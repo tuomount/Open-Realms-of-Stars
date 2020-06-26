@@ -3,6 +3,7 @@ package org.openRealmOfStars.utilities.repository;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.player.leader.EspionageMission;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -57,6 +58,9 @@ public class MissionRepository {
       IOUtilities.writeString(dos, mission.getPlanetGathering());
       IOUtilities.writeString(dos, mission.getShipType());
     }
+    if (mission.getType() == MissionType.ESPIONAGE_MISSION) {
+      IOUtilities.writeString(dos, mission.getEspionageType().getName());
+    }
   }
 
   /**
@@ -90,6 +94,8 @@ public class MissionRepository {
       return MissionType.COLONY_EXPLORE;
     case 11:
       return MissionType.SPY_MISSION;
+    case 12:
+      return MissionType.ESPIONAGE_MISSION;
     default:
       ErrorLogger.log("Warning: Unknown mission type: " + index
           + ". Defaulting to explore.");
@@ -159,6 +165,13 @@ public class MissionRepository {
         mission.setShipType(str);
       }
     }
+    if (mission.getType() == MissionType.ESPIONAGE_MISSION) {
+      str = IOUtilities.readString(dis);
+      if (!str.isEmpty()) {
+        mission.setEspionageType(EspionageMission.getMission(str));
+      }
+    }
+
     return mission;
   }
 

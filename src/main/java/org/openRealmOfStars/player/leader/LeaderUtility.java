@@ -3,6 +3,10 @@ package org.openRealmOfStars.player.leader;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -12,7 +16,11 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.AttitudeScore;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -209,6 +217,12 @@ public final class LeaderUtility {
         for (int i = 0; i < player.getFleets().getNumberOfFleets(); i++) {
           Fleet fleet = player.getFleets().getByIndex(i);
           if (fleet.getCommander() == leader) {
+            Mission mission = player.getMissions().getMissionForFleet(
+                fleet.getName(), MissionType.ESPIONAGE_MISSION);
+            if (mission != null) {
+              // Espionage mission underwork, not changing
+              return false;
+            }
             fleet.setCommander(null);
             break;
           }
@@ -234,6 +248,14 @@ public final class LeaderUtility {
         }
         activeFleet.setCommander(leader);
         leader.setTitle(LeaderUtility.createTitleForLeader(leader, player));
+        if (!player.isHuman()) {
+          Mission mission = player.getMissions().getMissionForFleet(
+              activeFleet.getName());
+          if (mission != null && mission.getType() == MissionType.SPY_MISSION) {
+            mission.setType(MissionType.ESPIONAGE_MISSION);
+            mission.setPhase(MissionPhase.TREKKING);
+          }
+        }
         result = true;
       }
     }
@@ -248,7 +270,8 @@ public final class LeaderUtility {
    */
   public static void addRandomPerks(final Leader leader) {
     boolean jobBasedPerkAdded = false;
-    if (DiceGenerator.getRandom(99) < 60) {
+    Perk[] goodPerks = getNewPerks(leader, PERK_TYPE_GOOD);
+    if (DiceGenerator.getRandom(99) < 60 || goodPerks.length == 0) {
       // Add Perk based on job
       Perk[] newPerks = null;
       if (leader.getJob() == Job.RULER) {
@@ -268,13 +291,17 @@ public final class LeaderUtility {
     }
     if (!jobBasedPerkAdded) {
       Perk[] newPerks = getNewPerks(leader, PERK_TYPE_GOOD);
-      int index = DiceGenerator.getRandom(newPerks.length - 1);
-      leader.getPerkList().add(newPerks[index]);
+      if (newPerks.length > 0) {
+        int index = DiceGenerator.getRandom(newPerks.length - 1);
+        leader.getPerkList().add(newPerks[index]);
+      }
     }
     if (DiceGenerator.getRandom(99)  < 10) {
       Perk[] newPerks = getNewPerks(leader, PERK_TYPE_BAD);
-      int index = DiceGenerator.getRandom(newPerks.length - 1);
-      leader.getPerkList().add(newPerks[index]);
+      if (newPerks.length > 0) {
+        int index = DiceGenerator.getRandom(newPerks.length - 1);
+        leader.getPerkList().add(newPerks[index]);
+      }
     }
   }
 
@@ -1500,5 +1527,74 @@ public final class LeaderUtility {
       return scores.get(0).getAttitude();
     }
     return secondary;
+  }
+
+  /**
+   * Handle leader release from espionage missage.
+   * Leader was caught but realm decided to release leader.
+   * @param info Realm who was trying espionage
+   * @param planet Planet where espionage was tried
+   * @param fleet Fleet which leader is commanding
+   * @param message Message for two realms.
+   * @param starMap StarMap
+   */
+  public static void handleLeaderReleased(final PlayerInfo info,
+      final Planet planet, final Fleet fleet, final String message,
+      final StarMap starMap) {
+    Message msg = new Message(MessageType.LEADER, message,
+        Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+    msg.setCoordinate(planet.getCoordinate());
+    msg.setMatchByString(fleet.getCommander().getName());
+    info.getMsgList().addUpcomingMessage(msg);
+    msg = msg.copy();
+    msg.setMatchByString(planet.getName());
+    planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+    starMap.getHistory().addEvent(NewsFactory.makeLeaderEvent(
+        fleet.getCommander(), info, starMap, msg.getMessage()));
+  }
+
+  /**
+   * Handle leader killed because of espionage mission.
+   * Leader may escaped due wealthy perk.
+   * @param info Realm who was trying espionage
+   * @param planet Planet where espionage was tried
+   * @param fleet Fleet which leader is commanding
+   * @param escapedMsg Message visible if leader escapes
+   * @param killedMsg Message visible if leader is killed
+   * @param game Games for adding news about killed leader.
+   */
+  public static void handleLeaderKilled(final PlayerInfo info,
+      final Planet planet, final Fleet fleet, final String escapedMsg,
+      final String killedMsg, final Game game) {
+    if (fleet.getCommander().hasPerk(Perk.WEALTHY)) {
+      fleet.getCommander().useWealth();
+      Message msg = new Message(MessageType.LEADER, escapedMsg,
+          Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+      msg.setMatchByString(planet.getName());
+      planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+    } else {
+      Message msg = new Message(MessageType.LEADER, killedMsg,
+          Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+      msg = msg.copy();
+      msg.setMatchByString(planet.getName());
+      planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      NewsData news = NewsFactory.makeLeaderDies(fleet.getCommander(),
+          info, "execution by "
+          + planet.getPlanetPlayerInfo().getEmpireName());
+      game.getStarMap().getNewsCorpData().addNews(news);
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+      fleet.getCommander().setJob(Job.DEAD);
+      fleet.setCommander(null);
+    }
+
   }
 }

@@ -33,6 +33,7 @@ import org.openRealmOfStars.game.States.AITurnView;
 import org.openRealmOfStars.game.States.BattleView;
 import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.DiplomacyView;
+import org.openRealmOfStars.game.States.EspionageMissionView;
 import org.openRealmOfStars.game.States.EspionageView;
 import org.openRealmOfStars.game.States.FleetTradeView;
 import org.openRealmOfStars.game.States.FleetView;
@@ -183,6 +184,11 @@ public class Game implements ActionListener {
    * Planet view Panel and handling planet
    */
   private PlanetView planetView;
+
+  /**
+   * Espionage mission view.
+   */
+  private EspionageMissionView espionageMissionView;
 
   /**
    * Planet bombing view Panel
@@ -838,6 +844,20 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show espionage view panel
+   * @param planet Planet where to do espionage missions
+   * @param player player who is currently playing
+   */
+  public void showEspionageMissionView(final Planet planet,
+      final PlayerInfo player) {
+    if (fleetView != null) {
+      espionageMissionView = new EspionageMissionView(planet, player,
+          fleetView.getFleet(), this);
+      this.updateDisplay(espionageMissionView);
+    }
+  }
+
+  /**
    * Show news corp view
    */
   public void showNewsCorpView() {
@@ -1006,6 +1026,12 @@ public class Game implements ActionListener {
         if (view.getPlanet().getPlanetPlayerInfo() != null) {
           info = view.getPlanet().getPlanetPlayerInfo();
           planet = view.getPlanet();
+        }
+      }
+      if (dataObject instanceof Planet) {
+        planet = (Planet) dataObject;
+        if (planet.getPlanetPlayerInfo() != null) {
+          info = planet.getPlanetPlayerInfo();
         }
       }
       if (dataObject instanceof PlayerInfo) {
@@ -1377,6 +1403,13 @@ public class Game implements ActionListener {
       } else if (dataObject instanceof Planet) {
         Planet planet = (Planet) dataObject;
         showPlanetView(planet, planet.getPlanetPlayerInfo(), true);
+      }
+      break;
+    }
+    case ESPIONAGE_MISSIONS_VIEW: {
+      if (dataObject instanceof Planet) {
+        Planet planet = (Planet) dataObject;
+        showEspionageMissionView(planet, getPlayers().getCurrentPlayerInfo());
       }
       break;
     }
@@ -2733,6 +2766,24 @@ public class Game implements ActionListener {
       planetView.handleAction(arg0);
       return;
     }
+    if (gameState == GameState.ESPIONAGE_MISSIONS_VIEW
+        && espionageMissionView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_FLEET)) {
+        changeGameState(GameState.FLEETVIEW, espionageMissionView.getFleet());
+        SoundPlayer.playMenuSound();
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
+        changeGameState(GameState.DIPLOMACY_VIEW,
+            espionageMissionView.getPlanet());
+        SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
+        return;
+      }
+      espionageMissionView.handleAction(arg0);
+      return;
+    }
     if (gameState == GameState.FLEETVIEW && fleetView != null) {
       // Fleet view
       if (arg0.getActionCommand()
@@ -2742,6 +2793,12 @@ public class Game implements ActionListener {
         fleetView = null;
         changeGameState(GameState.STARMAP, fleet);
         return;
+      }
+      if (arg0.getActionCommand().equals(
+          GameCommands.COMMAND_ESPIONAGE_MISSIONS)) {
+        changeGameState(GameState.ESPIONAGE_MISSIONS_VIEW,
+            fleetView.getEspionagePlanet());
+        SoundPlayer.playMenuSound();
       }
       if (arg0.getActionCommand().equals(
           GameCommands.COMMAND_VIEW_LEADERS)) {

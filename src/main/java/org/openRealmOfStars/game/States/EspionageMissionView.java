@@ -9,19 +9,20 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.ProductionListRenderer;
-import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.buttons.SpaceCombo;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
@@ -33,14 +34,20 @@ import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.espionage.EspionageUtility;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.leader.EspionageMission;
+import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 
+
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020  Tuomo Untinen
+ * Copyright (C) 2020  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -56,10 +63,10 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
  * along with this program; if not, see http://www.gnu.org/licenses/
  *
  *
- * Planet view for handling single planet production and space dock.
+ * Espionage mission view.
  *
  */
-public class PlanetView extends BlackPanel {
+public class EspionageMissionView extends BlackPanel {
 
   /**
    *
@@ -142,9 +149,9 @@ public class PlanetView extends BlackPanel {
    */
   private IconLabel happiness;
   /**
-   * JCombobox for selected construction for planet
+   * Label for selected construction.
    */
-  private JComboBox<Construction> constructionSelect;
+  private IconLabel constructionLabel;
   /**
    * How many buildings are on planet and maximum number of buildings on
    * planet.
@@ -159,34 +166,9 @@ public class PlanetView extends BlackPanel {
    */
   private IconLabel governorLabel;
   /**
-   * Button to access leader view.
-   */
-  private SpaceButton leaderViewBtn;
-  /**
-   * New construction information text.
-   */
-  private BaseInfoTextArea productionInfo;
-  /**
-   * Building information text.
-   */
-  private InfoTextArea buildingInfo;
-  /**
    * Buildings on planet in a list
    */
   private JList<Building> buildingList;
-  /**
-   * Button for demolish buildings from planet. This same button
-   * can be used recycle buildings.
-   */
-  private SpaceButton demolishBuildingBtn;
-  /**
-   * Button for rushing buildings with credits.
-   */
-  private SpaceButton rushWithCreditsBtn;
-  /**
-   * Button for rushing buildings with population.
-   */
-  private SpaceButton rushWithPopulationBtn;
 
   /**
    * Planet to show
@@ -194,29 +176,38 @@ public class PlanetView extends BlackPanel {
   private Planet planet;
 
   /**
-   * Allow player to handle planet via UI
-   */
-  private boolean allowHandling;
-
-  /**
    * Player trying to interact with planet
    */
   private PlayerInfo info;
+
+  /**
+   * Fleet near the planet
+   */
+  private Fleet fleet;
+  /**
+   * Mission type selection.
+   */
+  private SpaceCombo<EspionageMission> missionType;
+  /**
+   * Mission information text area.
+   */
+  private InfoTextArea missionInfo;
   /**
    * Planet view constructor. Planet view for viewing planet.
    * @param planet Planet to view
-   * @param interactive If true view contains full planet controls.
    * @param player Which player is currently playing
+   * @param fleet Fleet where is commander as a leader
    * @param listener Action listener for commands
    */
-  public PlanetView(final Planet planet, final boolean interactive,
-      final PlayerInfo player, final ActionListener listener) {
+  public EspionageMissionView(final Planet planet, final PlayerInfo player,
+      final Fleet fleet, final ActionListener listener) {
     this.setPlanet(planet);
+    this.setFleet(fleet);
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, null);
-    imgBase.setPlayer(player);
-    allowHandling = interactive;
     info = player;
+    imgBase.setPlayer(info);
+    imgBase.setText(getEspionageStats());
     this.setLayout(new BorderLayout());
 
     // Top Panel
@@ -238,28 +229,28 @@ public class PlanetView extends BlackPanel {
         Icons.ICON_FARM, ": 0",
         "Number of people working as a farmers.", listener);
     farmPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    farmPanel.setInteractive(interactive);
+    farmPanel.setInteractive(false);
     panel.add(farmPanel);
     minePanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_MINE, GameCommands.COMMAND_PLUS_MINE,
         Icons.ICON_MINE, ": 0",
         "Number of people working as a miners.", listener);
     minePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    minePanel.setInteractive(interactive);
+    minePanel.setInteractive(false);
     panel.add(minePanel);
     factoryPanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_PRODUCTION,
         GameCommands.COMMAND_PLUS_PRODUCTION, Icons.ICON_FACTORY,
         ": 0", "Number of people working as a factory worker.", listener);
     factoryPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    factoryPanel.setInteractive(interactive);
+    factoryPanel.setInteractive(false);
     panel.add(factoryPanel);
     resePanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_RESEARCH, GameCommands.COMMAND_PLUS_RESEARCH,
         Icons.ICON_RESEARCH,
         ": 0", "Number of people working as a scientist.", listener);
     resePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    resePanel.setInteractive(interactive);
+    resePanel.setInteractive(false);
     panel.add(resePanel);
     cultureLabel = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_CULTURE), ": 00");
@@ -324,7 +315,7 @@ public class PlanetView extends BlackPanel {
         Icons.ICON_TAX, ": 10",
         "How many productions are converted to credits", listener);
     taxPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    taxPanel.setInteractive(interactive);
+    taxPanel.setInteractive(false);
     panel.add(taxPanel);
 
     metal = new IconLabel(null, Icons.getIconByName(Icons.ICON_METAL),
@@ -351,64 +342,41 @@ public class PlanetView extends BlackPanel {
         Icons.getIconByName(Icons.ICON_FACTORY), "Next project");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(label);
-    constructionSelect = new JComboBox<>(this.planet.getProductionList());
-    constructionSelect.addActionListener(listener);
-    constructionSelect.setActionCommand(GameCommands.COMMAND_PRODUCTION_LIST);
-    constructionSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
-    constructionSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    constructionSelect.setBorder(new SimpleBorder());
-    constructionSelect.setFont(GuiStatics.getFontCubellan());
-    constructionSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
-        GuiStatics.TEXT_FIELD_HEIGHT));
-    constructionSelect.setRenderer(new ProductionListRenderer());
+    constructionLabel = new IconLabel(null,
+        Icons.getIconByName(Icons.ICON_CLOSED),
+        "Galactic Tower of Awesomeness");
+    constructionLabel.setToolTipText("Production currently underconstruction");
+    constructionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     if (planet.getUnderConstruction() != null) {
-      Construction[] list = this.planet.getProductionList();
-      for (int i = 0; i < list.length; i++) {
-        if (list[i].getName().equals(planet.getUnderConstruction().getName())) {
-          constructionSelect.setSelectedIndex(i);
-          break;
-        }
-      }
+      constructionLabel.setText(planet.getUnderConstruction().getName());
+      constructionLabel.setLeftIcon(planet.getUnderConstruction().getIcon());
     }
-    constructionSelect.setEditable(false);
-    constructionSelect.setEnabled(interactive);
-    constructionSelect.setAlignmentX(Component.LEFT_ALIGNMENT);
-    panel.add(constructionSelect);
+    panel.add(constructionLabel);
     panel.add(Box.createRigidArea(new Dimension(60, 5)));
-    buildingEstimate = new SpaceLabel("1000 turns");
+    buildingEstimate = new SpaceLabel("Construction time 1000 turns");
     buildingEstimate.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(buildingEstimate);
-    SpaceGreyPanel panelX = new SpaceGreyPanel();
-    panelX.setLayout(new BoxLayout(panelX, BoxLayout.X_AXIS));
-    panelX.setAlignmentX(Component.LEFT_ALIGNMENT);
-    label = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_CREDIT), "Rushing options");
-    label.setAlignmentX(Component.LEFT_ALIGNMENT);
-    panel.add(label);
-    rushWithCreditsBtn = new SpaceButton("Purchase",
-        GameCommands.COMMAND_RUSH_WITH_CREDITS);
-    rushWithCreditsBtn.addActionListener(listener);
-    rushWithCreditsBtn.setEnabled(false);
-    panelX.add(rushWithCreditsBtn);
-    panelX.add(Box.createRigidArea(new Dimension(5, 5)));
-    rushWithPopulationBtn = new SpaceButton("Enslave",
-        GameCommands.COMMAND_RUSH_WITH_POPULATION);
-    rushWithPopulationBtn.addActionListener(listener);
-    rushWithPopulationBtn.setEnabled(false);
-    panelX.add(rushWithPopulationBtn);
-    panel.add(panelX);
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
     topPanel.add(panel);
 
     topPanel.add(Box.createRigidArea(new Dimension(10, 25)));
-    productionInfo = new BaseInfoTextArea(5, 35);
-    productionInfo.setFont(GuiStatics.getFontCubellanSmaller());
-    productionInfo.setEditable(false);
-    JScrollPane scroll = new JScrollPane(productionInfo);
+
+    panel = new SpaceGreyPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    buildingLabel = new SpaceLabel("Buildings(00/00)");
+    buildingLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    panel.add(buildingLabel);
+    buildingList = new JList<>(planet.getBuildingList());
+    buildingList.setCellRenderer(new ProductionListRenderer());
+    buildingList.setAlignmentX(Component.LEFT_ALIGNMENT);
+    buildingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    buildingList.setBackground(Color.BLACK);
+    JScrollPane scroll = new JScrollPane(buildingList);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     scroll.setBackground(Color.BLACK);
-    topPanel.add(scroll);
-    topPanel.add(Box.createRigidArea(new Dimension(15, 25)));
+    scroll.setPreferredSize(new Dimension(100, 100));
+    panel.add(scroll);
+    topPanel.add(panel);
 
     northPanel.add(topPanel);
     northPanel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -428,56 +396,34 @@ public class PlanetView extends BlackPanel {
     governorLabelPanel.add(Box.createRigidArea(new Dimension(15, 5)));
     governorLabelPanel.add(governorLabel);
     governorPanel.add(governorLabelPanel, BorderLayout.WEST);
-    leaderViewBtn = new SpaceButton("Assign governor  ",
-        GameCommands.COMMAND_VIEW_LEADERS);
-    leaderViewBtn.addActionListener(listener);
-    leaderViewBtn.setEnabled(interactive);
-    SpaceGreyPanel governorBtnPanel = new SpaceGreyPanel();
-    governorBtnPanel.setLayout(new BoxLayout(governorBtnPanel,
-        BoxLayout.X_AXIS));
-    governorBtnPanel.add(leaderViewBtn);
-    governorBtnPanel.add(Box.createRigidArea(new Dimension(15, 5)));
-    governorPanel.add(governorBtnPanel, BorderLayout.EAST);
     northPanel.add(governorPanel);
     northPanel.setTitle(planet.getName());
 
     InvisiblePanel eastPanel = new InvisiblePanel(imgBase);
-    buildingLabel = new SpaceLabel("Buildings(00/00)");
-    buildingLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
-    eastPanel.add(buildingLabel);
-    buildingList = new JList<>(planet.getBuildingList());
-    buildingList.setCellRenderer(new ProductionListRenderer());
-    buildingList.setAlignmentX(Component.LEFT_ALIGNMENT);
-    buildingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    buildingList.setBackground(Color.BLACK);
-    scroll = new JScrollPane(buildingList);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    scroll.setBackground(Color.BLACK);
-    scroll.setPreferredSize(new Dimension(200, 200));
-    eastPanel.add(scroll);
-    buildingInfo = new InfoTextArea(5, 35);
-    buildingInfo.setFont(GuiStatics.getFontCubellanSmaller());
-    buildingInfo.setEditable(false);
-    eastPanel.add(buildingInfo);
-    String demoBtnText = "Demolish";
-    if (planet.getRecycleBonus() > 0) {
-      demoBtnText = "Recycle";
-    }
-    demolishBuildingBtn = new SpaceButton(demoBtnText,
-        GameCommands.COMMAND_DEMOLISH_BUILDING);
-    demolishBuildingBtn
-        .setSpaceIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-    demolishBuildingBtn.addActionListener(listener);
-    demolishBuildingBtn.setEnabled(interactive);
-    eastPanel.add(demolishBuildingBtn);
-    if (!interactive) {
-      SpaceButton btn = new SpaceButton("Hail",
-          GameCommands.COMMAND_HAIL_FLEET_PLANET);
-      btn.addActionListener(listener);
-      btn.setEnabled(!interactive);
-      eastPanel.add(btn);
-    }
+
+    missionType = new SpaceCombo<EspionageMission>(
+        EspionageUtility.getAvailableMissionTypes(planet, info));
+    missionType.setSelectedIndex(0);
+    missionType.addActionListener(listener);
+    missionType.setActionCommand(GameCommands.COMMAND_ESPIONAGE_MISSIONS);
+    eastPanel.add(missionType);
+    missionInfo = new InfoTextArea(5, 35);
+    missionInfo.setFont(GuiStatics.getFontCubellanSmaller());
+    missionInfo.setEditable(false);
+    missionInfo.setWrapStyleWord(true);
+    missionInfo.setLineWrap(true);
+    missionInfo.setCharacterWidth(7);
+    missionInfo.setMaximumSize(new Dimension(400, 200));
+    eastPanel.add(missionInfo);
+    SpaceButton btn = new SpaceButton("Execute mission",
+        GameCommands.COMMAND_EXECUTE_MISSION);
+    btn.addActionListener(listener);
+    eastPanel.add(btn);
+    btn = new SpaceButton("Hail Planet",
+        GameCommands.COMMAND_HAIL_FLEET_PLANET);
+    btn.addActionListener(listener);
+    eastPanel.add(btn);
 
     imgBase.setLayout(new BorderLayout());
     if (planet.getPlanetOwnerIndex() != -1) {
@@ -488,8 +434,8 @@ public class PlanetView extends BlackPanel {
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
-    SpaceButton btn = new SpaceButton("Back to star map",
-        GameCommands.COMMAND_VIEW_STARMAP);
+    btn = new SpaceButton("Back to fleet view",
+        GameCommands.COMMAND_VIEW_FLEET);
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.CENTER);
 
@@ -505,7 +451,33 @@ public class PlanetView extends BlackPanel {
   }
 
   /**
-   * Update Planet view panels
+   * Get Espionage stats.
+   * @return Stats as a string
+   */
+  public String getEspionageStats() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Planet's espionage detection: ");
+    sb.append(planet.getCloakingDetectionLvl());
+    sb.append("\n");
+    sb.append("Agent's covert value: ");
+    sb.append(fleet.getFleetCloackingValue());
+    sb.append("\n");
+    sb.append("Agent's espionage: ");
+    sb.append(fleet.getEspionageBonus());
+    sb.append("\n");
+    Leader agent = fleet.getCommander();
+    sb.append(agent.getCallName());
+    sb.append("\n");
+    for (Perk perk : agent.getPerkList()) {
+      sb.append(" * ");
+      sb.append(perk.getName());
+      sb.append("\n");
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Update espionage mission view panels
    */
   public void updatePanel() {
     totalPeople.setText(": " + planet.getTotalPopulation());
@@ -573,47 +545,34 @@ public class PlanetView extends BlackPanel {
     buildingLabel.setText("Buildings(" + planet.getUsedPlanetSize() + "/"
         + planet.getGroundSize() + ")");
 
-    Construction building = (Construction) constructionSelect.getSelectedItem();
-    buildingEstimate.setText(planet.getProductionTimeAsString(building));
-    int productionTime = planet.getProductionTime(building);
-    int rushCost = planet.getRushingCost(building);
-    if (rushCost > 0 && allowHandling && productionTime > 1) {
-      if ((info.getRace().hasCreditRush()
-          || info.getGovernment().hasCreditRush())
-          && rushCost <= info.getTotalCredits()
-          && planet.getUnderConstruction() != null) {
-        rushWithCreditsBtn.setEnabled(true);
-        rushWithCreditsBtn.setToolTipText("Rush construction with " + rushCost
-            + " credits!");
-      }
-      if ((info.getRace().hasPopulationRush()
-          || info.getGovernment().hasPopulationRush())
-          && planet.getUnderConstruction() != null) {
-        int populationCost = rushCost / Planet.POPULATION_RUSH_COST + 1;
-        if (planet.getTotalPopulation() > populationCost) {
-          rushWithPopulationBtn.setEnabled(true);
-          rushWithPopulationBtn.setToolTipText("Rush construction with "
-              + populationCost + " population!");
-        }
-      }
-    } else {
-      rushWithCreditsBtn.setEnabled(false);
-      rushWithPopulationBtn.setEnabled(false);
-      rushWithCreditsBtn.setToolTipText(null);
-      rushWithPopulationBtn.setToolTipText(null);
+    Construction building = planet.getUnderConstruction();
+    if (building != null) {
+      buildingEstimate.setText("Building time "
+          + planet.getProductionTimeAsString(building));
     }
 
-    SpaceRace race = null;
-    if (planet.getPlanetPlayerInfo() != null) {
-      race = planet.getPlanetPlayerInfo().getRace();
-    }
-    if (building instanceof Building) {
-      Building newBuilding = (Building) building;
-      productionInfo.setText(newBuilding.getFullDescription(race));
-    } else {
-      productionInfo.setText(building.getFullDescription());
-    }
     buildingList.setListData(planet.getBuildingList());
+    if (missionType.getSelectedItem() != null) {
+      EspionageMission mission =
+          (EspionageMission) missionType.getSelectedItem();
+      missionInfo.setText(mission.getDescription() + "\nDetection chance: "
+      + EspionageUtility.calculateDetectionSuccess(planet, fleet, mission)
+      + "%\nSuccess chance: "
+      + EspionageUtility.calculateSuccess(planet, fleet, mission)
+      + "%");
+    }
+    Mission mission = info.getMissions().getMissionForFleet(
+        fleet.getName(), MissionType.ESPIONAGE_MISSION);
+    if (mission != null) {
+      EspionageMission espionage = mission.getEspionageType();
+      if (espionage != null) {
+        missionInfo.setText(espionage.getDescription() + "\nDetection chance: "
+            + EspionageUtility.calculateDetectionSuccess(planet, fleet,
+                espionage) + "%\nSuccess chance: "
+            + EspionageUtility.calculateSuccess(planet, fleet, espionage)
+            + "%\nEspionage activated");
+      }
+    }
     this.repaint();
   }
 
@@ -632,152 +591,46 @@ public class PlanetView extends BlackPanel {
   }
 
   /**
-   * Handle actions for Planet view.
+   * @return the fleet
+   */
+  public Fleet getFleet() {
+    return fleet;
+  }
+
+  /**
+   * @param fleet the fleet to set
+   */
+  public void setFleet(final Fleet fleet) {
+    this.fleet = fleet;
+  }
+
+  /**
+   * Handle actions for espionage mission view.
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(final ActionEvent arg0) {
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
-      Building building = buildingList.getSelectedValue();
-      if (building != null) {
-        SpaceRace race = null;
-        if (planet.getPlanetPlayerInfo() != null) {
-          race = planet.getPlanetPlayerInfo().getRace();
-        }
-        String tmp = building.getFullDescription(race);
-        if (!tmp.equals(buildingInfo.getText())) {
-          buildingInfo.setText(tmp);
-          this.repaint();
-        }
-      }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_ESPIONAGE_MISSIONS)) {
+      updatePanel();
     }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_DEMOLISH_BUILDING)) {
-      Building building = buildingList.getSelectedValue();
-      if (building != null) {
-        planet.removeBuilding(building);
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_EXECUTE_MISSION)) {
+      if (missionType.getSelectedItem() != null) {
         SoundPlayer.playMenuSound();
-        SoundPlayer.playSound(SoundPlayer.EXPLOSION_SMALL);
-        SoundPlayer.playSound(SoundPlayer.DESTROY_BUILDING);
-        updatePanel();
+        EspionageMission espionage =
+            (EspionageMission) missionType.getSelectedItem();
+        Mission mission = new Mission(MissionType.ESPIONAGE_MISSION,
+            MissionPhase.EXECUTING, planet.getCoordinate());
+        mission.setFleetName(fleet.getName());
+        mission.setEspionageType(espionage);
+        mission.setTargetPlanet(planet.getName());
+        info.getMissions().add(mission);
+        fleet.setMovesLeft(0);
+      } else {
+        SoundPlayer.playMenuDisabled();
       }
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_RUSH_WITH_CREDITS)) {
-      planet.doRush(true, info);
-      SoundPlayer.playSound(SoundPlayer.COINS);
-      updatePanel();
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_RUSH_WITH_POPULATION)) {
-      planet.doRush(false, info);
-      SoundPlayer.playSound(SoundPlayer.WHIP);
-      updatePanel();
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_MINUS_FARM)
-        && planet.getWorkers(Planet.FOOD_FARMERS) > 0) {
-      planet.setWorkers(Planet.FOOD_FARMERS,
-          planet.getWorkers(Planet.FOOD_FARMERS) - 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST,
-          planet.getWorkers(Planet.CULTURE_ARTIST) + 1);
-      SoundPlayer.playMenuSound();
-      updatePanel();
-    }
-    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_PLUS_FARM)
-        && planet.getWorkers(Planet.CULTURE_ARTIST) > 0) {
-      planet.setWorkers(Planet.FOOD_FARMERS,
-          planet.getWorkers(Planet.FOOD_FARMERS) + 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST,
-          planet.getWorkers(Planet.CULTURE_ARTIST) - 1);
-      SoundPlayer.playMenuSound();
-      updatePanel();
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_MINUS_MINE)
-        && planet.getWorkers(Planet.METAL_MINERS) > 0) {
-      planet.setWorkers(Planet.METAL_MINERS,
-          planet.getWorkers(Planet.METAL_MINERS) - 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST,
-          planet.getWorkers(Planet.CULTURE_ARTIST) + 1);
-      SoundPlayer.playMenuSound();
-      updatePanel();
-    }
-    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_PLUS_MINE)
-        && planet.getWorkers(Planet.CULTURE_ARTIST) > 0) {
-      planet.setWorkers(Planet.METAL_MINERS,
-          planet.getWorkers(Planet.METAL_MINERS) + 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST,
-          planet.getWorkers(Planet.CULTURE_ARTIST) - 1);
-      SoundPlayer.playMenuSound();
-      updatePanel();
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_MINUS_PRODUCTION)
-        && planet.getWorkers(Planet.PRODUCTION_WORKERS) > 0) {
-      int originalProd = planet.getTotalProduction(
-          Planet.PRODUCTION_PRODUCTION);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS,
-          planet.getWorkers(Planet.PRODUCTION_WORKERS) - 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST,
-          planet.getWorkers(Planet.CULTURE_ARTIST) + 1);
-      if (planet.getTax()
-          > planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)) {
-        int newProd = planet.getTotalProduction(
-            Planet.PRODUCTION_PRODUCTION);
-        int decrease = originalProd - newProd;
-        planet.setTax(planet.getTax() - decrease, false);
-      }
-      SoundPlayer.playMenuSound();
-      updatePanel();
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_PLUS_PRODUCTION)
-        && planet.getWorkers(Planet.CULTURE_ARTIST) > 0) {
-      planet.setWorkers(Planet.PRODUCTION_WORKERS,
-          planet.getWorkers(Planet.PRODUCTION_WORKERS) + 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST,
-          planet.getWorkers(Planet.CULTURE_ARTIST) - 1);
-      SoundPlayer.playMenuSound();
-      updatePanel();
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_MINUS_RESEARCH)
-        && planet.getWorkers(Planet.RESEARCH_SCIENTIST) > 0) {
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST,
-          planet.getWorkers(Planet.RESEARCH_SCIENTIST) - 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST,
-          planet.getWorkers(Planet.CULTURE_ARTIST) + 1);
-      SoundPlayer.playMenuSound();
-      updatePanel();
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_PLUS_RESEARCH)
-        && planet.getWorkers(Planet.CULTURE_ARTIST) > 0) {
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST,
-          planet.getWorkers(Planet.RESEARCH_SCIENTIST) + 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST,
-          planet.getWorkers(Planet.CULTURE_ARTIST) - 1);
-      SoundPlayer.playMenuSound();
-      updatePanel();
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_MINUS_TAX)) {
-      planet.setTax(planet.getTax() - 1, false);
-      SoundPlayer.playMenuSound();
-      updatePanel();
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_PLUS_TAX)) {
-      planet.setTax(planet.getTax() + 1, false);
-      SoundPlayer.playMenuSound();
-      updatePanel();
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_PRODUCTION_LIST)) {
-      planet.setUnderConstruction(
-          (Construction) constructionSelect.getSelectedItem());
-      SoundPlayer.playMenuSound();
       updatePanel();
     }
   }
+
 }

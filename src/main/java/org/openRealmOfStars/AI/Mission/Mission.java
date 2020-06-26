@@ -1,5 +1,6 @@
 package org.openRealmOfStars.AI.Mission;
 
+import org.openRealmOfStars.player.leader.EspionageMission;
 import org.openRealmOfStars.starMap.Coordinate;
 
 /**
@@ -283,6 +284,26 @@ public class Mission {
     }
   }
 
+  /**
+   * Get Espionage Type.
+   * @return Espionage mission or null
+   */
+  public EspionageMission getEspionageType() {
+    if (type == MissionType.ESPIONAGE_MISSION && parameter != null) {
+      return EspionageMission.getMission(parameter);
+    }
+    return EspionageMission.NOT_SELECTED_YET;
+  }
+
+  /**
+   * Set espionage type for espionage mission.
+   * @param espionageMission Espionage type
+   */
+  public void setEspionageType(final EspionageMission espionageMission) {
+    if (type == MissionType.ESPIONAGE_MISSION) {
+      parameter = espionageMission.getName();
+    }
+  }
   /**
    * Set ship type for the gather mission.
    * @param shipType Sun Name

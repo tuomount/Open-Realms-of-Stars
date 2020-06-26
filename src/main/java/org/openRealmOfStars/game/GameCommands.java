@@ -131,6 +131,11 @@ public final class GameCommands {
   public static final String COMMAND_VIEW_PLANET = "ViewPlanetCommand";
 
   /**
+   * Change espionage mission.
+   */
+  public static final String COMMAND_CHANGE_MISSION = "ChangeEspionageMission";
+
+  /**
    * View fleet command
    */
   public static final String COMMAND_VIEW_FLEET = "ViewFleet";
@@ -488,6 +493,14 @@ public final class GameCommands {
    * Assign leader
    */
   public static final String COMMAND_ASSIGN_LEADER = "AssignLeader";
+  /**
+   * View espionage mission view
+   */
+  public static final String COMMAND_ESPIONAGE_MISSIONS = "EspionageMissions";
+  /**
+   * Execute mission.
+   */
+  public static final String COMMAND_EXECUTE_MISSION = "ExecuteMission";
 
   /**
    * Start combat for no reason. This is more like debug purposes

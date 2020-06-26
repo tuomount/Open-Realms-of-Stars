@@ -89,7 +89,8 @@ public class MissionList {
   public Mission getMissionForFleet(final String fleetName,
       final MissionType type) {
     for (Mission mission : missions) {
-      if (mission.getFleetName().equals(fleetName)
+      if (mission.getFleetName() != null
+          && mission.getFleetName().equals(fleetName)
           && mission.getType() == type) {
         return mission;
       }
@@ -116,13 +117,19 @@ public class MissionList {
    * @return Mission or null if not found
    */
   public Mission getMissionForFleet(final String fleetName) {
+    Mission first = null;
     for (Mission mission : missions) {
       if (mission.getFleetName() != null
-          && mission.getFleetName().equals(fleetName)) {
-        return mission;
+          && mission.getFleetName().equals(fleetName) && first == null) {
+        first = mission;
+      }
+      if (mission.getFleetName() != null
+          && mission.getFleetName().equals(fleetName)
+          && mission.getType() == MissionType.ESPIONAGE_MISSION) {
+        first = mission;
       }
     }
-    return null;
+    return first;
   }
 
   /**

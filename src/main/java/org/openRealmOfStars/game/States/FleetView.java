@@ -168,6 +168,10 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
    * Button to access leader view.
    */
   private SpaceButton leaderViewBtn;
+  /**
+   * Button to access espionage mission view.
+   */
+  private SpaceButton espionageMissonBtn;
 
   /**
    * Planet at north from fleet.
@@ -355,6 +359,13 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     leaderViewBtn.setEnabled(interactive);
     eastPanel.add(leaderViewBtn);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    espionageMissonBtn = new SpaceButton("Espionage mission",
+        GameCommands.COMMAND_ESPIONAGE_MISSIONS);
+    espionageMissonBtn.addActionListener(listener);
+    espionageMissonBtn.setAlignmentX(CENTER_ALIGNMENT);
+    espionageMissonBtn.setEnabled(interactive);
+    eastPanel.add(espionageMissonBtn);
+    eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
 
     label = new SpaceLabel("Ships in fleet");
     label.setAlignmentX(CENTER_ALIGNMENT);
@@ -537,10 +548,18 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     }
     if (fleet.getCommander() == null) {
       commanderLabel.setText(": No commander");
+      espionageMissonBtn.setEnabled(false);
     } else {
       commanderLabel.setText(": "
           + fleet.getCommander().getMilitaryRank().toString()
           + " " + fleet.getCommander().getName());
+      if (!interactiveView) {
+        espionageMissonBtn.setEnabled(false);
+      } else {
+        if (getEspionagePlanet() != null) {
+          espionageMissonBtn.setEnabled(true);
+        }
+      }
     }
     shipsInFleet.setListData(fleet.getShips());
     updateOtherFleet();
@@ -557,6 +576,42 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
 
   }
 
+  /**
+   * Check if target planet is suitable for espionage.
+   * @param target Target planet
+   * @return Target planet if suiteable otherwise null
+   */
+  private Planet getTargetEspionagePlanet(final Planet target) {
+    if (interactiveView && target != null
+        && target.getPlanetPlayerInfo() != null
+        && target.getPlanetPlayerInfo() != info
+        && fleet.getCommander() != null) {
+      return target;
+    }
+    return null;
+  }
+
+  /**
+   * Get suiteable espionage planet
+   * @return Suiteable espionage planet
+   */
+  public Planet getEspionagePlanet() {
+    Planet result = null;
+    result = getTargetEspionagePlanet(planet);
+    if (result == null) {
+      result = getTargetEspionagePlanet(northPlanet);
+    }
+    if (result == null) {
+      result = getTargetEspionagePlanet(eastPlanet);
+    }
+    if (result == null) {
+      result = getTargetEspionagePlanet(southPlanet);
+    }
+    if (result == null) {
+      result = getTargetEspionagePlanet(westPlanet);
+    }
+    return result;
+  }
   /**
    * @return the planet
    */
@@ -820,6 +875,9 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       imgBase.setSouthPlanet(southPlanet);
       imgBase.setWestPlanet(westPlanet);
       imgBase.setEastPlanet(eastPlanet);
+      if (getEspionagePlanet() == null) {
+        espionageMissonBtn.setEnabled(false);
+      }
     }
   }
 

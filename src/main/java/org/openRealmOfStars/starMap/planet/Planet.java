@@ -1621,7 +1621,7 @@ public class Planet {
             vote.setOrganizerIndex(this.getPlanetOwnerIndex());
             vote.setPlanetName(getName());
             map.getVotes().getVotes().add(vote);
-            if (Game.getTutorial() != null) {
+            if (Game.getTutorial() != null && map.isTutorialEnabled()) {
               String tutorialText = Game.getTutorial().showTutorialText(98);
               if (tutorialText != null) {
                 msg = new Message(MessageType.INFORMATION, tutorialText,
@@ -2001,7 +2001,7 @@ public class Planet {
    * @param buildingName Building name to look for-
    * @return True if found, otherwise false.
    */
-  private boolean hasCertainBuilding(final String buildingName) {
+  public boolean hasCertainBuilding(final String buildingName) {
     Building[] buildingsArray = getBuildingList();
     for (Building building : buildingsArray) {
       if (building.getName().equals(buildingName)) {
@@ -2725,6 +2725,20 @@ public class Planet {
         setGovernor(null);
       }
     }
+  }
+
+  /**
+   * Calculate how full planet is.
+   * This estimate can be then used how valueable planet is
+   * in certain cituations.
+   * @return Planet value in per cents.
+   */
+  public int getFullLevel() {
+    int result = 0;
+    result = getTotalPopulation() + getBuildingList().length;
+    result = result * 100;
+    result = result / (getGroundSize() * 2);
+    return result;
   }
 
 }

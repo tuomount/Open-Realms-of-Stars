@@ -392,7 +392,7 @@ public final class PlanetHandling {
     int score = building.getBattleBonus()
         + building.getDefenseDamage() * TURRET_DEFENSE_VALUE_SCORE;
     score = score + building.getScanRange() * 10
-        + building.getScanCloakingDetection() / 4;
+        + building.getScanCloakingDetection() / 2;
     if (info.getRace() == SpaceRace.SPORKS
         && building.getType() == BuildingType.MILITARY) {
       score = score + SPORK_MILITARY_VALUE_SCORE;

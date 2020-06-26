@@ -22,14 +22,20 @@ import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
+import org.openRealmOfStars.player.espionage.EspionageUtility;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.leader.EspionageMission;
 import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.Route;
@@ -41,6 +47,7 @@ import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -1159,6 +1166,7 @@ public final class MissionHandling {
             && culture.getHighestCulture() > -1) {
           // Fleet has found correct player sector, start spying
           mission.setPhase(MissionPhase.EXECUTING);
+          mission.setMissionTime(0);
           fleet.setaStarSearch(null);
         } else {
           makeReroute(game, fleet, info, mission);
@@ -1235,10 +1243,605 @@ public final class MissionHandling {
           }
         }
         fleet.setMovesLeft(0);
+        mission.setMissionTime(mission.getMissionTime() + 1);
+        if (fleet.getCommander() != null
+            && DiceGenerator.getRandom(40) < mission.getMissionTime()) {
+          mission.setPhase(MissionPhase.TREKKING);
+          mission.setType(MissionType.ESPIONAGE_MISSION);
+          mission.setEspionageType(EspionageMission.NOT_SELECTED_YET);
+          mission.setMissionTime(0);
+        }
       }
     } // End Of Spy mission
   }
 
+  /**
+   * Handle Espionage mission
+   * @param mission Espionage mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleEspionageMission(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.ESPIONAGE_MISSION) {
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        Mission newPlan = PlanetHandling.createSpyShipMission(info,
+            game.getStarMap());
+        if (newPlan != null) {
+          // New target to set up
+          mission.setTarget(new Coordinate(newPlan.getX(), newPlan.getY()));
+          mission.setTargetPlanet(newPlan.getTargetPlanet());
+          mission.setPhase(MissionPhase.TREKKING);
+        }
+      }
+      Coordinate targetCoord = new Coordinate(mission.getX(), mission.getY());
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getCoordinate().calculateDistance(targetCoord) <= 1) {
+        // Target acquired, let's do trade
+        mission.setPhase(MissionPhase.EXECUTING);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        makeReroute(game, fleet, info, mission);
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING) {
+        if (fleet.getCommander() != null) {
+          Planet planet = game.getStarMap().getPlanetByName(
+              mission.getTargetPlanet());
+          if (planet != null && planet.getPlanetPlayerInfo() != null
+              && info != planet.getPlanetPlayerInfo()) {
+            EspionageMission[] allowedTypes =
+                EspionageUtility.getAvailableMissionTypes(planet, info);
+            EspionageMission selectedType = mission.getEspionageType();
+            boolean ok = false;
+            for (EspionageMission type : allowedTypes) {
+              if (selectedType == type) {
+                ok = true;
+              }
+            }
+            if (!info.isHuman()
+                && (selectedType == null
+                   || selectedType == EspionageMission.NOT_SELECTED_YET)
+                && allowedTypes.length > 0) {
+              // FIXME Add more intelligence for this later
+              selectedType = allowedTypes[DiceGenerator.getRandom(
+                  allowedTypes.length - 1)];
+              ok = true;
+            }
+            if (ok) {
+              boolean somethingHappened = false;
+              int success = EspionageUtility.calculateSuccess(planet, fleet,
+                  selectedType);
+              if (DiceGenerator.getRandom(100) < success) {
+                // Succeed.
+                handleSuccessfulEspionage(selectedType, planet, fleet, info,
+                    game);
+                somethingHappened = true;
+              }
+              int caught = EspionageUtility.calculateDetectionSuccess(planet,
+                  fleet, selectedType);
+              if (DiceGenerator.getRandom(100) < caught) {
+                // Caught
+                handleCaughtEspionage(selectedType, planet, fleet, info,
+                    game);
+                somethingHappened = true;
+              }
+              if (!somethingHappened) {
+                Message msg = new Message(MessageType.LEADER,
+                    fleet.getCommander().getCallName()
+                    + " failed during espionage mission against "
+                    + planet.getPlanetPlayerInfo().getEmpireName()
+                    + ". "
+                    + fleet.getCommander().getCallName()
+                    + " avoided being caught tough...",
+                    Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+                msg.setCoordinate(planet.getCoordinate());
+                msg.setMatchByString(fleet.getCommander().getName());
+                info.getMsgList().addUpcomingMessage(msg);
+              }
+            }
+          }
+        }
+        // Espionage has been done, removing it.
+        info.getMissions().remove(mission);
+        if (!info.isHuman()) {
+          Mission newPlan = PlanetHandling.createSpyShipMission(info,
+              game.getStarMap());
+          if (newPlan != null) {
+            newPlan.setPhase(MissionPhase.TREKKING);
+            newPlan.setFleetName(fleet.getName());
+            info.getMissions().add(newPlan);
+          }
+        }
+      }
+    } // End Of Espionage mission
+  }
+
+  /**
+   * Handle caughtespionage mission.
+   * @param type EspionageMission type
+   * @param planet Planet where to do espionage
+   * @param fleet Fleet who is doing the espionage
+   * @param info Realm who is doing the espionage
+   * @param game Full game information.
+   */
+  private static void handleCaughtEspionage(final EspionageMission type,
+      final Planet planet, final Fleet fleet, final PlayerInfo info,
+      final Game game) {
+    int infoIndex = game.getStarMap().getPlayerList().getIndex(info);
+    boolean war = planet.getPlanetPlayerInfo().getDiplomacy().isWar(infoIndex);
+    boolean tradeWar = planet.getPlanetPlayerInfo().getDiplomacy()
+        .isTradeEmbargo(infoIndex);
+    if (type == EspionageMission.GAIN_TRUST) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+        LeaderUtility.handleLeaderReleased(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+                + " espionage mission. Since it espionage mission was gaining"
+                + " trust " + fleet.getCommander().getCallName()
+                + " was released.", game.getStarMap());
+      }
+    }
+    if (type == EspionageMission.STEAL_CREDIT) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
+      if (attitude == Attitude.AGGRESSIVE
+          || attitude == Attitude.BACKSTABBING
+          || attitude == Attitude.MILITARISTIC
+          || attitude == Attitude.MERCHANTICAL
+          || war || tradeWar) {
+        String startText = fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was steal credits. ";
+        String endText = "";
+        if (war) {
+          endText = " Execution was done because of war times.";
+        } else if (tradeWar) {
+          endText = " Execution was done because of revenge of trade war.";
+        }
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            startText
+            + fleet.getCommander().getCallName() + " was able to escape "
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " execution by using massive amount of credits. ",
+            startText
+            + fleet.getCommander().getCallName() + " was executed by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + "." + endText, game);
+      } else {
+        LeaderUtility.handleLeaderReleased(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+                + " espionage mission. Main goal was steal credits. "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+                + " release " + fleet.getCommander().getCallName()
+                + ".", game.getStarMap());
+      }
+    }
+    if (type == EspionageMission.STEAL_TECH) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
+      if (attitude == Attitude.AGGRESSIVE
+          || attitude == Attitude.BACKSTABBING
+          || attitude == Attitude.MILITARISTIC
+          || attitude == Attitude.SCIENTIFIC
+          || war || tradeWar) {
+        String startText = fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was steal technology. ";
+        String endText = "";
+        if (war) {
+          endText = " Execution was done because of war times.";
+        } else if (tradeWar) {
+          endText = " Execution was done because of revenge of trade war.";
+        }
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            startText
+            + fleet.getCommander().getCallName() + " was able to escape "
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " execution by using massive amount of credits. ",
+            startText
+            + fleet.getCommander().getCallName() + " was executed by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + "." + endText, game);
+      } else {
+        LeaderUtility.handleLeaderReleased(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+                + " espionage mission. Main goal was steal technology."
+                + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+                + " release " + fleet.getCommander().getCallName()
+                + ".", game.getStarMap());
+      }
+    }
+    if (type == EspionageMission.SABOTAGE) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
+      if (attitude == Attitude.AGGRESSIVE
+          || attitude == Attitude.BACKSTABBING
+          || attitude == Attitude.MILITARISTIC
+          || war || tradeWar) {
+        String startText = fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was sabotage. ";
+        String endText = "";
+        if (war) {
+          endText = " Execution was done because of war times.";
+        } else if (tradeWar) {
+          endText = " Execution was done because of revenge of trade war.";
+        }
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            startText
+            + fleet.getCommander().getCallName() + " was able to escape "
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " execution by using massive amount of credits.",
+            startText
+            + fleet.getCommander().getCallName() + " was executed by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + "." + endText, game);
+      } else {
+        LeaderUtility.handleLeaderReleased(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+                + " espionage mission. Main goal was sabotage. "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+                + " release " + fleet.getCommander().getCallName()
+                + ".", game.getStarMap());
+      }
+    }
+    if (type == EspionageMission.DEMOLISH_BUILDING) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
+      if (attitude == Attitude.AGGRESSIVE
+          || attitude == Attitude.BACKSTABBING
+          || attitude == Attitude.MILITARISTIC
+          || war || tradeWar) {
+        String startText = fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was demolish building. ";
+        String endText = "";
+        if (war) {
+          endText = " Execution was done because of war times.";
+        } else if (tradeWar) {
+          endText = " Execution was done because of revenge of trade war.";
+        }
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            startText
+            + fleet.getCommander().getCallName() + " was able to escape "
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " execution by using massive amount of credits. ",
+            startText
+            + fleet.getCommander().getCallName() + " was executed by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + "." + endText, game);
+      } else {
+        LeaderUtility.handleLeaderReleased(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+                + " espionage mission. Main goal was demolish building. "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+                + " release " + fleet.getCommander().getCallName()
+                + ".", game.getStarMap());
+      }
+    }
+    if (type == EspionageMission.ASSASSIN_GOVERNOR) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
+      if (attitude == Attitude.PEACEFUL
+          && !war && !tradeWar) {
+        LeaderUtility.handleLeaderReleased(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+                + " espionage mission. Main goal was assassin governor. "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+                + " release " + fleet.getCommander().getCallName()
+                + ".", game.getStarMap());
+      } else {
+        String startText = fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was assassin governor. ";
+        String endText = "";
+        if (war) {
+          endText = " Execution was done because of war times.";
+        } else if (tradeWar) {
+          endText = " Execution was done because of revenge of trade war.";
+        }
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            startText
+            + fleet.getCommander().getCallName() + " was able to escape "
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " execution by using massive amount of credits.",
+            startText
+            + fleet.getCommander().getCallName() + " was executed by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + "." + endText, game);
+      }
+    }
+    if (type == EspionageMission.TERRORIST_ATTACK) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      String startText = fleet.getCommander().getCallName() + " caught by "
+          + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+          + " espionage mission. Main goal was terrorist attack on planet. ";
+      String endText = "";
+      if (war) {
+        endText = " Execution was done because of war times.";
+      } else if (tradeWar) {
+        endText = " Execution was done because of revenge of trade war.";
+      }
+      LeaderUtility.handleLeaderKilled(info, planet, fleet,
+          startText
+          + fleet.getCommander().getCallName() + " was able to escape "
+          + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+          + " execution by using massive amount of credits.",
+          startText
+          + fleet.getCommander().getCallName() + " was executed by "
+          + planet.getPlanetPlayerInfo().getEmpireName()
+          + "." + endText, game);
+      DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
+          game.getPlayers().getIndex(info),
+          game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
+      trade.generateEqualTrade(NegotiationType.WAR);
+      StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info);
+      NewsData newsData = NewsFactory.makeWarNews(info,
+          planet.getPlanetPlayerInfo(), planet, game.getStarMap());
+      game.getStarMap().getNewsCorpData().addNews(newsData);
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+          planet, newsData));
+      trade.doTrades();
+      PlayerInfo defender = planet.getPlanetPlayerInfo();
+      String[] list = defender.getDiplomacy().activateDefensivePact(
+          game.getStarMap(), info);
+      if (list != null) {
+        game.getStarMap().getNewsCorpData().addNews(
+            NewsFactory.makeDefensiveActivation(info, list));
+      }
+    }
+  }
+
+  /**
+   * Handle successful espionage mission.
+   * @param type EspionageMission type
+   * @param planet Planet where to do espionage
+   * @param fleet Fleet who is doing the espionage
+   * @param info Realm who is doing the espionage
+   * @param game Full game information.
+   */
+  private static void handleSuccessfulEspionage(final EspionageMission type,
+      final Planet planet, final Fleet fleet, final PlayerInfo info,
+      final Game game) {
+    int infoIndex = game.getStarMap().getPlayerList().getIndex(info);
+    if (type == EspionageMission.GAIN_TRUST) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE,
+            planet.getPlanetPlayerInfo().getRace());
+        Message msg = new Message(MessageType.LEADER,
+            fleet.getCommander().getCallName() + " has gained trust against "
+            + planet.getPlanetPlayerInfo().getEmpireName() + ". This was "
+            + "gained via espionage mission.",
+            Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getCommander().getName());
+        info.getMsgList().addUpcomingMessage(msg);
+        fleet.getCommander().setExperience(
+            fleet.getCommander().getExperience() + type.getExperienceReward());
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+            fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+      }
+    }
+    if (type == EspionageMission.STEAL_CREDIT) {
+      int totalCredits = planet.getPlanetPlayerInfo().getTotalCredits();
+      if (totalCredits > 0) {
+        int stolen = totalCredits / 10;
+        // Planet full value affects how much credit is stolen.
+        int value = planet.getFullLevel();
+        stolen = stolen * 100 / value;
+        if (stolen == 0) {
+          stolen = 1;
+          planet.getPlanetPlayerInfo().setTotalCredits(totalCredits - stolen);
+          info.setTotalCredits(info.getTotalCredits() + stolen);
+          Message msg = new Message(MessageType.LEADER,
+              fleet.getCommander().getCallName() + " has stolen " + stolen
+              + " credits from " + planet.getPlanetPlayerInfo().getEmpireName()
+              + ". This was gained via espionage mission.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+          msg.setCoordinate(planet.getCoordinate());
+          msg.setMatchByString(fleet.getCommander().getName());
+          info.getMsgList().addUpcomingMessage(msg);
+          fleet.getCommander().setExperience(
+              fleet.getCommander().getExperience()
+              + type.getExperienceReward());
+          game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+              fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+        }
+      }
+    }
+    if (type == EspionageMission.STEAL_TECH) {
+      Tech[] stealableTechs = EspionageUtility.getStealableTech(planet, info);
+      if (stealableTechs.length > 0) {
+        int index = DiceGenerator.getRandom(0, stealableTechs.length - 1);
+        Tech tech = stealableTechs[index];
+        info.getTechList().addTech(stealableTechs[index]);
+        Message msg = new Message(MessageType.LEADER,
+            fleet.getCommander().getCallName() + " has stolen "
+              + tech.getName() + " technology from "
+              + planet.getPlanetPlayerInfo().getEmpireName()
+              + ". This was gained via espionage mission.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getCommander().getName());
+        info.getMsgList().addUpcomingMessage(msg);
+        fleet.getCommander().setExperience(
+            fleet.getCommander().getExperience() + type.getExperienceReward());
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+            fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+      }
+    }
+    if (type == EspionageMission.SABOTAGE) {
+      planet.setProdResource(planet.getProdResource() / 2);
+      Message msg = new Message(MessageType.LEADER,
+          fleet.getCommander().getCallName() + " sabotage "
+            + planet.getUnderConstruction().getName() + " project "
+            + " at planet " + planet.getName() + ". Planet is owned by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + ". This was done via espionage mission.",
+            Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+      fleet.getCommander().setExperience(
+          fleet.getCommander().getExperience() + type.getExperienceReward());
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+    }
+    if (type == EspionageMission.DEMOLISH_BUILDING) {
+      int index = DiceGenerator.getRandom(0,
+          planet.getBuildingList().length - 1);
+      Building building = planet.getBuildingList()[index];
+      planet.removeBuilding(building);
+      Message msg = new Message(MessageType.LEADER,
+          fleet.getCommander().getCallName() + " demolish "
+            + building.getName() + " at planet "
+            + planet.getName() + ". Planet is owned by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + ". This was done via espionage mission.",
+            Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+      msg = msg.copy();
+      msg.setMatchByString(planet.getName());
+      planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      NewsData news = NewsFactory.makeBuildingDestroyedNews(planet, building,
+          "");
+      game.getStarMap().getNewsCorpData().addNews(news);
+      fleet.getCommander().setExperience(
+          fleet.getCommander().getExperience() + type.getExperienceReward());
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+    }
+    if (type == EspionageMission.TERRORIST_ATTACK) {
+      int index = DiceGenerator.getRandom(0,
+          planet.getBuildingList().length - 1);
+      Building building = planet.getBuildingList()[index];
+      planet.removeBuilding(building);
+      String killedTxt = "";
+      if (planet.getTotalPopulation() > 1) {
+        planet.killOneWorker();
+        killedTxt = "Also population was killed during terrorist attack. ";
+      }
+      Message msg = new Message(MessageType.LEADER,
+          fleet.getCommander().getCallName() + " destroys "
+            + building.getName() + " at planet "
+            + planet.getName() + ". " + killedTxt + " Planet is owned by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + ". This was done via espionage mission.",
+            Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+      msg = msg.copy();
+      msg.setMatchByString(planet.getName());
+      planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      NewsData news = NewsFactory.makeBuildingDestroyedNews(planet, building,
+          killedTxt);
+      game.getStarMap().getNewsCorpData().addNews(news);
+      fleet.getCommander().setExperience(
+          fleet.getCommander().getExperience() + type.getExperienceReward());
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+    }
+    if (type == EspionageMission.ASSASSIN_GOVERNOR) {
+      Leader governor = planet.getGovernor();
+      if (governor.hasPerk(Perk.WEALTHY)) {
+        governor.useWealth();
+        Message msg = new Message(MessageType.LEADER,
+            fleet.getCommander().getCallName() + " tried to assasins "
+              + governor.getCallName() + " at planet " + planet.getName()
+              + " but failed. Planet is owned by "
+              + planet.getPlanetPlayerInfo().getEmpireName()
+              + ". This was done via espionage mission.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getCommander().getName());
+        info.getMsgList().addUpcomingMessage(msg);
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+            fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+        msg = new Message(MessageType.LEADER,
+            governor.getCallName() + " was tried to kill "
+              + " at planet " + planet.getName()
+              + ". Governor's expensive protection gear saved "
+              + governor.getGender().getHisHer() + " life.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(governor.getName());
+        planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      } else {
+        planet.setGovernor(null);
+        governor.setJob(Job.DEAD);
+        Message msg = new Message(MessageType.LEADER,
+            fleet.getCommander().getCallName() + " assasins "
+              + governor.getCallName() + " at planet " + planet.getName()
+              + ". Planet is owned by "
+              + planet.getPlanetPlayerInfo().getEmpireName()
+              + ". This was done via espionage mission.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getCommander().getName());
+        info.getMsgList().addUpcomingMessage(msg);
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+            fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+        msg = new Message(MessageType.LEADER,
+            governor.getCallName() + " is killed "
+              + " at planet " + planet.getName()
+              + ". This was probably assasination.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(governor.getName());
+        planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+        NewsData news = NewsFactory.makeLeaderDies(governor,
+            planet.getPlanetPlayerInfo(), "assasination");
+        game.getStarMap().getNewsCorpData().addNews(news);
+        fleet.getCommander().setExperience(
+            fleet.getCommander().getExperience() + type.getExperienceReward());
+      }
+    }
+  }
   /**
    * Find ship for gathering mission
    * @param mission Gathering mission

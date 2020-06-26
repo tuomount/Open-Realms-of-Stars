@@ -144,5 +144,9 @@ public enum GameState {
   /**
    * Show all the leaders for realm.
    */
-  LEADER_VIEW;
+  LEADER_VIEW,
+  /**
+   * Espionage mission view.
+   */
+  ESPIONAGE_MISSIONS_VIEW;
 }

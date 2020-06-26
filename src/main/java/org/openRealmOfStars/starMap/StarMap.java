@@ -2192,49 +2192,63 @@ public class StarMap {
       // Handle Leaders
       if (info.getRuler() == null && info.areLeadersDead()) {
         // No ruler and no leaders in pool
-        LeaderUtility.recruiteLeader(getPlanetList(), info);
-        int openLeaderPositions = calculateMaxLeaders(info);
-        if (openLeaderPositions > 0
-            && DiceGenerator.getRandom(99) < openLeaderPositions * 5) {
-          LeaderUtility.recruiteLeader(getPlanetList(), info);
+        Leader ruler = LeaderUtility.recruiteLeader(getPlanetList(), info);
+        if (ruler != null) {
+          LeaderUtility.assignLeaderAsRuler(ruler, info, this);
+          if (info.getRuler() != null) {
+            Message msg = new Message(MessageType.LEADER,
+                ruler.getCallName()
+                    + " has selected as ruler for " + info.getEmpireName(),
+                Icons.getIconByName(Icons.ICON_RULER));
+            msg.setMatchByString("Index:" + info.getLeaderIndex(ruler));
+            NewsData news = NewsFactory.makeNewRulerNews(ruler, info);
+            getNewsCorpData().addNews(news);
+            getHistory().addEvent(NewsFactory.makeLeaderEvent(info.getRuler(),
+                info, this, news));
+          }
         }
-        for (Leader leader : info.getLeaderPool()) {
-          if (leader.getJob() == Job.UNASSIGNED
-              || leader.getTimeInJob() > 20 && leader.getJob() == Job.COMMANDER
-              || leader.getTimeInJob() > 20
-              && leader.getJob() == Job.GOVERNOR) {
-            ArrayList<Object> targetJobPositions = new ArrayList<>();
-            Job bestJob = leader.getMostSuitableJob();
-            if (bestJob == Job.COMMANDER || bestJob == Job.UNASSIGNED) {
-              for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
-                Fleet fleet = info.getFleets().getByIndex(i);
-                if (fleet.getCommander() != null
-                    && fleet.getCommander().getTimeInJob() > 20) {
-                  targetJobPositions.add(fleet);
-                } else if (fleet.getCommander() == null
-                    && !fleet.isStarBaseDeployed()) {
-                  targetJobPositions.add(fleet);
-                }
+      }
+      int openLeaderPositions = calculateMaxLeaders(info);
+      if (openLeaderPositions > 0
+          && DiceGenerator.getRandom(99) < openLeaderPositions * 5) {
+        LeaderUtility.recruiteLeader(getPlanetList(), info);
+      }
+      for (Leader leader : info.getLeaderPool()) {
+        if (leader.getJob() == Job.UNASSIGNED
+            || leader.getTimeInJob() > 20 && leader.getJob() == Job.COMMANDER
+            || leader.getTimeInJob() > 20
+            && leader.getJob() == Job.GOVERNOR) {
+          ArrayList<Object> targetJobPositions = new ArrayList<>();
+          Job bestJob = leader.getMostSuitableJob();
+          if (bestJob == Job.COMMANDER || bestJob == Job.UNASSIGNED) {
+            for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
+              Fleet fleet = info.getFleets().getByIndex(i);
+              if (fleet.getCommander() != null
+                  && fleet.getCommander().getTimeInJob() > 20) {
+                targetJobPositions.add(fleet);
+              } else if (fleet.getCommander() == null
+                  && !fleet.isStarBaseDeployed()) {
+                targetJobPositions.add(fleet);
               }
             }
-            if (bestJob == Job.GOVERNOR || bestJob == Job.UNASSIGNED) {
-              for (Planet planet : planetList) {
-                if (planet.getPlanetPlayerInfo() == info
-                    && planet.getGovernor() != null
-                    && planet.getGovernor().getTimeInJob() > 20) {
-                  targetJobPositions.add(planet);
-                } else if (planet.getPlanetPlayerInfo() == info
-                    && planet.getGovernor() == null) {
-                  targetJobPositions.add(planet);
-                }
+          }
+          if (bestJob == Job.GOVERNOR || bestJob == Job.UNASSIGNED) {
+            for (Planet planet : planetList) {
+              if (planet.getPlanetPlayerInfo() == info
+                  && planet.getGovernor() != null
+                  && planet.getGovernor().getTimeInJob() > 20) {
+                targetJobPositions.add(planet);
+              } else if (planet.getPlanetPlayerInfo() == info
+                  && planet.getGovernor() == null) {
+                targetJobPositions.add(planet);
               }
             }
-            if (targetJobPositions.size() > 0) {
-              int index = DiceGenerator.getRandom(
-                  targetJobPositions.size() - 1);
-              LeaderUtility.assignLeader(leader, info, planetList,
-                  targetJobPositions.get(index));
-            }
+          }
+          if (targetJobPositions.size() > 0) {
+            int index = DiceGenerator.getRandom(
+                targetJobPositions.size() - 1);
+            LeaderUtility.assignLeader(leader, info, planetList,
+                targetJobPositions.get(index));
           }
         }
       }

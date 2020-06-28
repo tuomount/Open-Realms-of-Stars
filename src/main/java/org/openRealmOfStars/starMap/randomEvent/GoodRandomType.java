@@ -3,7 +3,7 @@ package org.openRealmOfStars.starMap.randomEvent;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019 Tuomo Untinen
+* Copyright (C) 2019, 2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -58,5 +58,10 @@ public enum GoodRandomType {
   /**
    * Leader gains level by getting his/hers achievements done earlier.
    */
-  LEADER_LEVEL;
+  LEADER_LEVEL,
+  /**
+   * Movie or music or theather or book was been done which became massive
+   * cultural hit. That planet gets cultural boost.
+   */
+  CULTURAL_HIT;
 }

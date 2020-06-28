@@ -290,6 +290,10 @@ public final class NewsFactory {
         && event.getGoodType() == GoodRandomType.SOLAR_ACTIVITY_DIMISHED) {
       instructions.addText("SOLAR ACTIVITY DECREASED!");
     }
+    if (event.getGoodType() != null
+        && event.getGoodType() == GoodRandomType.CULTURAL_HIT) {
+      instructions.addText("MASSIVE SUCCESS!");
+    }
     if (event.getBadType() != null
         && event.getBadType() == BadRandomType.SOLAR_ACTIVITY_INCREASE) {
       instructions.addText("SOLAR ACTIVITY INCREASED!");

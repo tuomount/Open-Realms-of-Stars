@@ -30,6 +30,7 @@ import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.namegenerators.OriginalWorkNameGenerator;
 
 /**
 *
@@ -470,6 +471,97 @@ public final class RandomEventUtility {
             icon);
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
+        info.getMsgList().addFirstMessage(message);
+      }
+    }
+  }
+
+  /**
+   * Handle cultual hit to planet.
+   * @param event Random Event must be cultural hit
+   * @param map Starmap for looking planet for realm.
+   */
+  public static void handleCulturalHit(final RandomEvent event,
+      final StarMap map) {
+    if (event.getGoodType() == GoodRandomType.CULTURAL_HIT) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info) {
+          planets.add(planet);
+        }
+      }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        event.setPlanet(planet);
+        String hitType = "movie";
+        String hitCapital = "Movie";
+        String author = "author";
+        switch (DiceGenerator.getRandom(5)) {
+          default:
+          case 0: {
+            hitType = "movie";
+            hitCapital = "Movie";
+            author = "director";
+          }
+          case 1: {
+            hitType = "song";
+            hitCapital = "Song";
+            author = "composer";
+          }
+          case 2: {
+            hitType = "show";
+            hitCapital = "Show";
+            author = "author";
+          }
+          case 3: {
+            hitType = "book";
+            hitCapital = "Book";
+            author = "author";
+          }
+          case 4: {
+            hitType = "opera";
+            hitCapital = "Opera";
+            author = "director";
+          }
+          case 5: {
+            hitType = "video game";
+            hitCapital = "Video game";
+            author = "designer";
+          }
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("Massive popular ");
+        sb.append(hitType);
+        sb.append(" was done in ");
+        sb.append(planet.getName());
+        sb.append(" by ");
+        sb.append(author);
+        Leader authorName = LeaderUtility.createLeader(
+            planet.getPlanetPlayerInfo(), planet, 1);
+        sb.append(authorName.getName());
+        sb.append(". ");
+        sb.append(hitCapital);
+        sb.append(" is called ");
+        OriginalWorkNameGenerator generator = new OriginalWorkNameGenerator();
+        String workName = generator.generate();
+        sb.append(workName);
+        sb.append(". It is huge success in whole galaxy!");
+        ImageInstruction instructions = new ImageInstruction();
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+            planet.getImageInstructions(), ImageInstruction.SIZE_HALF);
+        instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+            planet.getImageInstructions(), ImageInstruction.SIZE_FULL);
+        event.setImageInstructions(instructions.build());
+        Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
+        event.setText(sb.toString());
+        event.setNewsWorthy(true);
+        Message message = new Message(MessageType.PLANETARY, event.getText(),
+            icon);
+        message.setCoordinate(planet.getCoordinate());
+        message.setRandomEventPop(false);
         info.getMsgList().addFirstMessage(message);
       }
     }
@@ -1077,6 +1169,10 @@ public final class RandomEventUtility {
         }
         case LEADER_LEVEL: {
           handleLeaderLevel(event);
+          break;
+        }
+        case CULTURAL_HIT: {
+          handleCulturalHit(event, map);
           break;
         }
         default:

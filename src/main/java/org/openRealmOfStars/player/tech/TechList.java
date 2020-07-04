@@ -821,7 +821,7 @@ public class TechList {
           if (lvl < 10) {
             techLevels[i] = techLevels[i] + 1;
           }
-          return;
+          break;
         }
         addTech(tech);
         StringBuilder sb = new StringBuilder();
@@ -924,6 +924,60 @@ public class TechList {
             if (tech.getType() == TechType.Hulls
                 && tech.getComponent().startsWith("Privateering")) {
               tutorialText = Game.getTutorial().showTutorialText(59);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+              tutorialText = Game.getTutorial().showTutorialText(73);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
+            if (tech.getHull() != null || tech.getComponent() != null) {
+              tutorialText = Game.getTutorial().showTutorialText(70);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
+            if (tech.getType() == TechType.Hulls
+                && tech.getHull() != null
+                && tech.getHull().startsWith("Probe")) {
+              tutorialText = Game.getTutorial().showTutorialText(71);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
+            if (tech.getType() == TechType.Hulls
+                && tech.getHull() != null
+                && tech.getHull().contains("Starbase")) {
+              tutorialText = Game.getTutorial().showTutorialText(72);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
+            if (tech.getType() == TechType.Propulsion
+                && tech.getComponent() != null
+                && tech.getHull().contains("source")) {
+              tutorialText = Game.getTutorial().showTutorialText(75);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
+            if (tech.getType() == TechType.Propulsion
+                && tech.getComponent() != null
+                && tech.getHull().contains("drive")) {
+              tutorialText = Game.getTutorial().showTutorialText(74);
               if (tutorialText != null) {
                 msg = new Message(MessageType.INFORMATION, tutorialText,
                     Icons.getIconByName(Icons.ICON_TUTORIAL));

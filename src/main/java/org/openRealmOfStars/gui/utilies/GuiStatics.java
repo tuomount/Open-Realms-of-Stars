@@ -1197,6 +1197,13 @@ public final class GuiStatics {
           "/resources/images/homarian_bridge.png"));
 
   /**
+   * Ship Teuthidae bridge interior
+   */
+  public static final BufferedImage IMAGE_INTERIOR_TEUTHIDAE =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/teuthidae_bridge.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

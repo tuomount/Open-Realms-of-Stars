@@ -1317,6 +1317,24 @@ public final class LeaderUtility {
   }
 
   /**
+   * Get random living leader from realm.
+   * @param realm Realm whose leaders are being looked for.
+   * @return Leader or null
+   */
+  public static Leader getRandomLivingLeader(final PlayerInfo realm) {
+    ArrayList<Leader> tmpList = new ArrayList<>();
+    for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() != Job.DEAD) {
+        tmpList.add(leader);
+      }
+    }
+    if (tmpList.size() > 0) {
+      int index = DiceGenerator.getRandom(tmpList.size() - 1);
+      return tmpList.get(index);
+    }
+    return null;
+  }
+  /**
    * Assign Leader as a realm ruler.
    * @param ruler Leader to assign as ruler
    * @param realm Realm which is about to get new ruler.

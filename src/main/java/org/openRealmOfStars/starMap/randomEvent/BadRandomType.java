@@ -3,7 +3,7 @@ package org.openRealmOfStars.starMap.randomEvent;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019 Tuomo Untinen
+* Copyright (C) 2019, 2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -74,5 +74,9 @@ public enum BadRandomType {
   /**
    * Ruler has too much stress and gets mental perk.
    */
-  RULER_STRESS
+  RULER_STRESS,
+  /**
+   * Leader encounters accident and dies.
+   */
+  ACCIDENT;
 }

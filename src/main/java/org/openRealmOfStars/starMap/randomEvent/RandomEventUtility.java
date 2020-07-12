@@ -35,7 +35,7 @@ import org.openRealmOfStars.utilities.namegenerators.OriginalWorkNameGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019 Tuomo Untinen
+* Copyright (C) 2019,2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -117,6 +117,7 @@ public final class RandomEventUtility {
     if (event.getBadType() == BadRandomType.RULER_STRESS) {
       PlayerInfo info = event.getRealm();
       if (info.getRuler() != null) {
+        event.setLeader(info.getRuler());
         Perk[] perks = LeaderUtility.getNewPerks(info.getRuler(),
             LeaderUtility.PERK_TYPE_MENTAL);
         if (perks.length > 0) {
@@ -129,6 +130,42 @@ public final class RandomEventUtility {
           Message message = new Message(MessageType.INFORMATION,
               event.getText(), Icons.getIconByName(Icons.ICON_RULER));
           info.getMsgList().addFirstMessage(message);
+        }
+      }
+    }
+  }
+
+  /**
+   * Handle leader accident.
+   * @param event Random event, must be accident
+   */
+  public static void handleAccident(final RandomEvent event) {
+    if (event.getBadType() == BadRandomType.ACCIDENT) {
+      PlayerInfo info = event.getRealm();
+      Leader leader = LeaderUtility.getRandomLivingLeader(info);
+      if (leader != null) {
+        event.setLeader(leader);
+        if (leader.hasPerk(Perk.WEALTHY)) {
+          leader.useWealth();
+          event.setText(leader.getCallName() + " encounter deadly accident"
+              + " but luckily  " + leader.getGender().getHisHer()
+              + " extra ordinary wealth was able to save"
+              + leader.getGender().getHisHer()
+              + " life. ");
+          Message message = new Message(MessageType.INFORMATION,
+              event.getText(), Icons.getIconByName(Icons.ICON_LEADERS));
+          info.getMsgList().addFirstMessage(message);
+        } else {
+          event.setText(leader.getCallName() + " encounter deadly accident"
+              + " and "  + leader.getGender().getHisHer()
+              + " life ended immediately!"
+              + "This is terrible news for whole " + info.getEmpireName()
+              + ".");
+          event.setNewsWorthy(true);
+          Message message = new Message(MessageType.INFORMATION,
+              event.getText(), Icons.getIconByName(Icons.ICON_LEADERS));
+          info.getMsgList().addFirstMessage(message);
+          leader.setJob(Job.DEAD);
         }
       }
     }
@@ -150,6 +187,7 @@ public final class RandomEventUtility {
       if (leaders.size() > 0) {
         int index = DiceGenerator.getRandom(leaders.size() - 1);
         Leader leader = leaders.get(index);
+        event.setLeader(leader);
         leader.setLevel(leader.getLevel() + 1);
         LeaderUtility.addRandomPerks(leader);
         event.setText(leader.getCallName()
@@ -1133,6 +1171,10 @@ public final class RandomEventUtility {
         }
         case RULER_STRESS: {
           handleRulerStress(event);
+          break;
+        }
+        case ACCIDENT: {
+          handleAccident(event);
           break;
         }
         default:

@@ -32,7 +32,7 @@ import org.openRealmOfStars.utilities.TextUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2019  Tuomo Untinen
+* Copyright (C) 2017-2020  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -297,6 +297,10 @@ public final class NewsFactory {
     if (event.getBadType() != null
         && event.getBadType() == BadRandomType.SOLAR_ACTIVITY_INCREASE) {
       instructions.addText("SOLAR ACTIVITY INCREASED!");
+    }
+    if (event.getBadType() != null
+        && event.getBadType() == BadRandomType.ACCIDENT) {
+      return makeLeaderDies(event.getLeader(), event.getRealm(), "accident");
     }
     news.setImageInstructions(instructions.build());
     news.setNewsText(event.getText());

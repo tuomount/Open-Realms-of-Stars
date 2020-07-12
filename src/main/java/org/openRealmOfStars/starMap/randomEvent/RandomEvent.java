@@ -2,13 +2,14 @@ package org.openRealmOfStars.starMap.randomEvent;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019 Tuomo Untinen
+* Copyright (C) 2019,2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -70,6 +71,10 @@ public class RandomEvent {
   private String text;
 
   /**
+   * Leader who the event affects.
+   */
+  private Leader leader;
+  /**
    * Image instructions
    */
   private String imageInstructions;
@@ -97,6 +102,7 @@ public class RandomEvent {
     this.setNewsWorthy(false);
     this.setImageInstructions("");
     this.setPopupShown(false);
+    this.setLeader(null);
   }
 
   /**
@@ -115,6 +121,7 @@ public class RandomEvent {
     this.setNewsWorthy(false);
     this.setImageInstructions("");
     this.setPopupShown(false);
+    this.setLeader(null);
   }
 
   /**
@@ -251,5 +258,21 @@ public class RandomEvent {
    */
   public void setPopupShown(final boolean popupShown) {
     this.popupShown = popupShown;
+  }
+
+  /**
+   * Get the possible leader for the event.
+   * @return the leader
+   */
+  public Leader getLeader() {
+    return leader;
+  }
+
+  /**
+   * Set leader for event.
+   * @param leader the leader to set
+   */
+  public void setLeader(final Leader leader) {
+    this.leader = leader;
   }
 }

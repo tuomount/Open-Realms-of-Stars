@@ -78,5 +78,9 @@ public enum BadRandomType {
   /**
    * Leader encounters accident and dies.
    */
-  ACCIDENT;
+  ACCIDENT,
+  /**
+   * Terrorist attack on planet.
+   */
+  TERRORIST_ATTACK;
 }

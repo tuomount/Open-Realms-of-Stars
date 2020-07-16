@@ -335,6 +335,104 @@ public final class RandomEventUtility {
   }
 
   /**
+   * Handle terrorist attack random event.
+   * @param event Random event must be terrorist attack
+   * @param map Starmap to locate planet.
+   */
+  public static void handleTerroristAttack(final RandomEvent event,
+      final StarMap map) {
+    if (event.getBadType() == BadRandomType.TERRORIST_ATTACK) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info
+            && planet.getBuildingList().length > 0) {
+          planets.add(planet);
+        }
+      }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        event.setPlanet(planet);
+        event.setNewsWorthy(true);
+        int happiness = planet.calculateHappiness();
+        Building[] buildings = planet.getBuildingList();
+        index = DiceGenerator.getRandom(buildings.length - 1);
+        StringBuilder sb = new StringBuilder();
+        int accidentIndex = DiceGenerator.getRandom(2);
+        switch (accidentIndex) {
+          case 0: sb.append("Terrorist attack on "); break;
+          case 1: sb.append("Terrorist bombing on "); break;
+          default:
+          case 2: sb.append("Terror on "); break;
+        }
+        sb.append(planet.getName());
+        int casualty = 0;
+        if (happiness > 0) {
+          planet.killOneWorker();
+          casualty++;
+        }
+        sb.append(". ");
+        if (happiness <= 0) {
+          planet.removeBuilding(buildings[index]);
+          sb.append(buildings[index].getName());
+          sb.append(" destroyed during incident. ");
+        }
+        if (planet.getTotalPopulation() > 1 && happiness < 0) {
+          planet.killOneWorker();
+          casualty++;
+        }
+        if (planet.getGovernor() != null && happiness < -1) {
+          event.setLeader(planet.getGovernor());
+          if (planet.getGovernor().hasPerk(Perk.WEALTHY)) {
+            planet.getGovernor().useWealth();
+            sb.append(planet.getGovernor().getCallName());
+            sb.append(" was target on terrorist attack but ");
+            sb.append(planet.getGovernor().getGender().getHisHer());
+            sb.append(" extra ordinary wealth was able to save ");
+            sb.append(planet.getGovernor().getGender().getHisHer());
+            sb.append(" life. ");
+          } else {
+            sb.append(planet.getGovernor().getCallName());
+            sb.append(" was target on terrorist attack and ");
+            sb.append(planet.getGovernor().getGender().getHisHer());
+            sb.append(" life ended during attack. ");
+            sb.append("This is terrible news for whole ");
+            sb.append(info.getEmpireName());
+            sb.append(". ");
+            planet.getGovernor().setJob(Job.DEAD);
+          }
+        }
+        if (planet.getTotalPopulation() > 1 && happiness < -2) {
+          planet.killOneWorker();
+          casualty++;
+        }
+        sb.append(casualty);
+        sb.append(" number of population was killed during the ");
+        sb.append("terrorist attack. ");
+        if (happiness <= -2) {
+          sb.append("Terrorist were killed during the attack!");
+        } else if (happiness <= 0) {
+          sb.append("Terrorist killed themselves during the attack!");
+        } else {
+          sb.append("Terrorist were captured alive and sentence for life!");
+        }
+        ImageInstruction instructions = new ImageInstruction();
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+            planet.getPlanetType().getImageInstructions(),
+            ImageInstruction.SIZE_FULL);
+        event.setImageInstructions(instructions.build());
+        event.setText(sb.toString());
+        Message message = new Message(MessageType.PLANETARY, event.getText(),
+            Icons.getIconByName(Icons.ICON_DEATH));
+        message.setCoordinate(planet.getCoordinate());
+        info.getMsgList().addFirstMessage(message);
+      }
+    }
+  }
+
+  /**
    * Handle deserted ship event.
    * @param event Random event must be deserted ship.
    * @param map Starmap for looking good planet and free space.
@@ -1175,6 +1273,10 @@ public final class RandomEventUtility {
         }
         case ACCIDENT: {
           handleAccident(event);
+          break;
+        }
+        case TERRORIST_ATTACK: {
+          handleTerroristAttack(event, map);
           break;
         }
         default:

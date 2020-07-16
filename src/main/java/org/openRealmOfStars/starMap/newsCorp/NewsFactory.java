@@ -302,6 +302,10 @@ public final class NewsFactory {
         && event.getBadType() == BadRandomType.ACCIDENT) {
       return makeLeaderDies(event.getLeader(), event.getRealm(), "accident");
     }
+    if (event.getBadType() != null
+        && event.getBadType() == BadRandomType.TERRORIST_ATTACK) {
+      instructions.addText("TERRORIST ATTACK!");
+    }
     news.setImageInstructions(instructions.build());
     news.setNewsText(event.getText());
     return news;

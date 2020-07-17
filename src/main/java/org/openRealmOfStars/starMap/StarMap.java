@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionHandling;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
@@ -394,11 +395,41 @@ public class StarMap {
           int sx = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
               maxX - SOLAR_SYSTEM_WIDTH);
           int sy = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
-              maxX - SOLAR_SYSTEM_WIDTH);
+              maxY - SOLAR_SYSTEM_WIDTH);
           int planets = DiceGenerator.getRandom(3, 5);
           int gasGiants = DiceGenerator.getRandom(2);
           if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
               config.getSolarSystemDistance()) == 0) {
+            solarSystem = createSolarSystem(solarSystem, sx, sy, planets,
+                gasGiants, i, config);
+            break;
+          }
+          loop++;
+        }
+      }
+    }
+    if (config.getStartingPosition() == GalaxyConfig.ANCIENTS_IN_MIDDLE) {
+      int oneThird = maxX / 3;
+      for (int i = 0; i < config.getMaxPlayers(); i++) {
+        while (loop < MAX_LOOPS) {
+          boolean ancient = config.getPlayerAncientRealm(i);
+          int sx = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
+              maxX - SOLAR_SYSTEM_WIDTH);
+          int sy = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
+              maxY - SOLAR_SYSTEM_WIDTH);
+          if (ancient) {
+            sx = DiceGenerator.getRandom(oneThird, 2 * oneThird);
+            sy = DiceGenerator.getRandom(oneThird, 2 * oneThird);
+          }
+          boolean middle = false;
+          if (sx >= oneThird && sx <= 2 * oneThird
+              && sy >= oneThird && sy <= 2 * oneThird) {
+            middle = true;
+          }
+          int planets = DiceGenerator.getRandom(3, 5);
+          int gasGiants = DiceGenerator.getRandom(2);
+          if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
+              config.getSolarSystemDistance()) == 0 && middle == ancient) {
             solarSystem = createSolarSystem(solarSystem, sx, sy, planets,
                 gasGiants, i, config);
             break;

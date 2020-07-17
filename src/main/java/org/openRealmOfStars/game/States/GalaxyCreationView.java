@@ -416,9 +416,10 @@ public class GalaxyCreationView extends BlackPanel {
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 8)));
-    String[] startPos = new String[2];
+    String[] startPos = new String[3];
     startPos[0] = "Border";
     startPos[1] = "Random";
+    startPos[2] = "Ancient middle";
     comboPlayerPos = new SpaceCombo<>(startPos);
     comboPlayerPos.setSelectedIndex(this.config.getStartingPosition());
     comboPlayerPos.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);

@@ -8,7 +8,7 @@ import org.openRealmOfStars.player.government.GovernmentUtility;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018,2019  Tuomo Untinen
+ * Copyright (C) 2016, 2018-2020  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -88,6 +88,11 @@ public class GalaxyConfig {
    * Players start from random position
    */
   public static final int START_POSITION_RANDOM = 1;
+
+  /**
+   * Ancient realms are in the middle
+   */
+  public static final int ANCIENTS_IN_MIDDLE = 2;
 
   /**
    * Where players start

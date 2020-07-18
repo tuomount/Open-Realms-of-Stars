@@ -32,13 +32,25 @@ public class PerkTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testAllPerks() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("## Perk list\n\n");
     for (int i = 0; i < Perk.values().length; i++) {
       Perk perk = Perk.getByIndex(i);
       assertEquals(Perk.values()[i], perk);
       assertEquals(i, perk.getIndex());
       assertNotNull(perk.getName());
       assertNotNull(perk.getDescription());
+      if (i < 10) {
+        sb.append(" ");
+      }
+      sb.append(i);
+      sb.append(". ");
+      sb.append(perk.getName());
+      sb.append(" - ");
+      sb.append(perk.getDescription());
+      sb.append("\n");
     }
+    //System.out.println(sb.toString());
   }
 
 }

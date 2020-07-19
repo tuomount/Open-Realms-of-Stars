@@ -1113,6 +1113,13 @@ public class StarMap {
    */
   public void createRealmToPlanet(final Planet planet,
       final PlayerInfo playerInfo, final int playerIndex) {
+    if (planet.getPlanetPlayerInfo() != null && planet.getGovernor() != null) {
+      planet.getGovernor().setJob(Job.UNASSIGNED);
+      planet.setGovernor(null);
+      //TODO: What to do when ancient realm conquers other realm's starting
+      //Planet? Set culture 0 and destroy all buildings? Ancient realm knows
+      //where is another realm's home planet.
+    }
     planet.setPlanetOwner(playerIndex, playerInfo);
     if (Game.getTutorial() != null && playerInfo.isHuman()
         && isTutorialEnabled()) {

@@ -966,7 +966,7 @@ public class TechList {
             }
             if (tech.getType() == TechType.Propulsion
                 && tech.getComponent() != null
-                && tech.getHull().contains("source")) {
+                && tech.getComponent().contains("source")) {
               tutorialText = Game.getTutorial().showTutorialText(75);
               if (tutorialText != null) {
                 msg = new Message(MessageType.INFORMATION, tutorialText,
@@ -976,7 +976,7 @@ public class TechList {
             }
             if (tech.getType() == TechType.Propulsion
                 && tech.getComponent() != null
-                && tech.getHull().contains("drive")) {
+                && tech.getComponent().contains("drive")) {
               tutorialText = Game.getTutorial().showTutorialText(74);
               if (tutorialText != null) {
                 msg = new Message(MessageType.INFORMATION, tutorialText,

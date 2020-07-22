@@ -498,6 +498,9 @@ public final class LeaderUtility {
       if (perkType == PERK_TYPE_COMMANDER && !perk.isFleetCommanderPerk()) {
         continue;
       }
+      if (perkType == PERK_TYPE_MENTAL && !perk.isMentalPerk()) {
+        continue;
+      }
       boolean alreadyHas = false;
       for (Perk leaderPerk : leader.getPerkList()) {
         if (perk == leaderPerk) {

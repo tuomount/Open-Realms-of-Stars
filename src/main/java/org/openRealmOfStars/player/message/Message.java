@@ -176,7 +176,6 @@ public class Message {
     for (int i = 0; i < message.length(); i++) {
       if (message.charAt(i) == ' ' && split > MAX_ROW_LEN) {
         sb.append("\n");
-        sb.append(message.charAt(i));
         split = 0;
       } else if (message.charAt(i) == '\n') {
         sb.append(message.charAt(i));

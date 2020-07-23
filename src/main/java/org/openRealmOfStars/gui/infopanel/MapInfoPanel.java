@@ -174,7 +174,7 @@ public class MapInfoPanel extends InfoPanel {
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
     textArea.setCharacterWidth(7);
-    routeBtn = new SpaceButton("Route", GameCommands.COMMAND_ROUTE_FLEET);
+    routeBtn = new SpaceButton("Route FTL", GameCommands.COMMAND_ROUTE_FLEET);
     routeBtn.addActionListener(listener);
     routeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
     routeBtn.setToolTipText("R - Route fleet with FTL. Route is direct line"

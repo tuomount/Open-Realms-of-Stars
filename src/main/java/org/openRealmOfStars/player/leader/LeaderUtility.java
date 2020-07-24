@@ -1616,6 +1616,26 @@ public final class LeaderUtility {
       fleet.getCommander().setJob(Job.DEAD);
       fleet.setCommander(null);
     }
+  }
 
+  /**
+   * Is leader with power hungry perk ready to kill ruler?
+   * @param government Government type
+   * @return True if ready to kill
+   */
+  public static boolean isPowerHungryReadyForKill(
+      final GovernmentType government) {
+    if (government == GovernmentType.CLAN
+        || government == GovernmentType.EMPIRE
+        || government == GovernmentType.HEGEMONY
+        || government == GovernmentType.HIERARCHY
+        || government == GovernmentType.HIVEMIND
+        || government == GovernmentType.HORDE
+        || government == GovernmentType.KINGDOM
+        || government == GovernmentType.MECHANICAL_HORDE
+        || government == GovernmentType.NEST) {
+      return true;
+    }
+    return false;
   }
 }

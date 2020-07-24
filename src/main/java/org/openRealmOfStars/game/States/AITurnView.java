@@ -1833,6 +1833,153 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
+   * Handle Power hungry leader trying to kill ruler.
+   * @param leader Power hungry leader
+   * @param realm Which ruler is being targeted
+   */
+  private void handlePowerHungryKill(final Leader leader,
+      final PlayerInfo realm) {
+    // Power hungry leaders try to kill current leader
+    // Calculating chance for killing
+    int chance = 5;
+    if (leader.getAge() > realm.getRuler().getAge()) {
+      chance = chance + leader.getAge() - realm.getRuler().getAge();
+    }
+    if (leader.hasPerk(Perk.AGGRESSIVE)) {
+      chance = chance + 5;
+    }
+    if (leader.hasPerk(Perk.CORRUPTED)) {
+      chance = chance + 3;
+    }
+    if (leader.hasPerk(Perk.MAD)) {
+      chance = chance + 5;
+    }
+    if (leader.hasPerk(Perk.MILITARISTIC)) {
+      chance = chance + 5;
+    }
+    if (leader.hasPerk(Perk.ADDICTED)) {
+      chance = chance + 3;
+    }
+    if (leader.hasPerk(Perk.LOGICAL)) {
+      chance = chance - 3;
+    }
+    if (leader.hasPerk(Perk.DIPLOMATIC)) {
+      chance = chance - 3;
+    }
+    if (leader.hasPerk(Perk.PEACEFUL)) {
+      chance = chance - 5;
+    }
+    if (leader.hasPerk(Perk.SECRET_AGENT)) {
+      chance = chance + 3;
+    }
+    if (leader.hasPerk(Perk.STUPID)) {
+      chance = chance + 5;
+    }
+    if (leader.hasPerk(Perk.INCOMPETENT)) {
+      chance = chance + 3;
+    }
+    if (leader.hasPerk(Perk.WARLORD)) {
+      chance = chance + 5;
+    }
+    if (leader.hasPerk(Perk.PACIFIST)) {
+      chance = 0;
+    }
+    if (DiceGenerator.getRandom(1, 100) < chance) {
+      // Assassination happens
+      if (realm.getRuler().hasPerk(Perk.WEALTHY)) {
+        Message msg = new Message(MessageType.LEADER,
+            realm.getRuler().getCallName()
+                + " has paid massive amount of credits to make "
+                + realm.getRuler().getGender().getHisHer() + " life is"
+                + " protected against assasinations.",
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setMatchByString("Index:" + realm.getLeaderIndex(
+            realm.getRuler()));
+        realm.getMsgList().addNewMessage(msg);
+        realm.getRuler().useWealth();
+        // Assassin is going to die because of treason
+        leader.setJob(Job.DEAD);
+        msg = new Message(MessageType.LEADER,
+            leader.getCallName()
+                + " has died at age of " + leader.getAge()
+                + " due treason against " + realm.getEmpireName()
+                + "! ",
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+        realm.getMsgList().addNewMessage(msg);
+        String reason;
+        switch (DiceGenerator.getRandom(2)) {
+          case 0:
+          default: {
+            reason = "execution because of treason";
+            break;
+          }
+          case 1: {
+              reason = "execution because attempted assasination of "
+                 + realm.getRuler().getTitle();
+            break;
+          }
+          case 2: {
+              reason = "execution because attempted assasination of "
+                 + realm.getRuler().getCallName();
+            break;
+          }
+        }
+        NewsData news = NewsFactory.makeLeaderDies(leader, realm,
+            reason);
+        game.getStarMap().getNewsCorpData().addNews(news);
+        game.getStarMap().getHistory().addEvent(
+            NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
+            news));
+
+      } else {
+        realm.getRuler().setJob(Job.DEAD);
+        Message msg = new Message(MessageType.LEADER,
+            realm.getRuler().getCallName()
+                + " has died at age of " + realm.getRuler().getAge(),
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setMatchByString("Index:" + realm.getLeaderIndex(
+            realm.getRuler()));
+        realm.getMsgList().addNewMessage(msg);
+        String reason;
+        switch (DiceGenerator.getRandom(2)) {
+          case 0:
+          default: {
+            if (realm.getRuler().getRace() != SpaceRace.MECHIONS) {
+              reason = "poison drink";
+            } else {
+              reason = "overload of regular expressions";
+            }
+            break;
+          }
+          case 1: {
+            if (realm.getRuler().getRace() != SpaceRace.MECHIONS) {
+              reason = "heavy object hitting head";
+            } else {
+              reason = "heavy object crushing the body";
+            }
+            break;
+          }
+          case 2: {
+            if (realm.getRuler().getRace() != SpaceRace.MECHIONS) {
+              reason = "blade in back";
+            } else {
+              reason = "shot to head";
+            }
+            break;
+          }
+        }
+        NewsData news = NewsFactory.makeLeaderDies(realm.getRuler(), realm,
+            reason);
+        game.getStarMap().getNewsCorpData().addNews(news);
+        game.getStarMap().getHistory().addEvent(
+            NewsFactory.makeLeaderEvent(realm.getRuler(), realm,
+                game.getStarMap(), news));
+        realm.setRuler(null);
+      }
+    }
+  }
+  /**
    * Handle leaders getting older.
    * Handle also ruler leader experience
    * @param realm Realm whose leaders are being handled
@@ -1928,6 +2075,13 @@ public class AITurnView extends BlackPanel {
               }
             }
           }
+        }
+        if (realm.getRuler() != null
+            && leader.getJob() != Job.RULER
+            && leader.hasPerk(Perk.POWER_HUNGRY)
+            && LeaderUtility.isPowerHungryReadyForKill(
+                realm.getGovernment())) {
+          handlePowerHungryKill(leader, realm);
         }
         if (leader.getJob() == Job.COMMANDER
             && leader.hasPerk(Perk.CORRUPTED)) {

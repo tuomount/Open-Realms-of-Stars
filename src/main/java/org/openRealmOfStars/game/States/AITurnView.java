@@ -1895,7 +1895,7 @@ public class AITurnView extends BlackPanel {
             Icons.getIconByName(Icons.ICON_DEATH));
         msg.setMatchByString("Index:" + realm.getLeaderIndex(
             realm.getRuler()));
-        realm.getMsgList().addNewMessage(msg);
+        realm.getMsgList().addUpcomingMessage(msg);
         realm.getRuler().useWealth();
         // Assassin is going to die because of treason
         leader.setJob(Job.DEAD);
@@ -1906,7 +1906,7 @@ public class AITurnView extends BlackPanel {
                 + "! ",
             Icons.getIconByName(Icons.ICON_DEATH));
         msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
-        realm.getMsgList().addNewMessage(msg);
+        realm.getMsgList().addUpcomingMessage(msg);
         String reason;
         switch (DiceGenerator.getRandom(2)) {
           case 0:
@@ -1934,13 +1934,16 @@ public class AITurnView extends BlackPanel {
 
       } else {
         realm.getRuler().setJob(Job.DEAD);
+        // Leader gains experience for succeesfull assasination
+        leader.setExperience(leader.getExperience() + 50);
         Message msg = new Message(MessageType.LEADER,
             realm.getRuler().getCallName()
-                + " has died at age of " + realm.getRuler().getAge(),
+                + " has died at age of " + realm.getRuler().getAge()
+                + ". Death was caused by internal power struggle.",
             Icons.getIconByName(Icons.ICON_DEATH));
         msg.setMatchByString("Index:" + realm.getLeaderIndex(
             realm.getRuler()));
-        realm.getMsgList().addNewMessage(msg);
+        realm.getMsgList().addUpcomingMessage(msg);
         String reason;
         switch (DiceGenerator.getRandom(2)) {
           case 0:
@@ -1954,7 +1957,9 @@ public class AITurnView extends BlackPanel {
           }
           case 1: {
             if (realm.getRuler().getRace() != SpaceRace.MECHIONS) {
-              reason = "heavy object hitting head";
+              reason = "heavy object hitting "
+                  + realm.getRuler().getGender().getHisHer()
+                  + " head";
             } else {
               reason = "heavy object crushing the body";
             }
@@ -1962,9 +1967,10 @@ public class AITurnView extends BlackPanel {
           }
           case 2: {
             if (realm.getRuler().getRace() != SpaceRace.MECHIONS) {
-              reason = "blade in back";
+              reason = "blade in "
+                  + realm.getRuler().getGender().getHisHer() + " back";
             } else {
-              reason = "shot to head";
+              reason = "shot to the head";
             }
             break;
           }
@@ -2030,7 +2036,7 @@ public class AITurnView extends BlackPanel {
                       + leader.getGender().getHisHer() + " life.",
                   Icons.getIconByName(Icons.ICON_DEATH));
               msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
-              realm.getMsgList().addNewMessage(msg);
+              realm.getMsgList().addUpcomingMessage(msg);
               leader.useWealth();
             } else {
               leader.setJob(Job.DEAD);
@@ -2039,7 +2045,7 @@ public class AITurnView extends BlackPanel {
                       + " has died at age of " + leader.getAge(),
                   Icons.getIconByName(Icons.ICON_DEATH));
               msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
-              realm.getMsgList().addNewMessage(msg);
+              realm.getMsgList().addUpcomingMessage(msg);
               String reason;
               switch (DiceGenerator.getRandom(2)) {
                 case 0:

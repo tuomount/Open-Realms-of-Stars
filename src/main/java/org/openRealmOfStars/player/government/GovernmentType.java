@@ -1,5 +1,7 @@
 package org.openRealmOfStars.player.government;
 
+import org.openRealmOfStars.player.leader.LeaderUtility;
+
 /**
 *
 * Open Realm of Stars game project
@@ -482,6 +484,11 @@ public enum GovernmentType {
     if (hasHeirs()) {
       sb.append(dot);
       sb.append(" Rulers have heirs");
+      sb.append(lf);
+    }
+    if (LeaderUtility.isPowerHungryReadyForKill(this)) {
+      sb.append(dot);
+      sb.append(" Possibility to internal power struggle");
       sb.append(lf);
     }
     if (isImmuneToHappiness()) {

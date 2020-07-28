@@ -625,12 +625,8 @@ public class DiplomacyView extends BlackPanel {
       setOfferingList(startType);
       updatePanel(SpeechType.ASK_MOVE_SPY);
     } else if (startType == HUMAN_BORDER_CROSS) {
-      trade.generateOffer();
-      setOfferingList(startType);
       updatePanel(getGreetLine());
     } else if (startType == HUMAN_ESPIONAGE) {
-      trade.generateOffer();
-      setOfferingList(startType);
       updatePanel(getGreetLine());
     } else {
       updatePanel(getGreetLine());

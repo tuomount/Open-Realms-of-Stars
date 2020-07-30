@@ -19,7 +19,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018,2019 Tuomo Untinen
+ * Copyright (C) 2016,2018-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -437,6 +437,24 @@ public class ShipDesign {
     }
     return false;
   }
+  /**
+   * Does ship design have more than one engine?
+   *  True if two or more engines are in place.
+   * @return True if engines are found, otherwise false
+   */
+  private boolean hasTwoEngines() {
+    String mainEngineName = null;
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.ENGINE) {
+        if (mainEngineName == null) {
+          mainEngineName = comp.getName();
+        } else if (!comp.getName().equals(mainEngineName)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
   /**
    * Get number of free slots
@@ -726,6 +744,10 @@ public class ShipDesign {
     if (!hasEngine()) {
       designOk = false;
       sb.append(ShipDesignConsts.ENGINE_IS_MISSING);
+    }
+    if (hasTwoEngines()) {
+      designOk = false;
+      sb.append(ShipDesignConsts.TWO_ENGINES);
     }
     if (getFreeSlots() < 0) {
       designOk = false;

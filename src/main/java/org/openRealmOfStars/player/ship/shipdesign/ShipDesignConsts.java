@@ -35,6 +35,11 @@ public final class ShipDesignConsts {
    */
   public static final String ENGINE_IS_MISSING = "Engine is missing!\n";
   /**
+   * Message when ship is has two different engines
+   */
+  public static final String TWO_ENGINES = "Two different engines are not"
+      + " allowed\n";
+  /**
    * Message when ship contains weapons even hull does not allow them.
    */
   public static final String NO_WEAPONS_ALLOWED = "No weapons allowed in ";

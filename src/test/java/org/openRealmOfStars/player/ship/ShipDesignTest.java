@@ -70,6 +70,33 @@ public class ShipDesignTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testScout2Design() {
+    ShipHull hull = ShipHullFactory.createByName("Scout Mk2", SpaceRace.CENTAURS);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+    ShipComponent engine2 = ShipComponentFactory.createByName("Nuclear drive Mk2");
+    ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    design.addComponent(weapon);
+    design.addComponent(engine);
+    design.addComponent(armor);
+    design.addComponent(engine2);
+    assertEquals(true,ShipDesignConsts.TWO_ENGINES.equals(design.getFlaws()));
+    design = new ShipDesign(hull);
+    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    design.addComponent(weapon);
+    design.addComponent(engine2);
+    design.addComponent(armor);
+    design.addComponent(engine2);
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(2, design.getSpeed());
+    assertEquals(2, design.getFtlSpeed());
+    assertEquals(2, design.getTacticSpeed());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testColonyDesign() {
     ShipHull hull = ShipHullFactory.createByName("Colony", SpaceRace.CENTAURS);
     ShipDesign design = new ShipDesign(hull);

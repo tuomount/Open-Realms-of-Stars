@@ -1379,7 +1379,8 @@ public final class MissionHandling {
         diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
             planet.getPlanetPlayerInfo().getRace());
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
-            fleet.getCommander().getCallName() + " caught by "
+            fleet.getCommander().getCallName() + " from "
+                + info.getEmpireName() + " caught by "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
                 + " espionage mission. Since it espionage mission was gaining"
                 + " trust " + fleet.getCommander().getCallName()
@@ -1399,7 +1400,8 @@ public final class MissionHandling {
           || attitude == Attitude.MILITARISTIC
           || attitude == Attitude.MERCHANTICAL
           || war || tradeWar) {
-        String startText = fleet.getCommander().getCallName() + " caught by "
+        String startText = fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
             + " espionage mission. Main goal was steal credits. ";
         String endText = "";
@@ -1410,7 +1412,7 @@ public final class MissionHandling {
         }
         LeaderUtility.handleLeaderKilled(info, planet, fleet,
             startText
-            + fleet.getCommander().getCallName() + " was able to escape "
+            + fleet.getCommander().getCallName() + " was able to escape"
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
             + " execution by using massive amount of credits. ",
             startText
@@ -1419,7 +1421,8 @@ public final class MissionHandling {
             + "." + endText, game);
       } else {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
-            fleet.getCommander().getCallName() + " caught by "
+            fleet.getCommander().getCallName() + " from "
+                + info.getEmpireName() + " caught by "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
                 + " espionage mission. Main goal was steal credits. "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
@@ -1440,7 +1443,8 @@ public final class MissionHandling {
           || attitude == Attitude.MILITARISTIC
           || attitude == Attitude.SCIENTIFIC
           || war || tradeWar) {
-        String startText = fleet.getCommander().getCallName() + " caught by "
+        String startText = fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
             + " espionage mission. Main goal was steal technology. ";
         String endText = "";
@@ -1451,7 +1455,7 @@ public final class MissionHandling {
         }
         LeaderUtility.handleLeaderKilled(info, planet, fleet,
             startText
-            + fleet.getCommander().getCallName() + " was able to escape "
+            + fleet.getCommander().getCallName() + " was able to escape"
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
             + " execution by using massive amount of credits. ",
             startText
@@ -1460,7 +1464,8 @@ public final class MissionHandling {
             + "." + endText, game);
       } else {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
-            fleet.getCommander().getCallName() + " caught by "
+            fleet.getCommander().getCallName() + " from "
+                + info.getEmpireName() + " caught by "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
                 + " espionage mission. Main goal was steal technology."
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
@@ -1480,7 +1485,8 @@ public final class MissionHandling {
           || attitude == Attitude.BACKSTABBING
           || attitude == Attitude.MILITARISTIC
           || war || tradeWar) {
-        String startText = fleet.getCommander().getCallName() + " caught by "
+        String startText = fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
             + " espionage mission. Main goal was sabotage. ";
         String endText = "";
@@ -1491,7 +1497,7 @@ public final class MissionHandling {
         }
         LeaderUtility.handleLeaderKilled(info, planet, fleet,
             startText
-            + fleet.getCommander().getCallName() + " was able to escape "
+            + fleet.getCommander().getCallName() + " was able to escape"
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
             + " execution by using massive amount of credits.",
             startText
@@ -1500,7 +1506,8 @@ public final class MissionHandling {
             + "." + endText, game);
       } else {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
-            fleet.getCommander().getCallName() + " caught by "
+            fleet.getCommander().getCallName() + " from "
+                + info.getEmpireName() + " caught by "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
                 + " espionage mission. Main goal was sabotage. "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
@@ -1520,7 +1527,8 @@ public final class MissionHandling {
           || attitude == Attitude.BACKSTABBING
           || attitude == Attitude.MILITARISTIC
           || war || tradeWar) {
-        String startText = fleet.getCommander().getCallName() + " caught by "
+        String startText = fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
             + " espionage mission. Main goal was demolish building. ";
         String endText = "";
@@ -1531,7 +1539,7 @@ public final class MissionHandling {
         }
         LeaderUtility.handleLeaderKilled(info, planet, fleet,
             startText
-            + fleet.getCommander().getCallName() + " was able to escape "
+            + fleet.getCommander().getCallName() + " was able to escape"
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
             + " execution by using massive amount of credits. ",
             startText
@@ -1540,7 +1548,8 @@ public final class MissionHandling {
             + "." + endText, game);
       } else {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
-            fleet.getCommander().getCallName() + " caught by "
+            fleet.getCommander().getCallName() + " from "
+                + info.getEmpireName() + " caught by "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
                 + " espionage mission. Main goal was demolish building. "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
@@ -1559,14 +1568,16 @@ public final class MissionHandling {
       if (attitude == Attitude.PEACEFUL
           && !war && !tradeWar) {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
-            fleet.getCommander().getCallName() + " caught by "
+            fleet.getCommander().getCallName() + " from "
+                + info.getEmpireName() + " caught by "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
                 + " espionage mission. Main goal was assassin governor. "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
                 + " release " + fleet.getCommander().getCallName()
                 + ".", game.getStarMap());
       } else {
-        String startText = fleet.getCommander().getCallName() + " caught by "
+        String startText = fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
             + " espionage mission. Main goal was assassin governor. ";
         String endText = "";
@@ -1577,7 +1588,7 @@ public final class MissionHandling {
         }
         LeaderUtility.handleLeaderKilled(info, planet, fleet,
             startText
-            + fleet.getCommander().getCallName() + " was able to escape "
+            + fleet.getCommander().getCallName() + " was able to escape"
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
             + " execution by using massive amount of credits.",
             startText
@@ -1593,7 +1604,8 @@ public final class MissionHandling {
         diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
             planet.getPlanetPlayerInfo().getRace());
       }
-      String startText = fleet.getCommander().getCallName() + " caught by "
+      String startText = fleet.getCommander().getCallName() + " from "
+          + info.getEmpireName() + " caught by "
           + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
           + " espionage mission. Main goal was terrorist attack on planet. ";
       String endText = "";
@@ -1604,7 +1616,7 @@ public final class MissionHandling {
       }
       LeaderUtility.handleLeaderKilled(info, planet, fleet,
           startText
-          + fleet.getCommander().getCallName() + " was able to escape "
+          + fleet.getCommander().getCallName() + " was able to escape"
           + " from " + planet.getPlanetPlayerInfo().getEmpireName()
           + " execution by using massive amount of credits.",
           startText
@@ -1651,7 +1663,8 @@ public final class MissionHandling {
         diplomacy.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE,
             planet.getPlanetPlayerInfo().getRace());
         Message msg = new Message(MessageType.LEADER,
-            fleet.getCommander().getCallName() + " has gained trust against "
+            fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " has gained trust against "
             + planet.getPlanetPlayerInfo().getEmpireName() + ". This was "
             + "gained via espionage mission.",
             Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
@@ -1676,7 +1689,8 @@ public final class MissionHandling {
           planet.getPlanetPlayerInfo().setTotalCredits(totalCredits - stolen);
           info.setTotalCredits(info.getTotalCredits() + stolen);
           Message msg = new Message(MessageType.LEADER,
-              fleet.getCommander().getCallName() + " has stolen " + stolen
+              fleet.getCommander().getCallName()  + " from "
+              + info.getEmpireName() + " has stolen " + stolen
               + " credits from " + planet.getPlanetPlayerInfo().getEmpireName()
               + ". This was gained via espionage mission.",
               Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
@@ -1698,7 +1712,8 @@ public final class MissionHandling {
         Tech tech = stealableTechs[index];
         info.getTechList().addTech(stealableTechs[index]);
         Message msg = new Message(MessageType.LEADER,
-            fleet.getCommander().getCallName() + " has stolen "
+            fleet.getCommander().getCallName() + " from "
+              + info.getEmpireName() + " has stolen "
               + tech.getName() + " technology from "
               + planet.getPlanetPlayerInfo().getEmpireName()
               + ". This was gained via espionage mission.",
@@ -1715,7 +1730,8 @@ public final class MissionHandling {
     if (type == EspionageMission.SABOTAGE) {
       planet.setProdResource(planet.getProdResource() / 2);
       Message msg = new Message(MessageType.LEADER,
-          fleet.getCommander().getCallName() + " sabotage "
+          fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " sabotage "
             + planet.getUnderConstruction().getName() + " project "
             + " at planet " + planet.getName() + ". Planet is owned by "
             + planet.getPlanetPlayerInfo().getEmpireName()
@@ -1735,7 +1751,8 @@ public final class MissionHandling {
       Building building = planet.getBuildingList()[index];
       planet.removeBuilding(building);
       Message msg = new Message(MessageType.LEADER,
-          fleet.getCommander().getCallName() + " demolish "
+          fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " demolish "
             + building.getName() + " at planet "
             + planet.getName() + ". Planet is owned by "
             + planet.getPlanetPlayerInfo().getEmpireName()
@@ -1766,7 +1783,8 @@ public final class MissionHandling {
         killedTxt = "Also population was killed during terrorist attack. ";
       }
       Message msg = new Message(MessageType.LEADER,
-          fleet.getCommander().getCallName() + " destroys "
+          fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " destroys "
             + building.getName() + " at planet "
             + planet.getName() + ". " + killedTxt + " Planet is owned by "
             + planet.getPlanetPlayerInfo().getEmpireName()
@@ -1791,7 +1809,8 @@ public final class MissionHandling {
       if (governor.hasPerk(Perk.WEALTHY)) {
         governor.useWealth();
         Message msg = new Message(MessageType.LEADER,
-            fleet.getCommander().getCallName() + " tried to assasins "
+            fleet.getCommander().getCallName() + " from "
+              + info.getEmpireName() + " tried to assasins "
               + governor.getCallName() + " at planet " + planet.getName()
               + " but failed. Planet is owned by "
               + planet.getPlanetPlayerInfo().getEmpireName()
@@ -1815,7 +1834,8 @@ public final class MissionHandling {
         planet.setGovernor(null);
         governor.setJob(Job.DEAD);
         Message msg = new Message(MessageType.LEADER,
-            fleet.getCommander().getCallName() + " assasins "
+            fleet.getCommander().getCallName() + " from "
+              + info.getEmpireName() + " assasins "
               + governor.getCallName() + " at planet " + planet.getName()
               + ". Planet is owned by "
               + planet.getPlanetPlayerInfo().getEmpireName()

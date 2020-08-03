@@ -674,6 +674,7 @@ public final class RandomEventUtility {
         sb.append(planet.getName());
         sb.append(" by ");
         sb.append(author);
+        sb.append(" ");
         Leader authorName = LeaderUtility.createLeader(
             planet.getPlanetPlayerInfo(), planet, 1);
         sb.append(authorName.getName());
@@ -682,7 +683,9 @@ public final class RandomEventUtility {
         sb.append(" is called ");
         OriginalWorkNameGenerator generator = new OriginalWorkNameGenerator();
         String workName = generator.generate();
+        sb.append("\"");
         sb.append(workName);
+        sb.append("\"");
         sb.append(". It is huge success in whole galaxy!");
         ImageInstruction instructions = new ImageInstruction();
         instructions.addBackground(ImageInstruction.BACKGROUND_STARS);

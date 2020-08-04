@@ -1686,23 +1686,23 @@ public final class MissionHandling {
         stolen = stolen * 100 / value;
         if (stolen == 0) {
           stolen = 1;
-          planet.getPlanetPlayerInfo().setTotalCredits(totalCredits - stolen);
-          info.setTotalCredits(info.getTotalCredits() + stolen);
-          Message msg = new Message(MessageType.LEADER,
-              fleet.getCommander().getCallName()  + " from "
-              + info.getEmpireName() + " has stolen " + stolen
-              + " credits from " + planet.getPlanetPlayerInfo().getEmpireName()
-              + ". This was gained via espionage mission.",
-              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
-          msg.setCoordinate(planet.getCoordinate());
-          msg.setMatchByString(fleet.getCommander().getName());
-          info.getMsgList().addUpcomingMessage(msg);
-          fleet.getCommander().setExperience(
-              fleet.getCommander().getExperience()
-              + type.getExperienceReward());
-          game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
-              fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
         }
+        planet.getPlanetPlayerInfo().setTotalCredits(totalCredits - stolen);
+        info.setTotalCredits(info.getTotalCredits() + stolen);
+        Message msg = new Message(MessageType.LEADER,
+            fleet.getCommander().getCallName()  + " from "
+            + info.getEmpireName() + " has stolen " + stolen
+            + " credits from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + ". This was gained via espionage mission.",
+            Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getCommander().getName());
+        info.getMsgList().addUpcomingMessage(msg);
+        fleet.getCommander().setExperience(
+            fleet.getCommander().getExperience()
+            + type.getExperienceReward());
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+            fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
       }
     }
     if (type == EspionageMission.STEAL_TECH) {
@@ -1786,7 +1786,7 @@ public final class MissionHandling {
           fleet.getCommander().getCallName() + " from "
             + info.getEmpireName() + " destroys "
             + building.getName() + " at planet "
-            + planet.getName() + ". " + killedTxt + " Planet is owned by "
+            + planet.getName() + ". " + killedTxt + "Planet is owned by "
             + planet.getPlanetPlayerInfo().getEmpireName()
             + ". This was done via espionage mission.",
             Icons.getIconByName(Icons.ICON_SPY_GOGGLES));

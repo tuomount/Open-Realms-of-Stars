@@ -1276,7 +1276,7 @@ public class DiplomacyView extends BlackPanel {
    * @param tutorialIndex Tutorial index to add.
    */
   private void addPossibleTutorial(final int tutorialIndex) {
-    if (Game.getTutorial() != null) {
+    if (Game.getTutorial() != null && starMap.isTutorialEnabled()) {
       String tutorialText = Game.getTutorial().showTutorialText(tutorialIndex);
       if (tutorialText != null) {
         Message msg = new Message(MessageType.INFORMATION, tutorialText,

@@ -2268,10 +2268,6 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_QUIT_GAME)) {
         SoundPlayer.playMenuSound();
-        configFile.setMusicVolume(MusicPlayer.getVolume());
-        configFile.setSoundVolume(SoundPlayer.getSoundVolume());
-        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
-        writeConfigFile();
         System.exit(0);
       }
     }

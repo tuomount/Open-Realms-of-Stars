@@ -2033,7 +2033,9 @@ public class AITurnView extends BlackPanel {
               Message msg = new Message(MessageType.LEADER,
                   leader.getCallName()
                       + " has paid massive amount of credits to save "
-                      + leader.getGender().getHisHer() + " life.",
+                      + leader.getGender().getHisHer() + " life. "
+                      + leader.getCallName()
+                      + " was about to die for old age.",
                   Icons.getIconByName(Icons.ICON_DEATH));
               msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
               realm.getMsgList().addUpcomingMessage(msg);

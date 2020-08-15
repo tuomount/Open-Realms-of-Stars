@@ -187,7 +187,7 @@ public class ShipTest {
     assertEquals(false,ship.hasBombs());
     assertEquals(100, ship.getScannerDetectionLvl());
     assertEquals(5, ship.getScannerLvl());
-    assertEquals(5, ship.getDefenseValue());
+    assertEquals(0, ship.getDefenseValue());
     assertEquals(false, ship.isColonyShip());
     assertEquals(true, ship.isPrivateeringShip());
     assertEquals(false, ship.isTrooperShip());

@@ -468,6 +468,22 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
+   * Get strongest cloaking detection for certain player.
+   * @param info PlayerInfo
+   * @return Cloak detection
+   */
+  public int getMaxCloakDetection(final PlayerInfo info) {
+    int strongestPower = 0;
+    for (CombatShip ship : combatShipList) {
+      if (ship.getPlayer() != info
+          && ship.getShip().getScannerDetectionLvl() > strongestPower) {
+        strongestPower = ship.getShip().getScannerDetectionLvl();
+      }
+    }
+    return strongestPower;
+  }
+
+  /**
    * Destroy one single ship from the fleet and combat
    * @param ship Combat ship
    */
@@ -1257,8 +1273,15 @@ public boolean launchIntercept(final int distance,
       accuracy = accuracy - 5;
     }
     accuracy = accuracy - target.getShip().getDefenseValue();
+    if (target.isCloaked() == CombatShip.SHIP_VISIBLE_CLOAKED) {
+      accuracy = accuracy - 10;
+    }
     if (accuracy < 5) {
       accuracy = 5;
+    }
+    if (target.isCloaked() == CombatShip.SHIP_CLOAKED
+        || target.isCloaked() == CombatShip.SHIP_CLOAKED_PLAYER) {
+      accuracy = 30;
     }
     return accuracy;
   }
@@ -1303,6 +1326,7 @@ public boolean launchIntercept(final int distance,
           }
           ai.setAiShotsLeft(ai.getAiShotsLeft() - 1);
           setComponentUse(-1);
+          ai.setCloaked(CombatShip.SHIP_VISIBLE);
           return true;
         }
       }
@@ -1524,6 +1548,7 @@ public boolean launchIntercept(final int distance,
         shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
       }
       if (!shot) {
+        activateCloaking();
         // Not moving after shooting
         ai.setMovesLeft(ai.getMovesLeft() - 1);
         ai.setX(point.getX());
@@ -1568,18 +1593,21 @@ public boolean launchIntercept(final int distance,
           if (!shot) {
             // Even closest was too far away, ending the turn now
             aStar = null;
+            activateCloaking();
             endRound(textLogger);
             return true;
           }
         }
       } else {
         aStar = null;
+        activateCloaking();
         endRound(textLogger);
         return true;
       }
     }
     if (getAnimation() == null && ai.getAiShotsLeft() == 0
         && ai.getMovesLeft() == 0) {
+      activateCloaking();
       endRound(textLogger);
     }
     return false;
@@ -1618,6 +1646,7 @@ public boolean launchIntercept(final int distance,
     PathPoint point = aStar.getMove();
     if (point != null && !isBlocked(point.getX(), point.getY())
         && ai.getMovesLeft() > 0) {
+      activateCloaking();
       // Not moving after shooting
       ai.setMovesLeft(ai.getMovesLeft() - 1);
       ai.setX(point.getX());
@@ -1645,15 +1674,37 @@ public boolean launchIntercept(final int distance,
     if ((ai.getMovesLeft() == 0 || aStar.isLastMove())
         && getAnimation() == null) {
       aStar = null;
+      activateCloaking();
       endRound(textLogger);
       return true;
     }
     if (getAnimation() == null && ai.getMovesLeft() == 0) {
+      activateCloaking();
       endRound(textLogger);
     }
     return false;
   }
 
+  /**
+   * Activate current ships cloaking device, if available.
+   */
+  private void activateCloaking() {
+    int index = getCurrentShip().getCloakingDeviceIndex();
+    if (index != -1 && !getCurrentShip().isComponentUsed(index)) {
+      PlayerInfo enemy = getPlayer1();
+      if (getCurrentShip().getPlayer() == enemy) {
+        enemy = getPlayer2();
+      }
+      int cloakDetection = getMaxCloakDetection(enemy);
+      if (getCurrentShip().getShip().getCloakingValue() > cloakDetection) {
+        getCurrentShip().setCloaked(CombatShip.SHIP_CLOAKED);
+      } else {
+        getCurrentShip().setCloaked(CombatShip.SHIP_VISIBLE_CLOAKED);
+      }
+      // FIXME Cloaking device sound
+      getCurrentShip().useComponent(index);
+    }
+  }
   /**
    * @param textLogger where logging is added if not null
    * @param infoPanel Infopanel where ship components are shown.

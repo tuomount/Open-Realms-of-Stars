@@ -217,6 +217,10 @@ public class MapPanel extends JPanel {
    */
   private int miniMapBotY;
   /**
+   * Pulsating transparency value.
+   */
+  private int transparency;
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -272,6 +276,7 @@ public class MapPanel extends JPanel {
     this.setBackground(Color.black);
     setRoute(null);
     wormHoleAnimation = 0;
+    transparency = 32;
   }
   /**
    * Calculate view according the actual panel size;
@@ -1159,6 +1164,10 @@ public class MapPanel extends JPanel {
    */
   public void drawBattleMap(final Combat combat, final PlayerInfo info,
       final StarMap starMap) {
+    transparency = transparency * 2;
+    if (transparency >= 160) {
+      transparency = 32;
+    }
     wormHoleAnimation++;
     if (wormHoleAnimation > GuiStatics.WORMHOLE.getMaxFrames() - 1) {
       wormHoleAnimation = 0;
@@ -1299,10 +1308,14 @@ public class MapPanel extends JPanel {
         }
         // Draw fleet
         CombatShip ship = combat.getShipFromCoordinate(i, j);
-        if (ship != null) {
+        if (ship != null && ship.isCloaked() < CombatShip.SHIP_CLOAKED) {
           BufferedImage img = ShipImages
               .getByRace(ship.getShip().getHull().getRace())
               .getShipImage(ship.getShip().getHull().getImageIndex());
+          if (ship.isCloaked() == CombatShip.SHIP_VISIBLE_CLOAKED
+              || ship.isCloaked() == CombatShip.SHIP_CLOAKED_PLAYER) {
+            img = GraphRoutines.transparent(img, transparency);
+          }
           if (ship.isFlipY()) {
             AffineTransform at = AffineTransform.getScaleInstance(1, -1);
             at.translate(0, -img.getHeight(null));

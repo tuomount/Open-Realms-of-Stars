@@ -162,6 +162,7 @@ public class CombatMapMouseListener extends MouseAdapter
             battleInfoPanel.useComponent(componentUse);
             componentUse = -1;
             combat.setComponentUse(-1);
+            ship.setCloaked(CombatShip.SHIP_VISIBLE);
           }
         }
         if (weapon != null
@@ -179,6 +180,7 @@ public class CombatMapMouseListener extends MouseAdapter
             battleInfoPanel.useComponent(componentUse);
             componentUse = -1;
             combat.setComponentUse(-1);
+            ship.setCloaked(CombatShip.SHIP_VISIBLE);
           }
         }
       } else {

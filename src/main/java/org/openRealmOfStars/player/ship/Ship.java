@@ -1103,7 +1103,6 @@ private int increaseHitChanceByComponent() {
     if (getTacticSpeed() == 0) {
         defenseValue = defenseValue - 15;
     }
-    boolean cloak = false;
     boolean thrusters = false;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
@@ -1112,15 +1111,6 @@ private int increaseHitChanceByComponent() {
           && hasComponentEnergy(i)) {
         thrusters = true;
       }
-      if (hullPoints[i] > 0
-          && comp.getType() == ShipComponentType.CLOAKING_DEVICE
-          && hasComponentEnergy(i)
-          && comp.getCloaking() > 0) {
-        cloak = true;
-      }
-    }
-    if (cloak) {
-      defenseValue = defenseValue + 5;
     }
     if (thrusters) {
       defenseValue = defenseValue + 5;

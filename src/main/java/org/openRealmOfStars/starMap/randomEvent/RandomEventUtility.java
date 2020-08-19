@@ -640,31 +640,37 @@ public final class RandomEventUtility {
             hitType = "movie";
             hitCapital = "Movie";
             author = "director";
+            break;
           }
           case 1: {
             hitType = "song";
             hitCapital = "Song";
             author = "composer";
+            break;
           }
           case 2: {
             hitType = "show";
             hitCapital = "Show";
             author = "author";
+            break;
           }
           case 3: {
             hitType = "book";
             hitCapital = "Book";
             author = "author";
+            break;
           }
           case 4: {
             hitType = "opera";
             hitCapital = "Opera";
             author = "director";
+            break;
           }
           case 5: {
             hitType = "video game";
             hitCapital = "Video game";
             author = "designer";
+            break;
           }
         }
         StringBuilder sb = new StringBuilder();

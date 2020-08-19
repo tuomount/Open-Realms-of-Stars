@@ -220,7 +220,7 @@ public final class MusicPlayer {
    * Death Is Jut Another Path By Otto Halmén CC-BY 3.0
    */
   public static final MusicFileInfo DEATH_IS_JUST_ANOTHER_PATH =
-      new MusicFileInfo("Death Is Jut Another Path", "Otto Halmen",
+      new MusicFileInfo("Death Is Just Another Path", "Otto Halmen",
           "/resources/musics/Death Is Just Another Path.ogg");
 
   /**

@@ -1308,12 +1308,11 @@ public class MapPanel extends JPanel {
         }
         // Draw fleet
         CombatShip ship = combat.getShipFromCoordinate(i, j);
-        if (ship != null && ship.isCloaked() < CombatShip.SHIP_CLOAKED) {
+        if (ship != null) {
           BufferedImage img = ShipImages
               .getByRace(ship.getShip().getHull().getRace())
               .getShipImage(ship.getShip().getHull().getImageIndex());
-          if (ship.isCloaked() == CombatShip.SHIP_VISIBLE_CLOAKED
-              || ship.isCloaked() == CombatShip.SHIP_CLOAKED_PLAYER) {
+          if (ship.isCloaked()) {
             img = GraphRoutines.transparent(img, transparency);
           }
           if (ship.isFlipY()) {

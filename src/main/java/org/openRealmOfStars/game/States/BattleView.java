@@ -22,11 +22,8 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatMapMouseListener;
-import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
-import org.openRealmOfStars.player.ship.ShipComponent;
-import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -357,31 +354,7 @@ public class BattleView extends BlackPanel {
           && combat.getCurrentShip().getShip().componentIsWorking(index)) {
         combatMapMouseListener.setComponentUse(index);
         combat.setComponentUse(index);
-        ShipComponent component = combat.getCurrentShip().getShip()
-            .getComponent(index);
-        if (component.getType() == ShipComponentType.CLOAKING_DEVICE) {
-          combatMapMouseListener.setComponentUse(-1);
-          combat.setComponentUse(-1);
-          combat.getCurrentShip().useComponent(index);
-          if (combat.getCurrentShip().isCloaked() == CombatShip.SHIP_VISIBLE) {
-            PlayerInfo enemy = combat.getPlayer1();
-            if (combat.getCurrentShip().getPlayer() == enemy) {
-              enemy = combat.getPlayer2();
-            }
-            int cloakDetection = combat.getMaxCloakDetection(enemy);
-            if (combat.getCurrentShip().getShip().getCloakingValue()
-                > cloakDetection) {
-              combat.getCurrentShip().setCloaked(
-                  CombatShip.SHIP_CLOAKED_PLAYER);
-            } else {
-              combat.getCurrentShip().setCloaked(
-                  CombatShip.SHIP_VISIBLE_CLOAKED);
-            }
-          } else {
-            combat.getCurrentShip().setCloaked(CombatShip.SHIP_VISIBLE);
-          }
-          // FIXME Cloaking device sound
-        } else if (combat.getCurrentShip().getShip().isStarBase()
+        if (combat.getCurrentShip().getShip().isStarBase()
             && !combat.getCurrentShip().getShip().getFlag(
                 Ship.FLAG_STARBASE_DEPLOYED)) {
           textLogger.addLog("Undeployed Starbase cannot use weapons!");

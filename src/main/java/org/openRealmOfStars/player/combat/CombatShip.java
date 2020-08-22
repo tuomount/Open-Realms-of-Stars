@@ -32,22 +32,6 @@ import org.openRealmOfStars.player.ship.ShipComponent;
 public class CombatShip implements Comparable<CombatShip> {
 
   /**
-   * Ship is visible as normaly.
-   */
-  public static final int SHIP_VISIBLE = 0;
-  /**
-   * Ship is visible but cloaked.
-   */
-  public static final int SHIP_VISIBLE_CLOAKED = 1;
-  /**
-   * Ship isn't visible but shown for human player.
-   */
-  public static final int SHIP_CLOAKED_PLAYER = 2;
-  /**
-   * Ship is cloaked.
-   */
-  public static final int SHIP_CLOAKED = 3;
-  /**
    * Ship information
    */
   private Ship ship;
@@ -109,10 +93,6 @@ public class CombatShip implements Comparable<CombatShip> {
   private Leader commander;
 
   /**
-   * True if ship is cloaked.
-   */
-  private int cloaked;
-  /**
    * Constructor for Combat ship
    * @param ship Ship to put in combat
    * @param player Player who owns the ship
@@ -132,7 +112,6 @@ public class CombatShip implements Comparable<CombatShip> {
     this.movesLeft = ship.getTacticSpeed();
     this.setBonusAccuracy(0);
     this.setPrivateeredCredits(0);
-    setCloaked(SHIP_VISIBLE);
     reInitShipForRound();
   }
 
@@ -258,7 +237,7 @@ public class CombatShip implements Comparable<CombatShip> {
     if (ship.getShield() == 0 && ship.getTotalShield() == 0) {
       sb.append("No shields\n");
     }
-    if (isCloaked() > 0) {
+    if (isCloaked()) {
       sb.append("Cloaked\n");
     }
     return sb.toString();
@@ -307,7 +286,7 @@ public class CombatShip implements Comparable<CombatShip> {
     if (ship.getShield() == 0 && ship.getTotalShield() == 0) {
       sb.append("No shields\n");
     }
-    if (isCloaked() > 0) {
+    if (isCloaked()) {
       sb.append("Cloaked\n");
     }
     return sb.toString();
@@ -451,19 +430,18 @@ public class CombatShip implements Comparable<CombatShip> {
   }
 
   /**
-   * Is ship cloacked or not. Ship can be also cloaked but visible.
-   * @return the cloaked
+   * Is ship cloaked or not.
+   * @return true if cloaked.
    */
-  public int isCloaked() {
-    return cloaked;
-  }
-
-  /**
-   * Set cloaked value
-   * @param cloaked the cloaked to set
-   */
-  public void setCloaked(final int cloaked) {
-    this.cloaked = cloaked;
+  public boolean isCloaked() {
+    for (int i = 0; i < getShip().getNumberOfComponents(); i++) {
+      ShipComponent component = getShip().getComponent(i);
+      if (getShip().hasComponentEnergy(i) && component.getCloaking() > 0
+          && getShip().getHullPointForComponent(i) > 0) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**

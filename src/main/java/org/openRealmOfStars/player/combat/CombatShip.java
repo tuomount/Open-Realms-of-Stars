@@ -93,6 +93,15 @@ public class CombatShip implements Comparable<CombatShip> {
   private Leader commander;
 
   /**
+   * Overload failure chance.
+   */
+  private int overloadFailure;
+
+  /**
+   * Ship's current energy level.
+   */
+  private int energyLevel;
+  /**
    * Constructor for Combat ship
    * @param ship Ship to put in combat
    * @param player Player who owns the ship
@@ -112,6 +121,8 @@ public class CombatShip implements Comparable<CombatShip> {
     this.movesLeft = ship.getTacticSpeed();
     this.setBonusAccuracy(0);
     this.setPrivateeredCredits(0);
+    this.setOverloadFailure(0);
+    this.setEnergyLevel(ship.getTotalEnergy());
     reInitShipForRound();
   }
 
@@ -289,6 +300,13 @@ public class CombatShip implements Comparable<CombatShip> {
     if (isCloaked()) {
       sb.append("Cloaked\n");
     }
+    sb.append("\n");
+    sb.append("Energy reserves: ");
+    sb.append(getEnergyReserve());
+    sb.append("\n");
+    sb.append("Overload failure: ");
+    sb.append(getOverloadFailure());
+    sb.append("/100\n");
     return sb.toString();
   }
 
@@ -305,6 +323,9 @@ public class CombatShip implements Comparable<CombatShip> {
    */
   public void reInitShipForRound() {
     int weapons = 0;
+    if (getEnergyLevel() > ship.getTotalEnergy()) {
+      setEnergyLevel(ship.getTotalEnergy());
+    }
     if (ship.isStarBase() && ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
       setMovesLeft(0);
     } else {
@@ -458,5 +479,55 @@ public class CombatShip implements Comparable<CombatShip> {
       }
     }
     return index;
+  }
+
+  /**
+   * Get overload failure chance.
+   * Failure chance is between 0-100.
+   * @return the overloadFailure
+   */
+  public int getOverloadFailure() {
+    return overloadFailure;
+  }
+
+  /**
+   * Set overload failure chance;
+   * @param overloadFailure the overloadFailure to set
+   */
+  public void setOverloadFailure(final int overloadFailure) {
+    this.overloadFailure = overloadFailure;
+    if (this.overloadFailure > 100) {
+      this.overloadFailure = 100;
+    }
+    if (this.overloadFailure < 0) {
+      this.overloadFailure = 0;
+    }
+  }
+
+  /**
+   * Get ship's current energy level.
+   * @return the energyLevel
+   */
+  public int getEnergyLevel() {
+    return energyLevel;
+  }
+
+  /**
+   * @param energyLevel the energyLevel to set
+   */
+  public void setEnergyLevel(final int energyLevel) {
+    this.energyLevel = energyLevel;
+  }
+
+  /**
+   * Calculates current energy reserve.
+   * There is energy just enough if this is zero.
+   * Negative means that there isn't enough, energy overload can happen.
+   * Positive means that there is surplus energy left. Overloading components
+   * is possible.
+   * @return Energy reserve
+   */
+  public int getEnergyReserve() {
+    return energyLevel - ship.getEnergyConsumption();
   }
 }

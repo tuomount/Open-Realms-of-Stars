@@ -603,6 +603,23 @@ private int getRemainingEnergy(final int index) {
   }
 
   /**
+   * Get current energy consumpition based on component priority
+   * order. This never cannot be more than total energy.
+   * @return Total energy consumption.
+   */
+  public int getEnergyConsumption() {
+    int energy = getTotalEnergy();
+    int energyConsumption = 0;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && energy >= comp.getEnergyRequirement()) {
+        energy = energy - comp.getEnergyRequirement();
+        energyConsumption = energyConsumption + comp.getEnergyRequirement();
+      }
+    }
+    return energyConsumption;
+  }
+  /**
    * Get Speed depending on hull points and energy level
    * @return Speed
    */

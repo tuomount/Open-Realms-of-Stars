@@ -70,7 +70,9 @@ public class CombatShipTest {
         "Shield: 0/2 Armor: 0/0\n" +
         "Hull points: 8/8\n" +
         "No weapons\n" +
-        "shields down\n", combatShip.getDescription());
+        "shields down\n\n" +
+        "Energy reserves: 0\n" +
+        "Overload failure: 0/100\n", combatShip.getDescription());
   }
 
   @Test
@@ -109,7 +111,9 @@ public class CombatShipTest {
         "Shield: 0/0 Armor: 0/0\n" +
         "Hull points: 8/8\n" +
         "No weapons\n" +
-        "No shields\n", combatShip.getDescription());
+        "No shields\n\n" +
+        "Energy reserves: 0\n" +
+        "Overload failure: 0/100\n", combatShip.getDescription());
   }
 
   @Test

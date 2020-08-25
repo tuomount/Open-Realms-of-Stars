@@ -1111,6 +1111,16 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Make one damage on single ship component.
+   * This only works if component has hull points left.
+   * @param index Ship component index.
+   */
+  public void oneDamage(final int index) {
+    if (index >= 0 && index < hullPoints.length && hullPoints[index] > 0) {
+      hullPoints[index]--;
+    }
+  }
+  /**
    * Get defense value for ship
    * @return defense value for ship
    */

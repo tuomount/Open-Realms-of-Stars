@@ -1674,6 +1674,83 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
+   * Handle Overloading of component.
+   * @param textLogger TextLogger for giving out the information
+   * @param index Ship component index for overloading
+   * @return True if overloading handled
+   */
+  public boolean handleOverloading(final Logger textLogger, final int index) {
+    if (!getCurrentShip().isComponentUsed(index)) {
+      ShipComponent component = getCurrentShip().getShip()
+          .getComponent(index);
+      Ship ship = getCurrentShip().getShip();
+      if (component.getType() == ShipComponentType.ENGINE
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 1) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 2);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          getCurrentShip().setMovesLeft(
+              getCurrentShip().getMovesLeft() + 1);
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
+      if (component.getType() == ShipComponentType.THRUSTERS
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 0) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 1);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          getCurrentShip().setMovesLeft(
+              getCurrentShip().getMovesLeft() + 1);
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
+      if (component.getType() == ShipComponentType.SHIELD
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 0
+          && ship.getShield() < ship.getTotalShield()) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 1);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          ship.setShield(ship.getShield() + 1);
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
    * @param textLogger where logging is added if not null
    * @param infoPanel Infopanel where ship components are shown.
    *        This can be null too.

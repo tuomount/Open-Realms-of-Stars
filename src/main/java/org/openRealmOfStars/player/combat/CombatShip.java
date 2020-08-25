@@ -5,6 +5,7 @@ import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
@@ -75,6 +76,10 @@ public class CombatShip implements Comparable<CombatShip> {
    * Bonus accuracy from defending
    */
   private int bonusAccuracy;
+  /**
+   * Bonus from overloaded Jammer.
+   */
+  private int overloadedJammer;
 
   /**
    * Was ship damaged. Really damage not just some shield hit.
@@ -102,6 +107,10 @@ public class CombatShip implements Comparable<CombatShip> {
    */
   private int energyLevel;
   /**
+   * Ship has been overloaded.
+   */
+  private boolean isOverloaded;
+  /**
    * Constructor for Combat ship
    * @param ship Ship to put in combat
    * @param player Player who owns the ship
@@ -123,6 +132,7 @@ public class CombatShip implements Comparable<CombatShip> {
     this.setPrivateeredCredits(0);
     this.setOverloadFailure(0);
     this.setEnergyLevel(ship.getTotalEnergy());
+    this.setOverloadedJammer(0);
     reInitShipForRound();
   }
 
@@ -323,9 +333,52 @@ public class CombatShip implements Comparable<CombatShip> {
    */
   public void reInitShipForRound() {
     int weapons = 0;
+    setOverloadedJammer(0);
     if (getEnergyLevel() > ship.getTotalEnergy()) {
       setEnergyLevel(ship.getTotalEnergy());
     }
+    if (getEnergyReserve() < 0) {
+      int chance = 0;
+      switch (getEnergyReserve()) {
+        case -1: {
+          chance = 10;
+          break;
+        }
+        case -2: {
+          chance = 20;
+          break;
+        }
+        case -3: {
+          chance = 40;
+          break;
+        }
+        case -4: {
+          chance = 80;
+          break;
+        }
+        default: {
+          chance = 100;
+          break;
+        }
+      }
+      int value = DiceGenerator.getRandom(99);
+      if (value < chance) {
+        setMovesLeft(0);
+        componentUsed = new boolean[ship.getNumberOfComponents()];
+        for (int i = 0; i < componentUsed.length; i++) {
+          componentUsed[i] = true;
+        }
+        setAiShotsLeft(0);
+        setEnergyLevel(getEnergyLevel() - getEnergyReserve());
+        setOverloaded(true);
+        // Ship is basically useless for this turn.
+        return;
+      }
+    }
+    if (getEnergyLevel() < ship.getTotalEnergy() && !hasOverloaded()) {
+      setEnergyLevel(getEnergyLevel() + 1);
+    }
+    setOverloaded(false);
     if (ship.isStarBase() && ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
       setMovesLeft(0);
     } else {
@@ -370,6 +423,22 @@ public class CombatShip implements Comparable<CombatShip> {
     }
   }
 
+  /**
+   * Is overload failure. This should be checked before making overload.
+   * This will automatically increase/decrease overload failure if needed.
+   * @param index Ship Component index
+   * @return True if overload failure happened
+   */
+  public boolean isOverloadFailure(final int index) {
+    int value = DiceGenerator.getRandom(99);
+    if (value < getOverloadFailure()) {
+      getShip().oneDamage(index);
+      setOverloadFailure(getOverloadFailure() / 2);
+      return true;
+    }
+    setOverloadFailure(getOverloadFailure() + 5);
+    return false;
+  }
   /**
    * Define how many moves combat ship has left for this round
    * @param movesLeft For this round
@@ -529,5 +598,37 @@ public class CombatShip implements Comparable<CombatShip> {
    */
   public int getEnergyReserve() {
     return energyLevel - ship.getEnergyConsumption();
+  }
+
+  /**
+   * Get Overloaded jammer defense.
+   * @return the overloadedJammer
+   */
+  public int getOverloadedJammer() {
+    return overloadedJammer;
+  }
+
+  /**
+   * Set Overloaded jammer defense.
+   * @param overloadedJammer the overloadedJammer to set
+   */
+  public void setOverloadedJammer(final int overloadedJammer) {
+    this.overloadedJammer = overloadedJammer;
+  }
+
+  /**
+   * Has ship overloaded during this turn?
+   * @return the hasOverloaded
+   */
+  public boolean hasOverloaded() {
+    return isOverloaded;
+  }
+
+  /**
+   * Set overload flag
+   * @param hasOverloaded the hasOverloaded to set
+   */
+  public void setOverloaded(final boolean hasOverloaded) {
+    this.isOverloaded = hasOverloaded;
   }
 }

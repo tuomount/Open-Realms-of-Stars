@@ -360,6 +360,12 @@ public class BattleView extends BlackPanel {
           textLogger.addLog("Undeployed Starbase cannot use weapons!");
           combatMapMouseListener.setComponentUse(-1);
           combat.setComponentUse(-1);
+          return;
+        }
+        if (combat.handleOverloading(textLogger, index)) {
+          infoPanel.useComponent(index);
+          combatMapMouseListener.setComponentUse(-1);
+          combat.setComponentUse(-1);
         }
       } else {
         combatMapMouseListener.setComponentUse(-1);

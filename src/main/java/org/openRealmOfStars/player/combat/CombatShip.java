@@ -261,9 +261,28 @@ public class CombatShip implements Comparable<CombatShip> {
     if (isCloaked()) {
       sb.append("Cloaked\n");
     }
+    sb.append("\n");
+    sb.append(getOverloadInformation());
     return sb.toString();
   }
 
+  /**
+   * Get overload information of the combat ship.
+   * @return Overload information as string.
+   */
+  public String getOverloadInformation() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Energy reserves: ");
+    if (getEnergyReserve() > 0) {
+      sb.append("+");
+    }
+    sb.append(getEnergyReserve());
+    sb.append("\n");
+    sb.append("Overload failure: ");
+    sb.append(getOverloadFailure());
+    sb.append("/100\n");
+    return sb.toString();
+  }
   /**
    * Get Combat ship description
    * @return String for description
@@ -311,12 +330,7 @@ public class CombatShip implements Comparable<CombatShip> {
       sb.append("Cloaked\n");
     }
     sb.append("\n");
-    sb.append("Energy reserves: ");
-    sb.append(getEnergyReserve());
-    sb.append("\n");
-    sb.append("Overload failure: ");
-    sb.append(getOverloadFailure());
-    sb.append("/100\n");
+    sb.append(getOverloadInformation());
     return sb.toString();
   }
 

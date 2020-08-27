@@ -116,6 +116,11 @@ public class BattleView extends BlackPanel {
   private InfoTextArea textArea;
 
   /**
+   * Text area containing overload information.
+   */
+  private InfoTextArea overloadInfo;
+
+  /**
    * Text area containing combat log
    */
   private InfoTextArea logArea;
@@ -192,8 +197,11 @@ public class BattleView extends BlackPanel {
     textArea = new InfoTextArea(10, 30);
     textArea.setEditable(false);
     textArea.setLineWrap(true);
+    overloadInfo = new InfoTextArea(3, 30);
+    overloadInfo.setEditable(false);
+    overloadInfo.setLineWrap(true);
     infoPanel = new BattleInfoPanel(combat.getCurrentShip().getShip(), textArea,
-        listener);
+        overloadInfo, listener);
 
     combatMapMouseListener = new CombatMapMouseListener(combat, mapPanel,
         infoPanel);
@@ -227,6 +235,10 @@ public class BattleView extends BlackPanel {
     this.add(bottom, BorderLayout.SOUTH);
     delayCount = 0;
     textLogger.addLog(INITIAL_LOG_MESSAGE);
+    if (combat.getCurrentShip() != null) {
+      infoPanel.showShip(combat.getCurrentShip().getShip());
+      overloadInfo.setText(combat.getCurrentShip().getOverloadInformation());
+    }
   }
 
   /**
@@ -266,6 +278,7 @@ public class BattleView extends BlackPanel {
       combatMapMouseListener.setComponentUse(-1);
       if (combat.getCurrentShip() != null) {
         infoPanel.showShip(combat.getCurrentShip().getShip());
+        overloadInfo.setText(combat.getCurrentShip().getOverloadInformation());
       }
     }
   }
@@ -281,6 +294,7 @@ public class BattleView extends BlackPanel {
     combatMapMouseListener.setComponentUse(-1);
     if (combat.getCurrentShip() != null) {
       infoPanel.showShip(combat.getCurrentShip().getShip());
+      overloadInfo.setText(combat.getCurrentShip().getOverloadInformation());
     }
     this.repaint();
   }
@@ -304,6 +318,8 @@ public class BattleView extends BlackPanel {
         combatMapMouseListener.setComponentUse(-1);
         if (combat.getCurrentShip() != null) {
           infoPanel.showShip(combat.getCurrentShip().getShip());
+          overloadInfo.setText(
+              combat.getCurrentShip().getOverloadInformation());
         }
         this.repaint();
         combatMapMouseListener.setEscaped(false);

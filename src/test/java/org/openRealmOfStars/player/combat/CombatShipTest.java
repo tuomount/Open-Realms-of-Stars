@@ -63,7 +63,9 @@ public class CombatShipTest {
         "Moves: 2\n" +
         "Hull points: 8/8\n" +
         "No weapons\n" +
-        "shields down\n", combatShip.toString());
+        "shields down\n\n" +
+        "Energy reserves: 0\n" +
+        "Overload failure: 0/100\n", combatShip.toString());
     assertEquals("Test ship Mk1 - Test hull\n\n" +
         "Initiative: 10\n" +
         "Moves: 2\n" +
@@ -104,7 +106,9 @@ public class CombatShipTest {
         "Moves: 2\n" +
         "Hull points: 8/8\n" +
         "No weapons\n" +
-        "No shields\n", combatShip.toString());
+        "No shields\n\n" +
+        "Energy reserves: 0\n" +
+        "Overload failure: 0/100\n", combatShip.toString());
     assertEquals("Test ship Mk1 - Test hull\n\n" +
         "Initiative: 10\n" +
         "Moves: 2\n" +

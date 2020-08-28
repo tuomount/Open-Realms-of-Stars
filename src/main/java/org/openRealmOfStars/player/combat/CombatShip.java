@@ -111,6 +111,10 @@ public class CombatShip implements Comparable<CombatShip> {
    */
   private boolean isOverloaded;
   /**
+   * Cloaking device is overloaded.
+   */
+  private boolean cloakOverloaded;
+  /**
    * Constructor for Combat ship
    * @param ship Ship to put in combat
    * @param player Player who owns the ship
@@ -133,6 +137,7 @@ public class CombatShip implements Comparable<CombatShip> {
     this.setOverloadFailure(0);
     this.setEnergyLevel(ship.getTotalEnergy());
     this.setOverloadedJammer(0);
+    this.setCloakOverloaded(false);
     reInitShipForRound();
   }
 
@@ -348,6 +353,7 @@ public class CombatShip implements Comparable<CombatShip> {
   public void reInitShipForRound() {
     int weapons = 0;
     setOverloadedJammer(0);
+    setCloakOverloaded(false);
     if (getEnergyLevel() > ship.getTotalEnergy()) {
       setEnergyLevel(ship.getTotalEnergy());
     }
@@ -383,6 +389,7 @@ public class CombatShip implements Comparable<CombatShip> {
           componentUsed[i] = true;
         }
         setAiShotsLeft(0);
+        getShip().setShield(0);
         setEnergyLevel(getEnergyLevel() - getEnergyReserve());
         setOverloaded(true);
         // Ship is basically useless for this turn.
@@ -546,6 +553,22 @@ public class CombatShip implements Comparable<CombatShip> {
       }
     }
     return false;
+  }
+
+  /**
+   * Is cloaking device overloaded?
+   * @return the cloakOverloaded
+   */
+  public boolean isCloakOverloaded() {
+    return cloakOverloaded;
+  }
+
+  /**
+   * Set flag value if cloaking device is overloaded.
+   * @param cloakOverloaded the cloakOverloaded to set
+   */
+  public void setCloakOverloaded(final boolean cloakOverloaded) {
+    this.cloakOverloaded = cloakOverloaded;
   }
 
   /**

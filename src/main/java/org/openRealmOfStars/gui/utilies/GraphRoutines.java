@@ -154,4 +154,47 @@ public final class GraphRoutines {
     gr2D.dispose();
     return transparentImg;
   }
+  /**
+   * Draw transparent grey siluete version of bufferedImage.
+   * Image must be 4byte ABGR type.
+   * @param image Buffered Image
+   * @param transparency Transparency value
+   * @return Transparent version of image
+   */
+  public static BufferedImage greyTransparent(final BufferedImage image,
+      final int transparency) {
+    if (image == null) {
+      return null;
+    }
+    if (image.getType() != BufferedImage.TYPE_4BYTE_ABGR) {
+      return image;
+    }
+    int transValue = transparency;
+    if (transValue > 255) {
+      transValue = 255;
+    }
+    if (transValue < 0) {
+      transValue = 0;
+    }
+    int grey = (transValue << 16) | (transValue << 8) | (transValue);
+    int origWidth = image.getWidth();
+    int origHeight = image.getHeight();
+    BufferedImage transparentImg = new BufferedImage(origWidth, origHeight,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    Graphics2D gr2D = transparentImg.createGraphics();
+    for (int x = 0; x < origWidth; x++) {
+      for (int y = 0; y < origHeight; y++) {
+        int color = image.getRGB(x, y);
+        int alpha = color & 0xff000000;
+        alpha = (alpha >> 24) & 0xff;
+        color = color & 0x00ffffff;
+        alpha = alpha * transValue / 255;
+        alpha = alpha << 24;
+        color = grey | alpha;
+        transparentImg.setRGB(x, y, color);
+      }
+    }
+    gr2D.dispose();
+    return transparentImg;
+  }
 }

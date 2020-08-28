@@ -459,7 +459,8 @@ public boolean launchIntercept(final int distance,
     CombatShip strongestShip = null;
     for (CombatShip ship : combatShipList) {
       if (ship.getPlayer() != info
-          && ship.getShip().getTotalMilitaryPower() > strongestPower) {
+          && ship.getShip().getTotalMilitaryPower() > strongestPower
+          && !ship.isCloakOverloaded()) {
         strongestShip = ship;
         strongestPower = strongestShip.getShip().getTotalMilitaryPower();
       }
@@ -660,7 +661,7 @@ public boolean launchIntercept(final int distance,
     double maxDistance = MAX_DISTANCE;
     CombatShip enemyShip = null;
     for (CombatShip ship : combatShipList) {
-      if (ship.getPlayer() != info) {
+      if (ship.getPlayer() != info && !ship.isCloakOverloaded()) {
         CombatCoordinate centerCoordinate =
                 new CombatCoordinate(friendlyShip.getX(),
             friendlyShip.getY());
@@ -688,7 +689,7 @@ public boolean launchIntercept(final int distance,
     double maxDistance = MAX_DISTANCE;
     CombatShip enemyShip = null;
     for (CombatShip ship : combatShipList) {
-      if (ship.getPlayer() != info) {
+      if (ship.getPlayer() != info && !ship.isCloakOverloaded()) {
         CombatCoordinate centerCoordinate =
                 new CombatCoordinate(friendlyShip.getX(),
             friendlyShip.getY());
@@ -1273,11 +1274,15 @@ public boolean launchIntercept(final int distance,
       accuracy = accuracy - 5;
     }
     accuracy = accuracy - target.getShip().getDefenseValue();
+    accuracy = accuracy - target.getOverloadedJammer();
     if (target.isCloaked()) {
       accuracy = accuracy - 5;
     }
     if (accuracy < 5) {
       accuracy = 5;
+    }
+    if (target.isCloakOverloaded()) {
+      accuracy = -1;
     }
     return accuracy;
   }
@@ -1317,6 +1322,7 @@ public boolean launchIntercept(final int distance,
           setAnimation(
               new CombatAnimation(ai, target, weapon, shipDamage.getValue()));
           ai.useComponent(i);
+          ai.setCloakOverloaded(false);
           if (infoPanel != null) {
             infoPanel.useComponent(i);
           }
@@ -1513,10 +1519,11 @@ public boolean launchIntercept(final int distance,
           deadliest.getY());
       int distance = (int) Math.round(aiCoordinate.calculateDistance(
           deadliestCoordinate));
-      if (range < distance - ai.getMovesLeft() && closest != null) {
+      if (range < distance - ai.getMovesLeft() && closest != null
+          && !closest.isCloakOverloaded()) {
         shot = handleAIShoot(ai, closest, textLogger, infoPanel);
       }
-    } else if (closest != null) {
+    } else if (closest != null && !closest.isCloakOverloaded()) {
       shot = handleAIShoot(ai, closest, textLogger, infoPanel);
     }
     AStarSearch aStar = null;
@@ -1534,12 +1541,14 @@ public boolean launchIntercept(final int distance,
       return true;
     }
     PathPoint point = aStar.getMove();
-    if (ai.getShip().getTacticSpeed() == 0) {
+    if (ai.getShip().getTacticSpeed() == 0 && deadliest != null
+        && !deadliest.isCloakOverloaded()) {
       shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
     }
     if (point != null && !isBlocked(point.getX(), point.getY())
         && ai.getMovesLeft() > 0) {
-      if (shootDeadliest) {
+      if (deadliest != null && shootDeadliest
+          && !deadliest.isCloakOverloaded()) {
         shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
       }
       if (!shot) {
@@ -1563,7 +1572,8 @@ public boolean launchIntercept(final int distance,
         && getAnimation() == null) {
       if (ai.getAiShotsLeft() > 0) {
         shot = false;
-        if (shootDeadliest) {
+        if (shootDeadliest && deadliest != null
+            && !deadliest.isCloakOverloaded()) {
           // We still got more shots left, let's shoot the deadliest
           shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
         } else {
@@ -1581,7 +1591,8 @@ public boolean launchIntercept(final int distance,
         if (!shot) {
           // Deadliest wasn't close enough, let's shoot the closest
           closest = getClosestEnemyShip(info, getCurrentShip());
-          if (closest != deadliest) {
+          if (closest != deadliest && closest != null
+              && !closest.isCloakOverloaded()) {
             shot = handleAIShoot(ai, closest, textLogger, infoPanel);
           }
           if (!shot) {
@@ -1734,6 +1745,47 @@ public boolean launchIntercept(final int distance,
             getCurrentShip().getEnergyLevel() - 1);
         if (!getCurrentShip().isOverloadFailure(index)) {
           ship.setShield(ship.getShield() + 1);
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
+      if (component.getType() == ShipComponentType.JAMMER
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 0) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 1);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          getCurrentShip().setOverloadedJammer(
+              component.getDefenseValue() * 3);
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
+      if (component.getType() == ShipComponentType.CLOAKING_DEVICE
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 0) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 1);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          getCurrentShip().setCloakOverloaded(true);
           if (textLogger != null) {
             textLogger.addLog(component.getName() + " overloaded!");
           }

@@ -1312,7 +1312,9 @@ public class MapPanel extends JPanel {
           BufferedImage img = ShipImages
               .getByRace(ship.getShip().getHull().getRace())
               .getShipImage(ship.getShip().getHull().getImageIndex());
-          if (ship.isCloaked()) {
+          if (ship.isCloakOverloaded()) {
+            img = GraphRoutines.greyTransparent(img, transparency);
+          } else if (ship.isCloaked()) {
             img = GraphRoutines.transparent(img, transparency);
           }
           if (ship.isFlipY()) {
@@ -1342,6 +1344,9 @@ public class MapPanel extends JPanel {
               int accuracy = combat.calculateAccuracy(combat.getCurrentShip(),
                   weapon, target);
               String accuracyStr = accuracy + "%";
+              if (accuracy == -1) {
+                accuracyStr = "NO LOCK";
+              }
               int textWidth = (int) GuiStatics.getFontCubellan()
                   .getStringBounds(accuracyStr, gr.getFontRenderContext())
                   .getWidth();

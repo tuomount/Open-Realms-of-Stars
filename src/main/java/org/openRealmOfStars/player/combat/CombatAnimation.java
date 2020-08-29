@@ -136,6 +136,14 @@ public class CombatAnimation {
    * Name for explosion sound effect
    */
   private String explosionSfx;
+  /**
+   * How many times animation should be looped.
+   */
+  private int loops;
+  /**
+   * How many times have been looped
+   */
+  private int loopCount;
 
   /**
    * Combat Animation
@@ -169,6 +177,8 @@ public class CombatAnimation {
     this.firstDraw = true;
     this.target = end;
     this.shooter = start;
+    loops = 0;
+    loopCount = 0;
     if (hitType <= 0) {
       this.hit = true;
     } else {
@@ -207,7 +217,7 @@ public class CombatAnimation {
       explosionSfx = SoundPlayer.ALARM;
     } else if (animType == CombatAnimationType.LIGHTNING) {
       explosionAnim = GuiStatics.LIGHTNING;
-      explosionSfx = SoundPlayer.GLITCH;
+      explosionSfx = SoundPlayer.ELECTRIC;
     } else {
       if (end.getShip().getShield() > 0) {
         shieldAnim = GuiStatics.SHIELD1;
@@ -256,7 +266,8 @@ public class CombatAnimation {
       break;
     }
     case LIGHTNING: {
-      count = explosionAnim.getMaxFrames();
+      count = explosionAnim.getMaxFrames() * 3;
+      loops = 2;
       break;
     }
     default:
@@ -532,14 +543,20 @@ public class CombatAnimation {
       }
     } else if (type == CombatAnimationType.LIGHTNING) {
       count--;
+      doAnimationIon(13);
       if (animFrame < explosionAnim.getMaxFrames()) {
         showAnim = true;
-        if (animFrame == 0 && hit) {
+        if (animFrame == 0 && hit && loopCount == 0) {
           SoundPlayer.playSound(explosionSfx);
         }
         animFrame++;
       } else {
-        showAnim = false;
+        if (loopCount < loops) {
+          loopCount++;
+          animFrame = 0;
+        } else {
+          showAnim = false;
+        }
       }
     }
   }
@@ -561,6 +578,32 @@ public class CombatAnimation {
               ParticleEffectType.EXPLOSION_PARTICLE, px, py);
           particles.add(particle);
         }
+      }
+    }
+  }
+
+  /**
+   * Do ion particle animation with particle effect
+   * @param frameWhenAddParticleEffect Add particle after this frame number
+   */
+  private void doAnimationIon(final int frameWhenAddParticleEffect) {
+    showAnim = true;
+    if (count > frameWhenAddParticleEffect) {
+      int parts = DiceGenerator.getRandom(15, 25);
+      int px = (int) Math.round(ex);
+      int py = (int) Math.round(ey);
+      for (int i = 0; i < parts; i++) {
+        int nx = DiceGenerator.getRandom(5);
+        int ny = DiceGenerator.getRandom(5);
+        if (DiceGenerator.getRandom(1) == 0) {
+          nx = nx * -1;
+        }
+        if (DiceGenerator.getRandom(1) == 0) {
+          ny = ny * -1;
+        }
+        ParticleEffect particle = new ParticleEffect(
+            ParticleEffectType.ION_PARTICLE, px + nx, py + ny);
+        particles.add(particle);
       }
     }
   }

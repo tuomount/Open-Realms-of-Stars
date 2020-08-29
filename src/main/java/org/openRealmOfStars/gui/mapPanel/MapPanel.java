@@ -1410,8 +1410,7 @@ public class MapPanel extends JPanel {
           break;
           }
         case LIGHTNING: {
-          //FIXME Change better lighting sound
-          SoundPlayer.playSound(SoundPlayer.GLITCH);
+          SoundPlayer.playSound(SoundPlayer.ELECTRIC);
           break;
           }
         default: {

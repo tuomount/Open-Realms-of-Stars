@@ -277,6 +277,9 @@ Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
 Glitch sound by Tuomo Untinen(CC0)
 
+Electricity Sound Effects by Erich Izdepski
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
 # Musics By
 
 Observing The Star by

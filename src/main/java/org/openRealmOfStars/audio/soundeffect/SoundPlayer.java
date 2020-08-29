@@ -8,7 +8,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016-2018  Tuomo Untinen
+* Copyright (C) 2016-2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -201,6 +201,10 @@ public final class SoundPlayer {
    */
   public static final String GLITCH = "/resources/sounds/glitch.wav";
 
+  /**
+   * Sound effect for electric burst.
+   */
+  public static final String ELECTRIC = "/resources/sounds/electric.wav";
 
   /**
    * Is Sound enabled

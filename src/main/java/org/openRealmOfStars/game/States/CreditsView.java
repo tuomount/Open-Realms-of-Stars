@@ -170,6 +170,9 @@ public class CreditsView extends BlackPanel {
       + "Time warp by Tuomo Untinen\n\n"
       + "Homarian Space Ship Bridge by Tuomo Untinen\n\n"
       + "Spinosaurus by Tuomo Untinen\n\n"
+      + "Lightning animation from Sci-fi effects by Skorpio\n"
+      + "https://opengameart.org/content/sci-fi-effects\n"
+      + "Licensed under CC BY 4.0\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"
@@ -341,7 +344,7 @@ public class CreditsView extends BlackPanel {
       + "Justin Dalessandro(ColdOneK)\n"
       + "Licensed under CC BY 4.0 "
       + "http://creativecommons.org/licenses/by/4.0/\n\n"
-      + "Death Is Jut Another Path by \n"
+      + "Death Is Just Another Path by \n"
       + "Otto Halmen\n"
       + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";

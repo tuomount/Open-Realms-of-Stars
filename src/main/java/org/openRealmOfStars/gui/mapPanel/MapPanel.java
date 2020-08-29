@@ -27,13 +27,13 @@ import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatAnimation;
+import org.openRealmOfStars.player.combat.CombatAnimationType;
 import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.ShipComponent;
-import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -1384,27 +1384,34 @@ public class MapPanel extends JPanel {
       CombatAnimation anim = combat.getAnimation();
       if (anim.isFirstDraw()) {
         anim.setFirstDraw(false);
-        switch (anim.getWeapon().getType()) {
-        case WEAPON_BEAM: {
+        switch (anim.getType()) {
+        case LASER_BEAM:
+        case PHASOR_BEAM:
+        case ANTIMATTER_BEAM: {
           SoundPlayer.playSound(SoundPlayer.WEAPON_BEAM);
           break;
           }
-        case WEAPON_PHOTON_TORPEDO: {
+        case PHOTON_TORPEDO: {
           SoundPlayer.playSound(SoundPlayer.WEAPON_TORPEDO);
           break;
           }
-        case WEAPON_RAILGUN: {
+        case RAILGUN: {
           SoundPlayer.playSound(SoundPlayer.WEAPON_RAILGUN);
           break;
           }
-        case WEAPON_ECM_TORPEDO:
-        case WEAPON_HE_MISSILE: {
+        case ECM_TORPEDO:
+        case HE_MISSILE: {
           SoundPlayer.playSound(SoundPlayer.WEAPON_MISSILE);
           break;
           }
-        case PRIVATEERING_MODULE: {
+        case PRIVATEERING: {
           //FIXME Change better privateer sound
           SoundPlayer.playSound(SoundPlayer.REPAIR);
+          break;
+          }
+        case LIGHTNING: {
+          //FIXME Change better lighting sound
+          SoundPlayer.playSound(SoundPlayer.GLITCH);
           break;
           }
         default: {
@@ -1413,7 +1420,9 @@ public class MapPanel extends JPanel {
         }
       }
 
-      if (anim.getWeapon().getType() == ShipComponentType.WEAPON_BEAM) {
+      if (anim.getType() == CombatAnimationType.ANTIMATTER_BEAM
+          || anim.getType() == CombatAnimationType.LASER_BEAM
+          || anim.getType() == CombatAnimationType.PHASOR_BEAM) {
         Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
         gr.setStroke(full);
@@ -1421,8 +1430,7 @@ public class MapPanel extends JPanel {
         gr.drawLine(anim.getSx() + viewPointOffsetX,
             anim.getSy() + viewPointOffsetY, anim.getEx() + viewPointOffsetX,
             anim.getEy() + viewPointOffsetY);
-      } else if (anim.getWeapon()
-          .getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+      } else if (anim.getType() == CombatAnimationType.PHOTON_TORPEDO) {
         gr.drawImage(GuiStatics.PHOTON_TORPEDO,
             anim.getSx() + viewPointOffsetX
                 - GuiStatics.PHOTON_TORPEDO.getWidth() / 2,

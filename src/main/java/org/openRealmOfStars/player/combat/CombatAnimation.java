@@ -12,14 +12,13 @@ import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffectType;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.ship.ShipComponent;
-import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -72,7 +71,7 @@ public class CombatAnimation {
   /**
    * Weapon which was fired
    */
-  private ShipComponent weapon;
+  private CombatAnimationType type;
 
   /**
    * Was shot hit or miss
@@ -142,32 +141,48 @@ public class CombatAnimation {
    * Combat Animation
    * @param shooter Ship who shot
    * @param target Ship who took the shot
-   * @param weapon Weapon which was used for shooting
+   * @param type Animation type used in animation
    * @param hit  1 Not even a dent
    *             0 Armor or shield damaged
    *            -1 Component damage
    *            -2 Destroyed
    */
   public CombatAnimation(final CombatShip shooter, final CombatShip target,
-      final ShipComponent weapon, final int hit) {
-    this.weapon = weapon;
+      final CombatAnimationType type, final int hit) {
+    initCombatAnimation(shooter, target, type, hit);
+  }
+
+  /**
+   * Initializes combat animation.
+   * @param start Ship who shot
+   * @param end Ship who took the shot
+   * @param animType Animation type used in animation
+   * @param hitType  1 Not even a dent
+   *             0 Armor or shield damaged
+   *            -1 Component damage
+   *            -2 Destroyed
+   */
+  private void initCombatAnimation(final CombatShip start,
+      final CombatShip end, final CombatAnimationType animType,
+      final int hitType) {
+    this.type = animType;
     this.firstDraw = true;
-    this.target = target;
-    this.shooter = shooter;
-    if (hit <= 0) {
+    this.target = end;
+    this.shooter = start;
+    if (hitType <= 0) {
       this.hit = true;
     } else {
       this.hit = false;
     }
-    if (shooter != null) {
-      sx = shooter.getX() * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH / 2;
-      sy = shooter.getY() * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT / 2;
+    if (start != null) {
+      sx = start.getX() * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH / 2;
+      sy = start.getY() * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT / 2;
     } else {
       sx = 4 * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH / 2;
       sy = 4 * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT / 2;
     }
-    ex = target.getX() * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH / 2;
-    ey = target.getY() * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT / 2;
+    ex = end.getX() * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH / 2;
+    ey = end.getY() * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT / 2;
     double dx = Math.abs(sx - ex);
     double dy = Math.abs(sy - ey);
     distance = (int) dy;
@@ -184,54 +199,63 @@ public class CombatAnimation {
     animFrame = 0;
     showAnim = false;
     particles = new ArrayList<>();
-    if (weapon.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
+    if (animType == CombatAnimationType.ECM_TORPEDO) {
       explosionAnim = GuiStatics.EXPLOSION2;
       explosionSfx = SoundPlayer.EXPLOSION_EMP;
-    } else if (weapon.getType() == ShipComponentType.PRIVATEERING_MODULE) {
+    } else if (animType == CombatAnimationType.PRIVATEERING) {
       explosionAnim = GuiStatics.PRIVATEER;
       explosionSfx = SoundPlayer.ALARM;
+    } else if (animType == CombatAnimationType.LIGHTNING) {
+      explosionAnim = GuiStatics.LIGHTNING;
+      explosionSfx = SoundPlayer.GLITCH;
     } else {
-      if (target.getShip().getShield() > 0) {
+      if (end.getShip().getShield() > 0) {
         shieldAnim = GuiStatics.SHIELD1;
       }
-      if (hit == 0) {
+      if (hitType == 0) {
         explosionAnim = GuiStatics.EXPLOSION3;
         explosionSfx = SoundPlayer.EXPLOSION_SMALL;
       } else {
         explosionAnim = GuiStatics.EXPLOSION1;
-        if (target.getShip().getHullPoints() <= 0) {
+        if (end.getShip().getHullPoints() <= 0) {
           explosionSfx = SoundPlayer.SHIP_EXPLODE;
         } else {
           explosionSfx = SoundPlayer.EXPLOSION;
         }
       }
     }
-    switch (weapon.getType()) {
+    switch (animType) {
     case PLASMA_BEAM: {
       count = 40;
       break;
     }
-    case WEAPON_BEAM: {
+    case ANTIMATTER_BEAM:
+    case PHASOR_BEAM:
+    case LASER_BEAM: {
       count = 40;
       break;
     }
-    case WEAPON_RAILGUN: {
+    case RAILGUN: {
       count = explosionAnim.getMaxFrames();
       break;
     }
-    case WEAPON_ECM_TORPEDO: {
+    case ECM_TORPEDO: {
       count = explosionAnim.getMaxFrames();
       break;
     }
-    case WEAPON_HE_MISSILE: {
+    case HE_MISSILE: {
       count = explosionAnim.getMaxFrames();
       break;
     }
-    case WEAPON_PHOTON_TORPEDO: {
+    case PHOTON_TORPEDO: {
       count = explosionAnim.getMaxFrames();
       break;
     }
-    case PRIVATEERING_MODULE: {
+    case PRIVATEERING: {
+      count = explosionAnim.getMaxFrames();
+      break;
+    }
+    case LIGHTNING: {
       count = explosionAnim.getMaxFrames();
       break;
     }
@@ -239,6 +263,59 @@ public class CombatAnimation {
       count = 40;
       break;
     }
+  }
+  /**
+   * Combat Animation
+   * @param shooter Ship who shot
+   * @param target Ship who took the shot
+   * @param weapon Weapon which was used for shooting
+   * @param hit  1 Not even a dent
+   *             0 Armor or shield damaged
+   *            -1 Component damage
+   *            -2 Destroyed
+   */
+  public CombatAnimation(final CombatShip shooter, final CombatShip target,
+      final ShipComponent weapon, final int hit) {
+    CombatAnimationType initType = CombatAnimationType.PLASMA_BEAM;
+    switch (weapon.getType()) {
+      case PLASMA_BEAM: {
+        initType = CombatAnimationType.PLASMA_BEAM;
+        break;
+      }
+      case WEAPON_RAILGUN: {
+        initType = CombatAnimationType.RAILGUN;
+        break;
+      }
+      case WEAPON_ECM_TORPEDO: {
+        initType = CombatAnimationType.ECM_TORPEDO;
+        break;
+      }
+      case WEAPON_HE_MISSILE: {
+        initType = CombatAnimationType.HE_MISSILE;
+        break;
+      }
+      case WEAPON_PHOTON_TORPEDO: {
+        initType = CombatAnimationType.PHOTON_TORPEDO;
+        break;
+      }
+      case WEAPON_BEAM: {
+        if (weapon.getName().startsWith("Antimatter beam")) {
+          initType = CombatAnimationType.ANTIMATTER_BEAM;
+        } else if (weapon.getName().startsWith("Phasors")) {
+          initType = CombatAnimationType.PHASOR_BEAM;
+        } else {
+          initType = CombatAnimationType.LASER_BEAM;
+        }
+        break;
+      }
+      case PRIVATEERING_MODULE: {
+        initType = CombatAnimationType.PRIVATEERING;
+      }
+      default:
+        initType = CombatAnimationType.LASER_BEAM;
+        break;
+    }
+    initCombatAnimation(shooter, target, initType, hit);
   }
 
   /**
@@ -288,8 +365,10 @@ public class CombatAnimation {
         particle.handleParticle();
       }
     }
-    if (weapon.getType() == ShipComponentType.WEAPON_BEAM
-        || weapon.getType() == ShipComponentType.PLASMA_BEAM) {
+    if (type == CombatAnimationType.ANTIMATTER_BEAM
+        || type == CombatAnimationType.LASER_BEAM
+        || type == CombatAnimationType.PHASOR_BEAM
+        || type == CombatAnimationType.PLASMA_BEAM) {
       count--;
       if (count < FRAME_MARKER_WHEN_EXPLODE) {
         doAnimationHit(20);
@@ -306,8 +385,8 @@ public class CombatAnimation {
         }
       }
       int parts = DiceGenerator.getRandom(5, 15);
-      boolean phasorsParticle = weapon.getName().startsWith("Phasors");
-      boolean antimatterParticle = weapon.getName().startsWith("Antimatter");
+      boolean phasorsParticle = type == CombatAnimationType.PHASOR_BEAM;
+      boolean antimatterParticle = type == CombatAnimationType.ANTIMATTER_BEAM;
       for (int i = 0; i < parts; i++) {
         int dist = DiceGenerator.getRandom(distance);
         int px = (int) Math.round(dist * mx + sx);
@@ -336,7 +415,7 @@ public class CombatAnimation {
           particles.add(particle);
         }
       }
-    } else if (weapon.getType() == ShipComponentType.WEAPON_RAILGUN) {
+    } else if (type == CombatAnimationType.RAILGUN) {
       if (Math.round(sx) == Math.round(ex)
           && Math.round(sy) == Math.round(ey)) {
         count--;
@@ -367,7 +446,7 @@ public class CombatAnimation {
           }
         }
       }
-    } else if (weapon.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+    } else if (type == CombatAnimationType.PHOTON_TORPEDO) {
       if (Math.round(sx) == Math.round(ex)
           && Math.round(sy) == Math.round(ey)) {
         count--;
@@ -408,8 +487,8 @@ public class CombatAnimation {
           }
         }
       }
-    } else if (weapon.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
-        || weapon.getType() == ShipComponentType.WEAPON_HE_MISSILE) {
+    } else if (type == CombatAnimationType.ECM_TORPEDO
+        || type == CombatAnimationType.HE_MISSILE) {
       if (Math.round(sx) == Math.round(ex)
           && Math.round(sy) == Math.round(ey)) {
         count--;
@@ -440,7 +519,18 @@ public class CombatAnimation {
           }
         }
       }
-    } else if (weapon.getType() == ShipComponentType.PRIVATEERING_MODULE) {
+    } else if (type == CombatAnimationType.PRIVATEERING) {
+      count--;
+      if (animFrame < explosionAnim.getMaxFrames()) {
+        showAnim = true;
+        if (animFrame == 0 && hit) {
+          SoundPlayer.playSound(explosionSfx);
+        }
+        animFrame++;
+      } else {
+        showAnim = false;
+      }
+    } else if (type == CombatAnimationType.LIGHTNING) {
       count--;
       if (animFrame < explosionAnim.getMaxFrames()) {
         showAnim = true;
@@ -516,10 +606,10 @@ public class CombatAnimation {
    * @return Beam color
    */
   public Color getBeamColor() {
-    if (weapon.getName().startsWith("Antimatter beam")) {
+    if (type == CombatAnimationType.ANTIMATTER_BEAM) {
       return new Color(2 * count, 2 * count,
           COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count));
-    } else if (weapon.getName().startsWith("Phasors")) {
+    } else if (type == CombatAnimationType.PHASOR_BEAM) {
       return new Color(2 * count, COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count),
           2 * count);
     } else {
@@ -561,11 +651,11 @@ public class CombatAnimation {
   }
 
   /**
-   * Get shooters weapon as ship component
-   * @return Ship component
+   * Get animation as combat animation
+   * @return Combat animation
    */
-  public ShipComponent getWeapon() {
-    return weapon;
+  public CombatAnimationType getType() {
+    return type;
   }
 
   /**

@@ -596,6 +596,12 @@ public final class GuiStatics {
       "/resources/images/explosion4.png");
 
   /**
+   * Lighting animation
+   */
+  public static final AnimatedImage LIGHTNING = new AnimatedImage(64, 64,
+      "/resources/images/lightning.png");
+
+  /**
    * Shield animation
    */
   public static final AnimatedImage SHIELD1 = new AnimatedImage(64, 64,

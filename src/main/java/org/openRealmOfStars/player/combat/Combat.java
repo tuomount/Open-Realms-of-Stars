@@ -599,7 +599,10 @@ public boolean launchIntercept(final int distance,
       defenderEscaped = true;
     }
     if (getCurrentShip() != null) {
-      getCurrentShip().reInitShipForRound();
+      CombatAnimation anim = getCurrentShip().reInitShipForRound();
+      if (anim != null) {
+        setAnimation(anim);
+      }
     }
     if (isCombatOver()) {
       handleEndCombat();
@@ -885,7 +888,11 @@ public boolean launchIntercept(final int distance,
     }
     CombatShip ship = getCurrentShip();
     if (ship != null) {
-      ship.reInitShipForRound();
+      CombatAnimation anim = ship.reInitShipForRound();
+      if (anim != null) {
+        setAnimation(anim);
+      }
+
     }
   }
 
@@ -1783,7 +1790,7 @@ public boolean launchIntercept(final int distance,
           && ship.componentIsWorking(index)
           && getCurrentShip().getEnergyLevel() > 0) {
         getCurrentShip().setEnergyLevel(
-            getCurrentShip().getEnergyLevel() - 1);
+            getCurrentShip().getEnergyLevel() - 2);
         if (!getCurrentShip().isOverloadFailure(index)) {
           getCurrentShip().setCloakOverloaded(true);
           if (textLogger != null) {

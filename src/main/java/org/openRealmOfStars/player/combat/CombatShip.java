@@ -349,8 +349,9 @@ public class CombatShip implements Comparable<CombatShip> {
 
   /**
    * Reinitialize ship for next round
+   * @return CombatAnimation or null
    */
-  public void reInitShipForRound() {
+  public CombatAnimation reInitShipForRound() {
     int weapons = 0;
     setOverloadedJammer(0);
     setCloakOverloaded(false);
@@ -393,7 +394,9 @@ public class CombatShip implements Comparable<CombatShip> {
         setEnergyLevel(getEnergyLevel() - getEnergyReserve());
         setOverloaded(true);
         // Ship is basically useless for this turn.
-        return;
+        CombatAnimation animation = new CombatAnimation(this, this,
+            CombatAnimationType.LIGHTNING, 1);
+        return animation;
       }
     }
     if (getEnergyLevel() < ship.getTotalEnergy() && !hasOverloaded()) {
@@ -420,6 +423,7 @@ public class CombatShip implements Comparable<CombatShip> {
     }
     ship.regenerateShield();
     damaged = false;
+    return null;
   }
 
   /**

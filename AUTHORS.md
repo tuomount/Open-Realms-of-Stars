@@ -177,6 +177,9 @@ Homarian Space Ship Bridge by Tuomo Untinen
 
 Spinosaurus by Tuomo Untinen
 
+Lightning animation from Sci-fi effects by Skorpio
+https://opengameart.org/content/sci-fi-effects
+Licensed under CC BY 4.0
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 
@@ -365,7 +368,7 @@ Set Fire to Reality - dark/electronic by
 Justin Dalessandro(ColdOneK)
 Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
-Death Is Jut Another Path by 
+Death Is Just Another Path by 
 Otto Halmen
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 

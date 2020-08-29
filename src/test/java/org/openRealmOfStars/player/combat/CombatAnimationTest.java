@@ -15,7 +15,7 @@ import org.openRealmOfStars.player.ship.ShipComponentType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2019  Tuomo Untinen
+ * Copyright (C) 2016,2019,2020  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -58,7 +58,7 @@ public class CombatAnimationTest {
     assertEquals(false,anim.isFirstDraw());
     assertEquals(shooter,anim.getShooter());
     assertEquals(target,anim.getTarget());
-    assertEquals(weapon,anim.getWeapon());
+    assertEquals(CombatAnimationType.LASER_BEAM,anim.getType());
     assertEquals(5*64+32,anim.getSx());
     assertEquals(7*64+32,anim.getSy());
     assertEquals(6*64+32,anim.getEx());
@@ -103,7 +103,7 @@ public class CombatAnimationTest {
     assertEquals(false,anim.isFirstDraw());
     assertEquals(shooter,anim.getShooter());
     assertEquals(target,anim.getTarget());
-    assertEquals(weapon,anim.getWeapon());
+    assertEquals(CombatAnimationType.PHASOR_BEAM, anim.getType());
     assertEquals(5*64+32,anim.getSx());
     assertEquals(7*64+32,anim.getSy());
     assertEquals(6*64+32,anim.getEx());
@@ -148,7 +148,7 @@ public class CombatAnimationTest {
     assertEquals(false,anim.isFirstDraw());
     assertEquals(shooter,anim.getShooter());
     assertEquals(target,anim.getTarget());
-    assertEquals(weapon,anim.getWeapon());
+    assertEquals(CombatAnimationType.ANTIMATTER_BEAM, anim.getType());
     assertEquals(5*64+32,anim.getSx());
     assertEquals(7*64+32,anim.getSy());
     assertEquals(6*64+32,anim.getEx());
@@ -191,7 +191,7 @@ public class CombatAnimationTest {
     
     assertEquals(shooter,anim.getShooter());
     assertEquals(target,anim.getTarget());
-    assertEquals(weapon,anim.getWeapon());
+    assertEquals(CombatAnimationType.RAILGUN, anim.getType());
     assertEquals(5*64+32,anim.getSx());
     assertEquals(7*64+32,anim.getSy());
     assertEquals(6*64+32,anim.getEx());
@@ -235,7 +235,7 @@ public class CombatAnimationTest {
     
     assertEquals(shooter,anim.getShooter());
     assertEquals(target,anim.getTarget());
-    assertEquals(weapon,anim.getWeapon());
+    assertEquals(CombatAnimationType.PHOTON_TORPEDO, anim.getType());
     assertEquals(5*64+32,anim.getSx());
     assertEquals(7*64+32,anim.getSy());
     assertEquals(6*64+32,anim.getEx());
@@ -280,7 +280,7 @@ public class CombatAnimationTest {
     
     assertEquals(shooter,anim.getShooter());
     assertEquals(target,anim.getTarget());
-    assertEquals(weapon,anim.getWeapon());
+    assertEquals(CombatAnimationType.ECM_TORPEDO, anim.getType());
     assertEquals(5*64+32,anim.getSx());
     assertEquals(7*64+32,anim.getSy());
     assertEquals(6*64+32,anim.getEx());
@@ -325,7 +325,7 @@ public class CombatAnimationTest {
     
     assertEquals(shooter,anim.getShooter());
     assertEquals(target,anim.getTarget());
-    assertEquals(weapon,anim.getWeapon());
+    assertEquals(CombatAnimationType.HE_MISSILE, anim.getType());
     assertEquals(5*64+32,anim.getSx());
     assertEquals(7*64+32,anim.getSy());
     assertEquals(6*64+32,anim.getEx());

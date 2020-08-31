@@ -280,6 +280,9 @@ Glitch sound by Tuomo Untinen(CC0)
 Electricity Sound Effects by Erich Izdepski
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
+Overloaded engine, jammer, targeting computer and cloaking device
+sounds from 50 CC0 SFX #2 by Rubberduck (CC0)
+
 # Musics By
 
 Observing The Star by

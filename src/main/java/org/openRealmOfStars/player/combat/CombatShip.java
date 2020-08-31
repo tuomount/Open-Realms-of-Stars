@@ -80,6 +80,10 @@ public class CombatShip implements Comparable<CombatShip> {
    * Bonus from overloaded Jammer.
    */
   private int overloadedJammer;
+  /**
+   * Bonus from overloaded targeting computer
+   */
+  private int overloadedComputer;
 
   /**
    * Was ship damaged. Really damage not just some shield hit.
@@ -138,6 +142,7 @@ public class CombatShip implements Comparable<CombatShip> {
     this.setEnergyLevel(ship.getTotalEnergy());
     this.setOverloadedJammer(0);
     this.setCloakOverloaded(false);
+    this.setOverloadedComputer(0);
     reInitShipForRound();
   }
 
@@ -671,5 +676,21 @@ public class CombatShip implements Comparable<CombatShip> {
    */
   public void setOverloaded(final boolean hasOverloaded) {
     this.isOverloaded = hasOverloaded;
+  }
+
+  /**
+   * Get overloaded targeting computer bonus.
+   * @return the overloadedComputer
+   */
+  public int getOverloadedComputer() {
+    return overloadedComputer;
+  }
+
+  /**
+   * Set overloaded targeting computer bonus.
+   * @param overloadedComputer the overloadedComputer to set
+   */
+  public void setOverloadedComputer(final int overloadedComputer) {
+    this.overloadedComputer = overloadedComputer;
   }
 }

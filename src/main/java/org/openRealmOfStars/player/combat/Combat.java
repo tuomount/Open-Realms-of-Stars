@@ -1712,6 +1712,7 @@ public boolean launchIntercept(final int distance,
               getCurrentShip().getMovesLeft() + 1);
           if (textLogger != null) {
             textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playSound(SoundPlayer.ENGINE_OVERLOAD);
           }
         } else {
           if (textLogger != null) {
@@ -1733,6 +1734,7 @@ public boolean launchIntercept(final int distance,
               getCurrentShip().getMovesLeft() + 1);
           if (textLogger != null) {
             textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playSound(SoundPlayer.ENGINE_OVERLOAD);
           }
         } else {
           if (textLogger != null) {
@@ -1752,8 +1754,13 @@ public boolean launchIntercept(final int distance,
             getCurrentShip().getEnergyLevel() - 1);
         if (!getCurrentShip().isOverloadFailure(index)) {
           ship.setShield(ship.getShield() + 1);
+          CombatAnimation shieldAnim = new CombatAnimation(
+              getCurrentShip(), getCurrentShip(), CombatAnimationType.SHIELD,
+              1);
+          setAnimation(shieldAnim);
           if (textLogger != null) {
             textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playShieldSound();
           }
         } else {
           if (textLogger != null) {
@@ -1775,6 +1782,29 @@ public boolean launchIntercept(final int distance,
               component.getDefenseValue() * 3);
           if (textLogger != null) {
             textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playSound(SoundPlayer.JAMMER_OVERLOAD);
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
+      if (component.getType() == ShipComponentType.TARGETING_COMPUTER
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 0) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 1);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          getCurrentShip().setOverloadedComputer(
+              component.getDamage());
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playSound(SoundPlayer.COMPUTER_OVERLOAD);
           }
         } else {
           if (textLogger != null) {
@@ -1795,6 +1825,7 @@ public boolean launchIntercept(final int distance,
           getCurrentShip().setCloakOverloaded(true);
           if (textLogger != null) {
             textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playSound(SoundPlayer.CLOAK_OVERLOAD);
           }
         } else {
           if (textLogger != null) {

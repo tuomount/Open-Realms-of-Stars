@@ -1413,6 +1413,10 @@ public class MapPanel extends JPanel {
           SoundPlayer.playSound(SoundPlayer.ELECTRIC);
           break;
           }
+        case SHIELD: {
+          SoundPlayer.playShieldSound();
+          break;
+          }
         default: {
           ErrorLogger.log("Unexpected weapon type, sound effect is missing!");
         }
@@ -1436,7 +1440,9 @@ public class MapPanel extends JPanel {
             anim.getSy() + viewPointOffsetY
                 - GuiStatics.PHOTON_TORPEDO.getHeight() / 2,
             null);
-      } else {
+      } else if (anim.getType() == CombatAnimationType.ECM_TORPEDO
+          || anim.getType() == CombatAnimationType.HE_MISSILE
+          || anim.getType() == CombatAnimationType.RAILGUN) {
         gr.setColor(GuiStatics.COLOR_GREY_160);
         Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);

@@ -218,6 +218,8 @@ public class CombatAnimation {
     } else if (animType == CombatAnimationType.LIGHTNING) {
       explosionAnim = GuiStatics.LIGHTNING;
       explosionSfx = SoundPlayer.ELECTRIC;
+    } else if (animType == CombatAnimationType.SHIELD) {
+      explosionAnim = GuiStatics.SHIELD1;
     } else {
       if (end.getShip().getShield() > 0) {
         shieldAnim = GuiStatics.SHIELD1;
@@ -268,6 +270,10 @@ public class CombatAnimation {
     case LIGHTNING: {
       count = explosionAnim.getMaxFrames() * 3;
       loops = 2;
+      break;
+    }
+    case SHIELD: {
+      count = explosionAnim.getMaxFrames();
       break;
     }
     default:
@@ -321,6 +327,7 @@ public class CombatAnimation {
       }
       case PRIVATEERING_MODULE: {
         initType = CombatAnimationType.PRIVATEERING;
+        break;
       }
       default:
         initType = CombatAnimationType.LASER_BEAM;
@@ -534,8 +541,16 @@ public class CombatAnimation {
       count--;
       if (animFrame < explosionAnim.getMaxFrames()) {
         showAnim = true;
+        animFrame++;
+      } else {
+        showAnim = false;
+      }
+    } else if (type == CombatAnimationType.SHIELD) {
+      count--;
+      if (animFrame < explosionAnim.getMaxFrames()) {
+        showAnim = true;
         if (animFrame == 0 && hit) {
-          SoundPlayer.playSound(explosionSfx);
+          SoundPlayer.playShieldSound();
         }
         animFrame++;
       } else {
@@ -717,6 +732,7 @@ public class CombatAnimation {
   public boolean isFirstDraw() {
     return firstDraw;
   }
+
 
   /**
    * Set first draw

@@ -264,6 +264,8 @@ public class CreditsView extends BlackPanel {
       + "Electricity Sound Effects by Erich Izdepski\n"
       + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Overloaded engine, jammer, targeting computer and cloaking device\n"
+      + "sounds from 50 CC0 SFX #2 by Rubberduck (CC0)\n\n"
       + "# Musics By\n\n"
       + "Observing The Star by\n"
       + "YD (CC0)\n\n"

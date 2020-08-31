@@ -63,5 +63,10 @@ public enum CombatAnimationType {
   /**
    * Lighting sparkling around
    */
-  LIGHTNING;
+  LIGHTNING,
+  /**
+   * Shield effect
+   */
+  SHIELD;
+
 }

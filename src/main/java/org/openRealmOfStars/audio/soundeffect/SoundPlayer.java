@@ -207,6 +207,30 @@ public final class SoundPlayer {
   public static final String ELECTRIC = "/resources/sounds/electric.wav";
 
   /**
+   * Sound effect for computer overload
+   */
+  public static final String COMPUTER_OVERLOAD =
+      "/resources/sounds/computer_overload.wav";
+
+  /**
+   * Sound effect for engine overload
+   */
+  public static final String ENGINE_OVERLOAD =
+      "/resources/sounds/engine_overload.wav";
+
+  /**
+   * Sound effect for jammer overload
+   */
+  public static final String JAMMER_OVERLOAD =
+      "/resources/sounds/jammer_overload.wav";
+
+  /**
+   * Sound effect for cloak overload
+   */
+  public static final String CLOAK_OVERLOAD =
+      "/resources/sounds/cloak_overload.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */

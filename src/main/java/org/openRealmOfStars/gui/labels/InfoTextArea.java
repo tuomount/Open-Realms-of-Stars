@@ -12,7 +12,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2018,2020  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -98,6 +98,11 @@ public class InfoTextArea extends JTextArea {
   private int smoothScrollY = 0;
 
   /**
+   * Shadow color
+   */
+  private Color shadowColor;
+
+  /**
    * Construct InfoTextArea with default but set size on rows and
    * columns.
    * @param rows Number of rows
@@ -106,7 +111,9 @@ public class InfoTextArea extends JTextArea {
   public InfoTextArea(final int rows, final int columns) {
     super(rows, columns);
     this.setFont(GuiStatics.getFontCubellanSC());
-    this.setForeground(Color.white);
+    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
+        GuiStatics.COLOR_GREEN_TEXT_DARK);
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
@@ -118,7 +125,9 @@ public class InfoTextArea extends JTextArea {
   public InfoTextArea() {
     super(17, 10);
     this.setFont(GuiStatics.getFontCubellanSC());
-    this.setForeground(Color.white);
+    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
+        GuiStatics.COLOR_GREEN_TEXT_DARK);
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
@@ -132,7 +141,9 @@ public class InfoTextArea extends JTextArea {
     super(text);
     this.setFont(GuiStatics.getFontCubellanSC());
     textToShow = text;
-    this.setForeground(Color.white);
+    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
+        GuiStatics.COLOR_GREEN_TEXT_DARK);
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
@@ -148,6 +159,15 @@ public class InfoTextArea extends JTextArea {
     textToShow = t;
   }
 
+  /**
+   * Set text colors: Foreground and shadow
+   * @param foreground Foreground color
+   * @param shadow Shadow color
+   */
+  public void setTextColor(final Color foreground, final Color shadow) {
+    setForeground(foreground);
+    shadowColor = shadow;
+  }
   /**
    * disable auto scroll
    */
@@ -218,7 +238,7 @@ public class InfoTextArea extends JTextArea {
   @Override
   protected void paintComponent(final Graphics g) {
     this.setCaretPosition(this.getDocument().getLength());
-    g.setColor(Color.black);
+    g.setColor(getBackground());
     Insets inset = this.getBorder().getBorderInsets(this);
     int sx = inset.left;
     int sy = inset.top;
@@ -278,7 +298,7 @@ public class InfoTextArea extends JTextArea {
       }
       String[] texts = sb.toString().split("\n");
       for (int i = 0; i < texts.length; i++) {
-        g.setColor(GuiStatics.COLOR_GREEN_TEXT_DARK);
+        g.setColor(shadowColor);
         int yHeight = GuiStatics.getTextHeight(getFont(), texts[i]);
         if (!smoothScroll) {
           g.drawString(texts[i], sx + 3, sy + i * yHeight + yHeight);
@@ -287,7 +307,7 @@ public class InfoTextArea extends JTextArea {
             g.drawString(texts[i], sx + 2, sy + i * yHeight - 1 + yHeight);
           }
           g.drawString(texts[i], sx + 2, sy + i * yHeight + 1 + yHeight);
-          g.setColor(GuiStatics.COLOR_GREEN_TEXT);
+          g.setColor(getForeground());
           g.drawString(texts[i], sx + 2, sy + i * yHeight + yHeight);
         } else {
           g.drawString(texts[i], sx + 3,

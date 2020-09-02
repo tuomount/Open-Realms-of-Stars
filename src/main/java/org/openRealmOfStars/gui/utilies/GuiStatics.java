@@ -355,14 +355,24 @@ public final class GuiStatics {
   public static final Color COLOR_GREY_TEXT = new Color(160, 165, 160);
 
   /**
-   * Green text
+   * Red text
    */
   public static final Color COLOR_RED_TEXT = new Color(186, 4, 0, 255);
+  /**
+   * Red text Dark
+   */
+  public static final Color COLOR_RED_TEXT_DARK = new Color(93, 2, 0, 255);
 
   /**
-   * Green text
+   * Yellow text
    */
   public static final Color COLOR_YELLOW_TEXT = new Color(220, 220, 4, 255);
+
+  /**
+   * Yellow text Dark
+   */
+  public static final Color COLOR_YELLOW_TEXT_DARK = new Color(110, 110, 2,
+      255);
 
   /**
    * Damage 3/4

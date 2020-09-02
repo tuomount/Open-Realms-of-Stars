@@ -237,7 +237,7 @@ public class BattleView extends BlackPanel {
     textLogger.addLog(INITIAL_LOG_MESSAGE);
     if (combat.getCurrentShip() != null) {
       infoPanel.showShip(combat.getCurrentShip().getShip());
-      overloadInfo.setText(combat.getCurrentShip().getOverloadInformation());
+      updateOverloadInfo();
     }
   }
 
@@ -278,7 +278,7 @@ public class BattleView extends BlackPanel {
       combatMapMouseListener.setComponentUse(-1);
       if (combat.getCurrentShip() != null) {
         infoPanel.showShip(combat.getCurrentShip().getShip());
-        overloadInfo.setText(combat.getCurrentShip().getOverloadInformation());
+        updateOverloadInfo();
       }
     }
   }
@@ -294,7 +294,7 @@ public class BattleView extends BlackPanel {
     combatMapMouseListener.setComponentUse(-1);
     if (combat.getCurrentShip() != null) {
       infoPanel.showShip(combat.getCurrentShip().getShip());
-      overloadInfo.setText(combat.getCurrentShip().getOverloadInformation());
+      updateOverloadInfo();
     }
     this.repaint();
   }
@@ -307,6 +307,24 @@ public class BattleView extends BlackPanel {
     return combat.isCombatOver();
   }
 
+  /**
+   * Handle overload info, updates text and colors.
+   */
+  public void updateOverloadInfo() {
+    if (combat.getCurrentShip().getEnergyReserve() > 0) {
+      overloadInfo.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
+          GuiStatics.COLOR_GREEN_TEXT_DARK);
+    } else if (combat.getCurrentShip().getEnergyReserve() < 0) {
+      overloadInfo.setTextColor(GuiStatics.COLOR_RED_TEXT,
+          GuiStatics.COLOR_RED_TEXT_DARK);
+    } else {
+      overloadInfo.setTextColor(GuiStatics.COLOR_YELLOW_TEXT,
+          GuiStatics.COLOR_YELLOW_TEXT_DARK);
+    }
+    overloadInfo.setText(
+        combat.getCurrentShip().getOverloadInformation());
+    overloadInfo.repaint();
+  }
   /**
    * Handle actions for battle view
    * @param arg0 Active Event
@@ -379,6 +397,7 @@ public class BattleView extends BlackPanel {
           return;
         }
         if (combat.handleOverloading(textLogger, index)) {
+          updateOverloadInfo();
           infoPanel.useComponent(index);
           combatMapMouseListener.setComponentUse(-1);
           combat.setComponentUse(-1);

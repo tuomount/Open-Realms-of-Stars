@@ -654,6 +654,20 @@ public boolean launchIntercept(final int distance,
   private static final int MAX_DISTANCE = 999;
 
   /**
+   * Calculates distance between two combat ships
+   * @param from From where
+   * @param to To which ship
+   * @return Distance in double
+   */
+  private double calculateDistance(final CombatShip from,
+      final CombatShip to) {
+    CombatCoordinate centerCoordinate =
+        new CombatCoordinate(from.getX(), from.getY());
+    CombatCoordinate toCoordinate =
+        new CombatCoordinate(to.getX(), to.getY());
+    return centerCoordinate.calculateDistance(toCoordinate);
+  }
+  /**
    * Get the closest enemy ship
    * @param info Player info who is doing the comparison
    * @param friendlyShip Where to start looking the closet one
@@ -665,12 +679,7 @@ public boolean launchIntercept(final int distance,
     CombatShip enemyShip = null;
     for (CombatShip ship : combatShipList) {
       if (ship.getPlayer() != info && !ship.isCloakOverloaded()) {
-        CombatCoordinate centerCoordinate =
-                new CombatCoordinate(friendlyShip.getX(),
-            friendlyShip.getY());
-        CombatCoordinate shipCoordinate =
-                new CombatCoordinate(ship.getX(), ship.getY());
-        double distance = centerCoordinate.calculateDistance(shipCoordinate);
+        double distance = calculateDistance(friendlyShip, ship);
         if (distance < maxDistance) {
           enemyShip = ship;
           maxDistance = distance;
@@ -693,12 +702,7 @@ public boolean launchIntercept(final int distance,
     CombatShip enemyShip = null;
     for (CombatShip ship : combatShipList) {
       if (ship.getPlayer() != info && !ship.isCloakOverloaded()) {
-        CombatCoordinate centerCoordinate =
-                new CombatCoordinate(friendlyShip.getX(),
-            friendlyShip.getY());
-        CombatCoordinate shipCoordinate =
-                new CombatCoordinate(ship.getX(), ship.getY());
-        double distance = centerCoordinate.calculateDistance(shipCoordinate);
+        double distance = calculateDistance(friendlyShip, ship);
         int cargo = ship.getShip().getCargoType();
         boolean cargoToSteal = false;
         if (cargo == Ship.CARGO_TYPE_METAL
@@ -1547,6 +1551,22 @@ public boolean launchIntercept(final int distance,
       endRound(textLogger);
       return true;
     }
+    if (deadliest != null
+        && deadliest.getShip().getTotalMilitaryPower()
+        < ai.getShip().getTotalMilitaryPower()
+        && calculateDistance(ai, deadliest) > ai.getMovesLeft() + 1) {
+      // Overload movement
+      int index = getCurrentShip().getOverloadMove();
+      int energyReq = 1;
+      if (index != -1 && getCurrentShip().getShip().getComponent(
+          index).getType() == ShipComponentType.THRUSTERS) {
+        energyReq = 0;
+      }
+      if (index != -1 && getCurrentShip().getEnergyReserve() >= energyReq
+          && DiceGenerator.getRandom(99) < 20) {
+        handleOverloading(textLogger, index);
+      }
+    }
     PathPoint point = aStar.getMove();
     if (ai.getShip().getTacticSpeed() == 0 && deadliest != null
         && !deadliest.isCloakOverloaded()) {
@@ -1605,23 +1625,68 @@ public boolean launchIntercept(final int distance,
           if (!shot) {
             // Even closest was too far away, ending the turn now
             aStar = null;
+            if (closest != null) {
+              overloadDefense(textLogger, closest);
+            }
             endRound(textLogger);
             return true;
           }
         }
       } else {
         aStar = null;
+        if (deadliest != null) {
+          overloadDefense(textLogger, deadliest);
+        }
         endRound(textLogger);
         return true;
       }
     }
     if (getAnimation() == null && ai.getAiShotsLeft() == 0
         && ai.getMovesLeft() == 0) {
+      if (deadliest != null) {
+        overloadDefense(textLogger, deadliest);
+      }
       endRound(textLogger);
     }
     return false;
   }
 
+  /**
+   * Overload ship's possible defenses if needed
+   * @param textLogger where logging is added if not null
+   * @param attacker CombatShip which is the biggest threat.
+   */
+  private void overloadDefense(final Logger textLogger,
+      final CombatShip attacker) {
+    if (getCurrentShip().getShip().getShield() < getCurrentShip()
+        .getShip().getTotalShield()) {
+      // Faster shield generating
+      int index = getCurrentShip().getComponentForUse(
+          ShipComponentType.SHIELD);
+      if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+          && DiceGenerator.getRandom(99) < 20) {
+        handleOverloading(textLogger, index);
+      }
+    }
+    if (calculateDistance(getCurrentShip(), attacker) < 3) {
+      // Better defense
+      int index = getCurrentShip().getComponentForUse(
+          ShipComponentType.JAMMER);
+      boolean overloaded = false;
+      if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+          && DiceGenerator.getRandom(99) < 20) {
+        overloaded = handleOverloading(textLogger, index);
+      }
+      if (!overloaded) {
+        index = getCurrentShip().getComponentForUse(
+            ShipComponentType.CLOAKING_DEVICE);
+        if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+            && DiceGenerator.getRandom(99) < 20) {
+          overloaded = handleOverloading(textLogger, index);
+        }
+      }
+    }
+  }
   /**
    * AI handling for non military ships.
    * @param textLogger where logging is added if not null
@@ -1652,6 +1717,15 @@ public boolean launchIntercept(final int distance,
       endRound(textLogger);
       return true;
     }
+    if (wormHole != null) {
+      // Overload movement
+      int index = getCurrentShip().getOverloadMove();
+      if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+          && DiceGenerator.getRandom(99) < 20) {
+        handleOverloading(textLogger, index);
+      }
+    }
+    overloadDefense(textLogger, closest);
     PathPoint point = aStar.getMove();
     if (point != null && !isBlocked(point.getX(), point.getY())
         && ai.getMovesLeft() > 0) {

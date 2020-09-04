@@ -5,6 +5,7 @@ import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -144,6 +145,33 @@ public class CombatShip implements Comparable<CombatShip> {
     this.setCloakOverloaded(false);
     this.setOverloadedComputer(0);
     reInitShipForRound();
+  }
+
+  /**
+   * Get ship component for use.
+   * @param type Component Type for use.
+   * @return component index or -1 if not available.
+   */
+  public int getComponentForUse(final ShipComponentType type) {
+    for (int i = 0; i < ship.getNumberOfComponents(); i++) {
+      ShipComponent component = ship.getComponent(i);
+      if (component.getType() == type && ship.componentIsWorking(i)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Get Component for overloading movement.
+   * @return component index or -1 if not available.
+   */
+  public int getOverloadMove() {
+    int index = getComponentForUse(ShipComponentType.THRUSTERS);
+    if (index == -1) {
+      index = getComponentForUse(ShipComponentType.ENGINE);
+    }
+    return index;
   }
 
   /**

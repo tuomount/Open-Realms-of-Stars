@@ -67,6 +67,10 @@ public enum CombatAnimationType {
   /**
    * Shield effect
    */
-  SHIELD;
+  SHIELD,
+  /**
+   * Explosion
+   */
+  EXPLOSION;
 
 }

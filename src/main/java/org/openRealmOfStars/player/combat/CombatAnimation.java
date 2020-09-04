@@ -276,6 +276,10 @@ public class CombatAnimation {
       count = explosionAnim.getMaxFrames();
       break;
     }
+    case EXPLOSION: {
+      count = explosionAnim.getMaxFrames();
+      break;
+    }
     default:
       count = 40;
       break;
@@ -551,6 +555,17 @@ public class CombatAnimation {
         showAnim = true;
         if (animFrame == 0 && hit) {
           SoundPlayer.playShieldSound();
+        }
+        animFrame++;
+      } else {
+        showAnim = false;
+      }
+    } else if (type == CombatAnimationType.EXPLOSION) {
+      count--;
+      doAnimationHit(13);
+      if (animFrame < explosionAnim.getMaxFrames()) {
+        if (animFrame == 0 && hit) {
+          SoundPlayer.playSound(explosionSfx);
         }
         animFrame++;
       } else {

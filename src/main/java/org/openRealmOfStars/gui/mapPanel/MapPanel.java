@@ -1417,6 +1417,10 @@ public class MapPanel extends JPanel {
           SoundPlayer.playShieldSound();
           break;
           }
+        case EXPLOSION: {
+          SoundPlayer.playSound(SoundPlayer.EXPLOSION);
+          break;
+          }
         default: {
           ErrorLogger.log("Unexpected weapon type, sound effect is missing!");
         }

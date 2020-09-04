@@ -1792,6 +1792,10 @@ public boolean launchIntercept(final int distance,
           if (textLogger != null) {
             textLogger.addLog(component.getName()
                 + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
           }
         }
         getCurrentShip().useComponent(index);
@@ -1814,6 +1818,10 @@ public boolean launchIntercept(final int distance,
           if (textLogger != null) {
             textLogger.addLog(component.getName()
                 + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
           }
         }
         getCurrentShip().useComponent(index);
@@ -1840,6 +1848,10 @@ public boolean launchIntercept(final int distance,
           if (textLogger != null) {
             textLogger.addLog(component.getName()
                 + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
           }
         }
         getCurrentShip().useComponent(index);
@@ -1862,6 +1874,10 @@ public boolean launchIntercept(final int distance,
           if (textLogger != null) {
             textLogger.addLog(component.getName()
                 + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
           }
         }
         getCurrentShip().useComponent(index);
@@ -1884,6 +1900,10 @@ public boolean launchIntercept(final int distance,
           if (textLogger != null) {
             textLogger.addLog(component.getName()
                 + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
           }
         }
         getCurrentShip().useComponent(index);
@@ -1905,6 +1925,10 @@ public boolean launchIntercept(final int distance,
           if (textLogger != null) {
             textLogger.addLog(component.getName()
                 + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
           }
         }
         getCurrentShip().useComponent(index);

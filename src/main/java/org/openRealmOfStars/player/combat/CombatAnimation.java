@@ -12,6 +12,7 @@ import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffectType;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -191,8 +192,15 @@ public class CombatAnimation {
       sx = 4 * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH / 2;
       sy = 4 * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT / 2;
     }
-    ex = end.getX() * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH / 2;
-    ey = end.getY() * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT / 2;
+    if (hitType == ShipDamage.MISSED_ATTACK) {
+      ex = end.getX() * ShipImage.MAX_WIDTH + DiceGenerator.getRandom(
+          ShipImage.MAX_WIDTH - 1);
+      ey = end.getY() * ShipImage.MAX_HEIGHT + DiceGenerator.getRandom(
+          ShipImage.MAX_HEIGHT - 1);
+    } else {
+      ex = end.getX() * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH / 2;
+      ey = end.getY() * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT / 2;
+    }
     double dx = Math.abs(sx - ex);
     double dy = Math.abs(sy - ey);
     distance = (int) dy;

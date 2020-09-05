@@ -148,7 +148,8 @@ public class CombatMapMouseListener extends MouseAdapter
           if (target != null && !target.isCloakOverloaded()
               && combat.isClearShot(combat.getCurrentShip(), target)) {
             int accuracy = combat.calculateAccuracy(ship, weapon, target);
-            shipDamage = new ShipDamage(1, "Attack missed!");
+            shipDamage = new ShipDamage(ShipDamage.MISSED_ATTACK,
+                "Attack missed!");
             if (DiceGenerator.getRandom(1, 100) <= accuracy) {
               shipDamage = target.getShip().damageBy(weapon);
               if (shipDamage.getValue() == ShipDamage.DAMAGED) {

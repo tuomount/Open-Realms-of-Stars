@@ -1304,10 +1304,15 @@ public boolean launchIntercept(final int distance,
    * @param textLogger where logging is added if not null
    * @param infoPanel Infopanel where ship components are shown.
    *        This can be null too.
+   * @param shot AI has shot and animation is on going
    * @return true if shooting was actually done
    */
   public boolean handleAIShoot(final CombatShip ai, final CombatShip target,
-      final Logger textLogger, final BattleInfoPanel infoPanel) {
+      final Logger textLogger, final BattleInfoPanel infoPanel,
+      final boolean shot) {
+    if (shot) {
+      return true;
+    }
     if (target != null) {
       int nComp = ai.getShip().getNumberOfComponents();
       for (int i = 0; i < nComp; i++) {
@@ -1317,7 +1322,8 @@ public boolean launchIntercept(final int distance,
             && isClearShot(ai, target)
             && ai.getShip().componentIsWorking(i)) {
           int accuracy = calculateAccuracy(ai, weapon, target);
-          ShipDamage shipDamage = new ShipDamage(1, "Attack missed!");
+          ShipDamage shipDamage = new ShipDamage(ShipDamage.MISSED_ATTACK,
+              "Attack missed!");
           if (DiceGenerator.getRandom(1, 100) <= accuracy) {
             shipDamage = target.getShip().damageBy(weapon);
             if (shipDamage.getValue() <= ShipDamage.DAMAGED) {
@@ -1532,10 +1538,10 @@ public boolean launchIntercept(final int distance,
           deadliestCoordinate));
       if (range < distance - ai.getMovesLeft() && closest != null
           && !closest.isCloakOverloaded()) {
-        shot = handleAIShoot(ai, closest, textLogger, infoPanel);
+        shot = handleAIShoot(ai, closest, textLogger, infoPanel, shot);
       }
     } else if (closest != null && !closest.isCloakOverloaded()) {
-      shot = handleAIShoot(ai, closest, textLogger, infoPanel);
+      shot = handleAIShoot(ai, closest, textLogger, infoPanel, shot);
     }
     AStarSearch aStar = null;
     if (deadliest != null) {
@@ -1570,13 +1576,13 @@ public boolean launchIntercept(final int distance,
     PathPoint point = aStar.getMove();
     if (ai.getShip().getTacticSpeed() == 0 && deadliest != null
         && !deadliest.isCloakOverloaded()) {
-      shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
+      shot = handleAIShoot(ai, deadliest, textLogger, infoPanel, shot);
     }
     if (point != null && !isBlocked(point.getX(), point.getY())
         && ai.getMovesLeft() > 0) {
       if (deadliest != null && shootDeadliest
           && !deadliest.isCloakOverloaded()) {
-        shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
+        shot = handleAIShoot(ai, deadliest, textLogger, infoPanel, shot);
       }
       if (!shot) {
         // Not moving after shooting
@@ -1602,7 +1608,7 @@ public boolean launchIntercept(final int distance,
         if (shootDeadliest && deadliest != null
             && !deadliest.isCloakOverloaded()) {
           // We still got more shots left, let's shoot the deadliest
-          shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
+          shot = handleAIShoot(ai, deadliest, textLogger, infoPanel, shot);
         } else {
           if (privateer) {
             trader = getClosestTraderShip(info, ai);
@@ -1620,7 +1626,7 @@ public boolean launchIntercept(final int distance,
           closest = getClosestEnemyShip(info, getCurrentShip());
           if (closest != deadliest && closest != null
               && !closest.isCloakOverloaded()) {
-            shot = handleAIShoot(ai, closest, textLogger, infoPanel);
+            shot = handleAIShoot(ai, closest, textLogger, infoPanel, shot);
           }
           if (!shot) {
             // Even closest was too far away, ending the turn now

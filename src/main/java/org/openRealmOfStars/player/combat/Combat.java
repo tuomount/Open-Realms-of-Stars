@@ -1540,6 +1540,14 @@ public boolean launchIntercept(final int distance,
       if (range < distance - ai.getMovesLeft() && closest != null
           && !closest.isCloakOverloaded()) {
         shot = handleAIShoot(ai, closest, textLogger, infoPanel, shot);
+      } else {
+        int index = getCurrentShip().getComponentForUse(
+            ShipComponentType.TARGETING_COMPUTER);
+        if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+            && DiceGenerator.getRandom(99) < 20) {
+          handleOverloading(textLogger, index);
+        }
+
       }
     } else if (closest != null && !closest.isCloakOverloaded()) {
       shot = handleAIShoot(ai, closest, textLogger, infoPanel, shot);

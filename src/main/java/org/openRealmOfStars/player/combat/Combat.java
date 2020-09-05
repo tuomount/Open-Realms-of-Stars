@@ -854,7 +854,7 @@ public boolean launchIntercept(final int distance,
           ShipComponent weapon = new ShipComponent(0, "Orbital defense grid",
               0, 0, ShipComponentType.PLASMA_BEAM);
           weapon.setDamage(1);
-          ShipDamage shipDamage = ship.getShip().damageBy(weapon);
+          ShipDamage shipDamage = ship.getShip().damageBy(weapon, 0);
           if (shipDamage.getValue() <= ShipDamage.DAMAGED) {
             ship.setDamaged();
           }
@@ -1325,7 +1325,8 @@ public boolean launchIntercept(final int distance,
           ShipDamage shipDamage = new ShipDamage(ShipDamage.MISSED_ATTACK,
               "Attack missed!");
           if (DiceGenerator.getRandom(1, 100) <= accuracy) {
-            shipDamage = target.getShip().damageBy(weapon);
+            shipDamage = target.getShip().damageBy(weapon,
+                ai.getOverloadedComputer());
             if (shipDamage.getValue() <= ShipDamage.DAMAGED) {
               target.setDamaged();
             }

@@ -987,23 +987,25 @@ private int increaseHitChanceByComponent() {
   /**
    * Get accuracy for certain weapon
    * @param weapon ShipComponent
+   * @param criticalBonus Critical hit chance bonus.
    * @return 1 No damage, not even dent
    *         0 No damage, but shield or armor got lower
    *         -1 Got damage
    *         -2 Destroyed
    */
-  public ShipDamage damageBy(final ShipComponent weapon) {
+  public ShipDamage damageBy(final ShipComponent weapon,
+      final int criticalBonus) {
     int damage = 0;
     switch (weapon.getType()) {
     case WEAPON_BEAM:
     case WEAPON_PHOTON_TORPEDO: {
       damage = weapon.getDamage();
       damage = damage - this.getShield();
-      int chance = 5 + getExperience();
+      int chance = 5 + getExperience() + criticalBonus;
       if (weapon.getType() == ShipComponentType.WEAPON_BEAM) {
         // Beam weapons have biggest chance to penetrate shields
         // and armor but they have shortest range.
-        chance = 10 + getExperience();
+        chance = 10 + getExperience() + criticalBonus;
       }
       if (damage > 0) {
         this.setShield(this.getShield() - 1);

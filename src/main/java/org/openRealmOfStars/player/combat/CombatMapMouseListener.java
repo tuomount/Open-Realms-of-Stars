@@ -151,7 +151,8 @@ public class CombatMapMouseListener extends MouseAdapter
             shipDamage = new ShipDamage(ShipDamage.MISSED_ATTACK,
                 "Attack missed!");
             if (DiceGenerator.getRandom(1, 100) <= accuracy) {
-              shipDamage = target.getShip().damageBy(weapon);
+              shipDamage = target.getShip().damageBy(weapon,
+                  ship.getOverloadedComputer());
               if (shipDamage.getValue() == ShipDamage.DAMAGED) {
                 target.setDamaged();
               }

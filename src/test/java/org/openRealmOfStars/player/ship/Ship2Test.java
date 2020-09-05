@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2018 Tuomo Untinen
+ * Copyright (C) 2018, 2020 Tuomo Untinen
  * Copyright (C) 2017 Lucas
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -1199,49 +1199,49 @@ public class Ship2Test {
         ship.setArmor(1);
         assertEquals(1, ship.getShield());
         assertEquals(1, ship.getArmor());
-        ship.damageBy(weaponLaser);
+        ship.damageBy(weaponLaser, 0);
         assertEquals(0, ship.getShield());
         assertEquals(1, ship.getArmor());
-        ship.damageBy(weaponLaser);
+        ship.damageBy(weaponLaser, 0);
         assertEquals(0, ship.getShield());
         assertEquals(0, ship.getArmor());
-        ship.damageBy(weaponLaser);
+        ship.damageBy(weaponLaser, 0);
 
         ship.setShield(1);
         ship.setArmor(1);
         assertEquals(1, ship.getShield());
         assertEquals(1, ship.getArmor());
-        ship.damageBy(weaponRailgun);
+        ship.damageBy(weaponRailgun, 0);
         assertEquals(1, ship.getShield());
         assertEquals(0, ship.getArmor());
-        ship.damageBy(weaponRailgun);
+        ship.damageBy(weaponRailgun, 0);
         assertEquals(0, ship.getShield());
         assertEquals(0, ship.getArmor());
-        ship.damageBy(weaponRailgun);
+        ship.damageBy(weaponRailgun, 0);
 
         ship.setShield(1);
         ship.setArmor(1);
         assertEquals(1, ship.getShield());
         assertEquals(1, ship.getArmor());
-        ship.damageBy(weaponPhotoTorpedo);
+        ship.damageBy(weaponPhotoTorpedo, 0);
         assertEquals(0, ship.getShield());
         assertEquals(1, ship.getArmor());
-        ship.damageBy(weaponPhotoTorpedo);
+        ship.damageBy(weaponPhotoTorpedo, 0);
         assertEquals(0, ship.getShield());
         assertEquals(0, ship.getArmor());
-        ship.damageBy(weaponPhotoTorpedo);
+        ship.damageBy(weaponPhotoTorpedo, 0);
 
         ship.setShield(4);
         ship.setArmor(4);
         assertEquals(4, ship.getShield());
         assertEquals(4, ship.getArmor());
-        ship.damageBy(weaponECMTorpedo);
+        ship.damageBy(weaponECMTorpedo, 0);
         assertEquals(1, ship.getShield());
         assertEquals(4, ship.getArmor());
-        ship.damageBy(weaponECMTorpedo);
+        ship.damageBy(weaponECMTorpedo, 0);
         assertEquals(0, ship.getShield());
         assertEquals(4, ship.getArmor());
-        ship.damageBy(weaponECMTorpedo);
+        ship.damageBy(weaponECMTorpedo, 0);
         assertEquals(0, ship.getShield());
         assertEquals(4, ship.getArmor());
 
@@ -1249,13 +1249,13 @@ public class Ship2Test {
         ship.setArmor(2);
         assertEquals(2, ship.getShield());
         assertEquals(2, ship.getArmor());
-        ship.damageBy(weaponHeMissile);
+        ship.damageBy(weaponHeMissile, 0);
         assertEquals(1, ship.getShield());
         assertEquals(1, ship.getArmor());
-        ship.damageBy(weaponHeMissile);
+        ship.damageBy(weaponHeMissile, 0);
         assertEquals(0, ship.getShield());
         assertEquals(0, ship.getArmor());
-        ship.damageBy(weaponHeMissile);
+        ship.damageBy(weaponHeMissile, 0);
         assertEquals(0, ship.getShield());
         assertEquals(0, ship.getArmor());
 

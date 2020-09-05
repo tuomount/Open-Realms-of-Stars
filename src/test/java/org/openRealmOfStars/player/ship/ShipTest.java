@@ -294,27 +294,27 @@ public class ShipTest {
     Ship ship = new Ship(design);
     
     weapon = ShipComponentFactory.createByName("Phasors Mk1");
-    ShipDamage shipDamage = ship.damageBy(weapon);
+    ShipDamage shipDamage = ship.damageBy(weapon, 0);
     assertEquals(true, shipDamage.getValue() >= 0);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
     assertTrue(ship.getTacticalInfo().contains("Damaged:"));
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
-    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
+    shipDamage = ship.damageBy(weapon, 0);
     assertTrue(ship.getTacticalInfo().contains("Failures:"));
   }
 
@@ -339,7 +339,7 @@ public class ShipTest {
     Ship ship = new Ship(design);
     
     weapon = ShipComponentFactory.createByName("Massdrive Mk1");
-    ShipDamage shipDamage = ship.damageBy(weapon);
+    ShipDamage shipDamage = ship.damageBy(weapon, 0);
     assertEquals(true, shipDamage.getValue() >= 0);
   }
 

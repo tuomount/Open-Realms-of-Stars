@@ -27,13 +27,13 @@ import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatAnimation;
+import org.openRealmOfStars.player.combat.CombatAnimationType;
 import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.ShipComponent;
-import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -1312,7 +1312,9 @@ public class MapPanel extends JPanel {
           BufferedImage img = ShipImages
               .getByRace(ship.getShip().getHull().getRace())
               .getShipImage(ship.getShip().getHull().getImageIndex());
-          if (ship.isCloaked()) {
+          if (ship.isCloakOverloaded()) {
+            img = GraphRoutines.greyTransparent(img, transparency);
+          } else if (ship.isCloaked()) {
             img = GraphRoutines.transparent(img, transparency);
           }
           if (ship.isFlipY()) {
@@ -1342,6 +1344,9 @@ public class MapPanel extends JPanel {
               int accuracy = combat.calculateAccuracy(combat.getCurrentShip(),
                   weapon, target);
               String accuracyStr = accuracy + "%";
+              if (accuracy == -1) {
+                accuracyStr = "NO LOCK";
+              }
               int textWidth = (int) GuiStatics.getFontCubellan()
                   .getStringBounds(accuracyStr, gr.getFontRenderContext())
                   .getWidth();
@@ -1379,27 +1384,41 @@ public class MapPanel extends JPanel {
       CombatAnimation anim = combat.getAnimation();
       if (anim.isFirstDraw()) {
         anim.setFirstDraw(false);
-        switch (anim.getWeapon().getType()) {
-        case WEAPON_BEAM: {
+        switch (anim.getType()) {
+        case LASER_BEAM:
+        case PHASOR_BEAM:
+        case ANTIMATTER_BEAM: {
           SoundPlayer.playSound(SoundPlayer.WEAPON_BEAM);
           break;
           }
-        case WEAPON_PHOTON_TORPEDO: {
+        case PHOTON_TORPEDO: {
           SoundPlayer.playSound(SoundPlayer.WEAPON_TORPEDO);
           break;
           }
-        case WEAPON_RAILGUN: {
+        case RAILGUN: {
           SoundPlayer.playSound(SoundPlayer.WEAPON_RAILGUN);
           break;
           }
-        case WEAPON_ECM_TORPEDO:
-        case WEAPON_HE_MISSILE: {
+        case ECM_TORPEDO:
+        case HE_MISSILE: {
           SoundPlayer.playSound(SoundPlayer.WEAPON_MISSILE);
           break;
           }
-        case PRIVATEERING_MODULE: {
+        case PRIVATEERING: {
           //FIXME Change better privateer sound
           SoundPlayer.playSound(SoundPlayer.REPAIR);
+          break;
+          }
+        case LIGHTNING: {
+          SoundPlayer.playSound(SoundPlayer.ELECTRIC);
+          break;
+          }
+        case SHIELD: {
+          SoundPlayer.playShieldSound();
+          break;
+          }
+        case EXPLOSION: {
+          SoundPlayer.playSound(SoundPlayer.EXPLOSION);
           break;
           }
         default: {
@@ -1408,7 +1427,9 @@ public class MapPanel extends JPanel {
         }
       }
 
-      if (anim.getWeapon().getType() == ShipComponentType.WEAPON_BEAM) {
+      if (anim.getType() == CombatAnimationType.ANTIMATTER_BEAM
+          || anim.getType() == CombatAnimationType.LASER_BEAM
+          || anim.getType() == CombatAnimationType.PHASOR_BEAM) {
         Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
         gr.setStroke(full);
@@ -1416,15 +1437,16 @@ public class MapPanel extends JPanel {
         gr.drawLine(anim.getSx() + viewPointOffsetX,
             anim.getSy() + viewPointOffsetY, anim.getEx() + viewPointOffsetX,
             anim.getEy() + viewPointOffsetY);
-      } else if (anim.getWeapon()
-          .getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+      } else if (anim.getType() == CombatAnimationType.PHOTON_TORPEDO) {
         gr.drawImage(GuiStatics.PHOTON_TORPEDO,
             anim.getSx() + viewPointOffsetX
                 - GuiStatics.PHOTON_TORPEDO.getWidth() / 2,
             anim.getSy() + viewPointOffsetY
                 - GuiStatics.PHOTON_TORPEDO.getHeight() / 2,
             null);
-      } else {
+      } else if (anim.getType() == CombatAnimationType.ECM_TORPEDO
+          || anim.getType() == CombatAnimationType.HE_MISSILE
+          || anim.getType() == CombatAnimationType.RAILGUN) {
         gr.setColor(GuiStatics.COLOR_GREY_160);
         Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);

@@ -25,6 +25,10 @@ package org.openRealmOfStars.player.ship;
 public class ShipDamage {
 
   /**
+   * Attack did not hit.
+   */
+  public static final int MISSED_ATTACK = 2;
+  /**
    * Damage did not cause even a dent
    */
   public static final int NO_DAMAGE_NO_DENT = 1;

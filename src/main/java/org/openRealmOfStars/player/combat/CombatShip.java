@@ -5,6 +5,8 @@ import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentType;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
@@ -75,6 +77,14 @@ public class CombatShip implements Comparable<CombatShip> {
    * Bonus accuracy from defending
    */
   private int bonusAccuracy;
+  /**
+   * Bonus from overloaded Jammer.
+   */
+  private int overloadedJammer;
+  /**
+   * Bonus from overloaded targeting computer
+   */
+  private int overloadedComputer;
 
   /**
    * Was ship damaged. Really damage not just some shield hit.
@@ -92,6 +102,23 @@ public class CombatShip implements Comparable<CombatShip> {
    */
   private Leader commander;
 
+  /**
+   * Overload failure chance.
+   */
+  private int overloadFailure;
+
+  /**
+   * Ship's current energy level.
+   */
+  private int energyLevel;
+  /**
+   * Ship has been overloaded.
+   */
+  private boolean isOverloaded;
+  /**
+   * Cloaking device is overloaded.
+   */
+  private boolean cloakOverloaded;
   /**
    * Constructor for Combat ship
    * @param ship Ship to put in combat
@@ -112,7 +139,39 @@ public class CombatShip implements Comparable<CombatShip> {
     this.movesLeft = ship.getTacticSpeed();
     this.setBonusAccuracy(0);
     this.setPrivateeredCredits(0);
+    this.setOverloadFailure(0);
+    this.setEnergyLevel(ship.getTotalEnergy());
+    this.setOverloadedJammer(0);
+    this.setCloakOverloaded(false);
+    this.setOverloadedComputer(0);
     reInitShipForRound();
+  }
+
+  /**
+   * Get ship component for use.
+   * @param type Component Type for use.
+   * @return component index or -1 if not available.
+   */
+  public int getComponentForUse(final ShipComponentType type) {
+    for (int i = 0; i < ship.getNumberOfComponents(); i++) {
+      ShipComponent component = ship.getComponent(i);
+      if (component.getType() == type && ship.componentIsWorking(i)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Get Component for overloading movement.
+   * @return component index or -1 if not available.
+   */
+  public int getOverloadMove() {
+    int index = getComponentForUse(ShipComponentType.THRUSTERS);
+    if (index == -1) {
+      index = getComponentForUse(ShipComponentType.ENGINE);
+    }
+    return index;
   }
 
   /**
@@ -240,9 +299,28 @@ public class CombatShip implements Comparable<CombatShip> {
     if (isCloaked()) {
       sb.append("Cloaked\n");
     }
+    sb.append("\n");
+    sb.append(getOverloadInformation());
     return sb.toString();
   }
 
+  /**
+   * Get overload information of the combat ship.
+   * @return Overload information as string.
+   */
+  public String getOverloadInformation() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Energy reserves: ");
+    if (getEnergyReserve() > 0) {
+      sb.append("+");
+    }
+    sb.append(getEnergyReserve());
+    sb.append("\n");
+    sb.append("Overload failure: ");
+    sb.append(getOverloadFailure());
+    sb.append("/100\n");
+    return sb.toString();
+  }
   /**
    * Get Combat ship description
    * @return String for description
@@ -289,6 +367,8 @@ public class CombatShip implements Comparable<CombatShip> {
     if (isCloaked()) {
       sb.append("Cloaked\n");
     }
+    sb.append("\n");
+    sb.append(getOverloadInformation());
     return sb.toString();
   }
 
@@ -302,9 +382,60 @@ public class CombatShip implements Comparable<CombatShip> {
 
   /**
    * Reinitialize ship for next round
+   * @return CombatAnimation or null
    */
-  public void reInitShipForRound() {
+  public CombatAnimation reInitShipForRound() {
     int weapons = 0;
+    setOverloadedJammer(0);
+    setCloakOverloaded(false);
+    if (getEnergyLevel() > ship.getTotalEnergy()) {
+      setEnergyLevel(ship.getTotalEnergy());
+    }
+    if (getEnergyReserve() < 0) {
+      int chance = 0;
+      switch (getEnergyReserve()) {
+        case -1: {
+          chance = 10;
+          break;
+        }
+        case -2: {
+          chance = 20;
+          break;
+        }
+        case -3: {
+          chance = 40;
+          break;
+        }
+        case -4: {
+          chance = 80;
+          break;
+        }
+        default: {
+          chance = 100;
+          break;
+        }
+      }
+      int value = DiceGenerator.getRandom(99);
+      if (value < chance) {
+        setMovesLeft(0);
+        componentUsed = new boolean[ship.getNumberOfComponents()];
+        for (int i = 0; i < componentUsed.length; i++) {
+          componentUsed[i] = true;
+        }
+        setAiShotsLeft(0);
+        getShip().setShield(0);
+        setEnergyLevel(getEnergyLevel() - getEnergyReserve());
+        setOverloaded(true);
+        // Ship is basically useless for this turn.
+        CombatAnimation animation = new CombatAnimation(this, this,
+            CombatAnimationType.LIGHTNING, 1);
+        return animation;
+      }
+    }
+    if (getEnergyLevel() < ship.getTotalEnergy() && !hasOverloaded()) {
+      setEnergyLevel(getEnergyLevel() + 1);
+    }
+    setOverloaded(false);
     if (ship.isStarBase() && ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
       setMovesLeft(0);
     } else {
@@ -325,6 +456,7 @@ public class CombatShip implements Comparable<CombatShip> {
     }
     ship.regenerateShield();
     damaged = false;
+    return null;
   }
 
   /**
@@ -349,6 +481,22 @@ public class CombatShip implements Comparable<CombatShip> {
     }
   }
 
+  /**
+   * Is overload failure. This should be checked before making overload.
+   * This will automatically increase/decrease overload failure if needed.
+   * @param index Ship Component index
+   * @return True if overload failure happened
+   */
+  public boolean isOverloadFailure(final int index) {
+    int value = DiceGenerator.getRandom(99);
+    if (value < getOverloadFailure()) {
+      getShip().oneDamage(index);
+      setOverloadFailure(getOverloadFailure() / 2);
+      return true;
+    }
+    setOverloadFailure(getOverloadFailure() + 5);
+    return false;
+  }
   /**
    * Define how many moves combat ship has left for this round
    * @param movesLeft For this round
@@ -445,6 +593,22 @@ public class CombatShip implements Comparable<CombatShip> {
   }
 
   /**
+   * Is cloaking device overloaded?
+   * @return the cloakOverloaded
+   */
+  public boolean isCloakOverloaded() {
+    return cloakOverloaded;
+  }
+
+  /**
+   * Set flag value if cloaking device is overloaded.
+   * @param cloakOverloaded the cloakOverloaded to set
+   */
+  public void setCloakOverloaded(final boolean cloakOverloaded) {
+    this.cloakOverloaded = cloakOverloaded;
+  }
+
+  /**
    * Get Last available cloacking device index number.
    * @return Index number or -1 if not available.
    */
@@ -458,5 +622,103 @@ public class CombatShip implements Comparable<CombatShip> {
       }
     }
     return index;
+  }
+
+  /**
+   * Get overload failure chance.
+   * Failure chance is between 0-100.
+   * @return the overloadFailure
+   */
+  public int getOverloadFailure() {
+    return overloadFailure;
+  }
+
+  /**
+   * Set overload failure chance;
+   * @param overloadFailure the overloadFailure to set
+   */
+  public void setOverloadFailure(final int overloadFailure) {
+    this.overloadFailure = overloadFailure;
+    if (this.overloadFailure > 100) {
+      this.overloadFailure = 100;
+    }
+    if (this.overloadFailure < 0) {
+      this.overloadFailure = 0;
+    }
+  }
+
+  /**
+   * Get ship's current energy level.
+   * @return the energyLevel
+   */
+  public int getEnergyLevel() {
+    return energyLevel;
+  }
+
+  /**
+   * @param energyLevel the energyLevel to set
+   */
+  public void setEnergyLevel(final int energyLevel) {
+    this.energyLevel = energyLevel;
+  }
+
+  /**
+   * Calculates current energy reserve.
+   * There is energy just enough if this is zero.
+   * Negative means that there isn't enough, energy overload can happen.
+   * Positive means that there is surplus energy left. Overloading components
+   * is possible.
+   * @return Energy reserve
+   */
+  public int getEnergyReserve() {
+    return energyLevel - ship.getEnergyConsumption();
+  }
+
+  /**
+   * Get Overloaded jammer defense.
+   * @return the overloadedJammer
+   */
+  public int getOverloadedJammer() {
+    return overloadedJammer;
+  }
+
+  /**
+   * Set Overloaded jammer defense.
+   * @param overloadedJammer the overloadedJammer to set
+   */
+  public void setOverloadedJammer(final int overloadedJammer) {
+    this.overloadedJammer = overloadedJammer;
+  }
+
+  /**
+   * Has ship overloaded during this turn?
+   * @return the hasOverloaded
+   */
+  public boolean hasOverloaded() {
+    return isOverloaded;
+  }
+
+  /**
+   * Set overload flag
+   * @param hasOverloaded the hasOverloaded to set
+   */
+  public void setOverloaded(final boolean hasOverloaded) {
+    this.isOverloaded = hasOverloaded;
+  }
+
+  /**
+   * Get overloaded targeting computer bonus.
+   * @return the overloadedComputer
+   */
+  public int getOverloadedComputer() {
+    return overloadedComputer;
+  }
+
+  /**
+   * Set overloaded targeting computer bonus.
+   * @param overloadedComputer the overloadedComputer to set
+   */
+  public void setOverloadedComputer(final int overloadedComputer) {
+    this.overloadedComputer = overloadedComputer;
   }
 }

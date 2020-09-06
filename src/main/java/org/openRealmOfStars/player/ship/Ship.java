@@ -603,6 +603,23 @@ private int getRemainingEnergy(final int index) {
   }
 
   /**
+   * Get current energy consumpition based on component priority
+   * order. This never cannot be more than total energy.
+   * @return Total energy consumption.
+   */
+  public int getEnergyConsumption() {
+    int energy = getTotalEnergy();
+    int energyConsumption = 0;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && energy >= comp.getEnergyRequirement()) {
+        energy = energy - comp.getEnergyRequirement();
+        energyConsumption = energyConsumption + comp.getEnergyRequirement();
+      }
+    }
+    return energyConsumption;
+  }
+  /**
    * Get Speed depending on hull points and energy level
    * @return Speed
    */
@@ -970,23 +987,25 @@ private int increaseHitChanceByComponent() {
   /**
    * Get accuracy for certain weapon
    * @param weapon ShipComponent
+   * @param criticalBonus Critical hit chance bonus.
    * @return 1 No damage, not even dent
    *         0 No damage, but shield or armor got lower
    *         -1 Got damage
    *         -2 Destroyed
    */
-  public ShipDamage damageBy(final ShipComponent weapon) {
+  public ShipDamage damageBy(final ShipComponent weapon,
+      final int criticalBonus) {
     int damage = 0;
     switch (weapon.getType()) {
     case WEAPON_BEAM:
     case WEAPON_PHOTON_TORPEDO: {
       damage = weapon.getDamage();
       damage = damage - this.getShield();
-      int chance = 5 + getExperience();
+      int chance = 5 + getExperience() + criticalBonus;
       if (weapon.getType() == ShipComponentType.WEAPON_BEAM) {
         // Beam weapons have biggest chance to penetrate shields
         // and armor but they have shortest range.
-        chance = 10 + getExperience();
+        chance = 10 + getExperience() + criticalBonus;
       }
       if (damage > 0) {
         this.setShield(this.getShield() - 1);
@@ -1093,6 +1112,16 @@ private int increaseHitChanceByComponent() {
     return shipDamage;
   }
 
+  /**
+   * Make one damage on single ship component.
+   * This only works if component has hull points left.
+   * @param index Ship component index.
+   */
+  public void oneDamage(final int index) {
+    if (index >= 0 && index < hullPoints.length && hullPoints[index] > 0) {
+      hullPoints[index]--;
+    }
+  }
   /**
    * Get defense value for ship
    * @return defense value for ship

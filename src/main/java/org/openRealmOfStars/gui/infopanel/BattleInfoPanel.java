@@ -23,7 +23,7 @@ import org.openRealmOfStars.player.ship.ShipImage;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017 Tuomo Untinen
+ * Copyright (C) 2016-2018, 2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -89,10 +89,11 @@ public class BattleInfoPanel extends InfoPanel {
    * combat ship
    * @param ship CombatShip which information is shown
    * @param shipInfo TextArea where longer description can be shown
+   * @param overloadInfo TextArea where overload info is being shown
    * @param listener ActionListener for weapons and other components
    */
   public BattleInfoPanel(final Ship ship, final InfoTextArea shipInfo,
-      final ActionListener listener) {
+      final InfoTextArea overloadInfo, final ActionListener listener) {
     this.add(Box.createRigidArea(new Dimension(RIGID_BOX_WIDTH,
         RIGID_BOX_HEIGHT)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
@@ -113,6 +114,10 @@ public class BattleInfoPanel extends InfoPanel {
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(textArea);
+    if (overloadInfo != null) {
+      this.add(Box.createRigidArea(new Dimension(10, 10)));
+      this.add(overloadInfo);
+    }
     this.add(Box.createRigidArea(new Dimension(10, 10)));
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new GridLayout(6, 2));
@@ -127,6 +132,7 @@ public class BattleInfoPanel extends InfoPanel {
       this.add(Box.createRigidArea(new Dimension(10, 10)));
       this.add(shipInfo);
     }
+    showShip(ship);
   }
 
   /**

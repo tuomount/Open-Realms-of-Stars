@@ -459,7 +459,8 @@ public boolean launchIntercept(final int distance,
     CombatShip strongestShip = null;
     for (CombatShip ship : combatShipList) {
       if (ship.getPlayer() != info
-          && ship.getShip().getTotalMilitaryPower() > strongestPower) {
+          && ship.getShip().getTotalMilitaryPower() > strongestPower
+          && !ship.isCloakOverloaded()) {
         strongestShip = ship;
         strongestPower = strongestShip.getShip().getTotalMilitaryPower();
       }
@@ -598,7 +599,10 @@ public boolean launchIntercept(final int distance,
       defenderEscaped = true;
     }
     if (getCurrentShip() != null) {
-      getCurrentShip().reInitShipForRound();
+      CombatAnimation anim = getCurrentShip().reInitShipForRound();
+      if (anim != null) {
+        setAnimation(anim);
+      }
     }
     if (isCombatOver()) {
       handleEndCombat();
@@ -650,6 +654,20 @@ public boolean launchIntercept(final int distance,
   private static final int MAX_DISTANCE = 999;
 
   /**
+   * Calculates distance between two combat ships
+   * @param from From where
+   * @param to To which ship
+   * @return Distance in double
+   */
+  private double calculateDistance(final CombatShip from,
+      final CombatShip to) {
+    CombatCoordinate centerCoordinate =
+        new CombatCoordinate(from.getX(), from.getY());
+    CombatCoordinate toCoordinate =
+        new CombatCoordinate(to.getX(), to.getY());
+    return centerCoordinate.calculateDistance(toCoordinate);
+  }
+  /**
    * Get the closest enemy ship
    * @param info Player info who is doing the comparison
    * @param friendlyShip Where to start looking the closet one
@@ -660,13 +678,8 @@ public boolean launchIntercept(final int distance,
     double maxDistance = MAX_DISTANCE;
     CombatShip enemyShip = null;
     for (CombatShip ship : combatShipList) {
-      if (ship.getPlayer() != info) {
-        CombatCoordinate centerCoordinate =
-                new CombatCoordinate(friendlyShip.getX(),
-            friendlyShip.getY());
-        CombatCoordinate shipCoordinate =
-                new CombatCoordinate(ship.getX(), ship.getY());
-        double distance = centerCoordinate.calculateDistance(shipCoordinate);
+      if (ship.getPlayer() != info && !ship.isCloakOverloaded()) {
+        double distance = calculateDistance(friendlyShip, ship);
         if (distance < maxDistance) {
           enemyShip = ship;
           maxDistance = distance;
@@ -688,13 +701,8 @@ public boolean launchIntercept(final int distance,
     double maxDistance = MAX_DISTANCE;
     CombatShip enemyShip = null;
     for (CombatShip ship : combatShipList) {
-      if (ship.getPlayer() != info) {
-        CombatCoordinate centerCoordinate =
-                new CombatCoordinate(friendlyShip.getX(),
-            friendlyShip.getY());
-        CombatCoordinate shipCoordinate =
-                new CombatCoordinate(ship.getX(), ship.getY());
-        double distance = centerCoordinate.calculateDistance(shipCoordinate);
+      if (ship.getPlayer() != info && !ship.isCloakOverloaded()) {
+        double distance = calculateDistance(friendlyShip, ship);
         int cargo = ship.getShip().getCargoType();
         boolean cargoToSteal = false;
         if (cargo == Ship.CARGO_TYPE_METAL
@@ -846,7 +854,7 @@ public boolean launchIntercept(final int distance,
           ShipComponent weapon = new ShipComponent(0, "Orbital defense grid",
               0, 0, ShipComponentType.PLASMA_BEAM);
           weapon.setDamage(1);
-          ShipDamage shipDamage = ship.getShip().damageBy(weapon);
+          ShipDamage shipDamage = ship.getShip().damageBy(weapon, 0);
           if (shipDamage.getValue() <= ShipDamage.DAMAGED) {
             ship.setDamaged();
           }
@@ -884,7 +892,11 @@ public boolean launchIntercept(final int distance,
     }
     CombatShip ship = getCurrentShip();
     if (ship != null) {
-      ship.reInitShipForRound();
+      CombatAnimation anim = ship.reInitShipForRound();
+      if (anim != null) {
+        setAnimation(anim);
+      }
+
     }
   }
 
@@ -1273,11 +1285,15 @@ public boolean launchIntercept(final int distance,
       accuracy = accuracy - 5;
     }
     accuracy = accuracy - target.getShip().getDefenseValue();
+    accuracy = accuracy - target.getOverloadedJammer();
     if (target.isCloaked()) {
       accuracy = accuracy - 5;
     }
     if (accuracy < 5) {
       accuracy = 5;
+    }
+    if (target.isCloakOverloaded()) {
+      accuracy = -1;
     }
     return accuracy;
   }
@@ -1288,10 +1304,15 @@ public boolean launchIntercept(final int distance,
    * @param textLogger where logging is added if not null
    * @param infoPanel Infopanel where ship components are shown.
    *        This can be null too.
+   * @param shot AI has shot and animation is on going
    * @return true if shooting was actually done
    */
   public boolean handleAIShoot(final CombatShip ai, final CombatShip target,
-      final Logger textLogger, final BattleInfoPanel infoPanel) {
+      final Logger textLogger, final BattleInfoPanel infoPanel,
+      final boolean shot) {
+    if (shot) {
+      return true;
+    }
     if (target != null) {
       int nComp = ai.getShip().getNumberOfComponents();
       for (int i = 0; i < nComp; i++) {
@@ -1301,9 +1322,11 @@ public boolean launchIntercept(final int distance,
             && isClearShot(ai, target)
             && ai.getShip().componentIsWorking(i)) {
           int accuracy = calculateAccuracy(ai, weapon, target);
-          ShipDamage shipDamage = new ShipDamage(1, "Attack missed!");
+          ShipDamage shipDamage = new ShipDamage(ShipDamage.MISSED_ATTACK,
+              "Attack missed!");
           if (DiceGenerator.getRandom(1, 100) <= accuracy) {
-            shipDamage = target.getShip().damageBy(weapon);
+            shipDamage = target.getShip().damageBy(weapon,
+                ai.getOverloadedComputer());
             if (shipDamage.getValue() <= ShipDamage.DAMAGED) {
               target.setDamaged();
             }
@@ -1317,6 +1340,7 @@ public boolean launchIntercept(final int distance,
           setAnimation(
               new CombatAnimation(ai, target, weapon, shipDamage.getValue()));
           ai.useComponent(i);
+          ai.setCloakOverloaded(false);
           if (infoPanel != null) {
             infoPanel.useComponent(i);
           }
@@ -1513,11 +1537,20 @@ public boolean launchIntercept(final int distance,
           deadliest.getY());
       int distance = (int) Math.round(aiCoordinate.calculateDistance(
           deadliestCoordinate));
-      if (range < distance - ai.getMovesLeft() && closest != null) {
-        shot = handleAIShoot(ai, closest, textLogger, infoPanel);
+      if (range < distance - ai.getMovesLeft() && closest != null
+          && !closest.isCloakOverloaded()) {
+        shot = handleAIShoot(ai, closest, textLogger, infoPanel, shot);
+      } else {
+        int index = getCurrentShip().getComponentForUse(
+            ShipComponentType.TARGETING_COMPUTER);
+        if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+            && DiceGenerator.getRandom(99) < 20) {
+          handleOverloading(textLogger, index);
+        }
+
       }
-    } else if (closest != null) {
-      shot = handleAIShoot(ai, closest, textLogger, infoPanel);
+    } else if (closest != null && !closest.isCloakOverloaded()) {
+      shot = handleAIShoot(ai, closest, textLogger, infoPanel, shot);
     }
     AStarSearch aStar = null;
     if (deadliest != null) {
@@ -1533,14 +1566,32 @@ public boolean launchIntercept(final int distance,
       endRound(textLogger);
       return true;
     }
+    if (deadliest != null
+        && deadliest.getShip().getTotalMilitaryPower()
+        < ai.getShip().getTotalMilitaryPower()
+        && calculateDistance(ai, deadliest) > ai.getMovesLeft() + 1) {
+      // Overload movement
+      int index = getCurrentShip().getOverloadMove();
+      int energyReq = 1;
+      if (index != -1 && getCurrentShip().getShip().getComponent(
+          index).getType() == ShipComponentType.THRUSTERS) {
+        energyReq = 0;
+      }
+      if (index != -1 && getCurrentShip().getEnergyReserve() >= energyReq
+          && DiceGenerator.getRandom(99) < 20) {
+        handleOverloading(textLogger, index);
+      }
+    }
     PathPoint point = aStar.getMove();
-    if (ai.getShip().getTacticSpeed() == 0) {
-      shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
+    if (ai.getShip().getTacticSpeed() == 0 && deadliest != null
+        && !deadliest.isCloakOverloaded()) {
+      shot = handleAIShoot(ai, deadliest, textLogger, infoPanel, shot);
     }
     if (point != null && !isBlocked(point.getX(), point.getY())
         && ai.getMovesLeft() > 0) {
-      if (shootDeadliest) {
-        shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
+      if (deadliest != null && shootDeadliest
+          && !deadliest.isCloakOverloaded()) {
+        shot = handleAIShoot(ai, deadliest, textLogger, infoPanel, shot);
       }
       if (!shot) {
         // Not moving after shooting
@@ -1563,9 +1614,10 @@ public boolean launchIntercept(final int distance,
         && getAnimation() == null) {
       if (ai.getAiShotsLeft() > 0) {
         shot = false;
-        if (shootDeadliest) {
+        if (shootDeadliest && deadliest != null
+            && !deadliest.isCloakOverloaded()) {
           // We still got more shots left, let's shoot the deadliest
-          shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
+          shot = handleAIShoot(ai, deadliest, textLogger, infoPanel, shot);
         } else {
           if (privateer) {
             trader = getClosestTraderShip(info, ai);
@@ -1581,29 +1633,76 @@ public boolean launchIntercept(final int distance,
         if (!shot) {
           // Deadliest wasn't close enough, let's shoot the closest
           closest = getClosestEnemyShip(info, getCurrentShip());
-          if (closest != deadliest) {
-            shot = handleAIShoot(ai, closest, textLogger, infoPanel);
+          if (closest != deadliest && closest != null
+              && !closest.isCloakOverloaded()) {
+            shot = handleAIShoot(ai, closest, textLogger, infoPanel, shot);
           }
           if (!shot) {
             // Even closest was too far away, ending the turn now
             aStar = null;
+            if (closest != null) {
+              overloadDefense(textLogger, closest);
+            }
             endRound(textLogger);
             return true;
           }
         }
       } else {
         aStar = null;
+        if (deadliest != null) {
+          overloadDefense(textLogger, deadliest);
+        }
         endRound(textLogger);
         return true;
       }
     }
     if (getAnimation() == null && ai.getAiShotsLeft() == 0
         && ai.getMovesLeft() == 0) {
+      if (deadliest != null) {
+        overloadDefense(textLogger, deadliest);
+      }
       endRound(textLogger);
     }
     return false;
   }
 
+  /**
+   * Overload ship's possible defenses if needed
+   * @param textLogger where logging is added if not null
+   * @param attacker CombatShip which is the biggest threat.
+   */
+  private void overloadDefense(final Logger textLogger,
+      final CombatShip attacker) {
+    if (getCurrentShip().getShip().getShield() < getCurrentShip()
+        .getShip().getTotalShield()) {
+      // Faster shield generating
+      int index = getCurrentShip().getComponentForUse(
+          ShipComponentType.SHIELD);
+      if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+          && DiceGenerator.getRandom(99) < 20) {
+        handleOverloading(textLogger, index);
+      }
+    }
+    if (attacker != null
+        && calculateDistance(getCurrentShip(), attacker) < 3) {
+      // Better defense
+      int index = getCurrentShip().getComponentForUse(
+          ShipComponentType.JAMMER);
+      boolean overloaded = false;
+      if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+          && DiceGenerator.getRandom(99) < 20) {
+        overloaded = handleOverloading(textLogger, index);
+      }
+      if (!overloaded) {
+        index = getCurrentShip().getComponentForUse(
+            ShipComponentType.CLOAKING_DEVICE);
+        if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+            && DiceGenerator.getRandom(99) < 20) {
+          overloaded = handleOverloading(textLogger, index);
+        }
+      }
+    }
+  }
   /**
    * AI handling for non military ships.
    * @param textLogger where logging is added if not null
@@ -1634,6 +1733,15 @@ public boolean launchIntercept(final int distance,
       endRound(textLogger);
       return true;
     }
+    if (wormHole != null) {
+      // Overload movement
+      int index = getCurrentShip().getOverloadMove();
+      if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+          && DiceGenerator.getRandom(99) < 20) {
+        handleOverloading(textLogger, index);
+      }
+    }
+    overloadDefense(textLogger, closest);
     PathPoint point = aStar.getMove();
     if (point != null && !isBlocked(point.getX(), point.getY())
         && ai.getMovesLeft() > 0) {
@@ -1673,6 +1781,179 @@ public boolean launchIntercept(final int distance,
     return false;
   }
 
+  /**
+   * Handle Overloading of component.
+   * @param textLogger TextLogger for giving out the information
+   * @param index Ship component index for overloading
+   * @return True if overloading handled
+   */
+  public boolean handleOverloading(final Logger textLogger, final int index) {
+    if (!getCurrentShip().isComponentUsed(index)) {
+      ShipComponent component = getCurrentShip().getShip()
+          .getComponent(index);
+      Ship ship = getCurrentShip().getShip();
+      if (component.getType() == ShipComponentType.ENGINE
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 1) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 2);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          getCurrentShip().setMovesLeft(
+              getCurrentShip().getMovesLeft() + 1);
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playSound(SoundPlayer.ENGINE_OVERLOAD);
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
+      if (component.getType() == ShipComponentType.THRUSTERS
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 0) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 1);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          getCurrentShip().setMovesLeft(
+              getCurrentShip().getMovesLeft() + 1);
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playSound(SoundPlayer.ENGINE_OVERLOAD);
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
+      if (component.getType() == ShipComponentType.SHIELD
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 0
+          && ship.getShield() < ship.getTotalShield()) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 1);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          ship.setShield(ship.getShield() + 1);
+          CombatAnimation shieldAnim = new CombatAnimation(
+              getCurrentShip(), getCurrentShip(), CombatAnimationType.SHIELD,
+              1);
+          setAnimation(shieldAnim);
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playShieldSound();
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
+      if (component.getType() == ShipComponentType.JAMMER
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 0) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 1);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          getCurrentShip().setOverloadedJammer(
+              component.getDefenseValue() * 3);
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playSound(SoundPlayer.JAMMER_OVERLOAD);
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
+      if (component.getType() == ShipComponentType.TARGETING_COMPUTER
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 0) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 1);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          getCurrentShip().setOverloadedComputer(
+              component.getDamage());
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playSound(SoundPlayer.COMPUTER_OVERLOAD);
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
+      if (component.getType() == ShipComponentType.CLOAKING_DEVICE
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 0) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 2);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          getCurrentShip().setCloakOverloaded(true);
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playSound(SoundPlayer.CLOAK_OVERLOAD);
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
+    }
+    return false;
+  }
   /**
    * @param textLogger where logging is added if not null
    * @param infoPanel Infopanel where ship components are shown.

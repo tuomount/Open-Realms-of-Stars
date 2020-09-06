@@ -24,6 +24,7 @@ import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatMapMouseListener;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -116,6 +117,11 @@ public class BattleView extends BlackPanel {
   private InfoTextArea textArea;
 
   /**
+   * Text area containing overload information.
+   */
+  private InfoTextArea overloadInfo;
+
+  /**
    * Text area containing combat log
    */
   private InfoTextArea logArea;
@@ -192,8 +198,11 @@ public class BattleView extends BlackPanel {
     textArea = new InfoTextArea(10, 30);
     textArea.setEditable(false);
     textArea.setLineWrap(true);
+    overloadInfo = new InfoTextArea(3, 30);
+    overloadInfo.setEditable(false);
+    overloadInfo.setLineWrap(true);
     infoPanel = new BattleInfoPanel(combat.getCurrentShip().getShip(), textArea,
-        listener);
+        overloadInfo, listener);
 
     combatMapMouseListener = new CombatMapMouseListener(combat, mapPanel,
         infoPanel);
@@ -227,6 +236,10 @@ public class BattleView extends BlackPanel {
     this.add(bottom, BorderLayout.SOUTH);
     delayCount = 0;
     textLogger.addLog(INITIAL_LOG_MESSAGE);
+    if (combat.getCurrentShip() != null) {
+      infoPanel.showShip(combat.getCurrentShip().getShip());
+      updateOverloadInfo();
+    }
   }
 
   /**
@@ -266,6 +279,7 @@ public class BattleView extends BlackPanel {
       combatMapMouseListener.setComponentUse(-1);
       if (combat.getCurrentShip() != null) {
         infoPanel.showShip(combat.getCurrentShip().getShip());
+        updateOverloadInfo();
       }
     }
   }
@@ -281,6 +295,7 @@ public class BattleView extends BlackPanel {
     combatMapMouseListener.setComponentUse(-1);
     if (combat.getCurrentShip() != null) {
       infoPanel.showShip(combat.getCurrentShip().getShip());
+      updateOverloadInfo();
     }
     this.repaint();
   }
@@ -294,6 +309,24 @@ public class BattleView extends BlackPanel {
   }
 
   /**
+   * Handle overload info, updates text and colors.
+   */
+  public void updateOverloadInfo() {
+    if (combat.getCurrentShip().getEnergyReserve() > 0) {
+      overloadInfo.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
+          GuiStatics.COLOR_GREEN_TEXT_DARK);
+    } else if (combat.getCurrentShip().getEnergyReserve() < 0) {
+      overloadInfo.setTextColor(GuiStatics.COLOR_RED_TEXT,
+          GuiStatics.COLOR_RED_TEXT_DARK);
+    } else {
+      overloadInfo.setTextColor(GuiStatics.COLOR_YELLOW_TEXT,
+          GuiStatics.COLOR_YELLOW_TEXT_DARK);
+    }
+    overloadInfo.setText(
+        combat.getCurrentShip().getOverloadInformation());
+    overloadInfo.repaint();
+  }
+  /**
    * Handle actions for battle view
    * @param arg0 Active Event
    */
@@ -304,6 +337,8 @@ public class BattleView extends BlackPanel {
         combatMapMouseListener.setComponentUse(-1);
         if (combat.getCurrentShip() != null) {
           infoPanel.showShip(combat.getCurrentShip().getShip());
+          overloadInfo.setText(
+              combat.getCurrentShip().getOverloadInformation());
         }
         this.repaint();
         combatMapMouseListener.setEscaped(false);
@@ -354,10 +389,23 @@ public class BattleView extends BlackPanel {
           && combat.getCurrentShip().getShip().componentIsWorking(index)) {
         combatMapMouseListener.setComponentUse(index);
         combat.setComponentUse(index);
+        ShipComponent component = combat.getCurrentShip().getShip(
+            ).getComponent(index);
         if (combat.getCurrentShip().getShip().isStarBase()
             && !combat.getCurrentShip().getShip().getFlag(
-                Ship.FLAG_STARBASE_DEPLOYED)) {
+                Ship.FLAG_STARBASE_DEPLOYED)
+            && component.isWeapon()) {
           textLogger.addLog("Undeployed Starbase cannot use weapons!");
+          combatMapMouseListener.setComponentUse(-1);
+          combat.setComponentUse(-1);
+          return;
+        }
+        if (combat.handleOverloading(textLogger, index)) {
+          updateOverloadInfo();
+          infoPanel.useComponent(index);
+          combatMapMouseListener.setComponentUse(-1);
+          combat.setComponentUse(-1);
+        } else if (!component.isWeapon() && !component.isPrivateer()) {
           combatMapMouseListener.setComponentUse(-1);
           combat.setComponentUse(-1);
         }

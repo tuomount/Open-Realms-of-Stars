@@ -177,6 +177,9 @@ Homarian Space Ship Bridge by Tuomo Untinen
 
 Spinosaurus by Tuomo Untinen
 
+Lightning animation from Sci-fi effects by Skorpio
+https://opengameart.org/content/sci-fi-effects
+Licensed under CC BY 4.0
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 
@@ -274,6 +277,12 @@ Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
 Glitch sound by Tuomo Untinen(CC0)
 
+Electricity Sound Effects by Erich Izdepski
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
+Overloaded engine, jammer, targeting computer and cloaking device
+sounds from 50 CC0 SFX #2 by Rubberduck (CC0)
+
 # Musics By
 
 Observing The Star by
@@ -365,7 +374,7 @@ Set Fire to Reality - dark/electronic by
 Justin Dalessandro(ColdOneK)
 Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
-Death Is Jut Another Path by 
+Death Is Just Another Path by 
 Otto Halmen
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 

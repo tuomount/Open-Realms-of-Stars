@@ -8,7 +8,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016-2018  Tuomo Untinen
+* Copyright (C) 2016-2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -201,6 +201,34 @@ public final class SoundPlayer {
    */
   public static final String GLITCH = "/resources/sounds/glitch.wav";
 
+  /**
+   * Sound effect for electric burst.
+   */
+  public static final String ELECTRIC = "/resources/sounds/electric.wav";
+
+  /**
+   * Sound effect for computer overload
+   */
+  public static final String COMPUTER_OVERLOAD =
+      "/resources/sounds/computer_overload.wav";
+
+  /**
+   * Sound effect for engine overload
+   */
+  public static final String ENGINE_OVERLOAD =
+      "/resources/sounds/engine_overload.wav";
+
+  /**
+   * Sound effect for jammer overload
+   */
+  public static final String JAMMER_OVERLOAD =
+      "/resources/sounds/jammer_overload.wav";
+
+  /**
+   * Sound effect for cloak overload
+   */
+  public static final String CLOAK_OVERLOAD =
+      "/resources/sounds/cloak_overload.wav";
 
   /**
    * Is Sound enabled

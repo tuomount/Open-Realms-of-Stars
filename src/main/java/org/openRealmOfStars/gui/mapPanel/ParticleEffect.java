@@ -105,6 +105,22 @@ public class ParticleEffect {
           .getRandom(GuiStatics.EXPLOSION_COLORS.length - 1)];
       break;
     }
+    case ION_PARTICLE: {
+      mx = DiceGenerator.getRandom(5, 40);
+      mx = mx / 10;
+      my = DiceGenerator.getRandom(5, 40);
+      my = my / 10;
+      if (DiceGenerator.getRandom(1) == 0) {
+        mx = mx * -1;
+      }
+      if (DiceGenerator.getRandom(1) == 0) {
+        my = my * -1;
+      }
+      ttl = DiceGenerator.getRandom(5, 15);
+      color = GuiStatics.BLUE_BEAM_COLORS[DiceGenerator
+          .getRandom(GuiStatics.BLUE_BEAM_COLORS.length - 1)];
+      break;
+    }
     case LASER_PARTICLE: {
       mx = 0;
       my = 0;

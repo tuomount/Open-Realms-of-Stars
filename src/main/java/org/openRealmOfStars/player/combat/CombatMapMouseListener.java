@@ -145,12 +145,14 @@ public class CombatMapMouseListener extends MouseAdapter
             && !ship.isComponentUsed(componentUse)) {
           CombatShip target = combat.getShipFromCoordinate(combat.getCursorX(),
               combat.getCursorY());
-          if (target != null
+          if (target != null && !target.isCloakOverloaded()
               && combat.isClearShot(combat.getCurrentShip(), target)) {
             int accuracy = combat.calculateAccuracy(ship, weapon, target);
-            shipDamage = new ShipDamage(1, "Attack missed!");
+            shipDamage = new ShipDamage(ShipDamage.MISSED_ATTACK,
+                "Attack missed!");
             if (DiceGenerator.getRandom(1, 100) <= accuracy) {
-              shipDamage = target.getShip().damageBy(weapon);
+              shipDamage = target.getShip().damageBy(weapon,
+                  ship.getOverloadedComputer());
               if (shipDamage.getValue() == ShipDamage.DAMAGED) {
                 target.setDamaged();
               }
@@ -159,6 +161,7 @@ public class CombatMapMouseListener extends MouseAdapter
             combat.setAnimation(new CombatAnimation(ship, target, weapon,
                 shipDamage.getValue()));
             ship.useComponent(componentUse);
+            ship.setCloakOverloaded(false);
             battleInfoPanel.useComponent(componentUse);
             componentUse = -1;
             combat.setComponentUse(-1);

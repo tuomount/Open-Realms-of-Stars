@@ -1683,7 +1683,8 @@ public boolean launchIntercept(final int distance,
         handleOverloading(textLogger, index);
       }
     }
-    if (calculateDistance(getCurrentShip(), attacker) < 3) {
+    if (attacker != null
+        && calculateDistance(getCurrentShip(), attacker) < 3) {
       // Better defense
       int index = getCurrentShip().getComponentForUse(
           ShipComponentType.JAMMER);

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 
@@ -102,7 +103,16 @@ public final class IOUtilities {
       throws IOException {
     byte[] dataBuf = new byte[is.available()];
     is.readFully(dataBuf);
-    return new String(dataBuf, "US-ASCII");
+    int offset = 0;
+    int length = dataBuf.length;
+    Charset charset = StandardCharsets.US_ASCII;
+    if (dataBuf.length > 3 && dataBuf[0] == -17 && dataBuf[1] == -69
+        && dataBuf[2] == -65) {
+      charset = StandardCharsets.UTF_8;
+      offset = 3;
+      length = dataBuf.length - offset;
+    }
+    return new String(dataBuf, offset, length, charset);
   }
 
   /**

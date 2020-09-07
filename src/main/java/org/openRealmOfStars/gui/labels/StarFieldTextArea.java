@@ -294,7 +294,7 @@ public class StarFieldTextArea extends JTextArea {
             line = line.substring(2);
             bigFont = true;
           } else {
-            g.setFont(GuiStatics.getFontCubellan());
+            g.setFont(GuiStatics.getFontSquarion());
           }
           int w = GuiStatics.getTextWidth(g.getFont(), line);
           w = this.getWidth() / 2 + sx - w / 2;

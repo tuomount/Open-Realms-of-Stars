@@ -271,6 +271,94 @@ public final class GuiStatics {
   }
 
   /**
+   * Regular Squarion font
+   */
+  private static Font fontSquarion;
+
+  /**
+   * Regular Squarion font but Larger
+   */
+  private static Font fontSquarionLarger;
+
+  /**
+   * Get Regular Generale Station font
+   * @return Generale Station font
+   */
+  public static Font getFontSquarion() {
+    if (isLargerFonts()) {
+      if (fontSquarionLarger == null) {
+        try (InputStream is = Tiles.class
+            .getResource("/resources/fonts/Squarion/hinted-Squarion.ttf")
+            .openStream()) {
+          fontSquarionLarger = Font.createFont(Font.TRUETYPE_FONT, is);
+          fontSquarionLarger = fontSquarionLarger.deriveFont(
+              16F);
+        } catch (IOException | FontFormatException e) {
+          ErrorLogger.log("Error:" + e.getMessage());
+          return FONT_SMALL;
+        }
+      }
+      return fontSquarionLarger;
+    } else if (fontSquarion == null) {
+      try (InputStream is = Tiles.class
+          .getResource("/resources/fonts/Squarion/hinted-Squarion.ttf")
+          .openStream()) {
+        fontSquarion = Font.createFont(Font.TRUETYPE_FONT, is);
+        fontSquarion = fontSquarion.deriveFont(14F);
+      } catch (IOException | FontFormatException e) {
+        ErrorLogger.log("Error:" + e.getMessage());
+        return FONT_SMALL;
+      }
+    }
+    return fontSquarion;
+  }
+
+  /**
+   * Regular Squarion bold font
+   */
+  private static Font fontSquarionBold;
+
+  /**
+   * Regular Squarion bold font but Larger
+   */
+  private static Font fontSquarionBoldLarger;
+
+  /**
+   * Get Regular Generale Station font
+   * @return Generale Station font
+   */
+  public static Font getFontSquarionBold() {
+    if (isLargerFonts()) {
+      if (fontSquarionBoldLarger == null) {
+        try (InputStream is = Tiles.class
+            .getResource("/resources/fonts/Squarion/hinted-Squarion.ttf")
+            .openStream()) {
+          fontSquarionBoldLarger = Font.createFont(Font.TRUETYPE_FONT, is);
+          fontSquarionBoldLarger = fontSquarionBoldLarger.deriveFont(
+              22F);
+          fontSquarionBoldLarger = fontSquarionBoldLarger.deriveFont(Font.BOLD);
+        } catch (IOException | FontFormatException e) {
+          ErrorLogger.log("Error:" + e.getMessage());
+          return FONT_SMALL;
+        }
+      }
+      return fontSquarionBoldLarger;
+    } else if (fontSquarionBold == null) {
+      try (InputStream is = Tiles.class
+          .getResource("/resources/fonts/Squarion/hinted-Squarion.ttf")
+          .openStream()) {
+        fontSquarionBold = Font.createFont(Font.TRUETYPE_FONT, is);
+        fontSquarionBold = fontSquarionBold.deriveFont(18F);
+        fontSquarionBold = fontSquarionBold.deriveFont(Font.BOLD);
+      } catch (IOException | FontFormatException e) {
+        ErrorLogger.log("Error:" + e.getMessage());
+        return FONT_SMALL;
+      }
+    }
+    return fontSquarionBold;
+  }
+
+  /**
    * Use larger fonts
    */
   private static boolean useLargerFonts;

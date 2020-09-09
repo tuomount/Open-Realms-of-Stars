@@ -1524,6 +1524,8 @@ public boolean launchIntercept(final int distance,
             closest = null;
           }
         }
+      } else if (deadliest == null) {
+        return handleAiNonMilitaryShip(textLogger, infoPanel);
       }
     }
     boolean shot = false;
@@ -1722,7 +1724,7 @@ public boolean launchIntercept(final int distance,
     AStarSearch aStar = null;
     if (wormHole != null) {
       aStar = new AStarSearch(this, getCurrentShip(), wormHole, 0);
-    } else {
+    } else if (closest != null) {
       Coordinate farAway = getFarestFormEnemy(closest);
       aStar = new AStarSearch(this, getCurrentShip(), farAway, 0);
     }

@@ -353,10 +353,11 @@ public class CombatTest {
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
     Combat combat = new Combat(fleet1, fleet2, info1, info2);
-    combat.setTimerForWormHole(10000);
+    combat.setTimerForWormHole(7);
     assertEquals(0, info1.getTotalCredits());
     combat.doFastCombat(false);
-    assertEquals(info1, combat.getWinner());
+    assertNotEquals(combat.attackerHasEscaped(),
+        combat.defenderHasEscaped());
     assertEquals(3, info1.getTotalCredits());
   }
 
@@ -394,10 +395,9 @@ public class CombatTest {
     Combat combat = new Combat(fleet1, fleet2, info1, info2);
     // Setting long time for wormhole appear
     // Making sure that colony cannot escape
-    combat.setTimerForWormHole(200);
+    combat.setTimerForWormHole(20);
     assertEquals(0, info1.getTotalCredits());
     combat.doFastCombat(false);
-    assertEquals(info1, combat.getWinner());
     assertEquals(3, info1.getTotalCredits());
   }
 

@@ -175,7 +175,9 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 4.0\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
-      + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"
+      + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n"
+      + "Squarrion font by Cristiano Sobral (cssobral2013@gmail.com)\n"
+      + "from Reserved Font Name EXO by Natanael Gama (exo@ndiscovered.com)\n\n"
       + "# Sounds by\n\n"
       + "Space combat weapons sounds by\n"
       + "Michel Baradari apollo-music.de\n"
@@ -350,7 +352,7 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 4.0 "
       + "http://creativecommons.org/licenses/by/4.0/\n\n"
       + "Death Is Just Another Path by \n"
-      + "Otto Halmen\n"
+      + "Otto Halmén\n"
       + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";
 
@@ -383,10 +385,18 @@ public class CreditsView extends BlackPanel {
     try (DataInputStream dis = new DataInputStream(bis)) {
       cubellanLicense = IOUtilities.readTextFile(dis);
     }
+    is = CreditsView.class.getResourceAsStream(
+        "/resources/fonts/Squarion/License.txt");
+    bis = new BufferedInputStream(is);
+    String squarionLicense = "";
+    try (DataInputStream dis = new DataInputStream(bis)) {
+      squarionLicense = IOUtilities.readTextFile(dis);
+    }
     creditsText = creditsText + "\n\n"
         + "# GNU GENERAL PUBLIC LICENSE Version 2, June 1991\n" + gpl2License
-        + "\n\n" + "# SIL Open Font License, Version 1.1.\n\n"
-        + cubellanLicense;
+        + "\n\n" + "# Cubellan Font license\n\n"
+        + cubellanLicense + "\n\n" + "# Squarion Font License\n\n"
+        + squarionLicense;
     this.setLayout(new BorderLayout());
     textArea = new StarFieldTextArea();
     textArea.setScrollText(creditsText, NUMBER_OF_LINES);

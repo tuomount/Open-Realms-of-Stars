@@ -184,6 +184,8 @@ Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 
 Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)
+Squarrion font by Cristiano Sobral (cssobral2013@gmail.com)
+from Reserved Font Name EXO by Natanael Gama (exo@ndiscovered.com)
 
 # Sounds by
 
@@ -375,7 +377,7 @@ Justin Dalessandro(ColdOneK)
 Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
 Death Is Just Another Path by 
-Otto Halmen
+Otto Halmén
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
 

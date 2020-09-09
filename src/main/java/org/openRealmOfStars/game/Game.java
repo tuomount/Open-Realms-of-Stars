@@ -507,7 +507,7 @@ public class Game implements ActionListener {
       KeyboardFocusManager kfm = KeyboardFocusManager
           .getCurrentKeyboardFocusManager();
       kfm.addKeyEventDispatcher(new GameKeyAdapter(this));
-      MusicPlayer.play(MusicPlayer.MILLION_LIGHT_YEARS);
+      MusicPlayer.play(MusicPlayer.DEATH_IS_JUST_ANOTHER_PATH);
       MusicPlayer.setLoop(false);
       MusicPlayer.setVolume(musicVolume);
       SoundPlayer.setSoundVolume(soundVolume);
@@ -724,12 +724,13 @@ public class Game implements ActionListener {
       if (view instanceof MainMenu || view instanceof ResearchView
           || view instanceof ShipView
           || view instanceof PlayerSetupView
-          || view instanceof DiplomacyView) {
+          || view instanceof DiplomacyView
+          || view instanceof BattleView) {
         y = getHeight() - MUSIC_TEXT_BOTTOM;
       }
       songText = new JLabel("Test");
       songText.setBounds(getWidth() - 374, y, 350, 150);
-      songText.setFont(GuiStatics.getFontCubellanBold());
+      songText.setFont(GuiStatics.getFontSquarionBold());
       songText.setForeground(Color.white);
       MusicFileInfo info = MusicPlayer.getNowPlaying();
       String text = "<html>Now playing: " + info.getName() + " by "

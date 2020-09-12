@@ -5,7 +5,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 157;
+  private static final int MAX_SHIPCOMPONENT = 160;
 
   /**
    * Component Ion drive Mk1
@@ -821,6 +821,18 @@ public final class ShipComponentFactory {
    * Command control
    */
   public static final int COMPONENT_COMMAND_CENTER = 156;
+  /**
+   * Solar armor Mk1
+   */
+  public static final int COMPONENT_SOLAR_ARMOR_MK1 = 157;
+  /**
+   * Solar armor Mk2
+   */
+  public static final int COMPONENT_SOLAR_ARMOR_MK2 = 158;
+  /**
+   * Solar armor Mk3
+   */
+  public static final int COMPONENT_SOLAR_ARMOR_MK3 = 159;
 
 /**
    * Create ShipComponent with matching name
@@ -1327,6 +1339,15 @@ public final class ShipComponentFactory {
     case COMPONENT_COMMAND_CENTER:
         tmp = createStarbaseModule(index);
         break; // COMMAND Control
+    case COMPONENT_SOLAR_ARMOR_MK1:
+      tmp = createDefense(index);
+      break; // Solar Armor Mk1
+    case COMPONENT_SOLAR_ARMOR_MK2:
+      tmp = createDefense(index);
+      break; // Solar Armor Mk2
+    case COMPONENT_SOLAR_ARMOR_MK3:
+      tmp = createDefense(index);
+      break; // Solar Armor Mk3
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -2427,6 +2448,24 @@ public final class ShipComponentFactory {
       tmp = new ShipComponent(index, "Armor plating Mk10", 6, 15,
           ShipComponentType.ARMOR);
       tmp.setDefenseValue(10);
+    }
+    if (index == COMPONENT_SOLAR_ARMOR_MK1) {
+      tmp = new ShipComponent(index, "Solar armor Mk1", 6, 6,
+          ShipComponentType.ARMOR);
+      tmp.setDefenseValue(2);
+      tmp.setEnergyResource(1);
+    }
+    if (index == COMPONENT_SOLAR_ARMOR_MK2) {
+      tmp = new ShipComponent(index, "Solar armor Mk2", 7, 7,
+          ShipComponentType.ARMOR);
+      tmp.setDefenseValue(4);
+      tmp.setEnergyResource(2);
+    }
+    if (index == COMPONENT_SOLAR_ARMOR_MK3) {
+      tmp = new ShipComponent(index, "Solar armor Mk3", 8, 9,
+          ShipComponentType.ARMOR);
+      tmp.setDefenseValue(6);
+      tmp.setEnergyResource(3);
     }
     return tmp;
 

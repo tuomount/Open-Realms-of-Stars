@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.TextUtilities;
 
 /**
  *
@@ -51,6 +52,10 @@ public final class TechFactory {
   public static final String[] COMBAT_TECH_LEVEL3_NAMES = {"Laser Mk3",
       "Railgun Mk3", "Photon torpedo Mk3", "ECM torpedo Mk1",
       "HE missile Mk1", "Orbital bombs Mk1"};
+  /**
+   * Rare combat tech names for level 3.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL3_NAMES = {"Trator beam"};
   /**
    * Combat tech names for level 4
    */
@@ -110,6 +115,11 @@ public final class TechFactory {
   public static final String[] DEFENSE_TECH_LEVEL3_NAMES = {"Shield Mk3",
       "Armor plating Mk3", "Jammer Mk1", "Command outpost" };
   /**
+   * Defense rare tech names for level 3.
+   */
+  public static final String[] DEFENSE_RARE_TECH_LEVEL3_NAMES = {
+      "Solar armor Mk1"};
+  /**
    * Defense tech names for level 4
    */
   public static final String[] DEFENSE_TECH_LEVEL4_NAMES = {"Shield Mk4",
@@ -125,6 +135,11 @@ public final class TechFactory {
   public static final String[] DEFENSE_TECH_LEVEL6_NAMES = {"Shield Mk6",
       "Armor plating Mk6", "Space academy" };
   /**
+   * Defense rare tech names for level 6.
+   */
+  public static final String[] DEFENSE_RARE_TECH_LEVEL6_NAMES = {
+      "Solar armor Mk2"};
+  /**
    * Defense tech names for level 7
    */
   public static final String[] DEFENSE_TECH_LEVEL7_NAMES = {"Shield Mk7",
@@ -139,6 +154,11 @@ public final class TechFactory {
    */
   public static final String[] DEFENSE_TECH_LEVEL9_NAMES = {"Shield Mk9",
       "Armor plating Mk9", "Shield generator Mk2", "Orbital shield" };
+  /**
+   * Defense rare tech names for level 9.
+   */
+  public static final String[] DEFENSE_RARE_TECH_LEVEL9_NAMES = {
+      "Solar armor Mk3"};
   /**
    * Defense tech names for level 10
    */
@@ -374,7 +394,8 @@ public final class TechFactory {
       list = COMBAT_TECH_LEVEL2_NAMES;
       break;
     case 3:
-      list = COMBAT_TECH_LEVEL3_NAMES;
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL3_NAMES,
+          COMBAT_RARE_TECH_LEVEL3_NAMES);
       break;
     case 4:
       list = COMBAT_TECH_LEVEL4_NAMES;
@@ -452,7 +473,8 @@ public final class TechFactory {
       list = DEFENSE_TECH_LEVEL2_NAMES;
       break;
     case 3:
-      list = DEFENSE_TECH_LEVEL3_NAMES;
+      list = TextUtilities.concanateStringArrays(DEFENSE_TECH_LEVEL3_NAMES,
+          DEFENSE_RARE_TECH_LEVEL3_NAMES);
       break;
     case 4:
       list = DEFENSE_TECH_LEVEL4_NAMES;
@@ -461,7 +483,8 @@ public final class TechFactory {
       list = DEFENSE_TECH_LEVEL5_NAMES;
       break;
     case 6:
-      list = DEFENSE_TECH_LEVEL6_NAMES;
+      list = TextUtilities.concanateStringArrays(DEFENSE_TECH_LEVEL6_NAMES,
+          DEFENSE_RARE_TECH_LEVEL6_NAMES);
       break;
     case 7:
       list = DEFENSE_TECH_LEVEL7_NAMES;
@@ -470,7 +493,8 @@ public final class TechFactory {
       list = DEFENSE_TECH_LEVEL8_NAMES;
       break;
     case 9:
-      list = DEFENSE_TECH_LEVEL9_NAMES;
+      list = TextUtilities.concanateStringArrays(DEFENSE_TECH_LEVEL9_NAMES,
+          DEFENSE_RARE_TECH_LEVEL9_NAMES);
       break;
     case 10:
       list = DEFENSE_TECH_LEVEL10_NAMES;

@@ -3,7 +3,7 @@ package org.openRealmOfStars.utilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -104,5 +104,19 @@ public final class TextUtilities {
       sb.append(ch);
     }
     return sb.toString();
+  }
+
+  /**
+   * Concanate two string arrays into one string array.
+   * @param array1 First String array
+   * @param array2 Second String array
+   * @return Result array
+   */
+  public static String[] concanateStringArrays(final String[] array1,
+      final String[] array2) {
+    String[] result = new String[array1.length + array2.length];
+    System.arraycopy(array1, 0, result, 0, array1.length);
+    System.arraycopy(array2, 0, result, array1.length, array2.length);
+    return result;
   }
 }

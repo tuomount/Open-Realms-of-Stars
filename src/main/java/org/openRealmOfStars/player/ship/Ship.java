@@ -486,6 +486,15 @@ private boolean isIndexValid(final int index) {
           shield++;
         }
       }
+      if (comp.getType() == ShipComponentType.DISTORTION_SHIELD
+          && componentIsWorking(i)
+          && !shieldsUp) {
+        workingShields = true;
+        shieldsUp = true;
+        if (shield < getTotalShield()) {
+          shield++;
+        }
+      }
       if (comp.getType() == ShipComponentType.SHIELD_GENERATOR
           && componentIsWorking(i) && !generatorUp) {
         generatorUp = true;
@@ -516,6 +525,11 @@ private boolean isIndexValid(final int index) {
       }
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SHIELD
+          && componentIsWorking(i)) {
+          totalShield = totalShield + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.DISTORTION_SHIELD
           && componentIsWorking(i)) {
           totalShield = totalShield + comp.getDefenseValue();
       }
@@ -1199,6 +1213,11 @@ private int increaseHitChanceByComponent() {
           && hasComponentEnergy(i)) {
           defenseValue = defenseValue + comp.getDefenseValue();
       }
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.DISTORTION_SHIELD
+          && hasComponentEnergy(i)) {
+          defenseValue = defenseValue + comp.getDamage();
+      }
     }
     return defenseValue;
   }
@@ -1391,6 +1410,10 @@ private int increaseHitChanceByComponent() {
       ShipComponent comp = components.get(i);
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SHIELD) {
+          totalShield = totalShield + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
           totalShield = totalShield + comp.getDefenseValue();
       }
     }
@@ -1654,7 +1677,12 @@ private int increaseHitChanceByComponent() {
         power = power + comp.getDamage() / 10.0;
       }
       if (comp.getType() == ShipComponentType.JAMMER && componentIsWorking(i)) {
-        power = power + comp.getDefenseValue() / 10.0;
+        power = power + comp.getDefenseValue() / 5.0;
+      }
+      if (comp.getType() == ShipComponentType.DISTORTION_SHIELD
+          && componentIsWorking(i)) {
+        power = power + comp.getDefenseValue();
+        power = power + comp.getDamage() / 5;
       }
       if (comp.getType() == ShipComponentType.FIGHTER_BAY
           && componentIsWorking(i)) {

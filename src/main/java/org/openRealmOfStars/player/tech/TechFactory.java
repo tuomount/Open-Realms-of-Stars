@@ -125,6 +125,11 @@ public final class TechFactory {
   public static final String[] DEFENSE_TECH_LEVEL4_NAMES = {"Shield Mk4",
       "Armor plating Mk4", "Shield generator Mk1" };
   /**
+   * Defense rare tech names for level 4.
+   */
+  public static final String[] DEFENSE_RARE_TECH_LEVEL4_NAMES = {
+      "Distortion shield Mk1"};
+  /**
    * Defense tech names for level 5
    */
   public static final String[] DEFENSE_TECH_LEVEL5_NAMES = {"Shield Mk5",
@@ -138,7 +143,7 @@ public final class TechFactory {
    * Defense rare tech names for level 6.
    */
   public static final String[] DEFENSE_RARE_TECH_LEVEL6_NAMES = {
-      "Solar armor Mk2"};
+      "Solar armor Mk2", "Distortion shield Mk2"};
   /**
    * Defense tech names for level 7
    */
@@ -149,6 +154,11 @@ public final class TechFactory {
    */
   public static final String[] DEFENSE_TECH_LEVEL8_NAMES = {"Shield Mk8",
       "Armor plating Mk8", "Planetary defense turret Mk3" };
+  /**
+   * Defense rare tech names for level 8.
+   */
+  public static final String[] DEFENSE_RARE_TECH_LEVEL8_NAMES = {
+      "Distortion shield Mk3"};
   /**
    * Defense tech names for level 9
    */
@@ -477,7 +487,8 @@ public final class TechFactory {
           DEFENSE_RARE_TECH_LEVEL3_NAMES);
       break;
     case 4:
-      list = DEFENSE_TECH_LEVEL4_NAMES;
+      list = TextUtilities.concanateStringArrays(DEFENSE_TECH_LEVEL4_NAMES,
+          DEFENSE_RARE_TECH_LEVEL4_NAMES);
       break;
     case 5:
       list = DEFENSE_TECH_LEVEL5_NAMES;
@@ -490,7 +501,8 @@ public final class TechFactory {
       list = DEFENSE_TECH_LEVEL7_NAMES;
       break;
     case 8:
-      list = DEFENSE_TECH_LEVEL8_NAMES;
+      list = TextUtilities.concanateStringArrays(DEFENSE_TECH_LEVEL8_NAMES,
+          DEFENSE_RARE_TECH_LEVEL8_NAMES);
       break;
     case 9:
       list = TextUtilities.concanateStringArrays(DEFENSE_TECH_LEVEL9_NAMES,

@@ -13,7 +13,7 @@ import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
  *
  * Open Realm of Stars game project
  * Copyright (C) 2017 wksdn18
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017, 2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -340,7 +340,7 @@ public class ShipDesign2Test {
 
         final int NO_MILITARY_SHIP_POWER = 0;
         final int TOTAL_POWER = SLUT_HULL * 7 + WEAPON_BEAM_POWER + WEAPON_ECM_TORPEDO_POWER / 2 + SHIELD_VALUE
-                + ARMOR_VALUE + (ENGINE_VALUE - 1) + TARGETING_COMPUTER_VALUE / 10 + JAMMER_VALUE / 10;
+                + ARMOR_VALUE + (ENGINE_VALUE - 1) + TARGETING_COMPUTER_VALUE / 10 + JAMMER_VALUE / 5;
 
         ShipHull shiphull = Mockito.mock(ShipHull.class);
         Mockito.when(shiphull.getSlotHull()).thenReturn(SLUT_HULL);

@@ -460,6 +460,15 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case DISTORTION_SHIELD: {
+      sb.append("Shield value: ");
+      sb.append(getDefenseValue());
+      sb.append(" Jammer: -");
+      sb.append(getDamage());
+      sb.append("%");
+      sb.append("\n");
+      break;
+    }
     case SHIELD: {
       sb.append("Shield value: ");
       sb.append(getDefenseValue());

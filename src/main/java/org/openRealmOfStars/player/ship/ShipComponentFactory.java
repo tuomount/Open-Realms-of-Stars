@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 160;
+  private static final int MAX_SHIPCOMPONENT = 163;
 
   /**
    * Component Ion drive Mk1
@@ -833,6 +833,18 @@ public final class ShipComponentFactory {
    * Solar armor Mk3
    */
   public static final int COMPONENT_SOLAR_ARMOR_MK3 = 159;
+  /**
+   * Distortion shield Mk1
+   */
+  public static final int COMPONENT_DISTORTION_SHIELD_MK1 = 160;
+  /**
+   * Distortion shield Mk2
+   */
+  public static final int COMPONENT_DISTORTION_SHIELD_MK2 = 161;
+  /**
+   * Distortion shield Mk3
+   */
+  public static final int COMPONENT_DISTORTION_SHIELD_MK3 = 162;
 
 /**
    * Create ShipComponent with matching name
@@ -1348,6 +1360,15 @@ public final class ShipComponentFactory {
     case COMPONENT_SOLAR_ARMOR_MK3:
       tmp = createDefense(index);
       break; // Solar Armor Mk3
+    case COMPONENT_DISTORTION_SHIELD_MK1:
+      tmp = createDefense(index);
+      break; // Distortion shield Mk1
+    case COMPONENT_DISTORTION_SHIELD_MK2:
+      tmp = createDefense(index);
+      break; // Distortion shield Mk2
+    case COMPONENT_DISTORTION_SHIELD_MK3:
+      tmp = createDefense(index);
+      break; // Distortion shield Mk3
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -2466,6 +2487,27 @@ public final class ShipComponentFactory {
           ShipComponentType.ARMOR);
       tmp.setDefenseValue(6);
       tmp.setEnergyResource(3);
+    }
+    if (index == COMPONENT_DISTORTION_SHIELD_MK1) {
+      tmp = new ShipComponent(index, "Distortion shield Mk1", 7, 2,
+          ShipComponentType.DISTORTION_SHIELD);
+      tmp.setDefenseValue(3); // Shield bonus
+      tmp.setDamage(5); // Jammer bonus
+      tmp.setEnergyResource(3);
+    }
+    if (index == COMPONENT_DISTORTION_SHIELD_MK2) {
+      tmp = new ShipComponent(index, "Distortion shield Mk2", 8, 3,
+          ShipComponentType.DISTORTION_SHIELD);
+      tmp.setDefenseValue(4); // Shield bonus
+      tmp.setDamage(10); // Jammer bonus
+      tmp.setEnergyResource(3);
+    }
+    if (index == COMPONENT_DISTORTION_SHIELD_MK3) {
+      tmp = new ShipComponent(index, "Distortion shield Mk3", 9, 4,
+          ShipComponentType.DISTORTION_SHIELD);
+      tmp.setDefenseValue(5); // Shield bonus
+      tmp.setDamage(15); // Jammer bonus
+      tmp.setEnergyResource(4);
     }
     return tmp;
 

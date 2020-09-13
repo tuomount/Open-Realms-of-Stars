@@ -223,6 +223,10 @@ public class ShipDesign {
           && comp.getType() == ShipComponentType.SHIELD) {
         shield = shield + comp.getDefenseValue();
       }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
+        shield = shield + comp.getDefenseValue();
+      }
     }
     return shield;
   }
@@ -344,7 +348,8 @@ public class ShipDesign {
   public boolean hasDefenseComponent() {
     for (ShipComponent comp : components) {
       if (comp.getType() == ShipComponentType.ARMOR
-          || comp.getType() == ShipComponentType.SHIELD) {
+          || comp.getType() == ShipComponentType.SHIELD
+          || comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
         return true;
       }
     }
@@ -530,7 +535,7 @@ public class ShipDesign {
         power = power + comp.getDamage() / 10;
       }
       if (comp.getType() == ShipComponentType.JAMMER) {
-        power = power + comp.getDamage() / 10;
+        power = power + comp.getDamage() / 5;
       }
       if (comp.getType() == ShipComponentType.FIGHTER_BAY) {
         power = power + comp.getBaySize();
@@ -813,6 +818,15 @@ public class ShipDesign {
           && !jammer) {
         jammer = true;
       } else if (comp.getType() == ShipComponentType.JAMMER
+          && jammer) {
+        designOk = false;
+        sb.append(ShipDesignConsts.MANY_JAMMERS);
+        sb.append("\n");
+      }
+      if (comp.getType() == ShipComponentType.DISTORTION_SHIELD
+          && !jammer) {
+        jammer = true;
+      } else if (comp.getType() == ShipComponentType.DISTORTION_SHIELD
           && jammer) {
         designOk = false;
         sb.append(ShipDesignConsts.MANY_JAMMERS);

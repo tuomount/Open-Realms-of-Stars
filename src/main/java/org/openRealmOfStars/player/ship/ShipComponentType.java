@@ -128,7 +128,11 @@ public enum ShipComponentType {
    * Plasma beam always damages something,
    * first shields, then armor and finally hull
    */
-  PLASMA_BEAM;
+  PLASMA_BEAM,
+  /**
+   * Distortion shield, acts as shield and jammer.
+   */
+  DISTORTION_SHIELD;
 
   /**
    * Get ShipComponentType index
@@ -184,6 +188,8 @@ public enum ShipComponentType {
       return 22;
     case PLASMA_BEAM:
       return 23;
+    case DISTORTION_SHIELD:
+      return 24;
     default:
       return 0;
     }
@@ -244,6 +250,8 @@ public enum ShipComponentType {
       return ShipComponentType.FIGHTER_BAY;
     case 23:
       return ShipComponentType.PLASMA_BEAM;
+    case 24:
+      return ShipComponentType.DISTORTION_SHIELD;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -300,6 +308,8 @@ public enum ShipComponentType {
       return "Fighter bay";
     case PLASMA_BEAM:
       return "Plasma beam";
+    case DISTORTION_SHIELD:
+      return "Distortion shield";
     default:
       return "Error - Unknown";
     }
@@ -359,6 +369,8 @@ public enum ShipComponentType {
       return Icons.ICON_HULL_TECH;
     case PLASMA_BEAM:
       return Icons.ICON_LASERGUN;
+    case DISTORTION_SHIELD:
+      return Icons.ICON_SHIELD; // FIXME Change for better icon.
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

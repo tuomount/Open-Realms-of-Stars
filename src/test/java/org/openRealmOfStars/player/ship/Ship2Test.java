@@ -1336,7 +1336,7 @@ public class Ship2Test {
 
         Ship ship = new Ship(shipdesign);
 
-        assertEquals(14, ship.getTotalMilitaryPower());
+        assertEquals(16, ship.getTotalMilitaryPower());
     }
 
     /**

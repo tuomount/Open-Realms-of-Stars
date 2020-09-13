@@ -479,7 +479,8 @@ public class ShipDesignView extends BlackPanel {
         if (comp != null && filter.equalsIgnoreCase("Defense")
             && (comp.getType() == ShipComponentType.ARMOR
                 || comp.getType() == ShipComponentType.SHIELD
-                || comp.getType() == ShipComponentType.JAMMER)) {
+                || comp.getType() == ShipComponentType.JAMMER
+                || comp.getType() == ShipComponentType.DISTORTION_SHIELD)) {
           components.add(comp);
           continue;
         }

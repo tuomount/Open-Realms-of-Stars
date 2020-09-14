@@ -458,6 +458,8 @@ public final class TechFactory {
         } else if (techName.startsWith("Planetary invasion module")
             || techName.startsWith("Shock trooper module")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_TROOPS));
+        } else if (techName.startsWith("Tractor beam")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_TRACTOR_BEAM));
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
         }
@@ -539,6 +541,10 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else if (techName.startsWith("Command center")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
+        } else if (techName.startsWith("Solar armor")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_SOLAR_ARMOR));
+        } else if (techName.startsWith("Distortion shield")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_SHIELD));
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DEFENSE_TECH));
         }

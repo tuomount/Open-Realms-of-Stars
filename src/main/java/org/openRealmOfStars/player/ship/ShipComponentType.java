@@ -369,6 +369,7 @@ public enum ShipComponentType {
       return Icons.ICON_HULL_TECH;
     case PLASMA_BEAM:
       return Icons.ICON_LASERGUN;
+    // FIXME Icons for tractor beam and solar armor
     case DISTORTION_SHIELD:
       return Icons.ICON_SHIELD; // FIXME Change for better icon.
     default:

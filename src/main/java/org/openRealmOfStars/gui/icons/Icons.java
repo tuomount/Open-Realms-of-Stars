@@ -373,6 +373,14 @@ public final class Icons {
    * Ruler leader
    */
   public static final String ICON_RULER = "IconRuler";
+  /**
+   * Tractor beam
+   */
+  public static final String ICON_TRACTOR_BEAM = "IconTractorBeam";
+  /**
+   * Solar armor
+   */
+  public static final String ICON_SOLAR_ARMOR = "IconSolarArmor";
 
   /**
    * List of Icon
@@ -655,6 +663,10 @@ public final class Icons {
     icon = new Icon16x16(image, 0, 2, ICON_LEADERS);
     addIcon(icon);
     icon = new Icon16x16(image, 1, 2, ICON_RULER);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 2, ICON_SOLAR_ARMOR);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 2, ICON_TRACTOR_BEAM);
     addIcon(icon);
   }
 

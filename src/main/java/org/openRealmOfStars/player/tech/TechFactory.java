@@ -460,6 +460,7 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_TROOPS));
         } else if (techName.startsWith("Tractor beam")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_TRACTOR_BEAM));
+          tech.setRareTech(true);
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
         }
@@ -543,8 +544,22 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else if (techName.startsWith("Solar armor")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_SOLAR_ARMOR));
+            tech.setRareTech(true);
+            if (techName.equals("Solar armor Mk1")) {
+              tech.setNextTechOnTree("Solar armor Mk2");
+            }
+            if (techName.equals("Solar armor Mk2")) {
+              tech.setNextTechOnTree("Solar armor Mk3");
+            }
         } else if (techName.startsWith("Distortion shield")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SHIELD));
+          tech.setRareTech(true);
+          if (techName.equals("Distortion shield Mk1")) {
+            tech.setNextTechOnTree("Distortion shield Mk2");
+          }
+          if (techName.equals("Distortion shield Mk2")) {
+            tech.setNextTechOnTree("Distortion shield Mk3");
+          }
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DEFENSE_TECH));
         }

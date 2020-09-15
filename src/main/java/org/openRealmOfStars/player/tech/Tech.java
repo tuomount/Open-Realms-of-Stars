@@ -13,7 +13,7 @@ import org.openRealmOfStars.starMap.planet.construction.Building;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,6 +61,15 @@ public class Tech {
   private String hull;
 
   /**
+   * Is technology rare tech
+   */
+  private boolean rareTech;
+  /**
+   * Next rare tech on same tree. This should be null if
+   * not rare tech or last tech on tree.
+   */
+  private String nextTechOnTree;
+  /**
    * Icon for Tech
    */
   private Icon16x16 icon;
@@ -78,6 +87,8 @@ public class Tech {
     hull = null;
     improvement = null;
     component = null;
+    nextTechOnTree = null;
+    rareTech = false;
     icon = Icons.getIconByName(Icons.ICON_RESEARCH);
   }
 
@@ -246,6 +257,38 @@ public class Tech {
       sb.append(shipHull.toString());
     }
     return sb.toString();
+  }
+
+  /**
+   * Is tech rare?
+   * @return the rareTech
+   */
+  public boolean isRareTech() {
+    return rareTech;
+  }
+
+  /**
+   * Set flag for rare tech.
+   * @param rareTech the rareTech to set
+   */
+  public void setRareTech(final boolean rareTech) {
+    this.rareTech = rareTech;
+  }
+
+  /**
+   * Get next possible tech name or null.
+   * @return the nextTechOnTree or null.
+   */
+  public String getNextTechOnTree() {
+    return nextTechOnTree;
+  }
+
+  /**
+   * Set next tech on same tree.
+   * @param nextTechOnTree the nextTechOnTree to set
+   */
+  public void setNextTechOnTree(final String nextTechOnTree) {
+    this.nextTechOnTree = nextTechOnTree;
   }
 
 }

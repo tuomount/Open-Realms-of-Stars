@@ -142,6 +142,18 @@ public class TechListTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRareTechs() {
+    TechList list = new TechList();
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk1", 1));
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk2", 2));
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk3", 3));
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk4", 4));
+    list.addTech(TechFactory.createDefenseTech("Solar armor Mk1", 3));
+    assertEquals(1, list.getRareTechs().length);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testMissingTechCombat() {
     TechList list = new TechList();
     assertEquals(false, list.isUpgradeable(TechType.Combat));

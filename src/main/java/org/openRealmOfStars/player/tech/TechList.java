@@ -634,6 +634,23 @@ public class TechList {
   }
 
   /**
+   * Get all Rare techs from tech list.
+   * @return Get all Rare techs.
+   */
+  public Tech[] getRareTechs() {
+    ArrayList<Tech> list = new ArrayList<>();
+    for (int types = 0; types < 5; types++) {
+      for (int level = 0; level < 10; level++) {
+        for (Tech tech : techList[types][level].getList()) {
+          if (tech.isRareTech()) {
+            list.add(tech);
+          }
+        }
+      }
+    }
+    return list.toArray(new Tech[list.size()]);
+  }
+  /**
    * Is Tech list for certain level full
    * @param type Tech Type
    * @param level Level of tech list 1-10

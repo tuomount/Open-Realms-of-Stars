@@ -995,6 +995,59 @@ public final class TechFactory {
   private static final int TECH_FUTURE_LEVEL_RP_COST = 168;
 
   /**
+   * If list contains tech with certain name.
+   * @param techName TechName
+   * @param list List of techs
+   * @return True if tech with correct name found.
+   */
+  private static boolean hasTech(final String techName, final Tech[] list) {
+    if (list != null) {
+      for (int i = 0; i < list.length; i++) {
+        if (list[i].getName().equals(techName)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Get random rare tech. This handles possible tech trees in
+   * rare technology. So first must be get the lowest level of tech.
+   * @param techList Rare tech player already has.
+   * @return Tech or null if not available.
+   */
+  public static Tech getRandomRareTech(final Tech[] techList) {
+    ArrayList<Tech> choices = new ArrayList<>();
+    if (!hasTech("Solar armor Mk1", techList)) {
+      choices.add(createDefenseTech("Solar armor Mk1", 3));
+    }
+    if (hasTech("Solar armor Mk1", techList) && !hasTech("Solar armor Mk2",
+        techList)) {
+      choices.add(createDefenseTech("Solar armor Mk2", 6));
+    }
+    if (hasTech("Solar armor Mk2", techList) && !hasTech("Solar armor Mk3",
+        techList)) {
+      choices.add(createDefenseTech("Solar armor Mk3", 9));
+    }
+    if (!hasTech("Distortion shield Mk1", techList)) {
+      choices.add(createDefenseTech("Distortion shield Mk1", 4));
+    }
+    if (hasTech("Distortion shield Mk1", techList) && !hasTech(
+        "Distortion shield Mk2", techList)) {
+      choices.add(createDefenseTech("Distortion shield Mk2", 6));
+    }
+    if (hasTech("Distortion shield Mk2", techList) && !hasTech(
+        "Distortion shield Mk3", techList)) {
+      choices.add(createDefenseTech("Distortion shield Mk3", 8));
+    }
+    if (choices.size() > 1) {
+      int index = DiceGenerator.getRandom(0, choices.size() - 1);
+      return choices.get(index);
+    }
+    return null;
+  }
+  /**
    * Get tech level cost as research points
    * @param level Level to research
    * @param gameLength Maximum game length in turns

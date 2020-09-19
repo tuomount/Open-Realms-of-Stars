@@ -507,7 +507,7 @@ public class Game implements ActionListener {
       KeyboardFocusManager kfm = KeyboardFocusManager
           .getCurrentKeyboardFocusManager();
       kfm.addKeyEventDispatcher(new GameKeyAdapter(this));
-      MusicPlayer.play(MusicPlayer.DEATH_IS_JUST_ANOTHER_PATH);
+      MusicPlayer.play(MusicPlayer.MILLION_LIGHT_YEARS);
       MusicPlayer.setLoop(false);
       MusicPlayer.setVolume(musicVolume);
       SoundPlayer.setSoundVolume(soundVolume);

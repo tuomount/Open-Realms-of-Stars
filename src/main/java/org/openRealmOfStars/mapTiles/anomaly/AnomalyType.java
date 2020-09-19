@@ -67,5 +67,9 @@ public enum AnomalyType {
   /**
    * Space anomaly containing time warp.
    */
-  TIME_WARP;
+  TIME_WARP,
+  /**
+   * Rare technology in space anomaly. one time anomaly.
+   */
+  RARE_TECH;
 }

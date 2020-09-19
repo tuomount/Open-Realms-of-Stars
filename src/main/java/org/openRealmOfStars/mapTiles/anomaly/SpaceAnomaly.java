@@ -22,6 +22,7 @@ import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -400,6 +401,23 @@ public class SpaceAnomaly {
           }
           result.setText(sb.toString());
           result.setImage(GuiStatics.IMAGE_TIME_WARP);
+        }
+        case TileNames.SPACE_ANOMALY_RARE_TECH: {
+          result = new SpaceAnomaly(AnomalyType.RARE_TECH, 0);
+          Tech tech = TechFactory.getRandomRareTech(
+              info.getTechList().getRareTechs());
+          if (tech != null) {
+            result.setText("Found ancient ship floating around which contained"
+                + " schematics of " + tech.getName() + ". This seems to be"
+                + " unusual piece of technology. This invention is immediately"
+                + " taken to use.");
+            result.setImage(GuiStatics.IMAGE_OLD_SHIP);
+            info.getTechList().addTech(tech);
+          } else {
+            result = null;
+          }
+          map.setTile(fleet.getX(), fleet.getY(), empty);
+          break;
         }
         default: {
           break;

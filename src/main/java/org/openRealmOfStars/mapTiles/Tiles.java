@@ -297,9 +297,9 @@ public final class Tiles {
     tile.setAnimationIndex(getTileByName(
         TileNames.WORM_HOLE1).getIndex());
     tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_SHIP);
-    addTile(tile);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    addTile(tile);
     // Reading the gas planet 2x2
     tile = new Tile(tilesImage, 12, 1, TileNames.GAS_GIANT_3_NW);
     addTile(tile);
@@ -374,13 +374,17 @@ public final class Tiles {
     addTile(tile);
     bhSecondEnd = tile.getIndex();
     tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_MECHION);
-    addTile(tile);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    addTile(tile);
     tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_TIME_WARP);
-    addTile(tile);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_RARE_TECH);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    addTile(tile);
 
   }
 

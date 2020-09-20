@@ -317,6 +317,14 @@ public class ShipDesign {
           && comp.getType() == ShipComponentType.ARMOR) {
         armor = armor + comp.getDefenseValue();
       }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SOLAR_ARMOR) {
+        armor = armor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.LIVING_ARMOR) {
+        armor = armor + comp.getDefenseValue();
+      }
     }
     return armor;
   }

@@ -5,7 +5,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2018, 2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -132,7 +132,15 @@ public enum ShipComponentType {
   /**
    * Distortion shield, acts as shield and jammer.
    */
-  DISTORTION_SHIELD;
+  DISTORTION_SHIELD,
+  /**
+   * Solar armor, which acts as armor and gives energy
+   */
+  SOLAR_ARMOR,
+  /**
+   * Armor that makes armor regenerate one point per turn.
+   */
+  LIVING_ARMOR;
 
   /**
    * Get ShipComponentType index
@@ -252,6 +260,10 @@ public enum ShipComponentType {
       return ShipComponentType.PLASMA_BEAM;
     case 24:
       return ShipComponentType.DISTORTION_SHIELD;
+    case 25:
+      return ShipComponentType.SOLAR_ARMOR;
+    case 26:
+      return ShipComponentType.LIVING_ARMOR;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -310,6 +322,10 @@ public enum ShipComponentType {
       return "Plasma beam";
     case DISTORTION_SHIELD:
       return "Distortion shield";
+    case SOLAR_ARMOR:
+      return "Solar armor";
+    case LIVING_ARMOR:
+      return "Living armor";
     default:
       return "Error - Unknown";
     }
@@ -372,6 +388,10 @@ public enum ShipComponentType {
     // FIXME Icons for tractor beam and solar armor
     case DISTORTION_SHIELD:
       return Icons.ICON_SHIELD; // FIXME Change for better icon.
+    case SOLAR_ARMOR:
+      return Icons.ICON_SOLAR_ARMOR;
+    case LIVING_ARMOR:
+      return Icons.ICON_DEFENSE_TECH; // FIXME Change for better icon.
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

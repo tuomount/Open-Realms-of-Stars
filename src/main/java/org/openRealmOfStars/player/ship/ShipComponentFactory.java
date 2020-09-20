@@ -2472,19 +2472,19 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_SOLAR_ARMOR_MK1) {
       tmp = new ShipComponent(index, "Solar armor Mk1", 6, 6,
-          ShipComponentType.ARMOR);
+          ShipComponentType.SOLAR_ARMOR);
       tmp.setDefenseValue(2);
       tmp.setEnergyResource(1);
     }
     if (index == COMPONENT_SOLAR_ARMOR_MK2) {
       tmp = new ShipComponent(index, "Solar armor Mk2", 7, 7,
-          ShipComponentType.ARMOR);
+          ShipComponentType.SOLAR_ARMOR);
       tmp.setDefenseValue(4);
       tmp.setEnergyResource(2);
     }
     if (index == COMPONENT_SOLAR_ARMOR_MK3) {
       tmp = new ShipComponent(index, "Solar armor Mk3", 8, 9,
-          ShipComponentType.ARMOR);
+          ShipComponentType.SOLAR_ARMOR);
       tmp.setDefenseValue(6);
       tmp.setEnergyResource(3);
     }

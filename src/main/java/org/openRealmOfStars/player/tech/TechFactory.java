@@ -118,7 +118,7 @@ public final class TechFactory {
    * Defense rare tech names for level 3.
    */
   public static final String[] DEFENSE_RARE_TECH_LEVEL3_NAMES = {
-      "Solar armor Mk1"};
+      "Solar armor Mk1", "Living armor Mk1"};
   /**
    * Defense tech names for level 4
    */
@@ -143,7 +143,7 @@ public final class TechFactory {
    * Defense rare tech names for level 6.
    */
   public static final String[] DEFENSE_RARE_TECH_LEVEL6_NAMES = {
-      "Solar armor Mk2", "Distortion shield Mk2"};
+      "Solar armor Mk2", "Distortion shield Mk2", "Living armor Mk2"};
   /**
    * Defense tech names for level 7
    */
@@ -158,7 +158,7 @@ public final class TechFactory {
    * Defense rare tech names for level 8.
    */
   public static final String[] DEFENSE_RARE_TECH_LEVEL8_NAMES = {
-      "Distortion shield Mk3"};
+      "Distortion shield Mk3", "Living armor Mk3"};
   /**
    * Defense tech names for level 9
    */
@@ -551,7 +551,16 @@ public final class TechFactory {
             if (techName.equals("Solar armor Mk2")) {
               tech.setNextTechOnTree("Solar armor Mk3");
             }
-        } else if (techName.startsWith("Distortion shield")) {
+        } else if (techName.startsWith("Living armor")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_LIVING_ARMOR));
+          tech.setRareTech(true);
+          if (techName.equals("Living armor Mk1")) {
+            tech.setNextTechOnTree("Living armor Mk2");
+          }
+          if (techName.equals("Living armor Mk2")) {
+            tech.setNextTechOnTree("Living armor Mk3");
+          }
+      } else if (techName.startsWith("Distortion shield")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SHIELD));
           tech.setRareTech(true);
           if (techName.equals("Distortion shield Mk1")) {

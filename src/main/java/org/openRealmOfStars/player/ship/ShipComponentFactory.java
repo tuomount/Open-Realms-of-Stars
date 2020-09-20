@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 163;
+  private static final int MAX_SHIPCOMPONENT = 166;
 
   /**
    * Component Ion drive Mk1
@@ -845,6 +845,18 @@ public final class ShipComponentFactory {
    * Distortion shield Mk3
    */
   public static final int COMPONENT_DISTORTION_SHIELD_MK3 = 162;
+  /**
+   * Living armor Mk1
+   */
+  public static final int COMPONENT_LIVING_ARMOR_MK1 = 163;
+  /**
+   * Living armor Mk2
+   */
+  public static final int COMPONENT_LIVING_ARMOR_MK2 = 164;
+  /**
+   * Living armor Mk3
+   */
+  public static final int COMPONENT_LIVING_ARMOR_MK3 = 165;
 
 /**
    * Create ShipComponent with matching name
@@ -868,10 +880,12 @@ public final class ShipComponentFactory {
 
   /**
    * Create Ship component with index
+   * Part 1 just to make method shorter.
    * @param index Index to create
    * @return ShipComponent or null if index is not found
    */
-  public static ShipComponent create(final int index) {
+
+  private static ShipComponent createPart1(final int index) {
     ShipComponent tmp = null;
     switch (index) {
     case COMPONENT_ION_DRIVE_MK1:
@@ -1043,6 +1057,23 @@ public final class ShipComponentFactory {
     case COMPONENT_HE_MISSILE_MK3:
       tmp = createWeapon(index);
       break; // HE missile Mk3
+    default: {
+      ErrorLogger.log("Unexpected component with index: " + index);
+      throw new IllegalArgumentException("Unexpected component index: "
+                                        + index + "!");
+    }
+    }
+    return tmp;
+  }
+  /**
+   * Create Ship component with index
+   * Part 2 just to make method shorter.
+   * @param index Index to create
+   * @return ShipComponent or null if index is not found
+   */
+  public static ShipComponent createPart2(final int index) {
+    ShipComponent tmp = null;
+    switch (index) {
     case COMPONENT_ORBITAL_BOMBS_MK2:
       tmp = createElectronics(index);
       break; // Orbital bombs Mk2
@@ -1369,11 +1400,35 @@ public final class ShipComponentFactory {
     case COMPONENT_DISTORTION_SHIELD_MK3:
       tmp = createDefense(index);
       break; // Distortion shield Mk3
+    case COMPONENT_LIVING_ARMOR_MK1:
+      tmp = createDefense(index);
+      break; // Living Armor Mk1
+    case COMPONENT_LIVING_ARMOR_MK2:
+      tmp = createDefense(index);
+      break; // Living Armor Mk2
+    case COMPONENT_LIVING_ARMOR_MK3:
+      tmp = createDefense(index);
+      break; // Living Armor Mk3
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
                                         + index + "!");
     }
+    }
+    return tmp;
+  }
+
+  /**
+   * Create Ship component with index
+   * @param index Index to create
+   * @return ShipComponent or null if index is not found
+   */
+  public static ShipComponent create(final int index) {
+    ShipComponent tmp = null;
+    if (index < COMPONENT_ORBITAL_BOMBS_MK2) {
+      tmp = createPart1(index);
+    } else {
+      tmp = createPart2(index);
     }
     return tmp;
   }
@@ -2508,6 +2563,24 @@ public final class ShipComponentFactory {
       tmp.setDefenseValue(5); // Shield bonus
       tmp.setDamage(15); // Jammer bonus
       tmp.setEnergyResource(4);
+    }
+    if (index == COMPONENT_LIVING_ARMOR_MK1) {
+      tmp = new ShipComponent(index, "Living armor Mk1", 6, 6,
+          ShipComponentType.LIVING_ARMOR);
+      tmp.setDefenseValue(2);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == COMPONENT_LIVING_ARMOR_MK2) {
+      tmp = new ShipComponent(index, "Living armor Mk2", 8, 8,
+          ShipComponentType.LIVING_ARMOR);
+      tmp.setDefenseValue(4);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_LIVING_ARMOR_MK3) {
+      tmp = new ShipComponent(index, "Living armor Mk3", 10, 10,
+          ShipComponentType.LIVING_ARMOR);
+      tmp.setDefenseValue(6);
+      tmp.setEnergyRequirement(1);
     }
     return tmp;
 

@@ -381,6 +381,10 @@ public final class Icons {
    * Solar armor
    */
   public static final String ICON_SOLAR_ARMOR = "IconSolarArmor";
+  /**
+   * Living armor
+   */
+  public static final String ICON_LIVING_ARMOR = "IconLivingArmor";
 
   /**
    * List of Icon
@@ -667,6 +671,8 @@ public final class Icons {
     icon = new Icon16x16(image, 2, 2, ICON_SOLAR_ARMOR);
     addIcon(icon);
     icon = new Icon16x16(image, 3, 2, ICON_TRACTOR_BEAM);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 2, ICON_LIVING_ARMOR);
     addIcon(icon);
   }
 

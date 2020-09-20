@@ -1050,6 +1050,17 @@ public final class TechFactory {
         "Distortion shield Mk3", techList)) {
       choices.add(createDefenseTech("Distortion shield Mk3", 8));
     }
+    if (!hasTech("Living armor Mk1", techList)) {
+      choices.add(createDefenseTech("Living armor Mk1", 3));
+    }
+    if (hasTech("Living armor Mk1", techList) && !hasTech("Living armor Mk2",
+        techList)) {
+      choices.add(createDefenseTech("Living armor Mk2", 6));
+    }
+    if (hasTech("Living armor Mk2", techList) && !hasTech("Living armor Mk3",
+        techList)) {
+      choices.add(createDefenseTech("Living armor Mk3", 8));
+    }
     if (choices.size() > 1) {
       int index = DiceGenerator.getRandom(0, choices.size() - 1);
       return choices.get(index);

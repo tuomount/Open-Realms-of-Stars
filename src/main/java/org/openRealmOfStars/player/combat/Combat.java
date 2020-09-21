@@ -2004,6 +2004,45 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
+   * Do tractor beam on target ship
+   * @param tractor Ship which is pulling
+   * @param target Target who is being pulled.
+   * @return Just textual description what happened.
+   */
+  public ShipDamage doTractorBeam(final CombatShip tractor,
+      final CombatShip target) {
+    ShipDamage result = null;
+    int mx = 0;
+    int my = 0;
+    if (tractor.getX() - target.getX() == -2) {
+      mx = -1;
+    }
+    if (tractor.getX() - target.getX() == 2) {
+      mx = 1;
+    }
+    if (tractor.getY() - target.getY() == -2) {
+      my = -1;
+    }
+    if (tractor.getY() - target.getY() == 2) {
+      my = 1;
+    }
+    CombatShip blocking = getShipFromCoordinate(target.getX() + mx,
+        target.getY() + my);
+    if (blocking != null) {
+      result = new ShipDamage(1, "Target is being blocked by another ship!");
+    } else {
+      target.setX(target.getX() + mx);
+      target.setY(target.getY() + my);
+      result = new ShipDamage(1, "Target is being pulled by tractor beam!");
+    }
+    if (wormHole.getX() == target.getX() && wormHole.getY() == target.getY()) {
+      result = new ShipDamage(1, "Target is being pulled by tractor beam"
+          + " directly to escape!");
+      escapeShip(target);
+    }
+    return result;
+  }
+  /**
    * Do privateering with certain combat ship and player against
    * another combat ship and player.
    * @param privateer PlayerInfo who is being privateer

@@ -390,6 +390,29 @@ public class Combat {
   }
 
   /**
+   * Can ship do tractor beam on target
+   * @param tractor Ship having tractor beam
+   * @param target Target's combat ship
+   * @return True if tractor beam can be used
+   */
+  public boolean canTractor(final CombatShip tractor, final CombatShip target) {
+    ShipComponent weapon = tractor.getShip().getComponent(componentUse);
+    if (weapon != null && weapon.getType() == ShipComponentType.TRACTOR_BEAM) {
+      double xAxisDistance = Math.abs(tractor.getX() - target.getX());
+      double yAxisDistance = Math.abs(tractor.getY() - target.getY());
+      int distance;
+      if (xAxisDistance > yAxisDistance) {
+          distance = (int) xAxisDistance;
+      } else {
+          distance = (int) yAxisDistance;
+      }
+      if (distance == 2) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
    * Can ship do privateering towards target
    * @param privateer Privateer's combat ship
    * @param target Target's combat Ship

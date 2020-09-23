@@ -181,7 +181,7 @@ Lightning animation from Sci-fi effects by Skorpio
 https://opengameart.org/content/sci-fi-effects
 Licensed under CC BY 4.0
 
-Tractor beam, living armor and solar armor icons modified by Tuomo Untinen
+Tractor beam, organic armor and solar armor icons modified by Tuomo Untinen
 Originals from 141 Military Icons Set by AngryMeteor.com 
 
 

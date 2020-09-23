@@ -173,7 +173,7 @@ public class CreditsView extends BlackPanel {
       + "Lightning animation from Sci-fi effects by Skorpio\n"
       + "https://opengameart.org/content/sci-fi-effects\n"
       + "Licensed under CC BY 4.0\n\n"
-      + "Tractor beam, living armor and solar armor"
+      + "Tractor beam, organic armor and solar armor"
       + " icons modified by Tuomo Untinen\n"
       + "Originals from 141 Military Icons Set by AngryMeteor.com \n"
       + "\n\nFonts are under SIL Open Font License, Version 1.1.\n"

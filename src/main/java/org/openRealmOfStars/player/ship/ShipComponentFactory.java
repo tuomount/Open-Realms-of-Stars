@@ -846,17 +846,17 @@ public final class ShipComponentFactory {
    */
   public static final int COMPONENT_DISTORTION_SHIELD_MK3 = 162;
   /**
-   * Living armor Mk1
+   * Organic armor Mk1
    */
-  public static final int COMPONENT_LIVING_ARMOR_MK1 = 163;
+  public static final int COMPONENT_ORGANIC_ARMOR_MK1 = 163;
   /**
-   * Living armor Mk2
+   * Organic armor Mk2
    */
-  public static final int COMPONENT_LIVING_ARMOR_MK2 = 164;
+  public static final int COMPONENT_ORGANIC_ARMOR_MK2 = 164;
   /**
-   * Living armor Mk3
+   * Organic armor Mk3
    */
-  public static final int COMPONENT_LIVING_ARMOR_MK3 = 165;
+  public static final int COMPONENT_ORGANIC_ARMOR_MK3 = 165;
 
 /**
    * Create ShipComponent with matching name
@@ -1400,13 +1400,13 @@ public final class ShipComponentFactory {
     case COMPONENT_DISTORTION_SHIELD_MK3:
       tmp = createDefense(index);
       break; // Distortion shield Mk3
-    case COMPONENT_LIVING_ARMOR_MK1:
+    case COMPONENT_ORGANIC_ARMOR_MK1:
       tmp = createDefense(index);
       break; // Living Armor Mk1
-    case COMPONENT_LIVING_ARMOR_MK2:
+    case COMPONENT_ORGANIC_ARMOR_MK2:
       tmp = createDefense(index);
       break; // Living Armor Mk2
-    case COMPONENT_LIVING_ARMOR_MK3:
+    case COMPONENT_ORGANIC_ARMOR_MK3:
       tmp = createDefense(index);
       break; // Living Armor Mk3
     default: {
@@ -2564,21 +2564,21 @@ public final class ShipComponentFactory {
       tmp.setDamage(15); // Jammer bonus
       tmp.setEnergyResource(4);
     }
-    if (index == COMPONENT_LIVING_ARMOR_MK1) {
-      tmp = new ShipComponent(index, "Living armor Mk1", 6, 6,
-          ShipComponentType.LIVING_ARMOR);
+    if (index == COMPONENT_ORGANIC_ARMOR_MK1) {
+      tmp = new ShipComponent(index, "Organic armor Mk1", 6, 6,
+          ShipComponentType.ORGANIC_ARMOR);
       tmp.setDefenseValue(2);
       tmp.setEnergyRequirement(3);
     }
-    if (index == COMPONENT_LIVING_ARMOR_MK2) {
-      tmp = new ShipComponent(index, "Living armor Mk2", 8, 8,
-          ShipComponentType.LIVING_ARMOR);
+    if (index == COMPONENT_ORGANIC_ARMOR_MK2) {
+      tmp = new ShipComponent(index, "Organic armor Mk2", 8, 8,
+          ShipComponentType.ORGANIC_ARMOR);
       tmp.setDefenseValue(4);
       tmp.setEnergyRequirement(2);
     }
-    if (index == COMPONENT_LIVING_ARMOR_MK3) {
-      tmp = new ShipComponent(index, "Living armor Mk3", 10, 10,
-          ShipComponentType.LIVING_ARMOR);
+    if (index == COMPONENT_ORGANIC_ARMOR_MK3) {
+      tmp = new ShipComponent(index, "Organic armor Mk3", 10, 10,
+          ShipComponentType.ORGANIC_ARMOR);
       tmp.setDefenseValue(6);
       tmp.setEnergyRequirement(1);
     }

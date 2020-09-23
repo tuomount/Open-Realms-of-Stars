@@ -103,9 +103,10 @@ public class TechFactoryTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRandomRareTech2() {
-    Tech[] list = new Tech[2];
+    Tech[] list = new Tech[3];
     list[0] = TechFactory.createDefenseTech("Solar armor Mk1", 3);
     list[1] = TechFactory.createDefenseTech("Distortion shield Mk1", 4);
+    list[2] = TechFactory.createDefenseTech("Organic armor Mk1", 3);
     Tech tech = TechFactory.getRandomRareTech(list);
     assertNotNull(tech);
     assertEquals(true, tech.getName().contains("Mk2"));

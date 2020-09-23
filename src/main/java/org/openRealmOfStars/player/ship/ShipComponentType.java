@@ -140,7 +140,7 @@ public enum ShipComponentType {
   /**
    * Armor that makes armor regenerate one point per turn.
    */
-  LIVING_ARMOR,
+  ORGANIC_ARMOR,
   /**
    * Tractor beam to pull ship one closer.
    */
@@ -204,7 +204,7 @@ public enum ShipComponentType {
       return 24;
     case SOLAR_ARMOR:
       return 25;
-    case LIVING_ARMOR:
+    case ORGANIC_ARMOR:
       return 26;
     case TRACTOR_BEAM:
       return 27;
@@ -273,7 +273,7 @@ public enum ShipComponentType {
     case 25:
       return ShipComponentType.SOLAR_ARMOR;
     case 26:
-      return ShipComponentType.LIVING_ARMOR;
+      return ShipComponentType.ORGANIC_ARMOR;
     case 27:
       return ShipComponentType.TRACTOR_BEAM;
     default:
@@ -336,8 +336,8 @@ public enum ShipComponentType {
       return "Distortion shield";
     case SOLAR_ARMOR:
       return "Solar armor";
-    case LIVING_ARMOR:
-      return "Living armor";
+    case ORGANIC_ARMOR:
+      return "Organic armor";
     case TRACTOR_BEAM:
       return "Tractor beam";
     default:
@@ -404,7 +404,7 @@ public enum ShipComponentType {
       return Icons.ICON_SHIELD; // FIXME Change for better icon.
     case SOLAR_ARMOR:
       return Icons.ICON_SOLAR_ARMOR;
-    case LIVING_ARMOR:
+    case ORGANIC_ARMOR:
       return Icons.ICON_DEFENSE_TECH; // FIXME Change for better icon.
     case TRACTOR_BEAM:
       return Icons.ICON_TRACTOR_BEAM;

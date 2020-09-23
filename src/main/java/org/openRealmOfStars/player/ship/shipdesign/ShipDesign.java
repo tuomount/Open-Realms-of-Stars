@@ -322,7 +322,7 @@ public class ShipDesign {
         armor = armor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
-          && comp.getType() == ShipComponentType.LIVING_ARMOR) {
+          && comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
         armor = armor + comp.getDefenseValue();
       }
     }

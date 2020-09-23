@@ -487,7 +487,7 @@ private boolean isIndexValid(final int index) {
           shield++;
         }
       }
-      if (comp.getType() == ShipComponentType.LIVING_ARMOR
+      if (comp.getType() == ShipComponentType.ORGANIC_ARMOR
           && componentIsWorking(i) && !armorUp) {
         armorUp = true;
         if (armor < getTotalArmor()) {
@@ -537,7 +537,7 @@ private boolean isIndexValid(final int index) {
           totalArmor = totalArmor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
-          && comp.getType() == ShipComponentType.LIVING_ARMOR
+          && comp.getType() == ShipComponentType.ORGANIC_ARMOR
           && componentIsWorking(i)) {
           totalArmor = totalArmor + comp.getDefenseValue();
       }
@@ -1536,7 +1536,7 @@ private int increaseHitChanceByComponent() {
         armor = armor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
-          && comp.getType() == ShipComponentType.LIVING_ARMOR) {
+          && comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
         armor = armor + comp.getDefenseValue();
       }
     }
@@ -1711,7 +1711,7 @@ private int increaseHitChanceByComponent() {
         power = power + comp.getDefenseValue();
         power = power + comp.getDamage() / 5;
       }
-      if (comp.getType() == ShipComponentType.LIVING_ARMOR
+      if (comp.getType() == ShipComponentType.ORGANIC_ARMOR
           && componentIsWorking(i)) {
         power = power + comp.getDefenseValue() * 2;
       }

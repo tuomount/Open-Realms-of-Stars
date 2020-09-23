@@ -118,7 +118,7 @@ public final class TechFactory {
    * Defense rare tech names for level 3.
    */
   public static final String[] DEFENSE_RARE_TECH_LEVEL3_NAMES = {
-      "Solar armor Mk1", "Living armor Mk1"};
+      "Solar armor Mk1", "Organic armor Mk1"};
   /**
    * Defense tech names for level 4
    */
@@ -143,7 +143,7 @@ public final class TechFactory {
    * Defense rare tech names for level 6.
    */
   public static final String[] DEFENSE_RARE_TECH_LEVEL6_NAMES = {
-      "Solar armor Mk2", "Distortion shield Mk2", "Living armor Mk2"};
+      "Solar armor Mk2", "Distortion shield Mk2", "Organic armor Mk2"};
   /**
    * Defense tech names for level 7
    */
@@ -158,7 +158,7 @@ public final class TechFactory {
    * Defense rare tech names for level 8.
    */
   public static final String[] DEFENSE_RARE_TECH_LEVEL8_NAMES = {
-      "Distortion shield Mk3", "Living armor Mk3"};
+      "Distortion shield Mk3", "Organic armor Mk3"};
   /**
    * Defense tech names for level 9
    */
@@ -551,14 +551,14 @@ public final class TechFactory {
             if (techName.equals("Solar armor Mk2")) {
               tech.setNextTechOnTree("Solar armor Mk3");
             }
-        } else if (techName.startsWith("Living armor")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_LIVING_ARMOR));
+        } else if (techName.startsWith("Organic armor")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
           tech.setRareTech(true);
-          if (techName.equals("Living armor Mk1")) {
-            tech.setNextTechOnTree("Living armor Mk2");
+          if (techName.equals("Organic armor Mk1")) {
+            tech.setNextTechOnTree("Organic armor Mk2");
           }
-          if (techName.equals("Living armor Mk2")) {
-            tech.setNextTechOnTree("Living armor Mk3");
+          if (techName.equals("Organic armor Mk2")) {
+            tech.setNextTechOnTree("Organic armor Mk3");
           }
       } else if (techName.startsWith("Distortion shield")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SHIELD));
@@ -1050,16 +1050,16 @@ public final class TechFactory {
         "Distortion shield Mk3", techList)) {
       choices.add(createDefenseTech("Distortion shield Mk3", 8));
     }
-    if (!hasTech("Living armor Mk1", techList)) {
-      choices.add(createDefenseTech("Living armor Mk1", 3));
+    if (!hasTech("Organic armor Mk1", techList)) {
+      choices.add(createDefenseTech("Organic armor Mk1", 3));
     }
-    if (hasTech("Living armor Mk1", techList) && !hasTech("Living armor Mk2",
+    if (hasTech("Organic armor Mk1", techList) && !hasTech("Organic armor Mk2",
         techList)) {
-      choices.add(createDefenseTech("Living armor Mk2", 6));
+      choices.add(createDefenseTech("Organic armor Mk2", 6));
     }
-    if (hasTech("Living armor Mk2", techList) && !hasTech("Living armor Mk3",
+    if (hasTech("Organic armor Mk2", techList) && !hasTech("Organic armor Mk3",
         techList)) {
-      choices.add(createDefenseTech("Living armor Mk3", 8));
+      choices.add(createDefenseTech("Organic armor Mk3", 8));
     }
     if (choices.size() > 1) {
       int index = DiceGenerator.getRandom(0, choices.size() - 1);

@@ -382,9 +382,9 @@ public final class Icons {
    */
   public static final String ICON_SOLAR_ARMOR = "IconSolarArmor";
   /**
-   * Living armor
+   * Organic armor
    */
-  public static final String ICON_LIVING_ARMOR = "IconLivingArmor";
+  public static final String ICON_ORGANIC_ARMOR = "IconOrganicArmor";
 
   /**
    * List of Icon
@@ -672,7 +672,7 @@ public final class Icons {
     addIcon(icon);
     icon = new Icon16x16(image, 3, 2, ICON_TRACTOR_BEAM);
     addIcon(icon);
-    icon = new Icon16x16(image, 4, 2, ICON_LIVING_ARMOR);
+    icon = new Icon16x16(image, 4, 2, ICON_ORGANIC_ARMOR);
     addIcon(icon);
   }
 

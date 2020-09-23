@@ -1421,6 +1421,11 @@ public class MapPanel extends JPanel {
           SoundPlayer.playSound(SoundPlayer.EXPLOSION);
           break;
           }
+        case TRACTOR_BEAM: {
+          // FIXME Change better tractor beam sound
+          SoundPlayer.playSound(SoundPlayer.CLOAK_OVERLOAD);
+          break;
+          }
         default: {
           ErrorLogger.log("Unexpected weapon type, sound effect is missing!");
         }

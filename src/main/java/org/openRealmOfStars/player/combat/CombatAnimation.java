@@ -251,7 +251,8 @@ public class CombatAnimation {
     }
     case ANTIMATTER_BEAM:
     case PHASOR_BEAM:
-    case LASER_BEAM: {
+    case LASER_BEAM:
+    case TRACTOR_BEAM: {
       count = 40;
       break;
     }
@@ -339,6 +340,10 @@ public class CombatAnimation {
       }
       case PRIVATEERING_MODULE: {
         initType = CombatAnimationType.PRIVATEERING;
+        break;
+      }
+      case TRACTOR_BEAM: {
+        initType = CombatAnimationType.TRACTOR_BEAM;
         break;
       }
       default:

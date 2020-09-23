@@ -71,6 +71,10 @@ public enum CombatAnimationType {
   /**
    * Explosion
    */
-  EXPLOSION;
+  EXPLOSION,
+  /**
+   * Tractor beam
+   */
+  TRACTOR_BEAM;
 
 }

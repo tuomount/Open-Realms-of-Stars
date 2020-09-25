@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 166;
+  private static final int MAX_SHIPCOMPONENT = 167;
 
   /**
    * Component Ion drive Mk1
@@ -857,6 +857,10 @@ public final class ShipComponentFactory {
    * Organic armor Mk3
    */
   public static final int COMPONENT_ORGANIC_ARMOR_MK3 = 165;
+  /**
+   * Tractor beam
+   */
+  public static final int COMPONENT_TRACTOR_BEAM = 166;
 
 /**
    * Create ShipComponent with matching name
@@ -1071,7 +1075,7 @@ public final class ShipComponentFactory {
    * @param index Index to create
    * @return ShipComponent or null if index is not found
    */
-  public static ShipComponent createPart2(final int index) {
+  private static ShipComponent createPart2(final int index) {
     ShipComponent tmp = null;
     switch (index) {
     case COMPONENT_ORBITAL_BOMBS_MK2:
@@ -1402,13 +1406,16 @@ public final class ShipComponentFactory {
       break; // Distortion shield Mk3
     case COMPONENT_ORGANIC_ARMOR_MK1:
       tmp = createDefense(index);
-      break; // Living Armor Mk1
+      break; // Organic Armor Mk1
     case COMPONENT_ORGANIC_ARMOR_MK2:
       tmp = createDefense(index);
-      break; // Living Armor Mk2
+      break; // Organic Armor Mk2
     case COMPONENT_ORGANIC_ARMOR_MK3:
       tmp = createDefense(index);
-      break; // Living Armor Mk3
+      break; // Organic Armor Mk3
+    case COMPONENT_TRACTOR_BEAM:
+      tmp = createWeapon(index);
+      break; // Tractor beam
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -2391,6 +2398,13 @@ public final class ShipComponentFactory {
       tmp.setDamage(10);
       tmp.setWeaponRange(5);
       tmp.setEnergyRequirement(0);
+    }
+    if (index == COMPONENT_TRACTOR_BEAM) {
+      tmp = new ShipComponent(index, "Tractor beam", 8, 4,
+          ShipComponentType.TRACTOR_BEAM);
+      tmp.setDamage(0);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(1);
     }
     return tmp;
 

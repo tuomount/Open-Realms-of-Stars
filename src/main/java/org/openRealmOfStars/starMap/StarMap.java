@@ -37,6 +37,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
@@ -2967,6 +2968,27 @@ public class StarMap {
     }
   }
   /**
+   * Player can get rare tech based on tiles has seen.
+   * @param info PlayerInfo
+   * @param sx X coordinate
+   * @param sy Y coordinate
+   */
+  private void rareTechBasedOnTiles(final PlayerInfo info, final int sx,
+      final int sy) {
+    Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
+    if (tile.isBlackhole()
+        && !info.getTechList().hasTech(TechType.Combat, "Tractor beam")) {
+      info.getTechList().addTech(TechFactory.createCombatTech("Tractor beam",
+          3));
+      Message msg = new Message(MessageType.RESEARCH,
+          "Research on Black hole reveals the tractor beam technology.",
+          Icons.getIconByName(Icons.ICON_RESEARCH));
+      msg.setCoordinate(new Coordinate(sx, sy));
+      info.getMsgList().addNewMessage(msg);
+    }
+
+  }
+  /**
    * Draw visibility line and set visibility info for one player
    * @param info PlayerInfo
    * @param sx Start X
@@ -3001,6 +3023,7 @@ public class StarMap {
     int detectValue = cloakDetection;
     info.setSectorVisibility(sx, sy, PlayerInfo.VISIBLE);
     tutorialBasedOnTiles(info, sx, sy);
+    rareTechBasedOnTiles(info, sx, sy);
     if (detectValue > 0) {
       info.setSectorCloakingDetection(sx, sy, detectValue);
     }
@@ -3019,6 +3042,7 @@ public class StarMap {
       if (isValidCoordinate(nx, ny)) {
         info.setSectorVisibility(nx, ny, PlayerInfo.VISIBLE);
         tutorialBasedOnTiles(info, nx, ny);
+        rareTechBasedOnTiles(info, nx, ny);
         if (detectValue > 0
             && info.getSectorCloakDetection(nx, ny) < detectValue) {
           info.setSectorCloakingDetection(nx, ny, detectValue);

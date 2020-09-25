@@ -460,6 +460,14 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case ORGANIC_ARMOR: {
+      sb.append("Armor value: ");
+      sb.append(getDefenseValue());
+      sb.append(" ");
+      sb.append("Armor regeneration");
+      sb.append("\n");
+      break;
+    }
     case DISTORTION_SHIELD: {
       sb.append("Shield value: ");
       sb.append(getDefenseValue());
@@ -502,6 +510,11 @@ public class ShipComponent {
         sb.append(getFleetCapacityBonus());
         sb.append("\n");
       }
+      break;
+    }
+    case TRACTOR_BEAM: {
+      sb.append("Pulls smaller ships to closer");
+      sb.append("\n");
       break;
     }
     case COLONY_MODULE:

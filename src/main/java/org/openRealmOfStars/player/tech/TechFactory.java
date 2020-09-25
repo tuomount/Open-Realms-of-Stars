@@ -55,7 +55,7 @@ public final class TechFactory {
   /**
    * Rare combat tech names for level 3.
    */
-  public static final String[] COMBAT_RARE_TECH_LEVEL3_NAMES = {"Trator beam"};
+  public static final String[] COMBAT_RARE_TECH_LEVEL3_NAMES = {"Tractor beam"};
   /**
    * Combat tech names for level 4
    */

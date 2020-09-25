@@ -43,6 +43,7 @@ import org.openRealmOfStars.starMap.SquareInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 
@@ -1449,6 +1450,26 @@ public class MapPanel extends JPanel {
             anim.getSy() + viewPointOffsetY
                 - GuiStatics.PHOTON_TORPEDO.getHeight() / 2,
             null);
+      } else if (anim.getType() == CombatAnimationType.TRACTOR_BEAM) {
+        Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
+            BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
+        gr.setStroke(full);
+        for (int beam = 0; beam < 10; beam++) {
+          gr.setColor(new Color(133 - beam * 3, 179 - beam * 4, 255,
+              30 + beam * 6));
+          int ox = DiceGenerator.getRandom(ShipImage.MAX_WIDTH / 2);
+          int oy = DiceGenerator.getRandom(ShipImage.MAX_HEIGHT / 2);
+          if (DiceGenerator.getRandom(1) == 1) {
+            ox = ox * -1;
+          }
+          if (DiceGenerator.getRandom(1) == 1) {
+            oy = oy * -1;
+          }
+          gr.drawLine(anim.getSx() + viewPointOffsetX,
+              anim.getSy() + viewPointOffsetY,
+              anim.getEx() + viewPointOffsetX + ox,
+              anim.getEy() + viewPointOffsetY + oy);
+        }
       } else if (anim.getType() == CombatAnimationType.ECM_TORPEDO
           || anim.getType() == CombatAnimationType.HE_MISSILE
           || anim.getType() == CombatAnimationType.RAILGUN) {

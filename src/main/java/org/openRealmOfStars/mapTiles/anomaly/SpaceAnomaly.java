@@ -401,6 +401,7 @@ public class SpaceAnomaly {
           }
           result.setText(sb.toString());
           result.setImage(GuiStatics.IMAGE_TIME_WARP);
+          break;
         }
         case TileNames.SPACE_ANOMALY_RARE_TECH: {
           result = new SpaceAnomaly(AnomalyType.RARE_TECH, 0);

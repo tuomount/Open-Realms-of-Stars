@@ -3082,11 +3082,12 @@ public class StarMap {
       Fleet fleet = info.getFleets().getByIndex(i);
       if (production == Planet.PRODUCTION_RESEARCH) {
         result = result + fleet.getTotalReseachBonus();
-        if (info.getRuler() != null
-            && info.getRuler().hasPerk(Perk.SCIENTIST)) {
+        Leader leader = fleet.getCommander();
+        if (leader != null
+            && leader.hasPerk(Perk.SCIENTIST)) {
           result++;
         }
-        if (info.getRuler() != null && info.getRuler().hasPerk(Perk.STUPID)
+        if (leader != null && leader.hasPerk(Perk.STUPID)
             && result > 0) {
           result--;
         }
@@ -3104,6 +3105,16 @@ public class StarMap {
       }
       if (production == Planet.PRODUCTION_CULTURE) {
         result = result + fleet.getTotalCultureBonus();
+      }
+    }
+    if (production == Planet.PRODUCTION_RESEARCH) {
+      if (info.getRuler() != null
+          && info.getRuler().hasPerk(Perk.SCIENTIST)) {
+        result++;
+      }
+      if (info.getRuler() != null && info.getRuler().hasPerk(Perk.STUPID)
+          && result > 0) {
+        result--;
       }
     }
     if (production == Planet.PRODUCTION_CREDITS) {

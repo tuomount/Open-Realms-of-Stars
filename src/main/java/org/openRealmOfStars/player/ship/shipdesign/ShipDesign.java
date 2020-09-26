@@ -14,6 +14,7 @@ import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -81,7 +82,12 @@ public class ShipDesign {
     for (int i = 0; i < count; i++) {
       String compName = IOUtilities.readString(dis);
       ShipComponent comp = ShipComponentFactory.createByName(compName);
-      components.add(comp);
+      if (comp != null) {
+        components.add(comp);
+      } else {
+        ErrorLogger.log("Ship component '" + compName + "' does not exists."
+            + " Maybe save file is for newer version?");
+      }
     }
   }
 

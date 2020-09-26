@@ -384,6 +384,11 @@ public class StarMap {
     tiles[cx + 1][cy + 1] = Tiles.getTileByName(TileNames.BLACKHOLE_SE)
         .getIndex();
     tileInfo[cx + 1][cy + 1] = new SquareInfo(SquareInfo.TYPE_BLACKHOLE, 0);
+    for (int i = -2; i < 3; i++) {
+      for (int j = -2; j < 2; j++) {
+        solarSystem[cx + i][cy + j] = 1;
+      }
+    }
     newsCorpData = new NewsCorpData(players.getCurrentMaxRealms());
     turn = 0;
     aiTurnNumber = 0;

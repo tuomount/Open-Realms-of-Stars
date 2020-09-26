@@ -2035,7 +2035,8 @@ public boolean launchIntercept(final int distance,
       target.setY(target.getY() + my);
       result = new ShipDamage(1, "Target is being pulled by tractor beam!");
     }
-    if (wormHole.getX() == target.getX() && wormHole.getY() == target.getY()) {
+    if (wormHole != null && wormHole.getX() == target.getX()
+        && wormHole.getY() == target.getY()) {
       result = new ShipDamage(1, "Target is being pulled by tractor beam"
           + " directly to escape!");
       escapeShip(target);

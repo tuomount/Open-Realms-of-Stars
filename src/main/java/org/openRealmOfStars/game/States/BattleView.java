@@ -405,7 +405,8 @@ public class BattleView extends BlackPanel {
           infoPanel.useComponent(index);
           combatMapMouseListener.setComponentUse(-1);
           combat.setComponentUse(-1);
-        } else if (!component.isWeapon() && !component.isPrivateer()) {
+        } else if (!component.isWeapon() && !component.isPrivateer()
+            && !component.isTractor()) {
           combatMapMouseListener.setComponentUse(-1);
           combat.setComponentUse(-1);
         }

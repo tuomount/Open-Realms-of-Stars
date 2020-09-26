@@ -193,6 +193,17 @@ public class ShipComponent {
   }
 
   /**
+   * Is tractor beam component
+   * @return True if tractor beam
+   */
+  public boolean isTractor() {
+    if (type == ShipComponentType.TRACTOR_BEAM) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Get ship component Index
    * @return Component index
    */

@@ -251,8 +251,7 @@ public class CombatAnimation {
     }
     case ANTIMATTER_BEAM:
     case PHASOR_BEAM:
-    case LASER_BEAM:
-    case TRACTOR_BEAM: {
+    case LASER_BEAM: {
       count = 40;
       break;
     }
@@ -279,6 +278,10 @@ public class CombatAnimation {
     case LIGHTNING: {
       count = explosionAnim.getMaxFrames() * 3;
       loops = 2;
+      break;
+    }
+    case TRACTOR_BEAM: {
+      count = 30;
       break;
     }
     case SHIELD: {
@@ -584,6 +587,8 @@ public class CombatAnimation {
       } else {
         showAnim = false;
       }
+    } else if (type == CombatAnimationType.TRACTOR_BEAM) {
+      count--;
     } else if (type == CombatAnimationType.LIGHTNING) {
       count--;
       doAnimationIon(13);

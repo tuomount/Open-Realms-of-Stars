@@ -420,6 +420,8 @@ public enum ShipComponentType {
   public int getHitChance() {
       switch (this) {
       case WEAPON_BEAM:
+      case PRIVATEERING_MODULE:
+      case TRACTOR_BEAM:
           return 100;
       case PLASMA_BEAM:
         return 100;

@@ -184,6 +184,22 @@ public class CombatMapMouseListener extends MouseAdapter
             combat.setComponentUse(-1);
           }
         }
+        if (weapon != null
+            && weapon.getType() == ShipComponentType.TRACTOR_BEAM
+            && !ship.isComponentUsed(componentUse)) {
+          CombatShip target = combat.getShipFromCoordinate(combat.getCursorX(),
+              combat.getCursorY());
+          if (target != null && combat.canTractor(ship, target)) {
+            shipDamage = combat.doTractorBeam(ship, target);
+            shipDamage.ready();
+            combat.setAnimation(new CombatAnimation(ship, target, weapon,
+                shipDamage.getValue()));
+            ship.useComponent(componentUse);
+            battleInfoPanel.useComponent(componentUse);
+            componentUse = -1;
+            combat.setComponentUse(-1);
+          }
+        }
       } else {
         if (combat.getCurrentShip() == null) {
           return;

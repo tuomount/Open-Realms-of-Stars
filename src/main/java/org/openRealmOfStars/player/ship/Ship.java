@@ -1533,11 +1533,11 @@ private int increaseHitChanceByComponent() {
       }
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SOLAR_ARMOR) {
-        armor = armor + comp.getDefenseValue();
+        totalArmor = totalArmor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
-        armor = armor + comp.getDefenseValue();
+        totalArmor = totalArmor + comp.getDefenseValue();
       }
     }
     return totalArmor;

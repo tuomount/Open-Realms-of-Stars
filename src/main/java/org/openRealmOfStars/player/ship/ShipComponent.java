@@ -454,6 +454,7 @@ public class ShipComponent {
       sb.append("\n");
     }
     switch (getType()) {
+    case SOLAR_ARMOR:
     case ARMOR: {
       sb.append("Armor value: ");
       sb.append(getDefenseValue());

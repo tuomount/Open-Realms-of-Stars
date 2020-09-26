@@ -2562,21 +2562,21 @@ public final class ShipComponentFactory {
           ShipComponentType.DISTORTION_SHIELD);
       tmp.setDefenseValue(3); // Shield bonus
       tmp.setDamage(5); // Jammer bonus
-      tmp.setEnergyResource(3);
+      tmp.setEnergyRequirement(3);
     }
     if (index == COMPONENT_DISTORTION_SHIELD_MK2) {
       tmp = new ShipComponent(index, "Distortion shield Mk2", 8, 3,
           ShipComponentType.DISTORTION_SHIELD);
       tmp.setDefenseValue(4); // Shield bonus
       tmp.setDamage(10); // Jammer bonus
-      tmp.setEnergyResource(3);
+      tmp.setEnergyRequirement(3);
     }
     if (index == COMPONENT_DISTORTION_SHIELD_MK3) {
       tmp = new ShipComponent(index, "Distortion shield Mk3", 9, 4,
           ShipComponentType.DISTORTION_SHIELD);
       tmp.setDefenseValue(5); // Shield bonus
       tmp.setDamage(15); // Jammer bonus
-      tmp.setEnergyResource(4);
+      tmp.setEnergyRequirement(4);
     }
     if (index == COMPONENT_ORGANIC_ARMOR_MK1) {
       tmp = new ShipComponent(index, "Organic armor Mk1", 6, 6,

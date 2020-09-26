@@ -1719,6 +1719,9 @@ private int increaseHitChanceByComponent() {
           && componentIsWorking(i)) {
         power = power + comp.getBaySize();
       }
+      if (comp.getType() == ShipComponentType.TRACTOR_BEAM) {
+        power = power + 1;
+      }
     }
     if (isStarBase() && !getFlag(FLAG_STARBASE_DEPLOYED)) {
       // Only deployed starbases should have military power

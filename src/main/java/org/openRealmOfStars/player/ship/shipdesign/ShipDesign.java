@@ -357,7 +357,9 @@ public class ShipDesign {
     for (ShipComponent comp : components) {
       if (comp.getType() == ShipComponentType.ARMOR
           || comp.getType() == ShipComponentType.SHIELD
-          || comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
+          || comp.getType() == ShipComponentType.DISTORTION_SHIELD
+          || comp.getType() == ShipComponentType.SOLAR_ARMOR
+          || comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
         return true;
       }
     }
@@ -538,6 +540,9 @@ public class ShipDesign {
       if (comp.getType() == ShipComponentType.ENGINE
           && getHull().getHullType() != ShipHullType.STARBASE) {
         power = power + comp.getTacticSpeed() - 1;
+      }
+      if (comp.getType() == ShipComponentType.TRACTOR_BEAM) {
+        power = power + 1;
       }
       if (comp.getType() == ShipComponentType.TARGETING_COMPUTER) {
         power = power + comp.getDamage() / 10;

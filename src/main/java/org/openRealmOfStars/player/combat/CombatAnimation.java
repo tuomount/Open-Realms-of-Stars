@@ -267,7 +267,9 @@ public class CombatAnimation {
       count = explosionAnim.getMaxFrames();
       break;
     }
-    case PHOTON_TORPEDO: {
+    case PHOTON_TORPEDO:
+    case PLASMA_CANNON:
+    case ION_CANNON: {
       count = explosionAnim.getMaxFrames();
       break;
     }
@@ -329,6 +331,14 @@ public class CombatAnimation {
       }
       case WEAPON_PHOTON_TORPEDO: {
         initType = CombatAnimationType.PHOTON_TORPEDO;
+        break;
+      }
+      case PLASMA_CANNON: {
+        initType = CombatAnimationType.PLASMA_CANNON;
+        break;
+      }
+      case ION_CANNON: {
+        initType = CombatAnimationType.ION_CANNON;
         break;
       }
       case WEAPON_BEAM: {
@@ -484,7 +494,9 @@ public class CombatAnimation {
           }
         }
       }
-    } else if (type == CombatAnimationType.PHOTON_TORPEDO) {
+    } else if (type == CombatAnimationType.PHOTON_TORPEDO
+        || type == CombatAnimationType.PLASMA_CANNON
+        || type == CombatAnimationType.ION_CANNON) {
       if (Math.round(sx) == Math.round(ex)
           && Math.round(sy) == Math.round(ey)) {
         count--;

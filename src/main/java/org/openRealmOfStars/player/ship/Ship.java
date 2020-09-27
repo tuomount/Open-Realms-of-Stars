@@ -1066,7 +1066,8 @@ private int increaseHitChanceByComponent() {
       }
       break;
     }
-    case PLASMA_BEAM: {
+    case PLASMA_BEAM:
+    case PLASMA_CANNON: {
       damage = weapon.getDamage();
       damage = damage - this.getShield();
       if (damage > 0) {
@@ -1116,6 +1117,21 @@ private int increaseHitChanceByComponent() {
             "Attack deflected to shield!");
       }
       break;
+    }
+    case ION_CANNON: {
+      damage = weapon.getDamage();
+      if (damage <= this.getShield()) {
+        this.setShield(this.getShield() - damage);
+        return new ShipDamage(ShipDamage.NO_DAMAGE,
+            "Attacked damage shield by " + damage + "!");
+      } else {
+        this.setShield(0);
+        if (this.getArmor() > 0) {
+          return new ShipDamage(ShipDamage.NO_DAMAGE,
+              "Attack deflected to armor!");
+        }
+        damage = 1;
+      }
     }
     case WEAPON_ECM_TORPEDO: {
       damage = weapon.getDamage();

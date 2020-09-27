@@ -1394,7 +1394,10 @@ public class MapPanel extends JPanel {
           SoundPlayer.playSound(SoundPlayer.WEAPON_BEAM);
           break;
           }
-        case PHOTON_TORPEDO: {
+        case PHOTON_TORPEDO:
+        case PLASMA_CANNON:
+        case ION_CANNON: {
+          // FIXME Sounds for plasma/ion cannons
           SoundPlayer.playSound(SoundPlayer.WEAPON_TORPEDO);
           break;
           }
@@ -1445,7 +1448,9 @@ public class MapPanel extends JPanel {
         gr.drawLine(anim.getSx() + viewPointOffsetX,
             anim.getSy() + viewPointOffsetY, anim.getEx() + viewPointOffsetX,
             anim.getEy() + viewPointOffsetY);
-      } else if (anim.getType() == CombatAnimationType.PHOTON_TORPEDO) {
+      } else if (anim.getType() == CombatAnimationType.PHOTON_TORPEDO
+          || anim.getType() == CombatAnimationType.PLASMA_CANNON
+          || anim.getType() == CombatAnimationType.ION_CANNON) {
         gr.drawImage(GuiStatics.PHOTON_TORPEDO,
             anim.getSx() + viewPointOffsetX
                 - GuiStatics.PHOTON_TORPEDO.getWidth() / 2,

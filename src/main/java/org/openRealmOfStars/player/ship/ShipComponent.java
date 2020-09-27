@@ -175,7 +175,9 @@ public class ShipComponent {
         || type == ShipComponentType.WEAPON_ECM_TORPEDO
         || type == ShipComponentType.WEAPON_HE_MISSILE
         || type == ShipComponentType.WEAPON_PHOTON_TORPEDO
-        || type == ShipComponentType.WEAPON_RAILGUN) {
+        || type == ShipComponentType.WEAPON_RAILGUN
+        || type == ShipComponentType.PLASMA_CANNON
+        || type == ShipComponentType.ION_CANNON) {
       return true;
     }
     return false;
@@ -593,6 +595,25 @@ public class ShipComponent {
       sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 75%, 50% penetrates armor");
+      sb.append("\n");
+      break;
+    }
+    case PLASMA_CANNON: {
+      sb.append("Damage: ");
+      sb.append(getDamage());
+      sb.append(" Range: ");
+      sb.append(getWeaponRange());
+      sb.append("\nHit: 75%");
+      sb.append("\n");
+      break;
+    }
+    case ION_CANNON: {
+      sb.append("Shield damage: ");
+      sb.append(getDamage());
+      sb.append("Damage: 1");
+      sb.append(" Range: ");
+      sb.append(getWeaponRange());
+      sb.append("\nHit: 75%, Armor stops");
       sb.append("\n");
       break;
     }

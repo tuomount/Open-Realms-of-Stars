@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 167;
+  private static final int MAX_SHIPCOMPONENT = 176;
 
   /**
    * Component Ion drive Mk1
@@ -861,6 +861,42 @@ public final class ShipComponentFactory {
    * Tractor beam
    */
   public static final int COMPONENT_TRACTOR_BEAM = 166;
+  /**
+   * Plasma cannon Mk1
+   */
+  public static final int COMPONENT_PLASMA_CANNON_MK1 = 167;
+  /**
+   * Plasma cannon Mk2
+   */
+  public static final int COMPONENT_PLASMA_CANNON_MK2 = 168;
+  /**
+   * Plasma cannon Mk3
+   */
+  public static final int COMPONENT_PLASMA_CANNON_MK3 = 169;
+  /**
+   * Plasma cannon Mk4
+   */
+  public static final int COMPONENT_PLASMA_CANNON_MK4 = 170;
+  /**
+   * Plasma cannon Mk5
+   */
+  public static final int COMPONENT_PLASMA_CANNON_MK5 = 171;
+  /**
+   * Ion cannon Mk1
+   */
+  public static final int COMPONENT_ION_CANNON_MK1 = 172;
+  /**
+   * Ion cannon Mk2
+   */
+  public static final int COMPONENT_ION_CANNON_MK2 = 173;
+  /**
+   * Ion cannon Mk3
+   */
+  public static final int COMPONENT_ION_CANNON_MK3 = 174;
+  /**
+   * Ion cannon Mk4
+   */
+  public static final int COMPONENT_ION_CANNON_MK4 = 175;
 
 /**
    * Create ShipComponent with matching name
@@ -1416,6 +1452,33 @@ public final class ShipComponentFactory {
     case COMPONENT_TRACTOR_BEAM:
       tmp = createWeapon(index);
       break; // Tractor beam
+    case COMPONENT_PLASMA_CANNON_MK1:
+      tmp = createWeapon(index);
+      break; // Plasma cannon Mk1
+    case COMPONENT_PLASMA_CANNON_MK2:
+      tmp = createWeapon(index);
+      break; // Plasma cannon Mk2
+    case COMPONENT_PLASMA_CANNON_MK3:
+      tmp = createWeapon(index);
+      break; // Plasma cannon Mk3
+    case COMPONENT_PLASMA_CANNON_MK4:
+      tmp = createWeapon(index);
+      break; // Plasma cannon Mk4
+    case COMPONENT_PLASMA_CANNON_MK5:
+      tmp = createWeapon(index);
+      break; // Plasma cannon Mk5
+    case COMPONENT_ION_CANNON_MK1:
+      tmp = createWeapon(index);
+      break; // Ion cannon Mk1
+    case COMPONENT_ION_CANNON_MK2:
+      tmp = createWeapon(index);
+      break; // Ion cannon Mk2
+    case COMPONENT_ION_CANNON_MK3:
+      tmp = createWeapon(index);
+      break; // Ion cannon Mk3
+    case COMPONENT_ION_CANNON_MK4:
+      tmp = createWeapon(index);
+      break; // Ion cannon Mk4
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -2405,6 +2468,69 @@ public final class ShipComponentFactory {
       tmp.setDamage(0);
       tmp.setWeaponRange(2);
       tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_PLASMA_CANNON_MK1) {
+      tmp = new ShipComponent(index, "Plasma cannon Mk1", 6, 4,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(2);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_PLASMA_CANNON_MK2) {
+      tmp = new ShipComponent(index, "Plasma cannon Mk2", 6, 4,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(3);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_PLASMA_CANNON_MK3) {
+      tmp = new ShipComponent(index, "Plasma cannon Mk3", 6, 4,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(5);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_PLASMA_CANNON_MK4) {
+      tmp = new ShipComponent(index, "Plasma cannon Mk4", 7, 5,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(7);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == COMPONENT_PLASMA_CANNON_MK5) {
+      tmp = new ShipComponent(index, "Plasma cannon Mk5", 8, 5,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(9);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == COMPONENT_ION_CANNON_MK1) {
+      tmp = new ShipComponent(index, "Ion cannon Mk1", 5, 3,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(3);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_ION_CANNON_MK2) {
+      tmp = new ShipComponent(index, "Ion cannon Mk2", 5, 3,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(5);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_ION_CANNON_MK3) {
+      tmp = new ShipComponent(index, "Ion cannon Mk3", 6, 4,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(7);
+      tmp.setWeaponRange(3);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_ION_CANNON_MK4) {
+      tmp = new ShipComponent(index, "Ion cannon Mk4", 6, 4,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(9);
+      tmp.setWeaponRange(3);
+      tmp.setEnergyRequirement(2);
     }
     return tmp;
 

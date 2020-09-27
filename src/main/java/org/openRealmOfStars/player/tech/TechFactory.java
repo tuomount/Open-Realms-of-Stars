@@ -47,6 +47,11 @@ public final class TechFactory {
   public static final String[] COMBAT_TECH_LEVEL2_NAMES = {"Laser Mk2",
       "Railgun Mk2", "Photon torpedo Mk2", "Planetary invasion module" };
   /**
+   * Rare combat tech names for level 2.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL2_NAMES = {
+      "Plasma cannon Mk1"};
+  /**
    * Combat tech names for level 3
    */
   public static final String[] COMBAT_TECH_LEVEL3_NAMES = {"Laser Mk3",
@@ -55,7 +60,8 @@ public final class TechFactory {
   /**
    * Rare combat tech names for level 3.
    */
-  public static final String[] COMBAT_RARE_TECH_LEVEL3_NAMES = {"Tractor beam"};
+  public static final String[] COMBAT_RARE_TECH_LEVEL3_NAMES = {"Tractor beam",
+      "Ion cannon Mk1", "Plasma cannon Mk2"};
   /**
    * Combat tech names for level 4
    */
@@ -69,6 +75,11 @@ public final class TechFactory {
       "Railgun Mk5", "Photon torpedo Mk5", "ECM torpedo Mk3", "HE missile Mk3",
       "Orbital bombs Mk2" };
   /**
+   * Rare combat tech names for level 5.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL5_NAMES = {
+      "Ion cannon Mk2", "Plasma cannon Mk3"};
+  /**
    * Combat tech names for level 6
    */
   public static final String[] COMBAT_TECH_LEVEL6_NAMES = {"Phasors Mk1",
@@ -81,6 +92,11 @@ public final class TechFactory {
       "Massdrive Mk2", "Photon torpedo Mk7", "ECM torpedo Mk5",
       "HE missile Mk5", "Shock trooper module", "Orbital antimatter bomb" };
   /**
+   * Rare combat tech names for level 6.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL7_NAMES = {
+      "Ion cannon Mk3", "Plasma cannon Mk4"};
+  /**
    * Combat tech names for level 8
    */
   public static final String[] COMBAT_TECH_LEVEL8_NAMES = {"Phasors Mk3",
@@ -92,6 +108,11 @@ public final class TechFactory {
   public static final String[] COMBAT_TECH_LEVEL9_NAMES = {
       "Antimatter beam Mk1", "Massdrive Mk4", "Photon torpedo Mk9",
       "ECM torpedo Mk7", "HE missile Mk7", "Orbital neutron bomb" };
+  /**
+   * Rare combat tech names for level 7.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL9_NAMES = {
+      "Ion cannon Mk4", "Plasma cannon Mk5"};
   /**
    * Combat tech names for level 10
    */
@@ -401,7 +422,8 @@ public final class TechFactory {
       list = COMBAT_TECH_LEVEL1_NAMES;
       break;
     case 2:
-      list = COMBAT_TECH_LEVEL2_NAMES;
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL2_NAMES,
+          COMBAT_RARE_TECH_LEVEL2_NAMES);
       break;
     case 3:
       list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL3_NAMES,
@@ -411,19 +433,22 @@ public final class TechFactory {
       list = COMBAT_TECH_LEVEL4_NAMES;
       break;
     case 5:
-      list = COMBAT_TECH_LEVEL5_NAMES;
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL5_NAMES,
+          COMBAT_RARE_TECH_LEVEL5_NAMES);
       break;
     case 6:
       list = COMBAT_TECH_LEVEL6_NAMES;
       break;
     case 7:
-      list = COMBAT_TECH_LEVEL7_NAMES;
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL7_NAMES,
+          COMBAT_RARE_TECH_LEVEL7_NAMES);
       break;
     case 8:
       list = COMBAT_TECH_LEVEL8_NAMES;
       break;
     case 9:
-      list = COMBAT_TECH_LEVEL9_NAMES;
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL9_NAMES,
+          COMBAT_RARE_TECH_LEVEL9_NAMES);
       break;
     case 10:
       list = COMBAT_TECH_LEVEL10_NAMES;
@@ -461,6 +486,33 @@ public final class TechFactory {
         } else if (techName.startsWith("Tractor beam")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_TRACTOR_BEAM));
           tech.setRareTech(true);
+        } else if (techName.startsWith("Ion cannon")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
+          tech.setRareTech(true);
+          if (techName.equals("Ion cannon Mk1")) {
+            tech.setNextTechOnTree("Ion cannon Mk2");
+          }
+          if (techName.equals("Ion cannon Mk2")) {
+            tech.setNextTechOnTree("Ion cannon Mk3");
+          }
+          if (techName.equals("Ion cannon Mk3")) {
+            tech.setNextTechOnTree("Ion cannon Mk4");
+          }
+        } else if (techName.startsWith("Plasma cannon")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
+          tech.setRareTech(true);
+          if (techName.equals("Plasma cannon Mk1")) {
+            tech.setNextTechOnTree("Plasma cannon Mk2");
+          }
+          if (techName.equals("Plasma cannon Mk2")) {
+            tech.setNextTechOnTree("Plasma cannon Mk3");
+          }
+          if (techName.equals("Plasma cannon Mk3")) {
+            tech.setNextTechOnTree("Plasma cannon Mk4");
+          }
+          if (techName.equals("Plasma cannon Mk4")) {
+            tech.setNextTechOnTree("Plasma cannon Mk5");
+          }
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
         }
@@ -1038,6 +1090,40 @@ public final class TechFactory {
     if (hasTech("Solar armor Mk2", techList) && !hasTech("Solar armor Mk3",
         techList)) {
       choices.add(createDefenseTech("Solar armor Mk3", 9));
+    }
+    if (!hasTech("Ion cannon Mk1", techList)) {
+      choices.add(createCombatTech("Ion cannon Mk1", 3));
+    }
+    if (hasTech("Ion cannon Mk1", techList) && !hasTech("Ion cannon Mk2",
+        techList)) {
+      choices.add(createCombatTech("Ion cannon Mk2", 5));
+    }
+    if (hasTech("Ion cannon Mk2", techList) && !hasTech("Ion cannon Mk3",
+        techList)) {
+      choices.add(createCombatTech("Ion cannon Mk3", 7));
+    }
+    if (hasTech("Ion cannon Mk3", techList) && !hasTech("Ion cannon Mk4",
+        techList)) {
+      choices.add(createCombatTech("Ion cannon Mk4", 9));
+    }
+    if (!hasTech("Plasma cannon Mk1", techList)) {
+      choices.add(createCombatTech("Plasma cannon Mk1", 2));
+    }
+    if (hasTech("Plasma cannon Mk1", techList) && !hasTech("Plasma cannon Mk2",
+        techList)) {
+      choices.add(createCombatTech("Plasma cannon Mk2", 3));
+    }
+    if (hasTech("Plasma cannon Mk2", techList) && !hasTech("Plasma cannon Mk3",
+        techList)) {
+      choices.add(createCombatTech("Plasma cannon Mk3", 5));
+    }
+    if (hasTech("Plasma cannon Mk3", techList) && !hasTech("Plasma cannon Mk4",
+        techList)) {
+      choices.add(createCombatTech("Plasma cannon Mk4", 7));
+    }
+    if (hasTech("Plasma cannon Mk5", techList) && !hasTech("Plasma cannon Mk5",
+        techList)) {
+      choices.add(createCombatTech("Plasma cannon Mk5", 9));
     }
     if (!hasTech("Distortion shield Mk1", techList)) {
       choices.add(createDefenseTech("Distortion shield Mk1", 4));

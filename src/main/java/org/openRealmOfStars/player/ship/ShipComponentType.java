@@ -144,7 +144,15 @@ public enum ShipComponentType {
   /**
    * Tractor beam to pull ship one closer.
    */
-  TRACTOR_BEAM;
+  TRACTOR_BEAM,
+  /**
+   * Plasma cannon to make always damage.
+   */
+  PLASMA_CANNON,
+  /**
+   * Ion cannon to make destroy shields and hull.
+   */
+  ION_CANNON;
 
   /**
    * Get ShipComponentType index
@@ -208,6 +216,10 @@ public enum ShipComponentType {
       return 26;
     case TRACTOR_BEAM:
       return 27;
+    case PLASMA_CANNON:
+      return 28;
+    case ION_CANNON:
+      return 29;
     default:
       return 0;
     }
@@ -276,6 +288,10 @@ public enum ShipComponentType {
       return ShipComponentType.ORGANIC_ARMOR;
     case 27:
       return ShipComponentType.TRACTOR_BEAM;
+    case 28:
+      return ShipComponentType.PLASMA_CANNON;
+    case 29:
+      return ShipComponentType.ION_CANNON;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -340,6 +356,10 @@ public enum ShipComponentType {
       return "Organic armor";
     case TRACTOR_BEAM:
       return "Tractor beam";
+    case PLASMA_CANNON:
+      return "Plasma cannon";
+    case ION_CANNON:
+      return "Ion cannon";
     default:
       return "Error - Unknown";
     }
@@ -399,15 +419,18 @@ public enum ShipComponentType {
       return Icons.ICON_HULL_TECH;
     case PLASMA_BEAM:
       return Icons.ICON_LASERGUN;
-    // FIXME Icons for tractor beam and solar armor
     case DISTORTION_SHIELD:
       return Icons.ICON_SHIELD; // FIXME Change for better icon.
     case SOLAR_ARMOR:
       return Icons.ICON_SOLAR_ARMOR;
     case ORGANIC_ARMOR:
-      return Icons.ICON_DEFENSE_TECH; // FIXME Change for better icon.
+      return Icons.ICON_ORGANIC_ARMOR;
     case TRACTOR_BEAM:
       return Icons.ICON_TRACTOR_BEAM;
+    case PLASMA_CANNON:
+      return Icons.ICON_COMBAT_TECH; // FIXME ICON
+    case ION_CANNON:
+      return Icons.ICON_COMBAT_TECH; // FIXME ICON
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }
@@ -427,6 +450,8 @@ public enum ShipComponentType {
         return 100;
       case WEAPON_RAILGUN:
       case WEAPON_PHOTON_TORPEDO:
+      case PLASMA_CANNON:
+      case ION_CANNON:
           return 75;
       case WEAPON_ECM_TORPEDO:
       case WEAPON_HE_MISSILE:

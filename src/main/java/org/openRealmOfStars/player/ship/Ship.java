@@ -1275,6 +1275,22 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Has ship working tractor beam or not
+   * @return True if ship has tractor beam that works
+   */
+  public boolean isTractorShip() {
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.TRACTOR_BEAM
+          && hasComponentEnergy(i)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Is Ship trooper ship or not
    * @return True if ship has functional planetary invasion module,
    * otherwise false

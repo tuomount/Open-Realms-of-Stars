@@ -398,16 +398,20 @@ public class Combat {
   public boolean canTractor(final CombatShip tractor, final CombatShip target) {
     ShipComponent weapon = tractor.getShip().getComponent(componentUse);
     if (weapon != null && weapon.getType() == ShipComponentType.TRACTOR_BEAM) {
-      double xAxisDistance = Math.abs(tractor.getX() - target.getX());
-      double yAxisDistance = Math.abs(tractor.getY() - target.getY());
-      int distance;
-      if (xAxisDistance > yAxisDistance) {
-          distance = (int) xAxisDistance;
-      } else {
-          distance = (int) yAxisDistance;
-      }
-      if (distance == 2) {
-        return true;
+      int tratocSize = tractor.getShip().getHull().getSize().getMass();
+      int pullSize = target.getShip().getHull().getSize().getMass();
+      if (tratocSize >= pullSize) {
+        double xAxisDistance = Math.abs(tractor.getX() - target.getX());
+        double yAxisDistance = Math.abs(tractor.getY() - target.getY());
+        int distance;
+        if (xAxisDistance > yAxisDistance) {
+            distance = (int) xAxisDistance;
+        } else {
+            distance = (int) yAxisDistance;
+        }
+        if (distance == 2) {
+          return true;
+        }
       }
     }
     return false;
@@ -1505,6 +1509,46 @@ public boolean launchIntercept(final int distance,
     return false;
   }
   /**
+   * Handle tractoring
+   * @param textLogger where logging is added if not null
+   * @param infoPanel Infopanel where ship components are shown.
+   *        This can be null too.
+   * @param target Target ship to be pullwd.
+   * @return true if end round has been activated and component use
+   *        should be cleared from UI. Otherwise false.
+   */
+  private boolean handleTractorShip(final Logger textLogger,
+      final BattleInfoPanel infoPanel, final CombatShip target) {
+    CombatShip ai = getCurrentShip();
+    if (canTractor(ai, target)) {
+      int nComp = ai.getShip().getNumberOfComponents();
+      for (int i = 0; i < nComp; i++) {
+        ShipComponent weapon = ai.getShip().getComponent(i);
+        setComponentUse(i);
+        if (weapon != null && weapon.isTractor() && !ai.isComponentUsed(i)
+            && ai.getShip().componentIsWorking(i)) {
+          ShipDamage shipDamage = doTractorBeam(ai, target);
+          shipDamage.ready();
+          setAnimation(new CombatAnimation(ai, target, weapon,
+              shipDamage.getValue()));
+          ai.useComponent(componentUse);
+          if (textLogger != null) {
+            String[] logs = shipDamage.getMessage().split("\n");
+            for (String log : logs) {
+              textLogger.addLog(log);
+            }
+          }
+          if (infoPanel != null) {
+            infoPanel.useComponent(i);
+          }
+          setComponentUse(-1);
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  /**
    * AI handling for pure military ships.
    * @param textLogger where logging is added if not null
    * @param infoPanel Infopanel where ship components are shown.
@@ -1520,6 +1564,7 @@ public boolean launchIntercept(final int distance,
       return true;
     }
     boolean privateer = ai.getShip().isPrivateeringShip();
+    boolean tractor = ai.getShip().isTractorShip();
     PlayerInfo info = getCurrentShip().getPlayer();
     CombatShip deadliest = getMostPowerfulShip(info);
     CombatShip closest = getClosestEnemyShip(info, getCurrentShip());
@@ -1528,6 +1573,9 @@ public boolean launchIntercept(final int distance,
     if (privateer) {
       trader = getClosestTraderShip(info, ai);
       if (trader != null) {
+        if (tractor && canTractor(ai, trader)) {
+          handleTractorShip(textLogger, infoPanel, trader);
+        }
         boolean privateered = handlePrivateerShip(textLogger, infoPanel,
             trader);
         if (privateered) {
@@ -1556,6 +1604,10 @@ public boolean launchIntercept(final int distance,
       if (ai.getShip().getTotalMilitaryPower() > deadliest.getShip()
           .getTotalMilitaryPower()) {
         range = ai.getShip().getMinWeaponRange();
+        tractor = false;
+      }
+      if (tractor && canTractor(ai, deadliest)) {
+        handleTractorShip(textLogger, infoPanel, deadliest);
       }
       Coordinate aiCoordinate = new Coordinate(ai.getX(), ai.getY());
       Coordinate deadliestCoordinate = new Coordinate(deadliest.getX(),

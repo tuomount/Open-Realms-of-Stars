@@ -283,7 +283,7 @@ public class CombatAnimation {
       break;
     }
     case TRACTOR_BEAM: {
-      count = 30;
+      count = 20;
       break;
     }
     case SHIELD: {

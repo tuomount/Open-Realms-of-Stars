@@ -1428,8 +1428,7 @@ public class MapPanel extends JPanel {
           break;
           }
         case TRACTOR_BEAM: {
-          // FIXME Change better tractor beam sound
-          SoundPlayer.playSound(SoundPlayer.CLOAK_OVERLOAD);
+          SoundPlayer.playSound(SoundPlayer.TRACTORBEAM);
           break;
           }
         default: {

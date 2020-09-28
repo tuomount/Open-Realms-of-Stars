@@ -491,27 +491,34 @@ public final class TechFactory {
           tech.setRareTech(true);
           if (techName.equals("Ion cannon Mk1")) {
             tech.setNextTechOnTree("Ion cannon Mk2");
+            tech.setNextTechLevel(5);
           }
           if (techName.equals("Ion cannon Mk2")) {
             tech.setNextTechOnTree("Ion cannon Mk3");
+            tech.setNextTechLevel(7);
           }
           if (techName.equals("Ion cannon Mk3")) {
             tech.setNextTechOnTree("Ion cannon Mk4");
+            tech.setNextTechLevel(9);
           }
         } else if (techName.startsWith("Plasma cannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
           tech.setRareTech(true);
           if (techName.equals("Plasma cannon Mk1")) {
             tech.setNextTechOnTree("Plasma cannon Mk2");
+            tech.setNextTechLevel(3);
           }
           if (techName.equals("Plasma cannon Mk2")) {
             tech.setNextTechOnTree("Plasma cannon Mk3");
+            tech.setNextTechLevel(5);
           }
           if (techName.equals("Plasma cannon Mk3")) {
             tech.setNextTechOnTree("Plasma cannon Mk4");
+            tech.setNextTechLevel(7);
           }
           if (techName.equals("Plasma cannon Mk4")) {
             tech.setNextTechOnTree("Plasma cannon Mk5");
+            tech.setNextTechLevel(9);
           }
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
@@ -599,27 +606,33 @@ public final class TechFactory {
             tech.setRareTech(true);
             if (techName.equals("Solar armor Mk1")) {
               tech.setNextTechOnTree("Solar armor Mk2");
+              tech.setNextTechLevel(6);
             }
             if (techName.equals("Solar armor Mk2")) {
               tech.setNextTechOnTree("Solar armor Mk3");
+              tech.setNextTechLevel(9);
             }
         } else if (techName.startsWith("Organic armor")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
           tech.setRareTech(true);
           if (techName.equals("Organic armor Mk1")) {
             tech.setNextTechOnTree("Organic armor Mk2");
+            tech.setNextTechLevel(6);
           }
           if (techName.equals("Organic armor Mk2")) {
             tech.setNextTechOnTree("Organic armor Mk3");
+            tech.setNextTechLevel(8);
           }
       } else if (techName.startsWith("Distortion shield")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SHIELD));
           tech.setRareTech(true);
           if (techName.equals("Distortion shield Mk1")) {
             tech.setNextTechOnTree("Distortion shield Mk2");
+            tech.setNextTechLevel(6);
           }
           if (techName.equals("Distortion shield Mk2")) {
             tech.setNextTechOnTree("Distortion shield Mk3");
+            tech.setNextTechLevel(8);
           }
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DEFENSE_TECH));
@@ -970,11 +983,36 @@ public final class TechFactory {
    */
   public static Tech createRandomTech(final TechType type, final int level,
       final Tech[] alreadyHas) {
+    return createRandomTech(type, level, alreadyHas, null);
+  }
+  /**
+   * Create random tech by tech type and level, but not choose those tech
+   * player already has
+   * @param type Tech Type: Combat, Defense, Hulls, Improvements, Propulsion
+   *             and Electrics
+   * @param level Tech Level 1-10
+   * @param alreadyHas List of tech player has
+   * @param rareTech list of rare tech available for realm.
+   * @return Tech or null if cannot find new
+   */
+  public static Tech createRandomTech(final TechType type, final int level,
+      final Tech[] alreadyHas, final Tech[] rareTech) {
     String[] alreadyHasList = new String[alreadyHas.length];
     for (int i = 0; i < alreadyHasList.length; i++) {
       alreadyHasList[i] = alreadyHas[i].getName();
     }
-    String[] options = getListByTechLevel(type, level);
+    String[] techOptions = getListByTechLevel(type, level);
+    int rareTechs = 0;
+    if (rareTech != null && rareTech.length > 0) {
+      rareTechs = rareTech.length;
+    }
+    String[] options = new String[techOptions.length + rareTechs];
+    System.arraycopy(techOptions, 0, options, 0, techOptions.length);
+    if (rareTech != null) {
+      for (int i = 0; i < rareTechs; i++) {
+        options[techOptions.length + i] = rareTech[i].getName();
+      }
+    }
     ArrayList<String> choices = new ArrayList<>();
     for (String opt : options) {
       boolean playerHas = false;

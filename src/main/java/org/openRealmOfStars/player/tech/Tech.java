@@ -70,6 +70,10 @@ public class Tech {
    */
   private String nextTechOnTree;
   /**
+   * Which level next tech will be found.
+   */
+  private int nextTechLevel;
+  /**
    * Icon for Tech
    */
   private Icon16x16 icon;
@@ -88,6 +92,7 @@ public class Tech {
     improvement = null;
     component = null;
     nextTechOnTree = null;
+    nextTechLevel = 1;
     rareTech = false;
     icon = Icons.getIconByName(Icons.ICON_RESEARCH);
   }
@@ -289,6 +294,22 @@ public class Tech {
    */
   public void setNextTechOnTree(final String nextTechOnTree) {
     this.nextTechOnTree = nextTechOnTree;
+  }
+
+  /**
+   * Get next tech level.
+   * @return the nextTechLevel
+   */
+  public int getNextTechLevel() {
+    return nextTechLevel;
+  }
+
+  /**
+   * Set next tech level
+   * @param nextTechLevel the nextTechLevel to set
+   */
+  public void setNextTechLevel(final int nextTechLevel) {
+    this.nextTechLevel = nextTechLevel;
   }
 
 }

@@ -809,6 +809,31 @@ public class TechList {
     }
     return result;
   }
+
+  /**
+   * Check possible rare techs on tree
+   * @param techType Tech Type
+   * @param level Which level tech should be
+   * @return List of possible rare techs.
+   */
+  private Tech[] checkRareTechTree(final TechType techType, final int level) {
+    ArrayList<Tech> list = new ArrayList<>();
+    Tech[] techs = getRareTechs();
+    for (Tech tech : techs) {
+      if (tech.getType() == techType && tech.getNextTechOnTree() != null
+          && tech.getNextTechLevel() == level) {
+        Tech rareTech = TechFactory.createTech(techType, level,
+            tech.getNextTechOnTree());
+        if (rareTech != null) {
+          list.add(rareTech);
+        }
+      }
+    }
+    if (list.size() == 0) {
+      return null;
+    }
+    return list.toArray(new Tech[list.size()]);
+  }
   /**
    * Update Research points by turn. This will also grant a new technology
    * @param totalResearchPoints player makes per turn
@@ -828,8 +853,9 @@ public class TechList {
             - TechFactory.getTechCost(techLevels[i], gameLength);
         TechType type = TechType.getTypeByIndex(i);
         int lvl = techLevels[i];
+        Tech[] rareTechs = checkRareTechTree(type, lvl);
         Tech tech = TechFactory.createRandomTech(type, lvl,
-            getListForTypeAndLevel(type, lvl));
+            getListForTypeAndLevel(type, lvl), rareTechs);
         if (tech == null) {
           // Apparently tech level was already full,
           // so let's increase level and try again later.

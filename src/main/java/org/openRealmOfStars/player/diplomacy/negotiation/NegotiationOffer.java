@@ -123,7 +123,11 @@ public class NegotiationOffer {
       offerValue = getMapValue();
       break;
     case TECH:
-      offerValue = getTech().getLevel() * 2;
+      if (getTech().isRareTech()) {
+        offerValue = getTech().getLevel() * 4;
+      } else {
+        offerValue = getTech().getLevel() * 2;
+      }
       break;
     case PLANET:
       offerValue = getPlanet().getAmountMetalInGround() / 1000;

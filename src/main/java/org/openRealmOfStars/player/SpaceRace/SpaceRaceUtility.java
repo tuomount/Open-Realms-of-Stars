@@ -116,29 +116,25 @@ public final class SpaceRaceUtility {
     StringBuilder sb = new StringBuilder();
     if (DiceGenerator.getRandom(1) == 0) {
       if (race == SpaceRace.HUMAN) {
-        if (DiceGenerator.getRandom(1) == 0) {
-          sb.append("Terran");
-        } else {
-          sb.append(race.getNameSingle());
-        }
+    	  addSecondaryName(race, sb, "Terran");
       } else if (race == SpaceRace.MECHIONS) {
-        if (DiceGenerator.getRandom(1) == 0) {
-          sb.append("Steel");
-        } else {
-          sb.append(race.getNameSingle());
-        }
+    	  addSecondaryName(race, sb, "Steel");
+      } else if (race == SpaceRace.SPORKS) {
+    	  addSecondaryName(race, sb, "Taurus");
+      }	else if (race == SpaceRace.GREYANS) {
+    	  addSecondaryName(race, sb, "Aesir");
+      } else if (race == SpaceRace.CENTAURS) {
+          addSecondaryName(race, sb, "Aries");
       } else if (race == SpaceRace.TEUTHIDAES) {
-        if (DiceGenerator.getRandom(1) == 0) {
-          sb.append("Squiddan");
-        } else {
-          sb.append(race.getNameSingle());
-        }
-      } else if (race == SpaceRace.GREYANS) {
-        if (DiceGenerator.getRandom(1) == 0) {
-          sb.append("Aesir");
-        } else {
-          sb.append(race.getNameSingle());
-        }
+    	  addSecondaryName(race, sb, "Squiddan");
+      } else if (race == SpaceRace.MOTHOIDS) {
+    	  addSecondaryName(race, sb, "Gemini");
+      } else if (race == SpaceRace.SCAURIANS) {
+    	  addSecondaryName(race, sb, "Leo");
+      } else if (race == SpaceRace.HOMARIANS) {
+    	  addSecondaryName(race, sb, "Virgo");
+      } else if (race == SpaceRace.CHIRALOIDS) {
+    	  addSecondaryName(race, sb, "Libra");
       } else {
         sb.append(race.getNameSingle());
       }
@@ -158,6 +154,14 @@ public final class SpaceRaceUtility {
       }
     }
     return sb.toString();
+  }
+
+  private static void addSecondaryName(final SpaceRace race, StringBuilder sb, String secondaryName) {
+	  if (DiceGenerator.getRandom(1) == 0) {
+		  sb.append(secondaryName);
+	  } else {
+		  sb.append(race.getNameSingle());
+	  }
   }
 
 }

@@ -57,7 +57,7 @@ public class SpaceRaceUtilityTest {
     SpaceRace race = SpaceRace.CENTAURS;
     assertEquals(Attitude.DIPLOMATIC, race.getAttitude());
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.ALLIANCE);
-    assertEquals(true, str.contains("Centaur"));
+    assertEquals(true, str.contains("Centaur") || str.contains("Sagittarian"));
     assertEquals(true, str.contains("Alliance"));
   }
 
@@ -77,7 +77,7 @@ public class SpaceRaceUtilityTest {
     SpaceRace race = SpaceRace.HOMARIANS;
     assertEquals(Attitude.PEACEFUL, race.getAttitude());
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.NEST);
-    assertEquals(true, str.contains("Homarian"));
+    assertEquals(true, str.contains("Homarian") || str.contains("Cancerian"));
     assertEquals(true, str.contains("Nest"));
   }
 
@@ -87,7 +87,7 @@ public class SpaceRaceUtilityTest {
     SpaceRace race = SpaceRace.SPORKS;
     assertEquals(Attitude.AGGRESSIVE, race.getAttitude());
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.CLAN);
-    assertEquals(true, str.contains("Spork"));
+    assertEquals(true, str.contains("Spork") || str.contains("Taurus"));
     assertEquals(true, str.contains("Clan"));
   }
 
@@ -97,7 +97,7 @@ public class SpaceRaceUtilityTest {
     SpaceRace race = SpaceRace.MOTHOIDS;
     assertEquals(Attitude.EXPANSIONIST, race.getAttitude());
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.HIVEMIND);
-    assertEquals(true, str.contains("Mothoid"));
+    assertEquals(true, str.contains("Mothoid") || str.contains("Scorpio"));
     assertEquals(true, str.contains("Hive-mind"));
   }
 
@@ -109,6 +109,26 @@ public class SpaceRaceUtilityTest {
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.FEDERATION);
     assertEquals(true, str.contains("Teuthidae") || str.contains("Squiddan"));
     assertEquals(true, str.contains("Federation"));
+  }
+  
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorScaurians() {
+    SpaceRace race = SpaceRace.SCAURIANS;
+    assertEquals(Attitude.MERCHANTICAL, race.getAttitude());
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.EMPIRE);
+    assertEquals(true, str.contains("Scaurian") || str.contains("Nemean"));
+    assertEquals(true, str.contains("Empire"));
+  }
+  
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorChiraloids() {
+    SpaceRace race = SpaceRace.CHIRALOIDS;
+    assertEquals(Attitude.AGGRESSIVE, race.getAttitude());
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.HORDE);
+    assertEquals(true, str.contains("Chiraloid") || str.contains("Capricorn"));
+    assertEquals(true, str.contains("Horde"));
   }
 
   @Test

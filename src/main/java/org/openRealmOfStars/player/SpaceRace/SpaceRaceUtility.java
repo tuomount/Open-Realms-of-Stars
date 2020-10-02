@@ -116,25 +116,25 @@ public final class SpaceRaceUtility {
     StringBuilder sb = new StringBuilder();
     if (DiceGenerator.getRandom(1) == 0) {
       if (race == SpaceRace.HUMAN) {
-    	  addSecondaryName(race, sb, "Terran");
+          sb.append(buildSecondaryName(race, "Terran"));
       } else if (race == SpaceRace.MECHIONS) {
-    	  addSecondaryName(race, sb, "Steel");
+          sb.append(buildSecondaryName(race, "Steel"));
       } else if (race == SpaceRace.SPORKS) {
-    	  addSecondaryName(race, sb, "Taurus");
-      }	else if (race == SpaceRace.GREYANS) {
-    	  addSecondaryName(race, sb, "Aesir");
+          sb.append(buildSecondaryName(race, "Taurus"));
+      } else if (race == SpaceRace.GREYANS) {
+          sb.append(buildSecondaryName(race, "Aesir"));
       } else if (race == SpaceRace.CENTAURS) {
-          addSecondaryName(race, sb, "Aries");
+          sb.append(buildSecondaryName(race, "Sagittarian"));
       } else if (race == SpaceRace.TEUTHIDAES) {
-    	  addSecondaryName(race, sb, "Squiddan");
+          sb.append(buildSecondaryName(race, "Squiddan"));
       } else if (race == SpaceRace.MOTHOIDS) {
-    	  addSecondaryName(race, sb, "Gemini");
+          sb.append(buildSecondaryName(race, "Scorpio"));
       } else if (race == SpaceRace.SCAURIANS) {
-    	  addSecondaryName(race, sb, "Leo");
+          sb.append(buildSecondaryName(race, "Nemean"));
       } else if (race == SpaceRace.HOMARIANS) {
-    	  addSecondaryName(race, sb, "Virgo");
+          sb.append(buildSecondaryName(race, "Cancerian"));
       } else if (race == SpaceRace.CHIRALOIDS) {
-    	  addSecondaryName(race, sb, "Libra");
+          sb.append(buildSecondaryName(race, "Capricorn"));
       } else {
         sb.append(race.getNameSingle());
       }
@@ -156,12 +156,22 @@ public final class SpaceRaceUtility {
     return sb.toString();
   }
 
-  private static void addSecondaryName(final SpaceRace race, StringBuilder sb, String secondaryName) {
-	  if (DiceGenerator.getRandom(1) == 0) {
-		  sb.append(secondaryName);
-	  } else {
-		  sb.append(race.getNameSingle());
-	  }
+  /**
+   * Build secondary name for Space race based on the dice number.<br>
+   * If the dice number is 0, the secondary name will be defined based on
+   * the input parameter.<br>
+   * Otherwise, single name from the Space race will be used.
+   * @param race SpaceRace for which random name is going to be generated
+   * @param secondaryName the secondary name default based on type
+   * @return secondary name for Space race
+   */
+  private static String buildSecondaryName(final SpaceRace race,
+          final String secondaryName) {
+      if (DiceGenerator.getRandom(1) == 0) {
+          return secondaryName;
+      } else {
+          return race.getNameSingle();
+      }
   }
 
 }

@@ -57,7 +57,7 @@ public class SpaceRaceUtilityTest {
     SpaceRace race = SpaceRace.CENTAURS;
     assertEquals(Attitude.DIPLOMATIC, race.getAttitude());
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.ALLIANCE);
-    assertEquals(true, str.contains("Centaur") || str.contains("Aries"));
+    assertEquals(true, str.contains("Centaur") || str.contains("Sagittarian"));
     assertEquals(true, str.contains("Alliance"));
   }
 
@@ -77,7 +77,7 @@ public class SpaceRaceUtilityTest {
     SpaceRace race = SpaceRace.HOMARIANS;
     assertEquals(Attitude.PEACEFUL, race.getAttitude());
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.NEST);
-    assertEquals(true, str.contains("Homarian") || str.contains("Virgo"));
+    assertEquals(true, str.contains("Homarian") || str.contains("Cancerian"));
     assertEquals(true, str.contains("Nest"));
   }
 
@@ -97,7 +97,7 @@ public class SpaceRaceUtilityTest {
     SpaceRace race = SpaceRace.MOTHOIDS;
     assertEquals(Attitude.EXPANSIONIST, race.getAttitude());
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.HIVEMIND);
-    assertEquals(true, str.contains("Mothoid") || str.contains("Gemini"));
+    assertEquals(true, str.contains("Mothoid") || str.contains("Scorpio"));
     assertEquals(true, str.contains("Hive-mind"));
   }
 
@@ -117,7 +117,7 @@ public class SpaceRaceUtilityTest {
     SpaceRace race = SpaceRace.SCAURIANS;
     assertEquals(Attitude.MERCHANTICAL, race.getAttitude());
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.EMPIRE);
-    assertEquals(true, str.contains("Scaurian") || str.contains("Leo"));
+    assertEquals(true, str.contains("Scaurian") || str.contains("Nemean"));
     assertEquals(true, str.contains("Empire"));
   }
   
@@ -127,7 +127,7 @@ public class SpaceRaceUtilityTest {
     SpaceRace race = SpaceRace.CHIRALOIDS;
     assertEquals(Attitude.AGGRESSIVE, race.getAttitude());
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.HORDE);
-    assertEquals(true, str.contains("Chiraloid") || str.contains("Libra"));
+    assertEquals(true, str.contains("Chiraloid") || str.contains("Capricorn"));
     assertEquals(true, str.contains("Horde"));
   }
 

@@ -340,7 +340,9 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
-          || comp.getType() == ShipComponentType.WEAPON_RAILGUN) {
+          || comp.getType() == ShipComponentType.WEAPON_RAILGUN
+          || comp.getType() == ShipComponentType.PLASMA_CANNON
+          || comp.getType() == ShipComponentType.ION_CANNON) {
         return true;
       }
     }

@@ -703,7 +703,9 @@ private int getRemainingEnergy(final int index) {
           || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO || comp
-              .getType() == ShipComponentType.WEAPON_RAILGUN)) {
+              .getType() == ShipComponentType.WEAPON_RAILGUN
+          || comp.getType() == ShipComponentType.PLASMA_CANNON
+          || comp.getType() == ShipComponentType.ION_CANNON)) {
         return true;
       }
     }
@@ -1712,7 +1714,9 @@ private int increaseHitChanceByComponent() {
       if ((comp.getType() == ShipComponentType.WEAPON_BEAM
           || comp.getType() == ShipComponentType.WEAPON_RAILGUN
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
-          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO)
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+          || comp.getType() == ShipComponentType.PLASMA_CANNON
+          || comp.getType() == ShipComponentType.ION_CANNON)
           && componentIsWorking(i)) {
         militaryShip = true;
         power = power + comp.getDamage();

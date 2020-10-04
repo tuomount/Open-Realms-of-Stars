@@ -467,10 +467,11 @@ public final class TechFactory {
         } else if (techName.startsWith("Railgun")
             || techName.startsWith("Massdrive")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
-        } else if (techName.startsWith("Photon torpedo")
-            || techName.startsWith("ECM torpedo")
+        } else if (techName.startsWith("ECM torpedo")
             || techName.startsWith("HE missile")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_MISSILE));
+        } else if (techName.startsWith("Photon torpedo")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PHOTON_TORPEDO));
         } else if (techName.startsWith("Orbital bomb")
             || techName.startsWith("Orbital smart bomb")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_BOMB));
@@ -487,7 +488,7 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_TRACTOR_BEAM));
           tech.setRareTech(true);
         } else if (techName.startsWith("Ion cannon")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
+          tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));
           tech.setRareTech(true);
           if (techName.equals("Ion cannon Mk1")) {
             tech.setNextTechOnTree("Ion cannon Mk2");
@@ -502,7 +503,7 @@ public final class TechFactory {
             tech.setNextTechLevel(9);
           }
         } else if (techName.startsWith("Plasma cannon")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PLASMA_CANNON));
           tech.setRareTech(true);
           if (techName.equals("Plasma cannon Mk1")) {
             tech.setNextTechOnTree("Plasma cannon Mk2");
@@ -624,7 +625,7 @@ public final class TechFactory {
             tech.setNextTechLevel(8);
           }
       } else if (techName.startsWith("Distortion shield")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_SHIELD));
+          tech.setIcon(Icons.getIconByName(Icons.ICON_DISTORTION_SHIELD));
           tech.setRareTech(true);
           if (techName.equals("Distortion shield Mk1")) {
             tech.setNextTechOnTree("Distortion shield Mk2");

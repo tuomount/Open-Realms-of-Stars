@@ -376,7 +376,7 @@ public enum ShipComponentType {
     case WEAPON_RAILGUN:
       return Icons.ICON_COMBAT_TECH;
     case WEAPON_PHOTON_TORPEDO:
-      return Icons.ICON_MISSILE;
+      return Icons.ICON_PHOTON_TORPEDO;
     case WEAPON_ECM_TORPEDO:
       return Icons.ICON_MISSILE;
     case WEAPON_HE_MISSILE:
@@ -420,7 +420,7 @@ public enum ShipComponentType {
     case PLASMA_BEAM:
       return Icons.ICON_LASERGUN;
     case DISTORTION_SHIELD:
-      return Icons.ICON_SHIELD; // FIXME Change for better icon.
+      return Icons.ICON_DISTORTION_SHIELD;
     case SOLAR_ARMOR:
       return Icons.ICON_SOLAR_ARMOR;
     case ORGANIC_ARMOR:
@@ -428,9 +428,9 @@ public enum ShipComponentType {
     case TRACTOR_BEAM:
       return Icons.ICON_TRACTOR_BEAM;
     case PLASMA_CANNON:
-      return Icons.ICON_COMBAT_TECH; // FIXME ICON
+      return Icons.ICON_PLASMA_CANNON;
     case ION_CANNON:
-      return Icons.ICON_COMBAT_TECH; // FIXME ICON
+      return Icons.ICON_ION_CANNON;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

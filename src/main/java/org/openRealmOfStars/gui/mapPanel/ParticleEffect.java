@@ -174,6 +174,24 @@ public class ParticleEffect {
       ttl = 10;
       break;
     }
+    case PLASMA_PARTICLE: {
+      int value = DiceGenerator.getRandom(PHOTON_TORPEDO_RED, MAX_COLOR - 25);
+      color = new Color(value + DiceGenerator.getRandom(0, 25),
+          value + DiceGenerator.getRandom(0, 25),
+          value + DiceGenerator.getRandom(0, 25));
+      mx = DiceGenerator.getRandom(5, 20);
+      mx = mx / 10;
+      my = DiceGenerator.getRandom(5, 20);
+      my = my / 10;
+      if (DiceGenerator.getRandom(1) == 0) {
+        mx = mx * -1;
+      }
+      if (DiceGenerator.getRandom(1) == 0) {
+        my = my * -1;
+      }
+      ttl = 10;
+      break;
+    }
     case MISSILE_FIRE: {
       ttl = 15;
       color = new Color(MAX_COLOR, MAX_COLOR - 6 * (15 - ttl), 0);

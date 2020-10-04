@@ -668,6 +668,11 @@ public final class GuiStatics {
    */
   public static final BufferedImage PHOTON_TORPEDO = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/photon_torp.png"));
+  /**
+   * Plasma bullet
+   */
+  public static final BufferedImage PLASMA_BULLET = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/plasma.png"));
 
   /**
    * Explosion animation

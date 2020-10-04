@@ -251,7 +251,8 @@ public class CombatAnimation {
     }
     case ANTIMATTER_BEAM:
     case PHASOR_BEAM:
-    case LASER_BEAM: {
+    case LASER_BEAM:
+    case ION_CANNON: {
       count = 40;
       break;
     }
@@ -268,8 +269,7 @@ public class CombatAnimation {
       break;
     }
     case PHOTON_TORPEDO:
-    case PLASMA_CANNON:
-    case ION_CANNON: {
+    case PLASMA_CANNON: {
       count = explosionAnim.getMaxFrames();
       break;
     }
@@ -533,8 +533,14 @@ public class CombatAnimation {
           }
           px = px + nx;
           py = py + ny;
-          ParticleEffect particle = new ParticleEffect(
-              ParticleEffectType.PHOTON_TORP_PARTICILE, px, py);
+          ParticleEffect particle = null;
+          if (type == CombatAnimationType.PHOTON_TORPEDO) {
+            particle = new ParticleEffect(
+                ParticleEffectType.PHOTON_TORP_PARTICILE, px, py);
+          } else {
+            particle = new ParticleEffect(
+                ParticleEffectType.PLASMA_PARTICLE, px, py);
+          }
           particles.add(particle);
           if (Math.round(sx) == Math.round(ex)
               && Math.round(sy) == Math.round(ey)) {

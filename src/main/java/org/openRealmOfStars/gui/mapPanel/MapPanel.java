@@ -1447,13 +1447,19 @@ public class MapPanel extends JPanel {
         gr.drawLine(anim.getSx() + viewPointOffsetX,
             anim.getSy() + viewPointOffsetY, anim.getEx() + viewPointOffsetX,
             anim.getEy() + viewPointOffsetY);
-      } else if (anim.getType() == CombatAnimationType.PHOTON_TORPEDO
-          || anim.getType() == CombatAnimationType.PLASMA_CANNON) {
+      } else if (anim.getType() == CombatAnimationType.PHOTON_TORPEDO) {
         gr.drawImage(GuiStatics.PHOTON_TORPEDO,
             anim.getSx() + viewPointOffsetX
                 - GuiStatics.PHOTON_TORPEDO.getWidth() / 2,
             anim.getSy() + viewPointOffsetY
                 - GuiStatics.PHOTON_TORPEDO.getHeight() / 2,
+            null);
+      } else if (anim.getType() == CombatAnimationType.PLASMA_CANNON) {
+        gr.drawImage(GuiStatics.PLASMA_BULLET,
+            anim.getSx() + viewPointOffsetX
+                - GuiStatics.PLASMA_BULLET.getWidth() / 2,
+            anim.getSy() + viewPointOffsetY
+                - GuiStatics.PLASMA_BULLET.getHeight() / 2,
             null);
       } else if (anim.getType() == CombatAnimationType.ION_CANNON) {
         Stroke ionBeam = new BasicStroke(1, BasicStroke.CAP_SQUARE,

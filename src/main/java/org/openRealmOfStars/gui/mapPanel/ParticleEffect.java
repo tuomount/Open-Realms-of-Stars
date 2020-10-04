@@ -121,6 +121,20 @@ public class ParticleEffect {
           .getRandom(GuiStatics.BLUE_BEAM_COLORS.length - 1)];
       break;
     }
+    case ION_PARTICLE_LOW_ACTIVE: {
+      mx = 1;
+      my = 1;
+      if (DiceGenerator.getRandom(1) == 0) {
+        mx = mx * -1;
+      }
+      if (DiceGenerator.getRandom(1) == 0) {
+        my = my * -1;
+      }
+      ttl = DiceGenerator.getRandom(1, 5);
+      color = GuiStatics.BLUE_BEAM_COLORS[DiceGenerator
+          .getRandom(GuiStatics.BLUE_BEAM_COLORS.length - 1)];
+      break;
+    }
     case LASER_PARTICLE: {
       mx = 0;
       my = 0;

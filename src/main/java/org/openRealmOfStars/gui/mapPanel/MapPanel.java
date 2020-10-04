@@ -1448,14 +1448,22 @@ public class MapPanel extends JPanel {
             anim.getSy() + viewPointOffsetY, anim.getEx() + viewPointOffsetX,
             anim.getEy() + viewPointOffsetY);
       } else if (anim.getType() == CombatAnimationType.PHOTON_TORPEDO
-          || anim.getType() == CombatAnimationType.PLASMA_CANNON
-          || anim.getType() == CombatAnimationType.ION_CANNON) {
+          || anim.getType() == CombatAnimationType.PLASMA_CANNON) {
         gr.drawImage(GuiStatics.PHOTON_TORPEDO,
             anim.getSx() + viewPointOffsetX
                 - GuiStatics.PHOTON_TORPEDO.getWidth() / 2,
             anim.getSy() + viewPointOffsetY
                 - GuiStatics.PHOTON_TORPEDO.getHeight() / 2,
             null);
+      } else if (anim.getType() == CombatAnimationType.ION_CANNON) {
+        Stroke ionBeam = new BasicStroke(1, BasicStroke.CAP_SQUARE,
+            BasicStroke.JOIN_BEVEL, 1, new float[] {0.1f, 4.5f },
+            transparency / 100);
+        gr.setStroke(ionBeam);
+        gr.setColor(anim.getBeamColor());
+        gr.drawLine(anim.getSx() + viewPointOffsetX,
+            anim.getSy() + viewPointOffsetY, anim.getEx() + viewPointOffsetX,
+            anim.getEy() + viewPointOffsetY);
       } else if (anim.getType() == CombatAnimationType.TRACTOR_BEAM) {
         Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);

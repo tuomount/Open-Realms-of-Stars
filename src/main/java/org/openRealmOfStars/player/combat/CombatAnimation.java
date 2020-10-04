@@ -416,7 +416,8 @@ public class CombatAnimation {
     if (type == CombatAnimationType.ANTIMATTER_BEAM
         || type == CombatAnimationType.LASER_BEAM
         || type == CombatAnimationType.PHASOR_BEAM
-        || type == CombatAnimationType.PLASMA_BEAM) {
+        || type == CombatAnimationType.PLASMA_BEAM
+        || type == CombatAnimationType.ION_CANNON) {
       count--;
       if (count < FRAME_MARKER_WHEN_EXPLODE) {
         doAnimationHit(20);
@@ -435,6 +436,7 @@ public class CombatAnimation {
       int parts = DiceGenerator.getRandom(5, 15);
       boolean phasorsParticle = type == CombatAnimationType.PHASOR_BEAM;
       boolean antimatterParticle = type == CombatAnimationType.ANTIMATTER_BEAM;
+      boolean ionParticle = type == CombatAnimationType.ION_CANNON;
       for (int i = 0; i < parts; i++) {
         int dist = DiceGenerator.getRandom(distance);
         int px = (int) Math.round(dist * mx + sx);
@@ -456,6 +458,10 @@ public class CombatAnimation {
         } else if (antimatterParticle) {
           ParticleEffect particle = new ParticleEffect(
               ParticleEffectType.ANTIMATTER_PARTICLE, px, py);
+          particles.add(particle);
+        } else if (ionParticle) {
+          ParticleEffect particle = new ParticleEffect(
+              ParticleEffectType.ION_PARTICLE_LOW_ACTIVE, px, py);
           particles.add(particle);
         } else {
           ParticleEffect particle = new ParticleEffect(
@@ -495,8 +501,7 @@ public class CombatAnimation {
         }
       }
     } else if (type == CombatAnimationType.PHOTON_TORPEDO
-        || type == CombatAnimationType.PLASMA_CANNON
-        || type == CombatAnimationType.ION_CANNON) {
+        || type == CombatAnimationType.PLASMA_CANNON) {
       if (Math.round(sx) == Math.round(ex)
           && Math.round(sy) == Math.round(ey)) {
         count--;
@@ -715,6 +720,9 @@ public class CombatAnimation {
     } else if (type == CombatAnimationType.PHASOR_BEAM) {
       return new Color(2 * count, COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count),
           2 * count);
+    } else if (type == CombatAnimationType.ION_CANNON) {
+      return new Color(2 * count, COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count),
+          COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count));
     } else {
       return new Color(COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count), 2 * count,
           2 * count);

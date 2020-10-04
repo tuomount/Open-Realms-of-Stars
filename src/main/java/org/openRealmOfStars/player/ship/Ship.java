@@ -1134,6 +1134,7 @@ private int increaseHitChanceByComponent() {
         }
         damage = 1;
       }
+      break;
     }
     case WEAPON_ECM_TORPEDO: {
       damage = weapon.getDamage();

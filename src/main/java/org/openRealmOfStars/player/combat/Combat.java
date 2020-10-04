@@ -1871,7 +1871,8 @@ public boolean launchIntercept(final int distance,
       Ship ship = getCurrentShip().getShip();
       if (component.getType() == ShipComponentType.ENGINE
           && ship.componentIsWorking(index)
-          && getCurrentShip().getEnergyLevel() > 1) {
+          && getCurrentShip().getEnergyLevel() > 1
+          && !ship.isStarBase()) {
         getCurrentShip().setEnergyLevel(
             getCurrentShip().getEnergyLevel() - 2);
         if (!getCurrentShip().isOverloadFailure(index)) {
@@ -1897,7 +1898,8 @@ public boolean launchIntercept(final int distance,
       }
       if (component.getType() == ShipComponentType.THRUSTERS
           && ship.componentIsWorking(index)
-          && getCurrentShip().getEnergyLevel() > 0) {
+          && getCurrentShip().getEnergyLevel() > 0
+          && !ship.isStarBase()) {
         getCurrentShip().setEnergyLevel(
             getCurrentShip().getEnergyLevel() - 1);
         if (!getCurrentShip().isOverloadFailure(index)) {

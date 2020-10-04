@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2017, 2019 Tuomo Untinen
+ * Copyright (C) 2017, 2019, 2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -219,7 +219,31 @@ public class ShipTest {
     design.addComponent(targetingComp);
     Ship ship = new Ship(design);
     
-    assertEquals(58, ship.getTotalMilitaryPower());
+    assertEquals(59, ship.getTotalMilitaryPower());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTopCruiser() {
+    ShipHull hull = ShipHullFactory.createByName("Cruiser", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
+    ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
+    ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk10");
+    ShipComponent shield = ShipComponentFactory.createByName("Shield Mk10");
+    ShipComponent jammer = ShipComponentFactory.createByName("Distortion shield Mk3");
+    ShipComponent targetingComp = ShipComponentFactory.createByName("Targeting computer Mk1");
+    design.addComponent(energy);
+    design.addComponent(engine);
+    design.addComponent(armor);
+    design.addComponent(weapon);
+    design.addComponent(shield);
+    design.addComponent(jammer);
+    design.addComponent(targetingComp);
+    Ship ship = new Ship(design);
+    
+    assertEquals(56, ship.getTotalMilitaryPower());
   }
 
   @Test

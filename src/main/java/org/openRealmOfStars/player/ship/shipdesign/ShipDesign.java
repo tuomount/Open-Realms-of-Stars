@@ -223,6 +223,10 @@ public class ShipDesign {
           && comp.getType() == ShipComponentType.SHIELD) {
         shield = shield + comp.getDefenseValue();
       }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
+        shield = shield + comp.getDefenseValue();
+      }
     }
     return shield;
   }
@@ -313,6 +317,14 @@ public class ShipDesign {
           && comp.getType() == ShipComponentType.ARMOR) {
         armor = armor + comp.getDefenseValue();
       }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SOLAR_ARMOR) {
+        armor = armor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
+        armor = armor + comp.getDefenseValue();
+      }
     }
     return armor;
   }
@@ -328,7 +340,9 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
-          || comp.getType() == ShipComponentType.WEAPON_RAILGUN) {
+          || comp.getType() == ShipComponentType.WEAPON_RAILGUN
+          || comp.getType() == ShipComponentType.PLASMA_CANNON
+          || comp.getType() == ShipComponentType.ION_CANNON) {
         return true;
       }
     }
@@ -344,7 +358,10 @@ public class ShipDesign {
   public boolean hasDefenseComponent() {
     for (ShipComponent comp : components) {
       if (comp.getType() == ShipComponentType.ARMOR
-          || comp.getType() == ShipComponentType.SHIELD) {
+          || comp.getType() == ShipComponentType.SHIELD
+          || comp.getType() == ShipComponentType.DISTORTION_SHIELD
+          || comp.getType() == ShipComponentType.SOLAR_ARMOR
+          || comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
         return true;
       }
     }
@@ -526,11 +543,14 @@ public class ShipDesign {
           && getHull().getHullType() != ShipHullType.STARBASE) {
         power = power + comp.getTacticSpeed() - 1;
       }
+      if (comp.getType() == ShipComponentType.TRACTOR_BEAM) {
+        power = power + 1;
+      }
       if (comp.getType() == ShipComponentType.TARGETING_COMPUTER) {
         power = power + comp.getDamage() / 10;
       }
       if (comp.getType() == ShipComponentType.JAMMER) {
-        power = power + comp.getDamage() / 10;
+        power = power + comp.getDamage() / 5;
       }
       if (comp.getType() == ShipComponentType.FIGHTER_BAY) {
         power = power + comp.getBaySize();
@@ -813,6 +833,15 @@ public class ShipDesign {
           && !jammer) {
         jammer = true;
       } else if (comp.getType() == ShipComponentType.JAMMER
+          && jammer) {
+        designOk = false;
+        sb.append(ShipDesignConsts.MANY_JAMMERS);
+        sb.append("\n");
+      }
+      if (comp.getType() == ShipComponentType.DISTORTION_SHIELD
+          && !jammer) {
+        jammer = true;
+      } else if (comp.getType() == ShipComponentType.DISTORTION_SHIELD
           && jammer) {
         designOk = false;
         sb.append(ShipDesignConsts.MANY_JAMMERS);

@@ -475,10 +475,27 @@ private boolean isIndexValid(final int index) {
     boolean workingShields = false;
     boolean shieldsUp = false;
     boolean generatorUp = false;
+    boolean armorUp = false;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
 
       if (comp.getType() == ShipComponentType.SHIELD && componentIsWorking(i)
+          && !shieldsUp) {
+        workingShields = true;
+        shieldsUp = true;
+        if (shield < getTotalShield()) {
+          shield++;
+        }
+      }
+      if (comp.getType() == ShipComponentType.ORGANIC_ARMOR
+          && componentIsWorking(i) && !armorUp) {
+        armorUp = true;
+        if (armor < getTotalArmor()) {
+          armor++;
+        }
+      }
+      if (comp.getType() == ShipComponentType.DISTORTION_SHIELD
+          && componentIsWorking(i)
           && !shieldsUp) {
         workingShields = true;
         shieldsUp = true;
@@ -515,7 +532,22 @@ private boolean isIndexValid(final int index) {
           totalArmor = totalArmor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SOLAR_ARMOR
+          && componentIsWorking(i)) {
+          totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.ORGANIC_ARMOR
+          && componentIsWorking(i)) {
+          totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SHIELD
+          && componentIsWorking(i)) {
+          totalShield = totalShield + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.DISTORTION_SHIELD
           && componentIsWorking(i)) {
           totalShield = totalShield + comp.getDefenseValue();
       }
@@ -671,7 +703,9 @@ private int getRemainingEnergy(final int index) {
           || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO || comp
-              .getType() == ShipComponentType.WEAPON_RAILGUN)) {
+              .getType() == ShipComponentType.WEAPON_RAILGUN
+          || comp.getType() == ShipComponentType.PLASMA_CANNON
+          || comp.getType() == ShipComponentType.ION_CANNON)) {
         return true;
       }
     }
@@ -1034,7 +1068,8 @@ private int increaseHitChanceByComponent() {
       }
       break;
     }
-    case PLASMA_BEAM: {
+    case PLASMA_BEAM:
+    case PLASMA_CANNON: {
       damage = weapon.getDamage();
       damage = damage - this.getShield();
       if (damage > 0) {
@@ -1082,6 +1117,22 @@ private int increaseHitChanceByComponent() {
         }
         return new ShipDamage(ShipDamage.NO_DAMAGE,
             "Attack deflected to shield!");
+      }
+      break;
+    }
+    case ION_CANNON: {
+      damage = weapon.getDamage();
+      if (damage <= this.getShield()) {
+        this.setShield(this.getShield() - damage);
+        return new ShipDamage(ShipDamage.NO_DAMAGE,
+            "Attacked damage shield by " + damage + "!");
+      } else {
+        this.setShield(0);
+        if (this.getArmor() > 0) {
+          return new ShipDamage(ShipDamage.NO_DAMAGE,
+              "Attack deflected to armor!");
+        }
+        damage = 1;
       }
       break;
     }
@@ -1199,6 +1250,11 @@ private int increaseHitChanceByComponent() {
           && hasComponentEnergy(i)) {
           defenseValue = defenseValue + comp.getDefenseValue();
       }
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.DISTORTION_SHIELD
+          && hasComponentEnergy(i)) {
+          defenseValue = defenseValue + comp.getDamage();
+      }
     }
     return defenseValue;
   }
@@ -1233,6 +1289,22 @@ private int increaseHitChanceByComponent() {
   public boolean isPrivateeringShip() {
     if (hull.getHullType() == ShipHullType.PRIVATEER) {
       return true;
+    }
+    return false;
+  }
+
+  /**
+   * Has ship working tractor beam or not
+   * @return True if ship has tractor beam that works
+   */
+  public boolean isTractorShip() {
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.TRACTOR_BEAM
+          && hasComponentEnergy(i)) {
+        return true;
+      }
     }
     return false;
   }
@@ -1393,6 +1465,10 @@ private int increaseHitChanceByComponent() {
           && comp.getType() == ShipComponentType.SHIELD) {
           totalShield = totalShield + comp.getDefenseValue();
       }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
+          totalShield = totalShield + comp.getDefenseValue();
+      }
     }
     return totalShield;
   }
@@ -1489,6 +1565,14 @@ private int increaseHitChanceByComponent() {
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.ARMOR) {
           totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SOLAR_ARMOR) {
+        totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
+        totalArmor = totalArmor + comp.getDefenseValue();
       }
     }
     return totalArmor;
@@ -1631,7 +1715,9 @@ private int increaseHitChanceByComponent() {
       if ((comp.getType() == ShipComponentType.WEAPON_BEAM
           || comp.getType() == ShipComponentType.WEAPON_RAILGUN
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
-          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO)
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+          || comp.getType() == ShipComponentType.PLASMA_CANNON
+          || comp.getType() == ShipComponentType.ION_CANNON)
           && componentIsWorking(i)) {
         militaryShip = true;
         power = power + comp.getDamage();
@@ -1641,7 +1727,8 @@ private int increaseHitChanceByComponent() {
         power = power + comp.getDamage() / 2.0;
       }
       if (comp.getType() == ShipComponentType.ARMOR
-          || comp.getType() == ShipComponentType.SHIELD) {
+          || comp.getType() == ShipComponentType.SHIELD
+          || comp.getType() == ShipComponentType.SOLAR_ARMOR) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE
@@ -1654,11 +1741,23 @@ private int increaseHitChanceByComponent() {
         power = power + comp.getDamage() / 10.0;
       }
       if (comp.getType() == ShipComponentType.JAMMER && componentIsWorking(i)) {
-        power = power + comp.getDefenseValue() / 10.0;
+        power = power + comp.getDefenseValue() / 5.0;
+      }
+      if (comp.getType() == ShipComponentType.DISTORTION_SHIELD
+          && componentIsWorking(i)) {
+        power = power + comp.getDefenseValue();
+        power = power + comp.getDamage() / 5;
+      }
+      if (comp.getType() == ShipComponentType.ORGANIC_ARMOR
+          && componentIsWorking(i)) {
+        power = power + comp.getDefenseValue() * 2;
       }
       if (comp.getType() == ShipComponentType.FIGHTER_BAY
           && componentIsWorking(i)) {
         power = power + comp.getBaySize();
+      }
+      if (comp.getType() == ShipComponentType.TRACTOR_BEAM) {
+        power = power + 1;
       }
     }
     if (isStarBase() && !getFlag(FLAG_STARBASE_DEPLOYED)) {

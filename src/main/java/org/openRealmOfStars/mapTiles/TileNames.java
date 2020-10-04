@@ -377,6 +377,10 @@ public final class TileNames {
    */
   public static final String SPACE_ANOMALY_TIME_WARP = "SpaceAnomalyTimeWarp";
   /**
+   * Space anomaly tile: Rare tech
+   */
+  public static final String SPACE_ANOMALY_RARE_TECH = "SpaceAnomalyRareTech";
+  /**
    * Worm hole tile 1
    */
   public static final String WORM_HOLE1 = "WormHole1";
@@ -427,7 +431,8 @@ public final class TileNames {
    */
   public static final String[] NON_HARMULFUL_SPACE_ANOMALIES = {
       SPACE_ANOMALY_CREDITS, SPACE_ANOMALY_TECH, SPACE_ANOMALY_DSA,
-      SPACE_ANOMALY_MAP, SPACE_ANOMALY_SHIP, SPACE_ANOMALY_MECHION};
+      SPACE_ANOMALY_MAP, SPACE_ANOMALY_SHIP, SPACE_ANOMALY_MECHION,
+      SPACE_ANOMALY_RARE_TECH};
 
   /**
    * List of harmful space anomalies

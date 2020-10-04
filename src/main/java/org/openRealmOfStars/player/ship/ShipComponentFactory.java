@@ -5,7 +5,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 157;
+  private static final int MAX_SHIPCOMPONENT = 176;
 
   /**
    * Component Ion drive Mk1
@@ -821,6 +821,82 @@ public final class ShipComponentFactory {
    * Command control
    */
   public static final int COMPONENT_COMMAND_CENTER = 156;
+  /**
+   * Solar armor Mk1
+   */
+  public static final int COMPONENT_SOLAR_ARMOR_MK1 = 157;
+  /**
+   * Solar armor Mk2
+   */
+  public static final int COMPONENT_SOLAR_ARMOR_MK2 = 158;
+  /**
+   * Solar armor Mk3
+   */
+  public static final int COMPONENT_SOLAR_ARMOR_MK3 = 159;
+  /**
+   * Distortion shield Mk1
+   */
+  public static final int COMPONENT_DISTORTION_SHIELD_MK1 = 160;
+  /**
+   * Distortion shield Mk2
+   */
+  public static final int COMPONENT_DISTORTION_SHIELD_MK2 = 161;
+  /**
+   * Distortion shield Mk3
+   */
+  public static final int COMPONENT_DISTORTION_SHIELD_MK3 = 162;
+  /**
+   * Organic armor Mk1
+   */
+  public static final int COMPONENT_ORGANIC_ARMOR_MK1 = 163;
+  /**
+   * Organic armor Mk2
+   */
+  public static final int COMPONENT_ORGANIC_ARMOR_MK2 = 164;
+  /**
+   * Organic armor Mk3
+   */
+  public static final int COMPONENT_ORGANIC_ARMOR_MK3 = 165;
+  /**
+   * Tractor beam
+   */
+  public static final int COMPONENT_TRACTOR_BEAM = 166;
+  /**
+   * Plasma cannon Mk1
+   */
+  public static final int COMPONENT_PLASMA_CANNON_MK1 = 167;
+  /**
+   * Plasma cannon Mk2
+   */
+  public static final int COMPONENT_PLASMA_CANNON_MK2 = 168;
+  /**
+   * Plasma cannon Mk3
+   */
+  public static final int COMPONENT_PLASMA_CANNON_MK3 = 169;
+  /**
+   * Plasma cannon Mk4
+   */
+  public static final int COMPONENT_PLASMA_CANNON_MK4 = 170;
+  /**
+   * Plasma cannon Mk5
+   */
+  public static final int COMPONENT_PLASMA_CANNON_MK5 = 171;
+  /**
+   * Ion cannon Mk1
+   */
+  public static final int COMPONENT_ION_CANNON_MK1 = 172;
+  /**
+   * Ion cannon Mk2
+   */
+  public static final int COMPONENT_ION_CANNON_MK2 = 173;
+  /**
+   * Ion cannon Mk3
+   */
+  public static final int COMPONENT_ION_CANNON_MK3 = 174;
+  /**
+   * Ion cannon Mk4
+   */
+  public static final int COMPONENT_ION_CANNON_MK4 = 175;
 
 /**
    * Create ShipComponent with matching name
@@ -844,10 +920,12 @@ public final class ShipComponentFactory {
 
   /**
    * Create Ship component with index
+   * Part 1 just to make method shorter.
    * @param index Index to create
    * @return ShipComponent or null if index is not found
    */
-  public static ShipComponent create(final int index) {
+
+  private static ShipComponent createPart1(final int index) {
     ShipComponent tmp = null;
     switch (index) {
     case COMPONENT_ION_DRIVE_MK1:
@@ -1019,6 +1097,23 @@ public final class ShipComponentFactory {
     case COMPONENT_HE_MISSILE_MK3:
       tmp = createWeapon(index);
       break; // HE missile Mk3
+    default: {
+      ErrorLogger.log("Unexpected component with index: " + index);
+      throw new IllegalArgumentException("Unexpected component index: "
+                                        + index + "!");
+    }
+    }
+    return tmp;
+  }
+  /**
+   * Create Ship component with index
+   * Part 2 just to make method shorter.
+   * @param index Index to create
+   * @return ShipComponent or null if index is not found
+   */
+  private static ShipComponent createPart2(final int index) {
+    ShipComponent tmp = null;
+    switch (index) {
     case COMPONENT_ORBITAL_BOMBS_MK2:
       tmp = createElectronics(index);
       break; // Orbital bombs Mk2
@@ -1327,11 +1422,83 @@ public final class ShipComponentFactory {
     case COMPONENT_COMMAND_CENTER:
         tmp = createStarbaseModule(index);
         break; // COMMAND Control
+    case COMPONENT_SOLAR_ARMOR_MK1:
+      tmp = createDefense(index);
+      break; // Solar Armor Mk1
+    case COMPONENT_SOLAR_ARMOR_MK2:
+      tmp = createDefense(index);
+      break; // Solar Armor Mk2
+    case COMPONENT_SOLAR_ARMOR_MK3:
+      tmp = createDefense(index);
+      break; // Solar Armor Mk3
+    case COMPONENT_DISTORTION_SHIELD_MK1:
+      tmp = createDefense(index);
+      break; // Distortion shield Mk1
+    case COMPONENT_DISTORTION_SHIELD_MK2:
+      tmp = createDefense(index);
+      break; // Distortion shield Mk2
+    case COMPONENT_DISTORTION_SHIELD_MK3:
+      tmp = createDefense(index);
+      break; // Distortion shield Mk3
+    case COMPONENT_ORGANIC_ARMOR_MK1:
+      tmp = createDefense(index);
+      break; // Organic Armor Mk1
+    case COMPONENT_ORGANIC_ARMOR_MK2:
+      tmp = createDefense(index);
+      break; // Organic Armor Mk2
+    case COMPONENT_ORGANIC_ARMOR_MK3:
+      tmp = createDefense(index);
+      break; // Organic Armor Mk3
+    case COMPONENT_TRACTOR_BEAM:
+      tmp = createWeapon(index);
+      break; // Tractor beam
+    case COMPONENT_PLASMA_CANNON_MK1:
+      tmp = createWeapon(index);
+      break; // Plasma cannon Mk1
+    case COMPONENT_PLASMA_CANNON_MK2:
+      tmp = createWeapon(index);
+      break; // Plasma cannon Mk2
+    case COMPONENT_PLASMA_CANNON_MK3:
+      tmp = createWeapon(index);
+      break; // Plasma cannon Mk3
+    case COMPONENT_PLASMA_CANNON_MK4:
+      tmp = createWeapon(index);
+      break; // Plasma cannon Mk4
+    case COMPONENT_PLASMA_CANNON_MK5:
+      tmp = createWeapon(index);
+      break; // Plasma cannon Mk5
+    case COMPONENT_ION_CANNON_MK1:
+      tmp = createWeapon(index);
+      break; // Ion cannon Mk1
+    case COMPONENT_ION_CANNON_MK2:
+      tmp = createWeapon(index);
+      break; // Ion cannon Mk2
+    case COMPONENT_ION_CANNON_MK3:
+      tmp = createWeapon(index);
+      break; // Ion cannon Mk3
+    case COMPONENT_ION_CANNON_MK4:
+      tmp = createWeapon(index);
+      break; // Ion cannon Mk4
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
                                         + index + "!");
     }
+    }
+    return tmp;
+  }
+
+  /**
+   * Create Ship component with index
+   * @param index Index to create
+   * @return ShipComponent or null if index is not found
+   */
+  public static ShipComponent create(final int index) {
+    ShipComponent tmp = null;
+    if (index < COMPONENT_ORBITAL_BOMBS_MK2) {
+      tmp = createPart1(index);
+    } else {
+      tmp = createPart2(index);
     }
     return tmp;
   }
@@ -2295,6 +2462,76 @@ public final class ShipComponentFactory {
       tmp.setWeaponRange(5);
       tmp.setEnergyRequirement(0);
     }
+    if (index == COMPONENT_TRACTOR_BEAM) {
+      tmp = new ShipComponent(index, "Tractor beam", 8, 4,
+          ShipComponentType.TRACTOR_BEAM);
+      tmp.setDamage(0);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_PLASMA_CANNON_MK1) {
+      tmp = new ShipComponent(index, "Plasma cannon Mk1", 6, 4,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(2);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_PLASMA_CANNON_MK2) {
+      tmp = new ShipComponent(index, "Plasma cannon Mk2", 6, 4,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(3);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_PLASMA_CANNON_MK3) {
+      tmp = new ShipComponent(index, "Plasma cannon Mk3", 6, 4,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(5);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_PLASMA_CANNON_MK4) {
+      tmp = new ShipComponent(index, "Plasma cannon Mk4", 7, 5,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(7);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == COMPONENT_PLASMA_CANNON_MK5) {
+      tmp = new ShipComponent(index, "Plasma cannon Mk5", 8, 5,
+          ShipComponentType.PLASMA_CANNON);
+      tmp.setDamage(9);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == COMPONENT_ION_CANNON_MK1) {
+      tmp = new ShipComponent(index, "Ion cannon Mk1", 5, 3,
+          ShipComponentType.ION_CANNON);
+      tmp.setDamage(3);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_ION_CANNON_MK2) {
+      tmp = new ShipComponent(index, "Ion cannon Mk2", 5, 3,
+          ShipComponentType.ION_CANNON);
+      tmp.setDamage(5);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_ION_CANNON_MK3) {
+      tmp = new ShipComponent(index, "Ion cannon Mk3", 6, 4,
+          ShipComponentType.ION_CANNON);
+      tmp.setDamage(7);
+      tmp.setWeaponRange(3);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_ION_CANNON_MK4) {
+      tmp = new ShipComponent(index, "Ion cannon Mk4", 6, 4,
+          ShipComponentType.ION_CANNON);
+      tmp.setDamage(9);
+      tmp.setWeaponRange(3);
+      tmp.setEnergyRequirement(2);
+    }
     return tmp;
 
   }
@@ -2427,6 +2664,63 @@ public final class ShipComponentFactory {
       tmp = new ShipComponent(index, "Armor plating Mk10", 6, 15,
           ShipComponentType.ARMOR);
       tmp.setDefenseValue(10);
+    }
+    if (index == COMPONENT_SOLAR_ARMOR_MK1) {
+      tmp = new ShipComponent(index, "Solar armor Mk1", 6, 6,
+          ShipComponentType.SOLAR_ARMOR);
+      tmp.setDefenseValue(2);
+      tmp.setEnergyResource(1);
+    }
+    if (index == COMPONENT_SOLAR_ARMOR_MK2) {
+      tmp = new ShipComponent(index, "Solar armor Mk2", 7, 7,
+          ShipComponentType.SOLAR_ARMOR);
+      tmp.setDefenseValue(4);
+      tmp.setEnergyResource(2);
+    }
+    if (index == COMPONENT_SOLAR_ARMOR_MK3) {
+      tmp = new ShipComponent(index, "Solar armor Mk3", 8, 9,
+          ShipComponentType.SOLAR_ARMOR);
+      tmp.setDefenseValue(6);
+      tmp.setEnergyResource(3);
+    }
+    if (index == COMPONENT_DISTORTION_SHIELD_MK1) {
+      tmp = new ShipComponent(index, "Distortion shield Mk1", 7, 2,
+          ShipComponentType.DISTORTION_SHIELD);
+      tmp.setDefenseValue(3); // Shield bonus
+      tmp.setDamage(5); // Jammer bonus
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == COMPONENT_DISTORTION_SHIELD_MK2) {
+      tmp = new ShipComponent(index, "Distortion shield Mk2", 8, 3,
+          ShipComponentType.DISTORTION_SHIELD);
+      tmp.setDefenseValue(4); // Shield bonus
+      tmp.setDamage(10); // Jammer bonus
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == COMPONENT_DISTORTION_SHIELD_MK3) {
+      tmp = new ShipComponent(index, "Distortion shield Mk3", 9, 4,
+          ShipComponentType.DISTORTION_SHIELD);
+      tmp.setDefenseValue(5); // Shield bonus
+      tmp.setDamage(15); // Jammer bonus
+      tmp.setEnergyRequirement(4);
+    }
+    if (index == COMPONENT_ORGANIC_ARMOR_MK1) {
+      tmp = new ShipComponent(index, "Organic armor Mk1", 6, 6,
+          ShipComponentType.ORGANIC_ARMOR);
+      tmp.setDefenseValue(2);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == COMPONENT_ORGANIC_ARMOR_MK2) {
+      tmp = new ShipComponent(index, "Organic armor Mk2", 8, 8,
+          ShipComponentType.ORGANIC_ARMOR);
+      tmp.setDefenseValue(4);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_ORGANIC_ARMOR_MK3) {
+      tmp = new ShipComponent(index, "Organic armor Mk3", 10, 10,
+          ShipComponentType.ORGANIC_ARMOR);
+      tmp.setDefenseValue(6);
+      tmp.setEnergyRequirement(1);
     }
     return tmp;
 

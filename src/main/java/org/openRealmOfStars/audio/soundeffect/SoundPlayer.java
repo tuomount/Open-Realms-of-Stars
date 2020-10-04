@@ -205,6 +205,10 @@ public final class SoundPlayer {
    * Sound effect for electric burst.
    */
   public static final String ELECTRIC = "/resources/sounds/electric.wav";
+  /**
+   * Sound effect for tractor beam.
+   */
+  public static final String TRACTORBEAM = "/resources/sounds/tractorbeam.wav";
 
   /**
    * Sound effect for computer overload

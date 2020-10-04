@@ -175,7 +175,9 @@ public class ShipComponent {
         || type == ShipComponentType.WEAPON_ECM_TORPEDO
         || type == ShipComponentType.WEAPON_HE_MISSILE
         || type == ShipComponentType.WEAPON_PHOTON_TORPEDO
-        || type == ShipComponentType.WEAPON_RAILGUN) {
+        || type == ShipComponentType.WEAPON_RAILGUN
+        || type == ShipComponentType.PLASMA_CANNON
+        || type == ShipComponentType.ION_CANNON) {
       return true;
     }
     return false;
@@ -187,6 +189,17 @@ public class ShipComponent {
    */
   public boolean isPrivateer() {
     if (type == ShipComponentType.PRIVATEERING_MODULE) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Is tractor beam component
+   * @return True if tractor beam
+   */
+  public boolean isTractor() {
+    if (type == ShipComponentType.TRACTOR_BEAM) {
       return true;
     }
     return false;
@@ -454,9 +467,27 @@ public class ShipComponent {
       sb.append("\n");
     }
     switch (getType()) {
+    case SOLAR_ARMOR:
     case ARMOR: {
       sb.append("Armor value: ");
       sb.append(getDefenseValue());
+      sb.append("\n");
+      break;
+    }
+    case ORGANIC_ARMOR: {
+      sb.append("Armor value: ");
+      sb.append(getDefenseValue());
+      sb.append(" ");
+      sb.append("Armor regeneration");
+      sb.append("\n");
+      break;
+    }
+    case DISTORTION_SHIELD: {
+      sb.append("Shield value: ");
+      sb.append(getDefenseValue());
+      sb.append(" Jammer: -");
+      sb.append(getDamage());
+      sb.append("%");
       sb.append("\n");
       break;
     }
@@ -493,6 +524,11 @@ public class ShipComponent {
         sb.append(getFleetCapacityBonus());
         sb.append("\n");
       }
+      break;
+    }
+    case TRACTOR_BEAM: {
+      sb.append("Pulls smaller ships to closer");
+      sb.append("\n");
       break;
     }
     case COLONY_MODULE:
@@ -559,6 +595,25 @@ public class ShipComponent {
       sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 75%, 50% penetrates armor");
+      sb.append("\n");
+      break;
+    }
+    case PLASMA_CANNON: {
+      sb.append("Damage: ");
+      sb.append(getDamage());
+      sb.append(" Range: ");
+      sb.append(getWeaponRange());
+      sb.append("\nHit: 75%");
+      sb.append("\n");
+      break;
+    }
+    case ION_CANNON: {
+      sb.append("Shield damage: ");
+      sb.append(getDamage());
+      sb.append("Damage: 1");
+      sb.append(" Range: ");
+      sb.append(getWeaponRange());
+      sb.append("\nHit: 75%, Armor stops");
       sb.append("\n");
       break;
     }

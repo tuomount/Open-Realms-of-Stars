@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016, 2017  Tuomo Untinen
+* Copyright (C) 2016, 2017, 2020  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -147,6 +147,16 @@ public class ShipComponentTest {
         ShipComponentType.JAMMER);
     component.setDefenseValue(10);
     assertEquals("Jammer\nCost: 3 Metal: 3\nJammer: -10%\n", component.toString());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDistortionShield() {
+    ShipComponent component = new ShipComponent(0, "Distortion shield", 8, 3,
+        ShipComponentType.DISTORTION_SHIELD);
+    component.setDefenseValue(3);
+    component.setDamage(5);
+    assertEquals("Distortion shield\nCost: 8 Metal: 3\nShield value: 3 Jammer: -5%\n", component.toString());
   }
 
   @Test

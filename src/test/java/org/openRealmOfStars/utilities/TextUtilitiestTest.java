@@ -130,4 +130,15 @@ public class TextUtilitiestTest {
     assertEquals("Example text.\\Continue", value);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testConcanate() {
+    String[] value1 = {"text1", "text2"};
+    String[] value2 = {"text3", "text4", "text5"};
+    String[] result = TextUtilities.concanateStringArrays(value1, value2);
+    assertEquals(5, result.length);
+    assertEquals(value2[1], result[3]);
+    assertEquals(value1[0], result[0]);
+  }
+
 }

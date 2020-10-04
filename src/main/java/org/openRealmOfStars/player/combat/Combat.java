@@ -35,7 +35,7 @@ import org.openRealmOfStars.utilities.Logger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -389,6 +389,33 @@ public class Combat {
     return result;
   }
 
+  /**
+   * Can ship do tractor beam on target
+   * @param tractor Ship having tractor beam
+   * @param target Target's combat ship
+   * @return True if tractor beam can be used
+   */
+  public boolean canTractor(final CombatShip tractor, final CombatShip target) {
+    ShipComponent weapon = tractor.getShip().getComponent(componentUse);
+    if (weapon != null && weapon.getType() == ShipComponentType.TRACTOR_BEAM) {
+      int tratocSize = tractor.getShip().getHull().getSize().getMass();
+      int pullSize = target.getShip().getHull().getSize().getMass();
+      if (tratocSize >= pullSize) {
+        double xAxisDistance = Math.abs(tractor.getX() - target.getX());
+        double yAxisDistance = Math.abs(tractor.getY() - target.getY());
+        int distance;
+        if (xAxisDistance > yAxisDistance) {
+            distance = (int) xAxisDistance;
+        } else {
+            distance = (int) yAxisDistance;
+        }
+        if (distance == 2) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
   /**
    * Can ship do privateering towards target
    * @param privateer Privateer's combat ship
@@ -1482,6 +1509,46 @@ public boolean launchIntercept(final int distance,
     return false;
   }
   /**
+   * Handle tractoring
+   * @param textLogger where logging is added if not null
+   * @param infoPanel Infopanel where ship components are shown.
+   *        This can be null too.
+   * @param target Target ship to be pullwd.
+   * @return true if end round has been activated and component use
+   *        should be cleared from UI. Otherwise false.
+   */
+  private boolean handleTractorShip(final Logger textLogger,
+      final BattleInfoPanel infoPanel, final CombatShip target) {
+    CombatShip ai = getCurrentShip();
+    if (canTractor(ai, target)) {
+      int nComp = ai.getShip().getNumberOfComponents();
+      for (int i = 0; i < nComp; i++) {
+        ShipComponent weapon = ai.getShip().getComponent(i);
+        setComponentUse(i);
+        if (weapon != null && weapon.isTractor() && !ai.isComponentUsed(i)
+            && ai.getShip().componentIsWorking(i)) {
+          ShipDamage shipDamage = doTractorBeam(ai, target);
+          shipDamage.ready();
+          setAnimation(new CombatAnimation(ai, target, weapon,
+              shipDamage.getValue()));
+          ai.useComponent(componentUse);
+          if (textLogger != null) {
+            String[] logs = shipDamage.getMessage().split("\n");
+            for (String log : logs) {
+              textLogger.addLog(log);
+            }
+          }
+          if (infoPanel != null) {
+            infoPanel.useComponent(i);
+          }
+          setComponentUse(-1);
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  /**
    * AI handling for pure military ships.
    * @param textLogger where logging is added if not null
    * @param infoPanel Infopanel where ship components are shown.
@@ -1497,6 +1564,7 @@ public boolean launchIntercept(final int distance,
       return true;
     }
     boolean privateer = ai.getShip().isPrivateeringShip();
+    boolean tractor = ai.getShip().isTractorShip();
     PlayerInfo info = getCurrentShip().getPlayer();
     CombatShip deadliest = getMostPowerfulShip(info);
     CombatShip closest = getClosestEnemyShip(info, getCurrentShip());
@@ -1505,6 +1573,9 @@ public boolean launchIntercept(final int distance,
     if (privateer) {
       trader = getClosestTraderShip(info, ai);
       if (trader != null) {
+        if (tractor && canTractor(ai, trader)) {
+          handleTractorShip(textLogger, infoPanel, trader);
+        }
         boolean privateered = handlePrivateerShip(textLogger, infoPanel,
             trader);
         if (privateered) {
@@ -1533,6 +1604,10 @@ public boolean launchIntercept(final int distance,
       if (ai.getShip().getTotalMilitaryPower() > deadliest.getShip()
           .getTotalMilitaryPower()) {
         range = ai.getShip().getMinWeaponRange();
+        tractor = false;
+      }
+      if (tractor && canTractor(ai, deadliest)) {
+        handleTractorShip(textLogger, infoPanel, deadliest);
       }
       Coordinate aiCoordinate = new Coordinate(ai.getX(), ai.getY());
       Coordinate deadliestCoordinate = new Coordinate(deadliest.getX(),
@@ -1980,6 +2055,46 @@ public boolean launchIntercept(final int distance,
     return handleAiNonMilitaryShip(textLogger, infoPanel);
   }
 
+  /**
+   * Do tractor beam on target ship
+   * @param tractor Ship which is pulling
+   * @param target Target who is being pulled.
+   * @return Just textual description what happened.
+   */
+  public ShipDamage doTractorBeam(final CombatShip tractor,
+      final CombatShip target) {
+    ShipDamage result = null;
+    int mx = 0;
+    int my = 0;
+    if (tractor.getX() - target.getX() == -2) {
+      mx = -1;
+    }
+    if (tractor.getX() - target.getX() == 2) {
+      mx = 1;
+    }
+    if (tractor.getY() - target.getY() == -2) {
+      my = -1;
+    }
+    if (tractor.getY() - target.getY() == 2) {
+      my = 1;
+    }
+    CombatShip blocking = getShipFromCoordinate(target.getX() + mx,
+        target.getY() + my);
+    if (blocking != null) {
+      result = new ShipDamage(1, "Target is being blocked by another ship!");
+    } else {
+      target.setX(target.getX() + mx);
+      target.setY(target.getY() + my);
+      result = new ShipDamage(1, "Target is being pulled by tractor beam!");
+    }
+    if (wormHole != null && wormHole.getX() == target.getX()
+        && wormHole.getY() == target.getY()) {
+      result = new ShipDamage(1, "Target is being pulled by tractor beam"
+          + " directly to escape!");
+      escapeShip(target);
+    }
+    return result;
+  }
   /**
    * Do privateering with certain combat ship and player against
    * another combat ship and player.

@@ -180,10 +180,16 @@ Spinosaurus by Tuomo Untinen
 Lightning animation from Sci-fi effects by Skorpio
 https://opengameart.org/content/sci-fi-effects
 Licensed under CC BY 4.0
+
+Tractor beam, organic armor and solar armor icons modified by Tuomo Untinen
+Originals from 141 Military Icons Set by AngryMeteor.com 
+
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 
 Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)
+
 Squarrion font by Cristiano Sobral (cssobral2013@gmail.com)
 from Reserved Font Name EXO by Natanael Gama (exo@ndiscovered.com)
 
@@ -284,6 +290,8 @@ Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
 Overloaded engine, jammer, targeting computer and cloaking device
 sounds from 50 CC0 SFX #2 by Rubberduck (CC0)
+
+Tractor beam sound by BLACK LODGE GAMES, LLC (CC0)
 
 # Musics By
 

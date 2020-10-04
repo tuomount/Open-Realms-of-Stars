@@ -54,5 +54,13 @@ public enum ParticleEffectType {
   /**
    * Blue ion particle moving away from center.
    */
-  ION_PARTICLE;
+  ION_PARTICLE,
+  /**
+   * Blue ion particle not moving.
+   */
+  ION_PARTICLE_LOW_ACTIVE,
+  /**
+   * Yellow plasma particle
+   */
+  PLASMA_PARTICLE;
 }

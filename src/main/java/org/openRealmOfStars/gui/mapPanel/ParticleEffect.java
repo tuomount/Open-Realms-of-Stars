@@ -121,6 +121,20 @@ public class ParticleEffect {
           .getRandom(GuiStatics.BLUE_BEAM_COLORS.length - 1)];
       break;
     }
+    case ION_PARTICLE_LOW_ACTIVE: {
+      mx = 1;
+      my = 1;
+      if (DiceGenerator.getRandom(1) == 0) {
+        mx = mx * -1;
+      }
+      if (DiceGenerator.getRandom(1) == 0) {
+        my = my * -1;
+      }
+      ttl = DiceGenerator.getRandom(1, 5);
+      color = GuiStatics.BLUE_BEAM_COLORS[DiceGenerator
+          .getRandom(GuiStatics.BLUE_BEAM_COLORS.length - 1)];
+      break;
+    }
     case LASER_PARTICLE: {
       mx = 0;
       my = 0;
@@ -147,6 +161,24 @@ public class ParticleEffect {
     }
     case PHOTON_TORP_PARTICILE: {
       color = new Color(PHOTON_TORPEDO_RED, MAX_COLOR, 0);
+      mx = DiceGenerator.getRandom(5, 20);
+      mx = mx / 10;
+      my = DiceGenerator.getRandom(5, 20);
+      my = my / 10;
+      if (DiceGenerator.getRandom(1) == 0) {
+        mx = mx * -1;
+      }
+      if (DiceGenerator.getRandom(1) == 0) {
+        my = my * -1;
+      }
+      ttl = 10;
+      break;
+    }
+    case PLASMA_PARTICLE: {
+      int value = DiceGenerator.getRandom(PHOTON_TORPEDO_RED, MAX_COLOR - 25);
+      color = new Color(value + DiceGenerator.getRandom(0, 25),
+          value + DiceGenerator.getRandom(0, 25),
+          value + DiceGenerator.getRandom(0, 25));
       mx = DiceGenerator.getRandom(5, 20);
       mx = mx / 10;
       my = DiceGenerator.getRandom(5, 20);

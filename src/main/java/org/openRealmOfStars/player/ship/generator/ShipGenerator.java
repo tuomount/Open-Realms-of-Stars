@@ -186,7 +186,7 @@ public final class ShipGenerator {
         break;
       }
       case SCANNER: {
-        if (!design.gotCertainType(ShipComponentType.CLOAKING_DEVICE)) {
+        if (!design.gotCertainType(ShipComponentType.SCANNER)) {
           scores[i] = scores[i] + comp.getScannerRange() * 2;
           scores[i] = scores[i] + comp.getCloakDetection() / 10;
           if (design.getHull().getHullType() == ShipHullType.STARBASE) {
@@ -201,6 +201,11 @@ public final class ShipGenerator {
       case SHIELD: {
         scores[i] = scores[i] + comp.getDefenseValue();
         scores[i] = scores[i] + 5; // Recharge
+        break;
+      }
+      case DISTORTION_SHIELD: {
+        scores[i] = scores[i] + comp.getDefenseValue();
+        scores[i] = scores[i] + comp.getDamage(); // Jammer bonus
         break;
       }
       case SHIELD_GENERATOR: {

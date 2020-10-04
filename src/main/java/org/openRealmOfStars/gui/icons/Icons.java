@@ -373,6 +373,34 @@ public final class Icons {
    * Ruler leader
    */
   public static final String ICON_RULER = "IconRuler";
+  /**
+   * Tractor beam
+   */
+  public static final String ICON_TRACTOR_BEAM = "IconTractorBeam";
+  /**
+   * Solar armor
+   */
+  public static final String ICON_SOLAR_ARMOR = "IconSolarArmor";
+  /**
+   * Organic armor
+   */
+  public static final String ICON_ORGANIC_ARMOR = "IconOrganicArmor";
+  /**
+   * Plasma cannon
+   */
+  public static final String ICON_PLASMA_CANNON = "IconPlasmaCannon";
+  /**
+   * Ion cannon
+   */
+  public static final String ICON_ION_CANNON = "IconIonCannon";
+  /**
+   * Distortion shield
+   */
+  public static final String ICON_DISTORTION_SHIELD = "IconDistortionShield";
+  /**
+   * Photon torpedo
+   */
+  public static final String ICON_PHOTON_TORPEDO = "IconPhotonTorpedo";
 
   /**
    * List of Icon
@@ -655,6 +683,20 @@ public final class Icons {
     icon = new Icon16x16(image, 0, 2, ICON_LEADERS);
     addIcon(icon);
     icon = new Icon16x16(image, 1, 2, ICON_RULER);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 2, ICON_SOLAR_ARMOR);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 2, ICON_TRACTOR_BEAM);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 2, ICON_ORGANIC_ARMOR);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 2, ICON_PLASMA_CANNON);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 2, ICON_ION_CANNON);
+    addIcon(icon);
+    icon = new Icon16x16(image, 7, 2, ICON_DISTORTION_SHIELD);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 3, ICON_PHOTON_TORPEDO);
     addIcon(icon);
   }
 

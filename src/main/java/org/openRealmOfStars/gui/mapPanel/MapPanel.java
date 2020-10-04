@@ -43,6 +43,7 @@ import org.openRealmOfStars.starMap.SquareInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 
@@ -1334,12 +1335,14 @@ public class MapPanel extends JPanel {
           ShipComponent weapon = combat.getCurrentShip().getShip()
               .getComponent(combat.getComponentUse());
           if (combat.getComponentUse() != -1 && weapon != null
-              && (weapon.isWeapon() || weapon.isPrivateer())) {
+              && (weapon.isWeapon() || weapon.isPrivateer()
+              || weapon.isTractor())) {
             CombatShip target = combat.getShipFromCoordinate(
                 combat.getCursorX(), combat.getCursorY());
             if (target != null && combat.getCurrentShip().getPlayer().isHuman()
                 && (combat.isClearShot(combat.getCurrentShip(), target)
-                   || combat.canPrivateer(combat.getCurrentShip(), target))) {
+                   || combat.canPrivateer(combat.getCurrentShip(), target)
+                   || combat.canTractor(combat.getCurrentShip(), target))) {
               gr.drawImage(GuiStatics.CROSSHAIR, pixelX, pixelY, null);
               int accuracy = combat.calculateAccuracy(combat.getCurrentShip(),
                   weapon, target);
@@ -1391,7 +1394,10 @@ public class MapPanel extends JPanel {
           SoundPlayer.playSound(SoundPlayer.WEAPON_BEAM);
           break;
           }
-        case PHOTON_TORPEDO: {
+        case PHOTON_TORPEDO:
+        case PLASMA_CANNON:
+        case ION_CANNON: {
+          // FIXME Sounds for plasma/ion cannons
           SoundPlayer.playSound(SoundPlayer.WEAPON_TORPEDO);
           break;
           }
@@ -1421,6 +1427,10 @@ public class MapPanel extends JPanel {
           SoundPlayer.playSound(SoundPlayer.EXPLOSION);
           break;
           }
+        case TRACTOR_BEAM: {
+          SoundPlayer.playSound(SoundPlayer.TRACTORBEAM);
+          break;
+          }
         default: {
           ErrorLogger.log("Unexpected weapon type, sound effect is missing!");
         }
@@ -1444,6 +1454,42 @@ public class MapPanel extends JPanel {
             anim.getSy() + viewPointOffsetY
                 - GuiStatics.PHOTON_TORPEDO.getHeight() / 2,
             null);
+      } else if (anim.getType() == CombatAnimationType.PLASMA_CANNON) {
+        gr.drawImage(GuiStatics.PLASMA_BULLET,
+            anim.getSx() + viewPointOffsetX
+                - GuiStatics.PLASMA_BULLET.getWidth() / 2,
+            anim.getSy() + viewPointOffsetY
+                - GuiStatics.PLASMA_BULLET.getHeight() / 2,
+            null);
+      } else if (anim.getType() == CombatAnimationType.ION_CANNON) {
+        Stroke ionBeam = new BasicStroke(1, BasicStroke.CAP_SQUARE,
+            BasicStroke.JOIN_BEVEL, 1, new float[] {0.1f, 4.5f },
+            transparency / 100);
+        gr.setStroke(ionBeam);
+        gr.setColor(anim.getBeamColor());
+        gr.drawLine(anim.getSx() + viewPointOffsetX,
+            anim.getSy() + viewPointOffsetY, anim.getEx() + viewPointOffsetX,
+            anim.getEy() + viewPointOffsetY);
+      } else if (anim.getType() == CombatAnimationType.TRACTOR_BEAM) {
+        Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
+            BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
+        gr.setStroke(full);
+        for (int beam = 0; beam < 10; beam++) {
+          gr.setColor(new Color(133 - beam * 3, 179 - beam * 4, 255,
+              30 + beam * 6));
+          int ox = DiceGenerator.getRandom(ShipImage.MAX_WIDTH / 2);
+          int oy = DiceGenerator.getRandom(ShipImage.MAX_HEIGHT / 2);
+          if (DiceGenerator.getRandom(1) == 1) {
+            ox = ox * -1;
+          }
+          if (DiceGenerator.getRandom(1) == 1) {
+            oy = oy * -1;
+          }
+          gr.drawLine(anim.getSx() + viewPointOffsetX,
+              anim.getSy() + viewPointOffsetY,
+              anim.getEx() + viewPointOffsetX + ox,
+              anim.getEy() + viewPointOffsetY + oy);
+        }
       } else if (anim.getType() == CombatAnimationType.ECM_TORPEDO
           || anim.getType() == CombatAnimationType.HE_MISSILE
           || anim.getType() == CombatAnimationType.RAILGUN) {

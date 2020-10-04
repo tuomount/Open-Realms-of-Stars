@@ -5,7 +5,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2018, 2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -128,7 +128,31 @@ public enum ShipComponentType {
    * Plasma beam always damages something,
    * first shields, then armor and finally hull
    */
-  PLASMA_BEAM;
+  PLASMA_BEAM,
+  /**
+   * Distortion shield, acts as shield and jammer.
+   */
+  DISTORTION_SHIELD,
+  /**
+   * Solar armor, which acts as armor and gives energy
+   */
+  SOLAR_ARMOR,
+  /**
+   * Armor that makes armor regenerate one point per turn.
+   */
+  ORGANIC_ARMOR,
+  /**
+   * Tractor beam to pull ship one closer.
+   */
+  TRACTOR_BEAM,
+  /**
+   * Plasma cannon to make always damage.
+   */
+  PLASMA_CANNON,
+  /**
+   * Ion cannon to make destroy shields and hull.
+   */
+  ION_CANNON;
 
   /**
    * Get ShipComponentType index
@@ -184,6 +208,18 @@ public enum ShipComponentType {
       return 22;
     case PLASMA_BEAM:
       return 23;
+    case DISTORTION_SHIELD:
+      return 24;
+    case SOLAR_ARMOR:
+      return 25;
+    case ORGANIC_ARMOR:
+      return 26;
+    case TRACTOR_BEAM:
+      return 27;
+    case PLASMA_CANNON:
+      return 28;
+    case ION_CANNON:
+      return 29;
     default:
       return 0;
     }
@@ -244,6 +280,18 @@ public enum ShipComponentType {
       return ShipComponentType.FIGHTER_BAY;
     case 23:
       return ShipComponentType.PLASMA_BEAM;
+    case 24:
+      return ShipComponentType.DISTORTION_SHIELD;
+    case 25:
+      return ShipComponentType.SOLAR_ARMOR;
+    case 26:
+      return ShipComponentType.ORGANIC_ARMOR;
+    case 27:
+      return ShipComponentType.TRACTOR_BEAM;
+    case 28:
+      return ShipComponentType.PLASMA_CANNON;
+    case 29:
+      return ShipComponentType.ION_CANNON;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -300,6 +348,18 @@ public enum ShipComponentType {
       return "Fighter bay";
     case PLASMA_BEAM:
       return "Plasma beam";
+    case DISTORTION_SHIELD:
+      return "Distortion shield";
+    case SOLAR_ARMOR:
+      return "Solar armor";
+    case ORGANIC_ARMOR:
+      return "Organic armor";
+    case TRACTOR_BEAM:
+      return "Tractor beam";
+    case PLASMA_CANNON:
+      return "Plasma cannon";
+    case ION_CANNON:
+      return "Ion cannon";
     default:
       return "Error - Unknown";
     }
@@ -316,7 +376,7 @@ public enum ShipComponentType {
     case WEAPON_RAILGUN:
       return Icons.ICON_COMBAT_TECH;
     case WEAPON_PHOTON_TORPEDO:
-      return Icons.ICON_MISSILE;
+      return Icons.ICON_PHOTON_TORPEDO;
     case WEAPON_ECM_TORPEDO:
       return Icons.ICON_MISSILE;
     case WEAPON_HE_MISSILE:
@@ -359,6 +419,18 @@ public enum ShipComponentType {
       return Icons.ICON_HULL_TECH;
     case PLASMA_BEAM:
       return Icons.ICON_LASERGUN;
+    case DISTORTION_SHIELD:
+      return Icons.ICON_DISTORTION_SHIELD;
+    case SOLAR_ARMOR:
+      return Icons.ICON_SOLAR_ARMOR;
+    case ORGANIC_ARMOR:
+      return Icons.ICON_ORGANIC_ARMOR;
+    case TRACTOR_BEAM:
+      return Icons.ICON_TRACTOR_BEAM;
+    case PLASMA_CANNON:
+      return Icons.ICON_PLASMA_CANNON;
+    case ION_CANNON:
+      return Icons.ICON_ION_CANNON;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }
@@ -371,11 +443,15 @@ public enum ShipComponentType {
   public int getHitChance() {
       switch (this) {
       case WEAPON_BEAM:
+      case PRIVATEERING_MODULE:
+      case TRACTOR_BEAM:
           return 100;
       case PLASMA_BEAM:
         return 100;
       case WEAPON_RAILGUN:
       case WEAPON_PHOTON_TORPEDO:
+      case PLASMA_CANNON:
+      case ION_CANNON:
           return 75;
       case WEAPON_ECM_TORPEDO:
       case WEAPON_HE_MISSILE:

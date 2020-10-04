@@ -71,6 +71,18 @@ public enum CombatAnimationType {
   /**
    * Explosion
    */
-  EXPLOSION;
+  EXPLOSION,
+  /**
+   * Tractor beam
+   */
+  TRACTOR_BEAM,
+  /**
+   * Plasma canno
+   */
+  PLASMA_CANNON,
+  /**
+   * Ion Cannon
+   */
+  ION_CANNON;
 
 }

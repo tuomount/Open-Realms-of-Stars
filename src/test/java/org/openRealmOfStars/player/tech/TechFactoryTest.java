@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018 Tuomo Untinen
+* Copyright (C) 2018, 2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -90,6 +90,28 @@ public class TechFactoryTest {
     assertEquals(119, TechFactory.getTechCost(9, 600));
     assertEquals(145, TechFactory.getTechCost(10, 600));
     assertEquals(183, TechFactory.getTechCost(11, 600));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomRareTech() {
+    Tech[] list = new Tech[0];
+    assertNotNull(TechFactory.getRandomRareTech(list));
+    assertNotNull(TechFactory.getRandomRareTech(null));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomRareTech2() {
+    Tech[] list = new Tech[5];
+    list[0] = TechFactory.createDefenseTech("Solar armor Mk1", 3);
+    list[1] = TechFactory.createDefenseTech("Distortion shield Mk1", 4);
+    list[2] = TechFactory.createDefenseTech("Organic armor Mk1", 3);
+    list[3] = TechFactory.createCombatTech("Plasma cannon Mk1", 2);
+    list[4] = TechFactory.createCombatTech("Ion cannon Mk1", 3);
+    Tech tech = TechFactory.getRandomRareTech(list);
+    assertNotNull(tech);
+    assertEquals(true, tech.getName().contains("Mk2"));
   }
 
   @Test

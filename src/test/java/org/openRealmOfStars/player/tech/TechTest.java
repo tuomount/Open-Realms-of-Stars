@@ -12,7 +12,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,6 +39,8 @@ public class TechTest {
     Tech tech = new Tech("Test tech", TechType.Combat, 1);
     tech.setComponent("Test component");
     assertEquals("Test component", tech.getComponent());
+    assertEquals(false, tech.isRareTech());
+    assertEquals(null, tech.getNextTechOnTree());
     tech.setHull("Test hull");
     assertEquals("Test hull", tech.getHull());
     Icon16x16 icon = Mockito.mock(Icon16x16.class);
@@ -54,6 +56,10 @@ public class TechTest {
     tech.setType(TechType.Electrics);
     assertEquals(TechType.Electrics,tech.getType());
     assertEquals("Test tech2",tech.toString());
+    tech.setRareTech(true);
+    tech.setNextTechOnTree("Next branch");
+    assertEquals(true, tech.isRareTech());
+    assertEquals("Next branch", tech.getNextTechOnTree());
   }
   
   @Test

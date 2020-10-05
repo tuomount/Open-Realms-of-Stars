@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.diplomacy;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2019  Tuomo Untinen
+* Copyright (C) 2017-2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -206,6 +206,47 @@ public enum DiplomacyBonusType {
     }
   }
 
+  /**
+   * Get Casus belli score for based on diplomacy bonus type.
+   * @return Casus belli score
+   */
+  public int getCasusBelliScore() {
+    switch (this) {
+      case IN_WAR: return 0; // Diplomatic relation
+      case WAR_DECLARTION: return 5;
+      case IN_TRADE_ALLIANCE: return 0; // Diplomatic relation
+      case IN_ALLIANCE: return 0; // Diplomatic relation
+      case DIPLOMAT_CAPTURED: return 0; // Not used
+      case BORDER_CROSSED: return 3;
+      case GIVEN_VALUABLE_FREE: return 0;  // Positive bonus
+      case MADE_DEMAND: return 7;
+      case DIPLOMATIC_TRADE: return 0; // Positive bonus
+      case SAME_RACE: return 0; // Positive bonus
+      case LONG_PEACE: return 0; // Diplomatic relation
+      case INSULT: return 5;
+      case NUKED: return 4;
+      case NOTHING_TO_TRADE: return 0;  // Not positive or negative bonus
+      case IN_DEFENSIVE_PACT: return 0; // Diplomatic relation
+      case ESPIONAGE_BORDER_CROSS: return 5;
+      case SPY_TRADE: return 0; // Diplomatic relation
+      case DIPLOMACY_BONUS: return 0; // Mostly positive
+      case TRADE_FLEET: return 0; // Positive bonus
+      case BOARD_PLAYER: return 0; // Realm status
+      case EMBARGO: return 0; // Diplomatic relation
+      case LIKED_EMBARGO: return 0; // Positive bonus
+      case DISLIKED_EMBARGO: return 2;
+      case REALM_LOST: return 0; // Realm status
+      case OLYMPICS: return 0; // Positive bonus
+      case DNS_OLYMPICS: return 1;
+      case OLYMPICS_EMBARGO: return 0; // Positive bonus
+      case PROMISED_VOTE_YES: return 0; // Promised not happened yet
+      case PROMISED_VOTE_NO: return 0; // Promised not happened yet
+      case PROMISE_KEPT: return 0; // Positive bonus
+      case PROMISE_BROKEN: return 4;
+      default: throw new IllegalArgumentException("No such Diplomacy Bonus"
+          + " Type!");
+    }
+  }
   /**
    * Return diplomacy bonus type by index.
    * @param index This must be between 0-10

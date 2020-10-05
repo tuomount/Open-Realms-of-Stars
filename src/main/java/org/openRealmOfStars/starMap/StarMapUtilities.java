@@ -173,6 +173,10 @@ public final class StarMapUtilities {
         list.addBonus(DiplomacyBonusType.EMBARGO, player.getRace());
       }
       if (i != imposed && i != imposer && i != agree) {
+        // Going through all realms, including the one which were not
+        // part of the deal. If those realms liked imposed then
+        // imposer/agree gets negative bonus. If they hated imposed then
+        // imposer/agree gets positive bonus.
         int liking = player.getDiplomacy().getLiking(imposed);
         if (liking > 0) {
           DiplomacyBonusList list = player.getDiplomacy()

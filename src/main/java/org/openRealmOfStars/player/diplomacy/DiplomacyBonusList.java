@@ -10,7 +10,7 @@ import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017-2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -80,6 +80,17 @@ public class DiplomacyBonusList {
     return result;
   }
 
+  /**
+   * Calculate casus belli score diplomacy bonuses.
+   * @return Casus belli score.
+   */
+  public int getCasusBelliScore() {
+    int result = 0;
+    for (DiplomacyBonus bonus : list) {
+      result = result + bonus.getType().getCasusBelliScore();
+    }
+    return result;
+  }
   /**
    * Make war so that Alliance, trade alliance, defensive pact, long peace
    * and trade fleet are removed from the list.

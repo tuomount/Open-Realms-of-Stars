@@ -645,7 +645,12 @@ public class DiplomacyView extends BlackPanel {
    */
   private SpeechLine[] createOfferLines(final int startType) {
     int humanIndex = starMap.getPlayerList().getIndex(human);
+    int aiIndex = starMap.getPlayerList().getIndex(ai);
     ArrayList<SpeechLine> speechLines = new ArrayList<>();
+    String casusBelli = null;
+    if (human.getDiplomacy().hasCasusBelli(aiIndex)) {
+      casusBelli = " (Casus belli)";
+    }
     if (trade.isDiplomacyWithPirates()) {
       speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
           human.getRace(), null));
@@ -664,18 +669,18 @@ public class DiplomacyView extends BlackPanel {
               human.getRace(), null));
         }
         speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
-            human.getRace(), null));
+            human.getRace(), casusBelli));
       }
     } else if (startType == AI_BORDER_CROSS) {
       speechLines.add(SpeechFactory.createLine(SpeechType.MOVE_FLEET,
           human.getRace(), null));
       speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
-          human.getRace(), null));
+          human.getRace(), casusBelli));
     } else if (startType == AI_ESPIONAGE) {
       speechLines.add(SpeechFactory.createLine(SpeechType.MOVE_FLEET,
           human.getRace(), null));
       speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
-          human.getRace(), null));
+          human.getRace(), casusBelli));
     } else {
       if (!ai.getDiplomacy().isPeace(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.PEACE_OFFER,
@@ -732,7 +737,7 @@ public class DiplomacyView extends BlackPanel {
       }
       if (!ai.getDiplomacy().isWar(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.MAKE_WAR,
-            human.getRace(), null));
+            human.getRace(), casusBelli));
       }
     }
     SpeechLine[] lines = new SpeechLine[speechLines.size()];
@@ -882,6 +887,9 @@ public class DiplomacyView extends BlackPanel {
     lastSpeechType = type;
     int humanIndex = starMap.getPlayerList().getIndex(human);
     String text = ai.getDiplomacy().generateRelationText(humanIndex);
+    if (ai.getDiplomacy().hasCasusBelli(humanIndex)) {
+      text = text + " (Casus belli)";
+    }
     likenessLabel.setText(text);
     likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
     NegotiationOffer offer = null;

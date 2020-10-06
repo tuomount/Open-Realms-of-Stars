@@ -65,6 +65,10 @@ public class Diplomacy {
    * How much player likes another one: Hate
    */
   public static final int HATE = -2;
+  /**
+   * Limit when realm has casus belli.
+   */
+  public static final int CASUS_BELLI_LIMIT = 20;
 
   /**
    * String for Trade Alliance.
@@ -436,7 +440,7 @@ public class Diplomacy {
     return index;
   }
   /**
-   * Get likess value as a String.
+   * Get liking value as a String.
    * @param playerIndex whom to check
    * @return Likeness value as a string
    */
@@ -452,7 +456,7 @@ public class Diplomacy {
     }
   }
   /**
-   * Get likess value as a Color.
+   * Get liking value as a Color.
    * @param playerIndex whom to check
    * @return Likeness value as a Color
    */
@@ -466,6 +470,20 @@ public class Diplomacy {
     default:
       return GuiStatics.COLOR_GREY_160;
     }
+  }
+  /**
+   * Has realm casus belli against another? If realm is already war against
+   * another that is not casus belli.
+   * @param playerIndex Against whom casus belli?
+   * @return True if casus belli.
+   */
+  public boolean hasCasusBelli(final int playerIndex) {
+    DiplomacyBonusList list = getDiplomacyList(playerIndex);
+    if (list != null && list.getCasusBelliScore() > CASUS_BELLI_LIMIT
+        && !isWar(playerIndex)) {
+      return true;
+    }
+    return false;
   }
 
   /**

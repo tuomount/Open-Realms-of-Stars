@@ -1313,6 +1313,13 @@ public final class GuiStatics {
           "/resources/images/teuthidae_bridge.png"));
 
   /**
+   * Ship Spork bridge interior
+   */
+  public static final BufferedImage IMAGE_INTERIOR_SPORK =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/spork_bridge.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

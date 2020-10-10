@@ -1402,11 +1402,12 @@ public class DiplomacyView extends BlackPanel {
           humanIndex);
       Attitude attitude = ai.getAiAttitude();
       int liking = ai.getDiplomacy().getLiking(humanIndex);
+      boolean casusBelli = ai.getDiplomacy().hasCasusBelli(humanIndex);
       if (speechSelected.getType() == SpeechType.DECLINE_ANGER) {
         list.addBonus(DiplomacyBonusType.INSULT, ai.getRace());
       }
       int warChance = DiplomaticTrade.getWarChanceForDecline(
-          trade.getSpeechTypeByOffer(), attitude, liking);
+          trade.getSpeechTypeByOffer(), attitude, liking, casusBelli);
       if (speechSelected.getType() == SpeechType.DECLINE_WAR) {
         warChance = 100;
       }
@@ -1666,8 +1667,9 @@ public class DiplomacyView extends BlackPanel {
       } else {
         Attitude attitude = ai.getAiAttitude();
         int liking = ai.getDiplomacy().getLiking(humanIndex);
+        boolean casusBelli = ai.getDiplomacy().hasCasusBelli(humanIndex);
         int warChance = DiplomaticTrade.getWarChanceForDecline(
-            SpeechType.DEMAND, attitude, liking);
+            SpeechType.DEMAND, attitude, liking, casusBelli);
         int value = DiceGenerator.getRandom(99);
         if (value < warChance) {
           trade.generateEqualTrade(NegotiationType.WAR);

@@ -2087,8 +2087,9 @@ public final class MissionHandling {
       SpeechType type = trade.getSpeechTypeByOffer();
       Attitude attitude = info.getAiAttitude();
       int liking = info.getDiplomacy().getLiking(secondIndex);
+      boolean casusBelli = info.getDiplomacy().hasCasusBelli(secondIndex);
       int warChance = DiplomaticTrade.getWarChanceForDecline(type, attitude,
-          liking);
+          liking, casusBelli);
       if (info.getDiplomacy().getNumberOfWar() == 0
           && info.getGovernment().hasWarHappiness()) {
         // War monger governments like war

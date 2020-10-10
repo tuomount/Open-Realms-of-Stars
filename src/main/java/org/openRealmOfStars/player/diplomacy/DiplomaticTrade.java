@@ -27,7 +27,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2017, 2018 Tuomo Untinen
+ * Copyright (C) 2017-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -2076,10 +2076,11 @@ public class DiplomaticTrade {
    * @param attitude AI's attitude who's offer was declined
    * @param liking See fixed values from Diplomacy class.
    *        There are five choices: HATE, DISLIKE, NEUTRAL, LIKE and FRIENDS
+   * @param casusBelli True if asking has casus belli against decliner.
    * @return Chance for war. Number between 0-100.
    */
   public static int getWarChanceForDecline(final SpeechType type,
-      final Attitude attitude, final int liking) {
+      final Attitude attitude, final int liking, final boolean casusBelli) {
     int warChance = 0;
     if (type == SpeechType.MAKE_WAR) {
       warChance = 100;
@@ -2088,11 +2089,17 @@ public class DiplomaticTrade {
       switch (attitude) {
         case AGGRESSIVE: {
           warChance = warChance + 25;
+          if (casusBelli) {
+            warChance = warChance + 10;
+          }
           break;
         }
         case BACKSTABBING:
         case MILITARISTIC: {
           warChance = warChance + 15;
+          if (casusBelli) {
+            warChance = warChance + 10;
+          }
           break;
         }
         case DIPLOMATIC: {
@@ -2101,6 +2108,9 @@ public class DiplomaticTrade {
         }
         case EXPANSIONIST: {
           warChance = warChance + 5;
+          if (casusBelli) {
+            warChance = warChance + 2;
+          }
           break;
         }
         case LOGICAL:
@@ -2123,11 +2133,17 @@ public class DiplomaticTrade {
       switch (attitude) {
         case AGGRESSIVE: {
           warChance = warChance + 10;
+          if (casusBelli) {
+            warChance = warChance + 5;
+          }
           break;
         }
         case BACKSTABBING:
         case MILITARISTIC: {
           warChance = warChance + 5;
+          if (casusBelli) {
+            warChance = warChance + 5;
+          }
           break;
         }
         case DIPLOMATIC: {
@@ -2136,12 +2152,15 @@ public class DiplomaticTrade {
         }
         case EXPANSIONIST: {
           warChance = warChance + 3;
+          if (casusBelli) {
+            warChance = warChance + 2;
+          }
           break;
         }
         case LOGICAL:
         case SCIENTIFIC:
         default: {
-          // No chance for warChance
+          // No change for warChance
           break;
         }
         case MERCHANTICAL: {
@@ -2165,6 +2184,9 @@ public class DiplomaticTrade {
     }
     if (liking == Diplomacy.FRIENDS) {
       warChance = warChance - 20;
+    }
+    if (casusBelli) {
+      warChance = warChance + 10;
     }
     if (warChance > 100) {
       warChance = 100;

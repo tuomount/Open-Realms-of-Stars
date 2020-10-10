@@ -35,7 +35,7 @@ Route dot by Tuomo Untinen
 
 Relations icons by Tuomo Untinen
 
-Photon torpedo by Tuomo Untinen
+Photon torpedo and plasma bullet by Tuomo Untinen
 
 Space ships are done with Surt's modular ships
 
@@ -183,6 +183,14 @@ Licensed under CC BY 4.0
 
 Tractor beam, organic armor and solar armor icons modified by Tuomo Untinen
 Originals from 141 Military Icons Set by AngryMeteor.com 
+
+Plasma, Ion cannon and distortion shield icons modified by Tuomo Untinen
+Originals from 141 Military Icons Set by AngryMeteor.com 
+
+Teuthidae Space Ship Bridge by Tuomo Untinen
+
+Spork Space Ship Bridge by Tuomo Untinen
+
 
 
 Fonts are under SIL Open Font License, Version 1.1.

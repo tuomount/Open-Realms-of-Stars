@@ -74,6 +74,7 @@ public class DiplomacyBonusTypeTest {
     assertEquals(0, DiplomacyBonusType.PROMISED_VOTE_NO.getCasusBelliScore());
     assertEquals(0, DiplomacyBonusType.PROMISE_KEPT.getCasusBelliScore());
     assertEquals(4, DiplomacyBonusType.PROMISE_BROKEN.getCasusBelliScore());
+    assertEquals(8, DiplomacyBonusType.WAR_DECLARATION_AGAINST_US.getCasusBelliScore());
   }
 
 }

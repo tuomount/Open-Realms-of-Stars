@@ -131,10 +131,18 @@ public final class StarMapUtilities {
    * Add player's reputation that he or she has declared a war
    * @param starMap StarMap containing all the diplomacies
    * @param attacker PlayerInfo who is attacking.
+   * @param defender PlayerInfo who is being attacked.
    */
   public static void addWarDeclatingReputation(final StarMap starMap,
-      final PlayerInfo attacker) {
+      final PlayerInfo attacker, final PlayerInfo defender) {
     addReputation(starMap, attacker, DiplomacyBonusType.WAR_DECLARTION);
+    int index = starMap.getPlayerList().getIndex(attacker);
+    if (index != -1) {
+      DiplomacyBonusList list = defender.getDiplomacy().getDiplomacyList(
+          index);
+      list.addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US,
+          defender.getRace());
+    }
   }
 
   /**

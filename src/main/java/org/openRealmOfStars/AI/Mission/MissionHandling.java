@@ -1627,7 +1627,8 @@ public final class MissionHandling {
           game.getPlayers().getIndex(info),
           game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
       trade.generateEqualTrade(NegotiationType.WAR);
-      StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info);
+      StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
+          planet.getPlanetPlayerInfo());
       NewsData newsData = NewsFactory.makeWarNews(info,
           planet.getPlanetPlayerInfo(), planet, game.getStarMap());
       game.getStarMap().getNewsCorpData().addNews(newsData);
@@ -2013,8 +2014,9 @@ public final class MissionHandling {
       // Another party accepts it or it is war
       trade.doTrades();
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
-        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
+        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
+            defender);
         NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
             game.getStarMap());
         game.getStarMap().getNewsCorpData().addNews(newsData);
@@ -2109,8 +2111,9 @@ public final class MissionHandling {
       if (value < warChance && !info.getDiplomacy().isWar(secondIndex)) {
         trade.generateEqualTrade(NegotiationType.WAR);
         trade.doTrades();
-        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
+        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
+            defender);
         NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
             game.getStarMap());
         game.getStarMap().getNewsCorpData().addNews(newsData);

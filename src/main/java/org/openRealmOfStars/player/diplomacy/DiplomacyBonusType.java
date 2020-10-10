@@ -156,13 +156,17 @@ public enum DiplomacyBonusType {
   /**
    * Realm did not keep the voting promise.
    */
-  PROMISE_BROKEN;
+  PROMISE_BROKEN,
+  /**
+   * Another realm made war declaration directly against our realm.
+   */
+  WAR_DECLARATION_AGAINST_US;
 
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 31;
+  public static final int MAX_BONUS_TYPE = 32;
 
   /**
    * Get ShipHullType index
@@ -201,6 +205,7 @@ public enum DiplomacyBonusType {
       case PROMISED_VOTE_NO: return 28;
       case PROMISE_KEPT: return 29;
       case PROMISE_BROKEN: return 30;
+      case WAR_DECLARATION_AGAINST_US: return 31;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -243,6 +248,7 @@ public enum DiplomacyBonusType {
       case PROMISED_VOTE_NO: return 0; // Promised not happened yet
       case PROMISE_KEPT: return 0; // Positive bonus
       case PROMISE_BROKEN: return 4;
+      case WAR_DECLARATION_AGAINST_US: return 8;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -316,6 +322,8 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.PROMISE_KEPT;
     case 30:
       return DiplomacyBonusType.PROMISE_BROKEN;
+    case 31:
+      return DiplomacyBonusType.WAR_DECLARATION_AGAINST_US;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

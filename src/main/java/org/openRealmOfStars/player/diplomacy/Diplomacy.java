@@ -627,9 +627,10 @@ public class Diplomacy {
       if (isDefensivePact(i) && i != attackerIndex) {
         DiplomaticTrade trade = new DiplomaticTrade(starMap, attackerIndex, i);
         trade.generateEqualTrade(NegotiationType.WAR);
-        StarMapUtilities.addWarDeclatingReputation(starMap, attacker);
-        trade.doTrades();
         PlayerInfo defender = starMap.getPlayerByIndex(i);
+        StarMapUtilities.addWarDeclatingReputation(starMap, attacker,
+            defender);
+        trade.doTrades();
         defesiveGroupMember.add(defender.getEmpireName());
       }
     }

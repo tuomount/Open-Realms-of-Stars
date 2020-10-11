@@ -135,7 +135,10 @@ public final class StarMapUtilities {
    */
   public static void addWarDeclatingReputation(final StarMap starMap,
       final PlayerInfo attacker, final PlayerInfo defender) {
-    addReputation(starMap, attacker, DiplomacyBonusType.WAR_DECLARTION);
+    int defenderIndex = starMap.getPlayerList().getIndex(defender);
+    if (!attacker.getDiplomacy().hasCasusBelli(defenderIndex)) {
+      addReputation(starMap, attacker, DiplomacyBonusType.WAR_DECLARTION);
+    }
     int index = starMap.getPlayerList().getIndex(attacker);
     if (index != -1) {
       DiplomacyBonusList list = defender.getDiplomacy().getDiplomacyList(

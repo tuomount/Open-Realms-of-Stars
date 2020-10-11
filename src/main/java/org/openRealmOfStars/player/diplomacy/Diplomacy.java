@@ -487,6 +487,19 @@ public class Diplomacy {
   }
 
   /**
+   * Get casus belli reason as a string.
+   * @param playerIndex Against whom casus belli and reason?
+   * @return Casus belli reason
+   */
+  public String getCasusBelliReason(final int playerIndex) {
+    DiplomacyBonusList list = getDiplomacyList(playerIndex);
+    if (list != null && list.getCasusBelliScore() > CASUS_BELLI_LIMIT
+        && !isWar(playerIndex)) {
+      return list.getMostCassusBelli();
+    }
+    return "no casus belli";
+  }
+  /**
    * Get diplomatic relations between two players
    * @param playerIndex PLayer index to check
    * @return String choices: "", "War", "Trade alliance", "Alliance", "Peace",

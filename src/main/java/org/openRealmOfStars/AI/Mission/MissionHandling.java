@@ -1627,10 +1627,12 @@ public final class MissionHandling {
           game.getPlayers().getIndex(info),
           game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
       trade.generateEqualTrade(NegotiationType.WAR);
+      boolean casusBelli = info.getDiplomacy().hasCasusBelli(
+          game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
       StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
           planet.getPlanetPlayerInfo());
       NewsData newsData = NewsFactory.makeWarNews(info,
-          planet.getPlanetPlayerInfo(), planet, game.getStarMap());
+          planet.getPlanetPlayerInfo(), planet, game.getStarMap(), casusBelli);
       game.getStarMap().getNewsCorpData().addNews(newsData);
       game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
           planet, newsData));
@@ -2015,10 +2017,11 @@ public final class MissionHandling {
       trade.doTrades();
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
+        boolean casusBelli = info.getDiplomacy().hasCasusBelli(secondIndex);
         StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
             defender);
         NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
-            game.getStarMap());
+            game.getStarMap(), casusBelli);
         game.getStarMap().getNewsCorpData().addNews(newsData);
         game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));
@@ -2116,7 +2119,7 @@ public final class MissionHandling {
         StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
             defender);
         NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
-            game.getStarMap());
+            game.getStarMap(), casusBelli);
         game.getStarMap().getNewsCorpData().addNews(newsData);
         game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));

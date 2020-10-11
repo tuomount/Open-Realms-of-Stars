@@ -254,6 +254,48 @@ public enum DiplomacyBonusType {
     }
   }
   /**
+   * Get Casus belli reason as string
+   * @return Casus belli reason
+   */
+  public String getCasusBelliReason() {
+    switch (this) {
+      case IN_WAR: return "in war"; // Diplomatic relation
+      case WAR_DECLARTION: return "war declarations";
+      case IN_TRADE_ALLIANCE: return "in trade alliance"; // Diplomatic relatio
+      case IN_ALLIANCE: return "in alliance"; // Diplomatic relation
+      case DIPLOMAT_CAPTURED: return "diplomat captured"; // Not used
+      case BORDER_CROSSED: return "borders crossed";
+      case GIVEN_VALUABLE_FREE: return "gift";  // Positive bonus
+      case MADE_DEMAND: return "demands";
+      case DIPLOMATIC_TRADE: return "trades"; // Positive bonus
+      case SAME_RACE: return "race"; // Positive bonus
+      case LONG_PEACE: return "peace"; // Diplomatic relation
+      case INSULT: return "insults";
+      case NUKED: return "nuclear bombings";
+      case NOTHING_TO_TRADE: return "nothing"; // Not positive or negative bonu
+      case IN_DEFENSIVE_PACT: return "in defensive pact"; // Diplomatic relatio
+      case ESPIONAGE_BORDER_CROSS: return "espionages";
+      case SPY_TRADE: return "spy trade"; // Diplomatic relation
+      case DIPLOMACY_BONUS: return "diplomacy"; // Mostly positive
+      case TRADE_FLEET: return "trading"; // Positive bonus
+      case BOARD_PLAYER: return "pirates"; // Realm status
+      case EMBARGO: return "embargo"; // Diplomatic relation
+      case LIKED_EMBARGO: return "embargo"; // Positive bonus
+      case DISLIKED_EMBARGO: return "embargo";
+      case REALM_LOST: return "realm lost"; // Realm status
+      case OLYMPICS: return "olympics"; // Positive bonus
+      case DNS_OLYMPICS: return "boycott olympics";
+      case OLYMPICS_EMBARGO: return "boycott olympics"; // Positive bonus
+      case PROMISED_VOTE_YES: return "promise"; // Promised not happened yet
+      case PROMISED_VOTE_NO: return "promise"; // Promised not happened yet
+      case PROMISE_KEPT: return "promise"; // Positive bonus
+      case PROMISE_BROKEN: return "broken promises";
+      case WAR_DECLARATION_AGAINST_US: return "war against us";
+      default: throw new IllegalArgumentException("No such Diplomacy Bonus"
+          + " Type!");
+    }
+  }
+  /**
    * Return diplomacy bonus type by index.
    * @param index This must be between 0-10
    * @return Diplomacy Bonus Type

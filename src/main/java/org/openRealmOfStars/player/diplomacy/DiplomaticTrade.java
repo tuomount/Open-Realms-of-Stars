@@ -996,6 +996,10 @@ public class DiplomaticTrade {
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
+    boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
+    if (power > 0 && casusBelli) {
+      power = power + 20;
+    }
     if (power > 40 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
       generateEqualTrade(NegotiationType.WAR);
@@ -1078,6 +1082,10 @@ public class DiplomaticTrade {
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
+    boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
+    if (power > 0 && casusBelli) {
+      power = power + 20;
+    }
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
       generateEqualTrade(NegotiationType.WAR);
@@ -1177,8 +1185,9 @@ public class DiplomaticTrade {
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
+    boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
-        .isEmpty()) {
+        .isEmpty() && casusBelli) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -1250,6 +1259,10 @@ public class DiplomaticTrade {
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
+    boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
+    if (power > 0 && casusBelli) {
+      power = power + 10;
+    }
     if (power > 60 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
       generateEqualTrade(NegotiationType.WAR);
@@ -1356,6 +1369,10 @@ public class DiplomaticTrade {
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
+    boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
+    if (power > 0 && casusBelli) {
+      power = power + 20;
+    }
     if (power > 100 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
       generateEqualTrade(NegotiationType.WAR);
@@ -1438,17 +1455,21 @@ public class DiplomaticTrade {
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
+    boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
+    if (power > 0 && casusBelli) {
+      power = power + 10;
+    }
     if (power > 100 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
     if (power > 220 && info.getDiplomacy().getDiplomaticRelation(second)
-        .equals(Diplomacy.TRADE_ALLIANCE)) {
+        .equals(Diplomacy.TRADE_ALLIANCE) && casusBelli) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
-    if (power > 440) {
+    if (power > 440 && casusBelli) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -1543,6 +1564,10 @@ public class DiplomaticTrade {
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
+    boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
+    if (power > 0 && casusBelli) {
+      power = power + 20;
+    }
     if (power > 50 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
       generateEqualTrade(NegotiationType.WAR);
@@ -1629,17 +1654,18 @@ public class DiplomaticTrade {
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
+    boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
-        .isEmpty()) {
+        .isEmpty() && casusBelli) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
     if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
-        .equals(Diplomacy.TRADE_ALLIANCE)) {
+        .equals(Diplomacy.TRADE_ALLIANCE) && casusBelli) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
-    if (power > 400) {
+    if (power > 400 && casusBelli) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -1708,17 +1734,21 @@ public class DiplomaticTrade {
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
+    boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
+    if (power > 0 && casusBelli) {
+      power = power + 20;
+    }
     if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
-        .isEmpty()) {
+        .isEmpty() && casusBelli) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
     if (power > 400 && info.getDiplomacy().getDiplomaticRelation(second)
-        .equals(Diplomacy.TRADE_ALLIANCE)) {
+        .equals(Diplomacy.TRADE_ALLIANCE) && casusBelli) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
-    if (power > 600) {
+    if (power > 600 && casusBelli) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }

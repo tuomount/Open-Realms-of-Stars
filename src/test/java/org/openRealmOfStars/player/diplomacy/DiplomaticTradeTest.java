@@ -1406,6 +1406,12 @@ return map;
   public void testLogicalOffer() {
     StarMap map = generateMapWithPlayer(SpaceRace.MECHIONS,600);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
+    map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.HOMARIANS);
+    map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.HOMARIANS);
+    map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.HOMARIANS);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
     trade.getTradeableTechListForSecond();
@@ -1438,8 +1444,14 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testPeacefulOffer() {
-    StarMap map = generateMapWithPlayer(SpaceRace.MECHIONS,600);
-    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
+    StarMap map = generateMapWithPlayer(SpaceRace.HOMARIANS,600);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.PEACEFUL);
+    map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.HOMARIANS);
+    map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.HOMARIANS);
+    map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.HOMARIANS);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
     trade.getTradeableTechListForSecond();
@@ -1448,8 +1460,8 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.MECHIONS,0);
-    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
+    map = generateMapWithPlayer(SpaceRace.HOMARIANS,0);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.PEACEFUL);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
     trade.getTradeableTechListForSecond();
@@ -1652,6 +1664,12 @@ return map;
   public void testDiplomaticOffer() {
     StarMap map = generateMapWithPlayer(SpaceRace.SPORKS,300);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
+    map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.SPORKS);
+    map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.SPORKS);
+    map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.SPORKS);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
     trade.getTradeableTechListForSecond();

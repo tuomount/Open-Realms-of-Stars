@@ -54,10 +54,10 @@ public final class SpeechFactory {
       case TRADE: return createTradeLine(race);
       case ALLIANCE: return createAllianceLine(race);
       case TRADE_ALLIANCE: return createTradeAllianceLine(race);
-      case MAKE_WAR: return createMakeWarLine(race);
+      case MAKE_WAR: return createMakeWarLine(race, dynamicContent);
       case DECLINE: return createDeclineLine(race);
       case DECLINE_ANGER: return createDeclineAngerLine(race);
-      case DECLINE_WAR: return createDeclineWarLine(race);
+      case DECLINE_WAR: return createDeclineWarLine(race, dynamicContent);
       case DEMAND: return createDemandLine(race);
       case NEUTRAL_GREET: return createNeutralGreetLine(race, dynamicContent);
       case DISLIKE_GREET: return createDislikeGreetLine(race);
@@ -447,33 +447,40 @@ public final class SpeechFactory {
   /**
    * Create Decline War SpeechLine according the race
    * @param race SpaceRace
+   * @param casusBelli Casus belli indicator
    * @return SpeechLine or null if creating line fails
    */
-  private static SpeechLine createDeclineWarLine(final SpaceRace race) {
+  private static SpeechLine createDeclineWarLine(final SpaceRace race,
+      final String casusBelli) {
     SpeechType type = SpeechType.DECLINE_WAR;
+    String extra = "";
+    if (casusBelli != null) {
+      extra = casusBelli;
+    }
     switch (race) {
       case CENTAURS: return new SpeechLine(type,
-          "This is your last insult! Prepare to be stomped!");
+          "This is your last insult! Prepare to be stomped!" + extra);
       case GREYANS: return new SpeechLine(type,
-          "Your offer insulted us final time! Prepare to be anhilated!");
+          "Your offer insulted us final time! Prepare to be anhilated!"
+      + extra);
       case HUMAN: return new SpeechLine(type,
-          "This was your last insult! Die!");
+          "This was your last insult! Die!" + extra);
       case MECHIONS: return new SpeechLine(type,
-          "Initiating war protocol!");
+          "Initiating war protocol!" + extra);
       case MOTHOIDS: return new SpeechLine(type,
-          "We offer you this and you accept it?");
+          "We offer you this and you accept it?" + extra);
       case SPORKS: return new SpeechLine(type,
-          "You either take this with good or bad!");
+          "You either take this with good or bad!" + extra);
       case TEUTHIDAES: return new SpeechLine(type,
-          "You will pay for your insults!");
+          "You will pay for your insults!" + extra);
       case SCAURIANS: return new SpeechLine(type,
-          "I will take last credits from your cold body!");
+          "I will take last credits from your cold body!" + extra);
       case HOMARIANS: return new SpeechLine(type,
-          "Prepare to be sliced!");
+          "Prepare to be sliced!" + extra);
       case SPACE_PIRATE: return new SpeechLine(type,
-          "Yarr, Prepate to be boarded and destroyed!");
+          "Yarr, Prepate to be boarded and destroyed!" + extra);
       case CHIRALOIDS: return new SpeechLine(type,
-          "I say no and I will nuke you now!");
+          "I say no and I will nuke you now!" + extra);
       default: return null;
     }
   }
@@ -620,33 +627,39 @@ public final class SpeechFactory {
   /**
    * Create Make War SpeechLine according the race
    * @param race SpaceRace
+   * @param casusBelli Casus belli indicator
    * @return SpeechLine or null if creating line fails
    */
-  private static SpeechLine createMakeWarLine(final SpaceRace race) {
+  private static SpeechLine createMakeWarLine(final SpaceRace race,
+      final String casusBelli) {
     SpeechType type = SpeechType.MAKE_WAR;
+    String extra = "";
+    if (casusBelli != null) {
+      extra = casusBelli;
+    }
     switch (race) {
       case CENTAURS: return new SpeechLine(type,
-          "You will be stomped and crushed!");
+          "You will be stomped and crushed!" + extra);
       case GREYANS: return new SpeechLine(type,
-          "Prepare to be anhilated!");
+          "Prepare to be anhilated!" + extra);
       case HUMAN: return new SpeechLine(type,
-          "This means war!");
+          "This means war!" + extra);
       case MECHIONS: return new SpeechLine(type,
-          "Initializing war protocol!");
+          "Initializing war protocol!" + extra);
       case MOTHOIDS: return new SpeechLine(type,
-          "We will kill all your kind!");
+          "We will kill all your kind!" + extra);
       case SPORKS: return new SpeechLine(type,
-          "Shields up! Ready to fire!");
+          "Shields up! Ready to fire!" + extra);
       case TEUTHIDAES: return new SpeechLine(type,
-          "Prepare to die!");
+          "Prepare to die!" + extra);
       case SCAURIANS: return new SpeechLine(type,
-          "Time to die!");
+          "Time to die!" + extra);
       case HOMARIANS: return new SpeechLine(type,
-          "Time to get sliced and boiled!");
+          "Time to get sliced and boiled!" + extra);
       case SPACE_PIRATE: return new SpeechLine(type,
-          "Yarr, Time to die!");
+          "Yarr, Time to die!" + extra);
       case CHIRALOIDS: return new SpeechLine(type,
-          "Prepare to be nuked!");
+          "Prepare to be nuked!" + extra);
       default: return null;
     }
   }

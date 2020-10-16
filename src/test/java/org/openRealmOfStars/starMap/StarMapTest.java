@@ -986,11 +986,19 @@ public class StarMapTest {
         DiplomacyBonusType.WAR_DECLARTION));
     assertEquals(false, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.WAR_DECLARTION));
-    StarMapUtilities.addWarDeclatingReputation(starMap, attacker);
+    assertEquals(false, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
+        DiplomacyBonusType.WAR_DECLARATION_AGAINST_US));
+    assertEquals(false, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
+        DiplomacyBonusType.WAR_DECLARATION_AGAINST_US));
+    StarMapUtilities.addWarDeclatingReputation(starMap, attacker, info1);
     assertEquals(true, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.WAR_DECLARTION));
+    assertEquals(true, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
+        DiplomacyBonusType.WAR_DECLARATION_AGAINST_US));
     assertEquals(true, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.WAR_DECLARTION));
+    assertEquals(false, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
+        DiplomacyBonusType.WAR_DECLARATION_AGAINST_US));
   }
 
   @Test

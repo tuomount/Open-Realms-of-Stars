@@ -131,10 +131,21 @@ public final class StarMapUtilities {
    * Add player's reputation that he or she has declared a war
    * @param starMap StarMap containing all the diplomacies
    * @param attacker PlayerInfo who is attacking.
+   * @param defender PlayerInfo who is being attacked.
    */
   public static void addWarDeclatingReputation(final StarMap starMap,
-      final PlayerInfo attacker) {
-    addReputation(starMap, attacker, DiplomacyBonusType.WAR_DECLARTION);
+      final PlayerInfo attacker, final PlayerInfo defender) {
+    int defenderIndex = starMap.getPlayerList().getIndex(defender);
+    if (!attacker.getDiplomacy().hasCasusBelli(defenderIndex)) {
+      addReputation(starMap, attacker, DiplomacyBonusType.WAR_DECLARTION);
+    }
+    int index = starMap.getPlayerList().getIndex(attacker);
+    if (index != -1) {
+      DiplomacyBonusList list = defender.getDiplomacy().getDiplomacyList(
+          index);
+      list.addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US,
+          defender.getRace());
+    }
   }
 
   /**
@@ -173,6 +184,10 @@ public final class StarMapUtilities {
         list.addBonus(DiplomacyBonusType.EMBARGO, player.getRace());
       }
       if (i != imposed && i != imposer && i != agree) {
+        // Going through all realms, including the one which were not
+        // part of the deal. If those realms liked imposed then
+        // imposer/agree gets negative bonus. If they hated imposed then
+        // imposer/agree gets positive bonus.
         int liking = player.getDiplomacy().getLiking(imposed);
         if (liking > 0) {
           DiplomacyBonusList list = player.getDiplomacy()

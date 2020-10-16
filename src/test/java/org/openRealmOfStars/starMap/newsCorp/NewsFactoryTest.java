@@ -60,7 +60,8 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeWarNews(aggressor, defender, null, null);
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, null, null,
+        false);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -95,7 +96,8 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null);
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null,
+        false);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -128,7 +130,8 @@ public class NewsFactoryTest {
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     History history = Mockito.mock(History.class);
     Mockito.when(map.getHistory()).thenReturn(history);
-    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null);
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null,
+        false);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -140,7 +143,7 @@ public class NewsFactoryTest {
         defender.getEmpireName()));
     assertEquals(true, news.getNewsText().contains(planet.getName()));
     assertEquals(false, news.getNewsText().contains("border crossing"));
-    news = NewsFactory.makeWarNews(aggressor, defender, planet, map);
+    news = NewsFactory.makeWarNews(aggressor, defender, planet, map, false);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -184,7 +187,8 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getAiAttitude()).thenReturn(Attitude.AGGRESSIVE);
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null);
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null,
+        false);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -210,7 +214,8 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getAiAttitude()).thenReturn(Attitude.MILITARISTIC);
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null);
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null,
+        false);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -236,7 +241,8 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getAiAttitude()).thenReturn(Attitude.PEACEFUL);
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null);
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null,
+        false);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(

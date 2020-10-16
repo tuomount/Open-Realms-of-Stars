@@ -134,10 +134,10 @@ public class DiplomacyBonus {
      case WAR_DECLARTION: {
        if (race == SpaceRace.SPORKS) {
          bonusValue = -2;
-         bonusLasting = 255;
+         bonusLasting = 100;
        } else {
          bonusValue = -8;
-         bonusLasting = 255;
+         bonusLasting = 150;
        }
        break;
      }
@@ -396,6 +396,11 @@ public class DiplomacyBonus {
          bonusValue = -8;
          bonusLasting = 100;
        }
+       break;
+     }
+     case WAR_DECLARATION_AGAINST_US: {
+       bonusValue = -12;
+       bonusLasting = 255;
        break;
      }
      default: {

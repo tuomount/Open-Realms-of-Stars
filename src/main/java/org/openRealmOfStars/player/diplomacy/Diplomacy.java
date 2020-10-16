@@ -65,6 +65,10 @@ public class Diplomacy {
    * How much player likes another one: Hate
    */
   public static final int HATE = -2;
+  /**
+   * Limit when realm has casus belli.
+   */
+  public static final int CASUS_BELLI_LIMIT = 20;
 
   /**
    * String for Trade Alliance.
@@ -436,7 +440,7 @@ public class Diplomacy {
     return index;
   }
   /**
-   * Get likess value as a String.
+   * Get liking value as a String.
    * @param playerIndex whom to check
    * @return Likeness value as a string
    */
@@ -452,7 +456,7 @@ public class Diplomacy {
     }
   }
   /**
-   * Get likess value as a Color.
+   * Get liking value as a Color.
    * @param playerIndex whom to check
    * @return Likeness value as a Color
    */
@@ -467,7 +471,34 @@ public class Diplomacy {
       return GuiStatics.COLOR_GREY_160;
     }
   }
+  /**
+   * Has realm casus belli against another? If realm is already war against
+   * another that is not casus belli.
+   * @param playerIndex Against whom casus belli?
+   * @return True if casus belli.
+   */
+  public boolean hasCasusBelli(final int playerIndex) {
+    DiplomacyBonusList list = getDiplomacyList(playerIndex);
+    if (list != null && list.getCasusBelliScore() > CASUS_BELLI_LIMIT
+        && !isWar(playerIndex)) {
+      return true;
+    }
+    return false;
+  }
 
+  /**
+   * Get casus belli reason as a string.
+   * @param playerIndex Against whom casus belli and reason?
+   * @return Casus belli reason
+   */
+  public String getCasusBelliReason(final int playerIndex) {
+    DiplomacyBonusList list = getDiplomacyList(playerIndex);
+    if (list != null && list.getCasusBelliScore() > CASUS_BELLI_LIMIT
+        && !isWar(playerIndex)) {
+      return list.getMostCassusBelli();
+    }
+    return "no casus belli";
+  }
   /**
    * Get diplomatic relations between two players
    * @param playerIndex PLayer index to check
@@ -609,9 +640,10 @@ public class Diplomacy {
       if (isDefensivePact(i) && i != attackerIndex) {
         DiplomaticTrade trade = new DiplomaticTrade(starMap, attackerIndex, i);
         trade.generateEqualTrade(NegotiationType.WAR);
-        StarMapUtilities.addWarDeclatingReputation(starMap, attacker);
-        trade.doTrades();
         PlayerInfo defender = starMap.getPlayerByIndex(i);
+        StarMapUtilities.addWarDeclatingReputation(starMap, attacker,
+            defender);
+        trade.doTrades();
         defesiveGroupMember.add(defender.getEmpireName());
       }
     }

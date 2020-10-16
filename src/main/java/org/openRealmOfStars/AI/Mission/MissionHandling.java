@@ -1627,9 +1627,12 @@ public final class MissionHandling {
           game.getPlayers().getIndex(info),
           game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
       trade.generateEqualTrade(NegotiationType.WAR);
-      StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info);
+      boolean casusBelli = info.getDiplomacy().hasCasusBelli(
+          game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
+      StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
+          planet.getPlanetPlayerInfo());
       NewsData newsData = NewsFactory.makeWarNews(info,
-          planet.getPlanetPlayerInfo(), planet, game.getStarMap());
+          planet.getPlanetPlayerInfo(), planet, game.getStarMap(), casusBelli);
       game.getStarMap().getNewsCorpData().addNews(newsData);
       game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
           planet, newsData));
@@ -2013,10 +2016,12 @@ public final class MissionHandling {
       // Another party accepts it or it is war
       trade.doTrades();
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
-        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
+        boolean casusBelli = info.getDiplomacy().hasCasusBelli(secondIndex);
+        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
+            defender);
         NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
-            game.getStarMap());
+            game.getStarMap(), casusBelli);
         game.getStarMap().getNewsCorpData().addNews(newsData);
         game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));
@@ -2085,8 +2090,9 @@ public final class MissionHandling {
       SpeechType type = trade.getSpeechTypeByOffer();
       Attitude attitude = info.getAiAttitude();
       int liking = info.getDiplomacy().getLiking(secondIndex);
+      boolean casusBelli = info.getDiplomacy().hasCasusBelli(secondIndex);
       int warChance = DiplomaticTrade.getWarChanceForDecline(type, attitude,
-          liking);
+          liking, casusBelli);
       if (info.getDiplomacy().getNumberOfWar() == 0
           && info.getGovernment().hasWarHappiness()) {
         // War monger governments like war
@@ -2109,10 +2115,11 @@ public final class MissionHandling {
       if (value < warChance && !info.getDiplomacy().isWar(secondIndex)) {
         trade.generateEqualTrade(NegotiationType.WAR);
         trade.doTrades();
-        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
+        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
+            defender);
         NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
-            game.getStarMap());
+            game.getStarMap(), casusBelli);
         game.getStarMap().getNewsCorpData().addNews(newsData);
         game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));

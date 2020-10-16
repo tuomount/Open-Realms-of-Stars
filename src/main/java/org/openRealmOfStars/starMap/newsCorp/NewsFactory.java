@@ -69,11 +69,12 @@ public final class NewsFactory {
    * @param defender Player who is defending
    * @param meetingPlace Where meeting happened, fleet or planet
    * @param map StarMap of current game
+   * @param casusBelli true if attacker had casus belli
    * @return NewsData
    */
   public static NewsData makeWarNews(final PlayerInfo aggressor,
       final PlayerInfo defender, final Object meetingPlace,
-      final StarMap map) {
+      final StarMap map, final boolean casusBelli) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
@@ -109,7 +110,11 @@ public final class NewsFactory {
         break;
       }
       case 2: {
-        instructions.addText("WAR BEGINS!");
+        if (casusBelli) {
+          instructions.addText("DEFENSIVE WAR!");
+        } else {
+          instructions.addText("WAR BEGINS!");
+        }
         break;
       }
     }
@@ -142,43 +147,54 @@ public final class NewsFactory {
         sb.append("This meeting happened in deep space. ");
       }
     }
-    Attitude attitude = aggressor.getAiAttitude();
-    if (attitude == Attitude.AGGRESSIVE) {
-      if (aggressor.getRuler() == null) {
-        sb.append(aggressor.getEmpireName());
-        sb.append(" is known about their aggressive behaviour, so ");
-      } else {
-        sb.append(aggressor.getRuler().getCallName());
-        sb.append(" is known for ");
-        sb.append(aggressor.getRuler().getGender().getHisHer());
-        sb.append(" aggressive behaviour, so ");
+    if (!casusBelli) {
+      Attitude attitude = aggressor.getAiAttitude();
+      if (attitude == Attitude.AGGRESSIVE) {
+        if (aggressor.getRuler() == null) {
+          sb.append(aggressor.getEmpireName());
+          sb.append(" is known about their aggressive behaviour, so ");
+        } else {
+          sb.append(aggressor.getRuler().getCallName());
+          sb.append(" is known for ");
+          sb.append(aggressor.getRuler().getGender().getHisHer());
+          sb.append(" aggressive behaviour, so ");
+        }
+        sb.append("this war was just about to happen. ");
       }
-      sb.append("this war was just about to happen. ");
-    }
-    if (attitude == Attitude.MILITARISTIC) {
-      if (aggressor.getRuler() == null) {
-        sb.append(aggressor.getEmpireName());
-      } else {
-        sb.append(aggressor.getRuler().getCallName());
+      if (attitude == Attitude.MILITARISTIC) {
+        if (aggressor.getRuler() == null) {
+          sb.append(aggressor.getEmpireName());
+        } else {
+          sb.append(aggressor.getRuler().getCallName());
+        }
+        sb.append(" militaristic actions has lead to this war to burst out. ");
       }
-      sb.append(" militaristic actions has lead to this war to burst out. ");
-    }
-    if (attitude == Attitude.PEACEFUL) {
-      sb.append(aggressor.getEmpireName());
-      sb.append(" is known about their peace loving. What horrible acts has ");
-      sb.append(defender.getEmpireName());
-      sb.append(" done to ");
-      sb.append(aggressor.getEmpireName());
-      sb.append("? ");
-    }
-    if (map != null) {
-      int defenderIndex = map.getPlayerList().getIndex(defender);
-      if (aggressor.getDiplomacy().isMultipleBorderCrossing(defenderIndex)) {
-        sb.append("Maybe the reason for war is in multiple"
-            + " border crossing by ");
+      if (attitude == Attitude.PEACEFUL) {
+        sb.append(aggressor.getEmpireName());
+        sb.append(
+            " is known about their peace loving. What horrible acts has ");
         sb.append(defender.getEmpireName());
-        sb.append(" has done lately. ");
+        sb.append(" done to ");
+        sb.append(aggressor.getEmpireName());
+        sb.append("? ");
       }
+      if (map != null) {
+        int defenderIndex = map.getPlayerList().getIndex(defender);
+        if (aggressor.getDiplomacy().isMultipleBorderCrossing(defenderIndex)) {
+          sb.append("Maybe the reason for war is in multiple"
+              + " border crossing by ");
+          sb.append(defender.getEmpireName());
+          sb.append(" has done lately. ");
+        }
+      }
+    } else {
+      sb.append(aggressor.getEmpireName());
+      sb.append(" has justified war against ");
+      sb.append(defender.getEmpireName());
+      sb.append(" because of ");
+      int defenderIndex = map.getPlayerList().getIndex(defender);
+      sb.append(aggressor.getDiplomacy().getCasusBelliReason(defenderIndex));
+      sb.append(".");
     }
     news.setNewsText(sb.toString());
     return news;

@@ -76,6 +76,29 @@ public class DiplomacyBonusListTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCasusBelliScore() {
+    DiplomacyBonusList list = new DiplomacyBonusList(1);
+    boolean result = list.addBonus(DiplomacyBonusType.BORDER_CROSSED, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    assertEquals(3, list.getCasusBelliScore());
+    list.addBonus(DiplomacyBonusType.LONG_PEACE, SpaceRace.HUMAN);
+    assertEquals(3, list.getCasusBelliScore());
+    list.addBonus(DiplomacyBonusType.NUKED, SpaceRace.HUMAN);
+    assertEquals(7, list.getCasusBelliScore());
+    list.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS, SpaceRace.HUMAN);
+    assertEquals(12, list.getCasusBelliScore());
+    list.addBonus(DiplomacyBonusType.BORDER_CROSSED, SpaceRace.HUMAN);
+    assertEquals(15, list.getCasusBelliScore());
+    list.addBonus(DiplomacyBonusType.DNS_OLYMPICS, SpaceRace.HUMAN);
+    assertEquals(16, list.getCasusBelliScore());
+    list.addBonus(DiplomacyBonusType.MADE_DEMAND, SpaceRace.HUMAN);
+    assertEquals(23, list.getCasusBelliScore());
+    list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
+    assertEquals(23, list.getCasusBelliScore());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testCheckPromiseNoVoteNo() {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
     boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_NO, SpaceRace.HUMAN);

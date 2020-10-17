@@ -2477,28 +2477,28 @@ public final class ShipComponentFactory {
       tmp.setEnergyRequirement(1);
     }
     if (index == COMPONENT_PLASMA_CANNON_MK2) {
-      tmp = new ShipComponent(index, "Plasma cannon Mk2", 6, 4,
+      tmp = new ShipComponent(index, "Plasma cannon Mk2", 6, 5,
           ShipComponentType.PLASMA_CANNON);
       tmp.setDamage(3);
       tmp.setWeaponRange(2);
       tmp.setEnergyRequirement(2);
     }
     if (index == COMPONENT_PLASMA_CANNON_MK3) {
-      tmp = new ShipComponent(index, "Plasma cannon Mk3", 6, 4,
+      tmp = new ShipComponent(index, "Plasma cannon Mk3", 7, 5,
           ShipComponentType.PLASMA_CANNON);
       tmp.setDamage(5);
       tmp.setWeaponRange(2);
       tmp.setEnergyRequirement(2);
     }
     if (index == COMPONENT_PLASMA_CANNON_MK4) {
-      tmp = new ShipComponent(index, "Plasma cannon Mk4", 7, 5,
+      tmp = new ShipComponent(index, "Plasma cannon Mk4", 7, 6,
           ShipComponentType.PLASMA_CANNON);
       tmp.setDamage(7);
       tmp.setWeaponRange(2);
       tmp.setEnergyRequirement(3);
     }
     if (index == COMPONENT_PLASMA_CANNON_MK5) {
-      tmp = new ShipComponent(index, "Plasma cannon Mk5", 8, 5,
+      tmp = new ShipComponent(index, "Plasma cannon Mk5", 8, 6,
           ShipComponentType.PLASMA_CANNON);
       tmp.setDamage(9);
       tmp.setWeaponRange(2);

@@ -160,13 +160,18 @@ public enum DiplomacyBonusType {
   /**
    * Another realm made war declaration directly against our realm.
    */
-  WAR_DECLARATION_AGAINST_US;
+  WAR_DECLARATION_AGAINST_US,
+  /**
+   * You succesfully claim another realm made "attack" against your
+   * ship.
+   */
+  FALSE_FLAG;
 
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 32;
+  public static final int MAX_BONUS_TYPE = 33;
 
   /**
    * Get ShipHullType index
@@ -206,6 +211,7 @@ public enum DiplomacyBonusType {
       case PROMISE_KEPT: return 29;
       case PROMISE_BROKEN: return 30;
       case WAR_DECLARATION_AGAINST_US: return 31;
+      case FALSE_FLAG: return 32;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -249,6 +255,7 @@ public enum DiplomacyBonusType {
       case PROMISE_KEPT: return 0; // Positive bonus
       case PROMISE_BROKEN: return 4;
       case WAR_DECLARATION_AGAINST_US: return 8;
+      case FALSE_FLAG: return 8;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -291,6 +298,7 @@ public enum DiplomacyBonusType {
       case PROMISE_KEPT: return "promise"; // Positive bonus
       case PROMISE_BROKEN: return "broken promises";
       case WAR_DECLARATION_AGAINST_US: return "war against us";
+      case FALSE_FLAG: return "blown up ships";
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -366,6 +374,8 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.PROMISE_BROKEN;
     case 31:
       return DiplomacyBonusType.WAR_DECLARATION_AGAINST_US;
+    case 32:
+      return DiplomacyBonusType.FALSE_FLAG;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

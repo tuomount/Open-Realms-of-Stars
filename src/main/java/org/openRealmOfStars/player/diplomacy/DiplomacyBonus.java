@@ -403,6 +403,11 @@ public class DiplomacyBonus {
        bonusLasting = 255;
        break;
      }
+     case FALSE_FLAG: {
+       bonusValue = -4;
+       bonusLasting = 60;
+       break;
+     }
      default: {
        throw new IllegalArgumentException("Unknown bonus type!!");
      }

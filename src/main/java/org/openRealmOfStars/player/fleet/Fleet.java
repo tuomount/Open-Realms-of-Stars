@@ -282,6 +282,29 @@ public class Fleet {
   }
 
   /**
+   * Get "cheapest/worst" ship for false flag operation.
+   * @return Ship for false flag.
+   */
+  public Ship getShipForFalseFlag() {
+    Ship result = null;
+    int shipValue = 65535;
+    for (Ship ship : ships) {
+      if (result == null) {
+        result = ship;
+        shipValue = result.getTotalMilitaryPower() + result.getColonist() * 20;
+        continue;
+      }
+      int compareValue = ship.getTotalMilitaryPower()
+          + ship.getColonist() * 20;
+      if (compareValue < shipValue) {
+        result = ship;
+        shipValue = compareValue;
+      }
+    }
+    return result;
+  }
+
+  /**
    * Get Fleet name
    * @return Fleet name as a String
    */

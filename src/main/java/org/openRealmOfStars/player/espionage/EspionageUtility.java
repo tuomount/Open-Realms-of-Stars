@@ -141,6 +141,9 @@ public final class EspionageUtility {
         list.add(EspionageMission.DEMOLISH_BUILDING);
         list.add(EspionageMission.TERRORIST_ATTACK);
       }
+      if (!info.getDiplomacy().isWar(planet.getPlanetOwnerIndex())) {
+        list.add(EspionageMission.FALSE_FLAG);
+      }
     }
     return list.toArray(new EspionageMission[list.size()]);
   }

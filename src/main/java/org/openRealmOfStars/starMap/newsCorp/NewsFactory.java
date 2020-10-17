@@ -687,6 +687,62 @@ public final class NewsFactory {
     news.setNewsText(sb.toString());
     return news;
   }
+  /**
+   * Make news about leader escaping from false flag mission.
+   * @param leader Leader which is escaped
+   * @param leaderRealm Which realm killed belong
+   * @param killerRealm Which realm tried to "kill" the leader
+   * @param location Where leader were saved
+   * @return NewsData
+   */
+  public static NewsData makeLeaderFalseFlag(final Leader leader,
+      final PlayerInfo leaderRealm, final PlayerInfo killerRealm,
+      final String location) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addImage(ImageInstruction.SHUTTLE);
+    instructions.addText(leader.getCallName());
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("ESCAPE!");
+        break;
+      }
+      case 1: {
+        instructions.addText(leader.getTitle().toUpperCase()
+            + " STAYS ALIVE!");
+        break;
+      }
+      case 2: {
+        instructions.addText("SHUTTLE TO RESCUE!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    if (killerRealm != null) {
+      //FIXME not good wording
+      sb.append(leaderRealm.getEmpireName());
+      sb.append(" fought against ");
+      sb.append(killerRealm.getEmpireName());
+    } else {
+      sb.append(leaderRealm.getEmpireName());
+      sb.append(" ship was destroyed ");
+    }
+    sb.append(". ");
+    sb.append(leaderRealm.getEmpireName());
+    sb.append(" lost the fight but ");
+    sb.append(leader.getCallName());
+    sb.append(" was able to escape from certain death! ");
+    sb.append("Private shuttle took ");
+    sb.append(leader.getCallName());
+    sb.append(" to ");
+    sb.append(location);
+    sb.append(".");
+    news.setNewsText(sb.toString());
+    return news;
+  }
 
   /**
    * Make realm lost news. Realm lost it's final planet

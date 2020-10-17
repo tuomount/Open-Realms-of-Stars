@@ -23,3 +23,6 @@ oros.cfg
 hs_err_pid*
 /bin/
 /target/
+
+*.iml
+.idea/

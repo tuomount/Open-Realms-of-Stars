@@ -1397,8 +1397,7 @@ public class MapPanel extends JPanel {
         case PHOTON_TORPEDO:
         case PLASMA_CANNON:
         case ION_CANNON: {
-          // FIXME Sounds for plasma/ion cannons
-          SoundPlayer.playSound(SoundPlayer.WEAPON_TORPEDO);
+          SoundPlayer.playSound(SoundPlayer.ION_CANNON);
           break;
           }
         case RAILGUN: {

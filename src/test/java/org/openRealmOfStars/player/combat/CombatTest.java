@@ -198,6 +198,8 @@ public class CombatTest {
     info1.setEmpireName("Terran alliance");
     info2.setEmpireName("Spork empire");
     info2.getTechList().addTech(TechFactory.createDefenseTech("Shield Mk2", 2));
+    info2.getTechList().addTech(TechFactory.createPropulsionTech(
+        "Fusion source Mk1", 2));
     ShipDesign design1 = ShipGenerator.createBattleShip(
         info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(

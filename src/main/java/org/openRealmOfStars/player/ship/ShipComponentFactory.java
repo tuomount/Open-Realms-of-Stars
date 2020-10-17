@@ -2512,21 +2512,21 @@ public final class ShipComponentFactory {
       tmp.setEnergyRequirement(1);
     }
     if (index == COMPONENT_ION_CANNON_MK2) {
-      tmp = new ShipComponent(index, "Ion cannon Mk2", 6, 4,
+      tmp = new ShipComponent(index, "Ion cannon Mk2", 5, 3,
           ShipComponentType.ION_CANNON);
       tmp.setDamage(5);
       tmp.setWeaponRange(2);
       tmp.setEnergyRequirement(1);
     }
     if (index == COMPONENT_ION_CANNON_MK3) {
-      tmp = new ShipComponent(index, "Ion cannon Mk3", 7, 5,
+      tmp = new ShipComponent(index, "Ion cannon Mk3", 6, 4,
           ShipComponentType.ION_CANNON);
       tmp.setDamage(7);
       tmp.setWeaponRange(3);
       tmp.setEnergyRequirement(2);
     }
     if (index == COMPONENT_ION_CANNON_MK4) {
-      tmp = new ShipComponent(index, "Ion cannon Mk4", 8, 5,
+      tmp = new ShipComponent(index, "Ion cannon Mk4", 6, 4,
           ShipComponentType.ION_CANNON);
       tmp.setDamage(9);
       tmp.setWeaponRange(3);

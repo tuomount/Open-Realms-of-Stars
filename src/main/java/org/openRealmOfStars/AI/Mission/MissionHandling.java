@@ -1320,7 +1320,8 @@ public final class MissionHandling {
               }
               int caught = EspionageUtility.calculateDetectionSuccess(planet,
                   fleet, selectedType);
-              if (DiceGenerator.getRandom(100) < caught) {
+              if (DiceGenerator.getRandom(100) < caught
+                  && fleet.getShips().length > 0) {
                 // Caught
                 handleCaughtEspionage(selectedType, planet, fleet, info,
                     game);

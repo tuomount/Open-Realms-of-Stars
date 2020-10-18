@@ -722,18 +722,17 @@ public final class NewsFactory {
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);
     if (killerRealm != null) {
-      //FIXME not good wording
+      sb.append("Ship of ");
       sb.append(leaderRealm.getEmpireName());
-      sb.append(" fought against ");
+      sb.append(" was destroyed by ");
       sb.append(killerRealm.getEmpireName());
     } else {
       sb.append(leaderRealm.getEmpireName());
       sb.append(" ship was destroyed ");
     }
     sb.append(". ");
-    sb.append(leaderRealm.getEmpireName());
-    sb.append(" lost the fight but ");
     sb.append(leader.getCallName());
+    sb.append(" was on board the ship but ");
     sb.append(" was able to escape from certain death! ");
     sb.append("Private shuttle took ");
     sb.append(leader.getCallName());

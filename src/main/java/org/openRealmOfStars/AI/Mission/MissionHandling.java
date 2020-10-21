@@ -1323,7 +1323,7 @@ public final class MissionHandling {
               if (DiceGenerator.getRandom(100) < caught) {
                 // Caught
                 handleCaughtEspionage(selectedType, planet, fleet, info,
-                    game);
+                    game, somethingHappened);
                 somethingHappened = true;
               }
               if (!somethingHappened) {
@@ -1364,10 +1364,12 @@ public final class MissionHandling {
    * @param fleet Fleet who is doing the espionage
    * @param info Realm who is doing the espionage
    * @param game Full game information.
+   * @param espionageSucceed If true then espionage mission succeed, but now
+   *        leader will also get caught.
    */
   private static void handleCaughtEspionage(final EspionageMission type,
       final Planet planet, final Fleet fleet, final PlayerInfo info,
-      final Game game) {
+      final Game game, final boolean espionageSucceed) {
     int infoIndex = game.getStarMap().getPlayerList().getIndex(info);
     boolean war = planet.getPlanetPlayerInfo().getDiplomacy().isWar(infoIndex);
     boolean tradeWar = planet.getPlanetPlayerInfo().getDiplomacy()
@@ -1645,6 +1647,81 @@ public final class MissionHandling {
             NewsFactory.makeDefensiveActivation(info, list));
       }
     }
+    if (type == EspionageMission.FALSE_FLAG) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      Ship ship = null;
+      String startText = fleet.getCommander().getCallName() + " from "
+          + info.getEmpireName() + " caught by "
+          + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+          + " espionage mission. Main goal was false flag mission on planet.";
+      if (!espionageSucceed) {
+        ship = fleet.getShipForFalseFlag();
+        startText = startText + " " + ship.getName()
+          + " was destroyed during mission. ";
+      }
+      String endText = "";
+      int index = game.getStarMap().getPlayerList().getIndex(info);
+      boolean casusBelli = planet.getPlanetPlayerInfo().getDiplomacy()
+          .hasCasusBelli(index);
+      if (casusBelli) {
+        endText = " Execution was done because of spy operation"
+            + " was considered as act of war.";
+      } else if (tradeWar) {
+        endText = " Execution was done because of revenge of trade war.";
+      } else {
+        endText = " Execution was done because of acts of conspiracy.";
+      }
+      LeaderUtility.handleLeaderKilled(info, planet, fleet,
+          startText
+          + fleet.getCommander().getCallName() + " was able to escape"
+          + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+          + " execution by using massive amount of credits.",
+          startText
+          + fleet.getCommander().getCallName() + " was executed by "
+          + planet.getPlanetPlayerInfo().getEmpireName()
+          + "." + endText, game);
+      if (casusBelli) {
+        // War will be made if defender has casus belli against attack
+        // Attacker will any way declare it, so that reputation
+        // drop goes to attacker.
+        DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
+            game.getPlayers().getIndex(info),
+            game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
+        casusBelli = info.getDiplomacy().hasCasusBelli(
+            game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
+        trade.generateEqualTrade(NegotiationType.WAR);
+          game.getPlayers().getIndex(planet.getPlanetPlayerInfo());
+        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
+            planet.getPlanetPlayerInfo());
+        NewsData newsData = NewsFactory.makeWarNews(info,
+            planet.getPlanetPlayerInfo(), planet, game.getStarMap(),
+            casusBelli);
+        game.getStarMap().getNewsCorpData().addNews(newsData);
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+          planet, newsData));
+        trade.doTrades();
+        PlayerInfo defender = planet.getPlanetPlayerInfo();
+        String[] list = defender.getDiplomacy().activateDefensivePact(
+            game.getStarMap(), info);
+        if (list != null) {
+          game.getStarMap().getNewsCorpData().addNews(
+              NewsFactory.makeDefensiveActivation(info, list));
+        }
+      }
+      if (ship != null) {
+        fleet.removeShip(ship);
+      }
+      if (fleet.getCommander() != null && fleet.getNumberOfShip() == 0) {
+        // Fleet's last ship was destroyed but commander
+        // escaped from execution.
+        fleet.getCommander().setJob(Job.UNASSIGNED);
+      }
+    }
   }
 
   /**
@@ -1863,6 +1940,50 @@ public final class MissionHandling {
         fleet.getCommander().setExperience(
             fleet.getCommander().getExperience() + type.getExperienceReward());
       }
+    }
+    if (type == EspionageMission.FALSE_FLAG) {
+      DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(
+          planet.getPlanetOwnerIndex());
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.FALSE_FLAG, info.getRace());
+      }
+      Ship ship = fleet.getShipForFalseFlag();
+      Message msg = new Message(MessageType.LEADER,
+          fleet.getCommander().getCallName() + " from "
+          + info.getEmpireName() + " makes successfull false flag"
+          + " operation against "
+          + planet.getPlanetPlayerInfo().getEmpireName() + ". Ship called "
+          + ship.getName() + " was destroyed during the mission."
+          + " This mission happened next to " + planet.getName() + ".",
+          Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+      msg = new Message(MessageType.PLANETARY, ship.getName()
+          + " was destroyed from " + info.getEmpireName() + " fleet. "
+          + info.getEmpireName() + " claim that "
+          + planet.getPlanetPlayerInfo().getEmpireName()
+          + " destroyed it. This event happened next to "
+          + planet.getName() + ". ", Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(planet.getName());
+      planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      fleet.removeShip(ship);
+      String location = "escaped to another ship";
+      Leader leader = fleet.getCommander();
+      if (fleet.getCommander() != null && fleet.getNumberOfShip() == 0) {
+        // Fleet's last ship was destroyed so commander escaped to
+        // friendly planet
+        fleet.getCommander().setJob(Job.UNASSIGNED);
+        location = "escaped to closest friendly planet";
+      }
+      NewsData news = NewsFactory.makeLeaderFalseFlag(leader, info,
+          planet.getPlanetPlayerInfo(), location);
+      game.getStarMap().getNewsCorpData().addNews(news);
+      leader.setExperience(
+          leader.getExperience() + type.getExperienceReward());
     }
   }
   /**

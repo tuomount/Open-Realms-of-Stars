@@ -1320,11 +1320,10 @@ public final class MissionHandling {
               }
               int caught = EspionageUtility.calculateDetectionSuccess(planet,
                   fleet, selectedType);
-              if (DiceGenerator.getRandom(100) < caught
-                  && fleet.getShips().length > 0) {
+              if (DiceGenerator.getRandom(100) < caught) {
                 // Caught
                 handleCaughtEspionage(selectedType, planet, fleet, info,
-                    game);
+                    game, somethingHappened);
                 somethingHappened = true;
               }
               if (!somethingHappened) {
@@ -1365,10 +1364,12 @@ public final class MissionHandling {
    * @param fleet Fleet who is doing the espionage
    * @param info Realm who is doing the espionage
    * @param game Full game information.
+   * @param espionageSucceed If true then espionage mission succeed, but now
+   *        leader will also get caught.
    */
   private static void handleCaughtEspionage(final EspionageMission type,
       final Planet planet, final Fleet fleet, final PlayerInfo info,
-      final Game game) {
+      final Game game, final boolean espionageSucceed) {
     int infoIndex = game.getStarMap().getPlayerList().getIndex(info);
     boolean war = planet.getPlanetPlayerInfo().getDiplomacy().isWar(infoIndex);
     boolean tradeWar = planet.getPlanetPlayerInfo().getDiplomacy()
@@ -1653,12 +1654,16 @@ public final class MissionHandling {
         diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
             planet.getPlanetPlayerInfo().getRace());
       }
-      Ship ship = fleet.getShipForFalseFlag();
+      Ship ship = null;
       String startText = fleet.getCommander().getCallName() + " from "
           + info.getEmpireName() + " caught by "
           + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-          + " espionage mission. Main goal was false flag mission on planet. "
-          + ship.getName() + " was destroyed during mission. ";
+          + " espionage mission. Main goal was false flag mission on planet.";
+      if (!espionageSucceed) {
+        ship = fleet.getShipForFalseFlag();
+        startText = startText + " " + ship.getName()
+          + " was destroyed during mission. ";
+      }
       String endText = "";
       int index = game.getStarMap().getPlayerList().getIndex(info);
       boolean casusBelli = planet.getPlanetPlayerInfo().getDiplomacy()
@@ -1708,7 +1713,9 @@ public final class MissionHandling {
               NewsFactory.makeDefensiveActivation(info, list));
         }
       }
-      fleet.removeShip(ship);
+      if (ship != null) {
+        fleet.removeShip(ship);
+      }
       if (fleet.getCommander() != null && fleet.getNumberOfShip() == 0) {
         // Fleet's last ship was destroyed but commander
         // escaped from execution.

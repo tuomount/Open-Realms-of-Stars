@@ -301,9 +301,9 @@ sounds from 50 CC0 SFX #2 by Rubberduck (CC0)
 
 Tractor beam sound by BLACK LODGE GAMES, LLC (CC0)
 
-Plasma Cannon Sound Effects by klangfabrik
-Licensed under CC BY 0 
-https://creativecommons.org/publicdomain/zero/1.0/
+Plasma Cannon Sound Effects by Erokia
+https://freesound.org/people/Erokia/sounds/427396/
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
 # Musics By
 

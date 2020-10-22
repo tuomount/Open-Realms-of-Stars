@@ -141,3 +141,5 @@ Graphics should be licensed with CC-BY-SA and Sounds/Music with CC-BY. Also CC-B
 for music and sounds is okay, but the credits page will need to be updated.
 Fonts needs to be licensed with SIL Open Font License.
 
+See more information on [CONTRIBUTING.md](https://github.com/tuomount/Open-Realms-of-Stars/blob/master/CONTRIBUTING.md)
+

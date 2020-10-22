@@ -1303,9 +1303,8 @@ public final class MissionHandling {
                 && (selectedType == null
                    || selectedType == EspionageMission.NOT_SELECTED_YET)
                 && allowedTypes.length > 0) {
-              // FIXME Add more intelligence for this later
-              selectedType = allowedTypes[DiceGenerator.getRandom(
-                  allowedTypes.length - 1)];
+              selectedType = scoreEspionageMission(info, planet, allowedTypes,
+                  fleet, game.getStarMap());
               ok = true;
             }
             if (ok) {
@@ -1355,6 +1354,389 @@ public final class MissionHandling {
         }
       }
     } // End Of Espionage mission
+  }
+
+  /**
+   * Get espionage risk factor for AI attitude.
+   * @param attitude Attitude
+   * @return Risk factor from 1 to 6. 6 is taking highest risks.
+   */
+  private static int getEspionageRiskFactor(final Attitude attitude) {
+    int riskFactor = 2;
+    switch (attitude) {
+      case BACKSTABBING: {
+        riskFactor = 6;
+        break;
+      }
+      case AGGRESSIVE: {
+        riskFactor = 5;
+        break;
+      }
+      case MILITARISTIC: {
+        riskFactor = 4;
+        break;
+      }
+      case EXPANSIONIST: {
+        riskFactor = 3;
+        break;
+      }
+      case DIPLOMATIC:
+      case PEACEFUL: {
+        riskFactor = 1;
+        break;
+      }
+      default:
+      case LOGICAL:
+      case SCIENTIFIC:
+      case MERCHANTICAL: {
+        riskFactor = 2;
+        break;
+      }
+    }
+    return riskFactor;
+  }
+  /**
+   * Score espionage mission
+   * @param info Realm doing espionage
+   * @param planet Planet where to do espionage
+   * @param allowedTypes Allowed espionage types
+   * @param fleet Fleet doing espionage
+   * @param starMap Full Starmap
+   * @return EspionageMission, never null.
+   */
+  private static EspionageMission scoreEspionageMission(final PlayerInfo info,
+      final Planet planet, final EspionageMission[] allowedTypes,
+      final Fleet fleet, final StarMap starMap) {
+    int[] scores = new int[allowedTypes.length];
+    int target = planet.getPlanetOwnerIndex();
+    int infoIndex = starMap.getPlayerList().getIndex(info);
+    Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
+    int riskFactor = getEspionageRiskFactor(attitude);
+    int sum = 0;
+    for (int i = 0; i < allowedTypes.length; i++) {
+      int success = EspionageUtility.calculateSuccess(planet, fleet,
+          allowedTypes[i]);
+      int caught = EspionageUtility.calculateDetectionSuccess(planet,
+          fleet, allowedTypes[i]);
+      if (allowedTypes[i] == EspionageMission.ASSASSIN_GOVERNOR
+          || allowedTypes[i] == EspionageMission.DEMOLISH_BUILDING) {
+        switch (attitude) {
+          case AGGRESSIVE:
+          case MILITARISTIC:
+          case BACKSTABBING: {
+            scores[i] = 50;
+            break;
+          }
+          case DIPLOMATIC:
+          case PEACEFUL: {
+            scores[i] = 0;
+            break;
+          }
+          case EXPANSIONIST: {
+            scores[i] = 40;
+            break;
+          }
+          case LOGICAL:
+          case SCIENTIFIC: {
+            scores[i] = 25;
+            break;
+          }
+          default:
+          case MERCHANTICAL: {
+            scores[i] = 10;
+            break;
+          }
+        }
+        if (info.getDiplomacy().isWar(target)) {
+          scores[i] = scores[i] + 20;
+        }
+        if (info.getDiplomacy().isTradeEmbargo(target)) {
+          scores[i] = scores[i] + 10;
+        }
+      }
+      if (allowedTypes[i] == EspionageMission.STEAL_CREDIT) {
+        switch (attitude) {
+          case AGGRESSIVE:
+          case MILITARISTIC:
+          case BACKSTABBING: {
+            scores[i] = 50;
+            break;
+          }
+          case DIPLOMATIC:
+          case PEACEFUL: {
+            scores[i] = 20;
+            break;
+          }
+          case EXPANSIONIST: {
+            scores[i] = 40;
+            break;
+          }
+          case LOGICAL:
+          case SCIENTIFIC: {
+            scores[i] = 25;
+            break;
+          }
+          default:
+          case MERCHANTICAL: {
+            scores[i] = 40;
+            break;
+          }
+        }
+        if (info.getDiplomacy().isWar(target)) {
+          scores[i] = scores[i] + 10;
+        }
+        if (info.getDiplomacy().isTradeEmbargo(target)) {
+          scores[i] = scores[i] + 20;
+        }
+      }
+      if (allowedTypes[i] == EspionageMission.STEAL_TECH) {
+        switch (attitude) {
+          case AGGRESSIVE:
+          case MILITARISTIC:
+          case EXPANSIONIST:
+          case BACKSTABBING: {
+            scores[i] = 40;
+            break;
+          }
+          case DIPLOMATIC:
+          case MERCHANTICAL:
+          case PEACEFUL: {
+            scores[i] = 30;
+            break;
+          }
+          default:
+          case LOGICAL:
+          case SCIENTIFIC: {
+            scores[i] = 50;
+            break;
+          }
+        }
+        if (info.getDiplomacy().isWar(target)) {
+          scores[i] = scores[i] + 20;
+        }
+        if (info.getDiplomacy().isTradeEmbargo(target)) {
+          scores[i] = scores[i] + 20;
+        }
+      }
+      if (allowedTypes[i] == EspionageMission.TERRORIST_ATTACK) {
+        switch (attitude) {
+          case AGGRESSIVE:
+          case MILITARISTIC:
+          case BACKSTABBING: {
+            scores[i] = 50;
+            break;
+          }
+          case DIPLOMATIC:
+          case PEACEFUL: {
+            scores[i] = 0;
+            break;
+          }
+          case EXPANSIONIST: {
+            scores[i] = 20;
+            break;
+          }
+          case LOGICAL:
+          case SCIENTIFIC: {
+            scores[i] = 15;
+            break;
+          }
+          default:
+          case MERCHANTICAL: {
+            scores[i] = 5;
+            break;
+          }
+        }
+        if (info.getDiplomacy().isWar(target)) {
+          scores[i] = scores[i] + 20;
+        }
+        if (info.getDiplomacy().isTradeEmbargo(target)) {
+          scores[i] = scores[i] + 10;
+        }
+      }
+      if (allowedTypes[i] == EspionageMission.SABOTAGE
+          || allowedTypes[i] == EspionageMission.DEMOLISH_BUILDING) {
+        switch (attitude) {
+          case AGGRESSIVE:
+          case MILITARISTIC:
+          case BACKSTABBING: {
+            scores[i] = 60;
+            break;
+          }
+          case DIPLOMATIC:
+          case PEACEFUL: {
+            scores[i] = 5;
+            break;
+          }
+          case EXPANSIONIST: {
+            scores[i] = 40;
+            break;
+          }
+          case LOGICAL:
+          case SCIENTIFIC: {
+            scores[i] = 30;
+            break;
+          }
+          default:
+          case MERCHANTICAL: {
+            scores[i] = 10;
+            break;
+          }
+        }
+        if (info.getDiplomacy().isWar(target)) {
+          scores[i] = scores[i] + 20;
+        }
+        if (info.getDiplomacy().isTradeEmbargo(target)) {
+          scores[i] = scores[i] + 10;
+        }
+      }
+      if (allowedTypes[i] == EspionageMission.FALSE_FLAG) {
+        switch (attitude) {
+          case AGGRESSIVE:
+          case MILITARISTIC:
+          case BACKSTABBING: {
+            scores[i] = 60;
+            break;
+          }
+          case DIPLOMATIC:
+          case PEACEFUL: {
+            scores[i] = 5;
+            break;
+          }
+          case EXPANSIONIST: {
+            scores[i] = 40;
+            break;
+          }
+          case LOGICAL:
+          case SCIENTIFIC: {
+            scores[i] = 30;
+            break;
+          }
+          default:
+          case MERCHANTICAL: {
+            scores[i] = 10;
+            break;
+          }
+        }
+        int difference = starMap.getMilitaryDifference(infoIndex, target);
+        if (difference > 100) {
+          scores[i] = scores[i] + 30;
+        } else if (difference > 80) {
+          scores[i] = scores[i] + 20;
+        } else if (difference > 50) {
+          scores[i] = scores[i] + 10;
+        } else if (difference > 0) {
+          scores[i] = scores[i] + 0;
+        } else {
+          scores[i] = scores[i] - 15;
+        }
+        if (info.getDiplomacy().isTradeEmbargo(target)) {
+          scores[i] = scores[i] + 20;
+        }
+        if (info.getDiplomacy().isPeace(target)) {
+          scores[i] = scores[i] + 5;
+        }
+        if (info.getDiplomacy().isTradeAlliance(target)) {
+          scores[i] = scores[i] - 5;
+        }
+        if (info.getDiplomacy().isDefensivePact(target)) {
+          scores[i] = scores[i] - 10;
+        }
+        if (info.getDiplomacy().isAlliance(target)) {
+          scores[i] = scores[i] - 10;
+        }
+      }
+      int likingOpposite = 1;
+      if (allowedTypes[i] == EspionageMission.GAIN_TRUST) {
+        // Liking bonus is actually reversed for gain trust mission.
+        likingOpposite = -1;
+        switch (attitude) {
+          case AGGRESSIVE:
+          case MILITARISTIC: {
+            scores[i] = 0;
+            break;
+          }
+          case BACKSTABBING: {
+            scores[i] = 40;
+            break;
+          }
+          case DIPLOMATIC:
+          case PEACEFUL: {
+            scores[i] = 60;
+            break;
+          }
+          case EXPANSIONIST: {
+            scores[i] = 20;
+            break;
+          }
+          case LOGICAL:
+          case SCIENTIFIC: {
+            scores[i] = 40;
+            break;
+          }
+          default:
+          case MERCHANTICAL: {
+            scores[i] = 40;
+            break;
+          }
+        }
+        if (info.getDiplomacy().isTradeEmbargo(target)) {
+          scores[i] = scores[i] - 40;
+        }
+        if (planet.getPlanetPlayerInfo().getDiplomacy()
+            .getLiking(infoIndex) < 0) {
+          scores[i] = scores[i] + 80;
+        }
+        if (info.getDiplomacy().isWar(target)) {
+          scores[i] = 0;
+        }
+      }
+      // Adds liking for scores.
+      switch (info.getDiplomacy().getLiking(planet.getPlanetOwnerIndex())) {
+        case Diplomacy.HATE: {
+          scores[i] = scores[i] + 30 * likingOpposite;
+          break;
+        }
+        case Diplomacy.DISLIKE: {
+          scores[i] = scores[i] + 15 * likingOpposite;
+          break;
+        }
+        default:
+        case Diplomacy.NEUTRAL: {
+          scores[i] = scores[i] + 5 * likingOpposite;
+          break;
+        }
+        case Diplomacy.LIKE: {
+          scores[i] = scores[i] - 10 * likingOpposite;
+          break;
+        }
+        case Diplomacy.FRIENDS: {
+          scores[i] = scores[i] - 30 * likingOpposite;
+          break;
+        }
+      }
+      // Subtract possible caught chance adjusted by risk factor
+      scores[i] = scores[i] - (caught / riskFactor);
+      // Scores should not go above success rate.
+      if (scores[i] > success) {
+        scores[i] = success;
+      }
+      if (scores[i] < 0) {
+        scores[i] = 0;
+      }
+      sum = sum + scores[i];
+    }
+    int rand = DiceGenerator.getRandom(sum - 1);
+    int total = 0;
+    for (int i = 0; i < scores.length; i++) {
+      if (rand < total + scores[i]) {
+        return allowedTypes[i];
+      }
+      total = total + scores[i];
+    }
+    // Just making sure that null is never returned.
+    EspionageMission selectedType = allowedTypes[DiceGenerator.getRandom(
+        allowedTypes.length - 1)];
+    return selectedType;
   }
 
   /**

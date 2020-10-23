@@ -59,6 +59,11 @@ public final class SoundPlayer {
   public static final String WEAPON_TORPEDO = "/resources/sounds/torpedo.wav";
 
   /**
+   * Sound effect for Plasma cannon
+   */
+  public static final String WEAPON_PLASMA_CANNON = "/resources/sounds/plasma_cannon.wav";
+
+  /**
    * Sound effect for Ship explode
    */
   public static final String SHIP_EXPLODE = "/resources/sounds/explode.wav";

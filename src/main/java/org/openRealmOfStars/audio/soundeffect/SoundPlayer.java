@@ -62,11 +62,12 @@ public final class SoundPlayer {
    * Sound effect for Ion Cannon
    */
   public static final String ION_CANNON = "/resources/sounds/ion_cannon.wav";
-  
+
   /**
    * Sound effect for Plasma cannon
    */
-  public static final String WEAPON_PLASMA_CANNON = "/resources/sounds/plasma_cannon.wav";
+  public static final String WEAPON_PLASMA_CANNON = "/resources/sounds/"
+      + "plasma_cannon.wav";
 
   /**
    * Sound effect for Ship explode

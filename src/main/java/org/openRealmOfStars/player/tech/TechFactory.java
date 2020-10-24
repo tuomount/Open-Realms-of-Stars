@@ -479,7 +479,9 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_NUKE));
         } else if (techName.startsWith("Orbital defense grid")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANETARY_TURRET));
-        } else if (techName.startsWith("Mini nuke")) {
+        } else if (techName.startsWith("Orbital fusion")
+            || techName.startsWith("Orbital antimatter")
+            || techName.startsWith("Orbital neutron")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_NUKE));
         } else if (techName.startsWith("Planetary invasion module")
             || techName.startsWith("Shock trooper module")) {

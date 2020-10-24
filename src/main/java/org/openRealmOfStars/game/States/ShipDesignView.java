@@ -455,6 +455,21 @@ public class ShipDesignView extends BlackPanel {
   }
 
   /**
+   * Check if component list contains certain component already.
+   * @param component Ship Component to check
+   * @param list Component list
+   * @return True if list contains component already.
+   */
+  private static boolean componentListContains(final ShipComponent component,
+      final ArrayList<ShipComponent> list) {
+    for (ShipComponent shipComponent : list) {
+      if (shipComponent.getName().equals(component.getName())) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
    * Filter component by component tech types. "All" is special filter
    * and all techs are then added.
    * @param filter as a String
@@ -467,6 +482,9 @@ public class ShipDesignView extends BlackPanel {
       if (allTech[i].getComponent() != null) {
         ShipComponent comp = ShipComponentFactory
             .createByName(allTech[i].getComponent());
+        if (componentListContains(comp, components)) {
+          continue;
+        }
         if (comp != null && filter.equalsIgnoreCase("All")) {
           components.add(comp);
           continue;

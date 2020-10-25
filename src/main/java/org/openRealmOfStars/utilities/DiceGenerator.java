@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018  Tuomo Untinen
+ * Copyright (C) 2016,2018,2020  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -131,6 +131,12 @@ public final class DiceGenerator {
    */
   private static int getRandomResult(final int maxValue) {
     int result = 0;
+    if (maxValue < 0) {
+      throw new IllegalArgumentException("Negative value for random!");
+    }
+    if (maxValue == 0) {
+      return 0;
+    }
     if (numbers == null) {
       switch (getRandomJava(3)) {
       case 0:
@@ -169,6 +175,8 @@ public final class DiceGenerator {
     int sub = 0;
     if (maxValue >= minValue) {
       sub = maxValue - minValue;
+    } else {
+      throw new IllegalArgumentException("Max value is bigger than min value!");
     }
     int result = getRandomResult(sub);
     result = result + minValue;

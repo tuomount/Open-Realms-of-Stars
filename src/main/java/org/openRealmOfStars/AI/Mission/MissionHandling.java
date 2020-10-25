@@ -53,7 +53,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1725,13 +1725,15 @@ public final class MissionHandling {
       }
       sum = sum + scores[i];
     }
-    int rand = DiceGenerator.getRandom(sum - 1);
-    int total = 0;
-    for (int i = 0; i < scores.length; i++) {
-      if (rand < total + scores[i]) {
-        return allowedTypes[i];
+    if (sum > 0) {
+      int rand = DiceGenerator.getRandom(sum - 1);
+      int total = 0;
+      for (int i = 0; i < scores.length; i++) {
+        if (rand < total + scores[i]) {
+          return allowedTypes[i];
+        }
+        total = total + scores[i];
       }
-      total = total + scores[i];
     }
     // Just making sure that null is never returned.
     EspionageMission selectedType = allowedTypes[DiceGenerator.getRandom(

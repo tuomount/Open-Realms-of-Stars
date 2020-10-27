@@ -250,7 +250,7 @@ public class ShipHull {
     return getName() + "\n" + "Cost: " + getCost() + " Metal: " + getMetalCost()
         + "\n" + "Slots:" + getMaxSlot() + " Hull:"
         + getMaxSlot() * getSlotHull() + "\n" + "Size:" + getSize().toString()
-        + "Fleet capacity: " + getFleetCapacity()
+        + " Fleet capacity: " + getFleetCapacity()
         + "\n" + IOUtilities.stringWrapper(getHullType().getDescription(),
         LINE_LENGTH);
   }

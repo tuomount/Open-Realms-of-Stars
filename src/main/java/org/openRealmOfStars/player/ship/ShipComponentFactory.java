@@ -1412,7 +1412,7 @@ public final class ShipComponentFactory {
       break; // ORBITAL FUSION BOMB
     case COMPONENT_ORBITAL_ANTIMATTER_BOMB:
       tmp = createElectronics(index);
-      break; // ORBITAL FISSION BOMB
+      break; // ORBITAL ANTIMATTER BOMB
     case COMPONENT_ORBITAL_NEUTRON_BOMB:
       tmp = createElectronics(index);
       break; // ORBITAL NEUTRON BOMB

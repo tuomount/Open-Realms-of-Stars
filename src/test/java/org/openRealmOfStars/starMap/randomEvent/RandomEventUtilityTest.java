@@ -91,6 +91,7 @@ public class RandomEventUtilityTest {
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(player2);
     Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(0, 0));
     Mockito.when(planet.getRadiationLevel()).thenReturn(2);
+    Mockito.when(planet.getGroundSize()).thenReturn(12);
     Mockito.when(planet.getTotalPopulation()).thenReturn(1);
     Mockito.when(planet.getOrderNumber()).thenReturn(1);
     Mockito.when(planet.getImageInstructions()).thenReturn(

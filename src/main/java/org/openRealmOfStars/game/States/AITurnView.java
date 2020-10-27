@@ -2095,6 +2095,13 @@ public class AITurnView extends BlackPanel {
             && leader.hasPerk(Perk.CORRUPTED)) {
           realm.setTotalCredits(realm.getTotalCredits() - 1);
         }
+        if (leader.getJob() == Job.UNASSIGNED) {
+          Message msg = new Message(MessageType.LEADER,
+                  leader.getCallName() + " is unassigned!",
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+          msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+          realm.getMsgList().addUpcomingMessage(msg);
+        }
       }
       if (leader.getJob() == Job.RULER) {
         int numberOfPlanet = 0;

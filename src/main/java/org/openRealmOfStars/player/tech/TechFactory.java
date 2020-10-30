@@ -269,6 +269,12 @@ public final class TechFactory {
   public static final String[] IMPROVEMENT_TECH_LEVEL4_NAMES = {"Trade center",
       "Extreme sports center", "Recycle center", "Starbase lab"};
   /**
+   * Planetary Improvement rare tech names for level 4
+   */
+  public static final String[] IMPROVEMENT_RARE_TECH_LEVEL4_NAMES = {
+      "Deadly virus"
+  };
+  /**
    * Planetary Improvement tech names for level 5
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL5_NAMES = {
@@ -735,7 +741,8 @@ public final class TechFactory {
       list = IMPROVEMENT_TECH_LEVEL3_NAMES;
       break;
     case 4:
-      list = IMPROVEMENT_TECH_LEVEL4_NAMES;
+      list = TextUtilities.concanateStringArrays(IMPROVEMENT_TECH_LEVEL4_NAMES,
+          IMPROVEMENT_RARE_TECH_LEVEL4_NAMES);
       break;
     case 5:
       list = IMPROVEMENT_TECH_LEVEL5_NAMES;
@@ -765,6 +772,8 @@ public final class TechFactory {
         if (techName.startsWith("Starbase")) {
           tech.setComponent(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
+        } else if (techName.startsWith("Deadly virus")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_DEATH));
         } else {
           tech.setImprovement(techName);
           if (techName.startsWith("Barracks")) {

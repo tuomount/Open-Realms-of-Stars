@@ -209,8 +209,8 @@ public class RandomEventUtilityTest {
     event = new RandomEvent(BadRandomType.DEADLY_VIRUS_OUTBREAK,
         info);
     RandomEventUtility.handleDeadlyVirusOutbreak(event, starMap);
-    assertNotEquals("", event.getText());
-    assertNotEquals(null, event.getPlanet());
+    assertEquals("", event.getText());
+    assertEquals(null, event.getPlanet());
   }
 
   @Test

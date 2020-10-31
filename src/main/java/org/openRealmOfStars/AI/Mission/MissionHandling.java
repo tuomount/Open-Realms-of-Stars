@@ -2009,26 +2009,29 @@ public final class MissionHandling {
           + fleet.getCommander().getCallName() + " was executed by "
           + planet.getPlanetPlayerInfo().getEmpireName()
           + "." + endText, game);
-      DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
-          game.getPlayers().getIndex(info),
-          game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
-      trade.generateEqualTrade(NegotiationType.WAR);
-      boolean casusBelli = info.getDiplomacy().hasCasusBelli(
-          game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
-      StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
-          planet.getPlanetPlayerInfo());
-      NewsData newsData = NewsFactory.makeWarNews(info,
-          planet.getPlanetPlayerInfo(), planet, game.getStarMap(), casusBelli);
-      game.getStarMap().getNewsCorpData().addNews(newsData);
-      game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-          planet, newsData));
-      trade.doTrades();
-      PlayerInfo defender = planet.getPlanetPlayerInfo();
-      String[] list = defender.getDiplomacy().activateDefensivePact(
-          game.getStarMap(), info);
-      if (list != null) {
-        game.getStarMap().getNewsCorpData().addNews(
-            NewsFactory.makeDefensiveActivation(info, list));
+      if (!info.getDiplomacy().isWar(planet.getPlanetOwnerIndex())) {
+        DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
+            game.getPlayers().getIndex(info),
+            game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
+        trade.generateEqualTrade(NegotiationType.WAR);
+        boolean casusBelli = info.getDiplomacy().hasCasusBelli(
+            game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
+        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
+            planet.getPlanetPlayerInfo());
+        NewsData newsData = NewsFactory.makeWarNews(info,
+            planet.getPlanetPlayerInfo(), planet, game.getStarMap(),
+            casusBelli);
+        game.getStarMap().getNewsCorpData().addNews(newsData);
+        game.getStarMap().getHistory().addEvent(
+            NewsFactory.makeDiplomaticEvent(planet, newsData));
+        trade.doTrades();
+        PlayerInfo defender = planet.getPlanetPlayerInfo();
+        String[] list = defender.getDiplomacy().activateDefensivePact(
+            game.getStarMap(), info);
+        if (list != null) {
+          game.getStarMap().getNewsCorpData().addNews(
+              NewsFactory.makeDefensiveActivation(info, list));
+        }
       }
     }
     if (type == EspionageMission.FALSE_FLAG) {
@@ -2106,6 +2109,61 @@ public final class MissionHandling {
         fleet.getCommander().setJob(Job.UNASSIGNED);
       }
     }
+    if (type == EspionageMission.DEADLY_VIRUS) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      String startText = fleet.getCommander().getCallName() + " from "
+          + info.getEmpireName() + " caught by "
+          + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+          + " espionage mission. Main goal was spreading virus on planet. ";
+      String endText = "";
+      if (war) {
+        endText = " Execution was done because of war times.";
+      } else if (tradeWar) {
+        endText = " Execution was done because of revenge of trade war.";
+      } else {
+        endText = " Spreading deadly virus was considered as attack against "
+            + planet.getPlanetPlayerInfo().getEmpireName() + ".";
+      }
+      LeaderUtility.handleLeaderKilled(info, planet, fleet,
+          startText
+          + fleet.getCommander().getCallName() + " was able to escape"
+          + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+          + " execution by using massive amount of credits.",
+          startText
+          + fleet.getCommander().getCallName() + " was executed by "
+          + planet.getPlanetPlayerInfo().getEmpireName()
+          + "." + endText, game);
+      if (!info.getDiplomacy().isWar(planet.getPlanetOwnerIndex())) {
+        DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
+            game.getPlayers().getIndex(info),
+            game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
+        trade.generateEqualTrade(NegotiationType.WAR);
+        boolean casusBelli = info.getDiplomacy().hasCasusBelli(
+            game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
+        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info,
+            planet.getPlanetPlayerInfo());
+        NewsData newsData = NewsFactory.makeWarNews(info,
+            planet.getPlanetPlayerInfo(), planet, game.getStarMap(),
+            casusBelli);
+        game.getStarMap().getNewsCorpData().addNews(newsData);
+        game.getStarMap().getHistory().addEvent(
+            NewsFactory.makeDiplomaticEvent(planet, newsData));
+        trade.doTrades();
+        PlayerInfo defender = planet.getPlanetPlayerInfo();
+        String[] list = defender.getDiplomacy().activateDefensivePact(
+            game.getStarMap(), info);
+        if (list != null) {
+          game.getStarMap().getNewsCorpData().addNews(
+              NewsFactory.makeDefensiveActivation(info, list));
+        }
+      }
+    }
+
   }
 
   /**
@@ -2368,6 +2426,25 @@ public final class MissionHandling {
       game.getStarMap().getNewsCorpData().addNews(news);
       leader.setExperience(
           leader.getExperience() + type.getExperienceReward());
+    }
+    if (type == EspionageMission.DEADLY_VIRUS) {
+      Message msg = new Message(MessageType.LEADER,
+          fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " spreads "
+            + " deadly virus on " + planet.getName() + ". "
+            + "Almost every population of planet is being killed."
+            + " Planet is owned by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + ". This was done via espionage mission.",
+            Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+      StarMapUtilities.spreadDeadlyVirus(info, planet);
+      fleet.getCommander().setExperience(
+          fleet.getCommander().getExperience() + type.getExperienceReward());
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
     }
   }
   /**

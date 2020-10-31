@@ -1645,6 +1645,55 @@ public final class MissionHandling {
           scores[i] = scores[i] - 10;
         }
       }
+      if (allowedTypes[i] == EspionageMission.DEADLY_VIRUS) {
+        switch (attitude) {
+          case BACKSTABBING: {
+            scores[i] = 40;
+            break;
+          }
+          case AGGRESSIVE: {
+            scores[i] = 20;
+            break;
+          }
+          case MILITARISTIC: {
+            scores[i] = 10;
+            break;
+          }
+          default:
+          case MERCHANTICAL:
+          case LOGICAL:
+          case SCIENTIFIC:
+          case EXPANSIONIST:
+          case DIPLOMATIC:
+          case PEACEFUL: {
+            scores[i] = 0;
+            break;
+          }
+        }
+        if (info.getDiplomacy().isWar(target)) {
+          scores[i] = scores[i] + 5;
+          Mission mission = info.getMissions().getAttackMission(
+              planet.getName());
+          if (mission != null && mission.getPhase() == MissionPhase.TREKKING) {
+            scores[i] = scores[i] + 15;
+          }
+          if (mission != null && mission.getPhase() == MissionPhase.EXECUTING) {
+            scores[i] = scores[i] + 20;
+          }
+        }
+        if (info.getDiplomacy().isPeace(target)) {
+          scores[i] = scores[i] - 10;
+        }
+        if (info.getDiplomacy().isTradeAlliance(target)) {
+          scores[i] = scores[i] - 15;
+        }
+        if (info.getDiplomacy().isDefensivePact(target)) {
+          scores[i] = scores[i] - 20;
+        }
+        if (info.getDiplomacy().isAlliance(target)) {
+          scores[i] = scores[i] - 20;
+        }
+      }
       int likingOpposite = 1;
       if (allowedTypes[i] == EspionageMission.GAIN_TRUST) {
         // Liking bonus is actually reversed for gain trust mission.

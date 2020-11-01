@@ -756,6 +756,7 @@ public final class StarMapUtilities {
           int chance = DiceGenerator.getRandom(99);
           if (chance < 10) {
             spreadDeadlyVirus(info, planet);
+            newsData.addNews(NewsFactory.makeDeadlyVirusNews(planet, info));
           }
         }
       }

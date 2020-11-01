@@ -797,6 +797,7 @@ public final class RandomEventUtility {
            info.getTechList().addTech(TechFactory.createImprovementTech(
                "Deadly virus", 4));
             sb.append("Genetic code of virus is saved and stored carefully.");
+            event.setNewsWorthy(true);
           }
           event.setText(sb.toString());
           ImageInstruction instructions = new ImageInstruction();

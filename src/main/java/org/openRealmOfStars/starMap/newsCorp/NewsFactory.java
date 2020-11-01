@@ -322,6 +322,10 @@ public final class NewsFactory {
         && event.getBadType() == BadRandomType.TERRORIST_ATTACK) {
       instructions.addText("TERRORIST ATTACK!");
     }
+    if (event.getBadType() != null
+        && event.getBadType() == BadRandomType.DEADLY_VIRUS_OUTBREAK) {
+      return makeDeadlyVirusNews(event.getPlanet(), null);
+    }
     news.setImageInstructions(instructions.build());
     news.setNewsText(event.getText());
     return news;
@@ -2387,6 +2391,70 @@ public final class NewsFactory {
     return news;
   }
 
+  /**
+   * Make news about deadly virus on planet.
+   * @param planet Planet where virus is found.
+   * @param spreader Possible realm who is spreading it. Can be null.
+   * @return NewsData
+   */
+  public static NewsData makeDeadlyVirusNews(final Planet planet,
+      final PlayerInfo spreader) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addImage(ImageInstruction.VIRUSES);
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("DEADLY VIRUS!");
+        break;
+      }
+      case 1: {
+        instructions.addText("PANDEMIA!");
+        break;
+      }
+      case 2: {
+        instructions.addText("DISEASE!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder();
+    sb.append("New deadly virus is spreading on ");
+    sb.append(planet.getName());
+    sb.append(". ");
+    if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.MECHIONS) {
+      sb.append("Luckily planet is being populated by Mechions "
+          + "which are immune to diseases.");
+    } else {
+      sb.append("Majority of planet population has died because of the virus."
+          + " Spread has been able to limited on this single planet. ");
+      sb.append("This was major set back for ");
+      sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+      sb.append(". ");
+    }
+    if (spreader != null) {
+      sb.append("There are rumors that virus was spread from ");
+      sb.append(spreader.getEmpireName());
+      if (spreader.getDiplomacy().isTradeAlliance(
+          planet.getPlanetOwnerIndex())) {
+        sb.append(" due inter galactic trading between ");
+        sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+        sb.append(" and ");
+        sb.append(spreader.getEmpireName());
+        sb.append(". ");
+      } else if (spreader.getDiplomacy().isWar(planet.getPlanetOwnerIndex())) {
+        sb.append(" and it was done on purpose. ");
+        sb.append("These rumors are based on the fact that two realms are"
+            + " in war!");
+      } else {
+        sb.append(". ");
+        sb.append("This could be accident or spread on purpose. ");
+      }
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
   /**
    * Make scientific achievement news. Realm builds scientific achievement
    * building and thus is closer to win.

@@ -204,6 +204,7 @@ public class RandomEventUtilityTest {
     RandomEventUtility.handleDeadlyVirusOutbreak(event, starMap);
     assertNotEquals("", event.getText());
     assertNotEquals(null, event.getPlanet());
+    assertEquals(true, event.isNewsWorthy());
     assertEquals(1, event.getPlanet().getTotalPopulation());
     info = starMap.getPlayerByIndex(1);
     event = new RandomEvent(BadRandomType.DEADLY_VIRUS_OUTBREAK,
@@ -211,6 +212,7 @@ public class RandomEventUtilityTest {
     RandomEventUtility.handleDeadlyVirusOutbreak(event, starMap);
     assertEquals("", event.getText());
     assertEquals(null, event.getPlanet());
+    assertEquals(false, event.isNewsWorthy());
   }
 
   @Test

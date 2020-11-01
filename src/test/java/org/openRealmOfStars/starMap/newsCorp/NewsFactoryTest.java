@@ -32,7 +32,7 @@ import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017,2018  Tuomo Untinen
+* Copyright (C) 2017-2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -70,6 +70,49 @@ public class NewsFactoryTest {
         aggressor.getEmpireName()));
     assertEquals(true, news.getNewsText().contains(
         defender.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDeadlyVirus() {
+    PlayerInfo spreader = Mockito.mock(PlayerInfo.class);
+    Mockito.when(spreader.getEmpireName()).thenReturn("Empire of Test");
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(spreader.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(diplomacy.isWar(1)).thenReturn(false);
+    Mockito.when(diplomacy.isTradeAlliance(1)).thenReturn(true);
+    PlayerInfo owner = Mockito.mock(PlayerInfo.class);
+    Mockito.when(owner.getEmpireName()).thenReturn("Kingdom of Test");
+    Mockito.when(owner.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(owner);
+    Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(1);
+    Mockito.when(planet.getName()).thenReturn("Alpha Test I");
+    NewsData news = NewsFactory.makeDeadlyVirusNews(planet, null);
+    assertEquals(true, news.getNewsText().contains("deadly virus"));
+    assertEquals(true, news.getNewsText().contains("Alpha Test I"));
+    assertEquals(false, news.getNewsText().contains(spreader.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(owner.getEmpireName()));
+    news = NewsFactory.makeDeadlyVirusNews(planet, spreader);
+    assertEquals(true, news.getNewsText().contains("deadly virus"));
+    assertEquals(true, news.getNewsText().contains("Alpha Test I"));
+    assertEquals(true, news.getNewsText().contains(spreader.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(owner.getEmpireName()));
+    Mockito.when(diplomacy.isWar(1)).thenReturn(true);
+    Mockito.when(diplomacy.isTradeAlliance(1)).thenReturn(false);
+    news = NewsFactory.makeDeadlyVirusNews(planet, spreader);
+    assertEquals(true, news.getNewsText().contains("deadly virus"));
+    assertEquals(true, news.getNewsText().contains("Alpha Test I"));
+    assertEquals(true, news.getNewsText().contains(spreader.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(owner.getEmpireName()));
+    Mockito.when(owner.getRace()).thenReturn(SpaceRace.MECHIONS);
+    Mockito.when(diplomacy.isWar(1)).thenReturn(false);
+    Mockito.when(diplomacy.isTradeAlliance(1)).thenReturn(false);
+    news = NewsFactory.makeDeadlyVirusNews(planet, spreader);
+    assertEquals(true, news.getNewsText().contains("deadly virus"));
+    assertEquals(true, news.getNewsText().contains("Alpha Test I"));
+    assertEquals(true, news.getNewsText().contains(spreader.getEmpireName()));
+    assertEquals(false, news.getNewsText().contains(owner.getEmpireName()));
   }
 
   @Test

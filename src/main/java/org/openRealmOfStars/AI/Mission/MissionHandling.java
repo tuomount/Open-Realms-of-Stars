@@ -2490,6 +2490,8 @@ public final class MissionHandling {
       msg.setMatchByString(fleet.getCommander().getName());
       info.getMsgList().addUpcomingMessage(msg);
       StarMapUtilities.spreadDeadlyVirus(info, planet);
+      game.getStarMap().getNewsCorpData().addNews(
+          NewsFactory.makeDeadlyVirusNews(planet, info));
       fleet.getCommander().setExperience(
           fleet.getCommander().getExperience() + type.getExperienceReward());
       game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(

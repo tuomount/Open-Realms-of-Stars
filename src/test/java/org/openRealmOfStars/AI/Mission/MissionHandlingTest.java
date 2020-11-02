@@ -23,6 +23,7 @@ import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
@@ -268,6 +269,8 @@ public class MissionHandlingTest {
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
+    TechList techList = Mockito.mock(TechList.class);
+    Mockito.when(info.getTechList()).thenReturn(techList);
     Mission mission = new Mission(MissionType.TRADE_FLEET, MissionPhase.LOADING,
         new Coordinate(6, 5));
     mission.setTargetPlanet("Trader I");

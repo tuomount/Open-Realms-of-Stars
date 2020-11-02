@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.espionage;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.EspionageMission;
 import org.openRealmOfStars.player.tech.Tech;
@@ -143,6 +144,13 @@ public final class EspionageUtility {
       }
       if (!info.getDiplomacy().isWar(planet.getPlanetOwnerIndex())) {
         list.add(EspionageMission.FALSE_FLAG);
+      }
+      if (info.getTechList().hasTech(TechType.Improvements, "Deadly virus")
+          && planet.getPlanetPlayerInfo().getTechList().hasTech(
+              TechType.Improvements, "Deadly virus")
+          && planet.getTotalPopulation() > 1
+          && planet.getPlanetPlayerInfo().getRace() != SpaceRace.MECHIONS) {
+        list.add(EspionageMission.DEADLY_VIRUS);
       }
     }
     return list.toArray(new EspionageMission[list.size()]);

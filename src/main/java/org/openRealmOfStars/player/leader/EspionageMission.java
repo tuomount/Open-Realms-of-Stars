@@ -61,7 +61,12 @@ public enum EspionageMission {
    * False flag mission where espionage ship is being destroyed and
    * another realm is blamed for it.
    */
-  FALSE_FLAG(50, 60);
+  FALSE_FLAG(50, 60),
+  /**
+   * Deadly virus will spread on planet. This is available only
+   * if deadly virus has been spread earlier.
+   */
+  DEADLY_VIRUS(80, 40);
 
   /**
    * Create espionage mission
@@ -111,6 +116,7 @@ public enum EspionageMission {
       case TERRORIST_ATTACK: return "TERRORIST_ATTACK";
       case NOT_SELECTED_YET: return "NOT SELECTED YET";
       case FALSE_FLAG: return "FALSE FLAG";
+      case DEADLY_VIRUS: return "DEADLY VIRUS";
     }
   }
 
@@ -148,6 +154,9 @@ public enum EspionageMission {
     if (name.equals(FALSE_FLAG.getName())) {
       return FALSE_FLAG;
     }
+    if (name.equals(DEADLY_VIRUS.getName())) {
+      return DEADLY_VIRUS;
+    }
     return EspionageMission.GAIN_TRUST;
   }
 
@@ -164,6 +173,7 @@ public enum EspionageMission {
       case TERRORIST_ATTACK: return "Terrorist attack";
       case NOT_SELECTED_YET: return "Not selected yet";
       case FALSE_FLAG: return "False flag";
+      case DEADLY_VIRUS: return "Deadly virus";
     }
   }
 
@@ -194,6 +204,10 @@ public enum EspionageMission {
       case FALSE_FLAG: return "Destroy your own ship and blame another"
           + "realm for destroying it. Worst case: Commander dies, ship"
           + " destroyed and war declaration";
+      case DEADLY_VIRUS: return "Deadly virus spreads on planet killing"
+          + " most of the population. "
+      + "Worst case: Commander dies and war declaration";
+
     }
   }
 
@@ -214,6 +228,7 @@ public enum EspionageMission {
       case TERRORIST_ATTACK: return 200;
       case NOT_SELECTED_YET: return 0;
       case FALSE_FLAG: return 200;
+      case DEADLY_VIRUS: return 250;
     }
   }
 }

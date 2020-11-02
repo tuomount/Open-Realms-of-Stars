@@ -2086,7 +2086,8 @@ public class Planet {
    * @param attackType conquest, bombing, nuking
    * @param reason Explain why governor died like "conquest of planet",
    *               "nuclear blast"
-   * @param starMap StarMap add news and history event.
+   * @param starMap StarMap add news and history event. If null then history
+   *                or news is not added.
    */
   public void killOneWorker(final String attackType, final String reason, final
       StarMap starMap) {
@@ -2685,7 +2686,8 @@ public class Planet {
    * Method to kill planet governor with reason explanation
    * @param attackType conquest, bombing, nuking
    * @param reason Explain why governor died
-   * @param starMap StarMap add news and history event.
+   * @param starMap StarMap add news and history event. If null then
+   *        history isn't written.
    */
   public void killGovernor(final String attackType, final String reason, final
       StarMap starMap) {

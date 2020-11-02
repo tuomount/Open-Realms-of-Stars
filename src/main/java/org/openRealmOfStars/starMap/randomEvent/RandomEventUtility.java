@@ -22,6 +22,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
+import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -773,34 +774,41 @@ public final class RandomEventUtility {
       if (planets.size() > 0) {
         int index = DiceGenerator.getRandom(planets.size() - 1);
         Planet planet = planets.get(index);
-        event.setPlanet(planet);
-        StringBuilder sb = new StringBuilder();
-        sb.append("Deadly virus outbreaks at ");
-        sb.append(planet.getName());
-        sb.append(". ");
-        if (info.getRace() == SpaceRace.MECHIONS) {
-          sb.append("Luckly planet is occupied by Mechions which are"
-              + " immune to deadly viruses. This does not affect to"
-              + "planet in anyway.");
-        } else {
-          sb.append("Planet is immediately placed on guarantee to stop "
-              + "the virus spreading. Bad news is that only one population "
-              + "is immune to virus. Most of the population is dead.");
-          int pop = planet.getTotalPopulation();
-          pop = pop - 1;
-          for (int i = 0; i < pop; i++) {
-            planet.killOneWorker("deadly virus", "deadly virus", map);
+        if (!info.getTechList().hasTech(
+            TechType.Improvements, "Deadly virus")) {
+          event.setPlanet(planet);
+          StringBuilder sb = new StringBuilder();
+          sb.append("Deadly virus outbreaks at ");
+          sb.append(planet.getName());
+          sb.append(". ");
+          if (info.getRace() == SpaceRace.MECHIONS) {
+            sb.append("Luckly planet is occupied by Mechions which are"
+                + " immune to deadly viruses. This does not affect to"
+                + "planet in anyway.");
+          } else {
+            sb.append("Planet is immediately placed on guarantee to stop "
+                + "the virus spreading. Bad news is that only one population "
+                + "is immune to virus. Most of the population is dead.");
+            int pop = planet.getTotalPopulation();
+            pop = pop - 1;
+            for (int i = 0; i < pop; i++) {
+              planet.killOneWorker("deadly virus", "deadly virus", map);
+            }
+           info.getTechList().addTech(TechFactory.createImprovementTech(
+               "Deadly virus", 4));
+            sb.append("Genetic code of virus is saved and stored carefully.");
+            event.setNewsWorthy(true);
           }
+          event.setText(sb.toString());
+          ImageInstruction instructions = new ImageInstruction();
+          instructions.addImage(ImageInstruction.VIRUSES);
+          event.setImageInstructions(instructions.build());
+          Message message = new Message(MessageType.PLANETARY, event.getText(),
+              Icons.getIconByName(Icons.ICON_DEATH));
+          message.setCoordinate(planet.getCoordinate());
+          message.setRandomEventPop(true);
+          info.getMsgList().addFirstMessage(message);
         }
-        event.setText(sb.toString());
-        ImageInstruction instructions = new ImageInstruction();
-        instructions.addImage(ImageInstruction.VIRUSES);
-        event.setImageInstructions(instructions.build());
-        Message message = new Message(MessageType.PLANETARY, event.getText(),
-            Icons.getIconByName(Icons.ICON_DEATH));
-        message.setCoordinate(planet.getCoordinate());
-        message.setRandomEventPop(true);
-        info.getMsgList().addFirstMessage(message);
       }
     }
   }

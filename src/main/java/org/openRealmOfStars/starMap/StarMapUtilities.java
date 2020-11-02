@@ -11,16 +11,19 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.tech.TechFactory;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -649,6 +652,51 @@ public final class StarMapUtilities {
   }
 
   /**
+   * Spread deadly virus to planet.
+   * @param info Realm which is spreading the virus
+   * @param planet Planet where virus spreads.
+   */
+  public static void spreadDeadlyVirus(final PlayerInfo info,
+      final Planet planet) {
+    if (planet.getPlanetPlayerInfo() != null
+        && planet.getPlanetPlayerInfo() != info
+        && !planet.getPlanetPlayerInfo().getTechList().hasTech(
+        TechType.Improvements, "Deadly virus")) {
+      StringBuilder sb = new StringBuilder();
+      sb.append("Deadly virus outbreaks at ");
+      sb.append(planet.getName());
+      sb.append(" via trading between ");
+      sb.append(info.getEmpireName());
+      sb.append(".");
+      if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.MECHIONS) {
+        sb.append("Luckly planet is occupied by Mechions which are"
+            + " immune to deadly viruses. This does not affect to"
+            + "planet in anyway.");
+      } else {
+        sb.append("Planet is immediately placed on guarantee to stop "
+            + "the virus spreading. Bad news is that only one population "
+            + "is immune to virus. Most of the population is dead.");
+        int pop = planet.getTotalPopulation();
+        pop = pop - 1;
+        for (int i = 0; i < pop; i++) {
+          // Null as starmap since governor should not die for virus.
+          planet.killOneWorker("deadly virus", "deadly virus", null);
+        }
+        planet.getPlanetPlayerInfo().getTechList().addTech(
+            TechFactory.createImprovementTech("Deadly virus", 4));
+        sb.append("Genetic code of virus is saved and stored carefully.");
+      }
+      Message message = new Message(MessageType.PLANETARY, sb.toString(),
+          Icons.getIconByName(Icons.ICON_DEATH));
+      message.setCoordinate(planet.getCoordinate());
+      info.getMsgList().addUpcomingMessage(message);
+      message = new Message(MessageType.PLANETARY, sb.toString(),
+          Icons.getIconByName(Icons.ICON_DEATH));
+      message.setCoordinate(planet.getCoordinate());
+      planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(message);
+    }
+  }
+  /**
    * Make trade with ships. This gives credits for players involving in trade.
    * @param diplomacy Diplomacy for player trading with planet.
    *                  This can be null. It just then means that ship is
@@ -701,6 +749,15 @@ public final class StarMapUtilities {
             && newsData != null) {
           diplomacy.addBonus(DiplomacyBonusType.TRADE_FLEET, info.getRace());
           newsData.addNews(NewsFactory.makeTradeNews(info, planet));
+        }
+        if (info.getTechList().hasTech(TechType.Improvements, "Deadly virus")
+            && !planet.getPlanetPlayerInfo().getTechList().hasTech(
+                TechType.Improvements, "Deadly virus")) {
+          int chance = DiceGenerator.getRandom(99);
+          if (chance < 10) {
+            spreadDeadlyVirus(info, planet);
+            newsData.addNews(NewsFactory.makeDeadlyVirusNews(planet, info));
+          }
         }
       }
     } else if (diplomacy == null) {

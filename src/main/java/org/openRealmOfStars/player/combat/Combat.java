@@ -198,6 +198,14 @@ public class Combat {
    */
   private NewsData leaderKilledNews;
   /**
+   * Is attacker privateer?
+   */
+  private boolean attackerPrivateer;
+  /**
+   * Is defender privateer?
+   */
+  private boolean defenderPrivateer;
+  /**
    * Build shipList in initiative order
    * @param attackerFleet Attacking Player1 fleet
    * @param defenderFleet Defending Player2 fleet
@@ -222,6 +230,8 @@ public class Combat {
           final Coordinate escapePos) {
     this.attackerFleet = attackerFleet;
     this.defenderFleet = defenderFleet;
+    attackerPrivateer = this.attackerFleet.isPrivateerFleet();
+    defenderPrivateer = this.defenderFleet.isPrivateerFleet();
     this.attackerInfo = attackerInfo;
     this.defenderInfo = defenderInfo;
     leaderKilledNews = null;
@@ -540,7 +550,8 @@ public boolean launchIntercept(final int distance,
         } else {
           leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
               attackerFleet.getCommander(), defenderFleet.getCommander(),
-              attackerInfo, defenderInfo);
+              attackerInfo, defenderInfo, attackerPrivateer,
+              defenderPrivateer);
           attackerFleet.getCommander().setJob(Job.DEAD);
           attackerFleet.setCommander(null);
         }
@@ -570,7 +581,8 @@ public boolean launchIntercept(final int distance,
         } else {
           leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
               defenderFleet.getCommander(), attackerFleet.getCommander(),
-              defenderInfo, attackerInfo);
+              defenderInfo, attackerInfo, defenderPrivateer,
+              attackerPrivateer);
           defenderFleet.getCommander().setJob(Job.DEAD);
           defenderFleet.setCommander(null);
         }
@@ -600,7 +612,8 @@ public boolean launchIntercept(final int distance,
         } else {
           leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
               starbaseFleet.getCommander(), attackerFleet.getCommander(),
-              defenderInfo, attackerInfo);
+              defenderInfo, attackerInfo, defenderPrivateer,
+              attackerPrivateer);
           starbaseFleet.getCommander().setJob(Job.DEAD);
           starbaseFleet.setCommander(null);
         }

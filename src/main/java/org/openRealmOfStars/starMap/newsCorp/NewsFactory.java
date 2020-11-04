@@ -576,11 +576,14 @@ public final class NewsFactory {
    * @param killer Possible killer or null
    * @param killedRealm Which realm killed belong
    * @param killerRealm Which realm killed the commander
+   * @param killedPrivateer If killed commander was privateer
+   * @param killerPrivateer if killer commander was privateer
    * @return NewsData
    */
   public static NewsData makeCommanderKilledInAction(final Leader killed,
       final Leader killer, final PlayerInfo killedRealm,
-      final PlayerInfo killerRealm) {
+      final PlayerInfo killerRealm, final boolean killedPrivateer,
+      final boolean killerPrivateer) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
@@ -609,11 +612,23 @@ public final class NewsFactory {
     }
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);
-    sb.append(killedRealm.getEmpireName());
+    if (killedPrivateer) {
+      sb.append("Privateer ");
+    } else {
+      sb.append(killedRealm.getEmpireName());
+    }
     sb.append(" fought against ");
-    sb.append(killerRealm.getEmpireName());
+    if (killerPrivateer) {
+      sb.append("privateer");
+    } else {
+      sb.append(killerRealm.getEmpireName());
+    }
     sb.append(". ");
-    sb.append(killedRealm.getEmpireName());
+    if (killedPrivateer) {
+      sb.append("Privateer ");
+    } else {
+      sb.append(killedRealm.getEmpireName());
+    }
     sb.append(" lost the fight and ");
     sb.append(killed.getCallName());
     sb.append(" was killed in battle! ");
@@ -629,11 +644,19 @@ public final class NewsFactory {
       sb.append(killer.getGender().getHisHer());
       sb.append(" hands.");
     }
-    sb.append("Today is sad day for ");
-    sb.append(killedRealm.getEmpireName());
-    sb.append(" and for ");
-    sb.append(killed.getHomeworld());
-    sb.append(".");
+    if (!killedPrivateer) {
+      sb.append("Today is sad day for ");
+      sb.append(killedRealm.getEmpireName());
+      sb.append(" and for ");
+      sb.append(killed.getHomeworld());
+      sb.append(".");
+    } else {
+      sb.append("Since ");
+      sb.append(killed.getCallName());
+      sb.append(" was privateer ");
+      sb.append(killed.getGender().getHisHer());
+      sb.append(" origins are unknown.");
+    }
     news.setNewsText(sb.toString());
     return news;
   }

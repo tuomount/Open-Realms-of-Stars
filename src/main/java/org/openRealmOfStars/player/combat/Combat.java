@@ -237,20 +237,32 @@ public class Combat {
     leaderKilledNews = null;
     starbaseFleet = null;
     combatEvent = new CombatEvent(defenderFleet.getCoordinate());
-    String combatText = attackerInfo.getEmpireName() + " attacked against "
-        + defenderInfo.getEmpireName() + " with ";
-    if (attackerFleet.getNumberOfShip() > 1) {
-      combatText = combatText + attackerFleet.getNumberOfShip()
-        + " ships against ";
+    StringBuilder combatText = new StringBuilder();
+    if (!attackerPrivateer) {
+      combatText.append(attackerInfo.getEmpireName());
     } else {
-      combatText = combatText + " single ship against ";
+      combatText.append("Privateer");
+    }
+    combatText.append(" attacked against ");
+    if (!defenderPrivateer) {
+      combatText.append(defenderInfo.getEmpireName());
+    } else  {
+      combatText.append("Privateer");
+    }
+    combatText.append(" with ");
+    if (attackerFleet.getNumberOfShip() > 1) {
+      combatText.append(attackerFleet.getNumberOfShip());
+      combatText.append(" ships against ");
+    } else {
+      combatText.append(" single ship against ");
     }
     if (defenderFleet.getNumberOfShip() > 1) {
-      combatText = combatText + defenderFleet.getNumberOfShip() + " ships.";
+      combatText.append(defenderFleet.getNumberOfShip());
+      combatText.append(" ships.");
     } else {
-      combatText = combatText + "one ship.";
+      combatText.append("one ship.");
     }
-    combatEvent.setText(combatText);
+    combatEvent.setText(combatText.toString());
     FleetList fleetList = defenderInfo.getFleets();
     for (int i = 0; i < fleetList.getNumberOfFleets(); i++) {
       Fleet ite = fleetList.getByIndex(i);
@@ -1074,35 +1086,50 @@ public boolean launchIntercept(final int distance,
           looserPlayer.getFleets().remove(looserIndex);
         }
       }
-      String combatText = combatEvent.getText();
+      StringBuilder sb = new StringBuilder(combatEvent.getText());
       if (planet != null) {
-        combatText = combatText + " Combat happened in orbit of "
-        + planet.getName() + ".";
+        sb.append(" Combat happened in orbit of ");
+        sb.append(planet.getName());
+        sb.append(".");
         combatEvent.setPlanetName(planet.getName());
       }
       if (winnerFleet.getNumberOfShip() > 1) {
-        combatText = combatText + " Combat was victorious for "
-            + winnerPlayer.getEmpireName() + ". "
-            + winnerFleet.getNumberOfShip()
-            + " ships in victorious fleet survived. ";
+        sb.append(" Combat was victorious for ");
+        if (attackerInfo == winnerPlayer && !attackerPrivateer) {
+          sb.append(winnerPlayer.getEmpireName());
+        } else if (defenderInfo == winnerPlayer && !defenderPrivateer) {
+          sb.append(winnerPlayer.getEmpireName());
+        } else {
+          sb.append("privateers");
+        }
+        sb.append(". ");
+        sb.append(winnerFleet.getNumberOfShip());
+        sb.append(" ships in victorious fleet survived. ");
       } else {
-        combatText = combatText + " Combat was victorious for "
-            + winnerPlayer.getEmpireName() + ". "
-            + "Single ship survived in victorious fleet. ";
+        sb.append(" Combat was victorious for ");
+        if (attackerInfo == winnerPlayer && !attackerPrivateer) {
+          sb.append(winnerPlayer.getEmpireName());
+        } else if (defenderInfo == winnerPlayer && !defenderPrivateer) {
+          sb.append(winnerPlayer.getEmpireName());
+        } else {
+          sb.append("privateers");
+        }
+        sb.append(". ");
+        sb.append("Single ship survived in victorious fleet. ");
       }
       if (loserEscaped && escapePosition != null) {
         if (looserFleet.getNumberOfShip() > 1) {
-          combatText = combatText + "Loser fleet's "
-              + looserFleet.getNumberOfShip()
-              + "ships escaped from the combat.";
+          sb.append("Loser fleet's ");
+          sb.append(looserFleet.getNumberOfShip());
+          sb.append("ships escaped from the combat.");
         } else {
-          combatText = combatText + "Loser fleet's "
-              + "last ship escaped from the combat.";
+          sb.append("Loser fleet's ");
+          sb.append("last ship escaped from the combat.");
         }
       } else {
-        combatText = combatText + "Loser's fleet was totally destroyed!";
+        sb.append("Loser's fleet was totally destroyed!");
       }
-      combatEvent.setText(combatText);
+      combatEvent.setText(sb.toString());
       if (isWinnerAttacker) {
         Coordinate loserPos = looserFleet.getCoordinate();
         if (looserPlayer.getFleets().getFleetByCoordinate(loserPos) == null) {

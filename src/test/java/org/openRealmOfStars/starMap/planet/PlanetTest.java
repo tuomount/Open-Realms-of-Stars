@@ -241,9 +241,34 @@ public class PlanetTest {
     planet.addBuilding(building);
     planet.setWorkers(Planet.FOOD_FARMERS, 8);
     DiceGenerator.initializeGenerators(0, 1, 10);
-    String str = planet.nukem(20, "Orbital nuke", null);
+    PlanetNuked nuked = planet.nukem(20, "Orbital nuke", null, null);
     assertEquals("Orbital nuke killed 2 population and destroyed 2 buildings!"
-        + " Radiation level rised on planet surface to 2.", str);
+        + " Radiation level rised on planet surface to 2.", nuked.getText());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testOrbitalNuke2() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    planet.setGroundSize(8);
+    planet.setRadiationLevel(1);
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getName()).thenReturn("Random building");
+    Mockito.when(building.getProdCost()).thenReturn(10);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.setWorkers(Planet.FOOD_FARMERS, 8);
+    DiceGenerator.initializeGenerators(0, 1, 10, 0, 1, 10);
+    PlanetNuked nuked = planet.nukem(20, "Orbital nuke", null, null);
+    assertEquals("Orbital nuke killed 2 population and destroyed 2 buildings!"
+        + " Radiation level rised on planet surface to 2.", nuked.getText());
+    nuked = planet.nukem(20, "Orbital nuke", null, nuked);
+    assertEquals("Orbital nuke killed 4 population and destroyed 4 buildings!"
+        + " Radiation level rised on planet surface to 3.", nuked.getText());
   }
 
   @Test
@@ -263,9 +288,9 @@ public class PlanetTest {
     planet.addBuilding(building);
     planet.setWorkers(Planet.FOOD_FARMERS, 8);
     DiceGenerator.initializeGenerators(0, 0, 0, 0, 0, 10);
-    String str = planet.nukem(80, "Orbital antimatter bomb", null);
+    PlanetNuked nuked = planet.nukem(80, "Orbital antimatter bomb", null, null);
     assertEquals("Orbital antimatter bomb killed 8 population and destroyed 5 buildings!"
-        + " Radiation level rised on planet surface to 2.", str);
+        + " Radiation level rised on planet surface to 2.", nuked.getText());
   }
 
   @Test
@@ -285,9 +310,9 @@ public class PlanetTest {
     planet.addBuilding(building);
     planet.setWorkers(Planet.FOOD_FARMERS, 8);
     DiceGenerator.initializeGenerators(0, 0, 0, 0, 0, 10);
-    String str = planet.nukem(100, "Orbital neutron bomb", null);
+    PlanetNuked nuked = planet.nukem(100, "Orbital neutron bomb", null, null);
     assertEquals("Orbital neutron bomb killed 8 population and destroyed 4 buildings!"
-        + " Radiation level rised on planet surface to 2.", str);
+        + " Radiation level rised on planet surface to 2.", nuked.getText());
   }
 
   @Test

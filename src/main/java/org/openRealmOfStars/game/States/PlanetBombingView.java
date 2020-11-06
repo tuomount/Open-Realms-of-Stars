@@ -49,6 +49,7 @@ import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.PlanetNuked;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.Logger;
 
@@ -206,10 +207,9 @@ public class PlanetBombingView extends BlackPanel {
   private StarMap starMap;
 
   /**
-   * Text for nuking. Null if nukes were not used.
+   * Nuking information.
    */
-  private String nukeText;
-
+  private PlanetNuked nuked;
   /**
    * Constructor for PLanet bombing view. This view is used when
    * player is conquering planet with bombs and/or troops.
@@ -226,10 +226,10 @@ public class PlanetBombingView extends BlackPanel {
     this.fleet = fleet;
     this.attacker = attacker;
     this.attackPlayerIndex = attackerPlayerIndex;
+    nuked = new PlanetNuked();
     MusicPlayer.play(MusicPlayer.FIGHT_THEME01);
     aiControlled = false;
     allAi = false;
-    nukeText = null;
     // Background image
     imgBase = new BigImagePanel(planet, true, null);
     this.setLayout(new BorderLayout());
@@ -627,7 +627,8 @@ public class PlanetBombingView extends BlackPanel {
           imgBase.setAnimation(new PlanetAnimation(
               PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
           if (!planet.isShieldForBombing()) {
-            nukeText = planet.nukem(comp.getDamage(), comp.getName(), starMap);
+            nuked = planet.nukem(comp.getDamage(), comp.getName(), starMap,
+                nuked);
             textLogger.addLog(ship.getName() + " nukes the planet!");
             if (planet.getTotalPopulation() == 0) {
               planet.setPlanetOwner(-1, null);
@@ -728,7 +729,7 @@ public class PlanetBombingView extends BlackPanel {
               exitLoop = true;
               if (starMap != null) {
                 NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
-                    defender, planet, nukeText);
+                    defender, planet, nuked.getText());
                 starMap.getNewsCorpData().addNews(news);
                 EventOnPlanet event = new EventOnPlanet(
                     EventType.PLANET_CONQUERED,
@@ -774,7 +775,7 @@ public class PlanetBombingView extends BlackPanel {
           PlayerInfo defender = planet.getPlanetPlayerInfo();
           if (attackBombOrTroops() && starMap != null) {
             NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
-                defender, planet, nukeText);
+                defender, planet, nuked.getText());
             starMap.getNewsCorpData().addNews(news);
             EventOnPlanet event = new EventOnPlanet(EventType.PLANET_CONQUERED,
                 planet.getCoordinate(), planet.getName(),
@@ -811,7 +812,7 @@ public class PlanetBombingView extends BlackPanel {
               aiExitLoop = true;
               if (starMap != null) {
                 NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
-                    defender, planet, nukeText);
+                    defender, planet, nuked.getText());
                 starMap.getNewsCorpData().addNews(news);
                 EventOnPlanet event = new EventOnPlanet(
                     EventType.PLANET_CONQUERED, planet.getCoordinate(),

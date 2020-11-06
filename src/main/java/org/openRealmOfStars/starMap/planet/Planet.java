@@ -2173,10 +2173,15 @@ public class Planet {
    * @param strength Nuke strength from 0-100
    * @param bombName Bomb name for different type of explosions
    * @param starMap StarMap for writing history
+   * @param previousNuking Previous nuking information.
    * @return Description about bombs destruction power.
    */
-  public String nukem(final int strength, final String bombName,
-      final StarMap starMap) {
+  public PlanetNuked nukem(final int strength, final String bombName,
+      final StarMap starMap, final PlanetNuked previousNuking) {
+    PlanetNuked nuked = previousNuking;
+    if (nuked == null) {
+      nuked = new PlanetNuked();
+    }
     StringBuilder sb = new StringBuilder();
     int dead = getGroundSize() * strength / 100;
     if (dead < 2) {
@@ -2198,9 +2203,17 @@ public class Planet {
           buildingsDestroyed++;
         }
       }
-      sb.append(bombName + " killed " + dead + " population");
-      if (buildingsDestroyed > 0) {
-        sb.append(" and destroyed " + buildingsDestroyed + " buildings!");
+      nuked.setPopulationKilled(nuked.getPopulationKilled() + dead);
+      sb.append(bombName);
+      sb.append(" killed ");
+      sb.append(nuked.getPopulationKilled());
+      sb.append(" population");
+      nuked.setBuildingsDestroyed(nuked.getBuildingsDestroyed()
+          + buildingsDestroyed);
+      if (nuked.getBuildingsDestroyed() > 0) {
+        sb.append(" and destroyed ");
+        sb.append(nuked.getBuildingsDestroyed());
+        sb.append(" buildings!");
       } else {
         sb.append("!");
       }
@@ -2224,9 +2237,17 @@ public class Planet {
           buildingsDestroyed++;
         }
       }
-      sb.append(bombName + " killed " + dead + " population");
-      if (buildingsDestroyed > 0) {
-        sb.append(" and destroyed " + buildingsDestroyed + " buildings!");
+      nuked.setPopulationKilled(nuked.getPopulationKilled() + dead);
+      sb.append(bombName);
+      sb.append(" killed ");
+      sb.append(nuked.getPopulationKilled());
+      sb.append(" population");
+      nuked.setBuildingsDestroyed(nuked.getBuildingsDestroyed()
+          + buildingsDestroyed);
+      if (nuked.getBuildingsDestroyed() > 0) {
+        sb.append(" and destroyed ");
+        sb.append(nuked.getBuildingsDestroyed());
+        sb.append(" buildings!");
       } else {
         sb.append("!");
       }
@@ -2250,9 +2271,17 @@ public class Planet {
           buildingsDestroyed++;
         }
       }
-      sb.append(bombName + " killed " + dead + " population");
-      if (buildingsDestroyed > 0) {
-        sb.append(" and destroyed " + buildingsDestroyed + " buildings!");
+      nuked.setPopulationKilled(nuked.getPopulationKilled() + dead);
+      sb.append(bombName);
+      sb.append(" killed ");
+      sb.append(nuked.getPopulationKilled());
+      sb.append(" population");
+      nuked.setBuildingsDestroyed(nuked.getBuildingsDestroyed()
+          + buildingsDestroyed);
+      if (nuked.getBuildingsDestroyed() > 0) {
+        sb.append(" and destroyed ");
+        sb.append(nuked.getBuildingsDestroyed());
+        sb.append(" buildings!");
       } else {
         sb.append("!");
       }
@@ -2265,7 +2294,8 @@ public class Planet {
     for (int i = 0; i < dead; i++) {
       killOneWorker("nuking", "nuclear blast", starMap);
     }
-    return sb.toString();
+    nuked.setText(sb.toString());
+    return nuked;
   }
 
   /**

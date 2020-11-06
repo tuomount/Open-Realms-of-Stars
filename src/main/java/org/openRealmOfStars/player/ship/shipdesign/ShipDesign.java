@@ -529,7 +529,9 @@ public class ShipDesign {
           && (comp.getType() == ShipComponentType.WEAPON_BEAM
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
-          || comp.getType() == ShipComponentType.WEAPON_RAILGUN)) {
+          || comp.getType() == ShipComponentType.WEAPON_RAILGUN)
+          || comp.getType() == ShipComponentType.ION_CANNON
+          || comp.getType() == ShipComponentType.PLASMA_CANNON) {
         militaryShip = true;
         power = power + comp.getDamage();
       }

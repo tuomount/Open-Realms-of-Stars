@@ -610,7 +610,7 @@ public class ShipComponent {
     case ION_CANNON: {
       sb.append("Shield damage: ");
       sb.append(getDamage());
-      sb.append("Damage: 1");
+      sb.append(" Damage: 1");
       sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 75%, Armor stops");

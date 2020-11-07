@@ -493,8 +493,7 @@ public class Diplomacy {
    */
   public String getCasusBelliReason(final int playerIndex) {
     DiplomacyBonusList list = getDiplomacyList(playerIndex);
-    if (list != null && list.getCasusBelliScore() > CASUS_BELLI_LIMIT
-        && !isWar(playerIndex)) {
+    if (list != null && list.getCasusBelliScore() > CASUS_BELLI_LIMIT) {
       return list.getMostCassusBelli();
     }
     return "no casus belli";

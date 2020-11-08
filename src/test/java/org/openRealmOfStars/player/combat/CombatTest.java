@@ -183,7 +183,7 @@ public class CombatTest {
     assertEquals(fleet2, combat.getDefendingFleet());
     combat.doFastCombat();
     assertEquals("Terran alliance attacked against Spork empire "
-        + "with  single ship against one ship. Combat was victorious"
+        + "with single ship against one ship. Combat was victorious"
         + " for Terran alliance. Single ship survived in victorious "
         + "fleet. Loser's fleet was totally destroyed!"
         ,combat.getCombatEvent().getText());
@@ -220,7 +220,7 @@ public class CombatTest {
     combat.setPlanet(planet);
     combat.doFastCombat();
     assertEquals("Terran alliance attacked against Spork empire with"
-        + "  single ship against one ship. Combat happened in orbit of Test I."
+        + " single ship against one ship. Combat happened in orbit of Test I."
         + " Combat was victorious for Spork empire. Single ship survived in"
         + " victorious fleet. Loser's fleet was totally destroyed!"
         ,combat.getCombatEvent().getText());

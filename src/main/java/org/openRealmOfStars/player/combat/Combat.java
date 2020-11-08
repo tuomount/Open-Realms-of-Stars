@@ -254,7 +254,7 @@ public class Combat {
       combatText.append(attackerFleet.getNumberOfShip());
       combatText.append(" ships against ");
     } else {
-      combatText.append(" single ship against ");
+      combatText.append("single ship against ");
     }
     if (defenderFleet.getNumberOfShip() > 1) {
       combatText.append(defenderFleet.getNumberOfShip());

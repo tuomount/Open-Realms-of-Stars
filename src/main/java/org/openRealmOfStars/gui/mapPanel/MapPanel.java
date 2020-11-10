@@ -283,6 +283,15 @@ public class MapPanel extends JPanel {
    * Calculate view according the actual panel size;
    */
   protected void calculateViewPoints() {
+    calculateViewPoints(-1, -1);
+  }
+
+  /**
+   * Calculate view according the actual panel size;
+   * @param mapX Map max x size
+   * @param mapY Map max y size
+   */
+  protected void calculateViewPoints(final int mapX, final int mapY) {
     int tileWidth = Tile.MAX_WIDTH;
     int tileHeight = Tile.MAX_HEIGHT;
     if (battle) {
@@ -292,6 +301,12 @@ public class MapPanel extends JPanel {
     } else {
       viewPointX = (this.getWidth() / tileWidth - 1) / 2;
       viewPointY = (this.getHeight() / tileHeight - 1) / 2;
+      if (viewPointX * 2 + 1 > mapX && mapX != -1) {
+        viewPointX = (mapX - 1) / 2;
+      }
+      if (viewPointY * 2 + 1 > mapY && mapY != -1) {
+        viewPointY = (mapY - 1) / 2;
+      }
     }
     if (viewPointX < 1) {
       viewPointX = 1;
@@ -461,7 +476,7 @@ public class MapPanel extends JPanel {
       }
     }
     if (screen == null) {
-      calculateViewPoints();
+      calculateViewPoints(starMap.getMaxX(), starMap.getMaxY());
       if (this.getWidth() > 0 && this.getHeight() > 0) {
         screen = new BufferedImage(this.getWidth(), this.getHeight(),
             BufferedImage.TYPE_INT_ARGB);
@@ -561,7 +576,8 @@ public class MapPanel extends JPanel {
         gr.setStroke(dashed);
         gr.setColor(colorDarkBlue);
         Tile blackholeTile = starMap.getTile(i + cx, j + cy);
-        if (blackholeTile.isBlackhole() && !blackholeUpdated) {
+        if (blackholeTile != null && blackholeTile.isBlackhole()
+            && !blackholeUpdated) {
           updateBlackHoleEffect(pixelX, pixelY, i, j, blackholeTile);
           blackholeUpdated = true;
         }

@@ -110,7 +110,7 @@ public class LoadGameView extends BlackPanel {
         ErrorLogger.log("Failed reading save game " + files[i].getName());
       }
     }
-    Collections.sort(listOfGames);
+    Collections.sort(listOfGames, Collections.reverseOrder());
     SavedGame[] games = listOfGames.toArray(new SavedGame[listOfGames.size()]);
 
     saveGamesList = new JList<>(games);

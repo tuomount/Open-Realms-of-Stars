@@ -147,7 +147,21 @@ public class SavedGame implements Comparable<SavedGame> {
 
   @Override
   public int compareTo(final SavedGame arg0) {
-    return (int) (arg0.creationTimeMillis - this.creationTimeMillis);
+    if (this.creationTimeMillis < arg0.creationTimeMillis) {
+      return -1;
+    }
+    if (this.creationTimeMillis > arg0.creationTimeMillis) {
+      return 1;
+    }
+    return 0;
+  }
+
+  @Override
+  public String toString() {
+    String text = getFilename() + " - " + getTime() + " Turn: "
+        + getTurnNumber() + " - " + getEmpireName() + " "
+        + getGalaxySize();
+    return text;
   }
 
 }

@@ -321,7 +321,7 @@ public class TechListTest {
     info.getTechList().updateResearchPointByTurn(30, info, 300, true);
     assertEquals(MessageType.RESEARCH, info.getMsgList().getMsg().getType());
     String msg = info.getMsgList().getMsg().getMessage();
-    assertEquals(true, msg.contains(" has advenced"));
+    assertEquals(true, msg.contains(" has advanced"));
     assertEquals(true, msg.contains("next level."));
     assertEquals(2, info.getTechList().getTechLevel(TechType.Combat));
   }

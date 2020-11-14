@@ -878,7 +878,7 @@ public class TechList {
         sb.append(". ");
         if (isTechListForLevelFull(type, lvl)) {
           sb.append(tech.getType().toString());
-          sb.append(" has advenced to next level.");
+          sb.append(" has advanced to next level.");
         }
         Message msg = new Message(MessageType.RESEARCH, sb.toString(),
             Icons.getIconByName(Icons.ICON_RESEARCH));

@@ -2151,6 +2151,7 @@ public final class MissionHandling {
       }
       if (ship != null) {
         fleet.removeShip(ship);
+        info.getFleets().recalculateList();
       }
       if (fleet.getCommander() != null && fleet.getNumberOfShip() == 0) {
         // Fleet's last ship was destroyed but commander
@@ -2475,6 +2476,7 @@ public final class MissionHandling {
       game.getStarMap().getNewsCorpData().addNews(news);
       leader.setExperience(
           leader.getExperience() + type.getExperienceReward());
+      info.getFleets().recalculateList();
     }
     if (type == EspionageMission.DEADLY_VIRUS) {
       Message msg = new Message(MessageType.LEADER,

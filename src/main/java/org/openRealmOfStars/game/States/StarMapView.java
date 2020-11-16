@@ -167,6 +167,7 @@ public class StarMapView extends BlackPanel {
     this.game = game;
     setAutoFocus(false);
 
+    map.getFleetTiles();
     BlackPanel base = new BlackPanel();
     mapPanel = new MapPanel(false);
     mapPanel.setShowMiniMap(game.isShowMiniMapFlag());

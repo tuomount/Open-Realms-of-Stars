@@ -2098,8 +2098,11 @@ public final class MissionHandling {
       if (!espionageSucceed) {
         ship = fleet.getShipForFalseFlag();
         startText = startText + " " + ship.getName()
-          + " was destroyed during mission. ";
+          + " was destroyed during mission.";
       }
+      startText = startText + " Eventually "
+          + fleet.getCommander().getCallName() + " was caught by "
+          + planet.getPlanetPlayerInfo().getEmpireName() + ". ";
       String endText = "";
       int index = game.getStarMap().getPlayerList().getIndex(info);
       boolean casusBelli = planet.getPlanetPlayerInfo().getDiplomacy()

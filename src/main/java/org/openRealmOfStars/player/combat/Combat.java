@@ -1656,15 +1656,14 @@ public boolean launchIntercept(final int distance,
           deadliestCoordinate));
       if (range < distance - ai.getMovesLeft() && closest != null
           && !closest.isCloakOverloaded()) {
-        shot = handleAIShoot(ai, closest, textLogger, infoPanel, shot);
-      } else {
         int index = getCurrentShip().getComponentForUse(
             ShipComponentType.TARGETING_COMPUTER);
         if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
-            && DiceGenerator.getRandom(99) < 20) {
+            && DiceGenerator.getRandom(99) < 20
+            && ai.getOverloadedComputer() == 0) {
           handleOverloading(textLogger, index);
         }
-
+        shot = handleAIShoot(ai, closest, textLogger, infoPanel, shot);
       }
     } else if (closest != null && !closest.isCloakOverloaded()) {
       shot = handleAIShoot(ai, closest, textLogger, infoPanel, shot);
@@ -1702,12 +1701,26 @@ public boolean launchIntercept(final int distance,
     PathPoint point = aStar.getMove();
     if (ai.getShip().getTacticSpeed() == 0 && deadliest != null
         && !deadliest.isCloakOverloaded()) {
+      int index = getCurrentShip().getComponentForUse(
+          ShipComponentType.TARGETING_COMPUTER);
+      if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+          && DiceGenerator.getRandom(99) < 20
+          && ai.getOverloadedComputer() == 0) {
+        handleOverloading(textLogger, index);
+      }
       shot = handleAIShoot(ai, deadliest, textLogger, infoPanel, shot);
     }
     if (point != null && !isBlocked(point.getX(), point.getY())
         && ai.getMovesLeft() > 0) {
       if (deadliest != null && shootDeadliest
           && !deadliest.isCloakOverloaded()) {
+        int index = getCurrentShip().getComponentForUse(
+            ShipComponentType.TARGETING_COMPUTER);
+        if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+            && DiceGenerator.getRandom(99) < 20
+            && ai.getOverloadedComputer() == 0) {
+          handleOverloading(textLogger, index);
+        }
         shot = handleAIShoot(ai, deadliest, textLogger, infoPanel, shot);
       }
       if (!shot) {
@@ -1752,6 +1765,13 @@ public boolean launchIntercept(final int distance,
           closest = getClosestEnemyShip(info, getCurrentShip());
           if (closest != deadliest && closest != null
               && !closest.isCloakOverloaded()) {
+            int index = getCurrentShip().getComponentForUse(
+                ShipComponentType.TARGETING_COMPUTER);
+            if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
+                && DiceGenerator.getRandom(99) < 20
+                && ai.getOverloadedComputer() == 0) {
+              handleOverloading(textLogger, index);
+            }
             shot = handleAIShoot(ai, closest, textLogger, infoPanel, shot);
           }
           if (!shot) {

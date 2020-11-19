@@ -388,6 +388,7 @@ public class CombatShip implements Comparable<CombatShip> {
     int weapons = 0;
     setOverloadedJammer(0);
     setCloakOverloaded(false);
+    setOverloadedComputer(0);
     if (getEnergyLevel() > ship.getTotalEnergy()) {
       setEnergyLevel(ship.getTotalEnergy());
     }

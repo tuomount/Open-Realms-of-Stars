@@ -1902,7 +1902,7 @@ public final class MissionHandling {
             fleet.getCommander().getCallName() + " from "
                 + info.getEmpireName() + " caught by "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-                + " espionage mission. Main goal was steal technology."
+                + " espionage mission. Main goal was steal technology. "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
                 + " release " + fleet.getCommander().getCallName()
                 + ".", game.getStarMap());

@@ -77,6 +77,36 @@ public final class TextUtilities {
   }
 
   /**
+   * Remove line changes from text.
+   * Add space if needed and remove extra spaces.
+   * @param text Text to handle
+   * @return Handled text.
+   */
+  public static String removeLineChanges(final String text) {
+    StringBuilder sb = new StringBuilder(text.length() + 10);
+    boolean lastSpace = false;
+    boolean start = true;
+    for (int i = 0; i < text.length(); i++) {
+      char ch = text.charAt(i);
+      if (ch == '\n') {
+        if (!lastSpace && !start) {
+          sb.append(" ");
+          lastSpace = true;
+        }
+      } else if (ch == ' ') {
+        if (!lastSpace && !start) {
+          sb.append(" ");
+        }
+        lastSpace = true;
+      } else {
+        lastSpace = false;
+        start = false;
+        sb.append(ch);
+      }
+    }
+    return sb.toString();
+  }
+  /**
    * Handle character escapes with one single loop.
    * @param text Text to handle
    * @return Handled text

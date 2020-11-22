@@ -1394,6 +1394,21 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Ship has carrier module
+   * @return True if ship has carrier module, otherwise false
+   */
+  public boolean isCarrierModule() {
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp
+          .getType() == ShipComponentType.FIGHTER_BAY) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Get Ships damage level as color
    * @return one of these:
    * GuiStatics.COLOR_GREEN_TEXT
@@ -1943,7 +1958,7 @@ private int increaseHitChanceByComponent() {
    */
   public boolean isTradeShip() {
     if (getHull().getHullType() == ShipHullType.FREIGHTER
-        && !isColonyModule() && !isTrooperModule()) {
+        && !isColonyModule() && !isTrooperModule() && !isCarrierModule()) {
       return true;
     }
     return false;

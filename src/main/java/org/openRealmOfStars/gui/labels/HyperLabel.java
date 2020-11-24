@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Insets;
 
 import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.utilities.TextUtilities;
 
 /**
 *
@@ -52,6 +53,7 @@ public class HyperLabel extends SpaceLabel {
   private String convertHtml() {
     String text = getText();
     if (text.startsWith("<html>") && text.endsWith("</html>")) {
+      text = TextUtilities.removeLineChanges(text);
       text = text.replace("<html>", "");
       text = text.replace("</html>", "");
       text = text.replace("<br>", "\n");
@@ -78,7 +80,41 @@ public class HyperLabel extends SpaceLabel {
     g.fillRect(sx, sx, width, height);
     g.setFont(this.getFont());
     if (getText() != null) {
-      String[] texts = convertHtml().split("\n");
+      String text = convertHtml();
+      int lastSpace = -1;
+      int rowLen = 0;
+      int maxRowLen = width / 6;
+      int customCharWidth = GuiStatics.getTextWidth(getFont(),
+          "EeAaRrIiOoTtSs");
+      customCharWidth = customCharWidth / 14;
+      if (customCharWidth > 0) {
+        maxRowLen = width / customCharWidth;
+      }
+      StringBuilder sb = new StringBuilder(text);
+      for (int i = 0; i < sb.length(); i++) {
+        if (sb.charAt(i) == ' ') {
+          lastSpace = i;
+        }
+        if (sb.charAt(i) == '\n') {
+          lastSpace = -1;
+          rowLen = 0;
+        } else {
+          rowLen++;
+        }
+        if (rowLen > maxRowLen) {
+          if (lastSpace != -1) {
+            sb.setCharAt(lastSpace, '\n');
+            rowLen = i - lastSpace;
+            lastSpace = -1;
+          } else {
+            sb.setCharAt(i, '\n');
+            lastSpace = -1;
+            rowLen = 0;
+          }
+        }
+      }
+      String[] texts = sb.toString().split("\n");
+
       int yTotal = 0;
       for (int i = 0; i < texts.length; i++) {
         int yHeight = GuiStatics.getTextHeight(getFont(), texts[i]);

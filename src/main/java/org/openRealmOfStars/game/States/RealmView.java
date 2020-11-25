@@ -11,7 +11,7 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.labels.SpaceLabel;
+import org.openRealmOfStars.gui.labels.HyperLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -66,14 +66,14 @@ public class RealmView extends BlackPanel {
     InfoPanel info = new InfoPanel();
     info.setTitle("Racial information");
     info.setLayout(new BorderLayout());
-    SpaceLabel raceDescription = new SpaceLabel(
+    HyperLabel raceDescription = new HyperLabel(
         realm.getRace().getFullDescription(false, false));
     info.add(raceDescription, BorderLayout.CENTER);
     panelX.add(info);
     info = new InfoPanel();
     info.setTitle("Government information");
     info.setLayout(new GridLayout(0, 1));
-    SpaceLabel governmentDescription = new SpaceLabel(
+    HyperLabel governmentDescription = new HyperLabel(
         realm.getGovernment().getDescription(false));
     info.add(governmentDescription, BorderLayout.CENTER);
     String leaderDesc = "<html>No leader as ruler.</html>";
@@ -81,7 +81,7 @@ public class RealmView extends BlackPanel {
       leaderDesc = "<html>" + realm.getRuler().getDescription() + "</html>";
       leaderDesc = leaderDesc.replace("\n", "<br>");
     }
-    SpaceLabel leaderDescription = new SpaceLabel(leaderDesc);
+    HyperLabel leaderDescription = new HyperLabel(leaderDesc);
     info.add(leaderDescription);
     panelX.add(info);
     base.add(panelX);

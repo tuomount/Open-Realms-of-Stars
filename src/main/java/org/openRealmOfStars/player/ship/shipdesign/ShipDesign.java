@@ -768,6 +768,7 @@ public class ShipDesign {
    */
   public String getFlaws(final boolean banNukes, final boolean banPrivateer) {
     boolean designOk = true;
+    boolean flawNoCargoSpace = false;
     StringBuilder sb = new StringBuilder();
     if (!hasEngine()) {
       designOk = false;
@@ -782,8 +783,7 @@ public class ShipDesign {
       sb.append("Too many components!\n");
     }
     if (getFreeSlots() == 0 && hull.getHullType() == ShipHullType.FREIGHTER) {
-      designOk = false;
-      sb.append("No cargo space!\n");
+      flawNoCargoSpace = true;
     }
     if (hasWeapons() && (hull.getHullType() == ShipHullType.FREIGHTER
         || hull.getHullType() == ShipHullType.PROBE)) {
@@ -796,12 +796,23 @@ public class ShipDesign {
     boolean jammer = false;
     boolean privateerModule = false;
     boolean espionageModule = false;
+    boolean fighterBay = false;
+    boolean invasionModule = false;
+    boolean colonizationModule = false;
     for (int i = 0; i < getNumberOfComponents(); i++) {
       ShipComponent comp = getComponent(i);
-      if (comp.getType() == ShipComponentType.COLONY_MODULE
-          && hull.getHullType() != ShipHullType.FREIGHTER) {
-        designOk = false;
-        sb.append("Colonization module in non freighter hull.");
+      if (comp.getType() == ShipComponentType.FIGHTER_BAY) {
+        fighterBay = true;
+      }
+      if (comp.getType() == ShipComponentType.COLONY_MODULE) {
+        colonizationModule = true;
+        if (hull.getHullType() != ShipHullType.FREIGHTER) {
+          designOk = false;
+          sb.append("Colonization module in non freighter hull.");
+        }
+      }
+      if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
+        invasionModule = true;
       }
       if (comp.getType() == ShipComponentType.STARBASE_COMPONENT
           && hull.getHullType() != ShipHullType.STARBASE) {
@@ -859,6 +870,21 @@ public class ShipDesign {
         sb.append("\n");
       }
 
+    }
+    if (colonizationModule && invasionModule) {
+      designOk = false;
+      sb.append(ShipDesignConsts.BOTH_COLONY_AND_INVASION);
+      sb.append("\n");
+    }
+    if (flawNoCargoSpace && !fighterBay) {
+      designOk = false;
+      sb.append(ShipDesignConsts.NO_CARGO);
+      sb.append("\n");
+    } else if (flawNoCargoSpace && fighterBay
+        && (colonizationModule || invasionModule)) {
+      designOk = false;
+      sb.append(ShipDesignConsts.NO_CARGO);
+      sb.append("\n");
     }
     if (hull.getHullType() == ShipHullType.PRIVATEER && !privateerModule) {
       designOk = false;

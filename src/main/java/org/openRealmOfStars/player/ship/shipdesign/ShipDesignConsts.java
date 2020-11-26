@@ -4,7 +4,7 @@ package org.openRealmOfStars.player.ship.shipdesign;
 *
 * Open Realm of Stars game project
 * Copyright (C) 2017 wksdn18
-* Copyright (C) 2017,2018 Tuomo Untinen
+* Copyright (C) 2017,2018,2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -34,6 +34,15 @@ public final class ShipDesignConsts {
    * Message when ship is missing engine
    */
   public static final String ENGINE_IS_MISSING = "Engine is missing!\n";
+  /**
+   * Message when ship has both colonization and planetary invasion modules.
+   */
+  public static final String BOTH_COLONY_AND_INVASION = "Only colony or"
+      + " invasion module is allowed!\n";
+  /**
+   * Message when ship has no cargo space.
+   */
+  public static final String NO_CARGO = "No cargo space!\n";
   /**
    * Message when ship is has two different engines
    */

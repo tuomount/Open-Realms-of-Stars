@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -209,6 +209,27 @@ public class ShipDesignTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBattleShipDesign() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    info.getTechList().addTech(TechFactory.createCombatTech("Plasma cannon Mk1", 2));
+    info.getTechList().addTech(TechFactory.createDefenseTech("Solar armor Mk1", 3));
+    ShipDesign design = ShipGenerator.createBattleShip(info, ShipSize.SMALL, false, false);
+    boolean plasmaCannon = false;
+    boolean solarArmor = false;
+    for (ShipComponent comp : design.getComponentList()) {
+      if (comp.getType() == ShipComponentType.PLASMA_CANNON) {
+        plasmaCannon = true;
+      }
+      if (comp.getType() == ShipComponentType.SOLAR_ARMOR) {
+        solarArmor = true;
+      }
+    }
+    assertTrue(plasmaCannon);
+    assertTrue(solarArmor);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRareTechs() {
     ShipHull hull = ShipHullFactory.createByName("Battleship Mk1", SpaceRace.HUMAN);
     ShipDesign design = new ShipDesign(hull);
     ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");

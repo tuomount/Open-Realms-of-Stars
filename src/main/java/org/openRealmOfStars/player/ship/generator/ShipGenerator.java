@@ -21,7 +21,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2020  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -86,6 +86,25 @@ public final class ShipGenerator {
         scores[i] = scores[i] + comp.getDefenseValue() * 5;
         scores[i] = scores[i] + 5; // No need for electricity
         break;
+      }
+      case SOLAR_ARMOR: {
+        scores[i] = scores[i] + comp.getDefenseValue() * 5;
+        scores[i] = scores[i] + 5; // No need for electricity
+        scores[i] = scores[i] + comp.getEnergyResource() * 5;
+        break;
+      }
+      case ORGANIC_ARMOR: {
+        scores[i] = scores[i] + comp.getDefenseValue() * 5;
+        scores[i] = scores[i] + 10; // Regenerating
+        break;
+      }
+      case TRACTOR_BEAM: {
+        if (design.getHull().getSize() == ShipSize.LARGE) {
+          scores[i] = scores[i] + 5;
+        }
+        if (design.getHull().getSize() == ShipSize.HUGE) {
+          scores[i] = scores[i] + 10;
+        }
       }
       case ORBITAL_BOMBS: {
         if (!design.gotCertainType(ShipComponentType.ORBITAL_BOMBS)
@@ -205,6 +224,7 @@ public final class ShipGenerator {
       }
       case DISTORTION_SHIELD: {
         scores[i] = scores[i] + comp.getDefenseValue();
+        scores[i] = scores[i] + 5; // Recharge
         scores[i] = scores[i] + comp.getDamage(); // Jammer bonus
         break;
       }
@@ -252,6 +272,8 @@ public final class ShipGenerator {
       case WEAPON_ECM_TORPEDO:
       case WEAPON_HE_MISSILE:
       case WEAPON_PHOTON_TORPEDO:
+      case PLASMA_CANNON:
+      case ION_CANNON:
       case WEAPON_RAILGUN: {
         scores[i] = scores[i] + comp.getDamage() * 5;
         break;
@@ -264,6 +286,78 @@ public final class ShipGenerator {
     return scores;
   }
 
+  /**
+   * Adds best defense component on ship design
+   * @param shield Regular shield
+   * @param armor Regular armor
+   * @param solarArmor Solar Armor
+   * @param organicArmor Organic Armor
+   * @param distortionShield Distortion Shield
+   * @param design Ship Design
+   */
+  private static void addBestDefenseComponent(
+      final ShipComponent shield, final ShipComponent armor,
+      final ShipComponent solarArmor, final ShipComponent organicArmor,
+      final ShipComponent distortionShield, final ShipDesign design) {
+    int shieldValue = 0;
+    int armorValue = 0;
+    int solarArmorValue = 0;
+    int organicArmorValue = 0;
+    int distortionShieldValue = 0;
+    int biggestValue = 0;
+    ShipComponent biggestComponent = null;
+    if (distortionShield != null
+        && design.getFreeEnergy() >= distortionShield.getEnergyRequirement()) {
+      distortionShieldValue = distortionShield.getDefenseValue()
+          + distortionShield.getDamage() / 5;
+      if (distortionShieldValue > biggestValue) {
+        biggestValue = distortionShieldValue;
+        biggestComponent = distortionShield;
+      }
+    }
+    if (organicArmor != null
+        && design.getFreeEnergy() >= organicArmor.getEnergyRequirement()) {
+      organicArmorValue = organicArmor.getDefenseValue()
+          + (4 - organicArmor.getEnergyRequirement());
+      if (organicArmorValue > biggestValue) {
+        biggestValue = organicArmorValue;
+        biggestComponent = organicArmor;
+      }
+    }
+    if (shield != null
+        && design.getFreeEnergy() >= shield.getEnergyRequirement()) {
+      shieldValue = shield.getDefenseValue();
+      if (shieldValue > biggestValue) {
+        biggestValue = distortionShieldValue;
+        biggestComponent = distortionShield;
+      }
+      biggestValue = shieldValue;
+      biggestComponent = shield;
+    }
+    if (armor != null) {
+      armorValue = armor.getDefenseValue();
+      if (armorValue > biggestValue) {
+        biggestValue = armorValue;
+        biggestComponent = armor;
+      }
+    }
+    if (solarArmor != null) {
+      solarArmorValue = solarArmor.getDefenseValue()
+          + solarArmor.getEnergyResource();
+      if (solarArmorValue > biggestValue) {
+        biggestValue = solarArmorValue;
+        biggestComponent = solarArmor;
+      }
+      if (biggestComponent == armor
+          && design.getFreeSlots() >= 2 && design.getFreeEnergy() <= 1) {
+        biggestValue = solarArmorValue;
+        biggestComponent = solarArmor;
+      }
+    }
+    if (biggestComponent != null) {
+      design.addComponent(biggestComponent);
+    }
+  }
   /**
    * Design new battle ship for certain size
    * @param player Player doing the design
@@ -360,12 +454,19 @@ public final class ShipGenerator {
       Tech[] combatTechs = player.getTechList().getListForType(TechType.Combat);
       Tech shield = TechList.getBestTech(defenseTechs, "Shield");
       Tech armor = TechList.getBestTech(defenseTechs, "Armor plating");
+      Tech solarArmor = TechList.getBestTech(defenseTechs, "Solar armor");
+      Tech organicArmor = TechList.getBestTech(defenseTechs, "Organic armor");
+      Tech distortionShield = TechList.getBestTech(defenseTechs,
+          "Distortion shield");
       Tech shieldGen = TechList.getBestTech(electricsTechs, "Shield generator");
       Tech fighterBay = TechList.getBestTech(electricsTechs, "Fighter bay");
       ShipComponent shieldComp = null;
       ShipComponent shieldGenComp = null;
       ShipComponent armorComp = null;
       ShipComponent fighterBayComp = null;
+      ShipComponent solarArmorComp = null;
+      ShipComponent organicArmorComp = null;
+      ShipComponent distortionShieldComp = null;
       ArrayList<ShipComponent> components = new ArrayList<>();
       ShipComponent thrusters = null;
       if (player.getTechList().isTech("Combat thrusters")) {
@@ -390,12 +491,23 @@ public final class ShipGenerator {
             fighterBay.getComponent());
         components.add(fighterBayComp);
       }
-      if (shieldComp != null
-          && result.getFreeEnergy() >= shieldComp.getEnergyRequirement()) {
-        result.addComponent(shieldComp);
-      } else if (armorComp != null) {
-        result.addComponent(armorComp);
+      if (solarArmor != null) {
+        solarArmorComp = ShipComponentFactory.createByName(
+            solarArmor.getComponent());
+        components.add(solarArmorComp);
       }
+      if (organicArmor != null) {
+        organicArmorComp = ShipComponentFactory.createByName(
+            organicArmor.getComponent());
+        components.add(organicArmorComp);
+      }
+      if (distortionShield != null) {
+        distortionShieldComp = ShipComponentFactory.createByName(
+            distortionShield.getComponent());
+        components.add(distortionShieldComp);
+      }
+      addBestDefenseComponent(shieldComp, armorComp, solarArmorComp,
+          organicArmorComp, distortionShieldComp, result);
       Tech weapTech = player.getTechList()
           .getBestWeapon(ShipComponentType.WEAPON_BEAM);
       if (weapTech != null) {
@@ -422,6 +534,24 @@ public final class ShipGenerator {
       }
       weapTech = player.getTechList()
           .getBestWeapon(ShipComponentType.WEAPON_RAILGUN);
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList()
+          .getBestWeapon(ShipComponentType.PLASMA_CANNON);
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList()
+          .getBestWeapon(ShipComponentType.ION_CANNON);
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList()
+          .getBestWeapon(ShipComponentType.TRACTOR_BEAM);
       if (weapTech != null) {
         components
             .add(ShipComponentFactory.createByName(weapTech.getComponent()));

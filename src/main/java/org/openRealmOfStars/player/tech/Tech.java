@@ -215,6 +215,23 @@ public class Tech {
   }
 
   /**
+   * Get special information about the tech.
+   * @param techName Tech name for checking special text.
+   * @return Special text or null
+   */
+  private static String getSpecialText(final String techName) {
+    String result = null;
+    if (techName.equals("Deadly virus")) {
+      result = "Genetic code of deadly virus. This allows realm to do\n"
+          + "special espionage operation against another realm. Succesful\n"
+          + "operation will kill all but one population from the planet.\n"
+          + "That realm will also then learn this deadly virus.\n"
+          + "This deadly virus can also accidentaly spread when doing\n"
+          + "trade with another realm.";
+    }
+    return result;
+  }
+  /**
    * Get Tech info as a String
    * @param race SpaceRace who is building the tech
    * @return tech info
@@ -230,6 +247,14 @@ public class Tech {
     Building building = null;
     ShipComponent comp = null;
     ShipHull shipHull = null;
+    String special = getSpecialText(name);
+    if (special != null) {
+      sb.append("\n");
+      sb.append("Special: ");
+      sb.append("\n");
+      sb.append(special);
+      sb.append("\n");
+    }
     if (improvement != null) {
       sb.append("Improvement: ");
       sb.append("\n");
@@ -252,13 +277,22 @@ public class Tech {
       sb.append("\n");
     }
     sb.append("\n");
+    boolean extraLineChange = false;
     if (building != null) {
       sb.append(building.getFullDescription());
+      extraLineChange = true;
     }
     if (comp != null) {
+      if (extraLineChange) {
+        sb.append("\n");
+      }
       sb.append(comp.toString());
+      extraLineChange = true;
     }
     if (shipHull != null) {
+      if (extraLineChange) {
+        sb.append("\n");
+      }
       sb.append(shipHull.toString());
     }
     return sb.toString();

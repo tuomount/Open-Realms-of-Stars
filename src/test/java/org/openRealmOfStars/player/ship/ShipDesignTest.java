@@ -208,7 +208,7 @@ public class ShipDesignTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testBattleShipDesign() {
+  public void testRareTechs() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
     info.getTechList().addTech(TechFactory.createCombatTech("Plasma cannon Mk1", 2));
     info.getTechList().addTech(TechFactory.createDefenseTech("Solar armor Mk1", 3));
@@ -229,7 +229,51 @@ public class ShipDesignTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRareTechs() {
+  public void testRareTechs2() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    info.getTechList().addTech(TechFactory.createCombatTech("Ion cannon Mk1", 3));
+    info.getTechList().addTech(TechFactory.createDefenseTech("Organic armor Mk1", 3));
+    info.getTechList().addTech(TechFactory.createPropulsionTech("Fusion source Mk2", 3));
+    ShipDesign design = ShipGenerator.createBattleShip(info, ShipSize.SMALL, false, false);
+    boolean ionCannon = false;
+    boolean organicArmor = false;
+    for (ShipComponent comp : design.getComponentList()) {
+      if (comp.getType() == ShipComponentType.ION_CANNON) {
+        ionCannon = true;
+      }
+      if (comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
+        organicArmor = true;
+      }
+    }
+    assertTrue(ionCannon);
+    assertTrue(organicArmor);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRareTechs3() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    info.getTechList().addTech(TechFactory.createCombatTech("Ion cannon Mk1", 3));
+    info.getTechList().addTech(TechFactory.createDefenseTech("Distortion shield Mk1", 4));
+    info.getTechList().addTech(TechFactory.createPropulsionTech("Fusion source Mk2", 3));
+    ShipDesign design = ShipGenerator.createBattleShip(info, ShipSize.SMALL, false, false);
+    boolean ionCannon = false;
+    boolean distortionShield = false;
+    for (ShipComponent comp : design.getComponentList()) {
+      if (comp.getType() == ShipComponentType.ION_CANNON) {
+        ionCannon = true;
+      }
+      if (comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
+        distortionShield = true;
+      }
+    }
+    assertTrue(ionCannon);
+    assertTrue(distortionShield);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBattleShipDesign() {
     ShipHull hull = ShipHullFactory.createByName("Battleship Mk1", SpaceRace.HUMAN);
     ShipDesign design = new ShipDesign(hull);
     ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
@@ -256,6 +300,7 @@ public class ShipDesignTest {
     assertEquals(false, design.isTrooperShip());
   }
 
+  
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPrivateerDesign() {

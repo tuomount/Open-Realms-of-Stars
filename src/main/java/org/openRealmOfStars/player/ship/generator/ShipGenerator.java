@@ -328,11 +328,9 @@ public final class ShipGenerator {
         && design.getFreeEnergy() >= shield.getEnergyRequirement()) {
       shieldValue = shield.getDefenseValue();
       if (shieldValue > biggestValue) {
-        biggestValue = distortionShieldValue;
-        biggestComponent = distortionShield;
+        biggestValue = shieldValue;
+        biggestComponent = shield;
       }
-      biggestValue = shieldValue;
-      biggestComponent = shield;
     }
     if (armor != null) {
       armorValue = armor.getDefenseValue();

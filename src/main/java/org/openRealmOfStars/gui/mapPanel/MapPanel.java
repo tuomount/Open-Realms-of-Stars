@@ -1432,8 +1432,7 @@ public class MapPanel extends JPanel {
           break;
           }
         case PRIVATEERING: {
-          //FIXME Change better privateer sound
-          SoundPlayer.playSound(SoundPlayer.REPAIR);
+          SoundPlayer.playSound(SoundPlayer.ALARM);
           break;
           }
         case LIGHTNING: {

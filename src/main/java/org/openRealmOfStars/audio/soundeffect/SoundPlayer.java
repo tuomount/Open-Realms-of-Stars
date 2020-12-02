@@ -182,6 +182,11 @@ public final class SoundPlayer {
    */
   public static final String ALARM = "/resources/sounds/alarm.wav";
   /**
+   * Sound effect for transport inbound
+   */
+  public static final String TRANSPORT_INBOUND =
+      "/resources/sounds/transport_inbound.wav";
+  /**
    * Sound effect for destroying building
    */
   public static final String DESTROY_BUILDING =

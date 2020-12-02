@@ -582,6 +582,9 @@ public class CombatAnimation {
       }
     } else if (type == CombatAnimationType.PRIVATEERING) {
       count--;
+      if (count == explosionAnim.getMaxFrames() / 2) {
+        SoundPlayer.playSound(SoundPlayer.TRANSPORT_INBOUND);
+      }
       if (animFrame < explosionAnim.getMaxFrames()) {
         showAnim = true;
         animFrame++;

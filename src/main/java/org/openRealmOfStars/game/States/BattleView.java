@@ -107,6 +107,10 @@ public class BattleView extends BlackPanel {
   private static final int MAX_DELAY_COUNT = 30;
 
   /**
+   * Max timer count value.
+   */
+  private static final int MAX_TIMER_COUNT = 40;
+  /**
    * End button
    */
   private SpaceButton endButton;
@@ -130,6 +134,14 @@ public class BattleView extends BlackPanel {
    * Text log
    */
   private Logger textLogger;
+  /**
+   * Loop count how many times, alarm will be played.
+   */
+  private int loopCount;
+  /**
+   * How many times event must happen before dropping loopCount;
+   */
+  private int timerCount;
 
   /**
    * Battle view for space combat
@@ -188,8 +200,12 @@ public class BattleView extends BlackPanel {
     if (listener instanceof Game) {
       Game game = (Game) listener;
       mapPanel = new MapPanel(game);
+      loopCount = 5;
+      timerCount = MAX_TIMER_COUNT;
     } else {
       mapPanel = new MapPanel(true);
+      loopCount = 0;
+      timerCount = 0;
     }
     mapPanel.setSize(Combat.MAX_X * ShipImage.MAX_WIDTH,
         Combat.MAX_Y * ShipImage.MAX_HEIGHT);
@@ -333,6 +349,16 @@ public class BattleView extends BlackPanel {
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      if (loopCount > 0) {
+        if (timerCount == MAX_TIMER_COUNT) {
+          SoundPlayer.playSound(SoundPlayer.ALARM);
+        }
+        timerCount--;
+        if (timerCount <= 0) {
+          loopCount--;
+          timerCount = MAX_TIMER_COUNT;
+        }
+      }
       if (combatMapMouseListener.isEscaped()) {
         combatMapMouseListener.setComponentUse(-1);
         if (combat.getCurrentShip() != null) {

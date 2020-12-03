@@ -603,7 +603,7 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range: ");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 75%");
+      sb.append("\nHit: 75%, cannot be fully deflected");
       sb.append("\n");
       break;
     }

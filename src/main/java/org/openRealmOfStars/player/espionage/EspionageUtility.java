@@ -146,7 +146,7 @@ public final class EspionageUtility {
         list.add(EspionageMission.FALSE_FLAG);
       }
       if (info.getTechList().hasTech(TechType.Improvements, "Deadly virus")
-          && planet.getPlanetPlayerInfo().getTechList().hasTech(
+          && !planet.getPlanetPlayerInfo().getTechList().hasTech(
               TechType.Improvements, "Deadly virus")
           && planet.getTotalPopulation() > 1
           && planet.getPlanetPlayerInfo().getRace() != SpaceRace.MECHIONS) {

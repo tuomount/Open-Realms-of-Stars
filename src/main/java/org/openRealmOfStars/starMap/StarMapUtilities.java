@@ -667,7 +667,7 @@ public final class StarMapUtilities {
       sb.append(planet.getName());
       sb.append(" via trading between ");
       sb.append(info.getEmpireName());
-      sb.append(".");
+      sb.append(". ");
       if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.MECHIONS) {
         sb.append("Luckly planet is occupied by Mechions which are"
             + " immune to deadly viruses. This does not affect to"
@@ -675,7 +675,7 @@ public final class StarMapUtilities {
       } else {
         sb.append("Planet is immediately placed on guarantee to stop "
             + "the virus spreading. Bad news is that only one population "
-            + "is immune to virus. Most of the population is dead.");
+            + "is immune to virus. Most of the population is dead. ");
         int pop = planet.getTotalPopulation();
         pop = pop - 1;
         for (int i = 0; i < pop; i++) {

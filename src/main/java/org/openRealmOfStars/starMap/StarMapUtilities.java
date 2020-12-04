@@ -665,7 +665,23 @@ public final class StarMapUtilities {
       StringBuilder sb = new StringBuilder();
       sb.append("Deadly virus outbreaks at ");
       sb.append(planet.getName());
-      sb.append(" via trading between ");
+      String relation = info.getDiplomacy().getDiplomaticRelation(
+          planet.getPlanetOwnerIndex());
+      if (relation.equals(Diplomacy.WAR)) {
+        sb.append(" during war operations between ");
+      } else if (relation.equals(Diplomacy.TRADE_ALLIANCE)) {
+        sb.append(" via trading between ");
+      } else if (relation.equals(Diplomacy.DEFENSIVE_PACT)) {
+        sb.append(" via trading and military training between ");
+      } else if (relation.equals(Diplomacy.ALLIANCE)) {
+        sb.append(" via close trading between ");
+      } else if (relation.equals(Diplomacy.PEACE)) {
+        sb.append(" via peacuful conversations between ");
+      } else if (relation.equals(Diplomacy.TRADE_EMBARGO)) {
+        sb.append(" via secret negotiations between ");
+      } else {
+        sb.append(". Rumors suggest that disease spread from ");
+      }
       sb.append(info.getEmpireName());
       sb.append(". ");
       if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.MECHIONS) {

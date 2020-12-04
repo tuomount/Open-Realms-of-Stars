@@ -173,6 +173,30 @@ public class Planet {
    * String containg how happiness is calculated
    */
   private String happinessExplanation;
+  /**
+   * String containing how farm production is calculated.
+   */
+  private String farmProdExplain;
+  /**
+   * String containing how metal production is calculated.
+   */
+  private String metaProdExplain;
+  /**
+   * String containing how production production is calculated.
+   */
+  private String prodProdExplain;
+  /**
+   * String containing how research production is calculated.
+   */
+  private String reseProdExplain;
+  /**
+   * String containing how culture production is calculated.
+   */
+  private String cultProdExplain;
+  /**
+   * String containing how credit production is calculated.
+   */
+  private String credProdExplain;
 
   /**
    * Starting realm index for ancient realm start.
@@ -767,6 +791,7 @@ public class Planet {
     if (happinessEffect == null) {
       happinessEffect = new HappinessEffect(HappinessBonus.NONE, 0);
     }
+    StringBuilder sb = new StringBuilder();
     int result = 0;
     int mult = 100;
     int div = 100;
@@ -777,128 +802,410 @@ public class Planet {
     int totalPopulation = getTotalPopulation();
     switch (prod) {
     case PRODUCTION_FOOD: {
+      sb.append("<html>");
+      sb.append("Total food production.<br>");
+      sb.append("<li> planet +2");
+      sb.append("<br>");
       // Planet always produces +2 food
       mult = planetOwnerInfo.getRace().getFoodSpeed();
+      int value = workers[FOOD_FARMERS] * mult / div;
+      if (value > 0) {
+        sb.append("<li> farmers +");
+        sb.append(value);
+        sb.append("<br>");
+      }
+      value = getTotalProductionFromBuildings(prod);
       result = workers[FOOD_FARMERS] * mult / div + 2
-          + getTotalProductionFromBuildings(prod);
+          + value;
+      if (value > 0) {
+        sb.append("<li> buildings +");
+        sb.append(value);
+        sb.append("<br>");
+      }
       if (eventFound && event.getExtraFoodProduction() != 0) {
-        result = result + event.getExtraFoodProduction();
+        value = event.getExtraFoodProduction();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> ");
+          sb.append(event.getName());
+          sb.append(" +");
+          sb.append(value);
+          sb.append("<br>");
+        }
+        if (value < 0) {
+          sb.append("<li> ");
+          sb.append(event.getName());
+          sb.append(" ");
+          sb.append(value);
+          sb.append("<br>");
+        }
       }
       if (planetOwnerInfo.getRace() == SpaceRace.CHIRALOIDS) {
         // Chiraloids radiosynthesis
         int rad = getRadiationLevel();
         int currentPop = getTotalPopulation();
         if (currentPop > 0) {
-          result = result + Math.min(rad, currentPop);
+          value = Math.min(rad, currentPop);
+          result = result + value;
+          if (value > 0) {
+            sb.append("<li> radio synthesis +");
+            sb.append(value);
+            sb.append("<br>");
+          }
         }
       }
       if (totalPopulation >= 4) {
-        result = result + government.getFoodBonus();
+        value = government.getFoodBonus();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> government +");
+          sb.append(value);
+          sb.append("<br>");
+        }
       }
       if (governor != null && governor.hasPerk(Perk.AGRICULTURAL)) {
         result = result + 1;
+        sb.append("<li> governor +1");
+        sb.append("<br>");
       }
+      sb.append("</html>");
+      farmProdExplain = sb.toString();
       break;
     }
     case PRODUCTION_METAL: {
+      sb.append("<html>");
+      sb.append("Total metal production.<br>");
+      sb.append("<li> planet +1");
+      sb.append("<br>");
       mult = planetOwnerInfo.getRace().getMiningSpeed();
-      // Planet always produces +1 metal
-      result = workers[METAL_MINERS] * mult / div + 1
-          + getTotalProductionFromBuildings(prod);
-      if (eventFound && event.getExtraMetalProduction() != 0) {
-        result = result + event.getExtraMetalProduction();
+      int value = workers[METAL_MINERS] * mult / div;
+      if (value > 0) {
+        sb.append("<li> miners +");
+        sb.append(value);
+        sb.append("<br>");
       }
-      if (result > getAmountMetalInGround()) {
-        result = getAmountMetalInGround();
+      // Planet always produces +1 metal
+      value = getTotalProductionFromBuildings(prod);
+      result = workers[METAL_MINERS] * mult / div + 1
+          + value;
+      if (value > 0) {
+        sb.append("<li> buildings +");
+        sb.append(value);
+        sb.append("<br>");
+      }
+      if (eventFound && event.getExtraMetalProduction() != 0) {
+        value = event.getExtraMetalProduction();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> ");
+          sb.append(event.getName());
+          sb.append(" +");
+          sb.append(value);
+          sb.append("<br>");
+        }
+        if (value < 0) {
+          sb.append("<li> ");
+          sb.append(event.getName());
+          sb.append(" ");
+          sb.append(value);
+          sb.append("<br>");
+        }
       }
       if (happinessEffect.getType() == HappinessBonus.METAL) {
-        result = result + happinessEffect.getValue();
+        value = happinessEffect.getValue();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> happiness +");
+          sb.append(value);
+          sb.append("<br>");
+        }
+        if (value < 0) {
+          sb.append("<li> happiness ");
+          sb.append(value);
+          sb.append("<br>");
+        }
       }
       if (governor != null && governor.hasPerk(Perk.MINER)) {
         result = result + 1;
+        sb.append("<li> governor +1");
+        sb.append("<br>");
       }
+      if (result > getAmountMetalInGround()) {
+        result = getAmountMetalInGround();
+        sb.append("Limited by amount of metal available on planet!");
+      }
+      sb.append("</html>");
+      metaProdExplain = sb.toString();
       break;
     }
     case PRODUCTION_PRODUCTION: {
+      sb.append("<html>");
+      sb.append("Total production.<br>");
+      sb.append("<li> planet +1");
+      sb.append("<br>");
       mult = planetOwnerInfo.getRace().getProductionSpeed();
+      int value = workers[PRODUCTION_PRODUCTION] * mult / div;
+      if (value > 0) {
+        sb.append("<li> workers +");
+        sb.append(value);
+        sb.append("<br>");
+      }
       // Planet always produces +1 production
+      value = getTotalProductionFromBuildings(prod);
       result = workers[PRODUCTION_PRODUCTION] * mult / div + 1
-          + getTotalProductionFromBuildings(prod);
+          + value;
+      if (value > 0) {
+        sb.append("<li> buildings +");
+        sb.append(value);
+        sb.append("<br>");
+      }
       if (eventFound && event.getExtraProduction() != 0) {
-        result = result + event.getExtraProduction();
+        value = event.getExtraProduction();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> ");
+          sb.append(event.getName());
+          sb.append(" +");
+          sb.append(value);
+          sb.append("<br>");
+        }
+        if (value < 0) {
+          sb.append("<li> ");
+          sb.append(event.getName());
+          sb.append(" ");
+          sb.append(value);
+          sb.append("<br>");
+        }
       }
       if (totalPopulation >= 4) {
-        result = result + government.getProductionBonus();
+        value = government.getProductionBonus();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> government +");
+          sb.append(value);
+          sb.append("<br>");
+        }
       }
       result = result - getTax();
+      if (getTax() > 0) {
+        sb.append("<li> tax -");
+        sb.append(getTax());
+        sb.append("<br>");
+      }
       if (happinessEffect.getType() == HappinessBonus.PRODUCTION) {
         result = result + happinessEffect.getValue();
+        if (value > 0) {
+          sb.append("<li> happiness +");
+          sb.append(value);
+          sb.append("<br>");
+        }
+        if (value < 0) {
+          sb.append("<li> happiness ");
+          sb.append(value);
+          sb.append("<br>");
+        }
       }
+      value = 0;
       if (governor != null && governor.hasPerk(Perk.INDUSTRIAL)) {
         result = result + 1;
+        value = value + 1;
       }
       if (governor != null && governor.hasPerk(Perk.MICRO_MANAGER)
           && result > 0) {
         result = result - 1;
+        value = value - 1;
       }
+      if (value > 0) {
+        sb.append("<li> governor +");
+        sb.append(value);
+        sb.append("<br>");
+      }
+      if (value < 0) {
+        sb.append("<li> governor ");
+        sb.append(value);
+        sb.append("<br>");
+      }
+      sb.append("</html>");
+      prodProdExplain = sb.toString();
       break;
     }
     case PRODUCTION_RESEARCH: {
+      sb.append("<html>");
+      sb.append("Total research production.<br>");
       mult = planetOwnerInfo.getRace().getResearchSpeed();
-      // Planet does not have research bonus
-      result = workers[PRODUCTION_RESEARCH] * mult / div
-          + getTotalProductionFromBuildings(prod);
-      if (totalPopulation >= 4) {
-        result = result + government.getResearchBonus();
+      int value = workers[PRODUCTION_RESEARCH] * mult / div;
+      if (value > 0) {
+        sb.append("<li> scientists +");
+        sb.append(value);
+        sb.append("<br>");
       }
+      // Planet does not have research bonus
+      value = getTotalProductionFromBuildings(prod);
+      result = workers[PRODUCTION_RESEARCH] * mult / div
+          + value;
+      if (value > 0) {
+        sb.append("<li> buildings +");
+        sb.append(value);
+        sb.append("<br>");
+      }
+      if (totalPopulation >= 4) {
+        value = government.getResearchBonus();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> government +");
+          sb.append(value);
+          sb.append("<br>");
+        }
+      }
+      value = 0;
       if (governor != null && governor.hasPerk(Perk.SCIENTIST)) {
         result = result + 1;
+        value = value + 1;
       }
       if (governor != null && governor.hasPerk(Perk.STUPID)) {
         result = result - 1;
+        value = value - 1;
       }
+      if (value > 0) {
+        sb.append("<li> governor +");
+        sb.append(value);
+        sb.append("<br>");
+      }
+      if (value < 0) {
+        sb.append("<li> governor ");
+        sb.append(value);
+        sb.append("<br>");
+      }
+      sb.append("</html>");
+      reseProdExplain = sb.toString();
       break;
     }
     case PRODUCTION_CULTURE: {
+      sb.append("<html>");
+      sb.append("Total culture production.<br>");
       mult = planetOwnerInfo.getRace().getCultureSpeed();
+      int value = workers[PRODUCTION_CULTURE] * mult / div;
+      if (value > 0) {
+        sb.append("<li> artists +");
+        sb.append(value);
+        sb.append("<br>");
+      }
       // Planet does not have culture bonus
+      value = getTotalProductionFromBuildings(prod);
       result = workers[PRODUCTION_CULTURE] * mult / div
-          + getTotalProductionFromBuildings(prod);
+          + value;
+      if (value > 0) {
+        sb.append("<li> buildings +");
+        sb.append(value);
+        sb.append("<br>");
+      }
       if (homeWorldIndex != -1) {
         // Home worlds produce one extra culture
         result++;
+        sb.append("<li> home world +1");
+        sb.append("<br>");
       }
       if (happinessEffect.getType() == HappinessBonus.CULTURE) {
-        result = result + happinessEffect.getValue();
+        value = happinessEffect.getValue();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> happiness +");
+          sb.append(value);
+          sb.append("<br>");
+        }
+        if (value < 0) {
+          sb.append("<li> happiness ");
+          sb.append(value);
+          sb.append("<br>");
+        }
       }
       if (governor != null && governor.hasPerk(Perk.ARTISTIC)) {
         result = result + 1;
+        sb.append("<li> governor +1");
+        sb.append("<br>");
       }
+      sb.append("</html>");
+      cultProdExplain = sb.toString();
       break;
     }
     case PRODUCTION_CREDITS: {
+      sb.append("<html>");
+      sb.append("Total credits production.<br>");
       mult = 100;
       // Planet does not have credit bonus
       result = getTotalProductionFromBuildings(prod) + getTax()
           - getMaintenanceCost();
+      int value = getTotalProductionFromBuildings(prod);
+      if (value > 0) {
+        sb.append("<li> buildings +");
+        sb.append(value);
+        sb.append("<br>");
+      }
+      if (getTax() > 0) {
+        sb.append("<li> tax +");
+        sb.append(getTax());
+        sb.append("<br>");
+      }
+      value = getMaintenanceCost();
+      if (value > 0) {
+        sb.append("<li> maintenance -");
+        sb.append(value);
+        sb.append("<br>");
+      }
       if (totalPopulation >= 4) {
-        result = result + government.getCreditBonus();
+        value = government.getCreditBonus();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> government +");
+          sb.append(value);
+          sb.append("<br>");
+        }
+
       }
       if (happinessEffect.getType() == HappinessBonus.CREDIT) {
-        result = result + happinessEffect.getValue();
+        value = happinessEffect.getValue();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> happiness +");
+          sb.append(value);
+          sb.append("<br>");
+        }
+        if (value < 0) {
+          sb.append("<li> happiness ");
+          sb.append(value);
+          sb.append("<br>");
+        }
+
       }
+      value = 0;
       if (governor != null && governor.hasPerk(Perk.MERCHANT)) {
         result = result + 1;
+        value = value + 1;
       }
       if (governor != null && governor.hasPerk(Perk.SKILLFUL)) {
         result = result + 1;
+        value = value + 1;
       }
       if (governor != null && governor.hasPerk(Perk.CORRUPTED)) {
         result = result - 1;
+        value = value - 1;
       }
       if (governor != null && governor.hasPerk(Perk.INCOMPETENT)) {
         result = result - 1;
+        value = value - 1;
       }
+      if (value > 0) {
+        sb.append("<li> governor +");
+        sb.append(value);
+        sb.append("<br>");
+      }
+      if (value < 0) {
+        sb.append("<li> governor ");
+        sb.append(value);
+        sb.append("<br>");
+      }
+      sb.append("</html>");
+      credProdExplain = sb.toString();
       break;
     }
     case PRODUCTION_POPULATION: {
@@ -2668,6 +2975,66 @@ public class Planet {
     return happinessExplanation;
   }
 
+  /**
+   * Get Food production explanation how it is calculated.
+   * @return Food production explanation
+   */
+  public String getFarmProdExplanation() {
+    if (farmProdExplain == null) {
+      getTotalProduction(PRODUCTION_FOOD);
+    }
+    return farmProdExplain;
+  }
+  /**
+   * Get Metal production explanation how it is calculated.
+   * @return Metal production explanation
+   */
+  public String getMetalProdExplanation() {
+    if (metaProdExplain == null) {
+      getTotalProduction(PRODUCTION_METAL);
+    }
+    return metaProdExplain;
+  }
+  /**
+   * Get production production explanation how it is calculated.
+   * @return Production explanation
+   */
+  public String getProductionExplanation() {
+    if (prodProdExplain == null) {
+      getTotalProduction(PRODUCTION_PRODUCTION);
+    }
+    return prodProdExplain;
+  }
+  /**
+   * Get research production explanation how it is calculated.
+   * @return Research production explanation
+   */
+  public String getResearchProdExplanation() {
+    if (reseProdExplain == null) {
+      getTotalProduction(PRODUCTION_RESEARCH);
+    }
+    return reseProdExplain;
+  }
+  /**
+   * Get culture production explanation how it is calculated.
+   * @return Culture production explanation
+   */
+  public String getCultureProdExplanation() {
+    if (cultProdExplain == null) {
+      getTotalProduction(PRODUCTION_CULTURE);
+    }
+    return cultProdExplain;
+  }
+  /**
+   * Get credits production explanation how it is calculated.
+   * @return Credits production explanation
+   */
+  public String getCreditsProdExplanation() {
+    if (credProdExplain == null) {
+      getTotalProduction(PRODUCTION_CREDITS);
+    }
+    return credProdExplain;
+  }
   /**
    * Does planet have Orbital shield and bombing is not possible.
    * Orbital shield does not protect against invasion

@@ -545,16 +545,21 @@ public class PlanetView extends BlackPanel {
           "Planet population is at maximum!");
     }
     farmProd.setText(": " + planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    farmProd.setToolTipText(planet.getFarmProdExplanation());
     mineProd.setText(": " + planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    mineProd.setToolTipText(planet.getMetalProdExplanation());
     prodProd.setText(
         ": " + planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    prodProd.setToolTipText(planet.getProductionExplanation());
     reseProd
         .setText(": " + planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    reseProd.setToolTipText(planet.getResearchProdExplanation());
     cultProd
         .setText(": " + planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
-
+    cultProd.setToolTipText(planet.getCultureProdExplanation());
     credProd
         .setText(": " + planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    credProd.setToolTipText(planet.getCreditsProdExplanation());
     maintenance.setText(": " + planet.getMaintenanceCost());
     taxPanel.setText(": " + planet.getTax());
     metal.setText(": " + planet.getMetal());

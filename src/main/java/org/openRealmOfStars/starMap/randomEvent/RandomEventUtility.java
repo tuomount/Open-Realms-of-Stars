@@ -274,11 +274,15 @@ public final class RandomEventUtility {
         sb.append(". Treasure contained ");
         sb.append(value);
         sb.append(" worth of credits.");
+        ImageInstruction instructions = new ImageInstruction();
+        instructions.addImage(ImageInstruction.CONTAINERS);
+        event.setImageInstructions(instructions.build());
         event.setText(sb.toString());
         info.setTotalCredits(info.getTotalCredits() + value);
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_CREDIT));
         message.setCoordinate(planet.getCoordinate());
+        message.setRandomEventPop(true);
         info.getMsgList().addFirstMessage(message);
       }
     }

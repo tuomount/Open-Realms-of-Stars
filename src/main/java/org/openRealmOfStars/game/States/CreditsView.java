@@ -182,6 +182,7 @@ public class CreditsView extends BlackPanel {
       + "Teuthidae Space Ship Bridge by Tuomo Untinen\n\n"
       + "Spork Space Ship Bridge by Tuomo Untinen\n\n"
       + "Chiraloid Space Ship Bridge by Tuomo Untinen\n\n"
+      + "Sci-Fi containers by Rubberduck (CC0)\n\n"
       + "\n\nFonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

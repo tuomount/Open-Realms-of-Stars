@@ -354,6 +354,10 @@ public class ImageInstruction {
    * Instructions for spinosaurus
    */
   public static final String SPINOSAURUS = "spinosaurus";
+  /**
+   * Instructions for containers
+   */
+  public static final String CONTAINERS = "containers";
 
   /**
    * Instruction to draw image
@@ -524,7 +528,8 @@ public class ImageInstruction {
         && !TECHNICAL_BREAKTHROUGH.equals(image)
         && !SHIP_DESTROYED.equals(image)
         && !SHUTTLE.equals(image)
-        && !SPINOSAURUS.equals(image)) {
+        && !SPINOSAURUS.equals(image)
+        && !CONTAINERS.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -996,6 +1001,9 @@ public class ImageInstruction {
     }
     if (SPINOSAURUS.equals(image)) {
       drawImg = GuiStatics.IMAGE_SPINOSAURUS;
+    }
+    if (CONTAINERS.equals(image)) {
+      drawImg = GuiStatics.IMAGE_CONTAINERS;
     }
     BufferedImage img = workImage;
     if (img == null) {

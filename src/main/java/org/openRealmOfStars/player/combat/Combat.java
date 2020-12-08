@@ -1688,12 +1688,7 @@ public boolean launchIntercept(final int distance,
         && calculateDistance(ai, deadliest) > ai.getMovesLeft() + 1) {
       // Overload movement
       int index = getCurrentShip().getOverloadMove();
-      int energyReq = 1;
-      if (index != -1 && getCurrentShip().getShip().getComponent(
-          index).getType() == ShipComponentType.THRUSTERS) {
-        energyReq = 0;
-      }
-      if (index != -1 && getCurrentShip().getEnergyReserve() >= energyReq
+      if (index != -1 && getCurrentShip().getEnergyReserve() >= 1
           && DiceGenerator.getRandom(99) < 20) {
         handleOverloading(textLogger, index);
       }
@@ -1934,7 +1929,7 @@ public boolean launchIntercept(final int distance,
           && getCurrentShip().getEnergyLevel() > 1
           && !ship.isStarBase()) {
         getCurrentShip().setEnergyLevel(
-            getCurrentShip().getEnergyLevel() - 2);
+            getCurrentShip().getEnergyLevel() - 1);
         if (!getCurrentShip().isOverloadFailure(index)) {
           getCurrentShip().setMovesLeft(
               getCurrentShip().getMovesLeft() + 1);
@@ -2069,7 +2064,7 @@ public boolean launchIntercept(final int distance,
           && ship.componentIsWorking(index)
           && getCurrentShip().getEnergyLevel() > 0) {
         getCurrentShip().setEnergyLevel(
-            getCurrentShip().getEnergyLevel() - 2);
+            getCurrentShip().getEnergyLevel() - 1);
         if (!getCurrentShip().isOverloadFailure(index)) {
           getCurrentShip().setCloakOverloaded(true);
           if (textLogger != null) {

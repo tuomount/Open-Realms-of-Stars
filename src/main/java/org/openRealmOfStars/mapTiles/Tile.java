@@ -249,6 +249,9 @@ public class Tile {
         || name.equals(TileNames.SPACE_ANOMALY_PIRATE)
         || name.equals(TileNames.SPACE_ANOMALY_SHIP)
         || name.equals(TileNames.SPACE_ANOMALY_TECH)
+        || name.equals(TileNames.SPACE_ANOMALY_MECHION)
+        || name.equals(TileNames.SPACE_ANOMALY_RARE_TECH)
+        || name.equals(TileNames.SPACE_ANOMALY_TIME_WARP)
         || name.equals(TileNames.WORM_HOLE1)
         || name.equals(TileNames.WORM_HOLE2)) {
       return true;

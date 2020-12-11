@@ -455,6 +455,12 @@ public class StarMap {
         tiles = new int[maxX][maxY];
         tileInfo = new SquareInfo[maxX][maxY];
         culture = new CulturePower[maxX][maxY];
+        history = new History();
+        if (ancientRealmStart) {
+          history.addTurn(-config.getAncientHeadStart());
+        } else {
+          history.addTurn(0);
+        }
         sunList = new ArrayList<>();
         planetList = new ArrayList<>();
         for (int i = 0; i < maxX; i++) {

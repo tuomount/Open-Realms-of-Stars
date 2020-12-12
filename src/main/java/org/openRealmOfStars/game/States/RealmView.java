@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 
@@ -15,6 +16,7 @@ import org.openRealmOfStars.gui.labels.HyperLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.leader.Perk;
 
 /**
 *
@@ -49,8 +51,10 @@ public class RealmView extends BlackPanel {
    * Realm view constructor
    * @param realm Realm which is being shown
    * @param listener ActionListener
+   * @param knowledgeBonus Knowledge bonus between 0-10.
    */
-  public RealmView(final PlayerInfo realm, final ActionListener listener) {
+  public RealmView(final PlayerInfo realm, final ActionListener listener,
+      final int knowledgeBonus) {
     this.setLayout(new BorderLayout());
     InfoPanel base = new InfoPanel();
     base.setLayout(new BoxLayout(base, BoxLayout.Y_AXIS));
@@ -78,7 +82,21 @@ public class RealmView extends BlackPanel {
     info.add(governmentDescription, BorderLayout.CENTER);
     String leaderDesc = "<html>No leader as ruler.</html>";
     if (realm.getRuler() != null) {
-      leaderDesc = "<html>" + realm.getRuler().getDescription() + "</html>";
+      StringBuilder sb = new StringBuilder();
+      ArrayList<Perk> perkList = realm.getRuler().getPerkList();
+      for (Perk perk : perkList) {
+        if (perk.isKnownPerk(knowledgeBonus)) {
+          sb.append("<li> ");
+          sb.append(perk.getName());
+          sb.append("<br>");
+        }
+      }
+      if (sb.length() > 0) {
+        leaderDesc = "<html>" + realm.getRuler().getDescription()
+            + "<ht><br>Perks:<br>" + sb.toString() + "</html>";
+      } else {
+        leaderDesc = "<html>" + realm.getRuler().getDescription() + "</html>";
+      }
       leaderDesc = leaderDesc.replace("\n", "<br>");
     }
     HyperLabel leaderDescription = new HyperLabel(leaderDesc);

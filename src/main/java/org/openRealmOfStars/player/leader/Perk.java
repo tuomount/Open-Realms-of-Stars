@@ -439,4 +439,100 @@ public enum Perk {
   public String getName() {
     return name;
   }
+
+  /**
+   * Is perk visible with certain knowledge bonus.
+   * Knowledge bonus is between 0-10.
+   * @param knowledgeBonus Value between 0-10
+   * @return True if perk is visible.
+   */
+  public boolean isKnownPerk(final int knowledgeBonus) {
+    switch (this) {
+      case CHARISMATIC:
+      case CHATTERBOX:
+      case REPULSIVE:
+      case ACADEMIC: {
+        return true;
+      }
+      case PEACEFUL:
+      case STUPID:
+      case WEALTHY:
+      case DIPLOMATIC: {
+        if (knowledgeBonus > 0) {
+          return true;
+        }
+      }
+      case POWER_HUNGRY:
+      case LOGICAL:
+      case SKILLFUL:
+      case MAD:
+      case INCOMPETENT: {
+        if (knowledgeBonus > 1) {
+          return true;
+        }
+      }
+      case CORRUPTED:
+      case GOOD_LEADER:
+      case MILITARISTIC:
+      case PACIFIST:
+      case SLOW_LEARNER:
+      case SCIENTIST:
+      case WARLORD:
+      case AGGRESSIVE: {
+        if (knowledgeBonus > 2) {
+          return true;
+        }
+      }
+      case DISCIPLINE:
+      case TRADER:
+      case MERCHANT:
+      case WEAK_LEADER:
+      case HEALTHY:
+      case ADDICTED: {
+        if (knowledgeBonus > 3) {
+          return true;
+        }
+      }
+      case FTL_ENGINEER:
+      case EXPLORER: {
+        if (knowledgeBonus > 4) {
+          return true;
+        }
+      }
+      case MICRO_MANAGER:
+      case ARTISTIC: {
+        if (knowledgeBonus > 5) {
+          return true;
+        }
+      }
+      case MINER:
+      case AGRICULTURAL:
+      case INDUSTRIAL: {
+        if (knowledgeBonus > 6) {
+          return true;
+        }
+      }
+      case SCANNER_EXPERT:
+      case COMBAT_TACTICIAN:
+      case COMBAT_MASTER: {
+        if (knowledgeBonus > 7) {
+          return true;
+        }
+      }
+      case SPY_MASTER: {
+        if (knowledgeBonus > 8) {
+          return true;
+        }
+      }
+      case SECRET_AGENT:
+      case COUNTER_AGENT: {
+        if (knowledgeBonus > 9) {
+          return true;
+        }
+      }
+      default: {
+        return false;
+      }
+    }
+  }
 }

@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.espionage.Espionage;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -1848,5 +1849,40 @@ public class PlayerInfo {
       }
     }
     return true;
+  }
+
+  /**
+   * Get knowledge bonus against another realm.
+   * This bonus is between 0-10. Where 0 is that no information is basically
+   * available and 10 is everything is known.
+   * @param realmIndex Realm which knowledge bonus is calculated.
+   * @return Knowledge bonus.
+   */
+  public int getKnowledgeBonus(final int realmIndex) {
+    int result = 0;
+    EspionageList espionageList = getEspionage().getByIndex(realmIndex);
+    if (espionageList != null) {
+      result = espionageList.getTotalBonus();
+    }
+    DiplomacyBonusList diplomacyList = getDiplomacy().getDiplomacyList(
+        realmIndex);
+    if (diplomacyList != null) {
+      if (diplomacyList.getNumberOfMeetings() > 2) {
+        result++;
+      }
+      if (diplomacyList.getNumberOfMeetings() > 5) {
+        result++;
+      }
+      if (diplomacyList.getNumberOfMeetings() > 8) {
+        result++;
+      }
+      if (diplomacyList.getNumberOfMeetings() > 11) {
+        result++;
+      }
+    }
+    if (result > 10) {
+      result = 10;
+    }
+    return result;
   }
 }

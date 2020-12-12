@@ -116,25 +116,55 @@ public class HyperLabel extends SpaceLabel {
       String[] texts = sb.toString().split("\n");
 
       int yTotal = 0;
+      int yCur = 0;
+      int lines = 0;
+      int totalLines = 0;
       for (int i = 0; i < texts.length; i++) {
         int yHeight = GuiStatics.getTextHeight(getFont(), texts[i]);
-        yTotal = yTotal + yHeight;
+        if (texts[i].contains("<ht>") && yCur > yTotal) {
+          yTotal = yCur;
+          totalLines = lines;
+          yCur = 0;
+          lines = 0;
+        }
+        yCur = yCur + yHeight;
+        lines++;
       }
-      int yAvg = yTotal / texts.length;
+      if (yCur > yTotal) {
+        yTotal = yCur;
+        totalLines = lines;
+      }
+      if (totalLines == 0) {
+        totalLines = 1;
+      }
+      int yAvg = yTotal / totalLines;
       int yOffset = height / 2 - yTotal / 2;
       g.setColor(getForeground());
+      int y = 0;
+      int x = 0;
+      int longestLine = 0;
       for (int i = 0; i < texts.length; i++) {
         String tmpText = texts[i];
         int xOffset = 0;
+        if (tmpText.contains("<ht>")) {
+          tmpText = tmpText.replace("<ht>", "");
+          y = 0;
+          x = x + longestLine + 25;
+        }
         if (tmpText.contains("<li>")) {
-          tmpText = texts[i].replace("<li>", "");
+          tmpText = tmpText.replace("<li>", "");
           int xWidth = GuiStatics.getTextWidth(getFont(), " ");
           xOffset = xWidth * 5;
-          g.fillOval(xOffset - xWidth + sx + 2,
-              sy + i * yAvg + 5 + yOffset, 8, 8);
+          g.fillOval(x + xOffset - xWidth + sx + 2,
+              sy + y * yAvg + 5 + yOffset, 8, 8);
         }
-        g.drawString(tmpText, xOffset + sx + 2,
-            sy + i * yAvg + yAvg + yOffset);
+        int lineLength = GuiStatics.getTextWidth(getFont(), tmpText);
+        if (lineLength > longestLine) {
+          longestLine = lineLength;
+        }
+        g.drawString(tmpText, x + xOffset + sx + 2,
+            sy + y * yAvg + yAvg + yOffset);
+        y++;
       }
     }
 

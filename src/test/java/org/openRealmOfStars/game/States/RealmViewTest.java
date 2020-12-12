@@ -40,7 +40,7 @@ public class RealmViewTest {
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
-    new RealmView(info, listener);
+    new RealmView(info, listener, 10);
   }
 
 }

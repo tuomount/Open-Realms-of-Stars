@@ -1147,9 +1147,11 @@ public class Game implements ActionListener {
    */
   public void showRealmView(final PlayerInfo realm) {
     if (realm == null) {
-      realmView = new RealmView(players.getCurrentPlayerInfo(), this);
+      realmView = new RealmView(players.getCurrentPlayerInfo(), this, 10);
     } else {
-      realmView = new RealmView(realm, this);
+      int knowledge = players.getCurrentPlayerInfo().getKnowledgeBonus(
+          players.getIndex(realm));
+      realmView = new RealmView(realm, this, knowledge);
     }
     this.updateDisplay(realmView);
   }

@@ -618,6 +618,8 @@ public class PlanetBombingView extends BlackPanel {
    */
   public boolean attackBombOrTroops() {
     boolean conquered = false;
+    String attackType = "conquest";
+    String reason = " conquest of planet";
     if (usedComponentIndex != -1) {
       Ship ship = fleet.getShipByIndex(shipIndex);
       ShipComponent comp = ship.getComponent(usedComponentIndex);
@@ -630,6 +632,8 @@ public class PlanetBombingView extends BlackPanel {
             nuked = planet.nukem(comp.getDamage(), comp.getName(), starMap,
                 nuked);
             textLogger.addLog(ship.getName() + " nukes the planet!");
+            attackType = "nuking";
+            reason = " nuclear attack";
             if (planet.getTotalPopulation() == 0) {
               planet.setPlanetOwner(-1, null);
             }
@@ -654,6 +658,8 @@ public class PlanetBombingView extends BlackPanel {
                     ship.getName() + " misses population and buildings...");
               }
             }
+            attackType = "bombing";
+            reason = " massive orbital bombing";
           } else {
             textLogger.addLog("Orbital shield protects the planet!");
           }
@@ -681,6 +687,8 @@ public class PlanetBombingView extends BlackPanel {
               planet.setWorkers(Planet.PRODUCTION_FOOD, left);
             }
             textLogger.addLog("Your troops colonize the planet!");
+            attackType = "conquest";
+            reason = " conquest of planet";
           } else {
             planet.fightAgainstAttacker(shipTroops, starMap);
             ship.setColonist(0);
@@ -689,6 +697,10 @@ public class PlanetBombingView extends BlackPanel {
         }
       }
       usedComponentIndex = -1;
+      if (conquered || planet.getTotalPopulation() == 0) {
+        killGovernor(attackType, reason);
+      }
+
     }
     return conquered;
   }

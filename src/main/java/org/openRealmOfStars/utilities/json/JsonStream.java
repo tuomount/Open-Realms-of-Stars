@@ -33,29 +33,57 @@ public class JsonStream extends InputStream {
    */
   public static final int BEGIN_ARRAY = 91;
   /**
+   * Begin array aka [ left square bracket as string.
+   */
+  public static final String CH_BEGIN_ARRAY = "[";
+  /**
    * Begin object aka  { left curly bracket
    */
   public static final int BEGIN_OBJECT = 123;
+  /**
+   * Begin object aka  { left curly bracket as String
+   */
+  public static final String CH_BEGIN_OBJECT = "{";
   /**
    * End array aka ] right square bracket
    */
   public static final int END_ARRAY = 93;
   /**
+   * End array aka ] right square bracket as string.
+   */
+  public static final String CH_END_ARRAY = "]";
+  /**
    * End object aka } right curly bracket
    */
   public static final int END_OBJECT = 125;
+  /**
+   * End object aka } right curly bracket as String.
+   */
+  public static final String CH_END_OBJECT = "}";
   /**
    * Name separator aka : colon
    */
   public static final int NAME_SEPARATOR = 58;
   /**
+   * Name separator aka : colon as String.
+   */
+  public static final String CH_NAME_SEPARATOR = ":";
+  /**
    * value separator aka , comma
    */
   public static final int VALUE_SEPARATOR = 44;
   /**
+   * value separator aka , comma as String.
+   */
+  public static final String CH_VALUE_SEPARATOR = ",";
+  /**
    * String start and end aka " double qoute
    */
   public static final int DOUBLE_QOUTE = 34;
+  /**
+   * String start and end aka " double qoute as String
+   */
+  public static final String CH_DOUBLE_QOUTE = "\"";
 
   /**
    * Buffer where json is read.
@@ -192,7 +220,8 @@ public class JsonStream extends InputStream {
   }
 
   /**
-   * Count how many bytes something is until character is encountered
+   * Count how many bytes something is until character is encountered.
+   * Escaped characters are skipped.
    * @param character Character to encounter.
    * @return number of bytes until character is met.
    * @throws IOException If stream is closed.
@@ -201,7 +230,7 @@ public class JsonStream extends InputStream {
     int count = 0;
     if (isReadable()) {
       byte value = buffer[offset];
-      while (value != character) {
+      while (value != character && value != 92) {
         count++;
         if (offset + count < buffer.length) {
           value = buffer[offset + count];
@@ -227,5 +256,25 @@ public class JsonStream extends InputStream {
       return new String(temp, StandardCharsets.UTF_8);
     }
     return null;
+  }
+
+  /**
+   * Read certain US ascii string away from stream
+   * @param text String to read away.
+   * @return True if stream contained string at position
+   */
+  public boolean readAway(final String text) {
+    int limit = text.length();
+    if (offset + limit > buffer.length) {
+      limit = buffer.length - offset;
+    }
+    byte[] buf = new byte[limit];
+    System.arraycopy(buffer, offset, buf, 0, limit);
+    String str = new String(buf, StandardCharsets.US_ASCII);
+    if (str.equals(text)) {
+      offset = offset + limit;
+      return true;
+    }
+    return false;
   }
 }

@@ -1,5 +1,7 @@
 package org.openRealmOfStars.utilities.json.values;
 
+import java.util.ArrayList;
+
 import org.openRealmOfStars.utilities.json.JsonStream;
 
 /**
@@ -21,44 +23,48 @@ import org.openRealmOfStars.utilities.json.JsonStream;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Json String value
+* Array Value for Json
 *
 */
-public class StringValue implements JsonValue {
+public class ArrayValue implements JsonValue {
 
   /**
-   * Value as string.
+   * Array of values.
    */
-  private String value;
+  private ArrayList<JsonValue> arrayValue;
 
   /**
-   * Constructor for String value.
-   * @param value String value.
+   * Constructor for ArrayValue.
    */
-  public StringValue(final String value) {
-    this.value = value;
+  public ArrayValue() {
+    arrayValue = new ArrayList<>();
+  }
+
+  /**
+   * Get array as array list.
+   * @return Array list of Json Value.
+   */
+  public ArrayList<JsonValue> getArray() {
+    return arrayValue;
   }
   @Override
   public String getValueAsString() {
-    return JsonStream.CH_DOUBLE_QOUTE + value + JsonStream.CH_DOUBLE_QOUTE;
+    StringBuilder sb = new StringBuilder();
+    sb.append(JsonStream.CH_BEGIN_ARRAY);
+    for (int i = 0; i < arrayValue.size(); i++) {
+      JsonValue value = arrayValue.get(i);
+      sb.append(value.getValueAsString());
+      if (i < arrayValue.size() - 1) {
+        sb.append(JsonStream.CH_VALUE_SEPARATOR);
+      }
+    }
+    sb.append(JsonStream.CH_END_ARRAY);
+    return sb.toString();
   }
 
-  /**
-   * Set String value.
-   * @param value Value to set.
-   */
-  public void setValue(final String value) {
-    this.value = value;
-  }
-  /**
-   * Get string value.
-   * @return String value without double qoutes.
-   */
-  public String getValue() {
-    return value;
-  }
   @Override
   public ValueType getType() {
-    return ValueType.STRING;
+    return ValueType.ARRAY;
   }
+
 }

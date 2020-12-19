@@ -252,12 +252,142 @@ public class JsonStream extends InputStream {
       int count = countUntil(DOUBLE_QOUTE);
       byte[] temp = new byte[count];
       System.arraycopy(buffer, offset, temp, 0, count);
-      offset = offset + count;
+      offset = offset + count + 1;
       return new String(temp, StandardCharsets.UTF_8);
     }
     return null;
   }
 
+  /**
+   * Read Json number from stream.
+   * @return Number as string
+   *         or null if no number at current position of stream.
+   * @throws IOException If Stream is closed.
+   */
+  public String readNumber() throws IOException {
+    boolean firstDecimal = true;
+    boolean exponent = false;
+    boolean exponentDigit = false;
+    boolean fracPoint = false;
+    boolean fracDigit = false;
+    boolean stop = false;
+    int startZero = 0;
+    boolean invalid = false;
+    // 0 start, 1 minus, 2 int, 3 frac, 4 frac-digit,
+    // 5 exp-e, 6 exp-sign, 7 exp-digit
+    int state = 0;
+    int count = 0;
+    do  {
+      byte value = buffer[offset + count];
+      if (state == 0) {
+        // start
+        if (value == 45) {
+          state = 1;
+          count++;
+        } else if (value >= 48 && value <= 57) {
+          count++;
+          state = 2;
+          if (value == 48) {
+            startZero++;
+          } else {
+            firstDecimal = false;
+          }
+        } else {
+          // Did not start with minus or digit
+          return null;
+        }
+      } else if (state == 1) {
+        // Negative sign
+        if (value >= 48 && value <= 57) {
+          count++;
+          state = 2;
+          if (value == 48) {
+            startZero++;
+          } else {
+            firstDecimal = false;
+          }
+        } else {
+          // next wasn't digit
+          return null;
+        }
+      } else if (state == 2) {
+        // Integer part
+        if (value >= 48 && value <= 57) {
+          count++;
+          state = 2;
+          if (value == 48 && firstDecimal) {
+            startZero++;
+          } else {
+            firstDecimal = false;
+          }
+        } else {
+          state = 3;
+        }
+      } else if (state == 3) {
+        // Frac decimal
+        if (value == 46) {
+          count++;
+          state = 4;
+          fracPoint = true;
+        } else {
+          state = 5;
+        }
+      } else if (state == 4) {
+        // Frac digit
+        if (value >= 48 && value <= 57) {
+          count++;
+          state = 4;
+          fracDigit = true;
+        } else {
+          state = 5;
+        }
+      } else if (state == 5) {
+        // Exp e
+        if (value == 69 || value == 101) {
+          count++;
+          state = 6;
+          exponent = true;
+        } else {
+          stop = true;
+        }
+      } else if (state == 6) {
+        // Exp sign
+        if (value == 45 || value == 43) {
+          count++;
+          state = 7;
+        }
+        state = 7;
+      } else if (state == 7) {
+        // Frac digit
+        if (value >= 48 && value <= 57) {
+          count++;
+          state = 7;
+          exponentDigit = true;
+        } else {
+          stop = true;
+        }
+      }
+      if (offset + count == buffer.length) {
+        stop = true;
+      }
+    } while (!stop);
+    if (fracDigit != fracPoint) {
+      invalid = true;
+    }
+    if (exponent != exponentDigit) {
+      invalid = true;
+    }
+    if (startZero > 1) {
+      invalid = true;
+    }
+    if (!invalid) {
+      byte[] temp = new byte[count];
+      System.arraycopy(buffer, offset, temp, 0, count);
+      offset = offset + count;
+      return new String(temp, StandardCharsets.UTF_8);
+    }
+    return null;
+  }
   /**
    * Read certain US ascii string away from stream
    * @param text String to read away.

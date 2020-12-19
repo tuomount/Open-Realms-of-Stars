@@ -2,11 +2,14 @@ package org.openRealmOfStars.utilities.json;
 
 import java.io.IOException;
 
+import org.openRealmOfStars.utilities.json.values.ArrayValue;
 import org.openRealmOfStars.utilities.json.values.BooleanValue;
 import org.openRealmOfStars.utilities.json.values.JsonValue;
 import org.openRealmOfStars.utilities.json.values.Member;
 import org.openRealmOfStars.utilities.json.values.NullValue;
+import org.openRealmOfStars.utilities.json.values.NumberValue;
 import org.openRealmOfStars.utilities.json.values.ObjectValue;
+import org.openRealmOfStars.utilities.json.values.StringValue;
 
 /**
 *
@@ -40,9 +43,87 @@ public final class JsonParser {
   }
 
   /**
+   * Parse All possible values from stream
+   * @param json JsonStream
+   * @return JsonValue or null if fails.
+   * @throws IOException  if stream is closed
+   * @throws JsonException If json in malformed
+   */
+  private static JsonValue parseAllValues(final JsonStream json)
+      throws IOException, JsonException {
+    JsonValue value = null;
+    if (json.readAway("null")) {
+      value = new NullValue();
+    } else if (json.readAway("true")) {
+      value = new BooleanValue(true);
+    } else if (json.readAway("false")) {
+      value = new BooleanValue(false);
+    } else {
+      String str = json.readString();
+      if (str != null) {
+        value = new StringValue(str);
+      }
+      if (value == null) {
+        value = parseArray(json);
+      }
+      if (value == null) {
+        str = json.readNumber();
+        if (str != null) {
+          try {
+            value = new NumberValue(str);
+          } catch (IllegalArgumentException e) {
+            value = null;
+          }
+        }
+      }
+      if (value == null) {
+        value = parseObject(json);
+      }
+    }
+    return value;
+  }
+
+  /**
+   * Parse array.
+   * @param json Json Stream
+   * @return ArrayValue
+   * @throws IOException If stream is closed
+   * @throws JsonException If Json is malformed
+   */
+  private static ArrayValue parseArray(final JsonStream json)
+      throws IOException, JsonException {
+    if (json.isCurrent(JsonStream.BEGIN_ARRAY)) {
+      boolean end = false;
+      boolean sepatorRequired = false;
+      ArrayValue result = new ArrayValue();
+      do {
+        if (json.isCurrent(JsonStream.END_ARRAY)) {
+          end = true;
+        } else {
+          json.readWhiteSpace();
+          if (sepatorRequired) {
+            if (json.isCurrent(JsonStream.VALUE_SEPARATOR)) {
+              sepatorRequired = false;
+              json.readWhiteSpace();
+            } else {
+              throw new JsonException("Array is missing value separator.");
+            }
+          }
+          JsonValue value = parseAllValues(json);
+          if (value != null) {
+            result.getArray().add(value);
+            sepatorRequired = true;
+          }
+        }
+      } while (!end);
+      return result;
+    }
+    return null;
+  }
+  /**
    * Parse JSON Member
    * @param json JsonStream
-   * @return Memmber
+   * @return Member or null if name is missing.
    * @throws IOException If stream is closed
    * @throws JsonException If Json is malformed
    */
@@ -54,13 +135,7 @@ public final class JsonParser {
       json.readWhiteSpace();
       if (json.isCurrent(JsonStream.NAME_SEPARATOR)) {
         json.readWhiteSpace();
-        if (json.readAway("null")) {
-          value = new NullValue();
-        } else if (json.readAway("true")) {
-          value = new BooleanValue(true);
-        } else if (json.readAway("false")) {
-          value = new BooleanValue(false);
-        }
+        value = parseAllValues(json);
         Member result = new Member(name);
         result.setValue(value);
         return result;
@@ -68,7 +143,7 @@ public final class JsonParser {
         throw new JsonException("Name separator is missing.");
       }
     } else {
-      throw new JsonException("Name is missing.");
+      return null;
     }
   }
   /**
@@ -81,14 +156,12 @@ public final class JsonParser {
   private static ObjectValue parseObject(final JsonStream json)
       throws IOException, JsonException {
     if (json.isCurrent(JsonStream.BEGIN_OBJECT)) {
-      ObjectValue result = null;
-      json.readWhiteSpace();
+      ObjectValue result = new ObjectValue();
       boolean parsing = true;
       do {
+        json.readWhiteSpace();
         Member member = parseMember(json);
-        if (result == null) {
-          result = new ObjectValue(member);
-        } else {
+        if (member != null) {
           result.getMembers().add(member);
         }
         json.readWhiteSpace();

@@ -32,7 +32,9 @@ public class ObjectValueTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBasic() {
     Member member = new Member("Empty");
-    ObjectValue value = new ObjectValue(new Member("Empty"));
+    ObjectValue value = new ObjectValue();
+    assertEquals("{}", value.getValueAsString());
+    value.getMembers().add(member);
     assertEquals("{\"Empty\": null}", value.getValueAsString());
     StringValue str = new StringValue("Test");
     value.getMembers().remove(0);

@@ -34,12 +34,10 @@ public class ObjectValue implements JsonValue {
   private ArrayList<Member> arrayMember;
 
   /**
-   * Constructor for Object value
-   * @param first First member for object
+   * Constructor for Object value. No members.
    */
-  public ObjectValue(final Member first) {
+  public ObjectValue() {
     arrayMember = new ArrayList<>();
-    arrayMember.add(first);
   }
 
   /**

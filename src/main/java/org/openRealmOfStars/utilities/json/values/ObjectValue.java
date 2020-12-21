@@ -62,6 +62,38 @@ public class ObjectValue implements JsonValue {
     return sb.toString();
   }
 
+  /**
+   * Find First Member with matching name
+   * @param memberName Member name to match
+   * @return Member or null if not found.
+   */
+  public Member findFirst(final String memberName) {
+    for (Member member : arrayMember) {
+      if (member.getName().equals(memberName)) {
+        return member;
+      }
+      if (member.getValue().getType() == ValueType.OBJECT) {
+        ObjectValue next = (ObjectValue) member.getValue();
+        Member result = next.findFirst(memberName);
+        if (result != null) {
+          return result;
+        }
+      }
+      if (member.getValue().getType() == ValueType.ARRAY) {
+        ArrayValue array = (ArrayValue) member.getValue();
+        for (JsonValue arrayValue : array.getArray()) {
+          if (arrayValue.getType() == ValueType.OBJECT) {
+            ObjectValue next = (ObjectValue) arrayValue;
+            Member result = next.findFirst(memberName);
+            if (result != null) {
+              return result;
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
   @Override
   public ValueType getType() {
     return ValueType.OBJECT;

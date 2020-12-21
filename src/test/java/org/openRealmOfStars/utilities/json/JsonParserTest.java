@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.utilities.json.values.Member;
 import org.openRealmOfStars.utilities.json.values.ObjectValue;
 
 /**
@@ -78,6 +79,18 @@ public class JsonParserTest {
     stream.close();
     assertEquals("{\"Widget\": {\"Debug\": false,\"Run\": true,\"Values\": [1,2,3,4],\"NotDefined\": null}}",
         root.getValueAsString());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testSearchJson1() throws IOException {
+    String jsonText = "{\"Widget\": {\"Debug\": false, \"Run\": true, \"Values\": [1,2,3,4], \"NotDefined\": null}}";
+    byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
+    JsonStream stream = new JsonStream(buf);
+    ObjectValue root = JsonParser.parseJson(stream);
+    stream.close();
+    Member member = root.findFirst("Run");
+    assertEquals("true", member.getValue().getValueAsString());
   }
 
 }

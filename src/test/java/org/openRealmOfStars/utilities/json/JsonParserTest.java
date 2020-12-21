@@ -68,4 +68,16 @@ public class JsonParserTest {
         root.getValueAsString());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testSimpleJson3() throws IOException {
+    String jsonText = "{\"Widget\": {\"Debug\": false, \"Run\": true, \"Values\": [1,2,3,4], \"NotDefined\": null}}";
+    byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
+    JsonStream stream = new JsonStream(buf);
+    ObjectValue root = JsonParser.parseJson(stream);
+    stream.close();
+    assertEquals("{\"Widget\": {\"Debug\": false,\"Run\": true,\"Values\": [1,2,3,4],\"NotDefined\": null}}",
+        root.getValueAsString());
+  }
+
 }

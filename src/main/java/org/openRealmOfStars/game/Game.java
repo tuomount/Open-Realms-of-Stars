@@ -26,6 +26,7 @@ import javax.swing.UIManager;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.ambient.Bridge;
 import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
@@ -1945,6 +1946,18 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Static method for testing ambient lights.
+   * @param hostname Bridge hostname which to test
+   */
+  public static void testHue(final String hostname) {
+    Bridge bridge = new Bridge(hostname);
+    try {
+      bridge.register();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  /**
    * Main method to run the game
    * @param args from Command line
    */
@@ -1958,6 +1971,8 @@ public class Game implements ActionListener {
       System.out.println(printTechWiki());
     } else if (args.length > 0 && args[0].equals("--save-update")) {
       saveGameUpdate();
+    } else if (args.length > 1 && args[0].equals("--hue-test")) {
+      testHue(args[1]);
     } else {
       if (args.length > 0 && args[0].equals("--no-music")) {
         System.out.println("Disabling the music...");

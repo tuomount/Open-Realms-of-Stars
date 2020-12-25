@@ -1,5 +1,21 @@
 package org.openRealmOfStars.ambient;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+
+import org.openRealmOfStars.ambient.connection.BlindTrustManager;
+import org.openRealmOfStars.ambient.connection.BridgeHostnameVerifier;
+import org.openRealmOfStars.utilities.IOUtilities;
+
 /**
 *
 * Open Realm of Stars game project
@@ -84,5 +100,32 @@ public class Bridge {
     this.hostname = hostname;
   }
 
-
+  /**
+   * Method for registering OROS to bridge.
+   * @throws IOException If something goes wrong.
+   */
+  public void register() throws IOException {
+    SSLContext sslContext;
+    try {
+      sslContext = SSLContext.getInstance("TLSv1.2");
+    } catch (NoSuchAlgorithmException e) {
+      throw new IOException("Missing algorithm. " + e.getMessage());
+    }
+    TrustManager[] trustManagers = new TrustManager[1];
+    trustManagers[0] = new BlindTrustManager();
+    try {
+      sslContext.init(null, trustManagers, new SecureRandom());
+    } catch (KeyManagementException e) {
+      throw new IOException("Error in key management. " + e.getMessage());
+    }
+    URL url = new URL("https://" + hostname + "/api");
+    HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+    connection.setSSLSocketFactory(sslContext.getSocketFactory());
+    connection.setHostnameVerifier(new BridgeHostnameVerifier(hostname));
+    InputStream is = connection.getInputStream();
+    byte[] buf = IOUtilities.readAll(is);
+    String str = new String(buf, StandardCharsets.UTF_8);
+    System.out.println(str);
+    is.close();
+  }
 }

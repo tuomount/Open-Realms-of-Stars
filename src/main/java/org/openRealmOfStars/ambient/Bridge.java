@@ -15,6 +15,9 @@ import javax.net.ssl.TrustManager;
 import org.openRealmOfStars.ambient.connection.BlindTrustManager;
 import org.openRealmOfStars.ambient.connection.BridgeHostnameVerifier;
 import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.json.values.Member;
+import org.openRealmOfStars.utilities.json.values.ObjectValue;
+import org.openRealmOfStars.utilities.json.values.StringValue;
 
 /**
 *
@@ -122,6 +125,15 @@ public class Bridge {
     HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
     connection.setSSLSocketFactory(sslContext.getSocketFactory());
     connection.setHostnameVerifier(new BridgeHostnameVerifier(hostname));
+    connection.setDoOutput(true);
+    connection.setRequestMethod("POST");
+    ObjectValue root = new ObjectValue();
+    Member deviceMember = new Member("devicetype");
+    deviceMember.setValue(new StringValue(DEVICE_TYPE));
+    root.getMembers().add(deviceMember);
+    connection.getOutputStream().write(root.getValueAsString().getBytes(
+        StandardCharsets.UTF_8));
+    System.out.println(root.getValueAsString());
     InputStream is = connection.getInputStream();
     byte[] buf = IOUtilities.readAll(is);
     String str = new String(buf, StandardCharsets.UTF_8);

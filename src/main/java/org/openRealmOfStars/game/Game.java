@@ -31,6 +31,7 @@ import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.States.AITurnView;
+import org.openRealmOfStars.game.States.AmbientLightView;
 import org.openRealmOfStars.game.States.BattleView;
 import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.DiplomacyView;
@@ -322,6 +323,10 @@ public class Game implements ActionListener {
    * Planet List view for showing all planets realm has
    */
   private PlanetListView planetListView;
+  /**
+   * Options view for the game
+   */
+  private AmbientLightView ambientLightsView;
 
   /**
    * Change Message Fleet or Planet
@@ -880,6 +885,14 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show ambient lights view
+   */
+  public void showAmbientLightsView() {
+    ambientLightsView = new AmbientLightView(configFile, this);
+    this.updateDisplay(ambientLightsView);
+  }
+
+  /**
    * Show espionage view
    */
   public void showEspionageView() {
@@ -1341,6 +1354,9 @@ public class Game implements ActionListener {
       break;
     case OPTIONS_VIEW:
       showOptionsView();
+      break;
+    case SETUP_AMBIENT_LIGHTS:
+      showAmbientLightsView();
       break;
     case NEW_GAME: {
       makeNewGame(true);
@@ -2265,6 +2281,26 @@ public class Game implements ActionListener {
         return;
       }
       if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_SETUP_LIGHTS)) {
+        SoundPlayer.playMenuSound();
+        if (!optionsView.getResolution().equals(getCurrentResolution())) {
+          setNewResolution(optionsView.getResolution());
+        }
+        if (gameFrame.isResizable()) {
+          setResizable(false);
+          setNewResolution(gameFrame.getWidth() + "x" + gameFrame.getHeight());
+        }
+        configFile.setMusicVolume(optionsView.getMusicVolume());
+        configFile.setSoundVolume(optionsView.getSoundVolume());
+        configFile.setBorderless(optionsView.getBorderless());
+        configFile.setLargerFonts(optionsView.getLargerFonts());
+        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
+        GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        writeConfigFile();
+        changeGameState(GameState.SETUP_AMBIENT_LIGHTS);
+        return;
+      }
+      if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_APPLY)) {
         SoundPlayer.playMenuSound();
         if (!optionsView.getResolution().equals("Custom")) {
@@ -2292,6 +2328,31 @@ public class Game implements ActionListener {
         return;
       }
       optionsView.handleAction(arg0);
+      return;
+    }
+    if (gameState == GameState.SETUP_AMBIENT_LIGHTS
+        && ambientLightsView != null) {
+      // Ambient lights setup
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_OK)) {
+        SoundPlayer.playMenuSound();
+        writeConfigFile();
+        changeGameState(GameState.OPTIONS_VIEW);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_APPLY)) {
+        SoundPlayer.playMenuSound();
+        // FIXME Apply lights setup here
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.OPTIONS_VIEW);
+        return;
+      }
+      // FIXME Add lights handling
       return;
     }
     if (gameState == GameState.MAIN_MENU) {
@@ -2888,6 +2949,7 @@ public class Game implements ActionListener {
         || gameState == GameState.SAVE_GAME_NAME_VIEW
         || gameState == GameState.LOAD_GAME
         || gameState == GameState.OPTIONS_VIEW
+        || gameState == GameState.SETUP_AMBIENT_LIGHTS
         || gameState == GameState.MAIN_MENU
         || gameState == GameState.CREDITS) {
       actionPerformedMenus(arg0);

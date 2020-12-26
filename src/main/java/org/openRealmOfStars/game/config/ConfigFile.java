@@ -7,7 +7,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018, 2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -48,6 +48,10 @@ public class ConfigFile {
    * Config option larger fonts
    */
   public static final String CONFIG_LARGER_FONTS = "LargerFonts";
+  /**
+   * Config option for ambient light bridge
+   */
+  public static final String CONFIG_BRIDGE_HOST = "BridgeHost";
   /**
    * Config file default comment
    */
@@ -221,6 +225,34 @@ public class ConfigFile {
     if (width >= 1024 && height >= 768) {
       line.setValue(width + "x" + height);
     }
+  }
+
+  /**
+   * Set Bridge hostname
+   * @param hostname Hostname for ambient light bridge.
+   */
+  public void setBridgeHost(final String hostname) {
+    ConfigLine line = getLineByKey(CONFIG_BRIDGE_HOST);
+    if (hostname != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_BRIDGE_HOST + "=" + hostname);
+        add(line);
+      } else {
+        line.setValue(hostname);
+      }
+    }
+  }
+
+  /**
+   * Get Bridge hostname or null
+   * @return hostname or null
+   */
+  public String getBridgeHost() {
+    ConfigLine line = getLineByKey(CONFIG_BRIDGE_HOST);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
   }
   /**
    * Get Resolution width from config file

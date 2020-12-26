@@ -262,7 +262,13 @@ public class OptionsView extends BlackPanel {
     xPanel = new EmptyInfoPanel();
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
-    label = new SpaceLabel("Light bridge at <IP HERE>");
+    label = new SpaceLabel("Light bridge at <IP HERE OR HOSTNAME WHICH"
+        + " CAN BE LONG>");
+    if (config.getBridgeHost() != null) {
+      label.setText("Light bridge at " + config.getBridgeHost());
+    } else {
+      label.setText("Light bridge not setup yet.");
+    }
     xPanel.add(label);
     lightsPanel.add(xPanel);
     lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -270,6 +276,7 @@ public class OptionsView extends BlackPanel {
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
     btn = new SpaceButton("Setup lights", GameCommands.COMMAND_SETUP_LIGHTS);
+    btn.addActionListener(listener);
     xPanel.add(btn);
     lightsPanel.add(xPanel);
     lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));

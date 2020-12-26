@@ -107,9 +107,14 @@ public final class GameCommands {
   public static final String COMMAND_LIGHTS_INTENSE = "OptionsLightsIntense";
 
   /**
-   * Ambient lights intense
+   * Ambient lights setup
    */
   public static final String COMMAND_SETUP_LIGHTS = "SetupLights";
+
+  /**
+   * Ambient lights connect
+   */
+  public static final String COMMAND_BRIDGE_CONNECT = "SetupBridge";
 
   /**
    * End Turn command

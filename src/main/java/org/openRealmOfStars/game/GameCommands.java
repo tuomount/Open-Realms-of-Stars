@@ -92,6 +92,26 @@ public final class GameCommands {
   public static final String COMMAND_SOUND_VOLUME = "OptionsSoundVolume";
 
   /**
+   * Ambient lights intense up
+   */
+  public static final String COMMAND_LIGHTS_UP = "OptionsLightsUp";
+
+  /**
+   * Ambient lights intense down
+   */
+  public static final String COMMAND_LIGHTS_DN = "OptionsLightsDn";
+
+  /**
+   * Ambient lights intense
+   */
+  public static final String COMMAND_LIGHTS_INTENSE = "OptionsLightsIntense";
+
+  /**
+   * Ambient lights intense
+   */
+  public static final String COMMAND_SETUP_LIGHTS = "SetupLights";
+
+  /**
    * End Turn command
    */
   public static final String COMMAND_END_TURN = "EndTurn";

@@ -84,6 +84,15 @@ public class OptionsView extends BlackPanel {
   private SpaceCheckBox largerFontsBox;
 
   /**
+   * Ambient lights are enabled.
+   */
+  private SpaceCheckBox ambientLightsBox;
+  /**
+   * Ambient lights intense slider
+   */
+  private SpaceSliderPanel lightsSlider;
+
+  /**
    * Screen has been resized;
    */
   private boolean resized = false;
@@ -102,6 +111,7 @@ public class OptionsView extends BlackPanel {
     base.setTitle("Options");
     this.setLayout(new BorderLayout());
     base.setLayout(new BorderLayout());
+    // Accept panel starts here
     InfoPanel acceptPanel = new InfoPanel();
     acceptPanel.setTitle("Options accept and apply");
     acceptPanel.setLayout(new BoxLayout(acceptPanel, BoxLayout.X_AXIS));
@@ -129,6 +139,7 @@ public class OptionsView extends BlackPanel {
     EmptyInfoPanel xPanel = new EmptyInfoPanel();
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    // Screen panel starts here
     InfoPanel screenPanel = new InfoPanel();
     screenPanel.setLayout(new BoxLayout(screenPanel, BoxLayout.Y_AXIS));
     screenPanel.setTitle("Screen Options");
@@ -190,15 +201,20 @@ public class OptionsView extends BlackPanel {
     largerFontsBox.setSelected(config.getLargerFonts());
     xPanel.add(largerFontsBox);
     screenPanel.add(xPanel);
+    screenPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
     allOptions.add(screenPanel);
     allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
+    // Music panel starts here
     InfoPanel musicPanel = new InfoPanel();
     musicPanel.setTitle("Music Options");
-    musicPanel.setLayout(new BoxLayout(musicPanel, BoxLayout.X_AXIS));
+    musicPanel.setLayout(new BoxLayout(musicPanel, BoxLayout.Y_AXIS));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
     label = new SpaceLabel("Music volume");
-    musicPanel.add(label);
-    musicPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel.add(label);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     musicSlider = new SpaceSliderPanel(
         GameCommands.COMMAND_MUSIC_VOLUME_DN,
         GameCommands.COMMAND_MUSIC_VOLUME_UP,
@@ -206,15 +222,21 @@ public class OptionsView extends BlackPanel {
         GameCommands.COMMAND_MUSIC_VOLUME, listener);
     musicSlider.setSliderMajorTick(10);
     musicSlider.setSliderMinorTick(10);
-    musicPanel.add(musicSlider);
+    xPanel.add(musicSlider);
+    musicPanel.add(xPanel);
+    musicPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     allOptions.add(musicPanel);
     allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
+    // Sound panel starts here
     InfoPanel soundPanel = new InfoPanel();
     soundPanel.setTitle("Sound Options");
-    soundPanel.setLayout(new BoxLayout(soundPanel, BoxLayout.X_AXIS));
+    soundPanel.setLayout(new BoxLayout(soundPanel, BoxLayout.Y_AXIS));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
     label = new SpaceLabel("Sound volume");
-    soundPanel.add(label);
-    soundPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel.add(label);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     soundSlider = new SpaceSliderPanel(
         GameCommands.COMMAND_SOUND_VOLUME_DN,
         GameCommands.COMMAND_SOUND_VOLUME_UP,
@@ -222,8 +244,51 @@ public class OptionsView extends BlackPanel {
         GameCommands.COMMAND_SOUND_VOLUME, listener);
     soundSlider.setSliderMajorTick(10);
     soundSlider.setSliderMinorTick(10);
-    soundPanel.add(soundSlider);
+    xPanel.add(soundSlider);
+    soundPanel.add(xPanel);
+    soundPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     allOptions.add(soundPanel);
+    allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
+    // Lights panel starts here
+    InfoPanel lightsPanel = new InfoPanel();
+    lightsPanel.setTitle("Ambient lights");
+    lightsPanel.setLayout(new BoxLayout(lightsPanel, BoxLayout.Y_AXIS));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    ambientLightsBox = new SpaceCheckBox("Enable ambient lights");
+    xPanel.add(ambientLightsBox);
+    lightsPanel.add(xPanel);
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    label = new SpaceLabel("Light bridge at <IP HERE>");
+    xPanel.add(label);
+    lightsPanel.add(xPanel);
+    lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    btn = new SpaceButton("Setup lights", GameCommands.COMMAND_SETUP_LIGHTS);
+    xPanel.add(btn);
+    lightsPanel.add(xPanel);
+    lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    label = new SpaceLabel("Light intense");
+    xPanel.add(label);
+    lightsSlider = new SpaceSliderPanel(
+        GameCommands.COMMAND_LIGHTS_DN,
+        GameCommands.COMMAND_LIGHTS_UP,
+        Icons.ICON_PROPULSION_TECH, "Light intense", 0, 4, 4,
+        GameCommands.COMMAND_LIGHTS_INTENSE, listener);
+    lightsSlider.setSliderMajorTick(1);
+    lightsSlider.setSliderMinorTick(1);
+    xPanel.add(lightsSlider);
+    lightsPanel.add(xPanel);
+    lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    allOptions.add(lightsPanel);
     allOptions.add(Box.createRigidArea(new Dimension(20,
         game.getHeight() - 280)));
     base.add(allOptions, BorderLayout.CENTER);

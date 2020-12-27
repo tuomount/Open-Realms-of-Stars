@@ -75,6 +75,14 @@ public class Bridge {
    */
   private String lastErrorMsg;
   /**
+   * Next bridge command
+   */
+  private BridgeCommandType nextCommand;
+  /**
+   * Bridge thread.
+   */
+  private BridgeThread bridgeThread;
+  /**
    * Constructs new Hue bridge controller. Not authenticated yet,
    * so no username set.
    * @param hostname Hostname or IP address.
@@ -84,14 +92,23 @@ public class Bridge {
     setUsername(null);
     status = BridgeStatusType.NOT_CONNECTED;
     lastErrorMsg = "";
+    setNextCommand(null);
+    bridgeThread = new BridgeThread(this);
   }
 
   /**
    * Get Last Error Message.
    * @return Error as string.
    */
-  public String getLastErrorMsg() {
+  public synchronized String getLastErrorMsg() {
     return lastErrorMsg;
+  }
+  /**
+   * Set Last error messagge.
+   * @param error Error as a string.
+   */
+  public synchronized void setLastErrorMsg(final String error) {
+    lastErrorMsg = error;
   }
   /**
    * Get Username for the bridge.
@@ -205,10 +222,85 @@ public class Bridge {
   }
 
   /**
+   * Method for testing connection OROS to bridge.
+   * @throws IOException If something goes wrong.
+   */
+  public void testConnection() throws IOException {
+    SSLContext sslContext;
+    try {
+      sslContext = SSLContext.getInstance("TLSv1.2");
+    } catch (NoSuchAlgorithmException e) {
+      throw new IOException("Missing algorithm. " + e.getMessage());
+    }
+    TrustManager[] trustManagers = new TrustManager[1];
+    trustManagers[0] = new BlindTrustManager();
+    try {
+      sslContext.init(null, trustManagers, new SecureRandom());
+    } catch (KeyManagementException e) {
+      throw new IOException("Error in key management. " + e.getMessage());
+    }
+    URL url = new URL("https://" + hostname + "/api/" + username + "/lights");
+    status = BridgeStatusType.CONNECTING;
+    HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+    connection.setSSLSocketFactory(sslContext.getSocketFactory());
+    connection.setHostnameVerifier(new BridgeHostnameVerifier(hostname));
+    connection.setRequestMethod("GET");
+    InputStream is = connection.getInputStream();
+    byte[] buf = IOUtilities.readAll(is);
+    String str = new String(buf, StandardCharsets.UTF_8);
+    System.out.println("Code:" + connection.getResponseCode());
+    System.out.println(str);
+    JsonStream stream = new JsonStream(buf);
+    JsonParser parser = new JsonParser();
+    JsonRoot jsonRoot = parser.parseJson(stream);
+    Member member = jsonRoot.findFirst("1");
+    if (member != null) {
+      status = BridgeStatusType.CONNECTED;
+    } else {
+      status = BridgeStatusType.ERROR;
+      lastErrorMsg = "Could not connected.";
+    }
+    is.close();
+  }
+
+  /**
    * Get Bridge status.
    * @return Bridge status
    */
   public BridgeStatusType getStatus() {
     return status;
+  }
+
+  /**
+   * Change bridge status.
+   * @param newStatus for bridge.
+   */
+  public void setStatus(final BridgeStatusType newStatus) {
+    status = newStatus;
+  }
+  /**
+   * Get next command
+   * @return the nextCommand
+   */
+  public synchronized BridgeCommandType getNextCommand() {
+    return nextCommand;
+  }
+
+  /**
+   * Set next command. Will also launch new thread if control thread
+   *  is not running.
+   * @param nextCommand the nextCommand to set
+   */
+  public synchronized void setNextCommand(
+      final BridgeCommandType nextCommand) {
+    this.nextCommand = nextCommand;
+    if (this.nextCommand != null) {
+      if (!bridgeThread.isRunning() && bridgeThread.isStarted()) {
+        bridgeThread = new BridgeThread(this);
+      }
+      if (!bridgeThread.isRunning() && !bridgeThread.isStarted()) {
+        bridgeThread.start();
+      }
+    }
   }
 }

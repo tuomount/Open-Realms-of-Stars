@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -12,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 import org.openRealmOfStars.ambient.Bridge;
+import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.ambient.BridgeStatusType;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
@@ -104,6 +104,11 @@ public class AmbientLightView extends BlackPanel {
   public AmbientLightView(final ConfigFile config, final Bridge bridge,
       final ActionListener listener) {
     this.bridge = bridge;
+    if (bridge == null && config.getBridgeHost() != null
+          && config.getBridgeUsername() != null) {
+      this.bridge = new Bridge(config.getBridgeHost());
+      this.bridge.setUsername(config.getBridgeUsername());
+    }
     this.config = config;
     InfoPanel base = new InfoPanel();
     base.setTitle("Ambient Lights (EXPERIMENTAL)");
@@ -247,24 +252,24 @@ public class AmbientLightView extends BlackPanel {
    * @param arg0 ActionEvent
    */
   public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      updatePanels();
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_BRIDGE_CONNECT)) {
       SoundPlayer.playMenuSound();
       if (bridge == null) {
         bridge = new Bridge(hostnameField.getText());
       }
-      try {
-        bridge.register();
-        if (bridge.getStatus() != BridgeStatusType.REGISTERED) {
-          infoText.setText(bridge.getLastErrorMsg());
-        } else {
-          config.setBridgeHost(bridge.getHostname());
-          config.setBridgeUsername(bridge.getUsername());
-          infoText.setText("Registered successfully");
-        }
-        updatePanels();
-      } catch (IOException e) {
-        infoText.setText(e.getMessage());
+      bridge.setNextCommand(BridgeCommandType.REGISTER);
+      if (bridge.getStatus() != BridgeStatusType.REGISTERED) {
+        infoText.setText(bridge.getLastErrorMsg());
+      } else {
+        config.setBridgeHost(bridge.getHostname());
+        config.setBridgeUsername(bridge.getUsername());
+        infoText.setText("Registered successfully");
       }
+      updatePanels();
     }
   }
 
@@ -272,15 +277,30 @@ public class AmbientLightView extends BlackPanel {
    * Update panels for ambient lights view.
    */
   public void updatePanels() {
+    if (bridge == null) {
+      return;
+    }
     if (bridge.getUsername() != null) {
       usernameField.setText(bridge.getUsername());
     } else {
       usernameField.setText("Not registered");
     }
-    if (bridge.getLastErrorMsg() != null) {
-      infoText.setText(bridge.getLastErrorMsg());
-    } else {
-      infoText.setText("");
+    if (bridge.getStatus() == BridgeStatusType.NOT_CONNECTED
+        || bridge.getStatus() == BridgeStatusType.REGISTERED) {
+      if (bridge.getHostname() != null && bridge.getUsername() != null) {
+        bridge.setNextCommand(BridgeCommandType.TEST);
+      } else {
+        infoText.setText("Register bridge. Press sync button on HUE"
+            + " bridge before clicking register button.");
+      }
+    } else if (bridge.getStatus() == BridgeStatusType.REGISTERING) {
+      infoText.setText("Register bridge ...");
+    } else if (bridge.getStatus() == BridgeStatusType.CONNECTING) {
+      infoText.setText("Connecting bridge ...");
+    } else if (bridge.getStatus() == BridgeStatusType.CONNECTED) {
+      infoText.setText("Connected to bridge.");
+    } else if (bridge.getStatus() == BridgeStatusType.ERROR) {
+      infoText.setText("Error: " + bridge.getLastErrorMsg());
     }
     this.repaint();
   }

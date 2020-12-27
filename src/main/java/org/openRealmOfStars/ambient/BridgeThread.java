@@ -104,6 +104,14 @@ public class BridgeThread extends Thread {
           bridge.setStatus(BridgeStatusType.NOT_CONNECTED);
           bridge.setLastErrorMsg(e.getMessage());
         }
+      } else if (command == BridgeCommandType.FETCH_LIGHTS) {
+        try {
+          bridge.setNextCommand(null);
+          bridge.updateAllLights();
+        } catch (IOException e) {
+          bridge.setStatus(BridgeStatusType.NOT_CONNECTED);
+          bridge.setLastErrorMsg(e.getMessage());
+        }
       } else if (command == BridgeCommandType.EXIT) {
         bridge.setNextCommand(null);
         endThread = true;

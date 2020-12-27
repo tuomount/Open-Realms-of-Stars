@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -17,9 +18,11 @@ import org.openRealmOfStars.ambient.connection.BridgeHostnameVerifier;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.json.JsonParser;
 import org.openRealmOfStars.utilities.json.JsonStream;
+import org.openRealmOfStars.utilities.json.values.BooleanValue;
 import org.openRealmOfStars.utilities.json.values.JsonRoot;
 import org.openRealmOfStars.utilities.json.values.JsonValue;
 import org.openRealmOfStars.utilities.json.values.Member;
+import org.openRealmOfStars.utilities.json.values.NumberValue;
 import org.openRealmOfStars.utilities.json.values.ObjectValue;
 import org.openRealmOfStars.utilities.json.values.StringValue;
 import org.openRealmOfStars.utilities.json.values.ValueType;
@@ -83,6 +86,10 @@ public class Bridge {
    */
   private BridgeThread bridgeThread;
   /**
+   * Lights in bridge.
+   */
+  private ArrayList<Light> lights;
+  /**
    * Constructs new Hue bridge controller. Not authenticated yet,
    * so no username set.
    * @param hostname Hostname or IP address.
@@ -94,6 +101,7 @@ public class Bridge {
     lastErrorMsg = "";
     setNextCommand(null);
     bridgeThread = new BridgeThread(this);
+    lights = null;
   }
 
   /**
@@ -261,6 +269,111 @@ public class Bridge {
       lastErrorMsg = "Could not connected.";
     }
     is.close();
+  }
+
+  /**
+   * Get Lights in array list.
+   * @return Array list of lights.
+   */
+  public ArrayList<Light> getLigths() {
+    return lights;
+  }
+  /**
+   * Method for testing connection OROS to bridge.
+   * @throws IOException If something goes wrong.
+   */
+  public void updateAllLights() throws IOException {
+    SSLContext sslContext;
+    try {
+      sslContext = SSLContext.getInstance("TLSv1.2");
+    } catch (NoSuchAlgorithmException e) {
+      throw new IOException("Missing algorithm. " + e.getMessage());
+    }
+    TrustManager[] trustManagers = new TrustManager[1];
+    trustManagers[0] = new BlindTrustManager();
+    try {
+      sslContext.init(null, trustManagers, new SecureRandom());
+    } catch (KeyManagementException e) {
+      throw new IOException("Error in key management. " + e.getMessage());
+    }
+    setStatus(BridgeStatusType.BUSY);
+    URL url = new URL("https://" + hostname + "/api/" + username + "/lights");
+    HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+    connection.setSSLSocketFactory(sslContext.getSocketFactory());
+    connection.setHostnameVerifier(new BridgeHostnameVerifier(hostname));
+    connection.setRequestMethod("GET");
+    InputStream is = connection.getInputStream();
+    byte[] buf = IOUtilities.readAll(is);
+    String str = new String(buf, StandardCharsets.UTF_8);
+    System.out.println("Code:" + connection.getResponseCode());
+    System.out.println(str);
+    JsonStream stream = new JsonStream(buf);
+    JsonParser parser = new JsonParser();
+    JsonRoot jsonRoot = parser.parseJson(stream);
+    is.close();
+    lights = new ArrayList<>();
+    // Officially Hue bridge supports 50 lights, but let's be on safe side.
+    for (int i = 0; i < 255; i++) {
+      String lightName = String.valueOf(i);
+      Member member = jsonRoot.findFirst(lightName);
+      if (member != null && member.getValue().getType() == ValueType.OBJECT) {
+        Light light = new Light(member.getName());
+        ObjectValue lightNum = (ObjectValue) member.getValue();
+        member = lightNum.findFirst("name");
+        if (member.getValue().getType() == ValueType.STRING) {
+          StringValue strName = (StringValue) member.getValue();
+          light.setHumanReadablename(strName.getValue());
+        } else {
+          System.out.println("No name found for light " + lightName + ".");
+          continue;
+        }
+        member = lightNum.findFirst("state");
+        if (member != null
+            && member.getValue().getType() == ValueType.OBJECT) {
+          ObjectValue state = (ObjectValue) member.getValue();
+          member = state.findFirst("on");
+          if (member != null
+              && member.getValue().getType() == ValueType.BOOLEAN) {
+            BooleanValue value = (BooleanValue) member.getValue();
+            light.setOn(value.getValue());
+          } else {
+            System.out.println("No on found for light " + lightName + ".");
+            continue;
+          }
+          member = state.findFirst("bri");
+          if (member != null
+              && member.getValue().getType() == ValueType.NUMBER) {
+            NumberValue value = (NumberValue) member.getValue();
+            light.setBri(value.getValueAsInt());
+          } else {
+            System.out.println("No bri found for light " + lightName + ".");
+            continue;
+          }
+          member = state.findFirst("sat");
+          if (member != null
+              && member.getValue().getType() == ValueType.NUMBER) {
+            NumberValue value = (NumberValue) member.getValue();
+            light.setSat(value.getValueAsInt());
+          } else {
+            System.out.println("No sat found for light " + lightName + ".");
+            // We only support full color lights
+            continue;
+          }
+          member = state.findFirst("hue");
+          if (member != null
+              && member.getValue().getType() == ValueType.NUMBER) {
+            NumberValue value = (NumberValue) member.getValue();
+            light.setHue(value.getValueAsInt());
+          } else {
+            System.out.println("No hue found for light " + lightName + ".");
+            // We only support full color lights
+            continue;
+          }
+        }
+        lights.add(light);
+      }
+    }
+    setStatus(BridgeStatusType.CONNECTED);
   }
 
   /**

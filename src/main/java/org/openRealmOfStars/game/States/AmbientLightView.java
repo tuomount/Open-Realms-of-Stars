@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
@@ -91,6 +92,10 @@ public class AmbientLightView extends BlackPanel {
    * Active bridge
    */
   private Bridge bridge;
+  /**
+   * Has light list been updated.
+   */
+  private boolean lightListUpdated;
   /**
    * Constructor for AmbientLightView
    * @param config Current ConfigFile
@@ -223,7 +228,7 @@ public class AmbientLightView extends BlackPanel {
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
     label = new SpaceLabel("Center light");
     xPanel.add(label);
-    String[] lightNames = {"None"};
+    String[] lightNames = {"none"};
     centerLightSelection = new JComboBox<>(lightNames);
     centerLightSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     centerLightSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
@@ -278,14 +283,10 @@ public class AmbientLightView extends BlackPanel {
     if (bridge == null) {
       return;
     }
-    if (bridge.getUsername() != null) {
-      usernameField.setText(bridge.getUsername());
-    } else {
-      usernameField.setText("Not registered");
-    }
     if (bridge.getStatus() == BridgeStatusType.NOT_CONNECTED
         || bridge.getStatus() == BridgeStatusType.REGISTERED) {
       if (bridge.getHostname() != null && bridge.getUsername() != null) {
+        usernameField.setText(bridge.getUsername());
         bridge.setNextCommand(BridgeCommandType.TEST);
       } else {
         infoText.setText("Register bridge. Press sync button on HUE"
@@ -300,9 +301,35 @@ public class AmbientLightView extends BlackPanel {
       infoText.setText("Connecting bridge ...");
     } else if (bridge.getStatus() == BridgeStatusType.CONNECTED) {
       infoText.setText("Connected to bridge.");
+      if (bridge.getLigths() == null) {
+        bridge.setNextCommand(BridgeCommandType.FETCH_LIGHTS);
+        lightListUpdated = true;
+      } else {
+        infoText.setText("Connected to bridge."
+            + " Found " + bridge.getLigths().size() + " lights.");
+        if (lightListUpdated) {
+          String[] lightNames = new String[bridge.getLigths().size() + 1];
+          lightNames[0] = "none";
+          for (int i = 0; i < bridge.getLigths().size(); i++) {
+            lightNames[i + 1] = bridge.getLigths().get(i)
+                .getHumanReadablename();
+          }
+          centerLightSelection.setModel(
+              new DefaultComboBoxModel<>(lightNames));
+          lightListUpdated = false;
+        }
+      }
     } else if (bridge.getStatus() == BridgeStatusType.ERROR) {
       infoText.setText("Error: " + bridge.getLastErrorMsg());
     }
     this.repaint();
+  }
+
+  /**
+   * Get bridge from view.
+   * @return Bridge
+   */
+  public Bridge getBridge() {
+    return bridge;
   }
 }

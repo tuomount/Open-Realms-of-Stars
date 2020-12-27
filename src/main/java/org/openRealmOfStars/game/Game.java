@@ -2340,7 +2340,15 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_OK)) {
         SoundPlayer.playMenuSound();
-        writeConfigFile();
+        if (ambientLightsView.getBridge() != null) {
+          Bridge tmpBridge = ambientLightsView.getBridge();
+          if (tmpBridge.getHostname() != null
+              && tmpBridge.getUsername() != null) {
+            configFile.setBridgeHost(tmpBridge.getHostname());
+            configFile.setBridgeUsername(tmpBridge.getUsername());
+            writeConfigFile();
+          }
+        }
         changeGameState(GameState.OPTIONS_VIEW);
         return;
       }

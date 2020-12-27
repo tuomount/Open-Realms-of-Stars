@@ -36,5 +36,9 @@ public enum BridgeCommandType {
   /**
    * Ends command processing
    */
-  EXIT;
+  EXIT,
+  /**
+   * Fetch lights into list.
+   */
+  FETCH_LIGHTS;
 }

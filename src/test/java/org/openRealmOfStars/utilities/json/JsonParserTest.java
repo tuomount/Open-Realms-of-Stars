@@ -7,8 +7,8 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.utilities.json.values.JsonRoot;
 import org.openRealmOfStars.utilities.json.values.Member;
-import org.openRealmOfStars.utilities.json.values.ObjectValue;
 
 /**
 *
@@ -41,7 +41,7 @@ public class JsonParserTest {
     byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
     JsonStream stream = new JsonStream(buf);
     JsonParser parser = new JsonParser();
-    ObjectValue root = parser.parseJson(stream);
+    JsonRoot root = parser.parseJson(stream);
     stream.close();
     assertEquals("{}", root.getValueAsString());
   }
@@ -53,7 +53,7 @@ public class JsonParserTest {
     byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
     JsonStream stream = new JsonStream(buf);
     JsonParser parser = new JsonParser();
-    ObjectValue root = parser.parseJson(stream);
+    JsonRoot root = parser.parseJson(stream);
     stream.close();
     assertEquals("{\"Widget\": {\"Debug\": \"On\",\"Run\": \"Off\",\"Loop\": 128}}",
         root.getValueAsString());
@@ -66,7 +66,7 @@ public class JsonParserTest {
     byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
     JsonStream stream = new JsonStream(buf);
     JsonParser parser = new JsonParser();
-    ObjectValue root = parser.parseJson(stream);
+    JsonRoot root = parser.parseJson(stream);
     stream.close();
     assertEquals("{\"Widget\": {\"Debug\": false,\"Run\": true,\"Loop\": 0.01}}",
         root.getValueAsString());
@@ -75,24 +75,27 @@ public class JsonParserTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testSimpleJson3() throws IOException {
-    String jsonText = "{\"Widget\": {\"Debug\": false, \"Run\": true, \"Values\": [1,2,3,4], \"NotDefined\": null}}";
+    String jsonText = "{\"Widget\": {\"Debug\": false, \"Run\": true,"
+        + " \"Values\": [1,2,3,4], \"NotDefined\": null}}";
     byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
     JsonStream stream = new JsonStream(buf);
     JsonParser parser = new JsonParser();
-    ObjectValue root = parser.parseJson(stream);
+    JsonRoot root = parser.parseJson(stream);
     stream.close();
-    assertEquals("{\"Widget\": {\"Debug\": false,\"Run\": true,\"Values\": [1,2,3,4],\"NotDefined\": null}}",
+    assertEquals("{\"Widget\": {\"Debug\": false,\"Run\": true,"
+        + "\"Values\": [1,2,3,4],\"NotDefined\": null}}",
         root.getValueAsString());
   }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testSearchJson1() throws IOException {
-    String jsonText = "{\"Widget\": {\"Debug\": false, \"Run\": true, \"Values\": [1,2,3,4], \"NotDefined\": null}}";
+    String jsonText = "{\"Widget\": {\"Debug\": false, \"Run\": true,"
+        + " \"Values\": [1,2,3,4], \"NotDefined\": null}}";
     byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
     JsonStream stream = new JsonStream(buf);
     JsonParser parser = new JsonParser();
-    ObjectValue root = parser.parseJson(stream);
+    JsonRoot root = parser.parseJson(stream);
     stream.close();
     Member member = root.findFirst("Run");
     assertEquals("true", member.getValue().getValueAsString());
@@ -101,14 +104,30 @@ public class JsonParserTest {
   @Test(expected=JsonException.class)
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTooDeep() throws IOException {
-    String jsonText = "{\"Widget\": {\"Debug\": false, \"Run\": true, \"Values\": [1,2,3,4], \"NotDefined\": null}}";
+    String jsonText = "{\"Widget\": {\"Debug\": false, \"Run\": true,"
+        + " \"Values\": [1,2,3,4], \"NotDefined\": null}}";
     byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
     JsonStream stream = new JsonStream(buf);
     JsonParser parser = new JsonParser(2);
-    ObjectValue root = parser.parseJson(stream);
+    JsonRoot root = parser.parseJson(stream);
     stream.close();
-    assertEquals("{\"Widget\": {\"Debug\": false,\"Run\": true,\"Values\": [1,2,3,4],\"NotDefined\": null}}",
+    assertEquals("{\"Widget\": {\"Debug\": false,\"Run\": true,"
+        + "\"Values\": [1,2,3,4],\"NotDefined\": null}}",
         root.getValueAsString());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testJsonStartArray() throws IOException {
+    String jsonText = "  [{\"error\":{\"type\":101,\"address\":\"\","
+        + "\"description\":\"link button not pressed\"}}]";
+    byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
+    JsonStream stream = new JsonStream(buf);
+    JsonParser parser = new JsonParser();
+    JsonRoot root = parser.parseJson(stream);
+    assertEquals("[{\"error\": {\"type\": 101,\"address\": \"\","
+        + "\"description\": \"link button not pressed\"}}]", root.getValueAsString());
+    stream.close();
   }
 
 }

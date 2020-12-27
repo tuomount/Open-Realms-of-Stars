@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.openRealmOfStars.utilities.json.values.ArrayValue;
 import org.openRealmOfStars.utilities.json.values.BooleanValue;
+import org.openRealmOfStars.utilities.json.values.JsonRoot;
 import org.openRealmOfStars.utilities.json.values.JsonValue;
 import org.openRealmOfStars.utilities.json.values.Member;
 import org.openRealmOfStars.utilities.json.values.NullValue;
@@ -226,9 +227,13 @@ public final class JsonParser {
    * @throws IOException If reading fails
    * @throws JsonException if Json parsing fails
    */
-  public ObjectValue parseJson(final JsonStream json)
+  public JsonRoot parseJson(final JsonStream json)
       throws IOException, JsonException {
     depth = 0;
-    return parseObject(json);
+    JsonRoot root = new JsonRoot();
+    json.readWhiteSpace();
+    JsonValue value = parseAllValues(json);
+    root.setValue(value);
+    return root;
   }
 }

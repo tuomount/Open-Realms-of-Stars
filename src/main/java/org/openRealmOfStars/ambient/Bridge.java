@@ -15,7 +15,14 @@ import javax.net.ssl.TrustManager;
 import org.openRealmOfStars.ambient.connection.BlindTrustManager;
 import org.openRealmOfStars.ambient.connection.BridgeHostnameVerifier;
 import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.json.JsonParser;
+import org.openRealmOfStars.utilities.json.JsonStream;
+import org.openRealmOfStars.utilities.json.values.JsonRoot;
+import org.openRealmOfStars.utilities.json.values.JsonValue;
+import org.openRealmOfStars.utilities.json.values.Member;
 import org.openRealmOfStars.utilities.json.values.ObjectValue;
+import org.openRealmOfStars.utilities.json.values.StringValue;
+import org.openRealmOfStars.utilities.json.values.ValueType;
 
 /**
 *
@@ -60,6 +67,14 @@ public class Bridge {
   private String hostname;
 
   /**
+   * Bridge status.
+   */
+  private BridgeStatusType status;
+  /**
+   * Last Error message.
+   */
+  private String lastErrorMsg;
+  /**
    * Constructs new Hue bridge controller. Not authenticated yet,
    * so no username set.
    * @param hostname Hostname or IP address.
@@ -67,8 +82,17 @@ public class Bridge {
   public Bridge(final String hostname) {
     this.setHostname(hostname);
     setUsername(null);
+    status = BridgeStatusType.NOT_CONNECTED;
+    lastErrorMsg = "";
   }
 
+  /**
+   * Get Last Error Message.
+   * @return Error as string.
+   */
+  public String getLastErrorMsg() {
+    return lastErrorMsg;
+  }
   /**
    * Get Username for the bridge.
    * @return the username
@@ -120,6 +144,7 @@ public class Bridge {
       throw new IOException("Error in key management. " + e.getMessage());
     }
     URL url = new URL("https://" + hostname + "/api");
+    status = BridgeStatusType.REGISTERING;
     HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
     connection.setSSLSocketFactory(sslContext.getSocketFactory());
     connection.setHostnameVerifier(new BridgeHostnameVerifier(hostname));
@@ -133,7 +158,57 @@ public class Bridge {
     InputStream is = connection.getInputStream();
     byte[] buf = IOUtilities.readAll(is);
     String str = new String(buf, StandardCharsets.UTF_8);
+    System.out.println("Code:" + connection.getResponseCode());
     System.out.println(str);
+    JsonStream stream = new JsonStream(buf);
+    JsonParser parser = new JsonParser();
+    JsonRoot jsonRoot = parser.parseJson(stream);
+    Member member = jsonRoot.findFirst("error");
+    if (member == null) {
+      member = jsonRoot.findFirst("success");
+      if (member != null) {
+        member = jsonRoot.findFirst("username");
+        if (member != null) {
+          JsonValue value = member.getValue();
+          if (value.getType() == ValueType.STRING) {
+            StringValue strValue = (StringValue) value;
+            username = strValue.getValue();
+            status = BridgeStatusType.REGISTERED;
+          }
+        } else {
+          status = BridgeStatusType.NOT_CONNECTED;
+          lastErrorMsg = "No username received.";
+        }
+      } else {
+        status = BridgeStatusType.ERROR;
+        lastErrorMsg = "Unknown error happened.";
+      }
+    } else {
+      status = BridgeStatusType.ERROR;
+      member = jsonRoot.findFirst("description");
+      if (member != null) {
+        JsonValue value = member.getValue();
+        if (value.getType() == ValueType.STRING) {
+          StringValue strValue = (StringValue) value;
+          lastErrorMsg = "Remember press sync button"
+              + " before clicking register. "
+              + strValue.getValue();
+
+        } else {
+          lastErrorMsg = "Remember press sync button"
+              + " before clicking register. "
+              + member.getValue().getValueAsString();
+        }
+      }
+    }
     is.close();
+  }
+
+  /**
+   * Get Bridge status.
+   * @return Bridge status
+   */
+  public BridgeStatusType getStatus() {
+    return status;
   }
 }

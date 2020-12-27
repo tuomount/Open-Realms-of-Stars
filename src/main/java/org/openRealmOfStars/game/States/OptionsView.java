@@ -315,6 +315,7 @@ public class OptionsView extends BlackPanel {
    */
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_RESIZE)) {
+      SoundPlayer.playMenuSound();
       game.setResizable(true);
       resized = true;
     }

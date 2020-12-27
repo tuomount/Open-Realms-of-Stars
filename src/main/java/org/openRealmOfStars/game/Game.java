@@ -369,6 +369,10 @@ public class Game implements ActionListener {
    */
   private static TutorialList tutorialList;
   /**
+   * Ambient light bridge
+   */
+  private Bridge bridge;
+  /**
    * Get Star map
    * @return StarMap
    */
@@ -888,7 +892,7 @@ public class Game implements ActionListener {
    * Show ambient lights view
    */
   public void showAmbientLightsView() {
-    ambientLightsView = new AmbientLightView(configFile, this);
+    ambientLightsView = new AmbientLightView(configFile, bridge, this);
     this.updateDisplay(ambientLightsView);
   }
 
@@ -2352,7 +2356,7 @@ public class Game implements ActionListener {
         changeGameState(GameState.OPTIONS_VIEW);
         return;
       }
-      // FIXME Add lights handling
+      ambientLightsView.handleAction(arg0);
       return;
     }
     if (gameState == GameState.MAIN_MENU) {

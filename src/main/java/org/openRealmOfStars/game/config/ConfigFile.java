@@ -53,6 +53,10 @@ public class ConfigFile {
    */
   public static final String CONFIG_BRIDGE_HOST = "BridgeHost";
   /**
+   * Config option for ambient light bridge username
+   */
+  public static final String CONFIG_BRIDGE_USERNAME = "BridgeUsername";
+  /**
    * Config file default comment
    */
   public static final String CONFIG_COMMENT = "# Config file for "
@@ -249,6 +253,33 @@ public class ConfigFile {
    */
   public String getBridgeHost() {
     ConfigLine line = getLineByKey(CONFIG_BRIDGE_HOST);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
+  }
+  /**
+   * Set Bridge hostname
+   * @param username Username for ambient light bridge.
+   */
+  public void setBridgeUsername(final String username) {
+    ConfigLine line = getLineByKey(CONFIG_BRIDGE_USERNAME);
+    if (username != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_BRIDGE_USERNAME + "=" + username);
+        add(line);
+      } else {
+        line.setValue(username);
+      }
+    }
+  }
+
+  /**
+   * Get Bridge username or null
+   * @return username or null
+   */
+  public String getBridgeUsername() {
+    ConfigLine line = getLineByKey(CONFIG_BRIDGE_USERNAME);
     if (line != null) {
       return line.getValue();
     }

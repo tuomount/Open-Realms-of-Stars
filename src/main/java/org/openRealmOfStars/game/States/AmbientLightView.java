@@ -2,13 +2,18 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import org.openRealmOfStars.ambient.Bridge;
+import org.openRealmOfStars.ambient.BridgeStatusType;
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.config.ConfigFile;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
@@ -58,6 +63,10 @@ public class AmbientLightView extends BlackPanel {
   private JTextField hostnameField;
 
   /**
+   * Username field.
+   */
+  private JTextField usernameField;
+  /**
    * Button for registering bridge or testing connection
    */
   private SpaceButton connectBtn;
@@ -79,15 +88,25 @@ public class AmbientLightView extends BlackPanel {
   private SpaceSliderPanel lightsSlider;
 
   /**
+   * Active bridge
+   */
+  private Bridge bridge;
+  /**
+   * Config file.
+   */
+  private ConfigFile config;
+  /**
    * Constructor for AmbientLightView
    * @param config Current ConfigFile
+   * @param bridge Active bridge
    * @param listener ActionListener
    */
-  public AmbientLightView(final ConfigFile config,
+  public AmbientLightView(final ConfigFile config, final Bridge bridge,
       final ActionListener listener) {
-    //game.setResizable(true);
+    this.bridge = bridge;
+    this.config = config;
     InfoPanel base = new InfoPanel();
-    base.setTitle("Ambient Lights");
+    base.setTitle("Ambient Lights (EXPERIMENTAL)");
     this.setLayout(new BorderLayout());
     base.setLayout(new BorderLayout());
     // Accept panel starts here
@@ -115,14 +134,14 @@ public class AmbientLightView extends BlackPanel {
     base.add(acceptPanel, BorderLayout.NORTH);
     EmptyInfoPanel allOptions = new EmptyInfoPanel();
     allOptions.setLayout(new BoxLayout(allOptions, BoxLayout.Y_AXIS));
-    EmptyInfoPanel xPanel = new EmptyInfoPanel();
-    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
-    xPanel.setAlignmentX(LEFT_ALIGNMENT);
     // Bridge panel starts here
     InfoPanel bridgePanel = new InfoPanel();
     bridgePanel.setLayout(new BoxLayout(bridgePanel, BoxLayout.Y_AXIS));
     bridgePanel.setTitle("Bridge setup");
     SpaceLabel label = new SpaceLabel("Bridge hostname");
+    EmptyInfoPanel xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
     xPanel.add(label);
     xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     hostnameField = new JTextField();
@@ -136,8 +155,28 @@ public class AmbientLightView extends BlackPanel {
     xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     connectBtn = new SpaceButton("Register",
         GameCommands.COMMAND_BRIDGE_CONNECT);
+    connectBtn.addActionListener(listener);
     xPanel.add(connectBtn);
     xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    bridgePanel.add(xPanel);
+    bridgePanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    SpaceLabel usernameLabel = new SpaceLabel("Username");
+    xPanel.add(usernameLabel);
+    usernameField = new JTextField();
+    usernameField.setText(config.getBridgeHost());
+    usernameField.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    usernameField.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    usernameField.setFont(GuiStatics.getFontCubellanSmaller());
+    usernameField.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    if (config.getBridgeUsername() != null) {
+      usernameField.setText(config.getBridgeUsername());
+    }
+    xPanel.add(usernameField);
     bridgePanel.add(xPanel);
     bridgePanel.add(Box.createRigidArea(new Dimension(10, 10)));
     xPanel = new EmptyInfoPanel();
@@ -201,5 +240,48 @@ public class AmbientLightView extends BlackPanel {
 
     base.add(allOptions, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
+  }
+
+  /**
+   * Handle events for options view
+   * @param arg0 ActionEvent
+   */
+  public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_BRIDGE_CONNECT)) {
+      SoundPlayer.playMenuSound();
+      if (bridge == null) {
+        bridge = new Bridge(hostnameField.getText());
+      }
+      try {
+        bridge.register();
+        if (bridge.getStatus() != BridgeStatusType.REGISTERED) {
+          infoText.setText(bridge.getLastErrorMsg());
+        } else {
+          config.setBridgeHost(bridge.getHostname());
+          config.setBridgeUsername(bridge.getUsername());
+          infoText.setText("Registered successfully");
+        }
+        updatePanels();
+      } catch (IOException e) {
+        infoText.setText(e.getMessage());
+      }
+    }
+  }
+
+  /**
+   * Update panels for ambient lights view.
+   */
+  public void updatePanels() {
+    if (bridge.getUsername() != null) {
+      usernameField.setText(bridge.getUsername());
+    } else {
+      usernameField.setText("Not registered");
+    }
+    if (bridge.getLastErrorMsg() != null) {
+      infoText.setText(bridge.getLastErrorMsg());
+    } else {
+      infoText.setText("");
+    }
+    this.repaint();
   }
 }

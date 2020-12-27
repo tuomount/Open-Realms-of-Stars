@@ -92,10 +92,6 @@ public class AmbientLightView extends BlackPanel {
    */
   private Bridge bridge;
   /**
-   * Config file.
-   */
-  private ConfigFile config;
-  /**
    * Constructor for AmbientLightView
    * @param config Current ConfigFile
    * @param bridge Active bridge
@@ -109,7 +105,6 @@ public class AmbientLightView extends BlackPanel {
       this.bridge = new Bridge(config.getBridgeHost());
       this.bridge.setUsername(config.getBridgeUsername());
     }
-    this.config = config;
     InfoPanel base = new InfoPanel();
     base.setTitle("Ambient Lights (EXPERIMENTAL)");
     this.setLayout(new BorderLayout());
@@ -158,7 +153,7 @@ public class AmbientLightView extends BlackPanel {
         GuiStatics.TEXT_FIELD_HEIGHT));
     xPanel.add(hostnameField);
     xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    connectBtn = new SpaceButton("Register",
+    connectBtn = new SpaceButton("Connect",
         GameCommands.COMMAND_BRIDGE_CONNECT);
     connectBtn.addActionListener(listener);
     xPanel.add(connectBtn);
@@ -261,13 +256,16 @@ public class AmbientLightView extends BlackPanel {
       if (bridge == null) {
         bridge = new Bridge(hostnameField.getText());
       }
-      bridge.setNextCommand(BridgeCommandType.REGISTER);
-      if (bridge.getStatus() != BridgeStatusType.REGISTERED) {
-        infoText.setText(bridge.getLastErrorMsg());
+      if (bridge.getHostname() != hostnameField.getText()) {
+        bridge.setHostname(hostnameField.getText());
+      }
+      if (bridge.getUsername() != usernameField.getText()) {
+        bridge.setUsername(usernameField.getText());
+      }
+      if (usernameField.getText().isEmpty()) {
+        bridge.setNextCommand(BridgeCommandType.REGISTER);
       } else {
-        config.setBridgeHost(bridge.getHostname());
-        config.setBridgeUsername(bridge.getUsername());
-        infoText.setText("Registered successfully");
+        bridge.setNextCommand(BridgeCommandType.TEST);
       }
       updatePanels();
     }
@@ -292,6 +290,9 @@ public class AmbientLightView extends BlackPanel {
       } else {
         infoText.setText("Register bridge. Press sync button on HUE"
             + " bridge before clicking register button.");
+      }
+      if (bridge.getStatus() == BridgeStatusType.REGISTERED) {
+        infoText.setText("Registered successfully.");
       }
     } else if (bridge.getStatus() == BridgeStatusType.REGISTERING) {
       infoText.setText("Register bridge ...");

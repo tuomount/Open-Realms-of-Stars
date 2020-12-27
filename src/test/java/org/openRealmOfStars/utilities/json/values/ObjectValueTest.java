@@ -43,4 +43,18 @@ public class ObjectValueTest {
     assertEquals("{\"Empty\": \"Test\"}", value.getValueAsString());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAddMember() {
+    ObjectValue root = new ObjectValue();
+    root.addStringMember("TestString", "StringValue");
+    root.addIntegerMember("IntegerTest", 47);
+    root.addNumberMember("NumberTest", "47.74");
+    root.addBooleanMember("TestTrue", true);
+    root.addBooleanMember("TestFalse", false);
+    assertEquals("{\"TestString\": \"StringValue\","
+        + "\"IntegerTest\": 47,\"NumberTest\": 47.74,"
+        + "\"TestTrue\": true,\"TestFalse\": false}", root.getValueAsString());
+  }
+
 }

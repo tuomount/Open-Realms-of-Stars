@@ -36,12 +36,50 @@ import org.openRealmOfStars.utilities.json.values.StringValue;
 public final class JsonParser {
 
   /**
-   * Hiding constructor.
+   * Max depth for parsing JSON.
    */
-  private JsonParser() {
-    // Hiding constructor
+  private int maxDepth;
+  /**
+   * Current depth.
+   */
+  private int depth;
+  /**
+   * Initialize JSON parser with maximum depth level.
+   * @param maxDepth Max recursion depth.
+   */
+  public JsonParser(final int maxDepth) {
+    this.maxDepth = maxDepth;
+    depth = 0;
   }
 
+  /**
+   * Initialize JSON parset with default max depth level.
+   */
+  public JsonParser() {
+    this.maxDepth = 100;
+    depth = 0;
+  }
+
+  /**
+   * Increase depth level for json parsing
+   * @throws JsonException If parsing goes too deep.
+   */
+  private void goDeeper() throws JsonException {
+    depth++;
+    if (depth > maxDepth) {
+      throw new JsonException("JSON contained too deep recursion."
+          + " Parsing failed.");
+    }
+  }
+
+  /**
+   * Decrease depth of JSON parsing.
+   */
+  private void goSurface() {
+    if (depth > 0) {
+      depth--;
+    }
+  }
   /**
    * Parse All possible values from stream
    * @param json JsonStream
@@ -49,7 +87,7 @@ public final class JsonParser {
    * @throws IOException  if stream is closed
    * @throws JsonException If json in malformed
    */
-  private static JsonValue parseAllValues(final JsonStream json)
+  private JsonValue parseAllValues(final JsonStream json)
       throws IOException, JsonException {
     JsonValue value = null;
     if (json.readAway("null")) {
@@ -90,9 +128,10 @@ public final class JsonParser {
    * @throws IOException If stream is closed
    * @throws JsonException If Json is malformed
    */
-  private static ArrayValue parseArray(final JsonStream json)
+  private ArrayValue parseArray(final JsonStream json)
       throws IOException, JsonException {
     if (json.isCurrent(JsonStream.BEGIN_ARRAY)) {
+      goDeeper();
       boolean end = false;
       boolean sepatorRequired = false;
       ArrayValue result = new ArrayValue();
@@ -116,6 +155,7 @@ public final class JsonParser {
           }
         }
       } while (!end);
+      goSurface();
       return result;
     }
     return null;
@@ -127,7 +167,7 @@ public final class JsonParser {
    * @throws IOException If stream is closed
    * @throws JsonException If Json is malformed
    */
-  private static Member parseMember(final JsonStream json)
+  private Member parseMember(final JsonStream json)
       throws IOException, JsonException {
     String name = json.readString();
     JsonValue value = null;
@@ -153,9 +193,10 @@ public final class JsonParser {
    * @throws IOException If reading fails
    * @throws JsonException if Json parsing fails
    */
-  private static ObjectValue parseObject(final JsonStream json)
+  private ObjectValue parseObject(final JsonStream json)
       throws IOException, JsonException {
     if (json.isCurrent(JsonStream.BEGIN_OBJECT)) {
+      goDeeper();
       ObjectValue result = new ObjectValue();
       boolean parsing = true;
       do {
@@ -171,6 +212,7 @@ public final class JsonParser {
           throw new JsonException("Object is missing value separator");
         }
       } while (parsing);
+      goSurface();
       return result;
     } else {
       throw new JsonException("Not object for parsing.");
@@ -184,8 +226,9 @@ public final class JsonParser {
    * @throws IOException If reading fails
    * @throws JsonException if Json parsing fails
    */
-  public static ObjectValue parseJson(final JsonStream json)
+  public ObjectValue parseJson(final JsonStream json)
       throws IOException, JsonException {
+    depth = 0;
     return parseObject(json);
   }
 }

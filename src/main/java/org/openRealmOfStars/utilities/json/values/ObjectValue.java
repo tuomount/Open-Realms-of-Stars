@@ -35,6 +35,7 @@ public class ObjectValue implements JsonValue {
 
   /**
    * Constructor for Object value. No members.
+   * This can be used when generating new JSON structure.
    */
   public ObjectValue() {
     arrayMember = new ArrayList<>();
@@ -97,6 +98,55 @@ public class ObjectValue implements JsonValue {
   @Override
   public ValueType getType() {
     return ValueType.OBJECT;
+  }
+
+  /**
+   * Add String member to Object value.
+   * If value is null then null is added.
+   * @param name Member name
+   * @param value String value
+   */
+  public void addStringMember(final String name, final String value) {
+    Member member = new Member(name);
+    if (value != null) {
+      member.setValue(new StringValue(value));
+    } else {
+      member.setValue(new NullValue());
+    }
+    arrayMember.add(member);
+  }
+
+  /**
+   * Add Integer member to Object value.
+   * @param name Member name
+   * @param value integer value
+   */
+  public void addIntegerMember(final String name, final int value) {
+    Member member = new Member(name);
+    member.setValue(new NumberValue(String.valueOf(value)));
+    arrayMember.add(member);
+  }
+
+  /**
+   * Add Number member to Object value.
+   * @param name Member name
+   * @param value Number value
+   */
+  public void addNumberMember(final String name, final String value) {
+    Member member = new Member(name);
+    member.setValue(new NumberValue(value));
+    arrayMember.add(member);
+  }
+
+  /**
+   * Add boolean member to Object value.
+   * @param name Member name
+   * @param value Boolean value
+   */
+  public void addBooleanMember(final String name, final Boolean value) {
+    Member member = new Member(name);
+    member.setValue(new BooleanValue(value));
+    arrayMember.add(member);
   }
 
 }

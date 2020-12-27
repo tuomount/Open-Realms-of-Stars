@@ -40,7 +40,8 @@ public class JsonParserTest {
     String jsonText = "{}";
     byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
     JsonStream stream = new JsonStream(buf);
-    ObjectValue root = JsonParser.parseJson(stream);
+    JsonParser parser = new JsonParser();
+    ObjectValue root = parser.parseJson(stream);
     stream.close();
     assertEquals("{}", root.getValueAsString());
   }
@@ -51,7 +52,8 @@ public class JsonParserTest {
     String jsonText = "{\"Widget\": {\"Debug\": \"On\", \"Run\": \"Off\", \"Loop\": 128}}";
     byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
     JsonStream stream = new JsonStream(buf);
-    ObjectValue root = JsonParser.parseJson(stream);
+    JsonParser parser = new JsonParser();
+    ObjectValue root = parser.parseJson(stream);
     stream.close();
     assertEquals("{\"Widget\": {\"Debug\": \"On\",\"Run\": \"Off\",\"Loop\": 128}}",
         root.getValueAsString());
@@ -63,7 +65,8 @@ public class JsonParserTest {
     String jsonText = "{\"Widget\": {\"Debug\": false, \"Run\": true, \"Loop\": 0.01}}";
     byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
     JsonStream stream = new JsonStream(buf);
-    ObjectValue root = JsonParser.parseJson(stream);
+    JsonParser parser = new JsonParser();
+    ObjectValue root = parser.parseJson(stream);
     stream.close();
     assertEquals("{\"Widget\": {\"Debug\": false,\"Run\": true,\"Loop\": 0.01}}",
         root.getValueAsString());
@@ -75,7 +78,8 @@ public class JsonParserTest {
     String jsonText = "{\"Widget\": {\"Debug\": false, \"Run\": true, \"Values\": [1,2,3,4], \"NotDefined\": null}}";
     byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
     JsonStream stream = new JsonStream(buf);
-    ObjectValue root = JsonParser.parseJson(stream);
+    JsonParser parser = new JsonParser();
+    ObjectValue root = parser.parseJson(stream);
     stream.close();
     assertEquals("{\"Widget\": {\"Debug\": false,\"Run\": true,\"Values\": [1,2,3,4],\"NotDefined\": null}}",
         root.getValueAsString());
@@ -87,10 +91,24 @@ public class JsonParserTest {
     String jsonText = "{\"Widget\": {\"Debug\": false, \"Run\": true, \"Values\": [1,2,3,4], \"NotDefined\": null}}";
     byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
     JsonStream stream = new JsonStream(buf);
-    ObjectValue root = JsonParser.parseJson(stream);
+    JsonParser parser = new JsonParser();
+    ObjectValue root = parser.parseJson(stream);
     stream.close();
     Member member = root.findFirst("Run");
     assertEquals("true", member.getValue().getValueAsString());
+  }
+
+  @Test(expected=JsonException.class)
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTooDeep() throws IOException {
+    String jsonText = "{\"Widget\": {\"Debug\": false, \"Run\": true, \"Values\": [1,2,3,4], \"NotDefined\": null}}";
+    byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
+    JsonStream stream = new JsonStream(buf);
+    JsonParser parser = new JsonParser(2);
+    ObjectValue root = parser.parseJson(stream);
+    stream.close();
+    assertEquals("{\"Widget\": {\"Debug\": false,\"Run\": true,\"Values\": [1,2,3,4],\"NotDefined\": null}}",
+        root.getValueAsString());
   }
 
 }

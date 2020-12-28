@@ -52,6 +52,14 @@ import org.openRealmOfStars.utilities.json.values.ValueType;
 public class Bridge {
 
   /**
+   * Effect name warm white.
+   */
+  public static final String EFFECT_WARM_WHITE = "Warm white";
+  /**
+   * Effect name darkest.
+   */
+  public static final String EFFECT_DARKEST = "Darkest";
+  /**
    * Name for contact Hue bridge.
    */
   public static final String DEVICE_TYPE = "OROS AMBIENT LIGHTS";
@@ -89,6 +97,19 @@ public class Bridge {
    * Lights in bridge.
    */
   private ArrayList<Light> lights;
+
+  /**
+   * Left light name.
+   */
+  private String leftLightName;
+  /**
+   * Right light name.
+   */
+  private String rightLightName;
+  /**
+   * Center light name.
+   */
+  private String centerLightName;
   /**
    * Constructs new Hue bridge controller. Not authenticated yet,
    * so no username set.
@@ -102,6 +123,9 @@ public class Bridge {
     setNextCommand(null);
     bridgeThread = new BridgeThread(this);
     lights = null;
+    leftLightName = "none";
+    rightLightName = "none";
+    centerLightName = "none";
   }
 
   /**
@@ -272,11 +296,107 @@ public class Bridge {
   }
 
   /**
+   * Updates light values on bridge
+   * @param light Light to update on bridge
+   * @throws IOException If something goes wrong.
+   */
+  public void updateLight(final Light light) throws IOException {
+    ObjectValue json = light.updateLampJson();
+    if (json.getMembers().size() == 0) {
+      // No change for selected light.
+      return;
+    }
+    SSLContext sslContext;
+    try {
+      sslContext = SSLContext.getInstance("TLSv1.2");
+    } catch (NoSuchAlgorithmException e) {
+      throw new IOException("Missing algorithm. " + e.getMessage());
+    }
+    TrustManager[] trustManagers = new TrustManager[1];
+    trustManagers[0] = new BlindTrustManager();
+    try {
+      sslContext.init(null, trustManagers, new SecureRandom());
+    } catch (KeyManagementException e) {
+      throw new IOException("Error in key management. " + e.getMessage());
+    }
+    URL url = new URL("https://" + hostname + "/api/" + username + "/lights/"
+        + light.getName() + "/state");
+    status = BridgeStatusType.BUSY;
+    HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+    connection.setSSLSocketFactory(sslContext.getSocketFactory());
+    connection.setHostnameVerifier(new BridgeHostnameVerifier(hostname));
+    connection.setDoOutput(true);
+    connection.setRequestMethod("PUT");
+    connection.getOutputStream().write(json.getValueAsString().getBytes(
+        StandardCharsets.UTF_8));
+    System.out.println("URL: " + url.toString());
+    System.out.println(json.getValueAsString());
+    InputStream is = connection.getInputStream();
+    byte[] buf = IOUtilities.readAll(is);
+    String str = new String(buf, StandardCharsets.UTF_8);
+    System.out.println("Code:" + connection.getResponseCode());
+    System.out.println(str);
+    is.close();
+    status = BridgeStatusType.CONNECTED;
+  }
+
+  /**
    * Get Lights in array list.
    * @return Array list of lights.
    */
   public ArrayList<Light> getLigths() {
     return lights;
+  }
+
+  /**
+   * Make light effect.
+   * @param light Light
+   * @param hue Hue, -1 means no change to current value
+   * @param sat Saturation, -1 means no change to current value
+   * @param bri Brightness, -1 means no change to current value
+   */
+  public void makeLightEffect(final Light light, final int hue,
+      final int sat, final int bri) {
+    if (light != null) {
+      light.setOn(true);
+      if (hue != -1) {
+        light.setHue(hue);
+      }
+      if (sat != -1) {
+        light.setSat(sat);
+      }
+      if (bri != -1) {
+        light.setBri(bri);
+      }
+      try {
+        updateLight(light);
+      } catch (IOException e) {
+        // Ignore errors
+        setStatus(BridgeStatusType.CONNECTED);
+      }
+    }
+  }
+  /**
+   * Changes all light for warm white light.
+   */
+  public void effectWarmWhiteLight() {
+    Light light = getLeftLight();
+    makeLightEffect(light, 4000, 10, 255);
+    light = getRightLight();
+    makeLightEffect(light, 4000, 10, 255);
+    light = getCenterLight();
+    makeLightEffect(light, 4000, 10, 255);
+  }
+  /**
+   * Changes all light for darkest value
+   */
+  public void effectDarkest() {
+    Light light = getLeftLight();
+    makeLightEffect(light, -1, -1, 0);
+    light = getRightLight();
+    makeLightEffect(light, -1, -1, 0);
+    light = getCenterLight();
+    makeLightEffect(light, -1, -1, 0);
   }
   /**
    * Method for testing connection OROS to bridge.
@@ -415,5 +535,103 @@ public class Bridge {
         bridgeThread.start();
       }
     }
+  }
+
+  /**
+   * Get left light actual light object
+   * @return Light object or null if not found or not defined.
+   */
+  public Light getLeftLight() {
+    if (getLeftLightName() == null
+        || getLeftLightName().equals("none") || getLeftLightName().isEmpty()) {
+      return null;
+    }
+    for (Light light : lights) {
+      if (light.getHumanReadablename().equals(getLeftLightName())) {
+        return light;
+      }
+    }
+    return null;
+  }
+  /**
+   * Get center light actual light object
+   * @return Light object or null if not found or not defined.
+   */
+  public Light getCenterLight() {
+    if (getCenterLightName() == null
+        || getCenterLightName().equals("none")
+        || getCenterLightName().isEmpty()) {
+      return null;
+    }
+    for (Light light : lights) {
+      if (light.getHumanReadablename().equals(getCenterLightName())) {
+        return light;
+      }
+    }
+    return null;
+  }
+  /**
+   * Get right light actual light object
+   * @return Light object or null if not found or not defined.
+   */
+  public Light getRightLight() {
+    if (getRightLightName() == null
+        || getRightLightName().equals("none")
+        || getRightLightName().isEmpty()) {
+      return null;
+    }
+    for (Light light : lights) {
+      if (light.getHumanReadablename().equals(getRightLightName())) {
+        return light;
+      }
+    }
+    return null;
+  }
+  /**
+   * Get left lightname
+   * @return the leftLightName
+   */
+  public String getLeftLightName() {
+    return leftLightName;
+  }
+
+  /**
+   * Set left lightname.
+   * @param leftLightName the leftLightName to set
+   */
+  public void setLeftLightName(final String leftLightName) {
+    this.leftLightName = leftLightName;
+  }
+
+  /**
+   * Get right light name.
+   * @return the rightLightName
+   */
+  public String getRightLightName() {
+    return rightLightName;
+  }
+
+  /**
+   * Set right light name.
+   * @param rightLightName the rightLightName to set
+   */
+  public void setRightLightName(final String rightLightName) {
+    this.rightLightName = rightLightName;
+  }
+
+  /**
+   * Get center light name.
+   * @return the centerLightName
+   */
+  public String getCenterLightName() {
+    return centerLightName;
+  }
+
+  /**
+   * Set center light name.
+   * @param centerLightName the centerLightName to set
+   */
+  public void setCenterLightName(final String centerLightName) {
+    this.centerLightName = centerLightName;
   }
 }

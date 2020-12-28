@@ -51,7 +51,7 @@ public final class ConfigFileRepository {
   public static ConfigFile readConfigFile(final InputStream is)
       throws IOException {
     byte[] data = IOUtilities.readAll(is);
-    String dataAsString = new String(data, StandardCharsets.US_ASCII);
+    String dataAsString = new String(data, StandardCharsets.UTF_8);
     String[] lines = dataAsString.split("\n");
     ConfigFile config = new ConfigFile();
     for (String line : lines) {

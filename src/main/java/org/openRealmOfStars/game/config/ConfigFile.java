@@ -57,6 +57,18 @@ public class ConfigFile {
    */
   public static final String CONFIG_BRIDGE_USERNAME = "BridgeUsername";
   /**
+   * Config option for left ambient light
+   */
+  public static final String CONFIG_LEFT_LIGHT = "LeftLightName";
+  /**
+   * Config option for center ambient light
+   */
+  public static final String CONFIG_CENTER_LIGHT = "CenterLightName";
+  /**
+   * Config option for center right light
+   */
+  public static final String CONFIG_RIGHT_LIGHT = "RightLightName";
+  /**
    * Config file default comment
    */
   public static final String CONFIG_COMMENT = "# Config file for "
@@ -285,6 +297,91 @@ public class ConfigFile {
     }
     return null;
   }
+
+  /**
+   * Set Left ambient light name
+   * @param lightName Light name to set
+   */
+  public void setLeftLight(final String lightName) {
+    ConfigLine line = getLineByKey(CONFIG_LEFT_LIGHT);
+    if (lightName != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_LEFT_LIGHT + "=" + lightName);
+        add(line);
+      } else {
+        line.setValue(lightName);
+      }
+    }
+  }
+
+  /**
+   * Get left ambient light name
+   * @return lightname or null
+   */
+  public String getLeftLight() {
+    ConfigLine line = getLineByKey(CONFIG_LEFT_LIGHT);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
+  }
+
+  /**
+   * Set right ambient light name
+   * @param lightName Light name to set
+   */
+  public void setRightLight(final String lightName) {
+    ConfigLine line = getLineByKey(CONFIG_RIGHT_LIGHT);
+    if (lightName != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_RIGHT_LIGHT + "=" + lightName);
+        add(line);
+      } else {
+        line.setValue(lightName);
+      }
+    }
+  }
+
+  /**
+   * Get right ambient light name
+   * @return lightname or null
+   */
+  public String getRightLight() {
+    ConfigLine line = getLineByKey(CONFIG_RIGHT_LIGHT);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
+  }
+
+  /**
+   * Set center ambient light name
+   * @param lightName Light name to set
+   */
+  public void setCenterLight(final String lightName) {
+    ConfigLine line = getLineByKey(CONFIG_CENTER_LIGHT);
+    if (lightName != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_CENTER_LIGHT + "=" + lightName);
+        add(line);
+      } else {
+        line.setValue(lightName);
+      }
+    }
+  }
+
+  /**
+   * Get right ambient light name
+   * @return lightname or null
+   */
+  public String getCenterLight() {
+    ConfigLine line = getLineByKey(CONFIG_CENTER_LIGHT);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
+  }
+
   /**
    * Get Resolution width from config file
    * @return Resolution width

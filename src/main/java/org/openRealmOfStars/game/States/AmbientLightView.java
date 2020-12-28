@@ -76,9 +76,21 @@ public class AmbientLightView extends BlackPanel {
    */
   private InfoTextArea infoText;
   /**
-   * Light selector
+   * Light selector for center
    */
   private JComboBox<String> centerLightSelection;
+  /**
+   * Light selector for left
+   */
+  private JComboBox<String> leftLightSelection;
+  /**
+   * Light selector for right
+   */
+  private JComboBox<String> rightLightSelection;
+  /**
+   * Light effect for testing
+   */
+  private JComboBox<String> effectSelection;
   /**
    * Ambient lights are enabled.
    */
@@ -109,6 +121,9 @@ public class AmbientLightView extends BlackPanel {
           && config.getBridgeUsername() != null) {
       this.bridge = new Bridge(config.getBridgeHost());
       this.bridge.setUsername(config.getBridgeUsername());
+      this.bridge.setCenterLightName(config.getCenterLight());
+      this.bridge.setLeftLightName(config.getLeftLight());
+      this.bridge.setRightLightName(config.getRightLight());
     }
     InfoPanel base = new InfoPanel();
     base.setTitle("Ambient Lights (EXPERIMENTAL)");
@@ -226,9 +241,25 @@ public class AmbientLightView extends BlackPanel {
     xPanel = new EmptyInfoPanel();
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
-    label = new SpaceLabel("Center light");
+    label = new SpaceLabel("Left light");
     xPanel.add(label);
     String[] lightNames = {"none"};
+    leftLightSelection = new JComboBox<>(lightNames);
+    leftLightSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    leftLightSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    leftLightSelection.setBorder(new SimpleBorder());
+    leftLightSelection.setFont(GuiStatics.getFontCubellan());
+    leftLightSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    xPanel.add(leftLightSelection);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    lightsPanel.add(xPanel);
+    lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    label = new SpaceLabel("Center light");
+    xPanel.add(label);
     centerLightSelection = new JComboBox<>(lightNames);
     centerLightSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     centerLightSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
@@ -237,6 +268,45 @@ public class AmbientLightView extends BlackPanel {
     centerLightSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     xPanel.add(centerLightSelection);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    lightsPanel.add(xPanel);
+    lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    label = new SpaceLabel("Right light");
+    xPanel.add(label);
+    rightLightSelection = new JComboBox<>(lightNames);
+    rightLightSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    rightLightSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    rightLightSelection.setBorder(new SimpleBorder());
+    rightLightSelection.setFont(GuiStatics.getFontCubellan());
+    rightLightSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    xPanel.add(rightLightSelection);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    lightsPanel.add(xPanel);
+    lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    label = new SpaceLabel("Effect for testing");
+    xPanel.add(label);
+    String[] effectList = {Bridge.EFFECT_WARM_WHITE, Bridge.EFFECT_DARKEST};
+    effectSelection = new JComboBox<>(effectList);
+    effectSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    effectSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    effectSelection.setBorder(new SimpleBorder());
+    effectSelection.setFont(GuiStatics.getFontCubellan());
+    effectSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    xPanel.add(effectSelection);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    btn = new SpaceButton("Test", GameCommands.COMMAND_LIGHT_TEST);
+    btn.addActionListener(listener);
+    btn.createToolTip();
+    btn.setToolTipText("Test effect with selected lights");
+    xPanel.add(btn);
     xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     lightsPanel.add(xPanel);
     lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -274,8 +344,31 @@ public class AmbientLightView extends BlackPanel {
       }
       updatePanels();
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_LIGHT_TEST)) {
+      SoundPlayer.playMenuSound();
+      if (bridge != null && bridge.getStatus() == BridgeStatusType.CONNECTED) {
+        updateBridge();
+        String effectName = (String) effectSelection.getSelectedItem();
+        if (effectName.equals(Bridge.EFFECT_WARM_WHITE)) {
+          bridge.setNextCommand(BridgeCommandType.WARM_WHITE);
+        }
+        if (effectName.equals(Bridge.EFFECT_DARKEST)) {
+          bridge.setNextCommand(BridgeCommandType.DARKEST);
+        }
+      }
+    }
   }
 
+  /**
+   * Update bridge lights and other stuff from settings.
+   */
+  public void updateBridge() {
+    if (bridge != null && bridge.getStatus() == BridgeStatusType.CONNECTED) {
+      bridge.setLeftLightName(getLeftLight());
+      bridge.setRightLightName(getRightLight());
+      bridge.setCenterLightName(getCenterLight());
+    }
+  }
   /**
    * Update panels for ambient lights view.
    */
@@ -314,8 +407,15 @@ public class AmbientLightView extends BlackPanel {
             lightNames[i + 1] = bridge.getLigths().get(i)
                 .getHumanReadablename();
           }
+          leftLightSelection.setModel(
+              new DefaultComboBoxModel<>(lightNames));
           centerLightSelection.setModel(
               new DefaultComboBoxModel<>(lightNames));
+          rightLightSelection.setModel(
+              new DefaultComboBoxModel<>(lightNames));
+          centerLightSelection.setSelectedItem(bridge.getCenterLightName());
+          leftLightSelection.setSelectedItem(bridge.getLeftLightName());
+          rightLightSelection.setSelectedItem(bridge.getRightLightName());
           lightListUpdated = false;
         }
       }
@@ -332,4 +432,29 @@ public class AmbientLightView extends BlackPanel {
   public Bridge getBridge() {
     return bridge;
   }
+
+  /**
+   * Get left light name
+   * @return Left light name as String.
+   */
+  public String getLeftLight() {
+    return (String) leftLightSelection.getSelectedItem();
+  }
+
+  /**
+   * Get right light name
+   * @return Right light name as String.
+   */
+  public String getRightLight() {
+    return (String) rightLightSelection.getSelectedItem();
+  }
+
+  /**
+   * Get center light name
+   * @return Center light name as String.
+   */
+  public String getCenterLight() {
+    return (String) centerLightSelection.getSelectedItem();
+  }
+
 }

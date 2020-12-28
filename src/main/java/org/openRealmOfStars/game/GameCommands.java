@@ -115,6 +115,10 @@ public final class GameCommands {
    * Ambient lights connect
    */
   public static final String COMMAND_BRIDGE_CONNECT = "SetupBridge";
+  /**
+   * Light test
+   */
+  public static final String COMMAND_LIGHT_TEST = "TestLight";
 
   /**
    * End Turn command

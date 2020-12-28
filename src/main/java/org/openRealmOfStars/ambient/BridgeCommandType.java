@@ -40,5 +40,14 @@ public enum BridgeCommandType {
   /**
    * Fetch lights into list.
    */
-  FETCH_LIGHTS;
+  FETCH_LIGHTS,
+  /**
+   * Warm white light.
+   */
+  WARM_WHITE,
+  /**
+   * Lowest possible light
+   */
+  DARKEST;
+
 }

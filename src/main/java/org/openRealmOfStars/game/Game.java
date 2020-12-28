@@ -2346,6 +2346,9 @@ public class Game implements ActionListener {
               && tmpBridge.getUsername() != null) {
             configFile.setBridgeHost(tmpBridge.getHostname());
             configFile.setBridgeUsername(tmpBridge.getUsername());
+            configFile.setLeftLight(ambientLightsView.getLeftLight());
+            configFile.setRightLight(ambientLightsView.getRightLight());
+            configFile.setCenterLight(ambientLightsView.getCenterLight());
             writeConfigFile();
           }
         }

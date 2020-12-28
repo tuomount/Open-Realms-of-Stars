@@ -112,7 +112,13 @@ public class BridgeThread extends Thread {
           bridge.setStatus(BridgeStatusType.NOT_CONNECTED);
           bridge.setLastErrorMsg(e.getMessage());
         }
-      } else if (command == BridgeCommandType.EXIT) {
+      } else if (command == BridgeCommandType.WARM_WHITE) {
+         bridge.setNextCommand(null);
+         bridge.effectWarmWhiteLight();
+      } else if (command == BridgeCommandType.DARKEST) {
+        bridge.setNextCommand(null);
+        bridge.effectDarkest();
+     } else if (command == BridgeCommandType.EXIT) {
         bridge.setNextCommand(null);
         endThread = true;
       }

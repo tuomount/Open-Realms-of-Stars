@@ -15,6 +15,7 @@ import javax.net.ssl.TrustManager;
 
 import org.openRealmOfStars.ambient.connection.BlindTrustManager;
 import org.openRealmOfStars.ambient.connection.BridgeHostnameVerifier;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.json.JsonParser;
 import org.openRealmOfStars.utilities.json.JsonStream;
@@ -203,12 +204,12 @@ public class Bridge {
     root.addStringMember("devicetype", DEVICE_TYPE);
     connection.getOutputStream().write(root.getValueAsString().getBytes(
         StandardCharsets.UTF_8));
-    System.out.println(root.getValueAsString());
+    ErrorLogger.log(root.getValueAsString());
     InputStream is = connection.getInputStream();
     byte[] buf = IOUtilities.readAll(is);
     String str = new String(buf, StandardCharsets.UTF_8);
-    System.out.println("Code:" + connection.getResponseCode());
-    System.out.println(str);
+    ErrorLogger.log("Code:" + connection.getResponseCode());
+    ErrorLogger.log(str);
     JsonStream stream = new JsonStream(buf);
     JsonParser parser = new JsonParser();
     JsonRoot jsonRoot = parser.parseJson(stream);
@@ -280,8 +281,8 @@ public class Bridge {
     InputStream is = connection.getInputStream();
     byte[] buf = IOUtilities.readAll(is);
     String str = new String(buf, StandardCharsets.UTF_8);
-    System.out.println("Code:" + connection.getResponseCode());
-    System.out.println(str);
+    ErrorLogger.log("Code:" + connection.getResponseCode());
+    ErrorLogger.log(str);
     JsonStream stream = new JsonStream(buf);
     JsonParser parser = new JsonParser();
     JsonRoot jsonRoot = parser.parseJson(stream);
@@ -329,13 +330,13 @@ public class Bridge {
     connection.setRequestMethod("PUT");
     connection.getOutputStream().write(json.getValueAsString().getBytes(
         StandardCharsets.UTF_8));
-    System.out.println("URL: " + url.toString());
-    System.out.println(json.getValueAsString());
+    ErrorLogger.log("URL: " + url.toString());
+    ErrorLogger.log(json.getValueAsString());
     InputStream is = connection.getInputStream();
     byte[] buf = IOUtilities.readAll(is);
     String str = new String(buf, StandardCharsets.UTF_8);
-    System.out.println("Code:" + connection.getResponseCode());
-    System.out.println(str);
+    ErrorLogger.log("Code:" + connection.getResponseCode());
+    ErrorLogger.log(str);
     is.close();
     status = BridgeStatusType.CONNECTED;
   }
@@ -425,8 +426,8 @@ public class Bridge {
     InputStream is = connection.getInputStream();
     byte[] buf = IOUtilities.readAll(is);
     String str = new String(buf, StandardCharsets.UTF_8);
-    System.out.println("Code:" + connection.getResponseCode());
-    System.out.println(str);
+    ErrorLogger.log("Code:" + connection.getResponseCode());
+    ErrorLogger.log(str);
     JsonStream stream = new JsonStream(buf);
     JsonParser parser = new JsonParser();
     JsonRoot jsonRoot = parser.parseJson(stream);
@@ -444,7 +445,7 @@ public class Bridge {
           StringValue strName = (StringValue) member.getValue();
           light.setHumanReadablename(strName.getValue());
         } else {
-          System.out.println("No name found for light " + lightName + ".");
+          ErrorLogger.log("No name found for light " + lightName + ".");
           continue;
         }
         member = lightNum.findFirst("state");
@@ -457,7 +458,7 @@ public class Bridge {
             BooleanValue value = (BooleanValue) member.getValue();
             light.setOn(value.getValue());
           } else {
-            System.out.println("No on found for light " + lightName + ".");
+            ErrorLogger.log("No on found for light " + lightName + ".");
             continue;
           }
           member = state.findFirst("bri");
@@ -466,7 +467,7 @@ public class Bridge {
             NumberValue value = (NumberValue) member.getValue();
             light.setBri(value.getValueAsInt());
           } else {
-            System.out.println("No bri found for light " + lightName + ".");
+            ErrorLogger.log("No bri found for light " + lightName + ".");
             continue;
           }
           member = state.findFirst("sat");
@@ -475,7 +476,7 @@ public class Bridge {
             NumberValue value = (NumberValue) member.getValue();
             light.setSat(value.getValueAsInt());
           } else {
-            System.out.println("No sat found for light " + lightName + ".");
+            ErrorLogger.log("No sat found for light " + lightName + ".");
             // We only support full color lights
             continue;
           }
@@ -485,7 +486,7 @@ public class Bridge {
             NumberValue value = (NumberValue) member.getValue();
             light.setHue(value.getValueAsInt());
           } else {
-            System.out.println("No hue found for light " + lightName + ".");
+            ErrorLogger.log("No hue found for light " + lightName + ".");
             // We only support full color lights
             continue;
           }

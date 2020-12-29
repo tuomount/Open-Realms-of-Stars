@@ -48,6 +48,26 @@ public enum BridgeCommandType {
   /**
    * Lowest possible light
    */
-  DARKEST;
+  DARKEST,
+  /**
+   * Red alert aka Battle alert.
+   */
+  RED_ALERT,
+  /**
+   * Yellow alert aka Bombing alert.
+   */
+  YELLOW_ALERT,
+  /**
+   * Nuke start, sets all colors to bright white.
+   */
+  NUKE_START,
+  /**
+   * Nuclear blast fades away.
+   */
+  NUKE_FADE,
+  /**
+   * Float in space
+   */
+  FLOAT_IN_SPACE;
 
 }

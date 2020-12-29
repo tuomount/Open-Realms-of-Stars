@@ -124,6 +124,7 @@ public class AmbientLightView extends BlackPanel {
       this.bridge.setCenterLightName(config.getCenterLight());
       this.bridge.setLeftLightName(config.getLeftLight());
       this.bridge.setRightLightName(config.getRightLight());
+      this.bridge.setIntense(config.getLightIntense());
     }
     InfoPanel base = new InfoPanel();
     base.setTitle("Ambient Lights (EXPERIMENTAL)");
@@ -231,8 +232,9 @@ public class AmbientLightView extends BlackPanel {
     lightsSlider = new SpaceSliderPanel(
         GameCommands.COMMAND_LIGHTS_DN,
         GameCommands.COMMAND_LIGHTS_UP,
-        Icons.ICON_PROPULSION_TECH, "Light intense", 0, 4, 4,
-        GameCommands.COMMAND_LIGHTS_INTENSE, listener);
+        Icons.ICON_PROPULSION_TECH, "Light intense", 1, 5,
+        config.getLightIntense(), GameCommands.COMMAND_LIGHTS_INTENSE,
+        listener);
     lightsSlider.setSliderMajorTick(1);
     lightsSlider.setSliderMinorTick(1);
     xPanel.add(lightsSlider);
@@ -292,7 +294,9 @@ public class AmbientLightView extends BlackPanel {
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
     label = new SpaceLabel("Effect for testing");
     xPanel.add(label);
-    String[] effectList = {Bridge.EFFECT_WARM_WHITE, Bridge.EFFECT_DARKEST};
+    String[] effectList = {Bridge.EFFECT_WARM_WHITE, Bridge.EFFECT_DARKEST,
+        Bridge.EFFECT_RED_ALERT, Bridge.EFFECT_YELLOW_ALERT,
+        Bridge.EFFECT_NUKE, bridge.EFFECT_FLOAT_IN_SPACE};
     effectSelection = new JComboBox<>(effectList);
     effectSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     effectSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
@@ -355,6 +359,18 @@ public class AmbientLightView extends BlackPanel {
         if (effectName.equals(Bridge.EFFECT_DARKEST)) {
           bridge.setNextCommand(BridgeCommandType.DARKEST);
         }
+        if (effectName.equals(Bridge.EFFECT_RED_ALERT)) {
+          bridge.setNextCommand(BridgeCommandType.RED_ALERT);
+        }
+        if (effectName.equals(Bridge.EFFECT_YELLOW_ALERT)) {
+          bridge.setNextCommand(BridgeCommandType.YELLOW_ALERT);
+        }
+        if (effectName.equals(Bridge.EFFECT_NUKE)) {
+          bridge.setNextCommand(BridgeCommandType.NUKE_START);
+        }
+        if (effectName.equals(Bridge.EFFECT_FLOAT_IN_SPACE)) {
+          bridge.setNextCommand(BridgeCommandType.FLOAT_IN_SPACE);
+        }
       }
     }
   }
@@ -367,6 +383,7 @@ public class AmbientLightView extends BlackPanel {
       bridge.setLeftLightName(getLeftLight());
       bridge.setRightLightName(getRightLight());
       bridge.setCenterLightName(getCenterLight());
+      bridge.setIntense(getIntense());
     }
   }
   /**
@@ -457,4 +474,11 @@ public class AmbientLightView extends BlackPanel {
     return (String) centerLightSelection.getSelectedItem();
   }
 
+  /**
+   * Get intense value from slider.
+   * @return Intense value from slider.
+   */
+  public int getIntense() {
+    return lightsSlider.getSliderValue();
+  }
 }

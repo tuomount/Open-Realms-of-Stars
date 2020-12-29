@@ -61,6 +61,22 @@ public class Bridge {
    */
   public static final String EFFECT_DARKEST = "Darkest";
   /**
+   * Effect name Red alert.
+   */
+  public static final String EFFECT_RED_ALERT = "Red alert!";
+  /**
+   * Effect name Yellow alert.
+   */
+  public static final String EFFECT_YELLOW_ALERT = "Yellow alert!";
+  /**
+   * Effect name Nuke.
+   */
+  public static final String EFFECT_NUKE = "Nuke";
+  /**
+   * Effect name Nuke.
+   */
+  public static final String EFFECT_FLOAT_IN_SPACE = "Float in space";
+  /**
    * Name for contact Hue bridge.
    */
   public static final String DEVICE_TYPE = "OROS AMBIENT LIGHTS";
@@ -112,6 +128,18 @@ public class Bridge {
    */
   private String centerLightName;
   /**
+   * Phase value for effects. This value is in degrees.
+   */
+  private double phase;
+  /**
+   * Effect intense value;
+   */
+  private int intense;
+  /**
+   * Has effect ended so that BridgeThread can stop running the effect.
+   */
+  private boolean effectEnded;
+  /**
    * Constructs new Hue bridge controller. Not authenticated yet,
    * so no username set.
    * @param hostname Hostname or IP address.
@@ -127,6 +155,7 @@ public class Bridge {
     leftLightName = "none";
     rightLightName = "none";
     centerLightName = "none";
+    intense = 3;
   }
 
   /**
@@ -322,7 +351,6 @@ public class Bridge {
     }
     URL url = new URL("https://" + hostname + "/api/" + username + "/lights/"
         + light.getName() + "/state");
-    status = BridgeStatusType.BUSY;
     HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
     connection.setSSLSocketFactory(sslContext.getSocketFactory());
     connection.setHostnameVerifier(new BridgeHostnameVerifier(hostname));
@@ -399,6 +427,138 @@ public class Bridge {
     light = getCenterLight();
     makeLightEffect(light, -1, -1, 0);
   }
+
+  /**
+   * Makes lights blinking in certain hue.
+   * @param hue Hue for blinking light
+   */
+  public void effectAlert(final int hue) {
+    int center = 128;
+    int amp = 127;
+    int inc = 90;
+    if (intense == 4) {
+      amp = 100;
+      center = 155;
+      inc = 70;
+    }
+    if (intense == 3) {
+      amp = 80;
+      center = 175;
+      inc = 45;
+    }
+    if (intense == 2) {
+      amp = 60;
+      center = 195;
+      inc = 30;
+    }
+    if (intense == 1) {
+      amp = 50;
+      center = 205;
+      inc = 30;
+    }
+    phase = phase + inc;
+    if (phase > 359) {
+      phase = phase - 359;
+    }
+    int bri = (int) (Math.sin(Math.toRadians(phase)) * amp);
+    bri = bri + center;
+    Light light = getLeftLight();
+    makeLightEffect(light, hue, 255, bri);
+    bri = (int) (Math.cos(Math.toRadians(phase)) * amp);
+    bri = bri + center;
+    light = getRightLight();
+    makeLightEffect(light, hue, 255, bri);
+    bri = (int) (Math.sin(Math.toRadians(phase + 45)) * amp);
+    bri = bri + center;
+    light = getCenterLight();
+    makeLightEffect(light, hue, 128, bri);
+  }
+
+  /**
+   * Initialize nuke effect.
+   */
+  public void effectInitNuke() {
+    phase = 90;
+    effectEnded = false;
+    Light light = getLeftLight();
+    makeLightEffect(light, 48000, 20, 255);
+    light = getRightLight();
+    makeLightEffect(light, 20000, 10, 255);
+    light = getCenterLight();
+    makeLightEffect(light, 50000, 30, 255);
+  }
+
+  /**
+   * Fades down nuclear blast effect
+   */
+  public void effectFadeNuke() {
+    int center = 128;
+    int amp = 127;
+    int inc = 30;
+    phase = phase + inc;
+    if (phase > 270) {
+      effectEnded = true;
+      return;
+    }
+    int bri = (int) (Math.sin(Math.toRadians(phase)) * amp);
+    bri = bri + center;
+    Light light = getLeftLight();
+    makeLightEffect(light, 48000, 20, bri);
+    bri = (int) (Math.sin(Math.toRadians(phase)) * amp);
+    bri = bri + center;
+    light = getRightLight();
+    makeLightEffect(light, 20000, 10, bri);
+    bri = (int) (Math.sin(Math.toRadians(phase)) * amp);
+    bri = bri + center;
+    light = getCenterLight();
+    makeLightEffect(light, 50000, 30, bri);
+  }
+
+  /**
+   * Makes blueish space floating effect
+   */
+  public void effectBlueSpace() {
+    int center = 43500;
+    int amp = 6500;
+    int inc = 3;
+    int trickle = 100;
+    if (intense == 4) {
+      trickle = 80;
+      inc = 2;
+    }
+    if (intense == 3) {
+      trickle = 60;
+      inc = 2;
+    }
+    if (intense == 2) {
+      trickle = 40;
+      inc = 2;
+    }
+    if (intense == 1) {
+      trickle = 40;
+      inc = 1;
+    }
+    phase = phase + inc;
+    if (phase > 359) {
+      phase = phase - 359;
+    }
+    int hue = (int) (Math.sin(Math.toRadians(phase)) * amp);
+    hue = hue + center;
+    int bri = 150 + (int) (Math.sin(Math.toRadians(phase * 2)) * trickle);
+    Light light = getLeftLight();
+    makeLightEffect(light, hue, 255, bri);
+    hue = (int) (Math.cos(Math.toRadians(phase)) * amp);
+    hue = hue + center;
+    bri = 150 + (int) (Math.cos(Math.toRadians(phase * 2)) * trickle);
+    light = getRightLight();
+    makeLightEffect(light, hue, 255, bri);
+    hue = (int) (Math.sin(Math.toRadians(phase + 45)) * amp);
+    hue = hue + center;
+    bri = 150 + (int) (Math.sin(Math.toRadians(phase * 2)) * trickle);
+    light = getCenterLight();
+    makeLightEffect(light, hue, 255, bri);
+  }
+
   /**
    * Method for testing connection OROS to bridge.
    * @throws IOException If something goes wrong.
@@ -634,5 +794,29 @@ public class Bridge {
    */
   public void setCenterLightName(final String centerLightName) {
     this.centerLightName = centerLightName;
+  }
+
+  /**
+   * Get Effect intense value
+   * @return the intense
+   */
+  public int getIntense() {
+    return intense;
+  }
+
+  /**
+   * Set effect intense value.
+   * @param intense the intense to set
+   */
+  public void setIntense(final int intense) {
+    this.intense = intense;
+  }
+
+  /**
+   * Has current effect ended?
+   * @return True if effect has ended.
+   */
+  public boolean isEffectEnded() {
+    return effectEnded;
   }
 }

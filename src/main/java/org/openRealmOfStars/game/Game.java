@@ -2349,6 +2349,7 @@ public class Game implements ActionListener {
             configFile.setLeftLight(ambientLightsView.getLeftLight());
             configFile.setRightLight(ambientLightsView.getRightLight());
             configFile.setCenterLight(ambientLightsView.getCenterLight());
+            configFile.setLightIntense(ambientLightsView.getIntense());
             writeConfigFile();
           }
         }

@@ -69,6 +69,10 @@ public class ConfigFile {
    */
   public static final String CONFIG_RIGHT_LIGHT = "RightLightName";
   /**
+   * Config option for light intense
+   */
+  public static final String CONFIG_LIGHT_INTENSE = "LightIntense";
+  /**
    * Config file default comment
    */
   public static final String CONFIG_COMMENT = "# Config file for "
@@ -477,6 +481,43 @@ public class ConfigFile {
    */
   public void setSoundVolume(final int volume) {
     setVolume(CONFIG_SOUND_VOLUME, volume);
+  }
+
+  /**
+   * Light Intense for ambient effects.
+   * @param intense Light intense
+   */
+  public void setLightIntense(final int intense) {
+    ConfigLine line = getLineByKey(CONFIG_LIGHT_INTENSE);
+    if (line == null) {
+      line = new ConfigLine(CONFIG_LIGHT_INTENSE + "=3");
+      add(line);
+    }
+    if (intense >= 1 && intense <= 5) {
+      String str = Integer.toString(intense);
+      line.setValue(str);
+    }
+  }
+
+  /**
+   * Get light intense for ambient lights effect
+   * @return Light intense value
+   */
+  public int getLightIntense() {
+    int result = 3;
+    ConfigLine line = getLineByKey(CONFIG_LIGHT_INTENSE);
+    if (line != null) {
+      String value = line.getValue();
+      if (value != null) {
+        try {
+          result = Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+          ErrorLogger.log("Invalid " + CONFIG_LIGHT_INTENSE
+              + " value: " + value);
+        }
+      }
+    }
+    return result;
   }
 
 }

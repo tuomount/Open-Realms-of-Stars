@@ -74,6 +74,18 @@ public class BridgeThread extends Thread {
     super.start();
   }
 
+  /**
+   * Wait for certain amount of milli seconds.
+   * @param time in milli seconds.
+   */
+  private void sleepFor(final long time) {
+    try {
+      BridgeThread.sleep(time);
+    } catch (InterruptedException e) {
+      // Nothing to do.
+    }
+  }
+
   @Override
   public void run() {
     synchronized (this) {
@@ -83,11 +95,7 @@ public class BridgeThread extends Thread {
     do {
       BridgeCommandType command = bridge.getNextCommand();
       if (command == null) {
-        try {
-          BridgeThread.sleep(100);
-        } catch (InterruptedException e) {
-          // Nothing to do.
-        }
+        sleepFor(100);
       } else if (command == BridgeCommandType.REGISTER) {
         try {
           bridge.setNextCommand(null);
@@ -118,7 +126,21 @@ public class BridgeThread extends Thread {
       } else if (command == BridgeCommandType.DARKEST) {
         bridge.setNextCommand(null);
         bridge.effectDarkest();
-     } else if (command == BridgeCommandType.EXIT) {
+      } else if (command == BridgeCommandType.RED_ALERT) {
+        bridge.effectAlert(200);
+      } else if (command == BridgeCommandType.FLOAT_IN_SPACE) {
+        bridge.effectBlueSpace();
+      } else if (command == BridgeCommandType.YELLOW_ALERT) {
+        bridge.effectAlert(8000);
+      } else if (command == BridgeCommandType.NUKE_START) {
+        bridge.effectInitNuke();
+        bridge.setNextCommand(BridgeCommandType.NUKE_FADE);
+      } else if (command == BridgeCommandType.NUKE_FADE) {
+        bridge.effectFadeNuke();
+        if (bridge.isEffectEnded()) {
+          bridge.setNextCommand(null);
+        }
+      } else if (command == BridgeCommandType.EXIT) {
         bridge.setNextCommand(null);
         endThread = true;
       }

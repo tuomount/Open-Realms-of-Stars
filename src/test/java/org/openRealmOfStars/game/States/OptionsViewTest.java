@@ -42,6 +42,7 @@ public class OptionsViewTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     ConfigFile config = Mockito.mock(ConfigFile.class);
+    Mockito.when(config.getLightIntense()).thenReturn(3);
     Game game = Mockito.mock(Game.class);
     Mockito.when(game.getHeight()).thenReturn(768);
     Mockito.when(game.getWidth()).thenReturn(1024);
@@ -65,6 +66,7 @@ public class OptionsViewTest {
     ActionListener listener = Mockito.mock(ActionListener.class);
     MusicPlayer.setVolume(50);
     SoundPlayer.setSoundVolume(70);
+    Mockito.when(config.getLightIntense()).thenReturn(3);
     OptionsView view = new OptionsView(config, game, listener);
     ActionEvent event = Mockito.mock(ActionEvent.class);
     Mockito.when(event.getActionCommand()).thenReturn(

@@ -257,6 +257,9 @@ public class OptionsView extends BlackPanel {
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
     ambientLightsBox = new SpaceCheckBox("Enable ambient lights");
+    if (config.getAmbientLights()) {
+      ambientLightsBox.setSelected(true);
+    }
     xPanel.add(ambientLightsBox);
     lightsPanel.add(xPanel);
     xPanel = new EmptyInfoPanel();
@@ -288,8 +291,9 @@ public class OptionsView extends BlackPanel {
     lightsSlider = new SpaceSliderPanel(
         GameCommands.COMMAND_LIGHTS_DN,
         GameCommands.COMMAND_LIGHTS_UP,
-        Icons.ICON_PROPULSION_TECH, "Light intense", 0, 4, 4,
-        GameCommands.COMMAND_LIGHTS_INTENSE, listener);
+        Icons.ICON_PROPULSION_TECH, "Light intense", 1, 5,
+        config.getLightIntense(), GameCommands.COMMAND_LIGHTS_INTENSE,
+        listener);
     lightsSlider.setSliderMajorTick(1);
     lightsSlider.setSliderMinorTick(1);
     xPanel.add(lightsSlider);
@@ -395,6 +399,22 @@ public class OptionsView extends BlackPanel {
    */
   public boolean getLargerFonts() {
     return largerFontsBox.isSelected();
+  }
+
+  /**
+   * Get intense value from slider.
+   * @return Intense value from slider.
+   */
+  public int getIntense() {
+    return lightsSlider.getSliderValue();
+  }
+
+  /**
+   * Is ambient lights enabled or not?
+   * @return True if lights are enabled.
+   */
+  public boolean isLightsEnabled() {
+    return ambientLightsBox.isSelected();
   }
 
 }

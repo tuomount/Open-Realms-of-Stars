@@ -222,6 +222,9 @@ public class AmbientLightView extends BlackPanel {
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
     ambientLightsBox = new SpaceCheckBox("Enable ambient lights");
+    if (config.getAmbientLights()) {
+      ambientLightsBox.setSelected(true);
+    }
     xPanel.add(ambientLightsBox);
     lightsPanel.add(xPanel);
     xPanel = new EmptyInfoPanel();
@@ -296,7 +299,7 @@ public class AmbientLightView extends BlackPanel {
     xPanel.add(label);
     String[] effectList = {Bridge.EFFECT_WARM_WHITE, Bridge.EFFECT_DARKEST,
         Bridge.EFFECT_RED_ALERT, Bridge.EFFECT_YELLOW_ALERT,
-        Bridge.EFFECT_NUKE, bridge.EFFECT_FLOAT_IN_SPACE};
+        Bridge.EFFECT_NUKE, Bridge.EFFECT_FLOAT_IN_SPACE};
     effectSelection = new JComboBox<>(effectList);
     effectSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     effectSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
@@ -480,5 +483,13 @@ public class AmbientLightView extends BlackPanel {
    */
   public int getIntense() {
     return lightsSlider.getSliderValue();
+  }
+
+  /**
+   * Is ambient lights enabled or not?
+   * @return True if lights are enabled.
+   */
+  public boolean isLightsEnabled() {
+    return ambientLightsBox.isSelected();
   }
 }

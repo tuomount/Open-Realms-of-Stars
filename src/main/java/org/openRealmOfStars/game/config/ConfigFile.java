@@ -73,6 +73,10 @@ public class ConfigFile {
    */
   public static final String CONFIG_LIGHT_INTENSE = "LightIntense";
   /**
+   * Config option for enabled ambient light
+   */
+  public static final String CONFIG_ENABLE_LIGHTS = "EnableLights";
+  /**
    * Config file default comment
    */
   public static final String CONFIG_COMMENT = "# Config file for "
@@ -424,6 +428,22 @@ public class ConfigFile {
    */
   public void setBorderless(final boolean borderless) {
     setBoolean(CONFIG_BORDERLESS, borderless);
+  }
+
+  /**
+   * Is ambient lights enabled or disabled?
+   * @return true if disabled
+   */
+  public boolean getAmbientLights() {
+    return getBoolean(CONFIG_ENABLE_LIGHTS);
+  }
+
+  /**
+   * Set or disable ambient lights
+   * @param lights true to set larger fonts
+   */
+  public void setAmbientLights(final boolean lights) {
+    setBoolean(CONFIG_ENABLE_LIGHTS, lights);
   }
 
   /**

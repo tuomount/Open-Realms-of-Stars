@@ -2280,6 +2280,8 @@ public class Game implements ActionListener {
         configFile.setLargerFonts(optionsView.getLargerFonts());
         configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        configFile.setLightIntense(optionsView.getIntense());
+        configFile.setAmbientLights(optionsView.isLightsEnabled());
         writeConfigFile();
         changeGameState(GameState.MAIN_MENU);
         return;
@@ -2350,6 +2352,7 @@ public class Game implements ActionListener {
             configFile.setRightLight(ambientLightsView.getRightLight());
             configFile.setCenterLight(ambientLightsView.getCenterLight());
             configFile.setLightIntense(ambientLightsView.getIntense());
+            configFile.setAmbientLights(ambientLightsView.isLightsEnabled());
             writeConfigFile();
           }
         }

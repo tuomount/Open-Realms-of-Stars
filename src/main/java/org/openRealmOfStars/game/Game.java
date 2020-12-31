@@ -524,8 +524,8 @@ public class Game implements ActionListener {
       MusicPlayer.setVolume(musicVolume);
       SoundPlayer.setSoundVolume(soundVolume);
       musicTimer.start();
+      initBridge();
     }
-    initBridge();
     changeGameState(GameState.MAIN_MENU);
   }
 

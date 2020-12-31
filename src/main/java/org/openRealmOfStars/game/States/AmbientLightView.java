@@ -300,7 +300,8 @@ public class AmbientLightView extends BlackPanel {
     xPanel.add(label);
     String[] effectList = {Bridge.EFFECT_WARM_WHITE, Bridge.EFFECT_DARKEST,
         Bridge.EFFECT_RED_ALERT, Bridge.EFFECT_YELLOW_ALERT,
-        Bridge.EFFECT_NUKE, Bridge.EFFECT_FLOAT_IN_SPACE};
+        Bridge.EFFECT_NUKE, Bridge.EFFECT_FLOAT_IN_SPACE,
+        Bridge.EFFECT_GREEN_CONSOLE, Bridge.EFFECT_SPACE_CONSOLE};
     effectSelection = new JComboBox<>(effectList);
     effectSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     effectSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
@@ -323,6 +324,10 @@ public class AmbientLightView extends BlackPanel {
 
     base.add(allOptions, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
+    if (bridge.getStatus() == BridgeStatusType.CONNECTED
+        && bridge.getLigths() != null) {
+      updateLightsFromBridge();
+    }
   }
 
   /**
@@ -375,6 +380,12 @@ public class AmbientLightView extends BlackPanel {
         if (effectName.equals(Bridge.EFFECT_FLOAT_IN_SPACE)) {
           bridge.setNextCommand(BridgeCommandType.FLOAT_IN_SPACE);
         }
+        if (effectName.equals(Bridge.EFFECT_GREEN_CONSOLE)) {
+          bridge.setNextCommand(BridgeCommandType.GREEN_CONSOLE);
+        }
+        if (effectName.equals(Bridge.EFFECT_SPACE_CONSOLE)) {
+          bridge.setNextCommand(BridgeCommandType.SPACE_CONSOLE);
+        }
       }
     }
   }
@@ -389,6 +400,27 @@ public class AmbientLightView extends BlackPanel {
       bridge.setCenterLightName(getCenterLight());
       bridge.setIntense(getIntense());
     }
+  }
+  /**
+   * Update lights from the bridge.
+   */
+  public void updateLightsFromBridge() {
+    String[] lightNames = new String[bridge.getLigths().size() + 1];
+    lightNames[0] = "none";
+    for (int i = 0; i < bridge.getLigths().size(); i++) {
+      lightNames[i + 1] = bridge.getLigths().get(i)
+          .getHumanReadablename();
+    }
+    leftLightSelection.setModel(
+        new DefaultComboBoxModel<>(lightNames));
+    centerLightSelection.setModel(
+        new DefaultComboBoxModel<>(lightNames));
+    rightLightSelection.setModel(
+        new DefaultComboBoxModel<>(lightNames));
+    centerLightSelection.setSelectedItem(bridge.getCenterLightName());
+    leftLightSelection.setSelectedItem(bridge.getLeftLightName());
+    rightLightSelection.setSelectedItem(bridge.getRightLightName());
+    lightListUpdated = false;
   }
   /**
    * Update panels for ambient lights view.
@@ -422,22 +454,7 @@ public class AmbientLightView extends BlackPanel {
         infoText.setText("Connected to bridge."
             + " Found " + bridge.getLigths().size() + " lights.");
         if (lightListUpdated) {
-          String[] lightNames = new String[bridge.getLigths().size() + 1];
-          lightNames[0] = "none";
-          for (int i = 0; i < bridge.getLigths().size(); i++) {
-            lightNames[i + 1] = bridge.getLigths().get(i)
-                .getHumanReadablename();
-          }
-          leftLightSelection.setModel(
-              new DefaultComboBoxModel<>(lightNames));
-          centerLightSelection.setModel(
-              new DefaultComboBoxModel<>(lightNames));
-          rightLightSelection.setModel(
-              new DefaultComboBoxModel<>(lightNames));
-          centerLightSelection.setSelectedItem(bridge.getCenterLightName());
-          leftLightSelection.setSelectedItem(bridge.getLeftLightName());
-          rightLightSelection.setSelectedItem(bridge.getRightLightName());
-          lightListUpdated = false;
+          updateLightsFromBridge();
         }
       }
     } else if (bridge.getStatus() == BridgeStatusType.ERROR) {

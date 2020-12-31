@@ -123,6 +123,9 @@ public class BridgeThread extends Thread {
       } else if (command == BridgeCommandType.WARM_WHITE) {
          bridge.setNextCommand(null);
          bridge.effectWarmWhiteLight();
+      } else if (command == BridgeCommandType.GREEN_CONSOLE) {
+        bridge.setNextCommand(null);
+        bridge.effectGreenConsole();
       } else if (command == BridgeCommandType.DARKEST) {
         bridge.setNextCommand(null);
         bridge.effectDarkest();
@@ -130,6 +133,12 @@ public class BridgeThread extends Thread {
         bridge.effectAlert(200);
       } else if (command == BridgeCommandType.FLOAT_IN_SPACE) {
         bridge.effectBlueSpace();
+      } else if (command == BridgeCommandType.SPACE_CONSOLE) {
+        bridge.effectSpaceConsole(1);
+      } else if (command == BridgeCommandType.SPACE_CONSOLE2) {
+        bridge.effectSpaceConsole(2);
+      } else if (command == BridgeCommandType.SPACE_CONSOLE3) {
+        bridge.effectSpaceConsole(3);
       } else if (command == BridgeCommandType.YELLOW_ALERT) {
         bridge.effectAlert(8000);
       } else if (command == BridgeCommandType.NUKE_START) {

@@ -68,6 +68,22 @@ public enum BridgeCommandType {
   /**
    * Float in space
    */
-  FLOAT_IN_SPACE;
+  FLOAT_IN_SPACE,
+  /**
+   * Green console
+   */
+  GREEN_CONSOLE,
+  /**
+   * Space console effect
+   */
+  SPACE_CONSOLE,
+  /**
+   * Space console effect 2
+   */
+  SPACE_CONSOLE2,
+  /**
+   * Space console effect 3
+   */
+  SPACE_CONSOLE3;
 
 }

@@ -31,7 +31,7 @@ import org.openRealmOfStars.utilities.json.values.ValueType;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020, 2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -76,6 +76,14 @@ public class Bridge {
    * Effect name Nuke.
    */
   public static final String EFFECT_FLOAT_IN_SPACE = "Float in space";
+  /**
+   * Effect Green console
+   */
+  public static final String EFFECT_GREEN_CONSOLE = "Green Console";
+  /**
+   * Effect Space Console
+   */
+  public static final String EFFECT_SPACE_CONSOLE = "Space Console";
   /**
    * Name for contact Hue bridge.
    */
@@ -422,6 +430,17 @@ public class Bridge {
     makeLightEffect(light, 4000, 10, 255);
   }
   /**
+   * Changes all light for Green console
+   */
+  public void effectGreenConsole() {
+    Light light = getLeftLight();
+    makeLightEffect(light, 36000, 230, 255);
+    light = getRightLight();
+    makeLightEffect(light, 36000, 230, 255);
+    light = getCenterLight();
+    makeLightEffect(light, 36000, 200, 255);
+  }
+  /**
    * Changes all light for darkest value
    */
   public void effectDarkest() {
@@ -562,6 +581,66 @@ public class Bridge {
     bri = 150 + (int) (Math.sin(Math.toRadians(phase * 2)) * trickle);
     light = getCenterLight();
     makeLightEffect(light, hue, 255, bri);
+  }
+
+  /**
+   * Makes left light green, and right blueish space.
+   * Center is green space floating.
+   * @param version Space Console type version.
+   */
+  public void effectSpaceConsole(final int version) {
+    int center = 43500;
+    int amp = 6500;
+    int greenCenter = 34500;
+    int greenAmp = 2000;
+    int inc = 3;
+    int trickle = 100;
+    if (intense == 4) {
+      trickle = 80;
+      inc = 2;
+    }
+    if (intense == 3) {
+      trickle = 60;
+      inc = 2;
+    }
+    if (intense == 2) {
+      trickle = 40;
+      inc = 2;
+    }
+    if (intense == 1) {
+      trickle = 40;
+      inc = 1;
+    }
+    phase = phase + inc;
+    if (phase > 359) {
+      phase = phase - 359;
+    }
+    int hue = (int) (Math.sin(Math.toRadians(phase)) * amp);
+    hue = hue + center;
+    int bri = 150 + (int) (Math.sin(Math.toRadians(phase * 2)) * trickle);
+    Light light = getLeftLight();
+    if (version == 2) {
+      light = getRightLight();
+    }
+    if (version == 3) {
+      makeLightEffect(light, hue, 255, bri);
+    } else {
+      makeLightEffect(light, 35000, 230, bri);
+    }
+    hue = (int) (Math.cos(Math.toRadians(phase)) * amp);
+    hue = hue + center;
+    bri = 150 + (int) (Math.cos(Math.toRadians(phase * 2)) * trickle);
+    if (version == 1 || version == 3) {
+      light = getRightLight();
+    } else {
+      light = getLeftLight();
+    }
+    makeLightEffect(light, hue, 255, bri);
+    hue = (int) (Math.sin(Math.toRadians(phase)) * greenAmp);
+    hue = hue + greenCenter;
+    bri = 150 + (int) (Math.sin(Math.toRadians(phase * 2)) * trickle);
+    light = getCenterLight();
+    makeLightEffect(light, hue, 222, bri);
   }
 
   /**

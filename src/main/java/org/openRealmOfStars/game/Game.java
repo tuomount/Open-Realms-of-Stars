@@ -121,7 +121,7 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  * Copyright (C) 2017 God Beom
  *
  * This program is free software; you can redistribute it and/or
@@ -1399,7 +1399,7 @@ public class Game implements ActionListener {
       showOptionsView();
       break;
     case SETUP_AMBIENT_LIGHTS:
-      setBridgeCommand(BridgeCommandType.EXIT);
+      setBridgeCommand(null);
       showAmbientLightsView();
       break;
     case NEW_GAME: {
@@ -1408,7 +1408,7 @@ public class Game implements ActionListener {
       break;
     }
     case LEADER_VIEW: {
-      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
+      setBridgeCommand(BridgeCommandType.SPACE_CONSOLE);
       if (focusMessage == null) {
         viewLeaders(dataObject);
       } else {
@@ -1422,12 +1422,12 @@ public class Game implements ActionListener {
       break;
     }
     case ESPIONAGE_VIEW: {
-      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
+      setBridgeCommand(BridgeCommandType.SPACE_CONSOLE2);
       showEspionageView();
       break;
     }
     case HELP_VIEW: {
-      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
+      setBridgeCommand(BridgeCommandType.GREEN_CONSOLE);
       showHelp();
       break;
     }
@@ -1442,7 +1442,7 @@ public class Game implements ActionListener {
       break;
     }
     case CREDITS:
-      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
+      setBridgeCommand(BridgeCommandType.DARKEST);
       if (animationTimer != null) {
         animationTimer.setDelay(ANIMATION_DELAY_CREDITS);
       }
@@ -1462,11 +1462,11 @@ public class Game implements ActionListener {
       break;
     }
     case RESEARCHVIEW:
-      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
+      setBridgeCommand(BridgeCommandType.GREEN_CONSOLE);
       showResearch(focusMessage);
       break;
     case VIEWSHIPS:
-      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
+      setBridgeCommand(BridgeCommandType.SPACE_CONSOLE);
       showShipView();
       break;
     case VIEWSTATS:
@@ -1474,7 +1474,7 @@ public class Game implements ActionListener {
       showStatView();
       break;
     case VOTE_VIEW:
-      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
+      setBridgeCommand(BridgeCommandType.SPACE_CONSOLE3);
       showVoteView();
       break;
     case SHIPDESIGN: {

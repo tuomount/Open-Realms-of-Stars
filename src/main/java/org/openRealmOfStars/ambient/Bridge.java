@@ -140,6 +140,10 @@ public class Bridge {
    */
   private boolean effectEnded;
   /**
+   * Boolean if lights are enabled.
+   */
+  private boolean lightsEnabled;
+  /**
    * Constructs new Hue bridge controller. Not authenticated yet,
    * so no username set.
    * @param hostname Hostname or IP address.
@@ -156,6 +160,7 @@ public class Bridge {
     rightLightName = "none";
     centerLightName = "none";
     intense = 3;
+    lightsEnabled = true;
   }
 
   /**
@@ -233,12 +238,12 @@ public class Bridge {
     root.addStringMember("devicetype", DEVICE_TYPE);
     connection.getOutputStream().write(root.getValueAsString().getBytes(
         StandardCharsets.UTF_8));
-    ErrorLogger.log(root.getValueAsString());
+    ErrorLogger.debug(root.getValueAsString());
     InputStream is = connection.getInputStream();
     byte[] buf = IOUtilities.readAll(is);
     String str = new String(buf, StandardCharsets.UTF_8);
-    ErrorLogger.log("Code:" + connection.getResponseCode());
-    ErrorLogger.log(str);
+    ErrorLogger.debug("Code:" + connection.getResponseCode());
+    ErrorLogger.debug(str);
     JsonStream stream = new JsonStream(buf);
     JsonParser parser = new JsonParser();
     JsonRoot jsonRoot = parser.parseJson(stream);
@@ -310,8 +315,8 @@ public class Bridge {
     InputStream is = connection.getInputStream();
     byte[] buf = IOUtilities.readAll(is);
     String str = new String(buf, StandardCharsets.UTF_8);
-    ErrorLogger.log("Code:" + connection.getResponseCode());
-    ErrorLogger.log(str);
+    ErrorLogger.debug("Code:" + connection.getResponseCode());
+    ErrorLogger.debug(str);
     JsonStream stream = new JsonStream(buf);
     JsonParser parser = new JsonParser();
     JsonRoot jsonRoot = parser.parseJson(stream);
@@ -332,8 +337,8 @@ public class Bridge {
    */
   public void updateLight(final Light light) throws IOException {
     ObjectValue json = light.updateLampJson();
-    if (json.getMembers().size() == 0) {
-      // No change for selected light.
+    if (json.getMembers().size() == 0 || !areLightsEnabled()) {
+      // No change for selected light or lights are disabled
       return;
     }
     SSLContext sslContext;
@@ -358,13 +363,13 @@ public class Bridge {
     connection.setRequestMethod("PUT");
     connection.getOutputStream().write(json.getValueAsString().getBytes(
         StandardCharsets.UTF_8));
-    ErrorLogger.log("URL: " + url.toString());
-    ErrorLogger.log(json.getValueAsString());
+    ErrorLogger.debug("URL: " + url.toString());
+    ErrorLogger.debug(json.getValueAsString());
     InputStream is = connection.getInputStream();
     byte[] buf = IOUtilities.readAll(is);
     String str = new String(buf, StandardCharsets.UTF_8);
-    ErrorLogger.log("Code:" + connection.getResponseCode());
-    ErrorLogger.log(str);
+    ErrorLogger.debug("Code:" + connection.getResponseCode());
+    ErrorLogger.debug(str);
     is.close();
     status = BridgeStatusType.CONNECTED;
   }
@@ -586,8 +591,8 @@ public class Bridge {
     InputStream is = connection.getInputStream();
     byte[] buf = IOUtilities.readAll(is);
     String str = new String(buf, StandardCharsets.UTF_8);
-    ErrorLogger.log("Code:" + connection.getResponseCode());
-    ErrorLogger.log(str);
+    ErrorLogger.debug("Code:" + connection.getResponseCode());
+    ErrorLogger.debug(str);
     JsonStream stream = new JsonStream(buf);
     JsonParser parser = new JsonParser();
     JsonRoot jsonRoot = parser.parseJson(stream);
@@ -605,7 +610,7 @@ public class Bridge {
           StringValue strName = (StringValue) member.getValue();
           light.setHumanReadablename(strName.getValue());
         } else {
-          ErrorLogger.log("No name found for light " + lightName + ".");
+          ErrorLogger.debug("No name found for light " + lightName + ".");
           continue;
         }
         member = lightNum.findFirst("state");
@@ -618,7 +623,7 @@ public class Bridge {
             BooleanValue value = (BooleanValue) member.getValue();
             light.setOn(value.getValue());
           } else {
-            ErrorLogger.log("No on found for light " + lightName + ".");
+            ErrorLogger.debug("No on found for light " + lightName + ".");
             continue;
           }
           member = state.findFirst("bri");
@@ -627,7 +632,7 @@ public class Bridge {
             NumberValue value = (NumberValue) member.getValue();
             light.setBri(value.getValueAsInt());
           } else {
-            ErrorLogger.log("No bri found for light " + lightName + ".");
+            ErrorLogger.debug("No bri found for light " + lightName + ".");
             continue;
           }
           member = state.findFirst("sat");
@@ -636,7 +641,7 @@ public class Bridge {
             NumberValue value = (NumberValue) member.getValue();
             light.setSat(value.getValueAsInt());
           } else {
-            ErrorLogger.log("No sat found for light " + lightName + ".");
+            ErrorLogger.debug("No sat found for light " + lightName + ".");
             // We only support full color lights
             continue;
           }
@@ -646,7 +651,7 @@ public class Bridge {
             NumberValue value = (NumberValue) member.getValue();
             light.setHue(value.getValueAsInt());
           } else {
-            ErrorLogger.log("No hue found for light " + lightName + ".");
+            ErrorLogger.debug("No hue found for light " + lightName + ".");
             // We only support full color lights
             continue;
           }
@@ -818,5 +823,21 @@ public class Bridge {
    */
   public boolean isEffectEnded() {
     return effectEnded;
+  }
+
+  /**
+   * Are lights enabled?
+   * @return true if lights are enabled
+   */
+  public boolean areLightsEnabled() {
+    return lightsEnabled;
+  }
+
+  /**
+   * Set lights enabled or not.
+   * @param lightsEnabled the lightsEnabled to set
+   */
+  public void setLightsEnabled(final boolean lightsEnabled) {
+    this.lightsEnabled = lightsEnabled;
   }
 }

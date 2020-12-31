@@ -31,6 +31,26 @@ public final class ErrorLogger {
   }
 
   /**
+   * Is debug logging enabled;
+   */
+  private static boolean debugEnabled = false;
+
+  /**
+   * Enable debug logging.
+   */
+  public static void enabledDebugging() {
+    debugEnabled = true;
+  }
+  /**
+   * Log the error message only if debug has been enabled.
+   * @param message Message the log into errors
+   */
+  public static void debug(final String message) {
+    if (debugEnabled) {
+      System.err.println(message);
+    }
+  }
+  /**
    * Log the error message
    * @param message Message the log into errors
    */

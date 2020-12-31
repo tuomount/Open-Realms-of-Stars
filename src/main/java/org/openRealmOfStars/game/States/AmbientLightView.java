@@ -125,6 +125,7 @@ public class AmbientLightView extends BlackPanel {
       this.bridge.setLeftLightName(config.getLeftLight());
       this.bridge.setRightLightName(config.getRightLight());
       this.bridge.setIntense(config.getLightIntense());
+      this.bridge.setLightsEnabled(true);
     }
     InfoPanel base = new InfoPanel();
     base.setTitle("Ambient Lights (EXPERIMENTAL)");

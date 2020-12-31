@@ -27,6 +27,8 @@ import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.ambient.Bridge;
+import org.openRealmOfStars.ambient.BridgeCommandType;
+import org.openRealmOfStars.ambient.BridgeStatusType;
 import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
@@ -482,7 +484,7 @@ public class Game implements ActionListener {
       icons.add(GuiStatics.LOGO128);
       gameFrame.setIconImages(icons);
       gameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-      gameFrame.addWindowListener(new GameWindowListener());
+      gameFrame.addWindowListener(new GameWindowListener(this));
       gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE, WINDOW_Y_SIZE));
       gameFrame.setSize(resolutionWidth, resolutionHeight);
       gameFrame.getContentPane().setSize(resolutionWidth, resolutionHeight);
@@ -523,9 +525,39 @@ public class Game implements ActionListener {
       SoundPlayer.setSoundVolume(soundVolume);
       musicTimer.start();
     }
+    initBridge();
     changeGameState(GameState.MAIN_MENU);
   }
 
+  /**
+   * Tries to init bridg
+   */
+  public void initBridge() {
+    this.bridge = new Bridge(configFile.getBridgeHost());
+    this.bridge.setUsername(configFile.getBridgeUsername());
+    this.bridge.setCenterLightName(configFile.getCenterLight());
+    this.bridge.setLeftLightName(configFile.getLeftLight());
+    this.bridge.setRightLightName(configFile.getRightLight());
+    this.bridge.setIntense(configFile.getLightIntense());
+    this.bridge.setLightsEnabled(configFile.getAmbientLights());
+    try {
+      this.bridge.updateAllLights();
+    } catch (IOException e) {
+      this.bridge.setLightsEnabled(false);
+      ErrorLogger.log(e);
+    }
+  }
+
+  /**
+   * Set Next bridge command
+   * @param command Next bridge command
+   */
+  public void setBridgeCommand(final BridgeCommandType command) {
+    if (bridge != null && bridge.getStatus() == BridgeStatusType.CONNECTED
+        && bridge.areLightsEnabled()) {
+      bridge.setNextCommand(command);
+    }
+  }
   /**
    * Read Tutorial information to list.
    * @param filename Filename to tutorial, null to read default tutorial.
@@ -1339,34 +1371,44 @@ public class Game implements ActionListener {
     }
     switch (gameState) {
     case AITURN:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showAITurnView();
       break;
     case MAIN_MENU:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showMainMenu();
       break;
     case GALAXY_CREATION:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showGalaxyCreation();
       break;
     case PLAYER_SETUP:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showPlayerSetup();
       break;
     case SAVE_GAME_NAME_VIEW:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showSaveGameSetup(dataObject);
       break;
     case LOAD_GAME:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showLoadGame();
       break;
     case OPTIONS_VIEW:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showOptionsView();
       break;
     case SETUP_AMBIENT_LIGHTS:
+      setBridgeCommand(BridgeCommandType.EXIT);
       showAmbientLightsView();
       break;
     case NEW_GAME: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       makeNewGame(true);
       break;
     }
     case LEADER_VIEW: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       if (focusMessage == null) {
         viewLeaders(dataObject);
       } else {
@@ -1375,36 +1417,44 @@ public class Game implements ActionListener {
       break;
     }
     case NEWS_CORP_VIEW: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showNewsCorpView();
       break;
     }
     case ESPIONAGE_VIEW: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showEspionageView();
       break;
     }
     case HELP_VIEW: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showHelp();
       break;
     }
     case HISTORY_VIEW: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showHistoryView();
       break;
     }
     case PLANETBOMBINGVIEW: {
+      setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
       planetBombingView(dataObject);
       break;
     }
     case CREDITS:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       if (animationTimer != null) {
         animationTimer.setDelay(ANIMATION_DELAY_CREDITS);
       }
       showCredits();
       break;
     case STARMAP:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       MusicPlayer.activeFadeout();
       showStarMap(dataObject);
       break;
     case COMBAT: {
+      setBridgeCommand(BridgeCommandType.RED_ALERT);
       if (animationTimer != null) {
         animationTimer.setDelay(ANIMATION_DELAY_COMBAT);
       }
@@ -1412,22 +1462,28 @@ public class Game implements ActionListener {
       break;
     }
     case RESEARCHVIEW:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showResearch(focusMessage);
       break;
     case VIEWSHIPS:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showShipView();
       break;
     case VIEWSTATS:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showStatView();
       break;
     case VOTE_VIEW:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showVoteView();
       break;
     case SHIPDESIGN: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       shipDesign();
       break;
     }
     case PLANETVIEW: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       if (dataObject == null) {
         planetView(focusMessage);
       } else if (dataObject instanceof Planet) {
@@ -1437,6 +1493,7 @@ public class Game implements ActionListener {
       break;
     }
     case ESPIONAGE_MISSIONS_VIEW: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       if (dataObject instanceof Planet) {
         Planet planet = (Planet) dataObject;
         showEspionageMissionView(planet, getPlayers().getCurrentPlayerInfo());
@@ -1444,24 +1501,29 @@ public class Game implements ActionListener {
       break;
     }
     case FLEETVIEW: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       fleetView();
       break;
     }
     case FLEET_TRADE_VIEW: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       fleetTradeView();
       break;
     }
     case DIPLOMACY_VIEW: {
+      setBridgeCommand(BridgeCommandType.WARM_WHITE);
       showDiplomacyView(dataObject);
       break;
     }
     case REALM_VIEW: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       if (dataObject instanceof PlayerInfo) {
         showRealmView((PlayerInfo) dataObject);
       }
       break;
     }
     case PLANET_LIST_VIEW: {
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showPlanetListView();
       break;
     }
@@ -1966,18 +2028,6 @@ public class Game implements ActionListener {
   }
 
   /**
-   * Static method for testing ambient lights.
-   * @param hostname Bridge hostname which to test
-   */
-  public static void testHue(final String hostname) {
-    Bridge bridge = new Bridge(hostname);
-    try {
-      bridge.register();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-  /**
    * Main method to run the game
    * @param args from Command line
    */
@@ -1991,12 +2041,14 @@ public class Game implements ActionListener {
       System.out.println(printTechWiki());
     } else if (args.length > 0 && args[0].equals("--save-update")) {
       saveGameUpdate();
-    } else if (args.length > 1 && args[0].equals("--hue-test")) {
-      testHue(args[1]);
     } else {
       if (args.length > 0 && args[0].equals("--no-music")) {
         System.out.println("Disabling the music...");
         MusicPlayer.setMusicEnabled(false);
+      }
+      if (args.length > 0 && args[1].equals("--debug")) {
+        System.out.println("Debugging enabled.");
+        ErrorLogger.enabledDebugging();
       }
       new Game(true);
     }
@@ -2403,6 +2455,12 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_QUIT_GAME)) {
         SoundPlayer.playMenuSound();
+        setBridgeCommand(BridgeCommandType.WARM_WHITE);
+        try {
+          Thread.sleep(500);
+        } catch (InterruptedException e) {
+          // Nothing to do
+        }
         System.exit(0);
       }
     }

@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.AI.Mission.MissionList;
+import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
@@ -72,6 +73,16 @@ public class GameKeyAdapter implements KeyEventDispatcher {
           game.getHeight(), BufferedImage.TYPE_INT_RGB);
       game.paint(result.getGraphics());
       IOUtilities.saveScreenShot(result);
+      return true;
+    }
+    if (arg0.getKeyCode() == KeyEvent.VK_F1
+        && arg0.getID() == KeyEvent.KEY_PRESSED) {
+      game.setBridgeCommand(BridgeCommandType.WARM_WHITE);
+      return true;
+    }
+    if (arg0.getKeyCode() == KeyEvent.VK_F2
+        && arg0.getID() == KeyEvent.KEY_PRESSED) {
+      game.setBridgeCommand(BridgeCommandType.DARKEST);
       return true;
     }
 

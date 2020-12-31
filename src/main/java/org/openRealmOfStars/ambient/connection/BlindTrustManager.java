@@ -68,7 +68,7 @@ public class BlindTrustManager implements X509TrustManager {
   @Override
   public void checkServerTrusted(final X509Certificate[] arg0,
       final String arg1) throws CertificateException {
-    ErrorLogger.log("Received server certificate...");
+    ErrorLogger.debug("Received server certificate...");
     // Check that certificate is currently in valid period.
     arg0[0].checkValidity();
     if (subjectDn != null && issuerDn != null) {

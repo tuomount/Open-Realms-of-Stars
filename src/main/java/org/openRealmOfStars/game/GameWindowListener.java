@@ -3,10 +3,12 @@ package org.openRealmOfStars.game;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import org.openRealmOfStars.ambient.BridgeCommandType;
+
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,8 +29,25 @@ import java.awt.event.WindowEvent;
  */
 public class GameWindowListener extends WindowAdapter {
 
+  /**
+   * Game frame.
+   */
+  private Game game;
+  /**
+   * Constructor for GameWindowListener
+   * @param game Game frame.
+   */
+  public GameWindowListener(final Game game) {
+    this.game = game;
+  }
   @Override
   public void windowClosing(final WindowEvent arg0) {
+    game.setBridgeCommand(BridgeCommandType.WARM_WHITE);
+    try {
+      Thread.sleep(500);
+    } catch (InterruptedException e) {
+      // Nothing to do
+    }
     System.exit(0);
   }
 

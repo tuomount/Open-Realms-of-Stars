@@ -85,6 +85,26 @@ public class Bridge {
    */
   public static final String EFFECT_SPACE_CONSOLE = "Space Console";
   /**
+   * Effect Bright Cyan
+   */
+  public static final String EFFECT_BRIGHT_CYAN = "Bright cyan";
+  /**
+   * Effect Blueish white
+   */
+  public static final String EFFECT_BLUEISH_WHITE = "Blueish white";
+  /**
+   * Effect dark orange
+   */
+  public static final String EFFECT_DARK_ORANGE = "Dark orange";
+  /**
+   * Effect dark red
+   */
+  public static final String EFFECT_DARK_RED = "Dark red";
+  /**
+   * Effect purple dream
+   */
+  public static final String EFFECT_PURPLE_DREAM = "Purple dream";
+  /**
    * Name for contact Hue bridge.
    */
   public static final String DEVICE_TYPE = "OROS AMBIENT LIGHTS";
@@ -467,6 +487,61 @@ public class Bridge {
     makeLightEffect(light, 4000, 10, 255);
     light = getCenterLight();
     makeLightEffect(light, 4000, 10, 255);
+  }
+  /**
+   * Changes all light for brightCyan light.
+   */
+  public void effectBrightCyanLight() {
+    Light light = getLeftLight();
+    makeLightEffect(light, 40000, 255, 255);
+    light = getRightLight();
+    makeLightEffect(light, 40000, 255, 255);
+    light = getCenterLight();
+    makeLightEffect(light, 40000, 240, 255);
+  }
+  /**
+   * Changes all light for blueish white light.
+   */
+  public void effectBlueishWhiteLight() {
+    Light light = getLeftLight();
+    makeLightEffect(light, 46000, 190, 128);
+    light = getRightLight();
+    makeLightEffect(light, 46000, 190, 128);
+    light = getCenterLight();
+    makeLightEffect(light, 46000, 80, 255);
+  }
+  /**
+   * Changes all light for Purple dream light.
+   */
+  public void effectPurpleDreamLight() {
+    Light light = getLeftLight();
+    makeLightEffect(light, 49000, 190, 160);
+    light = getRightLight();
+    makeLightEffect(light, 48000, 190, 160);
+    light = getCenterLight();
+    makeLightEffect(light, 50000, 120, 160);
+  }
+  /**
+   * Changes all light for dark orange light.
+   */
+  public void effectDarkOrangeLight() {
+    Light light = getLeftLight();
+    makeLightEffect(light, 8000, 230, 128);
+    light = getRightLight();
+    makeLightEffect(light, 9000, 230, 128);
+    light = getCenterLight();
+    makeLightEffect(light, 8500, 200, 200);
+  }
+  /**
+   * Changes all light for dark red light.
+   */
+  public void effectDarkRedLight() {
+    Light light = getLeftLight();
+    makeLightEffect(light, 2000, 160, 128);
+    light = getRightLight();
+    makeLightEffect(light, 2000, 160, 128);
+    light = getCenterLight();
+    makeLightEffect(light, 400, 160, 200);
   }
   /**
    * Changes all light for Green console

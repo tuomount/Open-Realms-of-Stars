@@ -1517,7 +1517,6 @@ public class Game implements ActionListener {
       break;
     }
     case DIPLOMACY_VIEW: {
-      setBridgeCommand(BridgeCommandType.WARM_WHITE);
       showDiplomacyView(dataObject);
       break;
     }

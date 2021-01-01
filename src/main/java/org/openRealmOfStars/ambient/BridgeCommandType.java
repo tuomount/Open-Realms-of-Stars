@@ -84,6 +84,27 @@ public enum BridgeCommandType {
   /**
    * Space console effect 3
    */
-  SPACE_CONSOLE3;
+  SPACE_CONSOLE3,
+  /**
+   * Bright cyan
+   */
+  BRIGHT_CYAN,
+  /**
+   * Blueish white
+   */
+  BLUEISH_WHITE,
+  /**
+   * Dark orange
+   */
+  DARK_ORANGE,
+  /**
+   * Dark red
+   */
+  DARK_RED,
+  /**
+   * Purple dream
+   */
+  PURPLE_DREAM;
+
 
 }

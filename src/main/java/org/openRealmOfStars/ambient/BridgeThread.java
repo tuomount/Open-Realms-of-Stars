@@ -129,6 +129,21 @@ public class BridgeThread extends Thread {
       } else if (command == BridgeCommandType.WARM_WHITE) {
          bridge.setNextCommand(null);
          bridge.effectWarmWhiteLight();
+      } else if (command == BridgeCommandType.BRIGHT_CYAN) {
+        bridge.setNextCommand(null);
+        bridge.effectBrightCyanLight();
+      } else if (command == BridgeCommandType.BLUEISH_WHITE) {
+        bridge.setNextCommand(null);
+        bridge.effectBlueishWhiteLight();
+      } else if (command == BridgeCommandType.DARK_ORANGE) {
+        bridge.setNextCommand(null);
+        bridge.effectDarkOrangeLight();
+      } else if (command == BridgeCommandType.DARK_RED) {
+        bridge.setNextCommand(null);
+        bridge.effectDarkRedLight();
+      } else if (command == BridgeCommandType.PURPLE_DREAM) {
+        bridge.setNextCommand(null);
+        bridge.effectPurpleDreamLight();
       } else if (command == BridgeCommandType.GREEN_CONSOLE) {
         bridge.setNextCommand(null);
         bridge.effectGreenConsole();

@@ -7,7 +7,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018, 2020 Tuomo Untinen
+* Copyright (C) 2018, 2020, 2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -76,6 +76,10 @@ public class ConfigFile {
    * Config option for enabled ambient light
    */
   public static final String CONFIG_ENABLE_LIGHTS = "EnableLights";
+  /**
+   * Config option for bridge Id.
+   */
+  public static final String CONFIG_BRIDGE_ID = "BridgeId";
   /**
    * Config file default comment
    */
@@ -249,6 +253,33 @@ public class ConfigFile {
     if (width >= 1024 && height >= 768) {
       line.setValue(width + "x" + height);
     }
+  }
+  /**
+   * Set Bridge id
+   * @param id ID for ambient light bridge.
+   */
+  public void setBridgeId(final String id) {
+    ConfigLine line = getLineByKey(CONFIG_BRIDGE_ID);
+    if (id != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_BRIDGE_ID + "=" + id);
+        add(line);
+      } else {
+        line.setValue(id);
+      }
+    }
+  }
+
+  /**
+   * Get Bridge id or null
+   * @return Bridge id or null
+   */
+  public String getBridgeId() {
+    ConfigLine line = getLineByKey(CONFIG_BRIDGE_ID);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
   }
 
   /**

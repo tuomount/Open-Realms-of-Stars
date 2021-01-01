@@ -1,22 +1,33 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.openRealmOfStars.ambient.Bridge;
 import org.openRealmOfStars.ambient.BridgeCommandType;
+import org.openRealmOfStars.ambient.BridgeDevice;
 import org.openRealmOfStars.ambient.BridgeStatusType;
+import org.openRealmOfStars.ambient.ServiceDiscovery;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.config.ConfigFile;
+import org.openRealmOfStars.gui.ListRenderers.BridgeDeviceRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
@@ -32,7 +43,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020  Tuomo Untinen
+* Copyright (C) 2020, 2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -51,7 +62,8 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 * AmbientLightView for configuring ambient light and settings.
 *
 */
-public class AmbientLightView extends BlackPanel {
+public class AmbientLightView extends BlackPanel
+    implements ListSelectionListener {
 
   /**
   *
@@ -75,6 +87,10 @@ public class AmbientLightView extends BlackPanel {
    * Info Text for bridge information.
    */
   private InfoTextArea infoText;
+  /**
+   * JList of devices.
+   */
+  private JList<BridgeDevice> listOfDevices;
   /**
    * Light selector for center
    */
@@ -109,6 +125,10 @@ public class AmbientLightView extends BlackPanel {
    */
   private boolean lightListUpdated;
   /**
+   * Was scanning performed just before.
+   */
+  private boolean justScanned;
+  /**
    * Constructor for AmbientLightView
    * @param config Current ConfigFile
    * @param bridge Active bridge
@@ -126,6 +146,7 @@ public class AmbientLightView extends BlackPanel {
       this.bridge.setRightLightName(config.getRightLight());
       this.bridge.setIntense(config.getLightIntense());
       this.bridge.setLightsEnabled(true);
+      this.bridge.setId(config.getBridgeId());
     }
     InfoPanel base = new InfoPanel();
     base.setTitle("Ambient Lights (EXPERIMENTAL)");
@@ -168,6 +189,10 @@ public class AmbientLightView extends BlackPanel {
     xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     hostnameField = new JTextField();
     hostnameField.setText(config.getBridgeHost());
+    if (config.getBridgeId() != null) {
+      hostnameField.setText(config.getBridgeHost() + ":"
+          + config.getBridgeId());
+    }
     hostnameField.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     hostnameField.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     hostnameField.setFont(GuiStatics.getFontCubellanSmaller());
@@ -179,6 +204,39 @@ public class AmbientLightView extends BlackPanel {
         GameCommands.COMMAND_BRIDGE_CONNECT);
     connectBtn.addActionListener(listener);
     xPanel.add(connectBtn);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    bridgePanel.add(xPanel);
+    bridgePanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    infoText = new InfoTextArea(4, 80);
+    infoText.setLineWrap(true);
+    infoText.setCharacterWidth(7);
+    infoText.setEditable(false);
+    infoText.setPreferredSize(new Dimension(Integer.MAX_VALUE, 50));
+    infoText.setFont(GuiStatics.getFontCubellanSmaller());
+    xPanel.add(infoText);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    bridgePanel.add(xPanel);
+    bridgePanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    listOfDevices = new JList<>();
+    listOfDevices.setCellRenderer(new BridgeDeviceRenderer());
+    listOfDevices.setAlignmentX(Component.LEFT_ALIGNMENT);
+    listOfDevices.addListSelectionListener(this);
+    listOfDevices.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    listOfDevices.setBackground(Color.BLACK);
+    JScrollPane scroll = new JScrollPane(listOfDevices);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setAlignmentX(LEFT_ALIGNMENT);
+    scroll.setBackground(Color.BLACK);
+    scroll.setPreferredSize(new Dimension(Integer.MAX_VALUE, 50));
+    xPanel.add(scroll);
     xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     bridgePanel.add(xPanel);
     bridgePanel.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -201,19 +259,7 @@ public class AmbientLightView extends BlackPanel {
     xPanel.add(usernameField);
     bridgePanel.add(xPanel);
     bridgePanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    xPanel = new EmptyInfoPanel();
-    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
-    xPanel.setAlignmentX(LEFT_ALIGNMENT);
-    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    infoText = new InfoTextArea();
-    infoText.setLineWrap(true);
-    infoText.setCharacterWidth(7);
-    infoText.setEditable(false);
-    infoText.setFont(GuiStatics.getFontCubellanSmaller());
-    xPanel.add(infoText);
-    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    bridgePanel.add(xPanel);
-    bridgePanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
     allOptions.add(bridgePanel);
     // Lights panel starts here
     InfoPanel lightsPanel = new InfoPanel();
@@ -328,6 +374,7 @@ public class AmbientLightView extends BlackPanel {
         && bridge.getLigths() != null) {
       updateLightsFromBridge();
     }
+    justScanned = false;
   }
 
   /**
@@ -341,13 +388,68 @@ public class AmbientLightView extends BlackPanel {
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_BRIDGE_CONNECT)) {
       SoundPlayer.playMenuSound();
-      if (bridge == null) {
-        bridge = new Bridge(hostnameField.getText());
+      String hostname = getHostname();
+      String bridgeId = getBridgeId();
+      if (hostname.isEmpty()) {
+        ServiceDiscovery discovery;
+        try {
+          discovery = new ServiceDiscovery();
+          BridgeDevice[] devices = discovery.discoverBridges();
+          if (devices.length == 1) {
+            listOfDevices.setModel(new DefaultComboBoxModel<>(devices));
+            hostname = devices[0].getAddress();
+            bridgeId = devices[0].getId();
+            bridge = new Bridge(hostname);
+            if (bridgeId != null) {
+              bridge.setId(bridgeId);
+            }
+          } else if (devices.length > 0) {
+            listOfDevices.setModel(new DefaultComboBoxModel<>(devices));
+            hostname = devices[0].getAddress();
+            bridgeId = devices[0].getId();
+            bridge = new Bridge(hostname);
+            if (bridgeId != null) {
+              bridge.setId(bridgeId);
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.append("Multiple bridges found:\n");
+            for (BridgeDevice device : devices) {
+              sb.append(device.toString());
+              sb.append("\n");
+            }
+            infoText.setText(sb.toString());
+          } else {
+            listOfDevices.setModel(new DefaultComboBoxModel<>(devices));
+            infoText.setText("No bridges found...");
+          }
+        } catch (IOException e) {
+          infoText.setText("Failed scanning. " + e.getMessage());
+        }
+        this.repaint();
+        justScanned = true;
+        return;
       }
-      if (bridge.getHostname() != hostnameField.getText()) {
-        bridge.setHostname(hostnameField.getText());
+      justScanned = false;
+      if (bridge == null && !hostname.isEmpty()) {
+        bridge = new Bridge(hostname);
+        if (bridgeId != null) {
+          bridge.setId(bridgeId);
+          hostnameField.setText(hostname + ":" + bridgeId);
+        } else {
+          hostnameField.setText(hostname);
+        }
       }
-      if (bridge.getUsername() != usernameField.getText()) {
+      if (!bridge.getHostname().equals(hostname)) {
+        bridge.setHostname(hostname);
+        if (bridgeId != null) {
+          bridge.setId(bridgeId);
+        }
+      }
+      if (bridge.getUsername() != null
+          && !bridge.getUsername().equals(usernameField.getText())) {
+        bridge.setUsername(usernameField.getText());
+      }
+      if (bridge.getUsername() == null) {
         bridge.setUsername(usernameField.getText());
       }
       if (usernameField.getText().isEmpty()) {
@@ -426,7 +528,7 @@ public class AmbientLightView extends BlackPanel {
    * Update panels for ambient lights view.
    */
   public void updatePanels() {
-    if (bridge == null) {
+    if (bridge == null || justScanned) {
       return;
     }
     if (bridge.getStatus() == BridgeStatusType.NOT_CONNECTED
@@ -510,4 +612,43 @@ public class AmbientLightView extends BlackPanel {
   public boolean isLightsEnabled() {
     return ambientLightsBox.isSelected();
   }
+
+  /**
+   * Get Hostname from hostname field which can contain bridge id.
+   * @return hostname
+   */
+  public String getHostname() {
+    String str = hostnameField.getText();
+    String[] parts = str.split(":");
+    if (parts.length == 2) {
+      return parts[0];
+    }
+    return str;
+  }
+
+  /**
+   * Get bridge id from hostname field or null.
+   * @return bridge id or null.
+   */
+  public String getBridgeId() {
+    String str = hostnameField.getText();
+    String[] parts = str.split(":");
+    if (parts.length == 2) {
+      return parts[1];
+    }
+    if (bridge != null && bridge.getId() != null) {
+      return bridge.getId();
+    }
+    return null;
+  }
+
+  @Override
+  public void valueChanged(final ListSelectionEvent arg0) {
+    SoundPlayer.playMenuSound();
+    BridgeDevice device = listOfDevices.getSelectedValue();
+    if (device != null) {
+      hostnameField.setText(device.toString());
+    }
+  }
+
 }

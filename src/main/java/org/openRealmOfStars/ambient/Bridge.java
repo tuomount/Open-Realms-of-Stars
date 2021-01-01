@@ -152,6 +152,10 @@ public class Bridge {
    */
   private boolean lightsEnabled;
   /**
+   * Bridge id.
+   */
+  private String id;
+  /**
    * Constructs new Hue bridge controller. Not authenticated yet,
    * so no username set.
    * @param hostname Hostname or IP address.
@@ -169,6 +173,7 @@ public class Bridge {
     centerLightName = "none";
     intense = 3;
     lightsEnabled = true;
+    id = null;
   }
 
   /**
@@ -218,6 +223,28 @@ public class Bridge {
   }
 
   /**
+   * Locate Bridge using SSDP and bridge id.
+   * This will update hostname according the match.
+   * @return true if bridge war located.
+   */
+  public boolean locateBridge() {
+    if (id == null) {
+      // cannot locate if ID is null.
+      return false;
+    }
+    try {
+      ServiceDiscovery discovery = new ServiceDiscovery();
+      BridgeDevice device = discovery.discoverBridge(id);
+      if (device != null) {
+        hostname = device.getAddress();
+        return true;
+      }
+    } catch (IOException e) {
+      ErrorLogger.log(e);
+    }
+    return false;
+  }
+  /**
    * Method for registering OROS to bridge.
    * @throws IOException If something goes wrong.
    */
@@ -229,7 +256,11 @@ public class Bridge {
       throw new IOException("Missing algorithm. " + e.getMessage());
     }
     TrustManager[] trustManagers = new TrustManager[1];
-    trustManagers[0] = new BlindTrustManager();
+    if (getId() != null) {
+      trustManagers[0] = new BlindTrustManager(getId());
+    } else {
+      trustManagers[0] = new BlindTrustManager();
+    }
     try {
       sslContext.init(null, trustManagers, new SecureRandom());
     } catch (KeyManagementException e) {
@@ -308,7 +339,11 @@ public class Bridge {
       throw new IOException("Missing algorithm. " + e.getMessage());
     }
     TrustManager[] trustManagers = new TrustManager[1];
-    trustManagers[0] = new BlindTrustManager();
+    if (getId() != null) {
+      trustManagers[0] = new BlindTrustManager(getId());
+    } else {
+      trustManagers[0] = new BlindTrustManager();
+    }
     try {
       sslContext.init(null, trustManagers, new SecureRandom());
     } catch (KeyManagementException e) {
@@ -356,7 +391,11 @@ public class Bridge {
       throw new IOException("Missing algorithm. " + e.getMessage());
     }
     TrustManager[] trustManagers = new TrustManager[1];
-    trustManagers[0] = new BlindTrustManager();
+    if (getId() != null) {
+      trustManagers[0] = new BlindTrustManager(getId());
+    } else {
+      trustManagers[0] = new BlindTrustManager();
+    }
     try {
       sslContext.init(null, trustManagers, new SecureRandom());
     } catch (KeyManagementException e) {
@@ -655,7 +694,11 @@ public class Bridge {
       throw new IOException("Missing algorithm. " + e.getMessage());
     }
     TrustManager[] trustManagers = new TrustManager[1];
-    trustManagers[0] = new BlindTrustManager();
+    if (getId() != null) {
+      trustManagers[0] = new BlindTrustManager(getId());
+    } else {
+      trustManagers[0] = new BlindTrustManager();
+    }
     try {
       sslContext.init(null, trustManagers, new SecureRandom());
     } catch (KeyManagementException e) {
@@ -918,5 +961,21 @@ public class Bridge {
    */
   public void setLightsEnabled(final boolean lightsEnabled) {
     this.lightsEnabled = lightsEnabled;
+  }
+
+  /**
+   * Get bridge id.
+   * @return the id
+   */
+  public String getId() {
+    return id;
+  }
+
+  /**
+   * Set bridge Id.
+   * @param id the id to set
+   */
+  public void setId(final String id) {
+    this.id = id;
   }
 }

@@ -10,7 +10,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020, 2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -89,7 +89,7 @@ public class BlindTrustManager implements X509TrustManager {
       if (subjectCn == null) {
         throw new CertificateException("Server has invalid certificate!");
       }
-      if (!bridgeId.equals(subjectCn)) {
+      if (!bridgeId.equalsIgnoreCase(subjectCn)) {
         throw new CertificateException("Server has invalid certificate!");
       }
     } else if (subjectCn != null) {

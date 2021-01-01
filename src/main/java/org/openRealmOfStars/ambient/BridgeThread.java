@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020, 2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -111,6 +111,9 @@ public class BridgeThread extends Thread {
         } catch (IOException e) {
           bridge.setStatus(BridgeStatusType.NOT_CONNECTED);
           bridge.setLastErrorMsg(e.getMessage());
+          if (bridge.locateBridge()) {
+            bridge.setNextCommand(BridgeCommandType.TEST);
+          }
         }
       } else if (command == BridgeCommandType.FETCH_LIGHTS) {
         try {
@@ -119,6 +122,9 @@ public class BridgeThread extends Thread {
         } catch (IOException e) {
           bridge.setStatus(BridgeStatusType.NOT_CONNECTED);
           bridge.setLastErrorMsg(e.getMessage());
+          if (bridge.locateBridge()) {
+            bridge.setNextCommand(BridgeCommandType.FETCH_LIGHTS);
+          }
         }
       } else if (command == BridgeCommandType.WARM_WHITE) {
          bridge.setNextCommand(null);

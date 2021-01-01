@@ -42,11 +42,12 @@ public class GameWindowListener extends WindowAdapter {
   }
   @Override
   public void windowClosing(final WindowEvent arg0) {
-    game.setBridgeCommand(BridgeCommandType.WARM_WHITE);
-    try {
-      Thread.sleep(1000);
-    } catch (InterruptedException e) {
-      // Nothing to do
+    if (game.setBridgeCommand(BridgeCommandType.WARM_WHITE)) {
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        // Nothing to do
+      }
     }
     System.exit(0);
   }

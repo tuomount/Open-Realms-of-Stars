@@ -540,6 +540,7 @@ public class Game implements ActionListener {
     this.bridge.setRightLightName(configFile.getRightLight());
     this.bridge.setIntense(configFile.getLightIntense());
     this.bridge.setLightsEnabled(configFile.getAmbientLights());
+    this.bridge.setId(configFile.getBridgeId());
     try {
       this.bridge.updateAllLights();
     } catch (IOException e) {
@@ -551,12 +552,15 @@ public class Game implements ActionListener {
   /**
    * Set Next bridge command
    * @param command Next bridge command
+   * @return true if command was set for bridge
    */
-  public void setBridgeCommand(final BridgeCommandType command) {
+  public boolean setBridgeCommand(final BridgeCommandType command) {
     if (bridge != null && bridge.getStatus() == BridgeStatusType.CONNECTED
         && bridge.areLightsEnabled()) {
       bridge.setNextCommand(command);
+      return true;
     }
+    return false;
   }
   /**
    * Read Tutorial information to list.
@@ -2399,6 +2403,7 @@ public class Game implements ActionListener {
           if (tmpBridge.getHostname() != null
               && tmpBridge.getUsername() != null) {
             configFile.setBridgeHost(tmpBridge.getHostname());
+            configFile.setBridgeId(tmpBridge.getId());
             configFile.setBridgeUsername(tmpBridge.getUsername());
             configFile.setLeftLight(ambientLightsView.getLeftLight());
             configFile.setRightLight(ambientLightsView.getRightLight());
@@ -2455,11 +2460,12 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_QUIT_GAME)) {
         SoundPlayer.playMenuSound();
-        setBridgeCommand(BridgeCommandType.WARM_WHITE);
-        try {
-          Thread.sleep(500);
-        } catch (InterruptedException e) {
-          // Nothing to do
+        if (setBridgeCommand(BridgeCommandType.WARM_WHITE)) {
+          try {
+            Thread.sleep(500);
+          } catch (InterruptedException e) {
+            // Nothing to do
+          }
         }
         System.exit(0);
       }

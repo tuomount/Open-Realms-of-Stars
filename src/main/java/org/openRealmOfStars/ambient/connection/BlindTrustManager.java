@@ -34,29 +34,26 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 public class BlindTrustManager implements X509TrustManager {
 
   /**
-   * Subject DN.
+   * Issuer CN to trust.
    */
-  private String subjectDn;
+  private static final String TRUST_ISSUER_CN = "root-bridge";
   /**
-   * Issuer DN.
+   * BridgeId
    */
-  private String issuerDn;
+  private String bridgeId;
   /**
    * Blind trust manager no prior knowledge about server.
    */
   public BlindTrustManager() {
-    subjectDn = null;
-    issuerDn = null;
+    bridgeId = null;
   }
 
   /**
-   * Blind trust manager, with certain subject Dn and issuerDn.
-   * @param subjectDn Subject DN
-   * @param issuerDn Issuer DN
+   * Blind trust manager, with certain bridge id.
+   * @param bridgeId where to trust.
    */
-  public BlindTrustManager(final String subjectDn, final String issuerDn) {
-    this.subjectDn = subjectDn;
-    this.issuerDn = issuerDn;
+  public BlindTrustManager(final String bridgeId) {
+    this.bridgeId = bridgeId;
   }
   @Override
   public void checkClientTrusted(final X509Certificate[] arg0,
@@ -65,42 +62,55 @@ public class BlindTrustManager implements X509TrustManager {
         + " client certs.");
   }
 
+  /**
+   * Parse principal string and find certain key.
+   * @param principal String to parse
+   * @param key Key to find
+   * @return Value or null.
+   */
+  public String parsePrincipal(final String principal, final String key) {
+    String[] parts = principal.split(",");
+    for (String line : parts) {
+      String[] lineParts = line.split("=");
+      if (lineParts.length == 2 && lineParts[0].equalsIgnoreCase(key)) {
+        return lineParts[1];
+      }
+    }
+    return null;
+  }
   @Override
   public void checkServerTrusted(final X509Certificate[] arg0,
       final String arg1) throws CertificateException {
     ErrorLogger.debug("Received server certificate...");
     // Check that certificate is currently in valid period.
     arg0[0].checkValidity();
-    if (subjectDn != null && issuerDn != null) {
-      if (!subjectDn.equals(arg0[0].getSubjectDN().toString())) {
-        throw new CertificateException(
-            "Subject DN did not match for expected!");
+    String subjectCn = parsePrincipal(arg0[0].getSubjectDN().toString(), "CN");
+    if (bridgeId != null) {
+      if (subjectCn == null) {
+        throw new CertificateException("Server has invalid certificate!");
       }
-      if (!issuerDn.equals(arg0[0].getIssuerDN().toString())) {
-        throw new CertificateException(
-            "Issuer DN did not match for expected!");
+      if (!bridgeId.equals(subjectCn)) {
+        throw new CertificateException("Server has invalid certificate!");
       }
-    } else {
-      subjectDn = arg0[0].getSubjectDN().toString();
-      issuerDn = arg0[0].getIssuerDN().toString();
+    } else if (subjectCn != null) {
+      bridgeId = subjectCn;
+    }
+    String issuerCn = parsePrincipal(arg0[0].getIssuerDN().toString(), "CN");
+    if (issuerCn == null) {
+      throw new CertificateException("Server has invalid certificate!");
+    }
+    if (!TRUST_ISSUER_CN.equals(issuerCn)) {
+      throw new CertificateException("Server has invalid certificate!");
     }
   }
 
   /**
-   * Get Subject Dn. This is available after certificate check
-   * or construction made with giving subject DN.
-   * @return Subject DN
+   * Get Bridge id. This is available after certificate check
+   * or construction made with giving bridge id.
+   * @return Bridge id
    */
-  public String getSubjectDn() {
-    return subjectDn;
-  }
-  /**
-   * Get Issuer Dn. This is available after certificate check
-   * or construction made with giving issuer DN.
-   * @return Issuer DN
-   */
-  public String getIssuerDn() {
-    return issuerDn;
+  public String getBridgeId() {
+    return bridgeId;
   }
   @Override
   public X509Certificate[] getAcceptedIssuers() {

@@ -468,25 +468,27 @@ public class AmbientLightView extends BlackPanel
           hostnameField.setText(hostname);
         }
       }
-      if (!bridge.getHostname().equals(hostname)) {
-        bridge.setHostname(hostname);
-        if (bridgeId != null) {
-          bridge.setId(bridgeId);
+      if (bridge != null) {
+        if (!bridge.getHostname().equals(hostname)) {
+          bridge.setHostname(hostname);
+          if (bridgeId != null) {
+            bridge.setId(bridgeId);
+          }
         }
+        if (bridge.getUsername() != null
+            && !bridge.getUsername().equals(usernameField.getText())) {
+          bridge.setUsername(usernameField.getText());
+        }
+        if (bridge.getUsername() == null) {
+          bridge.setUsername(usernameField.getText());
+        }
+        if (usernameField.getText().isEmpty()) {
+          bridge.setNextCommand(BridgeCommandType.REGISTER);
+        } else {
+          bridge.setNextCommand(BridgeCommandType.TEST);
+        }
+        updatePanels();
       }
-      if (bridge.getUsername() != null
-          && !bridge.getUsername().equals(usernameField.getText())) {
-        bridge.setUsername(usernameField.getText());
-      }
-      if (bridge.getUsername() == null) {
-        bridge.setUsername(usernameField.getText());
-      }
-      if (usernameField.getText().isEmpty()) {
-        bridge.setNextCommand(BridgeCommandType.REGISTER);
-      } else {
-        bridge.setNextCommand(BridgeCommandType.TEST);
-      }
-      updatePanels();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_LIGHT_TEST)) {
       SoundPlayer.playMenuSound();

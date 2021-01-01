@@ -506,7 +506,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
    */
   private int calculateTotalTroopSpace() {
     int result = fleet.getTotalCargoColonist();
-    if (result % 2 == 1) {
+    if (result % 2 != 0) {
       result = result - 1;
       if (result < 0) {
         result = 0;

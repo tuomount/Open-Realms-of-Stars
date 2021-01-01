@@ -803,6 +803,7 @@ public class PlanetBombingView extends BlackPanel {
         PlanetAnimation anim = imgBase.getAnimation();
         if (anim.isAnimationFinished()) {
           removeDestroyedShip();
+          nextShip();
         } else {
           PlayerInfo defender = planet.getPlanetPlayerInfo();
           if (attackBombOrTroops() && starMap != null) {

@@ -27,7 +27,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018,2020  Tuomo Untinen
+* Copyright (C) 2018,2020,2021  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -260,6 +260,11 @@ public class OptionsView extends BlackPanel {
     if (config.getAmbientLights()) {
       ambientLightsBox.setSelected(true);
     }
+    ambientLightsBox.setToolTipText("<html>Are ambient light effects enabled"
+        + " during game.<br>During game play following keys have special"
+        + " effect on lights.<br>"
+        + "<li> F1 forces warm white ambient light.<li> F2 forces all lights"
+        + " go dark.</html>");
     xPanel.add(ambientLightsBox);
     lightsPanel.add(xPanel);
     xPanel = new EmptyInfoPanel();
@@ -296,6 +301,11 @@ public class OptionsView extends BlackPanel {
         listener);
     lightsSlider.setSliderMajorTick(1);
     lightsSlider.setSliderMinorTick(1);
+    lightsSlider.setLabelToolTip("<html>Light intensity value."
+        + " More intensive lights will create stronger ambient"
+        + " light effects.<br>Effect can be also faster"
+        + " compared to lower intensive level.<br>"
+        + " Some of the effect this setting has no affect.</html>");
     xPanel.add(lightsSlider);
     lightsPanel.add(xPanel);
     lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));

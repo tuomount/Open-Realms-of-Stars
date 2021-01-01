@@ -530,22 +530,24 @@ public class Game implements ActionListener {
   }
 
   /**
-   * Tries to init bridg
+   * Tries to init bridge
    */
   public void initBridge() {
-    this.bridge = new Bridge(configFile.getBridgeHost());
-    this.bridge.setUsername(configFile.getBridgeUsername());
-    this.bridge.setCenterLightName(configFile.getCenterLight());
-    this.bridge.setLeftLightName(configFile.getLeftLight());
-    this.bridge.setRightLightName(configFile.getRightLight());
-    this.bridge.setIntense(configFile.getLightIntense());
-    this.bridge.setLightsEnabled(configFile.getAmbientLights());
-    this.bridge.setId(configFile.getBridgeId());
-    try {
-      this.bridge.updateAllLights();
-    } catch (IOException e) {
-      this.bridge.setLightsEnabled(false);
-      ErrorLogger.log(e);
+    if (configFile.getBridgeId() != null) {
+      this.bridge = new Bridge(configFile.getBridgeHost());
+      this.bridge.setUsername(configFile.getBridgeUsername());
+      this.bridge.setCenterLightName(configFile.getCenterLight());
+      this.bridge.setLeftLightName(configFile.getLeftLight());
+      this.bridge.setRightLightName(configFile.getRightLight());
+      this.bridge.setIntense(configFile.getLightIntense());
+      this.bridge.setLightsEnabled(configFile.getAmbientLights());
+      this.bridge.setId(configFile.getBridgeId());
+      try {
+        this.bridge.updateAllLights();
+      } catch (IOException e) {
+        this.bridge.setLightsEnabled(false);
+        ErrorLogger.log(e);
+      }
     }
   }
 
@@ -2414,12 +2416,6 @@ public class Game implements ActionListener {
           }
         }
         changeGameState(GameState.OPTIONS_VIEW);
-        return;
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_APPLY)) {
-        SoundPlayer.playMenuSound();
-        // FIXME Apply lights setup here
         return;
       }
       if (arg0.getActionCommand()

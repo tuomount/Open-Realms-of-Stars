@@ -172,7 +172,7 @@ public class Bridge {
     rightLightName = "none";
     centerLightName = "none";
     intense = 3;
-    lightsEnabled = true;
+    lightsEnabled = false;
     id = null;
   }
 

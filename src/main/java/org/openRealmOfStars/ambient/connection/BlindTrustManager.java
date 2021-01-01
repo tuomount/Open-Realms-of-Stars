@@ -72,7 +72,7 @@ public class BlindTrustManager implements X509TrustManager {
     String[] parts = principal.split(",");
     for (String line : parts) {
       String[] lineParts = line.split("=");
-      if (lineParts.length == 2 && lineParts[0].equalsIgnoreCase(key)) {
+      if (lineParts.length == 2 && lineParts[0].trim().equalsIgnoreCase(key)) {
         return lineParts[1];
       }
     }

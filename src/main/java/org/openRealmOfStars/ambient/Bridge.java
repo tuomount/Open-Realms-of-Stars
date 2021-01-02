@@ -641,7 +641,7 @@ public class Bridge {
     light = getRightLight();
     makeLightEffect(light, 49000, 80, 0);
     light = getCenterLight();
-    makeLightEffect(light, 47000, 80, 05);
+    makeLightEffect(light, 47000, 80, 0);
   }
 
   /**
@@ -652,8 +652,9 @@ public class Bridge {
     int amp = 127;
     int inc = 30;
     phase = phase + inc;
-    if (phase > 360) {
+    if (phase > 359) {
       effectEnded = true;
+      phase = phase - 359;
       return;
     }
     int bri = (int) (Math.cos(Math.toRadians(phase)) * amp);

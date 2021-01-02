@@ -6,6 +6,7 @@ import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
@@ -1828,6 +1829,44 @@ public class DiplomaticTrade {
       generatePeaceOffer();
     } else {
       Attitude attitude = offerPlayer.getAiAttitude();
+      WinningStrategy  strategy = offerPlayer.getStrategy();
+      if (strategy == WinningStrategy.CULTURAL) {
+        if (attitude == Attitude.AGGRESSIVE
+            || attitude == Attitude.MILITARISTIC) {
+          // Cleans diplomatic behaviour so it tries to not to make war.
+          attitude = Attitude.DIPLOMATIC;
+        }
+        if (attitude == Attitude.BACKSTABBING) {
+          // Cleans diplomatic behaviour so it tries to not to make war.
+          attitude = Attitude.PEACEFUL;
+        }
+      }
+      if (strategy == WinningStrategy.DIPLOMATIC) {
+        if (attitude == Attitude.AGGRESSIVE
+            || attitude == Attitude.MILITARISTIC) {
+          // Cleans diplomatic behaviour so it tries to not to make war.
+          attitude = Attitude.DIPLOMATIC;
+        }
+        if (attitude == Attitude.BACKSTABBING) {
+          // Cleans diplomatic behaviour so it tries to not to make war.
+          attitude = Attitude.PEACEFUL;
+        }
+      }
+      if (strategy == WinningStrategy.CONQUER) {
+        if (attitude == Attitude.PEACEFUL) {
+          // Cleans diplomatic behaviour so it tries to  make war.
+          attitude = Attitude.MILITARISTIC;
+        }
+        if (attitude == Attitude.DIPLOMATIC) {
+          // Cleans diplomatic behaviour so it tries to  make war.
+          attitude = Attitude.AGGRESSIVE;
+        }
+      }
+      if (strategy == WinningStrategy.SCIENCE
+          && attitude == Attitude.BACKSTABBING) {
+        // Cleans diplomatic behaviour so it tries trade more science.
+        attitude = Attitude.SCIENTIFIC;
+      }
       switch (attitude) {
         case AGGRESSIVE: {
           generateAggressiveAttitudeOffer();

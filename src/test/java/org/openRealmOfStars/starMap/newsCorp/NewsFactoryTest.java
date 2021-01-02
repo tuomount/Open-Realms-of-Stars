@@ -1042,6 +1042,7 @@ public class NewsFactoryTest {
     Mockito.when(fleetList.getNumberOfFleets()).thenReturn(2);
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(diplomacy.getAllianceIndex()).thenReturn(-1);
+    Mockito.when(diplomacy.getNumberOfAdmires()).thenReturn(4);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire I");
     Mockito.when(info.getFleets()).thenReturn(fleetList);
@@ -1340,10 +1341,13 @@ public class NewsFactoryTest {
     Mockito.when(fleetList.getNumberOfFleets()).thenReturn(2);
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(diplomacy.getAllianceIndex()).thenReturn(1);
+    Mockito.when(diplomacy.getNumberOfAdmires()).thenReturn(4);
     Diplomacy diplomacy2 = Mockito.mock(Diplomacy.class);
     Mockito.when(diplomacy2.getAllianceIndex()).thenReturn(0);
+    Mockito.when(diplomacy2.getNumberOfAdmires()).thenReturn(4);
     Diplomacy diplomacy3 = Mockito.mock(Diplomacy.class);
     Mockito.when(diplomacy3.getAllianceIndex()).thenReturn(-1);
+    Mockito.when(diplomacy3.getNumberOfAdmires()).thenReturn(4);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire I");
     Mockito.when(info.getFleets()).thenReturn(fleetList);

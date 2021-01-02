@@ -7,7 +7,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018, 2020, 2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -48,6 +48,38 @@ public class ConfigFile {
    * Config option larger fonts
    */
   public static final String CONFIG_LARGER_FONTS = "LargerFonts";
+  /**
+   * Config option for ambient light bridge
+   */
+  public static final String CONFIG_BRIDGE_HOST = "BridgeHost";
+  /**
+   * Config option for ambient light bridge username
+   */
+  public static final String CONFIG_BRIDGE_USERNAME = "BridgeUsername";
+  /**
+   * Config option for left ambient light
+   */
+  public static final String CONFIG_LEFT_LIGHT = "LeftLightName";
+  /**
+   * Config option for center ambient light
+   */
+  public static final String CONFIG_CENTER_LIGHT = "CenterLightName";
+  /**
+   * Config option for center right light
+   */
+  public static final String CONFIG_RIGHT_LIGHT = "RightLightName";
+  /**
+   * Config option for light intense
+   */
+  public static final String CONFIG_LIGHT_INTENSE = "LightIntense";
+  /**
+   * Config option for enabled ambient light
+   */
+  public static final String CONFIG_ENABLE_LIGHTS = "EnableLights";
+  /**
+   * Config option for bridge Id.
+   */
+  public static final String CONFIG_BRIDGE_ID = "BridgeId";
   /**
    * Config file default comment
    */
@@ -223,6 +255,173 @@ public class ConfigFile {
     }
   }
   /**
+   * Set Bridge id
+   * @param id ID for ambient light bridge.
+   */
+  public void setBridgeId(final String id) {
+    ConfigLine line = getLineByKey(CONFIG_BRIDGE_ID);
+    if (id != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_BRIDGE_ID + "=" + id);
+        add(line);
+      } else {
+        line.setValue(id);
+      }
+    }
+  }
+
+  /**
+   * Get Bridge id or null
+   * @return Bridge id or null
+   */
+  public String getBridgeId() {
+    ConfigLine line = getLineByKey(CONFIG_BRIDGE_ID);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
+  }
+
+  /**
+   * Set Bridge hostname
+   * @param hostname Hostname for ambient light bridge.
+   */
+  public void setBridgeHost(final String hostname) {
+    ConfigLine line = getLineByKey(CONFIG_BRIDGE_HOST);
+    if (hostname != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_BRIDGE_HOST + "=" + hostname);
+        add(line);
+      } else {
+        line.setValue(hostname);
+      }
+    }
+  }
+
+  /**
+   * Get Bridge hostname or null
+   * @return hostname or null
+   */
+  public String getBridgeHost() {
+    ConfigLine line = getLineByKey(CONFIG_BRIDGE_HOST);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
+  }
+  /**
+   * Set Bridge hostname
+   * @param username Username for ambient light bridge.
+   */
+  public void setBridgeUsername(final String username) {
+    ConfigLine line = getLineByKey(CONFIG_BRIDGE_USERNAME);
+    if (username != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_BRIDGE_USERNAME + "=" + username);
+        add(line);
+      } else {
+        line.setValue(username);
+      }
+    }
+  }
+
+  /**
+   * Get Bridge username or null
+   * @return username or null
+   */
+  public String getBridgeUsername() {
+    ConfigLine line = getLineByKey(CONFIG_BRIDGE_USERNAME);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
+  }
+
+  /**
+   * Set Left ambient light name
+   * @param lightName Light name to set
+   */
+  public void setLeftLight(final String lightName) {
+    ConfigLine line = getLineByKey(CONFIG_LEFT_LIGHT);
+    if (lightName != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_LEFT_LIGHT + "=" + lightName);
+        add(line);
+      } else {
+        line.setValue(lightName);
+      }
+    }
+  }
+
+  /**
+   * Get left ambient light name
+   * @return lightname or null
+   */
+  public String getLeftLight() {
+    ConfigLine line = getLineByKey(CONFIG_LEFT_LIGHT);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
+  }
+
+  /**
+   * Set right ambient light name
+   * @param lightName Light name to set
+   */
+  public void setRightLight(final String lightName) {
+    ConfigLine line = getLineByKey(CONFIG_RIGHT_LIGHT);
+    if (lightName != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_RIGHT_LIGHT + "=" + lightName);
+        add(line);
+      } else {
+        line.setValue(lightName);
+      }
+    }
+  }
+
+  /**
+   * Get right ambient light name
+   * @return lightname or null
+   */
+  public String getRightLight() {
+    ConfigLine line = getLineByKey(CONFIG_RIGHT_LIGHT);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
+  }
+
+  /**
+   * Set center ambient light name
+   * @param lightName Light name to set
+   */
+  public void setCenterLight(final String lightName) {
+    ConfigLine line = getLineByKey(CONFIG_CENTER_LIGHT);
+    if (lightName != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_CENTER_LIGHT + "=" + lightName);
+        add(line);
+      } else {
+        line.setValue(lightName);
+      }
+    }
+  }
+
+  /**
+   * Get right ambient light name
+   * @return lightname or null
+   */
+  public String getCenterLight() {
+    ConfigLine line = getLineByKey(CONFIG_CENTER_LIGHT);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
+  }
+
+  /**
    * Get Resolution width from config file
    * @return Resolution width
    */
@@ -260,6 +459,22 @@ public class ConfigFile {
    */
   public void setBorderless(final boolean borderless) {
     setBoolean(CONFIG_BORDERLESS, borderless);
+  }
+
+  /**
+   * Is ambient lights enabled or disabled?
+   * @return true if disabled
+   */
+  public boolean getAmbientLights() {
+    return getBoolean(CONFIG_ENABLE_LIGHTS);
+  }
+
+  /**
+   * Set or disable ambient lights
+   * @param lights true to set larger fonts
+   */
+  public void setAmbientLights(final boolean lights) {
+    setBoolean(CONFIG_ENABLE_LIGHTS, lights);
   }
 
   /**
@@ -317,6 +532,43 @@ public class ConfigFile {
    */
   public void setSoundVolume(final int volume) {
     setVolume(CONFIG_SOUND_VOLUME, volume);
+  }
+
+  /**
+   * Light Intense for ambient effects.
+   * @param intense Light intense
+   */
+  public void setLightIntense(final int intense) {
+    ConfigLine line = getLineByKey(CONFIG_LIGHT_INTENSE);
+    if (line == null) {
+      line = new ConfigLine(CONFIG_LIGHT_INTENSE + "=3");
+      add(line);
+    }
+    if (intense >= 1 && intense <= 5) {
+      String str = Integer.toString(intense);
+      line.setValue(str);
+    }
+  }
+
+  /**
+   * Get light intense for ambient lights effect
+   * @return Light intense value
+   */
+  public int getLightIntense() {
+    int result = 3;
+    ConfigLine line = getLineByKey(CONFIG_LIGHT_INTENSE);
+    if (line != null) {
+      String value = line.getValue();
+      if (value != null) {
+        try {
+          result = Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+          ErrorLogger.log("Invalid " + CONFIG_LIGHT_INTENSE
+              + " value: " + value);
+        }
+      }
+    }
+    return result;
   }
 
 }

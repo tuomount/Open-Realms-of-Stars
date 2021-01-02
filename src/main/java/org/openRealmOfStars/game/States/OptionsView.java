@@ -27,7 +27,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018,2020  Tuomo Untinen
+* Copyright (C) 2018,2020,2021  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -84,6 +84,15 @@ public class OptionsView extends BlackPanel {
   private SpaceCheckBox largerFontsBox;
 
   /**
+   * Ambient lights are enabled.
+   */
+  private SpaceCheckBox ambientLightsBox;
+  /**
+   * Ambient lights intense slider
+   */
+  private SpaceSliderPanel lightsSlider;
+
+  /**
    * Screen has been resized;
    */
   private boolean resized = false;
@@ -102,6 +111,7 @@ public class OptionsView extends BlackPanel {
     base.setTitle("Options");
     this.setLayout(new BorderLayout());
     base.setLayout(new BorderLayout());
+    // Accept panel starts here
     InfoPanel acceptPanel = new InfoPanel();
     acceptPanel.setTitle("Options accept and apply");
     acceptPanel.setLayout(new BoxLayout(acceptPanel, BoxLayout.X_AXIS));
@@ -129,6 +139,7 @@ public class OptionsView extends BlackPanel {
     EmptyInfoPanel xPanel = new EmptyInfoPanel();
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    // Screen panel starts here
     InfoPanel screenPanel = new InfoPanel();
     screenPanel.setLayout(new BoxLayout(screenPanel, BoxLayout.Y_AXIS));
     screenPanel.setTitle("Screen Options");
@@ -190,15 +201,20 @@ public class OptionsView extends BlackPanel {
     largerFontsBox.setSelected(config.getLargerFonts());
     xPanel.add(largerFontsBox);
     screenPanel.add(xPanel);
+    screenPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
     allOptions.add(screenPanel);
     allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
+    // Music panel starts here
     InfoPanel musicPanel = new InfoPanel();
     musicPanel.setTitle("Music Options");
-    musicPanel.setLayout(new BoxLayout(musicPanel, BoxLayout.X_AXIS));
+    musicPanel.setLayout(new BoxLayout(musicPanel, BoxLayout.Y_AXIS));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
     label = new SpaceLabel("Music volume");
-    musicPanel.add(label);
-    musicPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel.add(label);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     musicSlider = new SpaceSliderPanel(
         GameCommands.COMMAND_MUSIC_VOLUME_DN,
         GameCommands.COMMAND_MUSIC_VOLUME_UP,
@@ -206,15 +222,21 @@ public class OptionsView extends BlackPanel {
         GameCommands.COMMAND_MUSIC_VOLUME, listener);
     musicSlider.setSliderMajorTick(10);
     musicSlider.setSliderMinorTick(10);
-    musicPanel.add(musicSlider);
+    xPanel.add(musicSlider);
+    musicPanel.add(xPanel);
+    musicPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     allOptions.add(musicPanel);
     allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
+    // Sound panel starts here
     InfoPanel soundPanel = new InfoPanel();
     soundPanel.setTitle("Sound Options");
-    soundPanel.setLayout(new BoxLayout(soundPanel, BoxLayout.X_AXIS));
+    soundPanel.setLayout(new BoxLayout(soundPanel, BoxLayout.Y_AXIS));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
     label = new SpaceLabel("Sound volume");
-    soundPanel.add(label);
-    soundPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel.add(label);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     soundSlider = new SpaceSliderPanel(
         GameCommands.COMMAND_SOUND_VOLUME_DN,
         GameCommands.COMMAND_SOUND_VOLUME_UP,
@@ -222,8 +244,72 @@ public class OptionsView extends BlackPanel {
         GameCommands.COMMAND_SOUND_VOLUME, listener);
     soundSlider.setSliderMajorTick(10);
     soundSlider.setSliderMinorTick(10);
-    soundPanel.add(soundSlider);
+    xPanel.add(soundSlider);
+    soundPanel.add(xPanel);
+    soundPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     allOptions.add(soundPanel);
+    allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
+    // Lights panel starts here
+    InfoPanel lightsPanel = new InfoPanel();
+    lightsPanel.setTitle("Ambient lights");
+    lightsPanel.setLayout(new BoxLayout(lightsPanel, BoxLayout.Y_AXIS));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    ambientLightsBox = new SpaceCheckBox("Enable ambient lights");
+    if (config.getAmbientLights()) {
+      ambientLightsBox.setSelected(true);
+    }
+    ambientLightsBox.setToolTipText("<html>Are ambient light effects enabled"
+        + " during game.<br>During game play following keys have special"
+        + " effect on lights.<br>"
+        + "<li> F1 forces warm white ambient light.<li> F2 forces all lights"
+        + " go dark.</html>");
+    xPanel.add(ambientLightsBox);
+    lightsPanel.add(xPanel);
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    label = new SpaceLabel("Light bridge at <IP HERE OR HOSTNAME WHICH"
+        + " CAN BE LONG>");
+    if (config.getBridgeHost() != null) {
+      label.setText("Light bridge at " + config.getBridgeHost());
+    } else {
+      label.setText("Light bridge not setup yet.");
+    }
+    xPanel.add(label);
+    lightsPanel.add(xPanel);
+    lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    btn = new SpaceButton("Setup lights", GameCommands.COMMAND_SETUP_LIGHTS);
+    btn.addActionListener(listener);
+    xPanel.add(btn);
+    lightsPanel.add(xPanel);
+    lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    label = new SpaceLabel("Light intense");
+    xPanel.add(label);
+    lightsSlider = new SpaceSliderPanel(
+        GameCommands.COMMAND_LIGHTS_DN,
+        GameCommands.COMMAND_LIGHTS_UP,
+        Icons.ICON_PROPULSION_TECH, "Light intense", 1, 5,
+        config.getLightIntense(), GameCommands.COMMAND_LIGHTS_INTENSE,
+        listener);
+    lightsSlider.setSliderMajorTick(1);
+    lightsSlider.setSliderMinorTick(1);
+    lightsSlider.setLabelToolTip("<html>Light intensity value."
+        + " More intensive lights will create stronger ambient"
+        + " light effects.<br>Effect can be also faster"
+        + " compared to lower intensive level.<br>"
+        + " Some of the effect this setting has no affect.</html>");
+    xPanel.add(lightsSlider);
+    lightsPanel.add(xPanel);
+    lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    allOptions.add(lightsPanel);
     allOptions.add(Box.createRigidArea(new Dimension(20,
         game.getHeight() - 280)));
     base.add(allOptions, BorderLayout.CENTER);
@@ -243,6 +329,7 @@ public class OptionsView extends BlackPanel {
    */
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_RESIZE)) {
+      SoundPlayer.playMenuSound();
       game.setResizable(true);
       resized = true;
     }
@@ -322,6 +409,22 @@ public class OptionsView extends BlackPanel {
    */
   public boolean getLargerFonts() {
     return largerFontsBox.isSelected();
+  }
+
+  /**
+   * Get intense value from slider.
+   * @return Intense value from slider.
+   */
+  public int getIntense() {
+    return lightsSlider.getSliderValue();
+  }
+
+  /**
+   * Is ambient lights enabled or not?
+   * @return True if lights are enabled.
+   */
+  public boolean isLightsEnabled() {
+    return ambientLightsBox.isSelected();
   }
 
 }

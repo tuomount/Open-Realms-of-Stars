@@ -15,8 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -207,6 +209,10 @@ public class PlanetBombingView extends BlackPanel {
   private StarMap starMap;
 
   /**
+   * Game Frame for changing ambient lights dynamically.
+   */
+  private Game game;
+  /**
    * Nuking information.
    */
   private PlanetNuked nuked;
@@ -222,6 +228,11 @@ public class PlanetBombingView extends BlackPanel {
   public PlanetBombingView(final Planet planet, final Fleet fleet,
       final PlayerInfo attacker, final int attackerPlayerIndex,
       final ActionListener listener) {
+    if (listener instanceof Game) {
+      game = (Game) listener;
+    } else {
+      game = null;
+    }
     this.setPlanet(planet);
     this.fleet = fleet;
     this.attacker = attacker;
@@ -626,6 +637,9 @@ public class PlanetBombingView extends BlackPanel {
       if (ship.componentIsWorking(usedComponentIndex)) {
         infoPanel.useComponent(usedComponentIndex);
         if (comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+          if (!allAi && game != null) {
+            game.setBridgeCommand(BridgeCommandType.NUKE_START);
+          }
           imgBase.setAnimation(new PlanetAnimation(
               PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
           if (!planet.isShieldForBombing()) {
@@ -642,6 +656,9 @@ public class PlanetBombingView extends BlackPanel {
           }
         }
         if (comp.getType() == ShipComponentType.ORBITAL_BOMBS) {
+          if (!allAi && game != null) {
+            game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
+          }
           imgBase.setAnimation(new PlanetAnimation(
               PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 0, 0, 1, 1));
           if (!planet.isShieldForBombing()) {
@@ -665,6 +682,9 @@ public class PlanetBombingView extends BlackPanel {
           }
         }
         if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
+          if (!allAi && game != null) {
+            game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
+          }
           imgBase.setAnimation(null);
           int shipTroop = ship.getHull().getRace().getTrooperPower()
               * (100 + comp.getDamage()) / 100;
@@ -783,6 +803,7 @@ public class PlanetBombingView extends BlackPanel {
         PlanetAnimation anim = imgBase.getAnimation();
         if (anim.isAnimationFinished()) {
           removeDestroyedShip();
+          nextShip();
         } else {
           PlayerInfo defender = planet.getPlanetPlayerInfo();
           if (attackBombOrTroops() && starMap != null) {

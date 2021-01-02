@@ -60,7 +60,7 @@ public class BlackHoleEffect {
     red1 = (red1 + red2) / 2;
     green1 = (green1 + green2) / 2;
     blue1 = (blue1 + blue2) / 2;
-    int color = red1 + green1 << 8 + blue1 << 16 + alpha1 << 24;
+    int color = red1 + (green1 << 8) + (blue1 << 16) + (alpha1 << 24);
     return color;
   }
   /**

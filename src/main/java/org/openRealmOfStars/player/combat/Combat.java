@@ -30,6 +30,7 @@ import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.Logger;
 
 /**
@@ -1231,7 +1232,7 @@ public boolean launchIntercept(final int distance,
           for (int i = logger.size() - 1; i >= 0; i--) {
             String msg = logger.getMessage(i);
             if (!msg.isEmpty()) {
-              System.out.println(msg);
+              ErrorLogger.log(msg);
             }
           }
         }

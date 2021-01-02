@@ -148,5 +148,9 @@ public enum GameState {
   /**
    * Espionage mission view.
    */
-  ESPIONAGE_MISSIONS_VIEW;
+  ESPIONAGE_MISSIONS_VIEW,
+  /**
+   * View for setuping ambient lights for the game.
+   */
+  SETUP_AMBIENT_LIGHTS;
 }

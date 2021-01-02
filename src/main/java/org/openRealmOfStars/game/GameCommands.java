@@ -92,6 +92,35 @@ public final class GameCommands {
   public static final String COMMAND_SOUND_VOLUME = "OptionsSoundVolume";
 
   /**
+   * Ambient lights intense up
+   */
+  public static final String COMMAND_LIGHTS_UP = "OptionsLightsUp";
+
+  /**
+   * Ambient lights intense down
+   */
+  public static final String COMMAND_LIGHTS_DN = "OptionsLightsDn";
+
+  /**
+   * Ambient lights intense
+   */
+  public static final String COMMAND_LIGHTS_INTENSE = "OptionsLightsIntense";
+
+  /**
+   * Ambient lights setup
+   */
+  public static final String COMMAND_SETUP_LIGHTS = "SetupLights";
+
+  /**
+   * Ambient lights connect
+   */
+  public static final String COMMAND_BRIDGE_CONNECT = "SetupBridge";
+  /**
+   * Light test
+   */
+  public static final String COMMAND_LIGHT_TEST = "TestLight";
+
+  /**
    * End Turn command
    */
   public static final String COMMAND_END_TURN = "EndTurn";

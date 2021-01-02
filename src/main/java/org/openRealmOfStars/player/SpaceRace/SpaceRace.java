@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.SpaceRace;
 
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
@@ -959,6 +960,38 @@ public enum SpaceRace {
       return SocialSystem.PATRIARCHY;
     default:
       return SocialSystem.EQUAL;
+    }
+  }
+  /**
+   * Get bridge effect for diplomacy screen
+   * @return BridgeCommandType
+   */
+  public BridgeCommandType getBridgeEffect() {
+    switch (this) {
+    case HUMAN:
+      return BridgeCommandType.WARM_WHITE;
+    case SPACE_PIRATE:
+      return BridgeCommandType.DARKEST;
+    case MECHIONS:
+      return BridgeCommandType.WARM_WHITE;
+    case SPORKS:
+      return BridgeCommandType.DARK_RED;
+    case GREYANS:
+      return BridgeCommandType.WARM_WHITE;
+    case CENTAURS:
+      return BridgeCommandType.BRIGHT_CYAN;
+    case MOTHOIDS:
+      return BridgeCommandType.GREEN_CONSOLE;
+    case TEUTHIDAES:
+      return BridgeCommandType.PURPLE_DREAM;
+    case SCAURIANS:
+      return BridgeCommandType.DARK_ORANGE;
+    case HOMARIANS:
+      return BridgeCommandType.BLUEISH_WHITE;
+    case CHIRALOIDS:
+      return BridgeCommandType.BLUEISH_WHITE;
+    default:
+      return BridgeCommandType.WARM_WHITE;
     }
   }
   /**

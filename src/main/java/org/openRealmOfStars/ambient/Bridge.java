@@ -105,6 +105,10 @@ public class Bridge {
    */
   public static final String EFFECT_PURPLE_DREAM = "Purple dream";
   /**
+   * Effect fade in
+   */
+  public static final String EFFECT_FADE_IN = "Fade in";
+  /**
    * Name for contact Hue bridge.
    */
   public static final String DEVICE_TYPE = "OROS AMBIENT LIGHTS";
@@ -624,6 +628,46 @@ public class Bridge {
     makeLightEffect(light, 20000, 10, 255);
     light = getCenterLight();
     makeLightEffect(light, 50000, 30, 255);
+  }
+
+  /**
+   * Initialize fade in.
+   */
+  public void effectInitFadeIn() {
+    phase = 180;
+    effectEnded = false;
+    Light light = getLeftLight();
+    makeLightEffect(light, 48000, 80, 0);
+    light = getRightLight();
+    makeLightEffect(light, 49000, 80, 0);
+    light = getCenterLight();
+    makeLightEffect(light, 47000, 80, 05);
+  }
+
+  /**
+   * Fade in effect
+   */
+  public void effectFadeIn() {
+    int center = 128;
+    int amp = 127;
+    int inc = 30;
+    phase = phase + inc;
+    if (phase > 360) {
+      effectEnded = true;
+      return;
+    }
+    int bri = (int) (Math.cos(Math.toRadians(phase)) * amp);
+    bri = bri + center;
+    Light light = getLeftLight();
+    makeLightEffect(light, 48000, 140, bri);
+    bri = (int) (Math.cos(Math.toRadians(phase)) * amp);
+    bri = bri + center;
+    light = getRightLight();
+    makeLightEffect(light, 49000, 150, bri);
+    bri = (int) (Math.cos(Math.toRadians(phase)) * amp);
+    bri = bri + center;
+    light = getCenterLight();
+    makeLightEffect(light, 47000, 160, bri);
   }
 
   /**

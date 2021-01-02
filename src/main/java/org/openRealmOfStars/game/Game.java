@@ -1423,7 +1423,7 @@ public class Game implements ActionListener {
       break;
     }
     case NEWS_CORP_VIEW: {
-      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
+      setBridgeCommand(BridgeCommandType.FADE_IN_START);
       showNewsCorpView();
       break;
     }

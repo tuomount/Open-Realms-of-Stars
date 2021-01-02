@@ -104,7 +104,15 @@ public enum BridgeCommandType {
   /**
    * Purple dream
    */
-  PURPLE_DREAM;
+  PURPLE_DREAM,
+  /**
+   * Fade in start
+   */
+  FADE_IN_START,
+  /**
+   * Fade in
+   */
+  FADE_IN;
 
 
 }

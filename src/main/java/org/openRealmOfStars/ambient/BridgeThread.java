@@ -170,6 +170,14 @@ public class BridgeThread extends Thread {
         if (bridge.isEffectEnded()) {
           bridge.setNextCommand(null);
         }
+      } else if (command == BridgeCommandType.FADE_IN_START) {
+        bridge.effectInitFadeIn();
+        bridge.setNextCommand(BridgeCommandType.FADE_IN);
+      } else if (command == BridgeCommandType.FADE_IN) {
+        bridge.effectFadeIn();
+        if (bridge.isEffectEnded()) {
+          bridge.setNextCommand(null);
+        }
       } else if (command == BridgeCommandType.EXIT) {
         bridge.setNextCommand(null);
         endThread = true;

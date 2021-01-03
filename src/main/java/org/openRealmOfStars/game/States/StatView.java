@@ -1,6 +1,7 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +20,9 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
+import org.openRealmOfStars.starMap.newsCorp.GalaxyStat;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  *
@@ -145,6 +148,7 @@ public class StatView extends BlackPanel {
     tabs.add(NewsCorpData.STAT_SCORE, statPanel);
 
     tabs.add("Relations", createRelationPanel(map, names));
+    tabs.add("Winnnig", createWinningPanel(map, names));
     base.add(tabs, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
 
@@ -179,6 +183,69 @@ public class StatView extends BlackPanel {
     return backBtn.getText();
   }
 
+  /**
+   * Create Winning panel
+   * @param map StarMap
+   * @param names Player empire names
+   * @return BlackPanel with winning information
+   */
+  public BlackPanel createWinningPanel(final StarMap map,
+      final String[] names) {
+    BlackPanel panel = new BlackPanel();
+    int rows = map.getPlayerList().getCurrentMaxRealms() + 1;
+    int cols = 3;
+    panel.setLayout(new GridLayout(rows, cols));
+    panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+    TransparentLabel label = new TransparentLabel(null, "", false, true);
+    panel.add(label);
+    int maxTurns = map.getScoreVictoryTurn();
+    label = new TransparentLabel(null, "Highest score at "
+        + maxTurns + " turns", true, true);
+    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    panel.add(label);
+    label = new TransparentLabel(null, "Culture", true, true);
+    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    panel.add(label);
+    GalaxyStat scoreStat = map.getNewsCorpData().generateScores();
+    int maxCulture = StarMapUtilities.calculateCultureScoreLimit(map.getMaxX(),
+        map.getMaxY(), map.getScoreVictoryTurn(), map.getScoreCulture());
+    boolean[] broadcasters = new boolean[
+        map.getPlayerList().getCurrentMaxRealms()];
+    for (int i = 0; i < map.getPlanetList().size(); i++) {
+      Planet planet = map.getPlanetList().get(i);
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.broadcaster()
+          && planet.getPlanetOwnerIndex() < broadcasters.length) {
+        broadcasters[planet.getPlanetOwnerIndex()] = true;
+      }
+    }
+    for (int i = 0; i < names.length; i++) {
+      label = new TransparentLabel(null, names[i], true, true);
+      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      panel.add(label);
+      int value = scoreStat.getLatest(i);
+      label = new TransparentLabel(null, String.valueOf(value), true, true);
+      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      panel.add(label);
+      StringBuilder sb = new StringBuilder();
+      sb.append(map.getNewsCorpData().getCultural().getLatest(i));
+      sb.append("/");
+      sb.append(maxCulture);
+      if (broadcasters[i]) {
+        sb.append(" Broadcasting");
+      }
+      value = map.getPlayerByIndex(i).getDiplomacy().getNumberOfAdmires();
+      if (value > 0) {
+        sb.append(" ");
+        sb.append(value);
+        sb.append(" admires");
+      }
+      label = new TransparentLabel(null, sb.toString(), true, true);
+      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      panel.add(label);
+    }
+    return panel;
+  }
   /**
    * Create Relation panel
    * @param map StarMap

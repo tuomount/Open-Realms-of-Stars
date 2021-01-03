@@ -310,7 +310,8 @@ public class Diplomacy {
   public int getNumberOfAdmires() {
     int admires = 0;
     for (int i = 0; i < diplomacyList.length; i++) {
-      if (getLiking(i) >= HIGH_NEUTRAL && !isWar(i) && !isTradeEmbargo(i)) {
+      if (getLiking(i) >= 0 && !isWar(i) && !isTradeEmbargo(i)
+          && isTradeAlliance(i)) {
         admires++;
       }
     }

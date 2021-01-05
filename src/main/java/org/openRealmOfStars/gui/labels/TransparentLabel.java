@@ -15,7 +15,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2018,2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -129,14 +129,38 @@ public class TransparentLabel extends JLabel {
     }
     g.setFont(this.getFont());
     g.setColor(this.getForeground());
+    StringBuilder sb = new StringBuilder(this.getText().length() + 10);
     if (wrap) {
       String[] texts = this.getText().split(" ");
       int totalHeight = 0;
+      int totalLineLen = 0;
+      int spaceLen = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+          " ");
       for (int i = 0; i < texts.length; i++) {
         int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
             texts[i]);
+        int textLen = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+            texts[i]);
+        if (totalLineLen + textLen > this.getWidth() - 10) {
+          sb.append("\n");
+          sb.append(texts[i]);
+          totalLineLen = textLen;
+        } else {
+          totalLineLen = totalLineLen + textLen + spaceLen;
+          if (sb.toString().isEmpty()) {
+            sb.append(texts[i]);
+          } else {
+            sb.append(" ");
+            sb.append(texts[i]);
+          }
+        }
         totalHeight = totalHeight + textHeight;
       }
+      if (texts.length > 0) {
+        totalHeight = totalHeight / texts.length;
+      }
+      texts = sb.toString().split("\n");
+      totalHeight = totalHeight * texts.length;
       for (int i = 0; i < texts.length; i++) {
         int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
             texts[i]);

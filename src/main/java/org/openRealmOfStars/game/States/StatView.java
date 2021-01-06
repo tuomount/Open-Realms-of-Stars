@@ -6,7 +6,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JTabbedPane;
+import javax.swing.border.EtchedBorder;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -18,6 +20,8 @@ import org.openRealmOfStars.gui.panels.StatisticPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
+import org.openRealmOfStars.player.ship.ShipImages;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.newsCorp.GalaxyStat;
@@ -153,6 +157,9 @@ public class StatView extends BlackPanel {
 
     tabs.add("Relations", createRelationPanel(map, names));
     tabs.add("Victory conditions", createWinningPanel(map, names));
+    if (map.isGameEnded()) {
+      tabs.add("Ship designs", createShipStatPanel(map, names));
+    }
     base.add(tabs, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
 
@@ -185,6 +192,192 @@ public class StatView extends BlackPanel {
    */
   public String getBackButtonText() {
     return backBtn.getText();
+  }
+
+  /**
+   * Get highest ship stat.
+   * @param realm PlayerINfo
+   * @param statType 0: Builts, 1: In use, 2: Combats, 3: Victories,
+   *                 4: Lost, 5: Kills, 6: Military power
+   * @return ShipStat or null
+   */
+  private ShipStat getHighestShipStat(final PlayerInfo realm,
+      final int statType) {
+    int value = -1;
+    int index = -1;
+    for (int j = 0; j < realm.getNumberOfShipStats(); j++) {
+      ShipStat stat = realm.getShipStat(j);
+      if (statType == 0 && stat.getNumberOfBuilt() > value) {
+        value = stat.getNumberOfBuilt();
+        index = j;
+      }
+      if (statType == 1 && stat.getNumberOfInUse() > value) {
+        value = stat.getNumberOfInUse();
+        index = j;
+      }
+      if (statType == 2 && stat.getNumberOfCombats() > value) {
+        value = stat.getNumberOfCombats();
+        index = j;
+      }
+      if (statType == 3 && stat.getNumberOfVictories() > value) {
+        value = stat.getNumberOfVictories();
+        index = j;
+      }
+      if (statType == 4 && stat.getNumberOfLoses() > value) {
+        value = stat.getNumberOfLoses();
+        index = j;
+      }
+      if (statType == 5 && stat.getNumberOfKills() > value) {
+        value = stat.getNumberOfKills();
+        index = j;
+      }
+      if (statType == 6 && stat.getDesign().getTotalMilitaryPower() > value) {
+        value = stat.getDesign().getTotalMilitaryPower();
+        index = j;
+      }
+    }
+    if (index != -1) {
+      return realm.getShipStat(index);
+    }
+    return null;
+  }
+  /**
+   * Ship stat panel
+   * @param map StarMap
+   * @param names Player empire names
+   * @return BlackPanel with winning information
+   */
+  public BlackPanel createShipStatPanel(final StarMap map,
+      final String[] names) {
+    BlackPanel panel = new BlackPanel();
+    int rows = map.getPlayerList().getCurrentMaxRealms() + 1;
+    int cols = 7;
+    panel.setLayout(new GridLayout(rows, cols));
+    panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+    TransparentLabel label = new TransparentLabel(null, "", false, true);
+    panel.add(label);
+    label = new TransparentLabel(null, "Most built one", true, true);
+    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setToolTipText("<html>How many of these designs were built."
+        + "</html>");
+    panel.add(label);
+    label = new TransparentLabel(null, "Most powerful", true, true);
+    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setToolTipText("<html>Which design has highest military power."
+        + "</html>");
+    panel.add(label);
+    label = new TransparentLabel(null, "Most combats", true, true);
+    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setToolTipText("<html>Which design had most of combats.</html>");
+    panel.add(label);
+    label = new TransparentLabel(null, "Most victorious", true, true);
+    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setToolTipText("<html>Which design had survived most time of"
+        + " combats or bombings.</html>");
+    panel.add(label);
+    label = new TransparentLabel(null, "Most lost", true, true);
+    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setToolTipText("<html>Which design had most of destructions by enemy"
+        + " in combats or bombings.</html>");
+    panel.add(label);
+    label = new TransparentLabel(null, "Most destructions", true, true);
+    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setToolTipText("<html>Which design had most of destructions in"
+        + " combats or bombings.</html>");
+    panel.add(label);
+    // Loop where to add player labels
+    for (int i = 0; i < names.length; i++) {
+      // Realm name
+      label = new TransparentLabel(null, names[i], true, true);
+      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      panel.add(label);
+      PlayerInfo realm = map.getPlayerByIndex(i);
+      ShipStat stat = getHighestShipStat(realm, 0);
+      label = new TransparentLabel(null, stat.getDesign().getName() + " - "
+          + stat.getNumberOfBuilt(), true, true);
+      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      ImageLabel image = new ImageLabel(
+          ShipImages.getByRace(stat.getDesign().getHull().getRace())
+          .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
+      BlackPanel invis = new BlackPanel();
+      invis.setLayout(new GridLayout(0, 2));
+      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      invis.add(image);
+      invis.add(label);
+      panel.add(invis);
+
+      stat = getHighestShipStat(realm, 6);
+      label = new TransparentLabel(null, stat.getDesign().getName() + " - "
+          + stat.getDesign().getTotalMilitaryPower(), true, true);
+      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      image = new ImageLabel(
+          ShipImages.getByRace(stat.getDesign().getHull().getRace())
+          .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
+      invis = new BlackPanel();
+      invis.setLayout(new GridLayout(0, 2));
+      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      invis.add(image);
+      invis.add(label);
+      panel.add(invis);
+
+      stat = getHighestShipStat(realm, 2);
+      label = new TransparentLabel(null, stat.getDesign().getName() + " - "
+          + stat.getNumberOfCombats(), true, true);
+      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      image = new ImageLabel(
+          ShipImages.getByRace(stat.getDesign().getHull().getRace())
+          .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
+      invis = new BlackPanel();
+      invis.setLayout(new GridLayout(0, 2));
+      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      invis.add(image);
+      invis.add(label);
+      panel.add(invis);
+
+      stat = getHighestShipStat(realm, 3);
+      label = new TransparentLabel(null, stat.getDesign().getName() + " - "
+          + stat.getNumberOfVictories(), true, true);
+      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      image = new ImageLabel(
+          ShipImages.getByRace(stat.getDesign().getHull().getRace())
+          .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
+      invis = new BlackPanel();
+      invis.setLayout(new GridLayout(0, 2));
+      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      invis.add(image);
+      invis.add(label);
+      panel.add(invis);
+
+      stat = getHighestShipStat(realm, 4);
+      label = new TransparentLabel(null, stat.getDesign().getName() + " - "
+          + stat.getNumberOfLoses(), true, true);
+      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      image = new ImageLabel(
+          ShipImages.getByRace(stat.getDesign().getHull().getRace())
+          .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
+      invis = new BlackPanel();
+      invis.setLayout(new GridLayout(0, 2));
+      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      invis.add(image);
+      invis.add(label);
+      panel.add(invis);
+
+      stat = getHighestShipStat(realm, 5);
+      label = new TransparentLabel(null, stat.getDesign().getName() + " - "
+          + stat.getNumberOfKills(), true, true);
+      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      image = new ImageLabel(
+          ShipImages.getByRace(stat.getDesign().getHull().getRace())
+          .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
+      invis = new BlackPanel();
+      invis.setLayout(new GridLayout(0, 2));
+      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      invis.add(image);
+      invis.add(label);
+      panel.add(invis);
+    }
+
+    return panel;
   }
 
   /**

@@ -302,6 +302,22 @@ public class Diplomacy {
   }
 
   /**
+   * Get number of admires realm has.
+   * Admire is when another realm likes your realm
+   * and you are not in war or trade embargo.
+   * @return Number of admires.
+   */
+  public int getNumberOfAdmires() {
+    int admires = 0;
+    for (int i = 0; i < diplomacyList.length; i++) {
+      if (getLiking(i) >= 0 && !isWar(i) && !isTradeEmbargo(i)
+          && isTradeAlliance(i)) {
+        admires++;
+      }
+    }
+    return admires;
+  }
+  /**
    * Is realm in alliance with someone
    * @return True if has alliance with some
    */

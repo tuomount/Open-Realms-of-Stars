@@ -13,11 +13,12 @@ import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.GalaxyStat;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.vote.Votes;
 
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018 Tuomo Untinen
+* Copyright (C) 2018,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -44,6 +45,7 @@ public class StatViewTest {
     ActionListener listener = Mockito.mock(ActionListener.class);
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);
+    Votes votes = Mockito.mock(Votes.class);
     Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(6);
     Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(5);
     PlayerInfo player = Mockito.mock(PlayerInfo.class);
@@ -65,6 +67,7 @@ public class StatViewTest {
     Mockito.when(map.getNewsCorpData()).thenReturn(newsCorp);
     Mockito.when(map.getPlayerByIndex(Mockito.anyInt())).thenReturn(player);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(map.getVotes()).thenReturn(votes);
     StatView view = new StatView(map, listener);
     assertEquals("Back to star map", view.getBackButtonText());
     view.setBackButtonText("Test OK");

@@ -2007,7 +2007,16 @@ public final class NewsFactory {
     if (winner.getRealm() >= 0 && winner.getRealm() < broadcasters.length) {
       broadcaster = broadcasters[winner.getRealm()];
     }
-    if (winner.getScore() >= limit && broadcaster) {
+    PlayerInfo winningRealm = map.getPlayerByIndex(winner.getRealm());
+    int admires = 0;
+    int admireLimit = (map.getPlayerList().getCurrentMaxRealms() - 1) / 2;
+    if (admireLimit < 1) {
+      admireLimit = 1;
+    }
+    if (winningRealm != null) {
+      admires = winningRealm.getDiplomacy().getNumberOfAdmires();
+    }
+    if (winner.getScore() >= limit && broadcaster && admires > admireLimit) {
       news = new NewsData();
       ImageInstruction instructions = new ImageInstruction();
       news.setImageInstructions(instructions.build());

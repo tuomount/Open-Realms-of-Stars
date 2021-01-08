@@ -3955,7 +3955,8 @@ public class StarMap {
             && getScoreResearch() > 0) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.SCIENCE);
         } else if (getNewsCorpData().getCultural().getPosition(i) < 3
-            && getScoreCulture() > -1) {
+            && getScoreCulture() > -1
+            && getPlayerByIndex(i).getDiplomacy().getNumberOfAdmires() > 0) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.CULTURAL);
         } else if (getNewsCorpData().getMilitary().getPosition(i) < 3
             && getScoreConquer() == 1) {

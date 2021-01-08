@@ -2339,7 +2339,9 @@ public class Game implements ActionListener {
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
+        setBridgeCommand(BridgeCommandType.EXIT);
         writeConfigFile();
+        initBridge();
         changeGameState(GameState.MAIN_MENU);
         return;
       }
@@ -2359,6 +2361,8 @@ public class Game implements ActionListener {
         configFile.setLargerFonts(optionsView.getLargerFonts());
         configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        configFile.setLightIntense(optionsView.getIntense());
+        configFile.setAmbientLights(optionsView.isLightsEnabled());
         writeConfigFile();
         changeGameState(GameState.SETUP_AMBIENT_LIGHTS);
         return;
@@ -2375,6 +2379,8 @@ public class Game implements ActionListener {
         configFile.setLargerFonts(optionsView.getLargerFonts());
         configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        configFile.setLightIntense(optionsView.getIntense());
+        configFile.setAmbientLights(optionsView.isLightsEnabled());
         return;
       }
       if (arg0.getActionCommand()
@@ -2411,7 +2417,9 @@ public class Game implements ActionListener {
             configFile.setCenterLight(ambientLightsView.getCenterLight());
             configFile.setLightIntense(ambientLightsView.getIntense());
             configFile.setAmbientLights(ambientLightsView.isLightsEnabled());
+            setBridgeCommand(BridgeCommandType.EXIT);
             writeConfigFile();
+            initBridge();
           }
         }
         changeGameState(GameState.OPTIONS_VIEW);

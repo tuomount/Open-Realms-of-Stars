@@ -15,6 +15,8 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.TradeRouteListRenderer;
@@ -39,7 +41,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018-2021  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -58,7 +60,8 @@ import org.openRealmOfStars.starMap.planet.Planet;
 * Fleet trade view for handling trading for human player
 *
 */
-public class FleetTradeView extends BlackPanel {
+public class FleetTradeView extends BlackPanel
+    implements ListSelectionListener {
 
   /**
   *
@@ -235,6 +238,7 @@ public class FleetTradeView extends BlackPanel {
     tradeRoutes.setBackground(Color.BLACK);
     tradeRoutes
         .setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+    tradeRoutes.addListSelectionListener(this);
     JScrollPane scroll = new JScrollPane(tradeRoutes);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     eastPanel.add(scroll);
@@ -354,5 +358,34 @@ public class FleetTradeView extends BlackPanel {
    */
   public TradeRoute getTradeRoute() {
     return tradeRoutes.getSelectedValue();
+  }
+
+  @Override
+  public void valueChanged(final ListSelectionEvent arg0) {
+   TradeRoute route = tradeRoutes.getSelectedValue();
+   if (route != null) {
+     int distance = (int) route.getOriginWorld().getCoordinate()
+         .calculateDistance(route.getTradeWorld().getCoordinate());
+     StringBuilder sb = new StringBuilder();
+     sb.append(route.toString());
+     sb.append("\n");
+     sb.append(route.getMoreInfo());
+     sb.append("\n");
+     if (fleet.getFleetFtlSpeed() > 0) {
+       int time = distance / fleet.getFleetFtlSpeed();
+       sb.append("Estimated trip time: ");
+       sb.append(time);
+       sb.append(" turn");
+       if (time > 1) {
+         sb.append("s");
+       }
+     } else {
+       sb.append("Estimated trip time: Never");
+     }
+     imgBase.setText(sb.toString());
+   } else {
+     imgBase.setText(null);
+   }
+   this.repaint();
   }
 }

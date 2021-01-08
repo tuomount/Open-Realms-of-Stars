@@ -113,6 +113,21 @@ public class TradeRoute {
   }
 
   /**
+   * Get more information about trade route.
+   * Information with whom trading is going to happen.
+   * @return Textual description with which realm trade is going to happen.
+   */
+  public String getMoreInfo() {
+    StringBuilder sb = new StringBuilder();
+    if (originWorld.getPlanetPlayerInfo() != null
+        && tradeWorld.getPlanetPlayerInfo() != null) {
+      sb.append(originWorld.getPlanetPlayerInfo().getEmpireName());
+      sb.append(" <-> ");
+      sb.append(tradeWorld.getPlanetPlayerInfo().getEmpireName());
+    }
+    return sb.toString();
+  }
+  /**
    * Get the origin world where fleet will start.
    * @return Origin world
    */

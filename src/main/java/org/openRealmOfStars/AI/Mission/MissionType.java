@@ -3,7 +3,7 @@ package org.openRealmOfStars.AI.Mission;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017 Tuomo Untinen
+ * Copyright (C) 2016, 2017, 2018, 2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -81,7 +81,11 @@ public enum MissionType {
   /**
    * Espionage mission against one planet.
    */
-  ESPIONAGE_MISSION;
+  ESPIONAGE_MISSION,
+  /**
+   * Diplomatic delegacy
+   */
+  DIPLOMATIC_DELEGACY;
 
   /**
    * Get Mission type with index
@@ -115,6 +119,8 @@ public enum MissionType {
       return 11;
     case ESPIONAGE_MISSION:
       return 12;
+    case DIPLOMATIC_DELEGACY:
+      return 13;
     default:
       return 0;
     }
@@ -149,6 +155,8 @@ public enum MissionType {
       return "Spy mission";
     case ESPIONAGE_MISSION:
       return "Espionage mission";
+    case DIPLOMATIC_DELEGACY:
+      return "Diplomatic delegacy";
     default:
       return "Unknown";
     }

@@ -88,7 +88,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -300,6 +300,9 @@ public class AITurnView extends BlackPanel {
         break;
       case ESPIONAGE_MISSION:
         MissionHandling.handleEspionageMission(mission, fleet, info, game);
+        break;
+      case DIPLOMATIC_DELEGACY:
+        MissionHandling.handleDiplomaticMission(mission, fleet, info, game);
         break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");
@@ -2692,6 +2695,7 @@ public class AITurnView extends BlackPanel {
   public boolean handleAiTurn() {
     if (game.getStarMap().getAIFleet() == null) {
       game.getStarMap().handleAIResearchAndPlanets();
+      game.getStarMap().handleDiplomaticDelegacies();
       game.getStarMap().handleFakingMilitarySize();
     } else {
       handleAIFleet();

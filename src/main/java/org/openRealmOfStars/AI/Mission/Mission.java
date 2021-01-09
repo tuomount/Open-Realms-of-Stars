@@ -6,7 +6,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -284,6 +284,26 @@ public class Mission {
     }
   }
 
+  /**
+   * Get target realm name for diplomatic delegacy.
+   * @return Realm name or empty string.
+   */
+  public String getTargetRealmName() {
+    if (type == MissionType.DIPLOMATIC_DELEGACY && parameter != null) {
+      return parameter;
+    }
+    return "";
+  }
+
+  /**
+   * Set Target realm name for diplomatic delegacy.
+   * @param name Realm name.
+   */
+  public void setTargetRealmName(final String name) {
+    if (type == MissionType.DIPLOMATIC_DELEGACY) {
+      parameter = name;
+    }
+  }
   /**
    * Get Espionage Type.
    * @return Espionage mission or null

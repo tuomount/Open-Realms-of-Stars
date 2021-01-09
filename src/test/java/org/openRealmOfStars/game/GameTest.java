@@ -19,7 +19,7 @@ import org.openRealmOfStars.starMap.newsCorp.NewsData;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2019 Tuomo Untinen
+* Copyright (C) 2017-2019,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -84,6 +84,9 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
+    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
+    System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
+    System.out.println(newsData[newsData.length - 1].getNewsText());
   }
 
   @Test
@@ -107,6 +110,9 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
+    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
+    System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
+    System.out.println(newsData[newsData.length - 1].getNewsText());
   }
 
   @Test
@@ -130,6 +136,9 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
+    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
+    System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
+    System.out.println(newsData[newsData.length - 1].getNewsText());
   }
 
   @Test
@@ -164,7 +173,7 @@ public class GameTest {
         assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
       } while (!game.getStarMap().isGameEnded());
       NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-//      System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
+      System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
       if (newsData.length > 0) {
         String victoryText = newsData[newsData.length - 1].getNewsText();
         for (int j = 0; j < 8; j++) {
@@ -174,7 +183,7 @@ public class GameTest {
             govWins[info.getGovernment().getIndex()] = govWins[info.getGovernment().getIndex()] +1;
           }
         }
-//        System.out.println(newsData[newsData.length - 1].getNewsText());
+        System.out.println(newsData[newsData.length - 1].getNewsText());
       } else {
 //        System.out.println("not sure who win!");
       }
@@ -231,6 +240,20 @@ public class GameTest {
     } else {
       System.out.println("not sure who win!");
     }
+/*    for (int i = 0; i < game.getPlayers().getCurrentMaxRealms(); i++) {
+      StringBuilder sb = new StringBuilder();
+      PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
+      sb.append(info.getEmpireName());
+      sb.append(": ");
+      for (int j = 0; j < game.getPlayers().getCurrentMaxRealms(); j++) {
+        if (i != j) {
+          sb.append(j +": ");
+          sb.append(info.getDiplomacy().getDiplomaticRelation(j));
+          sb.append(", ");
+        }
+      }
+      System.out.println(sb.toString());
+    }*/
   }
 
 }

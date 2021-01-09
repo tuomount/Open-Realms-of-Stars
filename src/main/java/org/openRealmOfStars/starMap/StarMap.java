@@ -23,8 +23,11 @@ import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.combat.Combat;
+import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
+import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.espionage.EspionageBonusType;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -66,7 +69,7 @@ import org.openRealmOfStars.utilities.repository.SunRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -2198,6 +2201,107 @@ public class StarMap {
     return list.toArray(new Planet[0]);
   }
   /**
+   * Handle AI planning for diplomatic delegacies.
+   */
+  public void handleDiplomaticDelegacies() {
+    PlayerInfo info = players.getPlayerInfoByIndex(aiTurnNumber);
+    if (info != null && !info.isHuman() && !info.isBoard()) {
+      // War fatigue has exhausted realm so better try to make peace
+      if (info.getWarFatigue() < 1) {
+        for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
+          if (info.getDiplomacy().isWar(i)) {
+            PlayerInfo target = players.getPlayerInfoByIndex(i);
+            if (target != null) {
+              Mission mission = info.getMissions().getDiplomaticMission(
+                  target.getEmpireName());
+              if (mission == null) {
+                mission = new Mission(MissionType.DIPLOMATIC_DELEGACY,
+                    MissionPhase.PLANNING, new Coordinate(maxX / 2, maxY / 2));
+                mission.setTargetRealmName(target.getEmpireName());
+                info.getMissions().add(mission);
+              }
+            }
+          }
+        }
+      }
+      if (info.getStrategy() == WinningStrategy.DIPLOMATIC
+          || info.getStrategy() == WinningStrategy.CULTURAL) {
+        for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
+          if (i != aiTurnNumber
+              && info.getDiplomacy().getDiplomaticRelations(i)
+                 < Diplomacy.RELATION_TRADE_ALLIANCE) {
+            PlayerInfo target = players.getPlayerInfoByIndex(i);
+            if (target != null) {
+              Mission mission = info.getMissions().getDiplomaticMission(
+                  target.getEmpireName());
+              if (mission == null) {
+                mission = new Mission(MissionType.DIPLOMATIC_DELEGACY,
+                    MissionPhase.PLANNING, new Coordinate(maxX / 2, maxY / 2));
+                mission.setTargetRealmName(target.getEmpireName());
+                info.getMissions().add(mission);
+              }
+            }
+          }
+        }
+      }
+      // Diplomatic attitudes try to make more friends
+      if (info.getDiplomacy().getNumberOfAdmires()
+          < players.getCurrentMaxRealms() / 2
+          && (info.getAiAttitude() == Attitude.DIPLOMATIC
+             || info.getAiAttitude() == Attitude.MERCHANTICAL
+             || info.getAiAttitude() == Attitude.PEACEFUL
+             || info.getAiAttitude() == Attitude.LOGICAL)) {
+        for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
+          if (i != aiTurnNumber
+              && info.getDiplomacy().getLiking(i) < Diplomacy.LIKE) {
+            PlayerInfo target = players.getPlayerInfoByIndex(i);
+            if (target != null) {
+              Mission mission = info.getMissions().getDiplomaticMission(
+                  target.getEmpireName());
+              if (mission == null) {
+                mission = new Mission(MissionType.DIPLOMATIC_DELEGACY,
+                    MissionPhase.PLANNING, new Coordinate(maxX / 2, maxY / 2));
+                mission.setTargetRealmName(target.getEmpireName());
+                info.getMissions().add(mission);
+              }
+            }
+          }
+        }
+      }
+      // If there are more than 3 realms, even aggressive ones should have
+      // at least one friend.
+      if (players.getCurrentMaxRealms() > 3
+          && info.getDiplomacy().getNumberOfAdmires() < 0
+          && (info.getAiAttitude() == Attitude.AGGRESSIVE
+             || info.getAiAttitude() == Attitude.SCIENTIFIC
+             || info.getAiAttitude() == Attitude.MILITARISTIC
+             || info.getAiAttitude() == Attitude.EXPANSIONIST)) {
+        for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
+          if (i != aiTurnNumber
+              && info.getDiplomacy().getLiking(i) < Diplomacy.LIKE) {
+            PlayerInfo target = players.getPlayerInfoByIndex(i);
+            if (target != null) {
+              Mission mission = info.getMissions().getDiplomaticMission(
+                  target.getEmpireName());
+              if (mission == null) {
+                mission = new Mission(MissionType.DIPLOMATIC_DELEGACY,
+                    MissionPhase.PLANNING, new Coordinate(maxX / 2, maxY / 2));
+                mission.setTargetRealmName(target.getEmpireName());
+                info.getMissions().add(mission);
+              }
+            }
+          }
+        }
+      }
+      // Search scout ship for diplomatic delagacy mission.
+      Mission mission = info.getMissions().getMission(
+          MissionType.DIPLOMATIC_DELEGACY, MissionPhase.PLANNING);
+      if (mission != null) {
+        MissionHandling.findScoutShipForMission(info, mission);
+      }
+    }
+  }
+  /**
    * Handle research and planets for single AI player
    */
   public void handleAIResearchAndPlanets() {
@@ -2225,8 +2329,8 @@ public class StarMap {
       /*
        * Making sure that there are enough exploration ships
        */
-      if (getGameLengthState() == GameLengthState.START_GAME
-          || getGameLengthState() == GameLengthState.ANCIENT_HEAD_START
+      if ((getGameLengthState() == GameLengthState.START_GAME
+          || getGameLengthState() == GameLengthState.ANCIENT_HEAD_START)
           && exploreMissions < 2) {
         Mission mission = new Mission(MissionType.EXPLORE,
             MissionPhase.PLANNING, null);
@@ -3948,16 +4052,21 @@ public class StarMap {
           continue;
         }
         if (getPlayerByIndex(i).getTechList().hasTech(TechType.Improvements,
-            "United Galaxy Tower") && getScoreDiplomacy() > 0) {
+            "United Galaxy Tower") && getScoreDiplomacy() > 0
+            && getPlayerByIndex(i).getDiplomacy().getNumberOfAdmires() > 0) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.DIPLOMATIC);
-        }
-        if (getNewsCorpData().getResearch().getPosition(i) < 3
-            && getScoreResearch() > 0) {
+        } else if (getNewsCorpData().getCultural().getPosition(i) < 3
+            && getScoreResearch() > 0
+            && getPlayerByIndex(i).getTechList()
+               .getNumberOfScientificAchievements() > 0) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.SCIENCE);
         } else if (getNewsCorpData().getCultural().getPosition(i) < 3
             && getScoreCulture() > -1
             && getPlayerByIndex(i).getDiplomacy().getNumberOfAdmires() > 0) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.CULTURAL);
+        } else if (getNewsCorpData().getResearch().getPosition(i) < 3
+            && getScoreResearch() > 0) {
+          getPlayerByIndex(i).setStrategy(WinningStrategy.SCIENCE);
         } else if (getNewsCorpData().getMilitary().getPosition(i) < 3
             && getScoreConquer() == 1) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.CONQUER);
@@ -4027,5 +4136,34 @@ public class StarMap {
       }
     }
     return result;
+  }
+
+  /**
+   * Find closet planet from certain coordinate for certain realm.
+   * This planet must be visible for searcher.
+   * @param coord Coordinate where to start looking.
+   * @param realmName Target planet's realm's name
+   * @param searcher Realm which is searching the planet
+   * @return Target planet or null if not found.
+   */
+  public Planet getClosetPlanetFromCoordinate(final Coordinate coord,
+      final String realmName, final PlayerInfo searcher) {
+    PlayerInfo info = players.findByName(realmName);
+    if (info != null) {
+      DiplomaticTrade trade = new DiplomaticTrade(this,
+          players.getIndex(searcher), players.getIndex(info));
+      Planet[] planets = trade.getTradeablePlanetListForSecond();
+      Planet targetPlanet = null;
+      int distance = 9999;
+      for (Planet planet : planets) {
+        int dist = (int) coord.calculateDistance(planet.getCoordinate());
+        if (dist < distance) {
+          targetPlanet = planet;
+          distance = dist;
+        }
+      }
+      return targetPlanet;
+    }
+    return null;
   }
 }

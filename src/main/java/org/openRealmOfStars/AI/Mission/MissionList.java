@@ -268,6 +268,20 @@ public class MissionList {
   }
 
   /**
+   * Get diplomatic mission for certain realm
+   * @param realmName Realm name to search
+   * @return Diplomatic mission or null
+   */
+  public Mission getDiplomaticMission(final String realmName) {
+    for (Mission mission : missions) {
+      if (mission.getType() == MissionType.DIPLOMATIC_DELEGACY
+          && mission.getTargetRealmName().equals(realmName)) {
+        return mission;
+      }
+    }
+    return null;
+  }
+  /**
    * Get Gather mission for certain ship type and which is under planning
    * @param shipType Ship type
    * @return Gather mission or null

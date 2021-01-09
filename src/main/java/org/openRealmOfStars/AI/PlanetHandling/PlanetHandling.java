@@ -30,7 +30,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2019, 2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -748,23 +748,39 @@ public final class PlanetHandling {
             if (mission != null && ship.getTotalMilitaryPower() > 0
                 && mission.getPhase() == MissionPhase.PLANNING) {
               mission.setPhase(MissionPhase.BUILDING);
+              break;
             }
             mission = info.getMissions().getMission(MissionType.COLONIZE,
                 MissionPhase.PLANNING);
             if (mission != null && ship.isColonyModule()) {
               mission.setPhase(MissionPhase.BUILDING);
               mission.setPlanetBuilding(planet.getName());
+              break;
+            }
+            mission = info.getMissions().getMission(
+                MissionType.DIPLOMATIC_DELEGACY, MissionPhase.PLANNING);
+            if (mission != null && ship.isScoutShip()) {
+              Planet targetPlanet = map.getClosetPlanetFromCoordinate(
+                  planet.getCoordinate(), mission.getTargetRealmName(), info);
+              if (targetPlanet != null) {
+                mission.setPhase(MissionPhase.BUILDING);
+                mission.setPlanetBuilding(planet.getName());
+                mission.setTarget(targetPlanet.getCoordinate());
+                break;
+              }
             }
             mission = info.getMissions().getMission(MissionType.TRADE_FLEET,
                 MissionPhase.PLANNING);
             if (mission != null && ship.isTradeShip()) {
               mission.setPhase(MissionPhase.BUILDING);
               mission.setPlanetBuilding(planet.getName());
+              break;
             }
             mission = info.getMissions().getGatherMission(Mission.TROOPER_TYPE);
             if (ship.isTrooperModule() && mission != null) {
               mission.setPlanetBuilding(planet.getName());
               mission.setPhase(MissionPhase.BUILDING);
+              break;
             } else if (ship.hasBombs()
                 && info.getMissions().getGatherMission(Mission.BOMBER_TYPE)
                 != null) {
@@ -772,6 +788,7 @@ public final class PlanetHandling {
                   Mission.BOMBER_TYPE);
               mission.setPlanetBuilding(planet.getName());
               mission.setPhase(MissionPhase.BUILDING);
+              break;
             } else if (ship.getTotalMilitaryPower() > 0
                 && info.getMissions().getGatherMission(Mission.ASSAULT_TYPE)
                 != null) {
@@ -779,6 +796,7 @@ public final class PlanetHandling {
                   Mission.ASSAULT_TYPE);
               mission.setPlanetBuilding(planet.getName());
               mission.setPhase(MissionPhase.BUILDING);
+              break;
             }  else if (ship.getTotalMilitaryPower() > 0
                 && info.getMissions().getGatherMission(Mission.ASSAULT_SB_TYPE)
                 != null) {
@@ -786,6 +804,7 @@ public final class PlanetHandling {
                   Mission.ASSAULT_SB_TYPE);
               mission.setPlanetBuilding(planet.getName());
               mission.setPhase(MissionPhase.BUILDING);
+              break;
             }
             mission = info.getMissions().getMission(MissionType.DEPLOY_STARBASE,
                 MissionPhase.PLANNING);
@@ -793,12 +812,14 @@ public final class PlanetHandling {
                 && ship.getHull().getHullType() == ShipHullType.STARBASE) {
               mission.setPhase(MissionPhase.BUILDING);
               mission.setPlanetBuilding(planet.getName());
+              break;
             }
             mission = info.getMissions().getMission(MissionType.EXPLORE,
                 MissionPhase.PLANNING);
             if (mission != null && ship.isScoutShip()) {
               mission.setPhase(MissionPhase.BUILDING);
               mission.setPlanetBuilding(planet.getName());
+              break;
             }
           }
           break;
@@ -1116,6 +1137,10 @@ public final class PlanetHandling {
           if (info.getMissions().getMission(MissionType.EXPLORE,
               MissionPhase.PLANNING) != null) {
             score = score + 30;
+          }
+          if (info.getMissions().getMission(MissionType.DIPLOMATIC_DELEGACY,
+              MissionPhase.PLANNING) != null) {
+            score = score + 50;
           }
           if (attitude == Attitude.EXPANSIONIST) {
             score = score + 10;

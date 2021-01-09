@@ -801,6 +801,55 @@ public final class MissionHandling {
   }
 
   /**
+   * Handle diplomatic mission
+   * @param mission Diplomatic mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleDiplomaticMission(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null
+        && mission.getType() == MissionType.DIPLOMATIC_DELEGACY) {
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        mission.setPhase(MissionPhase.TREKKING);
+        mission.setMissionTime(0);
+      }
+      Coordinate targetCoord = new Coordinate(mission.getX(), mission.getY());
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getCoordinate().calculateDistance(targetCoord) <= 1) {
+        // Target acquired, let's do trade
+        mission.setPhase(MissionPhase.EXECUTING);
+        mission.setMissionTime(0);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        makeReroute(game, fleet, info, mission);
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING) {
+        mission.setMissionTime(mission.getMissionTime() + 1);
+        if (mission.getMissionTime() >= 5) {
+          // Diplomatic trading should have happened
+          // Return closest home port
+          Planet homePort = game.getStarMap().getClosestHomePort(info,
+              fleet.getCoordinate());
+          if (homePort != null) {
+            mission.setType(MissionType.MOVE);
+            mission.setTarget(homePort.getCoordinate());
+            mission.setPhase(MissionPhase.TREKKING);
+            Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+                mission.getY(), fleet.getFleetFtlSpeed());
+            fleet.setRoute(route);
+          } else {
+            // No home port so just remove the mission
+            info.getMissions().remove(mission);
+          }
+          return;
+        }
+      }
+    } // End of diplomatic mission.
+  }
+
+  /**
    * Handle Gather mission
    * @param mission Gather mission, does nothing if type is wrong
    * @param fleet Fleet on mission
@@ -2501,6 +2550,55 @@ public final class MissionHandling {
           fleet.getCommander().getExperience() + type.getExperienceReward());
       game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
           fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+    }
+  }
+
+  /**
+   * Find scout ship for mission. Possible mission types are
+   * exploring and diplomatic delegacy.
+   * @param info PlayerInfo whose ships are being searched
+   * @param mission Mission where ship is going to be assinged.
+   */
+  public static void findScoutShipForMission(final PlayerInfo info,
+      final Mission mission) {
+    for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
+      Fleet fleet = info.getFleets().getByIndex(j);
+      Mission fleetMission = info.getMissions().getMissionForFleet(
+          fleet.getName());
+      if (fleetMission == null
+          || mission.getType() == MissionType.DIPLOMATIC_DELEGACY
+             && fleetMission.getType() == MissionType.MOVE) {
+        for (Ship ship : fleet.getShips()) {
+          Fleet newFleet = null;
+          if (ship.isScoutShip()) {
+            if (fleet.getNumberOfShip() > 1) {
+              fleet.removeShip(ship);
+              newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+            } else {
+              newFleet = fleet;
+              if (fleetMission != null
+                  && mission.getType() == MissionType.DIPLOMATIC_DELEGACY
+                  && fleetMission.getType() == MissionType.MOVE) {
+                info.getMissions().remove(fleetMission);
+              }
+            }
+          }
+          if (newFleet != null) {
+            if (mission.getType() == MissionType.EXPLORE) {
+              newFleet.setName(info.getFleets()
+                  .generateUniqueName("Scout"));
+              mission.setFleetName(newFleet.getName());
+              mission.setPhase(MissionPhase.LOADING);
+            }
+            if (mission.getType() == MissionType.DIPLOMATIC_DELEGACY) {
+              newFleet.setName(info.getFleets()
+                  .generateUniqueName(newFleet.getFirstShip().getName()));
+              mission.setFleetName(newFleet.getName());
+              mission.setPhase(MissionPhase.LOADING);
+            }
+          }
+        }
+      }
     }
   }
   /**

@@ -18,7 +18,7 @@ import org.openRealmOfStars.starMap.StarMapUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2020 Tuomo Untinen
+* Copyright (C) 2017-2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -102,6 +102,35 @@ public class Diplomacy {
    * String for Trade embargo
    */
   public static final String TRADE_EMBARGO = "Trade embargo";
+
+  /**
+   * Relation int for WAR
+   */
+  public static final int RELATION_WAR = -2;
+  /**
+   * Relation int for TRADE_WAR
+   */
+  public static final int RELATION_TRADE_WAR = -1;
+  /**
+   * Relation int for no relation
+   */
+  public static final int RELATION_NO_RELATION = 0;
+  /**
+   * Relation int for peace
+   */
+  public static final int RELATION_PEACE = 1;
+  /**
+   * Relation int for trade alliance
+   */
+  public static final int RELATION_TRADE_ALLIANCE = 2;
+  /**
+   * Relation int for defensive pact
+   */
+  public static final int RELATION_DEFENSIVE_PACT = 3;
+  /**
+   * Relation int for alliance
+   */
+  public static final int RELATION_ALLIANCE = 4;
 
   /**
    * Diplomacy Bonus list for each player
@@ -516,39 +545,67 @@ public class Diplomacy {
   }
   /**
    * Get diplomatic relations between two players
-   * @param playerIndex PLayer index to check
+   * @param playerIndex Player index to check
    * @return String choices: "", "War", "Trade alliance", "Alliance", "Peace",
    *                         "Defensive pact", "Trade embargo"
    */
   public String getDiplomaticRelation(final int playerIndex) {
-    String result = "";
+    int value = getDiplomaticRelations(playerIndex);
+    if (value == RELATION_PEACE) {
+      return PEACE;
+    }
+    if (value == RELATION_TRADE_ALLIANCE) {
+      return TRADE_ALLIANCE;
+    }
+    if (value == RELATION_DEFENSIVE_PACT) {
+      return DEFENSIVE_PACT;
+    }
+    if (value == RELATION_ALLIANCE) {
+      return ALLIANCE;
+    }
+    if (value == RELATION_TRADE_WAR) {
+      return TRADE_EMBARGO;
+    }
+    if (value == RELATION_WAR) {
+      return WAR;
+    }
+    return NO_RELATION;
+  }
+
+  /**
+   * Get diplomatic relations between two players
+   * @param playerIndex Player index to check
+   * @return Relation as int. -2 is war, 4 is alliance.
+   */
+  public int getDiplomaticRelations(final int playerIndex) {
+    int result = RELATION_NO_RELATION;
     if (isPeace(playerIndex)) {
-      result = PEACE;
+      result = RELATION_PEACE;
     }
     if (isTradeAlliance(playerIndex)) {
-      result = TRADE_ALLIANCE;
+      result = RELATION_TRADE_ALLIANCE;
     }
     if (isDefensivePact(playerIndex)) {
-      result = DEFENSIVE_PACT;
+      result = RELATION_DEFENSIVE_PACT;
     }
     if (isAlliance(playerIndex)) {
-      result = ALLIANCE;
+      result = RELATION_ALLIANCE;
     }
     if (isTradeEmbargo(playerIndex)) {
-      result = TRADE_EMBARGO;
+      result = RELATION_TRADE_WAR;
     }
     if (isWar(playerIndex)) {
-      result = WAR;
+      result = RELATION_WAR;
     }
     if (getDiplomacyList(playerIndex) != null
         && getDiplomacyList(playerIndex).isBonusType(
         DiplomacyBonusType.BOARD_PLAYER)) {
       // Always war with board player
-      result = WAR;
+      result = RELATION_WAR;
     }
     return result;
   }
-  /**
+/**
    * Is certain player(index) with player who is asking in alliance?
    * @param index Player index
    * @return True if alliance is between two players

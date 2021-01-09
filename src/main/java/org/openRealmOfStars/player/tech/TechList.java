@@ -13,13 +13,15 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipComponentType;
+import org.openRealmOfStars.starMap.planet.BuildingFactory;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -95,6 +97,30 @@ public class TechList {
     techFocus[TechType.Electrics.getIndex()] = 16;
   }
 
+  /**
+   * Get number of scientific achievements realm has.
+   * @return Number of scientific achievements.
+   */
+  public int getNumberOfScientificAchievements() {
+    int result = 0;
+    for (int i = 0; i < MAX_TECH_TYPES; i++) {
+      for (int j = 0; j < MAX_TECH_LEVEL; j++) {
+        for (Tech tech :  techList[i][j].getList()) {
+          if (tech.getImprovement() != null) {
+            Building building = BuildingFactory.createByName(
+                tech.getImprovement());
+            if (building.getScientificAchievement()) {
+              result++;
+            }
+            if (tech.getName().equals("Artificial planet")) {
+              result++;
+            }
+          }
+        }
+      }
+    }
+    return result;
+  }
   /**
    * Save Tech list for DataOutputStream
    * @param dos Data output stream

@@ -40,7 +40,7 @@ import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -2009,6 +2009,11 @@ public class Planet {
                     mission.setFleetName(fleet.getName());
                   }
                   if (mission.getType() == MissionType.SPY_MISSION) {
+                    fleet.setName(planetOwnerInfo.getFleets(
+                        ).generateUniqueName(ship.getName()));
+                    mission.setFleetName(fleet.getName());
+                  }
+                  if (mission.getType() == MissionType.DIPLOMATIC_DELEGACY) {
                     fleet.setName(planetOwnerInfo.getFleets(
                         ).generateUniqueName(ship.getName()));
                     mission.setFleetName(fleet.getName());

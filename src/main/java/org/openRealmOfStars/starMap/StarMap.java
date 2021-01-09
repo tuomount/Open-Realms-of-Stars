@@ -2360,6 +2360,11 @@ public class StarMap {
             MissionPhase.PLANNING, null);
         info.getMissions().add(mission);
       }
+      Mission mission = info.getMissions().getMission(MissionType.EXPLORE,
+          MissionPhase.PLANNING);
+      if (mission != null) {
+        MissionHandling.findScoutShipForMission(info, mission);
+      }
       // Handle research
       Research.handle(info);
       Research.removeUnusedAndObsoleteDesigns(info, this);

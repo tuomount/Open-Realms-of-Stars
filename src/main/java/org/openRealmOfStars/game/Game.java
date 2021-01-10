@@ -152,7 +152,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.16.3Beta";
+  public static final String GAME_VERSION = "0.16.4Beta";
 
   /**
    * Animation timer used for animation
@@ -739,13 +739,14 @@ public class Game implements ActionListener {
         Tile tile = getStarMap().getTile(fleet.getX(), fleet.getY());
         if (tile.getName().equals(TileNames.WORM_HOLE1)
             || tile.getName().equals(TileNames.WORM_HOLE2)) {
-          Coordinate coord = getStarMap().getFreeRandomSpot();
+          Coordinate coord = getStarMap().getFreeWormHole(
+              fleet.getCoordinate());
           fleet.setPos(coord);
           starMap.clearFleetTiles();
           getStarMap().doFleetScanUpdate(info, fleet, null);
           if (fleet.getCommander() != null) {
             fleet.getCommander().setExperience(
-                fleet.getCommander().getExperience() + 10);
+                fleet.getCommander().getExperience() + 2);
           }
         }
         if (starMapView != null) {

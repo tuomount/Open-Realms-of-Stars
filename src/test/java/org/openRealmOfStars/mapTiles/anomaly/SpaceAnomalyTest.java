@@ -31,7 +31,7 @@ import org.openRealmOfStars.starMap.StarMap;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -176,6 +176,7 @@ public class SpaceAnomalyTest {
     Mockito.when(tile.getName()).thenReturn(TileNames.SPACE_ANOMALY);
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getTile(5, 6)).thenReturn(tile);
+    Mockito.when(map.getFreeRandomSpot()).thenReturn(new Coordinate(8, 9));
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.WORMHOLE, anomaly.getType());
     assertEquals(GuiStatics.IMAGE_BLACKHOLE, anomaly.getImage());

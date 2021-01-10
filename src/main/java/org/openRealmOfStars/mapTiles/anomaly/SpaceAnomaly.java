@@ -31,7 +31,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2020,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -174,6 +174,10 @@ public class SpaceAnomaly {
           result.setImage(GuiStatics.IMAGE_ASTEROIDS);
           info.setTotalCredits(info.getTotalCredits() + result.value);
           map.setTile(fleet.getX(), fleet.getY(), empty);
+          if (fleet.getCommander() != null) {
+            fleet.getCommander().setExperience(
+                fleet.getCommander().getExperience() + 10);
+          }
           break;
         }
         case TileNames.SPACE_ANOMALY_MAP: {
@@ -183,6 +187,10 @@ public class SpaceAnomaly {
               + " realm's exploration data.");
           result.setImage(GuiStatics.IMAGE_OLD_PROBE);
           map.setTile(fleet.getX(), fleet.getY(), empty);
+          if (fleet.getCommander() != null) {
+            fleet.getCommander().setExperience(
+                fleet.getCommander().getExperience() + 10);
+          }
           for (int x = -3; x < 4; x++) {
             for (int y = -3; y < 4; y++) {
               if (x == -3 && y == -3) {
@@ -211,6 +219,10 @@ public class SpaceAnomaly {
           result.setImage(GuiStatics.IMAGE_DSA);
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
           map.setTile(fleet.getX(), fleet.getY(), anchor);
+          if (fleet.getCommander() != null) {
+            fleet.getCommander().setExperience(
+                fleet.getCommander().getExperience() + 10);
+          }
           break;
         }
         case TileNames.SPACE_ANOMALY_LAIR: {
@@ -265,6 +277,10 @@ public class SpaceAnomaly {
             result.setImage(GuiStatics.IMAGE_SPACE_SHIP);
             map.setTile(fleet.getX(), fleet.getY(), empty);
             info.getFleets().add(newFleet);
+            if (fleet.getCommander() != null) {
+              fleet.getCommander().setExperience(
+                  fleet.getCommander().getExperience() + 10);
+            }
           } else {
             result = new SpaceAnomaly(AnomalyType.SHIP, 0);
             result.setText("Ship pieces were found in "
@@ -283,6 +299,10 @@ public class SpaceAnomaly {
                 + " schematics of " + tech.getName() + ". This invention"
                 + " is immediately taken to use.");
             result.setImage(GuiStatics.IMAGE_OLD_SHIP);
+            if (fleet.getCommander() != null) {
+              fleet.getCommander().setExperience(
+                  fleet.getCommander().getExperience() + 10);
+            }
           } else {
             result = null;
           }
@@ -296,10 +316,16 @@ public class SpaceAnomaly {
           result.setImage(GuiStatics.IMAGE_BLACKHOLE);
           Tile anchor = Tiles.getTileByName(TileNames.WORM_HOLE1);
           map.setTile(fleet.getX(), fleet.getY(), anchor);
-          map.clearFleetTiles();
           Coordinate coord = map.getFreeRandomSpot();
+          map.setTile(coord.getX(), coord.getY(), anchor);
+          map.clearFleetTiles();
+          coord = map.getFreeWormHole(fleet.getCoordinate());
           fleet.setPos(coord);
           map.doFleetScanUpdate(info, fleet, null);
+          if (fleet.getCommander() != null) {
+            fleet.getCommander().setExperience(
+                fleet.getCommander().getExperience() + 30);
+          }
           break;
         }
         case TileNames.SPACE_ANOMALY_MECHION: {
@@ -330,6 +356,10 @@ public class SpaceAnomaly {
               index = DiceGenerator.getRandom(newPerks.length - 1);
               leader.getPerkList().add(newPerks[index]);
             }
+          }
+          if (fleet.getCommander() != null) {
+            fleet.getCommander().setExperience(
+                fleet.getCommander().getExperience() + 10);
           }
           info.getLeaderPool().add(leader);
           break;
@@ -387,6 +417,10 @@ public class SpaceAnomaly {
             info.getTechList().setTechResearchPoints(TechType.Propulsion,
                 info.getTechList().getTechResearchPoints(TechType.Propulsion)
                 + rp);
+          }
+          if (fleet.getCommander() != null) {
+            fleet.getCommander().setExperience(
+                fleet.getCommander().getExperience() + 40);
           }
           map.setTile(fleet.getX(), fleet.getY(), empty);
           for (Ship ship : fleet.getShips()) {

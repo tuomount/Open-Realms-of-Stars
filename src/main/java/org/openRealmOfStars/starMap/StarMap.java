@@ -3757,7 +3757,7 @@ public class StarMap {
       int sx = DiceGenerator.getRandom(1,
           maxX - 2);
       int sy = DiceGenerator.getRandom(1,
-          maxX - 2);
+          maxY - 2);
       if (!isBlocked(sx, sy) && isBlockedByFleet(sx, sy) == null) {
         return new Coordinate(sx, sy);
       }
@@ -3765,6 +3765,40 @@ public class StarMap {
     return null;
   }
 
+  /**
+   * Get Free worm hole in map by random
+   * @param notInclude Which coordinate's wormhole is not included
+   * @return Random wormhole.
+   */
+  public Coordinate getFreeWormHole(final Coordinate notInclude) {
+    ArrayList<Coordinate> wormholes = new ArrayList<>();
+    Tile hole1 = Tiles.getTileByName(TileNames.WORM_HOLE1);
+    Tile hole2 = Tiles.getTileByName(TileNames.WORM_HOLE2);
+    for (int y = 1; y < maxY - 2; y++) {
+      for (int x = 1; x < maxX - 2; x++) {
+        if (x == notInclude.getX() && y == notInclude.getY()) {
+          continue;
+        }
+        if (tiles[x][y] == hole1.getIndex()
+            || tiles[x][y] == hole2.getIndex()) {
+          if (!isBlocked(x, y) && isBlockedByFleet(x, y) == null) {
+            wormholes.add(new Coordinate(x, y));
+          } else {
+            int sx = DiceGenerator.getRandom(-1, 1);
+            int sy = DiceGenerator.getRandom(-1, 1);
+            if (!isBlocked(x + sx, y + sy)
+                && isBlockedByFleet(x + sx, y + sy) == null) {
+                  wormholes.add(new Coordinate(x + sx, y + sy));
+            }
+          }
+        }
+      }
+    }
+    if (wormholes.size() > 0) {
+      return wormholes.get(DiceGenerator.getRandom(wormholes.size() - 1));
+    }
+    return getFreeRandomSpot();
+  }
   /**
    * Generate name for artificial planet
    * @return artificial planet name

@@ -2190,6 +2190,15 @@ public class AITurnView extends BlackPanel {
       }
       int required = leader.getRequiredExperience();
       if (leader.getExperience() >= required) {
+        if (Game.getTutorial() != null
+        && game.getStarMap().isTutorialEnabled()) {
+          String tutorialText = Game.getTutorial().showTutorialText(121);
+          if (tutorialText != null) {
+            Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                Icons.getIconByName(Icons.ICON_TUTORIAL));
+            realm.getMsgList().addUpcomingMessage(msg);
+          }
+        }
         leader.setLevel(leader.getLevel() + 1);
         leader.setExperience(leader.getExperience() - required);
         LeaderUtility.addRandomPerks(leader);
@@ -2201,6 +2210,15 @@ public class AITurnView extends BlackPanel {
         realm.getMsgList().addUpcomingMessage(msg);
         if (leader.getJob() == Job.COMMANDER
             && leader.getMilitaryRank() != MilitaryRank.CIVILIAN) {
+          if (Game.getTutorial() != null
+              && game.getStarMap().isTutorialEnabled()) {
+                String tutorialText = Game.getTutorial().showTutorialText(122);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                realm.getMsgList().addUpcomingMessage(msg);
+              }
+          }
           leader.setMilitaryRank(MilitaryRank.getByIndex(
               leader.getMilitaryRank().getIndex() + 1));
           leader.setTitle(LeaderUtility.createTitleForLeader(leader, realm));

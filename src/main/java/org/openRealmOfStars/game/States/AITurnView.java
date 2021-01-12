@@ -2154,6 +2154,16 @@ public class AITurnView extends BlackPanel {
           }
           if (DiceGenerator.getRandom(99) < chance && firstPlanet != null
               && heirs < 3) {
+            if (Game.getTutorial() != null
+                && game.getStarMap().isTutorialEnabled()) {
+                  String tutorialText = Game.getTutorial().showTutorialText(
+                      123);
+                if (tutorialText != null) {
+                  Message msg = new Message(MessageType.INFORMATION,
+                      tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+                  realm.getMsgList().addUpcomingMessage(msg);
+                }
+            }
             heir = LeaderUtility.createLeader(realm, firstPlanet, 1);
             heir.setAge(0);
             heir.setParent(leader);

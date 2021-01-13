@@ -2044,6 +2044,16 @@ public class AITurnView extends BlackPanel {
               realm.getMsgList().addUpcomingMessage(msg);
               leader.useWealth();
             } else {
+              if (Game.getTutorial() != null
+                  && game.getStarMap().isTutorialEnabled()) {
+                    String tutorialText = Game.getTutorial().showTutorialText(
+                        124);
+                  if (tutorialText != null) {
+                    Message msg = new Message(MessageType.INFORMATION,
+                        tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+                    realm.getMsgList().addUpcomingMessage(msg);
+                  }
+              }
               leader.setJob(Job.DEAD);
               Message msg = new Message(MessageType.LEADER,
                   leader.getCallName()

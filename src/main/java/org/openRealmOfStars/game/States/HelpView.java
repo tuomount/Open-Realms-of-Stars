@@ -131,7 +131,8 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
   @Override
   public void valueChanged(final TreeSelectionEvent e) {
     SoundPlayer.playMenuSound();
-    if (tutorialTree.getSelectionPath().getLastPathComponent()
+    if (tutorialTree.getSelectionPath() != null
+        && tutorialTree.getSelectionPath().getLastPathComponent()
         instanceof DefaultMutableTreeNode) {
       Object object = ((DefaultMutableTreeNode)
           tutorialTree.getSelectionPath().getLastPathComponent())

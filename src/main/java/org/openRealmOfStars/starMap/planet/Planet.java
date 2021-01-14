@@ -1814,6 +1814,18 @@ public class Planet {
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
+          if (Game.getTutorial() != null && map != null
+              && map.isTutorialEnabled()
+              && getTotalPopulation() >= 5) {
+                String tutorialText = Game.getTutorial().showTutorialText(
+                    125);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION,
+                    tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+                planetOwnerInfo.getMsgList().addNewMessage(msg);
+              }
+          }
+
         }
         if (isFullOfPopulation()) {
           if (extraFood > require) {

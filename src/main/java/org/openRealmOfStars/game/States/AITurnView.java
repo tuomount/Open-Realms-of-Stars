@@ -2005,11 +2005,22 @@ public class AITurnView extends BlackPanel {
                   + " has selected as ruler for " + realm.getEmpireName(),
               Icons.getIconByName(Icons.ICON_RULER));
           msg.setMatchByString("Index:" + realm.getLeaderIndex(ruler));
+          realm.getMsgList().addUpcomingMessage(msg);
           NewsData news = NewsFactory.makeNewRulerNews(ruler, realm);
           game.getStarMap().getNewsCorpData().addNews(news);
           game.getStarMap().getHistory().addEvent(
               NewsFactory.makeLeaderEvent(realm.getRuler(), realm,
               game.getStarMap(), news));
+          if (Game.getTutorial() != null
+              && game.getStarMap().isTutorialEnabled()) {
+                String tutorialText = Game.getTutorial().showTutorialText(
+                    126);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION,
+                    tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+                realm.getMsgList().addUpcomingMessage(msg);
+              }
+          }
         }
       }
     }

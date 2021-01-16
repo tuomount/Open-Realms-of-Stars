@@ -36,7 +36,7 @@ import org.openRealmOfStars.utilities.namegenerators.OriginalWorkNameGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019,2020 Tuomo Untinen
+* Copyright (C) 2019-2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -104,8 +104,12 @@ public final class RandomEventUtility {
           + "This virus deletes all the data related to research. "
           + "All work for next tech in " + techName + " is lost. "
           + "Scientists need to start all over from the scratch.");
+      ImageInstruction instructions = new ImageInstruction();
+      instructions.addImage(ImageInstruction.DATALOSS);
+      event.setImageInstructions(instructions.build());
       Message message = new Message(MessageType.INFORMATION, event.getText(),
           Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));
+      message.setRandomEventPop(true);
       info.getMsgList().addFirstMessage(message);
     }
   }

@@ -13,7 +13,7 @@ import org.openRealmOfStars.starMap.planet.PlanetTypes;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2020 Tuomo Untinen
+* Copyright (C) 2017-2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -287,6 +287,10 @@ public class ImageInstruction {
    */
   public static final String MUTINY = "mutiny";
   /**
+   * Dataloss
+   */
+  public static final String DATALOSS = "dataloss";
+  /**
    * Old ship
    */
   public static final String OLD_SHIP = "old ship";
@@ -519,6 +523,7 @@ public class ImageInstruction {
         && !PIRATE_PILOT.equals(image)
         && !PIRATE_RAIDERS.equals(image)
         && !MUTINY.equals(image)
+        && !DATALOSS.equals(image)
         && !OLD_SHIP.equals(image)
         && !DESERT.equals(image)
         && !PARADISE.equals(image)
@@ -974,6 +979,9 @@ public class ImageInstruction {
     }
     if (MUTINY.equals(image)) {
       drawImg = GuiStatics.IMAGE_MUTINY;
+    }
+    if (DATALOSS.equals(image)) {
+      drawImg = GuiStatics.IMAGE_DATALOSS;
     }
     if (OLD_SHIP.equals(image)) {
       drawImg = GuiStatics.IMAGE_OLD_SHIP;

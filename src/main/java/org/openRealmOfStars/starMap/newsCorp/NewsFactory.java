@@ -32,7 +32,7 @@ import org.openRealmOfStars.utilities.TextUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2020  Tuomo Untinen
+* Copyright (C) 2017-2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -2307,6 +2307,98 @@ public final class NewsFactory {
         sb.append(" got ");
         sb.append(secondPerCent);
         sb.append(" per cent of votes. ");
+      }
+      news.setImageInstructions(instructions.build());
+      news.setNewsText(sb.toString());
+    }
+    return news;
+  }
+
+  /**
+   * Make News when game is ending for population victory.
+   * Returns null if population victory is not achieved
+   * @param map StarMap contains Planet and playerlist
+   * @return NewsData or null
+   */
+  public static NewsData makePopulationVictoryNewsAtEnd(final StarMap map) {
+    int limit = map.getScorePopulation();
+    if (limit == 0 || map.getTurn() < 100) {
+      return null;
+    }
+    switch (map.getScorePopulation()) {
+      case 1: limit = 40; break;
+      case 2: limit = 50; break;
+      case 3: limit = 60; break;
+      case 4: limit = 70; break;
+      default: limit = 50; break;
+    }
+    int[] population = new int[map.getPlayerList().getCurrentMaxRealms()];
+    int galaxyPopulation = 0;
+    for (int i = 0; i < map.getPlanetList().size(); i++) {
+      Planet planet = map.getPlanetList().get(i);
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetOwnerIndex() < population.length) {
+        galaxyPopulation = galaxyPopulation + planet.getTotalPopulation();
+        population[planet.getPlanetOwnerIndex()] =
+            population[planet.getPlanetOwnerIndex()]
+            + planet.getTotalPopulation();
+      }
+    }
+    if (galaxyPopulation == 0) {
+      return null;
+    }
+    int biggestValue = 0;
+    PlayerInfo winner = null;
+    for (int i = 0; i < population.length; i++) {
+      int value = population[i] * 100 / galaxyPopulation;
+      PlayerInfo info = map.getPlayerList().getPlayerInfoByIndex(i);
+      if (info != null) {
+        int allianceIndex = info.getDiplomacy().getAllianceIndex();
+        if (allianceIndex != -1) {
+          int bonus = population[allianceIndex] * 100 / galaxyPopulation;
+          value = value + bonus;
+        }
+        if (value >= limit && value > biggestValue) {
+          winner = info;
+          biggestValue = value;
+        }
+      }
+    }
+    NewsData news = null;
+    if (winner != null) {
+      news = new NewsData();
+      ImageInstruction instructions = new ImageInstruction();
+      news.setImageInstructions(instructions.build());
+      StringBuilder sb = new StringBuilder();
+      if (winner.getDiplomacy().getAllianceIndex() == -1) {
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addText("THE POPULATION VICTORY!");
+        instructions.addText(winner.getEmpireName());
+        instructions.addImage(winner.getRace().getNameSingle());
+        sb.append(winner.getEmpireName());
+        sb.append(" has ");
+        sb.append(biggestValue);
+        sb.append(" % of the galaxy population.");
+        sb.append(" No other realm has enough population to challenge ");
+        sb.append(winner.getEmpireName());
+        sb.append(". ");
+      } else {
+        PlayerInfo info = winner;
+        PlayerInfo info2 = map.getPlayerByIndex(
+            winner.getDiplomacy().getAllianceIndex());
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addText("THE POPULATION ALLIANCE!");
+        instructions.addText(info.getEmpireName());
+        instructions.addImage(info.getRace().getNameSingle());
+        sb.append("Alliance of ");
+        sb.append(info.getEmpireName());
+        sb.append(" and ");
+        sb.append(info2.getEmpireName());
+        sb.append(" has ");
+        sb.append(biggestValue);
+        sb.append(" % of the galaxy population.");
+        sb.append(" No other realm or alliance has enough population"
+            + " to challenge these two.");
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());

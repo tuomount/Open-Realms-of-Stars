@@ -395,6 +395,7 @@ public class StatView extends BlackPanel {
     boolean dominationLabels = false;
     boolean scienceLabels = false;
     boolean diplomacyLabels = false;
+    boolean populationLabels = false;
     if (map.getScoreCulture() != -1) {
       cols++;
       cultureLabels = true;
@@ -411,6 +412,10 @@ public class StatView extends BlackPanel {
     if (map.getScoreDiplomacy() > 0) {
       cols++;
       diplomacyLabels = true;
+    }
+    if (map.getScorePopulation() > 0) {
+      cols++;
+      populationLabels = true;
     }
     panel.setLayout(new GridLayout(rows, cols));
     panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -469,6 +474,23 @@ public class StatView extends BlackPanel {
           + " Galactic Secretary.</html>");
       panel.add(label);
     }
+    if (populationLabels) {
+      label = new TransparentLabel(null, "Population", true, true);
+      label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+      int limit = 0;
+      switch (map.getScorePopulation()) {
+        case 1: limit = 40; break;
+        case 2: limit = 50; break;
+        case 3: limit = 60; break;
+        case 4: limit = 70; break;
+        default: limit = 50; break;
+      }
+      label.setToolTipText("<html>Population victory is achieved when realm "
+          + " has " + limit + "% of whole galaxy population.<br>Also "
+          + "100 turns must have been passed when this victory is possible."
+          + "</html>");
+      panel.add(label);
+    }
     // Precalculations for scoring
     GalaxyStat scoreStat = map.getNewsCorpData().generateScores();
     int maxCulture = StarMapUtilities.calculateCultureScoreLimit(map.getMaxX(),
@@ -480,6 +502,8 @@ public class StatView extends BlackPanel {
     int[] homeworlds = new int[map.getPlayerList().getCurrentMaxRealms()];
     int[] achievements = new int[map.getPlayerList().getCurrentMaxRealms()];
     int[] towers = new int[map.getPlayerList().getCurrentMaxRealms()];
+    int[] population = new int[map.getPlayerList().getCurrentMaxRealms()];
+    int galaxyPopulation = 0;
     for (int i = 0; i < map.getPlanetList().size(); i++) {
       Planet planet = map.getPlanetList().get(i);
       if (planet.getPlanetPlayerInfo() != null
@@ -491,6 +515,13 @@ public class StatView extends BlackPanel {
           && planet.getPlanetOwnerIndex() < homeworlds.length
           && planet.getHomeWorldIndex() != -1) {
         homeworlds[planet.getPlanetOwnerIndex()]++;
+      }
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetOwnerIndex() < population.length) {
+        galaxyPopulation = galaxyPopulation + planet.getTotalPopulation();
+        population[planet.getPlanetOwnerIndex()] =
+            population[planet.getPlanetOwnerIndex()]
+            + planet.getTotalPopulation();
       }
       // Count scientific achievements for planets
       int count = 0;
@@ -577,6 +608,19 @@ public class StatView extends BlackPanel {
         sb.append("/");
         sb.append(towerLimit);
         sb.append(" United Galaxy Towers");
+        label = new TransparentLabel(null, sb.toString(), true, true);
+        label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+        panel.add(label);
+      }
+      if (populationLabels) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(population[i]);
+        sb.append("/");
+        sb.append(galaxyPopulation);
+        value = population[i] * 100 / galaxyPopulation;
+        sb.append(" (");
+        sb.append(value);
+        sb.append(" %)");
         label = new TransparentLabel(null, sb.toString(), true, true);
         label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
         panel.add(label);

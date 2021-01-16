@@ -8,7 +8,7 @@ import org.openRealmOfStars.player.government.GovernmentUtility;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018-2020  Tuomo Untinen
+ * Copyright (C) 2016, 2018-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -152,7 +152,6 @@ public class GalaxyConfig {
   /**
    * Scoring by Research
    * 0 Disabled victory by research
-   * NOTE THIS IS NOT IMPLEMENTED YET;
    * Just reserving 4 bytes to save games
    */
   private int scoringResearch;
@@ -160,10 +159,19 @@ public class GalaxyConfig {
   /**
    * Scoring by Diplomacy
    * 0 Disabled victory by diplomacy
-   * NOTE THIS IS NOT IMPLEMENTED YET;
    * Just reserving 4 bytes to save games
    */
   private int scoringDiplomacy;
+  /**
+   * Scoring by Population
+   * 0 Disabled victory by populations
+   * 1 40% population of whole galaxy
+   * 2 50% population of whole galaxy
+   * 3 60% population of whole galaxy
+   * 4 70% population of whole galaxy
+   * Just reserving 4 bytes to save games
+   */
+  private int scoringPopulation;
 
   /**
    * Space pirates level
@@ -228,6 +236,7 @@ public class GalaxyConfig {
     setScoreLimitConquer(1);
     setScoreLimitResearch(2);
     setScoreLimitDiplomacy(2);
+    setScoreLimitPopulation(2);
     setMaxPlayers(6);
     setAncientHeadStart(60);
     setSolarSystemDistance(12, 0);
@@ -727,6 +736,34 @@ public class GalaxyConfig {
    */
   public void setEnableTutorial(final boolean enableTutorial) {
     this.enableTutorial = enableTutorial;
+  }
+
+  /**
+   * Get scoring condition for population
+   * 0 Disabled victory by populations
+   * 1 40% population of whole galaxy
+   * 2 50% population of whole galaxy
+   * 3 60% population of whole galaxy
+   * 4 70% population of whole galaxy
+   * @return the scoringPopulation
+   */
+  public int getScoreLimitPopulation() {
+    return scoringPopulation;
+  }
+
+  /**
+   * Set scoring condition for population
+   * 0 Disabled victory by populations
+   * 1 40% population of whole galaxy
+   * 2 50% population of whole galaxy
+   * 3 60% population of whole galaxy
+   * 4 70% population of whole galaxy
+   * @param limit the scoringPopulation to set
+   */
+  public void setScoreLimitPopulation(final int limit) {
+    if (limit >= 0 && limit < 5) {
+      this.scoringPopulation = limit;
+    }
   }
 
 }

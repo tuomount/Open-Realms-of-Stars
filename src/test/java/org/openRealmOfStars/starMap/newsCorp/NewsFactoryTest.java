@@ -32,7 +32,7 @@ import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2020 Tuomo Untinen
+* Copyright (C) 2017-2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -1721,6 +1721,93 @@ public class NewsFactoryTest {
     assertNotNull(news);
     assertEquals(true, news.getNewsText().contains("Empire of Homarian"));
     assertEquals(true, news.getNewsText().contains("65 per cent"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPopulationVictory() {
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getScorePopulation()).thenReturn(2);
+    Mockito.when(map.getTurn()).thenReturn(182);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
+    PlayerInfo winner = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(winner.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(winner.getEmpireName()).thenReturn("Empire of Homarian");
+    Mockito.when(winner.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(diplomacy.getAllianceIndex()).thenReturn(-1);
+    PlayerInfo second = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy2 = Mockito.mock(Diplomacy.class);
+    Mockito.when(second.getDiplomacy()).thenReturn(diplomacy2);
+    Mockito.when(second.getEmpireName()).thenReturn("Empire of Humans");
+    Mockito.when(second.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(diplomacy2.getAllianceIndex()).thenReturn(-1);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(map.getPlayerByIndex(2)).thenReturn(winner);
+    Mockito.when(map.getPlayerByIndex(3)).thenReturn(second);
+    Mockito.when(playerList.getPlayerInfoByIndex(2)).thenReturn(winner);
+    Mockito.when(playerList.getPlayerInfoByIndex(3)).thenReturn(second);
+    ArrayList<Planet> planets = new ArrayList<>();
+    Planet planet1 = Mockito.mock(Planet.class);
+    Mockito.when(planet1.getTotalPopulation()).thenReturn(15);
+    Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(winner);
+    Mockito.when(planet1.getPlanetOwnerIndex()).thenReturn(2);
+    planets.add(planet1);
+    Planet planet2 = Mockito.mock(Planet.class);
+    Mockito.when(planet2.getTotalPopulation()).thenReturn(2);
+    Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(second);
+    Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(3);
+    planets.add(planet2);
+    Mockito.when(map.getPlanetList()).thenReturn(planets);
+    NewsData news = NewsFactory.makePopulationVictoryNewsAtEnd(map);
+    assertNotNull(news);
+    assertEquals(true, news.getNewsText().contains("Empire of Homarian"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPopulationVictoryAlliance() {
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getScorePopulation()).thenReturn(2);
+    Mockito.when(map.getTurn()).thenReturn(182);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
+    PlayerInfo winner = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(winner.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(winner.getEmpireName()).thenReturn("Empire of Homarian");
+    Mockito.when(winner.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(diplomacy.getAllianceIndex()).thenReturn(3);
+    PlayerInfo second = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy2 = Mockito.mock(Diplomacy.class);
+    Mockito.when(second.getDiplomacy()).thenReturn(diplomacy2);
+    Mockito.when(second.getEmpireName()).thenReturn("Empire of Humans");
+    Mockito.when(second.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(diplomacy2.getAllianceIndex()).thenReturn(2);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(map.getPlayerByIndex(2)).thenReturn(winner);
+    Mockito.when(map.getPlayerByIndex(3)).thenReturn(second);
+    Mockito.when(playerList.getPlayerInfoByIndex(2)).thenReturn(winner);
+    Mockito.when(playerList.getPlayerInfoByIndex(3)).thenReturn(second);
+    ArrayList<Planet> planets = new ArrayList<>();
+    Planet planet1 = Mockito.mock(Planet.class);
+    Mockito.when(planet1.getTotalPopulation()).thenReturn(15);
+    Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(winner);
+    Mockito.when(planet1.getPlanetOwnerIndex()).thenReturn(2);
+    planets.add(planet1);
+    Planet planet2 = Mockito.mock(Planet.class);
+    Mockito.when(planet2.getTotalPopulation()).thenReturn(2);
+    Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(second);
+    Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(3);
+    planets.add(planet2);
+    Mockito.when(map.getPlanetList()).thenReturn(planets);
+    NewsData news = NewsFactory.makePopulationVictoryNewsAtEnd(map);
+    assertNotNull(news);
+    assertEquals(true, news.getNewsText().contains("Empire of Homarian"));
+    assertEquals(true, news.getNewsText().contains("Empire of Humans"));
   }
 
   @Test

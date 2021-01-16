@@ -239,6 +239,10 @@ public class StarMap {
    * Diplomacy scoring setting
    */
   private int scoreDiplomacy;
+  /**
+   * Population scoring setting
+   */
+  private int scorePopulation;
 
   /**
    * System name generator.
@@ -300,7 +304,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.15";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.16";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -320,6 +324,7 @@ public class StarMap {
     setScoreConquer(config.getScoreLimitConquer());
     setScoreResearch(config.getScoreLimitResearch());
     setScoreDiplomacy(config.getScoreLimitDiplomacy());
+    setScorePopulation(config.getScoreLimitPopulation());
     setPirateDifficulty(PirateDifficultLevel.NORMAL);
     setKarmaType(config.getKarmaType());
     setKarmaSpeed(config.getKarmaSpeed());
@@ -945,6 +950,7 @@ public class StarMap {
       setScoreConquer(dis.readInt());
       setScoreResearch(dis.readInt());
       setScoreDiplomacy(dis.readInt());
+      setScorePopulation(dis.readInt());
       setPirateDifficulty(PirateDifficultLevel.getLevelByInt(dis.read()));
       setKarmaType(KarmaType.getTypeByInt(dis.read()));
       setKarmaSpeed(dis.read());
@@ -1024,7 +1030,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.15");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.16");
     // Turn number
     dos.writeInt(turn);
     // Victory conditions
@@ -1033,6 +1039,7 @@ public class StarMap {
     dos.writeInt(getScoreConquer());
     dos.writeInt(getScoreResearch());
     dos.writeInt(getScoreDiplomacy());
+    dos.writeInt(getScorePopulation());
     dos.writeByte(getPirateDifficulty().getIndex());
     dos.writeByte(getKarmaType().getIndex());
     dos.writeByte(getKarmaSpeed());
@@ -3701,6 +3708,32 @@ public class StarMap {
   public void setScoreDiplomacy(final int limit) {
     scoreDiplomacy = limit;
   }
+  /**
+   * Get score limit for population.
+   * @return the scorePopulation
+   *             0 Disabled
+   *             1 40% of whole galaxy
+   *             2 50% of whole galaxy
+   *             3 60% of whole galaxy
+   *             4 70% of whole galaxy
+   */
+  public int getScorePopulation() {
+    return scorePopulation;
+  }
+
+  /**
+   * Set score limit for population.
+   * @param scorePopulation the scorePopulation to set
+   *                        0 Disabled
+   *                        1 40% of whole galaxy
+   *                        2 50% of whole galaxy
+   *                        3 60% of whole galaxy
+   *                        4 70% of whole galaxy
+   */
+  public void setScorePopulation(final int scorePopulation) {
+    this.scorePopulation = scorePopulation;
+  }
+
   /**
    * Get Game length state. This checks current turn and
    * compares it score victory turn. Game is divided into

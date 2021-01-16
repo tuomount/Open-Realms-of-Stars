@@ -29,7 +29,7 @@ import org.openRealmOfStars.starMap.planet.PlanetTypes;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018,2019  Tuomo Untinen
+ * Copyright (C) 2016,2018-2021  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -106,6 +106,10 @@ public class GalaxyCreationView extends BlackPanel {
    * ComboBox on scoring diplomatic
    */
   private SpaceCombo<String> comboScoringDiplomatic;
+  /**
+   * ComboBox on scoring population
+   */
+  private SpaceCombo<String> comboScoringPopulation;
 
   /**
    * ComboBox for rogue planet
@@ -590,6 +594,35 @@ public class GalaxyCreationView extends BlackPanel {
       case 5: comboScoringDiplomatic.setSelectedIndex(5); break;
       default: comboScoringDiplomatic.setSelectedIndex(2); break;
     }
+    label = new SpaceLabel("Victory by population");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] scoringPopulation = new String[6];
+    scoringPopulation[0] = "Disabled";
+    scoringPopulation[1] = "40% of whole galaxy";
+    scoringPopulation[2] = "50% of whole galaxy";
+    scoringPopulation[3] = "60% of whole galaxy";
+    scoringPopulation[4] = "70% of whole galaxy";
+    comboScoringPopulation = new SpaceCombo<>(scoringPopulation);
+    comboScoringPopulation.setToolTipText("<html>Realm or alliance must have"
+        + " certain percentage of whole galaxy population to win."
+        + "<br>"
+        + " Also at least 100 turns have to have passed before victory by"
+        + " population is checked."
+        + "</html>");
+    comboScoringPopulation.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboScoringPopulation.addActionListener(listener);
+    info.add(comboScoringPopulation);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    switch (this.config.getScoreLimitPopulation()) {
+      case 0: comboScoringPopulation.setSelectedIndex(0); break;
+      case 1: comboScoringPopulation.setSelectedIndex(1); break;
+      case 2: comboScoringPopulation.setSelectedIndex(2); break;
+      case 3: comboScoringPopulation.setSelectedIndex(3); break;
+      case 4: comboScoringPopulation.setSelectedIndex(4); break;
+      default: comboScoringPopulation.setSelectedIndex(2); break;
+    }
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     tutorialEnabled = new SpaceCheckBox("Tutorial enabled");
     tutorialEnabled.setSelected(this.config.isEnableTutorial());
@@ -906,6 +939,7 @@ public class GalaxyCreationView extends BlackPanel {
       }
       config.setScoreLimitResearch(comboScoringScientific.getSelectedIndex());
       config.setScoreLimitDiplomacy(comboScoringDiplomatic.getSelectedIndex());
+      config.setScoreLimitPopulation(comboScoringPopulation.getSelectedIndex());
       config.setKarmaType(KarmaType.getTypeByInt(
           comboKarmaType.getSelectedIndex()));
       config.setKarmaSpeed(comboKarmaSpeed.getSelectedIndex() + 1);

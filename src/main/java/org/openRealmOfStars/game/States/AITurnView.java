@@ -2623,6 +2623,14 @@ public class AITurnView extends BlackPanel {
         NewsCorpData newsData = game.getStarMap().getNewsCorpData();
         newsData.addNews(news);
       }
+      news = NewsFactory.makePopulationVictoryNewsAtEnd(game.getStarMap());
+      if (news != null) {
+        GalacticEvent event = new GalacticEvent(news.getNewsText());
+        game.getStarMap().getHistory().addEvent(event);
+        game.getStarMap().setGameEnded(true);
+        NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+        newsData.addNews(news);
+      }
       if (game.getStarMap().getTurn() == game.getStarMap()
           .getScoreVictoryTurn()) {
         // Game is in the end

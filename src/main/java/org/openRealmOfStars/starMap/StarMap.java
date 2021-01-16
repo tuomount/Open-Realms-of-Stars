@@ -3095,6 +3095,18 @@ public class StarMap {
             info.getMsgList().addNewMessage(msg);
             return;
           }
+          if (planet.getOrderNumber() == 0) {
+            // Rogue planet
+            tutorialText = Game.getTutorial().showTutorialText(22);
+            if (tutorialText != null) {
+              Message msg = new Message(MessageType.PLANETARY, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(new Coordinate(sx, sy));
+              msg.setMatchByString(planet.getName());
+              info.getMsgList().addNewMessage(msg);
+              return;
+            }
+          }
         }
       }
       if (square.getType() == SquareInfo.TYPE_GAS_PLANET) {

@@ -369,6 +369,7 @@ public class Planet {
       // Rogue planet have more metal
       this.setAmountMetalInGround(DiceGenerator.getRandom(MINIMUM_ORE + 2000,
           MAXIMUM_ORE));
+      this.setRadiationLevel(DiceGenerator.getRandom(1, 5));
     } else {
       this.setAmountMetalInGround(DiceGenerator.getRandom(MINIMUM_ORE,
           MAXIMUM_ORE));

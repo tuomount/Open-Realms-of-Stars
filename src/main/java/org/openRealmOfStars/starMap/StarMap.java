@@ -2322,6 +2322,10 @@ public class StarMap {
     }
     if (info != null && !info.isHuman()) {
       int exploreMissions = 0;
+      int extraExploring = 0;
+      if (info.getStrategy() == WinningStrategy.POPULATION) {
+        extraExploring = 1;
+      }
       // Try to locate ships for gather missions
       for (int i = 0; i < info.getMissions().getSize(); i++) {
         Mission mission = info.getMissions().getMissionByIndex(i);
@@ -2338,31 +2342,31 @@ public class StarMap {
        */
       if ((getGameLengthState() == GameLengthState.START_GAME
           || getGameLengthState() == GameLengthState.ANCIENT_HEAD_START)
-          && exploreMissions < 2) {
+          && exploreMissions < 2 + extraExploring) {
         Mission mission = new Mission(MissionType.EXPLORE,
             MissionPhase.PLANNING, null);
         info.getMissions().add(mission);
       }
       if (getGameLengthState() == GameLengthState.EARLY_GAME
-          && exploreMissions < 4) {
+          && exploreMissions < 4 + extraExploring) {
         Mission mission = new Mission(MissionType.EXPLORE,
             MissionPhase.PLANNING, null);
         info.getMissions().add(mission);
       }
       if (getGameLengthState() == GameLengthState.MIDDLE_GAME
-          && exploreMissions < 3) {
+          && exploreMissions < 3 + extraExploring) {
         Mission mission = new Mission(MissionType.EXPLORE,
             MissionPhase.PLANNING, null);
         info.getMissions().add(mission);
       }
       if (getGameLengthState() == GameLengthState.LATE_GAME
-          && exploreMissions < 2) {
+          && exploreMissions < 2 + extraExploring) {
         Mission mission = new Mission(MissionType.EXPLORE,
             MissionPhase.PLANNING, null);
         info.getMissions().add(mission);
       }
       if (getGameLengthState() == GameLengthState.END_GAME
-          && exploreMissions < 1) {
+          && exploreMissions < 1 + extraExploring) {
         Mission mission = new Mission(MissionType.EXPLORE,
             MissionPhase.PLANNING, null);
         info.getMissions().add(mission);
@@ -4139,6 +4143,9 @@ public class StarMap {
         } else if (getNewsCorpData().getResearch().getPosition(i) < 3
             && getScoreResearch() > 0) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.SCIENCE);
+        } else if (getNewsCorpData().getPopulation().getPosition(i) < 3
+            && getScorePopulation() > 0) {
+          getPlayerByIndex(i).setStrategy(WinningStrategy.POPULATION);
         } else if (getNewsCorpData().getMilitary().getPosition(i) < 3
             && getScoreConquer() == 1) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.CONQUER);

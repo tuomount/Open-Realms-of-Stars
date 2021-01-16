@@ -2704,7 +2704,7 @@ public final class MissionHandling {
   public static void addPossibleTutorial(final Game game,
       final Object meetingPlace, final int tutorialIndex) {
     if (Game.getTutorial() != null) {
-      String tutorialText = Game.getTutorial().showTutorialText(105);
+      String tutorialText = Game.getTutorial().showTutorialText(tutorialIndex);
       if (tutorialText != null) {
         Message msg = new Message(MessageType.INFORMATION, tutorialText,
             Icons.getIconByName(Icons.ICON_TUTORIAL));

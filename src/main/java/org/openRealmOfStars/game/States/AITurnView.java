@@ -2013,13 +2013,18 @@ public class AITurnView extends BlackPanel {
               game.getStarMap(), news));
           if (Game.getTutorial() != null
               && game.getStarMap().isTutorialEnabled()) {
-                String tutorialText = Game.getTutorial().showTutorialText(
-                    126);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION,
-                    tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
-                realm.getMsgList().addUpcomingMessage(msg);
-              }
+                String tutorialText = Game.getTutorial().showTutorialText(129);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.INFORMATION,
+                  tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+              realm.getMsgList().addUpcomingMessage(msg);
+            }
+            tutorialText = Game.getTutorial().showTutorialText(121);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.INFORMATION,
+                  tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+              realm.getMsgList().addUpcomingMessage(msg);
+            }
           }
         }
       }
@@ -2058,7 +2063,7 @@ public class AITurnView extends BlackPanel {
               if (Game.getTutorial() != null
                   && game.getStarMap().isTutorialEnabled()) {
                     String tutorialText = Game.getTutorial().showTutorialText(
-                        124);
+                        127);
                   if (tutorialText != null) {
                     Message msg = new Message(MessageType.INFORMATION,
                         tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
@@ -2128,7 +2133,7 @@ public class AITurnView extends BlackPanel {
           if (Game.getTutorial() != null
               && game.getStarMap().isTutorialEnabled()) {
                 String tutorialText = Game.getTutorial().showTutorialText(
-                    127);
+                    130);
               if (tutorialText != null) {
                 msg = new Message(MessageType.INFORMATION,
                     tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
@@ -2188,7 +2193,7 @@ public class AITurnView extends BlackPanel {
             if (Game.getTutorial() != null
                 && game.getStarMap().isTutorialEnabled()) {
                   String tutorialText = Game.getTutorial().showTutorialText(
-                      123);
+                      126);
                 if (tutorialText != null) {
                   Message msg = new Message(MessageType.INFORMATION,
                       tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
@@ -2233,7 +2238,7 @@ public class AITurnView extends BlackPanel {
       if (leader.getExperience() >= required) {
         if (Game.getTutorial() != null
         && game.getStarMap().isTutorialEnabled()) {
-          String tutorialText = Game.getTutorial().showTutorialText(121);
+          String tutorialText = Game.getTutorial().showTutorialText(124);
           if (tutorialText != null) {
             Message msg = new Message(MessageType.INFORMATION, tutorialText,
                 Icons.getIconByName(Icons.ICON_TUTORIAL));
@@ -2253,7 +2258,7 @@ public class AITurnView extends BlackPanel {
             && leader.getMilitaryRank() != MilitaryRank.CIVILIAN) {
           if (Game.getTutorial() != null
               && game.getStarMap().isTutorialEnabled()) {
-                String tutorialText = Game.getTutorial().showTutorialText(122);
+                String tutorialText = Game.getTutorial().showTutorialText(125);
               if (tutorialText != null) {
                 msg = new Message(MessageType.INFORMATION, tutorialText,
                     Icons.getIconByName(Icons.ICON_TUTORIAL));
@@ -2332,6 +2337,17 @@ public class AITurnView extends BlackPanel {
               fleet.getCommander().setExperience(
                   fleet.getCommander().getExperience()
                   + fleet.getNumberOfShip() * fleet.getCommander().getLevel());
+            }
+          } else {
+            if (Game.getTutorial() != null
+                && game.getStarMap().isTutorialEnabled()
+                && game.getStarMap().getTurn() > 15) {
+              String tutorialText = Game.getTutorial().showTutorialText(123);
+              if (tutorialText != null) {
+                Message msg = new Message(MessageType.INFORMATION,
+                    tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addUpcomingMessage(msg);
+              }
             }
           }
           if (fleet.getRoute() != null) {

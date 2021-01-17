@@ -1745,6 +1745,17 @@ public class Planet {
           governor.setExperience(governor.getExperience()
               + getTotalPopulation());
         }
+      } else {
+        if (Game.getTutorial() != null && map != null
+            && map.isTutorialEnabled()
+            && map.getTurn() > 10) {
+          String tutorialText = Game.getTutorial().showTutorialText(122);
+          if (tutorialText != null) {
+            Message msg = new Message(MessageType.INFORMATION,
+                tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
+          }
+        }
       }
       happinessEffect = HappinessEffect.createHappinessEffect(
           calculateHappiness());
@@ -1818,15 +1829,13 @@ public class Planet {
           if (Game.getTutorial() != null && map != null
               && map.isTutorialEnabled()
               && getTotalPopulation() >= 5) {
-                String tutorialText = Game.getTutorial().showTutorialText(
-                    125);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION,
-                    tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
-                planetOwnerInfo.getMsgList().addNewMessage(msg);
-              }
+            String tutorialText = Game.getTutorial().showTutorialText(128);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.INFORMATION,
+                  tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+              planetOwnerInfo.getMsgList().addNewMessage(msg);
+            }
           }
-
         }
         if (isFullOfPopulation()) {
           if (extraFood > require) {

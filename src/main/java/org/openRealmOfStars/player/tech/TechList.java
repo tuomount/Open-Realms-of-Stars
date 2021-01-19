@@ -1015,9 +1015,11 @@ public class TechList {
                 info.getMsgList().addNewMessage(msg);
               }
             }
+            boolean specialHull = false;
             if (tech.getType() == TechType.Hulls
                 && tech.getHull() != null
                 && tech.getHull().startsWith("Probe")) {
+              specialHull = true;
               tutorialText = Game.getTutorial().showTutorialText(71);
               if (tutorialText != null) {
                 msg = new Message(MessageType.INFORMATION, tutorialText,
@@ -1028,6 +1030,7 @@ public class TechList {
             if (tech.getType() == TechType.Hulls
                 && tech.getHull() != null
                 && tech.getHull().contains("Starbase")) {
+              specialHull = true;
               tutorialText = Game.getTutorial().showTutorialText(72);
               if (tutorialText != null) {
                 msg = new Message(MessageType.INFORMATION, tutorialText,
@@ -1035,9 +1038,31 @@ public class TechList {
                 info.getMsgList().addNewMessage(msg);
               }
             }
-            if (tech.getType() == TechType.Propulsion
-                && tech.getComponent() != null
-                && tech.getComponent().contains("source")) {
+            if (tech.getType() == TechType.Hulls
+                && tech.getHull() != null
+                && tech.getHull().contains("Privateer")) {
+              specialHull = true;
+              tutorialText = Game.getTutorial().showTutorialText(73);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
+            if (tech.getType() == TechType.Hulls
+                && tech.getHull() != null
+                && tech.getHull().contains("Freighter")) {
+              specialHull = true;
+              tutorialText = Game.getTutorial().showTutorialText(74);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
+            if (tech.getType() == TechType.Hulls
+                && tech.getHull() != null
+                && !specialHull) {
               tutorialText = Game.getTutorial().showTutorialText(75);
               if (tutorialText != null) {
                 msg = new Message(MessageType.INFORMATION, tutorialText,
@@ -1047,14 +1072,43 @@ public class TechList {
             }
             if (tech.getType() == TechType.Propulsion
                 && tech.getComponent() != null
-                && tech.getComponent().contains("drive")) {
-              tutorialText = Game.getTutorial().showTutorialText(74);
+                && tech.getComponent().contains("source")) {
+              tutorialText = Game.getTutorial().showTutorialText(77);
               if (tutorialText != null) {
                 msg = new Message(MessageType.INFORMATION, tutorialText,
                     Icons.getIconByName(Icons.ICON_TUTORIAL));
                 info.getMsgList().addNewMessage(msg);
               }
             }
+            if (tech.getType() == TechType.Propulsion
+                && tech.getComponent() != null
+                && tech.getComponent().contains("drive")) {
+              tutorialText = Game.getTutorial().showTutorialText(76);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
+            if (tech.getType() == TechType.Electrics
+                && tech.getComponent().startsWith("Cloaking")) {
+              tutorialText = Game.getTutorial().showTutorialText(78);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
+            if (tech.getType() == TechType.Electrics
+                && tech.getComponent().startsWith("Espionage")) {
+              tutorialText = Game.getTutorial().showTutorialText(79);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
+
           }
         }
       }

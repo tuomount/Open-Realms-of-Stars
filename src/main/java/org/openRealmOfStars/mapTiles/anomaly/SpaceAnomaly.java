@@ -3,6 +3,8 @@ package org.openRealmOfStars.mapTiles.anomaly;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.game.Game;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
@@ -17,6 +19,8 @@ import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.NameGenerator;
 import org.openRealmOfStars.player.leader.Perk;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -448,6 +452,15 @@ public class SpaceAnomaly {
                 + " taken to use.");
             result.setImage(GuiStatics.IMAGE_OLD_SHIP);
             info.getTechList().addTech(tech);
+            if (Game.getTutorial() != null  && info.isHuman()
+                && map.isTutorialEnabled()) {
+              String tutorialText = Game.getTutorial().showTutorialText(14);
+              if (tutorialText != null) {
+                Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
           } else {
             result = null;
           }

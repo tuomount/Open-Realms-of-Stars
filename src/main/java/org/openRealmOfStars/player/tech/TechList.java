@@ -1108,6 +1108,16 @@ public class TechList {
                 info.getMsgList().addNewMessage(msg);
               }
             }
+            if (tech.getType() == TechType.Electrics
+                && tech.getComponent().startsWith("Scanner")
+                || tech.getComponent().startsWith("LR scanner")) {
+              tutorialText = Game.getTutorial().showTutorialText(80);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
 
           }
         }

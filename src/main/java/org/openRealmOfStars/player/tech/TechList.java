@@ -975,6 +975,15 @@ public class TechList {
               }
             }
             if (tech.getType() == TechType.Combat
+                && tech.getComponent().startsWith("Orbital")) {
+              tutorialText = Game.getTutorial().showTutorialText(81);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
+            if (tech.getType() == TechType.Combat
                 && tech.getComponent().startsWith("HE missile")) {
               tutorialText = Game.getTutorial().showTutorialText(54);
               if (tutorialText != null) {

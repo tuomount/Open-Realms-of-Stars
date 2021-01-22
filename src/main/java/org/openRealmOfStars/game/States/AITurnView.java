@@ -860,6 +860,48 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
+   * Get Chance for diplomacy when seeing another realm's fleet
+   * inside borders.
+   * @param nothingToTrade If there is nothing to trade flag
+   * @param info Realm which is deciding if diplomacy should start
+   * @param targetIndex Target realm's index
+   * @return chance of diplomacy 0 - 100.
+   */
+  private int getChanceForDiplomacy(final boolean nothingToTrade,
+      final PlayerInfo info, final int targetIndex) {
+    int result = 0;
+    Attitude attitude = info.getAiAttitude();
+    switch (attitude) {
+      case AGGRESSIVE: result = 10; break;
+      case BACKSTABBING: result = 30; break;
+      case DIPLOMATIC: result = 60; break;
+      case EXPANSIONIST: result = 30; break;
+      case LOGICAL: result = 40; break;
+      case MERCHANTICAL: result = 50; break;
+      case MILITARISTIC: result = 10; break;
+      case PEACEFUL: result = 50; break;
+      case SCIENTIFIC: result = 30; break;
+      default: result = 30; break;
+    }
+    if (info.getTotalWarFatigue() < -2
+        && info.getDiplomacy().isWar(targetIndex)) {
+      result = result + 50;
+    }
+    if (info.getStrategy() == WinningStrategy.DIPLOMATIC) {
+      result = result + 20;
+    }
+    if (info.getStrategy() == WinningStrategy.CULTURAL) {
+      result = result + 20;
+    }
+    if (result > 100) {
+      result = 100;
+    }
+    if (nothingToTrade) {
+      result = 0;
+    }
+    return result;
+  }
+  /**
    * Search for fleets that have crossed the borders
    */
   public void searchForBorderCrossing() {
@@ -883,19 +925,39 @@ public class AITurnView extends BlackPanel {
                   fleet.getX(), fleet.getY());
               if (culture.getHighestCulture() == game.getStarMap()
                   .getAiTurnNumber()) {
-                if (info.getDiplomacy().isTradeAlliance(i) && military == 0) {
+                int fleetOwnerIndex = game.getPlayers().getIndex(fleetOwner);
+                int type = Diplomacy.getBorderCrossingType(info, fleet,
+                    fleetOwnerIndex);
+                boolean nothingToTrade = info.getDiplomacy().getDiplomacyList(
+                    fleetOwnerIndex).isBonusType(
+                    DiplomacyBonusType.NOTHING_TO_TRADE);
+                if (info.getDiplomacy().isTradeAlliance(i) && military == 0
+                    && type != DiplomacyView.AI_ESPIONAGE) {
                   // Non military ship and trade alliance
-                  continue;
+                  int chance = getChanceForDiplomacy(nothingToTrade, info,
+                      fleetOwnerIndex);
+                  if (DiceGenerator.getRandom(99) > chance) {
+                    continue;
+                  }
                 }
                 if ((info.getDiplomacy().isAlliance(i)
                     || info.getDiplomacy().isDefensivePact(i))
-                    && military >= 0) {
+                    && military >= 0
+                    && type != DiplomacyView.AI_ESPIONAGE) {
                   // (non)military ship and alliance
-                  continue;
+                  int chance = getChanceForDiplomacy(nothingToTrade, info,
+                      fleetOwnerIndex);
+                  if (DiceGenerator.getRandom(99) > chance) {
+                    continue;
+                  }
                 }
                 if (info.getDiplomacy().isWar(i)) {
                   // War no diplomacy screen then
-                  continue;
+                  int chance = getChanceForDiplomacy(nothingToTrade, info,
+                      fleetOwnerIndex);
+                  if (DiceGenerator.getRandom(99) > chance) {
+                    continue;
+                  }
                 }
                 if (fleet.isPrivateerFleet()) {
                   continue;
@@ -905,9 +967,6 @@ public class AITurnView extends BlackPanel {
                   game.changeGameState(GameState.DIPLOMACY_VIEW, fleet);
                   return;
                 }
-                int fleetOwnerIndex = game.getPlayers().getIndex(fleetOwner);
-                int type = Diplomacy.getBorderCrossingType(info, fleet,
-                    fleetOwnerIndex);
                 if (type == DiplomacyView.AI_ESPIONAGE) {
                   info.getDiplomacy().getDiplomacyList(fleetOwnerIndex)
                       .addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,

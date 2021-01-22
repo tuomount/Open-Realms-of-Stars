@@ -2710,11 +2710,25 @@ public final class MissionHandling {
             Icons.getIconByName(Icons.ICON_TUTORIAL));
         if (meetingPlace instanceof Planet) {
           Planet planet = (Planet) meetingPlace;
-          msg.setCoordinate(planet.getCoordinate());
+          if (game.getStarMap().getPlayerByIndex(0).getSectorVisibility(
+              planet.getCoordinate()) == PlayerInfo.VISIBLE) {
+            msg.setCoordinate(planet.getCoordinate());
+          } else {
+            Coordinate center = new Coordinate(game.getStarMap().getMaxX() / 2,
+                game.getStarMap().getMaxY() / 2);
+            msg.setCoordinate(center);
+          }
         }
         if (meetingPlace instanceof Fleet) {
           Fleet fleet = (Fleet) meetingPlace;
-          msg.setCoordinate(fleet.getCoordinate());
+          if (game.getStarMap().getPlayerByIndex(0).getSectorVisibility(
+              fleet.getCoordinate()) == PlayerInfo.VISIBLE) {
+            msg.setCoordinate(fleet.getCoordinate());
+          } else {
+            Coordinate center = new Coordinate(game.getStarMap().getMaxX() / 2,
+                game.getStarMap().getMaxY() / 2);
+            msg.setCoordinate(center);
+          }
         }
         game.getPlayers().getPlayerInfoByIndex(0).getMsgList()
             .addNewMessage(msg);

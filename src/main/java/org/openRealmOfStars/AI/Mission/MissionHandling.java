@@ -724,6 +724,33 @@ public final class MissionHandling {
   }
 
   /**
+   * Handle Intercept mission
+   * @param mission Intercept mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleIntercept(final Mission mission, final Fleet fleet,
+      final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.INTERCEPT) {
+      if (mission.getPhase() != MissionPhase.TREKKING) {
+        mission.setPhase(MissionPhase.TREKKING);
+        fleet.setaStarSearch(null);
+        fleet.setRoute(null);
+      }
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getX() != mission.getX() || fleet.getY() != mission.getY()) {
+        AStarSearch search = new AStarSearch(game.getStarMap(), fleet.getX(),
+            fleet.getY(), mission.getX(), mission.getY(), true);
+        search.doSearch();
+        search.doRoute();
+        fleet.setaStarSearch(search);
+        makeRegularMoves(game, fleet, info);
+      }
+    } // End of intercept
+  }
+
+  /**
    * Handle Trade mission
    * @param mission Trade mission, does nothing if type is wrong
    * @param fleet Fleet on mission

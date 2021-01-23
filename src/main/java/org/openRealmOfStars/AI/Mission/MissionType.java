@@ -3,7 +3,7 @@ package org.openRealmOfStars.AI.Mission;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017, 2018, 2020 Tuomo Untinen
+ * Copyright (C) 2016, 2017, 2018, 2020, 2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -85,7 +85,11 @@ public enum MissionType {
   /**
    * Diplomatic delegacy
    */
-  DIPLOMATIC_DELEGACY;
+  DIPLOMATIC_DELEGACY,
+  /**
+   * Intercept mission which will last only one turn.
+   */
+  INTERCEPT;
 
   /**
    * Get Mission type with index
@@ -121,6 +125,8 @@ public enum MissionType {
       return 12;
     case DIPLOMATIC_DELEGACY:
       return 13;
+    case INTERCEPT:
+      return 14;
     default:
       return 0;
     }
@@ -157,6 +163,8 @@ public enum MissionType {
       return "Espionage mission";
     case DIPLOMATIC_DELEGACY:
       return "Diplomatic delegacy";
+    case INTERCEPT:
+      return "Intercept";
     default:
       return "Unknown";
     }

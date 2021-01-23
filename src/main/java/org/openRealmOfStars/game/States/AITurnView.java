@@ -14,6 +14,7 @@ import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionHandling;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.AI.Research.Research;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
@@ -902,6 +903,41 @@ public class AITurnView extends BlackPanel {
     return result;
   }
   /**
+   * Search for interceptable fleets on current AI's sectors.
+   */
+  public void searchForInterceptFleets() {
+    PlayerInfo info = game.getPlayers()
+        .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
+    if (info != null && !info.isHuman() && !info.isBoard()) {
+      info.cleanInterceptableFleetList();
+      int maxPlayer = game.getPlayers().getCurrentMaxRealms();
+      for (int i = 0; i < maxPlayer; i++) {
+        PlayerInfo fleetOwner = game.getPlayers().getPlayerInfoByIndex(i);
+        if (fleetOwner != info) {
+          int numberOfFleets = fleetOwner.getFleets().getNumberOfFleets();
+          for (int j = 0; j < numberOfFleets; j++) {
+            Fleet fleet = fleetOwner.getFleets().getByIndex(j);
+            int detect = info.getSectorCloakDetection(fleet.getX(),
+                fleet.getY());
+            byte visibility = info.getSectorVisibility(fleet.getCoordinate());
+            if (detect >= fleet.getFleetCloackingValue()
+                && visibility == PlayerInfo.VISIBLE) {
+              CulturePower culture = game.getStarMap().getSectorCulture(
+                  fleet.getX(), fleet.getY());
+              if (culture.getHighestCulture() == game.getStarMap()
+                  .getAiTurnNumber()) {
+                int fleetOwnerIndex = game.getPlayers().getIndex(fleetOwner);
+                if (info.getDiplomacy().isWar(fleetOwnerIndex)) {
+                  info.addInterceptableFleet(fleet);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  /**
    * Search for fleets that have crossed the borders
    */
   public void searchForBorderCrossing() {
@@ -1141,6 +1177,55 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
+   * Get closes intercept mission.
+   * @param origin Origin fleet which doing intercept mission
+   * @param info Realm who is planning interceptiong
+   * @param map Starmap
+   * @return Interceptable fleet or null none available.
+   */
+  public Fleet getClosestInterceptMission(final Fleet origin,
+      final PlayerInfo info, final StarMap map) {
+    int military = origin.getMilitaryValue();
+    int speed = origin.getMovesLeft();
+    if (!origin.allFixed() || info.isHuman()) {
+      return null;
+    }
+    Mission mission = info.getMissions().getMissionForFleet(origin.getName());
+    if (mission != null && (mission.getType() == MissionType.COLONIZE
+         || mission.getType() == MissionType.COLONY_EXPLORE
+         || mission.getType() == MissionType.DEPLOY_STARBASE
+         || mission.getType() == MissionType.DIPLOMATIC_DELEGACY
+         || mission.getType() == MissionType.TRADE_FLEET)) {
+      // This missions will not be detoured for intercepting
+      return null;
+    }
+
+    for (Fleet fleet : info.getInterceptableFleets()) {
+      if (fleet.getMilitaryValue() < military) {
+        double dist = fleet.getCoordinate().calculateDistance(
+            origin.getCoordinate());
+        if (dist <= speed) {
+          AStarSearch search = new AStarSearch(map, origin.getX(),
+              origin.getY(), fleet.getX(), fleet.getY(), true);
+          if (search.doSearch()) {
+            if (mission != null
+                && mission.getType() == MissionType.DEFEND
+                && mission.getPhase() == MissionPhase.EXECUTING) {
+              mission.setPhase(MissionPhase.TREKKING);
+            }
+            if (mission != null
+                && mission.getType() == MissionType.SPY_MISSION
+                && mission.getPhase() == MissionPhase.EXECUTING) {
+              mission.setPhase(MissionPhase.TREKKING);
+            }
+            return fleet;
+          }
+        }
+      }
+    }
+    return null;
+  }
+  /**
    * Handle single AI Fleet. If fleet was last then increase AI turn number
    * and set aiFleet to null.
    */
@@ -1207,7 +1292,16 @@ public class AITurnView extends BlackPanel {
           mission.setFleetName(fleet.getName());
         }
         if (!fleet.isStarBaseDeployed()) {
-          handleMissions(fleet, info);
+          Fleet interceptFleet = getClosestInterceptMission(
+              game.getStarMap().getAIFleet(), info, game.getStarMap());
+          if (interceptFleet != null) {
+            Mission intercept = new Mission(MissionType.INTERCEPT,
+                MissionPhase.TREKKING, interceptFleet.getCoordinate());
+            MissionHandling.handleIntercept(intercept,
+                game.getStarMap().getAIFleet(), info, game);
+          } else {
+            handleMissions(game.getStarMap().getAIFleet(), info);
+          }
         }
       }
       game.getStarMap().setAIFleet(info.getFleets().getNext());
@@ -2837,6 +2931,7 @@ public class AITurnView extends BlackPanel {
   public boolean handleAiTurn() {
     if (game.getStarMap().getAIFleet() == null) {
       game.getStarMap().handleAIResearchAndPlanets();
+      searchForInterceptFleets();
       game.getStarMap().handleDiplomaticDelegacies();
       game.getStarMap().handleFakingMilitarySize();
     } else {

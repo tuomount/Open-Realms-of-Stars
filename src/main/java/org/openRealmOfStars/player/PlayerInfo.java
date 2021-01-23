@@ -190,6 +190,12 @@ public class PlayerInfo {
    * Ruler of the realm.
    */
   private Leader ruler;
+
+  /**
+   * Enemy fleet which should intercepted. These will handled only on AI turn.
+   * These will not be saved into save game data.
+   */
+  private ArrayList<Fleet> interceptableFleets;
   /**
    * Uncharted map sector, only suns are visible
    */
@@ -1884,5 +1890,33 @@ public class PlayerInfo {
       result = 10;
     }
     return result;
+  }
+  /**
+   * Get intercetable fleets.
+   * @return the interceptableFleets
+   */
+  public ArrayList<Fleet> getInterceptableFleets() {
+    if (interceptableFleets == null) {
+      interceptableFleets = new ArrayList<>();
+    }
+    return interceptableFleets;
+  }
+
+  /**
+   * Add interceptable fleet into list.
+   * @param fleet New fleet to add.
+   */
+  public void addInterceptableFleet(final Fleet fleet) {
+    if (interceptableFleets == null) {
+      interceptableFleets = new ArrayList<>();
+    }
+    interceptableFleets.add(fleet);
+  }
+
+  /**
+   * Initialized interceptable fleet list.
+   */
+  public void cleanInterceptableFleetList() {
+    interceptableFleets = new ArrayList<>();
   }
 }

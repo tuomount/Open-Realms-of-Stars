@@ -15,6 +15,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.KarmaType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
 *
@@ -136,6 +137,52 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
+    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
+    System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
+    System.out.println(newsData[newsData.length - 1].getNewsText());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRunFullGameMediumWith8Realms() {
+    System.gc();
+    Game game = new Game(false);
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(8);
+    config.setSize(128, 2);
+    config.setScoringVictoryTurns(400);
+    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    game.setGalaxyConfig(config);
+    game.setPlayerInfo();
+    game.makeNewGame(false);
+    game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
+    do {
+      game.setAITurnView(new AITurnView(game));
+      boolean singleTurnEnd = false;
+      do {
+       singleTurnEnd = game.getAITurnView().handleAiTurn();
+      } while (!singleTurnEnd);
+      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
+    } while (!game.getStarMap().isGameEnded());
+    int planets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int maxPlanets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    for (Planet planet : game.getStarMap().getPlanetList()) {
+      if (planet.getPlanetOwnerIndex() != -1) {
+        planets[planet.getPlanetOwnerIndex()]++;
+      }
+      for (int j = 0; j < game.getPlayers().getCurrentMaxPlayers(); j++) {
+        if (planet.getRadiationLevel() <= game.getPlayers()
+            .getPlayerInfoByIndex(j).getRace().getMaxRad()
+            && planet.getPlanetOwnerIndex() == -1) {
+          maxPlanets[j]++;
+        }
+      }
+    }
+    for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
+      System.out.println(i + ": "
+          + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
+          + " - planets " + planets[i] + "/" + maxPlanets[i]);
+    }
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
     System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
     System.out.println(newsData[newsData.length - 1].getNewsText());

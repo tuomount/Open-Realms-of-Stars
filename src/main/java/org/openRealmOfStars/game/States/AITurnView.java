@@ -132,7 +132,7 @@ public class AITurnView extends BlackPanel {
   /**
    * Limit for colonization missions
    */
-  private static final int LIMIT_COLONIZATIONS = 4;
+  private static final int LIMIT_COLONIZATIONS = 6;
   /**
    * Text for showing human player
    */
@@ -1031,7 +1031,7 @@ public class AITurnView extends BlackPanel {
     if (info != null && !info.isHuman()) {
       ArrayList<Planet> planets = game.getStarMap().getPlanetList();
       int colonizations = info.getMissions().getNumberOfMissionTypes(
-          MissionType.COLONIZE);
+          MissionType.COLONIZE, MissionPhase.PLANNING);
       int attacks = info.getMissions().getNumberOfMissionTypes(
           MissionType.ATTACK);
       int maxRad = info.getRace().getMaxRad();
@@ -1053,6 +1053,7 @@ public class AITurnView extends BlackPanel {
               mission.getY()) == null && colonizations < LIMIT_COLONIZATIONS) {
             // No colonize mission for this planet found, so adding it.
             info.getMissions().addHighestPriority(mission);
+            colonizations++;
             mission = info.getMissions().getMission(MissionType.COLONY_EXPLORE,
                 MissionPhase.EXECUTING);
             if (mission != null) {
@@ -1071,6 +1072,7 @@ public class AITurnView extends BlackPanel {
               MissionPhase.PLANNING, planet.getCoordinate());
           if (info.getMissions().getColonizeMission(mission.getX(),
               mission.getY()) == null && colonizations < LIMIT_COLONIZATIONS) {
+            colonizations++;
             // No colonize mission for this planet found, so adding it.
             info.getMissions().addHighestPriority(mission);
           }

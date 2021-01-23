@@ -1006,15 +1006,17 @@ public final class PlanetHandling {
    * @param info Player who is about to build ship.
    * @param map Starmp
    * @param attitude Player attitude
+   * @param planet Player building colonyship
    * @return Score of the colony ship.
    */
   protected static int scoreColonyShip(final int preScore, final Ship ship,
-      final PlayerInfo info, final StarMap map, final Attitude attitude) {
+      final PlayerInfo info, final StarMap map, final Attitude attitude,
+      final Planet planet) {
     int score = preScore;
     if (ship.isColonyModule()) {
       // Colony ship should be built only on request
-      Mission mission = info.getMissions().getMission(MissionType.COLONIZE,
-          MissionPhase.PLANNING);
+      Mission mission = info.getMissions().getBestColonizeMissionPlanning(map,
+          info, planet.getCoordinate());
       if (mission != null) {
         Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(),
             mission.getY());
@@ -1035,6 +1037,8 @@ public final class PlanetHandling {
         if (map.getGameLengthState() == GameLengthState.MIDDLE_GAME) {
           score = score + 10;
         }
+        score = score + info.getMissions().getNumberOfMissionTypes(
+            MissionType.COLONIZE, MissionPhase.PLANNING) * 5;
       } else {
         score = -1;
       }
@@ -1148,7 +1152,19 @@ public final class PlanetHandling {
         }
         if (ship.isColonyModule()) {
           // Colony ship should be built only on request
-          score = scoreColonyShip(score, ship, info, map, attitude);
+          if (planet.getTotalPopulation() > 4) {
+            score = score + 30;
+          }
+          if (planet.getTotalPopulation() > 8) {
+            score = score + 30;
+          }
+          if (planet.getTotalPopulation() > 12) {
+            score = score + 30;
+          }
+          score = scoreColonyShip(score, ship, info, map, attitude, planet);
+          if (planet.getTotalPopulation() == 1) {
+            score = -1;
+          }
         }
         if (ship.hasBombs() && info.getMissions().getGatherMission(
             Mission.BOMBER_TYPE) != null) {

@@ -53,7 +53,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -556,22 +556,33 @@ public final class MissionHandling {
           game.getStarMap().getHistory().addEvent(event);
           planet.eventActivation();
         } else {
-          Planet newTarget = findFreeColonizablePlanet(info,
-              game.getStarMap().getPlanetList(), fleet);
-          if (newTarget != null) {
-            mission.setTarget(newTarget.getCoordinate());
+          Mission planningColony = info.getMissions()
+              .getBestColonizeMissionPlanning(game.getStarMap(),
+              info, fleet.getCoordinate());
+          if (planningColony != null) {
+            mission.setTarget(new Coordinate(planningColony.getX(),
+                planningColony.getY()));
             mission.setPhase(MissionPhase.TREKKING);
             fleet.setRoute(null);
+            info.getMissions().remove(planningColony);
           } else {
-            Planet homePort = game.getStarMap().getClosestHomePort(info,
-                fleet.getCoordinate());
-            if (homePort != null) {
+            Planet newTarget = findFreeColonizablePlanet(info,
+                game.getStarMap().getPlanetList(), fleet);
+            if (newTarget != null) {
+              mission.setTarget(newTarget.getCoordinate());
+              mission.setPhase(MissionPhase.TREKKING);
               fleet.setRoute(null);
-              mission.setTarget(homePort.getCoordinate());
-              mission.setTargetPlanet(homePort.getName());
-              mission.setMissionTime(0);
-              mission.setPhase(MissionPhase.PLANNING);
-              mission.setType(MissionType.MOVE);
+            } else {
+              Planet homePort = game.getStarMap().getClosestHomePort(info,
+                  fleet.getCoordinate());
+              if (homePort != null) {
+                fleet.setRoute(null);
+                mission.setTarget(homePort.getCoordinate());
+                mission.setTargetPlanet(homePort.getName());
+                mission.setMissionTime(0);
+                mission.setPhase(MissionPhase.PLANNING);
+                mission.setType(MissionType.MOVE);
+              }
             }
           }
         }

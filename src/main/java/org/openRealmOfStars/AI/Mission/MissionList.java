@@ -1,7 +1,9 @@
 package org.openRealmOfStars.AI.Mission;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.MissionRepository;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -133,6 +135,57 @@ public class MissionList {
   }
 
   /**
+   * Get best colonize mission at planning phase
+   * @param map StarMap
+   * @param info Realm which is handling colonization.
+   * @param coordinate can be null. Coordinate where to start looking.
+   * @return Mission or null
+   */
+  public Mission getBestColonizeMissionPlanning(final StarMap map,
+      final PlayerInfo info, final Coordinate coordinate) {
+    int totalValue = 0;
+    Mission result = null;
+    int maxRad = info.getRace().getMaxRad();
+    if (info.getTechList().isTech("Radiation dampener")) {
+      maxRad++;
+    }
+    if (info.getTechList().isTech("Radiation well")) {
+      maxRad++;
+    }
+    for (Mission mission : missions) {
+      if (mission.getType() == MissionType.COLONIZE
+          && mission.getPhase() == MissionPhase.PLANNING) {
+        Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(),
+            mission.getY());
+        int value = (colonPlanet.getGroundSize() - 6) * 10;
+        if (coordinate != null) {
+          double dist = coordinate.calculateDistance(
+              colonPlanet.getCoordinate());
+          if (dist < 10) {
+            value = value + 40;
+          } else  if (dist < 15) {
+            value = value + 20;
+          } else  if (dist > 40) {
+            value = value - 20;
+          }
+        }
+        if (info.getRace() == SpaceRace.CHIRALOIDS) {
+          value = value + colonPlanet.getRadiationLevel() * 2;
+        } else {
+          value = value - colonPlanet.getRadiationLevel();
+          if (colonPlanet.getRadiationLevel() > maxRad) {
+            value = 0;
+          }
+        }
+        if (value > totalValue) {
+          result = mission;
+          totalValue = value;
+        }
+      }
+    }
+    return result;
+  }
+  /**
    * Find a colonize mission for certain planet
    * @param x Planet X coordinate
    * @param y Planet Y coordinate
@@ -245,6 +298,24 @@ public class MissionList {
     int count = 0;
     for (Mission mission : missions) {
       if (mission.getType() == type) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  /**
+   * Calculate number of certain mission types. Both type and phase must match.
+   * @param type Mission types to count
+   * @param phase Mission phases to count
+   * @return number of missions
+   */
+  public int getNumberOfMissionTypes(final MissionType type,
+      final MissionPhase phase) {
+    int count = 0;
+    for (Mission mission : missions) {
+      if (mission.getType() == type
+          && mission.getPhase() == phase) {
         count++;
       }
     }

@@ -710,27 +710,27 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
-      return 30;
+      return 50;
     case MECHIONS:
-      return 30;
+      return 50;
     case SPORKS:
-      return 28;
+      return 48;
     case GREYANS:
-      return 35;
+      return 55;
     case CENTAURS:
-      return 30;
+      return 50;
     case MOTHOIDS:
-      return 32;
+      return 52;
     case TEUTHIDAES:
-      return 35;
+      return 55;
     case SCAURIANS:
-      return 35;
+      return 55;
     case HOMARIANS:
-      return 35;
+      return 55;
     case CHIRALOIDS:
-      return 33;
+      return 53;
     default:
-      return 30;
+      return 50;
     }
   }
 

@@ -913,7 +913,7 @@ public class AITurnView extends BlackPanel {
       int maxPlayer = game.getPlayers().getCurrentMaxRealms();
       for (int i = 0; i < maxPlayer; i++) {
         PlayerInfo fleetOwner = game.getPlayers().getPlayerInfoByIndex(i);
-        if (fleetOwner != info) {
+        if (fleetOwner != info && info.getDiplomacy().isWar(i)) {
           int numberOfFleets = fleetOwner.getFleets().getNumberOfFleets();
           for (int j = 0; j < numberOfFleets; j++) {
             Fleet fleet = fleetOwner.getFleets().getByIndex(j);
@@ -926,10 +926,7 @@ public class AITurnView extends BlackPanel {
                   fleet.getX(), fleet.getY());
               if (culture.getHighestCulture() == game.getStarMap()
                   .getAiTurnNumber()) {
-                int fleetOwnerIndex = game.getPlayers().getIndex(fleetOwner);
-                if (info.getDiplomacy().isWar(fleetOwnerIndex)) {
-                  info.addInterceptableFleet(fleet);
-                }
+                info.addInterceptableFleet(fleet);
               }
             }
           }
@@ -1211,6 +1208,25 @@ public class AITurnView extends BlackPanel {
             if (mission != null
                 && mission.getType() == MissionType.DEFEND
                 && mission.getPhase() == MissionPhase.EXECUTING) {
+              Planet planet = map.getPlanetByCoordinate(origin.getX(),
+                  origin.getY());
+              if (planet != null) {
+                // Defending fleet will not leave post if there is
+                // another attacking fleet too close the planet
+                for (Fleet attacker : info.getInterceptableFleets()) {
+                  if (fleet != attacker) {
+                    int topSpeed = attacker.getFleetFtlSpeed();
+                    if (attacker.getFleetSpeed() > topSpeed) {
+                      topSpeed = attacker.getFleetSpeed();
+                    }
+                    if (attacker.getCoordinate().calculateDistance(
+                        planet.getCoordinate()) < topSpeed) {
+                      // Another fleet is too close
+                      return null;
+                    }
+                  }
+                }
+              }
               mission.setPhase(MissionPhase.TREKKING);
             }
             if (mission != null

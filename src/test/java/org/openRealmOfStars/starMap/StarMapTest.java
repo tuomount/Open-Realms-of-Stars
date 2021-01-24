@@ -1466,4 +1466,28 @@ public class StarMapTest {
     String str = map.generateNewArtificialPlanetName();
     assertEquals(true, str.contains(" 2"));
   }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCenterOfRealm() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(50);
+    Mockito.when(config.getSizeY()).thenReturn(50);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_BORDER);
+    Mockito.when(config.getScoringVictoryTurns()).thenReturn(400);
+    Mockito.when(config.getScoreLimitCulture()).thenReturn(2);
+    Mockito.when(config.getScoreLimitConquer()).thenReturn(0);
+    Mockito.when(config.getScoreLimitResearch()).thenReturn(4);
+    Mockito.when(config.getScoreLimitDiplomacy()).thenReturn(1);
+
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
+
+    StarMap map = new StarMap(config, players);
+    Coordinate coord = map.calculateCenterOfRealm(0);
+    assertEquals(false, coord.getX() != map.getMaxX() / 2);
+    assertEquals(false, coord.getY() != map.getMaxY() / 2);
+  }
 }

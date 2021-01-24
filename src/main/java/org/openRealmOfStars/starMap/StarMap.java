@@ -4257,4 +4257,44 @@ public class StarMap {
     }
     return null;
   }
+
+  /**
+   * Calculate center of realm.
+   * @param index Realm index
+   * @return Center of realm, or if not found then center of galaxy.
+   */
+  public Coordinate calculateCenterOfRealm(final int index) {
+    Coordinate center = new Coordinate(maxX / 2, maxY / 2);
+    if (index >= 0 && index < players.getCurrentMaxRealms()) {
+      int divider = 0;
+      int xSum = 0;
+      int ySum = 0;
+      for (Planet planet : planetList) {
+        if (planet.getPlanetOwnerIndex() == index) {
+          int mult = planet.getCulture() + 1;
+          xSum = xSum + planet.getX() * mult;
+          ySum = ySum + planet.getY() * mult;
+          divider = divider + mult;
+        }
+      }
+      PlayerInfo info = getPlayerByIndex(index);
+      if (info != null) {
+        for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
+          Fleet fleet = info.getFleets().getByIndex(index);
+          if (fleet.isStarBaseDeployed() && fleet.getCulturalValue() > 0) {
+            int mult = fleet.getCulturalValue();
+            xSum = xSum + fleet.getX() * mult;
+            ySum = ySum + fleet.getY() * mult;
+            divider = divider + mult;
+          }
+        }
+      }
+      if (divider > 0) {
+        xSum = xSum / divider;
+        ySum = ySum / divider;
+        center = new Coordinate(xSum, ySum);
+      }
+    }
+    return center;
+  }
 }

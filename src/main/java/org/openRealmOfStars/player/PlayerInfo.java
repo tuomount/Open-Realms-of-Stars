@@ -197,6 +197,12 @@ public class PlayerInfo {
    */
   private ArrayList<Fleet> interceptableFleets;
   /**
+   * Center of realm based on culture in galaxy.
+   * This is cached for realm, since calculation
+   * can be rather expensive.
+   */
+  private Coordinate centerRealm;
+  /**
    * Uncharted map sector, only suns are visible
    */
   public static final byte UNCHARTED = 0;
@@ -1918,5 +1924,20 @@ public class PlayerInfo {
    */
   public void cleanInterceptableFleetList() {
     interceptableFleets = new ArrayList<>();
+  }
+  /**
+   * Get Center of realm. This will return
+   * cached value.
+   * @return the centerRealm
+   */
+  public Coordinate getCenterRealm() {
+    return centerRealm;
+  }
+  /**
+   * Set center of realm.
+   * @param centerRealm the centerRealm to set
+   */
+  public void setCenterRealm(final Coordinate centerRealm) {
+    this.centerRealm = centerRealm;
   }
 }

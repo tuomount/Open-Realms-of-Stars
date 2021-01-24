@@ -2321,6 +2321,8 @@ public class StarMap {
       return;
     }
     if (info != null && !info.isHuman()) {
+      Coordinate coord = calculateCenterOfRealm(aiTurnNumber);
+      info.setCenterRealm(coord);
       int exploreMissions = 0;
       int extraExploring = 0;
       if (info.getStrategy() == WinningStrategy.POPULATION) {
@@ -4281,7 +4283,8 @@ public class StarMap {
       if (info != null) {
         for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
           Fleet fleet = info.getFleets().getByIndex(index);
-          if (fleet.isStarBaseDeployed() && fleet.getCulturalValue() > 0) {
+          if (fleet != null && fleet.isStarBaseDeployed()
+              && fleet.getCulturalValue() > 0) {
             int mult = fleet.getCulturalValue();
             xSum = xSum + fleet.getX() * mult;
             ySum = ySum + fleet.getY() * mult;

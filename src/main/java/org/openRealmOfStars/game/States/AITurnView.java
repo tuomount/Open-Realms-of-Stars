@@ -1021,6 +1021,78 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
+   * Find best colony mission for realm.
+   * @param colonyMissions Array list of possible colony missions.
+   * @param info Realm which is selecting.
+   */
+  private void findBestColonyMission(
+      final ArrayList<Mission> colonyMissions, final PlayerInfo info) {
+    double bestDistance = 9999;
+    Mission bestMission = null;
+    for (Mission mission : colonyMissions) {
+      double dist = info.getCenterRealm().calculateDistance(
+          new Coordinate(mission.getX(), mission.getY()));
+      if (dist < bestDistance) {
+        bestMission = mission;
+        bestDistance = dist;
+      }
+    }
+    if (bestMission != null) {
+      info.getMissions().addHighestPriority(bestMission);
+      Mission mission = info.getMissions().getMission(
+          MissionType.COLONY_EXPLORE, MissionPhase.EXECUTING);
+      if (mission != null) {
+        // Colony ship was exploring, calling it back to home
+        mission.setPhase(MissionPhase.TREKKING);
+      }
+    }
+  }
+
+  /**
+   * Find closest planet from list which is closest for coordinate
+   * @param planets Array list of possible planets.
+   * @param coordinate Coordinate where to calculate distance
+   * @return Closest planet or null if list was empty.
+   */
+  private Planet findClosestPlanet(
+      final ArrayList<Planet> planets, final Coordinate coordinate) {
+    double bestDistance = 9999;
+    Planet bestPlanet = null;
+    for (Planet planet : planets) {
+      double dist = coordinate.calculateDistance(planet.getCoordinate());
+      if (dist < bestDistance) {
+        bestPlanet = planet;
+        bestDistance = dist;
+      }
+    }
+    return bestPlanet;
+  }
+
+  /**
+   * Find best(Closest) planet where to attack.
+   * @param planets Planet list
+   * @param info Realm looking for planet
+   */
+  private void findBestAttackPlanet(final ArrayList<Planet> planets,
+      final PlayerInfo info) {
+    Planet planet = findClosestPlanet(planets, info.getCenterRealm());
+    if (planet != null) {
+      addAttackMission(planet, info);
+    }
+  }
+  /**
+   * Find best(Closest) planet where to trade.
+   * @param planets Planet list
+   * @param info Realm looking for planet
+   */
+  private void findBestTradePlanet(final ArrayList<Planet> planets,
+      final PlayerInfo info) {
+    Planet planet = findClosestPlanet(planets, info.getCenterRealm());
+    if (planet != null) {
+      addTradeMission(planet, info);
+    }
+  }
+  /**
    * Search newly found planets for different missions.
    * This methods locates colonizable planets, attackable planets
    * and planets with to trade.
@@ -1041,6 +1113,9 @@ public class AITurnView extends BlackPanel {
       if (info.getTechList().isTech("Radiation well")) {
         maxRad++;
       }
+      ArrayList<Mission> colonyMissions = new ArrayList<>();
+      ArrayList<Planet> attackMissions = new ArrayList<>();
+      ArrayList<Planet> tradeMissions = new ArrayList<>();
       for (Planet planet : planets) {
         if (planet.getTotalRadiationLevel() <= maxRad
             && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
@@ -1052,14 +1127,7 @@ public class AITurnView extends BlackPanel {
           if (info.getMissions().getColonizeMission(mission.getX(),
               mission.getY()) == null && colonizations < LIMIT_COLONIZATIONS) {
             // No colonize mission for this planet found, so adding it.
-            info.getMissions().addHighestPriority(mission);
-            colonizations++;
-            mission = info.getMissions().getMission(MissionType.COLONY_EXPLORE,
-                MissionPhase.EXECUTING);
-            if (mission != null) {
-              // Colony ship was exploring, calling it back to home
-              mission.setPhase(MissionPhase.TREKKING);
-            }
+            colonyMissions.add(mission);
           }
         }
         if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
@@ -1072,9 +1140,7 @@ public class AITurnView extends BlackPanel {
               MissionPhase.PLANNING, planet.getCoordinate());
           if (info.getMissions().getColonizeMission(mission.getX(),
               mission.getY()) == null && colonizations < LIMIT_COLONIZATIONS) {
-            colonizations++;
-            // No colonize mission for this planet found, so adding it.
-            info.getMissions().addHighestPriority(mission);
+            colonyMissions.add(mission);
           }
         }
         if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
@@ -1088,7 +1154,7 @@ public class AITurnView extends BlackPanel {
                 ownerIndex);
             if (list != null && list.isBonusType(DiplomacyBonusType.IN_WAR)
                 && attacks < LIMIT_ATTACKS) {
-              addAttackMission(planet, info);
+              attackMissions.add(planet);
             } else {
               if (owner.isHuman()) {
                 boolean nothingToTrade = info.getDiplomacy()
@@ -1109,7 +1175,7 @@ public class AITurnView extends BlackPanel {
                   || list.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT))) {
                 // Got new map part maybe in trade and found planet owned by
                 // player which is being in alliance
-                addTradeMission(planet, info);
+                tradeMissions.add(planet);
               }
             }
           }
@@ -1125,7 +1191,7 @@ public class AITurnView extends BlackPanel {
                 && attacks < LIMIT_ATTACKS) {
               // Got new map part maybe in trade and found planet owned by
               // player which is being at war now.
-              addAttackMission(planet, info);
+              attackMissions.add(planet);
             }
             if (list != null
                 && (list.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
@@ -1133,7 +1199,7 @@ public class AITurnView extends BlackPanel {
                 || list.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT))) {
               // Got new map part maybe in trade and found planet owned by
               // player which is being in alliance
-              addTradeMission(planet, info);
+              tradeMissions.add(planet);
             }
           }
           if (info.getStrategy() == WinningStrategy.CONQUER
@@ -1172,6 +1238,9 @@ public class AITurnView extends BlackPanel {
           }
         } // End of owned planet handling
       } // End of for loop of planets
+      findBestColonyMission(colonyMissions, info);
+      findBestAttackPlanet(attackMissions, info);
+      findBestTradePlanet(tradeMissions, info);
     }
   }
 

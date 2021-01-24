@@ -766,6 +766,54 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
+   * Find closest coordinate
+   * @param coordinates List of coordinates
+   * @param coordinate Coordinate where to start looking
+   * @return Closest coordinate or null
+   */
+  private Coordinate findClosestCoordinate(
+      final ArrayList<Coordinate> coordinates, final Coordinate coordinate) {
+    double bestDistance = 9999;
+    Coordinate bestCoord = null;
+    for (Coordinate coord : coordinates) {
+      double dist = coordinate.calculateDistance(coord);
+      if (dist < bestDistance) {
+        bestCoord = coord;
+        bestDistance = dist;
+      }
+    }
+    return bestCoord;
+  }
+  /**
+   * Find best(Closest) coordinate where to deploy starbase
+   * @param coordinates Deep space anchor coordinates in list
+   * @param info Realm looking for DSA
+   */
+  private void findBestDeployStarbase(final ArrayList<Coordinate> coordinates,
+      final PlayerInfo info) {
+    Coordinate coord = findClosestCoordinate(coordinates,
+        info.getCenterRealm());
+    if (coord != null) {
+      Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
+          MissionPhase.PLANNING, coord);
+      info.getMissions().add(mission);
+    }
+  }
+  /**
+   * Find best(Closest) coordinate where to destroy starbase
+   * @param coordinates Deep space anchor coordinates in list
+   * @param info Realm looking for DSA
+   */
+  private void findBestDestroyStarbase(final ArrayList<Coordinate> coordinates,
+      final PlayerInfo info) {
+    Coordinate coord = findClosestCoordinate(coordinates,
+        info.getCenterRealm());
+    if (coord != null) {
+      addDestroyStarbaseMission(coord, info);
+    }
+  }
+
+  /**
    * Search deep space anchors
    */
   public void searchDeepSpaceAnchors() {
@@ -781,6 +829,8 @@ public class AITurnView extends BlackPanel {
         && destroyStarbases >= LIMIT_DESTROY_STARBASES) {
       return;
     }
+    ArrayList<Coordinate> deployStarbase = new ArrayList<>();
+    ArrayList<Coordinate> destroyStarbase = new ArrayList<>();
     for (int y = 0; y < map.getMaxY(); y++) {
       for (int x = 0; x < map.getMaxX(); x++) {
         Tile tile = map.getTile(x, y);
@@ -789,12 +839,11 @@ public class AITurnView extends BlackPanel {
             && info.getSectorVisibility(new Coordinate(x, y))
             > PlayerInfo.UNCHARTED) {
           if (fleetTiles[x][y] == null) {
-            Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
-                MissionPhase.PLANNING, new Coordinate(x, y));
             if (info.getMissions().getDeployStarbaseMission(x, y) == null
                 && deployStarbases < LIMIT_DEPLOY_STARBASES) {
               // No deploy starbase mission for this planet found, so adding it.
-              info.getMissions().add(mission);
+              Coordinate coord = new Coordinate(x, y);
+              deployStarbase.add(coord);
             }
           } else {
             // There is fleet already in the tile
@@ -805,13 +854,12 @@ public class AITurnView extends BlackPanel {
             if (!fleet.isStarBaseDeployed()
                 && info.getSectorVisibility(new Coordinate(x, y))
                 == PlayerInfo.VISIBLE && infoAt != info) {
-              Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
-                  MissionPhase.PLANNING, new Coordinate(x, y));
               if (info.getMissions().getDeployStarbaseMission(x, y) == null
                   && deployStarbases < LIMIT_DEPLOY_STARBASES) {
                 // No deploy starbase mission for this planet found,
                 // so adding it.
-                info.getMissions().add(mission);
+                Coordinate coord = new Coordinate(x, y);
+                deployStarbase.add(coord);
               }
             } else if (fleet.isStarBaseDeployed()
                   && info.getSectorVisibility(new Coordinate(x, y))
@@ -821,19 +869,18 @@ public class AITurnView extends BlackPanel {
                     index);
                 if (list.isBonusType(DiplomacyBonusType.IN_WAR)
                     && destroyStarbases < LIMIT_DESTROY_STARBASES) {
-                  addDestroyStarbaseMission(new Coordinate(x, y), info);
+                  destroyStarbase.add(new Coordinate(x, y));
                 }
             } else if (fleet.isStarBaseDeployed()
                 && info.getSectorVisibility(new Coordinate(x, y))
                 == PlayerInfo.VISIBLE && infoAt == info) {
-              Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
-                  MissionPhase.PLANNING, new Coordinate(x, y));
               if (info.getMissions().getDeployStarbaseMission(x, y) == null
                   && deployStarbases < LIMIT_DEPLOY_STARBASES
                   && info.isBiggerStarbases()
                   && fleet.getNumberOfShip() < Fleet.MAX_STARBASE_SIZE) {
                 // No secondary starbase deploy mission found for this anchor
-                info.getMissions().add(mission);
+                Coordinate coord = new Coordinate(x, y);
+                deployStarbase.add(coord);
               }
             } else if (fleet.isStarBaseDeployed()
                 && info.getSectorVisibility(new Coordinate(x, y))
@@ -850,7 +897,7 @@ public class AITurnView extends BlackPanel {
                     && destroyStarbases < LIMIT_DESTROY_STARBASES) {
                   // AI already has war against that player so,
                   // adding destroy mission
-                  addDestroyStarbaseMission(new Coordinate(x, y), info);
+                  destroyStarbase.add(new Coordinate(x, y));
                 }
               }
             }
@@ -858,6 +905,8 @@ public class AITurnView extends BlackPanel {
         }
       }
     }
+    findBestDeployStarbase(deployStarbase, info);
+    findBestDestroyStarbase(destroyStarbase, info);
   }
 
   /**

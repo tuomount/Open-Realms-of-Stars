@@ -58,7 +58,7 @@ import org.openRealmOfStars.utilities.Logger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -546,6 +546,7 @@ public class PlanetBombingView extends BlackPanel {
             }
           }
         }
+        infoPanel.updateShip();
       }
     } else {
       textLogger.addLog("Planet does not have planetary turrets...");
@@ -882,6 +883,9 @@ public class PlanetBombingView extends BlackPanel {
       }
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_TARGET)) {
+      if (!allAi && game != null) {
+        game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
+      }
       nextShip();
     }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)

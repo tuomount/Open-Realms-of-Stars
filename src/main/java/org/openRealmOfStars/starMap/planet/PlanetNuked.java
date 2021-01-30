@@ -3,7 +3,7 @@ package org.openRealmOfStars.starMap.planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -38,12 +38,17 @@ public class PlanetNuked {
   private String text;
 
   /**
+   * Has nuking actually happened.
+   */
+  private boolean nuked;
+  /**
    * Constructor for planet nuked.
    */
   public PlanetNuked() {
     populationKilled = 0;
     buildingsDestroyed = 0;
     text = null;
+    nuked = false;
   }
 
   /**
@@ -60,6 +65,9 @@ public class PlanetNuked {
    */
   public void setPopulationKilled(final int populationKilled) {
     this.populationKilled = populationKilled;
+    if (this.populationKilled > 0) {
+      nuked = true;
+    }
   }
 
   /**
@@ -76,6 +84,9 @@ public class PlanetNuked {
    */
   public void setBuildingsDestroyed(final int buildingsDestroyed) {
     this.buildingsDestroyed = buildingsDestroyed;
+    if (this.buildingsDestroyed > 0) {
+      nuked = true;
+    }
   }
 
   /**
@@ -94,4 +105,11 @@ public class PlanetNuked {
     this.text = text;
   }
 
+  /**
+   * Has nuking actually happened?
+   * @return True if nuking actually happened.
+   */
+  public boolean isNuked() {
+    return nuked;
+  }
 }

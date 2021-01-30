@@ -2772,6 +2772,7 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         SoundPlayer.playMenuSound();
+        planetBombingView.handleLastNewsAndReputation();
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);
           return;

@@ -46,6 +46,7 @@ import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
@@ -217,6 +218,10 @@ public class PlanetBombingView extends BlackPanel {
    */
   private PlanetNuked nuked;
   /**
+   * News data;
+   */
+  private NewsData newsData;
+  /**
    * Constructor for PLanet bombing view. This view is used when
    * player is conquering planet with bombs and/or troops.
    * @param planet Planet to be conquered
@@ -237,6 +242,7 @@ public class PlanetBombingView extends BlackPanel {
     this.fleet = fleet;
     this.attacker = attacker;
     this.attackPlayerIndex = attackerPlayerIndex;
+    this.newsData = null;
     nuked = new PlanetNuked();
     MusicPlayer.play(MusicPlayer.FIGHT_THEME01);
     aiControlled = false;
@@ -624,12 +630,27 @@ public class PlanetBombingView extends BlackPanel {
     }
   }
   /**
+   * Planet conquered.
+   */
+  private static final int CONQUERED = 1;
+  /**
+   * Planet only bombed.
+   */
+  private static final int ONLY_BOMBED = 2;
+  /**
+   * No effect.
+   */
+  private static final int NO_EFFECT = 0;
+  /**
    * Attack with bombs or troops. This handles killing/destroying
    * the buildings and animation.
-   * @return true if planet was conquered
+   * @return int 1 for conquered,
+   *             2 only for bombing
+   *             0 that nothing happened.
    */
-  public boolean attackBombOrTroops() {
+  private int attackBombOrTroops() {
     boolean conquered = false;
+    boolean bombed = false;
     String attackType = "conquest";
     String reason = " conquest of planet";
     if (usedComponentIndex != -1) {
@@ -649,6 +670,7 @@ public class PlanetBombingView extends BlackPanel {
             textLogger.addLog(ship.getName() + " nukes the planet!");
             attackType = "nuking";
             reason = " nuclear attack";
+            bombed = true;
             if (planet.getTotalPopulation() == 0) {
               planet.setPlanetOwner(-1, null);
             }
@@ -676,6 +698,7 @@ public class PlanetBombingView extends BlackPanel {
                     ship.getName() + " misses population and buildings...");
               }
             }
+            bombed = true;
             attackType = "bombing";
             reason = " massive orbital bombing";
           } else {
@@ -723,7 +746,13 @@ public class PlanetBombingView extends BlackPanel {
       }
 
     }
-    return conquered;
+    if (conquered) {
+      return CONQUERED;
+    }
+    if (bombed) {
+      return ONLY_BOMBED;
+    }
+    return NO_EFFECT;
   }
 
   /**
@@ -757,20 +786,18 @@ public class PlanetBombingView extends BlackPanel {
           if (usedComponentIndex != -1) {
             oneAttackFound = true;
             PlayerInfo defender = planet.getPlanetPlayerInfo();
-            if (attackBombOrTroops()) {
+            int result = attackBombOrTroops();
+            if (result == CONQUERED) {
               // Planet conquered
               exitLoop = true;
               if (starMap != null) {
-                NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
+                newsData = NewsFactory.makePlanetConqueredNews(attacker,
                     defender, planet, nuked.getText());
-                starMap.getNewsCorpData().addNews(news);
-                EventOnPlanet event = new EventOnPlanet(
-                    EventType.PLANET_CONQUERED,
-                    planet.getCoordinate(), planet.getName(),
-                    starMap.getPlayerList().getIndex(attacker));
-                event.setText(news.getNewsText());
-                starMap.getHistory().addEvent(event);
               }
+            }
+            if (result == ONLY_BOMBED && starMap != null) {
+              newsData = NewsFactory.makePlanetBombedNews(attacker,
+                  defender, planet, nuked.getText());
             }
             removeDestroyedShip();
             skipAnimation();
@@ -793,6 +820,7 @@ public class PlanetBombingView extends BlackPanel {
         troops = false;
       }
     } while (!exitLoop);
+    handleLastNewsAndReputation();
   }
   /**
    * Handle actions for Planet view.
@@ -807,15 +835,14 @@ public class PlanetBombingView extends BlackPanel {
           nextShip();
         } else {
           PlayerInfo defender = planet.getPlanetPlayerInfo();
-          if (attackBombOrTroops() && starMap != null) {
-            NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
+          int result = attackBombOrTroops();
+          if (result == CONQUERED && starMap != null) {
+            newsData = NewsFactory.makePlanetConqueredNews(attacker,
                 defender, planet, nuked.getText());
-            starMap.getNewsCorpData().addNews(news);
-            EventOnPlanet event = new EventOnPlanet(EventType.PLANET_CONQUERED,
-                planet.getCoordinate(), planet.getName(),
-                starMap.getPlayerList().getIndex(attacker));
-            event.setText(news.getNewsText());
-            starMap.getHistory().addEvent(event);
+          }
+          if (result == ONLY_BOMBED && starMap != null) {
+            newsData = NewsFactory.makePlanetBombedNews(attacker,
+                defender, planet, nuked.getText());
           }
         }
         updatePanel();
@@ -841,20 +868,18 @@ public class PlanetBombingView extends BlackPanel {
           if (usedComponentIndex != -1) {
             aiOneAttackFound = true;
             PlayerInfo defender = planet.getPlanetPlayerInfo();
-            if (attackBombOrTroops()) {
+            int result = attackBombOrTroops();
+            if (result == CONQUERED) {
               // Planet conquered
               aiExitLoop = true;
               if (starMap != null) {
-                NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
+                newsData = NewsFactory.makePlanetConqueredNews(attacker,
                     defender, planet, nuked.getText());
-                starMap.getNewsCorpData().addNews(news);
-                EventOnPlanet event = new EventOnPlanet(
-                    EventType.PLANET_CONQUERED, planet.getCoordinate(),
-                    planet.getName(),
-                    starMap.getPlayerList().getIndex(attacker));
-                event.setText(news.getNewsText());
-                starMap.getHistory().addEvent(event);
               }
+            }
+            if (result == ONLY_BOMBED && starMap != null) {
+              newsData = NewsFactory.makePlanetBombedNews(attacker,
+                  defender, planet, nuked.getText());
             }
           }
           if (aiComponentIndex < ship.getNumberOfComponents() - 1) {
@@ -918,5 +943,23 @@ public class PlanetBombingView extends BlackPanel {
    */
   public void skipAnimation() {
     imgBase.setAnimation(null);
+  }
+
+  /**
+   * Handle last news about planet conquer/bombing and give nuking reputation
+   * if needed.
+   */
+  public void handleLastNewsAndReputation() {
+    if (starMap != null && newsData != null) {
+      if (nuked.isNuked()) {
+        StarMapUtilities.addNukeReputation(starMap, attacker);
+      }
+    starMap.getNewsCorpData().addNews(newsData);
+    EventOnPlanet event = new EventOnPlanet(EventType.PLANET_CONQUERED,
+        planet.getCoordinate(), planet.getName(),
+        starMap.getPlayerList().getIndex(attacker));
+    event.setText(newsData.getNewsText());
+    starMap.getHistory().addEvent(event);
+    }
   }
 }

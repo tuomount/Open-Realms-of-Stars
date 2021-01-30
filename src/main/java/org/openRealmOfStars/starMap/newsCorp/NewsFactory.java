@@ -1843,11 +1843,13 @@ public final class NewsFactory {
         break;
       }
       case 1: {
-        instructions.addText("TRIUMPH ON " + planet.getName() + "!");
+        instructions.addText("TRIUMPH ON "
+            + planet.getName().toUpperCase() + "!");
         break;
       }
       case 2: {
-        instructions.addText(planet.getName() + " IS OVERTHROWN!");
+        instructions.addText(planet.getName().toUpperCase()
+            + " IS OVERTHROWN!");
         break;
       }
     }
@@ -1878,6 +1880,69 @@ public final class NewsFactory {
         sb.append(attacker.getEmpireName());
         sb.append(". ");
       }
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
+   * Attacker bombss defender planet
+   * @param attacker Player who is bombing
+   * @param defender Player who is defending
+   * @param planet Which planet was conquered
+   * @param nukeText Null if planet was not nuked.
+   *        Otherwise description about nuke.
+   * @return NewsData
+   */
+  public static NewsData makePlanetBombedNews(final PlayerInfo attacker,
+      final PlayerInfo defender, final Planet planet, final String nukeText) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+        planet.getImageInstructions(),
+        ImageInstruction.SIZE_FULL);
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("PLANET BOMBED!");
+        break;
+      }
+      case 1: {
+        instructions.addText("DEVASTATION ON "
+            + planet.getName().toUpperCase() + "!");
+        break;
+      }
+      case 2: {
+        instructions.addText(planet.getName().toUpperCase() + " IS BOMBED!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(attacker.getEmpireName());
+    sb.append(" made massive orbital bombings on ");
+    sb.append(planet.getName());
+    if (defender != null && planet.getPlanetPlayerInfo() == null) {
+      sb.append(". Defender ");
+      sb.append(defender.getEmpireName());
+      sb.append(" was defeated eventually. ");
+    } else {
+      sb.append(". ");
+    }
+    if (nukeText != null) {
+      sb.append(" ");
+      sb.append(nukeText);
+    }
+    if (defender != null && planet.getPlanetPlayerInfo() == defender) {
+      sb.append(" Not all ");
+      sb.append(defender.getRace().getNameSingle());
+      sb.append(" population were killed during the bombing.");
+    }
+    if (defender != null && planet.getPlanetPlayerInfo() == null) {
+      sb.append(" all ");
+      sb.append(defender.getRace().getNameSingle());
+      sb.append(" population were killed during the bombing.");
     }
     news.setNewsText(sb.toString());
     return news;

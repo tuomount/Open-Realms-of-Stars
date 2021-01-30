@@ -1005,6 +1005,50 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBombPlanet() {
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
+    PlayerInfo defender = Mockito.mock(PlayerInfo.class);
+    Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
+    Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.CARBONWORLD1.getImageInstructions());
+    NewsData news = NewsFactory.makePlanetBombedNews(aggressor, defender, planet, null);
+    assertEquals(true, news.getNewsText().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        defender.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(planet.getName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBombPlanetWithNukes() {
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.SILICONWORLD1.getImageInstructions());
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(9);
+    PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
+    PlayerInfo defender = Mockito.mock(PlayerInfo.class);
+    Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
+    Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
+    NewsData news = NewsFactory.makePlanetBombedNews(aggressor, defender, planet,
+        "nuclear bombs, raised to 9");
+    assertEquals(true, news.getNewsText().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        defender.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(planet.getName()));
+    assertEquals(true, news.getNewsText().contains("nuclear"));
+    assertEquals(true, news.getNewsText().contains("raised to 9"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testCultureVictory() {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);

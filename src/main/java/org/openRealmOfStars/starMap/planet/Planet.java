@@ -2529,8 +2529,6 @@ public class Planet {
       if (buildingsToDestroy < 2) {
         buildingsToDestroy = 2;
       }
-      // Dropping nukes on planet really drops the culture on planet
-      setCulture(getCulture() / 10 - strength);
       buildingsDestroyed = 0;
       for (int i = 0; i < buildingsToDestroy; i++) {
         if (bombOneBuilding()) {

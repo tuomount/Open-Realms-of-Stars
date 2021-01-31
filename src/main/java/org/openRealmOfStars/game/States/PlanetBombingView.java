@@ -244,7 +244,6 @@ public class PlanetBombingView extends BlackPanel {
     this.attackPlayerIndex = attackerPlayerIndex;
     this.newsData = null;
     nuked = new PlanetNuked();
-    MusicPlayer.play(MusicPlayer.FIGHT_THEME01);
     aiControlled = false;
     allAi = false;
     // Background image
@@ -344,6 +343,9 @@ public class PlanetBombingView extends BlackPanel {
           && !planet.getPlanetPlayerInfo().isHuman()) {
         allAi = true;
       }
+    }
+    if (!allAi) {
+      MusicPlayer.play(MusicPlayer.FIGHT_THEME01);
     }
     panel.add(endButton);
     eastPanel.add(panel);

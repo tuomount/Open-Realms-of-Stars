@@ -1054,6 +1054,51 @@ public class PlayerInfo {
   }
 
   /**
+   * Get Best uncharted sector around certain solar system
+   * @param sun Solar system
+   * @param fleet Fleet doing the exploring.
+   * @return PathPoint where to go next or null if no more exploring
+   */
+  public PathPoint getBestUnchartedSector(final Sun sun,
+      final Fleet fleet) {
+    double bestDistance = 999;
+    int bestScore = 0;
+    PathPoint bestPoint = null;
+    int scanner = fleet.getFleetScannerLvl();
+    int sunScanRad = scanner + 2;
+    for (int x = -sunScanRad; x < sunScanRad + 1; x++) {
+      for (int y = -sunScanRad; y < sunScanRad + 1; y++) {
+        Coordinate coordinate = new Coordinate(sun.getCenterX() + x,
+            sun.getCenterY() + y);
+        if (coordinate.isValidCoordinate(maxCoordinate)
+            && (x > 1 || x < -1 || y > 1 || y < -1)
+            && mapData[sun.getCenterX() + x][sun.getCenterY()
+              + y] == UNCHARTED) {
+          double dist = coordinate.calculateDistance(fleet.getCoordinate());
+          if (dist < bestDistance) {
+            double sundist = coordinate.calculateDistance(
+                sun.getCenterCoordinate());
+            int score = 5 - Math.abs((sunScanRad - (int) sundist));
+            if (score > bestScore) {
+              bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
+                  dist);
+              bestScore = score;
+              bestDistance = dist;
+            }
+          }
+        }
+      }
+    }
+    if (bestPoint == null) {
+      if (DiceGenerator.getRandom(1) == 0) {
+        bestPoint = getClosestUnchartedSector(sun, fleet);
+      } else {
+        bestPoint = getUnchartedSector(sun, fleet);
+      }
+    }
+    return bestPoint;
+  }
+  /**
    * Get closest sector to explore in this Solar system.
    * @param sun Solar System
    * @param fleet Fleet doing the exploring

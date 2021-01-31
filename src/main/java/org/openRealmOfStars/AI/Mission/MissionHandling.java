@@ -270,6 +270,33 @@ public final class MissionHandling {
       final PlayerInfo info, final Game game) {
     if (mission != null && mission.getType() == MissionType.EXPLORE) {
       String ignoreSun = null;
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        Sun sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
+            fleet.getY(), info, fleet, ignoreSun);
+        if (sun == null) {
+          Planet home = game.getStarMap().getClosestHomePort(info,
+              fleet.getCoordinate());
+          if (home == null) {
+            info.getMissions().remove(mission);
+            return;
+          }
+          mission.setType(MissionType.MOVE);
+          mission.setTarget(home.getCoordinate());
+          mission.setPhase(MissionPhase.PLANNING);
+          mission.setTargetPlanet(home.getName());
+        } else {
+          if (!sun.getName().equals(mission.getSunName())) {
+            mission.setTarget(sun.getCenterCoordinate());
+            fleet.setRoute(new Route(fleet.getX(), fleet.getY(),
+                mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+            mission.setSunName(sun.getName());
+            mission.setPhase(MissionPhase.TREKKING);
+            // Starting the new exploring mission
+            mission.setMissionTime(0);
+            return;
+          }
+        }
+      }
       if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getRoute() == null) {
         // Fleet has encounter obstacle, taking a detour round it
@@ -336,12 +363,15 @@ public final class MissionHandling {
           } else {
             sun = game.getStarMap().getSunByName(mission.getSunName());
           }
-          PathPoint point = info.getClosestUnchartedSector(sun, fleet);
-          if (DiceGenerator.getRandom(99) < 50) {
-            // Split exploring fleets a bit by selecting
-            // point by another method.
-            point = info.getUnchartedSector(sun, fleet);
-          }
+          PathPoint point = info.getBestUnchartedSector(sun, fleet);
+/*          if (point == null) {
+            point = info.getClosestUnchartedSector(sun, fleet);
+            if (DiceGenerator.getRandom(99) < 50) {
+              // Split exploring fleets a bit by selecting
+              // point by another method.
+              point = info.getUnchartedSector(sun, fleet);
+            }
+          }*/
           if (point != null) {
             mission.setTarget(new Coordinate(point.getX(), point.getY()));
             AStarSearch search = new AStarSearch(game.getStarMap(),

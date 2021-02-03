@@ -198,6 +198,24 @@ public class HistoryView extends BlackPanel {
   }
 
   /**
+   * Get space sector owner.
+   * @param target Where is this sector.
+   * @return PlayerInfo or null if not owned by anybody.
+   */
+  private PlayerInfo getSpaceSectorOwner(final Coordinate target) {
+    int[][] cultMap = map.getHistory().calculateCulture(turnNumber + 1,
+        map);
+    int x = target.getX();
+    int y = target.getY();
+    int cultIndex = cultMap[x][y];
+    if (cultIndex != -1) {
+      PlayerInfo info = map.getPlayerList().getPlayerInfoByIndex(
+          cultIndex);
+      return info;
+    }
+    return null;
+  }
+  /**
    * Update text area with historical information
    */
   public void updateTextArea() {
@@ -218,6 +236,12 @@ public class HistoryView extends BlackPanel {
           if (diplomatic.getPlanetName() != null) {
             startText = "Diplomatic meeting in planet called "
                 + diplomatic.getPlanetName() + ". ";
+          } else {
+            PlayerInfo info = getSpaceSectorOwner(targetCoordinate);
+            if (info != null) {
+              startText = "Diplomatic meeting happened in "
+                  + info.getEmpireName() + " space. ";
+            }
           }
         }
         textArea.setText(startText + diplomatic.getText());
@@ -254,8 +278,14 @@ public class HistoryView extends BlackPanel {
           textArea.setText("Combat happened at orbit of "
               + combat.getPlanetName() + ". " + combat.getText());
         } else {
-          textArea.setText("Combat happened in deep space. "
-              + combat.getText());
+          PlayerInfo info = getSpaceSectorOwner(combat.getCoordinate());
+          if (info != null) {
+            textArea.setText("Combat happened in " + info.getEmpireName()
+                + " space. " + combat.getText());
+          } else {
+            textArea.setText("Combat happened in deep space. "
+                + combat.getText());
+          }
         }
         targetCoordinate = combat.getCoordinate();
       }

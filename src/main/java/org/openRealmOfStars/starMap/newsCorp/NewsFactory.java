@@ -8,6 +8,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
@@ -141,10 +142,23 @@ public final class NewsFactory {
         sb.append(". ");
       }
     } else {
+      String place = "deep space";
+      if (meetingPlace instanceof Fleet) {
+        Fleet fleet = (Fleet) meetingPlace;
+        CulturePower power = map.getSectorCulture(fleet.getCoordinate().getX(),
+            fleet.getCoordinate().getY());
+        int index = power.getHighestCulture();
+        if (index != -1) {
+          PlayerInfo sectorOwner = map.getPlayerByIndex(index);
+          if (sectorOwner != null) {
+            place = sectorOwner.getEmpireName() + " space.";
+          }
+        }
+      }
       if (surpriseAttack) {
-        sb.append("This attack happened in deep space. ");
+        sb.append("This attack happened in " + place + " ");
       } else {
-        sb.append("This meeting happened in deep space. ");
+        sb.append("This meeting happened in " + place + " ");
       }
     }
     if (!casusBelli) {
@@ -1248,8 +1262,6 @@ public final class NewsFactory {
         sb.append(planet.getPlanetPlayerInfo().getEmpireName());
         sb.append(". ");
       }
-    } else {
-      sb.append("This meeting happened in deep space. ");
     }
     Attitude attitude = peaceMaker.getAiAttitude();
     if (attitude == Attitude.AGGRESSIVE) {
@@ -1327,8 +1339,6 @@ public final class NewsFactory {
         sb.append(planet.getPlanetPlayerInfo().getEmpireName());
         sb.append(". ");
       }
-    } else {
-      sb.append("This meeting happened in deep space. ");
     }
     Attitude attitude = offerer.getAiAttitude();
     if (attitude == Attitude.MERCHANTICAL) {
@@ -1512,8 +1522,6 @@ public final class NewsFactory {
         sb.append(planet.getPlanetPlayerInfo().getEmpireName());
         sb.append(". ");
       }
-    } else {
-      sb.append("This meeting happened in deep space. ");
     }
     Attitude attitude = offerer.getAiAttitude();
     if (attitude == Attitude.DIPLOMATIC) {
@@ -1590,8 +1598,6 @@ public final class NewsFactory {
         sb.append(planet.getPlanetPlayerInfo().getEmpireName());
         sb.append(". ");
       }
-    } else {
-      sb.append("This meeting happened in deep space. ");
     }
     Attitude attitude = embargoed.getAiAttitude();
     if (attitude == Attitude.AGGRESSIVE) {
@@ -1667,8 +1673,6 @@ public final class NewsFactory {
         sb.append(planet.getPlanetPlayerInfo().getEmpireName());
         sb.append(". ");
       }
-    } else {
-      sb.append("This meeting happened in deep space. ");
     }
     Attitude attitude = offerer.getAiAttitude();
     if (attitude == Attitude.DIPLOMATIC) {

@@ -4232,7 +4232,7 @@ public class StarMap {
   }
 
   /**
-   * Find closet planet from certain coordinate for certain realm.
+   * Find closest planet from certain coordinate for certain realm.
    * This planet must be visible for searcher.
    * @param coord Coordinate where to start looking.
    * @param realmName Target planet's realm's name
@@ -4256,6 +4256,40 @@ public class StarMap {
         }
       }
       return targetPlanet;
+    }
+    return null;
+  }
+
+  /**
+   * Find closest sector from certain coordinate for certain realm.
+   * This sector must be visible for searcher.
+   * @param coord Coordinate where to start looking.
+   * @param realmName Target planet's realm's name
+   * @param searcher Realm which is searching the planet
+   * @return target coordinate or null
+   */
+  public Coordinate getClosetSectorFromCoordinate(final Coordinate coord,
+      final String realmName, final PlayerInfo searcher) {
+    PlayerInfo info = players.findByName(realmName);
+    Coordinate target = null;
+    if (info != null) {
+      int index = players.getIndex(info);
+      if (index != -1) {
+        int distance = 9999;
+        for (int x = 0; x < getMaxX(); x++) {
+          for (int y = 0; y < getMaxY(); y++) {
+            if (getSectorCulture(x, y).getHighestCulture() == index) {
+              Coordinate possibleTarget = new Coordinate(x, y);
+              int dist = (int) coord.calculateDistance(possibleTarget);
+              if (dist < distance) {
+                target = possibleTarget;
+                distance = dist;
+              }
+            }
+          }
+        }
+        return target;
+      }
     }
     return null;
   }

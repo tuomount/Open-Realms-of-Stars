@@ -880,6 +880,20 @@ public final class MissionHandling {
     if (mission != null
         && mission.getType() == MissionType.DIPLOMATIC_DELEGACY) {
       if (mission.getPhase() == MissionPhase.LOADING) {
+        if (mission.getX() == game.getStarMap().getMaxX() / 2
+            && mission.getY() == game.getStarMap().getMaxY() / 2) {
+          Planet target = game.getStarMap().getClosetPlanetFromCoordinate(
+              fleet.getCoordinate(), mission.getTargetRealmName(), info);
+          if (target != null) {
+            mission.setTarget(target.getCoordinate());
+          } else {
+            Coordinate coord = game.getStarMap().getClosetSectorFromCoordinate(
+                fleet.getCoordinate(), mission.getTargetRealmName(), info);
+            if (coord != null) {
+              mission.setTarget(coord);
+            }
+          }
+        }
         mission.setPhase(MissionPhase.TREKKING);
         mission.setMissionTime(0);
       }
@@ -891,6 +905,20 @@ public final class MissionHandling {
         mission.setMissionTime(0);
       } else if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getRoute() == null) {
+        if (mission.getX() == game.getStarMap().getMaxX() / 2
+            && mission.getY() == game.getStarMap().getMaxY() / 2) {
+          Planet target = game.getStarMap().getClosetPlanetFromCoordinate(
+              fleet.getCoordinate(), mission.getTargetRealmName(), info);
+          if (target != null) {
+            mission.setTarget(target.getCoordinate());
+          } else {
+            Coordinate coord = game.getStarMap().getClosetSectorFromCoordinate(
+                fleet.getCoordinate(), mission.getTargetRealmName(), info);
+            if (coord != null) {
+              mission.setTarget(coord);
+            }
+          }
+        }
         makeReroute(game, fleet, info, mission);
       }
       if (mission.getPhase() == MissionPhase.EXECUTING) {

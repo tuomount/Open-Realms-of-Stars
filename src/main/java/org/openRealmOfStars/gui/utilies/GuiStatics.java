@@ -1335,6 +1335,12 @@ public final class GuiStatics {
   public static final BufferedImage IMAGE_INTERIOR_CHIRALOID =
       IOUtilities.loadImage(GuiStatics.class.getResource(
           "/resources/images/chiraloid_bridge.png"));
+  /**
+   * Ship Pirate bridge interior
+   */
+  public static final BufferedImage IMAGE_INTERIOR_PIRATE =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/pirate_bridge.png"));
 
   /**
    * Get text width for certain font

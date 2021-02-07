@@ -16,7 +16,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -183,6 +183,7 @@ public class CreditsView extends BlackPanel {
       + "Spork Space Ship Bridge by Tuomo Untinen\n\n"
       + "Chiraloid Space Ship Bridge by Tuomo Untinen\n\n"
       + "Sci-Fi containers by Rubberduck (CC0)\n\n"
+      + "Space Pirate Space Ship Bridge by Tuomo Untinen\n\n"
       + "\n\nFonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

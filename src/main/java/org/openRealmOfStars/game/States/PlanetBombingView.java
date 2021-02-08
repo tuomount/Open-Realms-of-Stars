@@ -804,6 +804,9 @@ public class PlanetBombingView extends BlackPanel {
             removeDestroyedShip();
             skipAnimation();
           }
+          if (exitLoop) {
+            break;
+          }
         }
       }
       nextShip();

@@ -824,16 +824,61 @@ public final class RandomEventUtility {
   /**
    * Handle corruption scandal.
    * @param event Random event must be corruption scandal.
+   * @param map Starmap to locate planet for corruption.
    */
-  public static void handleCorruptionScandal(final RandomEvent event) {
+  public static void handleCorruptionScandal(final RandomEvent event,
+      final StarMap map) {
     if (event.getBadType() == BadRandomType.CORRUPTION_SCANDAL) {
       PlayerInfo info = event.getRealm();
+      ImageInstruction instructions = new ImageInstruction();
+      instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+      instructions.addSiluete(info.getRace().getNameSingle(),
+          ImageInstruction.POSITION_LEFT);
+      int bestValue = 0;
+      Planet mostValuablePlanet = null;
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info) {
+          int value = planet.getTotalPopulation() * 10 + planet.getCulture();
+          if (value > bestValue) {
+            bestValue = value;
+            mostValuablePlanet = planet;
+          }
+        }
+      }
+      String governorCorrupted = "";
+      if (mostValuablePlanet != null
+          && mostValuablePlanet.getGovernor() != null) {
+        instructions.addSiluete(mostValuablePlanet.getGovernor().getRace()
+            .getNameSingle(), ImageInstruction.POSITION_RIGHT);
+        if (!mostValuablePlanet.getGovernor().hasPerk(Perk.CORRUPTED)) {
+          mostValuablePlanet.getGovernor().getPerkList().add(Perk.CORRUPTED);
+          governorCorrupted = " " + mostValuablePlanet.getGovernor()
+              .getCallName() + " turns to be corrupted also in this scandal.";
+        }
+      }
+      Leader ruler = info.getRuler();
+      String rulerCorrupted = "";
+      if (ruler != null) {
+        instructions.addSiluete(ruler.getRace().getNameSingle(),
+            ImageInstruction.POSITION_CENTER);
+        if (!ruler.hasPerk(Perk.CORRUPTED)) {
+          ruler.getPerkList().add(Perk.CORRUPTED);
+          rulerCorrupted = " " + ruler.getCallName()
+              + " turns to be corrupted also in this scandal.";
+        }
+      }
+      event.setImageInstructions(instructions.build());
       info.setTotalCredits(info.getTotalCredits() / 2);
       event.setText("Massive corruption scandal found in "
       + info.getEmpireName() + " government. Cleanining and fixing"
-          + "the corruption requires half of the credits in treasury.");
+          + " the corruption requires half of the credits in treasury."
+          + rulerCorrupted + governorCorrupted);
       Message message = new Message(MessageType.INFORMATION, event.getText(),
           Icons.getIconByName(Icons.ICON_CULTURE));
+      if (mostValuablePlanet != null) {
+        message.setCoordinate(mostValuablePlanet.getCoordinate());
+      }
+      message.setRandomEventPop(true);
       info.getMsgList().addFirstMessage(message);
     }
   }
@@ -1269,7 +1314,7 @@ public final class RandomEventUtility {
           break;
         }
         case CORRUPTION_SCANDAL: {
-          handleCorruptionScandal(event);
+          handleCorruptionScandal(event, map);
           break;
         }
         case DEADLY_VIRUS_OUTBREAK: {

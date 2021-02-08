@@ -197,4 +197,35 @@ public final class GraphRoutines {
     gr2D.dispose();
     return transparentImg;
   }
+
+  /**
+   * Draw black siluete version of bufferedImage.
+   * Image must be 4byte ABGR type.
+   * @param image Buffered Image
+   * @return black siluete version of image
+   */
+  public static BufferedImage blackSiluete(final BufferedImage image) {
+    if (image == null) {
+      return null;
+    }
+    if (image.getType() != BufferedImage.TYPE_4BYTE_ABGR) {
+      return image;
+    }
+    int origWidth = image.getWidth();
+    int origHeight = image.getHeight();
+    BufferedImage transparentImg = new BufferedImage(origWidth, origHeight,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    Graphics2D gr2D = transparentImg.createGraphics();
+    for (int x = 0; x < origWidth; x++) {
+      for (int y = 0; y < origHeight; y++) {
+        int color = image.getRGB(x, y);
+        int alpha = color & 0xff000000;
+        color = alpha;
+        transparentImg.setRGB(x, y, color);
+      }
+    }
+    gr2D.dispose();
+    return transparentImg;
+  }
+
 }

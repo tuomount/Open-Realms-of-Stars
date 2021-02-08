@@ -31,7 +31,7 @@ import org.openRealmOfStars.starMap.vote.Votes;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019, 2020 Tuomo Untinen
+* Copyright (C) 2019-2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -218,12 +218,13 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testCorruptionScandal() {
+    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
     RandomEvent event = new RandomEvent(BadRandomType.CORRUPTION_SCANDAL,
         info);
     assertEquals("", event.getText());
     info.setTotalCredits(32);
-    RandomEventUtility.handleCorruptionScandal(event);
+    RandomEventUtility.handleCorruptionScandal(event, starMap);
     assertEquals(16, info.getTotalCredits());
     assertNotEquals("", event.getText());
   }

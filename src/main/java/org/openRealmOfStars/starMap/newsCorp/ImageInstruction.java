@@ -5,6 +5,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.gui.utilies.GraphRoutines;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
@@ -367,6 +368,10 @@ public class ImageInstruction {
    * Instruction to draw image
    */
   private static final String IMAGE = "image";
+  /**
+   * Instruction to draw siluete
+   */
+  private static final String SILUETE = "siluete";
 
   /**
    * String builder used to collect all the instructions
@@ -541,6 +546,46 @@ public class ImageInstruction {
     sb.append(IMAGE);
     sb.append(PARAM_START);
     sb.append(sanitizeParameters(image));
+    sb.append(PARAM_END);
+    return this;
+  }
+
+  /**
+   * Add another image siluete to image instructions.
+   * Image is added into center of image
+   * @param image image name to place into image
+   * @param position Where siluete is going go be drawn.
+   *        POSITION_CENTER, POSITION_LEFT, POSITION_RIGHT
+   * @return ImageInstruction with text
+   */
+  public ImageInstruction addSiluete(final String image,
+      final String position) {
+    checkDelim();
+    if (!SpaceRace.CENTAURS.getNameSingle().equals(image)
+        && !SpaceRace.HUMAN.getNameSingle().equals(image)
+        && !SpaceRace.SPORKS.getNameSingle().equals(image)
+        && !SpaceRace.GREYANS.getNameSingle().equals(image)
+        && !SpaceRace.MOTHOIDS.getNameSingle().equals(image)
+        && !SpaceRace.TEUTHIDAES.getNameSingle().equals(image)
+        && !SpaceRace.MECHIONS.getNameSingle().equals(image)
+        && !SpaceRace.SCAURIANS.getNameSingle().equals(image)
+        && !SpaceRace.HOMARIANS.getNameSingle().equals(image)
+        && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)
+        && !SpaceRace.CHIRALOIDS.getNameSingle().equals(image)) {
+      throw new IllegalArgumentException("Illegal image: "
+        + image);
+    }
+    if (!POSITION_CENTER.equals(position)
+        && !POSITION_LEFT.equals(position)
+        && !POSITION_RIGHT.equals(position)) {
+      throw new IllegalArgumentException("Illegal logo position: "
+        + position);
+    }
+    sb.append(SILUETE);
+    sb.append(PARAM_START);
+    sb.append(sanitizeParameters(image));
+    sb.append(PARAMETER_DELIM);
+    sb.append(sanitizeParameters(position));
     sb.append(PARAM_END);
     return this;
   }
@@ -928,7 +973,41 @@ public class ImageInstruction {
           workImage.getHeight() / 2 - traderImg.getHeight() / 2, null);
     }
   }
+
   /**
+   * Draw siluete on image
+   * @param workImage Image where to draw
+   * @param raceName Race whom's siluete is drawn
+   * @param position LEFT, CENTER or RIGHT
+   */
+  private static void paintSiluete(final BufferedImage workImage,
+      final String raceName, final String position) {
+    BufferedImage silueteImg = GuiStatics.IMAGE_HUMAN_RACE;
+    SpaceRace race = SpaceRaceUtility.getRaceByName(raceName);
+    if (race != null) {
+      silueteImg = race.getRaceImage();
+    }
+    silueteImg = GraphRoutines.blackSiluete(silueteImg);
+
+    Graphics2D g = (Graphics2D) workImage.getGraphics();
+    if (POSITION_CENTER.equals(position)) {
+      g.drawImage(silueteImg,
+          workImage.getWidth() / 2 - silueteImg.getWidth() / 2,
+          workImage.getHeight() / 2 - silueteImg.getHeight() / 2, null);
+    }
+    if (POSITION_LEFT.equals(position)) {
+      g.drawImage(silueteImg,
+          workImage.getWidth() / 5 - silueteImg.getWidth() / 2,
+          workImage.getHeight() / 2 - silueteImg.getHeight() / 2, null);
+    }
+    if (POSITION_RIGHT.equals(position)) {
+      g.drawImage(silueteImg,
+          (workImage.getWidth() - workImage.getWidth() / 5)
+          - silueteImg.getWidth() / 2,
+          workImage.getHeight() / 2 - silueteImg.getHeight() / 2, null);
+    }
+  }
+/**
    * Draw image on image
    * @param workImage Image where to draw
    * @param image image type to draw
@@ -1068,6 +1147,9 @@ public class ImageInstruction {
       }
       if (IMAGE.equals(command)) {
         workImage = paintImage(workImage, parameters[0]);
+      }
+      if (SILUETE.equals(command)) {
+        paintSiluete(workImage, parameters[0], parameters[1]);
       }
       if (RELATION_SYMBOL.equals(command)) {
         Graphics2D g = (Graphics2D) workImage.getGraphics();

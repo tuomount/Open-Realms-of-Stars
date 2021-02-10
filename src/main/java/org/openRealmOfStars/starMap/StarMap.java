@@ -2384,7 +2384,8 @@ public class StarMap {
       ArrayList<Message> messages = info.getMsgList().getFullList();
       for (Message msg : messages) {
         if (msg.getType() == MessageType.RESEARCH) {
-          Research.handleShipDesigns(info);
+          Research.handleShipDesigns(info, this.getVotes().areNukesBanned(),
+              this.getVotes().arePrivateersBanned());
           break;
         }
       }

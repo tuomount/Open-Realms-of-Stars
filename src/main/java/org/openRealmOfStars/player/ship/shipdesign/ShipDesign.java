@@ -20,7 +20,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018-2020 Tuomo Untinen
+ * Copyright (C) 2016,2018-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -611,7 +611,13 @@ public class ShipDesign {
       ShipComponent comp = components.get(i);
       if (comp.getType() == ShipComponentType.ESPIONAGE_MODULE) {
         spyShip = true;
-        power = power + comp.getEspionageBonus();
+        power = power + comp.getEspionageBonus() * 2;
+      }
+      if (comp.getType() == ShipComponentType.CLOAKING_DEVICE) {
+        power = power + comp.getCloaking();
+      }
+      if (comp.getType() == ShipComponentType.SCANNER) {
+        power = power + comp.getScannerRange();
       }
     }
     if (!spyShip) {

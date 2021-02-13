@@ -1064,6 +1064,21 @@ public final class MissionHandling {
           }
         }
       }
+      if (mission.getPhase() == MissionPhase.PLANNING
+          && mission.getPlanetBuilding() != null) {
+        Planet planet = game.getStarMap().getPlanetByName(
+            mission.getPlanetBuilding());
+        if (planet != null
+            && !planet.getCoordinate().sameAs(fleet.getCoordinate())) {
+          AStarSearch search = new AStarSearch(game.getStarMap(), fleet.getX(),
+              fleet.getY(), planet.getX(), planet.getY(), true);
+          search.doSearch();
+          search.doRoute();
+          fleet.setaStarSearch(search);
+          makeRegularMoves(game, fleet, info);
+
+        }
+      }
       if (mission.getPhase() == MissionPhase.LOADING) {
         // Loading Troops
         Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),

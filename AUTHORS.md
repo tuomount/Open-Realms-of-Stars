@@ -197,6 +197,8 @@ Sci-Fi containers by Rubberduck (CC0)
 
 Space Pirate Space Ship Bridge by Tuomo Untinen
 
+Rare tech capsule by Tuomo Untinen
+
 
 
 Fonts are under SIL Open Font License, Version 1.1.

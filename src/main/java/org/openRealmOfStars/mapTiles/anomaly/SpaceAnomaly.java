@@ -446,11 +446,11 @@ public class SpaceAnomaly {
           Tech tech = TechFactory.getRandomRareTech(
               info.getTechList().getRareTechs());
           if (tech != null) {
-            result.setText("Found ancient ship floating around which contained"
-                + " schematics of " + tech.getName() + ". This seems to be"
-                + " unusual piece of technology. This invention is immediately"
-                + " taken to use.");
-            result.setImage(GuiStatics.IMAGE_OLD_SHIP);
+            result.setText("Found ancient capsule floating around which"
+                + " contained schematics of " + tech.getName()
+                + ". This seems to be unusual piece of technology."
+                + " This invention is immediately taken to use.");
+            result.setImage(GuiStatics.IMAGE_RARE_TECH);
             info.getTechList().addTech(tech);
             if (Game.getTutorial() != null  && info.isHuman()
                 && map.isTutorialEnabled()) {

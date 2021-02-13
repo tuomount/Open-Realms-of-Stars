@@ -1106,6 +1106,12 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/oldprobe.png"));
 
   /**
+   * Rare tech
+   */
+  public static final BufferedImage IMAGE_RARE_TECH = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/raretech.png"));
+
+  /**
    * Old Ship
    */
   public static final BufferedImage IMAGE_OLD_SHIP = IOUtilities.loadImage(

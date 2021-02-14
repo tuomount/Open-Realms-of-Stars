@@ -20,7 +20,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2018,2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -85,7 +85,7 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
   }
 
   /**
-   * How many single middle part width
+   * Middle part length
    */
   private static final int BAR_LEN = 32;
   @Override
@@ -99,15 +99,20 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
           / (scrollbar.getMaximum() - scrollbar.getMinimum());
       int picHeight = GuiStatics.IMAGE_SCROLL_BAR_THUMB.getHeight();
       int endHeight = thumbBounds.height / 2;
+      int middleLen = BAR_LEN;
       int bars = 0;
       if (endHeight > picHeight / 2) {
         endHeight = thumbBounds.height / 3;
-        if (endHeight > BAR_LEN) {
-          bars = thumbBounds.height / BAR_LEN;
+        if (endHeight > middleLen) {
+          bars = thumbBounds.height / middleLen;
           bars = bars - 2;
-          endHeight = (thumbBounds.height - bars * BAR_LEN) / 2;
+          endHeight = (thumbBounds.height - bars * middleLen) / 2;
         } else {
           bars = 1;
+          middleLen = thumbBounds.height - endHeight * 2;
+          if (middleLen < 0) {
+            middleLen = 1;
+          }
         }
       }
       if (endHeight > GuiStatics.IMAGE_SCROLL_BAR_THUMB.getHeight() - 16) {
@@ -120,15 +125,16 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
           GuiStatics.IMAGE_SCROLL_BAR_THUMB.getHeight() - endHeight,
           GuiStatics.IMAGE_SCROLL_BAR_THUMB.getWidth(), endHeight);
       BufferedImage middle = GuiStatics.IMAGE_SCROLL_BAR_THUMB.getSubimage(0,
-          16, GuiStatics.IMAGE_SCROLL_BAR_THUMB.getWidth(), BAR_LEN);
+          16, GuiStatics.IMAGE_SCROLL_BAR_THUMB.getWidth(), middleLen);
       g.drawImage(top, 0, y, null);
       if (bars > 0) {
         for (int i = 0; i < bars; i++) {
-          g.drawImage(middle, 0, y + endHeight + i * BAR_LEN, null);
+          g.drawImage(middle, 0, y + endHeight + i * middleLen, null);
 
         }
       }
-      g.drawImage(bottom, 0, y + endHeight + bars * BAR_LEN - 1, null);
+      g.drawImage(bottom, 0, y + endHeight + bars * middleLen - 1,
+          null);
     } else {
       int x = incrButton.getWidth() + 1;
       int distance = scrollbar.getWidth() - incrButton.getWidth()
@@ -137,15 +143,20 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
           / (scrollbar.getMaximum() - scrollbar.getMinimum());
       int picWidth = GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getHeight();
       int endWidth = thumbBounds.width / 2;
+      int middleLen = BAR_LEN;
       int bars = 0;
       if (endWidth > picWidth / 2) {
         endWidth = thumbBounds.width / 3;
-        if (endWidth > BAR_LEN) {
-          bars = thumbBounds.width / BAR_LEN;
+        if (endWidth > middleLen) {
+          bars = thumbBounds.width / middleLen;
           bars = bars - 2;
-          endWidth = (thumbBounds.width - bars * BAR_LEN) / 2;
+          endWidth = (thumbBounds.width - bars * middleLen) / 2;
         } else {
           bars = 1;
+          middleLen = thumbBounds.width - endWidth * 2;
+          if (middleLen < 0) {
+            middleLen = 1;
+          }
         }
       }
       if (endWidth > GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getWidth() - 16) {
@@ -158,15 +169,15 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
           GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getWidth() - endWidth, 0, endWidth,
           GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getHeight());
       BufferedImage middle = GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getSubimage(16,
-          0, BAR_LEN, GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getHeight());
+          0, middleLen, GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getHeight());
       g.drawImage(left, x, 0, null);
       if (bars > 0) {
         for (int i = 0; i < bars; i++) {
-          g.drawImage(middle, x + endWidth + i * BAR_LEN, 0, null);
+          g.drawImage(middle, x + endWidth + i * middleLen, 0, null);
 
         }
       }
-      g.drawImage(right, x + endWidth + bars * BAR_LEN - 1, 0, null);
+      g.drawImage(right, x + endWidth + bars * middleLen - 1, 0, null);
     }
   }
 

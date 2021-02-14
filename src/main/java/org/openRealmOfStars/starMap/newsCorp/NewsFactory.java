@@ -2266,7 +2266,7 @@ public final class NewsFactory {
         instructions.addImage(winner.getRace().getNameSingle());
         sb.append(winner.getEmpireName());
         sb.append(" has created the most advanced world in the galaxy! ");
-        sb.append("No other realm technology to challenge ");
+        sb.append("No other realm has technology to challenge ");
         sb.append(winner.getEmpireName());
         sb.append(".");
       } else {

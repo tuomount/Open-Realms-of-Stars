@@ -440,7 +440,12 @@ public final class PlanetHandling {
     }
     if (building.getScientificAchievement()
         && info.getStrategy() == WinningStrategy.SCIENCE) {
-      score = score + 80;
+      score = score + 250;
+      for (Building bild : planet.getBuildingList()) {
+        if (bild.getScientificAchievement()) {
+          score = score + 120;
+        }
+      }
     }
     if (attitude == Attitude.MERCHANTICAL) {
       score = score + building.getCredBonus() * 15;
@@ -535,11 +540,11 @@ public final class PlanetHandling {
         score = score + 80;
       }
     }
-    if (building.isBroadcaster() && !planet.broadcaster()) {
-      score = score + 30;
-      if (info.getStrategy() == WinningStrategy.CULTURAL) {
-        score = score + 80;
+    if (info.getStrategy() == WinningStrategy.CULTURAL) {
+      if (building.isBroadcaster() && !planet.broadcaster()) {
+        score = score + 120;
       }
+      score = score + building.getCultBonus() * 40;
     }
     if (building.getName().equals("Basic factory")
         && info.getTechList().hasTech(TechType.Improvements,

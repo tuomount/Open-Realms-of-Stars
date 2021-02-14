@@ -4146,7 +4146,7 @@ public class StarMap {
             "United Galaxy Tower") && getScoreDiplomacy() > 0
             && getPlayerByIndex(i).getDiplomacy().getNumberOfAdmires() > 0) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.DIPLOMATIC);
-        } else if (getNewsCorpData().getCultural().getPosition(i) < 3
+        } else if (getNewsCorpData().getResearch().getPosition(i) < 3
             && getScoreResearch() > 0
             && getPlayerByIndex(i).getTechList()
                .getNumberOfScientificAchievements() > 0) {

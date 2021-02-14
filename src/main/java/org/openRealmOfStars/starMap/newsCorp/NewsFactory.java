@@ -142,7 +142,7 @@ public final class NewsFactory {
         sb.append(". ");
       }
     } else {
-      String place = "deep space";
+      String place = null;
       if (meetingPlace instanceof Fleet) {
         Fleet fleet = (Fleet) meetingPlace;
         CulturePower power = map.getSectorCulture(fleet.getCoordinate().getX(),
@@ -155,10 +155,12 @@ public final class NewsFactory {
           }
         }
       }
-      if (surpriseAttack) {
-        sb.append("This attack happened in " + place + " ");
-      } else {
-        sb.append("This meeting happened in " + place + " ");
+      if (place != null) {
+        if (surpriseAttack) {
+          sb.append("This attack happened in " + place + " ");
+        } else {
+          sb.append("This meeting happened in " + place + " ");
+        }
       }
     }
     if (!casusBelli) {

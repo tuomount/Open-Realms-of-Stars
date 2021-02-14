@@ -921,7 +921,7 @@ public class TechList {
           }
           if (tech.getComponent() != null) {
             if (tech.getType() == TechType.Defense
-                && tech.getComponent().startsWith("Shield")) {
+                && tech.getComponent().startsWith("Shield Mk")) {
               tutorialText = Game.getTutorial().showTutorialText(56);
               if (tutorialText != null) {
                 msg = new Message(MessageType.INFORMATION, tutorialText,

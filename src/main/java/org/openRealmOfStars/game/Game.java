@@ -73,6 +73,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.mapTiles.anomaly.AnomalyType;
 import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
@@ -732,6 +733,9 @@ public class Game implements ActionListener {
             getStarMap().getNewsCorpData().addNews(
                 anomaly.getCombat().getLeaderKilledNews());
           }
+        }
+        if (anomaly != null && anomaly.getType() == AnomalyType.TIME_WARP) {
+          starMapView.setShowFleet(fleet);
         }
         starMap.clearFleetTiles();
         fleet.decMovesLeft();

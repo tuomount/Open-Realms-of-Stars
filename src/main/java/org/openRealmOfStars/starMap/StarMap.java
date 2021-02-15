@@ -2534,6 +2534,27 @@ public class StarMap {
             info.setSectorVisibility(iterator.getX(), iterator.getY(),
                 PlayerInfo.FOG_OF_WAR);
           }
+          if (iterator.isGasGiant()) {
+            Coordinate coord = new Coordinate(iterator.getX() + 1,
+                iterator.getY());
+            if (info.getSectorVisibility(coord)
+                == PlayerInfo.UNCHARTED) {
+              info.setSectorVisibility(coord.getX(), coord.getY(),
+                  PlayerInfo.FOG_OF_WAR);
+            }
+            coord = new Coordinate(iterator.getX(), iterator.getY() + 1);
+            if (info.getSectorVisibility(coord)
+                == PlayerInfo.UNCHARTED) {
+              info.setSectorVisibility(coord.getX(), coord.getY(),
+                  PlayerInfo.FOG_OF_WAR);
+            }
+            coord = new Coordinate(iterator.getX() + 1, iterator.getY() + 1);
+            if (info.getSectorVisibility(coord)
+                == PlayerInfo.UNCHARTED) {
+              info.setSectorVisibility(coord.getX(), coord.getY(),
+                  PlayerInfo.FOG_OF_WAR);
+            }
+          }
         }
       }
     }

@@ -323,9 +323,7 @@ public class SpaceAnomaly {
           Coordinate coord = map.getFreeRandomSpot();
           map.setTile(coord.getX(), coord.getY(), anchor);
           map.clearFleetTiles();
-          coord = map.getFreeWormHole(fleet.getCoordinate());
-          fleet.setPos(coord);
-          map.doFleetScanUpdate(info, fleet, null);
+          // Actual drag is done on movement while checking the tile type
           if (fleet.getCommander() != null) {
             fleet.getCommander().setExperience(
                 fleet.getCommander().getExperience() + 30);

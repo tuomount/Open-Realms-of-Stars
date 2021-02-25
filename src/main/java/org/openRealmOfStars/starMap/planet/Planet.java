@@ -1804,6 +1804,9 @@ public class Planet {
       if (planetOwnerInfo.getRace() != SpaceRace.MECHIONS) {
         int food = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
             * planetOwnerInfo.getRace().getFoodRequire() / 100;
+        if (planetOwnerInfo.getRace() == SpaceRace.CYGRUTS && food > 0) {
+          food = 1;
+        }
         extraFood = extraFood + food;
         int require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
         if (exceedRadiation() && extraFood > 0) {

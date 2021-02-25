@@ -11,7 +11,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -112,7 +112,19 @@ public enum SpaceRace {
           "Chiraloids are creatures with four arms and two legs.\n"
         + "They have hard exoskeleton. They also have special gland\n"
         + "which uses radioactivity to create nutrient. This is called\n"
-        + "radiosynthesis.");
+        + "radiosynthesis."),
+  /**
+   * Cygruts are organism combined with bionic organic and robotic
+   * parts. So they are cyborgs. They can assimilate any space race
+   * to their own race, so they are fearful conquerors.
+   * They need only very little food surviving, but their
+   * reproduction is very slow.
+   */
+  CYGRUTS(11, "Cygruts", "Cygrut",
+      "Cygruts are organism combined with bionic organic and robotic "
+      + "parts. So they are cyborgs. They can assimilate any space race"
+      + " to their own race, so they are fearful conquerors. They need only"
+      + " very little food surviving, but their reproduction is very slow.");
 
 
   /**
@@ -186,6 +198,8 @@ public enum SpaceRace {
       return 50;
     case CHIRALOIDS:
       return 50;
+    case CYGRUTS:
+      return 100;
     default:
       return 0;
     }
@@ -220,6 +234,8 @@ public enum SpaceRace {
         return Attitude.PEACEFUL;
       case CHIRALOIDS:
         return Attitude.AGGRESSIVE;
+      case CYGRUTS:
+        return Attitude.AGGRESSIVE;
       default:
         return Attitude.PEACEFUL;
     }
@@ -252,6 +268,8 @@ public enum SpaceRace {
       return 3;
     case CHIRALOIDS:
       return 10;
+    case CYGRUTS:
+      return 5;
     default:
       return -1;
     }
@@ -285,6 +303,8 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_PRIVATEER_RACE;
     case CHIRALOIDS:
       return GuiStatics.IMAGE_CHIRALOID_RACE;
+    case CYGRUTS:
+      return GuiStatics.IMAGE_CYGRUT_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -320,6 +340,8 @@ public enum SpaceRace {
         return start + "resources/images/privateer_race.png";
       case CHIRALOIDS:
         return start + "resources/images/chiraloid_race.png";
+      case CYGRUTS:
+        return start + "resources/images/cygrut_race.png";
       default:
         return start + "resources/images/centaur_race.png";
     }
@@ -372,6 +394,8 @@ public enum SpaceRace {
       return 150;
     case CHIRALOIDS:
       return 100;
+    case CYGRUTS:
+      return 100;
     default:
       return 0;
     }
@@ -404,6 +428,8 @@ public enum SpaceRace {
       return 50;
     case CHIRALOIDS:
       return 100;
+    case CYGRUTS:
+      return 50;
     default:
       return 0;
     }
@@ -436,6 +462,8 @@ public enum SpaceRace {
       return 11;
     case CHIRALOIDS:
       return 9;
+    case CYGRUTS:
+      return 13;
     default:
       return 0;
     }
@@ -468,6 +496,8 @@ public enum SpaceRace {
       return 150;
     case CHIRALOIDS:
       return 50;
+    case CYGRUTS:
+      return 100;
     default:
       return 0;
     }
@@ -499,6 +529,8 @@ public enum SpaceRace {
     case HOMARIANS:
       return 100;
     case CHIRALOIDS:
+      return 50;
+    case CYGRUTS:
       return 50;
     default:
       return 0;
@@ -532,6 +564,8 @@ public enum SpaceRace {
       return 200;
     case CHIRALOIDS:
       return 100;
+    case CYGRUTS:
+      return 100;
     default:
       return 100;
     }
@@ -563,6 +597,8 @@ public enum SpaceRace {
     case HOMARIANS:
       return 100;
     case CHIRALOIDS:
+      return 100;
+    case CYGRUTS:
       return 100;
     default:
       return 0;
@@ -596,6 +632,8 @@ public enum SpaceRace {
       return 1;
     case CHIRALOIDS:
       return -4;
+    case CYGRUTS:
+      return -8;
     default:
       return 0;
     }
@@ -633,6 +671,8 @@ public enum SpaceRace {
       return 50;
     case CHIRALOIDS:
       return 50;
+    case CYGRUTS:
+      return 60;
     default:
       return 50;
     }
@@ -664,6 +704,8 @@ public enum SpaceRace {
     case HOMARIANS:
       return 0;
     case CHIRALOIDS:
+      return 0;
+    case CYGRUTS:
       return 0;
     default:
       return 0;
@@ -697,6 +739,8 @@ public enum SpaceRace {
       return 16;
     case CHIRALOIDS:
       return 12;
+    case CYGRUTS:
+      return 10;
     default:
       return 15;
     }
@@ -729,6 +773,8 @@ public enum SpaceRace {
       return 55;
     case CHIRALOIDS:
       return 53;
+    case CYGRUTS:
+      return 50;
     default:
       return 50;
     }
@@ -760,6 +806,8 @@ public enum SpaceRace {
     case HOMARIANS:
       return 3;
     case CHIRALOIDS:
+      return 4;
+    case CYGRUTS:
       return 4;
     default:
       return 3;
@@ -794,6 +842,8 @@ public enum SpaceRace {
       return 1;
     case CHIRALOIDS:
       return 1;
+    case CYGRUTS:
+      return 2;
     default:
       return 1;
     }
@@ -858,6 +908,8 @@ public enum SpaceRace {
       return false;
     case CHIRALOIDS:
       return false;
+    case CYGRUTS:
+      return false;
     default:
       return true;
     }
@@ -889,6 +941,8 @@ public enum SpaceRace {
       return true;
     case CHIRALOIDS:
       return false;
+    case CYGRUTS:
+      return true;
     default:
       return false;
     }
@@ -925,6 +979,8 @@ public enum SpaceRace {
       return 70;
     case CHIRALOIDS:
       return 100;
+    case CYGRUTS:
+      return 150;
     default:
       return 80;
     }
@@ -958,6 +1014,8 @@ public enum SpaceRace {
       return SocialSystem.MATRIARCHY;
     case CHIRALOIDS:
       return SocialSystem.PATRIARCHY;
+    case CYGRUTS:
+      return SocialSystem.EQUAL;
     default:
       return SocialSystem.EQUAL;
     }
@@ -990,6 +1048,8 @@ public enum SpaceRace {
       return BridgeCommandType.BLUEISH_WHITE;
     case CHIRALOIDS:
       return BridgeCommandType.BLUEISH_WHITE;
+    case CYGRUTS:
+      return BridgeCommandType.DARKEST;
     default:
       return BridgeCommandType.WARM_WHITE;
     }
@@ -1128,6 +1188,8 @@ public enum SpaceRace {
       sb.append("Starts with 5 population");
     } else if (this == SpaceRace.CHIRALOIDS) {
       sb.append("Radiosynthesis (+1 food per radiation per population)");
+    } else if (this == SpaceRace.CYGRUTS) {
+      sb.append("Gain dead enemies as own population");
     } else {
       sb.append("None");
     }
@@ -1136,7 +1198,5 @@ public enum SpaceRace {
     }
     return sb.toString();
   }
-
-
 
 }

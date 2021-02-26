@@ -19,7 +19,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019 Tuomo Untinen
+ * Copyright (C) 2016-2019,2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -874,6 +874,17 @@ public final class Research {
         info.getTechList().setTechFocus(TechType.Electrics, LOW_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Propulsion, HIGH_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Combat, LOW_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Hulls, HIGH_FOCUS_LEVEL);
+        break;
+      }
+      case CYGRUTS: {
+        info.getTechList().setTechFocus(TechType.Improvements,
+            DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Defense, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Electrics, LOW_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Propulsion,
+            DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Combat, HIGH_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Hulls, HIGH_FOCUS_LEVEL);
         break;
       }

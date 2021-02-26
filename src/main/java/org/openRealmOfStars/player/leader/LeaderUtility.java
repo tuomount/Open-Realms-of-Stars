@@ -96,7 +96,8 @@ public final class LeaderUtility {
   public static Leader createLeader(final PlayerInfo info, final Planet planet,
       final int level) {
     Gender gender = Gender.NONE;
-    if (info.getRace() != SpaceRace.MECHIONS) {
+    if (info.getRace() != SpaceRace.MECHIONS
+        && info.getRace() != SpaceRace.CYGRUTS) {
       if (level == LEVEL_START_RULER) {
         if (info.getGovernment() == GovernmentType.EMPIRE
             || info.getGovernment() == GovernmentType.KINGDOM) {
@@ -411,7 +412,8 @@ public final class LeaderUtility {
           break;
         }
         case GUILD:
-        case HEGEMONY: {
+        case HEGEMONY:
+        case COLLECTIVE: {
           sb.append("Leader");
           break;
         }
@@ -1311,7 +1313,8 @@ public final class LeaderUtility {
         bestLeader = getNextHegemonyRuler(realm);
         break;
       }
-      case AI: {
+      case AI:
+      case COLLECTIVE: {
         bestLeader = getNextAiRuler(realm);
         break;
       }

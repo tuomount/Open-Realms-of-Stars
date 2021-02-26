@@ -2240,29 +2240,35 @@ public class AITurnView extends BlackPanel {
         switch (DiceGenerator.getRandom(2)) {
           case 0:
           default: {
-            if (realm.getRuler().getRace() != SpaceRace.MECHIONS) {
-              reason = "poison drink";
-            } else {
+            if (realm.getRuler().getRace() == SpaceRace.MECHIONS) {
               reason = "overload of regular expressions";
+            } else if (realm.getRuler().getRace() == SpaceRace.CYGRUTS) {
+              reason = "burnt cyber interface";
+            } else {
+              reason = "poison drink";
             }
             break;
           }
           case 1: {
-            if (realm.getRuler().getRace() != SpaceRace.MECHIONS) {
+            if (realm.getRuler().getRace() == SpaceRace.MECHIONS) {
+              reason = "heavy object crushing the body";
+            } else if (realm.getRuler().getRace() == SpaceRace.CYGRUTS) {
+              reason = "heavy object smashing the body";
+            } else {
               reason = "heavy object hitting "
                   + realm.getRuler().getGender().getHisHer()
                   + " head";
-            } else {
-              reason = "heavy object crushing the body";
             }
             break;
           }
           case 2: {
-            if (realm.getRuler().getRace() != SpaceRace.MECHIONS) {
+            if (realm.getRuler().getRace() == SpaceRace.MECHIONS) {
+              reason = "shot to the head";
+            } else if (realm.getRuler().getRace() == SpaceRace.CYGRUTS) {
+              reason = "explosion to the chest";
+            } else {
               reason = "blade in "
                   + realm.getRuler().getGender().getHisHer() + " back";
-            } else {
-              reason = "shot to the head";
             }
             break;
           }
@@ -2473,8 +2479,9 @@ public class AITurnView extends BlackPanel {
               && heirs > 1) {
             chance = 4;
           }
-          if (leader.getRace() == SpaceRace.MECHIONS) {
-            // Mechions do not get heirs
+          if (leader.getRace() == SpaceRace.MECHIONS
+              || leader.getRace() == SpaceRace.CYGRUTS) {
+            // Mechions or Cygruts do not get heirs
             chance = 0;
           }
           if (DiceGenerator.getRandom(99) < chance && firstPlanet != null

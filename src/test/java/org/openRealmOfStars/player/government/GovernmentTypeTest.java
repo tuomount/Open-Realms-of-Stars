@@ -9,7 +9,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018,2019  Tuomo Untinen
+* Copyright (C) 2018,2019-2021  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -186,6 +186,13 @@ public class GovernmentTypeTest {
         + "* Food bonus: 1\n"
         + "* War happiness\n"
         + "* Population rush\n";
+    expected[16] = "### Collective\n"
+        + "* Base fleet capacity: 4\n"
+        + "* Leader capacity: 6\n"
+        + "* Leader cost: 8\n"
+        + "* Reign length: 50 turns\n"
+        + "* War resistance: 1\n"
+        + "* Research bonus: 1\n";
     for (int i = 0; i <  GovernmentType.values().length; i++) {
       GovernmentType government = GovernmentType.values()[i];
       assertEquals(expected[i], government.getDescription(true));

@@ -93,6 +93,9 @@ public final class SpaceRaceUtility {
     if (name.equals(SpaceRace.CHIRALOIDS.getNameSingle())) {
       return SpaceRace.CHIRALOIDS;
     }
+    if (name.equals(SpaceRace.CYGRUTS.getNameSingle())) {
+      return SpaceRace.CYGRUTS;
+    }
     return null;
   }
 
@@ -135,7 +138,9 @@ public final class SpaceRaceUtility {
           sb.append(buildSecondaryName(race, "Cancerian"));
       } else if (race == SpaceRace.CHIRALOIDS) {
           sb.append(buildSecondaryName(race, "Capricorn"));
-      } else {
+      } else if (race == SpaceRace.CYGRUTS) {
+        sb.append(buildSecondaryName(race, "Bionian"));
+    } else {
         sb.append(race.getNameSingle());
       }
       sb.append(" ");

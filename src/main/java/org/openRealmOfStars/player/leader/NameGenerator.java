@@ -1967,6 +1967,87 @@ public final class NameGenerator {
   }
 
   /**
+   * Generate mechion leader name
+   * @return Mechion leader name
+   */
+  private static String generateCygrutName() {
+    StringBuilder sb = new StringBuilder();
+    switch (DiceGenerator.getRandom(14)) {
+      default:
+      case 0: sb.append("Bio"); break;
+      case 1: sb.append("Drone"); break;
+      case 2: sb.append("Cyborg"); break;
+      case 3: sb.append("Android"); break;
+      case 4: sb.append("Golem"); break;
+      case 5: sb.append("Replicate"); break;
+      case 6: sb.append("DNA"); break;
+      case 7: sb.append("RNA"); break;
+      case 8: sb.append("Cytosine"); break;
+      case 9: sb.append("Monitor"); break;
+      case 10: sb.append("Organ"); break;
+      case 11: sb.append("Guanine"); break;
+      case 12: sb.append("Adenie"); break;
+      case 13: sb.append("Thymine"); break;
+      case 14: {
+        sb.append("B");
+        sb.append(DiceGenerator.getRandom(1, 9));
+        break;
+      }
+    }
+    if (DiceGenerator.getRandom(1) == 0) {
+      sb.append("-");
+      switch (DiceGenerator.getRandom(11)) {
+        default:
+        case 0: sb.append("X-"); break;
+        case 1: sb.append("Y-"); break;
+        case 2: sb.append("Z-"); break;
+        case 3: sb.append("Q-"); break;
+        case 4: sb.append("A-"); break;
+        case 5: sb.append("B-"); break;
+        case 6: sb.append("E-"); break;
+        case 7: sb.append("G-"); break;
+        case 8: sb.append("W-"); break;
+        case 9: sb.append("C-"); break;
+        case 10: sb.append("T-"); break;
+        case 11: sb.append("T-"); break;
+      }
+      switch (DiceGenerator.getRandom(4)) {
+        default:
+        case 0: sb.append(DiceGenerator.getRandom(1, 10)); break;
+        case 1: sb.append(DiceGenerator.getRandom(20, 100)); break;
+        case 2: sb.append(DiceGenerator.getRandom(2, 9) * 100); break;
+        case 3: sb.append(DiceGenerator.getRandom(1, 9) * 1000); break;
+        case 4: sb.append(DiceGenerator.getRandom(1, 9) * 10000); break;
+      }
+    } else {
+      sb.append(" ");
+      switch (DiceGenerator.getRandom(4)) {
+        default:
+        case 0: sb.append(DiceGenerator.getRandom(1, 10)); break;
+        case 1: sb.append(DiceGenerator.getRandom(20, 100)); break;
+        case 2: sb.append(DiceGenerator.getRandom(2, 9) * 100); break;
+        case 3: sb.append(DiceGenerator.getRandom(1, 9) * 1000); break;
+        case 4: sb.append(DiceGenerator.getRandom(1, 9) * 10000); break;
+      }
+      switch (DiceGenerator.getRandom(10)) {
+        default:
+        case 0: sb.append("X"); break;
+        case 1: sb.append("Y"); break;
+        case 2: sb.append("Z"); break;
+        case 3: sb.append("Q"); break;
+        case 4: sb.append("C"); break;
+        case 5: sb.append("T"); break;
+        case 6: sb.append("E"); break;
+        case 7: sb.append("G"); break;
+        case 8: sb.append("W"); break;
+        case 9: sb.append("A"); break;
+        case 10: break;
+      }
+    }
+    return sb.toString();
+  }
+
+  /**
    * Generate Leader name.
    * @param race SpaceRace for which name will generated
    * @param gender Leader gender
@@ -2002,6 +2083,9 @@ public final class NameGenerator {
     }
     if (race == SpaceRace.MECHIONS) {
       return generateMechionName();
+    }
+    if (race == SpaceRace.CYGRUTS) {
+      return generateCygrutName();
     }
     return "Noname";
   }

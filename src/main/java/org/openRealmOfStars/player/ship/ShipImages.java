@@ -83,6 +83,11 @@ public final class ShipImages {
   private static ShipImage chiraloids;
 
   /**
+   * Cygrut ships
+   */
+  private static ShipImage cygruts;
+
+  /**
    * Hiding the constructor
    */
   private ShipImages() {
@@ -104,6 +109,7 @@ public final class ShipImages {
     homarians = new ShipImage("homarianships.png");
     spacePirate = new ShipImage("privateerships.png");
     chiraloids = new ShipImage("chiraloidships.png");
+    cygruts = new ShipImage("cygrutships.png");
   }
 
   /**
@@ -228,6 +234,17 @@ public final class ShipImages {
   }
 
   /**
+   * Get Cygrut ship images
+   * @return cygrut ship images
+   */
+  public static ShipImage cygruts() {
+    if (cygruts == null) {
+      initImages();
+    }
+    return cygruts;
+  }
+
+  /**
    * Get ship images for certain race
    * @param race Space race which images to get
    * @return ShipImage
@@ -256,6 +273,8 @@ public final class ShipImages {
       return spacePirates();
     case CHIRALOIDS:
       return chiraloids();
+    case CYGRUTS:
+      return cygruts();
     default:
       return humans();
     }

@@ -115,14 +115,14 @@ public enum SpaceRace {
         + "radiosynthesis."),
   /**
    * Cygruts are organism combined with bionic organic and robotic
-   * parts. So they are cyborgs. They can assimilate any space race
+   * parts. So they are cyborgs. They can synthesize any living space race
    * to their own race, so they are fearful conquerors.
    * They need only very little food surviving, but their
    * reproduction is very slow.
    */
   CYGRUTS(11, "Cygruts", "Cygrut",
-      "Cygruts are organism combined with bionic organic and robotic "
-      + "parts. So they are cyborgs. They can assimilate any space race"
+      "Cygruts are organism combined with bionic and robotic "
+      + "parts. So they are cyborgs. They can synthesize any living space race"
       + " to their own race, so they are fearful conquerors. They need only"
       + " very little food surviving, but their reproduction is very slow.");
 
@@ -599,7 +599,7 @@ public enum SpaceRace {
     case CHIRALOIDS:
       return 100;
     case CYGRUTS:
-      return 100;
+      return 50;
     default:
       return 0;
     }
@@ -1189,7 +1189,8 @@ public enum SpaceRace {
     } else if (this == SpaceRace.CHIRALOIDS) {
       sb.append("Radiosynthesis (+1 food per radiation per population)");
     } else if (this == SpaceRace.CYGRUTS) {
-      sb.append("Gain dead enemies as own population");
+      sb.append("Gain dead enemies as own population."
+          + " Steal technology by conquering planets.");
     } else {
       sb.append("None");
     }

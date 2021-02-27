@@ -118,6 +118,9 @@ public final class SpeechFactory {
       case CHIRALOIDS: return new SpeechLine(type,
           "I have detected your fleet on my sector."
           + " Pull your " + fleetName + " away, now!");
+      case CYGRUTS: return new SpeechLine(type,
+          "Your fleet " + fleetName
+          + " is in our sector! Pull it away immediately!");
       default: return null;
     }
   }
@@ -164,6 +167,9 @@ public final class SpeechFactory {
       case CHIRALOIDS: return new SpeechLine(type,
           "I have detected your spy fleet on my sector."
           + " Pull your " + fleetName + " away, now!");
+      case CYGRUTS: return new SpeechLine(type,
+          "We have detected your spy fleet "
+          + fleetName + " in our sector. Pull it away!");
       default: return null;
     }
   }
@@ -200,6 +206,8 @@ public final class SpeechFactory {
           "Yarr, you got no loot!");
       case CHIRALOIDS: return new SpeechLine(type,
           "Hmm, oh you didn't have anything to trade...");
+      case CYGRUTS: return new SpeechLine(type,
+          "We see you have nothing to trade with us, except yourself!");
       default: return null;
     }
   }
@@ -234,6 +242,8 @@ public final class SpeechFactory {
           "Yarr, I am towing my sails back!");
       case CHIRALOIDS: return new SpeechLine(type,
           "I am pulling the fleet back!");
+      case CYGRUTS: return new SpeechLine(type,
+          "We will move the fleet!");
       default: return null;
     }
   }
@@ -270,6 +280,8 @@ public final class SpeechFactory {
           "Yarr, Let's look some loot " +  raceName + "!");
       case CHIRALOIDS: return new SpeechLine(type,
           "Nice to meet with you " +  raceName + "!");
+      case CYGRUTS: return new SpeechLine(type,
+          "We haven't decide if you will be synthesized " + raceName + "!");
       default: return null;
     }
   }
@@ -304,6 +316,8 @@ public final class SpeechFactory {
           "Matey, let's split some loot!");
       case CHIRALOIDS: return new SpeechLine(type,
           "My fellow, let's talk a while...");
+      case CYGRUTS: return new SpeechLine(type,
+          "Our thrall! Speak, we listen.");
       default: return null;
     }
   }
@@ -338,6 +352,8 @@ public final class SpeechFactory {
           "Yarr!");
       case CHIRALOIDS: return new SpeechLine(type,
           "Nice to see you, again!");
+      case CYGRUTS: return new SpeechLine(type,
+          "We might not synthesize you, for now.");
       default: return null;
     }
   }
@@ -372,6 +388,8 @@ public final class SpeechFactory {
           "Hmph, yarr...");
       case CHIRALOIDS: return new SpeechLine(type,
           "Okay, I'll listen but be quick!");
+      case CYGRUTS: return new SpeechLine(type,
+          "YES?!");
       default: return null;
     }
   }
@@ -406,6 +424,8 @@ public final class SpeechFactory {
           "Yarr, I'll be needing sum rum after this!");
       case CHIRALOIDS: return new SpeechLine(type,
           "Watch your tongue or I'll rip it off!");
+      case CYGRUTS: return new SpeechLine(type,
+          "Synthesis material, speak now!");
       default: return null;
     }
   }
@@ -440,6 +460,8 @@ public final class SpeechFactory {
           "Yarr, Accept this or slice your throat!");
       case CHIRALOIDS: return new SpeechLine(type,
           "Agree or burn in nuclear fire!");
+      case CYGRUTS: return new SpeechLine(type,
+          "You will accept this or we will synthesize your species!");
       default: return null;
     }
   }
@@ -481,6 +503,9 @@ public final class SpeechFactory {
           "Yarr, Prepate to be boarded and destroyed!" + extra);
       case CHIRALOIDS: return new SpeechLine(type,
           "I say no and I will nuke you now!" + extra);
+      case CYGRUTS: return new SpeechLine(type,
+          "We will not accept but your species is good synthesize"
+          + " material for us!" + extra);
       default: return null;
     }
   }
@@ -518,6 +543,8 @@ public final class SpeechFactory {
           "Yarr, My socks smell better than your offer!");
       case CHIRALOIDS: return new SpeechLine(type,
           "Your offer is mad!");
+      case CYGRUTS: return new SpeechLine(type,
+          "We will not accept this!");
       default: return null;
     }
   }
@@ -552,6 +579,8 @@ public final class SpeechFactory {
           "Yarr, You start getting my nerve!");
       case CHIRALOIDS: return new SpeechLine(type,
           "You seem quiet mad... Are you?");
+      case CYGRUTS: return new SpeechLine(type,
+          "Adding cybergenetic implants might help you!");
       default: return null;
     }
   }
@@ -586,6 +615,8 @@ public final class SpeechFactory {
           "Yarr, I cannot accept this!");
       case CHIRALOIDS: return new SpeechLine(type,
           "No, no, and no thanks!");
+      case CYGRUTS: return new SpeechLine(type,
+          "We will not accept this!");
       default: return null;
     }
   }
@@ -620,6 +651,8 @@ public final class SpeechFactory {
           "Yarr, I'll wait your counter offer then...");
       case CHIRALOIDS: return new SpeechLine(type,
           "What do you propose then?");
+      case CYGRUTS: return new SpeechLine(type,
+          "Our offer was not good enough, what do you offer then?");
       default: return null;
     }
   }
@@ -660,6 +693,8 @@ public final class SpeechFactory {
           "Yarr, Time to die!" + extra);
       case CHIRALOIDS: return new SpeechLine(type,
           "Prepare to be nuked!" + extra);
+      case CYGRUTS: return new SpeechLine(type,
+          "We will start synthesize with your species!" + extra);
       default: return null;
     }
   }
@@ -694,6 +729,8 @@ public final class SpeechFactory {
           "Yarr, Are you interested in espionage trade for 20 turns?");
       case CHIRALOIDS: return new SpeechLine(type,
           "Are you willing to trade intel for 20 turns?");
+      case CYGRUTS: return new SpeechLine(type,
+          "We are offering you our spy information for 20 turns. Interested?");
       default: return null;
     }
   }
@@ -732,6 +769,9 @@ public final class SpeechFactory {
               + empire + "?");
       case CHIRALOIDS: return new SpeechLine(type,
           "Are you willing make trade embargo for 20 turns against "
+              + empire + "?");
+      case CYGRUTS: return new SpeechLine(type,
+          "We ask you to make trade embargo for 20 turns against "
               + empire + "?");
       default: return null;
     }
@@ -776,6 +816,8 @@ public final class SpeechFactory {
           "Yarr, Are you interested in trade alliance?");
       case CHIRALOIDS: return new SpeechLine(type,
           "Let's form a trade alliance!");
+      case CYGRUTS: return new SpeechLine(type,
+          "Your species has trading value for us, trade alliance?");
  default: return null;
     }
   }
@@ -811,6 +853,9 @@ public final class SpeechFactory {
       case CHIRALOIDS:
         return new SpeechLine(type,
           "Are you ready to join my alliance?");
+      case CYGRUTS: return new SpeechLine(type,
+          "Be our thrall or be our future synthesize material."
+          + " Join to our alliance!");
       default: return null;
     }
   }
@@ -846,6 +891,9 @@ public final class SpeechFactory {
       case CHIRALOIDS:
         return new SpeechLine(type,
           "Are you ready to make defensive pact?");
+      case CYGRUTS:
+        return new SpeechLine(type,
+          "Are ready to be our battle thrall?");
       default: return null;
     }
   }
@@ -917,6 +965,9 @@ public final class SpeechFactory {
       case CHIRALOIDS:
         return new SpeechLine(type,
           "I am willing to agree!");
+      case CYGRUTS:
+        return new SpeechLine(type,
+          "We will agree with your offer!");
       default: return null;
     }
   }
@@ -965,6 +1016,8 @@ public final class SpeechFactory {
           "Yarr, Most excellent deal!");
       case CHIRALOIDS: return new SpeechLine(type,
           "Excellent. This was great deal!");
+      case CYGRUTS: return new SpeechLine(type,
+          "We accept your deal!");
       default: return null;
     }
   }
@@ -999,6 +1052,8 @@ public final class SpeechFactory {
           "Yarr, What say you about my loot?");
       case CHIRALOIDS: return new SpeechLine(type,
           "What say you about my trade offer?");
+      case CYGRUTS: return new SpeechLine(type,
+          "Here is our offer!");
       default: return null;
     }
   }
@@ -1033,6 +1088,8 @@ public final class SpeechFactory {
           "Care to sign peace?");
       case CHIRALOIDS: return new SpeechLine(type,
           "Do you want peace or nuke?");
+      case CYGRUTS: return new SpeechLine(type,
+          "We offer you mutual coexistance.");
       default: return null;
     }
   }

@@ -224,12 +224,24 @@ public enum GovernmentType {
   }
 
   /**
+   * Get mining bonus for government when
+   * planet has 4 or more population.
+   * @return mining bonus
+   */
+  public int getMiningBonus() {
+    if (this == COLLECTIVE) {
+      return 1;
+    }
+    return 0;
+  }
+
+  /**
    * Get Research bonus for government when
    * planet has 4 or more population.
    * @return Research bonus
    */
   public int getResearchBonus() {
-    if (this == HEGEMONY || this == COLLECTIVE) {
+    if (this == HEGEMONY) {
       return 1;
     }
     return 0;
@@ -528,6 +540,12 @@ public enum GovernmentType {
         sb.append(dot);
         sb.append(" War resistance: ");
         sb.append(getWarResistance());
+        sb.append(lf);
+      }
+      if (getMiningBonus() != 0) {
+        sb.append(dot);
+        sb.append(" Mining bonus: ");
+        sb.append(getMiningBonus());
         sb.append(lf);
       }
       if (getProductionBonus() != 0) {

@@ -912,6 +912,15 @@ public class Planet {
           sb.append("<br>");
         }
       }
+      if (totalPopulation >= 4) {
+        value = government.getMiningBonus();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> government +");
+          sb.append(value);
+          sb.append("<br>");
+        }
+      }
       if (happinessEffect.getType() == HappinessBonus.METAL) {
         value = happinessEffect.getValue();
         result = result + value;

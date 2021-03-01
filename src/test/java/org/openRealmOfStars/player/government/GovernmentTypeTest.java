@@ -192,7 +192,7 @@ public class GovernmentTypeTest {
         + "* Leader cost: 8\n"
         + "* Reign length: 50 turns\n"
         + "* War resistance: 1\n"
-        + "* Research bonus: 1\n";
+        + "* Mining bonus: 1\n";
     for (int i = 0; i <  GovernmentType.values().length; i++) {
       GovernmentType government = GovernmentType.values()[i];
       assertEquals(expected[i], government.getDescription(true));

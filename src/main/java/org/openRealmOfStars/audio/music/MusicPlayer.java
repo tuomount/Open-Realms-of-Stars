@@ -11,7 +11,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2020  Tuomo Untinen
+* Copyright (C) 2017-2021  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -222,6 +222,13 @@ public final class MusicPlayer {
   public static final MusicFileInfo DEATH_IS_JUST_ANOTHER_PATH =
       new MusicFileInfo("Death Is Just Another Path", "Otto Halmén",
           "/resources/musics/Death Is Just Another Path.ogg");
+
+  /**
+   *Braindead By Kim Lightyear CC-BY-SA 3.0
+   */
+  public static final MusicFileInfo BRAINDEAD =
+      new MusicFileInfo("Braindead", "Kim Lightyear",
+          "/resources/musics/Braindead.ogg");
 
   /**
    * List of music to played while playing

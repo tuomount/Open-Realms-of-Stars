@@ -877,6 +877,8 @@ public enum SpaceRace {
       return MusicPlayer.SET_FIRE_TO_REALITY;
     case CHIRALOIDS:
       return MusicPlayer.MENACE;
+    case CYGRUTS:
+      return MusicPlayer.BRAINDEAD;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }

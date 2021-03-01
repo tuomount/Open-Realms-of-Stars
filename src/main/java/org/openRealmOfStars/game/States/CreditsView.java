@@ -382,7 +382,11 @@ public class CreditsView extends BlackPanel {
       + "Death Is Just Another Path by \n"
       + "Otto Halmén\n"
       + "Licensed under CC BY 3.0 "
-      + "http://creativecommons.org/licenses/by/3.0/\n\n";
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Braindead by \n"
+      + "Kim Lightyear\n"
+      + "Licensed under  CC-BY-SA 3.0 "
+      + "http://creativecommons.org/licenses/by-sa/3.0/\n\n";
 
 
   /**

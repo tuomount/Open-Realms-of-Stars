@@ -35,6 +35,7 @@ import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.espionage.EspionageUtility;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Perk;
@@ -45,6 +46,7 @@ import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
@@ -718,11 +720,39 @@ public class PlanetBombingView extends BlackPanel {
               * ship.getColonist() * (100 + comp.getDamage()) / 100;
           int planetTroops = planet.getTroopPower();
           if (shipTroops > planetTroops) {
+            int origPop = planet.getTotalPopulation();
+            Tech[] stealableTechs = EspionageUtility.getStealableTech(planet,
+                attacker);
             planet.fightAgainstAttacker(shipTroops, starMap);
             int left = shipTroops - planetTroops;
             left = left / shipTroop;
             if (left <= 0) {
               left = 1;
+            }
+            String extraPop = "";
+            if (attacker.getRace() == SpaceRace.CYGRUTS
+                && planet.getPlanetPlayerInfo().getRace()
+                != SpaceRace.MECHIONS) {
+              left = left + origPop;
+              extraPop = " Recently dead population is synthesized into your"
+                  + " population by adding cybergenetic implants.";
+              if (stealableTechs.length > 0) {
+                int index = DiceGenerator.getRandom(0,
+                    stealableTechs.length - 1);
+                Tech tech = stealableTechs[index];
+                attacker.getTechList().addTech(stealableTechs[index]);
+                Message msg = new Message(MessageType.RESEARCH,
+                      attacker.getEmpireName() + " has stolen "
+                      + tech.getName() + " technology from "
+                      + planet.getPlanetPlayerInfo().getEmpireName()
+                      + ". This was gained via "
+                      + attacker.getRace().getNameSingle()
+                      + " special ability.",
+                      Icons.getIconByName(Icons.ICON_RESEARCH));
+                msg.setCoordinate(planet.getCoordinate());
+                msg.setMatchByString(planet.getName());
+                attacker.getMsgList().addNewMessage(msg);
+              }
             }
             ship.setColonist(0);
             planet.setPlanetOwner(attackPlayerIndex, attacker);
@@ -732,7 +762,7 @@ public class PlanetBombingView extends BlackPanel {
             } else {
               planet.setWorkers(Planet.PRODUCTION_FOOD, left);
             }
-            textLogger.addLog("Your troops colonize the planet!");
+            textLogger.addLog("Your troops colonize the planet!" + extraPop);
             attackType = "conquest";
             reason = " conquest of planet";
           } else {

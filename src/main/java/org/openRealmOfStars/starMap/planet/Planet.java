@@ -1229,6 +1229,10 @@ public class Planet {
       result = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
           * planetOwnerInfo.getRace().getFoodRequire() / 100;
       int require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
+      if (planetOwnerInfo.getRace() == SpaceRace.CYGRUTS && result > 0) {
+        // Limit cyborg grow rate
+        result = 1;
+      }
       if (result > 0) {
         result = (require - extraFood) / result;
         if (result < 1) {

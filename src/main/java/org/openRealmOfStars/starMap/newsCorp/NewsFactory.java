@@ -1885,6 +1885,13 @@ public final class NewsFactory {
         sb.append(" population was killed by ground troops of ");
         sb.append(attacker.getEmpireName());
         sb.append(". ");
+        if (attacker.getRace() == SpaceRace.CYGRUTS
+            && defender.getRace() != SpaceRace.MECHIONS) {
+          sb.append("Recently dead population is synthesized into ");
+          sb.append(attacker.getEmpireName());
+          sb.append(" population by adding cybergenetic implants. ");
+          sb.append("This process may reveal technology secrets too.");
+        }
       }
     }
     news.setNewsText(sb.toString());

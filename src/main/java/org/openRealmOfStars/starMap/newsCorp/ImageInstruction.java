@@ -517,7 +517,7 @@ public class ImageInstruction {
         && !SpaceRace.HOMARIANS.getNameSingle().equals(image)
         && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)
         && !SpaceRace.CHIRALOIDS.getNameSingle().equals(image)
-        && !SpaceRace.CYGRUTS.getNameSingle().equals(image)
+        && !SpaceRace.REBORGIANS.getNameSingle().equals(image)
         && !LOGO.equals(image)
         && !BIG_BAN.equals(image)
         && !BIG_PEACE.equals(image)
@@ -573,7 +573,7 @@ public class ImageInstruction {
         && !SpaceRace.HOMARIANS.getNameSingle().equals(image)
         && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)
         && !SpaceRace.CHIRALOIDS.getNameSingle().equals(image)
-        && !SpaceRace.CYGRUTS.getNameSingle().equals(image)) {
+        && !SpaceRace.REBORGIANS.getNameSingle().equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -671,7 +671,7 @@ public class ImageInstruction {
         && !SpaceRace.HOMARIANS.getNameSingle().equals(logoType)
         && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(logoType)
         && !SpaceRace.CHIRALOIDS.getNameSingle().equals(logoType)
-        && !SpaceRace.CYGRUTS.getNameSingle().equals(logoType)) {
+        && !SpaceRace.REBORGIANS.getNameSingle().equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }
     if (!SIZE_FULL.equals(size)

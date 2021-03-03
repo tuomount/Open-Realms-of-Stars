@@ -39,7 +39,7 @@ public final class SpaceRaceUtility {
    */
   public static final String[] RACE_SELECTION = {"Human", "Mechion", "Spork",
       "Greyan", "Centaur", "Mothoid", "Teuthidae", "Scaurian", "Homarian",
-      "Chiraloid", "Cygrut" };
+      "Chiraloid", "Reborgian" };
 
 
   /**
@@ -93,8 +93,8 @@ public final class SpaceRaceUtility {
     if (name.equals(SpaceRace.CHIRALOIDS.getNameSingle())) {
       return SpaceRace.CHIRALOIDS;
     }
-    if (name.equals(SpaceRace.CYGRUTS.getNameSingle())) {
-      return SpaceRace.CYGRUTS;
+    if (name.equals(SpaceRace.REBORGIANS.getNameSingle())) {
+      return SpaceRace.REBORGIANS;
     }
     return null;
   }
@@ -138,7 +138,7 @@ public final class SpaceRaceUtility {
           sb.append(buildSecondaryName(race, "Cancerian"));
       } else if (race == SpaceRace.CHIRALOIDS) {
           sb.append(buildSecondaryName(race, "Capricorn"));
-      } else if (race == SpaceRace.CYGRUTS) {
+      } else if (race == SpaceRace.REBORGIANS) {
         sb.append(buildSecondaryName(race, "Bionian"));
     } else {
         sb.append(race.getNameSingle());

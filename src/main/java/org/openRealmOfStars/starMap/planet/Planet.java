@@ -1229,7 +1229,7 @@ public class Planet {
       result = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
           * planetOwnerInfo.getRace().getFoodRequire() / 100;
       int require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
-      if (planetOwnerInfo.getRace() == SpaceRace.CYGRUTS && result > 0) {
+      if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && result > 0) {
         // Limit cyborg grow rate
         result = 1;
       }
@@ -1817,7 +1817,7 @@ public class Planet {
       if (planetOwnerInfo.getRace() != SpaceRace.MECHIONS) {
         int food = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
             * planetOwnerInfo.getRace().getFoodRequire() / 100;
-        if (planetOwnerInfo.getRace() == SpaceRace.CYGRUTS && food > 0) {
+        if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && food > 0) {
           food = 1;
         }
         extraFood = extraFood + food;

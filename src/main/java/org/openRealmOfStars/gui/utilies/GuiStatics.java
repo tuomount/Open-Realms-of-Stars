@@ -1039,11 +1039,11 @@ public final class GuiStatics {
           "/resources/images/chiraloid_race.png"));
 
   /**
-   * Cygrut race selection image
+   * Reborgian race selection image
    */
-  public static final BufferedImage IMAGE_CYGRUT_RACE =
+  public static final BufferedImage IMAGE_REBORGIAN_RACE =
       IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/cygrut_race.png"));
+          "/resources/images/reborgian_race.png"));
 
   /**
    * Privateer race selection image

@@ -133,6 +133,16 @@ public class SpaceRaceUtilityTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorReborgians() {
+    SpaceRace race = SpaceRace.REBORGIANS;
+    assertEquals(Attitude.AGGRESSIVE, race.getAttitude());
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.COLLECTIVE);
+    assertEquals(true, str.contains("Reborgian") || str.contains("Bionian"));
+    assertEquals(true, str.contains("Collective"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFullDescriptions() {
     String[] expectedResult = new String[SpaceRaceUtility.RACE_SELECTION.length];
     expectedResult[0] = "### Humans\n"+
@@ -310,8 +320,8 @@ public class SpaceRaceUtilityTest {
         + "* War resistance: 50\n"
         + "* Rush: None\n"
         + "* Special: Radiosynthesis (+1 food per radiation per population)";
-    expectedResult[10] = "### Cygruts\n"
-        + "Cygruts are organism combined with bionic and"
+    expectedResult[10] = "### Reborgians\n"
+        + "Reborgians are organism combined with bionic and"
         + " robotic parts. So they are cyborgs. They can synthesize any"
         + " living space race to their own race, so they are fearful"
         + " conquerors. They need only very little food surviving,"

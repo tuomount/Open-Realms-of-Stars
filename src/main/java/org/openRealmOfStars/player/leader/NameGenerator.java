@@ -2084,7 +2084,7 @@ public final class NameGenerator {
     if (race == SpaceRace.MECHIONS) {
       return generateMechionName();
     }
-    if (race == SpaceRace.CYGRUTS) {
+    if (race == SpaceRace.REBORGIANS) {
       return generateCygrutName();
     }
     return "Noname";

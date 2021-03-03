@@ -1885,7 +1885,7 @@ public final class NewsFactory {
         sb.append(" population was killed by ground troops of ");
         sb.append(attacker.getEmpireName());
         sb.append(". ");
-        if (attacker.getRace() == SpaceRace.CYGRUTS
+        if (attacker.getRace() == SpaceRace.REBORGIANS
             && defender.getRace() != SpaceRace.MECHIONS) {
           sb.append("Recently dead population is synthesized into ");
           sb.append(attacker.getEmpireName());

@@ -1243,7 +1243,7 @@ public class StarMap {
       planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
       planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
       planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else if (playerInfo.getRace() == SpaceRace.CYGRUTS) {
+    } else if (playerInfo.getRace() == SpaceRace.REBORGIANS) {
       planet.setWorkers(Planet.FOOD_FARMERS, 0);
       planet.setWorkers(Planet.METAL_MINERS, 1);
       planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);

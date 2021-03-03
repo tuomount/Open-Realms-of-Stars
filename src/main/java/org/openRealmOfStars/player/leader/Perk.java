@@ -328,7 +328,7 @@ public enum Perk {
       // Mechions are robots, and are not healthy
       result = false;
     }
-    if (this == Perk.HEALTHY && race == SpaceRace.CYGRUTS) {
+    if (this == Perk.HEALTHY && race == SpaceRace.REBORGIANS) {
       // Cygruts are cyborg, and are not healthy
       result = false;
     }
@@ -344,11 +344,11 @@ public enum Perk {
       // Teuthidaes are not peaceful
       result = false;
     }
-    if (this == Perk.PEACEFUL && race == SpaceRace.CYGRUTS) {
+    if (this == Perk.PEACEFUL && race == SpaceRace.REBORGIANS) {
       // Cygruts are not peaceful
       result = false;
     }
-    if (this == Perk.PACIFIST && race == SpaceRace.CYGRUTS) {
+    if (this == Perk.PACIFIST && race == SpaceRace.REBORGIANS) {
       // Cygruts are not pacifist
       result = false;
     }
@@ -356,7 +356,7 @@ public enum Perk {
       // Mechions cannot be charismatic
       result = false;
     }
-    if (this == Perk.CHARISMATIC && race == SpaceRace.CYGRUTS) {
+    if (this == Perk.CHARISMATIC && race == SpaceRace.REBORGIANS) {
       // Cygruts cannot be charismatic
       result = false;
     }

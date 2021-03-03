@@ -95,7 +95,7 @@ public class DiplomacyBonus {
      }
      case LONG_PEACE: {
        onlyOne = true;
-       if (race == SpaceRace.SPORKS || race == SpaceRace.CYGRUTS) {
+       if (race == SpaceRace.SPORKS || race == SpaceRace.REBORGIANS) {
          bonusValue = 1;
          bonusLasting = 1;
        } else if (race == SpaceRace.MOTHOIDS) {
@@ -114,7 +114,7 @@ public class DiplomacyBonus {
        if (race == SpaceRace.HUMAN || race == SpaceRace.SCAURIANS) {
          bonusValue = 5;
          bonusLasting = 110;
-       } else if (race == SpaceRace.CYGRUTS) {
+       } else if (race == SpaceRace.REBORGIANS) {
          bonusValue = 3;
          bonusLasting = 100;
        } else {
@@ -138,7 +138,7 @@ public class DiplomacyBonus {
        if (race == SpaceRace.SPORKS) {
          bonusValue = -2;
          bonusLasting = 100;
-       } else if (race == SpaceRace.CYGRUTS) {
+       } else if (race == SpaceRace.REBORGIANS) {
          bonusValue = -4;
          bonusLasting = 100;
        } else {
@@ -161,7 +161,7 @@ public class DiplomacyBonus {
        if (race == SpaceRace.SPORKS || race == SpaceRace.CHIRALOIDS) {
          bonusValue = -2;
          bonusLasting = 60;
-       } else if (race == SpaceRace.MECHIONS || race == SpaceRace.CYGRUTS) {
+       } else if (race == SpaceRace.MECHIONS || race == SpaceRace.REBORGIANS) {
          bonusValue = -1;
          bonusLasting = 20;
        } else {

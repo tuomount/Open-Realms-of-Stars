@@ -97,7 +97,7 @@ public final class LeaderUtility {
       final int level) {
     Gender gender = Gender.NONE;
     if (info.getRace() != SpaceRace.MECHIONS
-        && info.getRace() != SpaceRace.CYGRUTS) {
+        && info.getRace() != SpaceRace.REBORGIANS) {
       if (level == LEVEL_START_RULER) {
         if (info.getGovernment() == GovernmentType.EMPIRE
             || info.getGovernment() == GovernmentType.KINGDOM) {

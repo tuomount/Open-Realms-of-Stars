@@ -161,7 +161,7 @@ public final class GovernmentUtility {
       };
       return governments;
     }
-    if (race == SpaceRace.CYGRUTS) {
+    if (race == SpaceRace.REBORGIANS) {
       GovernmentType[] governments = {
         GovernmentType.ALLIANCE, GovernmentType.DEMOCRACY,
         GovernmentType.FEDERATION, GovernmentType.HIVEMIND,

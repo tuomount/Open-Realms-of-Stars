@@ -730,7 +730,7 @@ public class PlanetBombingView extends BlackPanel {
               left = 1;
             }
             String extraPop = "";
-            if (attacker.getRace() == SpaceRace.CYGRUTS
+            if (attacker.getRace() == SpaceRace.REBORGIANS
                 && planet.getPlanetPlayerInfo().getRace()
                 != SpaceRace.MECHIONS) {
               left = left + origPop;

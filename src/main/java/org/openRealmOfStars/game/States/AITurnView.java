@@ -2242,7 +2242,7 @@ public class AITurnView extends BlackPanel {
           default: {
             if (realm.getRuler().getRace() == SpaceRace.MECHIONS) {
               reason = "overload of regular expressions";
-            } else if (realm.getRuler().getRace() == SpaceRace.CYGRUTS) {
+            } else if (realm.getRuler().getRace() == SpaceRace.REBORGIANS) {
               reason = "burnt cyber interface";
             } else {
               reason = "poison drink";
@@ -2252,7 +2252,7 @@ public class AITurnView extends BlackPanel {
           case 1: {
             if (realm.getRuler().getRace() == SpaceRace.MECHIONS) {
               reason = "heavy object crushing the body";
-            } else if (realm.getRuler().getRace() == SpaceRace.CYGRUTS) {
+            } else if (realm.getRuler().getRace() == SpaceRace.REBORGIANS) {
               reason = "heavy object smashing the body";
             } else {
               reason = "heavy object hitting "
@@ -2264,7 +2264,7 @@ public class AITurnView extends BlackPanel {
           case 2: {
             if (realm.getRuler().getRace() == SpaceRace.MECHIONS) {
               reason = "shot to the head";
-            } else if (realm.getRuler().getRace() == SpaceRace.CYGRUTS) {
+            } else if (realm.getRuler().getRace() == SpaceRace.REBORGIANS) {
               reason = "explosion to the chest";
             } else {
               reason = "blade in "
@@ -2480,7 +2480,7 @@ public class AITurnView extends BlackPanel {
             chance = 4;
           }
           if (leader.getRace() == SpaceRace.MECHIONS
-              || leader.getRace() == SpaceRace.CYGRUTS) {
+              || leader.getRace() == SpaceRace.REBORGIANS) {
             // Mechions or Cygruts do not get heirs
             chance = 0;
           }

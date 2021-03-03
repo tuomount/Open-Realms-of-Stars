@@ -462,7 +462,7 @@ public class PlayerInfo {
       addShipStat(stat);
       break;
     }
-    case CYGRUTS: {
+    case REBORGIANS: {
       /*
        * Cygruts get 1 Combat, 1 Defense, 1 improvement, Scout and Colony
        */

@@ -114,14 +114,14 @@ public enum SpaceRace {
         + "which uses radioactivity to create nutrient. This is called\n"
         + "radiosynthesis."),
   /**
-   * Cygruts are organism combined with bionic organic and robotic
+   * Reborgians are organism combined with organic and robotic
    * parts. So they are cyborgs. They can synthesize any living space race
    * to their own race, so they are fearful conquerors.
    * They need only very little food surviving, but their
    * reproduction is very slow.
    */
-  CYGRUTS(11, "Cygruts", "Cygrut",
-      "Cygruts are organism combined with bionic and robotic "
+  REBORGIANS(11, "Reborgians", "Reborgian",
+      "Reborgians are organism combined with bionic and robotic "
       + "parts. So they are cyborgs. They can synthesize any living space race"
       + " to their own race, so they are fearful conquerors. They need only"
       + " very little food surviving, but their reproduction is very slow.");
@@ -198,7 +198,7 @@ public enum SpaceRace {
       return 50;
     case CHIRALOIDS:
       return 50;
-    case CYGRUTS:
+    case REBORGIANS:
       return 100;
     default:
       return 0;
@@ -234,7 +234,7 @@ public enum SpaceRace {
         return Attitude.PEACEFUL;
       case CHIRALOIDS:
         return Attitude.AGGRESSIVE;
-      case CYGRUTS:
+      case REBORGIANS:
         return Attitude.AGGRESSIVE;
       default:
         return Attitude.PEACEFUL;
@@ -268,7 +268,7 @@ public enum SpaceRace {
       return 3;
     case CHIRALOIDS:
       return 10;
-    case CYGRUTS:
+    case REBORGIANS:
       return 5;
     default:
       return -1;
@@ -303,8 +303,8 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_PRIVATEER_RACE;
     case CHIRALOIDS:
       return GuiStatics.IMAGE_CHIRALOID_RACE;
-    case CYGRUTS:
-      return GuiStatics.IMAGE_CYGRUT_RACE;
+    case REBORGIANS:
+      return GuiStatics.IMAGE_REBORGIAN_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -340,8 +340,8 @@ public enum SpaceRace {
         return start + "resources/images/privateer_race.png";
       case CHIRALOIDS:
         return start + "resources/images/chiraloid_race.png";
-      case CYGRUTS:
-        return start + "resources/images/cygrut_race.png";
+      case REBORGIANS:
+        return start + "resources/images/reborgian_race.png";
       default:
         return start + "resources/images/centaur_race.png";
     }
@@ -394,7 +394,7 @@ public enum SpaceRace {
       return 150;
     case CHIRALOIDS:
       return 100;
-    case CYGRUTS:
+    case REBORGIANS:
       return 100;
     default:
       return 0;
@@ -428,7 +428,7 @@ public enum SpaceRace {
       return 50;
     case CHIRALOIDS:
       return 100;
-    case CYGRUTS:
+    case REBORGIANS:
       return 50;
     default:
       return 0;
@@ -462,7 +462,7 @@ public enum SpaceRace {
       return 11;
     case CHIRALOIDS:
       return 9;
-    case CYGRUTS:
+    case REBORGIANS:
       return 13;
     default:
       return 0;
@@ -496,7 +496,7 @@ public enum SpaceRace {
       return 150;
     case CHIRALOIDS:
       return 50;
-    case CYGRUTS:
+    case REBORGIANS:
       return 100;
     default:
       return 0;
@@ -530,7 +530,7 @@ public enum SpaceRace {
       return 100;
     case CHIRALOIDS:
       return 50;
-    case CYGRUTS:
+    case REBORGIANS:
       return 50;
     default:
       return 0;
@@ -564,7 +564,7 @@ public enum SpaceRace {
       return 200;
     case CHIRALOIDS:
       return 100;
-    case CYGRUTS:
+    case REBORGIANS:
       return 100;
     default:
       return 100;
@@ -598,7 +598,7 @@ public enum SpaceRace {
       return 100;
     case CHIRALOIDS:
       return 100;
-    case CYGRUTS:
+    case REBORGIANS:
       return 50;
     default:
       return 0;
@@ -632,7 +632,7 @@ public enum SpaceRace {
       return 1;
     case CHIRALOIDS:
       return -4;
-    case CYGRUTS:
+    case REBORGIANS:
       return -8;
     default:
       return 0;
@@ -671,7 +671,7 @@ public enum SpaceRace {
       return 50;
     case CHIRALOIDS:
       return 50;
-    case CYGRUTS:
+    case REBORGIANS:
       return 60;
     default:
       return 50;
@@ -705,7 +705,7 @@ public enum SpaceRace {
       return 0;
     case CHIRALOIDS:
       return 0;
-    case CYGRUTS:
+    case REBORGIANS:
       return 0;
     default:
       return 0;
@@ -739,7 +739,7 @@ public enum SpaceRace {
       return 16;
     case CHIRALOIDS:
       return 12;
-    case CYGRUTS:
+    case REBORGIANS:
       return 10;
     default:
       return 15;
@@ -773,7 +773,7 @@ public enum SpaceRace {
       return 55;
     case CHIRALOIDS:
       return 53;
-    case CYGRUTS:
+    case REBORGIANS:
       return 50;
     default:
       return 50;
@@ -807,7 +807,7 @@ public enum SpaceRace {
       return 3;
     case CHIRALOIDS:
       return 4;
-    case CYGRUTS:
+    case REBORGIANS:
       return 4;
     default:
       return 3;
@@ -842,7 +842,7 @@ public enum SpaceRace {
       return 1;
     case CHIRALOIDS:
       return 1;
-    case CYGRUTS:
+    case REBORGIANS:
       return 2;
     default:
       return 1;
@@ -877,7 +877,7 @@ public enum SpaceRace {
       return MusicPlayer.SET_FIRE_TO_REALITY;
     case CHIRALOIDS:
       return MusicPlayer.MENACE;
-    case CYGRUTS:
+    case REBORGIANS:
       return MusicPlayer.BRAINDEAD;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
@@ -910,7 +910,7 @@ public enum SpaceRace {
       return false;
     case CHIRALOIDS:
       return false;
-    case CYGRUTS:
+    case REBORGIANS:
       return false;
     default:
       return true;
@@ -943,7 +943,7 @@ public enum SpaceRace {
       return true;
     case CHIRALOIDS:
       return false;
-    case CYGRUTS:
+    case REBORGIANS:
       return true;
     default:
       return false;
@@ -981,7 +981,7 @@ public enum SpaceRace {
       return 70;
     case CHIRALOIDS:
       return 100;
-    case CYGRUTS:
+    case REBORGIANS:
       return 150;
     default:
       return 80;
@@ -1016,7 +1016,7 @@ public enum SpaceRace {
       return SocialSystem.MATRIARCHY;
     case CHIRALOIDS:
       return SocialSystem.PATRIARCHY;
-    case CYGRUTS:
+    case REBORGIANS:
       return SocialSystem.EQUAL;
     default:
       return SocialSystem.EQUAL;
@@ -1050,7 +1050,7 @@ public enum SpaceRace {
       return BridgeCommandType.BLUEISH_WHITE;
     case CHIRALOIDS:
       return BridgeCommandType.BLUEISH_WHITE;
-    case CYGRUTS:
+    case REBORGIANS:
       return BridgeCommandType.DARKEST;
     default:
       return BridgeCommandType.WARM_WHITE;
@@ -1190,7 +1190,7 @@ public enum SpaceRace {
       sb.append("Starts with 5 population");
     } else if (this == SpaceRace.CHIRALOIDS) {
       sb.append("Radiosynthesis (+1 food per radiation per population)");
-    } else if (this == SpaceRace.CYGRUTS) {
+    } else if (this == SpaceRace.REBORGIANS) {
       sb.append("Gain dead enemies as own population."
           + " Steal technology by conquering planets.");
     } else {

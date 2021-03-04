@@ -721,8 +721,11 @@ public class PlanetBombingView extends BlackPanel {
           int planetTroops = planet.getTroopPower();
           if (shipTroops > planetTroops) {
             int origPop = planet.getTotalPopulation();
-            Tech[] stealableTechs = EspionageUtility.getStealableTech(planet,
-                attacker);
+            Tech[] stealableTechs = null;
+            if (planet.getPlanetPlayerInfo() != null) {
+              stealableTechs = EspionageUtility.getStealableTech(planet,
+                  attacker);
+            }
             planet.fightAgainstAttacker(shipTroops, starMap);
             int left = shipTroops - planetTroops;
             left = left / shipTroop;
@@ -736,7 +739,7 @@ public class PlanetBombingView extends BlackPanel {
               left = left + origPop;
               extraPop = " Recently dead population is synthesized into your"
                   + " population by adding cybergenetic implants.";
-              if (stealableTechs.length > 0) {
+              if (stealableTechs != null && stealableTechs.length > 0) {
                 int index = DiceGenerator.getRandom(0,
                     stealableTechs.length - 1);
                 Tech tech = stealableTechs[index];

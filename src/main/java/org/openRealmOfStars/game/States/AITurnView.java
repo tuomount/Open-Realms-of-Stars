@@ -2602,6 +2602,7 @@ public class AITurnView extends BlackPanel {
         info.getMsgList().clearMessages();
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
+          fleet.resetShields();
           if (fleet.getCommander() != null) {
             if (fleet.getCommander().getJob() == Job.DEAD) {
               fleet.setCommander(null);
@@ -2764,7 +2765,9 @@ public class AITurnView extends BlackPanel {
           broadcasters[planet.getPlanetOwnerIndex()] = true;
           for (int j = 0; j < game.getPlayers().getCurrentMaxRealms(); j++) {
             PlayerInfo realm = game.getPlayers().getPlayerInfoByIndex(j);
-            if (realm != null) {
+            if (realm != null
+              && realm.getSectorVisibility(
+                  planet.getCoordinate()) == PlayerInfo.UNCHARTED) {
               realm.setSectorVisibility(planet.getCoordinate().getX(),
                   planet.getCoordinate().getY(),
                   PlayerInfo.FOG_OF_WAR);

@@ -329,7 +329,7 @@ public enum Perk {
       result = false;
     }
     if (this == Perk.HEALTHY && race == SpaceRace.REBORGIANS) {
-      // Cygruts are cyborg, and are not healthy
+      // Reborgians are cyborg, and are not healthy
       result = false;
     }
     if (this == Perk.MAD && race == SpaceRace.MECHIONS) {
@@ -345,11 +345,11 @@ public enum Perk {
       result = false;
     }
     if (this == Perk.PEACEFUL && race == SpaceRace.REBORGIANS) {
-      // Cygruts are not peaceful
+      // Reborgians are not peaceful
       result = false;
     }
     if (this == Perk.PACIFIST && race == SpaceRace.REBORGIANS) {
-      // Cygruts are not pacifist
+      // Reborgians are not pacifist
       result = false;
     }
     if (this == Perk.CHARISMATIC && race == SpaceRace.MECHIONS) {
@@ -357,7 +357,7 @@ public enum Perk {
       result = false;
     }
     if (this == Perk.CHARISMATIC && race == SpaceRace.REBORGIANS) {
-      // Cygruts cannot be charismatic
+      // Reborgians cannot be charismatic
       result = false;
     }
     if (this == Perk.SKILLFUL && race == SpaceRace.MECHIONS) {

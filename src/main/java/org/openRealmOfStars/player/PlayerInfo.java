@@ -464,7 +464,7 @@ public class PlayerInfo {
     }
     case REBORGIANS: {
       /*
-       * Cygruts get 1 Combat, 1 Defense, 1 improvement, Scout and Colony
+       * Reborgians get 1 Combat, 1 Defense, 1 improvement, Scout and Colony
        */
       Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
           techList.getListForTypeAndLevel(TechType.Combat, 1));

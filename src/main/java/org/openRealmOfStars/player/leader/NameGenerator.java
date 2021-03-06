@@ -1967,10 +1967,10 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate mechion leader name
-   * @return Mechion leader name
+   * Generate reborgian leader name
+   * @return Reborgian leader name
    */
-  private static String generateCygrutName() {
+  private static String generateReborgianName() {
     StringBuilder sb = new StringBuilder();
     switch (DiceGenerator.getRandom(14)) {
       default:
@@ -2085,7 +2085,7 @@ public final class NameGenerator {
       return generateMechionName();
     }
     if (race == SpaceRace.REBORGIANS) {
-      return generateCygrutName();
+      return generateReborgianName();
     }
     return "Noname";
   }

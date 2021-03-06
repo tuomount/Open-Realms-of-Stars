@@ -2483,7 +2483,7 @@ public class AITurnView extends BlackPanel {
           }
           if (leader.getRace() == SpaceRace.MECHIONS
               || leader.getRace() == SpaceRace.REBORGIANS) {
-            // Mechions or Cygruts do not get heirs
+            // Mechions or Reborgians do not get heirs
             chance = 0;
           }
           if (DiceGenerator.getRandom(99) < chance && firstPlanet != null

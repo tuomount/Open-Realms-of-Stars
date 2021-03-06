@@ -409,6 +409,8 @@ public final class PlanetHandling {
     if (info.getRace() == SpaceRace.CENTAURS
         || info.getRace() == SpaceRace.TEUTHIDAES) {
       score = score + building.getFarmBonus() * 50;
+    } else if (info.getRace() == SpaceRace.REBORGIANS) {
+      score = score + building.getFarmBonus() * 20;
     } else if (info.getRace() != SpaceRace.MECHIONS) {
       score = score + building.getFarmBonus() * 40;
     } else {

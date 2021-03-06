@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.leader.LeaderUtility;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018-2020 Tuomo Untinen
+* Copyright (C) 2018-2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -89,7 +89,11 @@ public enum GovernmentType {
   /**
    * Clan government
    */
-  CLAN(15, "Clan", -1, 1, false, 4);
+  CLAN(15, "Clan", -1, 1, false, 4),
+  /**
+   * Collective government
+   */
+  COLLECTIVE(16, "Collective", 0, 1, false, 4);
 
 
   /**
@@ -220,6 +224,18 @@ public enum GovernmentType {
   }
 
   /**
+   * Get mining bonus for government when
+   * planet has 4 or more population.
+   * @return mining bonus
+   */
+  public int getMiningBonus() {
+    if (this == COLLECTIVE) {
+      return 1;
+    }
+    return 0;
+  }
+
+  /**
    * Get Research bonus for government when
    * planet has 4 or more population.
    * @return Research bonus
@@ -320,6 +336,7 @@ public enum GovernmentType {
       }
       case AI:
       case HIVEMIND:
+      case COLLECTIVE:
       case NEST: {
         return 6;
       }
@@ -370,7 +387,8 @@ public enum GovernmentType {
         return 12;
       }
       case HEGEMONY:
-      case HIERARCHY: {
+      case HIERARCHY:
+      case COLLECTIVE: {
         return 8;
       }
     }
@@ -394,7 +412,8 @@ public enum GovernmentType {
       case ENTERPRISE:
       case HEGEMONY:
       case HIERARCHY:
-      case REPUBLIC: {
+      case REPUBLIC:
+      case COLLECTIVE: {
         return false;
       }
       case EMPIRE:
@@ -420,6 +439,9 @@ public enum GovernmentType {
       case GUILD:
       case ENTERPRISE: {
         return 40;
+      }
+      case COLLECTIVE: {
+        return 50;
       }
       case AI: {
         return 100;
@@ -518,6 +540,12 @@ public enum GovernmentType {
         sb.append(dot);
         sb.append(" War resistance: ");
         sb.append(getWarResistance());
+        sb.append(lf);
+      }
+      if (getMiningBonus() != 0) {
+        sb.append(dot);
+        sb.append(" Mining bonus: ");
+        sb.append(getMiningBonus());
         sb.append(lf);
       }
       if (getProductionBonus() != 0) {

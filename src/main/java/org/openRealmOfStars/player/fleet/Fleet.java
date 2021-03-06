@@ -843,7 +843,7 @@ public class Fleet {
   }
 
   /**
-   * Fix fleet's ships
+   * Fix fleet's ships and resets shield and armor.
    * @param fullFix True to fully fix all ships in fleet
    */
   public void fixFleetShips(final boolean fullFix) {
@@ -852,6 +852,14 @@ public class Fleet {
     }
   }
 
+  /**
+   * Reset shield and armor for all ships in fleet.
+   */
+  public void resetShields() {
+    for (Ship ship : ships) {
+      ship.initializeShieldAndArmor();
+    }
+  }
   /**
    * Calculate fleet's total military value
    * @return Total military value for fleet

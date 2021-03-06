@@ -328,6 +328,10 @@ public enum Perk {
       // Mechions are robots, and are not healthy
       result = false;
     }
+    if (this == Perk.HEALTHY && race == SpaceRace.REBORGIANS) {
+      // Reborgians are cyborg, and are not healthy
+      result = false;
+    }
     if (this == Perk.MAD && race == SpaceRace.MECHIONS) {
       // Mechions are robots, they have no mental problems
       result = false;
@@ -340,8 +344,20 @@ public enum Perk {
       // Teuthidaes are not peaceful
       result = false;
     }
+    if (this == Perk.PEACEFUL && race == SpaceRace.REBORGIANS) {
+      // Reborgians are not peaceful
+      result = false;
+    }
+    if (this == Perk.PACIFIST && race == SpaceRace.REBORGIANS) {
+      // Reborgians are not pacifist
+      result = false;
+    }
     if (this == Perk.CHARISMATIC && race == SpaceRace.MECHIONS) {
       // Mechions cannot be charismatic
+      result = false;
+    }
+    if (this == Perk.CHARISMATIC && race == SpaceRace.REBORGIANS) {
+      // Reborgians cannot be charismatic
       result = false;
     }
     if (this == Perk.SKILLFUL && race == SpaceRace.MECHIONS) {

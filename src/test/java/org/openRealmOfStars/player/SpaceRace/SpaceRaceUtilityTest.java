@@ -133,6 +133,16 @@ public class SpaceRaceUtilityTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorReborgians() {
+    SpaceRace race = SpaceRace.REBORGIANS;
+    assertEquals(Attitude.AGGRESSIVE, race.getAttitude());
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.COLLECTIVE);
+    assertEquals(true, str.contains("Reborgian") || str.contains("Bionian"));
+    assertEquals(true, str.contains("Collective"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFullDescriptions() {
     String[] expectedResult = new String[SpaceRaceUtility.RACE_SELECTION.length];
     expectedResult[0] = "### Humans\n"+
@@ -310,6 +320,27 @@ public class SpaceRaceUtilityTest {
         + "* War resistance: 50\n"
         + "* Rush: None\n"
         + "* Special: Radiosynthesis (+1 food per radiation per population)";
+    expectedResult[10] = "### Reborgians\n"
+        + "Reborgians are organism combined with bionic and"
+        + " robotic parts. So they are cyborgs. They can synthesize any"
+        + " living space race to their own race, so they are fearful"
+        + " conquerors. They need only very little food surviving,"
+        + " but their reproduction is very slow.\n"
+        + "* Max radiation: 5\n"
+        + "* Troop power: 13\n"
+        + "* Leader lifespan: 150\n"
+        + "* Production: 100%\n"
+        + "* Mining: 100%\n"
+        + "* Research: 100%\n"
+        + "* Food production: 100%\n"
+        + "* Growth: 50%\n"
+        + "* Food require: 50%\n"
+        + "* Culture: 50%\n"
+        + "* Diplomacy bonus: -8\n"
+        + "* War resistance: 60\n"
+        + "* Rush: Population\n"
+        + "* Special: Gain dead enemies as own population."
+        + " Steal technology by conquering planets.";
     for (int i = 0; i <  SpaceRaceUtility.RACE_SELECTION.length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByName(
           SpaceRaceUtility.RACE_SELECTION[i]);

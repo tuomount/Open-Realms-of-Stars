@@ -51,6 +51,8 @@ Scaurian trader picture by Tuomo Untinen, original art by Surt - http://opengame
 
 Chiraloid race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
+Reborgian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
+
 Space Captain by Justin Nichol 
 Tuomo Untinen added legs for the captain. -https://opengameart.org/content/space-captain-with-legs
 
@@ -416,5 +418,9 @@ Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 Death Is Just Another Path by 
 Otto Halmén
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
+Braindead by 
+Kim Lightyear
+Licensed under  CC-BY-SA 3.0 http://creativecommons.org/licenses/by-sa/3.0/
 
 

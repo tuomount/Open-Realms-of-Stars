@@ -912,6 +912,15 @@ public class Planet {
           sb.append("<br>");
         }
       }
+      if (totalPopulation >= 4) {
+        value = government.getMiningBonus();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> government +");
+          sb.append(value);
+          sb.append("<br>");
+        }
+      }
       if (happinessEffect.getType() == HappinessBonus.METAL) {
         value = happinessEffect.getValue();
         result = result + value;
@@ -1220,6 +1229,10 @@ public class Planet {
       result = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
           * planetOwnerInfo.getRace().getFoodRequire() / 100;
       int require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
+      if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && result > 0) {
+        // Limit cyborg grow rate
+        result = 1;
+      }
       if (result > 0) {
         result = (require - extraFood) / result;
         if (result < 1) {
@@ -1804,6 +1817,9 @@ public class Planet {
       if (planetOwnerInfo.getRace() != SpaceRace.MECHIONS) {
         int food = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
             * planetOwnerInfo.getRace().getFoodRequire() / 100;
+        if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && food > 0) {
+          food = 1;
+        }
         extraFood = extraFood + food;
         int require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
         if (exceedRadiation() && extraFood > 0) {

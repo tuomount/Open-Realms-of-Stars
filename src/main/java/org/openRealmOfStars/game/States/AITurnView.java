@@ -2240,29 +2240,35 @@ public class AITurnView extends BlackPanel {
         switch (DiceGenerator.getRandom(2)) {
           case 0:
           default: {
-            if (realm.getRuler().getRace() != SpaceRace.MECHIONS) {
-              reason = "poison drink";
-            } else {
+            if (realm.getRuler().getRace() == SpaceRace.MECHIONS) {
               reason = "overload of regular expressions";
+            } else if (realm.getRuler().getRace() == SpaceRace.REBORGIANS) {
+              reason = "burnt cyber interface";
+            } else {
+              reason = "poison drink";
             }
             break;
           }
           case 1: {
-            if (realm.getRuler().getRace() != SpaceRace.MECHIONS) {
+            if (realm.getRuler().getRace() == SpaceRace.MECHIONS) {
+              reason = "heavy object crushing the body";
+            } else if (realm.getRuler().getRace() == SpaceRace.REBORGIANS) {
+              reason = "heavy object smashing the body";
+            } else {
               reason = "heavy object hitting "
                   + realm.getRuler().getGender().getHisHer()
                   + " head";
-            } else {
-              reason = "heavy object crushing the body";
             }
             break;
           }
           case 2: {
-            if (realm.getRuler().getRace() != SpaceRace.MECHIONS) {
+            if (realm.getRuler().getRace() == SpaceRace.MECHIONS) {
+              reason = "shot to the head";
+            } else if (realm.getRuler().getRace() == SpaceRace.REBORGIANS) {
+              reason = "explosion to the chest";
+            } else {
               reason = "blade in "
                   + realm.getRuler().getGender().getHisHer() + " back";
-            } else {
-              reason = "shot to the head";
             }
             break;
           }
@@ -2430,6 +2436,8 @@ public class AITurnView extends BlackPanel {
               }
           }
         }
+      } else if (realm.getRuler() == leader) {
+        realm.setRuler(null);
       }
       if (leader.getJob() == Job.RULER) {
         int numberOfPlanet = 0;
@@ -2473,8 +2481,9 @@ public class AITurnView extends BlackPanel {
               && heirs > 1) {
             chance = 4;
           }
-          if (leader.getRace() == SpaceRace.MECHIONS) {
-            // Mechions do not get heirs
+          if (leader.getRace() == SpaceRace.MECHIONS
+              || leader.getRace() == SpaceRace.REBORGIANS) {
+            // Mechions or Reborgians do not get heirs
             chance = 0;
           }
           if (DiceGenerator.getRandom(99) < chance && firstPlanet != null
@@ -2595,6 +2604,7 @@ public class AITurnView extends BlackPanel {
         info.getMsgList().clearMessages();
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
+          fleet.resetShields();
           if (fleet.getCommander() != null) {
             if (fleet.getCommander().getJob() == Job.DEAD) {
               fleet.setCommander(null);
@@ -2757,7 +2767,9 @@ public class AITurnView extends BlackPanel {
           broadcasters[planet.getPlanetOwnerIndex()] = true;
           for (int j = 0; j < game.getPlayers().getCurrentMaxRealms(); j++) {
             PlayerInfo realm = game.getPlayers().getPlayerInfoByIndex(j);
-            if (realm != null) {
+            if (realm != null
+              && realm.getSectorVisibility(
+                  planet.getCoordinate()) == PlayerInfo.UNCHARTED) {
               realm.setSectorVisibility(planet.getCoordinate().getX(),
                   planet.getCoordinate().getY(),
                   PlayerInfo.FOG_OF_WAR);

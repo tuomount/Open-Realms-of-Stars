@@ -65,9 +65,7 @@ public final class GovernmentUtility {
    */
   public static GovernmentType[] getGovernmentsForRace(
       final SpaceRace race) {
-    if (race == SpaceRace.HUMAN
-        || race == SpaceRace.CENTAURS
-        || race == SpaceRace.GREYANS) {
+    if (race == SpaceRace.HUMAN) {
       GovernmentType[] governments = {
         GovernmentType.ALLIANCE, GovernmentType.DEMOCRACY,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
@@ -77,11 +75,23 @@ public final class GovernmentUtility {
       };
       return governments;
     }
+    if (race == SpaceRace.CENTAURS
+        || race == SpaceRace.GREYANS) {
+      GovernmentType[] governments = {
+          GovernmentType.ALLIANCE, GovernmentType.DEMOCRACY,
+          GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+          GovernmentType.ENTERPRISE, GovernmentType.COLLECTIVE,
+          GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+          GovernmentType.HIERARCHY, GovernmentType.KINGDOM
+        };
+        return governments;
+    }
     if (race == SpaceRace.MECHIONS) {
       GovernmentType[] governments = {
         GovernmentType.ALLIANCE, GovernmentType.DEMOCRACY,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.ENTERPRISE, GovernmentType.EMPIRE,
+        GovernmentType.COLLECTIVE,
         GovernmentType.AI, GovernmentType.MECHANICAL_HORDE,
         GovernmentType.HEGEMONY, GovernmentType.HIERARCHY
       };
@@ -145,8 +155,19 @@ public final class GovernmentUtility {
         GovernmentType.ALLIANCE,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.CLAN, GovernmentType.HIVEMIND,
+        GovernmentType.COLLECTIVE,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
         GovernmentType.HIERARCHY, GovernmentType.KINGDOM
+      };
+      return governments;
+    }
+    if (race == SpaceRace.REBORGIANS) {
+      GovernmentType[] governments = {
+        GovernmentType.ALLIANCE, GovernmentType.DEMOCRACY,
+        GovernmentType.FEDERATION, GovernmentType.HIVEMIND,
+        GovernmentType.COLLECTIVE, GovernmentType.EMPIRE,
+        GovernmentType.AI, GovernmentType.MECHANICAL_HORDE,
+        GovernmentType.HEGEMONY, GovernmentType.HIERARCHY
       };
       return governments;
     }

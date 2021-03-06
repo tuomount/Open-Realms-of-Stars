@@ -83,6 +83,11 @@ public final class ShipImages {
   private static ShipImage chiraloids;
 
   /**
+   * Reborgian ships
+   */
+  private static ShipImage reborgians;
+
+  /**
    * Hiding the constructor
    */
   private ShipImages() {
@@ -104,6 +109,7 @@ public final class ShipImages {
     homarians = new ShipImage("homarianships.png");
     spacePirate = new ShipImage("privateerships.png");
     chiraloids = new ShipImage("chiraloidships.png");
+    reborgians = new ShipImage("reborgianships.png");
   }
 
   /**
@@ -228,6 +234,17 @@ public final class ShipImages {
   }
 
   /**
+   * Get Reborgian ship images
+   * @return Reborgian ship images
+   */
+  public static ShipImage reborgians() {
+    if (reborgians == null) {
+      initImages();
+    }
+    return reborgians;
+  }
+
+  /**
    * Get ship images for certain race
    * @param race Space race which images to get
    * @return ShipImage
@@ -256,6 +273,8 @@ public final class ShipImages {
       return spacePirates();
     case CHIRALOIDS:
       return chiraloids();
+    case REBORGIANS:
+      return reborgians();
     default:
       return humans();
     }

@@ -2436,6 +2436,8 @@ public class AITurnView extends BlackPanel {
               }
           }
         }
+      } else if (realm.getRuler() == leader) {
+        realm.setRuler(null);
       }
       if (leader.getJob() == Job.RULER) {
         int numberOfPlanet = 0;

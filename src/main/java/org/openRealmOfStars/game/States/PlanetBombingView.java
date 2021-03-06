@@ -726,18 +726,11 @@ public class PlanetBombingView extends BlackPanel {
               stealableTechs = EspionageUtility.getStealableTech(planet,
                   attacker);
             }
-            planet.fightAgainstAttacker(shipTroops, starMap);
-            int left = shipTroops - planetTroops;
-            left = left / shipTroop;
-            if (left <= 0) {
-              left = 1;
-            }
             String extraPop = "";
             if (planet.getPlanetPlayerInfo() != null
                 && attacker.getRace() == SpaceRace.REBORGIANS
                 && planet.getPlanetPlayerInfo().getRace()
                 != SpaceRace.MECHIONS) {
-              left = left + origPop;
               extraPop = " Recently dead population is synthesized into your"
                   + " population by adding cybergenetic implants.";
               if (stealableTechs != null && stealableTechs.length > 0) {
@@ -757,6 +750,15 @@ public class PlanetBombingView extends BlackPanel {
                 msg.setMatchByString(planet.getName());
                 attacker.getMsgList().addNewMessage(msg);
               }
+            }
+            planet.fightAgainstAttacker(shipTroops, starMap);
+            int left = shipTroops - planetTroops;
+            left = left / shipTroop;
+            if (left <= 0) {
+              left = 1;
+            }
+            if (!extraPop.isEmpty()) {
+              left = left + origPop;
             }
             ship.setColonist(0);
             planet.setPlanetOwner(attackPlayerIndex, attacker);

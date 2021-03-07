@@ -97,7 +97,11 @@ public enum GovernmentType {
   /**
    * Utopia government
    */
-  UTOPIA(17, "Utopia", 2, -1, false, 1);
+  UTOPIA(17, "Utopia", 2, -1, false, 1),
+  /**
+   * Regime government
+   */
+  REGIME(18, "Regime", -1, 1, false, 4);
 
 
   /**
@@ -201,6 +205,9 @@ public enum GovernmentType {
     if (this == UTOPIA) {
       return 2;
     }
+    if (this == REGIME) {
+      return -1;
+    }
     return 0;
   }
   /**
@@ -224,7 +231,8 @@ public enum GovernmentType {
    */
   public int getProductionBonus() {
     if (this == DEMOCRACY || this == EMPIRE || this == REPUBLIC
-        || this == GUILD || this == HIERARCHY || this == MECHANICAL_HORDE) {
+        || this == REGIME || this == GUILD || this == HIERARCHY
+        || this == MECHANICAL_HORDE) {
       return 1;
     }
     return 0;
@@ -236,7 +244,8 @@ public enum GovernmentType {
    * @return mining bonus
    */
   public int getMiningBonus() {
-    if (this == COLLECTIVE || this == UNION || this == HORDE) {
+    if (this == COLLECTIVE || this == UNION || this == HORDE
+        || this == REGIME) {
       return 1;
     }
     return 0;
@@ -295,7 +304,8 @@ public enum GovernmentType {
    * @return True if war happiness bonus
    */
   public boolean hasWarHappiness() {
-    if (this == HORDE || this == CLAN || this == MECHANICAL_HORDE) {
+    if (this == HORDE || this == CLAN || this == MECHANICAL_HORDE
+        || this == REGIME) {
       return true;
     }
     return false;
@@ -307,7 +317,8 @@ public enum GovernmentType {
    */
   public boolean hasPopulationRush() {
     if (this == EMPIRE || this == KINGDOM || this == HIERARCHY
-        || this == HORDE || this == CLAN || this == MECHANICAL_HORDE) {
+        || this == HORDE || this == CLAN || this == MECHANICAL_HORDE
+        || this == REGIME) {
       return true;
     }
     return false;
@@ -365,7 +376,8 @@ public enum GovernmentType {
         return 12;
       }
       case EMPIRE:
-      case KINGDOM: {
+      case KINGDOM:
+      case REGIME: {
         return 7;
       }
       case HORDE:
@@ -393,6 +405,7 @@ public enum GovernmentType {
       case REPUBLIC:
       case EMPIRE:
       case KINGDOM:
+      case REGIME:
       case HORDE:
       case CLAN: {
         return 10;
@@ -434,7 +447,8 @@ public enum GovernmentType {
       case HIERARCHY:
       case REPUBLIC:
       case COLLECTIVE:
-      case UTOPIA: {
+      case UTOPIA:
+      case REGIME: {
         return false;
       }
       case NEST:
@@ -478,7 +492,8 @@ public enum GovernmentType {
       case HORDE:
       case MECHANICAL_HORDE:
       case EMPIRE:
-      case HIERARCHY: {
+      case HIERARCHY:
+      case REGIME: {
         return -1;
       }
     }

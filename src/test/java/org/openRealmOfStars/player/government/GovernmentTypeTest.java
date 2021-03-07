@@ -206,6 +206,19 @@ public class GovernmentTypeTest {
         + "* War resistance: -1\n"
         + "* Food bonus: 1\n"
         + "* Culture bonus: 1\n";
+    expected[18] = "### Regime\n"
+        + "* Base fleet capacity: 4\n"
+        + "* Leader capacity: 7\n"
+        + "* Leader cost: 10\n"
+        + "* Reign length: life time\n"
+        + "* Possibility to internal power struggle\n"
+        + "* Generic happiness: -1\n"
+        + "* Diplomatic bonus: -1\n"
+        + "* War resistance: 1\n"
+        + "* Mining bonus: 1\n"
+        + "* Production bonus: 1\n"
+        + "* War happiness\n"
+        + "* Population rush\n";
     for (int i = 0; i <  GovernmentType.values().length; i++) {
       GovernmentType government = GovernmentType.values()[i];
       assertEquals(expected[i], government.getDescription(true));

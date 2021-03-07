@@ -1636,7 +1636,8 @@ public final class LeaderUtility {
         || government == GovernmentType.HORDE
         || government == GovernmentType.KINGDOM
         || government == GovernmentType.MECHANICAL_HORDE
-        || government == GovernmentType.NEST) {
+        || government == GovernmentType.NEST
+        || government == GovernmentType.REGIME) {
       return true;
     }
     return false;

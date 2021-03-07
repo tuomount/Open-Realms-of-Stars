@@ -10,7 +10,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -56,9 +56,9 @@ public class SpaceRaceUtilityTest {
   public void testRandomNameGeneratorCentaurs() {
     SpaceRace race = SpaceRace.CENTAURS;
     assertEquals(Attitude.DIPLOMATIC, race.getAttitude());
-    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.ALLIANCE);
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.UNION);
     assertEquals(true, str.contains("Centaur") || str.contains("Sagittarian"));
-    assertEquals(true, str.contains("Alliance"));
+    assertEquals(true, str.contains("Union"));
   }
 
   @Test

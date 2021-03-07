@@ -1627,8 +1627,9 @@ public class PlanetHandlingTest {
     assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
   }
 
   @Test
@@ -1834,10 +1835,11 @@ public class PlanetHandlingTest {
     assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
     assertEquals(-2, planet.calculateHappiness());
   }
 
@@ -1867,10 +1869,11 @@ public class PlanetHandlingTest {
     assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(10, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
     assertEquals(-1, planet.calculateHappiness());
   }
 

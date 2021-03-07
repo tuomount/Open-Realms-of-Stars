@@ -442,7 +442,7 @@ public class LeaderUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNextLeaderDemocracy() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.ALLIANCE);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.UNION);
     ArrayList<Leader> pool = new ArrayList<>();
     Mockito.when(realm.getLeaderPool()).thenReturn(pool);
     Leader leader = new Leader("Test Leader");

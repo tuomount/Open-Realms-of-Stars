@@ -41,7 +41,7 @@ public class PlayerSetupViewTest {
   public void testBasic() {
     GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
     SpaceRace race = SpaceRace.HUMAN;
-    GovernmentType gov = GovernmentType.ALLIANCE;
+    GovernmentType gov = GovernmentType.UNION;
     Mockito.when(config.getRace(Mockito.anyInt())).thenReturn(race);
     Mockito.when(config.getPlayerGovernment(Mockito.anyInt())).thenReturn(gov);
     ActionListener listener = Mockito.mock(ActionListener.class);

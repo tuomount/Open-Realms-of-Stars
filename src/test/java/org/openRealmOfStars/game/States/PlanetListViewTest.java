@@ -77,7 +77,7 @@ public class PlanetListViewTest {
     planet1.setRadiationLevel(1);
     listOfPlanets.add(planet1);
     PlayerInfo realm = new PlayerInfo(SpaceRace.GREYANS, 2, 0);
-    realm.setGovernment(GovernmentType.ALLIANCE);
+    realm.setGovernment(GovernmentType.UNION);
     planet1.setPlanetOwner(0, realm);
     Mockito.when(map.getPlanetList()).thenReturn(listOfPlanets);
     ActionListener listener = Mockito.mock(ActionListener.class);

@@ -67,7 +67,7 @@ public final class GovernmentUtility {
       final SpaceRace race) {
     if (race == SpaceRace.HUMAN) {
       GovernmentType[] governments = {
-        GovernmentType.ALLIANCE, GovernmentType.DEMOCRACY,
+        GovernmentType.UNION, GovernmentType.DEMOCRACY,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.ENTERPRISE,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
@@ -78,7 +78,7 @@ public final class GovernmentUtility {
     if (race == SpaceRace.CENTAURS
         || race == SpaceRace.GREYANS) {
       GovernmentType[] governments = {
-          GovernmentType.ALLIANCE, GovernmentType.DEMOCRACY,
+          GovernmentType.UNION, GovernmentType.DEMOCRACY,
           GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
           GovernmentType.ENTERPRISE, GovernmentType.COLLECTIVE,
           GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
@@ -88,7 +88,7 @@ public final class GovernmentUtility {
     }
     if (race == SpaceRace.MECHIONS) {
       GovernmentType[] governments = {
-        GovernmentType.ALLIANCE, GovernmentType.DEMOCRACY,
+        GovernmentType.UNION, GovernmentType.DEMOCRACY,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.ENTERPRISE, GovernmentType.EMPIRE,
         GovernmentType.COLLECTIVE,
@@ -99,7 +99,7 @@ public final class GovernmentUtility {
     }
     if (race == SpaceRace.SPORKS) {
       GovernmentType[] governments = {
-        GovernmentType.ALLIANCE,
+        GovernmentType.UNION,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.CLAN, GovernmentType.HORDE,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
@@ -109,7 +109,7 @@ public final class GovernmentUtility {
     }
     if (race == SpaceRace.HOMARIANS) {
       GovernmentType[] governments = {
-        GovernmentType.ALLIANCE,
+        GovernmentType.UNION,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.CLAN, GovernmentType.HORDE,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
@@ -119,7 +119,7 @@ public final class GovernmentUtility {
     }
     if (race == SpaceRace.MOTHOIDS) {
       GovernmentType[] governments = {
-        GovernmentType.ALLIANCE,
+        GovernmentType.UNION,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.CLAN, GovernmentType.HORDE,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
@@ -130,7 +130,7 @@ public final class GovernmentUtility {
     }
     if (race == SpaceRace.SCAURIANS) {
       GovernmentType[] governments = {
-        GovernmentType.ALLIANCE,
+        GovernmentType.UNION,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.ENTERPRISE, GovernmentType.GUILD,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
@@ -141,7 +141,7 @@ public final class GovernmentUtility {
     }
     if (race == SpaceRace.TEUTHIDAES) {
       GovernmentType[] governments = {
-        GovernmentType.ALLIANCE,
+        GovernmentType.UNION,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.ENTERPRISE, GovernmentType.HORDE,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
@@ -152,7 +152,7 @@ public final class GovernmentUtility {
     }
     if (race == SpaceRace.CHIRALOIDS) {
       GovernmentType[] governments = {
-        GovernmentType.ALLIANCE,
+        GovernmentType.UNION,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.CLAN, GovernmentType.HIVEMIND,
         GovernmentType.COLLECTIVE,
@@ -163,7 +163,7 @@ public final class GovernmentUtility {
     }
     if (race == SpaceRace.REBORGIANS) {
       GovernmentType[] governments = {
-        GovernmentType.ALLIANCE, GovernmentType.DEMOCRACY,
+        GovernmentType.UNION, GovernmentType.DEMOCRACY,
         GovernmentType.FEDERATION, GovernmentType.HIVEMIND,
         GovernmentType.COLLECTIVE, GovernmentType.EMPIRE,
         GovernmentType.AI, GovernmentType.MECHANICAL_HORDE,

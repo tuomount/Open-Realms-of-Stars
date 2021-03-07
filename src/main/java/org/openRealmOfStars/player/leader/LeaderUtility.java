@@ -381,7 +381,7 @@ public final class LeaderUtility {
         case DEMOCRACY:
         case FEDERATION:
         case REPUBLIC:
-        case ALLIANCE: {
+        case UNION: {
           sb.append("President");
           break;
         }
@@ -1300,7 +1300,7 @@ public final class LeaderUtility {
         break;
       }
       case DEMOCRACY:
-      case ALLIANCE: {
+      case UNION: {
         bestLeader = getNextDemocraticRuler(realm);
         break;
       }

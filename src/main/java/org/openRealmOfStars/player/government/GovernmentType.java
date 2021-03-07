@@ -31,9 +31,9 @@ public enum GovernmentType {
    */
   DEMOCRACY(0, "Democracy", 1, -1, false, 2),
   /**
-   * Alliance government
+   * Union government
    */
-  ALLIANCE(1, "Alliance", 1, -1, false, 2),
+  UNION(1, "Union", 1, -1, false, 2),
   /**
    * Federation government
    */
@@ -41,7 +41,7 @@ public enum GovernmentType {
   /**
    * Republic government
    */
-  REPUBLIC(3, "Republic", 1, 0, false, 3),
+  REPUBLIC(3, "Republic", 0, 0, false, 3),
   /**
    * Guild government
    */
@@ -61,7 +61,7 @@ public enum GovernmentType {
   /**
    * Hivemind government
    */
-  HIVEMIND(8, "Hive-mind", 0, 0, true, 3),
+  HIVEMIND(8, "Hive-mind", 0, 0, true, 4),
   /**
    * AI government
    */
@@ -81,7 +81,7 @@ public enum GovernmentType {
   /**
    * Horde government
    */
-  HORDE(13, "Horde", -1, 1, false, 4),
+  HORDE(13, "Horde", -1, 1, false, 3),
   /**
    * Horde government for Mechions
    */
@@ -190,7 +190,7 @@ public enum GovernmentType {
    * @return Diplomatic bonus
    */
   public int getDiplomaticBonus() {
-    if (this == DEMOCRACY || this == ALLIANCE || this == FEDERATION
+    if (this == DEMOCRACY || this == UNION || this == FEDERATION
         || this == REPUBLIC) {
       return 1;
     }
@@ -201,7 +201,7 @@ public enum GovernmentType {
    * @return Trade bonus
    */
   public int getTradeBonus() {
-    if (this == DEMOCRACY || this == ALLIANCE || this == FEDERATION
+    if (this == DEMOCRACY || this == UNION || this == FEDERATION
         || this == REPUBLIC) {
       return 1;
     }
@@ -216,8 +216,8 @@ public enum GovernmentType {
    * @return Production bonus
    */
   public int getProductionBonus() {
-    if (this == DEMOCRACY || this == ALLIANCE || this == EMPIRE
-        || this == KINGDOM || this == HIERARCHY || this == MECHANICAL_HORDE) {
+    if (this == DEMOCRACY || this == EMPIRE || this == REPUBLIC
+        || this == GUILD || this == HIERARCHY || this == MECHANICAL_HORDE) {
       return 1;
     }
     return 0;
@@ -229,7 +229,7 @@ public enum GovernmentType {
    * @return mining bonus
    */
   public int getMiningBonus() {
-    if (this == COLLECTIVE) {
+    if (this == COLLECTIVE || this == UNION || this == HORDE) {
       return 1;
     }
     return 0;
@@ -265,7 +265,7 @@ public enum GovernmentType {
    * @return Credit bonus
    */
   public int getCreditBonus() {
-    if (this == GUILD || this == ENTERPRISE) {
+    if (this == KINGDOM || this == ENTERPRISE) {
       return 1;
     }
     return 0;
@@ -300,7 +300,7 @@ public enum GovernmentType {
    */
   public boolean hasCreditRush() {
     if (this == GUILD || this == ENTERPRISE || this == DEMOCRACY
-        || this == ALLIANCE || this == FEDERATION || this == REPUBLIC) {
+        || this == UNION || this == FEDERATION || this == REPUBLIC) {
       return true;
     }
     return false;
@@ -327,7 +327,7 @@ public enum GovernmentType {
   public int leaderPoolLimit() {
     switch (this) {
       default:
-      case ALLIANCE:
+      case UNION:
       case DEMOCRACY:
       case FEDERATION:
       case MECHANICAL_HORDE:
@@ -366,7 +366,7 @@ public enum GovernmentType {
   public int leaderRecruitCost() {
     switch (this) {
       default:
-      case ALLIANCE:
+      case UNION:
       case DEMOCRACY:
       case FEDERATION:
       case MECHANICAL_HORDE:
@@ -401,13 +401,12 @@ public enum GovernmentType {
   public boolean hasHeirs() {
     switch (this) {
       default:
-      case ALLIANCE:
+      case UNION:
       case DEMOCRACY:
       case FEDERATION:
       case MECHANICAL_HORDE:
       case AI:
       case HIVEMIND:
-      case NEST:
       case GUILD:
       case ENTERPRISE:
       case HEGEMONY:
@@ -416,6 +415,7 @@ public enum GovernmentType {
       case COLLECTIVE: {
         return false;
       }
+      case NEST:
       case EMPIRE:
       case KINGDOM:
       case HORDE:
@@ -430,7 +430,7 @@ public enum GovernmentType {
    */
   public int reignTime() {
     switch (this) {
-      case ALLIANCE:
+      case UNION:
       case DEMOCRACY:
       case FEDERATION:
       case REPUBLIC: {

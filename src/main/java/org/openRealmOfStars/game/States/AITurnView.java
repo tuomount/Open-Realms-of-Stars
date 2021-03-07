@@ -2472,7 +2472,8 @@ public class AITurnView extends BlackPanel {
             chance = 4;
           }
           if ((realm.getGovernment() == GovernmentType.EMPIRE
-              || realm.getGovernment() == GovernmentType.KINGDOM)
+              || realm.getGovernment() == GovernmentType.KINGDOM
+              || realm.getGovernment() == GovernmentType.NEST)
               && heirs == 0) {
             chance = 10;
           }

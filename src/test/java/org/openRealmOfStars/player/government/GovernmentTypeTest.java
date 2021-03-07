@@ -45,7 +45,7 @@ public class GovernmentTypeTest {
         + "* War resistance: -1\n"
         + "* Production bonus: 1\n"
         + "* Credit rush\n";
-    expected[1] = "### Alliance\n"
+    expected[1] = "### Union\n"
         + "* Base fleet capacity: 2\n"
         + "* Leader capacity: 10\n"
         + "* Leader cost: 10\n"
@@ -54,7 +54,7 @@ public class GovernmentTypeTest {
         + "* Diplomatic bonus: 1\n"
         + "* Trade bonus: 1\n"
         + "* War resistance: -1\n"
-        + "* Production bonus: 1\n"
+        + "* Mining bonus: 1\n"
         + "* Credit rush\n";
     expected[2] = "### Federation\n"
         + "* Base fleet capacity: 3\n"
@@ -70,9 +70,9 @@ public class GovernmentTypeTest {
         + "* Leader capacity: 10\n"
         + "* Leader cost: 10\n"
         + "* Reign length: 20 turns\n"
-        + "* Generic happiness: 1\n"
         + "* Diplomatic bonus: 1\n"
         + "* Trade bonus: 1\n"
+        + "* Production bonus: 1\n"
         + "* Credit rush\n";
     expected[4] = "### Guild\n"
         + "* Base fleet capacity: 3\n"
@@ -80,7 +80,7 @@ public class GovernmentTypeTest {
         + "* Leader cost: 12\n"
         + "* Reign length: 40 turns\n"
         + "* Trade bonus: 2\n"
-        + "* Credit bonus: 1\n"
+        + "* Production bonus: 1\n"
         + "* Credit rush\n";
     expected[5] = "### Enterprise\n"
         + "* Base fleet capacity: 3\n"
@@ -104,10 +104,11 @@ public class GovernmentTypeTest {
         + "* Leader capacity: 6\n"
         + "* Leader cost: 5\n"
         + "* Reign length: life time\n"
+        + "* Rulers have heirs\n"
         + "* Possibility to internal power struggle\n"
         + "* No effects on happines nor war fatigue\n";
     expected[8] = "### Hive-mind\n"
-        + "* Base fleet capacity: 3\n"
+        + "* Base fleet capacity: 4\n"
         + "* Leader capacity: 6\n"
         + "* Leader cost: 5\n"
         + "* Reign length: life time\n"
@@ -139,7 +140,7 @@ public class GovernmentTypeTest {
         + "* Possibility to internal power struggle\n"
         + "* Generic happiness: -1\n"
         + "* War resistance: 1\n"
-        + "* Production bonus: 1\n"
+        + "* Credit bonus: 1\n"
         + "* Population rush\n";
     expected[12] = "### Hierarchy\n"
         + "* Base fleet capacity: 4\n"
@@ -152,7 +153,7 @@ public class GovernmentTypeTest {
         + "* Production bonus: 1\n"
         + "* Population rush\n";
     expected[13] = "### Horde\n"
-        + "* Base fleet capacity: 4\n"
+        + "* Base fleet capacity: 3\n"
         + "* Leader capacity: 9\n"
         + "* Leader cost: 10\n"
         + "* Reign length: life time\n"
@@ -160,6 +161,7 @@ public class GovernmentTypeTest {
         + "* Possibility to internal power struggle\n"
         + "* Generic happiness: -1\n"
         + "* War resistance: 1\n"
+        + "* Mining bonus: 1\n"
         + "* Food bonus: 1\n"
         + "* War happiness\n"
         + "* Population rush\n";

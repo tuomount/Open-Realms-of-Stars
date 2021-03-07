@@ -1109,6 +1109,15 @@ public class Planet {
         sb.append(value);
         sb.append("<br>");
       }
+      if (totalPopulation >= 4) {
+        value = government.getCultureBonus();
+        result = result + value;
+        if (value > 0) {
+          sb.append("<li> government +");
+          sb.append(value);
+          sb.append("<br>");
+        }
+      }
       if (homeWorldIndex != -1) {
         // Home worlds produce one extra culture
         result++;

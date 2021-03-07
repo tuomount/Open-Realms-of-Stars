@@ -93,7 +93,11 @@ public enum GovernmentType {
   /**
    * Collective government
    */
-  COLLECTIVE(16, "Collective", 0, 1, false, 4);
+  COLLECTIVE(16, "Collective", 0, 1, false, 4),
+  /**
+   * Utopia government
+   */
+  UTOPIA(17, "Utopia", 2, -1, false, 1);
 
 
   /**
@@ -194,6 +198,9 @@ public enum GovernmentType {
         || this == REPUBLIC) {
       return 1;
     }
+    if (this == UTOPIA) {
+      return 2;
+    }
     return 0;
   }
   /**
@@ -202,7 +209,7 @@ public enum GovernmentType {
    */
   public int getTradeBonus() {
     if (this == DEMOCRACY || this == UNION || this == FEDERATION
-        || this == REPUBLIC) {
+        || this == REPUBLIC || this == UTOPIA) {
       return 1;
     }
     if (this == GUILD || this == ENTERPRISE) {
@@ -248,12 +255,24 @@ public enum GovernmentType {
   }
 
   /**
+   * Get Culture bonus for government when
+   * planet has 4 or more population.
+   * @return Culture bonus
+   */
+  public int getCultureBonus() {
+    if (this == UTOPIA) {
+      return 1;
+    }
+    return 0;
+  }
+
+  /**
    * Get Food bonus for government when
    * planet has 4 or more population.
    * @return Food bonus
    */
   public int getFoodBonus() {
-    if (this == HORDE || this == CLAN) {
+    if (this == HORDE || this == CLAN || this == UTOPIA) {
       return 1;
     }
     return 0;
@@ -337,7 +356,8 @@ public enum GovernmentType {
       case AI:
       case HIVEMIND:
       case COLLECTIVE:
-      case NEST: {
+      case NEST:
+      case UTOPIA: {
         return 6;
       }
       case GUILD:
@@ -383,7 +403,8 @@ public enum GovernmentType {
         return 5;
       }
       case GUILD:
-      case ENTERPRISE: {
+      case ENTERPRISE:
+      case UTOPIA: {
         return 12;
       }
       case HEGEMONY:
@@ -412,7 +433,8 @@ public enum GovernmentType {
       case HEGEMONY:
       case HIERARCHY:
       case REPUBLIC:
-      case COLLECTIVE: {
+      case COLLECTIVE:
+      case UTOPIA: {
         return false;
       }
       case NEST:
@@ -437,7 +459,8 @@ public enum GovernmentType {
         return 20;
       }
       case GUILD:
-      case ENTERPRISE: {
+      case ENTERPRISE:
+      case UTOPIA: {
         return 40;
       }
       case COLLECTIVE: {
@@ -570,6 +593,12 @@ public enum GovernmentType {
         sb.append(dot);
         sb.append(" Food bonus: ");
         sb.append(getFoodBonus());
+        sb.append(lf);
+      }
+      if (getCultureBonus() != 0) {
+        sb.append(dot);
+        sb.append(" Culture bonus: ");
+        sb.append(getCultureBonus());
         sb.append(lf);
       }
       if (hasWarHappiness()) {

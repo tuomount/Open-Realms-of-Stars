@@ -195,6 +195,17 @@ public class GovernmentTypeTest {
         + "* Reign length: 50 turns\n"
         + "* War resistance: 1\n"
         + "* Mining bonus: 1\n";
+    expected[17] = "### Utopia\n"
+        + "* Base fleet capacity: 1\n"
+        + "* Leader capacity: 6\n"
+        + "* Leader cost: 12\n"
+        + "* Reign length: 40 turns\n"
+        + "* Generic happiness: 2\n"
+        + "* Diplomatic bonus: 2\n"
+        + "* Trade bonus: 1\n"
+        + "* War resistance: -1\n"
+        + "* Food bonus: 1\n"
+        + "* Culture bonus: 1\n";
     for (int i = 0; i <  GovernmentType.values().length; i++) {
       GovernmentType government = GovernmentType.values()[i];
       assertEquals(expected[i], government.getDescription(true));

@@ -101,7 +101,11 @@ public enum GovernmentType {
   /**
    * Regime government
    */
-  REGIME(18, "Regime", -1, 1, false, 4);
+  REGIME(18, "Regime", -1, 1, false, 4),
+  /**
+   * Feudalism government
+   */
+  FEUDALISM(19, "Feudalism", -1, 2, false, 3);
 
 
   /**
@@ -293,7 +297,7 @@ public enum GovernmentType {
    * @return Credit bonus
    */
   public int getCreditBonus() {
-    if (this == KINGDOM || this == ENTERPRISE) {
+    if (this == KINGDOM || this == ENTERPRISE || this == FEUDALISM) {
       return 1;
     }
     return 0;
@@ -330,7 +334,8 @@ public enum GovernmentType {
    */
   public boolean hasCreditRush() {
     if (this == GUILD || this == ENTERPRISE || this == DEMOCRACY
-        || this == UNION || this == FEDERATION || this == REPUBLIC) {
+        || this == UNION || this == FEDERATION || this == REPUBLIC
+        || this == FEUDALISM) {
       return true;
     }
     return false;
@@ -372,6 +377,7 @@ public enum GovernmentType {
         return 6;
       }
       case GUILD:
+      case FEUDALISM:
       case ENTERPRISE: {
         return 12;
       }
@@ -405,6 +411,7 @@ public enum GovernmentType {
       case REPUBLIC:
       case EMPIRE:
       case KINGDOM:
+      case FEUDALISM:
       case REGIME:
       case HORDE:
       case CLAN: {
@@ -455,10 +462,23 @@ public enum GovernmentType {
       case EMPIRE:
       case KINGDOM:
       case HORDE:
+      case FEUDALISM:
       case CLAN: {
         return true;
       }
     }
+  }
+
+  /**
+   * If Planet has governor then add one happiness. This happens
+   * only if government has governor happiness.
+   * @return Happiness bonus
+   */
+  public int getGovernorHappiness() {
+    if (this == FEUDALISM) {
+      return 1;
+    }
+    return 0;
   }
   /**
    * Get ruler reign time.
@@ -560,6 +580,12 @@ public enum GovernmentType {
         sb.append(dot);
         sb.append(" Generic happiness: ");
         sb.append(getGenericHappiness());
+        sb.append(lf);
+      }
+      if (getGovernorHappiness() != 0) {
+        sb.append(dot);
+        sb.append(" Happiness from governor: ");
+        sb.append(getGovernorHappiness());
         sb.append(lf);
       }
       if (getDiplomaticBonus() != 0) {

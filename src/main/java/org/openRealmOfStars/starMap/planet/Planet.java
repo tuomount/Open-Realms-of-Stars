@@ -2986,6 +2986,16 @@ public class Planet {
       sb.append("Governor Good leader +1");
       sb.append("<br>");
     }
+    if (governor != null && government.getGovernorHappiness() != 0) {
+      base = base + government.getGovernorHappiness();
+      sb.append("<li>");
+      sb.append("Happiness from governorn ");
+      if (government.getGovernorHappiness() > 0) {
+        sb.append("+");
+      }
+      sb.append(government.getGovernorHappiness());
+      sb.append("<br>");
+    }
     if (getPlanetPlayerInfo().getRuler() != null
         && getPlanetPlayerInfo().getRuler().hasPerk(Perk.GOOD_LEADER)) {
       base = base + 1;

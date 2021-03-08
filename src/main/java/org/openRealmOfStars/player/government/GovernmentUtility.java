@@ -71,6 +71,7 @@ public final class GovernmentUtility {
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.ENTERPRISE, GovernmentType.UTOPIA,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+        GovernmentType.FEUDALISM,
         GovernmentType.HIERARCHY, GovernmentType.KINGDOM
       };
       return governments;
@@ -92,7 +93,8 @@ public final class GovernmentUtility {
           GovernmentType.ENTERPRISE, GovernmentType.COLLECTIVE,
           GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
           GovernmentType.HIERARCHY, GovernmentType.KINGDOM,
-          GovernmentType.REGIME
+          GovernmentType.REGIME, GovernmentType.FEUDALISM,
+
         };
         return governments;
     }
@@ -112,6 +114,7 @@ public final class GovernmentUtility {
         GovernmentType.UNION, GovernmentType.REGIME,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.CLAN, GovernmentType.HORDE,
+        GovernmentType.FEUDALISM,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
         GovernmentType.HIERARCHY, GovernmentType.KINGDOM
       };
@@ -122,6 +125,7 @@ public final class GovernmentUtility {
         GovernmentType.UNION, GovernmentType.UTOPIA,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.CLAN, GovernmentType.HORDE,
+        GovernmentType.FEUDALISM,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
         GovernmentType.NEST, GovernmentType.KINGDOM
       };
@@ -134,7 +138,7 @@ public final class GovernmentUtility {
         GovernmentType.CLAN, GovernmentType.HORDE,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
         GovernmentType.NEST, GovernmentType.KINGDOM,
-        GovernmentType.HIVEMIND
+        GovernmentType.FEUDALISM, GovernmentType.HIVEMIND
       };
       return governments;
     }
@@ -155,6 +159,7 @@ public final class GovernmentUtility {
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.ENTERPRISE, GovernmentType.HORDE,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+        GovernmentType.FEUDALISM,
         GovernmentType.HIERARCHY, GovernmentType.KINGDOM,
         GovernmentType.DEMOCRACY
       };
@@ -165,7 +170,7 @@ public final class GovernmentUtility {
         GovernmentType.UNION, GovernmentType.REGIME,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.CLAN, GovernmentType.HIVEMIND,
-        GovernmentType.COLLECTIVE,
+        GovernmentType.COLLECTIVE, GovernmentType.FEUDALISM,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
         GovernmentType.HIERARCHY, GovernmentType.KINGDOM
       };

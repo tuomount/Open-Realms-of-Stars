@@ -393,6 +393,8 @@ public final class LeaderUtility {
           }
           break;
         }
+        case FEUDALISM:
+        case NEST:
         case KINGDOM: {
           if (leader.getGender() == Gender.FEMALE) {
             sb.append("Queen");
@@ -407,12 +409,17 @@ public final class LeaderUtility {
           sb.append("Chief");
           break;
         }
+        case UTOPIA: {
+          sb.append("Wise");
+          break;
+        }
         case ENTERPRISE: {
           sb.append("CEO");
           break;
         }
         case GUILD:
         case HEGEMONY:
+        case REGIME:
         case COLLECTIVE: {
           sb.append("Leader");
           break;
@@ -421,7 +428,6 @@ public final class LeaderUtility {
           sb.append("Main Process");
           break;
         }
-        case NEST:
         case HIVEMIND: {
           sb.append("Master");
           break;
@@ -1637,6 +1643,7 @@ public final class LeaderUtility {
         || government == GovernmentType.KINGDOM
         || government == GovernmentType.MECHANICAL_HORDE
         || government == GovernmentType.NEST
+        || government == GovernmentType.FEUDALISM
         || government == GovernmentType.REGIME) {
       return true;
     }

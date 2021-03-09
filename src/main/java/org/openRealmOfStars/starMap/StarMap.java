@@ -2581,6 +2581,7 @@ public class StarMap {
     for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
+        info.estimateBestTechWorld(planetList);
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
           if (!fleet.isStarBaseDeployed()) {
@@ -2612,6 +2613,7 @@ public class StarMap {
     for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
+        info.estimateBestTechWorld(planetList);
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
           doFleetScanUpdate(info, fleet, null);

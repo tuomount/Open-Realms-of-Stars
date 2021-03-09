@@ -36,6 +36,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
+import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
@@ -202,6 +203,13 @@ public class PlayerInfo {
    * can be rather expensive.
    */
   private Coordinate centerRealm;
+
+  /**
+   * Best evaluation of player to build tech world.
+   * This information is not saved to games, since it can be
+   * and will be calculated. This information will be used only by AI.
+   */
+  private Planet bestPlanetForTechWorld;
   /**
    * Uncharted map sector, only suns are visible
    */
@@ -2027,5 +2035,30 @@ public class PlayerInfo {
    */
   public void setCenterRealm(final Coordinate centerRealm) {
     this.centerRealm = centerRealm;
+  }
+  /**
+   * Best planet for tech world.
+   * @return the bestPlanetForTechWorld
+   */
+  public Planet getBestPlanetForTechWorld() {
+    return bestPlanetForTechWorld;
+  }
+
+  /**
+   * Estimate which planet is best for making the tech world.
+   * @param planets Array list of planets.
+   */
+  public void estimateBestTechWorld(final ArrayList<Planet> planets) {
+    int bestValue = -99;
+    bestPlanetForTechWorld = null;
+    for (Planet planet : planets) {
+      if (planet.getPlanetPlayerInfo() == this) {
+        int value = planet.getEvaluationForTechWorld();
+        if (value > bestValue) {
+          bestPlanetForTechWorld = planet;
+          bestValue = value;
+        }
+      }
+    }
   }
 }

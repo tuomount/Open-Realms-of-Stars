@@ -441,13 +441,9 @@ public final class PlanetHandling {
       }
     }
     if (building.getScientificAchievement()
-        && info.getStrategy() == WinningStrategy.SCIENCE) {
-      score = score + 250;
-      for (Building bild : planet.getBuildingList()) {
-        if (bild.getScientificAchievement()) {
-          score = score + 120;
-        }
-      }
+        && info.getStrategy() == WinningStrategy.SCIENCE
+        && info.getBestPlanetForTechWorld() == planet) {
+      score = score + 500;
     }
     if (attitude == Attitude.MERCHANTICAL) {
       score = score + building.getCredBonus() * 15;

@@ -3200,4 +3200,25 @@ public class Planet {
     return result;
   }
 
+  /**
+   * Get evaluation value for how good current planet is for building
+   * scientific achievements.
+   * @return Evaluation value from -3 to positive number.
+   */
+  public int getEvaluationForTechWorld() {
+    int result = 0;
+    result = getGroundSize() - 10;
+    if (getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
+      result = result + 5;
+    }
+    for (Building building : buildings) {
+      if (building.getScientificAchievement()) {
+        result = result + 5;
+      }
+    }
+    result = result + getTotalProduction(PRODUCTION_PRODUCTION);
+    result = result + getTotalProduction(PRODUCTION_METAL);
+    result = result + getMetal() / 25;
+    return result;
+  }
 }

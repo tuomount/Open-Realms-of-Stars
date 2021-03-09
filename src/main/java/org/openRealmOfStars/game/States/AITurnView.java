@@ -2584,6 +2584,7 @@ public class AITurnView extends BlackPanel {
     for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
       PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
       if (info != null) {
+        info.estimateBestTechWorld(game.getStarMap().getPlanetList());
         info.setRandomEventOccured(null);
         if (!info.isBoard()) {
           removeBannedShipDesigns(info,

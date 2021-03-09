@@ -4,12 +4,14 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2019 Tuomo Untinen
+* Copyright (C) 2017-2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -123,7 +125,19 @@ public class NegotiationOffer {
       offerValue = getMapValue();
       break;
     case TECH:
-      if (getTech().isRareTech()) {
+      Building building = null;
+      boolean scienticAchievement = false;
+      if (getTech().getImprovement() != null) {
+        building = BuildingFactory.createByName(getTech().getImprovement());
+        scienticAchievement = building.getScientificAchievement();
+      }
+      if (getTech().getHull() != null
+          && getTech().getHull().equals("Artificial planet")) {
+        scienticAchievement = true;
+      }
+      if (scienticAchievement) {
+        offerValue = getTech().getLevel() * 8;
+      } else if (getTech().isRareTech()) {
         offerValue = getTech().getLevel() * 4;
       } else {
         offerValue = getTech().getLevel() * 2;

@@ -265,7 +265,7 @@ public final class ShipHullFactory {
       return tmp;
     }
     if (index == HULL_SMALL_STARBASE_MK1) {
-      tmp = new ShipHull(index, "Small starbase Mk1", 4, 1,
+      tmp = new ShipHull(index, "Small starbase Mk1", 6, 1,
           ShipHullType.STARBASE, ShipSize.SMALL, 6, 6, race);
       tmp.setFleetCapacity(0);
       tmp.setImageIndex(ShipImage.SMALL_STARBASE);
@@ -279,7 +279,7 @@ public final class ShipHullFactory {
       return tmp;
     }
     if (index == HULL_SMALL_STARBASE_MK2) {
-      tmp = new ShipHull(index, "Small starbase Mk2", 4, 2,
+      tmp = new ShipHull(index, "Small starbase Mk2", 6, 2,
           ShipHullType.STARBASE, ShipSize.SMALL, 6, 8, race);
       tmp.setFleetCapacity(0);
       tmp.setImageIndex(ShipImage.SMALL_STARBASE);
@@ -300,7 +300,7 @@ public final class ShipHullFactory {
       return tmp;
     }
     if (index == HULL_MEDIUM_STARBASE) {
-      tmp = new ShipHull(index, "Medium starbase", 6, 2, ShipHullType.STARBASE,
+      tmp = new ShipHull(index, "Medium starbase", 8, 2, ShipHullType.STARBASE,
           ShipSize.MEDIUM, 8, 10, race);
       tmp.setFleetCapacity(0);
       tmp.setImageIndex(ShipImage.MEDIUM_STARBASE);
@@ -342,7 +342,7 @@ public final class ShipHullFactory {
       return tmp;
     }
     if (index == HULL_LARGE_STARBASE) {
-      tmp = new ShipHull(index, "Large starbase", 8, 3, ShipHullType.STARBASE,
+      tmp = new ShipHull(index, "Large starbase", 10, 3, ShipHullType.STARBASE,
           ShipSize.LARGE, 15, 15, race);
       tmp.setFleetCapacity(0);
       tmp.setImageIndex(ShipImage.LARGE_STARBASE);
@@ -384,7 +384,7 @@ public final class ShipHullFactory {
       return tmp;
     }
     if (index == HULL_MASSIVE_STARBASE) {
-      tmp = new ShipHull(index, "Massive starbase", 10, 4,
+      tmp = new ShipHull(index, "Massive starbase", 12, 4,
           ShipHullType.STARBASE, ShipSize.HUGE, 25, 25, race);
       tmp.setFleetCapacity(0);
       tmp.setImageIndex(ShipImage.MASSIVE_STARBASE);

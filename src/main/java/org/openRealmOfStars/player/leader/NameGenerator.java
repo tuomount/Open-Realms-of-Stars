@@ -6,7 +6,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -2048,6 +2048,209 @@ public final class NameGenerator {
   }
 
   /**
+   * Generate Lithorian leader name
+   * @param gender Leader gender
+   * @return Lithorian leader name
+   */
+  private static String generateLithorianName(final Gender gender) {
+    StringBuilder sb = new StringBuilder();
+    if (gender == Gender.MALE) {
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("Smul"); break;
+        case 1: sb.append("Bul"); break;
+        case 2: sb.append("Umb"); break;
+        case 3: sb.append("Rag"); break;
+        case 4: sb.append("Fer"); break;
+        case 5: sb.append("Thorm"); break;
+        case 6: sb.append("Mol"); break;
+        case 7: sb.append("Mug"); break;
+        case 8: sb.append("A"); break;
+        case 9: sb.append("Mag"); break;
+        case 10: sb.append("Yam"); break;
+        case 11: sb.append("Shur"); break;
+        case 12: sb.append("Kur"); break;
+        case 13: sb.append("Yak"); break;
+        case 14: sb.append("Sha"); break;
+        case 15: sb.append("Dur"); break;
+        case 16: sb.append("Gur"); break;
+        case 17: sb.append("Bam"); break;
+        case 18: sb.append("Mul"); break;
+        case 19: sb.append("Tug"); break;
+      }
+      if (DiceGenerator.getRandom(3) == 0) {
+        switch (DiceGenerator.getRandom(19)) {
+          default:
+          case 0: sb.append("da"); break;
+          case 1: sb.append("ris"); break;
+          case 2: sb.append("zu"); break;
+          case 3: sb.append("or"); break;
+          case 4: sb.append("ar"); break;
+          case 5: sb.append("sh"); break;
+          case 6: sb.append("ol"); break;
+          case 7: sb.append("ug"); break;
+          case 8: sb.append("ro"); break;
+          case 9: sb.append("za"); break;
+          case 10: sb.append("ze"); break;
+          case 11: sb.append("ur"); break;
+          case 12: sb.append("go"); break;
+          case 13: sb.append("ak"); break;
+          case 14: sb.append("ha"); break;
+          case 15: sb.append("er"); break;
+          case 16: sb.append("ir"); break;
+          case 17: sb.append("er"); break;
+          case 18: sb.append("nu"); break;
+          case 19: sb.append("ny"); break;
+        }
+      }
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("der"); break;
+        case 1: sb.append("ris"); break;
+        case 2: sb.append("nis"); break;
+        case 3: sb.append("no"); break;
+        case 4: sb.append("bus"); break;
+        case 5: sb.append("tos"); break;
+        case 6: sb.append("rus"); break;
+        case 7: sb.append("nus"); break;
+        case 8: sb.append("sius"); break;
+        case 9: sb.append("nius"); break;
+        case 10: sb.append("gis"); break;
+        case 11: sb.append("lis"); break;
+        case 12: sb.append("nic"); break;
+        case 13: sb.append("on"); break;
+        case 14: sb.append("rub"); break;
+        case 15: sb.append("tog"); break;
+        case 16: sb.append("zer"); break;
+        case 17: sb.append("mus"); break;
+        case 18: sb.append("lon"); break;
+        case 19: sb.append("lok"); break;
+      }
+    }
+    if (gender == Gender.FEMALE) {
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("Ae"); break;
+        case 1: sb.append("So"); break;
+        case 2: sb.append("A"); break;
+        case 3: sb.append("My"); break;
+        case 4: sb.append("Bu"); break;
+        case 5: sb.append("Li"); break;
+        case 6: sb.append("Y"); break;
+        case 7: sb.append("Mu"); break;
+        case 8: sb.append("Ne"); break;
+        case 9: sb.append("Mo"); break;
+        case 10: sb.append("Ya"); break;
+        case 11: sb.append("Shu"); break;
+        case 12: sb.append("Ku"); break;
+        case 13: sb.append("Ya"); break;
+        case 14: sb.append("Sha"); break;
+        case 15: sb.append("Du"); break;
+        case 16: sb.append("Gu"); break;
+        case 17: sb.append("Ta"); break;
+        case 18: sb.append("Yo"); break;
+        case 19: sb.append("Wu"); break;
+      }
+      if (DiceGenerator.getRandom(3) == 0) {
+        switch (DiceGenerator.getRandom(19)) {
+          default:
+          case 0: sb.append("re"); break;
+          case 1: sb.append("mu"); break;
+          case 2: sb.append("go"); break;
+          case 3: sb.append("ro"); break;
+          case 4: sb.append("ra"); break;
+          case 5: sb.append("shi"); break;
+          case 6: sb.append("lo"); break;
+          case 7: sb.append("gu"); break;
+          case 8: sb.append("du"); break;
+          case 9: sb.append("ga"); break;
+          case 10: sb.append("ma"); break;
+          case 11: sb.append("le"); break;
+          case 12: sb.append("di"); break;
+          case 13: sb.append("ka"); break;
+          case 14: sb.append("ha"); break;
+          case 15: sb.append("re"); break;
+          case 16: sb.append("te"); break;
+          case 17: sb.append("ti"); break;
+          case 18: sb.append("me"); break;
+          case 19: sb.append("fe"); break;
+        }
+      }
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("re"); break;
+        case 1: sb.append("nus"); break;
+        case 2: sb.append("fa"); break;
+        case 3: sb.append("rios"); break;
+        case 4: sb.append("quis"); break;
+        case 5: sb.append("ce"); break;
+        case 6: sb.append("xus"); break;
+        case 7: sb.append("gen"); break;
+        case 8: sb.append("toa"); break;
+        case 9: sb.append("son"); break;
+        case 10: sb.append("gon"); break;
+        case 11: sb.append("zius"); break;
+        case 12: sb.append("han"); break;
+        case 13: sb.append("bon"); break;
+        case 14: sb.append("ra"); break;
+        case 15: sb.append("he"); break;
+        case 16: sb.append("za"); break;
+        case 17: sb.append("mah"); break;
+        case 18: sb.append("log"); break;
+        case 19: sb.append("ti"); break;
+      }
+    }
+    sb.append(" ");
+    switch (DiceGenerator.getRandom(19)) {
+      default:
+      case 0: sb.append("Blaze"); break;
+      case 1: sb.append("Flare"); break;
+      case 2: sb.append("Tinder"); break;
+      case 3: sb.append("Glow"); break;
+      case 4: sb.append("Pyre"); break;
+      case 5: sb.append("Lava"); break;
+      case 6: sb.append("Magma"); break;
+      case 7: sb.append("Fire"); break;
+      case 8: sb.append("Flame"); break;
+      case 9: sb.append("Steel"); break;
+      case 10: sb.append("Metal"); break;
+      case 11: sb.append("Glass"); break;
+      case 12: sb.append("Basalt"); break;
+      case 13: sb.append("Titanium"); break;
+      case 14: sb.append("Obsidian"); break;
+      case 15: sb.append("Heated"); break;
+      case 16: sb.append("Golden"); break;
+      case 17: sb.append("Boiling"); break;
+      case 18: sb.append("Fiery"); break;
+      case 19: sb.append("Red"); break;
+    }
+    switch (DiceGenerator.getRandom(19)) {
+      default:
+      case 0: sb.append("stone"); break;
+      case 1: sb.append("crystal"); break;
+      case 2: sb.append("gem"); break;
+      case 3: sb.append("gravel"); break;
+      case 4: sb.append("mineral"); break;
+      case 5: sb.append("metal"); break;
+      case 6: sb.append("ore"); break;
+      case 7: sb.append("boulder"); break;
+      case 8: sb.append("rock"); break;
+      case 9: sb.append("mass"); break;
+      case 10: sb.append("crust"); break;
+      case 11: sb.append("mountain"); break;
+      case 12: sb.append("volcano"); break;
+      case 13: sb.append("peak"); break;
+      case 14: sb.append("ignot"); break;
+      case 15: sb.append("plate"); break;
+      case 16: sb.append("alloy"); break;
+      case 17: sb.append("vein"); break;
+      case 18: sb.append("spirit"); break;
+      case 19: sb.append("flux"); break;
+    }
+    return sb.toString();
+  }
+
+  /**
    * Generate Leader name.
    * @param race SpaceRace for which name will generated
    * @param gender Leader gender
@@ -2086,6 +2289,9 @@ public final class NameGenerator {
     }
     if (race == SpaceRace.REBORGIANS) {
       return generateReborgianName();
+    }
+    if (race == SpaceRace.LITHORIANS) {
+      return generateLithorianName(gender);
     }
     return "Noname";
   }

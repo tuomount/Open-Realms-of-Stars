@@ -186,6 +186,17 @@ public final class GovernmentUtility {
       };
       return governments;
     }
+    if (race == SpaceRace.LITHORIANS) {
+      GovernmentType[] governments = {
+          GovernmentType.UNION, GovernmentType.HIVEMIND,
+          GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+          GovernmentType.UTOPIA, GovernmentType.COLLECTIVE,
+          GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+          GovernmentType.HIERARCHY, GovernmentType.KINGDOM,
+          GovernmentType.REGIME, GovernmentType.FEUDALISM
+        };
+        return governments;
+    }
     return null;
   }
 }

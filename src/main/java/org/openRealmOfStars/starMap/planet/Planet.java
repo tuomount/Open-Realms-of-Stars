@@ -1233,14 +1233,28 @@ public class Planet {
         result = 0;
         break;
       }
-
-      // Planet does not have population bonus
-      result = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
-          * planetOwnerInfo.getRace().getFoodRequire() / 100;
-      int require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
-      if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && result > 0) {
-        // Limit cyborg grow rate
-        result = 1;
+      int require = 10;
+      if (planetOwnerInfo.getRace().isLithovorian()) {
+        // Lithovorians eat metal instead of food.
+        require = getTotalPopulation() / 2;
+        int available = getMetal() + getTotalProduction(PRODUCTION_METAL);
+        if (available > require) {
+          result = 1;
+        } else if (available == require) {
+          result = 0;
+        } else {
+          result = -1;
+        }
+        require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
+      } else {
+        // Planet does not have population bonus
+        result = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
+            * planetOwnerInfo.getRace().getFoodRequire() / 100;
+        require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
+        if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && result > 0) {
+          // Limit cyborg grow rate
+          result = 1;
+        }
       }
       if (result > 0) {
         result = (require - extraFood) / result;
@@ -1753,6 +1767,131 @@ public class Planet {
   }
 
   /**
+   * Update planet foor for one turn.
+   * @param map StarMap
+   */
+  private void updatePlanetFoodForOneTurn(final StarMap map) {
+    Message msg;
+    if (planetOwnerInfo.getRace() != SpaceRace.MECHIONS) {
+      int food = 0;
+      if (planetOwnerInfo.getRace().isLithovorian()) {
+        int require = getTotalPopulation() / 2;
+        int available = getMetal() + getTotalProduction(PRODUCTION_METAL);
+        if (available > require) {
+          food = 1;
+        } else if (available == require) {
+          food = 0;
+        } else {
+          food = -1;
+        }
+      } else {
+        food = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
+            * planetOwnerInfo.getRace().getFoodRequire() / 100;
+        if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && food > 0) {
+          food = 1;
+        }
+      }
+      extraFood = extraFood + food;
+      int require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
+      if (exceedRadiation() && extraFood > 0) {
+        // Clear extra food if radiation is exceeded
+        extraFood = 0;
+      }
+      if (extraFood > 0 && extraFood >= require && !isFullOfPopulation()) {
+        extraFood = extraFood - require;
+        if (planetOwnerInfo.getRace().isLithovorian()) {
+          int metalRequire = getTotalPopulation() / 2;
+          int available = getTotalProduction(PRODUCTION_METAL);
+          if (metalRequire >= available) {
+            workers[METAL_MINERS] = workers[METAL_MINERS] + 1;
+          } else {
+            workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
+          }
+        } else {
+          workers[FOOD_FARMERS] = workers[FOOD_FARMERS] + 1;
+        }
+        msg = new Message(MessageType.POPULATION,
+            getName() + " has population growth! Population is now "
+                + getTotalPopulation(),
+            Icons.getIconByName(Icons.ICON_PEOPLE));
+        if (isFullOfPopulation()) {
+          msg = new Message(MessageType.POPULATION,
+              getName() + " has population growth! Population is now "
+                  + getTotalPopulation() + ". Population limit has reached!",
+              Icons.getIconByName(Icons.ICON_PEOPLE));
+        }
+        msg.setCoordinate(getCoordinate());
+        msg.setMatchByString(getName());
+        planetOwnerInfo.getMsgList().addNewMessage(msg);
+        if (Game.getTutorial() != null && map != null
+            && map.isTutorialEnabled()
+            && getTotalPopulation() >= 5) {
+          String tutorialText = Game.getTutorial().showTutorialText(128);
+          if (tutorialText != null) {
+            msg = new Message(MessageType.INFORMATION,
+                tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
+          }
+        }
+      }
+      if (isFullOfPopulation()) {
+        if (extraFood > require) {
+          // Over populated no extra food more than maximum required.
+          extraFood = require;
+        }
+        if (getTotalPopulation() > getPopulationLimit()) {
+          msg = new Message(MessageType.POPULATION,
+              getName() + " has population over the limit!",
+              Icons.getIconByName(Icons.ICON_DEATH));
+          // Over populated requires more food
+          extraFood--;
+        }
+      }
+      if (extraFood < 0 && extraFood <= require) {
+        extraFood = 0;
+        String workerName = "Culture artist";
+        if (workers[CULTURE_ARTIST] > 0) {
+          workers[CULTURE_ARTIST]--;
+          workerName = "Artist";
+        } else if (workers[METAL_MINERS] > 0) {
+          workers[METAL_MINERS]--;
+          workerName = "Miner";
+        } else if (workers[RESEARCH_SCIENTIST] > 0) {
+          workers[RESEARCH_SCIENTIST]--;
+          workerName = "Scientist";
+        } else if (workers[PRODUCTION_WORKERS] > 0) {
+          workers[PRODUCTION_WORKERS]--;
+          workerName = "Worker";
+        } else {
+          workers[FOOD_FARMERS]--;
+          workerName = "Farmer";
+        }
+        msg = new Message(MessageType.POPULATION,
+            getName() + " has " + workerName + " died! "
+                + "Population is now " + getTotalPopulation(),
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setCoordinate(getCoordinate());
+        msg.setMatchByString(getName());
+        planetOwnerInfo.getMsgList().addNewMessage(msg);
+        if (getTotalPopulation() < 1) {
+          msg = new Message(MessageType.POPULATION,
+              getName() + " has lost last population. " + getName()
+                  + " is now uncolonized!",
+              Icons.getIconByName(Icons.ICON_DEATH));
+          msg.setCoordinate(getCoordinate());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+          if (getGovernor() != null) {
+            getGovernor().setJob(Job.UNASSIGNED);
+            setGovernor(null);
+          }
+          setPlanetOwner(-1, null);
+          return;
+        }
+      }
+    }
+  }
+  /**
    * Update planet for one turn
    * @param enemyOrbiting if true it means that other player,
    *        has fleet orbiting on planet.
@@ -1822,103 +1961,8 @@ public class Planet {
           + getTotalProduction(PRODUCTION_CREDITS));
       culture = culture + getTotalProduction(PRODUCTION_CULTURE);
 
+      updatePlanetFoodForOneTurn(map);
       Message msg;
-      if (planetOwnerInfo.getRace() != SpaceRace.MECHIONS) {
-        int food = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
-            * planetOwnerInfo.getRace().getFoodRequire() / 100;
-        if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && food > 0) {
-          food = 1;
-        }
-        extraFood = extraFood + food;
-        int require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
-        if (exceedRadiation() && extraFood > 0) {
-          // Clear extra food if radiation is exceeded
-          extraFood = 0;
-        }
-        if (extraFood > 0 && extraFood >= require && !isFullOfPopulation()) {
-          extraFood = extraFood - require;
-          workers[FOOD_FARMERS] = workers[FOOD_FARMERS] + 1;
-          msg = new Message(MessageType.POPULATION,
-              getName() + " has population growth! Population is now "
-                  + getTotalPopulation(),
-              Icons.getIconByName(Icons.ICON_PEOPLE));
-          if (isFullOfPopulation()) {
-            msg = new Message(MessageType.POPULATION,
-                getName() + " has population growth! Population is now "
-                    + getTotalPopulation() + ". Population limit has reached!",
-                Icons.getIconByName(Icons.ICON_PEOPLE));
-          }
-          msg.setCoordinate(getCoordinate());
-          msg.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-          if (Game.getTutorial() != null && map != null
-              && map.isTutorialEnabled()
-              && getTotalPopulation() >= 5) {
-            String tutorialText = Game.getTutorial().showTutorialText(128);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION,
-                  tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
-              planetOwnerInfo.getMsgList().addNewMessage(msg);
-            }
-          }
-        }
-        if (isFullOfPopulation()) {
-          if (extraFood > require) {
-            // Over populated no extra food more than maximum required.
-            extraFood = require;
-          }
-          if (getTotalPopulation() > groundSize) {
-            msg = new Message(MessageType.POPULATION,
-                getName() + " has population over the limit!",
-                Icons.getIconByName(Icons.ICON_DEATH));
-            // Over populated requires more food
-            extraFood--;
-          }
-        }
-        if (extraFood < 0 && extraFood <= require) {
-          extraFood = 0;
-          String workerName = "Culture artist";
-          if (workers[CULTURE_ARTIST] > 0) {
-            workers[CULTURE_ARTIST]--;
-            workerName = "Artist";
-          } else if (workers[METAL_MINERS] > 0) {
-            workers[METAL_MINERS]--;
-            workerName = "Miner";
-          } else if (workers[RESEARCH_SCIENTIST] > 0) {
-            workers[RESEARCH_SCIENTIST]--;
-            workerName = "Scientist";
-          } else if (workers[PRODUCTION_WORKERS] > 0) {
-            workers[PRODUCTION_WORKERS]--;
-            workerName = "Worker";
-          } else {
-            workers[FOOD_FARMERS]--;
-            workerName = "Farmer";
-          }
-          msg = new Message(MessageType.POPULATION,
-              getName() + " has " + workerName + " died! "
-                  + "Population is now " + getTotalPopulation(),
-              Icons.getIconByName(Icons.ICON_DEATH));
-          msg.setCoordinate(getCoordinate());
-          msg.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-          if (getTotalPopulation() < 1) {
-            msg = new Message(MessageType.POPULATION,
-                getName() + " has lost last population. " + getName()
-                    + " is now uncolonized!",
-                Icons.getIconByName(Icons.ICON_DEATH));
-            msg.setCoordinate(getCoordinate());
-            msg.setMatchByString(getName());
-            planetOwnerInfo.getMsgList().addNewMessage(msg);
-            if (getGovernor() != null) {
-              getGovernor().setJob(Job.UNASSIGNED);
-              setGovernor(null);
-            }
-            setPlanetOwner(-1, null);
-            return;
-          }
-        }
-      }
-
       if (planetOwnerInfo.isHuman() && underConstruction == null) {
         // Forcing planet to have something to construct if player is human.
         setUnderConstruction(ConstructionFactory.createByName("Extra credit"));
@@ -2280,11 +2324,23 @@ public class Planet {
   }
 
   /**
+   * Get Planet's population limit based on race on planet.
+   * @return Planet's population limit
+   */
+  public int getPopulationLimit() {
+    int result = 0;
+    if (planetOwnerInfo != null) {
+      result = planetOwnerInfo.getRace().getExtraPopulation();
+    }
+    result = result + getGroundSize();
+    return result;
+  }
+  /**
    * Is planet full of population or not
    * @return True if planet is full of population
    */
   public boolean isFullOfPopulation() {
-    if (getTotalPopulation() >= getGroundSize()) {
+    if (getTotalPopulation() >= getPopulationLimit()) {
       return true;
     }
     return false;

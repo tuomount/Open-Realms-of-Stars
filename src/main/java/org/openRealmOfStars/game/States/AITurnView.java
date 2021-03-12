@@ -2250,7 +2250,8 @@ public class AITurnView extends BlackPanel {
             break;
           }
           case 1: {
-            if (realm.getRuler().getRace() == SpaceRace.MECHIONS) {
+            if (realm.getRuler().getRace() == SpaceRace.MECHIONS
+                || realm.getRuler().getRace() == SpaceRace.LITHORIANS) {
               reason = "heavy object crushing the body";
             } else if (realm.getRuler().getRace() == SpaceRace.REBORGIANS) {
               reason = "heavy object smashing the body";
@@ -2264,7 +2265,8 @@ public class AITurnView extends BlackPanel {
           case 2: {
             if (realm.getRuler().getRace() == SpaceRace.MECHIONS) {
               reason = "shot to the head";
-            } else if (realm.getRuler().getRace() == SpaceRace.REBORGIANS) {
+            } else if (realm.getRuler().getRace() == SpaceRace.REBORGIANS
+                || realm.getRuler().getRace() == SpaceRace.LITHORIANS) {
               reason = "explosion to the chest";
             } else {
               reason = "blade in "

@@ -1046,6 +1046,13 @@ public final class GuiStatics {
           "/resources/images/reborgian_race.png"));
 
   /**
+   * Lithorian race selection image
+   */
+  public static final BufferedImage IMAGE_LITHORIAN_RACE =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/lithorian_race.png"));
+
+  /**
    * Privateer race selection image
    */
   public static final BufferedImage IMAGE_PRIVATEER_RACE =

@@ -415,9 +415,9 @@ public enum SpaceRace {
     case CHIRALOIDS:
       return 100;
     case REBORGIANS:
-      return 200;
-    case LITHORIANS:
       return 100;
+    case LITHORIANS:
+      return 200;
     default:
       return 0;
     }

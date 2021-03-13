@@ -411,7 +411,7 @@ public final class PlanetHandling {
       score = score + building.getFarmBonus() * 50;
     } else if (info.getRace() == SpaceRace.REBORGIANS) {
       score = score + building.getFarmBonus() * 20;
-    } else if (info.getRace() != SpaceRace.LITHORIANS) {
+    } else if (info.getRace() == SpaceRace.LITHORIANS) {
       score = score - building.getFarmBonus() * 40;
     } else if (info.getRace() != SpaceRace.MECHIONS) {
       score = score + building.getFarmBonus() * 40;

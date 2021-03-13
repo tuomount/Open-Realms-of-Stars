@@ -1368,6 +1368,71 @@ public final class PlanetHandling {
     }
   }
   /**
+   * Handle Lithorian population on planet
+   * @param planet Which to handle
+   * @param info Planet owner
+   */
+  protected static void handleLithorianPopulation(final Planet planet,
+      final PlayerInfo info) {
+    int total = planet.getTotalPopulation();
+    int mining = 1 + planet.getTotalProductionFromBuildings(
+        Planet.PRODUCTION_METAL);
+    int happiness = planet.calculateHappiness();
+    if (!info.getGovernment().isImmuneToHappiness()) {
+      happiness = happiness - planet.getWorkers(Planet.CULTURE_ARTIST);
+    }
+    int modulo = total % 2;
+    int required = (total - mining) / 2;
+    int miners = 0;
+    if (mining > total) {
+      miners = required + modulo;
+      total = total - miners;
+    }
+    int research = 0;
+    int worker = 0;
+    int artist = 0;
+    if (total > 0) {
+      research++;
+      total--;
+    }
+    if (total > 0) {
+      worker++;
+      total--;
+    }
+    if (total > 0 && mining == planet.getTotalPopulation()) {
+      miners++;
+      total--;
+    }
+    if (!info.getGovernment().isImmuneToHappiness()
+        && happiness < 0 && total > 0) {
+      artist++;
+      happiness++;
+      total--;
+    }
+    do {
+      if (total > 0) {
+        worker++;
+        total--;
+      }
+      if (total > 0) {
+        research++;
+        total--;
+      }
+      if (!info.getGovernment().isImmuneToHappiness()
+          && happiness < 0 && total > 0) {
+        artist++;
+        happiness++;
+        total--;
+      }
+    } while (total > 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, worker);
+    planet.setWorkers(Planet.METAL_MINERS, miners);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, research);
+    planet.setWorkers(Planet.CULTURE_ARTIST, artist);
+  }
+
+  /**
    * Handle Homarian population planet
    * @param planet Planet to handle
    * @param info Planet owner
@@ -1737,10 +1802,13 @@ public final class PlanetHandling {
     } else if (info.getRace() == SpaceRace.CHIRALOIDS) {
       handleChiraloidPopulation(planet, info);
       branch = 2;
+    } else if (info.getRace() == SpaceRace.LITHORIANS) {
+      handleLithorianPopulation(planet, info);
+      branch = 3;
     } else {
       // Handle races whom need something to eat and have regular research
       handleGenericPopulation(planet, info);
-      branch = 3;
+      branch = 4;
     }
     if (population != planet.getTotalPopulation()) {
       StringBuilder sb = new StringBuilder();

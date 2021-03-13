@@ -1769,13 +1769,14 @@ public class Planet {
   /**
    * Update planet foor for one turn.
    * @param map StarMap
+   * @return true if planet is still populated, otherwise false
    */
-  private void updatePlanetFoodForOneTurn(final StarMap map) {
+  private boolean updatePlanetFoodForOneTurn(final StarMap map) {
     Message msg;
     if (planetOwnerInfo.getRace() != SpaceRace.MECHIONS) {
       int food = 0;
       if (planetOwnerInfo.getRace().isLithovorian()) {
-        int require = getTotalPopulation() / 2;
+        int require = getTotalPopulation();
         int available = getMetal() + getTotalProduction(PRODUCTION_METAL);
         if (available > require) {
           food = 1;
@@ -1800,7 +1801,7 @@ public class Planet {
       if (extraFood > 0 && extraFood >= require && !isFullOfPopulation()) {
         extraFood = extraFood - require;
         if (planetOwnerInfo.getRace().isLithovorian()) {
-          int metalRequire = getTotalPopulation() / 2;
+          int metalRequire = getTotalPopulation();
           int available = getTotalProduction(PRODUCTION_METAL);
           if (metalRequire >= available) {
             workers[METAL_MINERS] = workers[METAL_MINERS] + 1;
@@ -1874,6 +1875,9 @@ public class Planet {
         msg.setMatchByString(getName());
         planetOwnerInfo.getMsgList().addNewMessage(msg);
         if (getTotalPopulation() < 1) {
+          ErrorLogger.log("This probably should not happen but "
+              + planetOwnerInfo.getEmpireName()
+              + " has lost planet by starvation!!!");
           msg = new Message(MessageType.POPULATION,
               getName() + " has lost last population. " + getName()
                   + " is now uncolonized!",
@@ -1886,10 +1890,11 @@ public class Planet {
             setGovernor(null);
           }
           setPlanetOwner(-1, null);
-          return;
+          return false;
         }
       }
     }
+    return true;
   }
   /**
    * Update planet for one turn
@@ -1961,7 +1966,11 @@ public class Planet {
           + getTotalProduction(PRODUCTION_CREDITS));
       culture = culture + getTotalProduction(PRODUCTION_CULTURE);
 
-      updatePlanetFoodForOneTurn(map);
+      boolean alive = updatePlanetFoodForOneTurn(map);
+      if (!alive) {
+        // Planet has died.
+        return;
+      }
       Message msg;
       if (planetOwnerInfo.isHuman() && underConstruction == null) {
         // Forcing planet to have something to construct if player is human.

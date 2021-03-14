@@ -258,7 +258,7 @@ public final class ShipImages {
     if (lithorians == null) {
       initImages();
     }
-    return reborgians;
+    return lithorians;
   }
 
   /**

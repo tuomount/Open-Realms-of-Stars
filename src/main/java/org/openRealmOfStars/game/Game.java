@@ -734,7 +734,8 @@ public class Game implements ActionListener {
                 anomaly.getCombat().getLeaderKilledNews());
           }
         }
-        if (anomaly != null && anomaly.getType() == AnomalyType.TIME_WARP) {
+        if (anomaly != null && anomaly.getType() == AnomalyType.TIME_WARP
+            && starMapView != null) {
           starMapView.setShowFleet(fleet);
         }
         starMap.clearFleetTiles();

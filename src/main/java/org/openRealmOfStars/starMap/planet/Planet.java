@@ -3054,7 +3054,7 @@ public class Planet {
     if (governor != null && government.getGovernorHappiness() != 0) {
       base = base + government.getGovernorHappiness();
       sb.append("<li>");
-      sb.append("Happiness from governorn ");
+      sb.append("Happiness from governor ");
       if (government.getGovernorHappiness() > 0) {
         sb.append("+");
       }

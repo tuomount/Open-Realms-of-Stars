@@ -928,7 +928,7 @@ public enum SpaceRace {
     case REBORGIANS:
       return MusicPlayer.BRAINDEAD;
     case LITHORIANS:
-      return MusicPlayer.BRAINDEAD;
+      return MusicPlayer.TECHNODRIVE;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }

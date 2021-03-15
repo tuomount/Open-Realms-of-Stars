@@ -224,11 +224,18 @@ public final class MusicPlayer {
           "/resources/musics/Death Is Just Another Path.ogg");
 
   /**
-   *Braindead By Kim Lightyear CC-BY-SA 3.0
+   * Braindead By Kim Lightyear CC-BY-SA 3.0
    */
   public static final MusicFileInfo BRAINDEAD =
       new MusicFileInfo("Braindead", "Kim Lightyear",
           "/resources/musics/Braindead.ogg");
+
+  /**
+   * Techno DRIVE!!! By Centurion_of_war CC-BY 4.0
+   */
+  public static final MusicFileInfo TECHNODRIVE =
+      new MusicFileInfo("Techno DRIVE!!!", "Centurion_of_war",
+          "/resources/musics/techno_drive.ogg");
 
   /**
    * List of music to played while playing

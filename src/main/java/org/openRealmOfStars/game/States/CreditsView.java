@@ -392,7 +392,11 @@ public class CreditsView extends BlackPanel {
       + "Braindead by \n"
       + "Kim Lightyear\n"
       + "Licensed under  CC-BY-SA 3.0 "
-      + "http://creativecommons.org/licenses/by-sa/3.0/\n\n";
+      + "http://creativecommons.org/licenses/by-sa/3.0/\n\n"
+      + "Techno DRIVE!!! by \n"
+      + "Centurion_of_war\n"
+      + "Licensed under CC-BY 4.0 "
+      + "http://creativecommons.org/licenses/by/4.0/\n\n";
 
 
   /**

@@ -143,6 +143,16 @@ public class SpaceRaceUtilityTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorLithorians() {
+    SpaceRace race = SpaceRace.LITHORIANS;
+    assertEquals(Attitude.EXPANSIONIST, race.getAttitude());
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.UNION);
+    assertEquals(true, str.contains("Lithorian") || str.contains("Metavore"));
+    assertEquals(true, str.contains("Union"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFullDescriptions() {
     String[] expectedResult = new String[SpaceRaceUtility.RACE_SELECTION.length];
     expectedResult[0] = "### Humans\n"+
@@ -341,6 +351,24 @@ public class SpaceRaceUtilityTest {
         + "* Rush: Population\n"
         + "* Special: Gain dead enemies as own population."
         + " Steal technology by conquering planets.";
+    expectedResult[11] = "### Lithorians\n"
+        + "Lithorians are creatures that eat metal instead of food. They have"
+        + " slow grow rate, but they can have 2 extra population per planet."
+        + " They have excellent ability to mine metal.\n"
+        + "* Max radiation: 7\n"
+        + "* Troop power: 10\n"
+        + "* Leader lifespan: 110\n"
+        + "* Production: 100%\n"
+        + "* Mining: 200%\n"
+        + "* Research: 100%\n"
+        + "* Food production: 0%\n"
+        + "* Growth: 50%\n"
+        + "* Food require: 0%\n"
+        + "* Culture: 100%\n"
+        + "* Diplomacy bonus: -2\n"
+        + "* War resistance: 70\n"
+        + "* Rush: None\n"
+        + "* Special: Population eats metal instead of food.";
     for (int i = 0; i <  SpaceRaceUtility.RACE_SELECTION.length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByName(
           SpaceRaceUtility.RACE_SELECTION[i]);

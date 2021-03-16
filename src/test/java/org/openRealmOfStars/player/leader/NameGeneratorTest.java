@@ -9,7 +9,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -35,6 +35,15 @@ public class NameGeneratorTest {
   public void testMechion() {
     for (int i = 0; i < 50; i++) {
       String name = NameGenerator.generateName(SpaceRace.MECHIONS, Gender.NONE);
+      assertNotNull(name);
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testReborgian() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(SpaceRace.REBORGIANS, Gender.NONE);
       assertNotNull(name);
     }
   }
@@ -216,6 +225,26 @@ public class NameGeneratorTest {
   public void testHumanFemale() {
     for (int i = 0; i < 50; i++) {
       String name = NameGenerator.generateName(SpaceRace.HUMAN, Gender.FEMALE);
+      assertNotNull(name);
+      assertEquals(true, name.contains(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLithorianMale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(SpaceRace.LITHORIANS, Gender.MALE);
+      assertNotNull(name);
+      assertEquals(true, name.contains(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLithorianFemale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(SpaceRace.LITHORIANS, Gender.FEMALE);
       assertNotNull(name);
       assertEquals(true, name.contains(" "));
     }

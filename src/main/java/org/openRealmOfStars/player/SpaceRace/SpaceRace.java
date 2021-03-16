@@ -124,7 +124,17 @@ public enum SpaceRace {
       "Reborgians are organism combined with bionic and robotic "
       + "parts. So they are cyborgs. They can synthesize any living space race"
       + " to their own race, so they are fearful conquerors. They need only"
-      + " very little food surviving, but their reproduction is very slow.");
+      + " very little food surviving, but their reproduction is very slow."),
+  /**
+   * Lithorians are creatures that eat metal instead of food. They have slow
+   * grow rate, but they can have 2 extra population per planet. They have
+   * excellent ability to mine metal.
+   */
+  LITHORIANS(12, "Lithorians", "Lithorian",
+      "Lithorians are creatures that eat metal instead of food. They have"
+      + " slow grow rate, but they can have 2 extra population per planet."
+      + " They have excellent ability to mine metal.");
+
 
 
   /**
@@ -200,6 +210,8 @@ public enum SpaceRace {
       return 50;
     case REBORGIANS:
       return 100;
+    case LITHORIANS:
+      return 100;
     default:
       return 0;
     }
@@ -236,6 +248,8 @@ public enum SpaceRace {
         return Attitude.AGGRESSIVE;
       case REBORGIANS:
         return Attitude.AGGRESSIVE;
+      case LITHORIANS:
+        return Attitude.EXPANSIONIST;
       default:
         return Attitude.PEACEFUL;
     }
@@ -270,6 +284,8 @@ public enum SpaceRace {
       return 10;
     case REBORGIANS:
       return 5;
+    case LITHORIANS:
+      return 7;
     default:
       return -1;
     }
@@ -305,6 +321,8 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_CHIRALOID_RACE;
     case REBORGIANS:
       return GuiStatics.IMAGE_REBORGIAN_RACE;
+    case LITHORIANS:
+      return GuiStatics.IMAGE_LITHORIAN_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -342,6 +360,8 @@ public enum SpaceRace {
         return start + "resources/images/chiraloid_race.png";
       case REBORGIANS:
         return start + "resources/images/reborgian_race.png";
+      case LITHORIANS:
+        return start + "resources/images/lithorian_race.png";
       default:
         return start + "resources/images/centaur_race.png";
     }
@@ -396,6 +416,8 @@ public enum SpaceRace {
       return 100;
     case REBORGIANS:
       return 100;
+    case LITHORIANS:
+      return 200;
     default:
       return 0;
     }
@@ -430,6 +452,8 @@ public enum SpaceRace {
       return 100;
     case REBORGIANS:
       return 50;
+    case LITHORIANS:
+      return 100;
     default:
       return 0;
     }
@@ -464,6 +488,8 @@ public enum SpaceRace {
       return 9;
     case REBORGIANS:
       return 13;
+    case LITHORIANS:
+      return 10;
     default:
       return 0;
     }
@@ -497,6 +523,8 @@ public enum SpaceRace {
     case CHIRALOIDS:
       return 50;
     case REBORGIANS:
+      return 100;
+    case LITHORIANS:
       return 100;
     default:
       return 0;
@@ -532,6 +560,8 @@ public enum SpaceRace {
       return 50;
     case REBORGIANS:
       return 50;
+    case LITHORIANS:
+      return 50;
     default:
       return 0;
     }
@@ -566,6 +596,8 @@ public enum SpaceRace {
       return 100;
     case REBORGIANS:
       return 100;
+    case LITHORIANS:
+      return 0;
     default:
       return 100;
     }
@@ -600,6 +632,8 @@ public enum SpaceRace {
       return 100;
     case REBORGIANS:
       return 50;
+    case LITHORIANS:
+      return 0;
     default:
       return 0;
     }
@@ -634,6 +668,8 @@ public enum SpaceRace {
       return -4;
     case REBORGIANS:
       return -8;
+    case LITHORIANS:
+      return -2;
     default:
       return 0;
     }
@@ -673,6 +709,8 @@ public enum SpaceRace {
       return 50;
     case REBORGIANS:
       return 60;
+    case LITHORIANS:
+      return 70;
     default:
       return 50;
     }
@@ -706,6 +744,8 @@ public enum SpaceRace {
     case CHIRALOIDS:
       return 0;
     case REBORGIANS:
+      return 0;
+    case LITHORIANS:
       return 0;
     default:
       return 0;
@@ -741,6 +781,8 @@ public enum SpaceRace {
       return 12;
     case REBORGIANS:
       return 10;
+    case LITHORIANS:
+      return 13;
     default:
       return 15;
     }
@@ -775,6 +817,8 @@ public enum SpaceRace {
       return 53;
     case REBORGIANS:
       return 50;
+    case LITHORIANS:
+      return 52;
     default:
       return 50;
     }
@@ -809,6 +853,8 @@ public enum SpaceRace {
       return 4;
     case REBORGIANS:
       return 4;
+    case LITHORIANS:
+      return 3;
     default:
       return 3;
     }
@@ -844,6 +890,8 @@ public enum SpaceRace {
       return 1;
     case REBORGIANS:
       return 2;
+    case LITHORIANS:
+      return 1;
     default:
       return 1;
     }
@@ -879,6 +927,8 @@ public enum SpaceRace {
       return MusicPlayer.MENACE;
     case REBORGIANS:
       return MusicPlayer.BRAINDEAD;
+    case LITHORIANS:
+      return MusicPlayer.TECHNODRIVE;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }
@@ -911,6 +961,8 @@ public enum SpaceRace {
     case CHIRALOIDS:
       return false;
     case REBORGIANS:
+      return false;
+    case LITHORIANS:
       return false;
     default:
       return true;
@@ -945,11 +997,34 @@ public enum SpaceRace {
       return false;
     case REBORGIANS:
       return true;
+    case LITHORIANS:
+      return false;
     default:
       return false;
     }
   }
 
+  /**
+   * Is space race eating metal?
+   * @return True if eating metal.
+   */
+  public boolean isLithovorian() {
+    if (this == SpaceRace.LITHORIANS) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Extra population for each planet.
+   * @return Extra population per planet
+   */
+  public int getExtraPopulation() {
+    if (this == SpaceRace.LITHORIANS) {
+      return 2;
+    }
+    return 0;
+  }
   /**
    * Get life span of leaders.
    * This is amount the age leaders will always get.
@@ -983,6 +1058,8 @@ public enum SpaceRace {
       return 100;
     case REBORGIANS:
       return 150;
+    case LITHORIANS:
+      return 110;
     default:
       return 80;
     }
@@ -1018,6 +1095,8 @@ public enum SpaceRace {
       return SocialSystem.PATRIARCHY;
     case REBORGIANS:
       return SocialSystem.EQUAL;
+    case LITHORIANS:
+      return SocialSystem.MATRIARCHY;
     default:
       return SocialSystem.EQUAL;
     }
@@ -1051,6 +1130,8 @@ public enum SpaceRace {
     case CHIRALOIDS:
       return BridgeCommandType.BLUEISH_WHITE;
     case REBORGIANS:
+      return BridgeCommandType.DARKEST;
+    case LITHORIANS:
       return BridgeCommandType.DARKEST;
     default:
       return BridgeCommandType.WARM_WHITE;
@@ -1193,6 +1274,8 @@ public enum SpaceRace {
     } else if (this == SpaceRace.REBORGIANS) {
       sb.append("Gain dead enemies as own population."
           + " Steal technology by conquering planets.");
+    } else if (this == SpaceRace.LITHORIANS) {
+      sb.append("Population eats metal instead of food.");
     } else {
       sb.append("None");
     }

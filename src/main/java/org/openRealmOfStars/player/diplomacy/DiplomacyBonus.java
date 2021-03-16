@@ -214,7 +214,8 @@ public class DiplomacyBonus {
      }
      case IN_DEFENSIVE_PACT: {
        onlyOne = true;
-       if (race == SpaceRace.HUMAN || race == SpaceRace.HOMARIANS) {
+       if (race == SpaceRace.HUMAN || race == SpaceRace.HOMARIANS
+           || race == SpaceRace.LITHORIANS) {
          bonusValue = 30;
          bonusLasting = 255;
        } else if (race == SpaceRace.TEUTHIDAES || race == SpaceRace.SPORKS) {

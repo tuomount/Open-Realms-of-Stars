@@ -53,6 +53,8 @@ Chiraloid race picture by Tuomo Untinen, original art by Surt - http://opengamea
 
 Reborgian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
+Lithorian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
+
 Space Captain by Justin Nichol 
 Tuomo Untinen added legs for the captain. -https://opengameart.org/content/space-captain-with-legs
 
@@ -200,6 +202,10 @@ Sci-Fi containers by Rubberduck (CC0)
 Space Pirate Space Ship Bridge by Tuomo Untinen
 
 Rare tech capsule by Tuomo Untinen
+
+Lithorian ships are done by using Space ship building bits, volume 1 ships
+by Stephen Challener (Redshrike), hosted by OpenGameArt.org
+https://opengameart.org/content/space-ship-building-bits-volume-1
 
 
 
@@ -422,5 +428,9 @@ Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 Braindead by 
 Kim Lightyear
 Licensed under  CC-BY-SA 3.0 http://creativecommons.org/licenses/by-sa/3.0/
+
+Techno DRIVE!!! by 
+Centurion_of_war
+Licensed under CC-BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
 

@@ -244,6 +244,26 @@ public class GovernmentUtilityTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLithorianGovernments() {
+    GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
+        SpaceRace.LITHORIANS);
+    assertEquals(12, governments.length);
+    assertEquals(GovernmentType.UNION, governments[0]);
+    assertEquals(GovernmentType.HIVEMIND, governments[1]);
+    assertEquals(GovernmentType.FEDERATION, governments[2]);
+    assertEquals(GovernmentType.REPUBLIC, governments[3]);
+    assertEquals(GovernmentType.UTOPIA, governments[4]);
+    assertEquals(GovernmentType.COLLECTIVE, governments[5]);
+    assertEquals(GovernmentType.EMPIRE, governments[6]);
+    assertEquals(GovernmentType.HEGEMONY, governments[7]);
+    assertEquals(GovernmentType.HIERARCHY, governments[8]);
+    assertEquals(GovernmentType.KINGDOM, governments[9]);
+    assertEquals(GovernmentType.REGIME, governments[10]);
+    assertEquals(GovernmentType.FEUDALISM, governments[11]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testGovernmentIndexes() {
     GovernmentType[] govs = GovernmentType.values();
     for (int i = 0; i < govs.length; i++) {

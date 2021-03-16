@@ -93,6 +93,8 @@ public class CreditsView extends BlackPanel {
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Reborgian race picture by Tuomo Untinen, original art by Surt - "
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
+      + "Lithorian race picture by Tuomo Untinen, original art by Surt - "
+      + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Space Captain by Justin Nichol \n"
       + "Tuomo Untinen added legs for the captain. -"
       + "https://opengameart.org/content/space-captain-with-legs\n\n"
@@ -187,6 +189,10 @@ public class CreditsView extends BlackPanel {
       + "Sci-Fi containers by Rubberduck (CC0)\n\n"
       + "Space Pirate Space Ship Bridge by Tuomo Untinen\n\n"
       + "Rare tech capsule by Tuomo Untinen\n\n"
+      + "Lithorian ships are done by using"
+      + " Space ship building bits, volume 1 ships\n"
+      + "by Stephen Challener (Redshrike), hosted by OpenGameArt.org\n"
+      + "https://opengameart.org/content/space-ship-building-bits-volume-1\n\n"
       + "\n\nFonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"
@@ -386,7 +392,11 @@ public class CreditsView extends BlackPanel {
       + "Braindead by \n"
       + "Kim Lightyear\n"
       + "Licensed under  CC-BY-SA 3.0 "
-      + "http://creativecommons.org/licenses/by-sa/3.0/\n\n";
+      + "http://creativecommons.org/licenses/by-sa/3.0/\n\n"
+      + "Techno DRIVE!!! by \n"
+      + "Centurion_of_war\n"
+      + "Licensed under CC-BY 4.0 "
+      + "http://creativecommons.org/licenses/by/4.0/\n\n";
 
 
   /**

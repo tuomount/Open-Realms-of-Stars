@@ -121,6 +121,9 @@ public final class SpeechFactory {
       case REBORGIANS: return new SpeechLine(type,
           "Your fleet " + fleetName
           + " is in our sector! Pull it away immediately!");
+      case LITHORIANS: return new SpeechLine(type,
+          "Your fleet " + fleetName
+          + " has entered into my sector. Remove it!");
       default: return null;
     }
   }
@@ -170,6 +173,9 @@ public final class SpeechFactory {
       case REBORGIANS: return new SpeechLine(type,
           "We have detected your spy fleet "
           + fleetName + " in our sector. Pull it away!");
+      case LITHORIANS: return new SpeechLine(type,
+          "Your spy " + fleetName
+          + " has entered into my sector. Remove it! NOW!");
       default: return null;
     }
   }
@@ -208,6 +214,8 @@ public final class SpeechFactory {
           "Hmm, oh you didn't have anything to trade...");
       case REBORGIANS: return new SpeechLine(type,
           "We see you have nothing to trade with us, except yourself!");
+      case LITHORIANS: return new SpeechLine(type,
+          "You don't seem to have even pebble to trade.");
       default: return null;
     }
   }
@@ -244,6 +252,8 @@ public final class SpeechFactory {
           "I am pulling the fleet back!");
       case REBORGIANS: return new SpeechLine(type,
           "We will move the fleet!");
+      case LITHORIANS: return new SpeechLine(type,
+          "I am moving the fleet from your sector.");
       default: return null;
     }
   }
@@ -282,6 +292,8 @@ public final class SpeechFactory {
           "Nice to meet with you " +  raceName + "!");
       case REBORGIANS: return new SpeechLine(type,
           "We haven't decide if you will be synthesized " + raceName + "!");
+      case LITHORIANS: return new SpeechLine(type,
+          "Let's cool down and discuss, " + raceName + ".");
       default: return null;
     }
   }
@@ -318,6 +330,8 @@ public final class SpeechFactory {
           "My fellow, let's talk a while...");
       case REBORGIANS: return new SpeechLine(type,
           "Our thrall! Speak, we listen.");
+      case LITHORIANS: return new SpeechLine(type,
+          "Greetings, my fellow friend!");
       default: return null;
     }
   }
@@ -354,6 +368,8 @@ public final class SpeechFactory {
           "Nice to see you, again!");
       case REBORGIANS: return new SpeechLine(type,
           "We might not synthesize you, for now.");
+      case LITHORIANS: return new SpeechLine(type,
+          "Nice to see warm person in cool space.");
       default: return null;
     }
   }
@@ -390,6 +406,8 @@ public final class SpeechFactory {
           "Okay, I'll listen but be quick!");
       case REBORGIANS: return new SpeechLine(type,
           "YES?!");
+      case LITHORIANS: return new SpeechLine(type,
+          "Ah, something to put into smelting pot and eat up...");
       default: return null;
     }
   }
@@ -426,6 +444,8 @@ public final class SpeechFactory {
           "Watch your tongue or I'll rip it off!");
       case REBORGIANS: return new SpeechLine(type,
           "Synthesis material, speak now!");
+      case LITHORIANS: return new SpeechLine(type,
+          "Be quick or I will explode...");
       default: return null;
     }
   }
@@ -462,6 +482,8 @@ public final class SpeechFactory {
           "Agree or burn in nuclear fire!");
       case REBORGIANS: return new SpeechLine(type,
           "You will accept this or we will synthesize your species!");
+      case LITHORIANS: return new SpeechLine(type,
+          "Accept this or I will eat you like a pebble stone!");
       default: return null;
     }
   }
@@ -506,6 +528,9 @@ public final class SpeechFactory {
       case REBORGIANS: return new SpeechLine(type,
           "We will not accept but your species is good synthesize"
           + " material for us!" + extra);
+      case LITHORIANS: return new SpeechLine(type,
+          "This offer is so bad, I'll explode and prepare yourself"
+          + " for war!" + extra);
       default: return null;
     }
   }
@@ -545,6 +570,8 @@ public final class SpeechFactory {
           "Your offer is mad!");
       case REBORGIANS: return new SpeechLine(type,
           "We will not accept this!");
+      case LITHORIANS: return new SpeechLine(type,
+          "This offer makes me blazing hot and I getting close to explode!");
       default: return null;
     }
   }
@@ -581,6 +608,8 @@ public final class SpeechFactory {
           "You seem quiet mad... Are you?");
       case REBORGIANS: return new SpeechLine(type,
           "Adding cybergenetic implants might help you!");
+      case LITHORIANS: return new SpeechLine(type,
+          "You seem like a good fuel for furnace...");
       default: return null;
     }
   }
@@ -617,6 +646,8 @@ public final class SpeechFactory {
           "No, no, and no thanks!");
       case REBORGIANS: return new SpeechLine(type,
           "We will not accept this!");
+      case LITHORIANS: return new SpeechLine(type,
+          "I'll have to cool down this offer.");
       default: return null;
     }
   }
@@ -653,6 +684,8 @@ public final class SpeechFactory {
           "What do you propose then?");
       case REBORGIANS: return new SpeechLine(type,
           "Our offer was not good enough, what do you offer then?");
+      case LITHORIANS: return new SpeechLine(type,
+          "Your offer leaves me cold and cool.");
       default: return null;
     }
   }
@@ -695,6 +728,8 @@ public final class SpeechFactory {
           "Prepare to be nuked!" + extra);
       case REBORGIANS: return new SpeechLine(type,
           "We will start synthesize with your species!" + extra);
+      case LITHORIANS: return new SpeechLine(type,
+          "Prepare to encounter hot blazing war from us!" + extra);
       default: return null;
     }
   }
@@ -731,6 +766,8 @@ public final class SpeechFactory {
           "Are you willing to trade intel for 20 turns?");
       case REBORGIANS: return new SpeechLine(type,
           "We are offering you our spy information for 20 turns. Interested?");
+      case LITHORIANS: return new SpeechLine(type,
+          "I offer you our spy information for 20 turns. Interested?");
       default: return null;
     }
   }
@@ -772,6 +809,9 @@ public final class SpeechFactory {
               + empire + "?");
       case REBORGIANS: return new SpeechLine(type,
           "We ask you to make trade embargo for 20 turns against "
+              + empire + "?");
+      case LITHORIANS: return new SpeechLine(type,
+          "Are you will to do trade embargo for 20 turns against "
               + empire + "?");
       default: return null;
     }
@@ -818,6 +858,8 @@ public final class SpeechFactory {
           "Let's form a trade alliance!");
       case REBORGIANS: return new SpeechLine(type,
           "Your species has trading value for us, trade alliance?");
+      case LITHORIANS: return new SpeechLine(type,
+          "Let's start trading together, what is your answer?");
  default: return null;
     }
   }
@@ -856,6 +898,8 @@ public final class SpeechFactory {
       case REBORGIANS: return new SpeechLine(type,
           "Be our thrall or be our future synthesize material."
           + " Join to our alliance!");
+      case LITHORIANS: return new SpeechLine(type,
+          "Let's stand together like rocks and defend ourselves!");
       default: return null;
     }
   }
@@ -894,6 +938,9 @@ public final class SpeechFactory {
       case REBORGIANS:
         return new SpeechLine(type,
           "Are ready to be our battle thrall?");
+      case LITHORIANS:
+        return new SpeechLine(type,
+          "Let's form guarding pact, what say you?");
       default: return null;
     }
   }
@@ -968,6 +1015,9 @@ public final class SpeechFactory {
       case REBORGIANS:
         return new SpeechLine(type,
           "We will agree with your offer!");
+      case LITHORIANS:
+        return new SpeechLine(type,
+          "This deal makes me warm inside.");
       default: return null;
     }
   }
@@ -1018,6 +1068,8 @@ public final class SpeechFactory {
           "Excellent. This was great deal!");
       case REBORGIANS: return new SpeechLine(type,
           "We accept your deal!");
+      case LITHORIANS: return new SpeechLine(type,
+          "I accept your offer with warm!");
       default: return null;
     }
   }
@@ -1054,6 +1106,8 @@ public final class SpeechFactory {
           "What say you about my trade offer?");
       case REBORGIANS: return new SpeechLine(type,
           "Here is our offer!");
+      case LITHORIANS: return new SpeechLine(type,
+          "This is my offer!");
       default: return null;
     }
   }
@@ -1090,6 +1144,8 @@ public final class SpeechFactory {
           "Do you want peace or nuke?");
       case REBORGIANS: return new SpeechLine(type,
           "We offer you mutual coexistance.");
+      case LITHORIANS: return new SpeechLine(type,
+          "There is room for both of us.");
       default: return null;
     }
   }

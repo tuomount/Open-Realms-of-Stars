@@ -424,6 +424,10 @@ public final class LeaderUtility {
           sb.append("Leader");
           break;
         }
+        case TECHNOCRACY: {
+          sb.append("Master engineer");
+          break;
+        }
         case AI: {
           sb.append("Main Process");
           break;
@@ -1288,11 +1292,13 @@ public final class LeaderUtility {
       case MECHANICAL_HORDE:
       case HIERARCHY:
       case HIVEMIND:
+      case REGIME:
       case NEST: {
         bestLeader = getStrongestLeader(realm);
         break;
       }
       case EMPIRE:
+      case FEUDALISM:
       case KINGDOM: {
         bestLeader = getNextHeir(realm);
         if (bestLeader == null) {
@@ -1306,6 +1312,7 @@ public final class LeaderUtility {
         break;
       }
       case DEMOCRACY:
+      case TECHNOCRACY:
       case UNION: {
         bestLeader = getNextDemocraticRuler(realm);
         break;
@@ -1315,6 +1322,7 @@ public final class LeaderUtility {
         bestLeader = getNextFederationRuler(realm);
         break;
       }
+      case UTOPIA:
       case HEGEMONY: {
         bestLeader = getNextHegemonyRuler(realm);
         break;

@@ -35,7 +35,7 @@ public class GovernmentUtilityTest {
   public void testHumanGovernments() {
     GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
         SpaceRace.HUMAN);
-    assertEquals(11, governments.length);
+    assertEquals(12, governments.length);
     assertEquals(GovernmentType.UNION, governments[0]);
     assertEquals(GovernmentType.DEMOCRACY, governments[1]);
     assertEquals(GovernmentType.FEDERATION, governments[2]);
@@ -45,8 +45,9 @@ public class GovernmentUtilityTest {
     assertEquals(GovernmentType.EMPIRE, governments[6]);
     assertEquals(GovernmentType.HEGEMONY, governments[7]);
     assertEquals(GovernmentType.FEUDALISM, governments[8]);
-    assertEquals(GovernmentType.HIERARCHY, governments[9]);
-    assertEquals(GovernmentType.KINGDOM, governments[10]);
+    assertEquals(GovernmentType.TECHNOCRACY, governments[9]);
+    assertEquals(GovernmentType.HIERARCHY, governments[10]);
+    assertEquals(GovernmentType.KINGDOM, governments[11]);
   }
 
   @Test
@@ -54,7 +55,7 @@ public class GovernmentUtilityTest {
   public void testCentaursGovernments() {
     GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
         SpaceRace.CENTAURS);
-    assertEquals(12, governments.length);
+    assertEquals(13, governments.length);
     assertEquals(GovernmentType.UNION, governments[0]);
     assertEquals(GovernmentType.DEMOCRACY, governments[1]);
     assertEquals(GovernmentType.FEDERATION, governments[2]);
@@ -65,8 +66,9 @@ public class GovernmentUtilityTest {
     assertEquals(GovernmentType.HEGEMONY, governments[7]);
     assertEquals(GovernmentType.HIERARCHY, governments[8]);
     assertEquals(GovernmentType.KINGDOM, governments[9]);
-    assertEquals(GovernmentType.REGIME, governments[10]);
-    assertEquals(GovernmentType.FEUDALISM, governments[11]);
+    assertEquals(GovernmentType.TECHNOCRACY, governments[10]);
+    assertEquals(GovernmentType.REGIME, governments[11]);
+    assertEquals(GovernmentType.FEUDALISM, governments[12]);
   }
 
   @Test
@@ -74,7 +76,7 @@ public class GovernmentUtilityTest {
   public void testGreyansGovernments() {
     GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
         SpaceRace.GREYANS);
-    assertEquals(10, governments.length);
+    assertEquals(11, governments.length);
     assertEquals(GovernmentType.UNION, governments[0]);
     assertEquals(GovernmentType.DEMOCRACY, governments[1]);
     assertEquals(GovernmentType.FEDERATION, governments[2]);
@@ -83,8 +85,9 @@ public class GovernmentUtilityTest {
     assertEquals(GovernmentType.COLLECTIVE, governments[5]);
     assertEquals(GovernmentType.EMPIRE, governments[6]);
     assertEquals(GovernmentType.HEGEMONY, governments[7]);
-    assertEquals(GovernmentType.HIERARCHY, governments[8]);
-    assertEquals(GovernmentType.KINGDOM, governments[9]);
+    assertEquals(GovernmentType.TECHNOCRACY, governments[8]);
+    assertEquals(GovernmentType.HIERARCHY, governments[9]);
+    assertEquals(GovernmentType.KINGDOM, governments[10]);
   }
 
   @Test
@@ -189,7 +192,7 @@ public class GovernmentUtilityTest {
   public void testTeuthidaesGovernments() {
     GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
         SpaceRace.TEUTHIDAES);
-    assertEquals(12, governments.length);
+    assertEquals(13, governments.length);
     assertEquals(GovernmentType.UNION, governments[0]);
     assertEquals(GovernmentType.REGIME, governments[1]);
     assertEquals(GovernmentType.FEDERATION, governments[2]);
@@ -199,9 +202,10 @@ public class GovernmentUtilityTest {
     assertEquals(GovernmentType.EMPIRE, governments[6]);
     assertEquals(GovernmentType.HEGEMONY, governments[7]);
     assertEquals(GovernmentType.FEUDALISM, governments[8]);
-    assertEquals(GovernmentType.HIERARCHY, governments[9]);
-    assertEquals(GovernmentType.KINGDOM, governments[10]);
-    assertEquals(GovernmentType.DEMOCRACY, governments[11]);
+    assertEquals(GovernmentType.TECHNOCRACY, governments[9]);
+    assertEquals(GovernmentType.HIERARCHY, governments[10]);
+    assertEquals(GovernmentType.KINGDOM, governments[11]);
+    assertEquals(GovernmentType.DEMOCRACY, governments[12]);
   }
 
   @Test
@@ -231,7 +235,7 @@ public class GovernmentUtilityTest {
         SpaceRace.REBORGIANS);
     assertEquals(10, governments.length);
     assertEquals(GovernmentType.REGIME, governments[0]);
-    assertEquals(GovernmentType.DEMOCRACY, governments[1]);
+    assertEquals(GovernmentType.TECHNOCRACY, governments[1]);
     assertEquals(GovernmentType.FEDERATION, governments[2]);
     assertEquals(GovernmentType.HIVEMIND, governments[3]);
     assertEquals(GovernmentType.COLLECTIVE, governments[4]);
@@ -251,7 +255,7 @@ public class GovernmentUtilityTest {
     assertEquals(GovernmentType.UNION, governments[0]);
     assertEquals(GovernmentType.HIVEMIND, governments[1]);
     assertEquals(GovernmentType.FEDERATION, governments[2]);
-    assertEquals(GovernmentType.REPUBLIC, governments[3]);
+    assertEquals(GovernmentType.TECHNOCRACY, governments[3]);
     assertEquals(GovernmentType.UTOPIA, governments[4]);
     assertEquals(GovernmentType.COLLECTIVE, governments[5]);
     assertEquals(GovernmentType.EMPIRE, governments[6]);

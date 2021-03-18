@@ -6,7 +6,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018, 2020 Tuomo Untinen
+* Copyright (C) 2018, 2020, 2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -71,7 +71,7 @@ public final class GovernmentUtility {
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.ENTERPRISE, GovernmentType.UTOPIA,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
-        GovernmentType.FEUDALISM,
+        GovernmentType.FEUDALISM, GovernmentType.TECHNOCRACY,
         GovernmentType.HIERARCHY, GovernmentType.KINGDOM
       };
       return governments;
@@ -82,6 +82,7 @@ public final class GovernmentUtility {
           GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
           GovernmentType.ENTERPRISE, GovernmentType.COLLECTIVE,
           GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+          GovernmentType.TECHNOCRACY,
           GovernmentType.HIERARCHY, GovernmentType.KINGDOM
         };
         return governments;
@@ -93,6 +94,7 @@ public final class GovernmentUtility {
           GovernmentType.ENTERPRISE, GovernmentType.COLLECTIVE,
           GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
           GovernmentType.HIERARCHY, GovernmentType.KINGDOM,
+          GovernmentType.TECHNOCRACY,
           GovernmentType.REGIME, GovernmentType.FEUDALISM,
 
         };
@@ -159,7 +161,7 @@ public final class GovernmentUtility {
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
         GovernmentType.ENTERPRISE, GovernmentType.HORDE,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
-        GovernmentType.FEUDALISM,
+        GovernmentType.FEUDALISM, GovernmentType.TECHNOCRACY,
         GovernmentType.HIERARCHY, GovernmentType.KINGDOM,
         GovernmentType.DEMOCRACY
       };
@@ -178,7 +180,7 @@ public final class GovernmentUtility {
     }
     if (race == SpaceRace.REBORGIANS) {
       GovernmentType[] governments = {
-        GovernmentType.REGIME, GovernmentType.DEMOCRACY,
+        GovernmentType.REGIME, GovernmentType.TECHNOCRACY,
         GovernmentType.FEDERATION, GovernmentType.HIVEMIND,
         GovernmentType.COLLECTIVE, GovernmentType.EMPIRE,
         GovernmentType.AI, GovernmentType.MECHANICAL_HORDE,
@@ -189,7 +191,7 @@ public final class GovernmentUtility {
     if (race == SpaceRace.LITHORIANS) {
       GovernmentType[] governments = {
           GovernmentType.UNION, GovernmentType.HIVEMIND,
-          GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+          GovernmentType.FEDERATION, GovernmentType.TECHNOCRACY,
           GovernmentType.UTOPIA, GovernmentType.COLLECTIVE,
           GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
           GovernmentType.HIERARCHY, GovernmentType.KINGDOM,

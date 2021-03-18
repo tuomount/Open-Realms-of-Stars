@@ -105,7 +105,11 @@ public enum GovernmentType {
   /**
    * Feudalism government
    */
-  FEUDALISM(19, "Feudalism", -1, 2, false, 3);
+  FEUDALISM(19, "Feudalism", -1, 2, false, 3),
+  /**
+   * Technocracy government
+   */
+  TECHNOCRACY(20, "Technocracy", 0, -1, false, 2);
 
 
   /**
@@ -203,7 +207,7 @@ public enum GovernmentType {
    */
   public int getDiplomaticBonus() {
     if (this == DEMOCRACY || this == UNION || this == FEDERATION
-        || this == REPUBLIC) {
+        || this == REPUBLIC || this == TECHNOCRACY) {
       return 1;
     }
     if (this == UTOPIA) {
@@ -236,7 +240,7 @@ public enum GovernmentType {
   public int getProductionBonus() {
     if (this == DEMOCRACY || this == EMPIRE || this == REPUBLIC
         || this == REGIME || this == GUILD || this == HIERARCHY
-        || this == MECHANICAL_HORDE) {
+        || this == MECHANICAL_HORDE || this == TECHNOCRACY) {
       return 1;
     }
     return 0;
@@ -263,6 +267,9 @@ public enum GovernmentType {
   public int getResearchBonus() {
     if (this == HEGEMONY) {
       return 1;
+    }
+    if (this == TECHNOCRACY) {
+      return 2;
     }
     return 0;
   }
@@ -335,7 +342,7 @@ public enum GovernmentType {
   public boolean hasCreditRush() {
     if (this == GUILD || this == ENTERPRISE || this == DEMOCRACY
         || this == UNION || this == FEDERATION || this == REPUBLIC
-        || this == FEUDALISM) {
+        || this == FEUDALISM || this == TECHNOCRACY) {
       return true;
     }
     return false;
@@ -391,6 +398,7 @@ public enum GovernmentType {
         return 9;
       }
       case HEGEMONY:
+      case TECHNOCRACY:
       case HIERARCHY: {
         return 8;
       }
@@ -413,6 +421,7 @@ public enum GovernmentType {
       case KINGDOM:
       case FEUDALISM:
       case REGIME:
+      case TECHNOCRACY:
       case HORDE:
       case CLAN: {
         return 10;
@@ -455,6 +464,7 @@ public enum GovernmentType {
       case REPUBLIC:
       case COLLECTIVE:
       case UTOPIA:
+      case TECHNOCRACY:
       case REGIME: {
         return false;
       }
@@ -488,6 +498,7 @@ public enum GovernmentType {
     switch (this) {
       case UNION:
       case DEMOCRACY:
+      case TECHNOCRACY:
       case FEDERATION:
       case REPUBLIC: {
         return 20;

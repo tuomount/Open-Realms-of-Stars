@@ -231,6 +231,16 @@ public class GovernmentTypeTest {
         + "* War resistance: 2\n"
         + "* Credit bonus: 1\n"
         + "* Credit rush\n";
+    expected[20] = "### Technocracy\n"
+        + "* Base fleet capacity: 2\n"
+        + "* Leader capacity: 8\n"
+        + "* Leader cost: 10\n"
+        + "* Reign length: 20 turns\n"
+        + "* Diplomatic bonus: 1\n"
+        + "* War resistance: -1\n"
+        + "* Production bonus: 1\n"
+        + "* Research bonus: 2\n"
+        + "* Credit rush\n";
     for (int i = 0; i <  GovernmentType.values().length; i++) {
       GovernmentType government = GovernmentType.values()[i];
       assertEquals(expected[i], government.getDescription(true));
@@ -240,7 +250,7 @@ public class GovernmentTypeTest {
           assertFalse(true);
         }
       }
-      //System.out.println(government.getDescription(true));
+//      System.out.println(government.getDescription(true));
     }
   }
 

@@ -1382,11 +1382,14 @@ public final class PlanetHandling {
       happiness = happiness - planet.getWorkers(Planet.CULTURE_ARTIST);
     }
     int modulo = total % 2;
-    int required = (total - mining) / 2;
+    int required = total / 2 - mining;
     int miners = 0;
-    if (mining > total) {
+    if (required > 0 && required < total) {
       miners = required + modulo;
       total = total - miners;
+    } else if (required > 0 && required == total) {
+      miners = total;
+      total = 0;
     }
     int research = 0;
     int worker = 0;

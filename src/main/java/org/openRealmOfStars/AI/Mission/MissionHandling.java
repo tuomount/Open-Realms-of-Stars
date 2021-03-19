@@ -2814,7 +2814,7 @@ public final class MissionHandling {
    */
   public static void addPossibleTutorial(final Game game,
       final Object meetingPlace, final int tutorialIndex) {
-    if (Game.getTutorial() != null) {
+    if (Game.getTutorial() != null && game.getStarMap().isTutorialEnabled()) {
       String tutorialText = Game.getTutorial().showTutorialText(tutorialIndex);
       if (tutorialText != null) {
         Message msg = new Message(MessageType.INFORMATION, tutorialText,

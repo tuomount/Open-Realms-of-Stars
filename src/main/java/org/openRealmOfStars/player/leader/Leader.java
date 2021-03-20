@@ -572,4 +572,18 @@ public class Leader {
       }
     }
   }
+
+  /**
+   * Remove corruption perk from the list.
+   */
+  public void removeCorruption() {
+    for (int i = 0; i < perkList.size(); i++) {
+      Perk perk = perkList.get(i);
+      if (perk == Perk.CORRUPTED) {
+        perkList.remove(i);
+        break;
+      }
+    }
+  }
+
 }

@@ -2335,12 +2335,25 @@ public class AITurnView extends BlackPanel {
         }
         if (leader.getJob() == Job.PRISON) {
           leader.setTimeInJob(leader.getTimeInJob() - 1);
+          if (DiceGenerator.getRandom(99) < 10) {
+            // Small change to get little bit experience in prison.
+            leader.setExperience(leader.getExperience()
+                + DiceGenerator.getRandom(1, 3));
+          }
           if (leader.getTimeInJob() <= 0) {
+            String change = "";
+            if (leader.hasPerk(Perk.CORRUPTED)
+                && DiceGenerator.getRandom(99) < 30) {
+              // Leader can lose corruption perk if sit whole sentence.
+              leader.removeCorruption();
+              change = " " + leader.getName()
+                  + " has learned valuable lesson while in prison.";
+            }
             Message msg = new Message(MessageType.INFORMATION,
                 leader.getCallName() + " has done "
                 + leader.getGender().getHisHer() + " prison sentence and "
                 + " has sent free from prison. " + leader.getName()
-                + " can be assigned for tasks again.",
+                + " can be assigned for tasks again." + change,
                 Icons.getIconByName(Icons.ICON_LEADERS));
             realm.getMsgList().addUpcomingMessage(msg);
             leader.setJob(Job.UNASSIGNED);

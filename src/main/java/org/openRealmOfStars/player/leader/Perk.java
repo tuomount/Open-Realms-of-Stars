@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019, 2020 Tuomo Untinen
+* Copyright (C) 2019-2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -227,7 +227,12 @@ public enum Perk {
    * Perk which gives negative bonus on every job.
    */
   INCOMPETENT(39, "Incompetent", "-1 Diplomacy bonus, -5 accuracy,"
-      + " -1 credit when governor");
+      + " -1 credit when governor"),
+  /**
+   * Perk which tells that leader has been in jail.
+   * Might affect if he/she/it will get as a ruler.
+   */
+  CONVICT(40, "Convict", "Leader has been in jail");
 
 
 
@@ -422,6 +427,16 @@ public enum Perk {
     return false;
   }
   /**
+   * Is perk gained via action.
+   * @return True if gained only via action.
+   */
+  public boolean isGainedPerk() {
+    if (this == Perk.CONVICT) {
+      return true;
+    }
+    return false;
+  }
+  /**
    * Perk Index.
    */
   private int index;
@@ -466,6 +481,7 @@ public enum Perk {
     switch (this) {
       case CHARISMATIC:
       case CHATTERBOX:
+      case CONVICT:
       case REPULSIVE:
       case ACADEMIC: {
         return true;

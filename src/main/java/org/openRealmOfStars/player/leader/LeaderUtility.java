@@ -28,7 +28,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -75,9 +75,13 @@ public final class LeaderUtility {
    */
   public static final int PERK_TYPE_COMMANDER = 4;
   /**
-   * Commander type perk
+   * Mental type perk
    */
   public static final int PERK_TYPE_MENTAL = 5;
+  /**
+   * Perks which is gained via actions.
+   */
+  public static final int PERK_TYPE_GAINED = 6;
   /**
    * Hidden constructor.
    */
@@ -513,6 +517,9 @@ public final class LeaderUtility {
       if (perkType == PERK_TYPE_MENTAL && !perk.isMentalPerk()) {
         continue;
       }
+      if (perk.isGainedPerk()) {
+        continue;
+      }
       boolean alreadyHas = false;
       for (Perk leaderPerk : leader.getPerkList()) {
         if (perk == leaderPerk) {
@@ -577,6 +584,9 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.CORRUPTED)) {
       result = result + 20;
+    }
+    if (leader.hasPerk(Perk.CONVICT)) {
+      result = result + 2;
     }
     if (leader.hasPerk(Perk.MILITARISTIC)) {
       result = result + 25;
@@ -713,6 +723,9 @@ public final class LeaderUtility {
       if (leader.hasPerk(Perk.INCOMPETENT)) {
         result = result - 10;
       }
+      if (leader.hasPerk(Perk.CONVICT)) {
+        result = result - 10;
+      }
     }
     return result;
   }
@@ -792,6 +805,9 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.INCOMPETENT)) {
       result = result - 10;
+    }
+    if (leader.hasPerk(Perk.CONVICT)) {
+      result = result - 20;
     }
     return result;
   }
@@ -911,6 +927,9 @@ public final class LeaderUtility {
       result = result + 5;
     }
     if (leader.hasPerk(Perk.INCOMPETENT)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.CONVICT)) {
       result = result - 10;
     }
     // Simulates voting for leader
@@ -1038,6 +1057,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.INCOMPETENT)) {
       result = result - 10;
     }
+    if (leader.hasPerk(Perk.CONVICT)) {
+      result = result - 10;
+    }
     // Simulates voting for leader
     result = result + DiceGenerator.getRandom(20);
     return result;
@@ -1154,6 +1176,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.INCOMPETENT)) {
       result = result - 10;
     }
+    if (leader.hasPerk(Perk.CONVICT)) {
+      result = result - 10;
+    }
     return result;
   }
 
@@ -1254,6 +1279,9 @@ public final class LeaderUtility {
       result = result + 5;
     }
     if (leader.hasPerk(Perk.INCOMPETENT)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.CONVICT)) {
       result = result - 10;
     }
     return result;
@@ -1465,6 +1493,9 @@ public final class LeaderUtility {
         peaceful.setValue(peaceful.getValue() - 1);
       }
       if (perk == Perk.CORRUPTED) {
+        backstabbing.setValue(backstabbing.getValue() + 1);
+      }
+      if (perk == Perk.CONVICT) {
         backstabbing.setValue(backstabbing.getValue() + 1);
       }
       if (perk == Perk.COUNTER_AGENT || perk == Perk.DISCIPLINE) {

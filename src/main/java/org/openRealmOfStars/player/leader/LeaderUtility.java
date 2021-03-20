@@ -1716,6 +1716,7 @@ public final class LeaderUtility {
           fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
       fleet.getCommander().setJob(Job.PRISON);
       fleet.getCommander().setTimeInJob(time);
+      fleet.getCommander().addPerk(Perk.CONVICT);
       fleet.setCommander(null);
     }
   }

@@ -2286,6 +2286,105 @@ public class AITurnView extends BlackPanel {
     }
   }
   /**
+   * Ruler will free one prisoner.
+   * @param realm Realm who is handling leaders currently.
+   */
+  public void rulerFreePrisoner(final PlayerInfo realm) {
+    Leader prisoner = null;
+    int bestValue = 0;
+    for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() == Job.PRISON) {
+        int value = 0;
+        switch (leader.getMilitaryRank()) {
+          default:
+          case CIVILIAN: {
+            value = 0;
+            break;
+          }
+          case ENSIGN: {
+            value = 1;
+            break;
+          }
+          case LIEUTENANT: {
+            value = 2;
+            break;
+          }
+          case CAPTAIN: {
+            value = 4;
+            break;
+          }
+          case COLONEL: {
+            value = 8;
+            break;
+          }
+          case COMMANDER: {
+            value = 16;
+            break;
+          }
+          case ADMIRAL: {
+            value = 32;
+            break;
+          }
+        }
+        if (leader.getParent() != null) {
+          value = value + 8;
+        }
+        if (leader.hasPerk(Perk.CORRUPTED)) {
+          value = value + 2;
+        }
+        if (leader.hasPerk(Perk.WEALTHY)) {
+          value = value + 8;
+        }
+        if (leader.hasPerk(Perk.PACIFIST)) {
+          value = value - 8;
+        }
+        if (leader.hasPerk(Perk.PEACEFUL)) {
+          value = value - 8;
+        }
+        if (leader.hasPerk(Perk.SPY_MASTER)) {
+          value = value + 4;
+        }
+        if (leader.hasPerk(Perk.INCOMPETENT)) {
+          value = value - 16;
+        }
+        if (leader.hasPerk(Perk.STUPID)) {
+          value = value - 4;
+        }
+        if (leader.hasPerk(Perk.MILITARISTIC)) {
+          value = value + 1;
+        }
+        if (leader.hasPerk(Perk.AGGRESSIVE)) {
+          value = value + 1;
+        }
+        if (value > bestValue) {
+          prisoner = leader;
+          bestValue = value;
+        }
+      }
+    }
+    if (prisoner != null) {
+      NewsData news = NewsFactory.makeLeaderFreed(prisoner, realm);
+      game.getStarMap().getNewsCorpData().addNews(news);
+      game.getStarMap().getHistory().addEvent(
+          NewsFactory.makeLeaderEvent(prisoner, realm,
+          game.getStarMap(), news));
+      prisoner.setJob(Job.UNASSIGNED);
+      prisoner.setTimeInJob(0);
+      prisoner.addPerk(Perk.CORRUPTED);
+      int realmIndex = game.getPlayers().getIndex(realm);
+      for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
+        if (realmIndex != i) {
+          PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
+          DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
+              realmIndex);
+          if (list != null) {
+            list.addBonus(DiplomacyBonusType.FREED_CONVICT, info.getRace());
+          }
+        }
+      }
+    }
+  }
+  /**
    * Handle leaders getting older.
    * Handle also ruler leader experience
    * @param realm Realm whose leaders are being handled
@@ -2478,6 +2577,9 @@ public class AITurnView extends BlackPanel {
         }
         if (leader.hasPerk(Perk.CORRUPTED)) {
           realm.setTotalCredits(realm.getTotalCredits() - 1);
+          if (DiceGenerator.getRandom(99) < 10) {
+            rulerFreePrisoner(realm);
+          }
         }
         for (Planet planet : game.getStarMap().getPlanetList()) {
           if (planet.getPlanetPlayerInfo() == realm) {

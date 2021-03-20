@@ -415,6 +415,11 @@ public class DiplomacyBonus {
        bonusLasting = 60;
        break;
      }
+     case FREED_CONVICT: {
+       bonusValue = -2;
+       bonusLasting = 60;
+       break;
+     }
      default: {
        throw new IllegalArgumentException("Unknown bonus type!!");
      }

@@ -475,7 +475,7 @@ public final class NewsFactory {
         break;
       }
       case 1: {
-        instructions.addText(leader.getCallName() + " CAUGHT FROM "
+        instructions.addText("CAUGHT FROM "
             + reason.toUpperCase() + "!");
         break;
       }
@@ -509,6 +509,54 @@ public final class NewsFactory {
     sb.append(leader.getHomeworld());
     sb.append(". ");
     news.setNewsText(sb.toString());
+    return news;
+  }
+  /**
+   * Make leader freed news.
+   * @param leader Leader which was set as free.
+   * @param realm Realm whose freeing the leader.
+   * @return NewsData
+   */
+  public static NewsData makeLeaderFreed(final Leader leader,
+      final PlayerInfo realm) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+    instructions.addImage(leader.getRace().getNameSingle());
+    instructions.addText(leader.getCallName());
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("FREED!");
+        break;
+      }
+      case 1: {
+        instructions.addText("IS FREE!");
+        break;
+      }
+      case 2: {
+        instructions.addText("UNEXPECTED FREE!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    if (realm.getRuler() != null) {
+      sb.append(realm.getRuler().getTitle());
+      sb.append(" of ");
+      sb.append(realm.getEmpireName());
+    } else {
+      sb.append(realm.getEmpireName());
+    }
+    sb.append(" has decided to set ");
+    sb.append(leader.getCallName());
+    sb.append(" for free. This is very unexpected! ");
+    sb.append(leader.getCallName());
+    sb.append(" still had sentence left for ");
+    sb.append(leader.getTimeInJob());
+    sb.append(" years.");
+    sb.append("This act will cause diplomatic turbulence against");
+    sb.append(" other realms in galaxy.");
     return news;
   }
   /**

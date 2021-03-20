@@ -509,6 +509,15 @@ public class Leader {
     return false;
   }
   /**
+   * Adds new perk for leader. Checks if leader has perk before adding it.
+   * @param perk New perk to add
+   */
+  public void addPerk(final Perk perk) {
+    if (!hasPerk(perk)) {
+      perkList.add(perk);
+    }
+  }
+  /**
    * Get parent index for leader.
    * This is avaiable only if leader is created from reading saved game.
    * This index should be used to make actual parent avaiable.

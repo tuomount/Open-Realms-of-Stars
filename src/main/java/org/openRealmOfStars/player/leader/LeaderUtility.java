@@ -470,7 +470,7 @@ public final class LeaderUtility {
         sb.append("Prince");
       }
     }
-    if (leader.getJob() == Job.UNASSIGNED) {
+    if (leader.getJob() == Job.UNASSIGNED || leader.getJob() == Job.PRISON) {
       if (leader.getParent() != null) {
         if (leader.getGender() == Gender.FEMALE) {
           sb.append("Princess");
@@ -617,7 +617,8 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
-      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG
+          || leader.getJob() == Job.PRISON) {
         continue;
       }
       int score = getStrongPoints(leader);
@@ -642,7 +643,8 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
-      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG
+          || leader.getJob() == Job.PRISON) {
         continue;
       }
       int score = getStrongHeirPoints(leader);
@@ -803,7 +805,8 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
-      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG
+          || leader.getJob() == Job.PRISON) {
         continue;
       }
       int score = getBusinessPoints(leader);
@@ -924,7 +927,8 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
-      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG
+          || leader.getJob() == Job.PRISON) {
         continue;
       }
       int score = getDemocraticPoints(leader);
@@ -1048,7 +1052,8 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
-      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG
+          || leader.getJob() == Job.PRISON) {
         continue;
       }
       int score = getFederationPoints(leader);
@@ -1161,7 +1166,8 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
-      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG
+          || leader.getJob() == Job.PRISON) {
         continue;
       }
       int score = getHegemonyPoints(leader);
@@ -1262,7 +1268,8 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
-      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG
+          || leader.getJob() == Job.PRISON) {
         continue;
       }
       int score = getAiPoints(leader);
@@ -1631,6 +1638,53 @@ public final class LeaderUtility {
       game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
           fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
       fleet.getCommander().setJob(Job.DEAD);
+      fleet.setCommander(null);
+    }
+  }
+
+  /**
+   * Handle leader prisoned because of espionage mission.
+   * Leader may escaped due wealthy perk.
+   * @param info Realm who was trying espionage
+   * @param planet Planet where espionage was tried
+   * @param fleet Fleet which leader is commanding
+   * @param escapedMsg Message visible if leader escapes
+   * @param prisonMsg Message visible if leader is prisoned
+   * @param shortReason Short reason for prisoning
+   * @param time sentence time in turns.
+   * @param game Games for adding news about killed leader.
+   */
+  public static void handleLeaderPrison(final PlayerInfo info,
+      final Planet planet, final Fleet fleet, final String escapedMsg,
+      final String prisonMsg, final String shortReason, final int time,
+      final Game game) {
+    if (fleet.getCommander().hasPerk(Perk.WEALTHY)) {
+      fleet.getCommander().useWealth();
+      Message msg = new Message(MessageType.LEADER, escapedMsg,
+          Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+      msg.setMatchByString(planet.getName());
+      planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+    } else {
+      Message msg = new Message(MessageType.LEADER, prisonMsg,
+          Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+      msg = msg.copy();
+      msg.setMatchByString(planet.getName());
+      planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      NewsData news = NewsFactory.makeLeaderPrisoned(fleet.getCommander(),
+          info, shortReason, prisonMsg, time);
+      game.getStarMap().getNewsCorpData().addNews(news);
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
+      fleet.getCommander().setJob(Job.PRISON);
+      fleet.getCommander().setTimeInJob(time);
       fleet.setCommander(null);
     }
   }

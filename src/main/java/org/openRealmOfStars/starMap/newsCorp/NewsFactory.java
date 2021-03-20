@@ -450,6 +450,68 @@ public final class NewsFactory {
     return news;
   }
   /**
+   * Make news about if leader is put in jail for some reason.
+   * @param leader Leader which is going to prison
+   * @param realm Realm who owns the leader
+   * @param reason Reason why leader is going to jail.
+   *               This should short version.
+   * @param reasonFull Reason why leader is going to jail.
+   *               This should long version of reason.
+   * @param time Prison time in turns.
+   * @return NewsData
+   */
+  public static NewsData makeLeaderPrisoned(final Leader leader,
+      final PlayerInfo realm, final String reason, final String reasonFull,
+      final int time) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+    instructions.addImage(leader.getRace().getNameSingle());
+    instructions.addText(leader.getCallName());
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("JAIL TIME!");
+        break;
+      }
+      case 1: {
+        instructions.addText(leader.getCallName() + " CAUGHT FROM "
+            + reason.toUpperCase() + "!");
+        break;
+      }
+      case 2: {
+        instructions.addText("GUILTY!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append("One of the leaders of");
+    sb.append(realm.getEmpireName());
+    sb.append(" was caught from ");
+    sb.append(reason);
+    sb.append(". ");
+    sb.append(leader.getCallName());
+    sb.append(" has sentenced for prison for ");
+    sb.append(time);
+    sb.append(" years. ");
+    sb.append("Reason for ");
+    sb.append(leader.getCallName());
+    sb.append(" get jail was ");
+    sb.append(reason);
+    sb.append(". ");
+    if (leader.getTitle() != null && !leader.getTitle().isEmpty()) {
+      sb.append(leader.getTitle());
+    } else {
+      sb.append(leader.getName());
+    }
+    sb.append(" is from ");
+    sb.append(leader.getHomeworld());
+    sb.append(". ");
+    news.setNewsText(sb.toString());
+    return news;
+  }
+  /**
    * Make news when ruler dies
    * @param leader Ruler who died
    * @param realm Realm where ruler belong

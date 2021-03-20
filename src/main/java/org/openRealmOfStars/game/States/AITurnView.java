@@ -2333,7 +2333,22 @@ public class AITurnView extends BlackPanel {
         if (leader.getJob() == Job.TOO_YOUNG && leader.getAge() >= 18) {
           leader.assignJob(Job.UNASSIGNED, realm);
         }
-        leader.setTimeInJob(leader.getTimeInJob() + 1);
+        if (leader.getJob() == Job.PRISON) {
+          leader.setTimeInJob(leader.getTimeInJob() - 1);
+          if (leader.getTimeInJob() <= 0) {
+            Message msg = new Message(MessageType.INFORMATION,
+                leader.getCallName() + " has done "
+                + leader.getGender().getHisHer() + " prison sentence and "
+                + " has sent free from prison. " + leader.getName()
+                + " can be assigned for tasks again.",
+                Icons.getIconByName(Icons.ICON_LEADERS));
+            realm.getMsgList().addUpcomingMessage(msg);
+            leader.setJob(Job.UNASSIGNED);
+            leader.setTimeInJob(0);
+          }
+        } else {
+          leader.setTimeInJob(leader.getTimeInJob() + 1);
+        }
         // Checking the mortality
         int lifeExpection = leader.getRace().getLifeSpan();
         if (leader.hasPerk(Perk.ADDICTED)) {

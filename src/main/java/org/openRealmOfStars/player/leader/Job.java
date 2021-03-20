@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.leader;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019, 2020 Tuomo Untinen
+* Copyright (C) 2019-2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -47,7 +47,11 @@ public enum Job {
   /**
    * Leader is heir, but too young to use yet
    */
-  TOO_YOUNG(5, "Too young");
+  TOO_YOUNG(5, "Too young"),
+  /**
+   * Leader is in prison.
+   */
+  PRISON(6, "In prison");
 
   /**
    * Job Constructor.

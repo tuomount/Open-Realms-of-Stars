@@ -2015,14 +2015,18 @@ public final class MissionHandling {
             + planet.getPlanetPlayerInfo().getEmpireName()
             + "." + endText, game);
       } else {
-        LeaderUtility.handleLeaderReleased(info, planet, fleet,
-            fleet.getCommander().getCallName() + " from "
-                + info.getEmpireName() + " caught by "
-                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-                + " espionage mission. Main goal was steal credits. "
-                + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
-                + " release " + fleet.getCommander().getCallName()
-                + ".", game.getStarMap());
+        String startText = fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was steal credits. ";
+        LeaderUtility.handleLeaderPrison(info, planet, fleet, startText
+            + fleet.getCommander().getCallName() + " was able to escape"
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " prison time by using massive amount of credits. ",
+            startText
+            + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+            + " prison " + fleet.getCommander().getCallName()
+            + " because of stealing.", "Steal credits", 5, game);
       }
     }
     if (type == EspionageMission.STEAL_TECH) {
@@ -2058,14 +2062,19 @@ public final class MissionHandling {
             + planet.getPlanetPlayerInfo().getEmpireName()
             + "." + endText, game);
       } else {
-        LeaderUtility.handleLeaderReleased(info, planet, fleet,
-            fleet.getCommander().getCallName() + " from "
-                + info.getEmpireName() + " caught by "
-                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-                + " espionage mission. Main goal was steal technology. "
-                + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
-                + " release " + fleet.getCommander().getCallName()
-                + ".", game.getStarMap());
+        String startText = fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was steal technology. ";
+        LeaderUtility.handleLeaderPrison(info, planet, fleet, startText
+            + fleet.getCommander().getCallName() + " was able to escape"
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " prison time by using massive amount of credits. ",
+            startText
+            + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+            + " prison " + fleet.getCommander().getCallName()
+            + " because of stealing technology.", "Steal technology", 10,
+            game);
       }
     }
     if (type == EspionageMission.SABOTAGE) {
@@ -2100,14 +2109,18 @@ public final class MissionHandling {
             + planet.getPlanetPlayerInfo().getEmpireName()
             + "." + endText, game);
       } else {
-        LeaderUtility.handleLeaderReleased(info, planet, fleet,
-            fleet.getCommander().getCallName() + " from "
-                + info.getEmpireName() + " caught by "
-                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-                + " espionage mission. Main goal was sabotage. "
-                + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
-                + " release " + fleet.getCommander().getCallName()
-                + ".", game.getStarMap());
+        String startText = fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was sabotage. ";
+        LeaderUtility.handleLeaderPrison(info, planet, fleet, startText
+            + fleet.getCommander().getCallName() + " was able to escape"
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " prison time by using massive amount of credits. ",
+            startText
+            + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+            + " prison " + fleet.getCommander().getCallName()
+            + " because of sabotage.", "Sabotage", 8, game);
       }
     }
     if (type == EspionageMission.DEMOLISH_BUILDING) {
@@ -2142,14 +2155,18 @@ public final class MissionHandling {
             + planet.getPlanetPlayerInfo().getEmpireName()
             + "." + endText, game);
       } else {
-        LeaderUtility.handleLeaderReleased(info, planet, fleet,
-            fleet.getCommander().getCallName() + " from "
-                + info.getEmpireName() + " caught by "
-                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-                + " espionage mission. Main goal was demolish building. "
-                + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
-                + " release " + fleet.getCommander().getCallName()
-                + ".", game.getStarMap());
+        String startText = fleet.getCommander().getCallName() + " from "
+            + info.getEmpireName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was demolish building ";
+        LeaderUtility.handleLeaderPrison(info, planet, fleet, startText
+            + fleet.getCommander().getCallName() + " was able to escape"
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " prison time by using massive amount of credits. ",
+            startText
+            + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+            + " prison " + fleet.getCommander().getCallName()
+            + " because of demolish building.", "Demolish building", 10, game);
       }
     }
     if (type == EspionageMission.ASSASSIN_GOVERNOR) {

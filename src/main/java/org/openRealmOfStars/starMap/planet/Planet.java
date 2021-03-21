@@ -1511,7 +1511,8 @@ public class Planet {
       if (tmp2 != null && !exceedRadiation()) {
         result.add(tmp2);
       }
-    } else {
+    } else if (planetOwnerInfo != null
+        && !planetOwnerInfo.getRace().isLithovorian()) {
       tmp = BuildingFactory.createByName("Basic farm");
       if (tmp != null && !exceedRadiation()) {
         result.add(tmp);

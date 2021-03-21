@@ -10,7 +10,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -401,6 +401,10 @@ public final class Icons {
    * Photon torpedo
    */
   public static final String ICON_PHOTON_TORPEDO = "IconPhotonTorpedo";
+  /**
+   * Prison icon
+   */
+  public static final String ICON_PRISON = "IconPrison";
 
   /**
    * List of Icon
@@ -697,6 +701,8 @@ public final class Icons {
     icon = new Icon16x16(image, 7, 2, ICON_DISTORTION_SHIELD);
     addIcon(icon);
     icon = new Icon16x16(image, 0, 3, ICON_PHOTON_TORPEDO);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 3, ICON_PRISON);
     addIcon(icon);
   }
 

@@ -1702,7 +1702,7 @@ public final class LeaderUtility {
           fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
     } else {
       Message msg = new Message(MessageType.LEADER, prisonMsg,
-          Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+          Icons.getIconByName(Icons.ICON_PRISON));
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(fleet.getCommander().getName());
       info.getMsgList().addUpcomingMessage(msg);

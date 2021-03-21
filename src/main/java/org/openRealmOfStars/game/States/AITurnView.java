@@ -2453,7 +2453,7 @@ public class AITurnView extends BlackPanel {
                 + leader.getGender().getHisHer() + " prison sentence and "
                 + " has sent free from prison. " + leader.getName()
                 + " can be assigned for tasks again." + change,
-                Icons.getIconByName(Icons.ICON_LEADERS));
+                Icons.getIconByName(Icons.ICON_PRISON));
             realm.getMsgList().addUpcomingMessage(msg);
             leader.setJob(Job.UNASSIGNED);
             leader.setTimeInJob(0);

@@ -280,10 +280,10 @@ public class StatView extends BlackPanel {
     label.setToolTipText("<html>Which design had most of destructions by enemy"
         + " in combats or bombings.</html>");
     panel.add(label);
-    label = new TransparentLabel(null, "Most destructions", true, true);
+    label = new TransparentLabel(null, "Most kills", true, true);
     label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
-    label.setToolTipText("<html>Which design had most of destructions in"
-        + " combats or bombings.</html>");
+    label.setToolTipText("<html>Which design has most kills in"
+        + " combats.</html>");
     panel.add(label);
     // Loop where to add player labels
     for (int i = 0; i < names.length; i++) {

@@ -238,9 +238,10 @@ public final class ShipGenerator {
         break;
       }
       case STARBASE_COMPONENT: {
-        scores[i] = scores[i] + comp.getCreditBonus() * 5;
-        scores[i] = scores[i] + comp.getCultureBonus() * 5;
-        scores[i] = scores[i] + comp.getResearchBonus() * 5;
+        scores[i] = scores[i] + comp.getCreditBonus() * 10;
+        scores[i] = scores[i] + comp.getCultureBonus() * 10;
+        scores[i] = scores[i] + comp.getResearchBonus() * 10;
+        scores[i] = scores[i] + comp.getFleetCapacityBonus() * 10;
         break;
       }
       case ESPIONAGE_MODULE: {
@@ -1050,7 +1051,9 @@ public final class ShipGenerator {
       if (hull.getSize() != ShipSize.SMALL || player.isBoard()) {
         ShipComponent weapon = ShipComponentFactory
             .createByName(player.getTechList().getBestWeapon().getComponent());
-        result.addComponent(weapon);
+        if (!hull.getName().equals("Artificial planet")) {
+          result.addComponent(weapon);
+        }
       }
 
       Tech[] defenseTechs = player.getTechList()
@@ -1068,6 +1071,7 @@ public final class ShipGenerator {
       ShipComponent shieldGenComp = null;
       ShipComponent armorComp = null;
       ArrayList<ShipComponent> components = new ArrayList<>();
+      ArrayList<ShipComponent> modules = new ArrayList<>();
       if (shield != null) {
         shieldComp = ShipComponentFactory.createByName(shield.getComponent());
         components.add(shieldComp);
@@ -1092,61 +1096,80 @@ public final class ShipGenerator {
         credComp = ShipComponentFactory
             .createByName(starbaseCred.getComponent());
         components.add(credComp);
+        modules.add(credComp);
       }
       ShipComponent cultComp = null;
-      if (starbaseCred != null) {
+      if (starbaseCult != null) {
         cultComp = ShipComponentFactory
             .createByName(starbaseCult.getComponent());
         components.add(cultComp);
+        modules.add(cultComp);
       }
       ShipComponent labComp = null;
-      if (starbaseCred != null) {
+      if (starbaseLab != null) {
         labComp = ShipComponentFactory
             .createByName(starbaseLab.getComponent());
         components.add(labComp);
+        modules.add(labComp);
       }
       ShipComponent fleetComp = null;
       if (starbaseFleet != null) {
         fleetComp = ShipComponentFactory
             .createByName(starbaseFleet.getComponent());
         components.add(fleetComp);
+        modules.add(fleetComp);
       }
-      Tech weapTech = player.getTechList()
-          .getBestWeapon(ShipComponentType.WEAPON_BEAM);
-      if (weapTech != null) {
-        components
-            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
-      }
-      weapTech = player.getTechList()
-          .getBestWeapon(ShipComponentType.WEAPON_ECM_TORPEDO);
-      if (weapTech != null) {
-        components
-            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
-      }
-      weapTech = player.getTechList()
-          .getBestWeapon(ShipComponentType.WEAPON_HE_MISSILE);
-      if (weapTech != null) {
-        components
-            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
-      }
-      weapTech = player.getTechList()
-          .getBestWeapon(ShipComponentType.WEAPON_PHOTON_TORPEDO);
-      if (weapTech != null) {
-        components
-            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
-      }
-      weapTech = player.getTechList()
-          .getBestWeapon(ShipComponentType.WEAPON_RAILGUN);
-      if (weapTech != null) {
-        components
-            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      if (!hull.getName().equals("Artificial planet")) {
+        Tech weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.WEAPON_BEAM);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.WEAPON_ECM_TORPEDO);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.WEAPON_HE_MISSILE);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.WEAPON_PHOTON_TORPEDO);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.WEAPON_RAILGUN);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.PLASMA_CANNON);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.ION_CANNON);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        Tech elecTech = TechList.getBestTech(electricsTechs,
+            "Targeting computer");
+        if (elecTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(elecTech.getComponent()));
+        }
       }
       Tech elecTech = TechList.getBestTech(electricsTechs, "Jammer");
-      if (elecTech != null) {
-        components
-            .add(ShipComponentFactory.createByName(elecTech.getComponent()));
-      }
-      elecTech = TechList.getBestTech(electricsTechs, "Targeting computer");
       if (elecTech != null) {
         components
             .add(ShipComponentFactory.createByName(elecTech.getComponent()));
@@ -1165,6 +1188,10 @@ public final class ShipGenerator {
       if (elecTech != null) {
         components
             .add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      if (modules.size() > 0) {
+        int index = DiceGenerator.getRandom(modules.size() - 1);
+        result.addComponent(modules.get(index));
       }
       int[] componentScores = new int[components.size()];
       int safetyCount = 500;

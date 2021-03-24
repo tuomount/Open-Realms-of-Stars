@@ -1273,33 +1273,47 @@ public final class PlanetHandling {
   protected static void handleMechionPopulation(final Planet planet,
       final PlayerInfo info) {
     int total = planet.getTotalPopulation();
-    int quarter = total / 4;
-    int modulo = total % 4;
-    if (quarter > 1) {
+    int metalProd = planet.getTotalProductionFromBuildings(
+        Planet.PRODUCTION_METAL);
+    int prodProd = planet.getTotalProductionFromBuildings(
+        Planet.PRODUCTION_PRODUCTION);
+    int resProd = planet.getTotalProductionFromBuildings(
+        Planet.PRODUCTION_RESEARCH);
+    int happiness = planet.calculateHappiness();
+    if (!info.getGovernment().isImmuneToHappiness()) {
+      happiness = happiness - planet.getWorkers(Planet.CULTURE_ARTIST);
+    }
+    if (total > 3) {
       int metalAdd = 0;
-      int prodAdd = 0;
+      int prodAdd = 1;
       int reseAdd = 0;
       int cultAdd = 0;
-      if (modulo == 1) {
-        prodAdd = 1;
+      total--;
+      if (resProd < 2) {
+        reseAdd = 2;
+        total = total - 2;
       }
-      if (modulo == 2) {
-        prodAdd = 1;
-        metalAdd = 1;
-      }
-      if (modulo == 3) {
-        prodAdd = 2;
-        metalAdd = 1;
-      }
+      do {
+        if (metalProd < prodProd && total > 0) {
+          metalAdd++;
+          metalProd++;
+          total--;
+        } else if (total > 0) {
+          prodAdd++;
+          prodProd++;
+          total--;
+        }
+        if (happiness < -1 & total > 0) {
+          cultAdd++;
+          happiness++;
+          total--;
+        }
+      } while (total > 0);
       planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, quarter + metalAdd);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, quarter + prodAdd);
-      if (quarter % 2 != 0) {
-        reseAdd = 1;
-        cultAdd = -1;
-      }
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, quarter + reseAdd);
-      planet.setWorkers(Planet.CULTURE_ARTIST, quarter + cultAdd);
+      planet.setWorkers(Planet.METAL_MINERS, metalAdd);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, prodAdd);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, reseAdd);
+      planet.setWorkers(Planet.CULTURE_ARTIST, cultAdd);
     } else {
       switch (total) {
       case 1: {
@@ -1322,38 +1336,6 @@ public final class PlanetHandling {
         planet.setWorkers(Planet.FOOD_FARMERS, 0);
         planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
         planet.setWorkers(Planet.METAL_MINERS, 0);
-        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-        break;
-      }
-      case 4: {
-        planet.setWorkers(Planet.FOOD_FARMERS, 0);
-        planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-        planet.setWorkers(Planet.METAL_MINERS, 1);
-        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-        break;
-      }
-      case 5: {
-        planet.setWorkers(Planet.FOOD_FARMERS, 0);
-        planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
-        planet.setWorkers(Planet.METAL_MINERS, 1);
-        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-        break;
-      }
-      case 6: {
-        planet.setWorkers(Planet.FOOD_FARMERS, 0);
-        planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
-        planet.setWorkers(Planet.METAL_MINERS, 2);
-        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-        break;
-      }
-      case 7: {
-        planet.setWorkers(Planet.FOOD_FARMERS, 0);
-        planet.setWorkers(Planet.PRODUCTION_WORKERS, 3);
-        planet.setWorkers(Planet.METAL_MINERS, 2);
         planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
         planet.setWorkers(Planet.CULTURE_ARTIST, 0);
         break;

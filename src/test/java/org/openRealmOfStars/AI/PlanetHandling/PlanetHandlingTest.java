@@ -531,7 +531,7 @@ public class PlanetHandlingTest {
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
-    assertEquals(40,score);
+    assertEquals(39,score);
   }
 
   @Test
@@ -577,7 +577,7 @@ public class PlanetHandlingTest {
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
-    assertEquals(80,score);
+    assertEquals(78,score);
   }
 
   @Test

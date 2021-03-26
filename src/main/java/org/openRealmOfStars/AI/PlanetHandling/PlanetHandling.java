@@ -106,11 +106,6 @@ public final class PlanetHandling {
   private static final int GREYAN_RESEARCH_VALUE_SCORE = 15;
 
   /**
-   * Metal amount divider
-   */
-  private static final int METAL_AMOUNT_DIVIDER = 120;
-
-  /**
    * AI player handling for a single planet, what to build
    * and how to set population work
    * @param map Star Map
@@ -400,12 +395,22 @@ public final class PlanetHandling {
 
     // Production score
     score = score + building.getFactBonus() * 60;
-    score = score + building.getMineBonus() * planet.getAmountMetalInGround()
-        / METAL_AMOUNT_DIVIDER;
-    score = score + building.getMaterialBonus() * 60;
-    if (info.getRace() == SpaceRace.MOTHOIDS) {
-      score = score + building.getMineBonus() * 30;
+    if (planet.getAmountMetalInGround() > 30) {
+      score = score + building.getMineBonus() * 40;
+      if (info.getRace() == SpaceRace.MOTHOIDS
+          || info.getRace() == SpaceRace.SCAURIANS) {
+        score = score + building.getMineBonus() * 30;
+      }
     }
+    int metalProd = planet.getTotalProduction(Planet.PRODUCTION_METAL);
+    int prodProd = planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION);
+    if (metalProd > prodProd) {
+      score = score + building.getFactBonus() * 20;
+    }
+    if (metalProd < prodProd) {
+      score = score + building.getMineBonus() * 20;
+    }
+    score = score + building.getMaterialBonus() * 60;
     if (info.getRace() == SpaceRace.CENTAURS
         || info.getRace() == SpaceRace.TEUTHIDAES) {
       score = score + building.getFarmBonus() * 50;

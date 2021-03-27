@@ -418,5 +418,29 @@ public final class SoundPlayer {
     }
   }
 
-
+  /**
+   * Convert linear volume between 0-100 to dB drop in master gain.
+   * @param volume Volume
+   * @param minimumDb MinimumDb drop value
+   * @return Volume in dB drop.
+   */
+  public static float convertLinearVolumeToDb(final int volume,
+      final float minimumDb) {
+    float value = 0;
+    switch (volume / 10) {
+    default:
+    case 10: value = -minimumDb; break;
+    case 9: value = -minimumDb - 3; break;
+    case 8: value = -minimumDb - 6; break;
+    case 7: value = -minimumDb - 9; break;
+    case 6: value = -minimumDb - 12; break;
+    case 5: value = -minimumDb - 15; break;
+    case 4: value = -minimumDb - 18; break;
+    case 3: value = -minimumDb - 21; break;
+    case 2: value = -minimumDb - 24; break;
+    case 1: value = -minimumDb - 27; break;
+    case 0: value = 0; break;
+    }
+    return value;
+  }
 }

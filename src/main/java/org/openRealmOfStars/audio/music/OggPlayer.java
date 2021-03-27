@@ -11,6 +11,7 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
 import com.jcraft.jogg.Packet;
@@ -247,6 +248,7 @@ public class OggPlayer {
     oggStream.reset();
     initializeJOrbis();
     stopPlay = false;
+    boolean masterGain = false;
     numberOfPackets = 0;
     fadeoutDivider = 1;
     slowFadeout = 0;
@@ -342,7 +344,8 @@ public class OggPlayer {
           try {
             gainControl = (FloatControl) outputLine.getControl(
                 FloatControl.Type.MASTER_GAIN);
-            float range = gainControl.getMaximum() - gainControl.getMinimum();
+            masterGain = true;
+            float range = -gainControl.getMinimum();
             float value = range * getOggVolume() / 100;
             gainControl.setValue(gainControl.getMinimum() + value);
           } catch (IllegalArgumentException e2) {
@@ -426,10 +429,16 @@ public class OggPlayer {
                     }
                   }
                   if (gainControl != null) {
-                    float range = gainControl.getMaximum()
-                        - gainControl.getMinimum();
-                    float value = range * getOggVolume() / 100;
-                    gainControl.setValue(gainControl.getMinimum() + value);
+                    if (masterGain) {
+                      float value = SoundPlayer.convertLinearVolumeToDb(
+                          getOggVolume(), gainControl.getMinimum());
+                      gainControl.setValue(gainControl.getMinimum() + value);
+                    } else {
+                      float range = gainControl.getMaximum()
+                          - gainControl.getMinimum();
+                      float value = range * getOggVolume() / 100;
+                      gainControl.setValue(gainControl.getMinimum() + value);
+                    }
                   }
                   if (outputLine != null) {
                     outputLine.write(

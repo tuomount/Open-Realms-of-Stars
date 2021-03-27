@@ -116,9 +116,9 @@ public class SoundEffectManager extends Thread {
           try {
             FloatControl gainControl = (FloatControl) clips[soundIndex]
                 .getControl(FloatControl.Type.MASTER_GAIN);
-            float range = gainControl.getMaximum() - gainControl.getMinimum();
-            float value = range * SoundPlayer.getSoundVolume() / 100;
-            gainControl.setValue(gainControl.getMinimum() + value);
+            gainControl.setValue(gainControl.getMinimum()
+                + SoundPlayer.convertLinearVolumeToDb(
+                    SoundPlayer.getSoundVolume(), gainControl.getMinimum()));
           } catch (IllegalArgumentException e1) {
             ErrorLogger.log("Your audio system does not support VOLUME or"
                 + " MASTER_GAIN control...Playing default volume");

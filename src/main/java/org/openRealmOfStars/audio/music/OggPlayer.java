@@ -25,7 +25,7 @@ import com.jcraft.jorbis.Info;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -334,14 +334,17 @@ public class OggPlayer {
         try {
           gainControl = (FloatControl) outputLine.getControl(
               FloatControl.Type.VOLUME);
-          gainControl.setValue(gainControl.getMaximum() * getOggVolume() / 100);
+          float range = gainControl.getMaximum() - gainControl.getMinimum();
+          float value = range * getOggVolume() / 100;
+          gainControl.setValue(gainControl.getMinimum() + value);
         } catch (IllegalArgumentException e) {
           // Sound system does not support volume, let's try master gain then
           try {
             gainControl = (FloatControl) outputLine.getControl(
                 FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(
-                gainControl.getMinimum() * ((100 - getOggVolume()) / 100));
+            float range = gainControl.getMaximum() - gainControl.getMinimum();
+            float value = range * getOggVolume() / 100;
+            gainControl.setValue(gainControl.getMinimum() + value);
           } catch (IllegalArgumentException e2) {
             ErrorLogger.log("Your audio system does not support VOLUME or"
                 + " MASTER_GAIN control...Playing default volume");
@@ -423,8 +426,10 @@ public class OggPlayer {
                     }
                   }
                   if (gainControl != null) {
-                    gainControl.setValue(
-                        gainControl.getMaximum() * getOggVolume() / 100);
+                    float range = gainControl.getMaximum()
+                        - gainControl.getMinimum();
+                    float value = range * getOggVolume() / 100;
+                    gainControl.setValue(gainControl.getMinimum() + value);
                   }
                   if (outputLine != null) {
                     outputLine.write(

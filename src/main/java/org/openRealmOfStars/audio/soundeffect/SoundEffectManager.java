@@ -16,7 +16,7 @@ import org.openRealmOfStars.utilities.repository.SoundRepository;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016,2017  Tuomo Untinen
+* Copyright (C) 2016,2017,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -109,21 +109,23 @@ public class SoundEffectManager extends Thread {
         try {
           FloatControl gainControl = (FloatControl) clips[soundIndex]
               .getControl(FloatControl.Type.VOLUME);
-          gainControl.setValue(gainControl.getMaximum()
-              * SoundPlayer.getSoundVolume() / 100);
+          float range = gainControl.getMaximum() - gainControl.getMinimum();
+          float value = range * SoundPlayer.getSoundVolume() / 100;
+          gainControl.setValue(gainControl.getMinimum() + value);
         } catch (IllegalArgumentException e) {
           try {
             FloatControl gainControl = (FloatControl) clips[soundIndex]
                 .getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(gainControl.getMinimum() * ((100
-                - SoundPlayer.getSoundVolume()) / 100));
+            float range = gainControl.getMaximum() - gainControl.getMinimum();
+            float value = range * SoundPlayer.getSoundVolume() / 100;
+            gainControl.setValue(gainControl.getMinimum() + value);
           } catch (IllegalArgumentException e1) {
             ErrorLogger.log("Your audio system does not support VOLUME or"
                 + " MASTER_GAIN control...Playing default volume");
           }
         }
         try {
-          Thread.sleep(5);
+          Thread.sleep(10);
         } catch (InterruptedException e) {
           // Do nothing
         }

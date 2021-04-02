@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.leader.stats.LeaderStats;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019,2020 Tuomo Untinen
+* Copyright (C) 2019-2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -114,6 +115,10 @@ public class Leader {
   private ArrayList<Perk> perkList;
 
   /**
+   * Leader stats.
+   */
+  private LeaderStats stats;
+  /**
    * Constructor for leader. Leader must have name.
    * @param name Leader name
    */
@@ -131,6 +136,7 @@ public class Leader {
     setParent(null);
     parentIndex = -1;
     perkList = new ArrayList<>();
+    stats = new LeaderStats();
   }
 
   /**
@@ -158,6 +164,7 @@ public class Leader {
     for (int i = 0; i < size; i++) {
       perkList.add(Perk.getByIndex(dis.read()));
     }
+    stats = new LeaderStats(dis);
   }
 
   /**
@@ -188,6 +195,7 @@ public class Leader {
     for (int i = 0; i < perkList.size(); i++) {
       dos.writeByte(perkList.get(i).getIndex());
     }
+    stats.saveLeaderStats(dos);
   }
 
   /**

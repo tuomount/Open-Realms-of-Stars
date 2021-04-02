@@ -2,6 +2,12 @@ package org.openRealmOfStars.player.leader.stats;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -50,6 +56,73 @@ public class LeaderStatsTest {
     for (int i = 0; i < StatType.values().length; i++) {
       StatType type = StatType.values()[i];
       assertEquals(i, type.getAsByte());
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSaving() throws IOException {
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    try (DataOutputStream dos = new DataOutputStream(baos)) {
+      LeaderStats stats = new LeaderStats();
+      for (int i = 0; i < StatType.values().length; i++) {
+        StatType type = StatType.values()[i];
+        stats.setStat(type, i + 1);
+        assertEquals(i + 1, stats.getStat(type));
+      }
+      stats.saveLeaderStats(dos);
+      byte[] buffer = baos.toByteArray();
+      assertEquals(StatType.values().length * 3 + 1, buffer.length);
+      assertEquals(StatType.values().length, buffer[0]);
+      // This test will work up to 128 different stats.
+      for (int i = 0; i < StatType.values().length; i++) {
+        assertEquals(i, buffer[1 + i * 3]);
+        assertEquals(i + 1, buffer[1 + i * 3 + 2]);
+        assertEquals(0, buffer[1 + i * 3 + 1]);
+      }
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSavingEmpty() throws IOException {
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    try (DataOutputStream dos = new DataOutputStream(baos)) {
+      LeaderStats stats = new LeaderStats();
+      stats.saveLeaderStats(dos);
+      byte[] buffer = baos.toByteArray();
+      assertEquals(1, buffer.length);
+      assertEquals(0, buffer[0]);
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testReading() throws IOException {
+    byte[] buffer = {0x05, 0x01, 0x00, 0x05, 0x0a, 0x00, 0x04, 0x04, 0x00, 0x03,
+        0x03, 0x00, 0x02, 0x07, 0x00, 0x01};
+    ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
+    try (DataInputStream dis = new DataInputStream(bais)) {
+      LeaderStats stats = new LeaderStats(dis);
+      assertEquals(5, stats.getStat(StatType.getBasedOnIndex(1)));
+      assertEquals(4, stats.getStat(StatType.getBasedOnIndex(10)));
+      assertEquals(3, stats.getStat(StatType.getBasedOnIndex(4)));
+      assertEquals(2, stats.getStat(StatType.getBasedOnIndex(3)));
+      assertEquals(1, stats.getStat(StatType.getBasedOnIndex(7)));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testReadingEmpty() throws IOException {
+    byte[] buffer = {0x00};
+    ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
+    try (DataInputStream dis = new DataInputStream(bais)) {
+      LeaderStats stats = new LeaderStats(dis);
+      for (int i = 0; i < StatType.values().length; i++) {
+        StatType type = StatType.values()[i];
+        assertEquals(0, stats.getStat(type));
+      }
     }
   }
 

@@ -1,4 +1,9 @@
 package org.openRealmOfStars.player.leader.stats;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 /**
 *
 * Open Realm of Stars game project
@@ -120,6 +125,78 @@ public class LeaderStats {
   }
 
   /**
+   * Constructs leader stats from input stream.
+   * @param dis DataInput stream.
+   * @throws IOException If reading from stream fails.
+   */
+  public LeaderStats(final DataInputStream dis) throws IOException {
+    reignLength = 0;
+    numberOfRulers = 0;
+    numberOfBattles = 0;
+    numberOfEspionage = 0;
+    numberOfAnomaly = 0;
+    commanderLength = 0;
+    governorLength = 0;
+    numberOfJailTime = 0;
+    jailTime = 0;
+    killedAnotherLeader = 0;
+    numberOfPirateBattles = 0;
+    numberOfPrivateers = 0;
+    numberOfTrades = 0;
+    numberOfShipsBuilt = 0;
+    numberOfBuildingsBuilt = 0;
+    populationGrowth = 0;
+    diplomaticTrades = 0;
+    warDeclarations = 0;
+    int count = dis.read();
+    if (count > 0) {
+      for (int i = 0; i < count; i++) {
+        int index = dis.read();
+        if (index == -1) {
+          throw new IOException("Unexpected end of stream while reading"
+              + " leader stats.");
+        }
+        StatType type = StatType.getBasedOnIndex(index);
+        int value = dis.readUnsignedShort();
+        setStat(type, value);
+      }
+    }
+  }
+
+  /**
+   * Count how many times there are stats greater than zero.
+   * @return Number of stats.
+   */
+  private int countStats() {
+    int count = 0;
+    for (int i = 0; i < StatType.values().length; i++) {
+      if (getStat(StatType.getBasedOnIndex(i)) > 0) {
+        count++;
+      }
+    }
+    return count;
+  }
+  /**
+   * Save Leader stats to DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException If writing fails.
+   */
+  public void saveLeaderStats(final DataOutputStream dos) throws IOException {
+    int count = countStats();
+    dos.writeByte(count);
+    for (int i = 0; i < StatType.values().length; i++) {
+      if (getStat(StatType.getBasedOnIndex(i)) > 0) {
+        count--;
+        dos.writeByte(i);
+        dos.writeShort(getStat(StatType.getBasedOnIndex(i)));
+      }
+    }
+    if (count != 0) {
+      throw new IOException("Mismatch on number of expected stats and actually"
+          + " written.");
+    }
+  }
+  /**
    * Set Stat value.
    * @param type Stat type which to set.
    * @param value Value where to set.
@@ -179,5 +256,13 @@ public class LeaderStats {
       default: throw new IllegalArgumentException("Unexpected stat type: "
           + type.toString());
     }
+  }
+
+  /**
+   * Increase value by one.
+   * @param type Stat type for increase.
+   */
+  public void addOne(final StatType type) {
+    setStat(type, getStat(type) + 1);
   }
 }

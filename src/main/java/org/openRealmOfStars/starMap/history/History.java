@@ -14,6 +14,7 @@ import org.openRealmOfStars.starMap.history.event.CultureEvent;
 import org.openRealmOfStars.starMap.history.event.Event;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
+import org.openRealmOfStars.starMap.history.event.LeaderEvent;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -261,5 +262,29 @@ public class History {
         }
       }
     }
+  }
+
+  /**
+   * Get all leader events for realm and leader index.
+   * @param realmIndex Realm Index to look for.
+   * @param leaderIndex Leader index to look.
+   * @return Array list of leader events for certain realm and leader.
+   */
+  public ArrayList<LeaderEvent> getLeaderEvents(final int realmIndex,
+      final int leaderIndex) {
+    ArrayList<LeaderEvent> events = new ArrayList<>();
+    for (HistoryTurn turn : listOfTurns) {
+      for (int i = 0; i < turn.getNumberOfEvents(); i++) {
+        Event event = turn.getEvent(i);
+        if (event.getType() == EventType.LEADER_EVENT) {
+          LeaderEvent leaderEvent = (LeaderEvent) event;
+          if (leaderEvent.getLeaderIndex() == leaderIndex
+              && leaderEvent.getPlayerIndex() == realmIndex) {
+            events.add(leaderEvent);
+          }
+        }
+      }
+    }
+    return events;
   }
 }

@@ -29,6 +29,7 @@ import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.history.event.LeaderEvent;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -290,6 +291,14 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
           sb.append(perk.getDescription());
           sb.append("\n");
         }
+      }
+      int realmIndex = map.getPlayerList().getIndex(player);
+      int leaderIndex = player.getLeaderIndex(leader);
+      ArrayList<LeaderEvent> leaderEvents = map.getHistory().getLeaderEvents(
+          realmIndex, leaderIndex);
+      for (LeaderEvent event : leaderEvents) {
+        sb.append("\n");
+        sb.append(event.getText());
       }
       infoText.setText(sb.toString());
     }

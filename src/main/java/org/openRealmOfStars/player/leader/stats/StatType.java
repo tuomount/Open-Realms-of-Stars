@@ -126,4 +126,35 @@ public enum StatType {
             + this.toString());
     }
   }
+
+  /**
+   * Get StatType based on index number.
+   * @param index Stat index number.
+   * @return StatType.
+   */
+  public static StatType getBasedOnIndex(final int index) {
+    switch (index) {
+      case 0: return RULER_REIGN_LENGTH;
+      case 1: return NUMBER_OF_RULER;
+      case 2: return NUMBER_OF_BATTLES;
+      case 3: return NUMBER_OF_ESPIONAGE;
+      case 4: return NUMBER_OF_ANOMALY;
+      case 5: return COMMANDER_LENGTH;
+      case 6: return GOVERNOR_LENGTH;
+      case 7: return NUMBER_OF_JAIL_TIME;
+      case 8: return JAIL_TIME;
+      case 9: return KILLED_ANOTHER_LEADER;
+      case 10: return NUMBER_OF_PIRATE_BATTLES;
+      case 11: return NUMBER_OF_PRIVATEERING;
+      case 12: return NUMBER_OF_TRADES;
+      case 13: return NUMBER_OF_SHIPS_BUILT;
+      case 14: return NUMBER_OF_BUILDINGS_BUILT;
+      case 15: return POPULATION_GROWTH;
+      case 16: return DIPLOMATIC_TRADE;
+      case 17: return WAR_DECLARATIONS;
+      default:
+        throw new IllegalArgumentException("Unexpected StatType:"
+            + index);
+    }
+  }
 }

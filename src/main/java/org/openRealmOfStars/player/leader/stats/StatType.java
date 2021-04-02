@@ -75,7 +75,27 @@ public enum StatType {
   /**
    * How many times has done trading.
    */
-  NUMBER_OF_TRADES;
+  NUMBER_OF_TRADES,
+  /**
+   * How many ships has been build by governor.
+   */
+  NUMBER_OF_SHIPS_BUILT,
+  /**
+   * How many buildings has been build by governor.
+   */
+  NUMBER_OF_BUILDINGS_BUILT,
+  /**
+   * How much population has growth when governor.
+   */
+  POPULATION_GROWTH,
+  /**
+   * How many diplomatic trades has done as a ruler.
+   */
+  DIPLOMATIC_TRADE,
+  /**
+   * How many times has made war as a ruler.
+   */
+  WAR_DECLARATIONS;
 
   /**
    * Get Stat Type as byte.
@@ -96,6 +116,11 @@ public enum StatType {
       case NUMBER_OF_PIRATE_BATTLES: return 10;
       case NUMBER_OF_PRIVATEERING: return 11;
       case NUMBER_OF_TRADES: return 12;
+      case NUMBER_OF_SHIPS_BUILT: return 13;
+      case NUMBER_OF_BUILDINGS_BUILT: return 14;
+      case POPULATION_GROWTH: return 15;
+      case DIPLOMATIC_TRADE: return 16;
+      case WAR_DECLARATIONS: return 17;
       default:
         throw new IllegalArgumentException("Unexpected StatType:"
             + this.toString());

@@ -76,6 +76,26 @@ public class LeaderStats {
   private int numberOfTrades;
 
   /**
+   * How many ships has been built as a governor.
+   */
+  private int numberOfShipsBuilt;
+  /**
+   * How many buildings has been built as a governor.
+   */
+  private int numberOfBuildingsBuilt;
+  /**
+   * How much population has growth during governor.
+   */
+  private int populationGrowth;
+  /**
+   * How many diplomatic trades has been done as a ruler.
+   */
+  private int diplomaticTrades;
+  /**
+   * How many war declaration has been done as a ruler.
+   */
+  private int warDeclarations;
+  /**
    * Constructor of leader stats.
    */
   public LeaderStats() {
@@ -92,6 +112,11 @@ public class LeaderStats {
     numberOfPirateBattles = 0;
     numberOfPrivateers = 0;
     numberOfTrades = 0;
+    numberOfShipsBuilt = 0;
+    numberOfBuildingsBuilt = 0;
+    populationGrowth = 0;
+    diplomaticTrades = 0;
+    warDeclarations = 0;
   }
 
   /**
@@ -115,6 +140,11 @@ public class LeaderStats {
         case NUMBER_OF_PIRATE_BATTLES: numberOfPirateBattles = value; break;
         case NUMBER_OF_PRIVATEERING: numberOfPrivateers = value; break;
         case NUMBER_OF_TRADES: numberOfTrades = value; break;
+        case NUMBER_OF_SHIPS_BUILT: numberOfShipsBuilt = value; break;
+        case NUMBER_OF_BUILDINGS_BUILT: numberOfBuildingsBuilt = value; break;
+        case POPULATION_GROWTH: populationGrowth = value; break;
+        case DIPLOMATIC_TRADE: diplomaticTrades = value; break;
+        case WAR_DECLARATIONS: warDeclarations = value; break;
         default: throw new IllegalArgumentException("Unexpected stat type: "
             + type.toString());
       }
@@ -141,6 +171,11 @@ public class LeaderStats {
       case NUMBER_OF_PIRATE_BATTLES: return numberOfPirateBattles;
       case NUMBER_OF_PRIVATEERING: return numberOfPrivateers;
       case NUMBER_OF_TRADES: return numberOfTrades;
+      case NUMBER_OF_SHIPS_BUILT: return numberOfShipsBuilt;
+      case NUMBER_OF_BUILDINGS_BUILT: return numberOfBuildingsBuilt;
+      case POPULATION_GROWTH: return populationGrowth;
+      case DIPLOMATIC_TRADE: return diplomaticTrades;
+      case WAR_DECLARATIONS: return warDeclarations;
       default: throw new IllegalArgumentException("Unexpected stat type: "
           + type.toString());
     }

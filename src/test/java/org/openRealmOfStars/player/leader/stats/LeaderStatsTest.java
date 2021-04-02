@@ -33,64 +33,24 @@ public class LeaderStatsTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     LeaderStats stats = new LeaderStats();
-    assertEquals(0, stats.getStat(StatType.COMMANDER_LENGTH));
-    assertEquals(0, stats.getStat(StatType.GOVERNOR_LENGTH));
-    assertEquals(0, stats.getStat(StatType.JAIL_TIME));
-    assertEquals(0, stats.getStat(StatType.KILLED_ANOTHER_LEADER));
-    assertEquals(0, stats.getStat(StatType.NUMBER_OF_ANOMALY));
-    assertEquals(0, stats.getStat(StatType.NUMBER_OF_BATTLES));
-    assertEquals(0, stats.getStat(StatType.NUMBER_OF_ESPIONAGE));
-    assertEquals(0, stats.getStat(StatType.NUMBER_OF_JAIL_TIME));
-    assertEquals(0, stats.getStat(StatType.NUMBER_OF_PIRATE_BATTLES));
-    assertEquals(0, stats.getStat(StatType.NUMBER_OF_PRIVATEERING));
-    assertEquals(0, stats.getStat(StatType.NUMBER_OF_RULER));
-    assertEquals(0, stats.getStat(StatType.NUMBER_OF_TRADES));
-    assertEquals(0, stats.getStat(StatType.RULER_REIGN_LENGTH));
-    stats.setStat(StatType.COMMANDER_LENGTH, 1);
-    stats.setStat(StatType.GOVERNOR_LENGTH, 2);
-    stats.setStat(StatType.JAIL_TIME, 3);
-    stats.setStat(StatType.KILLED_ANOTHER_LEADER, 4);
-    stats.setStat(StatType.NUMBER_OF_ANOMALY, 5);
-    stats.setStat(StatType.NUMBER_OF_BATTLES, 6);
-    stats.setStat(StatType.NUMBER_OF_ESPIONAGE, 7);
-    stats.setStat(StatType.NUMBER_OF_JAIL_TIME, 8);
-    stats.setStat(StatType.NUMBER_OF_PIRATE_BATTLES, 9);
-    stats.setStat(StatType.NUMBER_OF_PRIVATEERING, 10);
-    stats.setStat(StatType.NUMBER_OF_RULER, 11);
-    stats.setStat(StatType.NUMBER_OF_TRADES, 12);
-    stats.setStat(StatType.RULER_REIGN_LENGTH, 13);
-    assertEquals(1, stats.getStat(StatType.COMMANDER_LENGTH));
-    assertEquals(2, stats.getStat(StatType.GOVERNOR_LENGTH));
-    assertEquals(3, stats.getStat(StatType.JAIL_TIME));
-    assertEquals(4, stats.getStat(StatType.KILLED_ANOTHER_LEADER));
-    assertEquals(5, stats.getStat(StatType.NUMBER_OF_ANOMALY));
-    assertEquals(6, stats.getStat(StatType.NUMBER_OF_BATTLES));
-    assertEquals(7, stats.getStat(StatType.NUMBER_OF_ESPIONAGE));
-    assertEquals(8, stats.getStat(StatType.NUMBER_OF_JAIL_TIME));
-    assertEquals(9, stats.getStat(StatType.NUMBER_OF_PIRATE_BATTLES));
-    assertEquals(10, stats.getStat(StatType.NUMBER_OF_PRIVATEERING));
-    assertEquals(11, stats.getStat(StatType.NUMBER_OF_RULER));
-    assertEquals(12, stats.getStat(StatType.NUMBER_OF_TRADES));
-    assertEquals(13, stats.getStat(StatType.RULER_REIGN_LENGTH));
+    for (int i = 0; i < StatType.values().length; i++) {
+      StatType type = StatType.values()[i];
+      assertEquals(0, stats.getStat(type));
+    }
+    for (int i = 0; i < StatType.values().length; i++) {
+      StatType type = StatType.values()[i];
+      stats.setStat(type, i + 1);
+      assertEquals(i + 1, stats.getStat(type));
+    }
   }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testStatTypes() {
-    assertEquals(0, StatType.RULER_REIGN_LENGTH.getAsByte());
-    assertEquals(1, StatType.NUMBER_OF_RULER.getAsByte());
-    assertEquals(2, StatType.NUMBER_OF_BATTLES.getAsByte());
-    assertEquals(3, StatType.NUMBER_OF_ESPIONAGE.getAsByte());
-    assertEquals(4, StatType.NUMBER_OF_ANOMALY.getAsByte());
-    assertEquals(5, StatType.COMMANDER_LENGTH.getAsByte());
-    assertEquals(6, StatType.GOVERNOR_LENGTH.getAsByte());
-    assertEquals(5, StatType.COMMANDER_LENGTH.getAsByte());
-    assertEquals(7, StatType.NUMBER_OF_JAIL_TIME.getAsByte());
-    assertEquals(8, StatType.JAIL_TIME.getAsByte());
-    assertEquals(9, StatType.KILLED_ANOTHER_LEADER.getAsByte());
-    assertEquals(10, StatType.NUMBER_OF_PIRATE_BATTLES.getAsByte());
-    assertEquals(11, StatType.NUMBER_OF_PRIVATEERING.getAsByte());
-    assertEquals(12, StatType.NUMBER_OF_TRADES.getAsByte());
+    for (int i = 0; i < StatType.values().length; i++) {
+      StatType type = StatType.values()[i];
+      assertEquals(i, type.getAsByte());
+    }
   }
-  
+
 }

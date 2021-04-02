@@ -603,4 +603,11 @@ public class Leader {
     }
   }
 
+  /**
+   * Get Stats for leader.
+   * @return LeaderStats.
+   */
+  public LeaderStats getStats() {
+    return stats;
+  }
 }

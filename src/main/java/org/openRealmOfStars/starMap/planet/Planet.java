@@ -16,6 +16,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
+import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -1812,6 +1813,9 @@ public class Planet {
         } else {
           workers[FOOD_FARMERS] = workers[FOOD_FARMERS] + 1;
         }
+        if (governor != null) {
+          governor.getStats().addOne(StatType.POPULATION_GROWTH);
+        }
         msg = new Message(MessageType.POPULATION,
             getName() + " has population growth! Population is now "
                 + getTotalPopulation(),
@@ -2045,6 +2049,7 @@ public class Planet {
           if (governor != null) {
             governor.setExperience(governor.getExperience()
                 + underConstruction.getProdCost() / 2);
+            governor.getStats().addOne(StatType.NUMBER_OF_BUILDINGS_BUILT);
           }
           buildings.add((Building) underConstruction);
           msg = new Message(MessageType.CONSTRUCTION,
@@ -2083,6 +2088,9 @@ public class Planet {
               culture = culture + stat.getDesign().getTotalMilitaryPower() / 4;
             }
             Fleet fleet = new Fleet(ship, getX(), getY());
+            if (governor != null) {
+              governor.getStats().addOne(StatType.NUMBER_OF_SHIPS_BUILT);
+            }
             planetOwnerInfo.getFleets().add(fleet);
             if (planetOwnerInfo.getMissions() != null) {
               Mission mission = planetOwnerInfo.getMissions()
@@ -2224,6 +2232,9 @@ public class Planet {
         } else {
           if (underConstruction.getName()
               .equals(ConstructionFactory.MECHION_CITIZEN)) {
+            if (governor != null) {
+              governor.getStats().addOne(StatType.POPULATION_GROWTH);
+            }
             metal = metal - underConstruction.getMetalCost();
             prodResource = prodResource - underConstruction.getProdCost();
             workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;

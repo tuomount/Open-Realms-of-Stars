@@ -87,6 +87,7 @@ import org.openRealmOfStars.player.fleet.TradeRoute;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.ChangeMessage;
 import org.openRealmOfStars.player.message.ChangeMessageFleet;
 import org.openRealmOfStars.player.message.ChangeMessagePlanet;
@@ -720,6 +721,9 @@ public class Game implements ActionListener {
         fleet.setPos(new Coordinate(nx, ny));
         SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(starMap,
             info, fleet);
+        if (anomaly != null && fleet.getCommander() != null) {
+          fleet.getCommander().getStats().addOne(StatType.NUMBER_OF_ANOMALY);
+        }
         if (anomaly != null && starMapView != null && info.isHuman()) {
           PopupPanel popup = new PopupPanel(anomaly);
           starMapView.setPopup(popup);

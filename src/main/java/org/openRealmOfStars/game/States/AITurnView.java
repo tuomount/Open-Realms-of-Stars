@@ -47,6 +47,7 @@ import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.MilitaryRank;
 import org.openRealmOfStars.player.leader.Perk;
+import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -2228,6 +2229,7 @@ public class AITurnView extends BlackPanel {
         realm.getRuler().setJob(Job.DEAD);
         // Leader gains experience for succeesfull assasination
         leader.setExperience(leader.getExperience() + 50);
+        leader.getStats().addOne(StatType.KILLED_ANOTHER_LEADER);
         Message msg = new Message(MessageType.LEADER,
             realm.getRuler().getCallName()
                 + " has died at age of " + realm.getRuler().getAge()
@@ -2396,6 +2398,7 @@ public class AITurnView extends BlackPanel {
       if (ruler != null) {
         LeaderUtility.assignLeaderAsRuler(ruler, realm, game.getStarMap());
         if (realm.getRuler() != null) {
+          realm.getRuler().getStats().addOne(StatType.NUMBER_OF_RULER);
           Message msg = new Message(MessageType.LEADER,
               ruler.getCallName()
                   + " has selected as ruler for " + realm.getEmpireName(),
@@ -2434,6 +2437,7 @@ public class AITurnView extends BlackPanel {
         }
         if (leader.getJob() == Job.PRISON) {
           leader.setTimeInJob(leader.getTimeInJob() - 1);
+          leader.getStats().addOne(StatType.JAIL_TIME);
           if (DiceGenerator.getRandom(99) < 10) {
             // Small change to get little bit experience in prison.
             leader.setExperience(leader.getExperience()
@@ -2538,15 +2542,21 @@ public class AITurnView extends BlackPanel {
           }
         }
         if (realm.getRuler() != null
-            && leader.getJob() != Job.RULER
+            && leader.getJob() != Job.RULER && leader.getJob() != Job.PRISON
             && leader.hasPerk(Perk.POWER_HUNGRY)
             && LeaderUtility.isPowerHungryReadyForKill(
                 realm.getGovernment())) {
           handlePowerHungryKill(leader, realm);
         }
+        if (leader.getJob() == Job.COMMANDER) {
+          leader.getStats().addOne(StatType.COMMANDER_LENGTH);
+        }
         if (leader.getJob() == Job.COMMANDER
             && leader.hasPerk(Perk.CORRUPTED)) {
           realm.setTotalCredits(realm.getTotalCredits() - 1);
+        }
+        if (leader.getJob() == Job.GOVERNOR) {
+          leader.getStats().addOne(StatType.GOVERNOR_LENGTH);
         }
         if (leader.getJob() == Job.UNASSIGNED) {
           Message msg = new Message(MessageType.LEADER,
@@ -2569,6 +2579,7 @@ public class AITurnView extends BlackPanel {
         realm.setRuler(null);
       }
       if (leader.getJob() == Job.RULER) {
+        leader.getStats().addOne(StatType.RULER_REIGN_LENGTH);
         int numberOfPlanet = 0;
         int numberOfStarbases = 0;
         Planet firstPlanet = null;

@@ -15,6 +15,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Perk;
+import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -1528,8 +1529,9 @@ public class DiplomaticTrade {
       }
       case 2: {
         if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
-          generateMapTrade(SELL, true); break;
+          generateMapTrade(SELL, true);
         }
+        break;
       }
       case 3: {
         generateTechTrade(TRADE); break;
@@ -1539,8 +1541,9 @@ public class DiplomaticTrade {
       }
       case 5: {
         if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
-          generateTechTrade(SELL); break;
+          generateTechTrade(SELL);
         }
+        break;
       }
       case 6: {
         if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
@@ -2366,6 +2369,8 @@ public class DiplomaticTrade {
   private int doTrade(final NegotiationList offerList, final PlayerInfo info,
       final PlayerInfo giver) {
     int totalValue = 0;
+    boolean countAsDiplomaticTrade = false;
+    boolean countAsWar = false;
     for (int i = 0; i < offerList.getSize(); i++) {
       NegotiationOffer offer = offerList.getByIndex(i);
       totalValue = totalValue + offer.getOfferValue(info.getRace());
@@ -2373,6 +2378,7 @@ public class DiplomaticTrade {
       case CREDIT: {
         info.setTotalCredits(info.getTotalCredits() + offer.getCreditValue());
         giver.setTotalCredits(giver.getTotalCredits() - offer.getCreditValue());
+        countAsDiplomaticTrade = true;
         break;
       }
       case RECALL_FLEET: {
@@ -2404,6 +2410,7 @@ public class DiplomaticTrade {
       }
       case TECH: {
         info.getTechList().addTech(offer.getTech());
+        countAsDiplomaticTrade = true;
         break;
       }
       case FLEET: {
@@ -2416,6 +2423,7 @@ public class DiplomaticTrade {
             .getName());
         giver.getFleets().remove(index);
         giver.getMissions().deleteMissionForFleet(offer.getFleet().getName());
+        countAsDiplomaticTrade = true;
         break;
       }
       case PLANET: {
@@ -2426,10 +2434,12 @@ public class DiplomaticTrade {
           planet.setGovernor(null);
         }
         planet.setPlanetOwner(index, info);
+        countAsDiplomaticTrade = true;
         break;
       }
       case MAP: {
         doMapTrade(info, giver, true);
+        countAsDiplomaticTrade = true;
         break;
       }
       case DIPLOMAT: {
@@ -2440,63 +2450,85 @@ public class DiplomaticTrade {
         int index = starMap.getPlayerList().getIndex(giver);
         info.getDiplomacy().getDiplomacyList(index).addBonus(
             DiplomacyBonusType.IN_TRADE_ALLIANCE, info.getRace());
+        countAsDiplomaticTrade = true;
         break;
       }
       case ALLIANCE: {
         int index = starMap.getPlayerList().getIndex(giver);
         info.getDiplomacy().getDiplomacyList(index).addBonus(
             DiplomacyBonusType.IN_ALLIANCE, info.getRace());
+        countAsDiplomaticTrade = true;
         break;
       }
       case PEACE: {
         int index = starMap.getPlayerList().getIndex(giver);
         info.getDiplomacy().getDiplomacyList(index).addBonus(
             DiplomacyBonusType.LONG_PEACE, info.getRace());
+        countAsDiplomaticTrade = true;
         break;
       }
       case WAR: {
         int index = starMap.getPlayerList().getIndex(giver);
         info.getDiplomacy().getDiplomacyList(index).addBonus(
             DiplomacyBonusType.IN_WAR, info.getRace());
+        countAsWar = true;
         break;
       }
       case DEFENSIVE_PACT: {
         int index = starMap.getPlayerList().getIndex(giver);
         info.getDiplomacy().getDiplomacyList(index).addBonus(
             DiplomacyBonusType.IN_DEFENSIVE_PACT, info.getRace());
+        countAsDiplomaticTrade = true;
         break;
       }
       case SPY_TRADE: {
         int index = starMap.getPlayerList().getIndex(giver);
         info.getDiplomacy().getDiplomacyList(index).addBonus(
             DiplomacyBonusType.SPY_TRADE, info.getRace());
+        countAsDiplomaticTrade = true;
         break;
       }
       case TRADE_EMBARGO: {
         int index = starMap.getPlayerList().getIndex(giver);
         info.getDiplomacy().getDiplomacyList(index).addBonus(
             DiplomacyBonusType.LIKED_EMBARGO, info.getRace());
+        countAsDiplomaticTrade = true;
         break;
       }
       case MAP_PLANETS: {
         doMapTrade(info, giver, false);
+        countAsDiplomaticTrade = true;
         break;
       }
       case PROMISE_VOTE_NO: {
         int index = starMap.getPlayerList().getIndex(giver);
         info.getDiplomacy().getDiplomacyList(index).addBonus(
             DiplomacyBonusType.PROMISED_VOTE_NO, info.getRace());
+        countAsDiplomaticTrade = true;
         break;
       }
       case PROMISE_VOTE_YES: {
         int index = starMap.getPlayerList().getIndex(giver);
         info.getDiplomacy().getDiplomacyList(index).addBonus(
             DiplomacyBonusType.PROMISED_VOTE_YES, info.getRace());
+        countAsDiplomaticTrade = true;
         break;
       }
       default:
         //DO nothing
         break;
+      }
+    }
+    if (countAsWar) {
+      if (giver.getRuler() != null) {
+        giver.getRuler().getStats().addOne(StatType.WAR_DECLARATIONS);
+      }
+    } else if (countAsDiplomaticTrade) {
+      if (giver.getRuler() != null) {
+        giver.getRuler().getStats().addOne(StatType.DIPLOMATIC_TRADE);
+      }
+      if (info.getRuler() != null) {
+        info.getRuler().getStats().addOne(StatType.DIPLOMATIC_TRADE);
       }
     }
     return totalValue;

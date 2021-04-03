@@ -16,6 +16,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.AttitudeScore;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.StarMap;
@@ -370,6 +371,71 @@ public final class LeaderUtility {
     }
     return result;
   }
+
+  /**
+   * Get Ruler title for leader and government type.
+   * @param leader Leader for getting the title
+   * @param government Government type
+   * @return Ruler title
+   */
+  private static String getRulerTitle(final Leader leader,
+      final GovernmentType government) {
+    switch (government) {
+    default:
+    case DEMOCRACY:
+    case FEDERATION:
+    case REPUBLIC:
+    case UNION: {
+      return "President";
+    }
+    case EMPIRE: {
+      if (leader.getGender() == Gender.FEMALE) {
+        return "Empiress";
+      }
+      return "Emperor";
+    }
+    case FEUDALISM:
+    case NEST:
+    case KINGDOM: {
+      if (leader.getGender() == Gender.FEMALE) {
+        return "Queen";
+      }
+      return "King";
+    }
+    case HORDE:
+    case MECHANICAL_HORDE:
+    case CLAN: {
+      return "Chief";
+    }
+    case UTOPIA: {
+      return "Wise";
+    }
+    case ENTERPRISE: {
+      return "CEO";
+    }
+    case GUILD:
+    case HEGEMONY:
+    case REGIME:
+    case COLLECTIVE: {
+      return "Leader";
+    }
+    case TECHNOCRACY: {
+      return "Master engineer";
+    }
+    case AI: {
+      return "Main Process";
+    }
+    case HIVEMIND: {
+      return "Master";
+    }
+    case HIERARCHY: {
+      if (leader.getGender() == Gender.FEMALE) {
+        return "Lady";
+      }
+      return "Lord";
+    }
+  }
+  }
   /**
    * Create Title for leader
    * @param leader Leader to whom to create title
@@ -380,75 +446,7 @@ public final class LeaderUtility {
       final PlayerInfo realm) {
     StringBuilder sb = new StringBuilder();
     if (leader.getJob() == Job.RULER) {
-      switch (realm.getGovernment()) {
-        default:
-        case DEMOCRACY:
-        case FEDERATION:
-        case REPUBLIC:
-        case UNION: {
-          sb.append("President");
-          break;
-        }
-        case EMPIRE: {
-          if (leader.getGender() == Gender.FEMALE) {
-            sb.append("Empiress");
-          } else {
-            sb.append("Emperor");
-          }
-          break;
-        }
-        case FEUDALISM:
-        case NEST:
-        case KINGDOM: {
-          if (leader.getGender() == Gender.FEMALE) {
-            sb.append("Queen");
-          } else {
-            sb.append("King");
-          }
-          break;
-        }
-        case HORDE:
-        case MECHANICAL_HORDE:
-        case CLAN: {
-          sb.append("Chief");
-          break;
-        }
-        case UTOPIA: {
-          sb.append("Wise");
-          break;
-        }
-        case ENTERPRISE: {
-          sb.append("CEO");
-          break;
-        }
-        case GUILD:
-        case HEGEMONY:
-        case REGIME:
-        case COLLECTIVE: {
-          sb.append("Leader");
-          break;
-        }
-        case TECHNOCRACY: {
-          sb.append("Master engineer");
-          break;
-        }
-        case AI: {
-          sb.append("Main Process");
-          break;
-        }
-        case HIVEMIND: {
-          sb.append("Master");
-          break;
-        }
-        case HIERARCHY: {
-          if (leader.getGender() == Gender.FEMALE) {
-            sb.append("Lady");
-          } else {
-            sb.append("Lord");
-          }
-          break;
-        }
-      }
+      sb.append(getRulerTitle(leader, realm.getGovernment()));
     }
     if (leader.getJob() == Job.COMMANDER) {
       if (leader.getMilitaryRank() == MilitaryRank.CIVILIAN) {
@@ -1717,6 +1715,7 @@ public final class LeaderUtility {
       fleet.getCommander().setJob(Job.PRISON);
       fleet.getCommander().setTimeInJob(time);
       fleet.getCommander().addPerk(Perk.CONVICT);
+      fleet.getCommander().getStats().addOne(StatType.NUMBER_OF_JAIL_TIME);
       fleet.setCommander(null);
     }
   }
@@ -1742,5 +1741,220 @@ public final class LeaderUtility {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Get Main job description for leader.
+   * @param leader Leader for getting the main job.
+   * @param government Government type for getting proper title for ruler.
+   * @return Job title
+   */
+  private static String getMainJob(final Leader leader,
+      final GovernmentType government) {
+    int ruler = leader.getStats().getStat(StatType.RULER_REIGN_LENGTH);
+    int governor = leader.getStats().getStat(StatType.GOVERNOR_LENGTH);
+    int commander = leader.getStats().getStat(StatType.COMMANDER_LENGTH);
+    int avg = (ruler + governor + commander) / 3;
+    if (ruler > avg) {
+      return getRulerTitle(leader, government);
+    }
+    if (avg == 0) {
+      return "jobless";
+    }
+    if (governor > avg) {
+      return "Governor";
+    }
+    if (commander > avg) {
+      return "Commander";
+    }
+    return "between jobs";
+  }
+
+  /**
+   * Get textual description where leader is known about.
+   * @param leader Leader.
+   * @return String
+   */
+  private static String getBestKnown(final Leader leader) {
+    StringBuilder sb = new StringBuilder();
+    boolean and = false;
+    boolean noMore = false;
+    int numberOfBattle = leader.getStats().getStat(StatType.NUMBER_OF_BATTLES);
+    int numberOfAnomalies = leader.getStats().getStat(
+        StatType.NUMBER_OF_ANOMALY);
+    int trades = leader.getStats().getStat(
+        StatType.NUMBER_OF_TRADES);
+    int privateering = leader.getStats().getStat(
+        StatType.NUMBER_OF_PRIVATEERING);
+    int commanderAvg = (numberOfAnomalies + numberOfBattle + trades
+        + privateering) / 4;
+    int numberOfBuildings = leader.getStats().getStat(
+        StatType.NUMBER_OF_BUILDINGS_BUILT);
+    int numberOfShips = leader.getStats().getStat(
+        StatType.NUMBER_OF_SHIPS_BUILT);
+    int populationGrowth = leader.getStats().getStat(
+        StatType.POPULATION_GROWTH);
+    int governorAvg = (numberOfBuildings + numberOfShips
+        + populationGrowth) / 3;
+    int warDeclarations = leader.getStats().getStat(StatType.WAR_DECLARATIONS);
+    int diplomaticTrades = leader.getStats().getStat(StatType.DIPLOMATIC_TRADE);
+    int rulerAvg = (warDeclarations + diplomaticTrades) / 2;
+    if (rulerAvg >= commanderAvg) {
+      if (warDeclarations > diplomaticTrades) {
+        sb.append("war declarations");
+        and = true;
+      } else {
+        sb.append("diplomatic trades");
+        and = true;
+      }
+    }
+    if (governorAvg >= commanderAvg) {
+      if (numberOfShips > numberOfBuildings
+          && numberOfShips > populationGrowth) {
+        if (and) {
+          noMore = true;
+          sb.append(" and ");
+        }
+        sb.append("ship building");
+        and = true;
+      }
+      if (!noMore && numberOfBuildings > numberOfShips
+          && numberOfBuildings > populationGrowth) {
+        if (and) {
+          noMore = true;
+          sb.append(" and ");
+        }
+        sb.append("building projects");
+        and = true;
+      }
+      if (!noMore && populationGrowth > numberOfShips
+          && populationGrowth > numberOfBuildings) {
+        if (and) {
+          noMore = true;
+          sb.append(" and ");
+        }
+        sb.append("population growth");
+        and = true;
+      }
+    }
+    if (commanderAvg >= governorAvg) {
+      if (!noMore && numberOfBattle > numberOfAnomalies
+          && numberOfBattle > privateering
+          && numberOfBattle > trades) {
+        if (and) {
+          noMore = true;
+          sb.append(" and ");
+        }
+        sb.append("space battles");
+        if (leader.getStats().getStat(StatType.NUMBER_OF_PIRATE_BATTLES)
+            >= numberOfBattle / 2) {
+          sb.append(" against space pirates");
+        }
+        and = true;
+      }
+      if (!noMore && numberOfAnomalies > numberOfBattle
+          && numberOfAnomalies > privateering
+          && numberOfAnomalies > trades) {
+        if (and) {
+          noMore = true;
+          sb.append(" and ");
+        }
+        sb.append("exploring space anomalies");
+        and = true;
+      }
+      if (!noMore && trades > numberOfBattle
+          && trades > privateering
+          && trades > numberOfAnomalies) {
+        if (and) {
+          noMore = true;
+          sb.append(" and ");
+        }
+        sb.append("trades");
+        and = true;
+      }
+      if (!noMore && privateering > numberOfBattle
+          && privateering > trades
+          && privateering > numberOfAnomalies) {
+        if (and) {
+          noMore = true;
+          sb.append(" and ");
+        }
+        sb.append("space pirating");
+        and = true;
+      }
+    }
+    return sb.toString();
+  }
+  /**
+   * Create Bio for leader
+   * @param leader Leader whom to create bio.
+   * @param info PlayerInfo
+   * @return Bio as a String.
+   */
+  public static String createBioForLeader(final Leader leader,
+      final PlayerInfo info) {
+    boolean living = true;
+    boolean young = false;
+    if (leader.getAge() < 35) {
+      young = true;
+    }
+    if (leader.getJob() == Job.DEAD) {
+      living = false;
+      young = false;
+    }
+    StringBuilder sb = new StringBuilder();
+    sb.append(leader.getName());
+    if (living) {
+      sb.append(" is mostly ");
+    } else {
+      sb.append(" was mostly ");
+    }
+    sb.append(getMainJob(leader, info.getGovernment()));
+    if (living) {
+      sb.append(". Currently ");
+      sb.append(leader.getName());
+      sb.append(" is ");
+      sb.append(leader.getJob().toString());
+      sb.append(". ");
+    } else {
+      sb.append(". ");
+    }
+    sb.append(leader.getTitle());
+    String known = getBestKnown(leader);
+    if (known.isEmpty()) {
+      if (young && living) {
+        sb.append(" is still young and is able to achieve many things.");
+      }
+      if (!living) {
+        sb.append(" has passed away without great actions.");
+      }
+    } else {
+      if (living) {
+        sb.append(" is known for ");
+      } else {
+        sb.append(" will be remembered for ");
+      }
+      sb.append(known);
+      sb.append(". ");
+    }
+    if (leader.getStats().getStat(StatType.NUMBER_OF_ESPIONAGE) > 0) {
+      sb.append(leader.getName());
+      if (living) {
+        sb.append(" is suspected to be spy. ");
+      } else {
+        sb.append(" was suspected to be spy. ");
+      }
+    }
+    if (leader.getStats().getStat(StatType.NUMBER_OF_JAIL_TIME) > 0) {
+      sb.append(leader.getName());
+      if (living) {
+        sb.append(" has been in jail. ");
+      } else {
+        sb.append(" has been sentenced to jail ");
+        sb.append(leader.getStats().getStat(StatType.NUMBER_OF_JAIL_TIME));
+        sb.append(" times");
+      }
+    }
+    return sb.toString();
   }
 }

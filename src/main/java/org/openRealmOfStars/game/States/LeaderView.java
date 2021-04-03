@@ -29,13 +29,12 @@ import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.starMap.history.event.LeaderEvent;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020, 2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -292,14 +291,8 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
           sb.append("\n");
         }
       }
-      int realmIndex = map.getPlayerList().getIndex(player);
-      int leaderIndex = player.getLeaderIndex(leader);
-      ArrayList<LeaderEvent> leaderEvents = map.getHistory().getLeaderEvents(
-          realmIndex, leaderIndex);
-      for (LeaderEvent event : leaderEvents) {
-        sb.append("\n");
-        sb.append(event.getText());
-      }
+      sb.append("\n");
+      sb.append(LeaderUtility.createBioForLeader(leader, player));
       infoText.setText(sb.toString());
     }
     updateButtonToolTips();

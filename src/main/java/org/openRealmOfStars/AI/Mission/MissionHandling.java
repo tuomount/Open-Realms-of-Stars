@@ -30,6 +30,7 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
+import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -1468,6 +1469,8 @@ public final class MissionHandling {
               ok = true;
             }
             if (ok) {
+              fleet.getCommander().getStats().addOne(
+                  StatType.NUMBER_OF_ESPIONAGE);
               boolean somethingHappened = false;
               int success = EspionageUtility.calculateSuccess(planet, fleet,
                   selectedType);
@@ -2585,6 +2588,7 @@ public final class MissionHandling {
       } else {
         planet.setGovernor(null);
         governor.setJob(Job.DEAD);
+        fleet.getCommander().getStats().addOne(StatType.KILLED_ANOTHER_LEADER);
         Message msg = new Message(MessageType.LEADER,
             fleet.getCommander().getCallName() + " from "
               + info.getEmpireName() + " assasins "

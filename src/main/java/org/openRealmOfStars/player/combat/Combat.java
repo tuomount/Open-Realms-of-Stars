@@ -17,6 +17,7 @@ import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
+import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -36,7 +37,7 @@ import org.openRealmOfStars.utilities.Logger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -238,17 +239,41 @@ public class Combat {
     leaderKilledNews = null;
     starbaseFleet = null;
     combatEvent = new CombatEvent(defenderFleet.getCoordinate());
+    if (attackerFleet.getCommander() != null) {
+      attackerFleet.getCommander().getStats().addOne(
+          StatType.NUMBER_OF_BATTLES);
+    }
+    if (defenderFleet.getCommander() != null) {
+      defenderFleet.getCommander().getStats().addOne(
+          StatType.NUMBER_OF_BATTLES);
+    }
     StringBuilder combatText = new StringBuilder();
     if (!attackerPrivateer) {
       combatText.append(attackerInfo.getEmpireName());
+      if (attackerInfo.isBoard() && defenderFleet.getCommander() != null) {
+        defenderFleet.getCommander().getStats().addOne(
+            StatType.NUMBER_OF_PIRATE_BATTLES);
+      }
     } else {
       combatText.append("Privateer");
+      if (defenderFleet.getCommander() != null) {
+        defenderFleet.getCommander().getStats().addOne(
+            StatType.NUMBER_OF_PIRATE_BATTLES);
+      }
     }
     combatText.append(" attacked against ");
     if (!defenderPrivateer) {
       combatText.append(defenderInfo.getEmpireName());
+      if (defenderInfo.isBoard() && attackerFleet.getCommander() != null) {
+        attackerFleet.getCommander().getStats().addOne(
+            StatType.NUMBER_OF_PIRATE_BATTLES);
+      }
     } else  {
       combatText.append("Privateer");
+      if (attackerFleet.getCommander() != null) {
+        attackerFleet.getCommander().getStats().addOne(
+            StatType.NUMBER_OF_PIRATE_BATTLES);
+      }
     }
     combatText.append(" with ");
     if (attackerFleet.getNumberOfShip() > 1) {
@@ -565,6 +590,10 @@ public boolean launchIntercept(final int distance,
               attackerFleet.getCommander(), defenderFleet.getCommander(),
               attackerInfo, defenderInfo, attackerPrivateer,
               defenderPrivateer);
+          if (defenderFleet.getCommander() != null) {
+            defenderFleet.getCommander().getStats().addOne(
+                StatType.KILLED_ANOTHER_LEADER);
+          }
           attackerFleet.getCommander().setJob(Job.DEAD);
           attackerFleet.setCommander(null);
         }
@@ -596,6 +625,10 @@ public boolean launchIntercept(final int distance,
               defenderFleet.getCommander(), attackerFleet.getCommander(),
               defenderInfo, attackerInfo, defenderPrivateer,
               attackerPrivateer);
+          if (attackerFleet.getCommander() != null) {
+            attackerFleet.getCommander().getStats().addOne(
+                StatType.KILLED_ANOTHER_LEADER);
+          }
           defenderFleet.getCommander().setJob(Job.DEAD);
           defenderFleet.setCommander(null);
         }
@@ -2166,6 +2199,13 @@ public boolean launchIntercept(final int distance,
       final CombatShip pirateShip, final PlayerInfo targetPlayer,
       final CombatShip targetShip) {
     ShipDamage result = null;
+    Leader commander = null;
+    if (attackerFleet.isShipInFleet(pirateShip.getShip())) {
+      commander = attackerFleet.getCommander();
+    }
+    if (defenderFleet.isShipInFleet(pirateShip.getShip())) {
+      commander = defenderFleet.getCommander();
+    }
     if (pirateShip.getShip().isPrivateeringShip()) {
       int cargoType = targetShip.getShip().getCargoType();
       if (cargoType == Ship.CARGO_TYPE_TRADE_GOODS) {
@@ -2176,12 +2216,18 @@ public boolean launchIntercept(final int distance,
         pirateShip.setPrivateeredCredits(
             pirateShip.getPrivateeredCredits() + 3);
         result = new ShipDamage(1, "Privateered trade goods from trade ship!");
+        if (commander != null) {
+          commander.getStats().addOne(StatType.NUMBER_OF_PRIVATEERING);
+        }
       }
       if (cargoType == Ship.CARGO_TYPE_POPULATION) {
         targetShip.getShip().setColonist(0);
         pirateShip.setPrivateeredCredits(
             pirateShip.getPrivateeredCredits() + 1);
         result = new ShipDamage(1, "Murderered colonists and stole valuables!");
+        if (commander != null) {
+          commander.getStats().addOne(StatType.NUMBER_OF_PRIVATEERING);
+        }
       }
       if (cargoType == Ship.CARGO_TYPE_TROOPS) {
         result = new ShipDamage(1, "Ship is full of troops and cannot be"
@@ -2198,6 +2244,9 @@ public boolean launchIntercept(final int distance,
                 + targetShip.getShip().getMetal());
             targetShip.getShip().setMetal(0);
             result = new ShipDamage(1, "All valuable metal has been stolen!");
+            if (commander != null) {
+              commander.getStats().addOne(StatType.NUMBER_OF_PRIVATEERING);
+            }
           } else {
             int stolen = pirateShip.getShip().getFreeCargoMetal();
             pirateShip.getShip().setMetal(pirateShip.getShip().getMetal()
@@ -2206,6 +2255,9 @@ public boolean launchIntercept(final int distance,
                 - stolen);
             result = new ShipDamage(1, "You raided " + stolen
                 + " units of metal!");
+            if (commander != null) {
+              commander.getStats().addOne(StatType.NUMBER_OF_PRIVATEERING);
+            }
           }
         } else {
           result = new ShipDamage(1, "Cargo cannot be fitted in your ship!");

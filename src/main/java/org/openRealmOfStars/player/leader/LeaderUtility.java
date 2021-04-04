@@ -1799,7 +1799,7 @@ public final class LeaderUtility {
     int warDeclarations = leader.getStats().getStat(StatType.WAR_DECLARATIONS);
     int diplomaticTrades = leader.getStats().getStat(StatType.DIPLOMATIC_TRADE);
     int rulerAvg = (warDeclarations + diplomaticTrades) / 2;
-    if (rulerAvg >= commanderAvg) {
+    if (rulerAvg >= commanderAvg && rulerAvg > 0) {
       if (warDeclarations > diplomaticTrades) {
         sb.append("war declarations");
         and = true;
@@ -1904,6 +1904,10 @@ public final class LeaderUtility {
     }
     StringBuilder sb = new StringBuilder();
     sb.append(leader.getName());
+    if (leader.getJob() == Job.TOO_YOUNG) {
+      sb.append(" is still growing up and whill achieve many things later.");
+      return sb.toString();
+    }
     if (living) {
       sb.append(" is mostly ");
     } else {
@@ -1914,7 +1918,13 @@ public final class LeaderUtility {
       sb.append(". Currently ");
       sb.append(leader.getName());
       sb.append(" is ");
-      sb.append(leader.getJob().toString());
+      if (leader.getJob() == Job.RULER) {
+        sb.append(getRulerTitle(leader, info.getGovernment()));
+      } else if (leader.getJob() == Job.COMMANDER) {
+        sb.append(leader.getMilitaryRank().toString());
+      } else {
+        sb.append(leader.getJob().toString().toLowerCase());
+      }
       sb.append(". ");
     } else {
       sb.append(". ");
@@ -1924,6 +1934,17 @@ public final class LeaderUtility {
     if (known.isEmpty()) {
       if (young && living) {
         sb.append(" is still young and is able to achieve many things.");
+      }
+      if (!young && living) {
+        sb.append(" is still live and ");
+        if (leader.getRace() == SpaceRace.MECHIONS) {
+          sb.append("functional and");
+        } else if (leader.hasPerk(Perk.HEALTHY)) {
+          sb.append("has healthy lifestyle and");
+        } else if (!leader.hasPerk(Perk.ADDICTED)) {
+          sb.append("healthy and");
+        }
+        sb.append(" is able to achieve things.");
       }
       if (!living) {
         sb.append(" has passed away without great actions.");

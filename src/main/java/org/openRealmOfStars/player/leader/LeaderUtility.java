@@ -1452,11 +1452,9 @@ public final class LeaderUtility {
   /**
    * Get ruler attitude
    * @param leader Leader for getting the attitude
-   * @param secondary Backup for secondary realm attitude
    * @return Attitude
    */
-  public static Attitude getRulerAttitude(final Leader leader,
-      final Attitude secondary) {
+  public static Attitude getRulerAttitude(final Leader leader) {
     AttitudeScore aggressive = new AttitudeScore(Attitude.AGGRESSIVE);
     AttitudeScore backstabbing = new AttitudeScore(Attitude.BACKSTABBING);
     AttitudeScore diplomatic = new AttitudeScore(Attitude.DIPLOMATIC);
@@ -1599,6 +1597,21 @@ public final class LeaderUtility {
     Collections.sort(scores, Collections.reverseOrder());
     if (scores.get(0).getValue() > 0) {
       return scores.get(0).getAttitude();
+    }
+    return null;
+  }
+
+  /**
+   * Get ruler attitude
+   * @param leader Leader for getting the attitude
+   * @param secondary Backup for secondary realm attitude
+   * @return Attitude
+   */
+  public static Attitude getRulerAttitude(final Leader leader,
+      final Attitude secondary) {
+    Attitude attitude = getRulerAttitude(leader);
+    if (attitude != null) {
+      return attitude;
     }
     return secondary;
   }
@@ -1933,7 +1946,7 @@ public final class LeaderUtility {
     String known = getBestKnown(leader);
     if (known.isEmpty()) {
       if (young && living) {
-        sb.append(" is still young and is able to achieve many things.");
+        sb.append(" is still young and is able to achieve many things. ");
       }
       if (!young && living) {
         sb.append(" is still live and ");
@@ -1944,10 +1957,10 @@ public final class LeaderUtility {
         } else if (!leader.hasPerk(Perk.ADDICTED)) {
           sb.append("healthy and");
         }
-        sb.append(" is able to achieve things.");
+        sb.append(" is able to achieve things. ");
       }
       if (!living) {
-        sb.append(" has passed away without great actions.");
+        sb.append(" has passed away without great actions. ");
       }
     } else {
       if (living) {
@@ -1973,8 +1986,57 @@ public final class LeaderUtility {
       } else {
         sb.append(" has been sentenced to jail ");
         sb.append(leader.getStats().getStat(StatType.NUMBER_OF_JAIL_TIME));
-        sb.append(" times");
+        sb.append(" times. ");
       }
+    }
+    Attitude attitude = getRulerAttitude(leader);
+    if (attitude != null) {
+      sb.append(leader.getCallName());
+      if (living) {
+        sb.append(" is known to be ");
+      } else {
+        sb.append(" was known to be ");
+      }
+      switch (attitude) {
+      case AGGRESSIVE: {
+        sb.append("aggressive");
+        break;
+      }
+      case BACKSTABBING: {
+        sb.append("untrustworthy");
+        break;
+      }
+      case DIPLOMATIC: {
+        sb.append("diplomatic");
+        break;
+      }
+      case EXPANSIONIST: {
+        sb.append("adventurous");
+        break;
+      }
+      case LOGICAL: {
+        sb.append("very logical");
+        break;
+      }
+      case MERCHANTICAL: {
+        sb.append("merchantical");
+        break;
+      }
+      case MILITARISTIC: {
+        sb.append("militaristic");
+        break;
+      }
+      case PEACEFUL: {
+        sb.append("calm and peaceful");
+        break;
+      }
+      default:
+      case SCIENTIFIC: {
+        sb.append("scientific");
+        break;
+      }
+      }
+      sb.append(". ");
     }
     return sb.toString();
   }

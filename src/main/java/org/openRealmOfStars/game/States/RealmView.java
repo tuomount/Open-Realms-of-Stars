@@ -16,6 +16,7 @@ import org.openRealmOfStars.gui.labels.HyperLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 
 /**
@@ -93,9 +94,13 @@ public class RealmView extends BlackPanel {
       }
       if (sb.length() > 0) {
         leaderDesc = "<html>" + realm.getRuler().getDescription()
-            + "<ht><br>Perks:<br>" + sb.toString() + "</html>";
+            + "<ht><br>Perks:<br>" + sb.toString()
+            + "<hr><br>" + LeaderUtility.createBioForLeader(realm.getRuler(),
+                realm) + "</html>";
       } else {
-        leaderDesc = "<html>" + realm.getRuler().getDescription() + "</html>";
+        leaderDesc = "<html>" + realm.getRuler().getDescription()
+            + "<hr><br>" + LeaderUtility.createBioForLeader(realm.getRuler(),
+                realm) + "</html>";
       }
       leaderDesc = leaderDesc.replace("\n", "<br>");
     }

@@ -142,6 +142,7 @@ public class HyperLabel extends SpaceLabel {
       g.setColor(getForeground());
       int y = 0;
       int x = 0;
+      int biggestY = 0;
       int longestLine = 0;
       for (int i = 0; i < texts.length; i++) {
         String tmpText = texts[i];
@@ -150,6 +151,11 @@ public class HyperLabel extends SpaceLabel {
           tmpText = tmpText.replace("<ht>", "");
           y = 0;
           x = x + longestLine + 25;
+        }
+        if (tmpText.contains("<hr>")) {
+          tmpText = tmpText.replace("<hr>", "");
+          y = biggestY;
+          x = 0;
         }
         if (tmpText.contains("<li>")) {
           tmpText = tmpText.replace("<li>", "");
@@ -165,6 +171,9 @@ public class HyperLabel extends SpaceLabel {
         g.drawString(tmpText, x + xOffset + sx + 2,
             sy + y * yAvg + yAvg + yOffset);
         y++;
+        if (y > biggestY) {
+          biggestY = y;
+        }
       }
     }
 

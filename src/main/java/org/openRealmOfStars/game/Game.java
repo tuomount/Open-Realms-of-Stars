@@ -2146,8 +2146,11 @@ public class Game implements ActionListener {
       if (players.getCurrentPlayerInfo().getRace() == SpaceRace.MECHIONS) {
         fleetView.getPlanet().setWorkers(Planet.PRODUCTION_WORKERS,
             ship.getColonist());
+      } else if (players.getCurrentPlayerInfo().getRace().isLithovorian()) {
+        fleetView.getPlanet().setWorkers(Planet.METAL_MINERS,
+            ship.getColonist());
       } else {
-        fleetView.getPlanet().setWorkers(Planet.PRODUCTION_FOOD,
+        fleetView.getPlanet().setWorkers(Planet.FOOD_FARMERS,
             ship.getColonist());
       }
       // Remove the ship and show the planet view you just colonized

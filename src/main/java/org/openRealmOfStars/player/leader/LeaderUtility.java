@@ -1922,9 +1922,20 @@ public final class LeaderUtility {
       return sb.toString();
     }
     if (living) {
-      sb.append(" is mostly ");
+      sb.append(" is ");
     } else {
-      sb.append(" was mostly ");
+      sb.append(" was ");
+    }
+    int ruler = leader.getStats().getStat(StatType.RULER_REIGN_LENGTH);
+    int governor = leader.getStats().getStat(StatType.GOVERNOR_LENGTH);
+    int commander = leader.getStats().getStat(StatType.COMMANDER_LENGTH);
+    if (ruler > 0 && governor == 0 && commander == 0) {
+      sb.append("the ");
+    } else if (ruler == 0 && governor > 0 && commander == 0
+        || ruler == 0 && governor == 0 && commander > 0) {
+      sb.append("working as ");
+    } else if (ruler != 0 || governor != 0 || commander != 0) {
+      sb.append("mostly working as ");
     }
     sb.append(getMainJob(leader, info.getGovernment()));
     if (living) {

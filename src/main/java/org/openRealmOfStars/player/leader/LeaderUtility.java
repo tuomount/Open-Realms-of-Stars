@@ -1971,7 +1971,7 @@ public final class LeaderUtility {
         sb.append(" is able to achieve things. ");
       }
       if (!living) {
-        sb.append(" has passed away without great actions. ");
+        sb.append(" has passed away with respect. ");
       }
     } else {
       if (living) {

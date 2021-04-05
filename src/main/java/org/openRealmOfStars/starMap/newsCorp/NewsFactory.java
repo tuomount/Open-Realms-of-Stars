@@ -211,7 +211,7 @@ public final class NewsFactory {
       sb.append(" because of ");
       int defenderIndex = map.getPlayerList().getIndex(defender);
       sb.append(aggressor.getDiplomacy().getCasusBelliReason(defenderIndex));
-      sb.append(".");
+      sb.append(". ");
     }
     news.setNewsText(sb.toString());
     return news;
@@ -296,7 +296,7 @@ public final class NewsFactory {
         sb.append(" aggressive behaviour, so ");
       }
       sb.append("this war was just about to happen, even against ");
-      sb.append("bigger group!");
+      sb.append("bigger group! ");
     }
     if (attitude == Attitude.MILITARISTIC) {
       if (aggressor.getRuler() == null) {
@@ -446,7 +446,7 @@ public final class NewsFactory {
     sb.append(". ");
     sb.append("Who will be the next ruler of ");
     sb.append(realm.getEmpireName());
-    sb.append("?");
+    sb.append("? ");
     news.setNewsText(sb.toString());
     return news;
   }
@@ -555,9 +555,9 @@ public final class NewsFactory {
     sb.append(leader.getCallName());
     sb.append(" still had sentence left for ");
     sb.append(leader.getTimeInJob());
-    sb.append(" years.");
+    sb.append(" years. ");
     sb.append("This act will cause diplomatic turbulence against");
-    sb.append(" other realms in galaxy.");
+    sb.append(" other realms in galaxy. ");
     return news;
   }
   /**
@@ -627,7 +627,7 @@ public final class NewsFactory {
       sb.append(leader.getCallName());
       sb.append(" has ");
       sb.append(heirs);
-      sb.append(" heirs.");
+      sb.append(" heirs. ");
       if (realm.getRuler() == null) {
         sb.append("Probably one of them will be the next ruler of");
         sb.append(realm.getEmpireName());
@@ -770,7 +770,7 @@ public final class NewsFactory {
       }
       sb.append(" on ");
       sb.append(killer.getGender().getHisHer());
-      sb.append(" hands.");
+      sb.append(" hands. ");
     }
     if (!killedPrivateer) {
       sb.append("Today is sad day for ");
@@ -784,7 +784,7 @@ public final class NewsFactory {
       sb.append(killed.getCallName());
       sb.append(" was privateer ");
       sb.append(killed.getGender().getHisHer());
-      sb.append(" origins are unknown.");
+      sb.append(" origins are unknown. ");
     }
     news.setNewsText(sb.toString());
     return news;
@@ -839,7 +839,7 @@ public final class NewsFactory {
     sb.append(" was able to escape from certain death! ");
     sb.append("Private shuttle took ");
     sb.append(leader.getCallName());
-    sb.append(" to non hostile planet.");
+    sb.append(" to non hostile planet. ");
     news.setNewsText(sb.toString());
     return news;
   }
@@ -894,7 +894,7 @@ public final class NewsFactory {
     sb.append(leader.getCallName());
     sb.append(" to ");
     sb.append(location);
-    sb.append(".");
+    sb.append(". ");
     news.setNewsText(sb.toString());
     return news;
   }
@@ -928,7 +928,7 @@ public final class NewsFactory {
     StringBuilder sb = new StringBuilder(100);
     sb.append(realm.getEmpireName());
     sb.append(" has lost its last planet from the known galaxy! ");
-    sb.append("Galaxy now has one realm less...");
+    sb.append("Galaxy now has one realm less... ");
     news.setNewsText(sb.toString());
     return news;
   }
@@ -1043,7 +1043,7 @@ public final class NewsFactory {
       sb.append(". ");
     }
     sb.append("Cargo hull was full of goods from distant world! ");
-    sb.append("This trade benefits both parties!");
+    sb.append("This trade benefits both parties! ");
     Attitude attitude = trader.getAiAttitude();
     if (attitude == Attitude.MERCHANTICAL) {
       sb.append(trader.getEmpireName());
@@ -1318,7 +1318,7 @@ public final class NewsFactory {
     } else {
       sb.append("Non of the population of ");
       sb.append(planet.getName());
-      sb.append(" were hurt during the destruction.");
+      sb.append(" were hurt during the destruction. ");
     }
     news.setNewsText(sb.toString());
     return news;
@@ -1528,7 +1528,7 @@ public final class NewsFactory {
     sb.append(" has equally same amount of United Galaxy Towers as ");
     sb.append(second.getEmpireName());
     sb.append("! ");
-    sb.append("Race of Galactic secretary is continuing...");
+    sb.append("Race of Galactic secretary is continuing... ");
     news.setNewsText(sb.toString());
     return news;
   }
@@ -1572,12 +1572,12 @@ public final class NewsFactory {
         break;
       }
       case 1: {
-        sb.append(" but next thing is to focus on galactic politics.");
+        sb.append(" but next thing is to focus on galactic politics. ");
         break;
       }
       case 2: {
         sb.append(" but it is not sure yet who is going to be the ruler"
-            + " of the galaxy...");
+            + " of the galaxy... ");
         break;
       }
     }
@@ -1830,7 +1830,7 @@ public final class NewsFactory {
       instructions.addText("FIRST STATISTICAL RESEARCH DONE!");
       instructions.addText("BY");
       news.setNewsText("GBNC has done first statistical research about Realms"
-          + " in Stars.");
+          + " in Stars. ");
       news.setImageInstructions(instructions.build());
     } else {
       instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -1845,7 +1845,7 @@ public final class NewsFactory {
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
           sb.append(" has greatest military power in whole galaxy! ");
-          sb.append("See full report from Statiscis view.");
+          sb.append("See full report from Statiscis view. ");
         }
       }
       if (statIndex == 1) {
@@ -1857,7 +1857,7 @@ public final class NewsFactory {
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
           sb.append(" is the wealthiest realm in whole galaxy! ");
-          sb.append("See full report for Statiscis view.");
+          sb.append("See full report for Statiscis view. ");
         }
       }
       if (statIndex == 2) {
@@ -1869,7 +1869,7 @@ public final class NewsFactory {
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
           sb.append(" has most of the colonized planets in whole galaxy! ");
-          sb.append("See full report from Statiscis view.");
+          sb.append("See full report from Statiscis view. ");
         }
       }
       if (statIndex == 3) {
@@ -1881,7 +1881,7 @@ public final class NewsFactory {
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
           sb.append(" has most of the people in whole galaxy! ");
-          sb.append("See full report from Statiscis view.");
+          sb.append("See full report from Statiscis view. ");
         }
       }
       if (statIndex == 4) {
@@ -1893,7 +1893,7 @@ public final class NewsFactory {
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
           sb.append(" is the biggest cultural power in whole galaxy! ");
-          sb.append("See full report from Statiscis view.");
+          sb.append("See full report from Statiscis view. ");
         }
       }
       if (statIndex == 5) {
@@ -1905,7 +1905,7 @@ public final class NewsFactory {
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
           sb.append(" is the biggest scientific power in whole galaxy! ");
-          sb.append("See full report from Statiscis view.");
+          sb.append("See full report from Statiscis view. ");
         }
       }
       if (statIndex == 6) {
@@ -1917,7 +1917,7 @@ public final class NewsFactory {
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
           sb.append(" is the greatest realm in whole galaxy! ");
-          sb.append("See full report from Statiscis view.");
+          sb.append("See full report from Statiscis view. ");
         }
       }
       if (sb.toString().isEmpty()) {
@@ -1928,7 +1928,7 @@ public final class NewsFactory {
             + " STATISTICAL RESEARCH DONE!");
         instructions.addText("BY");
         news.setNewsText("GBNC has done " + numberAsString
-            + " statistical research about Realms in Stars.");
+            + " statistical research about Realms in Stars. ");
         news.setImageInstructions(instructions.build());
       } else {
         news.setImageInstructions(instructions.build());
@@ -2003,7 +2003,7 @@ public final class NewsFactory {
           sb.append("Recently dead population is synthesized into ");
           sb.append(attacker.getEmpireName());
           sb.append(" population by adding cybergenetic implants. ");
-          sb.append("This process may reveal technology secrets too.");
+          sb.append("This process may reveal technology secrets too. ");
         }
       }
     }
@@ -2063,12 +2063,12 @@ public final class NewsFactory {
     if (defender != null && planet.getPlanetPlayerInfo() == defender) {
       sb.append(" Not all ");
       sb.append(defender.getRace().getNameSingle());
-      sb.append(" population were killed during the bombing.");
+      sb.append(" population were killed during the bombing. ");
     }
     if (defender != null && planet.getPlanetPlayerInfo() == null) {
       sb.append(" all ");
       sb.append(defender.getRace().getNameSingle());
-      sb.append(" population were killed during the bombing.");
+      sb.append(" population were killed during the bombing. ");
     }
     news.setNewsText(sb.toString());
     return news;
@@ -2101,7 +2101,7 @@ public final class NewsFactory {
         sb.append(info.getEmpireName());
         sb.append(" ! ");
       }
-      sb.append("See full scoring situation from Statiscis view.");
+      sb.append("See full scoring situation from Statiscis view. ");
     }
     news.setImageInstructions(instructions.build());
     news.setNewsText(sb.toString());
@@ -2136,7 +2136,7 @@ public final class NewsFactory {
         sb.append(" ! ");
       }
       sb.append("Race is now on last quarter! ");
-      sb.append("See full scoring situation from Statiscis view.");
+      sb.append("See full scoring situation from Statiscis view. ");
     }
     news.setImageInstructions(instructions.build());
     news.setNewsText(sb.toString());
@@ -2326,7 +2326,7 @@ public final class NewsFactory {
         sb.append(" has the half of the home worlds in the galaxy! ");
         sb.append("No other realm has power to challenge ");
         sb.append(info.getEmpireName());
-        sb.append(".");
+        sb.append(". ");
       } else {
         PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
         PlayerInfo info2 = map.getPlayerByIndex(winner.getAllianceRealm());
@@ -2339,7 +2339,7 @@ public final class NewsFactory {
         sb.append(" and ");
         sb.append(info2.getEmpireName());
         sb.append(" has the half of the home worlds in the galaxy! ");
-        sb.append("No other realm has power to challenge this alliance.");
+        sb.append("No other realm has power to challenge this alliance. ");
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
@@ -2388,7 +2388,7 @@ public final class NewsFactory {
         sb.append(" has created the most advanced world in the galaxy! ");
         sb.append("No other realm has technology to challenge ");
         sb.append(winner.getEmpireName());
-        sb.append(".");
+        sb.append(". ");
       } else {
         PlayerInfo info = winner;
         PlayerInfo info2 = map.getPlayerByIndex(
@@ -2402,7 +2402,7 @@ public final class NewsFactory {
         sb.append(" and ");
         sb.append(info2.getEmpireName());
         sb.append(" has created the most advanced world in the galaxy! ");
-        sb.append("No other realm technology to challenge this alliance.");
+        sb.append("No other realm technology to challenge this alliance. ");
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
@@ -2589,7 +2589,7 @@ public final class NewsFactory {
         sb.append(biggestValue);
         sb.append(" % of the galaxy population.");
         sb.append(" No other realm or alliance has enough population"
-            + " to challenge these two.");
+            + " to challenge these two. ");
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
@@ -2664,7 +2664,7 @@ public final class NewsFactory {
         info = map.getPlayerByIndex(second.getRealm());
         sb.append("Second greatest realm is ");
         sb.append(info.getEmpireName());
-        sb.append(" !");
+        sb.append(" ! ");
       } else {
         info = map.getPlayerByIndex(second.getRealm());
         PlayerInfo info2 = map.getPlayerByIndex(second.getAllianceRealm());
@@ -2672,7 +2672,7 @@ public final class NewsFactory {
         sb.append(info.getEmpireName());
         sb.append(" and ");
         sb.append(info2.getEmpireName());
-        sb.append(" !");
+        sb.append(" ! ");
       }
     } else {
       PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
@@ -2690,7 +2690,7 @@ public final class NewsFactory {
         info = map.getPlayerByIndex(second.getRealm());
         sb.append("Second greatest realm is ");
         sb.append(info.getEmpireName());
-        sb.append(" !");
+        sb.append(" ! ");
       } else {
         info = map.getPlayerByIndex(second.getRealm());
         info2 = map.getPlayerByIndex(second.getAllianceRealm());
@@ -2698,7 +2698,7 @@ public final class NewsFactory {
         sb.append(info.getEmpireName());
         sb.append(" and ");
         sb.append(info2.getEmpireName());
-        sb.append(" !");
+        sb.append(" ! ");
       }
     }
     news.setImageInstructions(instructions.build());
@@ -2740,7 +2740,7 @@ public final class NewsFactory {
     sb.append(". ");
     if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.MECHIONS) {
       sb.append("Luckily planet is being populated by Mechions "
-          + "which are immune to diseases.");
+          + "which are immune to diseases. ");
     } else {
       sb.append("Majority of planet population has died because of the virus."
           + " Spread has been able to limited on this single planet. ");
@@ -2761,7 +2761,7 @@ public final class NewsFactory {
       } else if (spreader.getDiplomacy().isWar(planet.getPlanetOwnerIndex())) {
         sb.append(" and it was done on purpose. ");
         sb.append("These rumors are based on the fact that two realms are"
-            + " in war!");
+            + " in war! ");
       } else {
         sb.append(". ");
         sb.append("This could be accident or spread on purpose. ");
@@ -3022,7 +3022,7 @@ public final class NewsFactory {
     sb.append(vote.getType().getDescription());
     sb.append("'. This voting has time ");
     sb.append(vote.getTurnsToVote());
-    sb.append(" turns.");
+    sb.append(" turns. ");
     news.setNewsText(sb.toString());
     return news;
   }
@@ -3165,13 +3165,13 @@ public final class NewsFactory {
       sb.append(secondCandidate.getEmpireName());
       sb.append(": ");
       sb.append(no);
-      sb.append(" per cent.");
+      sb.append(" per cent. ");
     } else {
       sb.append("YES: ");
       sb.append(yes);
       sb.append(" per cent and NO: ");
       sb.append(no);
-      sb.append(" per cent.");
+      sb.append(" per cent. ");
     }
     news.setNewsText(sb.toString());
     return news;

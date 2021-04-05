@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -570,6 +571,38 @@ public class LeaderUtilityTest {
     pool.add(leader2);
     Leader ruler = LeaderUtility.getNextRuler(realm);
     assertEquals(leader2, ruler);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLeaderBio() {
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.AI);
+    Leader leader = new Leader("Robot X");
+    leader.setJob(Job.GOVERNOR);
+    leader.setTitle("Governor");
+    leader.setAge(18);
+    leader.getPerkList().add(Perk.SLOW_LEARNER);
+    leader.getPerkList().add(Perk.STUPID);
+    String str = LeaderUtility.createBioForLeader(leader, realm);
+    assertEquals("Robot X is jobless. Currently Robot X is governor."
+        + " Governor is still young and is able to achieve many things. ",
+        str);
+    leader = new Leader("Robo Test");
+    leader.setJob(Job.RULER);
+    leader.setTitle("King");
+    leader.setAge(18);
+    leader.getStats().addOne(StatType.NUMBER_OF_RULER);
+    leader.getStats().addOne(StatType.RULER_REIGN_LENGTH);
+    leader.getStats().addOne(StatType.WAR_DECLARATIONS);
+    leader.getStats().addOne(StatType.WAR_DECLARATIONS);
+    leader.getStats().addOne(StatType.NUMBER_OF_TRADES);
+    leader.getPerkList().add(Perk.AGGRESSIVE);
+    str = LeaderUtility.createBioForLeader(leader, realm);
+    assertEquals("Robo Test is the Main Process. Currently Robo Test is Main"
+        + " Process. King is known for war declarations and trades."
+        + " King Robo Test is known to be aggressive. ", str);
+
   }
 
 }

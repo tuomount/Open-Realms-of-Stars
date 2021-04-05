@@ -777,7 +777,7 @@ public final class NewsFactory {
       sb.append(killedRealm.getEmpireName());
       sb.append(" and for ");
       sb.append(killed.getHomeworld());
-      sb.append(".");
+      sb.append(". ");
       sb.append(LeaderUtility.createBioForLeader(killed, killedRealm));
     } else {
       sb.append("Since ");

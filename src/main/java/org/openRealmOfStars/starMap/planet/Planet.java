@@ -1557,6 +1557,11 @@ public class Planet {
             // No farming buildings for Mechions
             continue;
           }
+          if (tmp.getType() == BuildingType.FARM
+              && planetOwnerInfo.getRace().isLithovorian()) {
+            // No farming buildings for Lithovorians.
+            continue;
+          }
           if (tmp.isSingleAllowed()) {
             boolean built = false;
             for (int j = 0; j < alreadyBuilt.length; j++) {

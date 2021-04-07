@@ -586,6 +586,7 @@ public boolean launchIntercept(final int distance,
           attackerFleet.getCommander().setJob(Job.UNASSIGNED);
           attackerFleet.setCommander(null);
         } else {
+          attackerFleet.getCommander().setJob(Job.DEAD);
           leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
               attackerFleet.getCommander(), defenderFleet.getCommander(),
               attackerInfo, defenderInfo, attackerPrivateer,
@@ -594,7 +595,6 @@ public boolean launchIntercept(final int distance,
             defenderFleet.getCommander().getStats().addOne(
                 StatType.KILLED_ANOTHER_LEADER);
           }
-          attackerFleet.getCommander().setJob(Job.DEAD);
           attackerFleet.setCommander(null);
         }
       }
@@ -621,6 +621,7 @@ public boolean launchIntercept(final int distance,
           defenderFleet.getCommander().setJob(Job.UNASSIGNED);
           defenderFleet.setCommander(null);
         } else {
+          defenderFleet.getCommander().setJob(Job.DEAD);
           leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
               defenderFleet.getCommander(), attackerFleet.getCommander(),
               defenderInfo, attackerInfo, defenderPrivateer,
@@ -629,7 +630,6 @@ public boolean launchIntercept(final int distance,
             attackerFleet.getCommander().getStats().addOne(
                 StatType.KILLED_ANOTHER_LEADER);
           }
-          defenderFleet.getCommander().setJob(Job.DEAD);
           defenderFleet.setCommander(null);
         }
       }

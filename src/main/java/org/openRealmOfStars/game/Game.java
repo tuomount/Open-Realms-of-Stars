@@ -725,6 +725,9 @@ public class Game implements ActionListener {
           fleet.getCommander().getStats().addOne(StatType.NUMBER_OF_ANOMALY);
         }
         if (anomaly != null && starMapView != null && info.isHuman()) {
+          if (MusicPlayer.getNowPlaying() != MusicPlayer.MYSTERIOUS_ANOMALY) {
+            MusicPlayer.play(MusicPlayer.MYSTERIOUS_ANOMALY);
+          }
           PopupPanel popup = new PopupPanel(anomaly);
           starMapView.setPopup(popup);
         }

@@ -238,6 +238,13 @@ public final class MusicPlayer {
           "/resources/musics/techno_drive.ogg");
 
   /**
+   * Mysterious Anomaly by Eric Matyas Soundimage.org CC-BY 3.0
+   */
+  public static final MusicFileInfo MYSTERIOUS_ANOMALY =
+      new MusicFileInfo("Mysterious Anomaly", "Eric Matyas Soundimage.org",
+          "/resources/musics/mysterious-anomaly.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

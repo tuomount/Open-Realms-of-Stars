@@ -397,7 +397,12 @@ public class CreditsView extends BlackPanel {
       + "Techno DRIVE!!! by \n"
       + "Centurion_of_war\n"
       + "Licensed under CC-BY 4.0 "
-      + "http://creativecommons.org/licenses/by/4.0/\n\n";
+      + "http://creativecommons.org/licenses/by/4.0/\n\n"
+      + "Mysterious Anomaly by \n"
+      + "Eric Matyas Soundimage.org\n"
+      + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n";
+
 
 
   /**

@@ -1673,13 +1673,13 @@ public final class LeaderUtility {
       msg = msg.copy();
       msg.setMatchByString(planet.getName());
       planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      fleet.getCommander().setJob(Job.DEAD);
       NewsData news = NewsFactory.makeLeaderDies(fleet.getCommander(),
           info, "execution by "
           + planet.getPlanetPlayerInfo().getEmpireName());
       game.getStarMap().getNewsCorpData().addNews(news);
       game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
           fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
-      fleet.getCommander().setJob(Job.DEAD);
       fleet.setCommander(null);
     }
   }

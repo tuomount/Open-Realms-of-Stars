@@ -280,7 +280,7 @@ public class GameTest {
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     // Uncomment below if game is wanted to be saved.
-/*    new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
+    /*new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
         "testgame.save", game.getStarMap());*/
     System.out.println("Game ended at turn: " + game.getStarMap().getTurn());
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();

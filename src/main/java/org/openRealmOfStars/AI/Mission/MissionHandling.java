@@ -298,6 +298,22 @@ public final class MissionHandling {
           }
         }
       }
+      if (mission.getPhase() == MissionPhase.TREKKING) {
+        Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
+            fleet.getMovesLeft());
+        if (targetAnomaly != null) {
+          // Focus on anomalies
+          fleet.setRoute(null);
+          AStarSearch search = new AStarSearch(game.getStarMap(),
+              fleet.getX(), fleet.getY(), targetAnomaly.getX(),
+              targetAnomaly.getY(), false);
+          search.doSearch();
+          search.doRoute();
+          fleet.setaStarSearch(search);
+          makeRegularMoves(game, fleet, info);
+          return;
+        }
+      }
       if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getRoute() == null) {
         // Fleet has encounter obstacle, taking a detour round it

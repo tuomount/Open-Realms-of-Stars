@@ -1688,7 +1688,7 @@ public boolean launchIntercept(final int distance,
           deadliest.getY());
       int distance = (int) Math.round(aiCoordinate.calculateDistance(
           deadliestCoordinate));
-      if (range < distance - ai.getMovesLeft() && closest != null
+      if (range <= distance - ai.getMovesLeft() && closest != null
           && !closest.isCloakOverloaded()) {
         int index = getCurrentShip().getComponentForUse(
             ShipComponentType.TARGETING_COMPUTER);
@@ -1757,7 +1757,11 @@ public boolean launchIntercept(final int distance,
         ai.setMovesLeft(ai.getMovesLeft() - 1);
         ai.setX(point.getX());
         ai.setY(point.getY());
-        aStar.nextMove();
+        if (aStar.isLastMove()) {
+          ai.setMovesLeft(0);
+        } else {
+          aStar.nextMove();
+        }
         if (textLogger != null && infoPanel != null) {
           // Play sound only if battle view is used
           SoundPlayer.playEngineSound();
@@ -1769,8 +1773,7 @@ public boolean launchIntercept(final int distance,
       // Path is blocked
       ai.setMovesLeft(0);
     }
-    if ((ai.getMovesLeft() == 0 || aStar.isLastMove())
-        && getAnimation() == null) {
+    if (ai.getMovesLeft() == 0 && getAnimation() == null) {
       if (ai.getAiShotsLeft() > 0) {
         shot = false;
         if (shootDeadliest && deadliest != null

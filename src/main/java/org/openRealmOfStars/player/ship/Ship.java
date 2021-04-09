@@ -1545,9 +1545,11 @@ private int increaseHitChanceByComponent() {
   public int getMinWeaponRange() {
     int range = MAX_WEAPON_RANGE;
     for (int i = 0; i < components.size(); i++) {
-      int componentRange = getWeaponRange(i);
-      if (componentRange < range) {
-        range = componentRange;
+      if (components.get(i).isWeapon()) {
+        int componentRange = getWeaponRange(i);
+        if (componentRange < range) {
+          range = componentRange;
+        }
       }
     }
     return range;

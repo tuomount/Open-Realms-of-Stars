@@ -1389,7 +1389,7 @@ public final class PlanetHandling {
       worker++;
       total--;
     }
-    if (total > 0 && mining == planet.getTotalPopulation()) {
+    if (total > 0 && mining == planet.getTotalPopulation() / 2) {
       miners++;
       total--;
     }

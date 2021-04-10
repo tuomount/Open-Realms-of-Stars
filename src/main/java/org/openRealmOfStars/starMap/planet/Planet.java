@@ -941,8 +941,8 @@ public class Planet {
         sb.append("<li> governor +1");
         sb.append("<br>");
       }
-      if (planetOwnerInfo.getRace().isLithovorian()) {
-        int pop = getTotalPopulation() / 2;
+      int pop = getTotalPopulation() / 2;
+      if (planetOwnerInfo.getRace().isLithovorian() && pop > 0) {
         sb.append("<li> lithovorian -");
         sb.append(pop);
         sb.append("<br>");
@@ -1245,7 +1245,9 @@ public class Planet {
         // Lithovorians eat metal instead of food.
         require = getTotalPopulation() / 2;
         int available = getMetal() + getTotalProduction(PRODUCTION_METAL);
-        if (available > require) {
+        if (available >= require * 2) {
+          result = 2;
+        } else if (available > require) {
           result = 1;
         } else if (available == require) {
           result = 0;

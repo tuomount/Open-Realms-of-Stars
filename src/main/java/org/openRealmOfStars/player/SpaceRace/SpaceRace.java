@@ -481,7 +481,7 @@ public enum SpaceRace {
     case TEUTHIDAES:
       return 10;
     case SCAURIANS:
-      return 12;
+      return 10;
     case HOMARIANS:
       return 11;
     case CHIRALOIDS:
@@ -489,7 +489,7 @@ public enum SpaceRace {
     case REBORGIANS:
       return 13;
     case LITHORIANS:
-      return 10;
+      return 12;
     default:
       return 0;
     }
@@ -1225,8 +1225,22 @@ public enum SpaceRace {
     sb.append(lf);
     sb.append(dot);
     sb.append(" Growth: ");
-    sb.append(getGrowthSpeed());
-    sb.append("%");
+    switch (getGrowthSpeed()) {
+    case 0: sb.append("never"); break;
+    case 50: {
+      if (this == REBORGIANS) {
+        sb.append("always ");
+      }
+      sb.append("20 turns");
+      if (this == LITHORIANS) {
+        sb.append(" limited");
+      }
+      break;
+    }
+    default:
+    case 100: sb.append("10 turns"); break;
+    case 150: sb.append("6 turns"); break;
+    }
     sb.append(lf);
     sb.append(dot);
     sb.append(" Food require: ");

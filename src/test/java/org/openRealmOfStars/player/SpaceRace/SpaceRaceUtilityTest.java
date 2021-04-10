@@ -164,7 +164,7 @@ public class SpaceRaceUtilityTest {
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
         "* Food production: 100%\n"+
-        "* Growth: 100%\n"+
+        "* Growth: 10 turns\n"+
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: 2\n"+
@@ -180,7 +180,7 @@ public class SpaceRaceUtilityTest {
         "* Mining: 150%\n"+
         "* Research: 50%\n"+
         "* Food production: 0%\n"+
-        "* Growth: 0%\n"+
+        "* Growth: never\n"+
         "* Food require: 0%\n"+
         "* Culture: 50%\n"+
         "* Diplomacy bonus: -2\n"+
@@ -196,7 +196,7 @@ public class SpaceRaceUtilityTest {
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
         "* Food production: 100%\n"+
-        "* Growth: 100%\n"+
+        "* Growth: 10 turns\n"+
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -3\n"+
@@ -212,7 +212,7 @@ public class SpaceRaceUtilityTest {
         "* Mining: 100%\n"+
         "* Research: 150%\n"+
         "* Food production: 100%\n"+
-        "* Growth: 50%\n"+
+        "* Growth: 20 turns\n"+
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: 0\n"+
@@ -230,7 +230,7 @@ public class SpaceRaceUtilityTest {
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
         "* Food production: 100%\n"+
-        "* Growth: 50%\n"+
+        "* Growth: 20 turns\n"+
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -1\n"+
@@ -249,7 +249,7 @@ public class SpaceRaceUtilityTest {
         "* Mining: 50%\n"+
         "* Research: 100%\n"+
         "* Food production: 100%\n"+
-        "* Growth: 150%\n"+
+        "* Growth: 6 turns\n"+
         "* Food require: 100%\n"+
         "* Culture: 150%\n"+
         "* Diplomacy bonus: 0\n"+
@@ -267,7 +267,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 100%\n"
         + "* Research: 150%\n"
         + "* Food production: 100%\n"
-        + "* Growth: 100%\n"
+        + "* Growth: 10 turns\n"
         + "* Food require: 100%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: -2\n"
@@ -279,13 +279,13 @@ public class SpaceRaceUtilityTest {
         + "merchantical\nrace. They focus make better trades with other "
         + "and gain more\ncredits.\n"
         + "* Max radiation: 5\n"
-        + "* Troop power: 12\n"
+        + "* Troop power: 10\n"
         + "* Leader lifespan: 90\n"
         + "* Production: 100%\n"
         + "* Mining: 50%\n"
         + "* Research: 100%\n"
         + "* Food production: 100%\n"
-        + "* Growth: 50%\n"
+        + "* Growth: 20 turns\n"
         + "* Food require: 100%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: 1\n"
@@ -304,7 +304,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 150%\n"
         + "* Research: 50%\n"
         + "* Food production: 200%\n"
-        + "* Growth: 100%\n"
+        + "* Growth: 10 turns\n"
         + "* Food require: 100%\n"
         + "* Culture: 50%\n"
         + "* Diplomacy bonus: 1\n"
@@ -323,7 +323,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 100%\n"
         + "* Research: 50%\n"
         + "* Food production: 100%\n"
-        + "* Growth: 50%\n"
+        + "* Growth: 20 turns\n"
         + "* Food require: 100%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: -4\n"
@@ -343,7 +343,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 100%\n"
         + "* Research: 100%\n"
         + "* Food production: 100%\n"
-        + "* Growth: 50%\n"
+        + "* Growth: always 20 turns\n"
         + "* Food require: 50%\n"
         + "* Culture: 50%\n"
         + "* Diplomacy bonus: -8\n"
@@ -356,13 +356,13 @@ public class SpaceRaceUtilityTest {
         + " slow grow rate, but they can have 2 extra population per planet."
         + " They have excellent ability to mine metal.\n"
         + "* Max radiation: 7\n"
-        + "* Troop power: 10\n"
+        + "* Troop power: 12\n"
         + "* Leader lifespan: 110\n"
         + "* Production: 100%\n"
         + "* Mining: 200%\n"
         + "* Research: 100%\n"
         + "* Food production: 0%\n"
-        + "* Growth: 50%\n"
+        + "* Growth: 20 turns limited\n"
         + "* Food require: 0%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: -2\n"

@@ -389,6 +389,29 @@ public class Leader {
       builder.append(getTimeInJob());
       builder.append(" turns\n");
     }
+    if (getJob() == Job.GOVERNOR) {
+      builder.append("Governor for ");
+      builder.append(getTimeInJob());
+      builder.append(" turns");
+      if (getTimeInJob() > 19) {
+        builder.append("  (assignable)");
+      }
+      builder.append("\n");
+    }
+    if (getJob() == Job.COMMANDER) {
+      builder.append("Commander for ");
+      builder.append(getTimeInJob());
+      builder.append(" turns");
+      if (getTimeInJob() > 19) {
+        builder.append("  (assignable)");
+      }
+      builder.append("\n");
+    }
+    if (getJob() == Job.PRISON) {
+      builder.append("Prisoned for ");
+      builder.append(getTimeInJob());
+      builder.append(" turns\n");
+    }
     builder.append("Military status: ");
     builder.append(getMilitaryRank().toString());
     builder.append("\n");

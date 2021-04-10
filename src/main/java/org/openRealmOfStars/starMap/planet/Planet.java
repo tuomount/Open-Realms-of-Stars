@@ -1245,7 +1245,7 @@ public class Planet {
         // Lithovorians eat metal instead of food.
         require = getTotalPopulation() / 2;
         int available = getMetal() + getTotalProduction(PRODUCTION_METAL);
-        if (available >= require * 2) {
+        if (available >= require * 4) {
           result = 2;
         } else if (available > require) {
           result = 1;
@@ -1793,7 +1793,7 @@ public class Planet {
       if (planetOwnerInfo.getRace().isLithovorian()) {
         int require = getTotalPopulation() / 2;
         int available = getMetal();
-        if (available >= require * 2) {
+        if (available >= require * 4) {
           food = 2;
           setMetal(getMetal() - require);
         } else if (available > require) {

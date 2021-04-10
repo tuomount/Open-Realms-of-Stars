@@ -2827,9 +2827,14 @@ public class AITurnView extends BlackPanel {
                 // Not blocked so fleet is moving
                 MissionHandling.makeFleetMove(game, fleet.getRoute().getX(),
                     fleet.getRoute().getY(), info, fleet);
+                Mission mission = info.getMissions().getMissionForFleet(
+                    fleet.getName());
+                if (mission != null && mission.getType() == MissionType.MOVE
+                    && mission.getPhase() == MissionPhase.TREKKING) {
+                  mission.setMissionTime(mission.getMissionTime() + 1);
+                }
                 if (fleet.getRoute() != null && fleet.getRoute().isEndReached()
-                    && info.getMissions().getMissionForFleet(
-                        fleet.getName()) == null) {
+                    && mission == null) {
                   // End is reached giving a message
                   fleet.setRoute(null);
                   Message msg = new Message(MessageType.FLEET,

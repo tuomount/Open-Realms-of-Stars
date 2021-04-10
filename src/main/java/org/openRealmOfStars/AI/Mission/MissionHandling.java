@@ -764,6 +764,9 @@ public final class MissionHandling {
   public static void handleMove(final Mission mission, final Fleet fleet,
       final PlayerInfo info, final Game game) {
     if (mission != null && mission.getType() == MissionType.MOVE) {
+      if (mission.getPhase() == MissionPhase.PLANNING) {
+        mission.setMissionTime(0);
+      }
       if (mission.getPhase() != MissionPhase.TREKKING) {
         Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed());
@@ -776,6 +779,7 @@ public final class MissionHandling {
         info.getMissions().remove(mission);
       } else if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getRoute() == null) {
+        mission.setMissionTime(mission.getMissionTime() + 1);
         makeReroute(game, fleet, info, mission);
       }
     } // End of move
@@ -2715,7 +2719,8 @@ public final class MissionHandling {
           fleet.getName());
       if (fleetMission == null
           || mission.getType() == MissionType.DIPLOMATIC_DELEGACY
-             && fleetMission.getType() == MissionType.MOVE) {
+             && fleetMission.getType() == MissionType.MOVE
+             && fleetMission.getMissionTime() > 4) {
         for (Ship ship : fleet.getShips()) {
           Fleet newFleet = null;
           if (ship.isScoutShip()) {

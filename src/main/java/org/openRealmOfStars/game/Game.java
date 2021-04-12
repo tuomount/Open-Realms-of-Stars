@@ -1073,6 +1073,7 @@ public class Game implements ActionListener {
       if (dataObject instanceof Fleet) {
         fleet = (Fleet) dataObject;
         info = starMap.getPlayerInfoByFleet(fleet);
+        planet = starMap.getPlanetByCoordinate(fleet.getX(), fleet.getY());
         if (info.isHuman()) {
           type = DiplomacyView.AI_BORDER_CROSS;
           CulturePower culture = starMap.getSectorCulture(fleet.getX(),

@@ -224,6 +224,16 @@ public class PlanetBombingView extends BlackPanel {
    */
   private NewsData newsData;
   /**
+   * How many action turns ships has left. This depends on ships
+   * tactical speed.
+   */
+  private int[] actionsLeft;
+  /**
+   * How many action turns ships has left. This depends on ships
+   * tactical speed. This is the maximum value at beging of conquer.
+   */
+  private int[] maxActionsLeft;
+  /**
    * Constructor for PLanet bombing view. This view is used when
    * player is conquering planet with bombs and/or troops.
    * @param planet Planet to be conquered
@@ -241,6 +251,14 @@ public class PlanetBombingView extends BlackPanel {
       game = null;
     }
     this.setPlanet(planet);
+    actionsLeft = new int[fleet.getNumberOfShip()];
+    maxActionsLeft = new int[fleet.getNumberOfShip()];
+    int i = 0;
+    for (Ship ship : fleet.getShips()) {
+      actionsLeft[i] = ship.getTacticSpeed() * 4;
+      maxActionsLeft[i] = actionsLeft[i];
+      i++;
+    }
     this.fleet = fleet;
     this.attacker = attacker;
     this.attackPlayerIndex = attackerPlayerIndex;
@@ -434,7 +452,12 @@ public class PlanetBombingView extends BlackPanel {
     }
     textArea.setText(sb.toString());
     textArea.repaint();
-    infoPanel.updatePanel();
+    sb = new StringBuilder();
+    sb.append("Turns left: ");
+    sb.append(actionsLeft[shipIndex]);
+    sb.append("/");
+    sb.append(maxActionsLeft[shipIndex]);
+    infoPanel.updatePanel(sb.toString());
 
     /*
      * Set the orbiting ships
@@ -467,6 +490,9 @@ public class PlanetBombingView extends BlackPanel {
    * component usages on ship
    */
   public void nextShip() {
+    if (actionsLeft[shipIndex] > 0) {
+      actionsLeft[shipIndex]--;
+    }
     shipIndex++;
     if (shipIndex >= getFleet().getNumberOfShip()) {
       shipIndex = 0;
@@ -889,7 +915,7 @@ public class PlanetBombingView extends BlackPanel {
         updatePanel();
         imgBase.repaint();
       } else {
-        if (aiControlled && !aiExitLoop) {
+        if (aiControlled && !aiExitLoop && actionsLeft[shipIndex] > 0) {
           Ship ship = fleet.getShipByIndex(shipIndex);
           ShipComponent component = ship.getComponent(aiComponentIndex);
           if (component.getType() == ShipComponentType.ORBITAL_BOMBS
@@ -955,7 +981,7 @@ public class PlanetBombingView extends BlackPanel {
       nextShip();
     }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
-        && imgBase.getAnimation() == null) {
+        && imgBase.getAnimation() == null && actionsLeft[shipIndex] > 0) {
       String number = arg0.getActionCommand()
           .substring(GameCommands.COMMAND_COMPONENT_USE.length());
       int index = Integer.valueOf(number);

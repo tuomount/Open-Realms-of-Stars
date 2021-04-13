@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -53,6 +54,7 @@ import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
+import org.openRealmOfStars.starMap.planet.BombingShip;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetNuked;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -223,16 +225,12 @@ public class PlanetBombingView extends BlackPanel {
    * News data;
    */
   private NewsData newsData;
+
   /**
-   * How many action turns ships has left. This depends on ships
-   * tactical speed.
+   * List of bombing ships. These will contain extra information that
+   * is used while conquering the planet.
    */
-  private int[] actionsLeft;
-  /**
-   * How many action turns ships has left. This depends on ships
-   * tactical speed. This is the maximum value at beging of conquer.
-   */
-  private int[] maxActionsLeft;
+  private ArrayList<BombingShip> bombers;
   /**
    * Constructor for PLanet bombing view. This view is used when
    * player is conquering planet with bombs and/or troops.
@@ -251,13 +249,9 @@ public class PlanetBombingView extends BlackPanel {
       game = null;
     }
     this.setPlanet(planet);
-    actionsLeft = new int[fleet.getNumberOfShip()];
-    maxActionsLeft = new int[fleet.getNumberOfShip()];
-    int i = 0;
+    bombers = new ArrayList<>();
     for (Ship ship : fleet.getShips()) {
-      actionsLeft[i] = ship.getTacticSpeed() * 4;
-      maxActionsLeft[i] = actionsLeft[i];
-      i++;
+      bombers.add(new BombingShip(ship.getTacticSpeed() * 4));
     }
     this.fleet = fleet;
     this.attacker = attacker;
@@ -454,9 +448,9 @@ public class PlanetBombingView extends BlackPanel {
     textArea.repaint();
     sb = new StringBuilder();
     sb.append("Turns left: ");
-    sb.append(actionsLeft[shipIndex]);
+    sb.append(bombers.get(shipIndex).getActions());
     sb.append("/");
-    sb.append(maxActionsLeft[shipIndex]);
+    sb.append(bombers.get(shipIndex).getMaxActions());
     infoPanel.updatePanel(sb.toString());
 
     /*
@@ -490,8 +484,10 @@ public class PlanetBombingView extends BlackPanel {
    * component usages on ship
    */
   public void nextShip() {
-    if (actionsLeft[shipIndex] > 0) {
-      actionsLeft[shipIndex]--;
+    if (bombers.get(shipIndex) != null
+        && bombers.get(shipIndex).getActions() > 0) {
+      bombers.get(shipIndex).setActions(
+          bombers.get(shipIndex).getActions() - 1);
     }
     shipIndex++;
     if (shipIndex >= getFleet().getNumberOfShip()) {
@@ -596,6 +592,7 @@ public class PlanetBombingView extends BlackPanel {
     Ship ship = fleet.getShipByIndex(shipIndex);
     if (ship.getHullPoints() <= 0) {
       fleet.removeShip(ship);
+      bombers.remove(shipIndex);
       ShipStat stat = attacker.getShipStatByName(ship.getName());
       if (stat != null) {
         stat.setNumberOfLoses(stat.getNumberOfLoses() + 1);
@@ -915,7 +912,8 @@ public class PlanetBombingView extends BlackPanel {
         updatePanel();
         imgBase.repaint();
       } else {
-        if (aiControlled && !aiExitLoop && actionsLeft[shipIndex] > 0) {
+        if (aiControlled && !aiExitLoop
+            && bombers.get(shipIndex).getActions() > 0) {
           Ship ship = fleet.getShipByIndex(shipIndex);
           ShipComponent component = ship.getComponent(aiComponentIndex);
           if (component.getType() == ShipComponentType.ORBITAL_BOMBS
@@ -981,7 +979,8 @@ public class PlanetBombingView extends BlackPanel {
       nextShip();
     }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
-        && imgBase.getAnimation() == null && actionsLeft[shipIndex] > 0) {
+        && imgBase.getAnimation() == null
+        && bombers.get(shipIndex).getActions() > 0) {
       String number = arg0.getActionCommand()
           .substring(GameCommands.COMMAND_COMPONENT_USE.length());
       int index = Integer.valueOf(number);

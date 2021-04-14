@@ -106,6 +106,7 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.GalaxyConfig;
+import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
@@ -2227,13 +2228,15 @@ public class Game implements ActionListener {
         && starMapView.getStarMapMouseListener().isMoveClicked()
         && starMapView.getStarMapMouseListener()
             .getLastClickedFleet() != null) {
-      starMapView.getStarMapMouseListener().getLastClickedFleet()
-          .setRoute(null);
-      starMapView.getStarMapMouseListener().setMoveClicked(false);
-      fleetMakeMove(players.getCurrentPlayerInfo(),
-          starMapView.getStarMapMouseListener().getLastClickedFleet(),
-          starMapView.getStarMapMouseListener().getMoveX(),
-          starMapView.getStarMapMouseListener().getMoveY());
+      Fleet fleet = starMapView.getStarMapMouseListener().getLastClickedFleet();
+      if (fleet.getRoute() != null && !fleet.getRoute().isBombing()) {
+        fleet.setRoute(null);
+        starMapView.getStarMapMouseListener().setMoveClicked(false);
+        fleetMakeMove(players.getCurrentPlayerInfo(),
+            starMapView.getStarMapMouseListener().getLastClickedFleet(),
+            starMapView.getStarMapMouseListener().getMoveX(),
+            starMapView.getStarMapMouseListener().getMoveY());
+      }
     }
   }
 
@@ -3027,9 +3030,18 @@ public class Game implements ActionListener {
         return;
       }
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_CONQUEST)) {
-        changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);
-        SoundPlayer.playMenuSound();
-        return;
+        Route route = fleetView.getFleet().getRoute();
+        if (route == null) {
+          Fleet fleet = fleetView.getFleet();
+          fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
+              fleet.getY(), Route.ROUTE_BOMBED));
+          fleet.setMovesLeft(0);
+          changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);
+          SoundPlayer.playMenuSound();
+          return;
+        } else {
+          SoundPlayer.playMenuDisabled();
+        }
       }
       if (arg0.getActionCommand().equals(
           GameCommands.COMMAND_HAIL_FLEET_PLANET)) {

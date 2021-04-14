@@ -484,11 +484,6 @@ public class PlanetBombingView extends BlackPanel {
    * component usages on ship
    */
   public void nextShip() {
-    if (bombers.get(shipIndex) != null
-        && bombers.get(shipIndex).getActions() > 0) {
-      bombers.get(shipIndex).setActions(
-          bombers.get(shipIndex).getActions() - 1);
-    }
     shipIndex++;
     if (shipIndex >= getFleet().getNumberOfShip()) {
       shipIndex = 0;
@@ -513,7 +508,8 @@ public class PlanetBombingView extends BlackPanel {
       return;
     }
     Ship ship = fleet.getShipByIndex(shipIndex);
-    if (!componentUsed[index] && ship.componentIsWorking(index)) {
+    if (!componentUsed[index] && ship.componentIsWorking(index)
+        && bombers.get(shipIndex).getActions() > 0) {
       componentUsed[index] = true;
       ShipComponent comp = ship.getComponent(index);
       if (comp != null) {
@@ -522,12 +518,16 @@ public class PlanetBombingView extends BlackPanel {
           planetTurretShoot();
           updatePanel();
           usedComponentIndex = index;
+          bombers.get(shipIndex).setActions(
+              bombers.get(shipIndex).getActions() - 1);
         }
         if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
           if (ship.getColonist() > 0) {
             planetTurretShoot();
             updatePanel();
             usedComponentIndex = index;
+            bombers.get(shipIndex).setActions(
+                bombers.get(shipIndex).getActions() - 1);
           } else {
             textLogger.addLog("No more troops on board!");
           }

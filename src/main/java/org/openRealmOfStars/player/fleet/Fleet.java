@@ -515,6 +515,8 @@ public class Fleet {
         sb.append("\nDefending");
       } else if (route.isFixing()) {
         sb.append("\nFixing");
+      } else if (route.isBombing()) {
+        sb.append("\nBombing");
       } else {
         sb.append("\nEnroute");
       }

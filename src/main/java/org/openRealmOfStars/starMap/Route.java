@@ -8,7 +8,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2018,2021  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -62,6 +62,11 @@ public class Route {
   public static final int ROUTE_FIX = -1;
 
   /**
+   * Use this as FTL speed to set fleet when it has bombed planet.
+   */
+  public static final int ROUTE_BOMBED = -2;
+
+  /**
    * Constructor for route
    * @param sx Start X coordinate
    * @param sy Start Y coordinate
@@ -103,6 +108,17 @@ public class Route {
    */
   public boolean isFixing() {
     if (ftlSpeed == ROUTE_FIX) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Route just for bombing the planet under fleet sector
+   * @return true if bombing the planet
+   */
+  public boolean isBombing() {
+    if (ftlSpeed == ROUTE_BOMBED) {
       return true;
     }
     return false;
@@ -229,7 +245,6 @@ public class Route {
     }
     return repairDot;
   }
-
   /**
    * Get Defense image
    * @return BufferedImage
@@ -240,6 +255,23 @@ public class Route {
           .loadImage(Icons.class.getResource("/resources/images/defense.png"));
     }
     return defenseDot;
+  }
+
+  /**
+   * Route bombed image
+   */
+  private static BufferedImage bombedDot;
+
+  /**
+   * Get bombed image
+   * @return BufferedImage
+   */
+  public static BufferedImage getBombedDot() {
+    if (bombedDot == null) {
+      bombedDot = IOUtilities
+          .loadImage(Icons.class.getResource("/resources/images/bombed.png"));
+    }
+    return bombedDot;
   }
 
   /**

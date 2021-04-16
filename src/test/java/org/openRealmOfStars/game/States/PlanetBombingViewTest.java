@@ -104,9 +104,12 @@ public class PlanetBombingViewTest {
         attackerPlayerInfo, attackerPlayerIndex, listener);
     for (int i = 0; i < ship.getNumberOfComponents(); i++) {
        planetBombingView.shipComponentUsage(i);
+       if (ship.getComponent(i).getType() == ShipComponentType.ORBITAL_BOMBS) {
+         int index = planetBombingView.getUsedComponentIndex();
+         assertEquals(ShipComponentType.ORBITAL_BOMBS,
+             ship.getComponent(index).getType());
+       }
     }
-    int index = planetBombingView.getUsedComponentIndex();
-    assertEquals(ShipComponentType.ORBITAL_BOMBS, ship.getComponent(index).getType());
   }
 
   @Test
@@ -137,9 +140,12 @@ public class PlanetBombingViewTest {
         attackerPlayerInfo, attackerPlayerIndex, listener);
     for (int i = 0; i < ship.getNumberOfComponents(); i++) {
        planetBombingView.shipComponentUsage(i);
+       if (ship.getComponent(i).getType() == ShipComponentType.ORBITAL_NUKE) {
+         int index = planetBombingView.getUsedComponentIndex();
+         assertEquals(ShipComponentType.ORBITAL_NUKE,
+             ship.getComponent(index).getType());
+       }
     }
-    int index = planetBombingView.getUsedComponentIndex();
-    assertEquals(ShipComponentType.ORBITAL_NUKE, ship.getComponent(index).getType());
   }
 
   @Test

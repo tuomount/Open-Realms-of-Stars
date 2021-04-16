@@ -126,6 +126,10 @@ public class PlanetBombingView extends BlackPanel {
   private Fleet fleet;
 
   /**
+   * Suppression fire against defenders.
+   */
+  private int suppressionFire;
+  /**
    * Ships in fleet
    */
   private JList<Ship> shipsInFleet;
@@ -255,6 +259,7 @@ public class PlanetBombingView extends BlackPanel {
     }
     this.fleet = fleet;
     this.attacker = attacker;
+    suppressionFire = 0;
     this.attackPlayerIndex = attackerPlayerIndex;
     this.newsData = null;
     nuked = new PlanetNuked();
@@ -302,7 +307,7 @@ public class PlanetBombingView extends BlackPanel {
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     troopsPower = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_TROOPS),
-        "Troops power: " + planet.getTroopPower());
+        "Troops power: " + planet.getTroopPower() + " -100 suppression");
     troopsPower.setToolTipText("Total power of defending troops.");
     troopsPower.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(troopsPower);
@@ -435,7 +440,12 @@ public class PlanetBombingView extends BlackPanel {
     totalPeople.setText("Population: " + planet.getTotalPopulation());
     defenseTurret.setText("Turrets: " + planet.getTurretLvl());
     totalBuildings.setText("Buildings: " + planet.getNumberOfBuildings());
-    troopsPower.setText("Troops power: " + planet.getTroopPower());
+    if (suppressionFire == 0) {
+      troopsPower.setText("Troops power: " + planet.getTroopPower());
+    } else {
+      troopsPower.setText("Troops power: " + planet.getTroopPower() + " -"
+          + suppressionFire + " suppression");
+    }
 
     StringBuilder sb = new StringBuilder();
     for (int i = textLogger.size() - 1; i >= 0; i--) {
@@ -514,7 +524,12 @@ public class PlanetBombingView extends BlackPanel {
       ShipComponent comp = ship.getComponent(index);
       if (comp != null) {
         if (comp.getType() == ShipComponentType.ORBITAL_BOMBS
-            || comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+            || comp.getType() == ShipComponentType.ORBITAL_NUKE
+            || comp.getType() == ShipComponentType.WEAPON_BEAM
+            || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
+            || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+            || comp.getType() == ShipComponentType.WEAPON_RAILGUN
+            || comp.getType() == ShipComponentType.PLASMA_CANNON) {
           planetTurretShoot();
           updatePanel();
           usedComponentIndex = index;
@@ -665,6 +680,10 @@ public class PlanetBombingView extends BlackPanel {
    */
   private static final int ONLY_BOMBED = 2;
   /**
+   * Planet only shot.
+   */
+  private static final int ONLY_SHOOT = 3;
+  /**
    * No effect.
    */
   private static final int NO_EFFECT = 0;
@@ -673,11 +692,13 @@ public class PlanetBombingView extends BlackPanel {
    * the buildings and animation.
    * @return int 1 for conquered,
    *             2 only for bombing
+   *             3 only for shooting
    *             0 that nothing happened.
    */
   private int attackBombOrTroops() {
     boolean conquered = false;
     boolean bombed = false;
+    boolean shot = false;
     String attackType = "conquest";
     String reason = " conquest of planet";
     if (usedComponentIndex != -1) {
@@ -701,6 +722,79 @@ public class PlanetBombingView extends BlackPanel {
             if (planet.getTotalPopulation() == 0) {
               planet.setPlanetOwner(-1, null);
             }
+          } else {
+            textLogger.addLog("Orbital shield protects the planet!");
+          }
+        }
+        if (comp.getType() == ShipComponentType.WEAPON_BEAM
+            || comp.getType() == ShipComponentType.WEAPON_RAILGUN
+            || comp.getType() == ShipComponentType.PLASMA_CANNON) {
+          if (!allAi && game != null) {
+            game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
+          }
+          imgBase.setAnimation(new PlanetAnimation(
+              PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 0, 0, 1, 1));
+          if (!planet.isShieldForBombing()) {
+            int hit = DiceGenerator.getRandom(1, 100);
+            StringBuilder sb = new StringBuilder();
+            if (hit <= comp.getDamage() * 3) {
+              suppressionFire++;
+              sb.append(ship.getName());
+              sb.append(" causes suppression against defenders");
+              shot = true;
+            }
+            if (hit <= comp.getDamage() && planet.bombOneBuilding()) {
+              if (shot) {
+                sb.append(" and destroyers building...");
+              } else {
+                sb.append(ship.getName());
+                sb.append(" destroyers building...");
+                shot = true;
+              }
+            }
+            if (!shot) {
+              sb.append(ship.getName());
+              sb.append(" does not hit anything...");
+            }
+            attackType = "shooting";
+            reason = " space ship weapon";
+            textLogger.addLog(sb.toString());
+          } else {
+            textLogger.addLog("Orbital shield protects the planet!");
+          }
+        }
+        if (comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+            || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE) {
+          if (!allAi && game != null) {
+            game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
+          }
+          imgBase.setAnimation(new PlanetAnimation(
+              PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 0, 0, 1, 1));
+          if (!planet.isShieldForBombing()) {
+            int hit = DiceGenerator.getRandom(1, 100);
+            StringBuilder sb = new StringBuilder();
+            if (hit <= comp.getDamage() * 2) {
+              suppressionFire++;
+              sb.append(ship.getName());
+              sb.append(" causes suppression against defenders");
+              shot = true;
+            }
+            if (hit <= comp.getDamage() * 2 && planet.bombOneBuilding()) {
+              if (shot) {
+                sb.append(" and destroyers building...");
+              } else {
+                sb.append(ship.getName());
+                sb.append(" destroyers building...");
+                shot = true;
+              }
+            }
+            if (!shot) {
+              sb.append(ship.getName());
+              sb.append(" does not hit anything...");
+            }
+            attackType = "shooting";
+            reason = " space ship weapon";
+            textLogger.addLog(sb.toString());
           } else {
             textLogger.addLog("Orbital shield protects the planet!");
           }
@@ -741,7 +835,11 @@ public class PlanetBombingView extends BlackPanel {
               * (100 + comp.getDamage()) / 100;
           int shipTroops = ship.getHull().getRace().getTrooperPower()
               * ship.getColonist() * (100 + comp.getDamage()) / 100;
-          int planetTroops = planet.getTroopPower();
+          int planetTroops = planet.getTroopPower() - suppressionFire;
+          if (planet.getTroopPower() > 0 && planetTroops < 0) {
+            planetTroops = 1;
+          }
+          suppressionFire = 0;
           if (shipTroops > planetTroops) {
             int origPop = planet.getTotalPopulation();
             Tech[] stealableTechs = null;
@@ -812,6 +910,9 @@ public class PlanetBombingView extends BlackPanel {
     }
     if (bombed) {
       return ONLY_BOMBED;
+    }
+    if (shot) {
+      return ONLY_SHOOT;
     }
     return NO_EFFECT;
   }
@@ -917,8 +1018,13 @@ public class PlanetBombingView extends BlackPanel {
           Ship ship = fleet.getShipByIndex(shipIndex);
           ShipComponent component = ship.getComponent(aiComponentIndex);
           if (component.getType() == ShipComponentType.ORBITAL_BOMBS
-             || component.getType() == ShipComponentType.ORBITAL_NUKE) {
-            // Always bombing
+             || component.getType() == ShipComponentType.ORBITAL_NUKE
+             || component.getType() == ShipComponentType.WEAPON_BEAM
+             || component.getType() == ShipComponentType.WEAPON_HE_MISSILE
+             || component.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+             || component.getType() == ShipComponentType.WEAPON_RAILGUN
+             || component.getType() == ShipComponentType.PLASMA_CANNON) {
+            // Always bombing or shooting
             shipComponentUsage(aiComponentIndex);
           }
           if (component.getType() == ShipComponentType

@@ -236,6 +236,10 @@ public class PlanetBombingView extends BlackPanel {
    */
   private ArrayList<BombingShip> bombers;
   /**
+   * Has ship already spent action?
+   */
+  private boolean actionSpent;
+  /**
    * Constructor for PLanet bombing view. This view is used when
    * player is conquering planet with bombs and/or troops.
    * @param planet Planet to be conquered
@@ -264,6 +268,7 @@ public class PlanetBombingView extends BlackPanel {
     this.newsData = null;
     nuked = new PlanetNuked();
     aiControlled = false;
+    actionSpent = false;
     allAi = false;
     // Background image
     imgBase = new BigImagePanel(planet, true, null);
@@ -495,6 +500,7 @@ public class PlanetBombingView extends BlackPanel {
    */
   public void nextShip() {
     shipIndex++;
+    actionSpent = false;
     if (shipIndex >= getFleet().getNumberOfShip()) {
       shipIndex = 0;
     }
@@ -523,9 +529,7 @@ public class PlanetBombingView extends BlackPanel {
       componentUsed[index] = true;
       ShipComponent comp = ship.getComponent(index);
       if (comp != null) {
-        if (comp.getType() == ShipComponentType.ORBITAL_BOMBS
-            || comp.getType() == ShipComponentType.ORBITAL_NUKE
-            || comp.getType() == ShipComponentType.WEAPON_BEAM
+        if (comp.getType() == ShipComponentType.WEAPON_BEAM
             || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
             || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
             || comp.getType() == ShipComponentType.WEAPON_RAILGUN
@@ -535,14 +539,29 @@ public class PlanetBombingView extends BlackPanel {
           usedComponentIndex = index;
           bombers.get(shipIndex).setActions(
               bombers.get(shipIndex).getActions() - 1);
+          actionSpent = true;
+        }
+        if (comp.getType() == ShipComponentType.ORBITAL_BOMBS
+                || comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+          planetTurretShoot();
+          updatePanel();
+          usedComponentIndex = index;
+          if (!actionSpent) {
+            bombers.get(shipIndex).setActions(
+                bombers.get(shipIndex).getActions() - 1);
+            actionSpent = true;
+          }
         }
         if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
           if (ship.getColonist() > 0) {
             planetTurretShoot();
             updatePanel();
             usedComponentIndex = index;
-            bombers.get(shipIndex).setActions(
-                bombers.get(shipIndex).getActions() - 1);
+            if (!actionSpent) {
+              bombers.get(shipIndex).setActions(
+                  bombers.get(shipIndex).getActions() - 1);
+              actionSpent = true;
+            }
           } else {
             textLogger.addLog("No more troops on board!");
           }

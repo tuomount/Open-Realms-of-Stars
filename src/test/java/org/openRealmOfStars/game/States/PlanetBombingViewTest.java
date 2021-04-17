@@ -24,7 +24,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017 Tuomo Untinen
+ * Copyright (C) 2016-2019,2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -56,6 +56,7 @@ public class PlanetBombingViewTest {
     Mockito.when(firstShip.getHull()).thenReturn(shipHull);
     Mockito.when(fleet.getFirstShip()).thenReturn(firstShip);
     Mockito.when(fleet.getShips()).thenReturn(new Ship[]{firstShip});
+    Mockito.when(fleet.getNumberOfShip()).thenReturn(1);
 
     PlayerInfo attackerPlayerInfo = Mockito.mock(PlayerInfo.class);
     int attackerPlayerIndex = 0;
@@ -103,9 +104,12 @@ public class PlanetBombingViewTest {
         attackerPlayerInfo, attackerPlayerIndex, listener);
     for (int i = 0; i < ship.getNumberOfComponents(); i++) {
        planetBombingView.shipComponentUsage(i);
+       if (ship.getComponent(i).getType() == ShipComponentType.ORBITAL_BOMBS) {
+         int index = planetBombingView.getUsedComponentIndex();
+         assertEquals(ShipComponentType.ORBITAL_BOMBS,
+             ship.getComponent(index).getType());
+       }
     }
-    int index = planetBombingView.getUsedComponentIndex();
-    assertEquals(ShipComponentType.ORBITAL_BOMBS, ship.getComponent(index).getType());
   }
 
   @Test
@@ -136,9 +140,12 @@ public class PlanetBombingViewTest {
         attackerPlayerInfo, attackerPlayerIndex, listener);
     for (int i = 0; i < ship.getNumberOfComponents(); i++) {
        planetBombingView.shipComponentUsage(i);
+       if (ship.getComponent(i).getType() == ShipComponentType.ORBITAL_NUKE) {
+         int index = planetBombingView.getUsedComponentIndex();
+         assertEquals(ShipComponentType.ORBITAL_NUKE,
+             ship.getComponent(index).getType());
+       }
     }
-    int index = planetBombingView.getUsedComponentIndex();
-    assertEquals(ShipComponentType.ORBITAL_NUKE, ship.getComponent(index).getType());
   }
 
   @Test

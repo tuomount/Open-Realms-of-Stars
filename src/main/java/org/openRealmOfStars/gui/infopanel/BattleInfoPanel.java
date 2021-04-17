@@ -23,7 +23,7 @@ import org.openRealmOfStars.player.ship.ShipImage;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018, 2020,2021 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -190,8 +190,10 @@ public class BattleInfoPanel extends InfoPanel {
 
   /**
    * Update panels according set data
+   * @param extraText This text will be added after ships's description.
+   *                  This can be null and nothing is added.
    */
-  public void updatePanel() {
+  public void updatePanel(final String extraText) {
     if (ship != null) {
       BufferedImage img = new BufferedImage(ShipImage.MAX_WIDTH,
           ShipImage.MAX_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
@@ -201,7 +203,11 @@ public class BattleInfoPanel extends InfoPanel {
       g2d.dispose();
       imageLabel.setImage(ship.getHull().getImage());
       setTitle(ship.getName());
-      textArea.setText(ship.getDescription());
+      if (extraText != null) {
+        textArea.setText(ship.getDescription() + "\n\n" + extraText);
+      } else {
+        textArea.setText(ship.getDescription());
+      }
       this.repaint();
     } else {
       setTitle("Battle info");
@@ -212,8 +218,19 @@ public class BattleInfoPanel extends InfoPanel {
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
       g2d.dispose();
       imageLabel.setImage(img);
-      textArea.setText("");
+      if (extraText != null) {
+        textArea.setText(extraText);
+      } else {
+        textArea.setText("");
+      }
       this.repaint();
     }
+  }
+
+  /**
+   * Update panels according set data
+   */
+  public void updatePanel() {
+    updatePanel(null);
   }
 }

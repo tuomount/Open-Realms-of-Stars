@@ -2749,6 +2749,10 @@ public class AITurnView extends BlackPanel {
         info.getMsgList().clearMessages();
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
+          if (fleet.getRoute() != null && fleet.getRoute().isBombing()) {
+            // Clean bombing route.
+            fleet.setRoute(null);
+          }
           fleet.resetShields();
           if (fleet.getCommander() != null) {
             if (fleet.getCommander().getJob() == Job.DEAD) {

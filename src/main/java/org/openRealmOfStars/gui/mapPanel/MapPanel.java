@@ -50,7 +50,7 @@ import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -817,6 +817,8 @@ public class MapPanel extends JPanel {
             gr.drawImage(Route.getDefenseDot(), pixelX, pixelY, null);
           } else if (route.isFixing()) {
             gr.drawImage(Route.getRepairDot(), pixelX, pixelY, null);
+          } else if (route.isBombing()) {
+            gr.drawImage(Route.getBombedDot(), pixelX, pixelY, null);
           } else {
             gr.drawImage(Route.getRouteDot(), pixelX, pixelY, null);
           }

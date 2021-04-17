@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -53,6 +54,7 @@ import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
+import org.openRealmOfStars.starMap.planet.BombingShip;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetNuked;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -123,6 +125,10 @@ public class PlanetBombingView extends BlackPanel {
    */
   private Fleet fleet;
 
+  /**
+   * Suppression fire against defenders.
+   */
+  private int suppressionFire;
   /**
    * Ships in fleet
    */
@@ -223,6 +229,16 @@ public class PlanetBombingView extends BlackPanel {
    * News data;
    */
   private NewsData newsData;
+
+  /**
+   * List of bombing ships. These will contain extra information that
+   * is used while conquering the planet.
+   */
+  private ArrayList<BombingShip> bombers;
+  /**
+   * Has ship already spent action?
+   */
+  private boolean actionSpent;
   /**
    * Constructor for PLanet bombing view. This view is used when
    * player is conquering planet with bombs and/or troops.
@@ -241,12 +257,18 @@ public class PlanetBombingView extends BlackPanel {
       game = null;
     }
     this.setPlanet(planet);
+    bombers = new ArrayList<>();
+    for (Ship ship : fleet.getShips()) {
+      bombers.add(new BombingShip(ship.getTacticSpeed() * 4));
+    }
     this.fleet = fleet;
     this.attacker = attacker;
+    suppressionFire = 0;
     this.attackPlayerIndex = attackerPlayerIndex;
     this.newsData = null;
     nuked = new PlanetNuked();
     aiControlled = false;
+    actionSpent = false;
     allAi = false;
     // Background image
     imgBase = new BigImagePanel(planet, true, null);
@@ -290,7 +312,7 @@ public class PlanetBombingView extends BlackPanel {
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     troopsPower = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_TROOPS),
-        "Troops power: " + planet.getTroopPower());
+        "Troops power: " + planet.getTroopPower() + " -100 suppression");
     troopsPower.setToolTipText("Total power of defending troops.");
     troopsPower.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(troopsPower);
@@ -423,7 +445,12 @@ public class PlanetBombingView extends BlackPanel {
     totalPeople.setText("Population: " + planet.getTotalPopulation());
     defenseTurret.setText("Turrets: " + planet.getTurretLvl());
     totalBuildings.setText("Buildings: " + planet.getNumberOfBuildings());
-    troopsPower.setText("Troops power: " + planet.getTroopPower());
+    if (suppressionFire == 0) {
+      troopsPower.setText("Troops power: " + planet.getTroopPower());
+    } else {
+      troopsPower.setText("Troops power: " + planet.getTroopPower() + " -"
+          + suppressionFire + " suppression");
+    }
 
     StringBuilder sb = new StringBuilder();
     for (int i = textLogger.size() - 1; i >= 0; i--) {
@@ -434,7 +461,12 @@ public class PlanetBombingView extends BlackPanel {
     }
     textArea.setText(sb.toString());
     textArea.repaint();
-    infoPanel.updatePanel();
+    sb = new StringBuilder();
+    sb.append("Turns left: ");
+    sb.append(bombers.get(shipIndex).getActions());
+    sb.append("/");
+    sb.append(bombers.get(shipIndex).getMaxActions());
+    infoPanel.updatePanel(sb.toString());
 
     /*
      * Set the orbiting ships
@@ -468,6 +500,7 @@ public class PlanetBombingView extends BlackPanel {
    */
   public void nextShip() {
     shipIndex++;
+    actionSpent = false;
     if (shipIndex >= getFleet().getNumberOfShip()) {
       shipIndex = 0;
     }
@@ -491,21 +524,44 @@ public class PlanetBombingView extends BlackPanel {
       return;
     }
     Ship ship = fleet.getShipByIndex(shipIndex);
-    if (!componentUsed[index] && ship.componentIsWorking(index)) {
+    if (!componentUsed[index] && ship.componentIsWorking(index)
+        && bombers.get(shipIndex).getActions() > 0) {
       componentUsed[index] = true;
       ShipComponent comp = ship.getComponent(index);
       if (comp != null) {
-        if (comp.getType() == ShipComponentType.ORBITAL_BOMBS
-            || comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+        if (comp.getType() == ShipComponentType.WEAPON_BEAM
+            || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
+            || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+            || comp.getType() == ShipComponentType.WEAPON_RAILGUN
+            || comp.getType() == ShipComponentType.PLASMA_CANNON) {
           planetTurretShoot();
           updatePanel();
           usedComponentIndex = index;
+          bombers.get(shipIndex).setActions(
+              bombers.get(shipIndex).getActions() - 1);
+          actionSpent = true;
+        }
+        if (comp.getType() == ShipComponentType.ORBITAL_BOMBS
+                || comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+          planetTurretShoot();
+          updatePanel();
+          usedComponentIndex = index;
+          if (!actionSpent) {
+            bombers.get(shipIndex).setActions(
+                bombers.get(shipIndex).getActions() - 1);
+            actionSpent = true;
+          }
         }
         if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
           if (ship.getColonist() > 0) {
             planetTurretShoot();
             updatePanel();
             usedComponentIndex = index;
+            if (!actionSpent) {
+              bombers.get(shipIndex).setActions(
+                  bombers.get(shipIndex).getActions() - 1);
+              actionSpent = true;
+            }
           } else {
             textLogger.addLog("No more troops on board!");
           }
@@ -570,6 +626,7 @@ public class PlanetBombingView extends BlackPanel {
     Ship ship = fleet.getShipByIndex(shipIndex);
     if (ship.getHullPoints() <= 0) {
       fleet.removeShip(ship);
+      bombers.remove(shipIndex);
       ShipStat stat = attacker.getShipStatByName(ship.getName());
       if (stat != null) {
         stat.setNumberOfLoses(stat.getNumberOfLoses() + 1);
@@ -642,6 +699,10 @@ public class PlanetBombingView extends BlackPanel {
    */
   private static final int ONLY_BOMBED = 2;
   /**
+   * Planet only shot.
+   */
+  private static final int ONLY_SHOOT = 3;
+  /**
    * No effect.
    */
   private static final int NO_EFFECT = 0;
@@ -650,11 +711,13 @@ public class PlanetBombingView extends BlackPanel {
    * the buildings and animation.
    * @return int 1 for conquered,
    *             2 only for bombing
+   *             3 only for shooting
    *             0 that nothing happened.
    */
   private int attackBombOrTroops() {
     boolean conquered = false;
     boolean bombed = false;
+    boolean shot = false;
     String attackType = "conquest";
     String reason = " conquest of planet";
     if (usedComponentIndex != -1) {
@@ -678,6 +741,79 @@ public class PlanetBombingView extends BlackPanel {
             if (planet.getTotalPopulation() == 0) {
               planet.setPlanetOwner(-1, null);
             }
+          } else {
+            textLogger.addLog("Orbital shield protects the planet!");
+          }
+        }
+        if (comp.getType() == ShipComponentType.WEAPON_BEAM
+            || comp.getType() == ShipComponentType.WEAPON_RAILGUN
+            || comp.getType() == ShipComponentType.PLASMA_CANNON) {
+          if (!allAi && game != null) {
+            game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
+          }
+          imgBase.setAnimation(new PlanetAnimation(
+              PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 0, 0, 1, 1));
+          if (!planet.isShieldForBombing()) {
+            int hit = DiceGenerator.getRandom(1, 100);
+            StringBuilder sb = new StringBuilder();
+            if (hit <= comp.getDamage() * 3) {
+              suppressionFire++;
+              sb.append(ship.getName());
+              sb.append(" causes suppression against defenders");
+              shot = true;
+            }
+            if (hit <= comp.getDamage() && planet.bombOneBuilding()) {
+              if (shot) {
+                sb.append(" and destroyers building...");
+              } else {
+                sb.append(ship.getName());
+                sb.append(" destroyers building...");
+                shot = true;
+              }
+            }
+            if (!shot) {
+              sb.append(ship.getName());
+              sb.append(" does not hit anything...");
+            }
+            attackType = "shooting";
+            reason = " space ship weapon";
+            textLogger.addLog(sb.toString());
+          } else {
+            textLogger.addLog("Orbital shield protects the planet!");
+          }
+        }
+        if (comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+            || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE) {
+          if (!allAi && game != null) {
+            game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
+          }
+          imgBase.setAnimation(new PlanetAnimation(
+              PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 0, 0, 1, 1));
+          if (!planet.isShieldForBombing()) {
+            int hit = DiceGenerator.getRandom(1, 100);
+            StringBuilder sb = new StringBuilder();
+            if (hit <= comp.getDamage() * 2) {
+              suppressionFire++;
+              sb.append(ship.getName());
+              sb.append(" causes suppression against defenders");
+              shot = true;
+            }
+            if (hit <= comp.getDamage() * 2 && planet.bombOneBuilding()) {
+              if (shot) {
+                sb.append(" and destroyers building...");
+              } else {
+                sb.append(ship.getName());
+                sb.append(" destroyers building...");
+                shot = true;
+              }
+            }
+            if (!shot) {
+              sb.append(ship.getName());
+              sb.append(" does not hit anything...");
+            }
+            attackType = "shooting";
+            reason = " space ship weapon";
+            textLogger.addLog(sb.toString());
           } else {
             textLogger.addLog("Orbital shield protects the planet!");
           }
@@ -718,7 +854,11 @@ public class PlanetBombingView extends BlackPanel {
               * (100 + comp.getDamage()) / 100;
           int shipTroops = ship.getHull().getRace().getTrooperPower()
               * ship.getColonist() * (100 + comp.getDamage()) / 100;
-          int planetTroops = planet.getTroopPower();
+          int planetTroops = planet.getTroopPower() - suppressionFire;
+          if (planet.getTroopPower() > 0 && planetTroops < 0) {
+            planetTroops = 1;
+          }
+          suppressionFire = 0;
           if (shipTroops > planetTroops) {
             int origPop = planet.getTotalPopulation();
             Tech[] stealableTechs = null;
@@ -789,6 +929,9 @@ public class PlanetBombingView extends BlackPanel {
     }
     if (bombed) {
       return ONLY_BOMBED;
+    }
+    if (shot) {
+      return ONLY_SHOOT;
     }
     return NO_EFFECT;
   }
@@ -889,12 +1032,18 @@ public class PlanetBombingView extends BlackPanel {
         updatePanel();
         imgBase.repaint();
       } else {
-        if (aiControlled && !aiExitLoop) {
+        if (aiControlled && !aiExitLoop
+            && bombers.get(shipIndex).getActions() > 0) {
           Ship ship = fleet.getShipByIndex(shipIndex);
           ShipComponent component = ship.getComponent(aiComponentIndex);
           if (component.getType() == ShipComponentType.ORBITAL_BOMBS
-             || component.getType() == ShipComponentType.ORBITAL_NUKE) {
-            // Always bombing
+             || component.getType() == ShipComponentType.ORBITAL_NUKE
+             || component.getType() == ShipComponentType.WEAPON_BEAM
+             || component.getType() == ShipComponentType.WEAPON_HE_MISSILE
+             || component.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+             || component.getType() == ShipComponentType.WEAPON_RAILGUN
+             || component.getType() == ShipComponentType.PLASMA_CANNON) {
+            // Always bombing or shooting
             shipComponentUsage(aiComponentIndex);
           }
           if (component.getType() == ShipComponentType
@@ -955,7 +1104,8 @@ public class PlanetBombingView extends BlackPanel {
       nextShip();
     }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
-        && imgBase.getAnimation() == null) {
+        && imgBase.getAnimation() == null
+        && bombers.get(shipIndex).getActions() > 0) {
       String number = arg0.getActionCommand()
           .substring(GameCommands.COMMAND_COMPONENT_USE.length());
       int index = Integer.valueOf(number);

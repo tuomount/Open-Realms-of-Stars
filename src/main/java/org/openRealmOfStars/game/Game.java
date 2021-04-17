@@ -2229,14 +2229,16 @@ public class Game implements ActionListener {
         && starMapView.getStarMapMouseListener()
             .getLastClickedFleet() != null) {
       Fleet fleet = starMapView.getStarMapMouseListener().getLastClickedFleet();
-      if (fleet.getRoute() != null && !fleet.getRoute().isBombing()) {
-        fleet.setRoute(null);
+      if (fleet.getRoute() != null && fleet.getRoute().isBombing()) {
         starMapView.getStarMapMouseListener().setMoveClicked(false);
-        fleetMakeMove(players.getCurrentPlayerInfo(),
-            starMapView.getStarMapMouseListener().getLastClickedFleet(),
-            starMapView.getStarMapMouseListener().getMoveX(),
-            starMapView.getStarMapMouseListener().getMoveY());
+        return;
       }
+      fleet.setRoute(null);
+      starMapView.getStarMapMouseListener().setMoveClicked(false);
+      fleetMakeMove(players.getCurrentPlayerInfo(),
+          starMapView.getStarMapMouseListener().getLastClickedFleet(),
+          starMapView.getStarMapMouseListener().getMoveX(),
+          starMapView.getStarMapMouseListener().getMoveY());
     }
   }
 

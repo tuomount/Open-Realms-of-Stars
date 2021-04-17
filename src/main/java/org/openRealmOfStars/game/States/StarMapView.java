@@ -502,13 +502,14 @@ public class StarMapView extends BlackPanel {
         .equalsIgnoreCase(GameCommands.COMMAND_ROUTE_FLEET)
         && getStarMapMouseListener().getLastClickedFleet() != null
         && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
-      if (!getStarMapMouseListener().getLastClickedFleet().getRoute()
+      if (getStarMapMouseListener().getLastClickedFleet().getRoute() != null
+          && !getStarMapMouseListener().getLastClickedFleet().getRoute()
           .isBombing()) {
+        SoundPlayer.playMenuDisabled();
+      } else {
         SoundPlayer.playMenuSound();
         SoundPlayer.playSound(SoundPlayer.WARP_ENGINE_ENGAGE);
         getStarMapMouseListener().setRoutePlanning(true);
-      } else {
-        SoundPlayer.playMenuDisabled();
       }
     }
 

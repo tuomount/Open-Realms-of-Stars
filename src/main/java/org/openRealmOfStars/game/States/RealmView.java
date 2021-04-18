@@ -22,7 +22,7 @@ import org.openRealmOfStars.player.leader.Perk;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018,2020 Tuomo Untinen
+* Copyright (C) 2018,2020,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -53,9 +53,10 @@ public class RealmView extends BlackPanel {
    * @param realm Realm which is being shown
    * @param listener ActionListener
    * @param knowledgeBonus Knowledge bonus between 0-10.
+   * @param meetings Number of meetings human player has with this realm.
    */
   public RealmView(final PlayerInfo realm, final ActionListener listener,
-      final int knowledgeBonus) {
+      final int knowledgeBonus, final int meetings) {
     this.setLayout(new BorderLayout());
     InfoPanel base = new InfoPanel();
     base.setLayout(new BoxLayout(base, BoxLayout.Y_AXIS));
@@ -103,6 +104,16 @@ public class RealmView extends BlackPanel {
                 realm) + "</html>";
       }
       leaderDesc = leaderDesc.replace("\n", "<br>");
+    }
+    if (knowledgeBonus == 0 && meetings == 0) {
+      leaderDesc = "<html>No knowledge about the leader.</html>";
+    }
+    if (knowledgeBonus == 0 && meetings == 1) {
+      if (realm.getRuler() != null) {
+        leaderDesc = "<html>" + realm.getRuler().getCallName() + "</html>";
+      } else {
+        leaderDesc = "<html>No leader as ruler.</html>";
+      }
     }
     HyperLabel leaderDescription = new HyperLabel(leaderDesc);
     info.add(leaderDescription);

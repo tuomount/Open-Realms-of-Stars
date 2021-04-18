@@ -80,6 +80,7 @@ import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -1218,11 +1219,17 @@ public class Game implements ActionListener {
    */
   public void showRealmView(final PlayerInfo realm) {
     if (realm == null) {
-      realmView = new RealmView(players.getCurrentPlayerInfo(), this, 10);
+      realmView = new RealmView(players.getCurrentPlayerInfo(), this, 10, 2);
     } else {
       int knowledge = players.getCurrentPlayerInfo().getKnowledgeBonus(
           players.getIndex(realm));
-      realmView = new RealmView(realm, this, knowledge);
+      DiplomacyBonusList diplomacy = players.getCurrentPlayerInfo()
+          .getDiplomacy().getDiplomacyList(players.getIndex(realm));
+      int meetings = 0;
+      if (diplomacy != null) {
+        meetings = diplomacy.getNumberOfMeetings();
+      }
+      realmView = new RealmView(realm, this, knowledge, meetings);
     }
     this.updateDisplay(realmView);
   }

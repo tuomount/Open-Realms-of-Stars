@@ -3180,6 +3180,23 @@ public class AITurnView extends BlackPanel {
       index = DiceGenerator.getRandom(0,
           map.getPlayerList().getCurrentMaxRealms());
     }
+    if (map.getKarmaType() == KarmaType.ONLY_GOODS_FOR_LAST) {
+      int half = scoreBoard.getNumberOfRows() / 2;
+      if (bad) {
+        return null;
+      }
+      int minValue = half;
+      int maxValue = scoreBoard.getNumberOfRows() - 1;
+      index = scoreBoard.getRow(DiceGenerator.getRandom(minValue, maxValue))
+          .getRealm();
+    }
+    if (map.getKarmaType() == KarmaType.RANDOM_GOOD_ONES) {
+      if (bad) {
+        return null;
+      }
+      index = DiceGenerator.getRandom(0,
+          map.getPlayerList().getCurrentMaxRealms());
+    }
     if (index != -1) {
       return map.getPlayerByIndex(index);
     }

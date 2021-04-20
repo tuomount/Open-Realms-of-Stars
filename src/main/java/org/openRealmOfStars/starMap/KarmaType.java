@@ -45,7 +45,15 @@ public enum KarmaType {
   /**
    * Bad and good karma effect can happen any realm.
    */
-  RANDOM;
+  RANDOM,
+  /**
+   * Only good events happen on last half realms.
+   */
+  ONLY_GOODS_FOR_LAST,
+  /**
+   * Good events can happen to any realm.
+   */
+  RANDOM_GOOD_ONES;
 
   /**
    * Get karma type as integer
@@ -59,6 +67,8 @@ public enum KarmaType {
       case SECOND_FIRST_AND_LAST: return 2;
       case BALANCED: return 3;
       case RANDOM: return 4;
+      case ONLY_GOODS_FOR_LAST: return 5;
+      case RANDOM_GOOD_ONES: return 6;
     }
   }
 
@@ -75,6 +85,8 @@ public enum KarmaType {
       case 2: return SECOND_FIRST_AND_LAST;
       case 3: return BALANCED;
       case 4: return RANDOM;
+      case 5: return ONLY_GOODS_FOR_LAST;
+      case 6: return RANDOM_GOOD_ONES;
     }
   }
 

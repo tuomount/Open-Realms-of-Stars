@@ -354,25 +354,27 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(comboSpaceAnomalies);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
 
-    label = new SpaceLabel("Random event karma");
+    label = new SpaceLabel("Random events");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    String[] karmaTypes = new String[5];
-    karmaTypes[0] = "Disabled random events";
+    String[] karmaTypes = new String[7];
+    karmaTypes[0] = "Disabled";
     karmaTypes[1] = "First and last";
     karmaTypes[2] = "Two first and two last";
-    karmaTypes[3] = "Balanced";
+    karmaTypes[3] = "Half and half";
     karmaTypes[4] = "Random";
+    karmaTypes[5] = "Only good events for last half";
+    karmaTypes[6] = "Random only good events";
     comboKarmaType = new SpaceCombo<>(karmaTypes);
     comboKarmaType.setSelectedIndex(this.config.getKarmaType().getIndex());
     comboKarmaType.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboKarmaType.addActionListener(listener);
-    comboKarmaType.setToolTipText("<html>Is there random events."
+    comboKarmaType.setToolTipText("<html>Are there random events."
         + " This settings decides which realms get the random events."
-        + "<br> There are good and bad random events. Usually those"
-        + " realms who are leading get bad events and losing realms"
-        + " get good events.<html>");
+        + "<br> Good events happen on realms which are last in scoring"
+        + " and bad events happen on realms which are the first in"
+        + " scoring.<html>");
     info.add(comboKarmaType);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new SpaceLabel("Random event speed");
@@ -388,7 +390,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboKarmaSpeed.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboKarmaSpeed.addActionListener(listener);
     comboKarmaSpeed.setToolTipText("<html>How often random events occur."
-        + " If random event karma is disable this setting does not do"
+        + " If random events are disable this setting does not do"
         + " anything.<html>");
     info.add(comboKarmaSpeed);
     info.add(Box.createRigidArea(new Dimension(5, 5)));

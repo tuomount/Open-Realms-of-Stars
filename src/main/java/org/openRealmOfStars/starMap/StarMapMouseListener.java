@@ -110,6 +110,10 @@ public class StarMapMouseListener extends MouseAdapter
   private boolean moveClicked;
 
   /**
+   * Warning shown if trying to move on top another fleet.
+   */
+  private boolean warningShown;
+  /**
    * Move point where clicked on map X coord
    */
   private int moveX;
@@ -473,6 +477,22 @@ public class StarMapMouseListener extends MouseAdapter
    */
   public void setMoveClicked(final boolean moveClicked) {
     this.moveClicked = moveClicked;
+  }
+
+  /**
+   * Is warning shown for player?
+   * @return True if warning has been shown
+   */
+  public boolean isWarningShown() {
+    return warningShown;
+  }
+
+  /**
+   * Set warning shown flag.
+   * @param warningShown True if shown.
+   */
+  public void setWarningShown(final boolean warningShown) {
+    this.warningShown = warningShown;
   }
 
 }

@@ -84,6 +84,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.fleet.TradeRoute;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Job;
@@ -646,6 +647,93 @@ public class Game implements ActionListener {
     }
   }
 
+  /**
+   * Get conflicting realms.
+   * @param info Player who owns the fleet
+   * @param fleet Fleet to move
+   * @param nx New coordinate x axel
+   * @param ny new coordinate y axel
+   * @return PlayerInfo or null if no conflict
+   */
+  public PlayerInfo getConflictingRealm(final PlayerInfo info,
+      final Fleet fleet, final int nx, final int ny) {
+    // Getting fleet owner information
+    FleetTileInfo[][] fleetTiles = starMap.getFleetTiles();
+    FleetTileInfo fleetTile = fleetTiles[fleet.getX()][fleet.getY()];
+
+    // And making sure that fleet owner is actually make the move
+    boolean isSamePlayer = false;
+    if (fleetTile != null) {
+      isSamePlayer = players.getIndex(info) == fleetTile.getPlayerIndex();
+      if (!isSamePlayer) {
+        isSamePlayer = players.getIndex(info) == fleetTile.getConflictIndex();
+      }
+    }
+    final boolean isValidCoordinate = getStarMap().isValidCoordinate(nx, ny);
+    final boolean isMovesLeft = fleet.getMovesLeft() > 0;
+    final boolean isNotBlocked = !getStarMap().isBlocked(nx, ny);
+
+    if (isSamePlayer && isValidCoordinate && isMovesLeft && isNotBlocked
+        && fleetTiles[nx][ny] != null) {
+      int playerIndex = fleetTiles[nx][ny].getPlayerIndex();
+      PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
+      if (info != info2) {
+        if (info.getDiplomacy().isWar(playerIndex)) {
+          return null;
+        }
+        FleetVisibility visibility = new FleetVisibility(info, fleet,
+            playerIndex);
+        if (visibility.isFleetVisible() && visibility.isRecognized()) {
+          return info2;
+        }
+      }
+    }
+    return null;
+  }
+  /**
+   * Get conflicting fleet if fleet is cloaked.
+   * @param info Player who owns the fleet
+   * @param fleet Fleet to move
+   * @param nx New coordinate x axel
+   * @param ny new coordinate y axel
+   * @return PlayerInfo or null if no conflict
+   */
+  public Fleet getConflictingFleet(final PlayerInfo info,
+      final Fleet fleet, final int nx, final int ny) {
+    // Getting fleet owner information
+    FleetTileInfo[][] fleetTiles = starMap.getFleetTiles();
+    FleetTileInfo fleetTile = fleetTiles[fleet.getX()][fleet.getY()];
+
+    // And making sure that fleet owner is actually make the move
+    boolean isSamePlayer = false;
+    if (fleetTile != null) {
+      isSamePlayer = players.getIndex(info) == fleetTile.getPlayerIndex();
+      if (!isSamePlayer) {
+        isSamePlayer = players.getIndex(info) == fleetTile.getConflictIndex();
+      }
+    }
+    final boolean isValidCoordinate = getStarMap().isValidCoordinate(nx, ny);
+    final boolean isMovesLeft = fleet.getMovesLeft() > 0;
+    final boolean isNotBlocked = !getStarMap().isBlocked(nx, ny);
+
+    if (isSamePlayer && isValidCoordinate && isMovesLeft && isNotBlocked
+        && fleetTiles[nx][ny] != null) {
+      int playerIndex = fleetTiles[nx][ny].getPlayerIndex();
+      int fleetIndex = fleetTiles[nx][ny].getFleetIndex();
+      PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
+      if (info != info2) {
+        if (info.getDiplomacy().isWar(playerIndex)) {
+          return null;
+        }
+        FleetVisibility visibility = new FleetVisibility(info, fleet,
+            playerIndex);
+        if (!visibility.isFleetVisible()) {
+          return info2.getFleets().getByIndex(fleetIndex);
+        }
+      }
+    }
+    return null;
+  }
   /**
    * Cause Fleet to make a move
    * @param info Player who owns the fleet
@@ -2240,6 +2328,16 @@ public class Game implements ActionListener {
         starMapView.getStarMapMouseListener().setMoveClicked(false);
         return;
       }
+/*      PlayerInfo conflictingRealm = getConflictingRealm(
+          players.getCurrentPlayerInfo(),
+          starMapView.getStarMapMouseListener().getLastClickedFleet(),
+          starMapView.getStarMapMouseListener().getMoveX(),
+          starMapView.getStarMapMouseListener().getMoveY());
+      Fleet conflictingFleet = getConflictingFleet(
+          players.getCurrentPlayerInfo(),
+          starMapView.getStarMapMouseListener().getLastClickedFleet(),
+          starMapView.getStarMapMouseListener().getMoveX(),
+          starMapView.getStarMapMouseListener().getMoveY());*/
       fleet.setRoute(null);
       starMapView.getStarMapMouseListener().setMoveClicked(false);
       fleetMakeMove(players.getCurrentPlayerInfo(),

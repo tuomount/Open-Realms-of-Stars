@@ -677,12 +677,18 @@ public class Game implements ActionListener {
 
     if (isSamePlayer && isValidCoordinate && isMovesLeft && isNotBlocked
         && fleetTiles[nx][ny] != null) {
+      if (fleet.isPrivateerFleet()) {
+        return null;
+      }
       fleetTile = fleetTiles[nx][ny];
       int playerIndex = fleetTile.getPlayerIndex();
       PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
       Fleet enemy = info2.getFleets().getByIndex(fleetTile.getFleetIndex());
       if (info != info2 && enemy != null) {
-        if (info.getDiplomacy().isWar(playerIndex)) {
+        if (enemy.isPrivateerFleet()) {
+          return null;
+        }
+        if (info.getDiplomacy().isWar(playerIndex) || info2.isBoard()) {
           return null;
         }
         FleetVisibility visibility = new FleetVisibility(info, enemy,
@@ -722,14 +728,20 @@ public class Game implements ActionListener {
 
     if (isSamePlayer && isValidCoordinate && isMovesLeft && isNotBlocked
         && fleetTiles[nx][ny] != null) {
+      if (fleet.isPrivateerFleet()) {
+        return null;
+      }
       fleetTile = fleetTiles[nx][ny];
       int playerIndex = fleetTile.getPlayerIndex();
       int fleetIndex = fleetTile.getFleetIndex();
       PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
       Fleet enemy = info2.getFleets().getByIndex(fleetIndex);
 
-      if (info != info2) {
-        if (info.getDiplomacy().isWar(playerIndex)) {
+      if (info != info2 && enemy != null) {
+        if (enemy.isPrivateerFleet()) {
+          return null;
+        }
+        if (info.getDiplomacy().isWar(playerIndex) || info2.isBoard()) {
           return null;
         }
         FleetVisibility visibility = new FleetVisibility(info, enemy,

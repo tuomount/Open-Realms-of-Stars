@@ -675,13 +675,15 @@ public class Game implements ActionListener {
 
     if (isSamePlayer && isValidCoordinate && isMovesLeft && isNotBlocked
         && fleetTiles[nx][ny] != null) {
-      int playerIndex = fleetTiles[nx][ny].getPlayerIndex();
+      fleetTile = fleetTiles[nx][ny];
+      int playerIndex = fleetTile.getPlayerIndex();
       PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
-      if (info != info2) {
+      Fleet enemy = info2.getFleets().getByIndex(fleetTile.getFleetIndex());
+      if (info != info2 && enemy != null) {
         if (info.getDiplomacy().isWar(playerIndex)) {
           return null;
         }
-        FleetVisibility visibility = new FleetVisibility(info, fleet,
+        FleetVisibility visibility = new FleetVisibility(info, enemy,
             playerIndex);
         if (visibility.isFleetVisible() && visibility.isRecognized()) {
           return info2;
@@ -718,14 +720,17 @@ public class Game implements ActionListener {
 
     if (isSamePlayer && isValidCoordinate && isMovesLeft && isNotBlocked
         && fleetTiles[nx][ny] != null) {
-      int playerIndex = fleetTiles[nx][ny].getPlayerIndex();
-      int fleetIndex = fleetTiles[nx][ny].getFleetIndex();
+      fleetTile = fleetTiles[nx][ny];
+      int playerIndex = fleetTile.getPlayerIndex();
+      int fleetIndex = fleetTile.getFleetIndex();
       PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
+      Fleet enemy = info2.getFleets().getByIndex(fleetIndex);
+
       if (info != info2) {
         if (info.getDiplomacy().isWar(playerIndex)) {
           return null;
         }
-        FleetVisibility visibility = new FleetVisibility(info, fleet,
+        FleetVisibility visibility = new FleetVisibility(info, enemy,
             playerIndex);
         if (!visibility.isFleetVisible()) {
           return info2.getFleets().getByIndex(fleetIndex);
@@ -2328,7 +2333,7 @@ public class Game implements ActionListener {
         starMapView.getStarMapMouseListener().setMoveClicked(false);
         return;
       }
-/*      PlayerInfo conflictingRealm = getConflictingRealm(
+      PlayerInfo conflictingRealm = getConflictingRealm(
           players.getCurrentPlayerInfo(),
           starMapView.getStarMapMouseListener().getLastClickedFleet(),
           starMapView.getStarMapMouseListener().getMoveX(),
@@ -2337,8 +2342,30 @@ public class Game implements ActionListener {
           players.getCurrentPlayerInfo(),
           starMapView.getStarMapMouseListener().getLastClickedFleet(),
           starMapView.getStarMapMouseListener().getMoveX(),
-          starMapView.getStarMapMouseListener().getMoveY());*/
+          starMapView.getStarMapMouseListener().getMoveY());
+      if (conflictingRealm == null && conflictingFleet != null
+          && !starMapView.getStarMapMouseListener().isWarningShown()) {
+        PopupPanel popup = new PopupPanel("There is a cloaked fleet in sector."
+            + " Moving there would cause war against this realm. Are you sure"
+            + " you want move your fleet there and start combat?",
+            "Cloaked fleet");
+        starMapView.setPopup(popup);
+        starMapView.getStarMapMouseListener().setWarningShown(true);
+        return;
+      }
+      if (conflictingRealm != null
+          && !starMapView.getStarMapMouseListener().isWarningShown()) {
+        PopupPanel popup = new PopupPanel("There is a fleet from "
+          + conflictingRealm.getEmpireName() + " in the sector."
+            + " Moving there would cause war against this realm. Are you sure"
+            + " you want move your fleet there and start combat?",
+            "Another fleet");
+        starMapView.setPopup(popup);
+        starMapView.getStarMapMouseListener().setWarningShown(true);
+        return;
+      }
       fleet.setRoute(null);
+      starMapView.getStarMapMouseListener().setWarningShown(false);
       starMapView.getStarMapMouseListener().setMoveClicked(false);
       fleetMakeMove(players.getCurrentPlayerInfo(),
           starMapView.getStarMapMouseListener().getLastClickedFleet(),

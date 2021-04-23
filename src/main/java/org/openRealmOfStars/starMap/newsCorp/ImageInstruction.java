@@ -223,6 +223,14 @@ public class ImageInstruction {
    */
   public static final String TRADER2 = "trader2";
   /**
+   * Cloaked ship
+   */
+  public static final String CLOAKED_SHIP = "cloaked-ship";
+  /**
+   * Shuttle2
+   */
+  public static final String SHUTTLE2 = "shuttle2";
+  /**
    * Instructions for Relation symbol between two text
    */
   private static final String RELATION_SYMBOL = "relation_symbol";
@@ -711,7 +719,8 @@ public class ImageInstruction {
       throw new IllegalArgumentException("Illegal trader position: "
         + position);
     }
-    if (!TRADER1.equals(trader) && !TRADER2.equals(trader)) {
+    if (!TRADER1.equals(trader) && !TRADER2.equals(trader)
+        && !CLOAKED_SHIP.equals(trader) && !SHUTTLE2.equals(trader)) {
       throw new IllegalArgumentException("Illegal trader type: " + trader);
     }
     if (!SIZE_FULL.equals(size)
@@ -957,6 +966,12 @@ public class ImageInstruction {
     }
     if (TRADER2.equals(traderType)) {
       traderImg = GuiStatics.IMAGE_TRADE_SHIP2;
+    }
+    if (CLOAKED_SHIP.equals(traderType)) {
+      traderImg = GuiStatics.IMAGE_CLOAKED_SHIP;
+    }
+    if (SHUTTLE2.equals(traderType)) {
+      traderImg = GuiStatics.IMAGE_SHUTTLE2;
     }
     if (SIZE_HALF.equals(size)) {
       traderImg = GuiStatics.scaleToHalf(traderImg);

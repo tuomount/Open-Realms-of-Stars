@@ -113,12 +113,14 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.GenericFileFilter;
 import org.openRealmOfStars.utilities.repository.ConfigFileRepository;
@@ -2311,6 +2313,102 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Create conflict ship image with possible planet background.
+   * @param cloaked If ship is cloaked or not.
+   * @param planet Possible planet background
+   * @return ImageInstructions
+   */
+  private static ImageInstruction createConflictingShipImage(
+      final boolean cloaked, final Planet planet) {
+    ImageInstruction instructions = new ImageInstruction();
+    if (DiceGenerator.getRandom(1) == 0) {
+      instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    } else {
+      instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    }
+    String position = ImageInstruction.POSITION_CENTER;
+    switch (DiceGenerator.getRandom(3)) {
+      case 0: {
+        position = ImageInstruction.POSITION_CENTER;
+        break;
+      }
+      case 1: {
+        position = ImageInstruction.POSITION_LEFT;
+        break;
+      }
+      case 2:
+      default: {
+        position = ImageInstruction.POSITION_RIGHT;
+        break;
+      }
+    }
+    String size = ImageInstruction.SIZE_FULL;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        size = ImageInstruction.SIZE_FULL;
+        break;
+      }
+      case 1:
+      default: {
+        size = ImageInstruction.SIZE_HALF;
+        break;
+      }
+    }
+    if (planet != null) {
+      instructions.addPlanet(position, planet.getImageInstructions(), size);
+    }
+    position = ImageInstruction.POSITION_CENTER;
+    switch (DiceGenerator.getRandom(3)) {
+      case 0: {
+        position = ImageInstruction.POSITION_CENTER;
+        break;
+      }
+      case 1: {
+        position = ImageInstruction.POSITION_LEFT;
+        break;
+      }
+      case 2:
+      default: {
+        position = ImageInstruction.POSITION_RIGHT;
+        break;
+      }
+    }
+    size = ImageInstruction.SIZE_FULL;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        size = ImageInstruction.SIZE_FULL;
+        break;
+      }
+      case 1:
+      default: {
+        size = ImageInstruction.SIZE_HALF;
+        break;
+      }
+    }
+    String ship = ImageInstruction.TRADER1;
+    if (cloaked) {
+      ship = ImageInstruction.CLOAKED_SHIP;
+    } else {
+      switch (DiceGenerator.getRandom(3)) {
+        case 0: {
+          ship = ImageInstruction.TRADER1;
+          break;
+        }
+        case 1:
+        default: {
+          ship = ImageInstruction.TRADER2;
+          break;
+        }
+        case 2: {
+          ship = ImageInstruction.SHUTTLE2;
+          break;
+        }
+      }
+    }
+    instructions.addTrader(position, ship, size);
+    return instructions;
+  }
+  /**
    * Handle state changes via double clicking on StarMap
    */
   private void handleDoubleClicksOnStarMap() {
@@ -2349,6 +2447,10 @@ public class Game implements ActionListener {
             + " Moving there would cause war against this realm. Are you sure"
             + " you want move your fleet there and start combat?",
             "Cloaked fleet");
+        Planet planet = starMap.getPlanetByCoordinate(
+            starMapView.getStarMapMouseListener().getMoveX(),
+            starMapView.getStarMapMouseListener().getMoveY());
+        popup.setImageFromInstruction(createConflictingShipImage(true, planet));
         starMapView.setPopup(popup);
         starMapView.getStarMapMouseListener().setWarningShown(true);
         return;
@@ -2360,6 +2462,11 @@ public class Game implements ActionListener {
             + " Moving there would cause war against this realm. Are you sure"
             + " you want move your fleet there and start combat?",
             "Another fleet");
+        Planet planet = starMap.getPlanetByCoordinate(
+            starMapView.getStarMapMouseListener().getMoveX(),
+            starMapView.getStarMapMouseListener().getMoveY());
+        popup.setImageFromInstruction(createConflictingShipImage(false,
+            planet));
         starMapView.setPopup(popup);
         starMapView.getStarMapMouseListener().setWarningShown(true);
         return;

@@ -284,9 +284,11 @@ public class StarMapMouseListener extends MouseAdapter
           if (planet != null) {
             setLastClickedPlanet(planet);
             setLastClickedFleet(null);
+            setWarningShown(false);
             mapInfoPanel.showPlanet(planet, true);
           } else if (fleet != null) {
             setLastClickedPlanet(null);
+            setWarningShown(false);
             FleetTileInfo[][] tiles = starMap.getFleetTiles();
             PlayerInfo owner = starMap.getPlayerByIndex(
                 tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
@@ -332,9 +334,11 @@ public class StarMapMouseListener extends MouseAdapter
               handleFixTradeButton(fleet, owner);
               setLastClickedFleet(fleet);
               setLastClickedPlanet(null);
+              setWarningShown(false);
             } else {
               setLastClickedPlanet(null);
               setLastClickedFleet(null);
+              setWarningShown(false);
               if (!tile.getDescription().isEmpty()) {
                 mapInfoPanel.showTile(tile);
               } else {
@@ -345,6 +349,7 @@ public class StarMapMouseListener extends MouseAdapter
             mapInfoPanel.showPlanet(planet, true);
             setLastClickedPlanet(planet);
             setLastClickedFleet(null);
+            setWarningShown(false);
           } else if (fleet != null) {
             int detection = starMap.getCurrentPlayerInfo()
                 .getSectorCloakDetection(fleet.getX(), fleet.getY());
@@ -364,6 +369,7 @@ public class StarMapMouseListener extends MouseAdapter
               }
               setLastClickedPlanet(null);
               setLastClickedFleet(null);
+              setWarningShown(false);
             }
           } else {
             if (!tile.getDescription().isEmpty()) {
@@ -373,6 +379,7 @@ public class StarMapMouseListener extends MouseAdapter
             }
             setLastClickedPlanet(null);
             setLastClickedFleet(null);
+            setWarningShown(false);
           }
         }
       } else if (starMap.getCurrentPlayerInfo().getSectorVisibility(

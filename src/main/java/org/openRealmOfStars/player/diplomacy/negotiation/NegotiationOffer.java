@@ -127,9 +127,13 @@ public class NegotiationOffer {
     case TECH:
       Building building = null;
       boolean scienticAchievement = false;
+      boolean farmingBuilding = false;
       if (getTech().getImprovement() != null) {
         building = BuildingFactory.createByName(getTech().getImprovement());
         scienticAchievement = building.getScientificAchievement();
+        if (building.getFarmBonus() > 0) {
+          farmingBuilding = true;
+        }
       }
       if (getTech().getHull() != null
           && getTech().getHull().equals("Artificial planet")) {
@@ -141,6 +145,10 @@ public class NegotiationOffer {
         offerValue = getTech().getLevel() * 4;
       } else {
         offerValue = getTech().getLevel() * 2;
+      }
+      if ((race.isLithovorian() || race == SpaceRace.MECHIONS)
+          && farmingBuilding) {
+        offerValue = 0;
       }
       break;
     case PLANET:

@@ -209,6 +209,8 @@ Lithorian ships are done by using Space ship building bits, volume 1 ships
 by Stephen Challener (Redshrike), hosted by OpenGameArt.org
 https://opengameart.org/content/space-ship-building-bits-volume-1
 
+Cloaked ship and shuttle 2 by Tuomo Untinen
+
 
 
 Fonts are under SIL Open Font License, Version 1.1.

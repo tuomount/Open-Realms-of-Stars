@@ -84,6 +84,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.fleet.TradeRoute;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Job;
@@ -112,12 +113,14 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.GenericFileFilter;
 import org.openRealmOfStars.utilities.repository.ConfigFileRepository;
@@ -646,6 +649,110 @@ public class Game implements ActionListener {
     }
   }
 
+  /**
+   * Get conflicting realms.
+   * @param info Player who owns the fleet
+   * @param fleet Fleet to move
+   * @param nx New coordinate x axel
+   * @param ny new coordinate y axel
+   * @return PlayerInfo or null if no conflict
+   */
+  public PlayerInfo getConflictingRealm(final PlayerInfo info,
+      final Fleet fleet, final int nx, final int ny) {
+    // Getting fleet owner information
+    FleetTileInfo[][] fleetTiles = starMap.getFleetTiles();
+    FleetTileInfo fleetTile = fleetTiles[fleet.getX()][fleet.getY()];
+
+    // And making sure that fleet owner is actually make the move
+    boolean isSamePlayer = false;
+    if (fleetTile != null) {
+      isSamePlayer = players.getIndex(info) == fleetTile.getPlayerIndex();
+      if (!isSamePlayer) {
+        isSamePlayer = players.getIndex(info) == fleetTile.getConflictIndex();
+      }
+    }
+    final boolean isValidCoordinate = getStarMap().isValidCoordinate(nx, ny);
+    final boolean isMovesLeft = fleet.getMovesLeft() > 0;
+    final boolean isNotBlocked = !getStarMap().isBlocked(nx, ny);
+
+    if (isSamePlayer && isValidCoordinate && isMovesLeft && isNotBlocked
+        && fleetTiles[nx][ny] != null) {
+      if (fleet.isPrivateerFleet()) {
+        return null;
+      }
+      fleetTile = fleetTiles[nx][ny];
+      int playerIndex = fleetTile.getPlayerIndex();
+      PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
+      Fleet enemy = info2.getFleets().getByIndex(fleetTile.getFleetIndex());
+      if (info != info2 && enemy != null) {
+        if (enemy.isPrivateerFleet()) {
+          return null;
+        }
+        if (info.getDiplomacy().isWar(playerIndex) || info2.isBoard()) {
+          return null;
+        }
+        FleetVisibility visibility = new FleetVisibility(info, enemy,
+            playerIndex);
+        if (visibility.isFleetVisible() && visibility.isRecognized()) {
+          return info2;
+        }
+      }
+    }
+    return null;
+  }
+  /**
+   * Get conflicting fleet if fleet is cloaked.
+   * @param info Player who owns the fleet
+   * @param fleet Fleet to move
+   * @param nx New coordinate x axel
+   * @param ny new coordinate y axel
+   * @return PlayerInfo or null if no conflict
+   */
+  public Fleet getConflictingFleet(final PlayerInfo info,
+      final Fleet fleet, final int nx, final int ny) {
+    // Getting fleet owner information
+    FleetTileInfo[][] fleetTiles = starMap.getFleetTiles();
+    FleetTileInfo fleetTile = fleetTiles[fleet.getX()][fleet.getY()];
+
+    // And making sure that fleet owner is actually make the move
+    boolean isSamePlayer = false;
+    if (fleetTile != null) {
+      isSamePlayer = players.getIndex(info) == fleetTile.getPlayerIndex();
+      if (!isSamePlayer) {
+        isSamePlayer = players.getIndex(info) == fleetTile.getConflictIndex();
+      }
+    }
+    final boolean isValidCoordinate = getStarMap().isValidCoordinate(nx, ny);
+    final boolean isMovesLeft = fleet.getMovesLeft() > 0;
+    final boolean isNotBlocked = !getStarMap().isBlocked(nx, ny);
+
+    if (isSamePlayer && isValidCoordinate && isMovesLeft && isNotBlocked
+        && fleetTiles[nx][ny] != null) {
+      if (fleet.isPrivateerFleet()) {
+        return null;
+      }
+      fleetTile = fleetTiles[nx][ny];
+      int playerIndex = fleetTile.getPlayerIndex();
+      int fleetIndex = fleetTile.getFleetIndex();
+      PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
+      Fleet enemy = info2.getFleets().getByIndex(fleetIndex);
+
+      if (info != info2 && enemy != null) {
+        if (enemy.isPrivateerFleet()) {
+          return null;
+        }
+        if (info.getDiplomacy().isWar(playerIndex) || info2.isBoard()) {
+          return null;
+        }
+        FleetVisibility visibility = new FleetVisibility(info, enemy,
+            playerIndex);
+        if (!visibility.isFleetVisible()) {
+          return info2.getFleets().getByIndex(fleetIndex);
+        }
+      }
+    }
+    return null;
+  }
   /**
    * Cause Fleet to make a move
    * @param info Player who owns the fleet
@@ -2218,6 +2325,102 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Create conflict ship image with possible planet background.
+   * @param cloaked If ship is cloaked or not.
+   * @param planet Possible planet background
+   * @return ImageInstructions
+   */
+  private static ImageInstruction createConflictingShipImage(
+      final boolean cloaked, final Planet planet) {
+    ImageInstruction instructions = new ImageInstruction();
+    if (DiceGenerator.getRandom(1) == 0) {
+      instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    } else {
+      instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    }
+    String position = ImageInstruction.POSITION_CENTER;
+    switch (DiceGenerator.getRandom(3)) {
+      case 0: {
+        position = ImageInstruction.POSITION_CENTER;
+        break;
+      }
+      case 1: {
+        position = ImageInstruction.POSITION_LEFT;
+        break;
+      }
+      case 2:
+      default: {
+        position = ImageInstruction.POSITION_RIGHT;
+        break;
+      }
+    }
+    String size = ImageInstruction.SIZE_FULL;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        size = ImageInstruction.SIZE_FULL;
+        break;
+      }
+      case 1:
+      default: {
+        size = ImageInstruction.SIZE_HALF;
+        break;
+      }
+    }
+    if (planet != null) {
+      instructions.addPlanet(position, planet.getImageInstructions(), size);
+    }
+    position = ImageInstruction.POSITION_CENTER;
+    switch (DiceGenerator.getRandom(3)) {
+      case 0: {
+        position = ImageInstruction.POSITION_CENTER;
+        break;
+      }
+      case 1: {
+        position = ImageInstruction.POSITION_LEFT;
+        break;
+      }
+      case 2:
+      default: {
+        position = ImageInstruction.POSITION_RIGHT;
+        break;
+      }
+    }
+    size = ImageInstruction.SIZE_FULL;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        size = ImageInstruction.SIZE_FULL;
+        break;
+      }
+      case 1:
+      default: {
+        size = ImageInstruction.SIZE_HALF;
+        break;
+      }
+    }
+    String ship = ImageInstruction.TRADER1;
+    if (cloaked) {
+      ship = ImageInstruction.CLOAKED_SHIP;
+    } else {
+      switch (DiceGenerator.getRandom(3)) {
+        case 0: {
+          ship = ImageInstruction.TRADER1;
+          break;
+        }
+        case 1:
+        default: {
+          ship = ImageInstruction.TRADER2;
+          break;
+        }
+        case 2: {
+          ship = ImageInstruction.SHUTTLE2;
+          break;
+        }
+      }
+    }
+    instructions.addTrader(position, ship, size);
+    return instructions;
+  }
+  /**
    * Handle state changes via double clicking on StarMap
    */
   private void handleDoubleClicksOnStarMap() {
@@ -2240,7 +2443,48 @@ public class Game implements ActionListener {
         starMapView.getStarMapMouseListener().setMoveClicked(false);
         return;
       }
+      PlayerInfo conflictingRealm = getConflictingRealm(
+          players.getCurrentPlayerInfo(),
+          starMapView.getStarMapMouseListener().getLastClickedFleet(),
+          starMapView.getStarMapMouseListener().getMoveX(),
+          starMapView.getStarMapMouseListener().getMoveY());
+      Fleet conflictingFleet = getConflictingFleet(
+          players.getCurrentPlayerInfo(),
+          starMapView.getStarMapMouseListener().getLastClickedFleet(),
+          starMapView.getStarMapMouseListener().getMoveX(),
+          starMapView.getStarMapMouseListener().getMoveY());
+      if (conflictingRealm == null && conflictingFleet != null
+          && !starMapView.getStarMapMouseListener().isWarningShown()) {
+        PopupPanel popup = new PopupPanel("There is a cloaked fleet in sector."
+            + " Moving there would cause war against this realm. Are you sure"
+            + " you want move your fleet there and start combat?",
+            "Cloaked fleet");
+        Planet planet = starMap.getPlanetByCoordinate(
+            starMapView.getStarMapMouseListener().getMoveX(),
+            starMapView.getStarMapMouseListener().getMoveY());
+        popup.setImageFromInstruction(createConflictingShipImage(true, planet));
+        starMapView.setPopup(popup);
+        starMapView.getStarMapMouseListener().setWarningShown(true);
+        return;
+      }
+      if (conflictingRealm != null
+          && !starMapView.getStarMapMouseListener().isWarningShown()) {
+        PopupPanel popup = new PopupPanel("There is a fleet from "
+          + conflictingRealm.getEmpireName() + " in the sector."
+            + " Moving there would cause war against this realm. Are you sure"
+            + " you want move your fleet there and start combat?",
+            "Another fleet");
+        Planet planet = starMap.getPlanetByCoordinate(
+            starMapView.getStarMapMouseListener().getMoveX(),
+            starMapView.getStarMapMouseListener().getMoveY());
+        popup.setImageFromInstruction(createConflictingShipImage(false,
+            planet));
+        starMapView.setPopup(popup);
+        starMapView.getStarMapMouseListener().setWarningShown(true);
+        return;
+      }
       fleet.setRoute(null);
+      starMapView.getStarMapMouseListener().setWarningShown(false);
       starMapView.getStarMapMouseListener().setMoveClicked(false);
       fleetMakeMove(players.getCurrentPlayerInfo(),
           starMapView.getStarMapMouseListener().getLastClickedFleet(),

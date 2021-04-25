@@ -267,7 +267,7 @@ public class PopupPanel {
   }
 
   /**
-   * Chnage popup panel image
+   * Change popup panel image
    * @param image Where to change
    */
   public void setImage(final BufferedImage image) {
@@ -275,6 +275,20 @@ public class PopupPanel {
     this.scaledImage = null;
   }
 
+  /**
+   * Set image to pop up from image instructions.
+   * @param instructions Image instructions.
+   */
+  public void setImageFromInstruction(final ImageInstruction instructions) {
+    String str = instructions.build();
+    if (str.startsWith("image(")) {
+      image = null;
+    } else {
+      image = new BufferedImage(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT,
+          BufferedImage.TYPE_INT_ARGB);
+    }
+    image = ImageInstruction.parseImageInstructions(image, str);
+  }
   /**
    * Get popup panel image. This can be null.
    * @return BufferedImage

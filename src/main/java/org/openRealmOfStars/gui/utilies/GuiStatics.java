@@ -1163,6 +1163,18 @@ public final class GuiStatics {
       GuiStatics.class.getResource(
           "/resources/images/tradeship-learmarch1.png"));
   /**
+   * Cloaked ship
+   */
+  public static final BufferedImage IMAGE_CLOAKED_SHIP = IOUtilities.loadImage(
+      GuiStatics.class.getResource(
+          "/resources/images/cloaked_ship.png"));
+  /**
+   * Shuttle 2
+   */
+  public static final BufferedImage IMAGE_SHUTTLE2 = IOUtilities.loadImage(
+      GuiStatics.class.getResource(
+          "/resources/images/shuttle2.png"));
+  /**
    * Big nuke image
    */
   public static final BufferedImage IMAGE_BIG_NUKE = IOUtilities.loadImage(

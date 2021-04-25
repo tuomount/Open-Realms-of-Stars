@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -416,6 +417,7 @@ public class VoteView extends BlackPanel {
       int index = map.getPlayerList().getCurrentPlayer();
       vote.setChoice(index, VotingChoice.VOTED_YES);
       updatePanels();
+      SoundPlayer.playMenuSound();
       return;
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_VOTE_NO)) {
@@ -423,18 +425,21 @@ public class VoteView extends BlackPanel {
       int index = map.getPlayerList().getCurrentPlayer();
       vote.setChoice(index, VotingChoice.VOTED_NO);
       updatePanels();
+      SoundPlayer.playMenuSound();
       return;
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_VOTE)
         && voteIndex > 0) {
       voteIndex--;
       updatePanels();
+      SoundPlayer.playMenuSound();
       return;
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_VOTE)
         && voteIndex < map.getVotes().getVotableVotes().size() - 1) {
       voteIndex++;
       updatePanels();
+      SoundPlayer.playMenuSound();
       return;
     }
   }

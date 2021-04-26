@@ -2330,7 +2330,7 @@ public class Game implements ActionListener {
    * @param planet Possible planet background
    * @return ImageInstructions
    */
-  private static ImageInstruction createConflictingShipImage(
+  public static ImageInstruction createConflictingShipImage(
       final boolean cloaked, final Planet planet) {
     ImageInstruction instructions = new ImageInstruction();
     if (DiceGenerator.getRandom(1) == 0) {
@@ -2443,44 +2443,7 @@ public class Game implements ActionListener {
         starMapView.getStarMapMouseListener().setMoveClicked(false);
         return;
       }
-      PlayerInfo conflictingRealm = getConflictingRealm(
-          players.getCurrentPlayerInfo(),
-          starMapView.getStarMapMouseListener().getLastClickedFleet(),
-          starMapView.getStarMapMouseListener().getMoveX(),
-          starMapView.getStarMapMouseListener().getMoveY());
-      Fleet conflictingFleet = getConflictingFleet(
-          players.getCurrentPlayerInfo(),
-          starMapView.getStarMapMouseListener().getLastClickedFleet(),
-          starMapView.getStarMapMouseListener().getMoveX(),
-          starMapView.getStarMapMouseListener().getMoveY());
-      if (conflictingRealm == null && conflictingFleet != null
-          && !starMapView.getStarMapMouseListener().isWarningShown()) {
-        PopupPanel popup = new PopupPanel("There is a cloaked fleet in sector."
-            + " Moving there would cause war against this realm. Are you sure"
-            + " you want move your fleet there and start combat?",
-            "Cloaked fleet");
-        Planet planet = starMap.getPlanetByCoordinate(
-            starMapView.getStarMapMouseListener().getMoveX(),
-            starMapView.getStarMapMouseListener().getMoveY());
-        popup.setImageFromInstruction(createConflictingShipImage(true, planet));
-        starMapView.setPopup(popup);
-        starMapView.getStarMapMouseListener().setWarningShown(true);
-        return;
-      }
-      if (conflictingRealm != null
-          && !starMapView.getStarMapMouseListener().isWarningShown()) {
-        PopupPanel popup = new PopupPanel("There is a fleet from "
-          + conflictingRealm.getEmpireName() + " in the sector."
-            + " Moving there would cause war against this realm. Are you sure"
-            + " you want move your fleet there and start combat?",
-            "Another fleet");
-        Planet planet = starMap.getPlanetByCoordinate(
-            starMapView.getStarMapMouseListener().getMoveX(),
-            starMapView.getStarMapMouseListener().getMoveY());
-        popup.setImageFromInstruction(createConflictingShipImage(false,
-            planet));
-        starMapView.setPopup(popup);
-        starMapView.getStarMapMouseListener().setWarningShown(true);
+      if (starMapView.checkForConflict()) {
         return;
       }
       fleet.setRoute(null);

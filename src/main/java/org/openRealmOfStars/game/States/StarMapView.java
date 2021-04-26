@@ -596,4 +596,53 @@ public class StarMapView extends BlackPanel {
   public void setCursorFocus(final int cursorFocus) {
     mapPanel.setCursorFocus(cursorFocus);
   }
+
+  /**
+   * Check for conflict of war before moving the fleet.
+   * @return True if there is conflict and no warning has been shown before.
+   */
+  public boolean checkForConflict() {
+    PlayerInfo conflictingRealm = game.getConflictingRealm(
+        players.getCurrentPlayerInfo(),
+        getStarMapMouseListener().getLastClickedFleet(),
+        getStarMapMouseListener().getMoveX(),
+        getStarMapMouseListener().getMoveY());
+    Fleet conflictingFleet = game.getConflictingFleet(
+        players.getCurrentPlayerInfo(),
+        getStarMapMouseListener().getLastClickedFleet(),
+        getStarMapMouseListener().getMoveX(),
+        getStarMapMouseListener().getMoveY());
+    if (conflictingRealm == null && conflictingFleet != null
+        && !getStarMapMouseListener().isWarningShown()) {
+      PopupPanel popup = new PopupPanel("There is a cloaked fleet in sector."
+          + " Moving there would cause war against this realm. Are you sure"
+          + " you want move your fleet there and start combat?",
+          "Cloaked fleet");
+      Planet planet = map.getPlanetByCoordinate(
+          getStarMapMouseListener().getMoveX(),
+          getStarMapMouseListener().getMoveY());
+      popup.setImageFromInstruction(Game.createConflictingShipImage(true,
+          planet));
+      setPopup(popup);
+      getStarMapMouseListener().setWarningShown(true);
+      return true;
+    }
+    if (conflictingRealm != null
+        && !getStarMapMouseListener().isWarningShown()) {
+      PopupPanel popup = new PopupPanel("There is a fleet from "
+        + conflictingRealm.getEmpireName() + " in the sector."
+          + " Moving there would cause war against this realm. Are you sure"
+          + " you want move your fleet there and start combat?",
+          "Another fleet");
+      Planet planet = map.getPlanetByCoordinate(
+          getStarMapMouseListener().getMoveX(),
+          getStarMapMouseListener().getMoveY());
+      popup.setImageFromInstruction(Game.createConflictingShipImage(false,
+          planet));
+      setPopup(popup);
+      getStarMapMouseListener().setWarningShown(true);
+      return true;
+    }
+    return false;
+  }
 }

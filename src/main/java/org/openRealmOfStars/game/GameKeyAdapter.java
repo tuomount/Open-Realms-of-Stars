@@ -55,7 +55,11 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       if (fleet.getRoute() != null && fleet.getRoute().isBombing()) {
         return;
       }
+      if (game.getStarMapView().checkForConflict()) {
+        return;
+      }
       fleet.setRoute(null);
+      game.getStarMapView().getStarMapMouseListener().setWarningShown(false);
       int nx = fleet.getX() + x;
       int ny = fleet.getY() + y;
       game.fleetMakeMove(game.getPlayers().getCurrentPlayerInfo(),

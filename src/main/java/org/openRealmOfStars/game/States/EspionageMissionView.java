@@ -344,7 +344,7 @@ public class EspionageMissionView extends BlackPanel {
     panel.add(label);
     constructionLabel = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_CLOSED),
-        "Galactic Tower of Awesomeness");
+        "No building project selected.");
     constructionLabel.setToolTipText("Production currently underconstruction");
     constructionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     if (planet.getUnderConstruction() != null) {

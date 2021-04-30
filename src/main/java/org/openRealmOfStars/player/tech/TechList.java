@@ -844,7 +844,7 @@ public class TechList {
    * @param level Which level tech should be
    * @return List of possible rare techs.
    */
-  private Tech[] checkRareTechTree(final TechType techType, final int level) {
+  public Tech[] checkRareTechTree(final TechType techType, final int level) {
     ArrayList<Tech> list = new ArrayList<>();
     Tech[] techs = getRareTechs();
     for (Tech tech : techs) {

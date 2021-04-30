@@ -803,6 +803,8 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     StringBuilder sb = new StringBuilder(type.getDescription());
     int level = player.getTechList().getTechLevel(type);
     Tech[] missingTechs = player.getTechList().getListMissingTech(type, level);
+    Tech[] missingRareTech = player.getTechList().checkRareTechTree(type,
+        level);
     sb.append("\n\n");
     sb.append("Missing techs for level ");
     sb.append(level);
@@ -810,6 +812,15 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     for (int i = 0; i < missingTechs.length; i++) {
       sb.append(missingTechs[i].getName());
       sb.append("\n");
+    }
+    if (missingRareTech != null) {
+      sb.append("\nMissing rare tech for level ");
+      sb.append(level);
+      sb.append(":\n");
+      for (int i = 0; i < missingRareTech.length; i++) {
+        sb.append(missingRareTech[i].getName());
+        sb.append("\n");
+      }
     }
     infoText.setText(sb.toString());
     infoText.repaint();

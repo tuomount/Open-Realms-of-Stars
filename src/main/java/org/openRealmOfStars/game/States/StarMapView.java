@@ -503,7 +503,7 @@ public class StarMapView extends BlackPanel {
         && getStarMapMouseListener().getLastClickedFleet() != null
         && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
       if (getStarMapMouseListener().getLastClickedFleet().getRoute() != null
-          && !getStarMapMouseListener().getLastClickedFleet().getRoute()
+          && getStarMapMouseListener().getLastClickedFleet().getRoute()
           .isBombing()) {
         SoundPlayer.playMenuDisabled();
       } else {

@@ -127,12 +127,12 @@ public enum SpaceRace {
       + " very little food surviving, but their reproduction is very slow."),
   /**
    * Lithorians are creatures that eat metal instead of food. They have slow
-   * grow rate, but they can have 2 extra population per planet. They have
+   * grow rate and they have -2 population limit. They have
    * excellent ability to mine metal.
    */
   LITHORIANS(12, "Lithorians", "Lithorian",
       "Lithorians are creatures that eat metal instead of food. They have"
-      + " slow grow rate, but they can have 2 extra population per planet."
+      + " slow grow rate and they have -2 population limit."
       + " They have excellent ability to mine metal.");
 
 
@@ -1021,6 +1021,9 @@ public enum SpaceRace {
    */
   public int getExtraPopulation() {
     if (this == SpaceRace.LITHORIANS) {
+      return -2;
+    }
+    if (this == SpaceRace.CENTAURS) {
       return 2;
     }
     return 0;
@@ -1246,6 +1249,15 @@ public enum SpaceRace {
     sb.append(" Food require: ");
     sb.append(getFoodRequire());
     sb.append("%");
+    if (getExtraPopulation() != 0) {
+      sb.append(lf);
+      sb.append(dot);
+      sb.append(" Population limit: ");
+      if (getExtraPopulation() > 0) {
+        sb.append("+");
+      }
+      sb.append(getExtraPopulation());
+    }
     sb.append(lf);
     sb.append(dot);
     sb.append(" Culture: ");

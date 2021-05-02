@@ -232,6 +232,7 @@ public class SpaceRaceUtilityTest {
         "* Food production: 100%\n"+
         "* Growth: 20 turns\n"+
         "* Food require: 100%\n"+
+        "* Population limit: +2\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -1\n"+
         "* War resistance: 70\n"+
@@ -353,7 +354,7 @@ public class SpaceRaceUtilityTest {
         + " Steal technology by conquering planets.";
     expectedResult[11] = "### Lithorians\n"
         + "Lithorians are creatures that eat metal instead of food. They have"
-        + " slow grow rate, but they can have 2 extra population per planet."
+        + " slow grow rate and they have -2 population limit."
         + " They have excellent ability to mine metal.\n"
         + "* Max radiation: 7\n"
         + "* Troop power: 12\n"
@@ -364,6 +365,7 @@ public class SpaceRaceUtilityTest {
         + "* Food production: 0%\n"
         + "* Growth: 20 turns limited\n"
         + "* Food require: 0%\n"
+        + "* Population limit: -2\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: -2\n"
         + "* War resistance: 70\n"

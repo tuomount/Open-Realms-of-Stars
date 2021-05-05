@@ -582,6 +582,7 @@ public class PlanetView extends BlackPanel {
     buildingEstimate.setText(planet.getProductionTimeAsString(building));
     int productionTime = planet.getProductionTime(building);
     int rushCost = planet.getRushingCost(building);
+    boolean rushingAvailable = false;
     if (rushCost > 0 && allowHandling && productionTime > 1) {
       if ((info.getRace().hasCreditRush()
           || info.getGovernment().hasCreditRush())
@@ -590,6 +591,7 @@ public class PlanetView extends BlackPanel {
         rushWithCreditsBtn.setEnabled(true);
         rushWithCreditsBtn.setToolTipText("Rush construction with " + rushCost
             + " credits!");
+        rushingAvailable = true;
       }
       if ((info.getRace().hasPopulationRush()
           || info.getGovernment().hasPopulationRush())
@@ -599,9 +601,11 @@ public class PlanetView extends BlackPanel {
           rushWithPopulationBtn.setEnabled(true);
           rushWithPopulationBtn.setToolTipText("Rush construction with "
               + populationCost + " population!");
+          rushingAvailable = true;
         }
       }
-    } else {
+    }
+    if (!rushingAvailable) {
       rushWithCreditsBtn.setEnabled(false);
       rushWithPopulationBtn.setEnabled(false);
       rushWithCreditsBtn.setToolTipText(null);

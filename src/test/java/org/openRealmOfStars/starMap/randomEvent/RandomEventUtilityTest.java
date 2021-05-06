@@ -132,6 +132,7 @@ public class RandomEventUtilityTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMassiveDataLost() {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     info.getTechList().setTechResearchPoints(TechType.Combat, 20);
     info.getTechList().setTechResearchPoints(TechType.Defense, 20);
     info.getTechList().setTechResearchPoints(TechType.Hulls, 20);
@@ -140,7 +141,7 @@ public class RandomEventUtilityTest {
     info.getTechList().setTechResearchPoints(TechType.Electrics, 20);
     RandomEvent event = new RandomEvent(BadRandomType.MASSIVE_DATA_LOST, info);
     assertEquals("", event.getText());
-    RandomEventUtility.handleMassiveDataLost(event);
+    RandomEventUtility.handleMassiveDataLost(event, starMap);
     boolean found = false;
     for (TechType type : TechType.values()) {
       if (info.getTechList().getTechResearchPoints(type) == 0) {
@@ -155,10 +156,11 @@ public class RandomEventUtilityTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTechBreakThrough() {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     RandomEvent event = new RandomEvent(GoodRandomType.TECHNICAL_BREAKTHROUGH,
         info);
     assertEquals("", event.getText());
-    RandomEventUtility.handleTechnicalBreakThrough(event);
+    RandomEventUtility.handleTechnicalBreakThrough(event, starMap);
     boolean found = false;
     for (TechType type : TechType.values()) {
       if (info.getTechList().getTechResearchPoints(type) > 10) {

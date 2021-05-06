@@ -91,10 +91,23 @@ public final class RandomEventUtility {
   /**
    * Handle massive data lost event.
    * @param event Random event, must be Massive data lost.
+   * @param map StarMap for getting location for focus.
    */
-  public static void handleMassiveDataLost(final RandomEvent event) {
+  public static void handleMassiveDataLost(final RandomEvent event,
+      final StarMap map) {
     if (event.getBadType() == BadRandomType.MASSIVE_DATA_LOST) {
       PlayerInfo info = event.getRealm();
+      Planet mostValuablePlanet = null;
+      int bestValue = 0;
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info) {
+          int value = planet.getTotalProduction(Planet.PRODUCTION_RESEARCH);
+          if (value > bestValue) {
+            bestValue = value;
+            mostValuablePlanet = planet;
+          }
+        }
+      }
       int index = DiceGenerator.getRandom(TechType.values().length - 1);
       info.getTechList().setTechResearchPoints(TechType.getTypeByIndex(index),
           0);
@@ -110,6 +123,9 @@ public final class RandomEventUtility {
       Message message = new Message(MessageType.INFORMATION, event.getText(),
           Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));
       message.setRandomEventPop(true);
+      if (mostValuablePlanet != null) {
+        message.setCoordinate(mostValuablePlanet.getCoordinate());
+      }
       info.getMsgList().addFirstMessage(message);
     }
   }
@@ -237,8 +253,10 @@ public final class RandomEventUtility {
   /**
    * Handle techinical breakthrough
    * @param event Random event, must be technical breakthrough
+   * @param map Starmap for location
    */
-  public static void handleTechnicalBreakThrough(final RandomEvent event) {
+  public static void handleTechnicalBreakThrough(final RandomEvent event,
+      final StarMap map) {
     if (event.getGoodType() == GoodRandomType.TECHNICAL_BREAKTHROUGH) {
       PlayerInfo info = event.getRealm();
       int index = DiceGenerator.getRandom(TechType.values().length - 1);
@@ -248,6 +266,17 @@ public final class RandomEventUtility {
         original = 20;
       } else {
         original = original * 2;
+      }
+      Planet mostValuablePlanet = null;
+      int bestValue = 0;
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info) {
+          int value = planet.getTotalProduction(Planet.PRODUCTION_RESEARCH);
+          if (value > bestValue) {
+            bestValue = value;
+            mostValuablePlanet = planet;
+          }
+        }
       }
       info.getTechList().setTechResearchPoints(TechType.getTypeByIndex(index),
           original);
@@ -262,6 +291,9 @@ public final class RandomEventUtility {
       Message message = new Message(MessageType.INFORMATION, event.getText(),
           Icons.getIconByName(Icons.ICON_RESEARCH));
       message.setRandomEventPop(true);
+      if (mostValuablePlanet != null) {
+        message.setCoordinate(mostValuablePlanet.getCoordinate());
+      }
       info.getMsgList().addFirstMessage(message);
     }
   }
@@ -1344,7 +1376,7 @@ public final class RandomEventUtility {
           break;
         }
         case MASSIVE_DATA_LOST: {
-          handleMassiveDataLost(event);
+          handleMassiveDataLost(event, map);
           break;
         }
         case METEOR_HIT: {
@@ -1413,7 +1445,7 @@ public final class RandomEventUtility {
         }
         default:
         case TECHNICAL_BREAKTHROUGH: {
-          handleTechnicalBreakThrough(event);
+          handleTechnicalBreakThrough(event, map);
           break;
         }
       }

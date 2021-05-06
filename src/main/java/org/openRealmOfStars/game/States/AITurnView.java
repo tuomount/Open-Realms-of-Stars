@@ -3226,7 +3226,7 @@ public class AITurnView extends BlackPanel {
           }
         }
       }
-      int goodChance = map.getBadKarmaCount() / 10;
+      int goodChance = map.getGoodKarmaCount() / 10;
       if (DiceGenerator.getRandom(1, 100) < goodChance) {
         PlayerInfo info = getRealmByKarma(false);
         if (info != null && info.getRandomEventOccured() == null) {

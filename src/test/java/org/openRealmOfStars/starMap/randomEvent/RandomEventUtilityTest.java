@@ -306,7 +306,7 @@ public class RandomEventUtilityTest {
     RandomEvent event = new RandomEvent(BadRandomType.RULER_STRESS,
         info);
     assertEquals("", event.getText());
-    RandomEventUtility.handleRulerStress(event);
+    RandomEventUtility.handleRulerStress(event, starMap);
     assertNotEquals("", event.getText());
   }
 

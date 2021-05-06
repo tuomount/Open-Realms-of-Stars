@@ -117,15 +117,33 @@ public final class RandomEventUtility {
   /**
    * Handle ruler stress.
    * @param event Random event, must be ruler stress
+   * @param map StarMap for getting planet for focus.
    */
-  public static void handleRulerStress(final RandomEvent event) {
+  public static void handleRulerStress(final RandomEvent event,
+      final StarMap map) {
     if (event.getBadType() == BadRandomType.RULER_STRESS) {
       PlayerInfo info = event.getRealm();
       if (info.getRuler() != null) {
+        Planet mostValuablePlanet = null;
+        int bestValue = 0;
+        for (Planet planet : map.getPlanetList()) {
+          if (planet.getPlanetPlayerInfo() == info) {
+            int value = planet.getTotalPopulation() * 10 + planet.getCulture();
+            if (value > bestValue) {
+              bestValue = value;
+              mostValuablePlanet = planet;
+            }
+          }
+        }
         event.setLeader(info.getRuler());
         Perk[] perks = LeaderUtility.getNewPerks(info.getRuler(),
             LeaderUtility.PERK_TYPE_MENTAL);
         if (perks.length > 0) {
+          ImageInstruction instructions = new ImageInstruction();
+          instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+          instructions.addSiluete(info.getRuler().getRace().getNameSingle(),
+              ImageInstruction.POSITION_CENTER);
+          event.setImageInstructions(instructions.build());
           Perk perk = perks[DiceGenerator.getRandom(perks.length - 1)];
           info.getRuler().getPerkList().add(perk);
           event.setText(info.getRuler().getCallName() + " has been on massive"
@@ -134,6 +152,10 @@ public final class RandomEventUtility {
               + ".");
           Message message = new Message(MessageType.INFORMATION,
               event.getText(), Icons.getIconByName(Icons.ICON_RULER));
+          if (mostValuablePlanet != null) {
+            message.setCoordinate(mostValuablePlanet.getCoordinate());
+          }
+          message.setRandomEventPop(true);
           info.getMsgList().addFirstMessage(message);
         }
       }
@@ -1338,7 +1360,7 @@ public final class RandomEventUtility {
           break;
         }
         case RULER_STRESS: {
-          handleRulerStress(event);
+          handleRulerStress(event, map);
           break;
         }
         case ACCIDENT: {

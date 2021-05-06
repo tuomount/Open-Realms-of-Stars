@@ -3229,7 +3229,7 @@ public class AITurnView extends BlackPanel {
       int goodChance = map.getBadKarmaCount() / 10;
       if (DiceGenerator.getRandom(1, 100) < goodChance) {
         PlayerInfo info = getRealmByKarma(false);
-        if (info != null) {
+        if (info != null && info.getRandomEventOccured() == null) {
           RandomEvent event = RandomEventUtility.createGoodRandomEvent(info);
           if (RandomEventUtility.handleRandomEvent(event, map)) {
             map.setGoodKarmaCount(map.getGoodKarmaCount() / 2);

@@ -1887,7 +1887,7 @@ public class Planet {
         } else if (workers[PRODUCTION_WORKERS] > 0) {
           workers[PRODUCTION_WORKERS]--;
           workerName = "Worker";
-        } else {
+        } else  if (workers[FOOD_FARMERS] > 0) {
           workers[FOOD_FARMERS]--;
           workerName = "Farmer";
         }
@@ -1917,6 +1917,38 @@ public class Planet {
           return false;
         }
       }
+    } else {
+      // Mechion handling on planet
+      if (getTotalPopulation() > getPopulationLimit()) {
+        String workerName = "Culture artist";
+        if (workers[CULTURE_ARTIST] > 0) {
+          workers[CULTURE_ARTIST]--;
+          workerName = "Artist";
+        } else if (workers[METAL_MINERS] > 0) {
+          workers[METAL_MINERS]--;
+          workerName = "Miner";
+        } else if (workers[RESEARCH_SCIENTIST] > 0) {
+          workers[RESEARCH_SCIENTIST]--;
+          workerName = "Scientist";
+        } else if (workers[PRODUCTION_WORKERS] > 0) {
+          workers[PRODUCTION_WORKERS]--;
+          workerName = "Worker";
+        } else  if (workers[FOOD_FARMERS] > 0) {
+          workers[FOOD_FARMERS]--;
+          workerName = "Farmer";
+        }
+        setMetal(getMetal() + 10);
+        msg = new Message(MessageType.POPULATION,
+            getName() + " has " + workerName + " died due over population."
+                + " Mechions start killing others because of over population."
+                + " Some of the metal has been recycled."
+                + "Population is now " + getTotalPopulation(),
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setCoordinate(getCoordinate());
+        msg.setMatchByString(getName());
+        planetOwnerInfo.getMsgList().addNewMessage(msg);
+      }
+
     }
     return true;
   }

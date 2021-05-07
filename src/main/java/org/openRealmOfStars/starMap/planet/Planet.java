@@ -1514,7 +1514,7 @@ public class Planet {
     }
     if (planetOwnerInfo != null
         && planetOwnerInfo.getRace() == SpaceRace.MECHIONS
-        && getTotalPopulation() < getGroundSize()) {
+        && getTotalPopulation() < getPopulationLimit()) {
       tmp2 = ConstructionFactory
           .createByName(ConstructionFactory.MECHION_CITIZEN);
       if (tmp2 != null && !exceedRadiation()) {
@@ -2582,7 +2582,7 @@ public class Planet {
       ArrayList<Integer> list = new ArrayList<>();
       for (int i = 0; i < workers.length; i++) {
         if (workers[i] > 0) {
-          list.add(new Integer(i));
+          list.add(Integer.valueOf(i));
         }
       }
       int index = DiceGenerator.getRandom(list.size() - 1);

@@ -425,6 +425,9 @@ public final class LeaderUtility {
     case AI: {
       return "Main Process";
     }
+    case SPACE_PIRATES: {
+      return "Leader";
+    }
     case HIVEMIND: {
       return "Master";
     }

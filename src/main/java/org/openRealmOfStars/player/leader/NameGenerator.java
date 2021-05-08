@@ -2257,6 +2257,23 @@ public final class NameGenerator {
    * @return Leader name.
    */
   public static String generateName(final SpaceRace race, final Gender gender) {
+    if (race == SpaceRace.SPACE_PIRATE) {
+      switch (DiceGenerator.getRandom(11)) {
+        default:
+        case 0: return generateHumanName(gender);
+        case 1: return generateSporkName(gender);
+        case 2: return generateTeuthidaeName(gender);
+        case 3: return generateChiraloidName(gender);
+        case 4: return generateMothoidName(gender);
+        case 5: return generateScaurianName(gender);
+        case 6: return generateHomarianName(gender);
+        case 7: return generateGreyanName(gender);
+        case 8: return generateCentaurName(gender);
+        case 9: return generateMechionName();
+        case 10: return generateReborgianName();
+        case 11: return generateLithorianName(gender);
+      }
+    }
     if (race == SpaceRace.HUMAN) {
       return generateHumanName(gender);
     }

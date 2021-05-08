@@ -1891,7 +1891,7 @@ public class Game implements ActionListener {
       PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_PIRATE, maxPlayers,
           index, boardIndex);
       info.setBoard(true);
-      info.setGovernment(GovernmentType.AI);
+      info.setGovernment(GovernmentType.SPACE_PIRATES);
       info.setEmpireName("Space pirates");
       players.addPlayer(info);
     }

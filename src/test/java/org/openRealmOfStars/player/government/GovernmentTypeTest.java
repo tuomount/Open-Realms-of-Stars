@@ -241,6 +241,12 @@ public class GovernmentTypeTest {
         + "* Production bonus: 1\n"
         + "* Research bonus: 2\n"
         + "* Credit rush\n";
+    expected[21] = "### Pirates\n"
+        + "* Base fleet capacity: 3\n"
+        + "* Leader capacity: 6\n"
+        + "* Leader cost: 5\n"
+        + "* Reign length: 100 turns\n"
+        + "* No effects on happines nor war fatigue\n";
     for (int i = 0; i <  GovernmentType.values().length; i++) {
       GovernmentType government = GovernmentType.values()[i];
       assertEquals(expected[i], government.getDescription(true));

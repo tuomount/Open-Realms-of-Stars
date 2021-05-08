@@ -109,7 +109,11 @@ public enum GovernmentType {
   /**
    * Technocracy government
    */
-  TECHNOCRACY(20, "Technocracy", 0, -1, false, 2);
+  TECHNOCRACY(20, "Technocracy", 0, -1, false, 2),
+  /**
+   * Technocracy government
+   */
+  SPACE_PIRATES(21, "Pirates", 0, 0, true, 3);
 
 
   /**
@@ -377,6 +381,7 @@ public enum GovernmentType {
         return 10;
       }
       case AI:
+      case SPACE_PIRATES:
       case HIVEMIND:
       case COLLECTIVE:
       case NEST:
@@ -427,6 +432,7 @@ public enum GovernmentType {
         return 10;
       }
       case AI:
+      case SPACE_PIRATES:
       case HIVEMIND:
       case NEST: {
         return 5;
@@ -456,6 +462,7 @@ public enum GovernmentType {
       case FEDERATION:
       case MECHANICAL_HORDE:
       case AI:
+      case SPACE_PIRATES:
       case HIVEMIND:
       case GUILD:
       case ENTERPRISE:
@@ -511,6 +518,7 @@ public enum GovernmentType {
       case COLLECTIVE: {
         return 50;
       }
+      case SPACE_PIRATES:
       case AI: {
         return 100;
       }

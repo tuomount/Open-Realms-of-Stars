@@ -540,6 +540,17 @@ public boolean launchIntercept(final int distance,
         strongestPower = strongestShip.getShip().getTotalMilitaryPower();
       }
     }
+    if (strongestShip == null) {
+      for (CombatShip ship : combatShipList) {
+        if (ship.getPlayer() != info
+            && ship.getShip().getTheoreticalMilitaryPower() > strongestPower
+            && !ship.isCloakOverloaded()) {
+          strongestShip = ship;
+          strongestPower = strongestShip.getShip()
+              .getTheoreticalMilitaryPower();
+        }
+      }
+    }
     return strongestShip;
   }
 

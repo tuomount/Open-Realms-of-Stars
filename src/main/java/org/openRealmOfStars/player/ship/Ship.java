@@ -1719,6 +1719,66 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Theoretical military power if all systems were running.
+   * @return Theoretical military power
+   */
+  public int getTheoreticalMilitaryPower() {
+    double power = 0;
+    boolean militaryShip = false;
+    power = getHull().getSlotHull() * getHull().getMaxSlot();
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.WEAPON_BEAM
+          || comp.getType() == ShipComponentType.WEAPON_RAILGUN
+          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+          || comp.getType() == ShipComponentType.PLASMA_CANNON
+          || comp.getType() == ShipComponentType.ION_CANNON) {
+        militaryShip = true;
+        power = power + comp.getDamage();
+      }
+      if (comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
+        power = power + comp.getDamage() / 2.0;
+      }
+      if (comp.getType() == ShipComponentType.ARMOR
+          || comp.getType() == ShipComponentType.SHIELD
+          || comp.getType() == ShipComponentType.SOLAR_ARMOR) {
+        power = power + comp.getDefenseValue();
+      }
+      if (comp.getType() == ShipComponentType.ENGINE
+          && getHull().getHullType() != ShipHullType.STARBASE) {
+        power = power + comp.getTacticSpeed() - 1;
+      }
+      if (comp.getType() == ShipComponentType.TARGETING_COMPUTER) {
+        power = power + comp.getDamage() / 10.0;
+      }
+      if (comp.getType() == ShipComponentType.JAMMER) {
+        power = power + comp.getDefenseValue() / 5.0;
+      }
+      if (comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
+        power = power + comp.getDefenseValue();
+        power = power + comp.getDamage() / 5;
+      }
+      if (comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
+        power = power + comp.getDefenseValue() * 2;
+      }
+      if (comp.getType() == ShipComponentType.FIGHTER_BAY) {
+        power = power + comp.getBaySize();
+      }
+      if (comp.getType() == ShipComponentType.TRACTOR_BEAM) {
+        power = power + 1;
+      }
+    }
+    if (isStarBase() && !getFlag(FLAG_STARBASE_DEPLOYED)) {
+      // Only deployed starbases should have military power
+      power = 0;
+    }
+    if (!militaryShip) {
+      power = 0;
+    }
+    return (int) Math.round(power);
+  }
+  /**
    * Calculate military power of design. Design needs to have at least single
    * weapon to be a military ship
    * @return Military power

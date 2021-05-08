@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016, 2017, 2020  Tuomo Untinen
+* Copyright (C) 2016, 2017, 2020,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -115,7 +115,12 @@ public class ShipComponentTest {
     component.setDamage(2);
     component.setWeaponRange(4);
     component.setEnergyRequirement(0);
-    assertEquals("ECM\nCost: 3 Metal: 3\nShield damage: 2 Range: 4\nHit: 50%, damages only shields\n", component.toString());
+    assertEquals("ECM\n"
+        + "Cost: 3 Metal: 3\n"
+        + "Shield damage: 2 Range: 4\n"
+        + "Hit: 50%, damages only shields\n"
+        + "\n"
+        + "ECM torpedo only work against shields.\n", component.toString());
   }
 
   @Test
@@ -127,17 +132,29 @@ public class ShipComponentTest {
     component.setDamage(3);
     component.setWeaponRange(3);
     component.setEnergyRequirement(0);
-    assertEquals("HE missile\nCost: 3 Metal: 3\nDamage: 3 Range: 3\nHit: 50%, 50% penetrates shields\n", component.toString());
+    assertEquals("HE missile\n"
+        + "Cost: 3 Metal: 3\n"
+        + "Damage: 3 Range: 3\n"
+        + "Hit: 50%, 50% penetrates shields\n"
+        + "\n"
+        + "Long range weapon with 50% accuracy.\n", component.toString());
   }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCloackingDevice() {
-    ShipComponent component = new ShipComponent(0, "Cloack", 3, 3,
+    ShipComponent component = new ShipComponent(0, "Cloak", 3, 3,
         ShipComponentType.CLOAKING_DEVICE);
-    assertEquals("Cloack", component.getName());
+    assertEquals("Cloak", component.getName());
     component.setCloaking(40);
-    assertEquals("Cloack\nCost: 3 Metal: 3\nCloaking:40\n", component.toString());
+    assertEquals("Cloak\n"
+        + "Cost: 3 Metal: 3\n"
+        + "Cloaking:40\n"
+        + "\n"
+        + "Cloaking device tries to hide fleet in star map.\n"
+        + "It will also make ship more difficult target in combat.\n"
+        + "If cloaking device is overloaded in combat\n"
+        + "ship cannot be targeted for one turn.\n", component.toString());
   }
 
   @Test
@@ -146,7 +163,11 @@ public class ShipComponentTest {
     ShipComponent component = new ShipComponent(0, "Jammer", 3, 3,
         ShipComponentType.JAMMER);
     component.setDefenseValue(10);
-    assertEquals("Jammer\nCost: 3 Metal: 3\nJammer: -10%\n", component.toString());
+    assertEquals("Jammer\n"
+        + "Cost: 3 Metal: 3\n"
+        + "Jammer: -10%\n"
+        + "\n"
+        + "Makes ship to harder to hit.\n", component.toString());
   }
 
   @Test
@@ -156,7 +177,12 @@ public class ShipComponentTest {
         ShipComponentType.DISTORTION_SHIELD);
     component.setDefenseValue(3);
     component.setDamage(5);
-    assertEquals("Distortion shield\nCost: 8 Metal: 3\nShield value: 3 Jammer: -5%\n", component.toString());
+    assertEquals("Distortion shield\n"
+        + "Cost: 8 Metal: 3\n"
+        + "Shield value: 3 Jammer: -5%\n"
+        + "\n"
+        + "Distortion shield works as a shield\n"
+        + "and jammer making hitting more difficult.\n", component.toString());
   }
 
   @Test
@@ -165,7 +191,12 @@ public class ShipComponentTest {
     ShipComponent component = new ShipComponent(0, "Shield generator", 3, 3,
         ShipComponentType.SHIELD_GENERATOR);
     component.setDefenseValue(1);
-    assertEquals("Shield generator\nCost: 3 Metal: 3\nShield generator: 1\n", component.toString());
+
+    assertEquals("Shield generator\n"
+        + "Cost: 3 Metal: 3\n"
+        + "Shield generator: 1\n"
+        + "\n"
+        + "Regenerates shields once per turn.\n", component.toString());
   }
 
   @Test
@@ -174,7 +205,12 @@ public class ShipComponentTest {
     ShipComponent component = new ShipComponent(0, "Bombs", 3, 3,
         ShipComponentType.ORBITAL_BOMBS);
     component.setDamage(10);
-    assertEquals("Bombs\nCost: 3 Metal: 3\nOrbital bombs: 10% hit chance\n", component.toString());
+
+    assertEquals("Bombs\n"
+        + "Cost: 3 Metal: 3\n"
+        + "Orbital bombs: 10% hit chance\n"
+        + "\n"
+        + "Conventional bombs which do not cause diplomatic issues.\n", component.toString());
   }
   
   @Test
@@ -184,7 +220,14 @@ public class ShipComponentTest {
         ShipComponentType.TARGETING_COMPUTER);
     component.setDamage(1);
     component.setInitiativeBoost(1);
-    assertEquals("Computer\nCost: 3 Metal: 3\nTargeting computer: +1% to hit\nInitiative boost: +1\n", component.toString());
+    assertEquals("Computer\n"
+        + "Cost: 3 Metal: 3\n"
+        + "Targeting computer: +1% to hit\n"
+        + "Initiative boost: +1\n"
+        + "\n"
+        + "Targeting computer make ship react faster\n"
+        + "hit better. When target computer is overloaded\n"
+        + "critical hit chance is increased.\n", component.toString());
   }
 
   @Test
@@ -193,7 +236,12 @@ public class ShipComponentTest {
     ShipComponent component = new ShipComponent(0, "Invasion module", 3, 3,
         ShipComponentType.PLANETARY_INVASION_MODULE);
     component.setDamage(110);
-    assertEquals("Invasion module\nCost: 3 Metal: 3\nTroop combat: 110%\n", component.toString());
+    assertEquals("Invasion module\n"
+        + "Cost: 3 Metal: 3\n"
+        + "Troop combat: 110%\n"
+        + "\n"
+        + "Component for ground combat attacks.\n"
+        + "Remember take population act as attacking force.\n", component.toString());
   }
 
   @Test
@@ -275,9 +323,16 @@ public class ShipComponentTest {
     assertEquals(2, component.getCreditBonus());
     assertEquals(3, component.getCultureBonus());
     assertEquals(4, component.getFleetCapacityBonus());
-    assertEquals("Module\nCost: 3 Metal: 3"
-        + "\nCulture bonus: 3\nResearch bonus: 1\nCredit bonus: 2\n"
-        + "Fleet capacity bonus: 4\n",
+
+    assertEquals("Module\n"
+        + "Cost: 3 Metal: 3\n"
+        + "Culture bonus: 3\n"
+        + "Research bonus: 1\n"
+        + "Credit bonus: 2\n"
+        + "Fleet capacity bonus: 4\n"
+        + "\n"
+        + "Star base component gives bonus when\n"
+        + "star base is being deployed.\n",
         component.toString());
   }
 

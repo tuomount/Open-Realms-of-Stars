@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.ship;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -471,6 +471,8 @@ public class ShipComponent {
     case ARMOR: {
       sb.append("Armor value: ");
       sb.append(getDefenseValue());
+      sb.append("\n\n");
+      sb.append("Armor protects ship's hull from impacts.");
       sb.append("\n");
       break;
     }
@@ -479,6 +481,9 @@ public class ShipComponent {
       sb.append(getDefenseValue());
       sb.append(" ");
       sb.append("Armor regeneration");
+      sb.append("\n\n");
+      sb.append("Armor protects ship's hull from impacts."
+          + "\nOrganic armor repairs itself during combat if it has energy.");
       sb.append("\n");
       break;
     }
@@ -488,18 +493,29 @@ public class ShipComponent {
       sb.append(" Jammer: -");
       sb.append(getDamage());
       sb.append("%");
+      sb.append("\n\n");
+      sb.append("Distortion shield works as a shield\n"
+          + "and jammer making hitting more difficult.");
       sb.append("\n");
       break;
     }
     case SHIELD: {
       sb.append("Shield value: ");
       sb.append(getDefenseValue());
+      sb.append("\n\n");
+      sb.append("Shield protects ship's hull from impacts."
+          + "\nShield can be overload to regenerate faster.");
       sb.append("\n");
       break;
     }
     case CLOAKING_DEVICE: {
       sb.append("Cloaking:");
       sb.append(getCloaking());
+      sb.append("\n\n");
+      sb.append("Cloaking device tries to hide fleet in star map."
+          + "\nIt will also make ship more difficult target in combat."
+          + "\nIf cloaking device is overloaded in combat\n"
+          + "ship cannot be targeted for one turn.");
       sb.append("\n");
       break;
     }
@@ -524,17 +540,32 @@ public class ShipComponent {
         sb.append(getFleetCapacityBonus());
         sb.append("\n");
       }
-      break;
-    }
-    case TRACTOR_BEAM: {
-      sb.append("Pulls smaller ships to closer");
+      sb.append("\n");
+      sb.append("Star base component gives bonus when\n"
+          + "star base is being deployed.");
       sb.append("\n");
       break;
     }
-    case COLONY_MODULE:
-    case POWERSOURCE:
-    case PRIVATEERING_MODULE: {
+    case TRACTOR_BEAM: {
+      sb.append("\nPulls smaller ships to closer");
+      sb.append("\n");
+      break;
+    }
+    case COLONY_MODULE: {
+      sb.append("Colonization module can used to colonize new planets."
+          + "\nRemember move population to colony ship before"
+          + "\nleaving to colony mission.");
+      sb.append("\n");
+      break;
+    }
+    case POWERSOURCE: {
       // Do nothing
+      break;
+    }
+    case PRIVATEERING_MODULE: {
+      sb.append("\nPrivateer module allows stealing valueables"
+          + "\nfrom cargo ships.");
+      sb.append("\n");
       break;
     }
     case ENGINE: {
@@ -553,12 +584,19 @@ public class ShipComponent {
       sb.append("\n");
       sb.append("Combat Speed boost: +");
       sb.append(getTacticSpeed());
+      sb.append("\n\n");
+      sb.append("Combat thrusters gives movement boost during combat.");
       sb.append("\n");
       break;
     }
     case FIGHTER_BAY: {
       sb.append("Bay size: ");
       sb.append(getBaySize());
+      sb.append("\n\n");
+      sb.append("Fighter bays allows loading small and medium"
+          + "\nships into ship. This allows smaller ship to"
+          + "\nhave better combat speed from nuclear drives"
+          + "\nand carrier ship can have faster FTL drive.");
       sb.append("\n");
       break;
     }
@@ -568,7 +606,11 @@ public class ShipComponent {
       sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 100%, 50% penetrates armor");
+      sb.append("\n\n");
+      sb.append("Short range weapon with good accuracy."
+          + "\nBeam weapons always damages armor.");
       sb.append("\n");
+
       break;
     }
     case WEAPON_ECM_TORPEDO: {
@@ -577,6 +619,8 @@ public class ShipComponent {
       sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 50%, damages only shields");
+      sb.append("\n\n");
+      sb.append("ECM torpedo only work against shields.");
       sb.append("\n");
       break;
     }
@@ -586,6 +630,8 @@ public class ShipComponent {
       sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 50%, 50% penetrates shields");
+      sb.append("\n\n");
+      sb.append("Long range weapon with 50% accuracy.");
       sb.append("\n");
       break;
     }
@@ -595,6 +641,8 @@ public class ShipComponent {
       sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 75%, 50% penetrates armor");
+      sb.append("\n\n");
+      sb.append("Medium range weapon with 75% accuracy.");
       sb.append("\n");
       break;
     }
@@ -603,8 +651,12 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range: ");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 75%, cannot be fully deflected");
+      sb.append("\nHit: 75%");
+      sb.append("\n\n");
+      sb.append("Medium range weapon and cannot be fully"
+          + "\ndeflected with armor or shields.");
       sb.append("\n");
+
       break;
     }
     case ION_CANNON: {
@@ -614,7 +666,12 @@ public class ShipComponent {
       sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 75%, Armor stops");
+      sb.append("\n\n");
+      sb.append("Medium range weapons against shields."
+          + "\nIf target has any armor ion cannot is deflected."
+          + "\nOnly one damage to hull.");
       sb.append("\n");
+
       break;
     }
     case WEAPON_RAILGUN: {
@@ -623,6 +680,8 @@ public class ShipComponent {
       sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 75%, 50% penetrates shields");
+      sb.append("\n\n");
+      sb.append("Medium range weapon with 75% accuracy.");
       sb.append("\n");
       break;
     }
@@ -630,6 +689,8 @@ public class ShipComponent {
       sb.append("Jammer: -");
       sb.append(getDefenseValue());
       sb.append("%");
+      sb.append("\n\n");
+      sb.append("Makes ship to harder to hit.");
       sb.append("\n");
       break;
     }
@@ -637,7 +698,10 @@ public class ShipComponent {
       sb.append("Orbital bombs: ");
       sb.append(getDamage());
       sb.append("% hit chance");
+      sb.append("\n\n");
+      sb.append("Conventional bombs which do not cause diplomatic issues.");
       sb.append("\n");
+
       break;
     }
     case ORBITAL_NUKE: {
@@ -656,14 +720,21 @@ public class ShipComponent {
       sb.append("%\n");
       sb.append("Buildings destroyed: ");
       sb.append(buildingsDestroyed);
-      sb.append("%\n");
+      sb.append("%\n\n");
+      sb.append("Nuclear weapon which can cause diplomatic issues"
+          + "\nand increase planet's radiation.");
+      sb.append("\n");
       break;
     }
     case PLANETARY_INVASION_MODULE: {
       sb.append("Troop combat: ");
       sb.append(getDamage());
       sb.append("%");
+      sb.append("\n\n");
+      sb.append("Component for ground combat attacks.\n"
+          + "Remember take population act as attacking force.");
       sb.append("\n");
+
       break;
     }
     case SCANNER: {
@@ -672,18 +743,30 @@ public class ShipComponent {
       sb.append(" Cloak detection: ");
       sb.append(getCloakDetection());
       sb.append(" %");
+      sb.append("\n\n");
+      sb.append("Scanner range is how long scanner can see."
+          + "\nCloaked detection is on adjecents sectors and"
+          + "\nwill drop by distance.");
       sb.append("\n");
       break;
     }
     case SHIELD_GENERATOR: {
       sb.append("Shield generator: ");
       sb.append(getDefenseValue());
+      sb.append("\n\n");
+      sb.append("Regenerates shields once per turn.");
       sb.append("\n");
+
       break;
     }
     case ESPIONAGE_MODULE: {
       sb.append("Espionage: +");
       sb.append(getEspionageBonus());
+      sb.append("\n");
+      sb.append("Espionage bonus is used for getting espionage information\n"
+          + "from another realm if ship is on that realm's sector."
+          + "\nModule is also required for doing espionage missions"
+          + "\nwith leader.");
       sb.append("\n");
       break;
     }
@@ -694,6 +777,10 @@ public class ShipComponent {
       sb.append("\n");
       sb.append("Initiative boost: +");
       sb.append(getInitiativeBoost());
+      sb.append("\n\n");
+      sb.append("Targeting computer make ship react faster\n"
+          + "hit better. When target computer is overloaded"
+          + "\ncritical hit chance is increased.");
       sb.append("\n");
       break;
     }

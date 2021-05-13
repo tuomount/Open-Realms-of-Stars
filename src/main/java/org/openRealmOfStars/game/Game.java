@@ -159,7 +159,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.17.37Beta";
+  public static final String GAME_VERSION = "0.17.38Beta";
 
   /**
    * Animation timer used for animation
@@ -3255,9 +3255,8 @@ public class Game implements ActionListener {
           changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);
           SoundPlayer.playMenuSound();
           return;
-        } else {
-          SoundPlayer.playMenuDisabled();
         }
+        SoundPlayer.playMenuDisabled();
       }
       if (arg0.getActionCommand().equals(
           GameCommands.COMMAND_HAIL_FLEET_PLANET)) {

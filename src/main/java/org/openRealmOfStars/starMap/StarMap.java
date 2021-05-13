@@ -1002,7 +1002,7 @@ public class StarMap {
       value = dis.readInt();
       for (int i = 0; i < value; i++) {
         int index = IOUtilities.read16BitsToInt(dis);
-        Integer intValue = new Integer(index);
+        Integer intValue = Integer.valueOf(index);
         shownTutorialIndexes.add(intValue);
       }
       try {
@@ -1730,6 +1730,33 @@ public class StarMap {
       fleetTiles[x][y] = info;
     }
   }
+
+  /**
+   * Get biggest military fleet in certain coordinates.
+   * @param coord Coordinates where to look for ship
+   * @param playerIndex Which players fleets are searched
+   * @return Biggest fleet at coordinate or null
+   */
+  public Fleet getBiggestFleet(final Coordinate coord, final int playerIndex) {
+    Fleet biggest = null;
+    PlayerInfo player = players.getPlayerInfoByIndex(playerIndex);
+    if (player == null) {
+      return null;
+    }
+    for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
+      Fleet fleet = player.getFleets().getByIndex(j);
+      if (fleet.getCoordinate().sameAs(coord) && biggest == null) {
+        biggest = fleet;
+        continue;
+      }
+      if (fleet.getCoordinate().sameAs(coord) && biggest != null
+          && fleet.getMilitaryValue() > biggest.getMilitaryValue()) {
+        biggest = fleet;
+        continue;
+      }
+    }
+    return biggest;
+  }
   /**
    * Get the fleet tiles from the map.
    * These fleet positions are always calculated
@@ -2133,22 +2160,23 @@ public class StarMap {
     if (isValidCoordinate(x, y) && fleetTiles != null
         && fleetTiles[x][y] != null) {
       int playerIndex = fleetTiles[x][y].getPlayerIndex();
-      int fleetIndex = fleetTiles[x][y].getFleetIndex();
       PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
       if (info1 != info2) {
-        Fleet fleet2 = info2.getFleets().getByIndex(fleetIndex);
-        Coordinate escapePosition = StarMapUtilities.getEscapeCoordinates(
-            fleet2.getCoordinate(), fleet1.getCoordinate());
-        if (!isBlocked(escapePosition.getX(), escapePosition.getY())) {
-          PlayerInfo info = isBlockedByFleet(escapePosition.getX(),
-              escapePosition.getY());
-          if (info != null && info != info2) {
+        Fleet fleet2 = getBiggestFleet(new Coordinate(x, y), playerIndex);
+        if (fleet2 != null) {
+          Coordinate escapePosition = StarMapUtilities.getEscapeCoordinates(
+              fleet2.getCoordinate(), fleet1.getCoordinate());
+          if (!isBlocked(escapePosition.getX(), escapePosition.getY())) {
+            PlayerInfo info = isBlockedByFleet(escapePosition.getX(),
+                escapePosition.getY());
+            if (info != null && info != info2) {
+              escapePosition = null;
+            }
+          } else {
             escapePosition = null;
           }
-        } else {
-          escapePosition = null;
+          return new Combat(fleet1, fleet2, info1, info2, escapePosition);
         }
-        return new Combat(fleet1, fleet2, info1, info2, escapePosition);
       }
     }
     return null;

@@ -1989,9 +1989,7 @@ public class StarMap {
     if (isValidCoordinate(x, y) && fleetTiles != null
         && fleetTiles[x][y] != null) {
       int playerIndex = fleetTiles[x][y].getPlayerIndex();
-      int fleetIndex = fleetTiles[x][y].getFleetIndex();
-      return players.getPlayerInfoByIndex(playerIndex).getFleets()
-          .getByIndex(fleetIndex);
+      return getBiggestFleet(new Coordinate(x, y), playerIndex);
     }
     return null;
   }

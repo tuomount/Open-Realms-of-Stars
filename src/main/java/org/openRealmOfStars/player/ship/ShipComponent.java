@@ -608,7 +608,7 @@ public class ShipComponent {
       sb.append("\nHit: 100%, 50% penetrates armor");
       sb.append("\n\n");
       sb.append("Short range weapon with good accuracy."
-          + "\nBeam weapons always damages armor.");
+          + "\nBeam weapon has 5% bigger critical chance.");
       sb.append("\n");
 
       break;

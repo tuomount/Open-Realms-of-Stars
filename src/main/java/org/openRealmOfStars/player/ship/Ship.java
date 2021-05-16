@@ -927,7 +927,7 @@ private int getRemainingEnergy(final int index) {
  * @param weapon ShipComponent
  * @return Accuracy by weapon
  */
-private int getHitChanceByWeapon(final ShipComponent weapon) {
+private static int getHitChanceByWeapon(final ShipComponent weapon) {
     return weapon.getHitChance();
 }
 
@@ -1030,16 +1030,16 @@ private int increaseHitChanceByComponent() {
   public ShipDamage damageBy(final ShipComponent weapon,
       final int criticalBonus) {
     int damage = 0;
+    int chance = 5 + getExperience() + criticalBonus;
     switch (weapon.getType()) {
     case WEAPON_BEAM:
     case WEAPON_PHOTON_TORPEDO: {
       damage = weapon.getDamage();
       damage = damage - this.getShield();
-      int chance = 5 + getExperience() + criticalBonus;
       if (weapon.getType() == ShipComponentType.WEAPON_BEAM) {
         // Beam weapons have biggest chance to penetrate shields
         // and armor but they have shortest range.
-        chance = 10 + getExperience() + criticalBonus;
+        chance = chance + 5;
       }
       if (damage > 0) {
         this.setShield(this.getShield() - 1);
@@ -1096,7 +1096,7 @@ private int increaseHitChanceByComponent() {
         this.setArmor(this.getArmor() - 1);
       } else {
         if (this.getArmor() / 2 <= weapon.getDamage()
-            || DiceGenerator.getRandom(99) < 5) {
+            || DiceGenerator.getRandom(99) < chance) {
           this.setArmor(this.getArmor() - 1);
           return new ShipDamage(ShipDamage.NO_DAMAGE,
               "Attack hit the armor!");
@@ -1110,7 +1110,7 @@ private int increaseHitChanceByComponent() {
       } else {
         damage = damage + this.getShield() / 2;
         if (this.getShield() / 4 <= damage
-            || DiceGenerator.getRandom(99) < 5) {
+            || DiceGenerator.getRandom(99) < chance) {
           this.setShield(this.getShield() - 1);
           return new ShipDamage(ShipDamage.NO_DAMAGE,
               "Attack hit the shield!");
@@ -1126,14 +1126,13 @@ private int increaseHitChanceByComponent() {
         this.setShield(this.getShield() - damage);
         return new ShipDamage(ShipDamage.NO_DAMAGE,
             "Attacked damage shield by " + damage + "!");
-      } else {
-        this.setShield(0);
-        if (this.getArmor() > 0) {
-          return new ShipDamage(ShipDamage.NO_DAMAGE,
-              "Attack deflected to armor!");
-        }
-        damage = 1;
       }
+      this.setShield(0);
+      if (this.getArmor() > 0) {
+        return new ShipDamage(ShipDamage.NO_DAMAGE,
+            "Attack deflected to armor!");
+      }
+      damage = 1;
       break;
     }
     case WEAPON_ECM_TORPEDO: {

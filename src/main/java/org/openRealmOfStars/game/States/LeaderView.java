@@ -336,6 +336,12 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
         index++;
       }
     }
+    for (Leader leader : leaders) {
+      if (leader.getJob() == Job.PRISON) {
+        result[index] = leader;
+        index++;
+      }
+    }
     // Get all too youngs
     for (Leader leader : leaders) {
       if (leader.getJob() == Job.TOO_YOUNG) {

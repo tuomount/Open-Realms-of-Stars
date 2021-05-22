@@ -1439,6 +1439,9 @@ public final class LeaderUtility {
       case GOVERNOR: {
         return Icons.getIconByName(Icons.ICON_GOVERNOR);
       }
+      case PRISON: {
+        return Icons.getIconByName(Icons.ICON_PRISON);
+      }
       case DEAD: {
         return Icons.getIconByName(Icons.ICON_DEATH);
       }

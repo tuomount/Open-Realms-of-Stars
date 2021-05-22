@@ -487,7 +487,7 @@ public final class NewsFactory {
     }
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);
-    sb.append("One of the leaders of");
+    sb.append("One of the leaders of ");
     sb.append(realm.getEmpireName());
     sb.append(" was caught from ");
     sb.append(reason);

@@ -2181,7 +2181,7 @@ public final class MissionHandling {
         String startText = fleet.getCommander().getCallName() + " from "
             + info.getEmpireName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was demolish building ";
+            + " espionage mission. Main goal was demolish building. ";
         LeaderUtility.handleLeaderPrison(info, planet, fleet, startText
             + fleet.getCommander().getCallName() + " was able to escape"
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()

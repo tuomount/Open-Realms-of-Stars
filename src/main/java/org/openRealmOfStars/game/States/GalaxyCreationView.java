@@ -363,15 +363,15 @@ public class GalaxyCreationView extends BlackPanel {
     karmaTypes[1] = "First and last";
     karmaTypes[2] = "Two first and two last";
     karmaTypes[3] = "Half and half";
-    karmaTypes[4] = "Random";
-    karmaTypes[5] = "Only good events for last half";
-    karmaTypes[6] = "Random only good events";
+    karmaTypes[4] = "Random good and bad events";
+    karmaTypes[5] = "Only good events for last half, bads are disabled";
+    karmaTypes[6] = "Random only good events, bads are disabled";
     comboKarmaType = new SpaceCombo<>(karmaTypes);
     comboKarmaType.setSelectedIndex(this.config.getKarmaType().getIndex());
     comboKarmaType.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboKarmaType.addActionListener(listener);
-    comboKarmaType.setToolTipText("<html>Are there random events."
-        + " This settings decides which realms get the random events."
+    comboKarmaType.setToolTipText("<html>"
+        + " Settings determines which realms get the random events."
         + "<br> Good events happen on realms which are last in scoring"
         + " and bad events happen on realms which are the first in"
         + " scoring.<html>");

@@ -1939,6 +1939,7 @@ public class Game implements ActionListener {
         sb.append(i + 1);
         sb.append(". ");
         sb.append(comp.toString());
+        sb.append("\n\n");
         noPrint = false;
       }
       if (tech.getImprovement() != null) {
@@ -1946,7 +1947,7 @@ public class Game implements ActionListener {
         sb.append(i + 1);
         sb.append(". ");
         sb.append(build.getFullDescription());
-        sb.append("\n");
+        sb.append("\n\n");
         noPrint = false;
       }
       if (tech.getHull() != null) {
@@ -1955,7 +1956,7 @@ public class Game implements ActionListener {
         sb.append(i + 1);
         sb.append(". ");
         sb.append(hull.toString());
-        sb.append("\n");
+        sb.append("\n\n");
         noPrint = false;
       }
       if (noPrint) {

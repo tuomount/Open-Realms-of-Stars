@@ -762,7 +762,7 @@ public class ShipComponent {
     case ESPIONAGE_MODULE: {
       sb.append("Espionage: +");
       sb.append(getEspionageBonus());
-      sb.append("\n");
+      sb.append("\n\n");
       sb.append("Espionage bonus is used for getting espionage information\n"
           + "from another realm if ship is on that realm's sector."
           + "\nModule is also required for doing espionage missions"

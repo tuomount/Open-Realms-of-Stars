@@ -1299,7 +1299,8 @@ public enum SpaceRace {
       sb.append("Radiosynthesis (+1 food per radiation per population)");
     } else if (this == SpaceRace.REBORGIANS) {
       sb.append("Gain dead enemies as own population."
-          + " Steal technology by conquering planets.");
+          + " Steal technology by conquering planets."
+          + " No heirs available.");
     } else if (this == SpaceRace.LITHORIANS) {
       sb.append("Population eats metal instead of food.");
     } else {

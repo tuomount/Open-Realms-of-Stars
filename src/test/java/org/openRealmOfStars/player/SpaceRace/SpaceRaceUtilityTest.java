@@ -351,7 +351,8 @@ public class SpaceRaceUtilityTest {
         + "* War resistance: 60\n"
         + "* Rush: Population\n"
         + "* Special: Gain dead enemies as own population."
-        + " Steal technology by conquering planets.";
+        + " Steal technology by conquering planets."
+        + " No heirs available.";
     expectedResult[11] = "### Lithorians\n"
         + "Lithorians are creatures that eat metal instead of food. They have"
         + " slow grow rate and they have -2 population limit."

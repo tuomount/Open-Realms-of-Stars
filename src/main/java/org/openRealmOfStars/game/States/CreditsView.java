@@ -195,6 +195,7 @@ public class CreditsView extends BlackPanel {
       + "by Stephen Challener (Redshrike), hosted by OpenGameArt.org\n"
       + "https://opengameart.org/content/space-ship-building-bits-volume-1\n\n"
       + "Cloaked ship and shuttle 2 by Tuomo Untinen\n\n"
+      + "Lithorian Space Ship Bridge by Tuomo Untinen\n\n"
       + "\n\nFonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

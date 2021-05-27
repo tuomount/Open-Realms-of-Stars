@@ -1373,6 +1373,12 @@ public final class GuiStatics {
   public static final BufferedImage IMAGE_INTERIOR_PIRATE =
       IOUtilities.loadImage(GuiStatics.class.getResource(
           "/resources/images/pirate_bridge.png"));
+  /**
+   * Ship Lithorian bridge interior
+   */
+  public static final BufferedImage IMAGE_INTERIOR_LITHORIAN =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/lithorian_bridge.png"));
 
   /**
    * Get text width for certain font

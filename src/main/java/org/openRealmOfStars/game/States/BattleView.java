@@ -13,11 +13,13 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
@@ -144,6 +146,11 @@ public class BattleView extends BlackPanel {
   private int timerCount;
 
   /**
+   * Checkbox for auto combat enabled.
+   */
+  private SpaceCheckBox autoCombatEnabled;
+
+  /**
    * Battle view for space combat
    * @param combat Combat
    * @param map Star Map
@@ -228,11 +235,20 @@ public class BattleView extends BlackPanel {
     InfoPanel bottom = new InfoPanel();
     bottom.setTitle(null);
     bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
+    SpaceGreyPanel panel = new SpaceGreyPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     endButton = new SpaceButton("End round 0  ",
         GameCommands.COMMAND_END_BATTLE_ROUND);
     endButton.addActionListener(listener);
-    bottom.add(endButton);
+    panel.add(endButton);
+    autoCombatEnabled = new SpaceCheckBox("Auto Combat");
+    autoCombatEnabled.addActionListener(listener);
+    autoCombatEnabled.setActionCommand(GameCommands.COMMAND_AUTO_COMBAT);
+    autoCombatEnabled.setSelected(false);
+    panel.add(Box.createRigidArea(new Dimension(10, 10)));
+    panel.add(autoCombatEnabled);
 
+    bottom.add(panel);
     bottom.add(Box.createRigidArea(new Dimension(10, 10)));
     int numberOfRows = 10;
     if (GuiStatics.isLargerFonts()) {
@@ -386,8 +402,10 @@ public class BattleView extends BlackPanel {
         if (delayCount >= MAX_DELAY_COUNT) {
           delayCount = 0;
         }
+        boolean aiMove = !combat.getCurrentShip().getPlayer().isHuman()
+            || autoCombatEnabled.isSelected();
         if (combat.getCurrentShip() != null
-            && !combat.getCurrentShip().getPlayer().isHuman() && delayCount == 0
+            && aiMove && delayCount == 0
             && !isCombatEnded()) {
           handleAI();
         }
@@ -402,6 +420,11 @@ public class BattleView extends BlackPanel {
         &&  combat.getCurrentShip().getPlayer().isHuman()) {
       SoundPlayer.playMenuSound();
       endRound();
+    }
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_AUTO_COMBAT)) {
+      SoundPlayer.playMenuSound();
+      updatePanels();
     }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
         && combat.getCurrentShip() != null

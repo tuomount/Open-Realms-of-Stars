@@ -131,6 +131,11 @@ public final class GameCommands {
   public static final String COMMAND_END_BATTLE_ROUND = "EndBattleRound";
 
   /**
+   * Auto combat command
+   */
+  public static final String COMMAND_AUTO_COMBAT = "AutoCombat";
+
+  /**
    * Defend sector command
    */
   public static final String COMMAND_DEFEND_SECTOR = "DefendCommand";

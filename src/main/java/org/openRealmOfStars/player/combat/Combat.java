@@ -719,6 +719,21 @@ public boolean launchIntercept(final int distance,
     }
   }
   /**
+   * Steal Ship from fleet.
+   * @param ship Ship to steal
+   * @param origin Origin fleet
+   * @param target New target fleet
+   */
+  private void stealShipFromFleet(final CombatShip ship, final Fleet origin,
+      final Fleet target) {
+    if (animation.getShooter() != null) {
+      ship.setPlayer(animation.getShooter().getPlayer());
+      origin.removeShip(ship.getShip());
+      target.addShip(ship.getShip());
+      ship.setCommander(target.getCommander());
+    }
+  }
+  /**
    * Destroy ship for fleet's list.
    * @param ship ship to destroy from the fleet
    * @param fleet containing the ship
@@ -2191,6 +2206,23 @@ public boolean launchIntercept(final int distance,
       target.setX(target.getX() + mx);
       target.setY(target.getY() + my);
       result = new ShipDamage(1, "Target is being pulled by tractor beam!");
+      if (target.getShip().getTotalMilitaryPower() == 0
+          && target.getShip().getSpeed() == 0) {
+        result = new ShipDamage(1, "Target is being pulled by tractor beam and"
+            + " captured since all weapons and engines are down!");
+        Fleet origin = null;
+        Fleet stealer = null;
+        if (target.getPlayer() == attackerInfo) {
+          origin = attackerFleet;
+          stealer = defenderFleet;
+        } else if (target.getPlayer() == defenderInfo) {
+          origin = defenderFleet;
+          stealer = attackerFleet;
+        }
+        if (origin != null && stealer != null) {
+          stealShipFromFleet(target, origin, stealer);
+        }
+      }
     }
     if (wormHole != null && wormHole.getX() == target.getX()
         && wormHole.getY() == target.getY()) {

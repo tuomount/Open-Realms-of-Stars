@@ -11,7 +11,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017,2020 Tuomo Untinen
+ * Copyright (C) 2016,2017,2020,2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -222,6 +222,13 @@ public class CombatShip implements Comparable<CombatShip> {
     return player;
   }
 
+  /**
+   * Set Player info for combat ship
+   * @param player New player info for combat ship.
+   */
+  public void setPlayer(final PlayerInfo player) {
+    this.player = player;
+  }
   @Override
   public int compareTo(final CombatShip o) {
     int thisInit = this.ship.getInitiative();
@@ -578,6 +585,13 @@ public class CombatShip implements Comparable<CombatShip> {
     return commander;
   }
 
+  /**
+   * Set Fleet's commander
+   * @param commander New commande for fleet.
+   */
+  public void setCommander(final Leader commander) {
+    this.commander = commander;
+  }
   /**
    * Is ship cloaked or not.
    * @return true if cloaked.

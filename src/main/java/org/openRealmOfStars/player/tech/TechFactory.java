@@ -416,6 +416,41 @@ public final class TechFactory {
       "Cloaking device Mk6", "Planetary scanner Mk5", "Espionage module Mk5" };
 
   /**
+   * Find technology with certain name.
+   * @param name Technology name look for.
+   * @return Tech if found or null.
+   */
+  public static Tech findTech(final String name) {
+    Tech tech = null;
+    for (int i = 1; i < 11; i++) {
+      tech = createCombatTech(name, i);
+      if (tech != null) {
+        return tech;
+      }
+      tech = createDefenseTech(name, i);
+      if (tech != null) {
+        return tech;
+      }
+      tech = createHullTech(name, i);
+      if (tech != null) {
+        return tech;
+      }
+      tech = createPropulsionTech(name, i);
+      if (tech != null) {
+        return tech;
+      }
+      tech = createImprovementTech(name, i);
+      if (tech != null) {
+        return tech;
+      }
+      tech = createElectronicsTech(name, i);
+      if (tech != null) {
+        return tech;
+      }
+    }
+    return null;
+  }
+  /**
    * Create combat tech with certain name and level
    * @param name Tech Name
    * @param level level between 1-10

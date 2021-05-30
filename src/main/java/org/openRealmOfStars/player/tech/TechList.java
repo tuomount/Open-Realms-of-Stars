@@ -281,6 +281,32 @@ public class TechList {
   }
 
   /**
+   * Has certain tech in tech list. This will search tech from all types.
+   * @param techName Tech name to search.
+   * @return True if tech is in list otherwise false.
+   */
+  public boolean hasTech(final String techName) {
+    if (hasTech(TechType.Combat, techName)) {
+      return true;
+    }
+    if (hasTech(TechType.Defense, techName)) {
+      return true;
+    }
+    if (hasTech(TechType.Hulls, techName)) {
+      return true;
+    }
+    if (hasTech(TechType.Electrics, techName)) {
+      return true;
+    }
+    if (hasTech(TechType.Propulsion, techName)) {
+      return true;
+    }
+    if (hasTech(TechType.Improvements, techName)) {
+      return true;
+    }
+    return false;
+  }
+  /**
    * Has certain tech in tech list
    * @param type Tech type
    * @param techName Tech name to search

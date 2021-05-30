@@ -12,6 +12,7 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.leader.Job;
@@ -25,6 +26,8 @@ import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.history.event.CombatEvent;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
@@ -1036,6 +1039,24 @@ public boolean launchIntercept(final int distance,
       ShipStat stat = info.getShipStatByName(ship.getName());
       if (stat != null) {
         stat.setNumberOfVictories(stat.getNumberOfVictories() + 1);
+      }
+    }
+    if (info.getRace() == SpaceRace.SPACE_PIRATE) {
+      // Space pirates have special trait that they can gain
+      // tech by steal enemy ships.
+      for (Ship ship : fleet.getShips()) {
+        if (ship.getHull().getRace() != SpaceRace.SPACE_PIRATE) {
+          for (int j = 0; j  < ship.getNumberOfComponents(); j++) {
+            ShipComponent component = ship.getComponent(j);
+            if (component != null
+                && !info.getTechList().hasTech(component.getName())) {
+              Tech tech = TechFactory.findTech(component.getName());
+              if (tech != null) {
+                info.getTechList().addTech(tech);
+              }
+            }
+          }
+        }
       }
     }
   }

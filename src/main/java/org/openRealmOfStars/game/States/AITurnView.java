@@ -1492,20 +1492,22 @@ public class AITurnView extends BlackPanel {
       }
     }
     // Very easy does not get tech upgrades
-    if (difficulty == PirateDifficultLevel.EASY) {
+    if (difficulty == PirateDifficultLevel.EASY
+        && DiceGenerator.getRandom(100) < 50) {
       addRandomPirateTech(pirates, type, level);
     } else if (difficulty == PirateDifficultLevel.NORMAL) {
       addRandomPirateTech(pirates, type, level);
-      addRandomPirateTech(pirates, type, level);
     } else if (difficulty == PirateDifficultLevel.HARD) {
       addRandomPirateTech(pirates, type, level);
-      addRandomPirateTech(pirates, type, level);
-      addRandomPirateTech(pirates, type, level);
+      if (DiceGenerator.getRandom(100) < 50) {
+        addRandomPirateTech(pirates, type, level);
+      }
     } else if (difficulty == PirateDifficultLevel.VERY_HARD) {
       addRandomPirateTech(pirates, type, level);
       addRandomPirateTech(pirates, type, level);
-      addRandomPirateTech(pirates, type, level);
-      addRandomPirateTech(pirates, type, level);
+      if (DiceGenerator.getRandom(100) < 50) {
+        addRandomPirateTech(pirates, type, level);
+      }
     }
   }
   /**

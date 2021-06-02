@@ -1143,6 +1143,43 @@ public class AITurnView extends BlackPanel {
     }
   }
   /**
+   * Handle Space pirate search for black hole.
+   */
+  public void searchForBlackHole() {
+    PlayerInfo board = game.getPlayers().getBoardPlayer();
+    if (board != null && !board.getTechList().hasTech("Tractor beam")) {
+      StarMap map = game.getStarMap();
+      int centerx = map.getMaxX() / 2;
+      int centery = map.getMaxY() / 2;
+      Coordinate center = new Coordinate(centerx, centery);
+      int closest = -1;
+      double distance = 9999.0;
+      for (int i = 0; i < board.getFleets().getNumberOfFleets(); i++) {
+        Fleet fleet = board.getFleets().getByIndex(i);
+        double value = fleet.getCoordinate().calculateDistance(center);
+        if (value < distance) {
+          closest = i;
+          distance = value;
+        }
+      }
+      if (closest != -1) {
+        Fleet fleet = board.getFleets().getByIndex(closest);
+        Mission mission = board.getMissions().getMissionForFleet(
+            fleet.getName());
+        if (mission != null) {
+          mission.setTarget(center);
+          mission.setType(MissionType.MOVE);
+          mission.setPhase(MissionPhase.TREKKING);
+        } else {
+          mission = new Mission(MissionType.MOVE, MissionPhase.TREKKING,
+              center);
+          mission.setFleetName(fleet.getName());
+          board.getMissions().add(mission);
+        }
+      }
+    }
+  }
+  /**
    * Search newly found planets for different missions.
    * This methods locates colonizable planets, attackable planets
    * and planets with to trade.
@@ -1450,6 +1487,8 @@ public class AITurnView extends BlackPanel {
           // Searching for fleet which has crossed the borders
           searchForBorderCrossing();
           searchDeepSpaceAnchors();
+        } else {
+          searchForBlackHole();
         }
         game.getStarMap().setAIFleet(null);
         game.getStarMap()

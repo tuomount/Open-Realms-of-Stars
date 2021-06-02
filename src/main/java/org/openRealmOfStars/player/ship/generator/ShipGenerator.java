@@ -105,6 +105,9 @@ public final class ShipGenerator {
         if (design.getHull().getSize() == ShipSize.HUGE) {
           scores[i] = scores[i] + 10;
         }
+        if (player.getRace() == SpaceRace.SPACE_PIRATE) {
+          scores[i] = scores[i] + 20;
+        }
       }
       case ORBITAL_BOMBS: {
         if (!design.gotCertainType(ShipComponentType.ORBITAL_BOMBS)
@@ -653,9 +656,8 @@ public final class ShipGenerator {
       final ShipSize size, final boolean bomber, final boolean banNukes) {
     if (bomber) {
       return createMilitaryShip(player, size, SHIP_TYPE_BOMBER, banNukes);
-    } else {
-      return createMilitaryShip(player, size, SHIP_TYPE_REGULAR, banNukes);
     }
+    return createMilitaryShip(player, size, SHIP_TYPE_REGULAR, banNukes);
   }
 
   /**

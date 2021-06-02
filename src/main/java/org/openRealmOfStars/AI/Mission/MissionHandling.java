@@ -782,6 +782,23 @@ public final class MissionHandling {
         mission.setMissionTime(mission.getMissionTime() + 1);
         makeReroute(game, fleet, info, mission);
       }
+      if (info.isBoard()) {
+        Coordinate center = new Coordinate(game.getStarMap().getMaxX() / 2,
+            game.getStarMap().getMaxY() / 2);
+        if (info.getTechList().hasTech("Tractor beam")
+            && mission.getX() == center.getX()
+            && mission.getY() == center.getY()) {
+          // End all moves to center and start privateering.
+          info.getMissions().remove(mission);
+          Sun sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
+              fleet.getY(), info, fleet, null);
+          Mission privateerMission = new Mission(MissionType.PRIVATEER,
+              MissionPhase.TREKKING, sun.getCenterCoordinate());
+          privateerMission.setFleetName(fleet.getName());
+          privateerMission.setSunName(sun.getName());
+          info.getMissions().add(privateerMission);
+        }
+      }
     } // End of move
   }
 

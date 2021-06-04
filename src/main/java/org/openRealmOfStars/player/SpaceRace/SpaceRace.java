@@ -7,6 +7,7 @@ import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.starMap.planet.WorldType;
 
 /**
  *
@@ -1139,6 +1140,173 @@ public enum SpaceRace {
     default:
       return BridgeCommandType.WARM_WHITE;
     }
+  }
+
+  /**
+   * Get World base value for space race.
+   * This will tell how much of population world type can
+   * hold.
+   * @param worldType World Type
+   * @return Base value between 50 - 125 %.
+   */
+  public int getWorldTypeBaseValue(final WorldType worldType) {
+    if (this == HUMAN) {
+      switch (worldType) {
+      case SILICONWORLD: return 50;
+      case WATERWORLD: return 100;
+      case IRONWORLD: return 50;
+      case ICEWORLD: return 75;
+      case CARBONWORLD: return 100;
+      case DESERTWORLD: return 75;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    if (this == MECHIONS) {
+      switch (worldType) {
+      case SILICONWORLD: return 100;
+      case WATERWORLD: return 75;
+      case IRONWORLD: return 100;
+      case ICEWORLD: return 50;
+      case CARBONWORLD: return 75;
+      case DESERTWORLD: return 75;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    if (this == SPORKS) {
+      switch (worldType) {
+      case SILICONWORLD: return 50;
+      case WATERWORLD: return 100;
+      case IRONWORLD: return 50;
+      case ICEWORLD: return 50;
+      case CARBONWORLD: return 100;
+      case DESERTWORLD: return 75;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    if (this == GREYANS) {
+      switch (worldType) {
+      case SILICONWORLD: return 50;
+      case WATERWORLD: return 125;
+      case IRONWORLD: return 50;
+      case ICEWORLD: return 50;
+      case CARBONWORLD: return 100;
+      case DESERTWORLD: return 50;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    if (this == CENTAURS) {
+      switch (worldType) {
+      case SILICONWORLD: return 50;
+      case WATERWORLD: return 100;
+      case IRONWORLD: return 75;
+      case ICEWORLD: return 100;
+      case CARBONWORLD: return 125;
+      case DESERTWORLD: return 100;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    if (this == MOTHOIDS) {
+      switch (worldType) {
+      case SILICONWORLD: return 50;
+      case WATERWORLD: return 100;
+      case IRONWORLD: return 50;
+      case ICEWORLD: return 50;
+      case CARBONWORLD: return 125;
+      case DESERTWORLD: return 75;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    if (this == TEUTHIDAES) {
+      switch (worldType) {
+      case SILICONWORLD: return 50;
+      case WATERWORLD: return 125;
+      case IRONWORLD: return 50;
+      case ICEWORLD: return 75;
+      case CARBONWORLD: return 100;
+      case DESERTWORLD: return 50;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    if (this == SCAURIANS) {
+      switch (worldType) {
+      case SILICONWORLD: return 75;
+      case WATERWORLD: return 100;
+      case IRONWORLD: return 75;
+      case ICEWORLD: return 75;
+      case CARBONWORLD: return 75;
+      case DESERTWORLD: return 75;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    if (this == HOMARIANS) {
+      switch (worldType) {
+      case SILICONWORLD: return 50;
+      case WATERWORLD: return 125;
+      case IRONWORLD: return 50;
+      case ICEWORLD: return 100;
+      case CARBONWORLD: return 125;
+      case DESERTWORLD: return 50;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    if (this == SPACE_PIRATE) {
+      switch (worldType) {
+      case SILICONWORLD: return 75;
+      case WATERWORLD: return 100;
+      case IRONWORLD: return 50;
+      case ICEWORLD: return 75;
+      case CARBONWORLD: return 75;
+      case DESERTWORLD: return 75;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    if (this == CHIRALOIDS) {
+      switch (worldType) {
+      case SILICONWORLD: return 50;
+      case WATERWORLD: return 100;
+      case IRONWORLD: return 50;
+      case ICEWORLD: return 50;
+      case CARBONWORLD: return 100;
+      case DESERTWORLD: return 50;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    if (this == REBORGIANS) {
+      switch (worldType) {
+      case SILICONWORLD: return 75;
+      case WATERWORLD: return 100;
+      case IRONWORLD: return 100;
+      case ICEWORLD: return 50;
+      case CARBONWORLD: return 75;
+      case DESERTWORLD: return 75;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    if (this == LITHORIANS) {
+      switch (worldType) {
+      case SILICONWORLD: return 100;
+      case WATERWORLD: return 75;
+      case IRONWORLD: return 100;
+      case ICEWORLD: return 50;
+      case CARBONWORLD: return 50;
+      case DESERTWORLD: return 75;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
+    return 100;
   }
   /**
    * Get rush option as a String

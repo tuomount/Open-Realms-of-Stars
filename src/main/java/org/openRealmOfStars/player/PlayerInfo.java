@@ -37,6 +37,7 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.WorldType;
 import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
@@ -2103,5 +2104,17 @@ public class PlayerInfo {
         }
       }
     }
+  }
+
+  /**
+   * Get World base value for space race.
+   * This will tell how much of population world type can
+   * hold.
+   * @param worldType World Type
+   * @return Base value between 50 - 150 %.
+   */
+  public int getWorldTypeValue(final WorldType worldType) {
+    int result = this.getRace().getWorldTypeBaseValue(worldType);
+    return result;
   }
 }

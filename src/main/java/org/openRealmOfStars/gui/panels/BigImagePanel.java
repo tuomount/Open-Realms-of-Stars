@@ -22,7 +22,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020  Tuomo Untinen
+ * Copyright (C) 2016-2021  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -209,6 +209,10 @@ public class BigImagePanel extends JPanel {
         } else {
           sb.append(player.getRace().getName());
           sb.append(" can colonize this planet.");
+          sb.append(" Planet has total value of ");
+          sb.append(player.getWorldTypeValue(
+              planet.getPlanetType().getWorldType()));
+          sb.append("%.");
         }
       }
       int lastSpace = -1;

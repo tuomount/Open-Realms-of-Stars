@@ -1690,6 +1690,13 @@ public class Planet {
     } else {
       sb.append(planetType.getTypeAsString());
       sb.append("\n");
+      if (getPlanetPlayerInfo() != null) {
+        sb.append("Suitable: ");
+        sb.append(getPlanetPlayerInfo().getWorldTypeValue(
+            getPlanetType().getWorldType()));
+        sb.append("%\n");
+
+      }
       if (activeScanned && event != PlanetaryEvent.NONE && eventFound) {
         sb.append(event.getExplanation());
         sb.append("\n");
@@ -2405,6 +2412,11 @@ public class Planet {
       result = planetOwnerInfo.getRace().getExtraPopulation();
     }
     result = result + getGroundSize();
+    if (planetOwnerInfo != null) {
+      int percent = planetOwnerInfo.getRace().getWorldTypeBaseValue(
+          planetType.getWorldType());
+      result = result * percent / 100;
+    }
     return result;
   }
   /**

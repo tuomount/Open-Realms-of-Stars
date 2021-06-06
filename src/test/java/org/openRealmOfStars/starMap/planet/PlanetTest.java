@@ -19,7 +19,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -156,7 +156,7 @@ public class PlanetTest {
       planet.setWorkers(0, 1);
       planet.setCulture(5);
       tmp = planet.generateInfoText(true);
-      assertEquals("Earth\nWater world\nRadiation: 1\nSize: below average\nMetal: 6543\n"
+      assertEquals("Earth\nWater world\nSuitable: 75%\nRadiation: 1\nSize: below average\nMetal: 6543\n"
           + "Home world of\nMechions\nMechion Great Empire\nPopulation"
           + ": 1\nCulture: 5\n",tmp);
   }

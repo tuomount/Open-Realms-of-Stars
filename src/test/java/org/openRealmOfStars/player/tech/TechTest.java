@@ -60,6 +60,9 @@ public class TechTest {
     tech.setNextTechOnTree("Next branch");
     assertEquals(true, tech.isRareTech());
     assertEquals("Next branch", tech.getNextTechOnTree());
+    assertEquals(true, tech.isTradeable());
+    tech.setTradeable(false);
+    assertEquals(false, tech.isTradeable());
   }
   
   @Test

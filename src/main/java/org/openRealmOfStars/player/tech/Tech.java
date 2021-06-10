@@ -79,6 +79,10 @@ public class Tech {
   private Icon16x16 icon;
 
   /**
+   * Is tech tradeable to another realms?
+   */
+  private boolean tradeable;
+  /**
    * Create a new Tech with defaults
    * @param name Tech Name
    * @param type Tech Type
@@ -94,6 +98,7 @@ public class Tech {
     nextTechOnTree = null;
     nextTechLevel = 1;
     rareTech = false;
+    tradeable = true;
     icon = Icons.getIconByName(Icons.ICON_RESEARCH);
   }
 
@@ -344,6 +349,22 @@ public class Tech {
    */
   public void setNextTechLevel(final int nextTechLevel) {
     this.nextTechLevel = nextTechLevel;
+  }
+
+  /**
+   * Is tech tradeable to another realms?
+   * @return True if tech is tradeable
+   */
+  public boolean isTradeable() {
+    return tradeable;
+  }
+
+  /**
+   * Set Tech tradeable flag.
+   * @param tradeable True for tradeable
+   */
+  public void setTradeable(final boolean tradeable) {
+    this.tradeable = tradeable;
   }
 
 }

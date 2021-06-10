@@ -1072,19 +1072,34 @@ public class AITurnView extends BlackPanel {
 
   /**
    * Find best colony mission for realm.
+   * @param map StarMap
    * @param colonyMissions Array list of possible colony missions.
    * @param info Realm which is selecting.
    */
-  private void findBestColonyMission(
+  private void findBestColonyMission(final StarMap map,
       final ArrayList<Mission> colonyMissions, final PlayerInfo info) {
-    double bestDistance = 9999;
+    int bestScore = 0;
     Mission bestMission = null;
     for (Mission mission : colonyMissions) {
-      double dist = info.getCenterRealm().calculateDistance(
-          new Coordinate(mission.getX(), mission.getY()));
-      if (dist < bestDistance) {
-        bestMission = mission;
-        bestDistance = dist;
+      Planet planet = map.getPlanetByCoordinate(mission.getX(), mission.getY());
+      if (planet != null) {
+        int worldValue = info.getWorldTypeValue(
+            planet.getPlanetType().getWorldType());
+        int size = planet.getGroundSize();
+        double dist = info.getCenterRealm().calculateDistance(
+            new Coordinate(mission.getX(), mission.getY()));
+        double maxDistPoints = map.getMaxX() / 4;
+        int score = (int) (maxDistPoints - dist);
+        if (score < -10) {
+          score = -10;
+        }
+        score = score + size * 2;
+        worldValue = (worldValue - 50) / 3;
+        score = score + worldValue;
+        if (score > bestScore) {
+          bestScore = score;
+          bestMission = mission;
+        }
       }
     }
     if (bestMission != null) {
@@ -1325,7 +1340,7 @@ public class AITurnView extends BlackPanel {
           }
         } // End of owned planet handling
       } // End of for loop of planets
-      findBestColonyMission(colonyMissions, info);
+      findBestColonyMission(game.getStarMap(), colonyMissions, info);
       findBestAttackPlanet(attackMissions, info);
       findBestTradePlanet(tradeMissions, info);
     }

@@ -1394,6 +1394,11 @@ public class StarMap {
         if (planets == 1 && playerIndex != -1) {
           PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
           playerInfo.setAncientRealm(config.getPlayerAncientRealm(playerIndex));
+          PlanetTypes planetType = PlanetTypes.getRandomStartPlanetType(
+              playerInfo.getRace());
+          if (planetType != null) {
+            planet.setPlanetType(planetType);
+          }
           planet.setRadiationLevel(1);
           planet.setGroundSize(12);
           planet.setAmountMetalInGround(HOMEWORLD_METAL);

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -253,6 +254,36 @@ public enum PlanetTypes {
           && !type.isGasGiant()) {
         list.add(type);
       }
+    }
+    int index = DiceGenerator.getRandom(0, list.size() - 1);
+    return list.get(index);
+  }
+
+  /**
+   * Get Highest random start planet type.
+   * @param race Space race for best starting planet
+   * @return Planet type
+   */
+  public static PlanetTypes getRandomStartPlanetType(final SpaceRace race) {
+    ArrayList<PlanetTypes> list = new ArrayList<>();
+    int highestValue = 0;
+    for (WorldType worldType : WorldType.values()) {
+      if (worldType != WorldType.ARTIFICALWORLD
+          && race.getWorldTypeBaseValue(worldType) > highestValue) {
+          highestValue = race.getWorldTypeBaseValue(worldType);
+      }
+    }
+    for (PlanetTypes type : PlanetTypes.values()) {
+      if (type.worldType != WorldType.ARTIFICALWORLD && !type.isGasGiant()) {
+        int value = race.getWorldTypeBaseValue(type.getWorldType());
+        if (value == highestValue) {
+          list.add(type);
+        }
+      }
+    }
+    if (list.size() == 0) {
+      // This should not really happen.
+      return null;
     }
     int index = DiceGenerator.getRandom(0, list.size() - 1);
     return list.get(index);

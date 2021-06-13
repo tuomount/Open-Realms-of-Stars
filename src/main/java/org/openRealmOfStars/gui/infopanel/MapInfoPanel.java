@@ -170,6 +170,7 @@ public class MapInfoPanel extends InfoPanel {
     this.add(panel);
     this.add(Box.createRigidArea(new Dimension(10, 10)));
     textArea = new InfoTextArea();
+    textArea.setFont(GuiStatics.getFontCubellanSmaller());
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);

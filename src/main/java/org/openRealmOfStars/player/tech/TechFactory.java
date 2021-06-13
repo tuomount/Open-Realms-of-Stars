@@ -144,7 +144,7 @@ public final class TechFactory {
    * Defense tech names for level 4
    */
   public static final String[] DEFENSE_TECH_LEVEL4_NAMES = {"Shield Mk4",
-      "Armor plating Mk4", "Shield generator Mk1" };
+      "Armor plating Mk4", "Shield generator Mk1", "Desert colonization" };
   /**
    * Defense rare tech names for level 4.
    */
@@ -159,7 +159,7 @@ public final class TechFactory {
    * Defense tech names for level 6
    */
   public static final String[] DEFENSE_TECH_LEVEL6_NAMES = {"Shield Mk6",
-      "Armor plating Mk6", "Space academy" };
+      "Armor plating Mk6", "Space academy", "Iron colonization" };
   /**
    * Defense rare tech names for level 6.
    */
@@ -205,12 +205,12 @@ public final class TechFactory {
    * Hull tech names for level 2
    */
   public static final String[] HULL_TECH_LEVEL2_NAMES = {"Probe",
-      "Small freighter", "Small starbase Mk1" };
+      "Small freighter", "Small starbase Mk1"};
   /**
    * Hull tech names for level 3
    */
   public static final String[] HULL_TECH_LEVEL3_NAMES = {"Destroyer Mk2",
-      "Corvette Mk1", "Small starbase Mk2" };
+      "Corvette Mk1", "Small starbase Mk2", "Advanced colonization"};
   /**
    * Hull tech names for level 4
    */
@@ -267,7 +267,8 @@ public final class TechFactory {
    * Planetary Improvement tech names for level 4
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL4_NAMES = {"Trade center",
-      "Extreme sports center", "Recycle center", "Starbase lab"};
+      "Extreme sports center", "Recycle center", "Starbase lab",
+      "Carbon colonization"};
   /**
    * Planetary Improvement rare tech names for level 4
    */
@@ -291,7 +292,7 @@ public final class TechFactory {
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL7_NAMES = {
       "New technology center", "VR movie center", "Advanced recycle center",
-      "Starbase nano lab"};
+      "Starbase nano lab", "Aquatic colonization"};
   /**
    * Planetary Improvement tech names for level 8
    */
@@ -334,7 +335,7 @@ public final class TechFactory {
    * Propulsion tech names for level 5
    */
   public static final String[] PROPULSION_TECH_LEVEL5_NAMES = {"Warp drive Mk3",
-      "Hyper drive Mk3", "Tachyon source Mk2" };
+      "Hyper drive Mk3", "Tachyon source Mk2", "Ice colonization" };
   /**
    * Propulsion tech names for level 6
    */
@@ -624,7 +625,13 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Defense, level);
-        if (techName.startsWith("Planetary defense turret Mk")
+        if (techName.equals("Iron colonization")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
+          tech.setTradeable(false);
+        } else if (techName.equals("Desert colonization")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
+          tech.setTradeable(false);
+        } else if (techName.startsWith("Planetary defense turret Mk")
             || techName.startsWith("Orbital shield")
             || techName.equals("Space academy")) {
           tech.setImprovement(techName);
@@ -733,7 +740,11 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Hulls, level);
-        if (techName.contains("starbase")
+        if (techName.equals("Advanced colonization")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
+          tech.setTradeable(false);
+          return tech;
+        } else if (techName.contains("starbase")
             || techName.contains("Artificial planet")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else {
@@ -804,7 +815,13 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Improvements, level);
-        if (techName.startsWith("Starbase")) {
+        if (techName.equals("Aquatic colonization")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
+          tech.setTradeable(false);
+        } else if (techName.equals("Carbon colonization")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
+          tech.setTradeable(false);
+        } else if (techName.startsWith("Starbase")) {
           tech.setComponent(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else if (techName.startsWith("Deadly virus")) {
@@ -902,7 +919,10 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Propulsion, level);
-        if (tech.getName().equals("Material replicator")) {
+        if (techName.equals("Ice colonization")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
+          tech.setTradeable(false);
+        } else if (tech.getName().equals("Material replicator")) {
           tech.setImprovement(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_METAL_ORE));
         } else {

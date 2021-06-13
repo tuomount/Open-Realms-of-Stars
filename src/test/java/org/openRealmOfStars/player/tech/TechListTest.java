@@ -13,7 +13,7 @@ import org.openRealmOfStars.player.message.MessageType;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017, 2019 Tuomo Untinen
+* Copyright (C) 2017, 2019-2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -195,10 +195,11 @@ public class TechListTest {
     TechList list = new TechList();
     list.addTech(TechFactory.createImprovementTech("VR movie center", 7));
     Tech[] missing = list.getListMissingTech(TechType.Improvements, 7);
-    assertEquals(3, missing.length);
+    assertEquals(4, missing.length);
     assertEquals("New technology center", missing[0].getName());
     assertEquals("Advanced recycle center", missing[1].getName());
     assertEquals("Starbase nano lab", missing[2].getName());
+    assertEquals("Aquatic colonization", missing[3].getName());
   }
 
   @Test

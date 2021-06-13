@@ -234,6 +234,30 @@ public class Tech {
           + "This deadly virus can also accidentaly spread when doing\n"
           + "trade with another realm.";
     }
+    if (techName.equals("Advanced colonization")) {
+      result = "Improves survivality of colonies on almost barren silicon\n"
+          + " worlds. This will increase silicon world suitability by 25%.";
+    }
+    if (techName.equals("Desert colonization")) {
+      result = "Improves survivality of colonies on desert worlds.\n"
+          + " This will increase desert world suitability by 25%.";
+    }
+    if (techName.equals("Carbon colonization")) {
+      result = "Improves survivality of colonies on carbon worlds.\n"
+          + " This will increase carbon world suitability by 25%.";
+    }
+    if (techName.equals("Ice colonization")) {
+      result = "Improves survivality of colonies on ice worlds.\n"
+          + " This will increase ice world suitability by 25%.";
+    }
+    if (techName.equals("Iron colonization")) {
+      result = "Improves survivality of colonies on iron worlds.\n"
+          + " This will increase iron world suitability by 25%.";
+    }
+    if (techName.equals("Aquatic colonization")) {
+      result = "Improves survivality of colonies on water worlds.\n"
+          + " This will increase water world suitability by 25%.";
+    }
     return result;
   }
   /**

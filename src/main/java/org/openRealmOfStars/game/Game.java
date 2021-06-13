@@ -1964,6 +1964,10 @@ public class Game implements ActionListener {
           sb.append(i + 1);
           sb.append(". ");
           sb.append(" Allows deadly virus espionage mission.\n");
+        } else if (tech.getName().contains("colonization")) {
+          sb.append(i + 1);
+          sb.append(". ");
+          sb.append(" Improves planet suitability.\n");
         } else {
           throw new IllegalArgumentException("Tech with not actually used: "
              + tech.getName());

@@ -7,6 +7,7 @@ import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.WorldType;
 
 /**
@@ -1169,7 +1170,7 @@ public enum SpaceRace {
       case IRONWORLD: return 100;
       case ICEWORLD: return 50;
       case CARBONWORLD: return 75;
-      case DESERTWORLD: return 75;
+      case DESERTWORLD: return 50;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1216,7 +1217,7 @@ public enum SpaceRace {
       case WATERWORLD: return 100;
       case IRONWORLD: return 50;
       case ICEWORLD: return 50;
-      case CARBONWORLD: return 125;
+      case CARBONWORLD: return 100;
       case DESERTWORLD: return 75;
       default:
       case ARTIFICALWORLD: return 100;
@@ -1289,7 +1290,7 @@ public enum SpaceRace {
       case IRONWORLD: return 100;
       case ICEWORLD: return 50;
       case CARBONWORLD: return 75;
-      case DESERTWORLD: return 75;
+      case DESERTWORLD: return 50;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1443,6 +1444,12 @@ public enum SpaceRace {
     sb.append(dot);
     sb.append(" Rush: ");
     sb.append(getRushOption());
+    PlanetTypes planetTypes = PlanetTypes.getRandomStartPlanetType(this);
+    int sustainable = getWorldTypeBaseValue(planetTypes.getWorldType());
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Start planet value: ");
+    sb.append(sustainable);
     sb.append(lf);
     sb.append(dot);
     sb.append(" Special: ");

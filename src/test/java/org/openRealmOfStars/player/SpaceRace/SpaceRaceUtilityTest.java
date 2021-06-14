@@ -171,6 +171,7 @@ public class SpaceRaceUtilityTest {
         "* Diplomacy bonus: 2\n"+
         "* War resistance: 60\n"+
         "* Rush: Credit\n"+
+        "* Start planet value: 100\n"+
         "* Special: None";
     expectedResult[1] = "### Mechions\n"+
         "Mechanical beings whom do not eat food.\nEach population must be built.\n"+
@@ -187,6 +188,7 @@ public class SpaceRaceUtilityTest {
         "* Diplomacy bonus: -2\n"+
         "* War resistance: 50\n"+
         "* Rush: Population\n"+
+        "* Start planet value: 100\n"+
         "* Special: Population needs to be built and no heirs";
     expectedResult[2] = "### Sporks\n"+
         "Aggressive and warmongering species.\n"+
@@ -203,6 +205,7 @@ public class SpaceRaceUtilityTest {
         "* Diplomacy bonus: -3\n"+
         "* War resistance: 50\n"+
         "* Rush: Credit and population\n"+
+        "* Start planet value: 100\n"+
         "* Special: Extra scout ship and higher combat tech at start";
     expectedResult[3] = "### Greyans\n"+
         "Humanoid creatures with grey skin and big eyes.\nGreyan are excellent researchers.\n"+
@@ -219,6 +222,7 @@ public class SpaceRaceUtilityTest {
         "* Diplomacy bonus: 0\n"+
         "* War resistance: 40\n"+
         "* Rush: Credit\n"+
+        "* Start planet value: 125\n"+
         "* Special: Electronics and propulsion techs are higher at start";
     expectedResult[4] = "### Centaurs\n"+
         "Quadrupedal humanoid creatures which are big,\nabout 5 meters tall."
@@ -238,6 +242,7 @@ public class SpaceRaceUtilityTest {
         "* Diplomacy bonus: -1\n"+
         "* War resistance: 70\n"+
         "* Rush: Credit\n"+
+        "* Start planet value: 125\n"+
         "* Special: Stronger ships";
     expectedResult[5] = "### Mothoids\n"+
         "Mothoids are sentient insects with capability to hivemind."
@@ -257,6 +262,7 @@ public class SpaceRaceUtilityTest {
         "* Diplomacy bonus: 0\n"+
         "* War resistance: 30\n"+
         "* Rush: Population\n"+
+        "* Start planet value: 100\n"+
         "* Special: No defense tech but one Planetary improvement tech at start";
     expectedResult[6] = "### Teuthidaes\n"
         + "Teuthidaes are octopus like creatures. They are "
@@ -275,6 +281,7 @@ public class SpaceRaceUtilityTest {
         + "* Diplomacy bonus: -2\n"
         + "* War resistance: 60\n"
         + "* Rush: Credit\n"
+        + "* Start planet value: 125\n"
         + "* Special: Each ship has built-in cloaking device";
     expectedResult[7] = "### Scaurians\n"
         + "Scaurians are small but wide humanoid. They are "
@@ -293,6 +300,7 @@ public class SpaceRaceUtilityTest {
         + "* Diplomacy bonus: 1\n"
         + "* War resistance: 40\n"
         + "* Rush: Credit\n"
+        + "* Start planet value: 100\n"
         + "* Special: Trade fleet gain 50% more credits and better trade buildings.";
     expectedResult[8] = "### Homarians\n"
         + "Homarians are very strong creatures. "
@@ -312,6 +320,7 @@ public class SpaceRaceUtilityTest {
         + "* Diplomacy bonus: 1\n"
         + "* War resistance: 50\n"
         + "* Rush: Population\n"
+        + "* Start planet value: 125\n"
         + "* Special: Starts with 5 population";
     expectedResult[9] = "### Chiraloids\n"
         + "Chiraloids are creatures with four arms and two legs."
@@ -331,6 +340,7 @@ public class SpaceRaceUtilityTest {
         + "* Diplomacy bonus: -4\n"
         + "* War resistance: 50\n"
         + "* Rush: None\n"
+        + "* Start planet value: 100\n"
         + "* Special: Radiosynthesis (+1 food per radiation per population)";
     expectedResult[10] = "### Reborgians\n"
         + "Reborgians are organism combined with bionic and"
@@ -351,6 +361,7 @@ public class SpaceRaceUtilityTest {
         + "* Diplomacy bonus: -8\n"
         + "* War resistance: 60\n"
         + "* Rush: Population\n"
+        + "* Start planet value: 100\n"
         + "* Special: Gain dead enemies as own population."
         + " Steal technology by conquering planets."
         + " No heirs available.";
@@ -372,6 +383,7 @@ public class SpaceRaceUtilityTest {
         + "* Diplomacy bonus: -2\n"
         + "* War resistance: 70\n"
         + "* Rush: None\n"
+        + "* Start planet value: 100\n"
         + "* Special: Population eats metal instead of food.";
     for (int i = 0; i <  SpaceRaceUtility.RACE_SELECTION.length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByName(
@@ -398,13 +410,14 @@ public class SpaceRaceUtilityTest {
         WorldType type = WorldType.values()[j];
         result = result + race.getWorldTypeBaseValue(type);
       }
+      System.out.println(race.toString() + " Rad: " + race.getMaxRad() + " Sum: " + result);
       switch (race) {
       default:
       case HUMAN:
         assertEquals(650, result);
         break;
       case MECHIONS:
-        assertEquals(675, result);
+        assertEquals(650, result);
         break;
       case SPORKS:
         assertEquals(625, result);
@@ -416,7 +429,7 @@ public class SpaceRaceUtilityTest {
         assertEquals(750, result);
         break;
       case MOTHOIDS:
-        assertEquals(650, result);
+        assertEquals(625, result);
         break;
       case TEUTHIDAES:
         assertEquals(650, result);
@@ -431,7 +444,7 @@ public class SpaceRaceUtilityTest {
         assertEquals(600, result);
         break;
       case REBORGIANS:
-        assertEquals(675, result);
+        assertEquals(650, result);
         break;
       case LITHORIANS:
         assertEquals(650, result);

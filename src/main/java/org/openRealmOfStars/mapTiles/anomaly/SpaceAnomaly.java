@@ -171,7 +171,7 @@ public class SpaceAnomaly {
       switch (tile.getName()) {
         case TileNames.SPACE_ANOMALY_CREDITS: {
           result = new SpaceAnomaly(AnomalyType.CREDIT,
-              DiceGenerator.getRandom(2, 10));
+              DiceGenerator.getRandom(10, 30));
           result.setText("There was hidden cache of credits hidden in"
               + " asteroids. Cache contained " + result.getValue()
               + " credits.");

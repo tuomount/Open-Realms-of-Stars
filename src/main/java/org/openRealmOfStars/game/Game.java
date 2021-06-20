@@ -3,6 +3,8 @@ package org.openRealmOfStars.game;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -431,6 +433,10 @@ public class Game implements ActionListener {
   private static final int ANIMATION_DELAY_COMBAT = 60;
 
   /**
+   * Has fullscreen enabled or not.
+   */
+  private boolean fullscreenMode = false;
+  /**
    * Constructor of Game class
    * @param visible Is game actually visible or not
    */
@@ -442,6 +448,9 @@ public class Game implements ActionListener {
     int resolutionWidth = configFile.getResolutionWidth();
     int resolutionHeight = configFile.getResolutionHeight();
     if (visible) {
+      if (configFile.isHardwareAcceleration()) {
+        System.setProperty("sun.java2d.opengl", "true");
+      }
       gameFrame = new JFrame();
       try {
         readTutorial(null);
@@ -505,22 +514,32 @@ public class Game implements ActionListener {
       musicTimer.setActionCommand(GameCommands.COMMAND_MUSIC_TIMER);
       gameFrame.setUndecorated(configFile.getBorderless());
       GuiStatics.setLargerFonts(configFile.getLargerFonts());
-      gameFrame.setResizable(false);
+      GraphicsDevice graphicsDevice = GraphicsEnvironment
+          .getLocalGraphicsEnvironment().getDefaultScreenDevice();
+      fullscreenMode = false;
+      if (graphicsDevice.isFullScreenSupported() && configFile.isFullscreen()) {
+        fullscreenMode = true;
+        gameFrame.setResizable(true);
+        gameFrame.setUndecorated(true);
+        graphicsDevice.setFullScreenWindow(gameFrame);
+      }
       gameFrame.setVisible(true);
-      // Adjusting JFrame size. Some OS take UI component space
-      // from JFrame. This happens at least with Windows 7/10 and Java8.
-      int sizeX = resolutionWidth - gameFrame.getContentPane().getWidth();
-      int sizeY = resolutionHeight - gameFrame.getContentPane().getHeight();
-      if (sizeX > 0 || sizeY > 0) {
-        ErrorLogger.log("Adjust frame, since OS's UI component require"
-            + " their own space from JFrame.");
-        ErrorLogger.log("Adjusting X: " + sizeX + " Adjusting Y: " + sizeY);
-        gameFrame.setVisible(false);
-        gameFrame.setSize(new Dimension(resolutionWidth + sizeX,
-            resolutionHeight + sizeY));
-        gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE + sizeX,
-            WINDOW_Y_SIZE + sizeY));
-        gameFrame.setVisible(true);
+      if (!isFullscreenMode()) {
+        // Adjusting JFrame size. Some OS take UI component space
+        // from JFrame. This happens at least with Windows 7/10 and Java8.
+        int sizeX = resolutionWidth - gameFrame.getContentPane().getWidth();
+        int sizeY = resolutionHeight - gameFrame.getContentPane().getHeight();
+        if (sizeX > 0 || sizeY > 0) {
+          ErrorLogger.log("Adjust frame, since OS's UI component require"
+              + " their own space from JFrame.");
+          ErrorLogger.log("Adjusting X: " + sizeX + " Adjusting Y: " + sizeY);
+          gameFrame.setVisible(false);
+          gameFrame.setSize(new Dimension(resolutionWidth + sizeX,
+              resolutionHeight + sizeY));
+          gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE + sizeX,
+              WINDOW_Y_SIZE + sizeY));
+          gameFrame.setVisible(true);
+        }
       }
       // Add new KeyEventDispatcher
       KeyboardFocusManager kfm = KeyboardFocusManager
@@ -536,6 +555,13 @@ public class Game implements ActionListener {
     changeGameState(GameState.MAIN_MENU);
   }
 
+  /**
+   * Has Fullscreen mode enabled or not.
+   * @return True if enabled.
+   */
+  public boolean isFullscreenMode() {
+    return fullscreenMode;
+  }
   /**
    * Tries to init bridge
    */
@@ -2565,16 +2591,20 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_OK)) {
         SoundPlayer.playMenuSound();
-        if (!optionsView.getResolution().equals(getCurrentResolution())) {
+        if (!optionsView.getResolution().equals(getCurrentResolution())
+            && !isFullscreenMode()) {
           setNewResolution(optionsView.getResolution());
         }
-        if (gameFrame.isResizable()) {
+        if (gameFrame.isResizable() && !isFullscreenMode()) {
           setResizable(false);
           setNewResolution(gameFrame.getWidth() + "x" + gameFrame.getHeight());
         }
         configFile.setMusicVolume(optionsView.getMusicVolume());
         configFile.setSoundVolume(optionsView.getSoundVolume());
         configFile.setBorderless(optionsView.getBorderless());
+        configFile.setHardwareAcceleration(
+            optionsView.getHardwareAcceleration());
+        configFile.setFullscreen(optionsView.getFullscreen());
         configFile.setLargerFonts(optionsView.getLargerFonts());
         configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
@@ -2589,16 +2619,21 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_SETUP_LIGHTS)) {
         SoundPlayer.playMenuSound();
-        if (!optionsView.getResolution().equals(getCurrentResolution())) {
+        if (!optionsView.getResolution().equals(getCurrentResolution())
+            && !isFullscreenMode()) {
           setNewResolution(optionsView.getResolution());
         }
-        if (gameFrame.isResizable()) {
+        if (gameFrame.isResizable()
+            && !isFullscreenMode()) {
           setResizable(false);
           setNewResolution(gameFrame.getWidth() + "x" + gameFrame.getHeight());
         }
         configFile.setMusicVolume(optionsView.getMusicVolume());
         configFile.setSoundVolume(optionsView.getSoundVolume());
         configFile.setBorderless(optionsView.getBorderless());
+        configFile.setHardwareAcceleration(
+            optionsView.getHardwareAcceleration());
+        configFile.setFullscreen(optionsView.getFullscreen());
         configFile.setLargerFonts(optionsView.getLargerFonts());
         configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
@@ -2611,12 +2646,16 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_APPLY)) {
         SoundPlayer.playMenuSound();
-        if (!optionsView.getResolution().equals("Custom")) {
+        if (!optionsView.getResolution().equals("Custom")
+            && !isFullscreenMode()) {
           setNewResolution(optionsView.getResolution());
         }
         configFile.setMusicVolume(optionsView.getMusicVolume());
         configFile.setSoundVolume(optionsView.getSoundVolume());
         configFile.setBorderless(optionsView.getBorderless());
+        configFile.setHardwareAcceleration(
+            optionsView.getHardwareAcceleration());
+        configFile.setFullscreen(optionsView.getFullscreen());
         configFile.setLargerFonts(optionsView.getLargerFonts());
         configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
@@ -2628,11 +2667,13 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         MusicPlayer.setVolume(configFile.getMusicVolume());
         SoundPlayer.setSoundVolume(configFile.getSoundVolume());
-        setNewResolution(configFile.getResolutionWidth() + "x"
-            + configFile.getResolutionHeight());
+        if (!isFullscreenMode()) {
+          setNewResolution(configFile.getResolutionWidth() + "x"
+              + configFile.getResolutionHeight());
+        }
         SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);
-        if (gameFrame.isResizable()) {
+        if (gameFrame.isResizable() && !isFullscreenMode()) {
           setResizable(false);
         }
         return;

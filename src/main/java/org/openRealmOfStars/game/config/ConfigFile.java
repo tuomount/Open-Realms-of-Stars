@@ -81,6 +81,15 @@ public class ConfigFile {
    */
   public static final String CONFIG_BRIDGE_ID = "BridgeId";
   /**
+   * Config option for fullscreen
+   */
+  public static final String CONFIG_FULLSCREEN = "FullScreen";
+  /**
+   * Config option for hardware acceleration
+   */
+  public static final String CONFIG_HARDWARE_ACCELERATION =
+      "HardwareAcceleration";
+  /**
    * Config file default comment
    */
   public static final String CONFIG_COMMENT = "# Config file for "
@@ -429,6 +438,34 @@ public class ConfigFile {
     return getResolutionPart(0);
   }
 
+  /**
+   * Is FullScreen mode enabled?
+   * @return True if enabled
+   */
+  public boolean isFullscreen() {
+    return getBoolean(CONFIG_FULLSCREEN);
+  }
+  /**
+   * Set fullscreen setting.
+   * @param fullscreen Fullscreen to set.
+   */
+  public void setFullscreen(final boolean fullscreen) {
+    setBoolean(CONFIG_FULLSCREEN, fullscreen);
+  }
+  /**
+   * Is Hardware acceleration enabled or not.
+   * @return True if enabled.
+   */
+  public boolean isHardwareAcceleration() {
+    return getBoolean(CONFIG_HARDWARE_ACCELERATION);
+  }
+  /**
+   * Set Hardware acceleration setting.
+   * @param hardwareAcceleration Hardware acceleration boolean setting.
+   */
+  public void setHardwareAcceleration(final boolean hardwareAcceleration) {
+    setBoolean(CONFIG_HARDWARE_ACCELERATION, hardwareAcceleration);
+  }
   /**
    * Is borders enabled or disabled?
    * @return true if disabled

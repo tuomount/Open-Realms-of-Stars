@@ -59,6 +59,16 @@ public class OptionsView extends BlackPanel {
   private Game game;
 
   /**
+   * Fullscreen checkbox options
+   */
+  private SpaceCheckBox fullscreenBox;
+
+  /**
+   * Hardware acceleration checkbox options
+   */
+  private SpaceCheckBox hardwareAccelerationBox;
+
+  /**
    * Resolution selector
    */
   private JComboBox<String> resolutionSelection;
@@ -143,6 +153,16 @@ public class OptionsView extends BlackPanel {
     InfoPanel screenPanel = new InfoPanel();
     screenPanel.setLayout(new BoxLayout(screenPanel, BoxLayout.Y_AXIS));
     screenPanel.setTitle("Screen Options");
+    fullscreenBox = new SpaceCheckBox("Fullscreen mode");
+    fullscreenBox.setToolTipText("Game runs in fullscreen mode."
+        + " Requires restart.");
+    fullscreenBox.createToolTip();
+    fullscreenBox.setSelected(config.isFullscreen());
+    xPanel.add(fullscreenBox);
+    screenPanel.add(xPanel);
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
     SpaceLabel label = new SpaceLabel("Screen resolution");
     xPanel.add(label);
     xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -156,6 +176,9 @@ public class OptionsView extends BlackPanel {
     resolutionSelection.setFont(GuiStatics.getFontCubellan());
     resolutionSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
+    if (gameFrame.isFullscreenMode()) {
+      resolutionSelection.setEnabled(false);
+    }
     String actualResolution = game.getWidth() + "x" + game.getHeight();
     boolean found = false;
     for (int i = 0; i < resolutions.length; i++) {
@@ -174,10 +197,18 @@ public class OptionsView extends BlackPanel {
     btn.addActionListener(listener);
     btn.createToolTip();
     btn.setToolTipText("You can also resize game window here for custom size.");
+    if (gameFrame.isFullscreenMode()) {
+      btn.setEnabled(false);
+    }
     xPanel.add(btn);
     screenPanel.add(xPanel);
-    label = new SpaceLabel("NOTE: Restart is recommended if resolution is"
-        + " changed.");
+    if (!gameFrame.isFullscreenMode()) {
+      label = new SpaceLabel("NOTE: Restart is recommended if resolution is"
+          + " changed.");
+    } else {
+      label = new SpaceLabel("NOTE: Resolution can be changed only in windowed"
+          + " mode.");
+    }
     screenPanel.add(label);
     xPanel = new EmptyInfoPanel();
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
@@ -186,8 +217,15 @@ public class OptionsView extends BlackPanel {
     borderlessBox.setToolTipText("Removes OS's borders from game frame.");
     borderlessBox.createToolTip();
     borderlessBox.setSelected(config.getBorderless());
+    if (gameFrame.isFullscreenMode()) {
+      borderlessBox.setEnabled(false);
+    }
     xPanel.add(borderlessBox);
-    label = new SpaceLabel("Changing this takes affect after restart.");
+    if (!gameFrame.isFullscreenMode()) {
+      label = new SpaceLabel("Changing this takes affect after restart.");
+    } else {
+      label = new SpaceLabel("Borderless frame is only for windowed mode.");
+    }
     xPanel.add(label);
     screenPanel.add(Box.createRigidArea(new Dimension(20, 20)));
     screenPanel.add(xPanel);
@@ -200,6 +238,15 @@ public class OptionsView extends BlackPanel {
     largerFontsBox.createToolTip();
     largerFontsBox.setSelected(config.getLargerFonts());
     xPanel.add(largerFontsBox);
+    screenPanel.add(xPanel);
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    hardwareAccelerationBox = new SpaceCheckBox("OpenGL Hardware acceleration");
+    hardwareAccelerationBox.setToolTipText("Enables Java's OpenGL support.");
+    hardwareAccelerationBox.createToolTip();
+    hardwareAccelerationBox.setSelected(config.isHardwareAcceleration());
+    xPanel.add(hardwareAccelerationBox);
     screenPanel.add(xPanel);
     screenPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
@@ -403,6 +450,20 @@ public class OptionsView extends BlackPanel {
     return borderlessBox.isSelected();
   }
 
+  /**
+   * Get Fullscreen value.
+   * @return Fullscreen value
+   */
+  public boolean getFullscreen() {
+    return fullscreenBox.isSelected();
+  }
+  /**
+   * Get hardware acceleration value
+   * @return Hardware acceleration value
+   */
+  public boolean getHardwareAcceleration() {
+    return hardwareAccelerationBox.isSelected();
+  }
   /**
    * Get larger fonts value
    * @return Larger fonts value

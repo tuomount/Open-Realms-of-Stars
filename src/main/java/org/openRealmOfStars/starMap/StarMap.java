@@ -3341,6 +3341,39 @@ public class StarMap {
       if (planet.getPlanetPlayerInfo() != null
           && planet.getPlanetOwnerIndex() == playerIndex) {
         result = result + planet.getTotalProduction(production);
+        if (production == Planet.PRODUCTION_CREDITS
+            && planet.getGovernor() != null
+            && planet.getGovernor().hasPerk(Perk.MERCHANT)) {
+          result++;
+        }
+        if (production == Planet.PRODUCTION_RESEARCH) {
+          Leader leader = planet.getGovernor();
+          if (leader != null
+              && leader.hasPerk(Perk.SCIENTIST)) {
+            result++;
+          }
+          if (leader != null && leader.hasPerk(Perk.STUPID)
+              && result > 0) {
+            result--;
+          }
+        }
+        if (production == Planet.PRODUCTION_CREDITS) {
+          Leader leader = planet.getGovernor();
+          if (leader != null
+              && (leader.getJob() == Job.RULER
+              || leader.getJob() == Job.COMMANDER
+              || leader.getJob() == Job.GOVERNOR)
+              && leader.hasPerk(Perk.CORRUPTED)) {
+            result--;
+          }
+        }
+        if (production == Planet.PRODUCTION_CULTURE) {
+          Leader leader = planet.getGovernor();
+          if (leader != null && leader.hasPerk(Perk.ARTISTIC)) {
+            result++;
+          }
+        }
+
       }
     }
     PlayerInfo info = getPlayerByIndex(playerIndex);
@@ -3352,15 +3385,6 @@ public class StarMap {
       Fleet fleet = info.getFleets().getByIndex(i);
       if (production == Planet.PRODUCTION_RESEARCH) {
         result = result + fleet.getTotalReseachBonus();
-        Leader leader = fleet.getCommander();
-        if (leader != null
-            && leader.hasPerk(Perk.SCIENTIST)) {
-          result++;
-        }
-        if (leader != null && leader.hasPerk(Perk.STUPID)
-            && result > 0) {
-          result--;
-        }
       }
       if (production == Planet.PRODUCTION_CREDITS) {
         result = result + fleet.getTotalCreditsBonus();

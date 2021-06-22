@@ -13,7 +13,7 @@ import org.openRealmOfStars.utilities.json.values.Member;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -56,6 +56,32 @@ public class JsonParserTest {
     JsonRoot root = parser.parseJson(stream);
     stream.close();
     assertEquals("{\"Widget\": {\"Debug\": \"On\",\"Run\": \"Off\",\"Loop\": 128}}",
+        root.getValueAsString());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testEmptyStringJson() throws IOException {
+    String jsonText = "{\"\\n\\r\\t\": {\"Debug\": \"On\", \"Run\": \"Off\", \"Loop\": 128}}";
+    byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
+    JsonStream stream = new JsonStream(buf);
+    JsonParser parser = new JsonParser();
+    JsonRoot root = parser.parseJson(stream);
+    stream.close();
+    assertEquals("{\"\\n\\r\\t\": {\"Debug\": \"On\",\"Run\": \"Off\",\"Loop\": 128}}",
+        root.getValueAsString());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testDoubleQouteJson() throws IOException {
+    String jsonText = "{\"\\\"\": 128}";
+    byte[] buf = jsonText.getBytes(StandardCharsets.UTF_8);
+    JsonStream stream = new JsonStream(buf);
+    JsonParser parser = new JsonParser();
+    JsonRoot root = parser.parseJson(stream);
+    stream.close();
+    assertEquals("{\"\\\"\": 128}",
         root.getValueAsString());
   }
 

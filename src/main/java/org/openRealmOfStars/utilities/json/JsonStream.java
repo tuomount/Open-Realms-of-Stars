@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020,2021 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -84,7 +84,10 @@ public class JsonStream extends InputStream {
    * String start and end aka " double qoute as String
    */
   public static final String CH_DOUBLE_QOUTE = "\"";
-
+  /**
+   * Escape charater aka \.
+   */
+  public static final int ESCAPE = 92;
   /**
    * Buffer where json is read.
    */
@@ -106,6 +109,9 @@ public class JsonStream extends InputStream {
     this.buffer = buffer;
     offset = 0;
     closed = false;
+    if (buffer == null || buffer.length == 0) {
+      closed = true;
+    }
   }
 
   /**
@@ -230,12 +236,24 @@ public class JsonStream extends InputStream {
     int count = 0;
     if (isReadable()) {
       byte value = buffer[offset];
-      while (value != character && value != 92) {
+      while (value != character) {
+        boolean escape = false;
+        if (value == ESCAPE) {
+          escape = true;
+        }
         count++;
         if (offset + count < buffer.length) {
           value = buffer[offset + count];
         } else {
-          value = -1;
+          return count - 1;
+        }
+        if (escape && value == DOUBLE_QOUTE) {
+          count++;
+          if (offset + count < buffer.length) {
+            value = buffer[offset + count];
+          } else {
+            return count - 1;
+          }
         }
       }
     }
@@ -277,6 +295,9 @@ public class JsonStream extends InputStream {
     // 5 exp-e, 6 exp-sign, 7 exp-digit
     int state = 0;
     int count = 0;
+    if (offset + count >= buffer.length) {
+      return null;
+    }
     do  {
       byte value = buffer[offset + count];
       if (state == 0) {
@@ -367,7 +388,7 @@ public class JsonStream extends InputStream {
           stop = true;
         }
       }
-      if (offset + count == buffer.length) {
+      if (offset + count >= buffer.length) {
         stop = true;
       }
     } while (!stop);

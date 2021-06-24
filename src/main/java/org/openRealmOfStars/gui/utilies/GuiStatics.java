@@ -629,6 +629,80 @@ public final class GuiStatics {
       new Color(155, 77, 255)};
 
   /**
+   * Player color red.
+   */
+  public static final Color PLAYER_RED = new Color(215, 30, 34);
+  /**
+   * Player color blue.
+   */
+  public static final Color PLAYER_BLUE = new Color(29, 60, 233);
+  /**
+   * Player color green.
+   */
+  public static final Color PLAYER_GREEN = new Color(27, 145, 62);
+  /**
+   * Player color pink.
+   */
+  public static final Color PLAYER_PINK = new Color(237, 84, 186);
+  /**
+   * Player color orange.
+   */
+  public static final Color PLAYER_ORANGE = new Color(255, 148, 28);
+  /**
+   * Player color yellow.
+   */
+  public static final Color PLAYER_YELLOW = new Color(255, 255, 103);
+  /**
+   * Player color black.
+   */
+  public static final Color PLAYER_BLACK = new Color(63, 71, 78);
+  /**
+   * Player color white.
+   */
+  public static final Color PLAYER_WHITE = new Color(214, 224, 240);
+  /**
+   * Player color purple.
+   */
+  public static final Color PLAYER_PURPLE = new Color(107, 49, 188);
+  /**
+   * Player color brown.
+   */
+  public static final Color PLAYER_BROWN = new Color(113, 73, 30);
+  /**
+   * Player color cyan.
+   */
+  public static final Color PLAYER_CYAN = new Color(68, 253, 245);
+  /**
+   * Player color lime.
+   */
+  public static final Color PLAYER_LIME = new Color(80, 239, 57);
+  /**
+   * Player color chestnut.
+   */
+  public static final Color PLAYER_CHESTNUT = new Color(115, 27, 19);
+  /**
+   * Player color rose.
+   */
+  public static final Color PLAYER_ROSE = new Color(236, 192, 211);
+  /**
+   * Player color banana.
+   */
+  public static final Color PLAYER_BANANA = new Color(255, 253, 190);
+  /**
+   * Player color gray.
+   */
+  public static final Color PLAYER_GRAY = new Color(112, 132, 151);
+  /**
+   * Player color tan.
+   */
+  public static final Color PLAYER_TAN = new Color(146, 135, 118);
+  /**
+   * Player color coral.
+   */
+  public static final Color PLAYER_CORAL = new Color(236, 117, 120);
+
+
+  /**
    * Relation unknown icon
    */
   public static final BufferedImage RELATION_UNKNOWN = Icons.loadBigIcon(

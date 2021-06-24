@@ -260,78 +260,150 @@ public final class TileNames {
   public static final String UNCHARTED = "UNCHARTED";
 
   /**
-   * Culture tile for player 0 (Overlay)
+   * Culture tile for player BLUE (Overlay)
    */
-  public static final String PLAYER_0 = "Player_0";
+  public static final String PLAYER_BLUE = "Player_BLUE";
   /**
-   * Culture tile for player 1 (Overlay)
+   * Culture tile for player GREEN (Overlay)
    */
-  public static final String PLAYER_1 = "Player_1";
+  public static final String PLAYER_GREEN = "Player_GREEN";
   /**
-   * Culture tile for player 2 (Overlay)
+   * Culture tile for player WHITE (Overlay)
    */
-  public static final String PLAYER_2 = "Player_2";
+  public static final String PLAYER_WHITE = "Player_WHITE";
   /**
-   * Culture tile for player 3 (Overlay)
+   * Culture tile for player ORANGE (Overlay)
    */
-  public static final String PLAYER_3 = "Player_3";
+  public static final String PLAYER_ORANGE = "Player_ORANGE";
   /**
-   * Culture tile for player 4 (Overlay)
+   * Culture tile for player CYAN (Overlay)
    */
-  public static final String PLAYER_4 = "Player_4";
+  public static final String PLAYER_CYAN = "Player_CYAN";
   /**
-   * Culture tile for player 5 (Overlay)
+   * Culture tile for player PINK (Overlay)
    */
-  public static final String PLAYER_5 = "Player_5";
+  public static final String PLAYER_PINK = "Player_PINK";
   /**
-   * Culture tile for player 6 (Overlay)
+   * Culture tile for player RED (Overlay)
    */
-  public static final String PLAYER_6 = "Player_6";
+  public static final String PLAYER_RED = "Player_RED";
   /**
-   * Culture tile for player 7 (Overlay)
+   * Culture tile for player YELLOW (Overlay)
    */
-  public static final String PLAYER_7 = "Player_7";
+  public static final String PLAYER_YELLOW = "Player_YELLOW";
   /**
-   * Culture tile for player 8 (Overlay)
+   * Culture tile for player BLACK (Overlay)
    */
-  public static final String PLAYER_8 = "Player_8";
+  public static final String PLAYER_BLACK = "Player_BLACK";
+  /**
+   * Culture tile for player PURPLE (Overlay)
+   */
+  public static final String PLAYER_PURPLE = "Player_PURPLE";
+  /**
+   * Culture tile for player BROWN (Overlay)
+   */
+  public static final String PLAYER_BROWN = "Player_BROWN";
+  /**
+   * Culture tile for player LIME (Overlay)
+   */
+  public static final String PLAYER_LIME = "Player_LIME";
+  /**
+   * Culture tile for player CHESTNUT (Overlay)
+   */
+  public static final String PLAYER_CHESTNUT = "Player_CHESTNUT";
+  /**
+   * Culture tile for player ROSE (Overlay)
+   */
+  public static final String PLAYER_ROSE = "Player_ROSE";
+  /**
+   * Culture tile for player BANANA (Overlay)
+   */
+  public static final String PLAYER_BANANA = "Player_BANANA";
+  /**
+   * Culture tile for player GRAY (Overlay)
+   */
+  public static final String PLAYER_GRAY = "Player_GRAY";
+  /**
+   * Culture tile for player TAN (Overlay)
+   */
+  public static final String PLAYER_TAN = "Player_TAN";
+  /**
+   * Culture tile for player CORAL (Overlay)
+   */
+  public static final String PLAYER_CORAL = "Player_CORAL";
 
   /**
-   * Ship color tile for player 0 (Overlay)
+   * Ship color tile for player BLUE (Overlay)
    */
-  public static final String PLAYER_SHIP_0 = "Player_Ship_0";
+  public static final String PLAYER_SHIP_BLUE = "Player_Ship_BLUE";
   /**
-   * Ship color tile for player 1 (Overlay)
+   * Ship color tile for player GREEN (Overlay)
    */
-  public static final String PLAYER_SHIP_1 = "Player_Ship_1";
+  public static final String PLAYER_SHIP_GREEN = "Player_Ship_GREEN";
   /**
-   * Ship color tile for player 2 (Overlay)
+   * Ship color tile for player WHITE (Overlay)
    */
-  public static final String PLAYER_SHIP_2 = "Player_Ship_2";
+  public static final String PLAYER_SHIP_WHITE = "Player_Ship_WHITE";
   /**
-   * Ship color tile for player 3 (Overlay)
+   * Ship color tile for player ORANGE (Overlay)
    */
-  public static final String PLAYER_SHIP_3 = "Player_Ship_3";
+  public static final String PLAYER_SHIP_ORANGE = "Player_Ship_ORANGE";
   /**
-   * Ship color tile for player 4 (Overlay)
+   * Ship color tile for player CYAN (Overlay)
    */
-  public static final String PLAYER_SHIP_4 = "Player_Ship_4";
+  public static final String PLAYER_SHIP_CYAN = "Player_Ship_CYAN";
   /**
-   * Ship color tile for player 5 (Overlay)
+   * Ship color tile for player PINK (Overlay)
    */
-  public static final String PLAYER_SHIP_5 = "Player_Ship_5";
+  public static final String PLAYER_SHIP_PINK = "Player_Ship_PINK";
   /**
-   * Ship color tile for player 6 (Overlay)
+   * Ship color tile for player RED (Overlay)
    */
-  public static final String PLAYER_SHIP_6 = "Player_Ship_6";
+  public static final String PLAYER_SHIP_RED = "Player_Ship_RED";
   /**
-   * Ship color tile for player 7 (Overlay)
+   * Ship color tile for player YELLOW (Overlay)
    */
-  public static final String PLAYER_SHIP_7 = "Player_Ship_7";
+  public static final String PLAYER_SHIP_YELLOW = "Player_Ship_YELLOW";
   /**
-   * Ship color tile for player 8 (Overlay)
+   * Ship color tile for player BLACK (Overlay)
    */
-  public static final String PLAYER_SHIP_8 = "Player_Ship_8";
+  public static final String PLAYER_SHIP_BLACK = "Player_Ship_BLACK";
+  /**
+   * Ship color tile for player PURPLE (Overlay)
+   */
+  public static final String PLAYER_SHIP_PURPLE = "Player_Ship_PURPLE";
+  /**
+   * Ship color tile for player BROWN (Overlay)
+   */
+  public static final String PLAYER_SHIP_BROWN = "Player_Ship_BROWN";
+  /**
+   * Ship color tile for player LIME(Overlay)
+   */
+  public static final String PLAYER_SHIP_LIME = "Player_Ship_LIME";
+  /**
+   * Ship color tile for player CHESTNUT(Overlay)
+   */
+  public static final String PLAYER_SHIP_CHESTNUT = "Player_Ship_CHESTNUT";
+  /**
+   * Ship color tile for player ROSE(Overlay)
+   */
+  public static final String PLAYER_SHIP_ROSE = "Player_Ship_ROSE";
+  /**
+   * Ship color tile for player BANANA(Overlay)
+   */
+  public static final String PLAYER_SHIP_BANANA = "Player_Ship_BANANA";
+  /**
+   * Ship color tile for player GRAY(Overlay)
+   */
+  public static final String PLAYER_SHIP_GRAY = "Player_Ship_GRAY";
+  /**
+   * Ship color tile for player TAN(Overlay)
+   */
+  public static final String PLAYER_SHIP_TAN = "Player_Ship_TAN";
+  /**
+   * Ship color tile for player CORAL(Overlay)
+   */
+  public static final String PLAYER_SHIP_CORAL = "Player_Ship_CORAL";
   /**
    * Space anomaly tile: Credits
    */

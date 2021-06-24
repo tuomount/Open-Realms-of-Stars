@@ -18,6 +18,7 @@ import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.StatisticPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.ship.ShipImages;
@@ -289,13 +290,13 @@ public class StatView extends BlackPanel {
     for (int i = 0; i < names.length; i++) {
       // Realm name
       label = new TransparentLabel(null, names[i], true, true);
-      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      label.setForeground(PlayerColor.getByIndex(i).getColor());
       panel.add(label);
       PlayerInfo realm = map.getPlayerByIndex(i);
       ShipStat stat = getHighestShipStat(realm, 0);
       label = new TransparentLabel(null, stat.getDesign().getName() + " - "
           + stat.getNumberOfBuilt(), true, true);
-      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      label.setForeground(PlayerColor.getByIndex(i).getColor());
       ImageLabel image = new ImageLabel(
           ShipImages.getByRace(stat.getDesign().getHull().getRace())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
@@ -309,7 +310,7 @@ public class StatView extends BlackPanel {
       stat = getHighestShipStat(realm, 6);
       label = new TransparentLabel(null, stat.getDesign().getName() + " - "
           + stat.getDesign().getTotalMilitaryPower(), true, true);
-      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      label.setForeground(PlayerColor.getByIndex(i).getColor());
       image = new ImageLabel(
           ShipImages.getByRace(stat.getDesign().getHull().getRace())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
@@ -323,7 +324,7 @@ public class StatView extends BlackPanel {
       stat = getHighestShipStat(realm, 2);
       label = new TransparentLabel(null, stat.getDesign().getName() + " - "
           + stat.getNumberOfCombats(), true, true);
-      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      label.setForeground(PlayerColor.getByIndex(i).getColor());
       image = new ImageLabel(
           ShipImages.getByRace(stat.getDesign().getHull().getRace())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
@@ -337,7 +338,7 @@ public class StatView extends BlackPanel {
       stat = getHighestShipStat(realm, 3);
       label = new TransparentLabel(null, stat.getDesign().getName() + " - "
           + stat.getNumberOfVictories(), true, true);
-      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      label.setForeground(PlayerColor.getByIndex(i).getColor());
       image = new ImageLabel(
           ShipImages.getByRace(stat.getDesign().getHull().getRace())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
@@ -351,7 +352,7 @@ public class StatView extends BlackPanel {
       stat = getHighestShipStat(realm, 4);
       label = new TransparentLabel(null, stat.getDesign().getName() + " - "
           + stat.getNumberOfLoses(), true, true);
-      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      label.setForeground(PlayerColor.getByIndex(i).getColor());
       image = new ImageLabel(
           ShipImages.getByRace(stat.getDesign().getHull().getRace())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
@@ -365,7 +366,7 @@ public class StatView extends BlackPanel {
       stat = getHighestShipStat(realm, 5);
       label = new TransparentLabel(null, stat.getDesign().getName() + " - "
           + stat.getNumberOfKills(), true, true);
-      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      label.setForeground(PlayerColor.getByIndex(i).getColor());
       image = new ImageLabel(
           ShipImages.getByRace(stat.getDesign().getHull().getRace())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
@@ -548,12 +549,12 @@ public class StatView extends BlackPanel {
     for (int i = 0; i < names.length; i++) {
       // Realm name
       label = new TransparentLabel(null, names[i], true, true);
-      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      label.setForeground(PlayerColor.getByIndex(i).getColor());
       panel.add(label);
       int value = scoreStat.getLatest(i);
       // Scoring victory
       label = new TransparentLabel(null, String.valueOf(value), true, true);
-      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      label.setForeground(PlayerColor.getByIndex(i).getColor());
       panel.add(label);
       // Cultural victory
       if (cultureLabels) {
@@ -573,7 +574,7 @@ public class StatView extends BlackPanel {
           sb.append(" admires");
         }
         label = new TransparentLabel(null, sb.toString(), true, true);
-        label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+        label.setForeground(PlayerColor.getByIndex(i).getColor());
         panel.add(label);
       }
       // Domination victory
@@ -588,7 +589,7 @@ public class StatView extends BlackPanel {
         sb.append(limit);
         sb.append(" homeworlds");
         label = new TransparentLabel(null, sb.toString(), true, true);
-        label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+        label.setForeground(PlayerColor.getByIndex(i).getColor());
         panel.add(label);
       }
       if (scienceLabels) {
@@ -599,7 +600,7 @@ public class StatView extends BlackPanel {
         sb.append(limit);
         sb.append(" on single planet");
         label = new TransparentLabel(null, sb.toString(), true, true);
-        label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+        label.setForeground(PlayerColor.getByIndex(i).getColor());
         panel.add(label);
       }
       if (diplomacyLabels) {
@@ -609,7 +610,7 @@ public class StatView extends BlackPanel {
         sb.append(towerLimit);
         sb.append(" United Galaxy Towers");
         label = new TransparentLabel(null, sb.toString(), true, true);
-        label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+        label.setForeground(PlayerColor.getByIndex(i).getColor());
         panel.add(label);
       }
       if (populationLabels) {
@@ -622,7 +623,7 @@ public class StatView extends BlackPanel {
         sb.append(value);
         sb.append(" %)");
         label = new TransparentLabel(null, sb.toString(), true, true);
-        label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+        label.setForeground(PlayerColor.getByIndex(i).getColor());
         panel.add(label);
       }
     }
@@ -643,12 +644,12 @@ public class StatView extends BlackPanel {
     panel.add(label);
     for (int i = 0; i < names.length; i++) {
       label = new TransparentLabel(null, names[i], true, true);
-      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      label.setForeground(PlayerColor.getByIndex(i).getColor());
       panel.add(label);
     }
     for (int i = 0; i < names.length; i++) {
       label = new TransparentLabel(null, names[i], true, true);
-      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
+      label.setForeground(PlayerColor.getByIndex(i).getColor());
       panel.add(label);
       for (int j = 0; j < names.length; j++) {
         PlayerInfo info = map.getPlayerByIndex(i);

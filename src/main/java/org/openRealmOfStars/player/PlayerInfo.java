@@ -194,6 +194,11 @@ public class PlayerInfo {
   private Leader ruler;
 
   /**
+   * Realm color
+   */
+  private PlayerColor color;
+
+  /**
    * Enemy fleet which should intercepted. These will handled only on AI turn.
    * These will not be saved into save game data.
    */
@@ -267,6 +272,7 @@ public class PlayerInfo {
     ancientRealm = false;
     leaderPool = new ArrayList<>();
     ruler = null;
+    color = PlayerColor.getByIndex(index);
     setRandomEventOccured(null);
     setHuman(false);
     setBoard(false);
@@ -724,6 +730,7 @@ public class PlayerInfo {
     } else {
       ancientRealm = false;
     }
+    color = PlayerColor.getByIndex(dis.read());
     government = GovernmentUtility.getGovernmentByIndex(dis.readInt());
     warFatigue = dis.readInt();
     totalCredits = dis.readInt();
@@ -835,6 +842,7 @@ public class PlayerInfo {
     } else {
       dos.writeByte(0);
     }
+    dos.writeByte(color.getIndex());
     dos.writeInt(government.getIndex());
     dos.writeInt(warFatigue);
     dos.writeInt(totalCredits);
@@ -2140,5 +2148,21 @@ public class PlayerInfo {
       result = result + 25;
     }
     return result;
+  }
+
+  /**
+   * Set realm color.
+   * @param color PlayerColor
+   */
+  public void setColor(final PlayerColor color) {
+    this.color = color;
+  }
+
+  /**
+   * Get Realm color.
+   * @return PlayerColor
+   */
+  public PlayerColor getColor() {
+    return color;
   }
 }

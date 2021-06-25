@@ -241,13 +241,10 @@ public class PlayerSetupView extends BlackPanel {
       SoundPlayer.playMenuSound();
       for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
         if (comboRaceSelect[i].isEnabled()) {
-          // FIXME UPDATE PLAYER COLORS IN CONFIG
-          GovernmentType gov = (GovernmentType) comboGovernmentSelect[i]
+          PlayerColor color = (PlayerColor) comboRealmColor[i]
               .getSelectedItem();
-          if (gov != null) {
-            comboGovernmentSelect[i].setToolTipText(
-                gov.getDescription(false));
-            config.setPlayerGovernment(i, gov);
+          if (color != null) {
+            config.setPlayerColor(i, color);
           }
         }
       }

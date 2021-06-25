@@ -1,5 +1,6 @@
 package org.openRealmOfStars.starMap;
 
+import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.government.GovernmentType;
@@ -113,6 +114,10 @@ public class GalaxyConfig {
    * Player government
    */
   private GovernmentType[] playerGovernment;
+  /**
+   * Player colors
+   */
+  private PlayerColor[] playerColors;
   /**
    * Player ancient realm.
    */
@@ -245,9 +250,11 @@ public class GalaxyConfig {
     playerName = new String[StarMap.MAX_PLAYERS];
     playerGovernment = new GovernmentType[StarMap.MAX_PLAYERS];
     playerAncientRealm = new boolean[StarMap.MAX_PLAYERS];
+    playerColors = new PlayerColor[StarMap.MAX_PLAYERS];
     setEnableTutorial(true);
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
 
+      setPlayerColor(i, PlayerColor.getByIndex(i));
       setRace(i, SpaceRaceUtility.getRandomRace());
       while (true) {
         GovernmentType gov = GovernmentUtility.getRandomGovernment(getRace(i));
@@ -346,6 +353,28 @@ public class GalaxyConfig {
     return null;
   }
 
+  /**
+   * Set Player Color
+   * @param index Player Index
+   * @param color Color
+   */
+  public void setPlayerColor(final int index, final PlayerColor color) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      playerColors[index] = color;
+    }
+  }
+
+  /**
+   * Get Player Color.
+   * @param index Player Index
+   * @return PlayerColor
+   */
+  public PlayerColor getPlayerColor(final int index) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      return playerColors[index];
+    }
+    return null;
+  }
   /**
    * Set Ancient realm for player
    * @param index Player Index

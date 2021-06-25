@@ -2,8 +2,11 @@ package org.openRealmOfStars.gui.panels;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 /**
  * 
@@ -32,7 +35,11 @@ public class StatisticPanelTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testStatisticPanel() {
-    StatisticPanel panel = new StatisticPanel();
+    Color[] colors = new Color[3];
+    colors[0] = GuiStatics.PLAYER_BANANA;
+    colors[1] = GuiStatics.PLAYER_BLUE;
+    colors[2] = GuiStatics.PLAYER_CHESTNUT;
+    StatisticPanel panel = new StatisticPanel(colors);
     int[][] data = new int[3][5];
     data[0][0] = 1; 
     data[0][1] = 2; 
@@ -86,7 +93,11 @@ public class StatisticPanelTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testStatisticPanelWithZeros() {
-    StatisticPanel panel = new StatisticPanel();
+    Color[] colors = new Color[3];
+    colors[0] = GuiStatics.PLAYER_BANANA;
+    colors[1] = GuiStatics.PLAYER_BLUE;
+    colors[2] = GuiStatics.PLAYER_CHESTNUT;
+    StatisticPanel panel = new StatisticPanel(colors);
     int[][] data = new int[3][5];
     data[0][0] = 0; 
     data[0][1] = 0; 
@@ -111,7 +122,11 @@ public class StatisticPanelTest {
   @Test(expected=IllegalArgumentException.class)
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testStatisticPanelWithNullData() {
-    StatisticPanel panel = new StatisticPanel();
+    Color[] colors = new Color[3];
+    colors[0] = GuiStatics.PLAYER_BANANA;
+    colors[1] = GuiStatics.PLAYER_BLUE;
+    colors[2] = GuiStatics.PLAYER_CHESTNUT;
+    StatisticPanel panel = new StatisticPanel(colors);
     int[][] data = null;
     panel.setData(data);
   }
@@ -119,7 +134,11 @@ public class StatisticPanelTest {
   @Test(expected=IllegalArgumentException.class)
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testStatisticPanelWithInvalidData() {
-    StatisticPanel panel = new StatisticPanel();
+    Color[] colors = new Color[3];
+    colors[0] = GuiStatics.PLAYER_BANANA;
+    colors[1] = GuiStatics.PLAYER_BLUE;
+    colors[2] = GuiStatics.PLAYER_CHESTNUT;
+    StatisticPanel panel = new StatisticPanel(colors);
     int[][] data = new int[3][];
     data[0] = new int[5];
     data[1] = new int[3];

@@ -385,7 +385,43 @@ public final class Tiles {
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
-
+    // New Player tiles
+    tile = new Tile(tilesImage, 3, 4, TileNames.PLAYER_PURPLE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 3, 5, TileNames.PLAYER_SHIP_PURPLE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 4, 4, TileNames.PLAYER_BROWN);
+    addTile(tile);
+    tile = new Tile(tilesImage, 4, 5, TileNames.PLAYER_SHIP_BROWN);
+    addTile(tile);
+    tile = new Tile(tilesImage, 5, 4, TileNames.PLAYER_LIME);
+    addTile(tile);
+    tile = new Tile(tilesImage, 5, 5, TileNames.PLAYER_SHIP_LIME);
+    addTile(tile);
+    tile = new Tile(tilesImage, 6, 4, TileNames.PLAYER_CHESTNUT);
+    addTile(tile);
+    tile = new Tile(tilesImage, 6, 5, TileNames.PLAYER_SHIP_CHESTNUT);
+    addTile(tile);
+    tile = new Tile(tilesImage, 7, 4, TileNames.PLAYER_ROSE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 7, 5, TileNames.PLAYER_SHIP_ROSE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 8, 4, TileNames.PLAYER_BANANA);
+    addTile(tile);
+    tile = new Tile(tilesImage, 8, 5, TileNames.PLAYER_SHIP_BANANA);
+    addTile(tile);
+    tile = new Tile(tilesImage, 9, 4, TileNames.PLAYER_GRAY);
+    addTile(tile);
+    tile = new Tile(tilesImage, 9, 5, TileNames.PLAYER_SHIP_GRAY);
+    addTile(tile);
+    tile = new Tile(tilesImage, 10, 4, TileNames.PLAYER_TAN);
+    addTile(tile);
+    tile = new Tile(tilesImage, 10, 5, TileNames.PLAYER_SHIP_TAN);
+    addTile(tile);
+    tile = new Tile(tilesImage, 11, 4, TileNames.PLAYER_CORAL);
+    addTile(tile);
+    tile = new Tile(tilesImage, 11, 5, TileNames.PLAYER_SHIP_CORAL);
+    addTile(tile);
   }
 
   /**

@@ -9,7 +9,6 @@ import java.awt.Stroke;
 import javax.swing.JPanel;
 
 import org.openRealmOfStars.gui.utilies.GuiStatics;
-import org.openRealmOfStars.player.PlayerColor;
 
 /**
  *
@@ -72,10 +71,17 @@ public class StatisticPanel extends JPanel {
   private int victoryScoreLimit;
 
   /**
-   * Construct Statistics Panel.
+   * Array of player colors.
    */
-  public StatisticPanel() {
+  private Color[] playerColors;
+
+  /**
+   * Construct Statistics Panel.
+   * @param colors Player Colors in array
+   */
+  public StatisticPanel(final Color[] colors) {
     super();
+    playerColors = colors;
     victoryScoreLimit = -1;
     this.setBackground(Color.black);
   }
@@ -308,7 +314,7 @@ public class StatisticPanel extends JPanel {
 
     //Draw the data
     for (int p = 0; p < data.length; p++) {
-      g2d.setColor(PlayerColor.getByIndex(p).getColor());
+      g2d.setColor(playerColors[p]);
       if (yDataNames != null && yDataNames.length == data.length) {
         int nameHeight = GuiStatics.getTextHeight(
             GuiStatics.getFontCubellanSC(), yDataNames[p]);

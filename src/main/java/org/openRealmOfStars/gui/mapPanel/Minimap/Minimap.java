@@ -8,7 +8,6 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
-import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
@@ -266,8 +265,9 @@ public class Minimap {
           if (culture != null) {
             int index = culture.getHighestCulture();
             if (index != -1) {
+              PlayerInfo cultureInfo = map.getPlayerByIndex(index);
               Tile tile = Tiles.getTileByName(
-                  PlayerColor.getByIndex(index).getCultureTile());
+                  cultureInfo.getColor().getCultureTile());
               if (tile != null) {
                 tile.drawMiniSector(img, x * sectorSize, y * sectorSize,
                     sectorSize);

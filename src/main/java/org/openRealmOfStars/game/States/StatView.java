@@ -1,6 +1,7 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -83,7 +84,11 @@ public class StatView extends BlackPanel {
     tabs.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER);
     tabs.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
 
-    StatisticPanel statPanel = new StatisticPanel();
+    Color[] playerColors = new Color[map.getPlayerList().getCurrentMaxRealms()];
+    for (int i = 0; i < playerColors.length; i++) {
+      playerColors[i] = map.getPlayerByIndex(i).getColor().getColor();
+    }
+    StatisticPanel statPanel = new StatisticPanel(playerColors);
     statPanel.setData(map.getNewsCorpData().getMilitary().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
     String[] names = new String[map.getPlayerList().getCurrentMaxRealms()];
@@ -93,7 +98,7 @@ public class StatView extends BlackPanel {
     statPanel.setYDataNames(names);
     tabs.add(NewsCorpData.STAT_MILITARY, statPanel);
 
-    statPanel = new StatisticPanel();
+    statPanel = new StatisticPanel(playerColors);
     statPanel.setData(map.getNewsCorpData().getPlanets().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
     names = new String[map.getPlayerList().getCurrentMaxRealms()];
@@ -103,7 +108,7 @@ public class StatView extends BlackPanel {
     statPanel.setYDataNames(names);
     tabs.add(NewsCorpData.STAT_PLANETS, statPanel);
 
-    statPanel = new StatisticPanel();
+    statPanel = new StatisticPanel(playerColors);
     statPanel.setData(map.getNewsCorpData().getPopulation().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
     names = new String[map.getPlayerList().getCurrentMaxRealms()];
@@ -113,7 +118,7 @@ public class StatView extends BlackPanel {
     statPanel.setYDataNames(names);
     tabs.add(NewsCorpData.STAT_POPULATION, statPanel);
 
-    statPanel = new StatisticPanel();
+    statPanel = new StatisticPanel(playerColors);
     statPanel.setData(map.getNewsCorpData().getCultural().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
     names = new String[map.getPlayerList().getCurrentMaxRealms()];
@@ -126,7 +131,7 @@ public class StatView extends BlackPanel {
             map.getMaxY(), map.getScoreVictoryTurn(), map.getScoreCulture()));
     tabs.add(NewsCorpData.STAT_CULTURAL, statPanel);
 
-    statPanel = new StatisticPanel();
+    statPanel = new StatisticPanel(playerColors);
     statPanel.setData(map.getNewsCorpData().getCredit().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
     names = new String[map.getPlayerList().getCurrentMaxRealms()];
@@ -136,7 +141,7 @@ public class StatView extends BlackPanel {
     statPanel.setYDataNames(names);
     tabs.add(NewsCorpData.STAT_CREDIT, statPanel);
 
-    statPanel = new StatisticPanel();
+    statPanel = new StatisticPanel(playerColors);
     statPanel.setData(map.getNewsCorpData().getResearch().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
     names = new String[map.getPlayerList().getCurrentMaxRealms()];
@@ -146,7 +151,7 @@ public class StatView extends BlackPanel {
     statPanel.setYDataNames(names);
     tabs.add(NewsCorpData.STAT_RESEARCH, statPanel);
 
-    statPanel = new StatisticPanel();
+    statPanel = new StatisticPanel(playerColors);
     statPanel.setData(map.getNewsCorpData().generateScores().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
     names = new String[map.getPlayerList().getCurrentMaxRealms()];

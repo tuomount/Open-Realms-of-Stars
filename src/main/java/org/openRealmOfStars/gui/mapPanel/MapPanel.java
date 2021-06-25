@@ -24,7 +24,6 @@ import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
-import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatAnimation;
@@ -598,8 +597,9 @@ public class MapPanel extends JPanel {
           if (culture != null) {
             int index = culture.getHighestCulture();
             if (index != -1) {
-              Tile tile = Tiles.getTileByName(PlayerColor.getByIndex(
-                  index).getCultureTile());
+              PlayerInfo cultureInfo = starMap.getPlayerByIndex(index);
+              Tile tile = Tiles.getTileByName(
+                  cultureInfo.getColor().getCultureTile());
               if (tile != null) {
                 tile.draw(gr, pixelX, pixelY);
               }
@@ -666,8 +666,9 @@ public class MapPanel extends JPanel {
           boolean recognized = visibility.isRecognized();
           boolean espionageDetected = visibility.isEspionageDetected();
           if (recognized && fleetOwnerIndex != -1 && drawShip) {
+            PlayerInfo shipInfo = starMap.getPlayerByIndex(fleetOwnerIndex);
             Tile fleetColor = Tiles.getTileByName(
-                PlayerColor.getByIndex(fleetOwnerIndex).getShipTile());
+                shipInfo.getColor().getShipTile());
             if (fleetColor != null) {
               fleetColor.draw(gr, pixelX, pixelY);
             }
@@ -1036,8 +1037,9 @@ public class MapPanel extends JPanel {
         if (historyCultures != null) {
           int index = historyCultures[i + cx][j + cy];
           if (index != -1) {
+            PlayerInfo cultureInfo = starMap.getPlayerByIndex(index);
             Tile cultureTile = Tiles.getTileByName(
-                PlayerColor.getByIndex(index).getCultureTile());
+                cultureInfo.getColor().getCultureTile());
             if (cultureTile != null) {
               cultureTile.draw(gr, pixelX, pixelY);
             }

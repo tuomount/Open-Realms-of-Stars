@@ -9,7 +9,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2021  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -188,21 +188,21 @@ public final class Tiles {
     tile = new Tile(tilesImage, 10, 0, TileNames.UNCHARTED);
     addTile(tile);
     // Reading the culture tiles
-    tile = new Tile(tilesImage, 3, 2, TileNames.PLAYER_0);
+    tile = new Tile(tilesImage, 3, 2, TileNames.PLAYER_BLUE);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 2, TileNames.PLAYER_1);
+    tile = new Tile(tilesImage, 4, 2, TileNames.PLAYER_GREEN);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 2, TileNames.PLAYER_2);
+    tile = new Tile(tilesImage, 5, 2, TileNames.PLAYER_WHITE);
     addTile(tile);
-    tile = new Tile(tilesImage, 6, 2, TileNames.PLAYER_3);
+    tile = new Tile(tilesImage, 6, 2, TileNames.PLAYER_ORANGE);
     addTile(tile);
-    tile = new Tile(tilesImage, 3, 3, TileNames.PLAYER_4);
+    tile = new Tile(tilesImage, 3, 3, TileNames.PLAYER_CYAN);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 3, TileNames.PLAYER_5);
+    tile = new Tile(tilesImage, 5, 3, TileNames.PLAYER_PINK);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 3, TileNames.PLAYER_6);
+    tile = new Tile(tilesImage, 4, 3, TileNames.PLAYER_RED);
     addTile(tile);
-    tile = new Tile(tilesImage, 6, 3, TileNames.PLAYER_7);
+    tile = new Tile(tilesImage, 6, 3, TileNames.PLAYER_YELLOW);
     addTile(tile);
     // Reading the iron planet
     tile = new Tile(tilesImage, 12, 0, TileNames.IRONPLANET1);
@@ -235,25 +235,25 @@ public final class Tiles {
     tile = new Tile(tilesImage, 19, 0, TileNames.CARBONWORLD1);
     addTile(tile);
     // Reading the ship color tiles
-    tile = new Tile(tilesImage, 7, 2, TileNames.PLAYER_SHIP_0);
+    tile = new Tile(tilesImage, 7, 2, TileNames.PLAYER_SHIP_BLUE);
     addTile(tile);
-    tile = new Tile(tilesImage, 8, 2, TileNames.PLAYER_SHIP_1);
+    tile = new Tile(tilesImage, 8, 2, TileNames.PLAYER_SHIP_GREEN);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 2, TileNames.PLAYER_SHIP_2);
+    tile = new Tile(tilesImage, 9, 2, TileNames.PLAYER_SHIP_WHITE);
     addTile(tile);
-    tile = new Tile(tilesImage, 10, 2, TileNames.PLAYER_SHIP_3);
+    tile = new Tile(tilesImage, 10, 2, TileNames.PLAYER_SHIP_ORANGE);
     addTile(tile);
-    tile = new Tile(tilesImage, 7, 3, TileNames.PLAYER_SHIP_4);
+    tile = new Tile(tilesImage, 7, 3, TileNames.PLAYER_SHIP_CYAN);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 3, TileNames.PLAYER_SHIP_5);
+    tile = new Tile(tilesImage, 9, 3, TileNames.PLAYER_SHIP_PINK);
     addTile(tile);
-    tile = new Tile(tilesImage, 8, 3, TileNames.PLAYER_SHIP_6);
+    tile = new Tile(tilesImage, 8, 3, TileNames.PLAYER_SHIP_RED);
     addTile(tile);
-    tile = new Tile(tilesImage, 10, 3, TileNames.PLAYER_SHIP_7);
+    tile = new Tile(tilesImage, 10, 3, TileNames.PLAYER_SHIP_YELLOW);
     addTile(tile);
-    tile = new Tile(tilesImage, 11, 3, TileNames.PLAYER_SHIP_8);
+    tile = new Tile(tilesImage, 11, 3, TileNames.PLAYER_SHIP_BLACK);
     addTile(tile);
-    tile = new Tile(tilesImage, 11, 2, TileNames.PLAYER_8);
+    tile = new Tile(tilesImage, 11, 2, TileNames.PLAYER_BLACK);
     addTile(tile);
     tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY);
     addTile(tile);
@@ -385,7 +385,43 @@ public final class Tiles {
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
-
+    // New Player tiles
+    tile = new Tile(tilesImage, 3, 4, TileNames.PLAYER_PURPLE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 3, 5, TileNames.PLAYER_SHIP_PURPLE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 4, 4, TileNames.PLAYER_BROWN);
+    addTile(tile);
+    tile = new Tile(tilesImage, 4, 5, TileNames.PLAYER_SHIP_BROWN);
+    addTile(tile);
+    tile = new Tile(tilesImage, 5, 4, TileNames.PLAYER_LIME);
+    addTile(tile);
+    tile = new Tile(tilesImage, 5, 5, TileNames.PLAYER_SHIP_LIME);
+    addTile(tile);
+    tile = new Tile(tilesImage, 6, 4, TileNames.PLAYER_CHESTNUT);
+    addTile(tile);
+    tile = new Tile(tilesImage, 6, 5, TileNames.PLAYER_SHIP_CHESTNUT);
+    addTile(tile);
+    tile = new Tile(tilesImage, 7, 4, TileNames.PLAYER_ROSE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 7, 5, TileNames.PLAYER_SHIP_ROSE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 8, 4, TileNames.PLAYER_BANANA);
+    addTile(tile);
+    tile = new Tile(tilesImage, 8, 5, TileNames.PLAYER_SHIP_BANANA);
+    addTile(tile);
+    tile = new Tile(tilesImage, 9, 4, TileNames.PLAYER_GRAY);
+    addTile(tile);
+    tile = new Tile(tilesImage, 9, 5, TileNames.PLAYER_SHIP_GRAY);
+    addTile(tile);
+    tile = new Tile(tilesImage, 10, 4, TileNames.PLAYER_TAN);
+    addTile(tile);
+    tile = new Tile(tilesImage, 10, 5, TileNames.PLAYER_SHIP_TAN);
+    addTile(tile);
+    tile = new Tile(tilesImage, 11, 4, TileNames.PLAYER_CORAL);
+    addTile(tile);
+    tile = new Tile(tilesImage, 11, 5, TileNames.PLAYER_SHIP_CORAL);
+    addTile(tile);
   }
 
   /**

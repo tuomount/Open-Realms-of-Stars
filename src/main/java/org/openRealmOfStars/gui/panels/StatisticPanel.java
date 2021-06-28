@@ -71,23 +71,20 @@ public class StatisticPanel extends JPanel {
   private int victoryScoreLimit;
 
   /**
-   * Construct Statistics Panel.
+   * Array of player colors.
    */
-  public StatisticPanel() {
+  private Color[] playerColors;
+
+  /**
+   * Construct Statistics Panel.
+   * @param colors Player Colors in array
+   */
+  public StatisticPanel(final Color[] colors) {
     super();
+    playerColors = colors;
     victoryScoreLimit = -1;
     this.setBackground(Color.black);
   }
-
-  /**
-   * Player colors to match culture color shown on map. Notice that
-   * culture color on map has alpha channel these do not so they
-   * are not identical match.
-   */
-  public static final Color[] PLAYER_COLORS = {new Color(24, 0, 255),
-      new Color(0, 255, 18), new Color(255, 255, 255), new Color(255, 162, 0),
-      new Color(11, 255, 241), new Color(188, 0, 0), new Color(233, 44, 255),
-      new Color(0, 71, 121)};
 
   /**
    * Set Y data names which should be equal to player names
@@ -317,7 +314,7 @@ public class StatisticPanel extends JPanel {
 
     //Draw the data
     for (int p = 0; p < data.length; p++) {
-      g2d.setColor(PLAYER_COLORS[p]);
+      g2d.setColor(playerColors[p]);
       if (yDataNames != null && yDataNames.length == data.length) {
         int nameHeight = GuiStatics.getTextHeight(
             GuiStatics.getFontCubellanSC(), yDataNames[p]);

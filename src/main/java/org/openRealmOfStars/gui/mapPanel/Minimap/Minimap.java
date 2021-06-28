@@ -265,7 +265,9 @@ public class Minimap {
           if (culture != null) {
             int index = culture.getHighestCulture();
             if (index != -1) {
-              Tile tile = Tiles.getTileByName("Player_" + index);
+              PlayerInfo cultureInfo = map.getPlayerByIndex(index);
+              Tile tile = Tiles.getTileByName(
+                  cultureInfo.getColor().getCultureTile());
               if (tile != null) {
                 tile.drawMiniSector(img, x * sectorSize, y * sectorSize,
                     sectorSize);

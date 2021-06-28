@@ -77,6 +77,7 @@ import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.anomaly.AnomalyType;
 import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
+import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -1901,12 +1902,18 @@ public class Game implements ActionListener {
       maxPlayers++;
       boardIndex = galaxyConfig.getMaxPlayers();
     }
+    ArrayList<PlayerColor> randomListOfColors = new ArrayList<>();
+    for (PlayerColor color : PlayerColor.values()) {
+      randomListOfColors.add(color);
+    }
     for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
       PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i),
           maxPlayers, i, boardIndex);
       info.setGovernment(galaxyConfig.getPlayerGovernment(i));
       info.setEmpireName(galaxyConfig.getPlayerName(i));
       info.setAncientRealm(galaxyConfig.getPlayerAncientRealm(i));
+      info.setColor(galaxyConfig.getPlayerColor(i));
+      randomListOfColors.remove(galaxyConfig.getPlayerColor(i));
       if (i == 0) {
         info.setHuman(true);
       }
@@ -1919,6 +1926,8 @@ public class Game implements ActionListener {
       info.setBoard(true);
       info.setGovernment(GovernmentType.SPACE_PIRATES);
       info.setEmpireName("Space pirates");
+      int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
+      info.setColor(PlayerColor.getByIndex(colorIndex));
       players.addPlayer(info);
     }
     players.calculateInitialDiplomacyBonuses();

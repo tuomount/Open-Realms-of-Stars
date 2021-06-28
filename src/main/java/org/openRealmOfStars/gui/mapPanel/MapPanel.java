@@ -597,7 +597,9 @@ public class MapPanel extends JPanel {
           if (culture != null) {
             int index = culture.getHighestCulture();
             if (index != -1) {
-              Tile tile = Tiles.getTileByName("Player_" + index);
+              PlayerInfo cultureInfo = starMap.getPlayerByIndex(index);
+              Tile tile = Tiles.getTileByName(
+                  cultureInfo.getColor().getCultureTile());
               if (tile != null) {
                 tile.draw(gr, pixelX, pixelY);
               }
@@ -664,8 +666,9 @@ public class MapPanel extends JPanel {
           boolean recognized = visibility.isRecognized();
           boolean espionageDetected = visibility.isEspionageDetected();
           if (recognized && fleetOwnerIndex != -1 && drawShip) {
-            Tile fleetColor = Tiles.getTileByName("Player_Ship_"
-                + fleetOwnerIndex);
+            PlayerInfo shipInfo = starMap.getPlayerByIndex(fleetOwnerIndex);
+            Tile fleetColor = Tiles.getTileByName(
+                shipInfo.getColor().getShipTile());
             if (fleetColor != null) {
               fleetColor.draw(gr, pixelX, pixelY);
             }
@@ -1034,7 +1037,9 @@ public class MapPanel extends JPanel {
         if (historyCultures != null) {
           int index = historyCultures[i + cx][j + cy];
           if (index != -1) {
-            Tile cultureTile = Tiles.getTileByName("Player_" + index);
+            PlayerInfo cultureInfo = starMap.getPlayerByIndex(index);
+            Tile cultureTile = Tiles.getTileByName(
+                cultureInfo.getColor().getCultureTile());
             if (cultureTile != null) {
               cultureTile.draw(gr, pixelX, pixelY);
             }

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -14,6 +15,7 @@ import javax.swing.JTextField;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.ListRenderers.PlayerColorListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
@@ -25,6 +27,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.government.GovernmentType;
@@ -34,6 +37,7 @@ import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
@@ -90,6 +94,10 @@ public class PlayerSetupView extends BlackPanel {
   private RaceImagePanel[] raceImgs;
 
   /**
+   * Combobox for selecting realm color
+   */
+  private SpaceComboBox<PlayerColor>[] comboRealmColor;
+  /**
    * Galaxy config
    */
   private GalaxyConfig config;
@@ -98,6 +106,11 @@ public class PlayerSetupView extends BlackPanel {
    * Action Listener for combobox
    */
   private ActionListener actionListener;
+
+  /**
+   * Random list for colors.
+   */
+  private ArrayList<PlayerColor> randomListOfColors;
   /**
    * Constructor for Player Setup view
    * @param config Galaxy Configuration
@@ -110,6 +123,10 @@ public class PlayerSetupView extends BlackPanel {
     this.config = config;
     if (this.config == null) {
       this.config = new GalaxyConfig();
+    }
+    randomListOfColors = new ArrayList<>();
+    for (PlayerColor color : PlayerColor.values()) {
+      randomListOfColors.add(color);
     }
     Planet planet = new Planet(new Coordinate(1, 1), "Galaxy Creation Planet",
         2, false);
@@ -131,6 +148,7 @@ public class PlayerSetupView extends BlackPanel {
     checkAncientRealm = new SpaceCheckBox[StarMap.MAX_PLAYERS];
     raceImgs = new RaceImagePanel[StarMap.MAX_PLAYERS];
     playerName = new JTextField[StarMap.MAX_PLAYERS];
+    comboRealmColor = new SpaceComboBox[StarMap.MAX_PLAYERS];
 
     InvisiblePanel xinvis = new InvisiblePanel(invisible);
     xinvis.setLayout(new GridLayout(2, 4));
@@ -217,6 +235,26 @@ public class PlayerSetupView extends BlackPanel {
       SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
       GovernmentType gov = config.getPlayerGovernment(index);
       playerName[index].setText(SpaceRaceUtility.getRandomName(race, gov));
+    }
+    if (arg0.getActionCommand().startsWith(
+        GameCommands.COMMAND_COLOR_SETUP)) {
+      SoundPlayer.playMenuSound();
+      for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
+        if (comboRaceSelect[i].isEnabled()) {
+          PlayerColor color = (PlayerColor) comboRealmColor[i]
+              .getSelectedItem();
+          if (color != null) {
+            config.setPlayerColor(i, color);
+          }
+        }
+      }
+      String tmp = arg0.getActionCommand().substring(
+          GameCommands.COMMAND_COLOR_SETUP.length(),
+          arg0.getActionCommand().length());
+      int index = Integer.parseInt(tmp);
+      PlayerColor color = (PlayerColor) comboRealmColor[index]
+          .getSelectedItem();
+      comboRealmColor[index].setForeground(color.getColor());
     }
   }
 
@@ -332,6 +370,28 @@ public class PlayerSetupView extends BlackPanel {
           .getFullDescription(false, false));
     }
     info.add(playerName[index]);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    comboRealmColor[index] = new SpaceComboBox<>(
+        PlayerColor.values());
+    comboRealmColor[index]
+        .setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    comboRealmColor[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    comboRealmColor[index].setBorder(new SimpleBorder());
+    comboRealmColor[index].setFont(GuiStatics.getFontCubellan());
+    int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
+    PlayerColor color = randomListOfColors.get(colorIndex);
+    randomListOfColors.remove(colorIndex);
+    comboRealmColor[index].getModel()
+        .setSelectedItem(color);
+    PlayerColorListRenderer pclr = new PlayerColorListRenderer();
+    comboRealmColor[index].setForeground(color.getColor());
+    comboRealmColor[index].setRenderer(pclr);
+    comboRealmColor[index].addActionListener(listener);
+    comboRealmColor[index]
+        .setActionCommand(GameCommands.COMMAND_COLOR_SETUP + index);
+    comboRealmColor[index].setToolTipText("<html>Realm color in map and"
+        + " statistics.</html>");
+    info.add(comboRealmColor[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(25, 25)));

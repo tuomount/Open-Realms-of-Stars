@@ -390,6 +390,9 @@ public class TechList {
     ArrayList<Tech> techList = new ArrayList<>();
     for (Tech tech : tradeTechs) {
       boolean found = false;
+      if (!tech.isTradeable()) {
+        continue;
+      }
       for (Tech ownTech : ownTechs) {
         if (tech.getName().equals(ownTech.getName())) {
           found = true;

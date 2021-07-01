@@ -198,9 +198,9 @@ public final class Tiles {
     addTile(tile);
     tile = new Tile(tilesImage, 3, 3, TileNames.PLAYER_CYAN);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 3, TileNames.PLAYER_PINK);
+    tile = new Tile(tilesImage, 4, 3, TileNames.PLAYER_PINK);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 3, TileNames.PLAYER_RED);
+    tile = new Tile(tilesImage, 5, 3, TileNames.PLAYER_RED);
     addTile(tile);
     tile = new Tile(tilesImage, 6, 3, TileNames.PLAYER_YELLOW);
     addTile(tile);
@@ -245,9 +245,9 @@ public final class Tiles {
     addTile(tile);
     tile = new Tile(tilesImage, 7, 3, TileNames.PLAYER_SHIP_CYAN);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 3, TileNames.PLAYER_SHIP_PINK);
+    tile = new Tile(tilesImage, 8, 3, TileNames.PLAYER_SHIP_PINK);
     addTile(tile);
-    tile = new Tile(tilesImage, 8, 3, TileNames.PLAYER_SHIP_RED);
+    tile = new Tile(tilesImage, 9, 3, TileNames.PLAYER_SHIP_RED);
     addTile(tile);
     tile = new Tile(tilesImage, 10, 3, TileNames.PLAYER_SHIP_YELLOW);
     addTile(tile);

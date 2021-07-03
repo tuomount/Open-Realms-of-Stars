@@ -61,7 +61,7 @@ public class GalaxyConfigTest {
     config.setPlayerName(0, "Test of Human");
     assertEquals("Test of Human",config.getPlayerName(0));
     assertEquals(false,config.isUniqueName("Test of Human"));
-    assertEquals(null,config.getPlayerName(9));
+    assertEquals(null,config.getPlayerName(13));
     config.setMaxPlayers(3);
     assertEquals(3, config.getMaxPlayers());
     config.setSolarSystemDistance(13, 0);

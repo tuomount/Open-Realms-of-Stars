@@ -63,7 +63,7 @@ public abstract class Event {
    */
   public void setPlayerIndex(final int index) {
     if (index >= StarMap.MAX_PLAYERS) {
-      playerIndex = 7;
+      playerIndex = StarMap.MAX_PLAYERS - 1;
     } else if (index < -1) {
       playerIndex = -1;
     } else {

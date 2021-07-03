@@ -41,10 +41,10 @@ public class CultureEventTest {
     assertEquals(EventType.CULTURE_CHANGE, event.getType());
     assertEquals(coord, event.getCoordinate());
     assertEquals(0, event.getPlayerIndex());
-    event = new CultureEvent(coord, 8);
+    event = new CultureEvent(coord, 13);
     assertEquals(EventType.CULTURE_CHANGE, event.getType());
     assertEquals(coord, event.getCoordinate());
-    assertEquals(7, event.getPlayerIndex());
+    assertEquals(11, event.getPlayerIndex());
     event = new CultureEvent(coord, -2);
     assertEquals(EventType.CULTURE_CHANGE, event.getType());
     assertEquals(coord, event.getCoordinate());

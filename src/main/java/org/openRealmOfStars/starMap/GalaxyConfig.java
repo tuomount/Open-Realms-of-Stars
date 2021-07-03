@@ -438,7 +438,7 @@ public class GalaxyConfig {
    * @param maxPlayers for one game
    */
   public void setMaxPlayers(final int maxPlayers) {
-    if (maxPlayers >= 2 && maxPlayers <= 8) {
+    if (maxPlayers >= 2 && maxPlayers <= StarMap.MAX_PLAYERS) {
       this.maxPlayers = maxPlayers;
     }
   }

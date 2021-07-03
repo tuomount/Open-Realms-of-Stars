@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
@@ -26,6 +27,7 @@ import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -135,13 +137,16 @@ public class PlayerSetupView extends BlackPanel {
       planet.setGasGiant(true);
     }
     // Background image
-    BigImagePanel imgBase = new BigImagePanel(planet, true, "Player Setup");
+    BigImagePanel imgBase = new BigImagePanel(planet, true, "Realm Setup");
     imgBase.setLayout(new BorderLayout());
     this.setLayout(new BorderLayout());
+    imgBase.add(Box.createRigidArea(new Dimension(500, 100)),
+        BorderLayout.NORTH);
 
-    InvisiblePanel invisible = new InvisiblePanel(imgBase);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
-    invisible.add(Box.createRigidArea(new Dimension(500, 100)));
+    InfoPanel mainPanel = new InfoPanel();
+    mainPanel.setTitle("Realm Setup");
+    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    mainPanel.add(Box.createRigidArea(new Dimension(500, 10)));
 
     comboRaceSelect = new SpaceComboBox[StarMap.MAX_PLAYERS];
     comboGovernmentSelect = new SpaceComboBox[StarMap.MAX_PLAYERS];
@@ -150,17 +155,18 @@ public class PlayerSetupView extends BlackPanel {
     playerName = new JTextField[StarMap.MAX_PLAYERS];
     comboRealmColor = new SpaceComboBox[StarMap.MAX_PLAYERS];
 
-    InvisiblePanel xinvis = new InvisiblePanel(invisible);
-    xinvis.setLayout(new GridLayout(2, 4));
+    SpaceGreyPanel xgrey = new SpaceGreyPanel();
+    xgrey.setLayout(new GridLayout(3, 4));
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
-      xinvis.add(createPlayerRaceSelection(xinvis, i, listener));
+      xgrey.add(createPlayerRaceSelection(xgrey, i, listener));
     }
-    invisible.add(xinvis);
-    invisible.add(Box.createRigidArea(new Dimension(200, 150)));
+    mainPanel.add(xgrey);
+    mainPanel.add(Box.createRigidArea(new Dimension(500, 10)));
 
-    imgBase.add(invisible, BorderLayout.CENTER);
+    JScrollPane scroll = new JScrollPane(mainPanel);
+    imgBase.add(scroll, BorderLayout.CENTER);
 
-    invisible = new InvisiblePanel(imgBase);
+    InvisiblePanel invisible = new InvisiblePanel(imgBase);
     invisible.setLayout(new BorderLayout());
     SpaceButton btn = new SpaceButton("Cancel", GameCommands.COMMAND_CANCEL);
     btn.addActionListener(listener);
@@ -274,9 +280,9 @@ public class PlayerSetupView extends BlackPanel {
    * @param base The panel
    * @param index The player index
    * @param listener The action listener
-   * @return InvisiblePanel with configuration components
+   * @return panel with configuration components
    */
-  private InvisiblePanel createPlayerRaceSelection(final InvisiblePanel base,
+  private InvisiblePanel createPlayerRaceSelection(final SpaceGreyPanel base,
       final int index, final ActionListener listener) {
     InvisiblePanel xinvis = new InvisiblePanel(base);
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));

@@ -101,7 +101,7 @@ public class EspionageView extends BlackPanel {
     fakeMilitarySlider.setSliderMinorTick(10);
     fakeMilitarySlider.setSliderMajorTick(10);
     topPanel.add(fakeMilitarySlider);
-    topPanel.add(Box.createRigidArea(new Dimension(15, 25)));
+    topPanel.add(Box.createRigidArea(new Dimension(15, 10)));
     fakeMilitaryText = new InfoTextArea();
     fakeMilitaryText.setEditable(false);
     fakeMilitaryText.setFont(GuiStatics.getFontCubellanSmaller());
@@ -115,7 +115,7 @@ public class EspionageView extends BlackPanel {
 
     InfoPanel centerPanel = new InfoPanel();
     centerPanel.setTitle("Espionage");
-    centerPanel.setLayout(new GridLayout(2, 4));
+    centerPanel.setLayout(new GridLayout(3, 4));
     int maxPlayer = playerList.getCurrentMaxRealms();
     for (int i = 0; i < maxPlayer; i++) {
       PlayerInfo realmInfo = playerList.getPlayerInfoByIndex(i);
@@ -165,7 +165,8 @@ public class EspionageView extends BlackPanel {
 
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
-    this.add(centerPanel, BorderLayout.CENTER);
+    JScrollPane scroll2 = new JScrollPane(centerPanel);
+    this.add(scroll2, BorderLayout.CENTER);
     this.add(topPanel, BorderLayout.NORTH);
     updatePanel();
   }

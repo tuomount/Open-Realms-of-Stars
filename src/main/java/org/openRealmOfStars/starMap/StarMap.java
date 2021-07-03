@@ -93,7 +93,7 @@ public class StarMap {
   /**
    * Maximum number of player
    */
-  public static final int MAX_PLAYERS = 8;
+  public static final int MAX_PLAYERS = 12;
 
   /**
    * Maximum map size x

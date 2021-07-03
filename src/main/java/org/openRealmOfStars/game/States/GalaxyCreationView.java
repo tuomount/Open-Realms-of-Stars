@@ -10,6 +10,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
@@ -180,7 +181,16 @@ public class GalaxyCreationView extends BlackPanel {
 
     InvisiblePanel xinvis = new InvisiblePanel(invisible);
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
-    xinvis.add(Box.createRigidArea(new Dimension(200, 5)));
+    int extraBoxWidth = 200;
+    if (listener instanceof Game) {
+      Game game = (Game) listener;
+      int freeSpace = game.getWidth() - 440 - 280;
+      extraBoxWidth = freeSpace / 3;
+      if (extraBoxWidth > 200) {
+        extraBoxWidth = 200;
+      }
+    }
+    xinvis.add(Box.createRigidArea(new Dimension(extraBoxWidth, 5)));
     InfoPanel info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Galaxy Creation");
@@ -280,7 +290,6 @@ public class GalaxyCreationView extends BlackPanel {
         + " outside of solar systems.");
     info.add(comboRoguePlanets);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    xinvis.add(info);
 
     label = new SpaceLabel("Space pirates");
     label.setAlignmentX(CENTER_ALIGNMENT);
@@ -334,7 +343,6 @@ public class GalaxyCreationView extends BlackPanel {
         + "<html>");
     info.add(comboSpacePirateDifficulty);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    xinvis.add(info);
 
     label = new SpaceLabel("Space anomalies");
     label.setAlignmentX(CENTER_ALIGNMENT);
@@ -395,23 +403,27 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(comboKarmaSpeed);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
-    xinvis.add(Box.createRigidArea(new Dimension(200, 5)));
+    xinvis.add(Box.createRigidArea(new Dimension(extraBoxWidth, 5)));
 
     info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
-    info.setTitle("Player Setting");
-    label = new SpaceLabel("Number of players");
+    info.setTitle("Realm Setting");
+    label = new SpaceLabel("Number of realms");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    String[] players = new String[7];
-    players[0] = "Two players";
-    players[1] = "Three players";
-    players[2] = "Four players";
-    players[3] = "Five players";
-    players[4] = "Six players";
-    players[5] = "Seven players";
-    players[6] = "Eight players";
+    String[] players = new String[11];
+    players[0] = "Two realms";
+    players[1] = "Three realms";
+    players[2] = "Four realms";
+    players[3] = "Five realms";
+    players[4] = "Six realms";
+    players[5] = "Seven realms";
+    players[6] = "Eight realms";
+    players[7] = "Nine realms";
+    players[8] = "Ten realms";
+    players[9] = "Eleven realms";
+    players[10] = "Twelve realms";
     comboPlayers = new SpaceCombo<>(players);
     comboPlayers.setSelectedIndex(this.config.getMaxPlayers() - 2);
     comboPlayers.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
@@ -636,7 +648,7 @@ public class GalaxyCreationView extends BlackPanel {
         + " while playing and helps can accessed from Star Map view.</html>");
     info.add(tutorialEnabled);
     xinvis.add(info);
-    xinvis.add(Box.createRigidArea(new Dimension(200, 5)));
+    xinvis.add(Box.createRigidArea(new Dimension(extraBoxWidth, 5)));
     invisible.add(xinvis);
     invisible.add(Box.createRigidArea(new Dimension(200, 300)));
 
@@ -729,6 +741,13 @@ public class GalaxyCreationView extends BlackPanel {
         config.setSize(GALAXY_SIZE_SMALL, comboGalaxySize.getSelectedIndex());
         break;
       }
+      }
+      System.out.println("Players: " + config.getMaxPlayers());
+      System.out.println("Size: " + config.getGalaxySizeIndex());
+      if (config.getMaxPlayers() > 8 && config.getGalaxySizeIndex() < 2) {
+        config.setSize(GALAXY_SIZE_MEDIUM, 2);
+        comboGalaxySize.setSelectedIndex(2);
+        this.repaint();
       }
       switch (comboSunDensity.getSelectedIndex()) {
       case 0: {

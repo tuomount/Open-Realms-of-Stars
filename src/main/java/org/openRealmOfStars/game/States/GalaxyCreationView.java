@@ -742,8 +742,6 @@ public class GalaxyCreationView extends BlackPanel {
         break;
       }
       }
-      System.out.println("Players: " + config.getMaxPlayers());
-      System.out.println("Size: " + config.getGalaxySizeIndex());
       if (config.getMaxPlayers() > 8 && config.getGalaxySizeIndex() < 2) {
         config.setSize(GALAXY_SIZE_MEDIUM, 2);
         comboGalaxySize.setSelectedIndex(2);

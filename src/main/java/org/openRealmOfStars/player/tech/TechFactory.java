@@ -685,7 +685,7 @@ public final class TechFactory {
             tech.setNextTechOnTree("Distortion shield Mk3");
             tech.setNextTechLevel(8);
           }
-        } else {
+        } else if (tech.getIcon() == Icons.getIconByName(Icons.ICON_RESEARCH)) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DEFENSE_TECH));
         }
         return tech;

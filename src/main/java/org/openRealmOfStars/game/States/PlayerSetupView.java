@@ -164,6 +164,7 @@ public class PlayerSetupView extends BlackPanel {
     mainPanel.add(Box.createRigidArea(new Dimension(500, 10)));
 
     JScrollPane scroll = new JScrollPane(mainPanel);
+    scroll.getVerticalScrollBar().setUnitIncrement(20);
     imgBase.add(scroll, BorderLayout.CENTER);
 
     InvisiblePanel invisible = new InvisiblePanel(imgBase);

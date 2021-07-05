@@ -166,6 +166,7 @@ public class EspionageView extends BlackPanel {
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
     JScrollPane scroll2 = new JScrollPane(centerPanel);
+    scroll2.getVerticalScrollBar().setUnitIncrement(20);
     this.add(scroll2, BorderLayout.CENTER);
     this.add(topPanel, BorderLayout.NORTH);
     updatePanel();

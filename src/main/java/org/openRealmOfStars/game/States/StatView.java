@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EtchedBorder;
 
@@ -160,10 +161,13 @@ public class StatView extends BlackPanel {
     statPanel.setYDataNames(names);
     tabs.add(NewsCorpData.STAT_SCORE, statPanel);
 
-    tabs.add("Relations", createRelationPanel(map, names));
-    tabs.add("Victory conditions", createWinningPanel(map, names));
+    JScrollPane scroll = new JScrollPane(createRelationPanel(map, names));
+    tabs.add("Relations", scroll);
+    scroll = new JScrollPane(createWinningPanel(map, names));
+    tabs.add("Victory conditions", scroll);
     if (map.isGameEnded()) {
-      tabs.add("Ship designs", createShipStatPanel(map, names));
+      scroll = new JScrollPane(createShipStatPanel(map, names));
+      tabs.add("Ship designs", scroll);
     }
     base.add(tabs, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);

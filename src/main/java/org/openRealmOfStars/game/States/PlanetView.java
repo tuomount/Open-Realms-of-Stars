@@ -539,7 +539,7 @@ public class PlanetView extends BlackPanel {
       }
       peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
     }
-    if (planet.getTotalPopulation() >= planet.getGroundSize()) {
+    if (planet.getTotalPopulation() >= planet.getPopulationLimit()) {
       peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_NO_MORE_PEOPLE));
       peopleGrowth.setToolTipText(
           "Planet population is at maximum!");

@@ -622,9 +622,11 @@ public final class LeaderUtility {
   /**
    * Get Strongest leader for ruler.
    * @param realm PlayerInfo
+   * @param  xenophobe If true allows only original space race rulers.
    * @return Strongest leader in realm.
    */
-  public static Leader getStrongestLeader(final PlayerInfo realm) {
+  public static Leader getStrongestLeader(final PlayerInfo realm,
+      final boolean xenophobe) {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
@@ -633,6 +635,9 @@ public final class LeaderUtility {
         continue;
       }
       int score = getStrongPoints(leader);
+      if (xenophobe && leader.getRace() != realm.getRace()) {
+        score = 0;
+      }
       if (score > value) {
         bestLeader = leader;
         value = score;
@@ -1186,9 +1191,11 @@ public final class LeaderUtility {
   /**
    * Get best hegemony ruler.
    * @param realm Realm who is evaluating new ruler
+   * @param xenophobe If true only original space race is allowed to be ruler.
    * @return Hegemony ruler
    */
-  public static Leader getNextHegemonyRuler(final PlayerInfo realm) {
+  public static Leader getNextHegemonyRuler(final PlayerInfo realm,
+      final boolean xenophobe) {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
@@ -1197,6 +1204,9 @@ public final class LeaderUtility {
         continue;
       }
       int score = getHegemonyPoints(leader);
+      if (xenophobe && leader.getRace() != realm.getRace()) {
+        score = 0;
+      }
       if (score > value) {
         bestLeader = leader;
         value = score;
@@ -1326,11 +1336,14 @@ public final class LeaderUtility {
       case CLAN:
       case HORDE:
       case MECHANICAL_HORDE:
-      case HIERARCHY:
       case HIVEMIND:
-      case REGIME:
       case NEST: {
-        bestLeader = getStrongestLeader(realm);
+        bestLeader = getStrongestLeader(realm, true);
+        break;
+      }
+      case HIERARCHY:
+      case REGIME: {
+        bestLeader = getStrongestLeader(realm, false);
         break;
       }
       case EMPIRE:
@@ -1338,7 +1351,7 @@ public final class LeaderUtility {
       case KINGDOM: {
         bestLeader = getNextHeir(realm);
         if (bestLeader == null) {
-          bestLeader = getStrongestLeader(realm);
+          bestLeader = getStrongestLeader(realm, true);
         }
         break;
       }
@@ -1358,9 +1371,12 @@ public final class LeaderUtility {
         bestLeader = getNextFederationRuler(realm);
         break;
       }
-      case UTOPIA:
       case HEGEMONY: {
-        bestLeader = getNextHegemonyRuler(realm);
+        bestLeader = getNextHegemonyRuler(realm, true);
+        break;
+      }
+      case UTOPIA: {
+        bestLeader = getNextHegemonyRuler(realm, false);
         break;
       }
       case AI:

@@ -518,6 +518,7 @@ public class LeaderUtilityTest {
   public void testNextLeaderHegemony() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
     Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.HEGEMONY);
+    Mockito.when(realm.getRace()).thenReturn(SpaceRace.HUMAN);
     ArrayList<Leader> pool = new ArrayList<>();
     Mockito.when(realm.getLeaderPool()).thenReturn(pool);
     Leader leader = new Leader("Test Leader");

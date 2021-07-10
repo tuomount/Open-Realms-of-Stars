@@ -49,7 +49,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -210,6 +210,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     this.setInfo(playerInfo);
     // Background image
     imgBase = new BigImagePanel(planet, true, null);
+    imgBase.setPlayer(info);
     this.setLayout(new BorderLayout());
 
     // Top Panel
@@ -847,6 +848,9 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
    */
   public void setInfo(final PlayerInfo info) {
     this.info = info;
+    if (imgBase != null) {
+      imgBase.setPlayer(info);
+    }
   }
 
   /**

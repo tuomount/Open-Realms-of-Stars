@@ -37,7 +37,7 @@ import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020  Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

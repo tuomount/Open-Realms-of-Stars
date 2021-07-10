@@ -2295,7 +2295,7 @@ public class StarMap {
         }
       }
       // Diplomatic attitudes try to make more friends
-      if (info.getDiplomacy().getNumberOfAdmires()
+      if (StarMapUtilities.getNumberOfAdmires(aiTurnNumber, players)
           < players.getCurrentMaxRealms() / 2
           && (info.getAiAttitude() == Attitude.DIPLOMATIC
              || info.getAiAttitude() == Attitude.MERCHANTICAL
@@ -2318,10 +2318,10 @@ public class StarMap {
           }
         }
       }
-      // If there are more than 3 realms, even aggressive ones should have
+      // If there are more than 6 realms, even aggressive ones should have
       // at least one friend.
-      if (players.getCurrentMaxRealms() > 3
-          && info.getDiplomacy().getNumberOfAdmires() < 0
+      if (players.getCurrentMaxRealms() > 6
+          && StarMapUtilities.getNumberOfAdmires(aiTurnNumber, players) < 0
           && (info.getAiAttitude() == Attitude.AGGRESSIVE
              || info.getAiAttitude() == Attitude.SCIENTIFIC
              || info.getAiAttitude() == Attitude.MILITARISTIC
@@ -4234,7 +4234,7 @@ public class StarMap {
         }
         if (getPlayerByIndex(i).getTechList().hasTech(TechType.Improvements,
             "United Galaxy Tower") && getScoreDiplomacy() > 0
-            && getPlayerByIndex(i).getDiplomacy().getNumberOfAdmires() > 0) {
+            && StarMapUtilities.getNumberOfAdmires(i, getPlayerList()) > 0) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.DIPLOMATIC);
         } else if (getNewsCorpData().getResearch().getPosition(i) < 3
             && getScoreResearch() > 0
@@ -4243,7 +4243,7 @@ public class StarMap {
           getPlayerByIndex(i).setStrategy(WinningStrategy.SCIENCE);
         } else if (getNewsCorpData().getCultural().getPosition(i) < 3
             && getScoreCulture() > -1
-            && getPlayerByIndex(i).getDiplomacy().getNumberOfAdmires() > 0) {
+            &&  StarMapUtilities.getNumberOfAdmires(i, getPlayerList()) > 0) {
           getPlayerByIndex(i).setStrategy(WinningStrategy.CULTURAL);
         } else if (getNewsCorpData().getResearch().getPosition(i) < 3
             && getScoreResearch() > 0) {

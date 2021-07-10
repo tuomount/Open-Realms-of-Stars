@@ -574,7 +574,7 @@ public class StatView extends BlackPanel {
         if (broadcasters[i]) {
           sb.append(" Broadcasting");
         }
-        value = map.getPlayerByIndex(i).getDiplomacy().getNumberOfAdmires();
+        value = StarMapUtilities.getNumberOfAdmires(i, map.getPlayerList());
         if (value > 0) {
           sb.append(" ");
           sb.append(value);

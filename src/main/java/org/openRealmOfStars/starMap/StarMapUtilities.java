@@ -2,6 +2,7 @@ package org.openRealmOfStars.starMap;
 
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
@@ -23,7 +24,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -850,6 +851,39 @@ public final class StarMapUtilities {
     return result;
   }
 
+  /**
+   * Get number of admires realm has.
+   * Admire is when another realm likes your realm
+   * and you are not in war or trade embargo.
+   * @param admireTarget Which realm is going to check how many admires it has
+   * @param players Realms in list
+   * @return Number of admires.
+   */
+
+  public static int getNumberOfAdmires(final int admireTarget,
+      final PlayerList players) {
+    int admires = 0;
+    for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
+      if (i == admireTarget) {
+        continue;
+      }
+      PlayerInfo info = players.getPlayerInfoByIndex(i);
+      if (info == null) {
+        continue;
+      }
+      Diplomacy diplomacy = info.getDiplomacy();
+      if (diplomacy == null) {
+        continue;
+      }
+      if (diplomacy.getLiking(admireTarget) >= 0
+          && !diplomacy.isWar(admireTarget)
+          && !diplomacy.isTradeEmbargo(admireTarget)
+          && diplomacy.isTradeAlliance(admireTarget)) {
+        admires++;
+      }
+    }
+    return admires;
+  }
   /**
    * Calculate required tower limit for diplomatic victory start.
    * @param sizeX Map size in X coordinate

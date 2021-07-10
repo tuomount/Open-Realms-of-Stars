@@ -2205,7 +2205,8 @@ public final class NewsFactory {
       admireLimit = 1;
     }
     if (winningRealm != null) {
-      admires = winningRealm.getDiplomacy().getNumberOfAdmires();
+      admires = StarMapUtilities.getNumberOfAdmires(winner.getRealm(),
+          map.getPlayerList());
     }
     if (winner.getScore() >= limit && broadcaster && admires > admireLimit) {
       news = new NewsData();

@@ -200,7 +200,8 @@ public class BigImagePanel extends JPanel {
   private void drawTextArea(final Graphics g) {
     g.setFont(GuiStatics.getFontCubellan());
     if (title == null && planet != null) {
-      StringBuilder sb = new StringBuilder(planet.generateInfoText(true));
+      StringBuilder sb = new StringBuilder(planet.generateInfoText(true,
+          player));
       if (player != null && planet.getPlanetPlayerInfo() != player
           && !planet.isGasGiant()) {
         if (planet.getTotalRadiationLevel() > player.getRace().getMaxRad()) {

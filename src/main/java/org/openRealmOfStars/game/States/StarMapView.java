@@ -371,7 +371,7 @@ public class StarMapView extends BlackPanel {
    * @param planet to show
    */
   public void setShowPlanet(final Planet planet) {
-    infoPanel.showPlanet(planet, true);
+    infoPanel.showPlanet(planet, true, map.getCurrentPlayerInfo());
   }
 
   /**

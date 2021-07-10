@@ -1676,9 +1676,11 @@ public class Planet {
   /**
    * Generate info text
    * @param activeScanned If planet is scanned in one turn
+   * @param viewerInfo Realm who is view the planet
    * @return String
    */
-  public String generateInfoText(final boolean activeScanned) {
+  public String generateInfoText(final boolean activeScanned,
+      final PlayerInfo viewerInfo) {
     StringBuilder sb = new StringBuilder();
     sb.append(this.getName());
     sb.append("\n");
@@ -1695,7 +1697,12 @@ public class Planet {
         sb.append(getPlanetPlayerInfo().getWorldTypeValue(
             getPlanetType().getWorldType()));
         sb.append("%\n");
-
+      }
+      if (getPlanetPlayerInfo() == null && viewerInfo != null) {
+        sb.append("Suitable: ");
+        sb.append(viewerInfo.getWorldTypeValue(
+            getPlanetType().getWorldType()));
+        sb.append("%\n");
       }
       if (activeScanned && event != PlanetaryEvent.NONE && eventFound) {
         sb.append(event.getExplanation());

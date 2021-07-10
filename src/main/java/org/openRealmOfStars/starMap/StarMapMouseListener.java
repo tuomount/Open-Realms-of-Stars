@@ -285,7 +285,8 @@ public class StarMapMouseListener extends MouseAdapter
             setLastClickedPlanet(planet);
             setLastClickedFleet(null);
             setWarningShown(false);
-            mapInfoPanel.showPlanet(planet, true);
+            mapInfoPanel.showPlanet(planet, true,
+                starMap.getCurrentPlayerInfo());
           } else if (fleet != null) {
             setLastClickedPlanet(null);
             setWarningShown(false);
@@ -346,7 +347,8 @@ public class StarMapMouseListener extends MouseAdapter
               }
             }
           } else if (planet != null) {
-            mapInfoPanel.showPlanet(planet, true);
+            mapInfoPanel.showPlanet(planet, true,
+                starMap.getCurrentPlayerInfo());
             setLastClickedPlanet(planet);
             setLastClickedFleet(null);
             setWarningShown(false);
@@ -390,7 +392,8 @@ public class StarMapMouseListener extends MouseAdapter
         if (planet != null) {
           setLastClickedPlanet(planet);
           setLastClickedFleet(null);
-          mapInfoPanel.showPlanet(planet, false);
+          mapInfoPanel.showPlanet(planet, false,
+              starMap.getCurrentPlayerInfo());
         } else {
           Tile tile = starMap.getTile(coord.getMapX(), coord.getMapY());
           if (!tile.getDescription().isEmpty()) {

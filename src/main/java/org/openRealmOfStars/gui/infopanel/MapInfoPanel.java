@@ -208,8 +208,10 @@ public class MapInfoPanel extends InfoPanel {
    * Show planet on info panel
    * @param planetToShow The planet to show
    * @param activeScan Set true if planet is scanned in one turn
+   * @param viewerInfo Realm who is viewing the planet, can be null.
    */
-  public void showPlanet(final Planet planetToShow, final boolean activeScan) {
+  public void showPlanet(final Planet planetToShow, final boolean activeScan,
+      final PlayerInfo viewerInfo) {
     this.planet = planetToShow;
     this.fleet = null;
     this.activeScanned = activeScan;
@@ -219,7 +221,7 @@ public class MapInfoPanel extends InfoPanel {
     this.defendBtn.setEnabled(false);
     this.fixTradeFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
-    updatePanel(false);
+    updatePanel(false, viewerInfo);
   }
 
   /**
@@ -295,6 +297,15 @@ public class MapInfoPanel extends InfoPanel {
    * @param debug Show debug information on true
    */
   public void updatePanel(final boolean debug) {
+    updatePanel(debug, null);
+  }
+
+  /**
+   * Update panels according set data
+   * @param debug Show debug information on true
+   * @param viewerInfo Realm viewing the stuff. Can be null.
+   */
+  public void updatePanel(final boolean debug, final PlayerInfo viewerInfo) {
     if (planet != null) {
       BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
           Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
@@ -347,7 +358,7 @@ public class MapInfoPanel extends InfoPanel {
       g2d.dispose();
       imageLabel.setImage(img);
       setTitle(planet.getName());
-      textArea.setText(planet.generateInfoText(this.activeScanned));
+      textArea.setText(planet.generateInfoText(this.activeScanned, viewerInfo));
       this.repaint();
     } else if (fleet != null) {
       BufferedImage img = new BufferedImage(ShipImage.MAX_WIDTH,

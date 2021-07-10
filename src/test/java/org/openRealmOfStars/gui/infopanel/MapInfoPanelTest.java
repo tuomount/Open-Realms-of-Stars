@@ -64,7 +64,7 @@ public class MapInfoPanelTest {
     Tile tile = Mockito.mock(Tile.class);
     Mockito.when(tile.getDescription()).thenReturn("");
     panel.showTile(tile);
-    panel.showPlanet(null, false);
+    panel.showPlanet(null, false, null);
     PlayerInfo owner = Mockito.mock(PlayerInfo.class);
     panel.showFleet(null, owner, false);
     assertEquals(owner, panel.getFleetOwner());

@@ -2208,7 +2208,7 @@ public final class NewsFactory {
       admires = StarMapUtilities.getNumberOfAdmires(winner.getRealm(),
           map.getPlayerList());
     }
-    if (winner.getScore() >= limit && broadcaster && admires > admireLimit) {
+    if (winner.getScore() >= limit && broadcaster && admires >= admireLimit) {
       news = new NewsData();
       ImageInstruction instructions = new ImageInstruction();
       news.setImageInstructions(instructions.build());

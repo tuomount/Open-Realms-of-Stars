@@ -463,9 +463,13 @@ public class PlanetBombingView extends BlackPanel {
     textArea.repaint();
     sb = new StringBuilder();
     sb.append("Turns left: ");
-    sb.append(bombers.get(shipIndex).getActions());
-    sb.append("/");
-    sb.append(bombers.get(shipIndex).getMaxActions());
+    if (bombers.get(shipIndex) != null) {
+      sb.append(bombers.get(shipIndex).getActions());
+      sb.append("/");
+      sb.append(bombers.get(shipIndex).getMaxActions());
+    } else {
+      sb.append("0/0");
+    }
     infoPanel.updatePanel(sb.toString());
 
     /*

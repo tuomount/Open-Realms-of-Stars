@@ -1914,7 +1914,7 @@ public class Game implements ActionListener {
       info.setAncientRealm(galaxyConfig.getPlayerAncientRealm(i));
       info.setColor(galaxyConfig.getPlayerColor(i));
       randomListOfColors.remove(galaxyConfig.getPlayerColor(i));
-      if (i == 0) {
+      if (i == 0 && !galaxyConfig.isAiOnly()) {
         info.setHuman(true);
       }
       players.addPlayer(info);

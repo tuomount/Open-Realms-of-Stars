@@ -1845,7 +1845,7 @@ public class Game implements ActionListener {
           singleTurnEnd = getAITurnView().handleAiTurn();
         } while (!singleTurnEnd);
       }
-      if (allowHumanAncientRealm) {
+      if (allowHumanAncientRealm && !galaxyConfig.isAiOnly()) {
         starMap.getPlayerByIndex(0).setHuman(true);
         starMap.getPlayerByIndex(0).getMissions().clearMissions();
         PlayerInfo info = starMap.getPlayerByIndex(0);

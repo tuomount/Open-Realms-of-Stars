@@ -148,6 +148,11 @@ public class GalaxyCreationView extends BlackPanel {
   private SpaceCheckBox tutorialEnabled;
 
   /**
+   * Checkbox for AI only hame
+   */
+  private SpaceCheckBox aiOnlyGame;
+
+  /**
    * Galaxy config
    */
   private GalaxyConfig config;
@@ -191,6 +196,36 @@ public class GalaxyCreationView extends BlackPanel {
       }
     }
     xinvis.add(Box.createRigidArea(new Dimension(extraBoxWidth, 5)));
+    xinvis.add(createGalaxyCreationPanel(listener));
+    xinvis.add(Box.createRigidArea(new Dimension(extraBoxWidth, 5)));
+
+    xinvis.add(createRealmSetupPanel(listener));
+    xinvis.add(Box.createRigidArea(new Dimension(extraBoxWidth, 5)));
+    invisible.add(xinvis);
+    invisible.add(Box.createRigidArea(new Dimension(200, 300)));
+
+    imgBase.add(invisible, BorderLayout.CENTER);
+
+    invisible = new InvisiblePanel(imgBase);
+    invisible.setLayout(new BorderLayout());
+    SpaceButton btn = new SpaceButton("Cancel", GameCommands.COMMAND_CANCEL);
+    btn.addActionListener(listener);
+    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    invisible.add(btn, BorderLayout.WEST);
+    btn = new SpaceButton("Next", GameCommands.COMMAND_NEXT);
+    btn.addActionListener(listener);
+    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    invisible.add(btn, BorderLayout.EAST);
+    imgBase.add(invisible, BorderLayout.SOUTH);
+    this.add(imgBase, BorderLayout.CENTER);
+  }
+
+  /**
+   * Create Galaxy Creation panel.
+   * @param listener ActionListener
+   * @return InfoPanel with galaxy creation settings.
+   */
+  private InfoPanel createGalaxyCreationPanel(final ActionListener listener) {
     InfoPanel info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Galaxy Creation");
@@ -314,7 +349,6 @@ public class GalaxyCreationView extends BlackPanel {
 
     info.add(comboSpacePirates);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    xinvis.add(info);
 
     label = new SpaceLabel("Space pirate difficulty");
     label.setAlignmentX(CENTER_ALIGNMENT);
@@ -402,13 +436,19 @@ public class GalaxyCreationView extends BlackPanel {
         + " anything.<html>");
     info.add(comboKarmaSpeed);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    xinvis.add(info);
-    xinvis.add(Box.createRigidArea(new Dimension(extraBoxWidth, 5)));
+    return info;
+  }
 
-    info = new InfoPanel();
+  /**
+   * Create Realm setup panel
+   * @param listener ActionListener
+   * @return InfoPanel
+   */
+  private InfoPanel createRealmSetupPanel(final ActionListener listener) {
+    InfoPanel info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Realm Setting");
-    label = new SpaceLabel("Number of realms");
+    SpaceLabel label = new SpaceLabel("Number of realms");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -647,27 +687,18 @@ public class GalaxyCreationView extends BlackPanel {
         + " shown as in-game messages.<br> Tutorial can be enabled or disabled"
         + " while playing and helps can accessed from Star Map view.</html>");
     info.add(tutorialEnabled);
-    xinvis.add(info);
-    xinvis.add(Box.createRigidArea(new Dimension(extraBoxWidth, 5)));
-    invisible.add(xinvis);
-    invisible.add(Box.createRigidArea(new Dimension(200, 300)));
-
-    imgBase.add(invisible, BorderLayout.CENTER);
-
-    invisible = new InvisiblePanel(imgBase);
-    invisible.setLayout(new BorderLayout());
-    SpaceButton btn = new SpaceButton("Cancel", GameCommands.COMMAND_CANCEL);
-    btn.addActionListener(listener);
-    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invisible.add(btn, BorderLayout.WEST);
-    btn = new SpaceButton("Next", GameCommands.COMMAND_NEXT);
-    btn.addActionListener(listener);
-    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invisible.add(btn, BorderLayout.EAST);
-    imgBase.add(invisible, BorderLayout.SOUTH);
-    this.add(imgBase, BorderLayout.CENTER);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    aiOnlyGame = new SpaceCheckBox("AI Only game");
+    aiOnlyGame.setSelected(this.config.isAiOnly());
+    aiOnlyGame.addActionListener(listener);
+    aiOnlyGame.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    aiOnlyGame.setAlignmentX(CENTER_ALIGNMENT);
+    aiOnlyGame.setToolTipText("<html>If enabled AI will play all the realms."
+        + "<br> After each turn human can watch and see choices AI made."
+        + "</html>");
+    info.add(aiOnlyGame);
+    return info;
   }
-
   /**
    * Galaxy size configuration for very small galaxy
    */
@@ -701,6 +732,7 @@ public class GalaxyCreationView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
       SoundPlayer.playMenuSound();
       config.setEnableTutorial(tutorialEnabled.isSelected());
+      config.setAiOnly(aiOnlyGame.isSelected());
       config.setMaxPlayers(comboPlayers.getSelectedIndex() + 2);
       config.setStartingPosition(comboPlayerPos.getSelectedIndex());
       switch (comboGalaxySize.getSelectedIndex()) {

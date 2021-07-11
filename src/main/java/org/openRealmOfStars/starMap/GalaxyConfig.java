@@ -222,6 +222,11 @@ public class GalaxyConfig {
    * Flag for enabled tutorial
    */
   private boolean enableTutorial;
+
+  /**
+   * AI only playing the game.
+   */
+  private boolean aiOnly;
 /**
    * Constructor for galaxy config
    */
@@ -252,6 +257,7 @@ public class GalaxyConfig {
     playerAncientRealm = new boolean[StarMap.MAX_PLAYERS];
     playerColors = new PlayerColor[StarMap.MAX_PLAYERS];
     setEnableTutorial(true);
+    setAiOnly(false);
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
 
       setPlayerColor(i, PlayerColor.getByIndex(i));
@@ -793,6 +799,22 @@ public class GalaxyConfig {
     if (limit >= 0 && limit < 5) {
       this.scoringPopulation = limit;
     }
+  }
+
+  /**
+   * Is AI only playing as realms?
+   * @return True if AI is only playing.
+   */
+  public boolean isAiOnly() {
+    return aiOnly;
+  }
+
+  /**
+   * Set AI only playing flag.
+   * @param aiOnly boolean.
+   */
+  public void setAiOnly(final boolean aiOnly) {
+    this.aiOnly = aiOnly;
   }
 
 }

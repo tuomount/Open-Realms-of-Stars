@@ -291,7 +291,7 @@ public class PlayerSetupView extends BlackPanel {
 
     InfoPanel info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
-    if (index == 0) {
+    if (index == 0 && !config.isAiOnly()) {
       info.setTitle("Player " + (index + 1));
     } else {
       info.setTitle("Player " + (index + 1) + " (AI)");

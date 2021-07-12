@@ -503,9 +503,21 @@ public class Fleet {
     sb.append(" FTL: ");
     sb.append(getFleetFtlSpeed());
     sb.append("\n");
-    sb.append("Moves:");
+    sb.append("Moves: ");
     sb.append(movesLeft);
     sb.append("\n");
+    int colonist = getTotalCargoColonist();
+    if (colonist > 0) {
+      if (isColonyFleet()) {
+        sb.append("Colonists: ");
+      } else if (hasTrooper()) {
+        sb.append("Troops: ");
+      } else {
+        sb.append("Population: ");
+      }
+      sb.append(colonist);
+      sb.append("\n");
+    }
     for (Ship ship : ships) {
       sb.append(ship.getName() + " - " + ship.getTotalMilitaryPower());
       sb.append("\n");
@@ -828,6 +840,18 @@ public class Fleet {
     return false;
   }
 
+  /**
+   * Does fleet have trooper ship?
+   * @return True if has trooper
+   */
+  public boolean hasTrooper() {
+    for (Ship ship : ships) {
+      if (ship.isTrooperShip()) {
+        return true;
+      }
+    }
+    return false;
+  }
   /**
    * Get A Star search for fleet
    * @return A star search result

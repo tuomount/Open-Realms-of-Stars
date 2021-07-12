@@ -1440,6 +1440,10 @@ public class AITurnView extends BlackPanel {
       Fleet fleet = game.getStarMap().getAIFleet();
       if (fleet != null) {
         MissionHandling.mergeFleets(fleet, info);
+        if (fleet.isStarBaseDeployed() && fleet.getRoute() == null) {
+          fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
+              fleet.getY(), Route.ROUTE_DEFEND));
+        }
         Mission mission = info.getMissions().getMission(MissionType.COLONIZE,
             MissionPhase.PLANNING);
         Mission fleetMission = info.getMissions().getMissionForFleet(

@@ -43,6 +43,7 @@ import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -771,6 +772,9 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
                starbaseFleet.setName(fleetList.generateUniqueName(
                    "Deep Space"));
                fleetList.add(starbaseFleet);
+               starbaseFleet.setRoute(new Route(starbaseFleet.getX(),
+                   starbaseFleet.getY(), starbaseFleet.getX(),
+                   starbaseFleet.getY(), Route.ROUTE_DEFEND));
                fleet.removeShip(ship);
                ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
                if (fleet.getNumberOfShip() == 0

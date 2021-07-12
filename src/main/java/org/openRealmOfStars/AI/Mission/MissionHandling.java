@@ -697,6 +697,9 @@ public final class MissionHandling {
               if (starbaseFleet != null) {
                 starbaseFleet.addShip(ship);
                 ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+                starbaseFleet.setRoute(new Route(starbaseFleet.getX(),
+                    starbaseFleet.getY(), starbaseFleet.getX(),
+                    starbaseFleet.getY(), Route.ROUTE_DEFEND));
               } else {
                 starbaseFleet = new Fleet(ship, fleet.getX(), fleet.getY());
                 FleetList fleetList = info.getFleets();

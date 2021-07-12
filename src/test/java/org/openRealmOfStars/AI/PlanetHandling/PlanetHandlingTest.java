@@ -478,7 +478,7 @@ public class PlanetHandlingTest {
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
-    assertEquals(118,score);
+    assertEquals(99,score);
   }
 
   @Test
@@ -577,7 +577,7 @@ public class PlanetHandlingTest {
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
-    assertEquals(78,score);
+    assertEquals(79, score);
   }
 
   @Test
@@ -663,7 +663,7 @@ public class PlanetHandlingTest {
     Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
     Mockito.when(planet.howManyBuildings(farm.getName())).thenReturn(0);
     Mockito.when(planet.exceedRadiation()).thenReturn(false);
-    Building[] list = {farm, factory, lab, mine};
+    Building[] list = {farm, factory, lab, mine, factory, mine, factory, mine};
     Mockito.when(planet.getBuildingList()).thenReturn(list);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);

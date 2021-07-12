@@ -205,15 +205,6 @@ public final class PlanetHandling {
             }
           }
         }
-        if (!constructionSelected && info.getRace() == SpaceRace.MECHIONS
-            && planet.getTotalPopulation() < 6) {
-          int i = getConstruction(ConstructionFactory.MECHION_CITIZEN,
-              constructions);
-          if (i != -1) {
-            planet.setUnderConstruction(constructions[i]);
-            constructionSelected = true;
-          }
-        }
         if (gotMines == -1 && !constructionSelected) {
           // No mines at all
           int i = getConstruction("Advanced mine", constructions);
@@ -228,7 +219,20 @@ public final class PlanetHandling {
             }
           }
         }
-        if (gotSpacePort == -1 && !constructionSelected) {
+        if (!constructionSelected && info.getRace() == SpaceRace.MECHIONS
+            && planet.getTotalPopulation() < 3
+            && planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION) > 3
+            && planet.getTotalProduction(Planet.PRODUCTION_METAL) > 3) {
+          int i = getConstruction(ConstructionFactory.MECHION_CITIZEN,
+              constructions);
+          if (i != -1) {
+            planet.setUnderConstruction(constructions[i]);
+            constructionSelected = true;
+          }
+        }
+        if (gotSpacePort == -1 && !constructionSelected
+            && planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION) > 3
+            && planet.getTotalProduction(Planet.PRODUCTION_METAL) > 3) {
           // No space port
           int i = getConstruction("Space port", constructions);
           if (i != -1) {
@@ -404,6 +408,12 @@ public final class PlanetHandling {
     }
     int metalProd = planet.getTotalProduction(Planet.PRODUCTION_METAL);
     int prodProd = planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION);
+    if (metalProd < 4 && building.getName().equals("Basic mine")) {
+      score = score + 40;
+    }
+    if (prodProd < 4 && building.getName().equals("Basic factory")) {
+      score = score + 40;
+    }
     if (metalProd > prodProd) {
       score = score + building.getFactBonus() * 20;
     }
@@ -503,12 +513,6 @@ public final class PlanetHandling {
     }
     int production = planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION);
     int metal = planet.getTotalProduction(Planet.PRODUCTION_METAL);
-    if (building.getFactBonus() > 0 && production < 5) {
-      score = score * 2;
-    }
-    if (building.getMineBonus() > 0 && metal < 5) {
-      score = score * 2;
-    }
     if (building.getFactBonus() > 0 && production >= metal * 3
         && production > 0) {
       // Planet has enough production production
@@ -1073,7 +1077,7 @@ public final class PlanetHandling {
       scores[i] = -1;
       if (constructions[i].getName()
           .equals(ConstructionFactory.MECHION_CITIZEN)) {
-        scores[i] = planet.getGroundSize() * 4
+        scores[i] = planet.getPopulationLimit() * 4
             - 2 * planet.getTotalPopulation();
         if (planet.getBuildingList().length < 4) {
           scores[i] = scores[i] + 5;
@@ -1083,11 +1087,16 @@ public final class PlanetHandling {
         }
         int index = map.getPlayerList().getIndex(info);
         if (map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
-            index) == 0) {
+            index) == 0 && !info.getTechList().hasTech("Basic lab")) {
           // No research so focusing on building more population
           scores[i] = scores[i] + 50;
         }
-
+        if (planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION) < 4) {
+          scores[i] = scores[i] / 2;
+        }
+        if (planet.getTotalProduction(Planet.PRODUCTION_METAL) < 4) {
+          scores[i] = scores[i] / 2;
+        }
       }
       if (constructions[i] instanceof Building) {
         Building building = (Building) constructions[i];

@@ -210,6 +210,12 @@ public class Planet {
    * Current governor of the planet.
    */
   private Leader governor;
+
+  /**
+   * Orbital for planet.
+   */
+  private Ship orbital;
+
   /**
    * Maximum number of different works
    */
@@ -356,6 +362,7 @@ public class Planet {
     final int orderNumber, final boolean gasGiant) {
     this.setCoordinate(coordinate);
     governor = null;
+    orbital = null;
     if (orderNumber == 0) {
       // Rogue planet
       this.name = name;
@@ -3367,5 +3374,21 @@ public class Planet {
     result = result + getTotalProduction(PRODUCTION_METAL);
     result = result + getMetal() / 25;
     return result;
+  }
+
+  /**
+   * Get Orbital of the planet or null.
+   * @return Ship or null
+   */
+  public Ship getOrbital() {
+    return orbital;
+  }
+
+  /**
+   * Set Orbital of the planet or null.
+   * @param orbital Ship
+   */
+  public void setOrbital(final Ship orbital) {
+    this.orbital = orbital;
   }
 }

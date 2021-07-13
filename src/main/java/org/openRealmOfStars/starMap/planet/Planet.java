@@ -20,6 +20,7 @@ import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -446,8 +447,10 @@ public class Planet {
    *  -1 mean construction will never complete.
    */
   public int getProductionTime(final Construction build) {
-    int metalReq = build.getMetalCost() - getMetal();
-    int prodReq = build.getProdCost() - getProdResource();
+    int requiredMetalCost = getActualCost(build, PRODUCTION_METAL);
+    int requiredProdCost = getActualCost(build, PRODUCTION_PRODUCTION);
+    int metalReq = requiredMetalCost - getMetal();
+    int prodReq = requiredProdCost - getProdResource();
     if (metalReq <= 0 && prodReq <= 0) {
       return 1;
     }
@@ -1803,6 +1806,41 @@ public class Planet {
   }
 
   /**
+   * Get actual cost of construction
+   * @param build Construction
+   * @param costType PRODUCTION_PRODUCTION returns production cost,
+   *                 otherwise metal cost
+   * @return prodcution cost
+   */
+  public int getActualCost(final Construction build, final int costType) {
+    if (build == null) {
+      return 0;
+    }
+    int requiredMetalCost = build.getMetalCost();
+    int requiredProdCost = build.getProdCost();
+    if (build instanceof Ship) {
+      Ship ship = (Ship) build;
+      if (ship.getHull().getHullType() == ShipHullType.ORBITAL
+          && orbital != null) {
+        requiredProdCost = requiredProdCost - orbital.getProdCost();
+        requiredMetalCost = requiredMetalCost - orbital.getMetalCost();
+        if (requiredMetalCost < 0) {
+          requiredMetalCost = 0;
+        }
+        if (requiredProdCost < 0) {
+          requiredProdCost = 0;
+        }
+        // Upgrade always cost a bit extra.
+        requiredMetalCost = requiredMetalCost + 10;
+        requiredProdCost = requiredProdCost + 10;
+      }
+    }
+    if (costType == Planet.PRODUCTION_PRODUCTION) {
+      return requiredProdCost;
+    }
+    return requiredMetalCost;
+  }
+  /**
    * Update planet foor for one turn.
    * @param map StarMap
    * @return true if planet is still populated, otherwise false
@@ -2053,10 +2091,14 @@ public class Planet {
         // Forcing planet to have something to construct if player is human.
         setUnderConstruction(ConstructionFactory.createByName("Extra credit"));
       }
+      int requiredMetalCost = getActualCost(underConstruction,
+          Planet.PRODUCTION_METAL);
+      int requiredProdCost = getActualCost(underConstruction,
+          Planet.PRODUCTION_PRODUCTION);
       // Making building happens at the end
       if (underConstruction != null
-          && metal >= underConstruction.getMetalCost()
-          && prodResource >= underConstruction.getProdCost()) {
+          && metal >= requiredMetalCost
+          && prodResource >= requiredProdCost) {
         if (underConstruction instanceof Building
             && groundSize > buildings.size()) {
           Building building = (Building) underConstruction;
@@ -2116,8 +2158,8 @@ public class Planet {
               }
             }
           }
-          metal = metal - underConstruction.getMetalCost();
-          prodResource = prodResource - underConstruction.getProdCost();
+          metal = metal - requiredMetalCost;
+          prodResource = prodResource - requiredProdCost;
           if (governor != null) {
             governor.setExperience(governor.getExperience()
                 + underConstruction.getProdCost() / 2);
@@ -2134,8 +2176,8 @@ public class Planet {
             setUnderConstruction(getProductionList()[0]);
           }
         } else if (underConstruction instanceof Ship && !enemyOrbiting) {
-          metal = metal - underConstruction.getMetalCost();
-          prodResource = prodResource - underConstruction.getProdCost();
+          metal = metal - requiredMetalCost;
+          prodResource = prodResource - requiredProdCost;
           if (governor != null) {
             governor.setExperience(governor.getExperience()
                 + underConstruction.getProdCost() / 2);
@@ -2307,8 +2349,8 @@ public class Planet {
             if (governor != null) {
               governor.getStats().addOne(StatType.POPULATION_GROWTH);
             }
-            metal = metal - underConstruction.getMetalCost();
-            prodResource = prodResource - underConstruction.getProdCost();
+            metal = metal - requiredMetalCost;
+            prodResource = prodResource - requiredProdCost;
             workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
             msg = new Message(MessageType.CONSTRUCTION,
                 getName() + " built " + underConstruction.getName(),
@@ -2319,8 +2361,8 @@ public class Planet {
           }
           if (underConstruction.getName()
               .equals(ConstructionFactory.EXTRA_CULTURE)) {
-            metal = metal - underConstruction.getMetalCost();
-            prodResource = prodResource - underConstruction.getProdCost();
+            metal = metal - requiredMetalCost;
+            prodResource = prodResource - requiredProdCost;
             culture = culture + 5;
             msg = new Message(MessageType.CONSTRUCTION,
                 getName() + " built " + underConstruction.getName(),
@@ -2331,8 +2373,8 @@ public class Planet {
           }
           if (underConstruction.getName()
               .equals(ConstructionFactory.EXTRA_CREDIT)) {
-            metal = metal - underConstruction.getMetalCost();
-            prodResource = prodResource - underConstruction.getProdCost();
+            metal = metal - requiredMetalCost;
+            prodResource = prodResource - requiredProdCost;
             planetOwnerInfo
                 .setTotalCredits(planetOwnerInfo.getTotalCredits() + 12);
             msg = new Message(MessageType.CONSTRUCTION,

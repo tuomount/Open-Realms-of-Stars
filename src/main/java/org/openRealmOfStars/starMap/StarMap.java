@@ -2201,7 +2201,20 @@ public class StarMap {
           } else {
             escapePosition = null;
           }
+          Planet planet = getPlanetByCoordinate(x, y);
+          if (planet != null && planet.getOrbital() != null) {
+            return new Combat(fleet1, fleet2, info1, info2, escapePosition,
+                planet);
+          }
           return new Combat(fleet1, fleet2, info1, info2, escapePosition);
+        }
+      }
+      if (info2 == null) {
+        int planetIndex = fleetTiles[x][y].getPlanetIndex();
+        Planet planet = getPlanetList().get(planetIndex);
+        if (planet != null && planet.getOrbital() != null) {
+          return new Combat(fleet1, null, info1, info2, null,
+              planet);
         }
       }
     }

@@ -210,6 +210,11 @@ public class Combat {
    * Is defender privateer?
    */
   private boolean defenderPrivateer;
+
+  /**
+   * Is orbital in combat?
+   */
+  private boolean orbitalInCombat;
   /**
    * Build shipList in initiative order
    * @param attackerFleet Attacking Player1 fleet
@@ -241,6 +246,58 @@ public class Combat {
     this.defenderInfo = defenderInfo;
     leaderKilledNews = null;
     starbaseFleet = null;
+    escapePosition = escapePos;
+    orbitalInCombat = false;
+    initCombat();
+  }
+
+  /**
+   * Build shipList in initiative order with orbital.
+   * defenderFleet and defenderInfo can be null.
+   * @param attackerFleet Attacking Player1 fleet
+   * @param defenderFleet Defending Player2 fleet
+   * @param attackerInfo Attacking Player1 info
+   * @param defenderInfo Defending Player2 Info
+   * @param escapePos Escape position for defender
+   * @param planet Planet with orbital
+   */
+  public Combat(final Fleet attackerFleet, final Fleet defenderFleet,
+          final PlayerInfo attackerInfo, final PlayerInfo defenderInfo,
+          final Coordinate escapePos, final Planet planet) {
+    this.planet = planet;
+    if (planet.getOrbital() != null) {
+      orbitalInCombat = true;
+    }
+    this.attackerFleet = attackerFleet;
+    this.defenderFleet = defenderFleet;
+    starbaseFleet = null;
+    if (defenderFleet == null) {
+      this.defenderFleet = new Fleet(planet.getOrbital(), planet.getX(),
+          planet.getY());
+      this.defenderFleet.setName("Orbital-" + planet.getOrbital().getName()
+          + "-X" + planet.getX() + "-Y" + planet.getY());
+    } else {
+      starbaseFleet = new Fleet(planet.getOrbital(), planet.getX(),
+          planet.getY());
+      starbaseFleet.setName("Orbital-" + planet.getOrbital().getName()
+          + "-X" + planet.getX() + "-Y" + planet.getY());
+    }
+    attackerPrivateer = this.attackerFleet.isPrivateerFleet();
+    defenderPrivateer = this.defenderFleet.isPrivateerFleet();
+    this.attackerInfo = attackerInfo;
+    this.defenderInfo = defenderInfo;
+    if (defenderInfo == null) {
+      this.defenderInfo = planet.getPlanetPlayerInfo();
+    }
+    leaderKilledNews = null;
+    escapePosition = escapePos;
+    initCombat();
+  }
+
+  /**
+   * Init combat.
+   */
+  private void initCombat() {
     combatEvent = new CombatEvent(defenderFleet.getCoordinate());
     if (attackerFleet.getCommander() != null) {
       attackerFleet.getCommander().getStats().addOne(
@@ -328,7 +385,7 @@ public class Combat {
     timerForWormHole = combatShipList.size() * DiceGenerator.getRandom(1, 3);
     defenderEscaped = false;
     attackerEscaped = false;
-    escapePosition = escapePos;
+
   }
 
   /**
@@ -578,6 +635,18 @@ public boolean launchIntercept(final int distance,
    * @param ship Combat ship
    */
   public void destroyShip(final CombatShip ship) {
+    if (orbitalInCombat && planet != null
+        && ship.getShip() == planet.getOrbital()) {
+      planet.setOrbital(null);
+      Message msg = new Message(MessageType.PLANETARY,
+          ship.getShip().getName()
+              + " has been destroyed at " + planet.getName()
+              + " in combat.",
+          Icons.getIconByName(Icons.ICON_STARBASE));
+      msg.setMatchByString(planet.getName());
+      defenderInfo.getMsgList().addNewMessage(msg);
+      // TODO: Make news about orbital being destroyed.
+    }
     if (attackerFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, attackerFleet);
       if (attackerFleet.getNumberOfShip() == 0
@@ -774,7 +843,7 @@ public boolean launchIntercept(final int distance,
    * @param to To which ship
    * @return Distance in double
    */
-  private double calculateDistance(final CombatShip from,
+  private static double calculateDistance(final CombatShip from,
       final CombatShip to) {
     CombatCoordinate centerCoordinate =
         new CombatCoordinate(from.getX(), from.getY());

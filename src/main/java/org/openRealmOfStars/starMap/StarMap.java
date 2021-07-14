@@ -1846,6 +1846,16 @@ public class StarMap {
           }
         }
       }
+      for (int i = 0; i < planetList.size(); i++) {
+        Planet planet = planetList.get(i);
+        if (fleetTiles[planet.getX()][planet.getY()] == null
+            && planet.getOrbital() != null) {
+          FleetTileInfo info = new FleetTileInfo(
+              planet.getOrbital().getHull().getRace(),
+              planet.getOrbital().getHull().getImageIndex(), i);
+          setFleetTile(planet.getX(), planet.getY(), info);
+        }
+      }
     }
     return fleetTiles;
   }
@@ -2067,6 +2077,19 @@ public class StarMap {
     return fleet;
   }
 
+  /**
+   * Get Planet by Fleet Tile info. Used for getting orbital.
+   * @param fleetTile to get the oribtal
+   * @return Planet or null
+   */
+  public Planet getPlanetByFleetTileInfo(final FleetTileInfo fleetTile) {
+    int index = fleetTile.getPlanetIndex();
+    Planet planet = null;
+    if (index > -1 && index < planetList.size()) {
+      planet = planetList.get(index);
+    }
+    return planet;
+  }
   /**
    * Get pirate difficulty level.
    * @return Pirate difficulty level

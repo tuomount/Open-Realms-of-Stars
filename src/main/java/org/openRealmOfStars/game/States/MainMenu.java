@@ -14,9 +14,11 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.GenericFileFilter;
 
 /**
@@ -58,6 +60,9 @@ public class MainMenu extends BlackPanel {
     planet.setPlanetType(PlanetTypes.getRandomPlanetType(true, true, true));
     if (planet.getPlanetType().isGasGiant()) {
       planet.setGasGiant(true);
+    }
+    if (DiceGenerator.getRandom(99) < 25) {
+      planet.setOrbital(ShipGenerator.generateRandomOrbital());
     }
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true,

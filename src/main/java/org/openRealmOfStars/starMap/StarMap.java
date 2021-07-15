@@ -2212,7 +2212,9 @@ public class StarMap {
       if (info2 == null) {
         int planetIndex = fleetTiles[x][y].getPlanetIndex();
         Planet planet = getPlanetList().get(planetIndex);
-        if (planet != null && planet.getOrbital() != null) {
+        if (planet != null && planet.getOrbital() != null
+            && info1 != planet.getPlanetPlayerInfo()
+            && planet.getPlanetPlayerInfo() != null) {
           return new Combat(fleet1, null, info1, info2, null,
               planet);
         }

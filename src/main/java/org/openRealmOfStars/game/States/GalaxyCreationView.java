@@ -20,12 +20,14 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.KarmaType;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
@@ -174,6 +176,9 @@ public class GalaxyCreationView extends BlackPanel {
     planet.setPlanetType(PlanetTypes.getRandomPlanetType(true, true, true));
     if (planet.getPlanetType().isGasGiant()) {
       planet.setGasGiant(true);
+    }
+    if (DiceGenerator.getRandom(99) < 25) {
+      planet.setOrbital(ShipGenerator.generateRandomOrbital());
     }
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, "Galaxy Creation");

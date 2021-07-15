@@ -107,6 +107,22 @@ public class BigImagePanel extends JPanel {
   private String textInformation;
 
   /**
+   * Orbital pixel offset X coordinate
+   */
+  private int orbitalX;
+  /**
+   * Orbital pixel offset Y coordinate
+   */
+  private int orbitalY;
+  /**
+   * Orbital movement X axel.
+   */
+  private int orbitalMoveX;
+  /**
+   * Orbital movement Y axel.
+   */
+  private int orbitalMoveY;
+  /**
    * Create BigImagePanel
    * @param planet Planet to draw on background
    * @param starField Use star field or not
@@ -126,6 +142,10 @@ public class BigImagePanel extends JPanel {
     this.title = title;
     this.shipImages = null;
     this.setAnimation(null);
+    orbitalX = 0;
+    orbitalY = 0;
+    orbitalMoveX = 1;
+    orbitalMoveY = 1;
   }
 
   /**
@@ -386,6 +406,25 @@ public class BigImagePanel extends JPanel {
           offsetX = offsetX + 200;
         }
         g2d.drawImage(backgroundImg, offsetX, offsetY, null);
+        if (planet.getOrbital() != null) {
+          orbitalX = orbitalX + orbitalMoveX;
+          orbitalY = orbitalY + orbitalMoveY;
+          if (orbitalX > 100) {
+            orbitalMoveX = -1;
+          }
+          if (orbitalX < 0) {
+            orbitalMoveX = 1;
+          }
+          if (orbitalY > 25) {
+            orbitalMoveY = -1;
+          }
+          if (orbitalY < -25) {
+            orbitalMoveY = 1;
+          }
+          g2d.drawImage(planet.getOrbital().getHull().getImage(),
+              offsetX + backgroundImg.getWidth() / 2 + orbitalX,
+              offsetY + backgroundImg.getHeight() - 50 + orbitalY, null);
+        }
       } else {
         int offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2;
         int offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
@@ -394,6 +433,25 @@ public class BigImagePanel extends JPanel {
           offsetX = offsetX + 100;
         }
         g2d.drawImage(backgroundImg, offsetX, offsetY, null);
+        if (planet.getOrbital() != null) {
+          orbitalX = orbitalX + orbitalMoveX;
+          orbitalY = orbitalY + orbitalMoveY;
+          if (orbitalX > 100) {
+            orbitalMoveX = -1;
+          }
+          if (orbitalX < 0) {
+            orbitalMoveX = 1;
+          }
+          if (orbitalY > 25) {
+            orbitalMoveY = -1;
+          }
+          if (orbitalY < -25) {
+            orbitalMoveY = 1;
+          }
+          g2d.drawImage(planet.getOrbital().getHull().getImage(),
+              offsetX + backgroundImg.getWidth() / 2 + orbitalX,
+              offsetY + backgroundImg.getHeight() - 50 + orbitalY, null);
+        }
       }
     }
     if (animation != null) {

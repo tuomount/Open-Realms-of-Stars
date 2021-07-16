@@ -202,6 +202,11 @@ public class PlanetView extends BlackPanel {
    * Player trying to interact with planet
    */
   private PlayerInfo info;
+
+  /**
+   * Background image
+   */
+  private BigImagePanel imgBase;
   /**
    * Planet view constructor. Planet view for viewing planet.
    * @param planet Planet to view
@@ -213,7 +218,7 @@ public class PlanetView extends BlackPanel {
       final PlayerInfo player, final ActionListener listener) {
     this.setPlanet(planet);
     // Background image
-    BigImagePanel imgBase = new BigImagePanel(planet, true, null);
+    imgBase = new BigImagePanel(planet, true, null);
     imgBase.setPlayer(player);
     allowHandling = interactive;
     info = player;
@@ -647,6 +652,7 @@ public class PlanetView extends BlackPanel {
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
       Building building = buildingList.getSelectedValue();
+      boolean fullRepaint = false;
       if (building != null) {
         SpaceRace race = null;
         if (planet.getPlanetPlayerInfo() != null) {
@@ -656,8 +662,13 @@ public class PlanetView extends BlackPanel {
         if (!tmp.equals(buildingInfo.getText())) {
           buildingInfo.setText(tmp);
           this.repaint();
+          fullRepaint = true;
         }
       }
+      if (!fullRepaint) {
+        imgBase.repaint();
+      }
+      return;
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_DEMOLISH_BUILDING)) {

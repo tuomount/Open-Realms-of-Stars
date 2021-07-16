@@ -88,21 +88,23 @@ public final class GraphRoutines {
     }
     int origWidth = image.getWidth();
     int origHeight = image.getHeight();
-    int width = origHeight;
+    int width = origWidth;
     int height = origHeight;
     if (origWidth > maxWidth) {
       width = maxWidth;
       height = width * origHeight / origWidth;
-    }
-    if (height > maxHeight) {
+    } else if (height > maxHeight) {
       height = maxHeight;
       width = height * origWidth / origHeight;
+    } else {
+      width = maxWidth;
+      height = width * origHeight / origWidth;
     }
     BufferedImage resizedImage = new BufferedImage(width, height,
         image.getType());
     Graphics2D gr2D = resizedImage.createGraphics();
     gr2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-        RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        RenderingHints.VALUE_INTERPOLATION_BICUBIC);
     gr2D.setRenderingHint(RenderingHints.KEY_RENDERING,
         RenderingHints.VALUE_RENDER_QUALITY);
     gr2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,

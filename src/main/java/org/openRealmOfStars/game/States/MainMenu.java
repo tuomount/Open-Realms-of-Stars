@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.swing.Box;
@@ -24,7 +25,7 @@ import org.openRealmOfStars.utilities.GenericFileFilter;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2018,2021  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,12 +62,20 @@ public class MainMenu extends BlackPanel {
     if (planet.getPlanetType().isGasGiant()) {
       planet.setGasGiant(true);
     }
-    if (DiceGenerator.getRandom(99) < 25) {
-      planet.setOrbital(ShipGenerator.generateRandomOrbital());
+    BufferedImage orbital = null;
+    if (DiceGenerator.getRandom(99) < 250) {
+      if (DiceGenerator.getRandom(99) < 70) {
+        planet.setOrbital(ShipGenerator.generateRandomOrbital());
+      } else {
+        orbital = PlanetTypes.getRandomPlanetType(false, true, true).getImage();
+      }
     }
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true,
         "Open Realm of Stars");
+    if (orbital != null) {
+      imgBase.setCustomOrbital(orbital);
+    }
     this.setLayout(new BorderLayout());
 
     InvisiblePanel invisible = new InvisiblePanel(imgBase);

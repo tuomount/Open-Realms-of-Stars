@@ -107,21 +107,25 @@ public class BigImagePanel extends JPanel {
   private String textInformation;
 
   /**
-   * Orbital pixel offset X coordinate
+   * Orbital X coordinate around the planet
    */
-  private int orbitalX;
+  private double orbitalX;
+  /**
+   * Orbital Z coordinate around the planet
+   */
+  private double orbitalZ;
   /**
    * Orbital pixel offset Y coordinate
    */
   private int orbitalY;
   /**
-   * Orbital movement X axel.
+   * Orbital angle around the planet.
    */
-  private int orbitalMoveX;
+  private double orbitalAngle;
   /**
-   * Orbital movement Y axel.
+   * Custom image for orbital.
    */
-  private int orbitalMoveY;
+  private BufferedImage customOrbital;
   /**
    * Create BigImagePanel
    * @param planet Planet to draw on background
@@ -144,8 +148,9 @@ public class BigImagePanel extends JPanel {
     this.setAnimation(null);
     orbitalX = 0;
     orbitalY = 0;
-    orbitalMoveX = 1;
-    orbitalMoveY = 1;
+    orbitalZ = 0;
+    orbitalAngle = DiceGenerator.getRandom(359);
+    customOrbital = null;
   }
 
   /**
@@ -347,11 +352,34 @@ public class BigImagePanel extends JPanel {
    */
   private static final int SHIP_OFFSET_Y = 332;
 
+  /**
+   * Paint orbital.
+   * @param g2d Graphics
+   * @param orbitalImage Orbital image
+   * @param offsetX Offset in pixel
+   * @param offsetY Offset in pixels
+   */
+  private void paintOrbital(final Graphics2D g2d,
+      final BufferedImage orbitalImage, final int offsetX, final int offsetY) {
+    if (orbitalImage != null) {
+      orbitalX = Math.cos(Math.toRadians(orbitalAngle));
+      orbitalZ = Math.sin(Math.toRadians(orbitalAngle));
+      int newSize = (int) (5 + (orbitalZ + 1) * 42.5);
+      BufferedImage scaled = GraphRoutines.scaleImage(orbitalImage,
+          newSize, newSize);
+      int width = backgroundImg.getWidth() / 2;
+      g2d.drawImage(scaled,
+          offsetX + width + (int) (orbitalX * (width + 64)),
+          offsetY + backgroundImg.getHeight() / 2 + orbitalY, null);
+    }
+
+  }
   @Override
   public void paint(final Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
     int sx = 0;
     int sy = 0;
+    int nebulaeJitter = 16;
     if (planet != null) {
 
       sx = planet.getName().length() * (planet.getOrderNumber() - 1) * 3
@@ -373,9 +401,16 @@ public class BigImagePanel extends JPanel {
       this.setBackground(Color.black);
       g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
+    orbitalAngle = orbitalAngle + 1;
+    if (orbitalAngle > 359) {
+      orbitalAngle = orbitalAngle - 360;
+    }
     //g2d.drawImage(GuiStatics.NEBULAE_IMAGE, -sx, -sy, null);
-    GraphRoutines.drawTiling(g2d, GuiStatics.NEBULAE_IMAGE, -sx, -sy,
-        this.getWidth(), this.getHeight());
+    int dx = (int) (Math.cos(Math.toRadians(orbitalAngle)) * nebulaeJitter);
+    int dy = (int) (Math.sin(Math.toRadians(orbitalAngle)) * nebulaeJitter);
+    GraphRoutines.drawTiling(g2d, GuiStatics.NEBULAE_IMAGE,
+        -sx - dx - nebulaeJitter,
+        -sy - dy - nebulaeJitter, this.getWidth(), this.getHeight());
     if (northPlanetImg != null) {
       int offsetX = 0;
       int offsetY = 0;
@@ -405,25 +440,20 @@ public class BigImagePanel extends JPanel {
           offsetY = offsetY + 200;
           offsetX = offsetX + 200;
         }
-        g2d.drawImage(backgroundImg, offsetX, offsetY, null);
+        BufferedImage orbital = null;
         if (planet.getOrbital() != null) {
-          orbitalX = orbitalX + orbitalMoveX;
-          orbitalY = orbitalY + orbitalMoveY;
-          if (orbitalX > 100) {
-            orbitalMoveX = -1;
-          }
-          if (orbitalX < 0) {
-            orbitalMoveX = 1;
-          }
-          if (orbitalY > 25) {
-            orbitalMoveY = -1;
-          }
-          if (orbitalY < -25) {
-            orbitalMoveY = 1;
-          }
-          g2d.drawImage(planet.getOrbital().getHull().getImage(),
-              offsetX + backgroundImg.getWidth() / 2 + orbitalX,
-              offsetY + backgroundImg.getHeight() - 50 + orbitalY, null);
+          orbital = planet.getOrbital().getHull().getImage();
+        } else if (customOrbital != null) {
+          orbital = customOrbital;
+        }
+        if (orbitalZ < 0) {
+          paintOrbital(g2d, orbital,
+              offsetX, offsetY);
+        }
+        g2d.drawImage(backgroundImg, offsetX, offsetY, null);
+        if (orbitalZ >= 0) {
+          paintOrbital(g2d, orbital,
+              offsetX, offsetY);
         }
       } else {
         int offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2;
@@ -432,25 +462,20 @@ public class BigImagePanel extends JPanel {
           offsetY = offsetY + 100;
           offsetX = offsetX + 100;
         }
-        g2d.drawImage(backgroundImg, offsetX, offsetY, null);
+        BufferedImage orbital = null;
         if (planet.getOrbital() != null) {
-          orbitalX = orbitalX + orbitalMoveX;
-          orbitalY = orbitalY + orbitalMoveY;
-          if (orbitalX > 100) {
-            orbitalMoveX = -1;
-          }
-          if (orbitalX < 0) {
-            orbitalMoveX = 1;
-          }
-          if (orbitalY > 25) {
-            orbitalMoveY = -1;
-          }
-          if (orbitalY < -25) {
-            orbitalMoveY = 1;
-          }
-          g2d.drawImage(planet.getOrbital().getHull().getImage(),
-              offsetX + backgroundImg.getWidth() / 2 + orbitalX,
-              offsetY + backgroundImg.getHeight() - 50 + orbitalY, null);
+          orbital = planet.getOrbital().getHull().getImage();
+        } else if (customOrbital != null) {
+          orbital = customOrbital;
+        }
+        if (orbitalZ < 0) {
+          paintOrbital(g2d, orbital,
+              offsetX, offsetY);
+        }
+        g2d.drawImage(backgroundImg, offsetX, offsetY, null);
+        if (orbitalZ >= 0) {
+          paintOrbital(g2d, orbital,
+              offsetX, offsetY);
         }
       }
     }
@@ -700,6 +725,22 @@ public class BigImagePanel extends JPanel {
    */
   public void setWestPlanet(final Planet westPlanet) {
     westPlanetImg = setDistantPlanet(westPlanet);
+  }
+
+  /**
+   * Get Custom orbital image
+   * @return Orbital image.
+   */
+  public BufferedImage getCustomOrbital() {
+    return customOrbital;
+  }
+
+  /**
+   * Set custom orbital image
+   * @param customOrbital BufferedImage
+   */
+  public void setCustomOrbital(final BufferedImage customOrbital) {
+    this.customOrbital = customOrbital;
   }
 
 }

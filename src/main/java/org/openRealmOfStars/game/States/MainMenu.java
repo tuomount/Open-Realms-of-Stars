@@ -63,7 +63,7 @@ public class MainMenu extends BlackPanel {
       planet.setGasGiant(true);
     }
     BufferedImage orbital = null;
-    if (DiceGenerator.getRandom(99) < 250) {
+    if (DiceGenerator.getRandom(99) < 33) {
       if (DiceGenerator.getRandom(99) < 70) {
         planet.setOrbital(ShipGenerator.generateRandomOrbital());
       } else {

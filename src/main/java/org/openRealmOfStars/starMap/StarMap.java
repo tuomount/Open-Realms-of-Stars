@@ -2073,6 +2073,9 @@ public class StarMap {
    */
   public Fleet getFleetByFleetTileInfo(final FleetTileInfo fleetTile) {
     PlayerInfo info = getPlayerByIndex(fleetTile.getPlayerIndex());
+    if (info == null) {
+      return null;
+    }
     Fleet fleet = info.getFleets().getByIndex(fleetTile.getFleetIndex());
     return fleet;
   }

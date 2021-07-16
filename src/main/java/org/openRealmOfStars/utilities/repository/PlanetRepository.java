@@ -172,7 +172,7 @@ public class PlanetRepository {
     if (planet.getOrbital() == null) {
       dos.writeBoolean(false);
     } else {
-      dos.writeBoolean(false);
+      dos.writeBoolean(true);
       planet.getOrbital().saveShip(dos);
     }
   }

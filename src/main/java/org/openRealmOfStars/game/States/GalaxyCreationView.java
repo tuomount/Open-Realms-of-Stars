@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -177,11 +178,19 @@ public class GalaxyCreationView extends BlackPanel {
     if (planet.getPlanetType().isGasGiant()) {
       planet.setGasGiant(true);
     }
-    if (DiceGenerator.getRandom(99) < 25) {
-      planet.setOrbital(ShipGenerator.generateRandomOrbital());
+    BufferedImage orbital = null;
+    if (DiceGenerator.getRandom(99) < 33) {
+      if (DiceGenerator.getRandom(99) < 70) {
+        planet.setOrbital(ShipGenerator.generateRandomOrbital());
+      } else {
+        orbital = PlanetTypes.getRandomPlanetType(false, true, true).getImage();
+      }
     }
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, "Galaxy Creation");
+    if (orbital != null) {
+      imgBase.setCustomOrbital(orbital);
+    }
     imgBase.setLayout(new BorderLayout());
     this.setLayout(new BorderLayout());
 
@@ -734,6 +743,10 @@ public class GalaxyCreationView extends BlackPanel {
    * @param arg0 The event to handle
    */
   public void handleActions(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      this.repaint();
+      return;
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
       SoundPlayer.playMenuSound();
       config.setEnableTutorial(tutorialEnabled.isSelected());

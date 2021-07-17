@@ -526,6 +526,9 @@ public class BigImagePanel extends JPanel {
 
         int offsetX = SHIP_OFFSET_X;
         int offsetY = SHIP_OFFSET_Y;
+        if (planet != null && planet.getOrbital() != null) {
+          offsetY = offsetY + 90;
+        }
         switch (i) {
         case 0:
           break;

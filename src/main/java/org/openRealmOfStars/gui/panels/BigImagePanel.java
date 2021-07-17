@@ -299,6 +299,25 @@ public class BigImagePanel extends JPanel {
             GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS, 25,
             this.getHeight() / 2 + i * 15, texts[i]);
       }
+      if (planet.getOrbital() != null) {
+        texts = planet.getOrbital().getDescription().split("\n");
+        g.setFont(GuiStatics.getFontCubellan());
+        offsetX = 0;
+        for (int i = 0; i < texts.length; i++) {
+          int value = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+              texts[i]);
+          if (value > offsetX) {
+            offsetX = value;
+          }
+        }
+        for (int i = 0; i < texts.length; i++) {
+          drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS,
+              GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS,
+              this.getWidth() / 2 - offsetX - 20,
+              this.getHeight() / 2 - (texts.length + 2) * 15 + i * 15,
+              texts[i]);
+        }
+      }
     } else {
       if (title == null) {
         title = "In Deep Space...";
@@ -323,8 +342,7 @@ public class BigImagePanel extends JPanel {
     }
 
     if (textInformation != null) {
-      StringBuilder sb = new StringBuilder(textInformation);
-      String[] texts = sb.toString().split("\n");
+      String[] texts = textInformation.split("\n");
       g.setFont(GuiStatics.getFontCubellan());
       int offsetX = 0;
       for (int i = 0; i < texts.length; i++) {

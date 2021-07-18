@@ -10,6 +10,7 @@ import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameState;
 import org.openRealmOfStars.game.States.PlanetBombingView;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -3074,6 +3075,7 @@ public final class MissionHandling {
     Fleet fleetAtTarget = map.getFleetByCoordinate(point.getX(), point
         .getY());
     boolean war = false;
+    boolean orbital = false;
     if (fleetAtTarget != null) {
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (info == infoAtTarget) {
@@ -3084,7 +3086,16 @@ public final class MissionHandling {
         war = true;
       }
     }
-    if (war || fleetAtTarget == null) {
+    FleetTileInfo tile = map.getFleetTiles()[point.getX()][point.getY()];
+    if (tile != null && tile.getPlanetIndex() != -1) {
+      Planet planet = map.getPlanetList().get(tile.getPlanetIndex());
+      if (planet != null && planet.getOrbital() != null) {
+        orbital = true;
+        PlayerInfo infoAtTarget = planet.getPlanetPlayerInfo();
+        war = map.isWarBetween(info, infoAtTarget);
+      }
+    }
+    if (war || fleetAtTarget == null && !orbital) {
       // Not blocked so fleet is moving
       game.fleetMakeMove(info, fleet, point.getX(), point.getY());
       search.nextMove();

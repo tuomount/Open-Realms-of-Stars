@@ -2594,6 +2594,10 @@ public class Planet {
         setCulture(1);
       }
       happinessEffect = new HappinessEffect(HappinessBonus.NONE, 0);
+      if (orbital != null) {
+        // Orbital is always fixed in one turn.
+        orbital.fixShip(true);
+      }
     }
   }
 
@@ -2695,6 +2699,9 @@ public class Planet {
         result = building.getScanRange();
       }
     }
+    if (orbital != null && orbital.getScannerLvl() > result) {
+      result = orbital.getScannerLvl();
+    }
     return result;
   }
 
@@ -2768,6 +2775,9 @@ public class Planet {
           && result < building.getScanCloakingDetection()) {
         result = building.getScanCloakingDetection();
       }
+    }
+    if (orbital != null && orbital.getScannerDetectionLvl() > result) {
+      result = orbital.getScannerDetectionLvl();
     }
     return result;
   }

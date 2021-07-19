@@ -99,6 +99,10 @@ public final class GraphRoutines {
     } else {
       width = maxWidth;
       height = width * origHeight / origWidth;
+      if (height > maxHeight) {
+        height = maxHeight;
+        width = height * origWidth / origHeight;
+      }
     }
     BufferedImage resizedImage = new BufferedImage(width, height,
         image.getType());

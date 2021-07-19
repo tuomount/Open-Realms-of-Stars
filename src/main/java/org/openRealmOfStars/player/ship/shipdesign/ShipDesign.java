@@ -776,9 +776,13 @@ public class ShipDesign {
     boolean designOk = true;
     boolean flawNoCargoSpace = false;
     StringBuilder sb = new StringBuilder();
-    if (!hasEngine()) {
+    if (!hasEngine() && getHull().getHullType() != ShipHullType.ORBITAL) {
       designOk = false;
       sb.append(ShipDesignConsts.ENGINE_IS_MISSING);
+    }
+    if (hasEngine() && getHull().getHullType() == ShipHullType.ORBITAL) {
+      designOk = false;
+      sb.append(ShipDesignConsts.ORBITAL_HAS_ENGINE);
     }
     if (hasTwoEngines()) {
       designOk = false;
@@ -821,7 +825,10 @@ public class ShipDesign {
         invasionModule = true;
       }
       if (comp.getType() == ShipComponentType.STARBASE_COMPONENT
-          && hull.getHullType() != ShipHullType.STARBASE) {
+          && (hull.getHullType() == ShipHullType.FREIGHTER
+          || hull.getHullType() == ShipHullType.NORMAL
+          || hull.getHullType() == ShipHullType.PRIVATEER
+          || hull.getHullType() == ShipHullType.PROBE)) {
         designOk = false;
         sb.append(ShipDesignConsts.STARBASE_MODULE_IN_NOT_STARBASE);
         sb.append("\n");

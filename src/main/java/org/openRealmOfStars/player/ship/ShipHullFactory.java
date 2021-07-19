@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018 Tuomo Untinen
+ * Copyright (C) 2016, 2018, 2019, 2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +37,7 @@ public final class ShipHullFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPHULL = 33;
+  private static final int MAX_SHIPHULL = 35;
 
   /**
    * Create ShipHull with matching name
@@ -220,6 +220,16 @@ public final class ShipHullFactory {
    * Hull for Artificial planet
    */
   public static final int HULL_ARTICIAL_PLANET = 32;
+
+  /**
+   * Hull for small orbital
+   */
+  public static final int HULL_SMALL_ORBITAL = 33;
+
+  /**
+   * Hull for medium orbital
+   */
+  public static final int HULL_MEDIUM_ORBITAL = 34;
 
   /**
    * Create ship hull with index
@@ -458,6 +468,20 @@ public final class ShipHullFactory {
           ShipHullType.STARBASE, ShipSize.HUGE, 200, 300, race);
       tmp.setFleetCapacity(0);
       tmp.setImageIndex(ShipImage.ARTIFICIAL_PLANET);
+      return tmp;
+    }
+    if (index == HULL_SMALL_ORBITAL) {
+      tmp = new ShipHull(index, "Small orbital", 4, 1,
+          ShipHullType.ORBITAL, ShipSize.SMALL, 4, 4, race);
+      tmp.setFleetCapacity(0);
+      tmp.setImageIndex(ShipImage.SMALL_STARBASE);
+      return tmp;
+    }
+    if (index == HULL_MEDIUM_ORBITAL) {
+      tmp = new ShipHull(index, "Medium orbital", 6, 2,
+          ShipHullType.ORBITAL, ShipSize.MEDIUM, 4, 6, race);
+      tmp.setFleetCapacity(0);
+      tmp.setImageIndex(ShipImage.MEDIUM_STARBASE);
       return tmp;
     }
 

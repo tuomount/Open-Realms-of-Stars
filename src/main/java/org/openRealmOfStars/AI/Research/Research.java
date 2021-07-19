@@ -90,6 +90,8 @@ public final class Research {
     handleStarbaseDesign(info, ShipSize.MEDIUM);
     handleStarbaseDesign(info, ShipSize.LARGE);
     handleStarbaseDesign(info, ShipSize.HUGE);
+    handleOrbitalDesign(info, ShipSize.SMALL);
+    handleOrbitalDesign(info, ShipSize.MEDIUM);
     handleTrooperShipDesign(info);
     handleColonyShipDesign(info);
     handleFreighterShipDesign(info);
@@ -357,6 +359,48 @@ public final class Research {
       for (ShipStat stat : stats) {
         if (stat.getDesign().getHull().getSize() == size && stat.getDesign()
             .getHull().getHullType() == ShipHullType.STARBASE
+            && !stat.isObsolete()) {
+          notFound = false;
+          if (design.getTotalMilitaryPower() > stat.getDesign()
+              .getTotalMilitaryPower() && design.getStarbaseValue() == stat
+              .getDesign().getStarbaseValue()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+          if (design.getTotalMilitaryPower() == stat.getDesign()
+              .getTotalMilitaryPower() && design.getStarbaseValue() > stat
+              .getDesign().getStarbaseValue()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+        }
+      }
+      if (notFound) {
+        ShipStat ship = new ShipStat(design);
+        info.addShipStat(ship);
+      }
+    }
+
+  }
+
+  /**
+   * Handle Orbital design for AI for certain size
+   * @param info Player
+   * @param size ShipSize to handle
+   */
+  private static void handleOrbitalDesign(final PlayerInfo info,
+      final ShipSize size) {
+    ShipDesign design = ShipGenerator.createOrbital(info, size);
+    if (design != null) {
+      ShipStat[] stats = info.getShipStatList();
+      boolean notFound = true;
+      for (ShipStat stat : stats) {
+        if (stat.getDesign().getHull().getSize() == size && stat.getDesign()
+            .getHull().getHullType() == ShipHullType.ORBITAL
             && !stat.isObsolete()) {
           notFound = false;
           if (design.getTotalMilitaryPower() > stat.getDesign()

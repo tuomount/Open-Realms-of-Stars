@@ -107,6 +107,26 @@ public class BigImagePanel extends JPanel {
   private String textInformation;
 
   /**
+   * Orbital X coordinate around the planet
+   */
+  private double orbitalX;
+  /**
+   * Orbital Z coordinate around the planet
+   */
+  private double orbitalZ;
+  /**
+   * Orbital pixel offset Y coordinate
+   */
+  private int orbitalY;
+  /**
+   * Orbital angle around the planet.
+   */
+  private double orbitalAngle;
+  /**
+   * Custom image for orbital.
+   */
+  private BufferedImage customOrbital;
+  /**
    * Create BigImagePanel
    * @param planet Planet to draw on background
    * @param starField Use star field or not
@@ -126,6 +146,11 @@ public class BigImagePanel extends JPanel {
     this.title = title;
     this.shipImages = null;
     this.setAnimation(null);
+    orbitalX = 0;
+    orbitalY = 0;
+    orbitalZ = 0;
+    orbitalAngle = DiceGenerator.getRandom(359);
+    customOrbital = null;
   }
 
   /**
@@ -274,6 +299,25 @@ public class BigImagePanel extends JPanel {
             GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS, 25,
             this.getHeight() / 2 + i * 15, texts[i]);
       }
+      if (planet.getOrbital() != null) {
+        texts = planet.getOrbital().getDescription().split("\n");
+        g.setFont(GuiStatics.getFontCubellan());
+        offsetX = 0;
+        for (int i = 0; i < texts.length; i++) {
+          int value = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+              texts[i]);
+          if (value > offsetX) {
+            offsetX = value;
+          }
+        }
+        for (int i = 0; i < texts.length; i++) {
+          drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS,
+              GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS,
+              this.getWidth() / 2 - offsetX - 20,
+              this.getHeight() / 2 - (texts.length + 2) * 15 + i * 15,
+              texts[i]);
+        }
+      }
     } else {
       if (title == null) {
         title = "In Deep Space...";
@@ -298,8 +342,7 @@ public class BigImagePanel extends JPanel {
     }
 
     if (textInformation != null) {
-      StringBuilder sb = new StringBuilder(textInformation);
-      String[] texts = sb.toString().split("\n");
+      String[] texts = textInformation.split("\n");
       g.setFont(GuiStatics.getFontCubellan());
       int offsetX = 0;
       for (int i = 0; i < texts.length; i++) {
@@ -327,11 +370,34 @@ public class BigImagePanel extends JPanel {
    */
   private static final int SHIP_OFFSET_Y = 332;
 
+  /**
+   * Paint orbital.
+   * @param g2d Graphics
+   * @param orbitalImage Orbital image
+   * @param offsetX Offset in pixel
+   * @param offsetY Offset in pixels
+   */
+  private void paintOrbital(final Graphics2D g2d,
+      final BufferedImage orbitalImage, final int offsetX, final int offsetY) {
+    if (orbitalImage != null) {
+      orbitalX = Math.cos(Math.toRadians(orbitalAngle));
+      orbitalZ = Math.sin(Math.toRadians(orbitalAngle));
+      int newSize = (int) (5 + (orbitalZ + 1) * 42.5);
+      BufferedImage scaled = GraphRoutines.scaleImage(orbitalImage,
+          newSize, newSize);
+      int width = backgroundImg.getWidth() / 2;
+      g2d.drawImage(scaled,
+          offsetX + width + (int) (orbitalX * (width + 64)),
+          offsetY + backgroundImg.getHeight() / 2 + orbitalY, null);
+    }
+
+  }
   @Override
   public void paint(final Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
     int sx = 0;
     int sy = 0;
+    int nebulaeJitter = 16;
     if (planet != null) {
 
       sx = planet.getName().length() * (planet.getOrderNumber() - 1) * 3
@@ -353,9 +419,16 @@ public class BigImagePanel extends JPanel {
       this.setBackground(Color.black);
       g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
+    orbitalAngle = orbitalAngle + 1;
+    if (orbitalAngle > 359) {
+      orbitalAngle = orbitalAngle - 360;
+    }
     //g2d.drawImage(GuiStatics.NEBULAE_IMAGE, -sx, -sy, null);
-    GraphRoutines.drawTiling(g2d, GuiStatics.NEBULAE_IMAGE, -sx, -sy,
-        this.getWidth(), this.getHeight());
+    int dx = (int) (Math.cos(Math.toRadians(orbitalAngle)) * nebulaeJitter);
+    int dy = (int) (Math.sin(Math.toRadians(orbitalAngle)) * nebulaeJitter);
+    GraphRoutines.drawTiling(g2d, GuiStatics.NEBULAE_IMAGE,
+        -sx - dx - nebulaeJitter,
+        -sy - dy - nebulaeJitter, this.getWidth(), this.getHeight());
     if (northPlanetImg != null) {
       int offsetX = 0;
       int offsetY = 0;
@@ -385,7 +458,21 @@ public class BigImagePanel extends JPanel {
           offsetY = offsetY + 200;
           offsetX = offsetX + 200;
         }
+        BufferedImage orbital = null;
+        if (planet.getOrbital() != null) {
+          orbital = planet.getOrbital().getHull().getImage();
+        } else if (customOrbital != null) {
+          orbital = customOrbital;
+        }
+        if (orbitalZ < 0) {
+          paintOrbital(g2d, orbital,
+              offsetX, offsetY);
+        }
         g2d.drawImage(backgroundImg, offsetX, offsetY, null);
+        if (orbitalZ >= 0) {
+          paintOrbital(g2d, orbital,
+              offsetX, offsetY);
+        }
       } else {
         int offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2;
         int offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
@@ -393,7 +480,21 @@ public class BigImagePanel extends JPanel {
           offsetY = offsetY + 100;
           offsetX = offsetX + 100;
         }
+        BufferedImage orbital = null;
+        if (planet.getOrbital() != null) {
+          orbital = planet.getOrbital().getHull().getImage();
+        } else if (customOrbital != null) {
+          orbital = customOrbital;
+        }
+        if (orbitalZ < 0) {
+          paintOrbital(g2d, orbital,
+              offsetX, offsetY);
+        }
         g2d.drawImage(backgroundImg, offsetX, offsetY, null);
+        if (orbitalZ >= 0) {
+          paintOrbital(g2d, orbital,
+              offsetX, offsetY);
+        }
       }
     }
     if (animation != null) {
@@ -425,6 +526,9 @@ public class BigImagePanel extends JPanel {
 
         int offsetX = SHIP_OFFSET_X;
         int offsetY = SHIP_OFFSET_Y;
+        if (planet != null && planet.getOrbital() != null) {
+          offsetY = offsetY + 90;
+        }
         switch (i) {
         case 0:
           break;
@@ -642,6 +746,22 @@ public class BigImagePanel extends JPanel {
    */
   public void setWestPlanet(final Planet westPlanet) {
     westPlanetImg = setDistantPlanet(westPlanet);
+  }
+
+  /**
+   * Get Custom orbital image
+   * @return Orbital image.
+   */
+  public BufferedImage getCustomOrbital() {
+    return customOrbital;
+  }
+
+  /**
+   * Set custom orbital image
+   * @param customOrbital BufferedImage
+   */
+  public void setCustomOrbital(final BufferedImage customOrbital) {
+    this.customOrbital = customOrbital;
   }
 
 }

@@ -3,6 +3,7 @@ package org.openRealmOfStars.game.States;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -52,6 +53,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
@@ -186,8 +188,19 @@ public class AITurnView extends BlackPanel {
     if (planet.getPlanetType().isGasGiant()) {
       planet.setGasGiant(true);
     }
+    BufferedImage orbital = null;
+    if (DiceGenerator.getRandom(99) < 33) {
+      if (DiceGenerator.getRandom(99) < 70) {
+        planet.setOrbital(ShipGenerator.generateRandomOrbital());
+      } else {
+        orbital = PlanetTypes.getRandomPlanetType(false, true, true).getImage();
+      }
+    }
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, "Enemy turn");
+    if (orbital != null) {
+      imgBase.setCustomOrbital(orbital);
+    }
     this.setLayout(new BorderLayout());
 
     InvisiblePanel invisible = new InvisiblePanel(imgBase);

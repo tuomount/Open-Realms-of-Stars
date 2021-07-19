@@ -2727,6 +2727,11 @@ public class Game implements ActionListener {
     }
     if (gameState == GameState.MAIN_MENU) {
       // Main menu
+      if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)
+          && mainMenu != null) {
+        mainMenu.repaint();
+        return;
+      }
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_CONTINUE_GAME)) {
         SoundPlayer.playMenuSound();

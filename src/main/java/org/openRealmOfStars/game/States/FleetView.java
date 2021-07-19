@@ -633,6 +633,10 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      this.repaint();
+      return;
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIST_PLUS)
         && fleet.getFreeSpaceForColonist() > 0 && planet != null
         && planet.takeColonist()) {

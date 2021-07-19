@@ -48,6 +48,11 @@ public class FleetTileInfo {
   private int fleetIndex;
 
   /**
+   * Planet index for orbital.
+   */
+  private int planetIndex;
+
+  /**
    * Flag for indicating that same tile contains fleets from two
    * different realms.
    */
@@ -66,9 +71,25 @@ public class FleetTileInfo {
     this.imageIndex = index;
     this.playerIndex = playerIndex;
     this.setFleetIndex(fleetIndex);
+    this.planetIndex = -1;
     setConflict(-1);
   }
 
+  /**
+   * Constructor when fleet tile info is containing orbital.
+   * @param race Space race information
+   * @param index Ship's image index
+   * @param planetIndex Planet index.
+   */
+  public FleetTileInfo(final SpaceRace race, final int index,
+      final int planetIndex) {
+    this.race = race;
+    this.imageIndex = index;
+    this.playerIndex = -1;
+    this.setFleetIndex(-1);
+    this.planetIndex = planetIndex;
+    setConflict(-1);
+  }
   /**
    * Get Space race for Fleet
    * @return Space race
@@ -148,6 +169,22 @@ public class FleetTileInfo {
    */
   public void setConflict(final int conflict) {
     this.conflictIndex = conflict;
+  }
+
+  /**
+   * Get planet index for getting the orbital information.
+   * @return Planet index
+   */
+  public int getPlanetIndex() {
+    return planetIndex;
+  }
+
+  /**
+   * Set planet index for orbitals.
+   * @param planetIndex Planet index having orbital
+   */
+  public void setPlanetIndex(final int planetIndex) {
+    this.planetIndex = planetIndex;
   }
 
 }

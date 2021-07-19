@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.ship;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,14 +37,20 @@ public enum ShipHullType {
    */
   PROBE,
   /**
-   * No engines, cargo or privateering module allowed but starbase modules
+   * Cargo or privateering module allowed but starbase modules
    * are allowed
    */
   STARBASE,
   /**
    * Weapons, cargo, colony/troop module allowed and privateering module too
    */
-  PRIVATEER;
+  PRIVATEER,
+  /**
+   * No enginesCargo or privateering module allowed but starbase modules
+   * are allowed. These cannot move and are always built on planet.
+   */
+  ORBITAL;
+
 
   /**
    * Get ShipHullType index
@@ -62,6 +68,8 @@ public enum ShipHullType {
       return 3;
     case PRIVATEER:
       return 4;
+    case ORBITAL:
+      return 5;
     default:
       throw new IllegalArgumentException("Unexpected ship hull type!");
     }
@@ -84,6 +92,8 @@ public enum ShipHullType {
       return ShipHullType.STARBASE;
     case 4:
       return ShipHullType.PRIVATEER;
+    case 5:
+      return ShipHullType.ORBITAL;
     default:
       throw new IllegalArgumentException("Unexpected ship hull type!");
     }
@@ -102,6 +112,8 @@ public enum ShipHullType {
       return "Starbase";
     case PRIVATEER:
       return "Privateer";
+    case ORBITAL:
+      return "Orbital";
     default:
       throw new IllegalArgumentException("Unexpected ship hull type!");
     }
@@ -120,9 +132,11 @@ public enum ShipHullType {
     case PROBE:
       return toString() + ", no weapons allowed. FTL speed faster.";
     case STARBASE:
-      return toString() + ", No engine, Starbase components";
+      return toString() + ", Starbase components";
     case PRIVATEER:
       return toString() + ", Weapons, cargo and privateering.";
+    case ORBITAL:
+      return toString() + ", No engine, starbase components";
     default:
       throw new IllegalArgumentException("Unexpected ship hull type!");
     }

@@ -1511,6 +1511,10 @@ private int increaseHitChanceByComponent() {
             range = 0;
           }
         }
+        if (getHull().getHullType() == ShipHullType.ORBITAL) {
+          // Orbitals has two extra range for weapons.
+          range = range + 2;
+        }
       return range;
       }
     }

@@ -3150,7 +3150,19 @@ public final class MissionHandling {
         fleetAtTarget = null;
       }
     }
-    if (fleetAtTarget == null) {
+    boolean orbital = false;
+    FleetTileInfo tile = map.getFleetTiles()[nx][ny];
+    if (tile != null && tile.getPlanetIndex() != -1) {
+      Planet planet = map.getPlanetList().get(tile.getPlanetIndex());
+      if (planet != null && planet.getOrbital() != null) {
+        PlayerInfo infoAtTarget = planet.getPlanetPlayerInfo();
+        if (info != infoAtTarget) {
+          orbital = true;
+        }
+      }
+    }
+
+    if (fleetAtTarget == null && !orbital) {
       // Not blocked so fleet is moving
       game.fleetMakeMove(info, fleet, nx, ny);
     } else {

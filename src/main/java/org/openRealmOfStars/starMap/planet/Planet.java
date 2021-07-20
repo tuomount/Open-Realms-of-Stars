@@ -1086,15 +1086,9 @@ public class Planet {
     GovernmentType government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
-    sb.append("Total metal production.<br>");
-    sb.append("<li> planet +1");
-    sb.append("<br>");
-    sb.append("<html>");
-    sb.append("Total production.<br>");
-    sb.append("<li> planet +1");
-    sb.append("<br>");
-    sb.append("<html>");
     sb.append("Total research production.<br>");
+    sb.append("<li> planet +1");
+    sb.append("<br>");
     mult = planetOwnerInfo.getRace().getResearchSpeed();
     int value = workers[PRODUCTION_RESEARCH] * mult / div;
     if (value > 0) {
@@ -1166,10 +1160,6 @@ public class Planet {
     int div = 100;
     GovernmentType government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
-    sb.append("<html>");
-    sb.append("Total metal production.<br>");
-    sb.append("<li> planet +1");
-    sb.append("<br>");
     sb.append("<html>");
     sb.append("Total production.<br>");
     sb.append("<li> planet +1");
@@ -1368,7 +1358,6 @@ public class Planet {
     int div = 100;
     GovernmentType government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
-
     sb.append("<html>");
     sb.append("Total food production.<br>");
     sb.append("<li> planet +2");

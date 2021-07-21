@@ -710,18 +710,28 @@ public class Game implements ActionListener {
       fleetTile = fleetTiles[nx][ny];
       int playerIndex = fleetTile.getPlayerIndex();
       PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
-      Fleet enemy = info2.getFleets().getByIndex(fleetTile.getFleetIndex());
-      if (info != info2 && enemy != null) {
-        if (enemy.isPrivateerFleet()) {
-          return null;
+      if (info2 == null) {
+        Planet planet = getStarMap().getPlanetList().get(
+            fleetTile.getPlanetIndex());
+        if (planet != null
+            && planet.getPlanetPlayerInfo() != null
+            && info != planet.getPlanetPlayerInfo()) {
+          return planet.getPlanetPlayerInfo();
         }
-        if (info.getDiplomacy().isWar(playerIndex) || info2.isBoard()) {
-          return null;
-        }
-        FleetVisibility visibility = new FleetVisibility(info, enemy,
-            playerIndex);
-        if (visibility.isFleetVisible() && visibility.isRecognized()) {
-          return info2;
+      } else {
+        Fleet enemy = info2.getFleets().getByIndex(fleetTile.getFleetIndex());
+        if (info != info2 && enemy != null) {
+          if (enemy.isPrivateerFleet()) {
+            return null;
+          }
+          if (info.getDiplomacy().isWar(playerIndex) || info2.isBoard()) {
+            return null;
+          }
+          FleetVisibility visibility = new FleetVisibility(info, enemy,
+              playerIndex);
+          if (visibility.isFleetVisible() && visibility.isRecognized()) {
+            return info2;
+          }
         }
       }
     }
@@ -762,19 +772,32 @@ public class Game implements ActionListener {
       int playerIndex = fleetTile.getPlayerIndex();
       int fleetIndex = fleetTile.getFleetIndex();
       PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
-      Fleet enemy = info2.getFleets().getByIndex(fleetIndex);
-
-      if (info != info2 && enemy != null) {
-        if (enemy.isPrivateerFleet()) {
-          return null;
+      if (info2 == null) {
+        Planet planet = getStarMap().getPlanetList().get(
+            fleetTile.getPlanetIndex());
+        if (planet != null && planet.getOrbital() != null
+          && planet.getPlanetPlayerInfo() != null
+          && info != planet.getPlanetPlayerInfo()) {
+          Fleet orbitalFleet = new Fleet(planet.getOrbital(), planet.getX(),
+              planet.getY());
+          orbitalFleet.setName("Orbital-" + planet.getName()
+              + "-X" + planet.getX() + "-Y" + planet.getY());
+          return orbitalFleet;
         }
-        if (info.getDiplomacy().isWar(playerIndex) || info2.isBoard()) {
-          return null;
-        }
-        FleetVisibility visibility = new FleetVisibility(info, enemy,
-            playerIndex);
-        if (!visibility.isFleetVisible()) {
-          return info2.getFleets().getByIndex(fleetIndex);
+      } else {
+        Fleet enemy = info2.getFleets().getByIndex(fleetIndex);
+        if (info != info2 && enemy != null) {
+          if (enemy.isPrivateerFleet()) {
+            return null;
+          }
+          if (info.getDiplomacy().isWar(playerIndex) || info2.isBoard()) {
+            return null;
+          }
+          FleetVisibility visibility = new FleetVisibility(info, enemy,
+              playerIndex);
+          if (!visibility.isFleetVisible()) {
+            return info2.getFleets().getByIndex(fleetIndex);
+          }
         }
       }
     }

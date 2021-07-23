@@ -1087,7 +1087,6 @@ public class Planet {
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
     sb.append("Total research production.<br>");
-    sb.append("<li> planet +1");
     sb.append("<br>");
     mult = planetOwnerInfo.getRace().getResearchSpeed();
     int value = workers[PRODUCTION_RESEARCH] * mult / div;

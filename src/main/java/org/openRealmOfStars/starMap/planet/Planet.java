@@ -2623,7 +2623,7 @@ public class Planet {
     }
     result = result + getGroundSize();
     if (planetOwnerInfo != null) {
-      int percent = planetOwnerInfo.getRace().getWorldTypeBaseValue(
+      int percent = planetOwnerInfo.getWorldTypeValue(
           planetType.getWorldType());
       result = result * percent / 100;
     }

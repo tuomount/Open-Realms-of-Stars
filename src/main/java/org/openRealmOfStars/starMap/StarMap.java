@@ -39,6 +39,7 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
@@ -740,7 +741,8 @@ public class StarMap {
           }
         }
         if (type == ENEMY_PIRATE && ship.getTotalMilitaryPower() > 0
-            && !ship.isStarBase()) {
+            && !ship.isStarBase()
+            && ship.getHull().getHullType() != ShipHullType.ORBITAL) {
           listStats.add(stat);
         }
       }

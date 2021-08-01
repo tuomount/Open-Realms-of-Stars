@@ -2922,6 +2922,9 @@ public final class MissionHandling {
       final Object meetingPlace) {
     // For Ai players make offer
     int index = game.getStarMap().getPlayerList().getIndex(info);
+    if (index == secondIndex) {
+      return;
+    }
     DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
         index, secondIndex);
     if (fleet == null) {

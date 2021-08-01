@@ -805,6 +805,36 @@ public final class PlanetHandling {
               break;
             } else if (ship.getTotalMilitaryPower() > 0
                 && info.getMissions().getGatherMission(Mission.ASSAULT_TYPE)
+                != null
+                && info.getMissions().getGatherMission(Mission.ASSAULT_SB_TYPE)
+                != null) {
+              int chance = 50;
+              if (attitude == Attitude.MERCHANTICAL
+                  || attitude == Attitude.DIPLOMATIC) {
+                chance = 30;
+              }
+              if (attitude == Attitude.SCIENTIFIC
+                  || attitude == Attitude.LOGICAL) {
+                chance = 40;
+              }
+              if (attitude == Attitude.AGGRESSIVE
+                  || attitude == Attitude.MILITARISTIC) {
+                chance = 60;
+              }
+              if (DiceGenerator.getRandom(99) < chance) {
+                mission = info.getMissions().getGatherMission(
+                    Mission.ASSAULT_TYPE);
+                mission.setPlanetBuilding(planet.getName());
+                mission.setPhase(MissionPhase.BUILDING);
+              } else {
+                mission = info.getMissions().getGatherMission(
+                    Mission.ASSAULT_SB_TYPE);
+                mission.setPlanetBuilding(planet.getName());
+                mission.setPhase(MissionPhase.BUILDING);
+              }
+              break;
+            } else if (ship.getTotalMilitaryPower() > 0
+                && info.getMissions().getGatherMission(Mission.ASSAULT_TYPE)
                 != null) {
               mission = info.getMissions().getGatherMission(
                   Mission.ASSAULT_TYPE);

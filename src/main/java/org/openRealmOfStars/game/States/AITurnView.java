@@ -771,6 +771,8 @@ public class AITurnView extends BlackPanel {
       mission.setTargetPlanet("Starbase " + coordinate.toString());
       mission.setPlanetBuilding(homeWorld.getName());
     }
+    String attackFleetName = "Attacker of " +  mission.getTargetPlanet();
+    mission.setFleetName(attackFleetName);
     if (info.getMissions().getDestroyStarbaseMission(
         "Starbase " + coordinate.toString()) == null) {
       // No Destroy starbase mission for this starbase found, so adding it.
@@ -882,7 +884,8 @@ public class AITurnView extends BlackPanel {
                 DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
                     index);
                 if (list.isBonusType(DiplomacyBonusType.IN_WAR)
-                    && destroyStarbases < LIMIT_DESTROY_STARBASES) {
+                    && destroyStarbases < LIMIT_DESTROY_STARBASES
+                    || infoAt.isBoard()) {
                   destroyStarbase.add(new Coordinate(x, y));
                 }
             } else if (fleet.isStarBaseDeployed()
@@ -908,7 +911,8 @@ public class AITurnView extends BlackPanel {
                 DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
                     index);
                 if (list.isBonusType(DiplomacyBonusType.IN_WAR)
-                    && destroyStarbases < LIMIT_DESTROY_STARBASES) {
+                    && destroyStarbases < LIMIT_DESTROY_STARBASES
+                    || infoAt.isBoard()) {
                   // AI already has war against that player so,
                   // adding destroy mission
                   destroyStarbase.add(new Coordinate(x, y));

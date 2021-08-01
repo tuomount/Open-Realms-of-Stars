@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipComponentType;
@@ -14,9 +15,11 @@ import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
  *
@@ -108,6 +111,7 @@ public final class ShipGenerator {
         if (player.getRace() == SpaceRace.SPACE_PIRATE) {
           scores[i] = scores[i] + 20;
         }
+        break;
       }
       case ORBITAL_BOMBS: {
         if (!design.gotCertainType(ShipComponentType.ORBITAL_BOMBS)
@@ -1232,4 +1236,243 @@ public final class ShipGenerator {
     return result;
   }
 
+  /**
+   * Design new Orbital for certain size
+   * @param player Player doing the design
+   * @param size Ship Size
+   * @return ShipDesign if doable. Null if not doable for that size.
+   */
+  public static ShipDesign createOrbital(final PlayerInfo player,
+      final ShipSize size) {
+    ShipDesign result = null;
+    boolean military = false;
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    ShipHull hull = null;
+    int value = 0;
+    for (Tech tech : hullTechs) {
+      ShipHull tempHull = ShipHullFactory.createByName(tech.getHull(),
+          player.getRace());
+      if (tempHull == null) {
+        continue;
+      }
+      if (tempHull.getHullType() == ShipHullType.ORBITAL
+          && tempHull.getSize() == size) {
+        int tempValue = tempHull.getMaxSlot() * tempHull.getSlotHull();
+        if (tempValue > value) {
+          value = tempValue;
+          hull = tempHull;
+        }
+      }
+    }
+    if (hull != null) {
+      result = new ShipDesign(hull);
+      String[] part = hull.getName().split("Mk");
+      result.setName(
+          part[0].trim() + " Mk" + (player.getShipStatHighestNumber(
+              part[0]) + 1));
+      ShipComponent power = ShipComponentFactory.createByName(
+          player.getTechList().getBestEnergySource().getComponent());
+      result.addComponent(power);
+      int militaryChance = 50;
+      if (hull.getSize() == ShipSize.SMALL) {
+        militaryChance = 10;
+      }
+      if (DiceGenerator.getRandom(99) < militaryChance) {
+        military = true;
+      }
+      if (military || player.isBoard()) {
+        ShipComponent weapon = ShipComponentFactory
+            .createByName(player.getTechList().getBestWeapon().getComponent());
+          result.addComponent(weapon);
+      }
+
+      Tech[] defenseTechs = player.getTechList()
+          .getListForType(TechType.Defense);
+      Tech[] electricsTechs = player.getTechList()
+          .getListForType(TechType.Electrics);
+      Tech shield = TechList.getBestTech(defenseTechs, "Shield");
+      Tech armor = TechList.getBestTech(defenseTechs, "Armor plating");
+      Tech shieldGen = TechList.getBestTech(electricsTechs, "Shield generator");
+      Tech starbaseLab = player.getTechList().getBestStarbaseLab();
+      Tech starbaseCult = player.getTechList().getBestStarbaseCulture();
+      Tech starbaseCred = player.getTechList().getBestStarbaseCredit();
+      Tech starbaseFleet = player.getTechList().getBestStarbaseFleetCap();
+      ShipComponent shieldComp = null;
+      ShipComponent shieldGenComp = null;
+      ShipComponent armorComp = null;
+      ArrayList<ShipComponent> components = new ArrayList<>();
+      ArrayList<ShipComponent> modules = new ArrayList<>();
+      if (shield != null) {
+        shieldComp = ShipComponentFactory.createByName(shield.getComponent());
+        components.add(shieldComp);
+      }
+      if (shieldGen != null) {
+        shieldGenComp = ShipComponentFactory
+            .createByName(shieldGen.getComponent());
+        components.add(shieldGenComp);
+      }
+      if (armor != null) {
+        armorComp = ShipComponentFactory.createByName(armor.getComponent());
+        components.add(armorComp);
+      }
+      if (military) {
+        if (shieldComp != null
+            && result.getFreeEnergy() >= shieldComp.getEnergyRequirement()) {
+          result.addComponent(shieldComp);
+        } else if (armorComp != null) {
+          result.addComponent(armorComp);
+        }
+      }
+      ShipComponent credComp = null;
+      if (starbaseCred != null) {
+        credComp = ShipComponentFactory
+            .createByName(starbaseCred.getComponent());
+        components.add(credComp);
+        modules.add(credComp);
+      }
+      ShipComponent cultComp = null;
+      if (starbaseCult != null) {
+        cultComp = ShipComponentFactory
+            .createByName(starbaseCult.getComponent());
+        components.add(cultComp);
+        modules.add(cultComp);
+      }
+      ShipComponent labComp = null;
+      if (starbaseLab != null) {
+        labComp = ShipComponentFactory
+            .createByName(starbaseLab.getComponent());
+        components.add(labComp);
+        modules.add(labComp);
+      }
+      ShipComponent fleetComp = null;
+      if (starbaseFleet != null) {
+        fleetComp = ShipComponentFactory
+            .createByName(starbaseFleet.getComponent());
+        components.add(fleetComp);
+        modules.add(fleetComp);
+      }
+      if (military) {
+        Tech weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.WEAPON_BEAM);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.WEAPON_ECM_TORPEDO);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.WEAPON_HE_MISSILE);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.WEAPON_PHOTON_TORPEDO);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.WEAPON_RAILGUN);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.PLASMA_CANNON);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.ION_CANNON);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        Tech elecTech = TechList.getBestTech(electricsTechs,
+            "Targeting computer");
+        if (elecTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(elecTech.getComponent()));
+        }
+      }
+      Tech elecTech = TechList.getBestTech(electricsTechs, "Scanner");
+      if (elecTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      elecTech = TechList.getBestTech(electricsTechs, "LR scanner");
+      if (elecTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      if (modules.size() > 0) {
+        int index = DiceGenerator.getRandom(modules.size() - 1);
+        result.addComponent(modules.get(index));
+      }
+      int[] componentScores = new int[components.size()];
+      int safetyCount = 500;
+      while (result.getFreeSlots() > 0 && safetyCount > 0) {
+        safetyCount--;
+        componentScores = scoreComponents(result, player, components);
+        int sum = 0;
+        for (int i = 0; i < componentScores.length; i++) {
+          if (componentScores[i] > 0) {
+            sum = sum + componentScores[i];
+          }
+        }
+        int choice = DiceGenerator.getRandom(sum);
+        int total = 0;
+        for (int i = 0; i < componentScores.length; i++) {
+          if (componentScores[i] > 0) {
+            if (choice < total + componentScores[i]) {
+              if (result.getFreeEnergy() >= components.get(i)
+                  .getEnergyRequirement()) {
+                result.addComponent(components.get(i));
+              } else if (result.getFreeSlots() > 1 && power.getEnergyResource()
+                  + result.getFreeEnergy() >= components.get(i)
+                      .getEnergyRequirement()) {
+                result.addComponent(components.get(i));
+                result.addComponent(power);
+              }
+              break;
+            }
+            total = total + componentScores[i];
+          }
+        }
+
+      }
+
+    }
+    return result;
+  }
+
+  /**
+   * Generate random Orbital
+   * @return Orbital.
+   */
+  public static Ship generateRandomOrbital() {
+    PlayerInfo info = new PlayerInfo(
+        SpaceRace.values()[DiceGenerator.getRandom(
+            SpaceRace.values().length - 1)]);
+    info.getTechList().addTech(TechFactory.createHullTech("Small orbital", 2));
+    info.getTechList().addTech(TechFactory.createHullTech("Medium orbital", 4));
+    info.getTechList().addTech(TechFactory.createImprovementTech(
+        "Starbase music hall", 2));
+    ShipSize size = ShipSize.SMALL;
+    if (DiceGenerator.getRandom(1) == 1) {
+      size = ShipSize.MEDIUM;
+    }
+    ShipDesign design = ShipGenerator.createOrbital(info, size);
+    if (design != null) {
+      return new Ship(design);
+    }
+    ErrorLogger.debug("Failed to create orbital.");
+    return null;
+  }
 }

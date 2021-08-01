@@ -3,6 +3,7 @@ package org.openRealmOfStars.utilities.repository;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -19,7 +20,7 @@ import java.io.IOException;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018, 2020 Tuomo Untinen
+ * Copyright (C) 2016, 2018, 2020, 2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -115,6 +116,10 @@ public class PlanetRepository {
         }
       }
     }
+    boolean orbitalExists = dis.readBoolean();
+    if (orbitalExists) {
+      planet.setOrbital(new Ship(dis));
+    }
     return planet;
   }
 
@@ -163,6 +168,12 @@ public class PlanetRepository {
       IOUtilities.writeString(dos, null);
     } else {
       IOUtilities.writeString(dos, planet.getUnderConstruction().getName());
+    }
+    if (planet.getOrbital() == null) {
+      dos.writeBoolean(false);
+    } else {
+      dos.writeBoolean(true);
+      planet.getOrbital().saveShip(dos);
     }
   }
 

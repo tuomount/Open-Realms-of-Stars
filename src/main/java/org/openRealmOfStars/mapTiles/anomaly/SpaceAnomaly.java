@@ -23,6 +23,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipDamage;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
@@ -263,7 +264,8 @@ public class SpaceAnomaly {
             if (!stat.isObsolete()) {
               Ship ship = new Ship(stat.getDesign());
               if (ship.getHull().getSize() == ShipSize.SMALL
-                  && !ship.isStarBase()) {
+                  && !ship.isStarBase()
+                  && ship.getHull().getHullType() != ShipHullType.ORBITAL) {
                 listStats.add(stat);
               }
             }

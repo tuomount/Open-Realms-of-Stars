@@ -9,7 +9,7 @@ import org.openRealmOfStars.utilities.TextUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -205,7 +205,7 @@ public final class TechFactory {
    * Hull tech names for level 2
    */
   public static final String[] HULL_TECH_LEVEL2_NAMES = {"Probe",
-      "Small freighter", "Small starbase Mk1"};
+      "Small freighter", "Small starbase Mk1", "Small orbital"};
   /**
    * Hull tech names for level 3
    */
@@ -215,7 +215,7 @@ public final class TechFactory {
    * Hull tech names for level 4
    */
   public static final String[] HULL_TECH_LEVEL4_NAMES = {"Medium freighter",
-      "Medium starbase", "Scout Mk2", "Fighter bay Mk1" };
+      "Medium starbase", "Scout Mk2", "Fighter bay Mk1", "Medium orbital" };
   /**
    * Hull tech names for level 5
    */
@@ -745,7 +745,8 @@ public final class TechFactory {
           tech.setTradeable(false);
           return tech;
         } else if (techName.contains("starbase")
-            || techName.contains("Artificial planet")) {
+            || techName.contains("Artificial planet")
+            || techName.contains("orbital")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_HULL_TECH));

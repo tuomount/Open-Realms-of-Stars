@@ -702,7 +702,19 @@ public class MapPanel extends JPanel {
             }
           }
         }
-
+        if (fleet == null && fleetMap[i + cx][j + cy] != null) {
+          Planet planetOrbital = starMap.getPlanetByFleetTileInfo(
+              fleetMap[i + cx][j + cy]);
+          if (planetOrbital.getOrbital() != null && info != null
+              && info.getSectorVisibility(planetOrbital.getCoordinate())
+              == PlayerInfo.VISIBLE) {
+            // Draw orbital
+            BufferedImage img = ShipImages
+                .getByRace(fleetMap[i + cx][j + cy].getRace())
+                .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
+            gr.drawImage(img, pixelX, pixelY, null);
+          }
+        }
         // Draw fog of war and uncharted tiles
         if (info != null) {
           switch (info.getSectorVisibility(new Coordinate(i + cx,

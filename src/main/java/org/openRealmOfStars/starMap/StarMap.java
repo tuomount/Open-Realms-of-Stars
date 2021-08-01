@@ -39,6 +39,7 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
@@ -304,7 +305,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.18";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.19";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -740,7 +741,8 @@ public class StarMap {
           }
         }
         if (type == ENEMY_PIRATE && ship.getTotalMilitaryPower() > 0
-            && !ship.isStarBase()) {
+            && !ship.isStarBase()
+            && ship.getHull().getHullType() != ShipHullType.ORBITAL) {
           listStats.add(stat);
         }
       }
@@ -1030,7 +1032,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.18");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.19");
     // Turn number
     dos.writeInt(turn);
     // Victory conditions
@@ -1846,6 +1848,16 @@ public class StarMap {
           }
         }
       }
+      for (int i = 0; i < planetList.size(); i++) {
+        Planet planet = planetList.get(i);
+        if (fleetTiles[planet.getX()][planet.getY()] == null
+            && planet.getOrbital() != null) {
+          FleetTileInfo info = new FleetTileInfo(
+              planet.getOrbital().getHull().getRace(),
+              planet.getOrbital().getHull().getImageIndex(), i);
+          setFleetTile(planet.getX(), planet.getY(), info);
+        }
+      }
     }
     return fleetTiles;
   }
@@ -2063,10 +2075,26 @@ public class StarMap {
    */
   public Fleet getFleetByFleetTileInfo(final FleetTileInfo fleetTile) {
     PlayerInfo info = getPlayerByIndex(fleetTile.getPlayerIndex());
+    if (info == null) {
+      return null;
+    }
     Fleet fleet = info.getFleets().getByIndex(fleetTile.getFleetIndex());
     return fleet;
   }
 
+  /**
+   * Get Planet by Fleet Tile info. Used for getting orbital.
+   * @param fleetTile to get the oribtal
+   * @return Planet or null
+   */
+  public Planet getPlanetByFleetTileInfo(final FleetTileInfo fleetTile) {
+    int index = fleetTile.getPlanetIndex();
+    Planet planet = null;
+    if (index > -1 && index < planetList.size()) {
+      planet = planetList.get(index);
+    }
+    return planet;
+  }
   /**
    * Get pirate difficulty level.
    * @return Pirate difficulty level
@@ -2178,7 +2206,22 @@ public class StarMap {
           } else {
             escapePosition = null;
           }
+          Planet planet = getPlanetByCoordinate(x, y);
+          if (planet != null && planet.getOrbital() != null) {
+            return new Combat(fleet1, fleet2, info1, info2, escapePosition,
+                planet);
+          }
           return new Combat(fleet1, fleet2, info1, info2, escapePosition);
+        }
+      }
+      if (info2 == null) {
+        int planetIndex = fleetTiles[x][y].getPlanetIndex();
+        Planet planet = getPlanetList().get(planetIndex);
+        if (planet != null && planet.getOrbital() != null
+            && info1 != planet.getPlanetPlayerInfo()
+            && planet.getPlanetPlayerInfo() != null) {
+          return new Combat(fleet1, null, info1, info2, null,
+              planet);
         }
       }
     }

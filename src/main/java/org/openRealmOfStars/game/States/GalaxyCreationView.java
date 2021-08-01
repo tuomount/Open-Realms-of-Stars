@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -20,12 +21,14 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.KarmaType;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
@@ -175,8 +178,19 @@ public class GalaxyCreationView extends BlackPanel {
     if (planet.getPlanetType().isGasGiant()) {
       planet.setGasGiant(true);
     }
+    BufferedImage orbital = null;
+    if (DiceGenerator.getRandom(99) < 33) {
+      if (DiceGenerator.getRandom(99) < 70) {
+        planet.setOrbital(ShipGenerator.generateRandomOrbital());
+      } else {
+        orbital = PlanetTypes.getRandomPlanetType(false, true, true).getImage();
+      }
+    }
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, "Galaxy Creation");
+    if (orbital != null) {
+      imgBase.setCustomOrbital(orbital);
+    }
     imgBase.setLayout(new BorderLayout());
     this.setLayout(new BorderLayout());
 
@@ -729,6 +743,10 @@ public class GalaxyCreationView extends BlackPanel {
    * @param arg0 The event to handle
    */
   public void handleActions(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      this.repaint();
+      return;
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
       SoundPlayer.playMenuSound();
       config.setEnableTutorial(tutorialEnabled.isSelected());

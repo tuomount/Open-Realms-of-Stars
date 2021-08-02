@@ -2648,7 +2648,7 @@ public class StarMap {
       for (int y = -scanRad; y < scanRad + 1; y++) {
         for (int x = -scanRad; x < scanRad + 1; x++) {
           drawVisibilityLine(info, cx, cy, cx + x, cy + y, cloakDetection,
-              scanRad);
+              scanRad, fleet);
         }
       }
     }
@@ -3164,6 +3164,52 @@ public class StarMap {
   }
 
   /**
+   * Show message based on tiles.
+   * @param info PlayerInfo who is exploring
+   * @param sx X coordinate
+   * @param sy Y coordinate
+   * @param fleet Fleet which is exploring.
+   */
+  private void messageBasedOnTiles(final PlayerInfo info, final int sx,
+      final int sy, final Fleet fleet) {
+    if (info.isHuman()) {
+      Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
+      SquareInfo square = tileInfo[sx][sy];
+      if (tile.isSpaceAnomaly()) {
+        Message msg = new Message(MessageType.FLEET,
+            fleet.getName() + " found space anomaly.",
+              Icons.getIconByName(Icons.ICON_HULL_TECH));
+        msg.setCoordinate(fleet.getCoordinate());
+        msg.setMatchByString(fleet.getName());
+        info.getMsgList().addNewMessage(msg);
+        return;
+      }
+      if (square.getType() == SquareInfo.TYPE_PLANET) {
+        Planet planet = planetList.get(square.getValue());
+        if (planet != null) {
+          Message msg = new Message(MessageType.FLEET,
+              fleet.getName() + " found planet.",
+                Icons.getIconByName(Icons.ICON_PLANET));
+          msg.setCoordinate(fleet.getCoordinate());
+          msg.setMatchByString(fleet.getName());
+          info.getMsgList().addNewMessage(msg);
+          return;
+        }
+      }
+      if (tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1)
+          || tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR2)) {
+        Message msg = new Message(MessageType.FLEET,
+            fleet.getName() + " found deep space anchor.",
+            Icons.getIconByName(Icons.ICON_STARBASE));
+        msg.setCoordinate(fleet.getCoordinate());
+        msg.setMatchByString(fleet.getName());
+        info.getMsgList().addNewMessage(msg);
+        return;
+      }
+    }
+  }
+
+  /**
    * Show tutorial based what has reveal from the map.
    * @param info PlayerInfo who is exploring
    * @param sx X coordinate
@@ -3286,10 +3332,11 @@ public class StarMap {
    * @param ey End Y
    * @param cloakDetection Cloaking Detection level
    * @param maxRad maximum radius
+   * @param fleet Fleet or null
    */
   private void drawVisibilityLine(final PlayerInfo info, final int sx,
       final int sy, final int ex, final int ey, final int cloakDetection,
-      final int maxRad) {
+      final int maxRad, final Fleet fleet) {
     double startX = sx;
     double startY = sy;
     double dx = Math.abs(startX - ex);
@@ -3329,6 +3376,10 @@ public class StarMap {
         break;
       }
       if (isValidCoordinate(nx, ny)) {
+        if (info.getSectorVisibility(coordinate) == PlayerInfo.UNCHARTED
+            && fleet != null) {
+          messageBasedOnTiles(info, nx, ny, fleet);
+        }
         info.setSectorVisibility(nx, ny, PlayerInfo.VISIBLE);
         tutorialBasedOnTiles(info, nx, ny);
         rareTechBasedOnTiles(info, nx, ny);

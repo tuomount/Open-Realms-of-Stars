@@ -20,6 +20,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.FleetListRenderer;
@@ -173,6 +176,10 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
    * Button to access espionage mission view.
    */
   private SpaceButton espionageMissonBtn;
+  /**
+   * Button to enable auto exploring.
+   */
+  private SpaceButton exploreBtn;
 
   /**
    * Planet at north from fleet.
@@ -367,6 +374,13 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     espionageMissonBtn.setAlignmentX(CENTER_ALIGNMENT);
     espionageMissonBtn.setEnabled(interactive);
     eastPanel.add(espionageMissonBtn);
+    eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    exploreBtn = new SpaceButton(" Auto explore ",
+        GameCommands.COMMAND_AUTO_EXPLORE);
+    exploreBtn.addActionListener(listener);
+    exploreBtn.setAlignmentX(CENTER_ALIGNMENT);
+    exploreBtn.setEnabled(interactive);
+    eastPanel.add(exploreBtn);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
 
     label = new SpaceLabel("Ships in fleet");
@@ -563,6 +577,17 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
         }
       }
     }
+    if (interactiveView) {
+      exploreBtn.setEnabled(true);
+      Mission mission = info.getMissions().getMissionForFleet(fleet.getName());
+      if (mission == null) {
+        exploreBtn.setText("Auto explore");
+      } else {
+        exploreBtn.setText("Stop exploring");
+      }
+    } else {
+      exploreBtn.setEnabled(false);
+    }
     shipsInFleet.setListData(fleet.getShips());
     updateOtherFleet();
 
@@ -636,6 +661,21 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
       this.repaint();
       return;
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_AUTO_EXPLORE)
+        && interactiveView) {
+      Mission mission = info.getMissions().getMissionForFleet(fleet.getName());
+      if (mission == null) {
+        mission = new Mission(MissionType.EXPLORE, MissionPhase.LOADING,
+            fleet.getCoordinate());
+        mission.setFleetName(fleet.getName());
+        info.getMissions().add(mission);
+        SoundPlayer.playMenuSound();
+      } else {
+        info.getMissions().remove(mission);
+        SoundPlayer.playMenuDisabled();
+      }
+      updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIST_PLUS)
         && fleet.getFreeSpaceForColonist() > 0 && planet != null

@@ -540,6 +540,10 @@ public final class GameCommands {
    * Execute mission.
    */
   public static final String COMMAND_EXECUTE_MISSION = "ExecuteMission";
+  /**
+   * Enable auto exploring
+   */
+  public static final String COMMAND_AUTO_EXPLORE = "AutoExplore";
 
   /**
    * Start combat for no reason. This is more like debug purposes

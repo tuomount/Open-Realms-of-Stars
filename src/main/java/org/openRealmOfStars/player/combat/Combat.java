@@ -795,15 +795,14 @@ public boolean launchIntercept(final int distance,
    * @param ship Ship to steal
    * @param origin Origin fleet
    * @param target New target fleet
+   * @param stealInfo PlayerInfo who is doing the stealing
    */
-  private void stealShipFromFleet(final CombatShip ship, final Fleet origin,
-      final Fleet target) {
-    if (animation.getShooter() != null) {
-      ship.setPlayer(animation.getShooter().getPlayer());
-      origin.removeShip(ship.getShip());
-      target.addShip(ship.getShip());
-      ship.setCommander(target.getCommander());
-    }
+  private static void stealShipFromFleet(final CombatShip ship,
+      final Fleet origin, final Fleet target, final PlayerInfo stealInfo) {
+    ship.setPlayer(stealInfo);
+    origin.removeShip(ship.getShip());
+    target.addShip(ship.getShip());
+    ship.setCommander(target.getCommander());
   }
   /**
    * Destroy ship for fleet's list.
@@ -2302,15 +2301,18 @@ public boolean launchIntercept(final int distance,
             + " captured since all weapons and engines are down!");
         Fleet origin = null;
         Fleet stealer = null;
+        PlayerInfo stealInfo = null;
         if (target.getPlayer() == attackerInfo) {
           origin = attackerFleet;
           stealer = defenderFleet;
+          stealInfo = defenderInfo;
         } else if (target.getPlayer() == defenderInfo) {
           origin = defenderFleet;
           stealer = attackerFleet;
+          stealInfo = attackerInfo;
         }
         if (origin != null && stealer != null) {
-          stealShipFromFleet(target, origin, stealer);
+          stealShipFromFleet(target, origin, stealer, stealInfo);
         }
       }
     }

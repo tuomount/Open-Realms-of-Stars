@@ -142,21 +142,21 @@ public class PlanetTest {
       planet.setPlanetType(PlanetTypes.WATERWORLD1);
 
       String tmp = planet.generateInfoText(false, null);
-      assertEquals("Earth\nWater world\nRadiation: 1\nSize: below average\n",tmp);
+      assertEquals("Earth\nWater world\nRadiation: 1\nSize: small\n",tmp);
       tmp = planet.generateInfoText(true, null);
-      assertEquals("Earth\nWater world\nRadiation: 1\nSize: below average\nMetal: 6543\n",tmp);
+      assertEquals("Earth\nWater world\nRadiation: 1\nSize: small\nMetal: 6543\n",tmp);
       planet.setHomeWorldIndex(1);
       tmp = planet.generateInfoText(false, null);
-      assertEquals("Earth\nWater world\nRadiation: 1\nSize: below average\nHome world of\nMechions\n",tmp);
+      assertEquals("Earth\nWater world\nRadiation: 1\nSize: small\nHome world of\nMechions\n",tmp);
       tmp = planet.generateInfoText(true, null);
-      assertEquals("Earth\nWater world\nRadiation: 1\nSize: below average\nMetal: 6543\nHome world of\nMechions\n",tmp);
+      assertEquals("Earth\nWater world\nRadiation: 1\nSize: small\nMetal: 6543\nHome world of\nMechions\n",tmp);
       PlayerInfo info = new PlayerInfo(SpaceRaceUtility.getRaceByName("Mechion"));
       info.setEmpireName("Mechion Great Empire");
       planet.setPlanetOwner(0, info);
       planet.setWorkers(0, 1);
       planet.setCulture(5);
       tmp = planet.generateInfoText(true, null);
-      assertEquals("Earth\nWater world\nSuitable: 75%\nRadiation: 1\nSize: below average\nMetal: 6543\n"
+      assertEquals("Earth\nWater world\nSuitable: 75%\nRadiation: 1\nSize: small\nMetal: 6543\n"
           + "Home world of\nMechions\nMechion Great Empire\nPopulation"
           + ": 1\nCulture: 5\n",tmp);
   }

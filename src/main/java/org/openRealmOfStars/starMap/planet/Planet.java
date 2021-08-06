@@ -1788,19 +1788,19 @@ public class Planet {
   public String getSizeAsString() {
     switch (getGroundSize()) {
     case 7:
-      return "small";
+      return "tiny";
     case 8:
-      return "small";
+      return "tiny";
     case 9:
-      return "medium";
+      return "small";
     case 10:
-      return "below average";
+      return "small";
     case 11:
-      return "average";
+      return "medium";
     case 12:
-      return "average";
+      return "medium";
     case 13:
-      return "above average";
+      return "large";
     case 14:
       return "large";
     case 15:

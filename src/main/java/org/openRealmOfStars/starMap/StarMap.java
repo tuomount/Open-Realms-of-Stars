@@ -3206,16 +3206,18 @@ public class StarMap {
               sb.append(" Planet is ");
               sb.append(value);
               sb.append("% habitable for your people.");
+              sb.append(" Planet size is ");
+              sb.append(planet.getSizeAsString());
+              sb.append(".");
             } else {
               sb.append(" World type in this planet is something your");
               sb.append(" people cannot tolarate.");
             }
           }
           Message msg = new Message(MessageType.FLEET,
-              fleet.getName() + " found planet.",
-                Icons.getIconByName(Icons.ICON_PLANET));
-          msg.setCoordinate(fleet.getCoordinate());
-          msg.setMatchByString(fleet.getName());
+              sb.toString(), Icons.getIconByName(Icons.ICON_PLANET));
+          msg.setCoordinate(planet.getCoordinate());
+          msg.setMatchByString(planet.getName());
           info.getMsgList().addNewMessage(msg);
           return;
         }
@@ -3225,7 +3227,7 @@ public class StarMap {
         Message msg = new Message(MessageType.FLEET,
             fleet.getName() + " found deep space anchor.",
             Icons.getIconByName(Icons.ICON_STARBASE));
-        msg.setCoordinate(fleet.getCoordinate());
+        msg.setCoordinate(new Coordinate(sx, sy));
         msg.setMatchByString(fleet.getName());
         info.getMsgList().addNewMessage(msg);
         return;

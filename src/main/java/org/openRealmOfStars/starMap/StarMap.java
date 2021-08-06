@@ -3187,6 +3187,30 @@ public class StarMap {
       if (square.getType() == SquareInfo.TYPE_PLANET) {
         Planet planet = planetList.get(square.getValue());
         if (planet != null) {
+          StringBuilder sb = new StringBuilder();
+          sb.append(fleet.getName());
+          sb.append(" found planet called ");
+          sb.append(planet.getName());
+          sb.append(".");
+          if (planet.getPlanetPlayerInfo() != null) {
+            sb.append(" Unfortunately it has been already colonized by");
+            sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+            sb.append(".");
+          } else if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
+            sb.append(" Unfortunately planet's radiation level is too high");
+            sb.append(" for your people to live there...");
+          } else {
+            int value = info.getWorldTypeValue(
+                planet.getPlanetType().getWorldType());
+            if (value > 0) {
+              sb.append(" Planet is ");
+              sb.append(value);
+              sb.append("% habitable for your people.");
+            } else {
+              sb.append(" World type in this planet is something your");
+              sb.append(" people cannot tolarate.");
+            }
+          }
           Message msg = new Message(MessageType.FLEET,
               fleet.getName() + " found planet.",
                 Icons.getIconByName(Icons.ICON_PLANET));

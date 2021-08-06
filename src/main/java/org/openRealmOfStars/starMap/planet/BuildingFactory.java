@@ -618,8 +618,8 @@ public final class BuildingFactory {
       tmp = new Building(index, "Orbital shield",
           Icons.getIconByName(Icons.ICON_SHIELD),
           BuildingType.MILITARY);
-      tmp.setProdCost(150);
-      tmp.setMetalCost(50);
+      tmp.setProdCost(100);
+      tmp.setMetalCost(180);
       tmp.setDescription("Orbital shield that blocks bombs.");
       tmp.setScientificAchievement(true);
       tmp.setSingleAllowed(true);
@@ -866,8 +866,8 @@ public final class BuildingFactory {
           Icons.getIconByName(Icons.ICON_METAL_ORE), BuildingType.MINE);
       tmp.setCultBonus(0);
       tmp.setHappiness(0);
-      tmp.setProdCost(150);
-      tmp.setMetalCost(100);
+      tmp.setProdCost(200);
+      tmp.setMetalCost(40);
       tmp.setDescription("Massive material replicator");
       tmp.setScientificAchievement(true);
       tmp.setSingleAllowed(true);

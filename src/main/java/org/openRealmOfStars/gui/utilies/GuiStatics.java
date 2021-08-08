@@ -1455,6 +1455,13 @@ public final class GuiStatics {
           "/resources/images/lithorian_bridge.png"));
 
   /**
+   * Ship Reborgian bridge interior
+   */
+  public static final BufferedImage IMAGE_INTERIOR_REBORGIAN =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/reborgian_bridge.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

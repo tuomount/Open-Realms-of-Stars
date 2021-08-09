@@ -1,17 +1,30 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.ImageLabel;
+import org.openRealmOfStars.gui.labels.InfoTextPane;
 import org.openRealmOfStars.gui.labels.SpaceComboBox;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
@@ -41,7 +54,8 @@ import org.openRealmOfStars.starMap.planet.Planet;
 * Ship Upgrade view.
 *
 */
-public class ShipUpgradeView extends BlackPanel {
+public class ShipUpgradeView extends BlackPanel
+  implements ListSelectionListener {
 
   /**
   *
@@ -70,12 +84,7 @@ public class ShipUpgradeView extends BlackPanel {
   /**
    * Text is containing information about the ship
    */
-  private BaseInfoTextArea infoText;
-
-  /**
-   * Text is containing information about the upgrade
-   */
-  private BaseInfoTextArea upgradeInfoText;
+  private InfoTextPane infoText;
 
   /**
    * List of ships in fleet
@@ -87,6 +96,14 @@ public class ShipUpgradeView extends BlackPanel {
    */
   private SpaceComboBox<ShipDesign> upgradeList;
 
+  /**
+   * Metal on planet available
+   */
+  private SpaceLabel metalOnPlanet;
+  /**
+   * Credits for playerinfo
+   */
+  private SpaceLabel credits;
   /**
    * Create new ship upgrade view
    * @param player Player Info
@@ -103,9 +120,32 @@ public class ShipUpgradeView extends BlackPanel {
     InfoPanel base = new InfoPanel();
     base.setLayout(new BorderLayout());
     base.setTitle("Ship upgrade on " + planet.getName());
-
-    this.add(base, BorderLayout.CENTER);
-
+    shipListInFleet = new JList<>(this.fleet.getShips());
+    shipListInFleet.setCellRenderer(new ShipListRenderer());
+    shipListInFleet.setBackground(Color.BLACK);
+    shipListInFleet.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    shipListInFleet.addListSelectionListener(this);
+    JScrollPane scroll = new JScrollPane(shipListInFleet);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    SpaceGreyPanel panel = new SpaceGreyPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    panel.add(scroll);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
+    metalOnPlanet = new SpaceLabel("Metal available: 9999");
+    panel.add(metalOnPlanet);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
+    credits = new SpaceLabel("Credits: 99999");
+    panel.add(credits);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
+    this.add(base, BorderLayout.WEST);
+    panel = new SpaceGreyPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    infoText = new InfoTextPane();
+    panel.add(infoText);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
+    SpaceLabel label = new SpaceLabel("Upgrade ship to:");
+    panel.add(label);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
@@ -118,6 +158,11 @@ public class ShipUpgradeView extends BlackPanel {
     // updatePanel();
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
+  }
+  @Override
+  public void valueChanged(ListSelectionEvent e) {
+    // TODO Auto-generated method stub
+    
   }
 
 }

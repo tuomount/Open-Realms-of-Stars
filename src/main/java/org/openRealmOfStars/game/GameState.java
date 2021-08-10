@@ -152,5 +152,9 @@ public enum GameState {
   /**
    * View for setuping ambient lights for the game.
    */
-  SETUP_AMBIENT_LIGHTS;
+  SETUP_AMBIENT_LIGHTS,
+  /**
+   * View for ship upgrade.
+   */
+  SHIP_UPGRADE_VIEW;
 }

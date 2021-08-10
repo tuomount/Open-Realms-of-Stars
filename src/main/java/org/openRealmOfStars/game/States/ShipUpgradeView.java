@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -15,6 +16,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
+import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
@@ -28,6 +30,8 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipImage;
+import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -92,9 +96,9 @@ public class ShipUpgradeView extends BlackPanel
   private JList<Ship> shipListInFleet;
 
   /**
-   * Upgradeable ship designs.
+   * Upgradeable ship designs names.
    */
-  private SpaceComboBox<ShipDesign> upgradeList;
+  private SpaceComboBox<String> upgradeList;
 
   /**
    * Metal on planet available
@@ -104,6 +108,11 @@ public class ShipUpgradeView extends BlackPanel
    * Credits for playerinfo
    */
   private SpaceLabel credits;
+
+  /**
+   * Upgrade button.
+   */
+  private SpaceButton upgradeButton;
   /**
    * Create new ship upgrade view
    * @param player Player Info
@@ -137,15 +146,42 @@ public class ShipUpgradeView extends BlackPanel
     credits = new SpaceLabel("Credits: 99999");
     panel.add(credits);
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
-    this.add(base, BorderLayout.WEST);
+    base.add(panel, BorderLayout.WEST);
+    // Center panel
     panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    shipImage = new ImageLabel(
+        ShipImages.humans().getShipImage(ShipImage.SCOUT), true);
+    shipImage.setFillColor(Color.BLACK);
+    panel.add(shipImage);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
     infoText = new InfoTextPane();
-    panel.add(infoText);
+    scroll = new JScrollPane(infoText);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    panel.add(scroll);
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceLabel label = new SpaceLabel("Upgrade ship to:");
     panel.add(label);
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] emptyList = {"None"};
+    upgradeList = new SpaceComboBox<>(emptyList);
+    upgradeList.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    upgradeList.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    upgradeList.setBorder(new SimpleBorder());
+    upgradeList.setFont(GuiStatics.getFontCubellan());
+    upgradeList.getModel().setSelectedItem("None");
+    DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    upgradeList.setRenderer(dlcr);
+    upgradeList.addActionListener(listener);
+    upgradeList.setActionCommand(GameCommands.COMMAND_UPGRADE_SELECTED);
+    panel.add(upgradeList);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
+    upgradeButton = new SpaceButton("Upgrade", GameCommands.COMMAND_UPGRADE);
+    upgradeButton.addActionListener(listener);
+    panel.add(upgradeButton);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
+    base.add(panel, BorderLayout.CENTER);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
@@ -156,7 +192,7 @@ public class ShipUpgradeView extends BlackPanel
     bottomPanel.add(btn, BorderLayout.CENTER);
 
     // updatePanel();
-    // Add panels to base
+    this.add(base, BorderLayout.CENTER);
     this.add(bottomPanel, BorderLayout.SOUTH);
   }
   @Override

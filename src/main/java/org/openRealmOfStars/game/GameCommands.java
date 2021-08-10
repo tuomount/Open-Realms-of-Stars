@@ -175,6 +175,21 @@ public final class GameCommands {
   public static final String COMMAND_VIEW_FLEET = "ViewFleet";
 
   /**
+   * Upgrade selected command
+   */
+  public static final String COMMAND_UPGRADE_SELECTED = "UpgradeSelected";
+
+  /**
+   * Upgrade command
+   */
+  public static final String COMMAND_UPGRADE = "Upgrade";
+
+  /**
+   * View Upgrade command
+   */
+  public static final String COMMAND_VIEW_UPGRADE = "ViewUpgrade";
+
+  /**
    * View Star map
    */
   public static final String COMMAND_VIEW_STARMAP = "ViewStarMap";

@@ -3329,6 +3329,7 @@ public class Game implements ActionListener {
         changeGameState(GameState.FLEETVIEW);
         return;
       }
+      shipUpgradeView.handleAction(arg0);
     }
     if (gameState == GameState.FLEETVIEW && fleetView != null) {
       // Fleet view

@@ -3,10 +3,13 @@ package org.openRealmOfStars.game.States;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -19,7 +22,6 @@ import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextPane;
 import org.openRealmOfStars.gui.labels.SpaceComboBox;
@@ -33,7 +35,6 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
-import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -191,14 +192,68 @@ public class ShipUpgradeView extends BlackPanel
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.CENTER);
 
-    // updatePanel();
     this.add(base, BorderLayout.CENTER);
     this.add(bottomPanel, BorderLayout.SOUTH);
+
+    updatePanels();
+  }
+
+  /**
+   * Update panels.
+   */
+  public void updatePanels() {
+    metalOnPlanet.setText("Metal available: " + planet.getMetal());
+    credits.setText("Credits: " + player.getTotalCredits());
+    Ship ship = getSelectedShip();
+    if (ship != null) {
+      shipImage.setImage(ship.getHull().getImage());
+    }
+    this.repaint();
+  }
+  /**
+   * Handle actions for view.
+   * @param arg0 ActionEvent.
+   */
+  public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_SELECTED)) {
+      updatePanels();
+    }
+  }
+
+  /**
+   * Get Seletected ship
+   * @return Ship.
+   */
+  public Ship getSelectedShip() {
+    Ship ship = shipListInFleet.getSelectedValue();
+    return ship;
+  }
+
+  /**
+   * Upgrade possible ship design updates.
+   */
+  public void updateUpgradePossibilities() {
+    Ship ship = getSelectedShip();
+    if (ship != null) {
+      ArrayList<ShipStat> stats = new ArrayList<>();
+      for (ShipStat stat : player.getShipStatList()) {
+        if (stat.getDesign().getHull() == ship.getHull()
+            && ship.getName() != stat.getDesign().getName()) {
+          stats.add(stat);
+        }
+      }
+      String[] designNames = new String[stats.size() + 1];
+      designNames[0] = "None";
+      for (int i = 1; i < designNames.length; i++) {
+        designNames[i] = stats.get(i - 1).getDesign().getName();
+      }
+      upgradeList.setModel(new DefaultComboBoxModel<>(designNames));
+    }
   }
   @Override
-  public void valueChanged(ListSelectionEvent e) {
-    // TODO Auto-generated method stub
-    
+  public void valueChanged(final ListSelectionEvent e) {
+    updateUpgradePossibilities();
+    updatePanels();
   }
 
 }

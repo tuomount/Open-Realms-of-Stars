@@ -109,11 +109,23 @@ public class ShipUpgradeView extends BlackPanel
    * Credits for playerinfo
    */
   private SpaceLabel credits;
+  /**
+   * Cost for upgrade
+   */
+  private SpaceLabel totalCost;
 
   /**
    * Upgrade button.
    */
   private SpaceButton upgradeButton;
+  /**
+   * Metal upgrade cost
+   */
+  private int metalUpgradeCost;
+  /**
+   * Production upgrade cost
+   */
+  private int prodUpgradeCost;
   /**
    * Create new ship upgrade view
    * @param player Player Info
@@ -124,6 +136,8 @@ public class ShipUpgradeView extends BlackPanel
   public ShipUpgradeView(final PlayerInfo player, final Fleet fleet,
      final Planet planet, final ActionListener listener) {
     this.player = player;
+    metalUpgradeCost = 0;
+    prodUpgradeCost = 0;
     this.planet = planet;
     this.fleet = fleet;
     this.setLayout(new BorderLayout());
@@ -146,6 +160,9 @@ public class ShipUpgradeView extends BlackPanel
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
     credits = new SpaceLabel("Credits: 99999");
     panel.add(credits);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
+    totalCost = new SpaceLabel("Metal cost: 999 Credit cost: 999");
+    panel.add(totalCost);
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
     base.add(panel, BorderLayout.WEST);
     // Center panel
@@ -207,7 +224,30 @@ public class ShipUpgradeView extends BlackPanel
     Ship ship = getSelectedShip();
     if (ship != null) {
       shipImage.setImage(ship.getHull().getImage());
+      ShipStat stat = player.getShipStatByName(
+          (String) upgradeList.getSelectedItem());
+      if (stat != null && ship.getHull() == stat.getDesign().getHull()) {
+        metalUpgradeCost = ship.getUpgradeMetalCost(stat.getDesign());
+        prodUpgradeCost = ship.getUpgradeCost(stat.getDesign());
+        if (metalUpgradeCost > planet.getMetal()
+            + planet.getAmountMetalInGround()) {
+          metalUpgradeCost = 0;
+          prodUpgradeCost = 0;
+        }
+        if (metalUpgradeCost > planet.getMetal()) {
+          int left = planet.getMetal() - metalUpgradeCost;
+          metalUpgradeCost = planet.getMetal();
+          prodUpgradeCost = prodUpgradeCost + left * 2;
+        }
+      } else {
+        infoText.setText(ship.getTacticalInfo());
+        metalUpgradeCost = 0;
+        prodUpgradeCost = 0;
+        upgradeButton.setEnabled(false);
+      }
     }
+    totalCost.setText("Metal cost: " + metalUpgradeCost + " Credits Cost: "
+        + prodUpgradeCost);
     this.repaint();
   }
   /**

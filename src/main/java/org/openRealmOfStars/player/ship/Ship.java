@@ -2158,4 +2158,51 @@ private int increaseHitChanceByComponent() {
   public double getFleetCapacity() {
     return getHull().getFleetCapacity();
   }
+
+  /**
+   * Calculate metal upgrade cost for new design.
+   * @param design New design
+   * @return Metal cost
+   */
+  public int getUpgradeMetalCost(final ShipDesign design) {
+    if (design.getHull() != getHull()) {
+      return 0;
+    }
+    int cost = design.getMetalCost() - getMetalCost();
+    if (cost < 0) {
+      cost = 0;
+    }
+    for (int i = 0; i < getNumberOfComponents(); i++) {
+      ShipComponent origComp = getComponent(i);
+      ShipComponent newComp = design.getComponent(i);
+      if (origComp != newComp) {
+        cost++;
+      }
+    }
+    return cost;
+  }
+
+  /**
+   * Calculate production upgrade cost for new design.
+   * @param design New design
+   * @return Metal cost
+   */
+  public int getUpgradeCost(final ShipDesign design) {
+    if (design.getHull() != getHull()) {
+      return 0;
+    }
+    int cost = design.getCost() - getProdCost();
+    if (cost < 0) {
+      cost = 0;
+    }
+    for (int i = 0; i < getNumberOfComponents(); i++) {
+      ShipComponent origComp = getComponent(i);
+      ShipComponent newComp = design.getComponent(i);
+      if (origComp != newComp) {
+        cost = cost + 3;
+      }
+    }
+    return cost;
+  }
+
 }

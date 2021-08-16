@@ -35,6 +35,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -216,6 +217,91 @@ public class ShipUpgradeView extends BlackPanel
   }
 
   /**
+   * Get Value color based on two value.
+   * @param greenValue Green color if this is bigger
+   * @param redValue Red color if this is bigger
+   * @return Color
+   */
+  private Color getValueColor(final int greenValue, final int redValue) {
+    if (greenValue > redValue) {
+      return GuiStatics.COLOR_GREEN_TEXT;
+    } else if (greenValue < redValue) {
+      return GuiStatics.COLOR_RED_TEXT;
+    } else {
+      return GuiStatics.COLOR_GREY_160;
+    }
+  }
+  /**
+   * Show difference in info text panel
+   * @param design New ship design
+   * @param ship Original ship
+   */
+  private void showDifference(final ShipDesign design, final Ship ship) {
+    infoText.addText(ship.getName(), GuiStatics.COLOR_RED_TEXT);
+    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(design.getName(), GuiStatics.COLOR_GREEN_TEXT);
+    infoText.addText(" - ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(ship.getHull().getHullType().toString(),
+        GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("\nCapacity: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(String.format("%.1f", ship.getFleetCapacity()),
+        GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(" Energy: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    int oldValue = ship.getTotalEnergy() - ship.getEnergyConsumption();
+    int newValue = design.getFreeEnergy();
+    infoText.addText(oldValue, getValueColor(oldValue, newValue));
+    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(newValue, getValueColor(newValue, oldValue));
+    infoText.addText(" Init.: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    oldValue = ship.getInitiative();
+    newValue = design.getInitiative();
+    infoText.addText(oldValue, getValueColor(oldValue, newValue));
+    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(newValue, getValueColor(newValue, oldValue));
+    infoText.addText("\nSpeed: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    oldValue = ship.getSpeed();
+    newValue = design.getSpeed();
+    infoText.addText(oldValue, getValueColor(oldValue, newValue));
+    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(newValue, getValueColor(newValue, oldValue));
+    infoText.addText(" FTL: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    oldValue = ship.getFtlSpeed();
+    newValue = design.getFtlSpeed();
+    infoText.addText(oldValue, getValueColor(oldValue, newValue));
+    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(newValue, getValueColor(newValue, oldValue));
+    infoText.addText(" Tactic: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    oldValue = ship.getTacticSpeed();
+    newValue = design.getTacticSpeed();
+    infoText.addText(oldValue, getValueColor(oldValue, newValue));
+    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(newValue, getValueColor(newValue, oldValue));
+    infoText.addText("\nShield: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    oldValue = ship.getTotalShield();
+    newValue = design.getTotalShield();
+    infoText.addText(oldValue, getValueColor(oldValue, newValue));
+    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(newValue, getValueColor(newValue, oldValue));
+    infoText.addText(" Armor: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    oldValue = ship.getTotalArmor();
+    newValue = design.getTotalArmor();
+    infoText.addText(oldValue, getValueColor(oldValue, newValue));
+    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(newValue, getValueColor(newValue, oldValue));
+    infoText.addText(" Hull Points: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    oldValue = ship.getHull().getSlotHull() * ship.getNumberOfComponents();
+    newValue = design.getHull().getSlotHull() * design.getNumberOfComponents();
+    infoText.addText(oldValue, getValueColor(oldValue, newValue));
+    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(newValue, getValueColor(newValue, oldValue));
+    infoText.addText("\nMilitary power: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    oldValue = ship.getTheoreticalMilitaryPower();
+    newValue = design.getTotalMilitaryPower();
+    infoText.addText(oldValue, getValueColor(oldValue, newValue));
+    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(newValue, getValueColor(newValue, oldValue));
+  }
+  /**
    * Update panels.
    */
   public void updatePanels() {
@@ -226,7 +312,8 @@ public class ShipUpgradeView extends BlackPanel
       shipImage.setImage(ship.getHull().getImage());
       ShipStat stat = player.getShipStatByName(
           (String) upgradeList.getSelectedItem());
-      if (stat != null && ship.getHull() == stat.getDesign().getHull()) {
+      if (stat != null && ship.getHull().getName().equals(
+          stat.getDesign().getHull().getName())) {
         metalUpgradeCost = ship.getUpgradeMetalCost(stat.getDesign());
         prodUpgradeCost = ship.getUpgradeCost(stat.getDesign());
         if (metalUpgradeCost > planet.getMetal()
@@ -239,6 +326,7 @@ public class ShipUpgradeView extends BlackPanel
           metalUpgradeCost = planet.getMetal();
           prodUpgradeCost = prodUpgradeCost + left * 2;
         }
+      showDifference(stat.getDesign(), ship);
       } else {
         infoText.setText(ship.getTacticalInfo());
         metalUpgradeCost = 0;
@@ -277,8 +365,9 @@ public class ShipUpgradeView extends BlackPanel
     if (ship != null) {
       ArrayList<ShipStat> stats = new ArrayList<>();
       for (ShipStat stat : player.getShipStatList()) {
-        if (stat.getDesign().getHull() == ship.getHull()
-            && ship.getName() != stat.getDesign().getName()) {
+        if (stat.getDesign().getHull().getName().equals(
+            ship.getHull().getName())
+            && !ship.getName().equals(stat.getDesign().getName())) {
           stats.add(stat);
         }
       }

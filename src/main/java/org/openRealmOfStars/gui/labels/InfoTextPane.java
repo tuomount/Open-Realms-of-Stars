@@ -64,4 +64,20 @@ public class InfoTextPane extends JTextPane {
     setCharacterAttributes(aset, false);
     replaceSelection(text);
   }
+
+  /**
+   * Add Text with certain color into text pane.
+   * @param text Text to add
+   * @param color Foreground color used.
+   */
+  public void addText(final int text, final Color color) {
+    StyleContext sc = StyleContext.getDefaultStyleContext();
+    AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY,
+        StyleConstants.Foreground, color);
+    int len = getDocument().getLength();
+    setCaretPosition(len);
+    setCharacterAttributes(aset, false);
+    replaceSelection(String.valueOf(text));
+  }
+
 }

@@ -4,12 +4,13 @@ import java.awt.Color;
 
 import javax.swing.JTextPane;
 import javax.swing.text.AttributeSet;
-import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
 *
@@ -37,6 +38,11 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 public class InfoTextPane extends JTextPane {
 
   /**
+   *
+   */
+  private static final long serialVersionUID = 1L;
+
+  /**
    * Basic constructor with correct look and feel.
    */
   public InfoTextPane() {
@@ -57,12 +63,16 @@ public class InfoTextPane extends JTextPane {
    */
   public void addText(final String text, final Color color) {
     StyleContext sc = StyleContext.getDefaultStyleContext();
-    AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY,
+    AttributeSet aset = sc.addAttribute(this.getCharacterAttributes(),
         StyleConstants.Foreground, color);
     int len = getDocument().getLength();
     setCaretPosition(len);
     setCharacterAttributes(aset, false);
-    replaceSelection(text);
+    try {
+      getDocument().insertString(len, text, aset);
+    } catch (BadLocationException e) {
+      ErrorLogger.log(e);
+    }
   }
 
   /**
@@ -72,12 +82,16 @@ public class InfoTextPane extends JTextPane {
    */
   public void addText(final int text, final Color color) {
     StyleContext sc = StyleContext.getDefaultStyleContext();
-    AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY,
+    AttributeSet aset = sc.addAttribute(this.getCharacterAttributes(),
         StyleConstants.Foreground, color);
     int len = getDocument().getLength();
     setCaretPosition(len);
     setCharacterAttributes(aset, false);
-    replaceSelection(String.valueOf(text));
+    try {
+      getDocument().insertString(len, String.valueOf(text), aset);
+    } catch (BadLocationException e) {
+      ErrorLogger.log(e);
+    }
   }
 
 }

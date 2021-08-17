@@ -2165,7 +2165,7 @@ private int increaseHitChanceByComponent() {
    * @return Metal cost
    */
   public int getUpgradeMetalCost(final ShipDesign design) {
-    if (design.getHull() != getHull()) {
+    if (!design.getHull().getName().equals(getHull().getName())) {
       return 0;
     }
     int cost = design.getMetalCost() - getMetalCost();
@@ -2188,7 +2188,7 @@ private int increaseHitChanceByComponent() {
    * @return Metal cost
    */
   public int getUpgradeCost(final ShipDesign design) {
-    if (design.getHull() != getHull()) {
+    if (!design.getHull().getName().equals(getHull().getName())) {
       return 0;
     }
     int cost = design.getCost() - getProdCost();

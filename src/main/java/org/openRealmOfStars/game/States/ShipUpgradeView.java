@@ -32,6 +32,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -222,7 +223,7 @@ public class ShipUpgradeView extends BlackPanel
    * @param redValue Red color if this is bigger
    * @return Color
    */
-  private Color getValueColor(final int greenValue, final int redValue) {
+  private static Color getValueColor(final int greenValue, final int redValue) {
     if (greenValue > redValue) {
       return GuiStatics.COLOR_GREEN_TEXT;
     } else if (greenValue < redValue) {
@@ -237,6 +238,7 @@ public class ShipUpgradeView extends BlackPanel
    * @param ship Original ship
    */
   private void showDifference(final ShipDesign design, final Ship ship) {
+    infoText.setText("");
     infoText.addText(ship.getName(), GuiStatics.COLOR_RED_TEXT);
     infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
     infoText.addText(design.getName(), GuiStatics.COLOR_GREEN_TEXT);
@@ -300,6 +302,51 @@ public class ShipUpgradeView extends BlackPanel
     infoText.addText(oldValue, getValueColor(oldValue, newValue));
     infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
     infoText.addText(newValue, getValueColor(newValue, oldValue));
+    infoText.addText("\n\nComponents:\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    for (int i = 0; i < ship.getNumberOfComponents(); i++) {
+      ShipComponent origComp = ship.getComponent(i);
+      ShipComponent newComp = design.getComponent(i);
+      if (origComp == null && newComp == null) {
+        infoText.addText(i + 1, GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(": Empty\n\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        continue;
+      }
+      if (origComp == null && newComp != null) {
+        infoText.addText(i + 1, GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(": Empty -> ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(newComp.getName(), GuiStatics.COLOR_GREEN_TEXT);
+        infoText.addText("\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(newComp.toString(), GuiStatics.COLOR_GREEN_TEXT);
+        infoText.addText("\n\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        continue;
+      }
+      if (origComp != null && newComp == null) {
+        infoText.addText(i + 1, GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(":", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(origComp.getName(), GuiStatics.COLOR_GREEN_TEXT);
+        infoText.addText(" -> ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText("Empty", GuiStatics.COLOR_RED_TEXT);
+        infoText.addText("\n\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        continue;
+      }
+      if (origComp.getName().equals(newComp.getName())) {
+        infoText.addText(i + 1, GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(":", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(origComp.getName(), GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText("\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(origComp.toString(), GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText("\n\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+      } else {
+        infoText.addText(i + 1, GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(":", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(origComp.getName(), GuiStatics.COLOR_RED_TEXT);
+        infoText.addText(" -> ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(newComp.getName(), GuiStatics.COLOR_GREEN_TEXT);
+        infoText.addText("\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(newComp.toString(), GuiStatics.COLOR_GREEN_TEXT);
+        infoText.addText("\n\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+      }
+    }
   }
   /**
    * Update panels.
@@ -326,7 +373,10 @@ public class ShipUpgradeView extends BlackPanel
           metalUpgradeCost = planet.getMetal();
           prodUpgradeCost = prodUpgradeCost + left * 2;
         }
-      showDifference(stat.getDesign(), ship);
+        showDifference(stat.getDesign(), ship);
+        if (prodUpgradeCost > 0) {
+          upgradeButton.setEnabled(true);
+        }
       } else {
         infoText.setText(ship.getTacticalInfo());
         metalUpgradeCost = 0;

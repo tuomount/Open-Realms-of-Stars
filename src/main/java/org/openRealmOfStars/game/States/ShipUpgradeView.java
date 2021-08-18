@@ -421,6 +421,11 @@ public class ShipUpgradeView extends BlackPanel
           stats.add(stat);
         }
       }
+      ShipStat stat = player.getBestUpgrade(ship);
+      if (stat != null) {
+        stats.remove(stat);
+        stats.add(0, stat);
+      }
       String[] designNames = new String[stats.size() + 1];
       designNames[0] = "None";
       for (int i = 1; i < designNames.length; i++) {

@@ -1451,6 +1451,16 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Upgrade all ship components.
+   * @param newComponents Array of new components.
+   */
+  public void upgradeComponents(final ShipComponent[] newComponents) {
+    components = new ArrayList<>();
+    for (ShipComponent component : newComponents) {
+      components.add(component);
+    }
+  }
+  /**
    * Get ship's hull
    * @return Ship hull
    */

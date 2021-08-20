@@ -17,6 +17,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
@@ -37,6 +38,7 @@ import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -395,7 +397,22 @@ public class ShipUpgradeView extends BlackPanel
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_SELECTED)) {
       updatePanels();
+      SoundPlayer.playMenuSound();
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE)) {
+      ShipStat stat = player.getShipStatByName(
+          (String) upgradeList.getSelectedItem());
+      if (prodUpgradeCost > 0 && stat != null) {
+        StarMapUtilities.upgradeShip(getSelectedShip(), stat, player, planet);
+        shipListInFleet.setListData(fleet.getShips());
+        updatePanels();
+        SoundPlayer.playSound(SoundPlayer.REPAIR);
+        SoundPlayer.playMenuSound();
+      } else {
+        SoundPlayer.playMenuDisabled();
+      }
+    }
+
   }
 
   /**

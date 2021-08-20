@@ -938,7 +938,7 @@ public final class StarMapUtilities {
         metalCost = planet.getMetal();
         cost = cost + left * 2;
       }
-      if (cost > 0 && cost >= info.getTotalCredits()) {
+      if (cost > 0 && cost <= info.getTotalCredits()) {
         planet.setMetal(planet.getMetal() - metalCost);
         info.setTotalCredits(info.getTotalCredits() - cost);
         ShipStat oldStat = info.getShipStatByName(ship.getName());

@@ -59,6 +59,7 @@ import org.openRealmOfStars.game.States.RealmView;
 import org.openRealmOfStars.game.States.ResearchView;
 import org.openRealmOfStars.game.States.SaveGameNameView;
 import org.openRealmOfStars.game.States.ShipDesignView;
+import org.openRealmOfStars.game.States.ShipUpgradeView;
 import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.game.States.StatView;
@@ -214,6 +215,10 @@ public class Game implements ActionListener {
    */
   private FleetView fleetView;
 
+  /**
+   * Ship upgrade view.
+   */
+  private ShipUpgradeView shipUpgradeView;
   /**
    * Fleet trade view Panel and handling the trade
    */
@@ -1182,6 +1187,16 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show Fleet upgrade view.
+   */
+  public void showFleetUpgradeView() {
+    if (fleetView != null) {
+      shipUpgradeView = new ShipUpgradeView(players.getCurrentPlayerInfo(),
+          fleetView.getFleet(), fleetView.getPlanet(), this);
+      this.updateDisplay(shipUpgradeView);
+    }
+  }
+  /**
    * Show fleet trade view panel
    * @param planet Planet to show
    * @param fleet Fleet to show
@@ -1688,6 +1703,11 @@ public class Game implements ActionListener {
     case FLEETVIEW: {
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       fleetView();
+      break;
+    }
+    case SHIP_UPGRADE_VIEW: {
+      setBridgeCommand(BridgeCommandType.SPACE_CONSOLE3);
+      showFleetUpgradeView();
       break;
     }
     case FLEET_TRADE_VIEW: {
@@ -3302,6 +3322,15 @@ public class Game implements ActionListener {
       espionageMissionView.handleAction(arg0);
       return;
     }
+    if (gameState == GameState.SHIP_UPGRADE_VIEW && shipUpgradeView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_FLEET)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.FLEETVIEW);
+        return;
+      }
+      shipUpgradeView.handleAction(arg0);
+    }
     if (gameState == GameState.FLEETVIEW && fleetView != null) {
       // Fleet view
       if (arg0.getActionCommand()
@@ -3310,6 +3339,12 @@ public class Game implements ActionListener {
         Fleet fleet = fleetView.getFleet();
         fleetView = null;
         changeGameState(GameState.STARMAP, fleet);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_UPGRADE)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.SHIP_UPGRADE_VIEW);
         return;
       }
       if (arg0.getActionCommand().equals(

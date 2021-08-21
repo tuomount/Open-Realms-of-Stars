@@ -30,6 +30,22 @@ import org.openRealmOfStars.utilities.IOUtilities;
 public class ShipHull {
 
   /**
+   * Minimum upgrade value for small hull.
+   */
+  public static final int MIN_UPGRADE_SMALL = 2;
+  /**
+   * Minimum upgrade value for medium hull.
+   */
+  public static final int MIN_UPGRADE_MEDIUM = 4;
+  /**
+   * Minimum upgrade value for large hull.
+   */
+  public static final int MIN_UPGRADE_LARGE = 8;
+  /**
+   * Minimum upgrade value for huge hull.
+   */
+  public static final int MIN_UPGRADE_HUGE = 12;
+  /**
    * Unique index for factories and saving the game
    */
   private int index;

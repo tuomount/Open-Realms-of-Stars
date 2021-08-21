@@ -12,6 +12,8 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
@@ -910,6 +912,47 @@ public final class StarMapUtilities {
     return limit;
   }
 
+  /**
+   * Upgrade single ship. This will check if upgrade is possible due
+   * same hull type and that planet has enough resources to do upgrade.
+   * @param ship Ship to upgrade
+   * @param stat Which ship stat to upgrade
+   * @param info Realm which is doing the upgrade
+   * @param planet Planet where upgrade is going to be done.
+   */
+  public static void upgradeShip(final Ship ship, final ShipStat stat,
+      final PlayerInfo info, final Planet planet) {
+    if (ship != null && stat != null
+        && ship.getHull().getName().equals(
+            stat.getDesign().getHull().getName())
+        && ship.getColonist() == 0 && ship.getMetal() == 0) {
+      int cost = ship.getUpgradeCost(stat.getDesign());
+      int metalCost = ship.getUpgradeMetalCost(stat.getDesign());
+      if (metalCost > planet.getMetal()
+          + planet.getAmountMetalInGround()) {
+        metalCost = 0;
+        cost = 0;
+      }
+      if (metalCost > planet.getMetal()) {
+        int left = planet.getMetal() - metalCost;
+        metalCost = planet.getMetal();
+        cost = cost + left * 2;
+      }
+      if (cost > 0 && cost <= info.getTotalCredits()) {
+        planet.setMetal(planet.getMetal() - metalCost);
+        info.setTotalCredits(info.getTotalCredits() - cost);
+        ShipStat oldStat = info.getShipStatByName(ship.getName());
+        if (oldStat != null) {
+          oldStat.setNumberOfInUse(oldStat.getNumberOfInUse() - 1);
+          stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+          stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+          ship.setName(stat.getDesign().getName());
+          ship.upgradeComponents(stat.getDesign().getComponentList());
+          ship.fixShip(true);
+        }
+      }
+    }
+  }
   /**
    * Search string from a list. Returns true if list contains searched
    * string.

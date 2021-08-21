@@ -635,7 +635,7 @@ private int getRemainingEnergy(final int index) {
   }
 
   /**
-   * Get current energy consumpition based on component priority
+   * Get current energy consumption based on component priority
    * order. This never cannot be more than total energy.
    * @return Total energy consumption.
    */
@@ -1451,6 +1451,18 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Upgrade all ship components.
+   * @param newComponents Array of new components.
+   */
+  public void upgradeComponents(final ShipComponent[] newComponents) {
+    components = new ArrayList<>();
+    hullPoints = new int[newComponents.length];
+    for (int i = 0; i < newComponents.length; i++) {
+      components.add(newComponents[i]);
+      hullPoints[i] = getHull().getSlotHull();
+    }
+  }
+  /**
    * Get ship's hull
    * @return Ship hull
    */
@@ -2158,4 +2170,51 @@ private int increaseHitChanceByComponent() {
   public double getFleetCapacity() {
     return getHull().getFleetCapacity();
   }
+
+  /**
+   * Calculate metal upgrade cost for new design.
+   * @param design New design
+   * @return Metal cost
+   */
+  public int getUpgradeMetalCost(final ShipDesign design) {
+    if (!design.getHull().getName().equals(getHull().getName())) {
+      return 0;
+    }
+    int cost = design.getMetalCost() - getMetalCost();
+    if (cost < 0) {
+      cost = 0;
+    }
+    for (int i = 0; i < getNumberOfComponents(); i++) {
+      ShipComponent origComp = getComponent(i);
+      ShipComponent newComp = design.getComponent(i);
+      if (origComp != newComp) {
+        cost++;
+      }
+    }
+    return cost;
+  }
+
+  /**
+   * Calculate production upgrade cost for new design.
+   * @param design New design
+   * @return Metal cost
+   */
+  public int getUpgradeCost(final ShipDesign design) {
+    if (!design.getHull().getName().equals(getHull().getName())) {
+      return 0;
+    }
+    int cost = design.getCost() - getProdCost();
+    if (cost < 0) {
+      cost = 0;
+    }
+    for (int i = 0; i < getNumberOfComponents(); i++) {
+      ShipComponent origComp = getComponent(i);
+      ShipComponent newComp = design.getComponent(i);
+      if (origComp != newComp) {
+        cost = cost + 3;
+      }
+    }
+    return cost;
+  }
+
 }

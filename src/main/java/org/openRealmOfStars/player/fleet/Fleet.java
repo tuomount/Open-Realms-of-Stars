@@ -12,11 +12,13 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.repository.RouteRepository;
@@ -1160,4 +1162,46 @@ public class Fleet {
     }
   }
 
+  /**
+   * AI checks all ships in fleet if those could be upgrade.
+   * Upgrade is done only for military ships.
+   * @param info PlayerInfo which is upgrading.
+   * @param planet Planet where to upgrade.
+   */
+  public void aiUpgradeShips(final PlayerInfo info, final Planet planet) {
+    for (Ship ship : ships) {
+      if (ship.getTheoreticalMilitaryPower() == 0) {
+        continue;
+      }
+      ShipStat stat = info.getBestUpgrade(ship);
+      if (stat != null) {
+        int metalUpgradeCost = ship.getUpgradeMetalCost(stat.getDesign());
+        int prodUpgradeCost = ship.getUpgradeCost(stat.getDesign());
+        if (metalUpgradeCost > planet.getMetal()
+            + planet.getAmountMetalInGround()) {
+          continue;
+        }
+        if (metalUpgradeCost > planet.getMetal()) {
+          int left = planet.getMetal() - metalUpgradeCost;
+          metalUpgradeCost = planet.getMetal();
+          prodUpgradeCost = prodUpgradeCost + left * 2;
+        }
+        int minUpgrade = ShipHull.MIN_UPGRADE_SMALL;
+        if (ship.getHull().getSize() == ShipSize.MEDIUM) {
+          minUpgrade = ShipHull.MIN_UPGRADE_MEDIUM;
+        }
+        if (ship.getHull().getSize() == ShipSize.LARGE) {
+          minUpgrade = ShipHull.MIN_UPGRADE_LARGE;
+        }
+        if (ship.getHull().getSize() == ShipSize.HUGE) {
+          minUpgrade = ShipHull.MIN_UPGRADE_HUGE;
+        }
+        if (prodUpgradeCost > 0
+            && stat.getDesign().getTotalMilitaryPower()
+            >= ship.getTheoreticalMilitaryPower() + minUpgrade) {
+          StarMapUtilities.upgradeShip(ship, stat, info, planet);
+        }
+      }
+    }
+  }
 }

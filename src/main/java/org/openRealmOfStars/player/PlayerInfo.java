@@ -23,6 +23,7 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.MessageList;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -1627,6 +1628,32 @@ public class PlayerInfo {
     if (shipStatList.size() > 0 && index >= 0 && index < shipStatList.size()) {
       shipStatList.remove(index);
     }
+  }
+
+  /**
+   * Get Best upgrade for military ship
+   * @param ship Ship which to upgrade
+   * @return Upgraded ship stat or null
+   */
+  public ShipStat getBestUpgrade(final Ship ship) {
+    ShipStat bestStat = null;
+    int bestValue = 0;
+    if (ship != null && ship.getTheoreticalMilitaryPower() > 0) {
+      for (ShipStat stat : getShipStatList()) {
+        if (stat.getDesign().getHull().getName().equals(
+            ship.getHull().getName())
+            && !ship.getName().equals(stat.getDesign().getName())
+            && stat.getDesign().getHull().getMaxSlot()
+            == ship.getHull().getMaxSlot()) {
+          int value = stat.getDesign().getTotalMilitaryPower();
+          if (value > bestValue) {
+            bestValue = value;
+            bestStat = stat;
+          }
+        }
+      }
+    }
+    return bestStat;
   }
 
   /**

@@ -182,6 +182,11 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
   private SpaceButton exploreBtn;
 
   /**
+   * Button to view upgrade fleet;
+   */
+  private SpaceButton upgradeBtn;
+
+  /**
    * Planet at north from fleet.
    */
   private Planet northPlanet;
@@ -382,6 +387,13 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     exploreBtn.setEnabled(interactive);
     eastPanel.add(exploreBtn);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    upgradeBtn = new SpaceButton(" Upgrade ships ",
+        GameCommands.COMMAND_VIEW_UPGRADE);
+    upgradeBtn.addActionListener(listener);
+    upgradeBtn.setAlignmentX(CENTER_ALIGNMENT);
+    upgradeBtn.setEnabled(interactive);
+    eastPanel.add(upgradeBtn);
+    eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
 
     label = new SpaceLabel("Ships in fleet");
     label.setAlignmentX(CENTER_ALIGNMENT);
@@ -578,6 +590,11 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       }
     }
     if (interactiveView) {
+      if (planet != null && planet.getPlanetPlayerInfo() == info) {
+        upgradeBtn.setEnabled(true);
+      } else {
+        upgradeBtn.setEnabled(false);
+      }
       exploreBtn.setEnabled(true);
       Mission mission = info.getMissions().getMissionForFleet(fleet.getName());
       if (mission == null) {
@@ -587,6 +604,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       }
     } else {
       exploreBtn.setEnabled(false);
+      upgradeBtn.setEnabled(false);
     }
     shipsInFleet.setListData(fleet.getShips());
     updateOtherFleet();

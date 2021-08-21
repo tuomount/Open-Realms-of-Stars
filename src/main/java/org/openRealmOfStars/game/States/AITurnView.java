@@ -787,7 +787,7 @@ public class AITurnView extends BlackPanel {
    * @param coordinate Coordinate where to start looking
    * @return Closest coordinate or null
    */
-  private Coordinate findClosestCoordinate(
+  private static Coordinate findClosestCoordinate(
       final ArrayList<Coordinate> coordinates, final Coordinate coordinate) {
     double bestDistance = 9999;
     Coordinate bestCoord = null;
@@ -805,8 +805,8 @@ public class AITurnView extends BlackPanel {
    * @param coordinates Deep space anchor coordinates in list
    * @param info Realm looking for DSA
    */
-  private void findBestDeployStarbase(final ArrayList<Coordinate> coordinates,
-      final PlayerInfo info) {
+  private static void findBestDeployStarbase(
+      final ArrayList<Coordinate> coordinates, final PlayerInfo info) {
     Coordinate coord = findClosestCoordinate(coordinates,
         info.getCenterRealm());
     if (coord != null) {
@@ -935,7 +935,7 @@ public class AITurnView extends BlackPanel {
    * @param targetIndex Target realm's index
    * @return chance of diplomacy 0 - 100.
    */
-  private int getChanceForDiplomacy(final boolean nothingToTrade,
+  private static int getChanceForDiplomacy(final boolean nothingToTrade,
       final PlayerInfo info, final int targetIndex) {
     int result = 0;
     Attitude attitude = info.getAiAttitude();
@@ -1093,7 +1093,7 @@ public class AITurnView extends BlackPanel {
    * @param colonyMissions Array list of possible colony missions.
    * @param info Realm which is selecting.
    */
-  private void findBestColonyMission(final StarMap map,
+  private static void findBestColonyMission(final StarMap map,
       final ArrayList<Mission> colonyMissions, final PlayerInfo info) {
     int bestScore = 0;
     Mission bestMission = null;
@@ -1136,7 +1136,7 @@ public class AITurnView extends BlackPanel {
    * @param coordinate Coordinate where to calculate distance
    * @return Closest planet or null if list was empty.
    */
-  private Planet findClosestPlanet(
+  private static Planet findClosestPlanet(
       final ArrayList<Planet> planets, final Coordinate coordinate) {
     double bestDistance = 9999;
     Planet bestPlanet = null;
@@ -1461,6 +1461,11 @@ public class AITurnView extends BlackPanel {
           fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
               fleet.getY(), Route.ROUTE_DEFEND));
         }
+        Planet planet = game.getStarMap().getPlanetByCoordinate(
+            fleet.getCoordinate().getX(), fleet.getCoordinate().getY());
+        if (planet != null && planet.getPlanetPlayerInfo() == info) {
+          fleet.aiUpgradeShips(info, planet);
+        }
         Mission mission = info.getMissions().getMission(MissionType.COLONIZE,
             MissionPhase.PLANNING);
         Mission fleetMission = info.getMissions().getMissionForFleet(
@@ -1541,7 +1546,7 @@ public class AITurnView extends BlackPanel {
    * @param type Tech Type
    * @param level Tech level
    */
-  private void addRandomPirateTech(final PlayerInfo pirates,
+  private static void addRandomPirateTech(final PlayerInfo pirates,
       final TechType type, final int level) {
     TechList techList = pirates.getTechList();
     Tech tech = TechFactory.createRandomTech(type, level,
@@ -1557,7 +1562,7 @@ public class AITurnView extends BlackPanel {
    * @param difficulty Pirate difficulty level
    * @param type Tech Type which to upgrade
    */
-  private void updateSinglePirateTech(final PlayerInfo pirates,
+  private static void updateSinglePirateTech(final PlayerInfo pirates,
       final PirateDifficultLevel difficulty, final TechType type) {
     int level = pirates.getTechList().getTechLevel(type);
     if (pirates.getTechList().isUpgradeable(type)) {
@@ -1677,7 +1682,8 @@ public class AITurnView extends BlackPanel {
    * @param realms All the realms
    * @return Bonus for voting decision.
    */
-  private int getPromiseBonus(final PlayerInfo voter, final PlayerList realms) {
+  private static int getPromiseBonus(final PlayerInfo voter,
+      final PlayerList realms) {
     int result = 0;
     int voterIndex = realms.getIndex(voter);
     for (int i = 0; i < realms.getCurrentMaxRealms(); i++) {
@@ -1806,7 +1812,7 @@ public class AITurnView extends BlackPanel {
    * @param vote Actual vote
    * @param realms All the realms
    */
-  private void handlePromises(final Vote vote, final PlayerList realms) {
+  private static void handlePromises(final Vote vote, final PlayerList realms) {
     for (int i = 0; i < realms.getCurrentMaxRealms(); i++) {
       PlayerInfo info = realms.getPlayerInfoByIndex(i);
       for (int j = 0; j < realms.getCurrentMaxRealms(); j++) {

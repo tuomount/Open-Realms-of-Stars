@@ -1642,7 +1642,9 @@ public class PlayerInfo {
       for (ShipStat stat : getShipStatList()) {
         if (stat.getDesign().getHull().getName().equals(
             ship.getHull().getName())
-            && !ship.getName().equals(stat.getDesign().getName())) {
+            && !ship.getName().equals(stat.getDesign().getName())
+            && stat.getDesign().getHull().getMaxSlot()
+            == ship.getHull().getMaxSlot()) {
           int value = stat.getDesign().getTotalMilitaryPower();
           if (value > bestValue) {
             bestValue = value;

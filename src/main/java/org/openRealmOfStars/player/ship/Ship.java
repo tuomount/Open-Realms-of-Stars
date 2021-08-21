@@ -635,7 +635,7 @@ private int getRemainingEnergy(final int index) {
   }
 
   /**
-   * Get current energy consumpition based on component priority
+   * Get current energy consumption based on component priority
    * order. This never cannot be more than total energy.
    * @return Total energy consumption.
    */
@@ -1456,8 +1456,10 @@ private int increaseHitChanceByComponent() {
    */
   public void upgradeComponents(final ShipComponent[] newComponents) {
     components = new ArrayList<>();
-    for (ShipComponent component : newComponents) {
-      components.add(component);
+    hullPoints = new int[newComponents.length];
+    for (int i = 0; i < newComponents.length; i++) {
+      components.add(newComponents[i]);
+      hullPoints[i] = getHull().getSlotHull();
     }
   }
   /**

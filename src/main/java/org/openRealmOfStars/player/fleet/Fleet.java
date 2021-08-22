@@ -1200,6 +1200,7 @@ public class Fleet {
             && stat.getDesign().getTotalMilitaryPower()
             >= ship.getTheoreticalMilitaryPower() + minUpgrade) {
           StarMapUtilities.upgradeShip(ship, stat, info, planet);
+          setMovesLeft(0);
         }
       }
     }

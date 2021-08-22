@@ -407,6 +407,7 @@ public class ShipUpgradeView extends BlackPanel
         shipListInFleet.setListData(fleet.getShips());
         updatePanels();
         SoundPlayer.playSound(SoundPlayer.REPAIR);
+        fleet.setMovesLeft(0);
         SoundPlayer.playMenuSound();
       } else {
         SoundPlayer.playMenuDisabled();

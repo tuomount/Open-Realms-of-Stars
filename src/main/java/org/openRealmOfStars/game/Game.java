@@ -1970,7 +1970,7 @@ public class Game implements ActionListener {
       info.setGovernment(GovernmentType.SPACE_PIRATES);
       info.setEmpireName("Space pirates");
       int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
-      info.setColor(PlayerColor.getByIndex(colorIndex));
+      info.setColor(randomListOfColors.get(colorIndex));
       players.addPlayer(info);
     }
     players.calculateInitialDiplomacyBonuses();

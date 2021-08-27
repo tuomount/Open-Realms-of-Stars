@@ -199,6 +199,7 @@ public class SpaceAnomalyTest {
     Mockito.when(fleet.getCoordinate()).thenReturn(coord);
     Ship[] ships = new Ship[0];
     Mockito.when(fleet.getShips()).thenReturn(ships);
+    Mockito.when(fleet.getCombatOrder()).thenReturn(ships);
     Tile tile = Mockito.mock(Tile.class);
     Mockito.when(tile.getName()).thenReturn(TileNames.SPACE_ANOMALY_LAIR);
     StarMap map = Mockito.mock(StarMap.class);
@@ -230,6 +231,7 @@ public class SpaceAnomalyTest {
     Mockito.when(fleet.getCoordinate()).thenReturn(coord);
     Ship[] ships = new Ship[0];
     Mockito.when(fleet.getShips()).thenReturn(ships);
+    Mockito.when(fleet.getCombatOrder()).thenReturn(ships);
     Tile tile = Mockito.mock(Tile.class);
     Mockito.when(tile.getName()).thenReturn(TileNames.SPACE_ANOMALY_PIRATE);
     StarMap map = Mockito.mock(StarMap.class);

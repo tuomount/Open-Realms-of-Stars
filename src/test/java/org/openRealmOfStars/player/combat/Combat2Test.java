@@ -88,7 +88,9 @@ public class Combat2Test {
     doNothing().when(defenderShipStat).setNumberOfCombats(anyInt());
     doNothing().when(interruptShipStat).setNumberOfCombats(anyInt());
     when(attackerFleet.getShips()).thenReturn(attackerShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
     when(attackerFleet.getRoute()).thenReturn(attackerFleetRoute);
     when(defenderFleet.getRoute()).thenReturn(dependerFleetRoute);
     when(defenderFleet.getCoordinate()).thenReturn(defenderCoord);
@@ -97,8 +99,12 @@ public class Combat2Test {
     when(defenderShipStat.getNumberOfCombats()).thenReturn(1);
     when(interruptShipStat.getNumberOfCombats()).thenReturn(1);
     when(attackerShip.getName()).thenReturn("attacker");
+    when(attackerShip.getInitiative()).thenReturn(3);
+    when(attackerShip.getTotalMilitaryPower()).thenReturn(10);
     when(defenderShip.getName()).thenReturn("depender");
     when(defenderShip.getName()).thenReturn("depender");
+    when(defenderShip.getInitiative()).thenReturn(3);
+    when(defenderShip.getTotalMilitaryPower()).thenReturn(10);
     when(interruptShip.getName()).thenReturn("interrupt");
     when(attackerInfo.getShipStatByName(eq("attacker"))).thenReturn(attackerShipStat);
     when(dependerInfo.getShipStatByName(eq("depender"))).thenReturn(defenderShipStat);
@@ -124,6 +130,8 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip, interruptShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
 
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
     assertNotNull(combatTestItem);
@@ -153,6 +161,8 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip, interruptShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
 
     when(shooterCombatShip.getShip()).thenReturn(shooterShip);
     when(shooterShip.getComponent(anyInt())).thenReturn(shooterComponent);
@@ -179,6 +189,8 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip, interruptShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
 
     CombatShip shooterCombatShip = mock(CombatShip.class);
     CombatShip targetCombatShip = mock(CombatShip.class);
@@ -209,6 +221,8 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip, interruptShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
 
     CombatShip shooterCombatShip = mock(CombatShip.class);
     CombatShip targetCombatShip = mock(CombatShip.class);
@@ -241,6 +255,8 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip, interruptShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
 
     CombatShip shooterCombatShip = mock(CombatShip.class);
     CombatShip targetCombatShip = mock(CombatShip.class);
@@ -271,6 +287,9 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip, interruptShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
+
     ShipComponent shooterComponent = mock(ShipComponent.class);
     CombatShip currentCombatShip;
     when(attackerShip.getComponent(anyInt())).thenReturn(shooterComponent);
@@ -298,6 +317,9 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip, interruptShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
+
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
 
     when(defenderShip.getTotalMilitaryPower()).thenReturn(4);
@@ -322,6 +344,8 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip, interruptShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
 
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
 
@@ -344,6 +368,8 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip, interruptShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
     CombatShip currentCombatShip = combatTestItem.getCurrentShip();
     currentCombatShip.setX(5);
@@ -365,7 +391,8 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip, interruptShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
-
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
 
     CombatShip currentCombatShip = combatTestItem.getCurrentShip();
@@ -390,6 +417,9 @@ public class Combat2Test {
     defenderShips = new Ship[] {};
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
+
     when(attackerShip.getTotalMilitaryPower()).thenReturn(5);
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
     assertTrue(combatTestItem.isCombatOver());
@@ -406,6 +436,9 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
+
     when(attackerShip.getTotalMilitaryPower()).thenReturn(0);
     when(defenderShip.getTotalMilitaryPower()).thenReturn(0);
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
@@ -422,6 +455,9 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
+
     when(attackerShip.getTotalMilitaryPower()).thenReturn(1);
     when(defenderShip.getTotalMilitaryPower()).thenReturn(1);
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
@@ -438,6 +474,8 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip, interruptShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
 
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
     CombatShip attackerCombatShip = combatTestItem.getCurrentShip();
@@ -469,6 +507,8 @@ public class Combat2Test {
     defenderShips = new Ship[] {};
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
     Coordinate dependerFleetCoordinate = mock(Coordinate.class);
     when(defenderFleet.getCoordinate()).thenReturn(dependerFleetCoordinate);
@@ -496,6 +536,8 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
     Coordinate dependerFleetCoordinate = mock(Coordinate.class);
     when(defenderFleet.getCoordinate()).thenReturn(dependerFleetCoordinate);
@@ -524,6 +566,8 @@ public class Combat2Test {
     defenderShips = new Ship[] { defenderShip };
     when(attackerFleet.getShips()).thenReturn(attackerShips);
     when(defenderFleet.getShips()).thenReturn(defenderShips);
+    when(attackerFleet.getCombatOrder()).thenReturn(attackerShips);
+    when(defenderFleet.getCombatOrder()).thenReturn(defenderShips);
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
     Coordinate dependerFleetCoordinate = mock(Coordinate.class);
     when(defenderFleet.getCoordinate()).thenReturn(dependerFleetCoordinate);

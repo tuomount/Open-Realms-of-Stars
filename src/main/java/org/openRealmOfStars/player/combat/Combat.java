@@ -405,7 +405,7 @@ public class Combat {
   private void addCombatShipList(final Fleet fleet,
           final PlayerInfo playerInfo, final CombatPositionList positionList,
           final boolean flipY) {
-      Ship[] ships = fleet.getShips();
+      Ship[] ships = fleet.getCombatOrder();
       int index = 0;
       for (Ship ship : ships) {
         ShipStat stat = playerInfo.getShipStatByName(ship.getName());

@@ -223,6 +223,61 @@ public class Fleet {
   }
 
   /**
+   * Get combat order of ships.
+   * First ones are the fastest military ships. Then biggest military ships
+   * and finally non military ships.
+   * @return array of ship.
+   */
+  public Ship[] getCombatOrder() {
+    ArrayList<Ship> combatOrder = new ArrayList<>();
+    ArrayList<Ship> available = new ArrayList<>();
+    for (Ship ship : ships) {
+      available.add(ship);
+    }
+    do {
+      Ship bestShip = null;
+      for (Ship ship : available) {
+        if (bestShip == null) {
+          bestShip = ship;
+          continue;
+        }
+        if (bestShip.getTotalMilitaryPower() > 0
+            && ship.getTotalMilitaryPower() == 0) {
+          continue;
+        }
+        if (bestShip.getTotalMilitaryPower() > 0
+            && ship.getTotalMilitaryPower() > 0) {
+          if (bestShip.getInitiative() == ship.getInitiative()
+              && ship.getTotalMilitaryPower()
+              > bestShip.getTotalMilitaryPower()) {
+            bestShip = ship;
+            continue;
+          }
+          if (bestShip.getInitiative() < ship.getInitiative()) {
+            bestShip = ship;
+            continue;
+          }
+        }
+        if (bestShip.getTotalMilitaryPower() == 0
+            && ship.getTotalMilitaryPower() > 0) {
+          bestShip = ship;
+          continue;
+        }
+        if (bestShip.getInitiative() < ship.getInitiative()) {
+          bestShip = ship;
+          continue;
+        }
+      }
+      if (bestShip != null) {
+        available.remove(bestShip);
+        combatOrder.add(bestShip);
+      } else {
+        break;
+      }
+    } while (available.size() > 0);
+    return combatOrder.toArray(new Ship[combatOrder.size()]);
+  }
+  /**
    * Get fleet's X coordinate in star map
    * @return X coordinate
    */

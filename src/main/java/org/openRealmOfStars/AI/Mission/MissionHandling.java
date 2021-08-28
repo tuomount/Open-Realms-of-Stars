@@ -1188,7 +1188,19 @@ public final class MissionHandling {
           mission.setPhase(MissionPhase.EXECUTING);
         } else if (mission.getPhase() == MissionPhase.TREKKING
             && fleet.getRoute() == null) {
-          makeReroute(game, fleet, info, mission);
+          Coordinate targetCoord = new Coordinate(mission.getX(),
+              mission.getY());
+          if (fleet.getCoordinate().calculateDistance(targetCoord) < 2) {
+            AStarSearch search = new AStarSearch(game.getStarMap(),
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(),
+                false);
+            search.doSearch();
+            search.doRoute();
+            fleet.setaStarSearch(search);
+            makeRegularMoves(game, fleet, info);
+          } else {
+            makeReroute(game, fleet, info, mission);
+          }
         }
       }
       if (mission.getPhase() == MissionPhase.EXECUTING

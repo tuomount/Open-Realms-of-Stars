@@ -435,12 +435,13 @@ public class ShipUpgradeView extends BlackPanel
       for (ShipStat stat : player.getShipStatList()) {
         if (stat.getDesign().getHull().getName().equals(
             ship.getHull().getName())
-            && !ship.getName().equals(stat.getDesign().getName())) {
+            && !ship.getName().equals(stat.getDesign().getName())
+            && !stat.isObsolete()) {
           stats.add(stat);
         }
       }
       ShipStat stat = player.getBestUpgrade(ship);
-      if (stat != null) {
+      if (stat != null && !stat.isObsolete()) {
         stats.remove(stat);
         stats.add(0, stat);
       }

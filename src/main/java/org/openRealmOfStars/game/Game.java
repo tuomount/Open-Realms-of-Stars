@@ -964,8 +964,10 @@ public class Game implements ActionListener {
       String text = "<html>Now playing: " + info.getName() + " by "
           + info.getAuthor() + "</html>";
       songText.setText(text);
-      layeredPane.setLayer(songText, JLayeredPane.POPUP_LAYER);
-      layeredPane.add(songText);
+      if (MusicPlayer.isMusicEnabled()) {
+        layeredPane.setLayer(songText, JLayeredPane.POPUP_LAYER);
+        layeredPane.add(songText);
+      }
       if (MusicPlayer.isTextDisplayedEnough()) {
         songText.setVisible(false);
       }

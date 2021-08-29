@@ -404,54 +404,16 @@ public class StarMap {
     aiFleet = null;
     int loop = 0;
     // Create starting systems
-    if (config.getStartingPosition() == GalaxyConfig.START_POSITION_RANDOM) {
-      for (int i = 0; i < config.getMaxPlayers(); i++) {
-        while (loop < MAX_LOOPS) {
-          int sx = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
-              maxX - SOLAR_SYSTEM_WIDTH);
-          int sy = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
-              maxY - SOLAR_SYSTEM_WIDTH);
-          int planets = DiceGenerator.getRandom(3, 5);
-          int gasGiants = DiceGenerator.getRandom(2);
-          if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
-              config.getSolarSystemDistance()) == 0) {
-            solarSystem = createSolarSystem(solarSystem, sx, sy, planets,
-                gasGiants, i, config);
-            break;
-          }
-          loop++;
-        }
+    try {
+      if (config.getStartingPosition() == GalaxyConfig.START_POSITION_RANDOM) {
+        solarSystem = createRandomStartSystems(config, solarSystem);
       }
-    }
-    if (config.getStartingPosition() == GalaxyConfig.ANCIENTS_IN_MIDDLE) {
-      int oneThird = maxX / 3;
-      for (int i = 0; i < config.getMaxPlayers(); i++) {
-        while (loop < MAX_LOOPS) {
-          boolean ancient = config.getPlayerAncientRealm(i);
-          int sx = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
-              maxX - SOLAR_SYSTEM_WIDTH);
-          int sy = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
-              maxY - SOLAR_SYSTEM_WIDTH);
-          if (ancient) {
-            sx = DiceGenerator.getRandom(oneThird, 2 * oneThird);
-            sy = DiceGenerator.getRandom(oneThird, 2 * oneThird);
-          }
-          boolean middle = false;
-          if (sx >= oneThird && sx <= 2 * oneThird
-              && sy >= oneThird && sy <= 2 * oneThird) {
-            middle = true;
-          }
-          int planets = DiceGenerator.getRandom(3, 5);
-          int gasGiants = DiceGenerator.getRandom(2);
-          if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
-              config.getSolarSystemDistance()) == 0 && middle == ancient) {
-            solarSystem = createSolarSystem(solarSystem, sx, sy, planets,
-                gasGiants, i, config);
-            break;
-          }
-          loop++;
-        }
+      if (config.getStartingPosition() == GalaxyConfig.ANCIENTS_IN_MIDDLE) {
+        solarSystem = createAncientsInMiddleStart(config, solarSystem);
       }
+    } catch (IllegalStateException illegalState) {
+      ErrorLogger.log(illegalState);
+      loop = MAX_LOOPS;
     }
     if (config.getStartingPosition() == GalaxyConfig.START_POSITION_BORDER
         || loop == MAX_LOOPS) {
@@ -679,6 +641,95 @@ public class StarMap {
   }
 
   /**
+   * Create random start systems
+   * @param config GalaxyConfig
+   * @param solarSystemIn Array of solar systems.
+   * @return array of solar systems.
+   * @throws IllegalStateException if systems cannot be created.
+   */
+  private int[][] createRandomStartSystems(final GalaxyConfig config,
+      final int[][] solarSystemIn) throws IllegalStateException {
+    int[][] solarSystem = solarSystemIn;
+    int loop = 0;
+    int realms = 0;
+    for (int i = 0; i < config.getMaxPlayers(); i++) {
+      while (loop < MAX_LOOPS) {
+        int sx = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
+            maxX - SOLAR_SYSTEM_WIDTH);
+        int sy = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
+            maxY - SOLAR_SYSTEM_WIDTH);
+        int planets = DiceGenerator.getRandom(3, 5);
+        int gasGiants = DiceGenerator.getRandom(2);
+        if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
+            config.getSolarSystemDistance()) == 0) {
+          solarSystem = createSolarSystem(solarSystem, sx, sy, planets,
+              gasGiants, i, config);
+          break;
+        }
+        loop++;
+      }
+      if (loop < MAX_LOOPS) {
+        realms++;
+      }
+    }
+    if (loop >= MAX_LOOPS) {
+      throw new IllegalStateException("Random space was too crowded. "
+          + realms + " / " + config.getMaxPlayers() + " were fit on space.");
+    }
+    return solarSystem;
+  }
+
+  /**
+   * Create random start systems so that ancients are in middle.
+   * @param config GalaxyConfig
+   * @param solarSystemIn Array of solar systems.
+   * @return array of solar systems.
+   * @throws IllegalStateException of system cannot be created.
+   */
+  private int[][] createAncientsInMiddleStart(final GalaxyConfig config,
+      final int[][] solarSystemIn) throws IllegalStateException {
+    int[][] solarSystem = solarSystemIn;
+    int loop = 0;
+    int oneThird = maxX / 3;
+    int realms = 0;
+    for (int i = 0; i < config.getMaxPlayers(); i++) {
+      while (loop < MAX_LOOPS) {
+        boolean ancient = config.getPlayerAncientRealm(i);
+        int sx = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
+            maxX - SOLAR_SYSTEM_WIDTH);
+        int sy = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
+            maxY - SOLAR_SYSTEM_WIDTH);
+        if (ancient) {
+          sx = DiceGenerator.getRandom(oneThird, 2 * oneThird);
+          sy = DiceGenerator.getRandom(oneThird, 2 * oneThird);
+        }
+        boolean middle = false;
+        if (sx >= oneThird && sx <= 2 * oneThird
+            && sy >= oneThird && sy <= 2 * oneThird) {
+          middle = true;
+        }
+        int planets = DiceGenerator.getRandom(3, 5);
+        int gasGiants = DiceGenerator.getRandom(2);
+        if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
+            config.getSolarSystemDistance()) == 0 && middle == ancient) {
+          solarSystem = createSolarSystem(solarSystem, sx, sy, planets,
+              gasGiants, i, config);
+          break;
+        }
+        loop++;
+      }
+      if (loop < MAX_LOOPS) {
+        realms++;
+      }
+    }
+    if (loop >= MAX_LOOPS) {
+      throw new IllegalStateException(
+          "Ancient in middle space was too crowded. "
+          + realms + " / " + config.getMaxPlayers() + " were fit on space.");
+    }
+    return solarSystem;
+  }
+  /**
    * Adds one pirate ship into coordinate
    * @param x X Coordinate
    * @param y Y Coordinate
@@ -810,6 +861,25 @@ public class StarMap {
     int planets = DiceGenerator.getRandom(3, 5);
     int gasGiants = DiceGenerator.getRandom(2);
     int[][] mapOfSolars = solarSystem;
+    if (config.getSizeX() > 50) {
+      int length = maxX / 2 - 10;
+      int angle = DiceGenerator.getRandom(359);
+      for (int i = 0; i < config.getMaxPlayers(); i++) {
+        double rad = Math.toRadians(angle);
+        sx = (int) (maxX / 2 + Math.cos(rad) * length);
+        sy = (int) (maxX / 2 + Math.sin(rad) * length);
+        planets = DiceGenerator.getRandom(3, 5);
+        gasGiants = DiceGenerator.getRandom(2);
+        mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
+            i, config);
+        angle = angle + 360 / config.getMaxPlayers();
+        if (angle > 359) {
+          angle = angle - 360;
+        }
+      }
+      return mapOfSolars;
+    }
+    // Old border star system is only used with Tiny map.
     if (config.getMaxPlayers() == 2) {
       // First player
       sx = maxX / 2;

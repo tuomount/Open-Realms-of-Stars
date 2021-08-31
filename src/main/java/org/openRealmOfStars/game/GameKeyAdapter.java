@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.ambient.BridgeCommandType;
+import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
@@ -90,6 +91,15 @@ public class GameKeyAdapter implements KeyEventDispatcher {
     if (arg0.getKeyCode() == KeyEvent.VK_F2
         && arg0.getID() == KeyEvent.KEY_PRESSED) {
       game.setBridgeCommand(BridgeCommandType.DARKEST);
+      return true;
+    }
+    if (arg0.getKeyCode() == KeyEvent.VK_F3
+        && arg0.getID() == KeyEvent.KEY_PRESSED) {
+      if (MusicPlayer.isMusicEnabled()) {
+        MusicPlayer.setMusicEnabled(false);
+      } else {
+        MusicPlayer.setMusicEnabled(true);
+      }
       return true;
     }
 

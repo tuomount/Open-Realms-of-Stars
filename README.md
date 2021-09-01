@@ -10,7 +10,7 @@ using Java. The game requires at minimum Swing and Java 7 to run.
 ### Explore the galaxy
 ![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/starmap.png)
 
-Move your fleet in a randomly generated galaxy. Encouter other species, and find new planets to colonize. Explore mysterious space anomalies.
+Move your fleet in a randomly generated galaxy. Encounter other species, and find new planets to colonize. Explore mysterious space anomalies.
 
 ### Manage your own planets
 ![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/planet.png)

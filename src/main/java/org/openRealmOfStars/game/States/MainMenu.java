@@ -54,8 +54,9 @@ public class MainMenu extends BlackPanel {
   /**
    * Constructor for main menu
    * @param listener ActionListener
+   * @param text Optional Title text, for showing planet with text
    */
-  public MainMenu(final ActionListener listener) {
+  public MainMenu(final ActionListener listener, final String text) {
     Planet planet = new Planet(new Coordinate(1, 1), "Main Menu Planet", 1,
         false);
     planet.setPlanetType(PlanetTypes.getRandomPlanetType(true, true, true));
@@ -71,10 +72,16 @@ public class MainMenu extends BlackPanel {
       }
     }
     // Background image
-    BigImagePanel imgBase = new BigImagePanel(planet, true,
-        "Open Realm of Stars");
+    String title = "Open Realm of Stars";
+    if (text != null) {
+      title = text;
+    }
+    BigImagePanel imgBase = new BigImagePanel(planet, true, title);
     if (orbital != null) {
       imgBase.setCustomOrbital(orbital);
+    }
+    if (text != null) {
+      imgBase.setTextInMiddle(true);
     }
     this.setLayout(new BorderLayout());
 
@@ -112,7 +119,9 @@ public class MainMenu extends BlackPanel {
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
     invisible.add(btn);
-    imgBase.add(invisible);
+    if (text == null) {
+      imgBase.add(invisible);
+    }
     this.add(imgBase, BorderLayout.CENTER);
 
   }

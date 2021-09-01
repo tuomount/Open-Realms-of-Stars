@@ -1384,10 +1384,19 @@ public class Game implements ActionListener {
    * Show main menu panel
    */
   public void showMainMenu() {
-    mainMenu = new MainMenu(this);
+    mainMenu = new MainMenu(this, null);
     this.updateDisplay(mainMenu);
   }
+
   /**
+   * Show main menu panel
+   * @param text Text should be shown on front of planet.
+   */
+  public void showMainMenu(final String text) {
+    mainMenu = new MainMenu(this, text);
+    this.updateDisplay(mainMenu);
+  }
+/**
    * Show Realm View
    * @param realm PlayerInfo whose realm is shown.
    */
@@ -1575,6 +1584,12 @@ public class Game implements ActionListener {
     case AITURN:
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showAITurnView();
+      break;
+    case TEXT_SCREEN_VIEW:
+      if (dataObject instanceof String) {
+        setBridgeCommand(BridgeCommandType.WARM_WHITE);
+        showMainMenu((String) dataObject);
+      }
       break;
     case MAIN_MENU:
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
@@ -2260,6 +2275,11 @@ public class Game implements ActionListener {
       System.out.println(printTechWiki());
     } else if (args.length > 0 && args[0].equals("--save-update")) {
       saveGameUpdate();
+    } else if (args.length > 1 && args[0].equals("--text")) {
+      System.out.println("Disabling the music...");
+      MusicPlayer.setMusicEnabled(false);
+      Game game = new Game(true);
+      game.changeGameState(GameState.TEXT_SCREEN_VIEW, args[1]);
     } else {
       if (args.length > 0 && args[0].equals("--no-music")) {
         System.out.println("Disabling the music...");
@@ -2770,7 +2790,8 @@ public class Game implements ActionListener {
       ambientLightsView.handleAction(arg0);
       return;
     }
-    if (gameState == GameState.MAIN_MENU) {
+    if (gameState == GameState.MAIN_MENU
+        || gameState == GameState.TEXT_SCREEN_VIEW) {
       // Main menu
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)
           && mainMenu != null) {
@@ -3402,6 +3423,7 @@ public class Game implements ActionListener {
         || gameState == GameState.OPTIONS_VIEW
         || gameState == GameState.SETUP_AMBIENT_LIGHTS
         || gameState == GameState.MAIN_MENU
+        || gameState == GameState.TEXT_SCREEN_VIEW
         || gameState == GameState.CREDITS) {
       actionPerformedMenus(arg0);
     }

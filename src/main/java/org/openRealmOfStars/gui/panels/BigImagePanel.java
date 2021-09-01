@@ -126,6 +126,11 @@ public class BigImagePanel extends JPanel {
    * Custom image for orbital.
    */
   private BufferedImage customOrbital;
+
+  /**
+   * Flag to reposition title text.
+   */
+  private boolean textInMiddle;
   /**
    * Create BigImagePanel
    * @param planet Planet to draw on background
@@ -335,6 +340,11 @@ public class BigImagePanel extends JPanel {
         }
         if (offsetY < 75) {
           offsetY = 75;
+        }
+        if (textInMiddle) {
+          offsetY = (this.getHeight() - backgroundImg.getHeight()) / 2
+              - GuiStatics.getTextHeight(GuiStatics.getFontCubellanBoldBig(),
+                  title) / 2;
         }
       }
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK,
@@ -762,6 +772,22 @@ public class BigImagePanel extends JPanel {
    */
   public void setCustomOrbital(final BufferedImage customOrbital) {
     this.customOrbital = customOrbital;
+  }
+
+  /**
+   * Is title text in middle of Y axis.
+   * @return True if in middle
+   */
+  public boolean isTextInMiddle() {
+    return textInMiddle;
+  }
+
+  /**
+   * Set title text in middle
+   * @param textInMiddle True to center title text
+   */
+  public void setTextInMiddle(final boolean textInMiddle) {
+    this.textInMiddle = textInMiddle;
   }
 
 }

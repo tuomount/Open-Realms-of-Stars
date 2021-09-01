@@ -156,5 +156,9 @@ public enum GameState {
   /**
    * View for ship upgrade.
    */
-  SHIP_UPGRADE_VIEW;
+  SHIP_UPGRADE_VIEW,
+  /**
+   * Text screen on top of planet screen
+   */
+  TEXT_SCREEN_VIEW;
 }

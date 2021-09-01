@@ -36,7 +36,7 @@ public class MainMenuTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void test() {
     ActionListener listener = Mockito.mock(ActionListener.class);
-    MainMenu menu = new MainMenu(listener);
+    MainMenu menu = new MainMenu(listener, null);
     assertNotEquals(null, menu);
   }
 

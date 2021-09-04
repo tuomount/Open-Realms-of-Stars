@@ -487,6 +487,37 @@ public enum GovernmentType {
   }
 
   /**
+   * Is goverment xenophoic or not=
+   * @return True or false
+   */
+  public boolean isXenophopic() {
+    switch (this) {
+      case CLAN:
+      case HORDE:
+      case MECHANICAL_HORDE:
+      case HIVEMIND:
+      case EMPIRE:
+      case FEUDALISM:
+      case KINGDOM:
+      case HEGEMONY:
+      case NEST: {
+        return true;
+      }
+      default:
+      case AI:
+      case COLLECTIVE:
+      case DEMOCRACY:
+      case ENTERPRISE:
+      case FEDERATION:
+      case GUILD:
+      case REPUBLIC:
+      case SPACE_PIRATES: {
+        return false;
+      }
+    }
+  }
+
+  /**
    * If Planet has governor then add one happiness. This happens
    * only if government has governor happiness.
    * @return Happiness bonus

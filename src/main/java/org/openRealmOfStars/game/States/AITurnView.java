@@ -2262,7 +2262,54 @@ public class AITurnView extends BlackPanel {
     }
     if (DiceGenerator.getRandom(1, 100) < chance) {
       // Assassination happens
-      if (realm.getRuler().hasPerk(Perk.WEALTHY)) {
+      if (realm.getRace() != leader.getRace()
+          && realm.getGovernment().isXenophopic()) {
+        Message msg = new Message(MessageType.LEADER,
+            realm.getEmpireName() + " is xenophopic and outsider is caught "
+                + "before entering the palace. "
+                + leader.getGender().getHisHer() + " belongs has found"
+                + " assasination equipments. Quick angry mod kills "
+                + leader.getCallName() + ". Assasination of "
+                + realm.getRuler().getCallName() + " fails.",
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setMatchByString("Index:" + realm.getLeaderIndex(
+            realm.getRuler()));
+        realm.getMsgList().addUpcomingMessage(msg);
+        // Assassin is going to die because of treason
+        leader.setJob(Job.DEAD);
+        msg = new Message(MessageType.LEADER,
+            leader.getCallName()
+                + " has died at age of " + leader.getAge()
+                + " due treason against " + realm.getEmpireName()
+                + "! ",
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+        realm.getMsgList().addUpcomingMessage(msg);
+        String reason;
+        switch (DiceGenerator.getRandom(2)) {
+          case 0:
+          default: {
+            reason = "execution because of treason";
+            break;
+          }
+          case 1: {
+              reason = "execution because attempted assasination of "
+                 + realm.getRuler().getTitle();
+            break;
+          }
+          case 2: {
+              reason = "execution because attempted assasination of "
+                 + realm.getRuler().getCallName();
+            break;
+          }
+        }
+        NewsData news = NewsFactory.makeLeaderDies(leader, realm,
+            reason);
+        game.getStarMap().getNewsCorpData().addNews(news);
+        game.getStarMap().getHistory().addEvent(
+            NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
+            news));
+      } else if (realm.getRuler().hasPerk(Perk.WEALTHY)) {
         Message msg = new Message(MessageType.LEADER,
             realm.getRuler().getCallName()
                 + " has paid massive amount of credits to make "
@@ -2307,7 +2354,6 @@ public class AITurnView extends BlackPanel {
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
             news));
-
       } else {
         realm.getRuler().setJob(Job.DEAD);
         // Leader gains experience for succeesfull assasination

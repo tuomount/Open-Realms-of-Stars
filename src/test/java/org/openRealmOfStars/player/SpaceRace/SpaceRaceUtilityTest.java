@@ -383,7 +383,7 @@ public class SpaceRaceUtilityTest {
         + "* Diplomacy bonus: -2\n"
         + "* War resistance: 70\n"
         + "* Rush: None\n"
-        + "* Start planet value: 100\n"
+        + "* Start planet value: 125\n"
         + "* Special: Population eats metal instead of food.";
     for (int i = 0; i <  SpaceRaceUtility.RACE_SELECTION.length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByName(
@@ -410,14 +410,14 @@ public class SpaceRaceUtilityTest {
         WorldType type = WorldType.values()[j];
         result = result + race.getWorldTypeBaseValue(type);
       }
-      System.out.println(race.toString() + " Rad: " + race.getMaxRad() + " Sum: " + result);
+      //System.out.println(race.toString() + " Rad: " + race.getMaxRad() + " Sum: " + result);
       switch (race) {
       default:
       case HUMAN:
         assertEquals(650, result);
         break;
       case MECHIONS:
-        assertEquals(650, result);
+        assertEquals(625, result);
         break;
       case SPORKS:
         assertEquals(625, result);
@@ -429,13 +429,13 @@ public class SpaceRaceUtilityTest {
         assertEquals(750, result);
         break;
       case MOTHOIDS:
-        assertEquals(625, result);
+        assertEquals(600, result);
         break;
       case TEUTHIDAES:
         assertEquals(650, result);
         break;
       case SCAURIANS:
-        assertEquals(675, result);
+        assertEquals(625, result);
         break;
       case HOMARIANS:
         assertEquals(700, result);
@@ -447,7 +447,7 @@ public class SpaceRaceUtilityTest {
         assertEquals(650, result);
         break;
       case LITHORIANS:
-        assertEquals(650, result);
+        assertEquals(625, result);
         break;
       }
       //System.out.println(race.getName() + ": " + result + "(" + race.getMaxRad()+ ")");

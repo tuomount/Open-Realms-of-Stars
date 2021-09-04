@@ -2146,7 +2146,7 @@ public class PlayerInfo {
    * This will tell how much of population world type can
    * hold.
    * @param worldType World Type
-   * @return Base value between 50 - 150 %.
+   * @return Base value between 25 - 150 %.
    */
   public int getWorldTypeValue(final WorldType worldType) {
     int result = this.getRace().getWorldTypeBaseValue(worldType);

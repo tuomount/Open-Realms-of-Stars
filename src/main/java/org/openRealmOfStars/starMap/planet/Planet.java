@@ -2626,6 +2626,9 @@ public class Planet {
       int percent = planetOwnerInfo.getWorldTypeValue(
           planetType.getWorldType());
       result = result * percent / 100;
+      if (result < 2) {
+        result = 2;
+      }
     }
     return result;
   }

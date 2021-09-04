@@ -1148,7 +1148,7 @@ public enum SpaceRace {
    * This will tell how much of population world type can
    * hold.
    * @param worldType World Type
-   * @return Base value between 50 - 125 %.
+   * @return Base value between 25 - 125 %.
    */
   public int getWorldTypeBaseValue(final WorldType worldType) {
     if (this == HUMAN) {
@@ -1168,7 +1168,7 @@ public enum SpaceRace {
       case SILICONWORLD: return 100;
       case WATERWORLD: return 75;
       case IRONWORLD: return 100;
-      case ICEWORLD: return 50;
+      case ICEWORLD: return 25;
       case CARBONWORLD: return 75;
       case DESERTWORLD: return 50;
       default:
@@ -1216,7 +1216,7 @@ public enum SpaceRace {
       case SILICONWORLD: return 50;
       case WATERWORLD: return 100;
       case IRONWORLD: return 50;
-      case ICEWORLD: return 50;
+      case ICEWORLD: return 25;
       case CARBONWORLD: return 100;
       case DESERTWORLD: return 75;
       default:
@@ -1229,15 +1229,15 @@ public enum SpaceRace {
       case WATERWORLD: return 125;
       case IRONWORLD: return 50;
       case ICEWORLD: return 75;
-      case CARBONWORLD: return 100;
-      case DESERTWORLD: return 50;
+      case CARBONWORLD: return 125;
+      case DESERTWORLD: return 25;
       default:
       case ARTIFICALWORLD: return 100;
       }
     }
     if (this == SCAURIANS) {
       switch (worldType) {
-      case SILICONWORLD: return 75;
+      case SILICONWORLD: return 25;
       case WATERWORLD: return 100;
       case IRONWORLD: return 75;
       case ICEWORLD: return 75;
@@ -1298,9 +1298,9 @@ public enum SpaceRace {
     if (this == LITHORIANS) {
       switch (worldType) {
       case SILICONWORLD: return 100;
-      case WATERWORLD: return 75;
-      case IRONWORLD: return 100;
-      case ICEWORLD: return 50;
+      case WATERWORLD: return 50;
+      case IRONWORLD: return 125;
+      case ICEWORLD: return 25;
       case CARBONWORLD: return 50;
       case DESERTWORLD: return 75;
       default:

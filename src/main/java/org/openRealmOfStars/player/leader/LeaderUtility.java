@@ -642,14 +642,34 @@ public final class LeaderUtility {
         bestLeader = leader;
         value = score;
       }
-      if (bestLeader == null) {
-        bestLeader = leader;
-        value = score;
-      }
     }
     return bestLeader;
   }
 
+  /**
+   * Realm has heir only too young heirs.
+   * @param realm Realm to check
+   * @return True if all heirs are too young to rule.
+   */
+  public static boolean hasTooYoungHeirs(final PlayerInfo realm) {
+    boolean hasHeirs = false;
+    boolean onlyTooYoungHeirs = true;
+    for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getParent() != null) {
+        if (leader.getJob() == Job.DEAD || leader.getJob() == Job.PRISON) {
+          continue;
+        }
+        hasHeirs = true;
+        if (leader.getJob() != Job.TOO_YOUNG) {
+          onlyTooYoungHeirs = false;
+        }
+      }
+    }
+    if (hasHeirs && onlyTooYoungHeirs) {
+      return true;
+    }
+    return false;
+  }
   /**
    * Get heir leader for ruler.
    * @param realm PlayerInfo
@@ -665,10 +685,6 @@ public final class LeaderUtility {
       }
       int score = getStrongHeirPoints(leader);
       if (score > value) {
-        bestLeader = leader;
-        value = score;
-      }
-      if (bestLeader == null) {
         bestLeader = leader;
         value = score;
       }
@@ -836,10 +852,6 @@ public final class LeaderUtility {
         bestLeader = leader;
         value = score;
       }
-      if (bestLeader == null) {
-        bestLeader = leader;
-        value = score;
-      }
     }
     return bestLeader;
   }
@@ -958,10 +970,6 @@ public final class LeaderUtility {
       }
       int score = getDemocraticPoints(leader);
       if (score > value) {
-        bestLeader = leader;
-        value = score;
-      }
-      if (bestLeader == null) {
         bestLeader = leader;
         value = score;
       }
@@ -1089,10 +1097,6 @@ public final class LeaderUtility {
         bestLeader = leader;
         value = score;
       }
-      if (bestLeader == null) {
-        bestLeader = leader;
-        value = score;
-      }
     }
     return bestLeader;
   }
@@ -1211,10 +1215,6 @@ public final class LeaderUtility {
         bestLeader = leader;
         value = score;
       }
-      if (bestLeader == null) {
-        bestLeader = leader;
-        value = score;
-      }
     }
     return bestLeader;
   }
@@ -1316,10 +1316,6 @@ public final class LeaderUtility {
         bestLeader = leader;
         value = score;
       }
-      if (bestLeader == null) {
-        bestLeader = leader;
-        value = score;
-      }
     }
     return bestLeader;
   }
@@ -1350,6 +1346,14 @@ public final class LeaderUtility {
       case FEUDALISM:
       case KINGDOM: {
         bestLeader = getNextHeir(realm);
+        if (bestLeader == null && hasTooYoungHeirs(realm)) {
+          Message msg = new Message(MessageType.LEADER,
+              realm.getEmpireName() + " has heirs but all are too young to be"
+                  + " ruler. This is difficult time...",
+                  Icons.getIconByName(Icons.ICON_RULER));
+          realm.getMsgList().addUpcomingMessage(msg);
+          break;
+        }
         if (bestLeader == null) {
           bestLeader = getStrongestLeader(realm, true);
         }

@@ -16,7 +16,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2019,2020 Tuomo Untinen
+ * Copyright (C) 2020, 2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -318,6 +318,7 @@ public class LeaderUtilityTest {
   public void testNextLeaderKingdom() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
     Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    Mockito.when(realm.getRace()).thenReturn(SpaceRace.HUMAN);
     ArrayList<Leader> pool = new ArrayList<>();
     Mockito.when(realm.getLeaderPool()).thenReturn(pool);
     Leader parent = new Leader("Test Parent");
@@ -364,6 +365,7 @@ public class LeaderUtilityTest {
   public void testNextLeaderHorde() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
     Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.HORDE);
+    Mockito.when(realm.getRace()).thenReturn(SpaceRace.HUMAN);
     ArrayList<Leader> pool = new ArrayList<>();
     Mockito.when(realm.getLeaderPool()).thenReturn(pool);
     Leader parent = new Leader("Test Parent");

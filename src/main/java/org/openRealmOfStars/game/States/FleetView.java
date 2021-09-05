@@ -590,7 +590,8 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       }
     }
     if (interactiveView) {
-      if (planet != null && planet.getPlanetPlayerInfo() == info) {
+      if (planet != null && planet.getPlanetPlayerInfo() == info
+          && planet.hasCertainBuilding("Space port")) {
         upgradeBtn.setEnabled(true);
       } else {
         upgradeBtn.setEnabled(false);

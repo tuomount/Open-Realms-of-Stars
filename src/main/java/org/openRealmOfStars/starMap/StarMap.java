@@ -3263,7 +3263,7 @@ public class StarMap {
           sb.append(planet.getName());
           sb.append(".");
           if (planet.getPlanetPlayerInfo() != null) {
-            sb.append(" Unfortunately it has been already colonized by");
+            sb.append(" Unfortunately it has been already colonized by ");
             sb.append(planet.getPlanetPlayerInfo().getEmpireName());
             sb.append(".");
           } else if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {

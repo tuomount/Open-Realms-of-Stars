@@ -93,6 +93,10 @@ public final class GraphRoutines {
     if (origWidth > maxWidth) {
       width = maxWidth;
       height = width * origHeight / origWidth;
+      if (height > maxHeight) {
+        height = maxHeight;
+        width = height * origWidth / origHeight;
+      }
     } else if (height > maxHeight) {
       height = maxHeight;
       width = height * origWidth / origHeight;

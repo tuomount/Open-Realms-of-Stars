@@ -1931,6 +1931,19 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Is ship starbase or orbital.
+   * @return True if ship is either starbase or orbital.
+   */
+  public boolean isStarBaseOrOrbital() {
+    if (hull.getHullType() == ShipHullType.STARBASE) {
+      return true;
+    }
+    if (hull.getHullType() == ShipHullType.ORBITAL) {
+      return true;
+    }
+    return false;
+  }
+  /**
    * Get total research bonus, does not check if starbase is deployed
    * @return Research bonus
    */

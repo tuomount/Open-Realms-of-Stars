@@ -508,7 +508,7 @@ public class Combat {
     if (weapon != null && weapon.getType() == ShipComponentType.TRACTOR_BEAM) {
       int tratocSize = tractor.getShip().getHull().getSize().getMass();
       int pullSize = target.getShip().getHull().getSize().getMass();
-      if (tratocSize >= pullSize) {
+      if (tratocSize >= pullSize && !target.getShip().isStarBaseOrOrbital()) {
         double xAxisDistance = Math.abs(tractor.getX() - target.getX());
         double yAxisDistance = Math.abs(tractor.getY() - target.getY());
         int distance;

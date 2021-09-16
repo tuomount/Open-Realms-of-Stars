@@ -10,7 +10,7 @@ using Java. The game requires at minimum Swing and Java 7 to run.
 ### Explore the galaxy
 ![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/starmap.png)
 
-Move your fleet in a randomly generated galaxy. Encouter other species, and find new planets to colonize. Explore mysterious space anomalies.
+Move your fleet in a randomly generated galaxy. Encounter other species, and find new planets to colonize. Explore mysterious space anomalies.
 
 ### Manage your own planets
 ![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/planet.png)
@@ -31,6 +31,7 @@ Fight enemies with customizable ship designs. Ship components have their own hit
 ![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/bombing.png)
 
 Conquer enemy planets. Drop bombs to clear out enemy troops, then deploy your own ground troops to seize control.
+Regular space weapons can be used for causing suppression to defending troops.
 
 ### Leaders
 ![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/leaders.png)
@@ -47,14 +48,15 @@ See more [screenshots](https://github.com/tuomount/Open-Realms-of-Stars/tree/mas
 ### Features
 
  * Randomized galaxy with three different starting placements
- * 10 different space races to play
- * 15 different government types to play
+ * 12 different space races to play
+ * 21 different government types to play
  * Any realm can start as ancient realm even human player
  * Random events
  * Planetary events
  * Space anomalies
  * Space pirates
  * Privateering, trade fleets are actual ships which can be privateered
+ * Possibility to steal other ships with tractor beam
  * Diplomatic relations between realms (War, Peace, Trade war, Trade Alliance, Defensive Pact and Alliance)
  * AI remembers how it has been treated and will treat others accordingly
  * Galactic Olympics to influence to other realms

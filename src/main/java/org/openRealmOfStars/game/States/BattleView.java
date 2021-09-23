@@ -225,7 +225,7 @@ public class BattleView extends BlackPanel {
     overloadInfo.setEditable(false);
     overloadInfo.setLineWrap(true);
     infoPanel = new BattleInfoPanel(combat.getCurrentShip().getShip(), textArea,
-        overloadInfo, listener);
+        overloadInfo, true, listener);
 
     combatMapMouseListener = new CombatMapMouseListener(combat, mapPanel,
         infoPanel);

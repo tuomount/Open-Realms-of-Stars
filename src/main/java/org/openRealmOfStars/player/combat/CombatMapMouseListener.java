@@ -2,7 +2,6 @@ package org.openRealmOfStars.player.combat;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
@@ -38,8 +37,7 @@ import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
  *
  */
 
-public class CombatMapMouseListener extends MouseAdapter
-    implements MouseMotionListener {
+public class CombatMapMouseListener extends MouseAdapter {
 
   /**
    * Combat for mouse listener
@@ -119,6 +117,23 @@ public class CombatMapMouseListener extends MouseAdapter
       // battleInfoPanel.showShip(combat.getCurrentShip().getShip());
       activeShip = combat.getShipFromCoordinate(coord.getMapX(),
           coord.getMapY());
+      if (battleInfoPanel.isUseAllWeapons()) {
+        CombatShip target = combat.getShipFromCoordinate(combat.getCursorX(),
+            combat.getCursorY());
+        if (target != null) {
+          Coordinate coordinate = new Coordinate(coord.getMapX(),
+              coord.getMapY());
+          Coordinate currentShipCoordinate = new Coordinate(
+              combat.getCurrentShip().getX(), combat.getCurrentShip().getY());
+          int distance = (int) currentShipCoordinate.calculateDistance(
+              coordinate);
+          componentUse = battleInfoPanel.getBestWeaponForDistance(distance);
+          combat.setComponentUse(componentUse);
+        } else {
+          setComponentUse(-1);
+          combat.setComponentUse(-1);
+        }
+      }
     }
   }
 
@@ -130,11 +145,25 @@ public class CombatMapMouseListener extends MouseAdapter
         mapPanel.getOffsetX(), mapPanel.getOffsetY(), mapPanel.getViewPointX(),
         mapPanel.getViewPointY(), true);
     if (!coord.isOutOfPanel() && combat.getAnimation() == null) {
+      if (combat.getCurrentShip() == null) {
+        return;
+      }
+      if (battleInfoPanel.isUseAllWeapons()) {
+        CombatShip target = combat.getShipFromCoordinate(combat.getCursorX(),
+            combat.getCursorY());
+        if (target != null) {
+          Coordinate coordinate = new Coordinate(coord.getMapX(),
+              coord.getMapY());
+          Coordinate currentShipCoordinate = new Coordinate(
+              combat.getCurrentShip().getX(), combat.getCurrentShip().getY());
+          int distance = (int) currentShipCoordinate.calculateDistance(
+              coordinate);
+          componentUse = battleInfoPanel.getBestWeaponForDistance(distance);
+          combat.setComponentUse(componentUse);
+        }
+      }
       if (componentUse != -1) {
         CombatShip ship = combat.getCurrentShip();
-        if (ship == null) {
-          return;
-        }
         ShipComponent weapon = ship.getShip().getComponent(componentUse);
         if (ship.getShip().isStarBase()
             && !ship.getShip().getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
@@ -201,9 +230,6 @@ public class CombatMapMouseListener extends MouseAdapter
           }
         }
       } else {
-        if (combat.getCurrentShip() == null) {
-          return;
-        }
         Coordinate currentShipCoordinate = new Coordinate(
             combat.getCurrentShip().getX(), combat.getCurrentShip().getY());
         Coordinate coordinate = new Coordinate(coord.getMapX(),

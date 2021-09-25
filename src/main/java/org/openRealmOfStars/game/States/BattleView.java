@@ -225,7 +225,7 @@ public class BattleView extends BlackPanel {
     overloadInfo.setEditable(false);
     overloadInfo.setLineWrap(true);
     infoPanel = new BattleInfoPanel(combat.getCurrentShip().getShip(), textArea,
-        overloadInfo, listener);
+        overloadInfo, true, listener);
 
     combatMapMouseListener = new CombatMapMouseListener(combat, mapPanel,
         infoPanel);
@@ -430,6 +430,7 @@ public class BattleView extends BlackPanel {
         && combat.getCurrentShip() != null
         && combat.getCurrentShip().getPlayer().isHuman()) {
       SoundPlayer.playMenuSound();
+      infoPanel.disableAllWeapons();
       String number = arg0.getActionCommand()
           .substring(GameCommands.COMMAND_COMPONENT_USE.length());
       int index = Integer.valueOf(number);

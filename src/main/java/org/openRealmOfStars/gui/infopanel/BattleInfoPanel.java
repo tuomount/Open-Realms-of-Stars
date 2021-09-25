@@ -13,11 +13,14 @@ import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.ComponentButton;
+import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
 
 /**
@@ -66,6 +69,10 @@ public class BattleInfoPanel extends InfoPanel {
   private Ship ship;
 
   /**
+   * Check box to automatically fire all weapons.
+   */
+  private SpaceCheckBox useAllWeapons;
+  /**
    * Maximum number of buttons on panel. These are the component buttons.
    */
   private static final int MAX_BTN = 12;
@@ -90,10 +97,12 @@ public class BattleInfoPanel extends InfoPanel {
    * @param ship CombatShip which information is shown
    * @param shipInfo TextArea where longer description can be shown
    * @param overloadInfo TextArea where overload info is being shown
+   * @param combat True if this is being called from bombat, false for bombing.
    * @param listener ActionListener for weapons and other components
    */
   public BattleInfoPanel(final Ship ship, final InfoTextArea shipInfo,
-      final InfoTextArea overloadInfo, final ActionListener listener) {
+      final InfoTextArea overloadInfo, final boolean combat,
+      final ActionListener listener) {
     this.add(Box.createRigidArea(new Dimension(RIGID_BOX_WIDTH,
         RIGID_BOX_HEIGHT)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
@@ -118,7 +127,15 @@ public class BattleInfoPanel extends InfoPanel {
       this.add(Box.createRigidArea(new Dimension(10, 10)));
       this.add(overloadInfo);
     }
-    this.add(Box.createRigidArea(new Dimension(10, 10)));
+    if (combat) {
+      this.add(Box.createRigidArea(new Dimension(5, 5)));
+      useAllWeapons = new SpaceCheckBox("Use all weapons");
+      useAllWeapons.setSelected(true);
+      useAllWeapons.addActionListener(listener);
+      useAllWeapons.setActionCommand(GameCommands.COMMAND_USE_ALL_WEAPONS);
+      useAllWeapons.setAlignmentX(Component.CENTER_ALIGNMENT);
+      this.add(useAllWeapons);
+    }
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new GridLayout(6, 2));
     for (int i = 0; i < MAX_BTN; i++) {
@@ -135,6 +152,43 @@ public class BattleInfoPanel extends InfoPanel {
     showShip(ship);
   }
 
+  /**
+   * Get Best weapon for distance
+   * @param distance Distance where to shoot
+   * @return Index of best weapon or -1 if none available.
+   */
+  public int getBestWeaponForDistance(final int distance) {
+    int bestDamage = -1;
+    int bestIndex = -1;
+    for (int i = 0; i < MAX_BTN; i++) {
+      if (cBtn[i] != null) {
+        ShipComponent component = ship.getComponent(i);
+        if (component != null && component.isWeapon()
+            && component.getWeaponRange() >= distance
+            && !cBtn[i].isUsed()
+            && ship.componentIsWorking(i)) {
+          int damage = component.getDamage();
+          if (component.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
+            // ECM should be fired first
+            damage = damage + 10;
+          }
+          if (component.getType() == ShipComponentType.ION_CANNON) {
+            // Ion cannon also cause damage to shield
+            damage = damage + 2;
+          }
+          if (component.getType() == ShipComponentType.PLASMA_CANNON) {
+            // Nothing stops fully plasma cannon
+            damage = damage + 5;
+          }
+          if (damage > bestDamage) {
+            bestIndex = i;
+            bestDamage = damage;
+          }
+        }
+      }
+    }
+    return bestIndex;
+  }
   /**
    * Show ship on info panel
    * @param shipToShow The ship to show on info panel
@@ -227,6 +281,38 @@ public class BattleInfoPanel extends InfoPanel {
     }
   }
 
+  /**
+   * Is use all weapons selected?
+   * @return True if selected.
+   */
+  public boolean isUseAllWeapons() {
+    if (useAllWeapons != null) {
+      return useAllWeapons.isSelected();
+    }
+    return false;
+  }
+
+  /**
+   * Toggle check on Use All Weapons checkbox.
+   */
+  public void toggleUseAllWeapons() {
+    if (useAllWeapons != null) {
+      if (useAllWeapons.isSelected()) {
+        useAllWeapons.setSelected(false);
+      } else {
+        useAllWeapons.setSelected(true);
+      }
+    }
+  }
+
+  /**
+   * Deselect all weapons checkbox.
+   */
+  public void disableAllWeapons() {
+    if (useAllWeapons != null) {
+      useAllWeapons.setSelected(false);
+    }
+  }
   /**
    * Update panels according set data
    */

@@ -341,7 +341,8 @@ public class PlanetBombingView extends BlackPanel {
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     eastPanel.add(scroll);
 
-    infoPanel = new BattleInfoPanel(fleet.getFirstShip(), null, null, listener);
+    infoPanel = new BattleInfoPanel(fleet.getFirstShip(), null, null, false,
+        listener);
     infoPanel.showShip(fleet.getFirstShip());
     infoPanel.setBorder(null);
     eastPanel.add(infoPanel);

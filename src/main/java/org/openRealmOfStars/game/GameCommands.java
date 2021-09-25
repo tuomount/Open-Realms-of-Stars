@@ -136,6 +136,11 @@ public final class GameCommands {
   public static final String COMMAND_AUTO_COMBAT = "AutoCombat";
 
   /**
+   * Auto use all weapons
+   */
+  public static final String COMMAND_USE_ALL_WEAPONS = "UseAllWeapons";
+
+  /**
    * Defend sector command
    */
   public static final String COMMAND_DEFEND_SECTOR = "DefendCommand";

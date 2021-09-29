@@ -101,6 +101,25 @@ public class MissionList {
   }
 
   /**
+   * Get Exploring/Colony Explore
+   * or privateering mission with certain sun name.
+   * @param sunName Sun name to search.
+   * @return Mission or null
+   */
+  public Mission getExploringForSun(final String sunName) {
+    for (Mission mission : missions) {
+      if (mission.getType() == MissionType.COLONY_EXPLORE
+          || mission.getType() == MissionType.EXPLORE
+          || mission.getType() == MissionType.PRIVATEER) {
+        String missionSunName = mission.getSunName();
+        if (sunName.equals(missionSunName)) {
+          return mission;
+        }
+      }
+    }
+    return null;
+  }
+  /**
    * Change Fleet name in mission
    * @param oldName Old name to change
    * @param newName New name where to change

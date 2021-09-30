@@ -18,6 +18,7 @@ import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.WinningStrategy;
@@ -1646,12 +1647,13 @@ public class StarMap {
     Sun leastCharted = null;
     for (Sun sun : sunList) {
       Coordinate coordinate = new Coordinate(x, y);
-      // TODO: If this would not be run, then AI exploring is more stupid
-      Mission mission = info.getMissions().getExploringForSun(sun.getName());
-      if (mission != null && leastCharted != null) {
-        continue;
+      if (info.getAiDifficulty() == AiDifficulty.NORMAL
+          || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+        Mission mission = info.getMissions().getExploringForSun(sun.getName());
+        if (mission != null && leastCharted != null) {
+          continue;
+        }
       }
-      // TODO: End of smart AI
       double dist = coordinate.calculateDistance(sun.getCenterCoordinate());
       if (ignoreSun != null && ignoreSun.equals(sun.getName())) {
         dist = LONGEST_DISTANCE;

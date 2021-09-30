@@ -279,7 +279,7 @@ public class PlayerInfo {
     leaderPool = new ArrayList<>();
     ruler = null;
     color = PlayerColor.getByIndex(index);
-    aiDifficulty = AiDifficulty.STUPID;
+    aiDifficulty = AiDifficulty.NORMAL;
     setRandomEventOccured(null);
     setHuman(false);
     setBoard(false);
@@ -1187,15 +1187,29 @@ public class PlayerInfo {
             && mapData[sun.getCenterX() + x][sun.getCenterY()
               + y] == UNCHARTED) {
           double dist = coordinate.calculateDistance(fleet.getCoordinate());
-          if (dist <= bestDistance) {
-            double sundist = coordinate.calculateDistance(
-                sun.getCenterCoordinate());
-            int score = 5 - Math.abs((sunScanRad - (int) sundist));
-            if (score > bestScore) {
-              bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
-                  dist);
-              bestScore = score;
-              bestDistance = dist;
+          if (aiDifficulty == AiDifficulty.STUPID) {
+            if (dist < bestDistance) {
+              double sundist = coordinate.calculateDistance(
+                  sun.getCenterCoordinate());
+              int score = 5 - Math.abs((sunScanRad - (int) sundist));
+              if (score > bestScore) {
+                bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
+                    dist);
+                bestScore = score;
+                bestDistance = dist;
+              }
+            }
+          } else {
+            if (dist <= bestDistance) {
+              double sundist = coordinate.calculateDistance(
+                  sun.getCenterCoordinate());
+              int score = 5 - Math.abs((sunScanRad - (int) sundist));
+              if (score > bestScore) {
+                bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
+                    dist);
+                bestScore = score;
+                bestDistance = dist;
+              }
             }
           }
         }

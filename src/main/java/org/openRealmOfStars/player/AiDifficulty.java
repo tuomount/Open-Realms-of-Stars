@@ -67,4 +67,19 @@ public enum AiDifficulty {
     }
   }
 
+  @Override
+  public String toString() {
+    switch (this) {
+    case STUPID: {
+      return "Stupid";
+    }
+    default:
+    case NORMAL: {
+      return "Normal";
+    }
+    case CHALLENGING: {
+      return "Challenging";
+    }
+  }
+  }
 }

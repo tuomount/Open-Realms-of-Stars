@@ -217,6 +217,11 @@ public class PlayerInfo {
    * and will be calculated. This information will be used only by AI.
    */
   private Planet bestPlanetForTechWorld;
+
+  /**
+   * AI Difficulty for realm. Assuming that realm is being played by AI.
+   */
+  private AiDifficulty aiDifficulty;
   /**
    * Uncharted map sector, only suns are visible
    */
@@ -274,6 +279,7 @@ public class PlayerInfo {
     leaderPool = new ArrayList<>();
     ruler = null;
     color = PlayerColor.getByIndex(index);
+    aiDifficulty = AiDifficulty.STUPID;
     setRandomEventOccured(null);
     setHuman(false);
     setBoard(false);
@@ -732,6 +738,7 @@ public class PlayerInfo {
       ancientRealm = false;
     }
     color = PlayerColor.getByIndex(dis.read());
+    aiDifficulty = AiDifficulty.getByIndex(dis.read());
     government = GovernmentUtility.getGovernmentByIndex(dis.readInt());
     warFatigue = dis.readInt();
     totalCredits = dis.readInt();
@@ -844,6 +851,7 @@ public class PlayerInfo {
       dos.writeByte(0);
     }
     dos.writeByte(color.getIndex());
+    dos.writeByte(aiDifficulty.getIndex());
     dos.writeInt(government.getIndex());
     dos.writeInt(warFatigue);
     dos.writeInt(totalCredits);
@@ -1179,7 +1187,7 @@ public class PlayerInfo {
             && mapData[sun.getCenterX() + x][sun.getCenterY()
               + y] == UNCHARTED) {
           double dist = coordinate.calculateDistance(fleet.getCoordinate());
-          if (dist < bestDistance) {
+          if (dist <= bestDistance) {
             double sundist = coordinate.calculateDistance(
                 sun.getCenterCoordinate());
             int score = 5 - Math.abs((sunScanRad - (int) sundist));
@@ -2191,5 +2199,19 @@ public class PlayerInfo {
    */
   public PlayerColor getColor() {
     return color;
+  }
+  /**
+   * Get AI Difficulty
+   * @return AiDifficulty
+   */
+  public AiDifficulty getAiDifficulty() {
+    return aiDifficulty;
+  }
+  /**
+   * Set AI Difficulty
+   * @param aiDifficulty AI Difficulty level to set.
+   */
+  public void setAiDifficulty(final AiDifficulty aiDifficulty) {
+    this.aiDifficulty = aiDifficulty;
   }
 }

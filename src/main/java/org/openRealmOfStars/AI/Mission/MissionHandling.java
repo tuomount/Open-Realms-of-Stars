@@ -13,6 +13,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
@@ -185,8 +186,15 @@ public final class MissionHandling {
         search.doRoute();
         fleet.setaStarSearch(search);
       } else {
+        int mult = 1;
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL) {
+          mult = 2;
+        }
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          mult = 3;
+        }
         Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
-            fleet.getMovesLeft());
+            fleet.getMovesLeft() * mult);
         if (targetAnomaly != null) {
           mission.setPhase(MissionPhase.EXECUTING);
           fleet.setRoute(null);
@@ -329,8 +337,15 @@ public final class MissionHandling {
         }
       }
       if (mission.getPhase() == MissionPhase.EXECUTING) {
+        int mult = 1;
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL) {
+          mult = 2;
+        }
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          mult = 3;
+        }
         Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
-            fleet.getMovesLeft());
+            fleet.getMovesLeft() * mult);
         if (targetAnomaly != null) {
           // Focus on anomalies
           fleet.setRoute(null);

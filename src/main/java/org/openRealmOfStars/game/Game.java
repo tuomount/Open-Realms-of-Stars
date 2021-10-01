@@ -78,6 +78,7 @@ import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.anomaly.AnomalyType;
 import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
@@ -112,6 +113,7 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.GalaxyConfig;
+import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
@@ -1986,6 +1988,19 @@ public class Game implements ActionListener {
       info.setBoard(true);
       info.setGovernment(GovernmentType.SPACE_PIRATES);
       info.setEmpireName("Space pirates");
+      PirateDifficultLevel difficultyLevel = galaxyConfig
+          .getSpacePiratesDifficulty();
+      if (difficultyLevel == PirateDifficultLevel.EASY
+          || difficultyLevel == PirateDifficultLevel.VERY_EASY) {
+        info.setAiDifficulty(AiDifficulty.STUPID);
+      }
+      if (difficultyLevel == PirateDifficultLevel.NORMAL) {
+        info.setAiDifficulty(AiDifficulty.NORMAL);
+      }
+      if (difficultyLevel == PirateDifficultLevel.HARD
+          || difficultyLevel == PirateDifficultLevel.VERY_HARD) {
+        info.setAiDifficulty(AiDifficulty.CHALLENGING);
+      }
       int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
       info.setColor(randomListOfColors.get(colorIndex));
       players.addPlayer(info);

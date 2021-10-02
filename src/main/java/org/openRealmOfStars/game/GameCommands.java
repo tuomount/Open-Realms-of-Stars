@@ -491,6 +491,11 @@ public final class GameCommands {
   public static final String COMMAND_GOVERNMENT_SETUP = "GovernmentSetup";
 
   /**
+   * Difficulty has changed in Galaxy Setup
+   */
+  public static final String COMMAND_DIFFICULT_SETUP = "DifficultSetup";
+
+  /**
    * Random name button action
    */
   public static final String COMMAND_RANDOM_NAME = "RandomName";

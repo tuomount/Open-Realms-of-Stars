@@ -1974,6 +1974,7 @@ public class Game implements ActionListener {
       info.setGovernment(galaxyConfig.getPlayerGovernment(i));
       info.setEmpireName(galaxyConfig.getPlayerName(i));
       info.setAncientRealm(galaxyConfig.getPlayerAncientRealm(i));
+      info.setAiDifficulty(galaxyConfig.getDifficulty(i));
       info.setColor(galaxyConfig.getPlayerColor(i));
       randomListOfColors.remove(galaxyConfig.getPlayerColor(i));
       if (i == 0 && !galaxyConfig.isAiOnly()) {

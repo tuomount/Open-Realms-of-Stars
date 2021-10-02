@@ -29,6 +29,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
@@ -44,7 +45,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -100,6 +101,10 @@ public class PlayerSetupView extends BlackPanel {
    */
   private SpaceComboBox<PlayerColor>[] comboRealmColor;
   /**
+   * Combobox for selecting difficulty for each realm.
+   */
+  private SpaceComboBox<AiDifficulty>[] comboDifficult;
+  /**
    * Galaxy config
    */
   private GalaxyConfig config;
@@ -150,6 +155,7 @@ public class PlayerSetupView extends BlackPanel {
 
     comboRaceSelect = new SpaceComboBox[StarMap.MAX_PLAYERS];
     comboGovernmentSelect = new SpaceComboBox[StarMap.MAX_PLAYERS];
+    comboDifficult = new SpaceComboBox[StarMap.MAX_PLAYERS];
     checkAncientRealm = new SpaceCheckBox[StarMap.MAX_PLAYERS];
     raceImgs = new RaceImagePanel[StarMap.MAX_PLAYERS];
     playerName = new JTextField[StarMap.MAX_PLAYERS];
@@ -242,6 +248,19 @@ public class PlayerSetupView extends BlackPanel {
       SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
       GovernmentType gov = config.getPlayerGovernment(index);
       playerName[index].setText(SpaceRaceUtility.getRandomName(race, gov));
+    }
+    if (arg0.getActionCommand().startsWith(
+        GameCommands.COMMAND_DIFFICULT_SETUP)) {
+      SoundPlayer.playMenuSound();
+      for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
+        if (comboRaceSelect[i].isEnabled()) {
+          AiDifficulty diff = (AiDifficulty) comboDifficult[i]
+              .getSelectedItem();
+          if (diff != null) {
+            config.setPlayerDifficult(i, diff);
+          }
+        }
+      }
     }
     if (arg0.getActionCommand().startsWith(
         GameCommands.COMMAND_COLOR_SETUP)) {
@@ -377,6 +396,23 @@ public class PlayerSetupView extends BlackPanel {
           .getFullDescription(false, false));
     }
     info.add(playerName[index]);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    comboDifficult[index] = new SpaceComboBox<>(AiDifficulty.values());
+    comboDifficult[index].setSelectedIndex(
+        config.getDifficultyLevel().getIndex());
+    comboDifficult[index].setBackground(
+        GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    comboDifficult[index].setForeground(
+        GuiStatics.COLOR_COOL_SPACE_BLUE);
+    comboDifficult[index].setFont(GuiStatics.getFontCubellanSmaller());
+    comboDifficult[index].setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    comboDifficult[index].setActionCommand(
+        GameCommands.COMMAND_DIFFICULT_SETUP);
+    comboDifficult[index].addActionListener(listener);
+    if (index == 0 && !config.isAiOnly()) {
+      comboDifficult[index].setEnabled(false);
+    }
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     comboRealmColor[index] = new SpaceComboBox<>(
         PlayerColor.values());

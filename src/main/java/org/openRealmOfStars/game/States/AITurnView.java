@@ -3496,6 +3496,7 @@ public class AITurnView extends BlackPanel {
       updateText();
       synchronized (aiThread) {
         if (!aiThread.isStarted()) {
+          game.getStarMap().setAiOrAutomateTakingMoves(true);
           aiThread.start();
         }
       }
@@ -3506,6 +3507,7 @@ public class AITurnView extends BlackPanel {
           return;
         }
         if (readyToMove) {
+          game.getStarMap().setAiOrAutomateTakingMoves(false);
           if (game.getStarMap().getNewsCorpData().isNewsToShow()) {
             game.changeGameState(GameState.NEWS_CORP_VIEW);
           } else {

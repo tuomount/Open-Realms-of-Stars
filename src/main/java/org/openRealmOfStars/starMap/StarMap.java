@@ -304,6 +304,12 @@ public class StarMap {
    */
   private ArrayList<Integer> shownTutorialIndexes;
   /**
+   * AI or Automate is taking fleet moves. This does not to need to save into
+   * save file. This is just a flag which will be set on when AI Turn is
+   * progressing.
+   */
+  private boolean aiOrAutomateTakingMoves = false;
+  /**
    * Magic string to save game files
    */
   public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.20";
@@ -3259,7 +3265,12 @@ public class StarMap {
               Icons.getIconByName(Icons.ICON_HULL_TECH));
         msg.setCoordinate(fleet.getCoordinate());
         msg.setMatchByString(fleet.getName());
-        info.getMsgList().addNewMessage(msg);
+        //FIXME
+        if (aiOrAutomateTakingMoves) {
+          info.getMsgList().addUpcomingMessage(msg);
+        } else {
+          info.getMsgList().addNewMessage(msg);
+        }
         return;
       }
       if (square.getType() == SquareInfo.TYPE_PLANET) {
@@ -4622,5 +4633,21 @@ public class StarMap {
       }
     }
     return center;
+  }
+
+  /**
+   * Is AI or automate taking fleet moves.
+   * @return True if AI or Automate is moving.
+   */
+  public boolean isAiOrAutomateTakingMoves() {
+    return aiOrAutomateTakingMoves;
+  }
+
+  /**
+   * Set AI or automate moving the fleet flag.
+   * @param flag boolean flag
+   */
+  public void setAiOrAutomateTakingMoves(final boolean flag) {
+    this.aiOrAutomateTakingMoves = flag;
   }
 }

@@ -1187,7 +1187,7 @@ public class PlayerInfo {
             && mapData[sun.getCenterX() + x][sun.getCenterY()
               + y] == UNCHARTED) {
           double dist = coordinate.calculateDistance(fleet.getCoordinate());
-          if (aiDifficulty == AiDifficulty.STUPID) {
+          if (aiDifficulty == AiDifficulty.WEAK) {
             if (dist < bestDistance) {
               double sundist = coordinate.calculateDistance(
                   sun.getCenterCoordinate());

@@ -213,13 +213,13 @@ public class GameTest {
     game.getPlayers().getPlayerInfoByIndex(3).setAiDifficulty(
         AiDifficulty.NORMAL);
     game.getPlayers().getPlayerInfoByIndex(4).setAiDifficulty(
-        AiDifficulty.STUPID);
+        AiDifficulty.WEAK);
     game.getPlayers().getPlayerInfoByIndex(5).setAiDifficulty(
-        AiDifficulty.STUPID);
+        AiDifficulty.WEAK);
     game.getPlayers().getPlayerInfoByIndex(6).setAiDifficulty(
-        AiDifficulty.STUPID);
+        AiDifficulty.WEAK);
     game.getPlayers().getPlayerInfoByIndex(7).setAiDifficulty(
-        AiDifficulty.STUPID);
+        AiDifficulty.WEAK);
     do {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;

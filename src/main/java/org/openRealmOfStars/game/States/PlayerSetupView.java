@@ -258,6 +258,7 @@ public class PlayerSetupView extends BlackPanel {
               .getSelectedItem();
           if (diff != null) {
             config.setPlayerDifficult(i, diff);
+            comboDifficult[i].setToolTipText(diff.getDescription());
           }
         }
       }
@@ -412,7 +413,9 @@ public class PlayerSetupView extends BlackPanel {
     comboDifficult[index].addActionListener(listener);
     if (index == 0 && !config.isAiOnly()) {
       comboDifficult[index].setEnabled(false);
+      comboDifficult[index].setToolTipText("");
     }
+    info.add(comboDifficult[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     comboRealmColor[index] = new SpaceComboBox<>(
         PlayerColor.values());

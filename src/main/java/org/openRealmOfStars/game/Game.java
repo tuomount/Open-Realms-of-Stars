@@ -1993,7 +1993,7 @@ public class Game implements ActionListener {
           .getSpacePiratesDifficulty();
       if (difficultyLevel == PirateDifficultLevel.EASY
           || difficultyLevel == PirateDifficultLevel.VERY_EASY) {
-        info.setAiDifficulty(AiDifficulty.STUPID);
+        info.setAiDifficulty(AiDifficulty.WEAK);
       }
       if (difficultyLevel == PirateDifficultLevel.NORMAL) {
         info.setAiDifficulty(AiDifficulty.NORMAL);

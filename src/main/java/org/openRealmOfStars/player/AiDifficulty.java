@@ -26,7 +26,7 @@ public enum AiDifficulty {
   /**
    * Lowest AI level.
    */
-  STUPID,
+  WEAK,
   /**
    * Normal or standard AI level.
    */
@@ -54,7 +54,7 @@ public enum AiDifficulty {
    */
   public int getIndex() {
     switch (this) {
-      case STUPID: {
+      case WEAK: {
         return 0;
       }
       default:
@@ -70,8 +70,8 @@ public enum AiDifficulty {
   @Override
   public String toString() {
     switch (this) {
-    case STUPID: {
-      return "Stupid";
+    case WEAK: {
+      return "Weak";
     }
     default:
     case NORMAL: {
@@ -82,4 +82,30 @@ public enum AiDifficulty {
     }
   }
   }
+  /**
+   * AI Difficulty description.
+   * @return Description as String.
+   */
+  public String getDescription() {
+    switch (this) {
+    case WEAK: {
+      return "<html>Weak AI is going to have bad AI algorithm which "
+          + "causes AI to do clear mistakes. <br>"
+          + "This should be good for first time or casual player.</html>";
+    }
+    default:
+    case NORMAL: {
+      return "<html>Normal AI is try to achieve challenging enough for"
+          + " experience 4X player. There should not be obvious mistakes."
+          + "</html>";
+    }
+    case CHALLENGING: {
+      return "<html>Challening AI is try to achieve challenging enough for"
+          + " very experienced 4X player. <br>There should not be obvious"
+          + " mistakes and this should giving good fight.<br>"
+          + "For now this is still work in progress.</html>";
+    }
+  }
+  }
+
 }

@@ -1166,6 +1166,56 @@ public class PlayerInfo {
   }
 
   /**
+   * Calculate amount of uncharted sectors.
+   * @param coord Center coordinate
+   * @param scannerRange Scanner Range.
+   * @return Amount uncharted sectors.
+   */
+  private int calculateAmountOfUncharted(final Coordinate coord,
+      final int scannerRange) {
+    int amount = 0;
+    int cx = coord.getX();
+    int cy = coord.getY();
+    int minRange = scannerRange - 1;
+    if (minRange < 1) {
+      Coordinate newCoord = new Coordinate(cx - 1, cy);
+      if (newCoord.isValidCoordinate(maxCoordinate)
+          && getSectorVisibility(newCoord) == UNCHARTED) {
+        amount++;
+      }
+      newCoord = new Coordinate(cx, cy - 1);
+      if (newCoord.isValidCoordinate(maxCoordinate)
+          && getSectorVisibility(newCoord) == UNCHARTED) {
+        amount++;
+      }
+      newCoord = new Coordinate(cx, cy + 1);
+      if (newCoord.isValidCoordinate(maxCoordinate)
+          && getSectorVisibility(newCoord) == UNCHARTED) {
+        amount++;
+      }
+      newCoord = new Coordinate(cx + 1, cy);
+      if (newCoord.isValidCoordinate(maxCoordinate)
+          && getSectorVisibility(newCoord) == UNCHARTED) {
+        amount++;
+      }
+      newCoord = new Coordinate(cx, cy);
+      if (newCoord.isValidCoordinate(maxCoordinate)
+          && getSectorVisibility(newCoord) == UNCHARTED) {
+        amount++;
+      }
+    } else {
+      for (int x = -minRange; x < minRange + 1; x++) {
+        for (int y = -minRange; y < minRange + 1; y++) {
+          Coordinate newCoord = new Coordinate(cx + x, cy + y);
+          if (getSectorVisibility(newCoord) == UNCHARTED) {
+            amount++;
+          }
+        }
+      }
+    }
+    return amount;
+  }
+  /**
    * Get Best uncharted sector around certain solar system
    * @param sun Solar system
    * @param fleet Fleet doing the exploring.
@@ -1188,7 +1238,7 @@ public class PlayerInfo {
               + y] == UNCHARTED) {
           double dist = coordinate.calculateDistance(fleet.getCoordinate());
           if (aiDifficulty == AiDifficulty.WEAK) {
-            if (dist < bestDistance) {
+            if (dist <= bestDistance) {
               double sundist = coordinate.calculateDistance(
                   sun.getCenterCoordinate());
               int score = 5 - Math.abs((sunScanRad - (int) sundist));
@@ -1203,7 +1253,8 @@ public class PlayerInfo {
             if (dist <= bestDistance) {
               double sundist = coordinate.calculateDistance(
                   sun.getCenterCoordinate());
-              int score = 5 - Math.abs((sunScanRad - (int) sundist));
+              int score = 5 - Math.abs((sunScanRad - (int) sundist))
+                  + calculateAmountOfUncharted(coordinate, scanner);
               if (score > bestScore) {
                 bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
                     dist);

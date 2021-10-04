@@ -308,8 +308,15 @@ public final class MissionHandling {
         }
       }
       if (mission.getPhase() == MissionPhase.TREKKING) {
+        int mult = 1;
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL) {
+          mult = 2;
+        }
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          mult = 3;
+        }
         Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
-            fleet.getMovesLeft());
+            fleet.getMovesLeft() * mult);
         if (targetAnomaly != null) {
           // Focus on anomalies
           fleet.setRoute(null);

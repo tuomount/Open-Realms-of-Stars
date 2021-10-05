@@ -1980,6 +1980,9 @@ public class Game implements ActionListener {
       if (i == 0 && !galaxyConfig.isAiOnly()) {
         info.setHuman(true);
       }
+      if (info.isHuman()) {
+        info.setAiDifficulty(AiDifficulty.CHALLENGING);
+      }
       players.addPlayer(info);
     }
     if (galaxyConfig.getSpacePiratesLevel() > 0) {

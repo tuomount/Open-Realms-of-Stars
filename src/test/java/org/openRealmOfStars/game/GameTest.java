@@ -256,6 +256,69 @@ public class GameTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRunFullGameMediumWith3RealmsAndDifficulty() {
+    System.gc();
+    Game game = new Game(false);
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(3);
+    config.setSize(128, 2);
+    config.setScoringVictoryTurns(400);
+    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setRace(0, SpaceRace.HUMAN);
+    config.setPlayerName(0, "Challenging Terran");
+    config.setPlayerGovernment(0, GovernmentType.FEDERATION);
+    config.setRace(1, SpaceRace.HUMAN);
+    config.setPlayerGovernment(1, GovernmentType.UNION);
+    config.setPlayerName(1, "Normal Human");
+    config.setRace(2, SpaceRace.HUMAN);
+    config.setPlayerName(2, "Weak Human");
+    config.setPlayerGovernment(2, GovernmentType.DEMOCRACY);
+    game.setGalaxyConfig(config);
+    game.setPlayerInfo();
+    game.makeNewGame(false);
+    game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
+    game.getPlayers().getPlayerInfoByIndex(0).setAiDifficulty(
+        AiDifficulty.CHALLENGING);
+    game.getPlayers().getPlayerInfoByIndex(1).setAiDifficulty(
+        AiDifficulty.NORMAL);
+    game.getPlayers().getPlayerInfoByIndex(2).setAiDifficulty(
+        AiDifficulty.WEAK);
+    do {
+      game.setAITurnView(new AITurnView(game));
+      boolean singleTurnEnd = false;
+      do {
+       singleTurnEnd = game.getAITurnView().handleAiTurn();
+      } while (!singleTurnEnd);
+      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
+    } while (!game.getStarMap().isGameEnded());
+    int planets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int maxPlanets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    for (Planet planet : game.getStarMap().getPlanetList()) {
+      if (planet.getPlanetOwnerIndex() != -1) {
+        planets[planet.getPlanetOwnerIndex()]++;
+      }
+      for (int j = 0; j < game.getPlayers().getCurrentMaxPlayers(); j++) {
+        if (planet.getRadiationLevel() <= game.getPlayers()
+            .getPlayerInfoByIndex(j).getRace().getMaxRad()
+            && planet.getPlanetOwnerIndex() == -1) {
+          maxPlanets[j]++;
+        }
+      }
+    }
+    for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
+      System.out.println(i + ": "
+          + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
+          + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
+          .toString() + ")"
+          + " - planets " + planets[i] + "/" + maxPlanets[i]);
+    }
+    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
+    System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
+    System.out.println(newsData[newsData.length - 1].getNewsText());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRunFullGameMediumWith12Realms() {
     System.gc();
     Game game = new Game(false);

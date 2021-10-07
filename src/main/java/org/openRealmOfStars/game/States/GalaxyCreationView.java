@@ -773,6 +773,9 @@ public class GalaxyCreationView extends BlackPanel {
       config.setMaxPlayers(comboPlayers.getSelectedIndex() + 2);
       config.setDifficultyLevel(AiDifficulty.getByIndex(
           comboDifficulty.getSelectedIndex()));
+      for (int i = 0; i < config.getMaxPlayers(); i++) {
+        config.setPlayerDifficult(i, config.getDifficultyLevel());
+      }
       config.setStartingPosition(comboPlayerPos.getSelectedIndex());
       switch (comboGalaxySize.getSelectedIndex()) {
       case 0: {

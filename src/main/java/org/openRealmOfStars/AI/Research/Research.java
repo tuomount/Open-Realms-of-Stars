@@ -1,5 +1,6 @@
 package org.openRealmOfStars.AI.Research;
 
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
@@ -65,6 +66,16 @@ public final class Research {
    * highest default one.
    */
   public static final int VERY_HIGH_FOCUS_LEVEL = 40;
+
+  /**
+   * When AI will focus on labs at beginning. This is that focus level.
+   */
+  public static final int FOCUS_FOR_LAB = 52;
+  /**
+   * When AI with low research skill, it will focus more on labs
+   * at beginning. This is that focus level.
+   */
+  public static final int FOCUS_FOR_LAB_HIGH = 72;
 
   /**
    * Default focus level when some races have more than one high focuses.
@@ -831,7 +842,15 @@ public final class Research {
       }
     }
     if (!basicLab) {
-      info.getTechList().setTechFocus(TechType.Improvements, 40);
+      int extra = 0;
+      if (info.getAiDifficulty() == AiDifficulty.NORMAL
+          || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+        extra = 12;
+      }
+      info.getTechList().setTechFocus(TechType.Improvements, 40 + extra);
+      if (info.getRace().getResearchSpeed() == 50) {
+        info.getTechList().setTechFocus(TechType.Improvements, 60 + extra);
+      }
     } else {
       switch (info.getRace()) {
       case HUMAN: {

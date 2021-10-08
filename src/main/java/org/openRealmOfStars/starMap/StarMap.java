@@ -2406,7 +2406,9 @@ public class StarMap {
         for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
           if (i != aiTurnNumber
               && info.getDiplomacy().getDiplomaticRelations(i)
-                 < Diplomacy.RELATION_TRADE_ALLIANCE) {
+                 < Diplomacy.RELATION_TRADE_ALLIANCE
+              && info.getDiplomacy().getDiplomacyList(i)
+              .getNumberOfMeetings() > 0) {
             PlayerInfo target = players.getPlayerInfoByIndex(i);
             if (target != null) {
               Mission mission = info.getMissions().getDiplomaticMission(
@@ -2421,16 +2423,19 @@ public class StarMap {
           }
         }
       }
+      Attitude attitude = info.getAiAttitude();
       // Diplomatic attitudes try to make more friends
       if (StarMapUtilities.getNumberOfAdmires(aiTurnNumber, players)
           < players.getCurrentMaxRealms() / 2
-          && (info.getAiAttitude() == Attitude.DIPLOMATIC
-             || info.getAiAttitude() == Attitude.MERCHANTICAL
-             || info.getAiAttitude() == Attitude.PEACEFUL
-             || info.getAiAttitude() == Attitude.LOGICAL)) {
+          && (attitude == Attitude.DIPLOMATIC
+             || attitude == Attitude.MERCHANTICAL
+             || attitude == Attitude.PEACEFUL
+             || attitude == Attitude.LOGICAL)) {
         for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
           if (i != aiTurnNumber
-              && info.getDiplomacy().getLiking(i) < Diplomacy.LIKE) {
+              && info.getDiplomacy().getLiking(i) < Diplomacy.LIKE
+              && info.getDiplomacy().getDiplomacyList(i)
+              .getNumberOfMeetings() > 0) {
             PlayerInfo target = players.getPlayerInfoByIndex(i);
             if (target != null) {
               Mission mission = info.getMissions().getDiplomaticMission(
@@ -2448,14 +2453,16 @@ public class StarMap {
       // If there are more than 6 realms, even aggressive ones should have
       // at least one friend.
       if (players.getCurrentMaxRealms() > 6
-          && StarMapUtilities.getNumberOfAdmires(aiTurnNumber, players) < 0
-          && (info.getAiAttitude() == Attitude.AGGRESSIVE
-             || info.getAiAttitude() == Attitude.SCIENTIFIC
-             || info.getAiAttitude() == Attitude.MILITARISTIC
-             || info.getAiAttitude() == Attitude.EXPANSIONIST)) {
+          && StarMapUtilities.getNumberOfAdmires(aiTurnNumber, players) == 0
+          && (attitude == Attitude.AGGRESSIVE
+             || attitude == Attitude.SCIENTIFIC
+             || attitude == Attitude.MILITARISTIC
+             || attitude == Attitude.EXPANSIONIST)) {
         for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
           if (i != aiTurnNumber
-              && info.getDiplomacy().getLiking(i) < Diplomacy.LIKE) {
+              && info.getDiplomacy().getLiking(i) < Diplomacy.LIKE
+              && info.getDiplomacy().getDiplomacyList(i)
+              .getNumberOfMeetings() > 0) {
             PlayerInfo target = players.getPlayerInfoByIndex(i);
             if (target != null) {
               Mission mission = info.getMissions().getDiplomaticMission(
@@ -4580,10 +4587,13 @@ public class StarMap {
           for (int y = 0; y < getMaxY(); y++) {
             if (getSectorCulture(x, y).getHighestCulture() == index) {
               Coordinate possibleTarget = new Coordinate(x, y);
-              int dist = (int) coord.calculateDistance(possibleTarget);
-              if (dist < distance) {
-                target = possibleTarget;
-                distance = dist;
+              if (searcher.getSectorVisibility(possibleTarget)
+                  > PlayerInfo.UNCHARTED) {
+                int dist = (int) coord.calculateDistance(possibleTarget);
+                if (dist < distance) {
+                  target = possibleTarget;
+                  distance = dist;
+                }
               }
             }
           }

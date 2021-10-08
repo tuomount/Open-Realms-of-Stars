@@ -2747,6 +2747,24 @@ public class Planet {
     return false;
   }
   /**
+   * Check if planet has revealing building.
+   * This could be broadcaster or Galactic sport center.
+   * @return True if has, false if not.
+   */
+  public boolean revealing() {
+    Building[] buildingsArray = getBuildingList();
+    for (Building building : buildingsArray) {
+      if (building.isBroadcaster()) {
+        return true;
+      }
+      if (building.getName().equalsIgnoreCase("Galactic sports center")) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Check if planet has Space port for building ships
    * @return True if planet has space port, otherwise false.
    */

@@ -1360,15 +1360,12 @@ public class PlayerInfo {
         }
       }
     }
-    if (uncharted * 100 / sectorAmount > 95) {
+    if (uncharted * 100 / sectorAmount > 95
+        || bestDistance > 5) {
       bestPoint = null;
     }
     if (bestPoint == null) {
-      if (DiceGenerator.getRandom(1) == 0) {
-        bestPoint = getClosestUnchartedSector(sun, fleet);
-      } else {
-        bestPoint = getUnchartedSector(sun, fleet);
-      }
+      bestPoint = getClosestUnchartedSector(sun, fleet);
     }
     return bestPoint;
   }

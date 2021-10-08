@@ -2477,6 +2477,31 @@ public class StarMap {
           }
         }
       }
+      if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+        for (Planet planet : planetList) {
+          if (planet.getPlanetPlayerInfo() != null
+              && planet.getPlanetPlayerInfo() != info) {
+            int index = planet.getPlanetOwnerIndex();
+            if (info.getSectorVisibility(planet.getCoordinate())
+                > PlayerInfo.UNCHARTED
+                && info.getDiplomacy().getDiplomacyList(index)
+                .getNumberOfMeetings() == 0) {
+              PlayerInfo target = players.getPlayerInfoByIndex(index);
+              if (target != null) {
+                Mission mission = info.getMissions().getDiplomaticMission(
+                    target.getEmpireName());
+                if (mission == null) {
+                  mission = new Mission(MissionType.DIPLOMATIC_DELEGACY,
+                      MissionPhase.PLANNING,
+                      new Coordinate(maxX / 2, maxY / 2));
+                  mission.setTargetRealmName(target.getEmpireName());
+                  info.getMissions().add(mission);
+                }
+              }
+            }
+          }
+        }
+      }
       // Search scout ship for diplomatic delagacy mission.
       Mission mission = info.getMissions().getMission(
           MissionType.DIPLOMATIC_DELEGACY, MissionPhase.PLANNING);

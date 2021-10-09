@@ -304,6 +304,10 @@ public class StarMap {
    */
   private ArrayList<Integer> shownTutorialIndexes;
   /**
+   * All news from galaxy enabled.
+   */
+  private boolean allNewsEnabled;
+  /**
    * AI or Automate is taking fleet moves. This does not to need to save into
    * save file. This is just a flag which will be set on when AI Turn is
    * progressing.
@@ -312,7 +316,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.20";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.21";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -338,6 +342,7 @@ public class StarMap {
     setKarmaSpeed(config.getKarmaSpeed());
     setGoodKarmaCount(0);
     setBadKarmaCount(0);
+    setAllNewsEnabled(config.isAllNews());
     history = new History();
     votes = new Votes();
     shownTutorialIndexes = new ArrayList<>();
@@ -1068,6 +1073,7 @@ public class StarMap {
         Planet planet = new PlanetRepository().restorePlanet(dis, players);
         planetList.add(planet);
       }
+      setAllNewsEnabled(dis.readBoolean());
       NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
       newsCorpData = newsCorpRepo.restoreNewsCorp(dis,
           players.getCurrentMaxRealms());
@@ -1109,7 +1115,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.20");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.21");
     // Turn number
     dos.writeInt(turn);
     // Victory conditions
@@ -1146,6 +1152,7 @@ public class StarMap {
     for (int i = 0; i < planetList.size(); i++) {
       new PlanetRepository().savePlanet(dos, planetList.get(i));
     }
+    dos.writeBoolean(allNewsEnabled);
     NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
     newsCorpRepo.saveNewsCorp(dos, newsCorpData);
     votes.saveVotes(dos);
@@ -4651,5 +4658,21 @@ public class StarMap {
    */
   public void setAiOrAutomateTakingMoves(final boolean flag) {
     this.aiOrAutomateTakingMoves = flag;
+  }
+
+  /**
+   * Are all news enabled?
+   * @return True if all news are enabled.
+   */
+  public boolean isAllNewsEnabled() {
+    return allNewsEnabled;
+  }
+
+  /**
+   * Set flag for all news.
+   * @param allNewsEnabled Flag to set.
+   */
+  public void setAllNewsEnabled(final boolean allNewsEnabled) {
+    this.allNewsEnabled = allNewsEnabled;
   }
 }

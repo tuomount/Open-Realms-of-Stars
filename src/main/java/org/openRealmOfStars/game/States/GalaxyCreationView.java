@@ -156,9 +156,14 @@ public class GalaxyCreationView extends BlackPanel {
   private SpaceCheckBox tutorialEnabled;
 
   /**
-   * Checkbox for AI only hame
+   * Checkbox for AI only game
    */
   private SpaceCheckBox aiOnlyGame;
+
+  /**
+   * Checkbox for all news
+   */
+  private SpaceCheckBox allNewsSubscribed;
 
   /**
    * Galaxy config
@@ -454,6 +459,16 @@ public class GalaxyCreationView extends BlackPanel {
         + " If random events are disable this setting does not do"
         + " anything.<html>");
     info.add(comboKarmaSpeed);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    allNewsSubscribed = new SpaceCheckBox("All news enabled");
+    allNewsSubscribed.setSelected(this.config.isAllNews());
+    allNewsSubscribed.addActionListener(listener);
+    allNewsSubscribed.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    allNewsSubscribed.setAlignmentX(CENTER_ALIGNMENT);
+    allNewsSubscribed.setToolTipText("<html>If enabled all the news in galaxy"
+        + "<br> will be shown. Even on realms which have not met yet."
+        + "</html>");
+    info.add(allNewsSubscribed);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     return info;
   }
@@ -773,6 +788,7 @@ public class GalaxyCreationView extends BlackPanel {
       config.setMaxPlayers(comboPlayers.getSelectedIndex() + 2);
       config.setDifficultyLevel(AiDifficulty.getByIndex(
           comboDifficulty.getSelectedIndex()));
+      config.setAllNews(allNewsSubscribed.isSelected());
       for (int i = 0; i < config.getMaxPlayers(); i++) {
         config.setPlayerDifficult(i, config.getDifficultyLevel());
       }

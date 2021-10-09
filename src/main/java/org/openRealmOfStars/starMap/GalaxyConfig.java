@@ -237,6 +237,10 @@ public class GalaxyConfig {
    */
   private AiDifficulty difficultyLevel;
   /**
+   * Show all news in the whole galaxy.
+   */
+  private boolean allNews;
+  /**
    * Constructor for galaxy config
    */
   public GalaxyConfig() {
@@ -269,6 +273,7 @@ public class GalaxyConfig {
     playerColors = new PlayerColor[StarMap.MAX_PLAYERS];
     setEnableTutorial(true);
     setAiOnly(false);
+    setAllNews(false);
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
 
       setPlayerColor(i, PlayerColor.getByIndex(i));
@@ -866,6 +871,22 @@ public class GalaxyConfig {
    */
   public void setDifficultyLevel(final AiDifficulty difficultyLevel) {
     this.difficultyLevel = difficultyLevel;
+  }
+
+  /**
+   * Is all news flag enabled?
+   * @return True if all news are enabled
+   */
+  public boolean isAllNews() {
+    return allNews;
+  }
+
+  /**
+   * Set all news flag
+   * @param allNews All news flag
+   */
+  public void setAllNews(final boolean allNews) {
+    this.allNews = allNews;
   }
 
 }

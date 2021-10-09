@@ -1166,12 +1166,72 @@ public class PlayerInfo {
   }
 
   /**
-   * Get Best uncharted sector around certain solar system
+   * Calculate amount of uncharted sectors.
+   * @param coord Center coordinate
+   * @param scannerRange Scanner Range.
+   * @param sun Sun
+   * @return Amount uncharted sectors.
+   */
+  private int calculateAmountOfUncharted(final Coordinate coord,
+      final int scannerRange, final Sun sun) {
+    int amount = 0;
+    int cx = coord.getX();
+    int cy = coord.getY();
+    int minRange = scannerRange - 1;
+    if (minRange < 1) {
+      Coordinate newCoord = new Coordinate(cx - 1, cy);
+      if (newCoord.isValidCoordinate(maxCoordinate)
+          && getSectorVisibility(newCoord) == UNCHARTED
+          && sun.getCenterCoordinate().calculateDistance(newCoord) >= 2) {
+        amount++;
+      }
+      newCoord = new Coordinate(cx, cy - 1);
+      if (newCoord.isValidCoordinate(maxCoordinate)
+          && getSectorVisibility(newCoord) == UNCHARTED
+          && sun.getCenterCoordinate().calculateDistance(newCoord) >= 2) {
+        amount++;
+      }
+      newCoord = new Coordinate(cx, cy + 1);
+      if (newCoord.isValidCoordinate(maxCoordinate)
+          && getSectorVisibility(newCoord) == UNCHARTED
+          && sun.getCenterCoordinate().calculateDistance(newCoord) >= 2) {
+        amount++;
+      }
+      newCoord = new Coordinate(cx + 1, cy);
+      if (newCoord.isValidCoordinate(maxCoordinate)
+          && getSectorVisibility(newCoord) == UNCHARTED
+          && sun.getCenterCoordinate().calculateDistance(newCoord) >= 2) {
+        amount++;
+      }
+      newCoord = new Coordinate(cx, cy);
+      if (newCoord.isValidCoordinate(maxCoordinate)
+          && getSectorVisibility(newCoord) == UNCHARTED
+          && sun.getCenterCoordinate().calculateDistance(newCoord) >= 2) {
+        amount++;
+      }
+    } else {
+      for (int x = -minRange; x < minRange + 1; x++) {
+        for (int y = -minRange; y < minRange + 1; y++) {
+          Coordinate newCoord = new Coordinate(cx + x, cy + y);
+          if (newCoord.isValidCoordinate(maxCoordinate)
+              && getSectorVisibility(newCoord) == UNCHARTED
+              && sun.getCenterCoordinate().calculateDistance(newCoord) >= 2
+              && coord.calculateDistance(newCoord) <= scannerRange) {
+            amount++;
+          }
+        }
+      }
+    }
+    return amount;
+  }
+
+  /**
+   * Get Best uncharted sector around certain solar system for weak AI.
    * @param sun Solar system
    * @param fleet Fleet doing the exploring.
    * @return PathPoint where to go next or null if no more exploring
    */
-  public PathPoint getBestUnchartedSector(final Sun sun,
+  private PathPoint getBestUnchartedSectorWeak(final Sun sun,
       final Fleet fleet) {
     double bestDistance = 999;
     int bestScore = 0;
@@ -1187,29 +1247,15 @@ public class PlayerInfo {
             && mapData[sun.getCenterX() + x][sun.getCenterY()
               + y] == UNCHARTED) {
           double dist = coordinate.calculateDistance(fleet.getCoordinate());
-          if (aiDifficulty == AiDifficulty.STUPID) {
-            if (dist < bestDistance) {
-              double sundist = coordinate.calculateDistance(
-                  sun.getCenterCoordinate());
-              int score = 5 - Math.abs((sunScanRad - (int) sundist));
-              if (score > bestScore) {
-                bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
-                    dist);
-                bestScore = score;
-                bestDistance = dist;
-              }
-            }
-          } else {
-            if (dist <= bestDistance) {
-              double sundist = coordinate.calculateDistance(
-                  sun.getCenterCoordinate());
-              int score = 5 - Math.abs((sunScanRad - (int) sundist));
-              if (score > bestScore) {
-                bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
-                    dist);
-                bestScore = score;
-                bestDistance = dist;
-              }
+          if (dist < bestDistance) {
+            double sundist = coordinate.calculateDistance(
+                sun.getCenterCoordinate());
+            int score = 5 - Math.abs((sunScanRad - (int) sundist));
+            if (score > bestScore) {
+              bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
+                  dist);
+              bestScore = score;
+              bestDistance = dist;
             }
           }
         }
@@ -1221,6 +1267,105 @@ public class PlayerInfo {
       } else {
         bestPoint = getUnchartedSector(sun, fleet);
       }
+    }
+    return bestPoint;
+  }
+
+  /**
+   * Get Best uncharted sector around certain solar system for normal AI.
+   * @param sun Solar system
+   * @param fleet Fleet doing the exploring.
+   * @return PathPoint where to go next or null if no more exploring
+   */
+  private PathPoint getBestUnchartedSectorNormal(final Sun sun,
+      final Fleet fleet) {
+    double bestDistance = 999;
+    int bestScore = 0;
+    PathPoint bestPoint = null;
+    int scanner = fleet.getFleetScannerLvl();
+    int sunScanRad = scanner + 2;
+    for (int x = -sunScanRad; x < sunScanRad + 1; x++) {
+      for (int y = -sunScanRad; y < sunScanRad + 1; y++) {
+        Coordinate coordinate = new Coordinate(sun.getCenterX() + x,
+            sun.getCenterY() + y);
+        if (coordinate.isValidCoordinate(maxCoordinate)
+            && (x > 1 || x < -1 || y > 1 || y < -1)
+            && mapData[sun.getCenterX() + x][sun.getCenterY()
+              + y] == UNCHARTED) {
+          double dist = coordinate.calculateDistance(fleet.getCoordinate());
+          if (dist <= bestDistance) {
+            double sundist = coordinate.calculateDistance(
+                sun.getCenterCoordinate());
+            int score = 5 - Math.abs((sunScanRad - (int) sundist))
+                + calculateAmountOfUncharted(coordinate, scanner, sun);
+            if (score > bestScore) {
+              bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
+                  dist);
+              bestScore = score;
+              bestDistance = dist;
+            }
+          }
+        }
+      }
+    }
+    if (bestPoint == null) {
+      if (DiceGenerator.getRandom(1) == 0) {
+        bestPoint = getClosestUnchartedSector(sun, fleet);
+      } else {
+        bestPoint = getUnchartedSector(sun, fleet);
+      }
+    }
+    return bestPoint;
+  }
+
+  /**
+   * Get Best uncharted sector around certain solar system
+   * @param sun Solar system
+   * @param fleet Fleet doing the exploring.
+   * @return PathPoint where to go next or null if no more exploring
+   */
+  public PathPoint getBestUnchartedSector(final Sun sun,
+      final Fleet fleet) {
+    if (aiDifficulty == AiDifficulty.WEAK) {
+      return getBestUnchartedSectorWeak(sun, fleet);
+    }
+    if (aiDifficulty == AiDifficulty.NORMAL) {
+      return getBestUnchartedSectorNormal(sun, fleet);
+    }
+    double bestDistance = 999;
+    int bestScore = 0;
+    PathPoint bestPoint = null;
+    int uncharted = 0;
+    int sectorAmount = 0;
+    int scanner = fleet.getFleetScannerLvl();
+    int sunScanRad = scanner + 2;
+    for (int x = -sunScanRad; x < sunScanRad + 1; x++) {
+      for (int y = -sunScanRad; y < sunScanRad + 1; y++) {
+        Coordinate coordinate = new Coordinate(sun.getCenterX() + x,
+            sun.getCenterY() + y);
+        if (coordinate.isValidCoordinate(maxCoordinate)
+            && (x > 1 || x < -1 || y > 1 || y < -1)) {
+          sectorAmount++;
+          if (getSectorVisibility(coordinate) == UNCHARTED) {
+            uncharted++;
+          }
+          double dist = coordinate.calculateDistance(fleet.getCoordinate());
+          int score = calculateAmountOfUncharted(coordinate, scanner, sun);
+          if (score > bestScore && dist <= bestDistance) {
+            bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
+                dist);
+            bestScore = score;
+            bestDistance = dist;
+          }
+        }
+      }
+    }
+    if (uncharted * 100 / sectorAmount > 95
+        || bestDistance > 5) {
+      bestPoint = null;
+    }
+    if (bestPoint == null) {
+      bestPoint = getClosestUnchartedSector(sun, fleet);
     }
     return bestPoint;
   }

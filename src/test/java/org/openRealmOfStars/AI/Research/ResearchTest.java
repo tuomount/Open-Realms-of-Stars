@@ -23,7 +23,7 @@ import org.openRealmOfStars.starMap.StarMap;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017-2019, 2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -47,7 +47,7 @@ public class ResearchTest {
   public void testResearchHandlingHuman() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
     Research.handle(info);
-    assertEquals(Research.VERY_HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.FOCUS_FOR_LAB, 
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
@@ -169,7 +169,7 @@ public class ResearchTest {
   public void testResearchHandlingCentaurs() {
     PlayerInfo info = new PlayerInfo(SpaceRace.CENTAURS);
     Research.handle(info);
-    assertEquals(Research.VERY_HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.FOCUS_FOR_LAB, 
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
@@ -192,7 +192,7 @@ public class ResearchTest {
   public void testResearchHandlingGreyans() {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
     Research.handle(info);
-    assertEquals(Research.VERY_HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.FOCUS_FOR_LAB, 
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
@@ -215,7 +215,7 @@ public class ResearchTest {
   public void testResearchHandlingSporks() {
     PlayerInfo info = new PlayerInfo(SpaceRace.SPORKS);
     Research.handle(info);
-    assertEquals(Research.VERY_HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.FOCUS_FOR_LAB, 
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
@@ -238,7 +238,7 @@ public class ResearchTest {
   public void testResearchHandlingMechions() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
     Research.handle(info);
-    assertEquals(Research.VERY_HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.FOCUS_FOR_LAB_HIGH, 
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
@@ -284,7 +284,7 @@ public class ResearchTest {
     PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
     info.setAttitude(Attitude.BACKSTABBING);
     Research.handle(info);
-    assertEquals(Research.VERY_HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.FOCUS_FOR_LAB, 
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
@@ -312,7 +312,7 @@ public class ResearchTest {
   public void testResearchHandlingScaurians() {
     PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
     Research.handle(info);
-    assertEquals(Research.VERY_HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.FOCUS_FOR_LAB, 
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);

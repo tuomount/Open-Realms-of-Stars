@@ -1,5 +1,6 @@
 package org.openRealmOfStars.starMap;
 
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
@@ -119,6 +120,10 @@ public class GalaxyConfig {
    */
   private PlayerColor[] playerColors;
   /**
+   * Player difficulty
+   */
+  private AiDifficulty[] playerDifficult;
+  /**
    * Player ancient realm.
    */
   private boolean[] playerAncientRealm;
@@ -227,7 +232,11 @@ public class GalaxyConfig {
    * AI only playing the game.
    */
   private boolean aiOnly;
-/**
+  /**
+   * Generic Difficulty level
+   */
+  private AiDifficulty difficultyLevel;
+  /**
    * Constructor for galaxy config
    */
   public GalaxyConfig() {
@@ -242,6 +251,7 @@ public class GalaxyConfig {
     setChanceForPlanetaryEvent(10);
     setNumberOfRoguePlanets(ROGUE_PLANETS_FEW);
     setScoringVictoryTurns(300);
+    setDifficultyLevel(AiDifficulty.NORMAL);
     setScoreLimitCulture(1);
     setScoreLimitConquer(1);
     setScoreLimitResearch(2);
@@ -255,6 +265,7 @@ public class GalaxyConfig {
     playerName = new String[StarMap.MAX_PLAYERS];
     playerGovernment = new GovernmentType[StarMap.MAX_PLAYERS];
     playerAncientRealm = new boolean[StarMap.MAX_PLAYERS];
+    playerDifficult = new AiDifficulty[StarMap.MAX_PLAYERS];
     playerColors = new PlayerColor[StarMap.MAX_PLAYERS];
     setEnableTutorial(true);
     setAiOnly(false);
@@ -265,6 +276,7 @@ public class GalaxyConfig {
       while (true) {
         GovernmentType gov = GovernmentUtility.getRandomGovernment(getRace(i));
         setPlayerGovernment(i, gov);
+        setPlayerDifficult(i, AiDifficulty.NORMAL);
         String tmp = SpaceRaceUtility.getRandomName(getRace(i),
             getPlayerGovernment(i));
         if (isUniqueName(tmp)) {
@@ -380,6 +392,29 @@ public class GalaxyConfig {
       return playerColors[index];
     }
     return null;
+  }
+
+  /**
+   * Get Player difficulty.
+   * @param index Player Index
+   * @return AiDifficulty
+   */
+  public AiDifficulty getDifficulty(final int index) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      return playerDifficult[index];
+    }
+    return null;
+  }
+  /**
+   * Set Player Difficult
+   * @param index Player index
+   * @param difficult AiDifficulty to set.
+   */
+  public void setPlayerDifficult(final int index,
+      final AiDifficulty difficult) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      playerDifficult[index] = difficult;
+    }
   }
   /**
    * Set Ancient realm for player
@@ -815,6 +850,22 @@ public class GalaxyConfig {
    */
   public void setAiOnly(final boolean aiOnly) {
     this.aiOnly = aiOnly;
+  }
+
+  /**
+   * Get Generic AI difficulty
+   * @return AiDifficulty
+   */
+  public AiDifficulty getDifficultyLevel() {
+    return difficultyLevel;
+  }
+
+  /**
+   * Set Generic AI Difficulty
+   * @param difficultyLevel Generic difficulty
+   */
+  public void setDifficultyLevel(final AiDifficulty difficultyLevel) {
+    this.difficultyLevel = difficultyLevel;
   }
 
 }

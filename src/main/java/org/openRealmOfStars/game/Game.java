@@ -1974,10 +1974,14 @@ public class Game implements ActionListener {
       info.setGovernment(galaxyConfig.getPlayerGovernment(i));
       info.setEmpireName(galaxyConfig.getPlayerName(i));
       info.setAncientRealm(galaxyConfig.getPlayerAncientRealm(i));
+      info.setAiDifficulty(galaxyConfig.getDifficulty(i));
       info.setColor(galaxyConfig.getPlayerColor(i));
       randomListOfColors.remove(galaxyConfig.getPlayerColor(i));
       if (i == 0 && !galaxyConfig.isAiOnly()) {
         info.setHuman(true);
+      }
+      if (info.isHuman()) {
+        info.setAiDifficulty(AiDifficulty.CHALLENGING);
       }
       players.addPlayer(info);
     }
@@ -1992,7 +1996,7 @@ public class Game implements ActionListener {
           .getSpacePiratesDifficulty();
       if (difficultyLevel == PirateDifficultLevel.EASY
           || difficultyLevel == PirateDifficultLevel.VERY_EASY) {
-        info.setAiDifficulty(AiDifficulty.STUPID);
+        info.setAiDifficulty(AiDifficulty.WEAK);
       }
       if (difficultyLevel == PirateDifficultLevel.NORMAL) {
         info.setAiDifficulty(AiDifficulty.NORMAL);

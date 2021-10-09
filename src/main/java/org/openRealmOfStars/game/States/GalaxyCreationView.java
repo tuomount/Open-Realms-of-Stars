@@ -21,6 +21,7 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
@@ -69,6 +70,10 @@ public class GalaxyCreationView extends BlackPanel {
    */
   private SpaceCombo<String> comboPlayers;
 
+  /**
+   * Generic AI difficulty level.
+   */
+  private SpaceCombo<String> comboDifficulty;
   /**
    * ComboBox on player start positions
    */
@@ -484,6 +489,20 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayers.addActionListener(listener);
     info.add(comboPlayers);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
+    label = new SpaceLabel("AI Difficulty");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 8)));
+    String[] genericDifficulty = new String[3];
+    genericDifficulty[0] = "Weak";
+    genericDifficulty[1] = "Normal";
+    genericDifficulty[2] = "Challenging";
+    comboDifficulty = new SpaceCombo<>(genericDifficulty);
+    comboDifficulty.setSelectedIndex(config.getDifficultyLevel().getIndex());
+    comboDifficulty.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboDifficulty.addActionListener(listener);
+    info.add(comboDifficulty);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new SpaceLabel("Starting position");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
@@ -752,6 +771,11 @@ public class GalaxyCreationView extends BlackPanel {
       config.setEnableTutorial(tutorialEnabled.isSelected());
       config.setAiOnly(aiOnlyGame.isSelected());
       config.setMaxPlayers(comboPlayers.getSelectedIndex() + 2);
+      config.setDifficultyLevel(AiDifficulty.getByIndex(
+          comboDifficulty.getSelectedIndex()));
+      for (int i = 0; i < config.getMaxPlayers(); i++) {
+        config.setPlayerDifficult(i, config.getDifficultyLevel());
+      }
       config.setStartingPosition(comboPlayerPos.getSelectedIndex());
       switch (comboGalaxySize.getSelectedIndex()) {
       case 0: {

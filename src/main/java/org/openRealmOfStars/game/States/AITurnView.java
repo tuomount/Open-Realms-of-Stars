@@ -3045,9 +3045,11 @@ public class AITurnView extends BlackPanel {
             towers[planet.getPlanetOwnerIndex()]++;
           }
         }
-        if (planet.broadcaster()
+        if (planet.revealing()
             && planet.getPlanetOwnerIndex() < broadcasters.length) {
-          broadcasters[planet.getPlanetOwnerIndex()] = true;
+          if (planet.broadcaster()) {
+            broadcasters[planet.getPlanetOwnerIndex()] = true;
+          }
           for (int j = 0; j < game.getPlayers().getCurrentMaxRealms(); j++) {
             PlayerInfo realm = game.getPlayers().getPlayerInfoByIndex(j);
             if (realm != null

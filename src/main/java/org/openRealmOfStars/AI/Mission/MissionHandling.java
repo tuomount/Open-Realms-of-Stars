@@ -308,8 +308,15 @@ public final class MissionHandling {
         }
       }
       if (mission.getPhase() == MissionPhase.TREKKING) {
+        int mult = 1;
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL) {
+          mult = 2;
+        }
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          mult = 3;
+        }
         Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
-            fleet.getMovesLeft());
+            fleet.getMovesLeft() * mult);
         if (targetAnomaly != null) {
           // Focus on anomalies
           fleet.setRoute(null);
@@ -946,13 +953,16 @@ public final class MissionHandling {
           } else {
             Coordinate coord = game.getStarMap().getClosetSectorFromCoordinate(
                 fleet.getCoordinate(), mission.getTargetRealmName(), info);
-            if (coord != null) {
-              mission.setTarget(coord);
-            }
+            mission.setTarget(coord);
           }
         }
-        mission.setPhase(MissionPhase.TREKKING);
-        mission.setMissionTime(0);
+        if (mission.getX() != -1) {
+          mission.setPhase(MissionPhase.TREKKING);
+          mission.setMissionTime(0);
+        } else {
+          mission.setType(MissionType.EXPLORE);
+          mission.setPhase(MissionPhase.LOADING);
+        }
       }
       Coordinate targetCoord = new Coordinate(mission.getX(), mission.getY());
       if (mission.getPhase() == MissionPhase.TREKKING

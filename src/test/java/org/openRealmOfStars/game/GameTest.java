@@ -75,6 +75,14 @@ public class GameTest {
     config.setMaxPlayers(8);
     config.setScoringVictoryTurns(100);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setPlayerDifficult(0, AiDifficulty.WEAK);
+    config.setPlayerDifficult(1, AiDifficulty.WEAK);
+    config.setPlayerDifficult(2, AiDifficulty.WEAK);
+    config.setPlayerDifficult(3, AiDifficulty.WEAK);
+    config.setPlayerDifficult(4, AiDifficulty.WEAK);
+    config.setPlayerDifficult(5, AiDifficulty.WEAK);
+    config.setPlayerDifficult(6, AiDifficulty.WEAK);
+    config.setPlayerDifficult(7, AiDifficulty.WEAK);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
@@ -88,7 +96,7 @@ public class GameTest {
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-    System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
+    System.out.print("Weak AI Done, turn " + game.getStarMap().getTurn()+ ": ");
     System.out.println(newsData[newsData.length - 1].getNewsText());
   }
 
@@ -101,6 +109,14 @@ public class GameTest {
     config.setMaxPlayers(8);
     config.setScoringVictoryTurns(200);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setPlayerDifficult(0, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(1, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(2, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(3, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(4, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(5, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(6, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(7, AiDifficulty.NORMAL);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
@@ -114,7 +130,7 @@ public class GameTest {
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-    System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
+    System.out.print("Normal AI Done, turn " + game.getStarMap().getTurn()+ ": ");
     System.out.println(newsData[newsData.length - 1].getNewsText());
   }
 
@@ -127,6 +143,10 @@ public class GameTest {
     config.setMaxPlayers(4);
     config.setScoringVictoryTurns(400);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(3, AiDifficulty.CHALLENGING);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
@@ -140,7 +160,7 @@ public class GameTest {
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-    System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
+    System.out.print("Challenging Done, turn " + game.getStarMap().getTurn()+ ": ");
     System.out.println(newsData[newsData.length - 1].getNewsText());
   }
 
@@ -154,6 +174,14 @@ public class GameTest {
     config.setSize(128, 2);
     config.setScoringVictoryTurns(400);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(3, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(4, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(5, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(6, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(7, AiDifficulty.WEAK);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
@@ -183,6 +211,8 @@ public class GameTest {
     for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
       System.out.println(i + ": "
           + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
+          + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
+          .toString() + ")"
           + " - planets " + planets[i] + "/" + maxPlanets[i]);
     }
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
@@ -330,6 +360,18 @@ public class GameTest {
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     config.setSpacePiratesDifficulty(PirateDifficultLevel.EASY);
     config.setSpacePiratesLevel(2);
+    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(3, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(4, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(5, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(6, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(7, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(8, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(9, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(10, AiDifficulty.WEAK);
+    config.setPlayerDifficult(11, AiDifficulty.WEAK);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
@@ -359,6 +401,8 @@ public class GameTest {
     for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
       System.out.println(i + ": "
           + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
+          + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
+          .toString() + ")"
           + " - planets " + planets[i] + "/" + maxPlanets[i]);
     }
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
@@ -379,6 +423,14 @@ public class GameTest {
     config.setRace(0, SpaceRace.LITHORIANS);
     config.setPlayerGovernment(0, GovernmentType.EMPIRE);
     config.setPlayerName(0, "Empire of Lithorian");
+    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(3, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(4, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(5, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(6, AiDifficulty.WEAK);
+    config.setPlayerDifficult(7, AiDifficulty.WEAK);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
@@ -408,6 +460,8 @@ public class GameTest {
     for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
       System.out.println(i + ": "
           + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
+          + "(" + game.getPlayers().getPlayerInfoByIndex(i)
+          .getAiDifficulty().toString() + ")"
           + " - planets " + planets[i] + "/" + maxPlanets[i]);
     }
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
@@ -484,6 +538,14 @@ public class GameTest {
     config.setChanceForPlanetaryEvent(40);
     config.setKarmaType(KarmaType.SECOND_FIRST_AND_LAST);
     config.setKarmaSpeed(2);
+    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(1, AiDifficulty.WEAK);
+    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(3, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(4, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(5, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(6, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(7, AiDifficulty.NORMAL);
     config.setAncientHeadStart(40);
     config.setPlayerAncientRealm(1, true);
     config.setPlayerAncientRealm(2, true);
@@ -515,7 +577,10 @@ public class GameTest {
       System.out.println(newsData[newsData.length - 1].getNewsText());
       for (int i = 0; i < game.getStarMap().getPlayerList().getCurrentMaxRealms(); i++) {
         PlayerInfo info = game.getStarMap().getPlayerByIndex(i);
-        System.out.println(i + ": " + info.getEmpireName() + " - " + info.isAncientRealm());
+        System.out.println(i + ": " + info.getEmpireName()
+        + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
+        .toString() + ")"
+        + " - " + info.isAncientRealm());
       }
     } else {
       System.out.println("not sure who win!");

@@ -102,8 +102,7 @@ public enum AiDifficulty {
     case CHALLENGING: {
       return "<html>Challening AI is try to achieve challenging enough for"
           + " very experienced 4X player. <br>There should not be obvious"
-          + " mistakes and this should giving good fight.<br>"
-          + "For now this is still work in progress.</html>";
+          + " mistakes and this should giving good fight.<br></html>";
     }
   }
   }

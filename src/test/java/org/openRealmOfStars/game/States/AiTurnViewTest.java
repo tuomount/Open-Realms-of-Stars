@@ -209,7 +209,7 @@ public class AiTurnViewTest {
     view.updateSpacePirates(pirates,
         PirateDifficultLevel.VERY_HARD, true);
     tech = pirates.getTechList().getBestWeapon();
-    assertEquals(true, tech.getLevel() >= 4);
+    assertEquals(true, tech.getLevel() >= 3);
     view.updateSpacePirates(pirates,
         PirateDifficultLevel.VERY_HARD, true);
     view.updateSpacePirates(pirates,

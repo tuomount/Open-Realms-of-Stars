@@ -664,7 +664,9 @@ public class PlanetBombingView extends BlackPanel {
         NewsData news = NewsFactory.makeLeaderEscape(planet.getGovernor(),
             planet.getPlanetPlayerInfo(), null, attackType);
         if (starMap != null) {
-          starMap.getNewsCorpData().addNews(news);
+          if (starMap.hasHumanMet(planet.getPlanetPlayerInfo())) {
+            starMap.getNewsCorpData().addNews(news);
+          }
           starMap.getHistory().addEvent(
               NewsFactory.makeLeaderEvent(planet.getGovernor(),
                   planet.getPlanetPlayerInfo(), starMap, news));
@@ -687,7 +689,9 @@ public class PlanetBombingView extends BlackPanel {
         NewsData news = NewsFactory.makeLeaderDies(planet.getGovernor(),
             planet.getPlanetPlayerInfo(), reason);
         if (starMap != null) {
-          starMap.getNewsCorpData().addNews(news);
+          if (starMap.hasHumanMet(planet.getPlanetPlayerInfo())) {
+            starMap.getNewsCorpData().addNews(news);
+          }
           starMap.getHistory().addEvent(
               NewsFactory.makeLeaderEvent(planet.getGovernor(),
                   planet.getPlanetPlayerInfo(), starMap, news));

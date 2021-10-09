@@ -2618,7 +2618,9 @@ public class StarMap {
                 Icons.getIconByName(Icons.ICON_RULER));
             msg.setMatchByString("Index:" + info.getLeaderIndex(ruler));
             NewsData news = NewsFactory.makeNewRulerNews(ruler, info);
-            getNewsCorpData().addNews(news);
+            if (hasHumanMet(info)) {
+              getNewsCorpData().addNews(news);
+            }
             getHistory().addEvent(NewsFactory.makeLeaderEvent(info.getRuler(),
                 info, this, news));
           }
@@ -4674,5 +4676,30 @@ public class StarMap {
    */
   public void setAllNewsEnabled(final boolean allNewsEnabled) {
     this.allNewsEnabled = allNewsEnabled;
+  }
+
+  /**
+   * Has human aka player met certain realm yet. This will also return true
+   * if all news are subscribed. This method should be used when deciding if
+   * certain news are going to show.
+   * @param target Which realm is to be studied
+   * @return True if has met or player realm and target are equal.
+   */
+  public boolean hasHumanMet(final PlayerInfo target) {
+    if (isAllNewsEnabled()) {
+      return true;
+    }
+    PlayerInfo human = players.getPlayerInfoByIndex(0);
+    if (target == human) {
+      return true;
+    }
+    if (target == null) {
+      return false;
+    }
+    int i = players.getIndex(target);
+    if (human.getDiplomacy().getDiplomacyList(i).getNumberOfMeetings() > 0) {
+      return true;
+    }
+    return false;
   }
 }

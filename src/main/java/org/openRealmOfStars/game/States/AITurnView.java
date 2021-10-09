@@ -3394,6 +3394,7 @@ public class AITurnView extends BlackPanel {
    * @return True when turn has finished or need to change state
    */
   public boolean handleAiTurn() {
+    game.getStarMap().setAiOrAutomateTakingMoves(true);
     if (game.getStarMap().getAIFleet() == null) {
       game.getStarMap().handleAIResearchAndPlanets();
       searchForInterceptFleets();
@@ -3513,7 +3514,6 @@ public class AITurnView extends BlackPanel {
       updateText();
       synchronized (aiThread) {
         if (!aiThread.isStarted()) {
-          game.getStarMap().setAiOrAutomateTakingMoves(true);
           aiThread.start();
         }
       }
@@ -3524,7 +3524,6 @@ public class AITurnView extends BlackPanel {
           return;
         }
         if (readyToMove) {
-          game.getStarMap().setAiOrAutomateTakingMoves(false);
           if (game.getStarMap().getNewsCorpData().isNewsToShow()) {
             game.changeGameState(GameState.NEWS_CORP_VIEW);
           } else {

@@ -2351,6 +2351,7 @@ public class StarMap {
   public void clearAITurn() {
     aiTurnNumber = 0;
     aiFleet = null;
+    aiOrAutomateTakingMoves = false;
   }
 
   /**
@@ -3306,7 +3307,6 @@ public class StarMap {
               Icons.getIconByName(Icons.ICON_HULL_TECH));
         msg.setCoordinate(fleet.getCoordinate());
         msg.setMatchByString(fleet.getName());
-        //FIXME
         if (aiOrAutomateTakingMoves) {
           info.getMsgList().addUpcomingMessage(msg);
         } else {
@@ -3348,7 +3348,11 @@ public class StarMap {
               sb.toString(), Icons.getIconByName(Icons.ICON_PLANET));
           msg.setCoordinate(planet.getCoordinate());
           msg.setMatchByString(planet.getName());
-          info.getMsgList().addNewMessage(msg);
+          if (aiOrAutomateTakingMoves) {
+            info.getMsgList().addUpcomingMessage(msg);
+          } else {
+            info.getMsgList().addNewMessage(msg);
+          }
           return;
         }
       }
@@ -3359,7 +3363,11 @@ public class StarMap {
             Icons.getIconByName(Icons.ICON_STARBASE));
         msg.setCoordinate(new Coordinate(sx, sy));
         msg.setMatchByString(fleet.getName());
-        info.getMsgList().addNewMessage(msg);
+        if (aiOrAutomateTakingMoves) {
+          info.getMsgList().addUpcomingMessage(msg);
+        } else {
+          info.getMsgList().addNewMessage(msg);
+        }
         return;
       }
     }

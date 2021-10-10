@@ -304,6 +304,10 @@ public class StarMap {
    */
   private ArrayList<Integer> shownTutorialIndexes;
   /**
+   * All news from galaxy enabled.
+   */
+  private boolean allNewsEnabled;
+  /**
    * AI or Automate is taking fleet moves. This does not to need to save into
    * save file. This is just a flag which will be set on when AI Turn is
    * progressing.
@@ -312,7 +316,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.20";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.21";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -338,6 +342,7 @@ public class StarMap {
     setKarmaSpeed(config.getKarmaSpeed());
     setGoodKarmaCount(0);
     setBadKarmaCount(0);
+    setAllNewsEnabled(config.isAllNews());
     history = new History();
     votes = new Votes();
     shownTutorialIndexes = new ArrayList<>();
@@ -1068,6 +1073,7 @@ public class StarMap {
         Planet planet = new PlanetRepository().restorePlanet(dis, players);
         planetList.add(planet);
       }
+      setAllNewsEnabled(dis.readBoolean());
       NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
       newsCorpData = newsCorpRepo.restoreNewsCorp(dis,
           players.getCurrentMaxRealms());
@@ -1109,7 +1115,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.20");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.21");
     // Turn number
     dos.writeInt(turn);
     // Victory conditions
@@ -1146,6 +1152,7 @@ public class StarMap {
     for (int i = 0; i < planetList.size(); i++) {
       new PlanetRepository().savePlanet(dos, planetList.get(i));
     }
+    dos.writeBoolean(allNewsEnabled);
     NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
     newsCorpRepo.saveNewsCorp(dos, newsCorpData);
     votes.saveVotes(dos);
@@ -2344,6 +2351,7 @@ public class StarMap {
   public void clearAITurn() {
     aiTurnNumber = 0;
     aiFleet = null;
+    aiOrAutomateTakingMoves = false;
   }
 
   /**
@@ -2611,7 +2619,9 @@ public class StarMap {
                 Icons.getIconByName(Icons.ICON_RULER));
             msg.setMatchByString("Index:" + info.getLeaderIndex(ruler));
             NewsData news = NewsFactory.makeNewRulerNews(ruler, info);
-            getNewsCorpData().addNews(news);
+            if (hasHumanMet(info)) {
+              getNewsCorpData().addNews(news);
+            }
             getHistory().addEvent(NewsFactory.makeLeaderEvent(info.getRuler(),
                 info, this, news));
           }
@@ -3297,7 +3307,6 @@ public class StarMap {
               Icons.getIconByName(Icons.ICON_HULL_TECH));
         msg.setCoordinate(fleet.getCoordinate());
         msg.setMatchByString(fleet.getName());
-        //FIXME
         if (aiOrAutomateTakingMoves) {
           info.getMsgList().addUpcomingMessage(msg);
         } else {
@@ -3339,7 +3348,11 @@ public class StarMap {
               sb.toString(), Icons.getIconByName(Icons.ICON_PLANET));
           msg.setCoordinate(planet.getCoordinate());
           msg.setMatchByString(planet.getName());
-          info.getMsgList().addNewMessage(msg);
+          if (aiOrAutomateTakingMoves) {
+            info.getMsgList().addUpcomingMessage(msg);
+          } else {
+            info.getMsgList().addNewMessage(msg);
+          }
           return;
         }
       }
@@ -3350,7 +3363,11 @@ public class StarMap {
             Icons.getIconByName(Icons.ICON_STARBASE));
         msg.setCoordinate(new Coordinate(sx, sy));
         msg.setMatchByString(fleet.getName());
-        info.getMsgList().addNewMessage(msg);
+        if (aiOrAutomateTakingMoves) {
+          info.getMsgList().addUpcomingMessage(msg);
+        } else {
+          info.getMsgList().addNewMessage(msg);
+        }
         return;
       }
     }
@@ -4651,5 +4668,46 @@ public class StarMap {
    */
   public void setAiOrAutomateTakingMoves(final boolean flag) {
     this.aiOrAutomateTakingMoves = flag;
+  }
+
+  /**
+   * Are all news enabled?
+   * @return True if all news are enabled.
+   */
+  public boolean isAllNewsEnabled() {
+    return allNewsEnabled;
+  }
+
+  /**
+   * Set flag for all news.
+   * @param allNewsEnabled Flag to set.
+   */
+  public void setAllNewsEnabled(final boolean allNewsEnabled) {
+    this.allNewsEnabled = allNewsEnabled;
+  }
+
+  /**
+   * Has human aka player met certain realm yet. This will also return true
+   * if all news are subscribed. This method should be used when deciding if
+   * certain news are going to show.
+   * @param target Which realm is to be studied
+   * @return True if has met or player realm and target are equal.
+   */
+  public boolean hasHumanMet(final PlayerInfo target) {
+    if (isAllNewsEnabled()) {
+      return true;
+    }
+    PlayerInfo human = players.getPlayerInfoByIndex(0);
+    if (target == human) {
+      return true;
+    }
+    if (target == null) {
+      return false;
+    }
+    int i = players.getIndex(target);
+    if (human.getDiplomacy().getDiplomacyList(i).getNumberOfMeetings() > 0) {
+      return true;
+    }
+    return false;
   }
 }

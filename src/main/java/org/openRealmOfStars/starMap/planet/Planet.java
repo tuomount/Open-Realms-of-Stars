@@ -3553,7 +3553,9 @@ public class Planet {
         NewsData news = NewsFactory.makeLeaderDies(getGovernor(),
             getPlanetPlayerInfo(), reason);
         if (starMap != null) {
-          starMap.getNewsCorpData().addNews(news);
+          if (starMap.hasHumanMet(getPlanetPlayerInfo())) {
+            starMap.getNewsCorpData().addNews(news);
+          }
           starMap.getHistory().addEvent(
               NewsFactory.makeLeaderEvent(getGovernor(),
                   getPlanetPlayerInfo(), starMap, news));

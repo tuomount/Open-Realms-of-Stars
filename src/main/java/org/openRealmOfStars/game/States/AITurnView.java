@@ -2305,7 +2305,9 @@ public class AITurnView extends BlackPanel {
         }
         NewsData news = NewsFactory.makeLeaderDies(leader, realm,
             reason);
-        game.getStarMap().getNewsCorpData().addNews(news);
+        if (game.getStarMap().hasHumanMet(realm)) {
+          game.getStarMap().getNewsCorpData().addNews(news);
+        }
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
             news));
@@ -2495,7 +2497,9 @@ public class AITurnView extends BlackPanel {
     }
     if (prisoner != null) {
       NewsData news = NewsFactory.makeLeaderFreed(prisoner, realm);
-      game.getStarMap().getNewsCorpData().addNews(news);
+      if (game.getStarMap().hasHumanMet(realm)) {
+        game.getStarMap().getNewsCorpData().addNews(news);
+      }
       game.getStarMap().getHistory().addEvent(
           NewsFactory.makeLeaderEvent(prisoner, realm,
           game.getStarMap(), news));
@@ -2535,7 +2539,9 @@ public class AITurnView extends BlackPanel {
           msg.setMatchByString("Index:" + realm.getLeaderIndex(ruler));
           realm.getMsgList().addUpcomingMessage(msg);
           NewsData news = NewsFactory.makeNewRulerNews(ruler, realm);
-          game.getStarMap().getNewsCorpData().addNews(news);
+          if (game.getStarMap().hasHumanMet(realm)) {
+            game.getStarMap().getNewsCorpData().addNews(news);
+          }
           game.getStarMap().getHistory().addEvent(
               NewsFactory.makeLeaderEvent(realm.getRuler(), realm,
               game.getStarMap(), news));
@@ -2627,6 +2633,7 @@ public class AITurnView extends BlackPanel {
                     realm.getMsgList().addUpcomingMessage(msg);
                   }
               }
+              Job oldJob = leader.getJob();
               leader.setJob(Job.DEAD);
               Message msg = new Message(MessageType.LEADER,
                   leader.getCallName()
@@ -2660,7 +2667,11 @@ public class AITurnView extends BlackPanel {
               }
               NewsData news = NewsFactory.makeLeaderDies(leader, realm,
                   reason);
-              game.getStarMap().getNewsCorpData().addNews(news);
+              if (game.getStarMap().isAllNewsEnabled()
+                  || oldJob == Job.RULER
+                  && game.getStarMap().hasHumanMet(realm)) {
+                game.getStarMap().getNewsCorpData().addNews(news);
+              }
               game.getStarMap().getHistory().addEvent(
                   NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
                   news));
@@ -2783,7 +2794,9 @@ public class AITurnView extends BlackPanel {
             heir.setJob(Job.TOO_YOUNG);
             heir.setTitle(LeaderUtility.createTitleForLeader(heir, realm));
             NewsData news = NewsFactory.makeHeirNews(heir, realm);
-            game.getStarMap().getNewsCorpData().addNews(news);
+            if (game.getStarMap().hasHumanMet(realm)) {
+              game.getStarMap().getNewsCorpData().addNews(news);
+            }
             game.getStarMap().getHistory().addEvent(
                 NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
                 news));
@@ -2801,8 +2814,10 @@ public class AITurnView extends BlackPanel {
             && leader.getTimeInJob() >= realm.getGovernment().reignTime()) {
           leader.setJob(Job.UNASSIGNED);
           realm.setRuler(null);
-          game.getStarMap().getNewsCorpData().addNews(
-              NewsFactory.makeElectionNews(leader, realm));
+          if (game.getStarMap().hasHumanMet(realm)) {
+            game.getStarMap().getNewsCorpData().addNews(
+                NewsFactory.makeElectionNews(leader, realm));
+          }
         }
       }
       int required = leader.getRequiredExperience();
@@ -3379,6 +3394,7 @@ public class AITurnView extends BlackPanel {
    * @return True when turn has finished or need to change state
    */
   public boolean handleAiTurn() {
+    game.getStarMap().setAiOrAutomateTakingMoves(true);
     if (game.getStarMap().getAIFleet() == null) {
       game.getStarMap().handleAIResearchAndPlanets();
       searchForInterceptFleets();
@@ -3498,7 +3514,6 @@ public class AITurnView extends BlackPanel {
       updateText();
       synchronized (aiThread) {
         if (!aiThread.isStarted()) {
-          game.getStarMap().setAiOrAutomateTakingMoves(true);
           aiThread.start();
         }
       }
@@ -3509,7 +3524,6 @@ public class AITurnView extends BlackPanel {
           return;
         }
         if (readyToMove) {
-          game.getStarMap().setAiOrAutomateTakingMoves(false);
           if (game.getStarMap().getNewsCorpData().isNewsToShow()) {
             game.changeGameState(GameState.NEWS_CORP_VIEW);
           } else {

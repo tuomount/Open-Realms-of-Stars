@@ -2599,7 +2599,10 @@ public final class MissionHandling {
       planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
       NewsData news = NewsFactory.makeBuildingDestroyedNews(planet, building,
           "");
-      game.getStarMap().getNewsCorpData().addNews(news);
+      if (game.getStarMap().hasHumanMet(planet.getPlanetPlayerInfo())
+          || game.getStarMap().hasHumanMet(info)) {
+        game.getStarMap().getNewsCorpData().addNews(news);
+      }
       fleet.getCommander().setExperience(
           fleet.getCommander().getExperience() + type.getExperienceReward());
       game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
@@ -2690,7 +2693,9 @@ public final class MissionHandling {
         planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
         NewsData news = NewsFactory.makeLeaderDies(governor,
             planet.getPlanetPlayerInfo(), "assasination");
-        game.getStarMap().getNewsCorpData().addNews(news);
+        if (game.getStarMap().hasHumanMet(planet.getPlanetPlayerInfo())) {
+          game.getStarMap().getNewsCorpData().addNews(news);
+        }
         fleet.getCommander().setExperience(
             fleet.getCommander().getExperience() + type.getExperienceReward());
       }
@@ -2735,7 +2740,10 @@ public final class MissionHandling {
       }
       NewsData news = NewsFactory.makeLeaderFalseFlag(leader, info,
           planet.getPlanetPlayerInfo(), location);
-      game.getStarMap().getNewsCorpData().addNews(news);
+      if (game.getStarMap().hasHumanMet(info)
+          || game.getStarMap().hasHumanMet(planet.getPlanetPlayerInfo())) {
+        game.getStarMap().getNewsCorpData().addNews(news);
+      }
       leader.setExperience(
           leader.getExperience() + type.getExperienceReward());
       info.getFleets().recalculateList();

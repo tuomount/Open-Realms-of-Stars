@@ -878,7 +878,8 @@ public class Game implements ActionListener {
         } else {
           combat.doFastCombat();
           getStarMap().getHistory().addEvent(combat.getCombatEvent());
-          if (combat.getLeaderKilledNews() != null) {
+          if (combat.getLeaderKilledNews() != null
+              && getStarMap().isAllNewsEnabled()) {
             getStarMap().getNewsCorpData().addNews(
                 combat.getLeaderKilledNews());
           }
@@ -902,7 +903,8 @@ public class Game implements ActionListener {
           anomaly.getCombat().doFastCombat();
           getStarMap().getHistory().addEvent(
               anomaly.getCombat().getCombatEvent());
-          if (anomaly.getCombat().getLeaderKilledNews() != null) {
+          if (anomaly.getCombat().getLeaderKilledNews() != null
+              && getStarMap().isAllNewsEnabled()) {
             getStarMap().getNewsCorpData().addNews(
                 anomaly.getCombat().getLeaderKilledNews());
           }

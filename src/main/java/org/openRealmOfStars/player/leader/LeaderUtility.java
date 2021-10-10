@@ -1703,7 +1703,10 @@ public final class LeaderUtility {
       NewsData news = NewsFactory.makeLeaderDies(fleet.getCommander(),
           info, "execution by "
           + planet.getPlanetPlayerInfo().getEmpireName());
-      game.getStarMap().getNewsCorpData().addNews(news);
+      if (game.getStarMap().hasHumanMet(info)
+          || game.getStarMap().hasHumanMet(planet.getPlanetPlayerInfo())) {
+        game.getStarMap().getNewsCorpData().addNews(news);
+      }
       game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
           fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
       fleet.setCommander(null);
@@ -1748,7 +1751,9 @@ public final class LeaderUtility {
       planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
       NewsData news = NewsFactory.makeLeaderPrisoned(fleet.getCommander(),
           info, shortReason, prisonMsg, time);
-      game.getStarMap().getNewsCorpData().addNews(news);
+      if (game.getStarMap().hasHumanMet(info)) {
+        game.getStarMap().getNewsCorpData().addNews(news);
+      }
       game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
           fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
       fleet.getCommander().setJob(Job.PRISON);

@@ -2282,7 +2282,7 @@ public class AITurnView extends BlackPanel {
     if (target.getJob() == Job.TOO_YOUNG) {
       tooYoung = true;
     }
-    int chance = getKillChance(leader, realm.getRuler());
+    int chance = getKillChance(leader, target);
     if (DiceGenerator.getRandom(1, 100) < chance) {
       // Assassination happens
       if (realm.getRace() != leader.getRace()

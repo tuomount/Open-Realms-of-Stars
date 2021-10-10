@@ -466,7 +466,9 @@ public class GalaxyCreationView extends BlackPanel {
     allNewsSubscribed.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     allNewsSubscribed.setAlignmentX(CENTER_ALIGNMENT);
     allNewsSubscribed.setToolTipText("<html>If enabled all the news in galaxy"
-        + "<br> will be shown. Even on realms which have not met yet."
+        + "<br> will be shown. Even on realms which have not met yet.<br>"
+        + "All news include news about dead governors and commanders.<br>"
+        + "Without it only your governor and commander death news are shown."
         + "</html>");
     info.add(allNewsSubscribed);
     info.add(Box.createRigidArea(new Dimension(5, 5)));

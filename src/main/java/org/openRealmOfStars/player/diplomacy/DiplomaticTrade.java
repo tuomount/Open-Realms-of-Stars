@@ -2023,6 +2023,10 @@ public class DiplomaticTrade {
       bonus = bonus + 1;
     }
     if (info1.getRuler() != null
+        && info1.getRuler().hasPerk(Perk.CRUEL)) {
+      bonus = bonus - 2;
+    }
+    if (info1.getRuler() != null
         && info1.getRuler().hasPerk(Perk.PEACEFUL)) {
       bonus = bonus + 1;
     }

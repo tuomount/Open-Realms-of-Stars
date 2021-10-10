@@ -774,6 +774,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.DIPLOMATIC)) {
       result = result + 20;
     }
+    if (leader.hasPerk(Perk.CRUEL)) {
+      result = result - 30;
+    }
     if (leader.hasPerk(Perk.GOOD_LEADER)) {
       result = result + 5;
     }
@@ -883,6 +886,9 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.CHARISMATIC)) {
       result = result + 20;
+    }
+    if (leader.hasPerk(Perk.CRUEL)) {
+      result = result - 30;
     }
     if (leader.hasPerk(Perk.DIPLOMATIC)) {
       result = result + 20;
@@ -1007,6 +1013,9 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.DIPLOMATIC)) {
       result = result + 20;
+    }
+    if (leader.hasPerk(Perk.CRUEL)) {
+      result = result - 30;
     }
     if (leader.hasPerk(Perk.GOOD_LEADER)) {
       result = result + 20;
@@ -1189,6 +1198,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.CONVICT)) {
       result = result - 10;
     }
+    if (leader.hasPerk(Perk.CRUEL)) {
+      result = result - 10;
+    }
     return result;
   }
 
@@ -1248,6 +1260,9 @@ public final class LeaderUtility {
       result = result + 20;
     }
     if (leader.hasPerk(Perk.CORRUPTED)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.CRUEL)) {
       result = result - 10;
     }
     if (leader.hasPerk(Perk.MERCHANT)) {
@@ -1519,6 +1534,10 @@ public final class LeaderUtility {
       }
       if (perk == Perk.CONVICT) {
         backstabbing.setValue(backstabbing.getValue() + 1);
+      }
+      if (perk == Perk.CRUEL) {
+        backstabbing.setValue(backstabbing.getValue() + 5);
+        aggressive.setValue(aggressive.getValue() + 1);
       }
       if (perk == Perk.COUNTER_AGENT || perk == Perk.DISCIPLINE) {
         militaristic.setValue(militaristic.getValue() + 1);

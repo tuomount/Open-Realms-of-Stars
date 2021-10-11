@@ -2438,7 +2438,7 @@ public class AITurnView extends BlackPanel {
           realm.setRuler(null);
         }
         if (tooYoung) {
-          realm.setRuler(null);
+          leader.addPerk(Perk.CRUEL);
         }
       }
     }

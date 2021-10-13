@@ -3363,6 +3363,12 @@ public class Planet {
       sb.append("Governor Good leader +1");
       sb.append("<br>");
     }
+    if (governor != null && governor.hasPerk(Perk.CRUEL)) {
+      base = base - 1;
+      sb.append("<li>");
+      sb.append("Governor Cruel -1");
+      sb.append("<br>");
+    }
     if (governor != null && government.getGovernorHappiness() != 0) {
       base = base + government.getGovernorHappiness();
       sb.append("<li>");
@@ -3378,6 +3384,13 @@ public class Planet {
       base = base + 1;
       sb.append("<li>");
       sb.append("Ruler Good leader +1");
+      sb.append("<br>");
+    }
+    if (getPlanetPlayerInfo().getRuler() != null
+        && getPlanetPlayerInfo().getRuler().hasPerk(Perk.CRUEL)) {
+      base = base - 1;
+      sb.append("<li>");
+      sb.append("Ruler Cruel -1");
       sb.append("<br>");
     }
     sb.append("</html>");

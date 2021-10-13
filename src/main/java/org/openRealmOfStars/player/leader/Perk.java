@@ -232,7 +232,11 @@ public enum Perk {
    * Perk which tells that leader has been in jail.
    * Might affect if he/she/it will get as a ruler.
    */
-  CONVICT(40, "Convict", "Leader has been in jail");
+  CONVICT(40, "Convict", "Leader has been in jail"),
+  /**
+   * Perk which tells that leader has killed too young heir.
+   */
+  CRUEL(41, "Cruel", "Child killer, -2 diplomacy and -1 happiness");
 
 
 
@@ -431,7 +435,8 @@ public enum Perk {
    * @return True if gained only via action.
    */
   public boolean isGainedPerk() {
-    if (this == Perk.CONVICT) {
+    if (this == Perk.CONVICT
+        || this == Perk.CRUEL) {
       return true;
     }
     return false;
@@ -482,6 +487,7 @@ public enum Perk {
       case CHARISMATIC:
       case CHATTERBOX:
       case CONVICT:
+      case CRUEL:
       case REPULSIVE:
       case ACADEMIC: {
         return true;
@@ -493,6 +499,7 @@ public enum Perk {
         if (knowledgeBonus > 0) {
           return true;
         }
+        break;
       }
       case POWER_HUNGRY:
       case LOGICAL:
@@ -502,6 +509,7 @@ public enum Perk {
         if (knowledgeBonus > 1) {
           return true;
         }
+        break;
       }
       case CORRUPTED:
       case GOOD_LEADER:
@@ -514,6 +522,7 @@ public enum Perk {
         if (knowledgeBonus > 2) {
           return true;
         }
+        break;
       }
       case DISCIPLINE:
       case TRADER:
@@ -524,18 +533,21 @@ public enum Perk {
         if (knowledgeBonus > 3) {
           return true;
         }
+        break;
       }
       case FTL_ENGINEER:
       case EXPLORER: {
         if (knowledgeBonus > 4) {
           return true;
         }
+        break;
       }
       case MICRO_MANAGER:
       case ARTISTIC: {
         if (knowledgeBonus > 5) {
           return true;
         }
+        break;
       }
       case MINER:
       case AGRICULTURAL:
@@ -543,6 +555,7 @@ public enum Perk {
         if (knowledgeBonus > 6) {
           return true;
         }
+        break;
       }
       case SCANNER_EXPERT:
       case COMBAT_TACTICIAN:
@@ -550,21 +563,25 @@ public enum Perk {
         if (knowledgeBonus > 7) {
           return true;
         }
+        break;
       }
       case SPY_MASTER: {
         if (knowledgeBonus > 8) {
           return true;
         }
+        break;
       }
       case SECRET_AGENT:
       case COUNTER_AGENT: {
         if (knowledgeBonus > 9) {
           return true;
         }
+        break;
       }
       default: {
         return false;
       }
     }
+    return false;
   }
 }

@@ -2237,6 +2237,80 @@ public boolean launchIntercept(final int distance,
         getCurrentShip().setOverloaded(true);
         return true;
       }
+      if (component.getType() == ShipComponentType.SCANNER
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 0) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 1);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          PlayerInfo owner = getCurrentShip().getPlayer();
+          int extraCloak = 0;
+          int extraScan = 0;
+          if (attackerInfo == owner
+              && attackerFleet.getCommander() != null
+              && attackerFleet.getCommander().hasPerk(Perk.COUNTER_AGENT)) {
+            extraScan = extraScan + 5;
+          }
+          if (attackerInfo != owner
+              && attackerFleet.getCommander() != null
+              && attackerFleet.getCommander().hasPerk(Perk.SECRET_AGENT)) {
+            extraCloak = extraCloak + 5;
+          }
+          if (defenderInfo == owner
+              && defenderFleet.getCommander() != null
+              && defenderFleet.getCommander().hasPerk(Perk.COUNTER_AGENT)) {
+            extraScan = extraScan + 5;
+          }
+          if (defenderInfo != owner
+              && defenderFleet.getCommander() != null
+              && defenderFleet.getCommander().hasPerk(Perk.SECRET_AGENT)) {
+            extraCloak = extraCloak + 5;
+          }
+          if (defenderInfo == owner
+              && starbaseFleet.getCommander() != null
+              && starbaseFleet.getCommander().hasPerk(Perk.COUNTER_AGENT)) {
+            extraScan = extraScan + 5;
+          }
+          if (defenderInfo != owner
+              && starbaseFleet.getCommander() != null
+              && starbaseFleet.getCommander().hasPerk(Perk.SECRET_AGENT)) {
+            extraCloak = extraCloak + 5;
+          }
+          int scanPower = getCurrentShip().getShip().getScannerDetectionLvl();
+          scanPower = scanPower + DiceGenerator.getRandom(1, 100) + extraScan;
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+            //TODO Add scanner overload
+            SoundPlayer.playSound(SoundPlayer.ENGINE_OVERLOAD);
+          }
+          for (CombatShip targetShip : combatShipList) {
+            if (targetShip.getPlayer() != owner
+                && targetShip.isCloakOverloaded()) {
+              int cloakPower = targetShip.getShip().getCloakingValue()
+                  + 50 + extraCloak;
+              if (scanPower > cloakPower) {
+                targetShip.setCloakOverloaded(false);
+                if (textLogger != null) {
+                  textLogger.addLog(getCurrentShip().getShip().getName()
+                      + " reveals " + targetShip.getShip().getName() + ".");
+                }
+              }
+            }
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
     }
     return false;
   }

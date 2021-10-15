@@ -228,8 +228,7 @@ public class CombatAnimation {
       explosionSfx = SoundPlayer.ELECTRIC;
     } else if (animType == CombatAnimationType.SCANNING) {
       explosionAnim = GuiStatics.SCANNER;
-      //FIXME
-      explosionSfx = SoundPlayer.COMPUTER_OVERLOAD;
+      explosionSfx = SoundPlayer.SCANNER_OVERLOAD;
     } else if (animType == CombatAnimationType.SHIELD) {
       explosionAnim = GuiStatics.SHIELD1;
     } else {

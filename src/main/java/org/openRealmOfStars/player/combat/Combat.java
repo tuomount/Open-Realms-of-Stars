@@ -2293,7 +2293,7 @@ public boolean launchIntercept(final int distance,
               && starbaseFleet.getCommander().hasPerk(Perk.COUNTER_AGENT)) {
             extraScan = extraScan + 5;
           }
-          if (defenderInfo != owner
+          if (defenderInfo != owner && starbaseFleet != null
               && starbaseFleet.getCommander() != null
               && starbaseFleet.getCommander().hasPerk(Perk.SECRET_AGENT)) {
             extraCloak = extraCloak + 5;
@@ -2306,8 +2306,6 @@ public boolean launchIntercept(final int distance,
           scanPower = scanPower + DiceGenerator.getRandom(1, 100) + extraScan;
           if (textLogger != null) {
             textLogger.addLog(component.getName() + " overloaded!");
-            //TODO Add scanner overload
-            SoundPlayer.playSound(SoundPlayer.ENGINE_OVERLOAD);
           }
           for (CombatShip targetShip : combatShipList) {
             if (targetShip.getPlayer() != owner

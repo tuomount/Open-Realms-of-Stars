@@ -213,6 +213,8 @@ Cloaked ship and shuttle 2 by Tuomo Untinen
 
 Lithorian Space Ship Bridge by Tuomo Untinen
 
+Scanner animation by Tuomo Untinen
+
 
 
 Fonts are under SIL Open Font License, Version 1.1.
@@ -335,6 +337,10 @@ Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 Transport inbound Sci-Fi Trooper voice by Angus Macnaughton
 https://opengameart.org/content/sci-fi-trooper-voice-pack-54-lines
 Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
+
+Scanner overload sound by
+Tuomo Untinen
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
 # Musics By
 

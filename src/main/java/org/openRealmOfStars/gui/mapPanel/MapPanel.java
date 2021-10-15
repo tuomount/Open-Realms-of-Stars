@@ -1458,6 +1458,10 @@ public class MapPanel extends JPanel {
           SoundPlayer.playSound(SoundPlayer.ELECTRIC);
           break;
           }
+        case SCANNING: {
+          SoundPlayer.playSound(SoundPlayer.SCANNER_OVERLOAD);
+          break;
+          }
         case SHIELD: {
           SoundPlayer.playShieldSound();
           break;

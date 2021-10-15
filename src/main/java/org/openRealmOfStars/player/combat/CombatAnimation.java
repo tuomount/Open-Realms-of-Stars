@@ -226,6 +226,10 @@ public class CombatAnimation {
     } else if (animType == CombatAnimationType.LIGHTNING) {
       explosionAnim = GuiStatics.LIGHTNING;
       explosionSfx = SoundPlayer.ELECTRIC;
+    } else if (animType == CombatAnimationType.SCANNING) {
+      explosionAnim = GuiStatics.SCANNER;
+      //FIXME
+      explosionSfx = SoundPlayer.COMPUTER_OVERLOAD;
     } else if (animType == CombatAnimationType.SHIELD) {
       explosionAnim = GuiStatics.SHIELD1;
     } else {
@@ -278,6 +282,11 @@ public class CombatAnimation {
       break;
     }
     case LIGHTNING: {
+      count = explosionAnim.getMaxFrames() * 3;
+      loops = 2;
+      break;
+    }
+    case SCANNING: {
       count = explosionAnim.getMaxFrames() * 3;
       loops = 2;
       break;
@@ -618,6 +627,22 @@ public class CombatAnimation {
     } else if (type == CombatAnimationType.LIGHTNING) {
       count--;
       doAnimationIon(13);
+      if (animFrame < explosionAnim.getMaxFrames()) {
+        showAnim = true;
+        if (animFrame == 0 && hit && loopCount == 0) {
+          SoundPlayer.playSound(explosionSfx);
+        }
+        animFrame++;
+      } else {
+        if (loopCount < loops) {
+          loopCount++;
+          animFrame = 0;
+        } else {
+          showAnim = false;
+        }
+      }
+    } else if (type == CombatAnimationType.SCANNING) {
+      count--;
       if (animFrame < explosionAnim.getMaxFrames()) {
         showAnim = true;
         if (animFrame == 0 && hit && loopCount == 0) {

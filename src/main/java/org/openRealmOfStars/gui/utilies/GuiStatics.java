@@ -785,6 +785,12 @@ public final class GuiStatics {
       "/resources/images/shield.png");
 
   /**
+   * Scanner animation
+   */
+  public static final AnimatedImage SCANNER = new AnimatedImage(64, 64,
+      "/resources/images/scanner.png");
+
+  /**
    * Privateering animation
    */
   public static final AnimatedImage PRIVATEER = new AnimatedImage(64, 64,

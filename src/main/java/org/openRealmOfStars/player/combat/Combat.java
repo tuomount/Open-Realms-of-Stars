@@ -2298,6 +2298,10 @@ public boolean launchIntercept(final int distance,
               && starbaseFleet.getCommander().hasPerk(Perk.SECRET_AGENT)) {
             extraCloak = extraCloak + 5;
           }
+          CombatAnimation scanAnim = new CombatAnimation(
+              getCurrentShip(), getCurrentShip(),
+              CombatAnimationType.SCANNING, 1);
+          setAnimation(scanAnim);
           int scanPower = getCurrentShip().getShip().getScannerDetectionLvl();
           scanPower = scanPower + DiceGenerator.getRandom(1, 100) + extraScan;
           if (textLogger != null) {

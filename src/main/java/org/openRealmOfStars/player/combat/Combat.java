@@ -615,6 +615,20 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
+   * Are there cloaked and overloaded enemy ships.
+   * @param info Player who is doing the search.
+   * @return True if there are cloaked ships.
+   */
+  public boolean areCloakedShips(final PlayerInfo info) {
+    for (CombatShip ship : combatShipList) {
+      if (ship.getPlayer() != info
+          && ship.isCloakOverloaded()) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
    * Get strongest cloaking detection for certain player.
    * @param info PlayerInfo
    * @return Cloak detection
@@ -1758,6 +1772,14 @@ public boolean launchIntercept(final int distance,
     CombatShip deadliest = getMostPowerfulShip(info);
     CombatShip closest = getClosestEnemyShip(info, getCurrentShip());
     CombatShip trader = null;
+    if (areCloakedShips(info)) {
+      int index = getCurrentShip().getComponentForUse(
+          ShipComponentType.SCANNER);
+      if (index != -1 && getCurrentShip().getEnergyReserve() >= 0) {
+        handleOverloading(textLogger, index);
+      }
+
+    }
     int range = ai.getShip().getMaxWeaponRange();
     if (privateer) {
       trader = getClosestTraderShip(info, ai);

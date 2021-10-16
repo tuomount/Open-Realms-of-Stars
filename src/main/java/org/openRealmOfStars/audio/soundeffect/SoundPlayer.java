@@ -233,6 +233,12 @@ public final class SoundPlayer {
       "/resources/sounds/computer_overload.wav";
 
   /**
+   * Sound effect for scanner overload
+   */
+  public static final String SCANNER_OVERLOAD =
+      "/resources/sounds/scanner.wav";
+
+  /**
    * Sound effect for engine overload
    */
   public static final String ENGINE_OVERLOAD =

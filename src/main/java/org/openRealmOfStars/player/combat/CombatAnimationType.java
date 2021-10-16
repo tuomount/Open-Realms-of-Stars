@@ -83,6 +83,10 @@ public enum CombatAnimationType {
   /**
    * Ion Cannon
    */
-  ION_CANNON;
+  ION_CANNON,
+  /**
+   * Scanning
+   */
+  SCANNING;
 
 }

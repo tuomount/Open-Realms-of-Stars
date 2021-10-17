@@ -89,7 +89,11 @@ public enum MissionType {
   /**
    * Intercept mission which will last only one turn.
    */
-  INTERCEPT;
+  INTERCEPT,
+  /**
+   * Destroy fleet from coordinate.
+   */
+  DESTROY_FLEET;
 
   /**
    * Get Mission type with index
@@ -127,6 +131,8 @@ public enum MissionType {
       return 13;
     case INTERCEPT:
       return 14;
+    case DESTROY_FLEET:
+      return 15;
     default:
       return 0;
     }
@@ -165,6 +171,8 @@ public enum MissionType {
       return "Diplomatic delegacy";
     case INTERCEPT:
       return "Intercept";
+    case DESTROY_FLEET:
+      return "Destroy fleet";
     default:
       return "Unknown";
     }

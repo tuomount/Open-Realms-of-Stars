@@ -103,6 +103,8 @@ public class MissionRepository {
       return MissionType.DIPLOMATIC_DELEGACY;
     case 14:
       return MissionType.INTERCEPT;
+    case 15:
+      return MissionType.DESTROY_FLEET;
     default:
       ErrorLogger.log("Warning: Unknown mission type: " + index
           + ". Defaulting to explore.");

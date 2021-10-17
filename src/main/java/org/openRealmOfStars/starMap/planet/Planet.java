@@ -2493,6 +2493,14 @@ public class Planet {
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
+          //FIXME: Add destroy fleet mission
+/*          if (!planetOwnerInfo.isHuman()
+              && planetOwnerInfo.getAiDifficulty()
+              == AiDifficulty.CHALLENGING) {
+            Mission destroy = new Mission(MissionType.DESTROY_FLEET,
+                MissionPhase.PLANNING, getCoordinate());
+            planetOwnerInfo.getMissions().add(destroy);
+          }*/
         } else {
           if (underConstruction.getName()
               .equals(ConstructionFactory.MECHION_CITIZEN)) {

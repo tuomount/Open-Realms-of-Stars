@@ -829,6 +829,52 @@ public final class MissionHandling {
   }
 
   /**
+   * Handle Destroy fleet mission
+   * @param mission Move mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleDestroyFleet(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.DESTROY_FLEET) {
+      if (mission.getPhase() == MissionPhase.PLANNING) {
+        mission.setMissionTime(0);
+      }
+      if (mission.getPhase() != MissionPhase.TREKKING) {
+        Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+            mission.getY(), fleet.getFleetFtlSpeed());
+        fleet.setRoute(route);
+        mission.setPhase(MissionPhase.TREKKING);
+      }
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getCoordinate().calculateDistance(
+              new Coordinate(mission.getX(), mission.getY())) < 2) {
+        mission.setPhase(MissionPhase.EXECUTING);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        mission.setMissionTime(mission.getMissionTime() + 1);
+        makeReroute(game, fleet, info, mission);
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING) {
+        Fleet targetFleet = game.getStarMap().getFleetByCoordinate(
+            mission.getX(), mission.getY());
+        int radarDetection = info.getSectorCloakDetection(mission.getX(),
+            mission.getY());
+        if (targetFleet != null
+            && radarDetection > targetFleet.getFleetCloackingValue()) {
+          AStarSearch search = new AStarSearch(game.getStarMap(),
+              fleet.getX(), fleet.getY(), targetFleet.getX(),
+              targetFleet.getY(), false);
+          search.doSearch();
+          search.doRoute();
+          fleet.setaStarSearch(search);
+        }
+      }
+    } // End of destroy fleet
+  }
+
+  /**
    * Handle Intercept mission
    * @param mission Intercept mission, does nothing if type is wrong
    * @param fleet Fleet on mission

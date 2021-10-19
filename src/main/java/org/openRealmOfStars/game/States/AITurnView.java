@@ -319,6 +319,9 @@ public class AITurnView extends BlackPanel {
       case DIPLOMATIC_DELEGACY:
         MissionHandling.handleDiplomaticMission(mission, fleet, info, game);
         break;
+      case DESTROY_FLEET:
+        MissionHandling.handleDestroyFleet(mission, fleet, info, game);
+        break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");
       }
@@ -1505,6 +1508,24 @@ public class AITurnView extends BlackPanel {
           info.getFleets().recalculateList();
           mission.setPhase(MissionPhase.TREKKING);
           mission.setFleetName(fleet.getName());
+        }
+        mission = info.getMissions().getMission(MissionType.DESTROY_FLEET,
+            MissionPhase.PLANNING);
+        if (mission != null && fleet.getMilitaryValue() > 0
+            && fleetMission != null
+            && fleetMission.getType() == MissionType.DEFEND) {
+          if (fleetMission.getPlanetBuilding() == null) {
+            Planet defendPlanet = game.getStarMap().getPlanetByCoordinate(
+                fleet.getX(), fleet.getY());
+            if (defendPlanet != null) {
+              mission.setPlanetBuilding(defendPlanet.getName());
+            }
+          } else {
+            mission.setPlanetBuilding(fleetMission.getPlanetBuilding());
+          }
+          mission.setFleetName(fleet.getName());
+          mission.setPhase(MissionPhase.LOADING);
+          info.getMissions().remove(fleetMission);
         }
         if (!fleet.isStarBaseDeployed()) {
           Fleet interceptFleet = getClosestInterceptMission(

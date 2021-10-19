@@ -838,10 +838,8 @@ public final class MissionHandling {
   public static void handleDestroyFleet(final Mission mission,
       final Fleet fleet, final PlayerInfo info, final Game game) {
     if (mission != null && mission.getType() == MissionType.DESTROY_FLEET) {
-      if (mission.getPhase() == MissionPhase.PLANNING) {
+      if (mission.getPhase() == MissionPhase.LOADING) {
         mission.setMissionTime(0);
-      }
-      if (mission.getPhase() != MissionPhase.TREKKING) {
         Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed());
         fleet.setRoute(route);
@@ -869,6 +867,22 @@ public final class MissionHandling {
           search.doSearch();
           search.doRoute();
           fleet.setaStarSearch(search);
+        }
+        if (fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
+          String planetName = mission.getPlanetBuilding();
+          Planet defendPlanet = game.getStarMap().getPlanetByName(planetName);
+          if (defendPlanet == null) {
+            defendPlanet = game.getStarMap().getClosestHomePort(info,
+                fleet.getCoordinate());
+          }
+          Mission defend = new Mission(MissionType.DEFEND,
+              MissionPhase.TREKKING, defendPlanet.getCoordinate());
+          defend.setTarget(defendPlanet.getCoordinate());
+          defend.setTargetPlanet(defendPlanet.getName());
+          defend.setFleetName(fleet.getName());
+          defend.setMissionTime(0);
+          info.getMissions().remove(mission);
+          info.getMissions().add(defend);
         }
       }
     } // End of destroy fleet

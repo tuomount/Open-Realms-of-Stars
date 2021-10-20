@@ -1005,6 +1005,58 @@ public class AITurnView extends BlackPanel {
     }
   }
   /**
+   * Search best fleet for fleet destruction.
+   */
+  public void searchForFleetDestruction() {
+    PlayerInfo info = game.getPlayers()
+        .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
+    if (info != null && !info.isHuman() && !info.isBoard()) {
+      for (int i = 0; i < info.getMissions().getSize(); i++) {
+        Mission mission = info.getMissions().getMissionByIndex(i);
+        if (mission.getType() == MissionType.DESTROY_FLEET
+            && mission.getPhase() == MissionPhase.PLANNING) {
+          int bestDistance = 999;
+          Fleet bestFleet = null;
+          Mission bestMission = null;
+          for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
+            Fleet fleet = info.getFleets().getByIndex(j);
+            if (fleet.getMilitaryValue() == 0
+                || fleet.isStarBaseDeployed()) {
+              continue;
+            }
+            Mission fleetMission = info.getMissions().getMissionForFleet(
+                fleet.getName());
+            boolean checkFleet = false;
+            if (fleetMission != null
+                && fleetMission.getType() == MissionType.DEFEND) {
+              checkFleet = true;
+            }
+            if (fleetMission == null) {
+              checkFleet = true;
+            }
+            if (checkFleet) {
+              int distance = (int) fleet.getCoordinate().calculateDistance(
+                  new Coordinate(mission.getX(), mission.getY()));
+              if (distance < bestDistance) {
+                bestFleet = fleet;
+                bestDistance = distance;
+                bestMission = fleetMission;
+              }
+            }
+          }
+          if (bestFleet != null) {
+            if (bestMission != null) {
+              bestMission.setPhase(MissionPhase.PLANNING);
+              bestMission.setFleetName("Defender");
+            }
+            mission.setFleetName(bestFleet.getName());
+            mission.setPhase(MissionPhase.LOADING);
+          }
+        }
+      }
+    }
+  }
+  /**
    * Search for fleets that have crossed the borders
    */
   public void searchForBorderCrossing() {
@@ -1508,24 +1560,6 @@ public class AITurnView extends BlackPanel {
           info.getFleets().recalculateList();
           mission.setPhase(MissionPhase.TREKKING);
           mission.setFleetName(fleet.getName());
-        }
-        mission = info.getMissions().getMission(MissionType.DESTROY_FLEET,
-            MissionPhase.PLANNING);
-        if (mission != null && fleet.getMilitaryValue() > 0
-            && fleetMission != null
-            && fleetMission.getType() == MissionType.DEFEND) {
-          if (fleetMission.getPlanetBuilding() == null) {
-            Planet defendPlanet = game.getStarMap().getPlanetByCoordinate(
-                fleet.getX(), fleet.getY());
-            if (defendPlanet != null) {
-              mission.setPlanetBuilding(defendPlanet.getName());
-            }
-          } else {
-            mission.setPlanetBuilding(fleetMission.getPlanetBuilding());
-          }
-          mission.setFleetName(fleet.getName());
-          mission.setPhase(MissionPhase.LOADING);
-          info.getMissions().remove(fleetMission);
         }
         if (!fleet.isStarBaseDeployed()) {
           Fleet interceptFleet = getClosestInterceptMission(
@@ -3452,6 +3486,7 @@ public class AITurnView extends BlackPanel {
     if (game.getStarMap().getAIFleet() == null) {
       game.getStarMap().handleAIResearchAndPlanets();
       searchForInterceptFleets();
+      searchForFleetDestruction();
       game.getStarMap().handleDiplomaticDelegacies();
       game.getStarMap().handleFakingMilitarySize();
     } else {

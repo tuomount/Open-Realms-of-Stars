@@ -2496,7 +2496,9 @@ public class Planet {
           planetOwnerInfo.getMsgList().addNewMessage(msg);
           if (!planetOwnerInfo.isHuman()
               && planetOwnerInfo.getAiDifficulty()
-              == AiDifficulty.CHALLENGING) {
+              == AiDifficulty.CHALLENGING
+              && planetOwnerInfo.getMissions().getDestroyFleetMission(
+                  getCoordinate()) == null) {
             Mission destroy = new Mission(MissionType.DESTROY_FLEET,
                 MissionPhase.PLANNING, getCoordinate());
             planetOwnerInfo.getMissions().add(destroy);

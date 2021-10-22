@@ -222,6 +222,22 @@ public class MissionList {
   }
 
   /**
+   * Find a destroy fleet mission for coordinate
+   * @param coordinate Coordinate where fleet should be destroyed
+   * @return Mission or null if not found
+   */
+  public Mission getDestroyFleetMission(final Coordinate coordinate) {
+    for (Mission mission : missions) {
+      if (mission.getX() == coordinate.getX()
+          && mission.getY() == coordinate.getY()
+          && mission.getType() == MissionType.DESTROY_FLEET) {
+        return mission;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Find a deploy starbase mission for coordinate
    * @param x Planet X coordinate
    * @param y Planet Y coordinate

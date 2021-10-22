@@ -1580,8 +1580,6 @@ public class AITurnView extends BlackPanel {
         if (!info.isBoard()) {
           // All fleets have moved. Checking the new possible planet
           searchPlanetsForMissions();
-          // Searching for fleet which has crossed the borders
-          searchForBorderCrossing();
           searchDeepSpaceAnchors();
         } else {
           searchForBlackHole();
@@ -3485,6 +3483,8 @@ public class AITurnView extends BlackPanel {
     game.getStarMap().setAiOrAutomateTakingMoves(true);
     if (game.getStarMap().getAIFleet() == null) {
       game.getStarMap().handleAIResearchAndPlanets();
+      // Searching for fleet which has crossed the borders
+      searchForBorderCrossing();
       searchForInterceptFleets();
       searchForFleetDestruction();
       game.getStarMap().handleDiplomaticDelegacies();

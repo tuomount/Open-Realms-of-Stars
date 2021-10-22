@@ -136,6 +136,10 @@ public class DiplomaticTrade {
    */
   public static final int SELL = 2;
   /**
+   * Power of multiple border crossing.
+   */
+  private static final int BORDER_CROSSING_POWER = 20;
+  /**
    * Constructor for Diplomatic trade.
    * @param map Starmap
    * @param index1 First player index
@@ -1002,6 +1006,9 @@ public class DiplomaticTrade {
     if (power > 0 && casusBelli) {
       power = power + 20;
     }
+    if (info.getDiplomacy().countBorderCrossing(second) > 6) {
+      power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
+    }
     if (power > 40 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
       generateEqualTrade(NegotiationType.WAR);
@@ -1087,6 +1094,9 @@ public class DiplomaticTrade {
     boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
     if (power > 0 && casusBelli) {
       power = power + 20;
+    }
+    if (info.getDiplomacy().countBorderCrossing(second) > 6) {
+      power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
@@ -1188,6 +1198,9 @@ public class DiplomaticTrade {
     int power = starMap.getMilitaryDifference(first,
         second);
     boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
+    if (info.getDiplomacy().countBorderCrossing(second) > 6) {
+      power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
+    }
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty() && casusBelli) {
       generateEqualTrade(NegotiationType.WAR);
@@ -1264,6 +1277,9 @@ public class DiplomaticTrade {
     boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
     if (power > 0 && casusBelli) {
       power = power + 10;
+    }
+    if (info.getDiplomacy().countBorderCrossing(second) > 6) {
+      power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 60 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
@@ -1375,6 +1391,9 @@ public class DiplomaticTrade {
     if (power > 0 && casusBelli) {
       power = power + 20;
     }
+    if (info.getDiplomacy().countBorderCrossing(second) > 6) {
+      power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
+    }
     if (power > 100 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
       generateEqualTrade(NegotiationType.WAR);
@@ -1460,6 +1479,9 @@ public class DiplomaticTrade {
     boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
     if (power > 0 && casusBelli) {
       power = power + 10;
+    }
+    if (info.getDiplomacy().countBorderCrossing(second) > 6) {
+      power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 100 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
@@ -1572,6 +1594,9 @@ public class DiplomaticTrade {
     if (power > 0 && casusBelli) {
       power = power + 20;
     }
+    if (info.getDiplomacy().countBorderCrossing(second) > 6) {
+      power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
+    }
     if (power > 50 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
       generateEqualTrade(NegotiationType.WAR);
@@ -1664,6 +1689,9 @@ public class DiplomaticTrade {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
+    if (info.getDiplomacy().countBorderCrossing(second) > 6) {
+      power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
+    }
     if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
         .equals(Diplomacy.TRADE_ALLIANCE) && casusBelli) {
       generateEqualTrade(NegotiationType.WAR);
@@ -1741,6 +1769,9 @@ public class DiplomaticTrade {
     boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
     if (power > 0 && casusBelli) {
       power = power + 20;
+    }
+    if (info.getDiplomacy().countBorderCrossing(second) > 6) {
+      power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty() && casusBelli) {

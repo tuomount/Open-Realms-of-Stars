@@ -692,15 +692,27 @@ public class DiplomacyView extends BlackPanel {
             human.getRace(), casusBelli));
       }
     } else if (startType == AI_BORDER_CROSS) {
-      speechLines.add(SpeechFactory.createLine(SpeechType.MOVE_FLEET,
-          human.getRace(), null));
-      speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
-          human.getRace(), casusBelli));
+      if (trade.getFirstOffer() != null
+          && trade.getFirstOffer().isWarInOffer()) {
+        speechLines.add(SpeechFactory.createAgreeWithWarLine(
+            human.getRace()));
+      } else {
+        speechLines.add(SpeechFactory.createLine(SpeechType.MOVE_FLEET,
+            human.getRace(), null));
+        speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
+            human.getRace(), casusBelli));
+      }
     } else if (startType == AI_ESPIONAGE) {
-      speechLines.add(SpeechFactory.createLine(SpeechType.MOVE_FLEET,
-          human.getRace(), null));
-      speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
-          human.getRace(), casusBelli));
+      if (trade.getFirstOffer() != null
+          && trade.getFirstOffer().isWarInOffer()) {
+        speechLines.add(SpeechFactory.createAgreeWithWarLine(
+            human.getRace()));
+      } else {
+        speechLines.add(SpeechFactory.createLine(SpeechType.MOVE_FLEET,
+            human.getRace(), null));
+        speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
+            human.getRace(), casusBelli));
+      }
     } else {
       if (!ai.getDiplomacy().isPeace(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.PEACE_OFFER,

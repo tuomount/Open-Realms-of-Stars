@@ -650,9 +650,22 @@ public class Diplomacy {
    * @return True if there are multiple(more than 2) border crossing.
    */
   public boolean isMultipleBorderCrossing(final int index) {
+    int count = countBorderCrossing(index);
+    if (count > 2) {
+        return true;
+    }
+    return false;
+  }
+
+  /**
+   * Count number of border crossing
+   * @param index Player index
+   * @return Number of border crossing.
+   */
+  public int countBorderCrossing(final int index) {
+    int count = 0;
     if (index > -1 && index < diplomacyList.length
         && diplomacyList[index] != null) {
-      int count = 0;
       for (int i = 0; i < diplomacyList[index].getListSize(); i++) {
         DiplomacyBonus bonus = diplomacyList[index].get(i);
         if (bonus.getType() == DiplomacyBonusType.BORDER_CROSSED
@@ -660,13 +673,9 @@ public class Diplomacy {
           count++;
         }
       }
-      if (count > 2) {
-        return true;
-      }
     }
-    return false;
+    return count;
   }
-
   /**
    * Generate relation text
    * @param humanIndex Human relation index

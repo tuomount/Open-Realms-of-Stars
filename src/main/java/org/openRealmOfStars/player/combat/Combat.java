@@ -2288,7 +2288,7 @@ public boolean launchIntercept(final int distance,
               && defenderFleet.getCommander().hasPerk(Perk.SECRET_AGENT)) {
             extraCloak = extraCloak + 5;
           }
-          if (defenderInfo == owner
+          if (defenderInfo == owner && starbaseFleet != null
               && starbaseFleet.getCommander() != null
               && starbaseFleet.getCommander().hasPerk(Perk.COUNTER_AGENT)) {
             extraScan = extraScan + 5;

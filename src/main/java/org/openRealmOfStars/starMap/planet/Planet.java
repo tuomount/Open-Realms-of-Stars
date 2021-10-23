@@ -8,6 +8,7 @@ import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
@@ -2493,6 +2494,15 @@ public class Planet {
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
+          if (!planetOwnerInfo.isHuman()
+              && planetOwnerInfo.getAiDifficulty()
+              == AiDifficulty.CHALLENGING
+              && planetOwnerInfo.getMissions().getDestroyFleetMission(
+                  getCoordinate()) == null) {
+            Mission destroy = new Mission(MissionType.DESTROY_FLEET,
+                MissionPhase.PLANNING, getCoordinate());
+            planetOwnerInfo.getMissions().add(destroy);
+          }
         } else {
           if (underConstruction.getName()
               .equals(ConstructionFactory.MECHION_CITIZEN)) {

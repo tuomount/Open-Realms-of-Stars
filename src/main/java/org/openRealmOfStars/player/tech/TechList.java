@@ -1170,7 +1170,15 @@ public class TechList {
                 info.getMsgList().addNewMessage(msg);
               }
             }
-
+            if (tech.getType() == TechType.Electrics
+                && tech.getComponent().startsWith("Targeting computer")) {
+              tutorialText = Game.getTutorial().showTutorialText(60);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
           }
         }
       }

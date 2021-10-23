@@ -3268,6 +3268,32 @@ public class AITurnView extends BlackPanel {
       newsData.calculatePopulation(game.getStarMap().getPlanetList());
       NewsData news = NewsFactory.makeStatNews(game.getStarMap());
       newsData.addNews(news);
+      if (Game.getTutorial() != null
+          && game.getStarMap().getPlayerList().getPlayerInfoByIndex(0).isHuman()
+          && game.getStarMap().isTutorialEnabled()) {
+        String tutorialText = null;
+        if (news.getImageInstructions().contains("MOST OF PEOPLE")) {
+          tutorialText = Game.getTutorial().showTutorialText(154);
+        }
+        if (news.getImageInstructions().contains("MOST CULTURAL POWER")) {
+          tutorialText = Game.getTutorial().showTutorialText(151);
+        }
+        if (news.getImageInstructions().contains("MOST SCIENTIFIC REALM")) {
+          tutorialText = Game.getTutorial().showTutorialText(153);
+        }
+        if (news.getImageInstructions().contains("GREATEST REALM")) {
+          tutorialText = Game.getTutorial().showTutorialText(150);
+        }
+        if (news.getImageInstructions().contains("GREATEST MILITARY")) {
+          tutorialText = Game.getTutorial().showTutorialText(152);
+        }
+        if (tutorialText != null) {
+          Message msg = new Message(MessageType.INFORMATION, tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
+          game.getStarMap().getPlayerList().getPlayerInfoByIndex(0)
+          .getMsgList().addNewMessage(msg);
+        }
+      }
       GalacticEvent event = new GalacticEvent(news.getNewsText());
       game.getStarMap().getHistory().addEvent(event);
     }

@@ -2251,6 +2251,17 @@ public class Planet {
                 getName(), getPlanetOwnerIndex());
             eventOnPlanet.setText(news.getNewsText());
             map.getHistory().addEvent(eventOnPlanet);
+            if (Game.getTutorial() != null
+                && map.isTutorialEnabled()
+                && map.getPlayerList().getPlayerInfoByIndex(0).isHuman()) {
+              String tutorialText = Game.getTutorial().showTutorialText(155);
+              if (tutorialText != null) {
+                Message msgTut = new Message(MessageType.INFORMATION,
+                    tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+                map.getPlayerList().getPlayerInfoByIndex(0).getMsgList()
+                    .addUpcomingMessage(msgTut);
+              }
+            }
           }
           if (building.isBroadcaster() && map != null) {
             NewsData news = NewsFactory.makeBroadcasterBuildingNews(

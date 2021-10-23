@@ -930,11 +930,16 @@ public class DiplomaticTrade {
   public void generateFirstOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     Attitude attitude = info.getAiAttitude();
+    boolean hate = false;
+    boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
+    if (info.getDiplomacy().getLikingAsString(second).contains("Hate")) {
+      hate = true;
+    }
     switch (attitude) {
       case AGGRESSIVE: {
         int power = starMap.getMilitaryDifference(first,
             second);
-        if (power > 30) {
+        if (power > 30 || hate) {
           generateEqualTrade(NegotiationType.WAR);
         } else {
           generateEqualTrade(NegotiationType.PEACE);
@@ -944,31 +949,64 @@ public class DiplomaticTrade {
       case MILITARISTIC: {
         int power = starMap.getMilitaryDifference(first,
             second);
-        if (power > 60) {
+        if (power > 60 || hate) {
           generateEqualTrade(NegotiationType.WAR);
         } else {
           generateEqualTrade(NegotiationType.PEACE);
         }
         break;
       }
-      case EXPANSIONIST:
-      case MERCHANTICAL: {
-        generateEqualTrade(NegotiationType.PEACE);
-        PlayerInfo info2 = starMap.getPlayerByIndex(second);
-        NegotiationOffer offer = new NegotiationOffer(NegotiationType.MAP,
-            null);
-        offer.setMapValue(calculateMapValue(info, info2, true));
-        firstOffer.add(offer);
-        offer = new NegotiationOffer(NegotiationType.MAP, null);
-        offer.setMapValue(calculateMapValue(info2, info, true));
-        secondOffer.add(offer);
+      case EXPANSIONIST: {
+        if (hate) {
+          generateEqualTrade(NegotiationType.WAR);
+        } else {
+          generateEqualTrade(NegotiationType.PEACE);
+          PlayerInfo info2 = starMap.getPlayerByIndex(second);
+          NegotiationOffer offer = new NegotiationOffer(NegotiationType.MAP,
+              null);
+          offer.setMapValue(calculateMapValue(info, info2, true));
+          firstOffer.add(offer);
+          offer = new NegotiationOffer(NegotiationType.MAP, null);
+          offer.setMapValue(calculateMapValue(info2, info, true));
+          secondOffer.add(offer);
+        }
         break;
       }
-      case BACKSTABBING:
-      case DIPLOMATIC:
+      case MERCHANTICAL: {
+        if (hate && casusBelli) {
+          generateEqualTrade(NegotiationType.WAR);
+        } else {
+          generateEqualTrade(NegotiationType.PEACE);
+          PlayerInfo info2 = starMap.getPlayerByIndex(second);
+          NegotiationOffer offer = new NegotiationOffer(NegotiationType.MAP,
+              null);
+          offer.setMapValue(calculateMapValue(info, info2, true));
+          firstOffer.add(offer);
+          offer = new NegotiationOffer(NegotiationType.MAP, null);
+          offer.setMapValue(calculateMapValue(info2, info, true));
+          secondOffer.add(offer);
+        }
+        break;
+      }
+      case BACKSTABBING: {
+        if (hate || casusBelli) {
+          generateEqualTrade(NegotiationType.WAR);
+        } else {
+          generateEqualTrade(NegotiationType.PEACE);
+        }
+        break;
+      }
       case LOGICAL:
+      case SCIENTIFIC: {
+        if (hate && casusBelli) {
+          generateEqualTrade(NegotiationType.WAR);
+        } else {
+          generateEqualTrade(NegotiationType.PEACE);
+        }
+        break;
+      }
+      case DIPLOMATIC:
       case PEACEFUL:
-      case SCIENTIFIC:
       default: {
         generateEqualTrade(NegotiationType.PEACE);
         break;

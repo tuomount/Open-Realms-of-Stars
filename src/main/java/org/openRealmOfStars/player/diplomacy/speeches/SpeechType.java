@@ -126,7 +126,11 @@ public enum SpeechType {
   /**
    * Realm choice for embargo, not real speech line
    */
-  TRADE_EMBARGO_REALM_CHOICE;
+  TRADE_EMBARGO_REALM_CHOICE,
+  /**
+   * Fleets have crossed borders too many times, declared the war.
+   */
+  BORDER_WARS;
 
 
 

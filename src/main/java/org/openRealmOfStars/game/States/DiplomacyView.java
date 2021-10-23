@@ -629,12 +629,24 @@ public class DiplomacyView extends BlackPanel {
       endBtn.setEnabled(false);
       trade.generateOffer();
       setOfferingList(startType);
-      updatePanel(SpeechType.ASK_MOVE_FLEET);
+      humanLines.setListData(createOfferLines(AI_BORDER_CROSS));
+      if (trade.getFirstOffer() != null
+          && trade.getFirstOffer().isWarInOffer()) {
+        updatePanel(SpeechType.BORDER_WARS);
+      } else {
+        updatePanel(SpeechType.ASK_MOVE_FLEET);
+      }
     } else if (startType == AI_ESPIONAGE) {
       endBtn.setEnabled(false);
       trade.generateOffer();
       setOfferingList(startType);
-      updatePanel(SpeechType.ASK_MOVE_SPY);
+      humanLines.setListData(createOfferLines(AI_ESPIONAGE));
+      if (trade.getFirstOffer() != null
+          && trade.getFirstOffer().isWarInOffer()) {
+        updatePanel(SpeechType.BORDER_WARS);
+      } else {
+        updatePanel(SpeechType.ASK_MOVE_SPY);
+      }
     } else if (startType == HUMAN_BORDER_CROSS) {
       updatePanel(getGreetLine());
     } else if (startType == HUMAN_ESPIONAGE) {
@@ -937,6 +949,9 @@ public class DiplomacyView extends BlackPanel {
     } else if (type == SpeechType.TRADE_EMBARGO && offer != null) {
         text = SpeechFactory.createLine(type, ai.getRace(),
             offer.getRealm().getEmpireName()).getLine();
+    } else if (type == SpeechType.BORDER_WARS) {
+      text = SpeechFactory.createLine(type, ai.getRace(),
+          borderCrossedFleet.getName()).getLine();
     } else {
       text = SpeechFactory.createLine(type, ai.getRace(), null).getLine();
     }

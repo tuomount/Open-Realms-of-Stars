@@ -75,6 +75,7 @@ public final class SpeechFactory {
       case ASK_MOVE_SPY: return createAskMoveSpyFleetLine(race, dynamicContent);
       case OFFER_SPY_TRADE: return createSpyTradeLine(race);
       case TRADE_EMBARGO: return createEmbargoLine(race, dynamicContent);
+      case BORDER_WARS: return createMakeBorderWarLine(race, dynamicContent);
       default: return null;
     }
   }
@@ -730,6 +731,51 @@ public final class SpeechFactory {
           "We will start synthesize with your species!" + extra);
       case LITHORIANS: return new SpeechLine(type,
           "Prepare to encounter hot blazing war from us!" + extra);
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Make War SpeechLine according the race
+   * @param race SpaceRace
+   * @param fleetName which was last fleet crossing the border
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createMakeBorderWarLine(final SpaceRace race,
+      final String fleetName) {
+    SpeechType type = SpeechType.BORDER_WARS;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Your " + fleetName + " will be stomped and crushed along with you!");
+      case GREYANS: return new SpeechLine(type,
+          fleetName + " prepare to be anhilated!");
+      case HUMAN: return new SpeechLine(type,
+          "Your fleet " + fleetName + " has crossed our borders!"
+              + " This means war!");
+      case MECHIONS: return new SpeechLine(type,
+          "Fleet " + fleetName + " detected again! Initializing war protocol!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We have detected " + fleetName + "! We will kill all your kind!");
+      case SPORKS: return new SpeechLine(type,
+          "Intruder " + fleetName + "! Shields up! Ready to fire!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Fleet " + fleetName + " located. Prepare to die!");
+      case SCAURIANS: return new SpeechLine(type,
+          "Fleet " + fleetName + " has entered our sector! Time to die!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Fleet " + fleetName + "has been seen."
+              + " Time to get sliced and boiled!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, scurvy fleet " + fleetName + " spotted. Time to die!");
+      case CHIRALOIDS: return new SpeechLine(type,
+          "Your fleet " + fleetName + " has betrayed us."
+              + " Prepare to be nuked!");
+      case REBORGIANS: return new SpeechLine(type,
+          "Our scanners have detected " + fleetName + " in our sectors."
+              + "We will start synthesize with your species!");
+      case LITHORIANS: return new SpeechLine(type,
+          "Your puny " + fleetName + " has been detected."
+              + " Prepare to encounter hot blazing war from us!");
       default: return null;
     }
   }

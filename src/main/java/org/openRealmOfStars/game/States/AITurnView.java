@@ -3508,13 +3508,14 @@ public class AITurnView extends BlackPanel {
   public boolean handleAiTurn() {
     game.getStarMap().setAiOrAutomateTakingMoves(true);
     if (game.getStarMap().getAIFleet() == null) {
-      game.getStarMap().handleAIResearchAndPlanets();
       // Searching for fleet which has crossed the borders
       searchForBorderCrossing();
       searchForInterceptFleets();
       searchForFleetDestruction();
       game.getStarMap().handleDiplomaticDelegacies();
       game.getStarMap().handleFakingMilitarySize();
+      // This must be last since this changes the realm at very end.
+      game.getStarMap().handleAIResearchAndPlanets();
     } else {
       handleAIFleet();
       if (getNextState() != null) {

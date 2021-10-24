@@ -530,6 +530,8 @@ public class Game implements ActionListener {
         gameFrame.setResizable(true);
         gameFrame.setUndecorated(true);
         graphicsDevice.setFullScreenWindow(gameFrame);
+      } else {
+        gameFrame.setResizable(false);
       }
       gameFrame.setVisible(true);
       if (!isFullscreenMode()) {

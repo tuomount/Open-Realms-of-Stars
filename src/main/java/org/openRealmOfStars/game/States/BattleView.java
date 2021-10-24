@@ -430,7 +430,6 @@ public class BattleView extends BlackPanel {
         && combat.getCurrentShip() != null
         && combat.getCurrentShip().getPlayer().isHuman()) {
       SoundPlayer.playMenuSound();
-      infoPanel.disableAllWeapons();
       String number = arg0.getActionCommand()
           .substring(GameCommands.COMMAND_COMPONENT_USE.length());
       int index = Integer.valueOf(number);
@@ -441,6 +440,9 @@ public class BattleView extends BlackPanel {
         combat.setComponentUse(index);
         ShipComponent component = combat.getCurrentShip().getShip(
             ).getComponent(index);
+        if (component.isWeapon()) {
+          infoPanel.disableAllWeapons();
+        }
         if (combat.getCurrentShip().getShip().isStarBase()
             && !combat.getCurrentShip().getShip().getFlag(
                 Ship.FLAG_STARBASE_DEPLOYED)

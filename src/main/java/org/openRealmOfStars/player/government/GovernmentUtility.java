@@ -199,6 +199,18 @@ public final class GovernmentUtility {
         };
         return governments;
     }
+    if (race == SpaceRace.ALTEIRIANS) {
+      GovernmentType[] governments = {
+          GovernmentType.UNION, GovernmentType.HIVEMIND,
+          GovernmentType.REPUBLIC, GovernmentType.GUILD,
+          GovernmentType.HEGEMONY, GovernmentType.TECHNOCRACY,
+          GovernmentType.NEST, GovernmentType.EMPIRE,
+          GovernmentType.HIERARCHY, GovernmentType.HORDE,
+          GovernmentType.UTOPIA, GovernmentType.COLLECTIVE,
+          GovernmentType.REGIME
+        };
+        return governments;
+    }
     return null;
   }
 }

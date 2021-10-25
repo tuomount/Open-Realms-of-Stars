@@ -1341,6 +1341,12 @@ public class StarMap {
       planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
       planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
       planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    } else if (playerInfo.getRace() == SpaceRace.ALTEIRIANS) {
+      planet.setWorkers(Planet.FOOD_FARMERS, 1);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 1);
     } else {
       planet.setWorkers(Planet.FOOD_FARMERS, 1);
       planet.setWorkers(Planet.METAL_MINERS, 0);

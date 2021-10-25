@@ -125,6 +125,9 @@ public final class SpeechFactory {
       case LITHORIANS: return new SpeechLine(type,
           "Your fleet " + fleetName
           + " has entered into my sector. Remove it!");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Your pod " + fleetName
+          + " has detected in my sector. Move it!");
       default: return null;
     }
   }
@@ -177,6 +180,9 @@ public final class SpeechFactory {
       case LITHORIANS: return new SpeechLine(type,
           "Your spy " + fleetName
           + " has entered into my sector. Remove it! NOW!");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Your spy pod " + fleetName
+          + " has detected in my sector. Move it!");
       default: return null;
     }
   }
@@ -217,6 +223,8 @@ public final class SpeechFactory {
           "We see you have nothing to trade with us, except yourself!");
       case LITHORIANS: return new SpeechLine(type,
           "You don't seem to have even pebble to trade.");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "We don't feel you have anything to trade.");
       default: return null;
     }
   }
@@ -255,6 +263,8 @@ public final class SpeechFactory {
           "We will move the fleet!");
       case LITHORIANS: return new SpeechLine(type,
           "I am moving the fleet from your sector.");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "I'll be moving our pod.");
       default: return null;
     }
   }
@@ -295,6 +305,8 @@ public final class SpeechFactory {
           "We haven't decide if you will be synthesized " + raceName + "!");
       case LITHORIANS: return new SpeechLine(type,
           "Let's cool down and discuss, " + raceName + ".");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Let us feel for this moment, " + raceName + ".");
       default: return null;
     }
   }
@@ -333,6 +345,8 @@ public final class SpeechFactory {
           "Our thrall! Speak, we listen.");
       case LITHORIANS: return new SpeechLine(type,
           "Greetings, my fellow friend!");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Ah my friend!");
       default: return null;
     }
   }
@@ -371,6 +385,8 @@ public final class SpeechFactory {
           "We might not synthesize you, for now.");
       case LITHORIANS: return new SpeechLine(type,
           "Nice to see warm person in cool space.");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "It is nice to see you again!");
       default: return null;
     }
   }
@@ -409,6 +425,8 @@ public final class SpeechFactory {
           "YES?!");
       case LITHORIANS: return new SpeechLine(type,
           "Ah, something to put into smelting pot and eat up...");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Hmm, do I smell foul gases here?");
       default: return null;
     }
   }
@@ -447,6 +465,8 @@ public final class SpeechFactory {
           "Synthesis material, speak now!");
       case LITHORIANS: return new SpeechLine(type,
           "Be quick or I will explode...");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Urgh, I can feel and smell the foul gases...");
       default: return null;
     }
   }
@@ -485,6 +505,8 @@ public final class SpeechFactory {
           "You will accept this or we will synthesize your species!");
       case LITHORIANS: return new SpeechLine(type,
           "Accept this or I will eat you like a pebble stone!");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Accept this offer or you will feel our wrath!");
       default: return null;
     }
   }
@@ -532,6 +554,8 @@ public final class SpeechFactory {
       case LITHORIANS: return new SpeechLine(type,
           "This offer is so bad, I'll explode and prepare yourself"
           + " for war!" + extra);
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Your offer is full gas and you will feel our wrath!" + extra);
       default: return null;
     }
   }
@@ -573,6 +597,8 @@ public final class SpeechFactory {
           "We will not accept this!");
       case LITHORIANS: return new SpeechLine(type,
           "This offer makes me blazing hot and I getting close to explode!");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "This offer is full of ether and gases!");
       default: return null;
     }
   }
@@ -611,6 +637,8 @@ public final class SpeechFactory {
           "Adding cybergenetic implants might help you!");
       case LITHORIANS: return new SpeechLine(type,
           "You seem like a good fuel for furnace...");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "You are full of gases and you seem to leak it...");
       default: return null;
     }
   }
@@ -649,6 +677,8 @@ public final class SpeechFactory {
           "We will not accept this!");
       case LITHORIANS: return new SpeechLine(type,
           "I'll have to cool down this offer.");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "I cannot accept your offer.");
       default: return null;
     }
   }
@@ -731,6 +761,8 @@ public final class SpeechFactory {
           "We will start synthesize with your species!" + extra);
       case LITHORIANS: return new SpeechLine(type,
           "Prepare to encounter hot blazing war from us!" + extra);
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Prepare to to feel wrath from us!" + extra);
       default: return null;
     }
   }
@@ -776,6 +808,9 @@ public final class SpeechFactory {
       case LITHORIANS: return new SpeechLine(type,
           "Your puny " + fleetName + " has been detected."
               + " Prepare to encounter hot blazing war from us!");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Your puny pod " + fleetName + " has been detected."
+              + " Prepare to feel the wrath from us!");
       default: return null;
     }
   }
@@ -858,6 +893,9 @@ public final class SpeechFactory {
               + empire + "?");
       case LITHORIANS: return new SpeechLine(type,
           "Are you will to do trade embargo for 20 turns against "
+              + empire + "?");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Will you accept trade embargo for 20 turns against "
               + empire + "?");
       default: return null;
     }
@@ -946,6 +984,8 @@ public final class SpeechFactory {
           + " Join to our alliance!");
       case LITHORIANS: return new SpeechLine(type,
           "Let's stand together like rocks and defend ourselves!");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "We should join side by side to rule the galaxy!");
       default: return null;
     }
   }
@@ -987,6 +1027,9 @@ public final class SpeechFactory {
       case LITHORIANS:
         return new SpeechLine(type,
           "Let's form guarding pact, what say you?");
+      case ALTEIRIANS:
+        return new SpeechLine(type,
+          "We should join side by side to defend ourselves!");
       default: return null;
     }
   }
@@ -1064,6 +1107,9 @@ public final class SpeechFactory {
       case LITHORIANS:
         return new SpeechLine(type,
           "This deal makes me warm inside.");
+      case ALTEIRIANS:
+        return new SpeechLine(type,
+          "Most excellent deal!");
       default: return null;
     }
   }
@@ -1116,6 +1162,8 @@ public final class SpeechFactory {
           "We accept your deal!");
       case LITHORIANS: return new SpeechLine(type,
           "I accept your offer with warm!");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "I feel your offer. This is good!");
       default: return null;
     }
   }
@@ -1154,6 +1202,8 @@ public final class SpeechFactory {
           "Here is our offer!");
       case LITHORIANS: return new SpeechLine(type,
           "This is my offer!");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "I am offering this one, are you feeling it?");
       default: return null;
     }
   }

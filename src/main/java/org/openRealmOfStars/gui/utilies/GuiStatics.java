@@ -1133,6 +1133,13 @@ public final class GuiStatics {
           "/resources/images/lithorian_race.png"));
 
   /**
+   * Alteirian race selection image
+   */
+  public static final BufferedImage IMAGE_ALTEIRIAN_RACE =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/alteirian_race.png"));
+
+  /**
    * Privateer race selection image
    */
   public static final BufferedImage IMAGE_PRIVATEER_RACE =

@@ -2310,6 +2310,10 @@ public final class NameGenerator {
     if (race == SpaceRace.LITHORIANS) {
       return generateLithorianName(gender);
     }
+    if (race == SpaceRace.ALTEIRIANS) {
+      // FIXME Change name generator
+      return generateLithorianName(gender);
+    }
     return "Noname";
   }
 }

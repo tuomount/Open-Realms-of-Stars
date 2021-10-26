@@ -716,7 +716,9 @@ public final class SpeechFactory {
       case REBORGIANS: return new SpeechLine(type,
           "Our offer was not good enough, what do you offer then?");
       case LITHORIANS: return new SpeechLine(type,
-          "Your offer leaves me cold and cool.");
+          "Suggest your counter offer then...");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "So, what is your offer then?");
       default: return null;
     }
   }
@@ -849,6 +851,8 @@ public final class SpeechFactory {
           "We are offering you our spy information for 20 turns. Interested?");
       case LITHORIANS: return new SpeechLine(type,
           "I offer you our spy information for 20 turns. Interested?");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Are you interested joining to my spy network for 20 turnsa?");
       default: return null;
     }
   }
@@ -944,6 +948,8 @@ public final class SpeechFactory {
           "Your species has trading value for us, trade alliance?");
       case LITHORIANS: return new SpeechLine(type,
           "Let's start trading together, what is your answer?");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Let's join to mutual trading, what say you?");
  default: return null;
     }
   }
@@ -1242,6 +1248,8 @@ public final class SpeechFactory {
           "We offer you mutual coexistance.");
       case LITHORIANS: return new SpeechLine(type,
           "There is room for both of us.");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "Let's join together with peace...");
       default: return null;
     }
   }

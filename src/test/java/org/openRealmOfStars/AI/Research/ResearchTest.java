@@ -334,14 +334,14 @@ public class ResearchTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testUpdateCombatTech() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    TechList list = new TechList();
+    TechList list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
     assertEquals(1, list.getTechLevel(TechType.Combat));
     Research.checkUpdateCombat(info, Attitude.MILITARISTIC);
     assertEquals(2, list.getTechLevel(TechType.Combat));
-    list = new TechList();
+    list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Photon torpedo Mk1", 1));
@@ -353,7 +353,7 @@ public class ResearchTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testUpdateDefenseTech() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    TechList list = new TechList();
+    TechList list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createDefenseTech("Shield Mk1", 1));
     list.addTech(TechFactory.createDefenseTech("Armor plating Mk1", 1));
@@ -362,7 +362,7 @@ public class ResearchTest {
     list.addTech(TechFactory.createDefenseTech("Armor plating Mk2", 2));
     Research.checkUpdateDefense(info, Attitude.MILITARISTIC);
     assertEquals(3, list.getTechLevel(TechType.Defense));
-    list = new TechList();
+    list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createDefenseTech("Shield Mk1", 1));
     list.addTech(TechFactory.createDefenseTech("Armor plating Mk1", 1));
@@ -370,7 +370,7 @@ public class ResearchTest {
     list.addTech(TechFactory.createDefenseTech("Armor plating Mk2", 2));
     Research.checkUpdateDefense(info, Attitude.AGGRESSIVE);
     assertEquals(3, list.getTechLevel(TechType.Defense));
-    list = new TechList();
+    list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createDefenseTech("Shield Mk1", 1));
     list.addTech(TechFactory.createDefenseTech("Armor plating Mk1", 1));
@@ -386,7 +386,7 @@ public class ResearchTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testUpdateHullTech() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    TechList list = new TechList();
+    TechList list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createHullTech("Scout Mk1", 1));
     list.addTech(TechFactory.createHullTech("Colony", 1));
@@ -401,7 +401,7 @@ public class ResearchTest {
     assertEquals(2, list.getTechLevel(TechType.Hulls));
     Research.checkUpdateHull(info, Attitude.DIPLOMATIC);
     assertEquals(3, list.getTechLevel(TechType.Hulls));
-    list = new TechList();
+    list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createHullTech("Scout Mk1", 1));
     list.addTech(TechFactory.createHullTech("Colony", 1));
@@ -411,7 +411,7 @@ public class ResearchTest {
     list.addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
     Research.checkUpdateHull(info, Attitude.MILITARISTIC);
     assertEquals(3, list.getTechLevel(TechType.Hulls));
-    list = new TechList();
+    list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createHullTech("Scout Mk1", 1));
     list.addTech(TechFactory.createHullTech("Colony", 1));
@@ -421,7 +421,7 @@ public class ResearchTest {
     list.addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
     Research.checkUpdateHull(info, Attitude.AGGRESSIVE);
     assertEquals(3, list.getTechLevel(TechType.Hulls));
-    list = new TechList();
+    list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createHullTech("Scout Mk1", 1));
     list.addTech(TechFactory.createHullTech("Colony", 1));
@@ -437,7 +437,7 @@ public class ResearchTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testUpdateImprovementTech() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    TechList list = new TechList();
+    TechList list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createImprovementTech("Barracks", 1));
     list.addTech(TechFactory.createImprovementTech("Tax center", 1));
@@ -453,7 +453,7 @@ public class ResearchTest {
     assertEquals(2, list.getTechLevel(TechType.Improvements));
     Research.checkUpdateImprovement(info, Attitude.PEACEFUL);
     assertEquals(3, list.getTechLevel(TechType.Improvements));
-    list = new TechList();
+    list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createImprovementTech("Barracks", 1));
     list.addTech(TechFactory.createImprovementTech("Basic lab", 1));
@@ -465,7 +465,7 @@ public class ResearchTest {
     list.addTech(TechFactory.createImprovementTech("Starbase music hall", 2));
     Research.checkUpdateImprovement(info, Attitude.DIPLOMATIC);
     assertEquals(3, list.getTechLevel(TechType.Improvements));
-    list = new TechList();
+    list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createImprovementTech("Barracks", 1));
     list.addTech(TechFactory.createImprovementTech("Basic lab", 1));
@@ -476,7 +476,7 @@ public class ResearchTest {
     list.addTech(TechFactory.createImprovementTech("Starbase music hall", 2));
     Research.checkUpdateImprovement(info, Attitude.MERCHANTICAL);
     assertEquals(3, list.getTechLevel(TechType.Improvements));
-    list = new TechList();
+    list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createImprovementTech("Barracks", 1));
     list.addTech(TechFactory.createImprovementTech("Basic lab", 1));
@@ -488,7 +488,7 @@ public class ResearchTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testUpdatePropulsionTech() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    TechList list = new TechList();
+    TechList list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createPropulsionTech("Ion drive Mk1", 1));
     list.addTech(TechFactory.createPropulsionTech("Fission source Mk1", 1));
@@ -514,7 +514,7 @@ public class ResearchTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testUpdateElectronicsTech() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    TechList list = new TechList();
+    TechList list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createElectronicsTech("Scanner Mk1", 1));
     list.addTech(TechFactory.createElectronicsTech("Cloaking device Mk1", 1));

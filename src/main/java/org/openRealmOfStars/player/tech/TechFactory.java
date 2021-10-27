@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.tech;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
 
@@ -1047,11 +1048,12 @@ public final class TechFactory {
    *             and Electrics
    * @param level Tech Level 1-10
    * @param alreadyHas List of tech player has
+   * @param race SpaceRace for correct tech tree
    * @return Tech or null if cannot find new
    */
   public static Tech createRandomTech(final TechType type, final int level,
-      final Tech[] alreadyHas) {
-    return createRandomTech(type, level, alreadyHas, null);
+      final Tech[] alreadyHas, final SpaceRace race) {
+    return createRandomTech(type, level, alreadyHas, null, race);
   }
   /**
    * Create random tech by tech type and level, but not choose those tech
@@ -1061,15 +1063,16 @@ public final class TechFactory {
    * @param level Tech Level 1-10
    * @param alreadyHas List of tech player has
    * @param rareTech list of rare tech available for realm.
+   * @param race SpaceRace for correct tech tree
    * @return Tech or null if cannot find new
    */
   public static Tech createRandomTech(final TechType type, final int level,
-      final Tech[] alreadyHas, final Tech[] rareTech) {
+      final Tech[] alreadyHas, final Tech[] rareTech, final SpaceRace race) {
     String[] alreadyHasList = new String[alreadyHas.length];
     for (int i = 0; i < alreadyHasList.length; i++) {
       alreadyHasList[i] = alreadyHas[i].getName();
     }
-    String[] techOptions = getListByTechLevel(type, level);
+    String[] techOptions = getListByTechLevel(type, level, race);
     int rareTechs = 0;
     if (rareTech != null && rareTech.length > 0) {
       rareTechs = rareTech.length;
@@ -1328,13 +1331,15 @@ public final class TechFactory {
   }
 
   /**
-   * Get String list of tech by type and level
+   * Get String list of tech by type and level.
+   * This will now depend on space race.
    * @param type The tech type
    * @param level The tech level
+   * @param race SpaceRace Unique tech tree based on race
    * @return String array of tech
    */
   public static String[] getListByTechLevel(final TechType type,
-      final int level) {
+      final int level, final SpaceRace race) {
     switch (type) {
     case Combat:
       switch (level) {

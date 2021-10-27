@@ -270,7 +270,7 @@ public class PlayerInfo {
    */
   public PlayerInfo(final SpaceRace race, final int maxPlayers,
       final int index, final int boardPlayerIndex) {
-    setTechList(new TechList());
+    setTechList(new TechList(race));
     strategy = WinningStrategy.GENERIC;
     this.msgList = new MessageList();
     shipStatList = new ArrayList<>();
@@ -302,12 +302,12 @@ public class PlayerInfo {
        * Humans, Mechions and Centaurs get 1 Combat, 1 Defense, Scout and Colony
        */
       Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Defense, 1,
-          techList.getListForTypeAndLevel(TechType.Defense, 1));
+          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -340,12 +340,12 @@ public class PlayerInfo {
        * Lithorians get 1 Combat, 1 Defense, 1 electric, Scout and Colony
        */
       Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Defense, 1,
-          techList.getListForTypeAndLevel(TechType.Defense, 1));
+          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -366,7 +366,7 @@ public class PlayerInfo {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Electrics, 1,
-          techList.getListForTypeAndLevel(TechType.Electrics, 1));
+          techList.getListForTypeAndLevel(TechType.Electrics, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -383,17 +383,17 @@ public class PlayerInfo {
        * Chiraloids get 2 Combat, 1 Defense, Scout and Colony
        */
       Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Defense, 1,
-          techList.getListForTypeAndLevel(TechType.Defense, 1));
+          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -428,32 +428,32 @@ public class PlayerInfo {
        * Space pirates get higher start tech
        */
       Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Combat, 2,
-          techList.getListForTypeAndLevel(TechType.Combat, 2));
+          techList.getListForTypeAndLevel(TechType.Combat, 2), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Defense, 1,
-          techList.getListForTypeAndLevel(TechType.Defense, 1));
+          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Defense, 1,
-          techList.getListForTypeAndLevel(TechType.Defense, 1));
+          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Defense, 2,
-          techList.getListForTypeAndLevel(TechType.Defense, 2));
+          techList.getListForTypeAndLevel(TechType.Defense, 2), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -494,7 +494,7 @@ public class PlayerInfo {
        * Mothoids get 1 Combat, 1 improvement, Scout and Colony
        */
       Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -503,7 +503,7 @@ public class PlayerInfo {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Improvements, 1,
-          techList.getListForTypeAndLevel(TechType.Improvements, 1));
+          techList.getListForTypeAndLevel(TechType.Improvements, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -532,12 +532,12 @@ public class PlayerInfo {
        * Reborgians get 1 Combat, 1 Defense, 1 improvement, Scout and Colony
        */
       Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Defense, 1,
-          techList.getListForTypeAndLevel(TechType.Defense, 1));
+          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -546,7 +546,7 @@ public class PlayerInfo {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Improvements, 1,
-          techList.getListForTypeAndLevel(TechType.Improvements, 1));
+          techList.getListForTypeAndLevel(TechType.Improvements, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -575,17 +575,17 @@ public class PlayerInfo {
        * Sporks get 2 Combat, 1 Defense, Scout and Colony
        */
       Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Defense, 1,
-          techList.getListForTypeAndLevel(TechType.Defense, 1));
+          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -619,12 +619,12 @@ public class PlayerInfo {
        * electronics
        */
       Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Defense, 1,
-          techList.getListForTypeAndLevel(TechType.Defense, 1));
+          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -645,12 +645,12 @@ public class PlayerInfo {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Propulsion, 1,
-          techList.getListForTypeAndLevel(TechType.Propulsion, 1));
+          techList.getListForTypeAndLevel(TechType.Propulsion, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Electrics, 1,
-          techList.getListForTypeAndLevel(TechType.Electrics, 1));
+          techList.getListForTypeAndLevel(TechType.Electrics, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -667,12 +667,12 @@ public class PlayerInfo {
        * Scaurians get 1 Combat, 1 Defense, Scout, Colony and Tax center
        */
       Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Defense, 1,
-          techList.getListForTypeAndLevel(TechType.Defense, 1));
+          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -761,7 +761,7 @@ public class PlayerInfo {
     } else {
       setRuler(null);
     }
-    techList = new TechList(dis);
+    techList = new TechList(dis, race);
     ancientRealm = false;
     msgList = new MessageList(dis);
     int count = dis.readInt();

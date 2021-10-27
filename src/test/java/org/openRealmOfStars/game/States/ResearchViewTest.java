@@ -8,6 +8,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.tech.TechList;
 
 
@@ -39,7 +40,8 @@ public class ResearchViewTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBasic() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    TechList list = new TechList();
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    TechList list = new TechList(info.getRace());
     Mockito.when(info.getTechList()).thenReturn(list);
     int totalResearch = 5;
     String focusTech = null;

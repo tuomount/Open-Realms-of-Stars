@@ -849,6 +849,8 @@ public final class TechFactory {
               || techName.startsWith("Farming center")
               || techName.startsWith("Hydropodic farming center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
+            tech.setExcludeList(true);
+            tech.setSpaceRaces(SpaceRace.LITHORIANS, SpaceRace.MECHIONS);
           } else if (techName.startsWith("Advanced mine")
               || techName.startsWith("Mining center")
               || techName.startsWith("Nanobot mining center")) {

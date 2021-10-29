@@ -1342,160 +1342,256 @@ public final class TechFactory {
    */
   public static String[] getListByTechLevel(final TechType type,
       final int level, final SpaceRace race) {
+    String[] possibleTechs = new String[0];
     switch (type) {
     case Combat:
       switch (level) {
       case 1:
-        return COMBAT_TECH_LEVEL1_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL1_NAMES;
+        break;
       case 2:
-        return COMBAT_TECH_LEVEL2_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL2_NAMES;
+        break;
       case 3:
-        return COMBAT_TECH_LEVEL3_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL3_NAMES;
+        break;
       case 4:
-        return COMBAT_TECH_LEVEL4_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL4_NAMES;
+        break;
       case 5:
-        return COMBAT_TECH_LEVEL5_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL5_NAMES;
+        break;
       case 6:
-        return COMBAT_TECH_LEVEL6_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL6_NAMES;
+        break;
       case 7:
-        return COMBAT_TECH_LEVEL7_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL7_NAMES;
+        break;
       case 8:
-        return COMBAT_TECH_LEVEL8_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL8_NAMES;
+        break;
       case 9:
-        return COMBAT_TECH_LEVEL9_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL9_NAMES;
+        break;
       case 10:
-        return COMBAT_TECH_LEVEL10_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL10_NAMES;
+        break;
       default:
         throw new IllegalArgumentException("Tech level is beyond 10!");
       }
+      break;
     case Defense:
       switch (level) {
       case 1:
-        return DEFENSE_TECH_LEVEL1_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL1_NAMES;
+        break;
       case 2:
-        return DEFENSE_TECH_LEVEL2_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL2_NAMES;
+        break;
       case 3:
-        return DEFENSE_TECH_LEVEL3_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL3_NAMES;
+        break;
       case 4:
-        return DEFENSE_TECH_LEVEL4_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL4_NAMES;
+        break;
       case 5:
-        return DEFENSE_TECH_LEVEL5_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL5_NAMES;
+        break;
       case 6:
-        return DEFENSE_TECH_LEVEL6_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL6_NAMES;
+        break;
       case 7:
-        return DEFENSE_TECH_LEVEL7_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL7_NAMES;
+        break;
       case 8:
-        return DEFENSE_TECH_LEVEL8_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL8_NAMES;
+        break;
       case 9:
-        return DEFENSE_TECH_LEVEL9_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL9_NAMES;
+        break;
       case 10:
-        return DEFENSE_TECH_LEVEL10_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL10_NAMES;
+        break;
       default:
         throw new IllegalArgumentException("Tech level is beyond 10!");
       }
+      break;
     case Hulls:
       switch (level) {
       case 1:
-        return HULL_TECH_LEVEL1_NAMES;
+        possibleTechs = HULL_TECH_LEVEL1_NAMES;
+        break;
       case 2:
-        return HULL_TECH_LEVEL2_NAMES;
+        possibleTechs = HULL_TECH_LEVEL2_NAMES;
+        break;
       case 3:
-        return HULL_TECH_LEVEL3_NAMES;
+        possibleTechs = HULL_TECH_LEVEL3_NAMES;
+        break;
       case 4:
-        return HULL_TECH_LEVEL4_NAMES;
+        possibleTechs = HULL_TECH_LEVEL4_NAMES;
+        break;
       case 5:
-        return HULL_TECH_LEVEL5_NAMES;
+        possibleTechs = HULL_TECH_LEVEL5_NAMES;
+        break;
       case 6:
-        return HULL_TECH_LEVEL6_NAMES;
+        possibleTechs = HULL_TECH_LEVEL6_NAMES;
+        break;
       case 7:
-        return HULL_TECH_LEVEL7_NAMES;
+        possibleTechs = HULL_TECH_LEVEL7_NAMES;
+        break;
       case 8:
-        return HULL_TECH_LEVEL8_NAMES;
+        possibleTechs = HULL_TECH_LEVEL8_NAMES;
+        break;
       case 9:
-        return HULL_TECH_LEVEL9_NAMES;
+        possibleTechs = HULL_TECH_LEVEL9_NAMES;
+        break;
       case 10:
-        return HULL_TECH_LEVEL10_NAMES;
+        possibleTechs = HULL_TECH_LEVEL10_NAMES;
+        break;
       default:
         throw new IllegalArgumentException("Tech level is beyond 10!");
       }
+      break;
     case Improvements:
       switch (level) {
       case 1:
-        return IMPROVEMENT_TECH_LEVEL1_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL1_NAMES;
+        break;
       case 2:
-        return IMPROVEMENT_TECH_LEVEL2_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL2_NAMES;
+        break;
       case 3:
-        return IMPROVEMENT_TECH_LEVEL3_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL3_NAMES;
+        break;
       case 4:
-        return IMPROVEMENT_TECH_LEVEL4_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL4_NAMES;
+        break;
       case 5:
-        return IMPROVEMENT_TECH_LEVEL5_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL5_NAMES;
+        break;
       case 6:
-        return IMPROVEMENT_TECH_LEVEL6_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL6_NAMES;
+        break;
       case 7:
-        return IMPROVEMENT_TECH_LEVEL7_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL7_NAMES;
+        break;
       case 8:
-        return IMPROVEMENT_TECH_LEVEL8_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL8_NAMES;
+        break;
       case 9:
-        return IMPROVEMENT_TECH_LEVEL9_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL9_NAMES;
+        break;
       case 10:
-        return IMPROVEMENT_TECH_LEVEL10_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL10_NAMES;
+        break;
       default:
         throw new IllegalArgumentException("Tech level is beyond 10!");
       }
+      break;
     case Propulsion:
       switch (level) {
       case 1:
-        return PROPULSION_TECH_LEVEL1_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL1_NAMES;
+        break;
       case 2:
-        return PROPULSION_TECH_LEVEL2_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL2_NAMES;
+        break;
       case 3:
-        return PROPULSION_TECH_LEVEL3_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL3_NAMES;
+        break;
       case 4:
-        return PROPULSION_TECH_LEVEL4_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL4_NAMES;
+        break;
       case 5:
-        return PROPULSION_TECH_LEVEL5_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL5_NAMES;
+        break;
       case 6:
-        return PROPULSION_TECH_LEVEL6_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL6_NAMES;
+        break;
       case 7:
-        return PROPULSION_TECH_LEVEL7_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL7_NAMES;
+        break;
       case 8:
-        return PROPULSION_TECH_LEVEL8_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL8_NAMES;
+        break;
       case 9:
-        return PROPULSION_TECH_LEVEL9_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL9_NAMES;
+        break;
       case 10:
-        return PROPULSION_TECH_LEVEL10_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL10_NAMES;
+        break;
       default:
         throw new IllegalArgumentException("Tech level is beyond 10!");
       }
+      break;
     case Electrics:
       switch (level) {
       case 1:
-        return ELECTRONICS_TECH_LEVEL1_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL1_NAMES;
+        break;
       case 2:
-        return ELECTRONICS_TECH_LEVEL2_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL2_NAMES;
+        break;
       case 3:
-        return ELECTRONICS_TECH_LEVEL3_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL3_NAMES;
+        break;
       case 4:
-        return ELECTRONICS_TECH_LEVEL4_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL4_NAMES;
+        break;
       case 5:
-        return ELECTRONICS_TECH_LEVEL5_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL5_NAMES;
+        break;
       case 6:
-        return ELECTRONICS_TECH_LEVEL6_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL6_NAMES;
+        break;
       case 7:
-        return ELECTRONICS_TECH_LEVEL7_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL7_NAMES;
+        break;
       case 8:
-        return ELECTRONICS_TECH_LEVEL8_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL8_NAMES;
+        break;
       case 9:
-        return ELECTRONICS_TECH_LEVEL9_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL9_NAMES;
+        break;
       case 10:
-        return ELECTRONICS_TECH_LEVEL10_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL10_NAMES;
+        break;
       default:
         throw new IllegalArgumentException("Tech level is beyond 10!");
       }
+      break;
     default:
       throw new IllegalArgumentException("Illegal tech type!");
     }
+    if (possibleTechs.length > 0) {
+      ArrayList<String> techList = new ArrayList<>();
+      for (String techName : possibleTechs) {
+        Tech tech = createTech(type, level, techName);
+        if (tech.isExcludeList()) {
+          boolean donotAdd = false;
+          for (SpaceRace tmpRace : tech.getSpaceRaces()) {
+            if (tmpRace == race) {
+              donotAdd = true;
+            }
+          }
+          if (!donotAdd) {
+            techList.add(techName);
+          }
+        } else {
+          for (SpaceRace tmpRace : tech.getSpaceRaces()) {
+            if (tmpRace == race) {
+              techList.add(techName);
+              break;
+            }
+          }
+          if (tech.getSpaceRaces().length == 0) {
+            techList.add(techName);
+          }
+        }
+      }
+      return techList.toArray(new String[techList.size()]);
+    }
+    return possibleTechs;
   }
 
 }

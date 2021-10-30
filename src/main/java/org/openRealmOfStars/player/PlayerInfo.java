@@ -711,12 +711,12 @@ public class PlayerInfo {
        */
       //TODO Add missing minor orbital
       Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1));
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Defense, 1,
-          techList.getListForTypeAndLevel(TechType.Defense, 1));
+          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -737,7 +737,7 @@ public class PlayerInfo {
         techList.addTech(tech);
       }
       tech = TechFactory.createRandomTech(TechType.Electrics, 1,
-          techList.getListForTypeAndLevel(TechType.Electrics, 1));
+          techList.getListForTypeAndLevel(TechType.Electrics, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }

@@ -1263,6 +1263,9 @@ public class StarMap {
       //where is another realm's home planet.
     }
     planet.setPlanetOwner(playerIndex, playerInfo);
+    if (playerInfo.getRace() == SpaceRace.ALTEIRIANS) {
+      planet.colonizeWithOrbital();
+    }
     if (Game.getTutorial() != null && playerInfo.isHuman()
         && isTutorialEnabled()) {
       String tutorialText = Game.getTutorial().showTutorialText(0);
@@ -1363,6 +1366,9 @@ public class StarMap {
         numShip = 2;
       }
       for (int j = 0; j < numShip; j++) {
+        if (stat.getDesign().getHull().getHullType() == ShipHullType.ORBITAL) {
+          continue;
+        }
         Ship ship = new Ship(stat.getDesign());
         stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
         stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);

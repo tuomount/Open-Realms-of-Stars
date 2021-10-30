@@ -201,7 +201,7 @@ public final class TechFactory {
    * Hull tech names for level 1
    */
   public static final String[] HULL_TECH_LEVEL1_NAMES = {"Scout Mk1",
-      "Destroyer Mk1", "Colony" };
+      "Destroyer Mk1", "Colony", "Minor orbital" };
   /**
    * Hull tech names for level 2
    */
@@ -221,12 +221,13 @@ public final class TechFactory {
    * Hull tech names for level 5
    */
   public static final String[] HULL_TECH_LEVEL5_NAMES = {"Cruiser",
-      "Battleship Mk1", "Privateer Mk1", "Fighter bay Mk2" };
+      "Battleship Mk1", "Privateer Mk1", "Fighter bay Mk2", "Large orbital" };
   /**
    * Hull tech names for level 6
    */
   public static final String[] HULL_TECH_LEVEL6_NAMES = {"Large freighter",
-      "Large starbase", "Corvette Mk2", "Artificial planet" };
+      "Large starbase", "Corvette Mk2", "Artificial planet",
+      "Massive orbital"};
   /**
    * Hull tech names for level 7
    */
@@ -632,9 +633,13 @@ public final class TechFactory {
         if (techName.equals("Iron colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
+          tech.setExcludeList(true);
+          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
         } else if (techName.equals("Desert colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
+          tech.setExcludeList(true);
+          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
         } else if (techName.startsWith("Planetary defense turret Mk")
             || techName.startsWith("Orbital shield")
             || techName.equals("Space academy")) {
@@ -746,7 +751,18 @@ public final class TechFactory {
         Tech tech = new Tech(techName, TechType.Hulls, level);
         if (techName.equals("Advanced colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
+          tech.setExcludeList(true);
+          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
           tech.setTradeable(false);
+          return tech;
+        } else if (techName.equals("Minor orbital")
+            || techName.equals("Large orbital")
+            || techName.equals("Massive orbital")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
+          tech.setTradeable(false);
+          tech.setExcludeList(false);
+          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
+          tech.setHull(techName);
           return tech;
         } else if (techName.contains("starbase")
             || techName.contains("Artificial planet")
@@ -823,9 +839,13 @@ public final class TechFactory {
         if (techName.equals("Aquatic colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
+          tech.setExcludeList(true);
+          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
         } else if (techName.equals("Carbon colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
+          tech.setExcludeList(true);
+          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
         } else if (techName.startsWith("Starbase")) {
           tech.setComponent(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
@@ -949,6 +969,8 @@ public final class TechFactory {
         if (techName.equals("Ice colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
+          tech.setExcludeList(true);
+          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
         } else if (tech.getName().equals("Material replicator")) {
           tech.setImprovement(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_METAL_ORE));

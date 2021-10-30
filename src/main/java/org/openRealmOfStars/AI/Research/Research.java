@@ -101,8 +101,11 @@ public final class Research {
     handleStarbaseDesign(info, ShipSize.MEDIUM);
     handleStarbaseDesign(info, ShipSize.LARGE);
     handleStarbaseDesign(info, ShipSize.HUGE);
+    handleMinorOrbitalDesign(info);
     handleOrbitalDesign(info, ShipSize.SMALL);
     handleOrbitalDesign(info, ShipSize.MEDIUM);
+    handleOrbitalDesign(info, ShipSize.LARGE);
+    handleOrbitalDesign(info, ShipSize.HUGE);
     handleTrooperShipDesign(info);
     handleColonyShipDesign(info);
     handleFreighterShipDesign(info);
@@ -412,6 +415,7 @@ public final class Research {
       for (ShipStat stat : stats) {
         if (stat.getDesign().getHull().getSize() == size && stat.getDesign()
             .getHull().getHullType() == ShipHullType.ORBITAL
+            && !stat.getDesign().getHull().getName().equals("Minor orbital")
             && !stat.isObsolete()) {
           notFound = false;
           if (design.getTotalMilitaryPower() > stat.getDesign()
@@ -425,6 +429,43 @@ public final class Research {
           if (design.getTotalMilitaryPower() == stat.getDesign()
               .getTotalMilitaryPower() && design.getStarbaseValue() > stat
               .getDesign().getStarbaseValue()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+        }
+      }
+      if (notFound) {
+        ShipStat ship = new ShipStat(design);
+        info.addShipStat(ship);
+      }
+    }
+
+  }
+
+  /**
+   * Handle Minor Orbital design for AI
+   * @param info Player
+   */
+  private static void handleMinorOrbitalDesign(final PlayerInfo info) {
+    ShipDesign design = ShipGenerator.createMinorOrbital(info);
+    if (design != null) {
+      ShipStat[] stats = info.getShipStatList();
+      boolean notFound = true;
+      for (ShipStat stat : stats) {
+        if (stat.getDesign().getHull().getName().equals("Minor orbital")
+            && !stat.isObsolete()) {
+          notFound = false;
+          if (design.getTotalMilitaryPower() > stat.getDesign()
+              .getTotalMilitaryPower()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+          if (design.getTotalMilitaryPower() == stat.getDesign()
+              .getTotalMilitaryPower()) {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);

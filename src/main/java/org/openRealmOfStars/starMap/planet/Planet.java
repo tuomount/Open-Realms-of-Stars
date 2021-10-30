@@ -22,6 +22,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -2145,6 +2146,17 @@ public class Planet {
     return true;
   }
   /**
+   * Colonize planet with minor orbital.
+   */
+  public void colonizeWithOrbital() {
+    ShipStat stat = planetOwnerInfo.findMinorOrbitalDesign();
+    // We need to create here a new instance
+    Ship ship = new Ship(stat.getDesign());
+    stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+    stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+    orbital = ship;
+  }
+  /**
    * Update planet for one turn
    * @param enemyOrbiting if true it means that other player,
    *        has fleet orbiting on planet.
@@ -2652,6 +2664,31 @@ public class Planet {
       result = result * percent / 100;
       if (result < 2) {
         result = 2;
+      }
+    }
+    if (planetOwnerInfo.getRace() == SpaceRace.ALTEIRIANS) {
+      result = 0;
+      if (getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
+        result = getGroundSize();
+      }
+      if (orbital == null) {
+        return result;
+      }
+      if (orbital.getHull().getSize() == ShipSize.SMALL) {
+        if (orbital.getHull().getName().equals("Minor Orbital")) {
+          result = result + 4;
+        } else {
+          result = result + 6;
+        }
+      }
+      if (orbital.getHull().getSize() == ShipSize.MEDIUM) {
+        result = result + 8;
+      }
+      if (orbital.getHull().getSize() == ShipSize.LARGE) {
+        result = result + 10;
+      }
+      if (orbital.getHull().getSize() == ShipSize.HUGE) {
+        result = result + 12;
       }
     }
     return result;

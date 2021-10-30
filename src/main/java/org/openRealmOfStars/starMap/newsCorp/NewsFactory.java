@@ -2075,6 +2075,57 @@ public final class NewsFactory {
   }
 
   /**
+   * Attacker destroyed alteirian orbital
+   * @param attacker Player who is attacking
+   * @param defender Player who is defending
+   * @param planet Which planet was conquered
+   * @return NewsData
+   */
+  public static NewsData makeAlteirianLoseOrbitalNews(
+      final PlayerInfo attacker, final PlayerInfo defender,
+      final Planet planet) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+        planet.getImageInstructions(),
+        ImageInstruction.SIZE_FULL);
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("Critical orbital lost!");
+        break;
+      }
+      case 1: {
+        instructions.addText("DEVASTATION ON "
+            + planet.getName().toUpperCase() + "!");
+        break;
+      }
+      case 2: {
+        instructions.addText("Orbital and all population lost!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(attacker.getEmpireName());
+    sb.append(" made massive attack on ");
+    sb.append(planet.getName());
+    if (defender != null) {
+      sb.append(". Defender ");
+      sb.append(defender.getEmpireName());
+      sb.append(" was defeated eventually. ");
+    }
+    sb.append(" All population who lived in orbital are gone now. ");
+    if (planet.getGovernor() != null) {
+      sb.append(planet.getGovernor().getCallName());
+      sb.append(" was also killed during destruction of orbital.");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
    * Make News when game is in halfway
    * @param map StarMap contains NewsCorpData and playerlist
    * @return NewsData

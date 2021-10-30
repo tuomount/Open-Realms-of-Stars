@@ -144,7 +144,7 @@ public enum SpaceRace {
   ALTEIRIANS(13, "Alteirians", "Alteirian",
       "Alteirian are creatures that live in zero gravity. Because of this they"
       + " need special suites to move planet surface. Most of their time they"
-      + " live on planet's orbit. Their orbitals are much improved than other"
+      + " live on planet's orbit. Their orbitals are more improved than other"
       + " space race.");
 
 

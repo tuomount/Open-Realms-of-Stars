@@ -7,6 +7,7 @@ import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.WinningStrategy;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
@@ -2507,6 +2508,9 @@ public class DiplomaticTrade {
           planet.setGovernor(null);
         }
         planet.setPlanetOwner(index, info);
+        if (info.getRace() == SpaceRace.ALTEIRIANS) {
+          planet.colonizeWithOrbital();
+        }
         countAsDiplomaticTrade = true;
         break;
       }

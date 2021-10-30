@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 55;
+  private static final int MAX_BUILDING = 61;
 
   /**
    * Component Basic mine
@@ -308,6 +308,30 @@ public final class BuildingFactory {
    * Component Broadcasting network
    */
   public static final int COMPONENT_BROADCASTING_NETWORK = 54;
+  /**
+   * Component Cyber lab
+   */
+  public static final int COMPONENT_CYBER_LAB = 55;
+  /**
+   * Component Collective reseach center
+   */
+  public static final int COMPONENT_COLLECTIVE_RESEARCH_CENTER = 56;
+  /**
+   * Component Research matrix
+   */
+  public static final int COMPONENT_RESEARCH_MATRIX = 57;
+  /**
+   * Component Advanced furnace
+   */
+  public static final int COMPONENT_ADVANCED_FURNACE = 58;
+  /**
+   * Component Massive blast furnace
+   */
+  public static final int COMPONENT_MASSIVE_BLAST_FURNACE = 59;
+  /**
+   * Component Planetary furnace
+   */
+  public static final int COMPONENT_PLANETARY_FURNACE = 60;
 
   /**
    * Create planetary building with index
@@ -482,6 +506,24 @@ public final class BuildingFactory {
     case COMPONENT_BROADCASTING_NETWORK:
       tmp = createPlanetaryImprovement(index);
       break; // Broadcasting network
+    case COMPONENT_CYBER_LAB:
+      tmp = createPlanetaryImprovement(index);
+      break; // Cyber lab
+    case COMPONENT_COLLECTIVE_RESEARCH_CENTER:
+      tmp = createPlanetaryImprovement(index);
+      break; // Collective research center
+    case COMPONENT_RESEARCH_MATRIX:
+      tmp = createPlanetaryImprovement(index);
+      break; // Research matrix
+    case COMPONENT_ADVANCED_FURNACE:
+      tmp = createProductionFacility(index);
+      break; // Advanced furnace
+    case COMPONENT_MASSIVE_BLAST_FURNACE:
+      tmp = createProductionFacility(index);
+      break; // Massive blast furnace
+    case COMPONENT_PLANETARY_FURNACE:
+      tmp = createProductionFacility(index);
+      break; // Planetary furnace
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -874,7 +916,48 @@ public final class BuildingFactory {
       tmp.setMaterialBonus(2);
       return tmp;
     }
-
+    if (index == COMPONENT_ADVANCED_FURNACE) {
+      tmp = new Building(index, "Advanced furnace",
+          Icons.getIconByName(Icons.ICON_METAL), BuildingType.MINE);
+      tmp.setCultBonus(0);
+      tmp.setHappiness(0);
+      tmp.setProdCost(20);
+      tmp.setMetalCost(20);
+      tmp.setDescription("Advanced furnace produces metal and production.");
+      tmp.setSingleAllowed(true);
+      tmp.setMineBonus(1);
+      tmp.setFactBonus(1);
+      return tmp;
+    }
+    if (index == COMPONENT_MASSIVE_BLAST_FURNACE) {
+      tmp = new Building(index, "Massive blast furnace",
+          Icons.getIconByName(Icons.ICON_METAL), BuildingType.MINE);
+      tmp.setCultBonus(0);
+      tmp.setHappiness(0);
+      tmp.setProdCost(20);
+      tmp.setMetalCost(30);
+      tmp.setDescription("Massive blast furnace produces metal"
+          + " and production.");
+      tmp.setSingleAllowed(true);
+      tmp.setMineBonus(2);
+      tmp.setFactBonus(1);
+      return tmp;
+    }
+    if (index == COMPONENT_PLANETARY_FURNACE) {
+      tmp = new Building(index, "Planetary furnace",
+          Icons.getIconByName(Icons.ICON_METAL), BuildingType.MINE);
+      tmp.setCultBonus(0);
+      tmp.setHappiness(0);
+      tmp.setProdCost(200);
+      tmp.setMetalCost(100);
+      tmp.setDescription("Mega project that uses planet's core for heat"
+          + " source for furnance");
+      tmp.setSingleAllowed(true);
+      tmp.setScientificAchievement(true);
+      tmp.setMineBonus(4);
+      tmp.setFactBonus(2);
+      return tmp;
+    }
     return tmp;
   }
 
@@ -1151,6 +1234,43 @@ public final class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
+    if (index == COMPONENT_CYBER_LAB) {
+      tmp = new Building(index, "Cyber lab",
+          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+      tmp.setReseBonus(1);
+      tmp.setHappiness(1);
+      tmp.setProdCost(15);
+      tmp.setMetalCost(10);
+      tmp.setSingleAllowed(true);
+      tmp.setDescription("Cyber laboratory for research. Gives morale boost"
+          + " for population.");
+      return tmp;
+    }
+    if (index == COMPONENT_COLLECTIVE_RESEARCH_CENTER) {
+      tmp = new Building(index, "Collective research center",
+          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+      tmp.setReseBonus(2);
+      tmp.setHappiness(1);
+      tmp.setProdCost(25);
+      tmp.setMetalCost(10);
+      tmp.setSingleAllowed(true);
+      tmp.setMaintenanceCost(0.25);
+      tmp.setDescription("Collective research center for robotic minds.");
+      return tmp;
+    }
+    if (index == COMPONENT_RESEARCH_MATRIX) {
+      tmp = new Building(index, "Research matrix",
+          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+      tmp.setReseBonus(3);
+      tmp.setHappiness(2);
+      tmp.setProdCost(40);
+      tmp.setMetalCost(15);
+      tmp.setSingleAllowed(true);
+      tmp.setMaintenanceCost(0.3);
+      tmp.setDescription("Research matrix for robotic minds.");
+      return tmp;
+    }
+
     return tmp;
   }
 

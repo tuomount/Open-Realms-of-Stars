@@ -257,7 +257,8 @@ public final class TechFactory {
    * Planetary Improvement tech names for level 2
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL2_NAMES = {"Advanced farm",
-      "Advanced mine", "Advanced factory", "Starbase music hall" };
+      "Advanced mine", "Advanced factory", "Starbase music hall", "Cyber lab",
+      "Advanced furnace"};
   /**
    * Planetary Improvement tech names for level 3
    */
@@ -281,7 +282,8 @@ public final class TechFactory {
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL5_NAMES = {
       "Farming center", "Mining center", "Manufacturing center",
-      "Radiation dampener", "Galactic sports center" };
+      "Radiation dampener", "Galactic sports center",
+      "Collective research center", "Massive blast furnace" };
   /**
    * Planetary Improvement tech names for level 6
    */
@@ -304,7 +306,8 @@ public final class TechFactory {
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL9_NAMES = {
       "Hydropodic farming center", "Nanobot mining center",
-      "Nanobot manufacturing center" };
+      "Nanobot manufacturing center", "Research Matrix",
+      "Planetary furnace"};
   /**
    * Planetary Improvement tech names for level 10
    */
@@ -851,6 +854,26 @@ public final class TechFactory {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
             tech.setExcludeList(true);
             tech.setSpaceRaces(SpaceRace.LITHORIANS, SpaceRace.MECHIONS);
+          } else if (techName.startsWith("Cyber lab")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
+            tech.setExcludeList(false);
+            tech.setSpaceRaces(SpaceRace.MECHIONS);
+            tech.setTradeable(false);
+          } else if (techName.startsWith("Collective research center")
+              || techName.startsWith("Research Matrix")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
+            tech.setExcludeList(false);
+            tech.setSpaceRaces(SpaceRace.REBORGIANS, SpaceRace.MECHIONS);
+            tech.setTradeable(false);
+          } else if (techName.startsWith("Advanced furnace")
+              || techName.startsWith("Massive blast furnace")
+              || techName.startsWith("Planetary furnace")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_METAL));
+            tech.setExcludeList(false);
+            tech.setSpaceRaces(SpaceRace.LITHORIANS);
+            // This tech is rare tech that only Lithorians will learn it
+            // but they can trade it to others if they wish.
+            tech.setRareTech(true);
           } else if (techName.startsWith("Advanced mine")
               || techName.startsWith("Mining center")
               || techName.startsWith("Nanobot mining center")) {

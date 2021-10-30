@@ -33,7 +33,7 @@ import org.openRealmOfStars.starMap.vote.VotingType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2017-2020 Tuomo Untinen
+ * Copyright (C) 2017-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -203,7 +203,7 @@ return map;
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     PlayerInfo player1 = Mockito.mock(PlayerInfo.class);
-    TechList tech1 = new TechList();
+    TechList tech1 = new TechList(SpaceRace.HUMAN);
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech3", TechType.Combat, 2));
@@ -212,7 +212,7 @@ return map;
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     Mockito.when(player1.getTechList()).thenReturn(tech1);
     PlayerInfo player2 = Mockito.mock(PlayerInfo.class);
-    TechList tech2 = new TechList();
+    TechList tech2 = new TechList(SpaceRace.HUMAN);
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech2.addTech(new Tech("EleTech1", TechType.Electrics, 1));
@@ -371,7 +371,7 @@ return map;
     Mockito.when(player1.getEspionage()).thenReturn(espionage);
     Mockito.when(player1.getSectorVisibility(
         (Coordinate)Mockito.anyObject())).thenReturn((byte) 2);
-    TechList tech1 = new TechList();
+    TechList tech1 = new TechList(SpaceRace.HUMAN);
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech3", TechType.Combat, 2));
@@ -382,7 +382,7 @@ return map;
     Mockito.when(player1.getTechList()).thenReturn(tech1);
     PlayerInfo player2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(player2.getEspionage()).thenReturn(espionage);
-    TechList tech2 = new TechList();
+    TechList tech2 = new TechList(SpaceRace.HUMAN);
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech2.addTech(new Tech("EleTech1", TechType.Electrics, 1));
@@ -424,7 +424,7 @@ return map;
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     PlayerInfo player1 = Mockito.mock(PlayerInfo.class);
     Mockito.when(player1.getSectorVisibility(coord)).thenReturn((byte) 1);
-    TechList tech1 = new TechList();
+    TechList tech1 = new TechList(SpaceRace.HUMAN);
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech3", TechType.Combat, 2));
@@ -435,7 +435,7 @@ return map;
     Mockito.when(player1.getTechList()).thenReturn(tech1);
     PlayerInfo player2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(player2.getSectorVisibility(coord)).thenReturn((byte) 1);
-    TechList tech2 = new TechList();
+    TechList tech2 = new TechList(SpaceRace.HUMAN);
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech2.addTech(new Tech("EleTech1", TechType.Electrics, 1));
@@ -1210,7 +1210,7 @@ return map;
     Mockito.when(player1.getFleets()).thenReturn(fleetList);
     Mockito.when(player1.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(player1.getEspionage()).thenReturn(espionage);
-    TechList tech1 = new TechList();
+    TechList tech1 = new TechList(SpaceRace.HUMAN);
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech3", TechType.Combat, 2));
@@ -1225,7 +1225,7 @@ return map;
     Mockito.when(player2.getFleets()).thenReturn(fleetList);
     Mockito.when(player2.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(player2.getEspionage()).thenReturn(espionage);
-    TechList tech2 = new TechList();
+    TechList tech2 = new TechList(SpaceRace.HUMAN);
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech2.addTech(new Tech("EleTech1", TechType.Electrics, 1));

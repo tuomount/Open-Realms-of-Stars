@@ -83,6 +83,16 @@ public class Tech {
    */
   private boolean tradeable;
   /**
+   * If this is true list of space races is excluded not gaining this tech.
+   * If this is false list of space race is included gain this tech.
+   */
+  private boolean excludeList;
+
+  /**
+   * List of space races.
+   */
+  private SpaceRace[] spaceRaces;
+  /**
    * Create a new Tech with defaults
    * @param name Tech Name
    * @param type Tech Type
@@ -99,6 +109,8 @@ public class Tech {
     nextTechLevel = 1;
     rareTech = false;
     tradeable = true;
+    excludeList = false;
+    spaceRaces = new SpaceRace[0];
     icon = Icons.getIconByName(Icons.ICON_RESEARCH);
   }
 
@@ -389,6 +401,40 @@ public class Tech {
    */
   public void setTradeable(final boolean tradeable) {
     this.tradeable = tradeable;
+  }
+
+  /**
+   * Is list of space races exclude list or not?
+   * Exclude list contains races which should not gain this tech.
+   * Include list contains race which only gain this tech.
+   * @return True if exclude list.
+   */
+  public boolean isExcludeList() {
+    return excludeList;
+  }
+
+  /**
+   * Set flag for exclude or include list.
+   * @param excludeList True for exclude, false for include
+   */
+  public void setExcludeList(final boolean excludeList) {
+    this.excludeList = excludeList;
+  }
+
+  /**
+   * Get list of space races, this can be both exclude or include
+   * @return List of spaces.
+   */
+  public SpaceRace[] getSpaceRaces() {
+    return spaceRaces;
+  }
+
+  /**
+   * Set list of space race. This can be both exlude or include
+   * @param spaceRaces Spacerace as var args.
+   */
+  public void setSpaceRaces(final SpaceRace ...spaceRaces) {
+    this.spaceRaces = spaceRaces;
   }
 
 }

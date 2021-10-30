@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -74,9 +75,16 @@ public class TechList {
   private double[] techResearchPoint = new double[TechType.values().length];
 
   /**
-   * Constructor for TechList
+   * SpaceRace for techlist.
    */
-  public TechList() {
+  private SpaceRace race;
+
+  /**
+   * Constructor for TechList
+   * @param race SpaceRace for correct tech tree
+   */
+  public TechList(final SpaceRace race) {
+    this.race = race;
     techList = new TechListForLevel[TechType.values().length][MAX_TECH_LEVEL];
     for (int i = 0; i < MAX_TECH_TYPES; i++) {
       for (int j = 0; j < MAX_TECH_LEVEL; j++) {
@@ -143,9 +151,12 @@ public class TechList {
   /**
    * Read TechList from DataInputStream
    * @param dis DataInputStream
+   * @param race SpaceRace for correct techtree.
    * @throws IOException if there is any problem with DataInputStream
    */
-  public TechList(final DataInputStream dis) throws IOException {
+  public TechList(final DataInputStream dis, final SpaceRace race)
+      throws IOException {
+    this.race = race;
     techList = new TechListForLevel[TechType.values().length][MAX_TECH_LEVEL];
     for (int i = 0; i < MAX_TECH_TYPES; i++) {
       for (int j = 0; j < MAX_TECH_LEVEL; j++) {
@@ -669,7 +680,7 @@ public class TechList {
       return new Tech[0];
     }
     Tech[] techGot = getListForTypeAndLevel(type, level);
-    String[] choices = TechFactory.getListByTechLevel(type, level);
+    String[] choices = TechFactory.getListByTechLevel(type, level, race);
     ArrayList<String> list = new ArrayList<>();
     for (String choice : choices) {
       boolean found = false;
@@ -715,7 +726,7 @@ public class TechList {
    */
   public boolean isTechListForLevelFull(final TechType type, final int level) {
     Tech[] list = getListForTypeAndLevel(type, level);
-    String[] choices = TechFactory.getListByTechLevel(type, level);
+    String[] choices = TechFactory.getListByTechLevel(type, level, race);
     if (list.length == choices.length) {
       return true;
     }
@@ -837,7 +848,7 @@ public class TechList {
       TechType type = TechType.getTypeByIndex(index);
       int lvl = techLevels[index];
       Tech tech = TechFactory.createRandomTech(type, lvl,
-          getListForTypeAndLevel(type, lvl));
+          getListForTypeAndLevel(type, lvl), race);
       if (tech == null) {
         if (lvl < 10) {
           techLevels[index] = techLevels[index] + 1;
@@ -926,7 +937,7 @@ public class TechList {
         int lvl = techLevels[i];
         Tech[] rareTechs = checkRareTechTree(type, lvl);
         Tech tech = TechFactory.createRandomTech(type, lvl,
-            getListForTypeAndLevel(type, lvl), rareTechs);
+            getListForTypeAndLevel(type, lvl), rareTechs, race);
         if (tech == null) {
           // Apparently tech level was already full,
           // so let's increase level and try again later.
@@ -1210,7 +1221,7 @@ public class TechList {
   public boolean isUpgradeable(final TechType type) {
     int level = getTechLevel(type);
     int subLevel = getListForTypeAndLevel(type, level).length;
-    int maxSubLevel = TechFactory.getListByTechLevel(type, level).length;
+    int maxSubLevel = TechFactory.getListByTechLevel(type, level, race).length;
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < MAX_TECH_LEVEL) {
       return true;
     }

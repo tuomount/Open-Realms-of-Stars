@@ -1603,7 +1603,7 @@ public class AITurnView extends BlackPanel {
       final TechType type, final int level) {
     TechList techList = pirates.getTechList();
     Tech tech = TechFactory.createRandomTech(type, level,
-        techList.getListForTypeAndLevel(type, level));
+        techList.getListForTypeAndLevel(type, level), pirates.getRace());
     if (tech != null) {
       techList.addTech(tech);
     }

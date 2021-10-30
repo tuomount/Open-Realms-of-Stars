@@ -637,7 +637,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     int subLevel = player.getTechList().getListForTypeAndLevel(TechType.Combat,
         level).length;
     int maxSubLevel = TechFactory.getListByTechLevel(TechType.Combat,
-        level).length;
+        level, player.getRace()).length;
     int required = TechFactory.getTechCost(level, maximumGameLength);
     int turns = (int) Math.ceil(
         (required - player.getTechList().getTechResearchPoints(TechType.Combat))
@@ -664,7 +664,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Defense,
         level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Defense,
-        level).length;
+        level, player.getRace()).length;
     required = TechFactory.getTechCost(level, maximumGameLength);
     turns = (int) Math.ceil((required
         - player.getTechList().getTechResearchPoints(TechType.Defense))
@@ -690,7 +690,8 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     level = player.getTechList().getTechLevel(TechType.Hulls);
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Hulls,
         level).length;
-    maxSubLevel = TechFactory.getListByTechLevel(TechType.Hulls, level).length;
+    maxSubLevel = TechFactory.getListByTechLevel(TechType.Hulls, level,
+        player.getRace()).length;
     required = TechFactory.getTechCost(level, maximumGameLength);
     turns = (int) Math.ceil(
         (required - player.getTechList().getTechResearchPoints(TechType.Hulls))
@@ -717,7 +718,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     subLevel = player.getTechList()
         .getListForTypeAndLevel(TechType.Improvements, level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Improvements,
-        level).length;
+        level, player.getRace()).length;
     required = TechFactory.getTechCost(level, maximumGameLength);
     turns = (int) Math.ceil((required
         - player.getTechList().getTechResearchPoints(TechType.Improvements))
@@ -744,7 +745,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Propulsion,
         level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Propulsion,
-        level).length;
+        level, player.getRace()).length;
     required = TechFactory.getTechCost(level, maximumGameLength);
     turns = (int) Math.ceil((required
         - player.getTechList().getTechResearchPoints(TechType.Propulsion))
@@ -771,7 +772,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Electrics,
         level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Electrics,
-        level).length;
+        level, player.getRace()).length;
     required = TechFactory.getTechCost(level, maximumGameLength);
     turns = (int) Math.ceil((required
         - player.getTechList().getTechResearchPoints(TechType.Electrics))

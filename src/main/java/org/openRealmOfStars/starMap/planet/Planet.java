@@ -1693,6 +1693,9 @@ public class Planet {
           .getBuildingListFromTech();
       for (int i = 0; i < buildingsNames.length; i++) {
         tmp = BuildingFactory.createByName(buildingsNames[i]);
+        if (tmp == null) {
+          System.out.println("Null building: " + buildingsNames[i]);
+        }
         if (getTotalRadiationLevel() == 1
             && (tmp.getName().equals("Radiation dampener")
                 || tmp.getName().equals("Radiation well"))) {

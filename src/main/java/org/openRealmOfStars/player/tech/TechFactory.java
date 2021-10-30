@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.tech;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
 
@@ -256,7 +257,8 @@ public final class TechFactory {
    * Planetary Improvement tech names for level 2
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL2_NAMES = {"Advanced farm",
-      "Advanced mine", "Advanced factory", "Starbase music hall" };
+      "Advanced mine", "Advanced factory", "Starbase music hall", "Cyber lab",
+      "Advanced furnace"};
   /**
    * Planetary Improvement tech names for level 3
    */
@@ -280,7 +282,8 @@ public final class TechFactory {
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL5_NAMES = {
       "Farming center", "Mining center", "Manufacturing center",
-      "Radiation dampener", "Galactic sports center" };
+      "Radiation dampener", "Galactic sports center",
+      "Collective research center", "Massive blast furnace" };
   /**
    * Planetary Improvement tech names for level 6
    */
@@ -303,7 +306,8 @@ public final class TechFactory {
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL9_NAMES = {
       "Hydropodic farming center", "Nanobot mining center",
-      "Nanobot manufacturing center" };
+      "Nanobot manufacturing center", "Research Matrix",
+      "Planetary furnace"};
   /**
    * Planetary Improvement tech names for level 10
    */
@@ -848,6 +852,28 @@ public final class TechFactory {
               || techName.startsWith("Farming center")
               || techName.startsWith("Hydropodic farming center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
+            tech.setExcludeList(true);
+            tech.setSpaceRaces(SpaceRace.LITHORIANS, SpaceRace.MECHIONS);
+          } else if (techName.startsWith("Cyber lab")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
+            tech.setExcludeList(false);
+            tech.setSpaceRaces(SpaceRace.MECHIONS);
+            tech.setTradeable(false);
+          } else if (techName.startsWith("Collective research center")
+              || techName.startsWith("Research Matrix")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
+            tech.setExcludeList(false);
+            tech.setSpaceRaces(SpaceRace.REBORGIANS, SpaceRace.MECHIONS);
+            tech.setTradeable(false);
+          } else if (techName.startsWith("Advanced furnace")
+              || techName.startsWith("Massive blast furnace")
+              || techName.startsWith("Planetary furnace")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_METAL));
+            tech.setExcludeList(false);
+            tech.setSpaceRaces(SpaceRace.LITHORIANS);
+            // This tech is rare tech that only Lithorians will learn it
+            // but they can trade it to others if they wish.
+            tech.setRareTech(true);
           } else if (techName.startsWith("Advanced mine")
               || techName.startsWith("Mining center")
               || techName.startsWith("Nanobot mining center")) {
@@ -1047,11 +1073,12 @@ public final class TechFactory {
    *             and Electrics
    * @param level Tech Level 1-10
    * @param alreadyHas List of tech player has
+   * @param race SpaceRace for correct tech tree
    * @return Tech or null if cannot find new
    */
   public static Tech createRandomTech(final TechType type, final int level,
-      final Tech[] alreadyHas) {
-    return createRandomTech(type, level, alreadyHas, null);
+      final Tech[] alreadyHas, final SpaceRace race) {
+    return createRandomTech(type, level, alreadyHas, null, race);
   }
   /**
    * Create random tech by tech type and level, but not choose those tech
@@ -1061,15 +1088,16 @@ public final class TechFactory {
    * @param level Tech Level 1-10
    * @param alreadyHas List of tech player has
    * @param rareTech list of rare tech available for realm.
+   * @param race SpaceRace for correct tech tree
    * @return Tech or null if cannot find new
    */
   public static Tech createRandomTech(final TechType type, final int level,
-      final Tech[] alreadyHas, final Tech[] rareTech) {
+      final Tech[] alreadyHas, final Tech[] rareTech, final SpaceRace race) {
     String[] alreadyHasList = new String[alreadyHas.length];
     for (int i = 0; i < alreadyHasList.length; i++) {
       alreadyHasList[i] = alreadyHas[i].getName();
     }
-    String[] techOptions = getListByTechLevel(type, level);
+    String[] techOptions = getListByTechLevel(type, level, race);
     int rareTechs = 0;
     if (rareTech != null && rareTech.length > 0) {
       rareTechs = rareTech.length;
@@ -1328,167 +1356,265 @@ public final class TechFactory {
   }
 
   /**
-   * Get String list of tech by type and level
+   * Get String list of tech by type and level.
+   * This will now depend on space race.
    * @param type The tech type
    * @param level The tech level
+   * @param race SpaceRace Unique tech tree based on race
    * @return String array of tech
    */
   public static String[] getListByTechLevel(final TechType type,
-      final int level) {
+      final int level, final SpaceRace race) {
+    String[] possibleTechs = new String[0];
     switch (type) {
     case Combat:
       switch (level) {
       case 1:
-        return COMBAT_TECH_LEVEL1_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL1_NAMES;
+        break;
       case 2:
-        return COMBAT_TECH_LEVEL2_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL2_NAMES;
+        break;
       case 3:
-        return COMBAT_TECH_LEVEL3_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL3_NAMES;
+        break;
       case 4:
-        return COMBAT_TECH_LEVEL4_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL4_NAMES;
+        break;
       case 5:
-        return COMBAT_TECH_LEVEL5_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL5_NAMES;
+        break;
       case 6:
-        return COMBAT_TECH_LEVEL6_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL6_NAMES;
+        break;
       case 7:
-        return COMBAT_TECH_LEVEL7_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL7_NAMES;
+        break;
       case 8:
-        return COMBAT_TECH_LEVEL8_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL8_NAMES;
+        break;
       case 9:
-        return COMBAT_TECH_LEVEL9_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL9_NAMES;
+        break;
       case 10:
-        return COMBAT_TECH_LEVEL10_NAMES;
+        possibleTechs = COMBAT_TECH_LEVEL10_NAMES;
+        break;
       default:
         throw new IllegalArgumentException("Tech level is beyond 10!");
       }
+      break;
     case Defense:
       switch (level) {
       case 1:
-        return DEFENSE_TECH_LEVEL1_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL1_NAMES;
+        break;
       case 2:
-        return DEFENSE_TECH_LEVEL2_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL2_NAMES;
+        break;
       case 3:
-        return DEFENSE_TECH_LEVEL3_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL3_NAMES;
+        break;
       case 4:
-        return DEFENSE_TECH_LEVEL4_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL4_NAMES;
+        break;
       case 5:
-        return DEFENSE_TECH_LEVEL5_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL5_NAMES;
+        break;
       case 6:
-        return DEFENSE_TECH_LEVEL6_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL6_NAMES;
+        break;
       case 7:
-        return DEFENSE_TECH_LEVEL7_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL7_NAMES;
+        break;
       case 8:
-        return DEFENSE_TECH_LEVEL8_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL8_NAMES;
+        break;
       case 9:
-        return DEFENSE_TECH_LEVEL9_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL9_NAMES;
+        break;
       case 10:
-        return DEFENSE_TECH_LEVEL10_NAMES;
+        possibleTechs = DEFENSE_TECH_LEVEL10_NAMES;
+        break;
       default:
         throw new IllegalArgumentException("Tech level is beyond 10!");
       }
+      break;
     case Hulls:
       switch (level) {
       case 1:
-        return HULL_TECH_LEVEL1_NAMES;
+        possibleTechs = HULL_TECH_LEVEL1_NAMES;
+        break;
       case 2:
-        return HULL_TECH_LEVEL2_NAMES;
+        possibleTechs = HULL_TECH_LEVEL2_NAMES;
+        break;
       case 3:
-        return HULL_TECH_LEVEL3_NAMES;
+        possibleTechs = HULL_TECH_LEVEL3_NAMES;
+        break;
       case 4:
-        return HULL_TECH_LEVEL4_NAMES;
+        possibleTechs = HULL_TECH_LEVEL4_NAMES;
+        break;
       case 5:
-        return HULL_TECH_LEVEL5_NAMES;
+        possibleTechs = HULL_TECH_LEVEL5_NAMES;
+        break;
       case 6:
-        return HULL_TECH_LEVEL6_NAMES;
+        possibleTechs = HULL_TECH_LEVEL6_NAMES;
+        break;
       case 7:
-        return HULL_TECH_LEVEL7_NAMES;
+        possibleTechs = HULL_TECH_LEVEL7_NAMES;
+        break;
       case 8:
-        return HULL_TECH_LEVEL8_NAMES;
+        possibleTechs = HULL_TECH_LEVEL8_NAMES;
+        break;
       case 9:
-        return HULL_TECH_LEVEL9_NAMES;
+        possibleTechs = HULL_TECH_LEVEL9_NAMES;
+        break;
       case 10:
-        return HULL_TECH_LEVEL10_NAMES;
+        possibleTechs = HULL_TECH_LEVEL10_NAMES;
+        break;
       default:
         throw new IllegalArgumentException("Tech level is beyond 10!");
       }
+      break;
     case Improvements:
       switch (level) {
       case 1:
-        return IMPROVEMENT_TECH_LEVEL1_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL1_NAMES;
+        break;
       case 2:
-        return IMPROVEMENT_TECH_LEVEL2_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL2_NAMES;
+        break;
       case 3:
-        return IMPROVEMENT_TECH_LEVEL3_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL3_NAMES;
+        break;
       case 4:
-        return IMPROVEMENT_TECH_LEVEL4_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL4_NAMES;
+        break;
       case 5:
-        return IMPROVEMENT_TECH_LEVEL5_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL5_NAMES;
+        break;
       case 6:
-        return IMPROVEMENT_TECH_LEVEL6_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL6_NAMES;
+        break;
       case 7:
-        return IMPROVEMENT_TECH_LEVEL7_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL7_NAMES;
+        break;
       case 8:
-        return IMPROVEMENT_TECH_LEVEL8_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL8_NAMES;
+        break;
       case 9:
-        return IMPROVEMENT_TECH_LEVEL9_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL9_NAMES;
+        break;
       case 10:
-        return IMPROVEMENT_TECH_LEVEL10_NAMES;
+        possibleTechs = IMPROVEMENT_TECH_LEVEL10_NAMES;
+        break;
       default:
         throw new IllegalArgumentException("Tech level is beyond 10!");
       }
+      break;
     case Propulsion:
       switch (level) {
       case 1:
-        return PROPULSION_TECH_LEVEL1_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL1_NAMES;
+        break;
       case 2:
-        return PROPULSION_TECH_LEVEL2_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL2_NAMES;
+        break;
       case 3:
-        return PROPULSION_TECH_LEVEL3_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL3_NAMES;
+        break;
       case 4:
-        return PROPULSION_TECH_LEVEL4_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL4_NAMES;
+        break;
       case 5:
-        return PROPULSION_TECH_LEVEL5_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL5_NAMES;
+        break;
       case 6:
-        return PROPULSION_TECH_LEVEL6_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL6_NAMES;
+        break;
       case 7:
-        return PROPULSION_TECH_LEVEL7_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL7_NAMES;
+        break;
       case 8:
-        return PROPULSION_TECH_LEVEL8_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL8_NAMES;
+        break;
       case 9:
-        return PROPULSION_TECH_LEVEL9_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL9_NAMES;
+        break;
       case 10:
-        return PROPULSION_TECH_LEVEL10_NAMES;
+        possibleTechs = PROPULSION_TECH_LEVEL10_NAMES;
+        break;
       default:
         throw new IllegalArgumentException("Tech level is beyond 10!");
       }
+      break;
     case Electrics:
       switch (level) {
       case 1:
-        return ELECTRONICS_TECH_LEVEL1_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL1_NAMES;
+        break;
       case 2:
-        return ELECTRONICS_TECH_LEVEL2_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL2_NAMES;
+        break;
       case 3:
-        return ELECTRONICS_TECH_LEVEL3_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL3_NAMES;
+        break;
       case 4:
-        return ELECTRONICS_TECH_LEVEL4_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL4_NAMES;
+        break;
       case 5:
-        return ELECTRONICS_TECH_LEVEL5_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL5_NAMES;
+        break;
       case 6:
-        return ELECTRONICS_TECH_LEVEL6_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL6_NAMES;
+        break;
       case 7:
-        return ELECTRONICS_TECH_LEVEL7_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL7_NAMES;
+        break;
       case 8:
-        return ELECTRONICS_TECH_LEVEL8_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL8_NAMES;
+        break;
       case 9:
-        return ELECTRONICS_TECH_LEVEL9_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL9_NAMES;
+        break;
       case 10:
-        return ELECTRONICS_TECH_LEVEL10_NAMES;
+        possibleTechs = ELECTRONICS_TECH_LEVEL10_NAMES;
+        break;
       default:
         throw new IllegalArgumentException("Tech level is beyond 10!");
       }
+      break;
     default:
       throw new IllegalArgumentException("Illegal tech type!");
     }
+    if (possibleTechs.length > 0) {
+      ArrayList<String> techList = new ArrayList<>();
+      for (String techName : possibleTechs) {
+        Tech tech = createTech(type, level, techName);
+        if (tech.isExcludeList()) {
+          boolean donotAdd = false;
+          for (SpaceRace tmpRace : tech.getSpaceRaces()) {
+            if (tmpRace == race) {
+              donotAdd = true;
+            }
+          }
+          if (!donotAdd) {
+            techList.add(techName);
+          }
+        } else {
+          for (SpaceRace tmpRace : tech.getSpaceRaces()) {
+            if (tmpRace == race) {
+              techList.add(techName);
+              break;
+            }
+          }
+          if (tech.getSpaceRaces().length == 0) {
+            techList.add(techName);
+          }
+        }
+      }
+      return techList.toArray(new String[techList.size()]);
+    }
+    return possibleTechs;
   }
 
 }

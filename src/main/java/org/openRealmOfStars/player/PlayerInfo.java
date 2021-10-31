@@ -707,7 +707,6 @@ public class PlayerInfo {
     case ALTEIRIANS: {
       /*
        * Alteirians get 1 Combat, 1 Defense, Scout, Colony, minor orbital
-       * and one electrics
        */
       Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
           techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
@@ -736,11 +735,6 @@ public class PlayerInfo {
         techList.addTech(tech);
       }
       tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-      if (tech != null) {
-        techList.addTech(tech);
-      }
-      tech = TechFactory.createRandomTech(TechType.Electrics, 1,
-          techList.getListForTypeAndLevel(TechType.Electrics, 1), getRace());
       if (tech != null) {
         techList.addTech(tech);
       }

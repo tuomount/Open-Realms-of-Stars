@@ -1336,6 +1336,108 @@ public class PlanetHandlingTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testAlteirianHandling1Population() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.colonizeWithOrbital();
+    planet.setWorkers(Planet.METAL_MINERS, 1);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testAlteirianHandling2Population() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.colonizeWithOrbital();
+    planet.setWorkers(Planet.METAL_MINERS, 2);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testAlteirianHandling3Population() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.colonizeWithOrbital();
+    planet.setWorkers(Planet.METAL_MINERS, 3);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testAlteirianHandling3PopulationWithFarm() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.colonizeWithOrbital();
+    planet.setWorkers(Planet.METAL_MINERS, 3);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
+    boolean ok = false;
+    if (planet.getWorkers(Planet.RESEARCH_SCIENTIST)
+        + planet.getWorkers(Planet.CULTURE_ARTIST) == 2) {
+      ok = true;
+    }
+    assertEquals(true, ok);
+  }
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testAlteirianHandling3PopulationWithFarmAndLab() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.colonizeWithOrbital();
+    planet.setWorkers(Planet.METAL_MINERS, 3);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic lab"));
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testAlteirianHandling4PopulationWithFarmAndLab() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.colonizeWithOrbital();
+    planet.setWorkers(Planet.METAL_MINERS, 4);
+    planet.addBuilding(BuildingFactory.createByName("Advanced farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic lab"));
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testChiraloidHandling1Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);

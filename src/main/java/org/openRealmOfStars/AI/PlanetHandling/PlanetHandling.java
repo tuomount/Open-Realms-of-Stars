@@ -190,8 +190,12 @@ public final class PlanetHandling {
             }
           }
         }
-        if (gotFarms == -1 && !constructionSelected
-            && info.getRace() != SpaceRace.MECHIONS) {
+        boolean needFood = true;
+        if (info.getRace() == SpaceRace.MECHIONS
+            || info.getRace() == SpaceRace.LITHORIANS) {
+          needFood = false;
+        }
+        if (gotFarms == -1 && !constructionSelected && !needFood) {
           // No farms at all
           int i = getConstruction("Advanced farm", constructions);
           if (i != -1) {
@@ -1695,6 +1699,71 @@ public final class PlanetHandling {
     }
   }
   /**
+   * Handle Alteirian population
+   * @param planet Planet to handle
+   * @param info Owner of the planet
+   */
+  protected static void handleAlteirianPopulation(final Planet planet,
+      final PlayerInfo info) {
+    int food = planet.getFoodProdByPlanetAndBuildings();
+    int total = planet.getTotalPopulation();
+    int foodReq = total * info.getRace().getFoodRequire() / 100;
+    int farmersReq = foodReq - food;
+    int happy = planet.calculateHappiness();
+    if (total < planet.getPopulationLimit() && farmersReq >= 0
+        && farmersReq < total) {
+      farmersReq++;
+    }
+    planet.setWorkers(Planet.FOOD_FARMERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    int workers = 0;
+    int miners = 0;
+    int artists = 0;
+    int scientist = 0;
+    if (farmersReq > 0) {
+      planet.setWorkers(Planet.FOOD_FARMERS, farmersReq);
+      total = total - farmersReq;
+    }
+    if (planet.getTotalProductionFromBuildings(
+        Planet.PRODUCTION_RESEARCH) == 0 && total > 0) {
+      scientist = 1;
+      total = total - 1;
+    }
+    if (planet.getTotalProductionFromBuildings(
+        Planet.PRODUCTION_PRODUCTION) < 5 && total > 1) {
+      total = total - 2;
+      workers = workers + 2;
+    }
+    if (planet.getTotalProductionFromBuildings(
+        Planet.PRODUCTION_METAL) < 5 && total > 1) {
+      total = total - 2;
+      miners = miners + 2;
+    }
+    int part = 0;
+    part = total % 2;
+    int div = total / 2;
+    artists = artists + div;
+    scientist = scientist + div;
+    if (happy < -1 && part > 0) {
+      artists++;
+      part--;
+    }
+    if (part == 1) {
+      if (DiceGenerator.getRandom(99) < 50) {
+        scientist++;
+      } else {
+        artists++;
+      }
+    }
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, workers);
+    planet.setWorkers(Planet.METAL_MINERS, miners);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, scientist);
+    planet.setWorkers(Planet.CULTURE_ARTIST, artists);
+  }
+  /**
    * Handle generic population
    * @param planet Planet to handle
    * @param info Owner of the planet
@@ -1711,7 +1780,7 @@ public final class PlanetHandling {
     int foodReq = total * info.getRace().getFoodRequire() / 100;
     int farmersReq = foodReq - food;
     int happy = planet.calculateHappiness();
-    if (total < planet.getGroundSize() && farmersReq >= 0 && !startPlanet
+    if (total < planet.getPopulationLimit() && farmersReq >= 0 && !startPlanet
         && farmersReq < total) {
       farmersReq++;
     }
@@ -1834,10 +1903,13 @@ public final class PlanetHandling {
     } else if (info.getRace() == SpaceRace.LITHORIANS) {
       handleLithorianPopulation(planet, info);
       branch = 3;
+    } else if (info.getRace() == SpaceRace.ALTEIRIANS) {
+      handleAlteirianPopulation(planet, info);
+      branch = 4;
     } else {
       // Handle races whom need something to eat and have regular research
       handleGenericPopulation(planet, info);
-      branch = 4;
+      branch = 5;
     }
     if (population != planet.getTotalPopulation()) {
       StringBuilder sb = new StringBuilder();

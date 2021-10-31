@@ -2675,7 +2675,7 @@ public class Planet {
         return result;
       }
       if (orbital.getHull().getSize() == ShipSize.SMALL) {
-        if (orbital.getHull().getName().equals("Minor Orbital")) {
+        if (orbital.getHull().getName().equals("Minor orbital")) {
           result = result + 4;
         } else {
           result = result + 6;

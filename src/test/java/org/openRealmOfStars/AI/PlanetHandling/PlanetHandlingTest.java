@@ -1420,6 +1420,29 @@ public class PlanetHandlingTest {
   }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testAlteirianHandling3PopulationWithFactoryMineLab() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.colonizeWithOrbital();
+    planet.setWorkers(Planet.METAL_MINERS, 3);
+    planet.addBuilding(BuildingFactory.createByName("Basic factory"));
+    planet.addBuilding(BuildingFactory.createByName("Basic mine"));
+    planet.addBuilding(BuildingFactory.createByName("Basic lab"));
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    boolean ok = false;
+    if (planet.getWorkers(Planet.RESEARCH_SCIENTIST)
+        + planet.getWorkers(Planet.CULTURE_ARTIST) == 1) {
+      ok = true;
+    }
+    assertEquals(true, ok);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAlteirianHandling4PopulationWithFarmAndLab() {
     PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);

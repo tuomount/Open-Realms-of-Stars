@@ -55,6 +55,8 @@ Reborgian race picture by Tuomo Untinen, original art by Surt - http://opengamea
 
 Lithorian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
+Alteirian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
+
 Space Captain by Justin Nichol 
 Tuomo Untinen added legs for the captain. -https://opengameart.org/content/space-captain-with-legs
 
@@ -447,6 +449,10 @@ Licensed under CC-BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
 Mysterious Anomaly by 
 Eric Matyas Soundimage.org
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
+Sky Portal by
+Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
 

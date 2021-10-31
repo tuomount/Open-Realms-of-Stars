@@ -37,7 +37,7 @@ public final class ShipHullFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPHULL = 35;
+  private static final int MAX_SHIPHULL = 38;
 
   /**
    * Create ShipHull with matching name
@@ -230,6 +230,18 @@ public final class ShipHullFactory {
    * Hull for medium orbital
    */
   public static final int HULL_MEDIUM_ORBITAL = 34;
+  /**
+   * Hull for minor orbital
+   */
+  public static final int HULL_MINOR_ORBITAL = 35;
+  /**
+   * Hull for large orbital
+   */
+  public static final int HULL_LARGE_ORBITAL = 36;
+  /**
+   * Hull for massive orbital
+   */
+  public static final int HULL_MASSIVE_ORBITAL = 37;
 
   /**
    * Create ship hull with index
@@ -482,6 +494,27 @@ public final class ShipHullFactory {
           ShipHullType.ORBITAL, ShipSize.MEDIUM, 4, 6, race);
       tmp.setFleetCapacity(0);
       tmp.setImageIndex(ShipImage.MEDIUM_STARBASE);
+      return tmp;
+    }
+    if (index == HULL_MINOR_ORBITAL) {
+      tmp = new ShipHull(index, "Minor orbital", 3, 1,
+          ShipHullType.ORBITAL, ShipSize.SMALL, 3, 3, race);
+      tmp.setFleetCapacity(0);
+      tmp.setImageIndex(ShipImage.SMALL_STARBASE);
+      return tmp;
+    }
+    if (index == HULL_LARGE_ORBITAL) {
+      tmp = new ShipHull(index, "Large orbital", 10, 3,
+          ShipHullType.ORBITAL, ShipSize.LARGE, 8, 12, race);
+      tmp.setFleetCapacity(0);
+      tmp.setImageIndex(ShipImage.LARGE_STARBASE);
+      return tmp;
+    }
+    if (index == HULL_MASSIVE_ORBITAL) {
+      tmp = new ShipHull(index, "Massive orbital", 12, 4,
+          ShipHullType.ORBITAL, ShipSize.HUGE, 16, 24, race);
+      tmp.setFleetCapacity(0);
+      tmp.setImageIndex(ShipImage.MASSIVE_STARBASE);
       return tmp;
     }
 

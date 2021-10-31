@@ -2390,6 +2390,9 @@ public class Game implements ActionListener {
       // colonize
       fleetView.getPlanet().setPlanetOwner(players.getCurrentPlayer(),
           players.getCurrentPlayerInfo());
+      if (players.getCurrentPlayerInfo().getRace() == SpaceRace.ALTEIRIANS) {
+        fleetView.getPlanet().colonizeWithOrbital();
+      }
       if (players.getCurrentPlayerInfo().getRace() == SpaceRace.MECHIONS) {
         fleetView.getPlanet().setWorkers(Planet.PRODUCTION_WORKERS,
             ship.getColonist());

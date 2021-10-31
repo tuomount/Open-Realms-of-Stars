@@ -704,6 +704,51 @@ public class PlayerInfo {
       addShipStat(stat);
       break;
     }
+    case ALTEIRIANS: {
+      /*
+       * Alteirians get 1 Combat, 1 Defense, Scout, Colony, minor orbital
+       */
+      Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
+          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Defense, 1,
+          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Colony", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Scout Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Minor orbital", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      ShipDesign design = ShipGenerator.createScout(this);
+      ShipStat stat = new ShipStat(design);
+      addShipStat(stat);
+      design = ShipGenerator.createColony(this, false);
+      stat = new ShipStat(design);
+      addShipStat(stat);
+      design = ShipGenerator.createMinorOrbital(this);
+      stat = new ShipStat(design);
+      addShipStat(stat);
+      break;
+    }
     default:
       ErrorLogger.log("Unexpected race:" + getRace());
     }
@@ -2372,5 +2417,19 @@ public class PlayerInfo {
    */
   public void setAiDifficulty(final AiDifficulty aiDifficulty) {
     this.aiDifficulty = aiDifficulty;
+  }
+
+  /**
+   * Find Minor orbital design.
+   * @return Minor orbital design or null
+   */
+  public ShipStat findMinorOrbitalDesign() {
+    for (ShipStat ite : shipStatList) {
+      if (ite.getDesign().getHull().getName().equals("Minor orbital")
+          && !ite.isObsolete()) {
+        return ite;
+      }
+    }
+    return null;
   }
 }

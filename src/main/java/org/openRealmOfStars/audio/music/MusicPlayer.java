@@ -245,6 +245,13 @@ public final class MusicPlayer {
           "/resources/musics/mysterious-anomaly.ogg");
 
   /**
+   * Sky Portal By Alexandr Zhelanov CC-BY 3.0
+   */
+  public static final MusicFileInfo SKY_PORTAL = new MusicFileInfo(
+      "Sky Portal", "Alexandr Zhelanov",
+      "/resources/musics/Sky Portal.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

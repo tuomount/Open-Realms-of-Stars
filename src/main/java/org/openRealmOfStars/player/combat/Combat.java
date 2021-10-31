@@ -659,6 +659,17 @@ public boolean launchIntercept(final int distance,
           Icons.getIconByName(Icons.ICON_STARBASE));
       msg.setMatchByString(planet.getName());
       defenderInfo.getMsgList().addNewMessage(msg);
+      if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.ALTEIRIANS) {
+        // TODO: This should be same news as when orbital is being destroyed.
+        leaderKilledNews = NewsFactory.makeAlteirianLoseOrbitalNews(
+            attackerInfo, defenderInfo, planet);
+        if (planet.getGovernor() != null) {
+          planet.getGovernor().setJob(Job.DEAD);
+          planet.setGovernor(null);
+        }
+        // Alteirians lose planet if orbital is destroyed.
+        planet.setPlanetOwner(-1, null);
+      }
       // TODO: Make news about orbital being destroyed.
     }
     if (attackerFleet.isShipInFleet(ship.getShip())) {

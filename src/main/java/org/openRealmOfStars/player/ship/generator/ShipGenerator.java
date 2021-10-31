@@ -1280,6 +1280,10 @@ public final class ShipGenerator {
       if (DiceGenerator.getRandom(99) < militaryChance) {
         military = true;
       }
+      if (player.getRace() == SpaceRace.ALTEIRIANS) {
+        military = true;
+        // Alteirians will lose planet if orbital is lost.
+      }
       if (military || player.isBoard()) {
         ShipComponent weapon = ShipComponentFactory
             .createByName(player.getTechList().getBestWeapon().getComponent());
@@ -1446,6 +1450,50 @@ public final class ShipGenerator {
           }
         }
 
+      }
+
+    }
+    return result;
+  }
+
+  /**
+   * Design new Minor orbital
+   * @param player Player doing the design
+   * @return ShipDesign if doable. Null if not doable for that size.
+   */
+  public static ShipDesign createMinorOrbital(final PlayerInfo player) {
+    ShipDesign result = null;
+    if (player.getTechList().hasTech("Minor orbital")) {
+      ShipHull hull = ShipHullFactory.createByName("Minor orbital",
+          player.getRace());
+      result = new ShipDesign(hull);
+      String[] part = hull.getName().split("Mk");
+      result.setName(
+          part[0].trim() + " Mk" + (player.getShipStatHighestNumber(
+              part[0]) + 1));
+      ShipComponent power = ShipComponentFactory.createByName(
+          player.getTechList().getBestEnergySource().getComponent());
+      result.addComponent(power);
+      ShipComponent weapon = ShipComponentFactory
+          .createByName(player.getTechList().getBestWeapon().getComponent());
+      result.addComponent(weapon);
+      Tech[] defenseTechs = player.getTechList()
+          .getListForType(TechType.Defense);
+      Tech shield = TechList.getBestTech(defenseTechs, "Shield");
+      Tech armor = TechList.getBestTech(defenseTechs, "Armor plating");
+      ShipComponent shieldComp = null;
+      ShipComponent armorComp = null;
+      if (shield != null) {
+        shieldComp = ShipComponentFactory.createByName(shield.getComponent());
+      }
+      if (armor != null) {
+        armorComp = ShipComponentFactory.createByName(armor.getComponent());
+      }
+      if (shieldComp != null
+          && result.getFreeEnergy() >= shieldComp.getEnergyRequirement()) {
+        result.addComponent(shieldComp);
+      } else if (armorComp != null) {
+        result.addComponent(armorComp);
       }
 
     }

@@ -95,6 +95,8 @@ public class CreditsView extends BlackPanel {
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Lithorian race picture by Tuomo Untinen, original art by Surt - "
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
+      + "Alteirian race picture by Tuomo Untinen, original art by Surt - "
+      + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Space Captain by Justin Nichol \n"
       + "Tuomo Untinen added legs for the captain. -"
       + "https://opengameart.org/content/space-captain-with-legs\n\n"
@@ -408,7 +410,12 @@ public class CreditsView extends BlackPanel {
       + "Mysterious Anomaly by \n"
       + "Eric Matyas Soundimage.org\n"
       + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Sky Portal by\n"
+      + "Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov\n"
+      + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";
+
 
 
 

@@ -39,7 +39,7 @@ public final class SpaceRaceUtility {
    */
   public static final String[] RACE_SELECTION = {"Human", "Mechion", "Spork",
       "Greyan", "Centaur", "Mothoid", "Teuthidae", "Scaurian", "Homarian",
-      "Chiraloid", "Reborgian", "Lithorian" };
+      "Chiraloid", "Reborgian", "Lithorian", "Alteirian" };
 
 
   /**
@@ -98,6 +98,9 @@ public final class SpaceRaceUtility {
     }
     if (name.equals(SpaceRace.LITHORIANS.getNameSingle())) {
       return SpaceRace.LITHORIANS;
+    }
+    if (name.equals(SpaceRace.ALTEIRIANS.getNameSingle())) {
+      return SpaceRace.ALTEIRIANS;
     }
     return null;
   }

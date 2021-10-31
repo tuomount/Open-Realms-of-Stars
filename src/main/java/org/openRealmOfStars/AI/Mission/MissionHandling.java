@@ -597,6 +597,9 @@ public final class MissionHandling {
           // Make sure that ship is really colony and there is planet to
           // colonize
           planet.setPlanetOwner(game.getStarMap().getAiTurnNumber(), info);
+          if (info.getRace() == SpaceRace.ALTEIRIANS) {
+            planet.colonizeWithOrbital();
+          }
           if (info.getRace() == SpaceRace.MECHIONS) {
             planet.setWorkers(Planet.PRODUCTION_WORKERS, ship.getColonist());
           } else {

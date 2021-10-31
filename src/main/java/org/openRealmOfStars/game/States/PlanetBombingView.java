@@ -912,6 +912,9 @@ public class PlanetBombingView extends BlackPanel {
             }
             ship.setColonist(0);
             planet.setPlanetOwner(attackPlayerIndex, attacker);
+            if (attacker.getRace() == SpaceRace.ALTEIRIANS) {
+              planet.colonizeWithOrbital();
+            }
             conquered = true;
             if (attacker.getRace() == SpaceRace.MECHIONS) {
               planet.setWorkers(Planet.PRODUCTION_WORKERS, left);

@@ -385,6 +385,26 @@ public class SpaceRaceUtilityTest {
         + "* Rush: None\n"
         + "* Start planet value: 125\n"
         + "* Special: Population eats metal instead of food.";
+    expectedResult[12] = "### Alteirians\n"
+        + "Alteirian are creatures that live in zero gravity. Because of this"
+        + " they need special suites to move planet surface."
+        + " Most of their time they live on planet's orbit. Their orbitals are"
+        + " more improved than other space race.\n"
+        + "* Max radiation: 5\n"
+        + "* Troop power: 6\n"
+        + "* Leader lifespan: 90\n"
+        + "* Production: 50%\n"
+        + "* Mining: 50%\n"
+        + "* Research: 200%\n"
+        + "* Food production: 100%\n"
+        + "* Growth: 10 turns\n"
+        + "* Food require: 100%\n"
+        + "* Culture: 150%\n"
+        + "* Diplomacy bonus: -1\n"
+        + "* War resistance: 50\n"
+        + "* Rush: Credit\n"
+        + "* Start planet value: 100\n"
+        + "* Special: Lives only on orbitals.";
     for (int i = 0; i <  SpaceRaceUtility.RACE_SELECTION.length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByName(
           SpaceRaceUtility.RACE_SELECTION[i]);
@@ -412,7 +432,6 @@ public class SpaceRaceUtilityTest {
       }
       //System.out.println(race.toString() + " Rad: " + race.getMaxRad() + " Sum: " + result);
       switch (race) {
-      default:
       case HUMAN:
         assertEquals(650, result);
         break;
@@ -448,6 +467,12 @@ public class SpaceRaceUtilityTest {
         break;
       case LITHORIANS:
         assertEquals(625, result);
+        break;
+      case ALTEIRIANS:
+        assertEquals(800, result);
+        break;
+      default:
+        assertEquals(0, result);
         break;
       }
       //System.out.println(race.getName() + ": " + result + "(" + race.getMaxRad()+ ")");

@@ -206,15 +206,29 @@ public class ShipView extends BlackPanel {
         && shipList.getSelectedIndex() != -1) {
       ShipStat stat = shipList.getSelectedValue();
       if (!stat.isObsolete()) {
-        stat.setObsolete(true);
-        if (stat.getNumberOfBuilt() == 0) {
-          deleteBtn.setEnabled(true);
+        if (stat.getDesign().getHull().getName().equals("Minor orbital")) {
+         int count = player.countMinorOrbitalDesign();
+         if (count > 1) {
+           stat.setObsolete(true);
+           if (stat.getNumberOfBuilt() == 0) {
+             deleteBtn.setEnabled(true);
+           }
+           SoundPlayer.playMenuSound();
+         } else {
+           SoundPlayer.playMenuDisabled();
+         }
+        } else {
+          stat.setObsolete(true);
+          if (stat.getNumberOfBuilt() == 0) {
+            deleteBtn.setEnabled(true);
+          }
+          SoundPlayer.playMenuSound();
         }
       } else {
         stat.setObsolete(false);
         deleteBtn.setEnabled(false);
+        SoundPlayer.playMenuSound();
       }
-      SoundPlayer.playMenuSound();
       updateList();
     }
   }

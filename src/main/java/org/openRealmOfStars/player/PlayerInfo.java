@@ -2432,4 +2432,20 @@ public class PlayerInfo {
     }
     return null;
   }
+
+  /**
+   * Count Minor orbital designs.
+   * @return number of minor orbital design
+   */
+  public int countMinorOrbitalDesign() {
+    int result = 0;
+    for (ShipStat ite : shipStatList) {
+      if (ite.getDesign().getHull().getName().equals("Minor orbital")
+          && !ite.isObsolete()) {
+        result++;
+      }
+    }
+    return result;
+  }
+
 }

@@ -980,8 +980,7 @@ public enum SpaceRace {
     case LITHORIANS:
       return MusicPlayer.TECHNODRIVE;
     case ALTEIRIANS:
-      //FIXME: Wrong music
-      return MusicPlayer.MILLION_LIGHT_YEARS;
+      return MusicPlayer.SKY_PORTAL;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }

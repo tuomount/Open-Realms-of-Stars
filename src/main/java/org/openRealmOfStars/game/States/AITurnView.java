@@ -2642,6 +2642,25 @@ public class AITurnView extends BlackPanel {
       }
     }
     for (Leader leader : realm.getLeaderPool()) {
+      if (!leader.hasPerk(Perk.WEALTHY) && leader.hasPerk(Perk.CORRUPTED)
+          && (leader.getJob() == Job.COMMANDER
+          || leader.getJob() == Job.GOVERNOR
+          || leader.getJob() == Job.RULER)) {
+        int chance = 10 + leader.getTimeInJob();
+        if (chance > 75) {
+          chance = 75;
+        }
+        if (DiceGenerator.getRandom(100) < chance) {
+          leader.addPerk(Perk.WEALTHY);
+          Message msg = new Message(MessageType.LEADER,
+              leader.getCallName() + " has gained massive wealth by doing "
+              + leader.getGender().getHisHer() + " work. Some suspect that "
+              + "this wealthy might be obtained by questionable means.",
+              Icons.getIconByName(Icons.ICON_CREDIT));
+          msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+          realm.getMsgList().addUpcomingMessage(msg);
+        }
+      }
       if (leader.getJob() != Job.DEAD) {
         // First getting older
         leader.setAge(leader.getAge() + 1);

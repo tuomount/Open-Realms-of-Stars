@@ -371,6 +371,10 @@ public class ImageInstruction {
    * Instructions for containers
    */
   public static final String CONTAINERS = "containers";
+  /**
+   * Instructions for terror
+   */
+  public static final String TERROR = "terror";
 
   /**
    * Instruction to draw image
@@ -550,7 +554,8 @@ public class ImageInstruction {
         && !SHIP_DESTROYED.equals(image)
         && !SHUTTLE.equals(image)
         && !SPINOSAURUS.equals(image)
-        && !CONTAINERS.equals(image)) {
+        && !CONTAINERS.equals(image)
+        && !TERROR.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -1115,6 +1120,9 @@ public class ImageInstruction {
     }
     if (CONTAINERS.equals(image)) {
       drawImg = GuiStatics.IMAGE_CONTAINERS;
+    }
+    if (TERROR.equals(image)) {
+      drawImg = GuiStatics.IMAGE_TERROR;
     }
     BufferedImage img = workImage;
     if (img == null) {

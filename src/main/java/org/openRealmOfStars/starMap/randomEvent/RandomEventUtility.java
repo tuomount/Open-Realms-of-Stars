@@ -481,15 +481,13 @@ public final class RandomEventUtility {
           sb.append("Terrorist were captured alive and sentence for life!");
         }
         ImageInstruction instructions = new ImageInstruction();
-        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
-        instructions.addPlanet(ImageInstruction.POSITION_CENTER,
-            planet.getPlanetType().getImageInstructions(),
-            ImageInstruction.SIZE_FULL);
+        instructions.addImage(ImageInstruction.CONTAINERS);
         event.setImageInstructions(instructions.build());
         event.setText(sb.toString());
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_DEATH));
         message.setCoordinate(planet.getCoordinate());
+        message.setRandomEventPop(true);
         info.getMsgList().addFirstMessage(message);
       }
     }

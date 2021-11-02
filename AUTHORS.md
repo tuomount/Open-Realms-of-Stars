@@ -217,6 +217,9 @@ Lithorian Space Ship Bridge by Tuomo Untinen
 
 Scanner animation by Tuomo Untinen
 
+Warzone Concept by Justin Nichol
+https://opengameart.org/content/warzone-concept
+
 
 
 Fonts are under SIL Open Font License, Version 1.1.

@@ -1168,6 +1168,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.FTL_ENGINEER)) {
       result = result + 10;
     }
+    if (leader.hasPerk(Perk.MASTER_ENGINEER)) {
+      result = result + 10;
+    }
     if (leader.hasPerk(Perk.MICRO_MANAGER)) {
       result = result + 5;
     }
@@ -1549,6 +1552,10 @@ public final class LeaderUtility {
       if (perk == Perk.FTL_ENGINEER || perk == Perk.SCANNER_EXPERT) {
         expansionist.setValue(expansionist.getValue() + 3);
         scientific.setValue(scientific.getValue() + 1);
+      }
+      if (perk == Perk.MASTER_ENGINEER) {
+        expansionist.setValue(expansionist.getValue() + 1);
+        scientific.setValue(scientific.getValue() + 2);
       }
       if (perk == Perk.GOOD_LEADER) {
         logical.setValue(logical.getValue() + 3);

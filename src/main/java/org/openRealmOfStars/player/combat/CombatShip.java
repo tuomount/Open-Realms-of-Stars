@@ -502,7 +502,11 @@ public class CombatShip implements Comparable<CombatShip> {
       setOverloadFailure(getOverloadFailure() / 2);
       return true;
     }
-    setOverloadFailure(getOverloadFailure() + 5);
+    int amount = 5;
+    if (commander != null && commander.hasPerk(Perk.MASTER_ENGINEER)) {
+      amount = amount - 2;
+    }
+    setOverloadFailure(getOverloadFailure() + amount);
     return false;
   }
   /**

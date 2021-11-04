@@ -236,7 +236,11 @@ public enum Perk {
   /**
    * Perk which tells that leader has killed too young heir.
    */
-  CRUEL(41, "Cruel", "Child killer, -2 diplomacy and -1 happiness");
+  CRUEL(41, "Cruel", "Child killer, -2 diplomacy and -1 happiness"),
+  /**
+   * Perk which allows leader more to component overloads during combat.
+   */
+  MASTER_ENGINEER(42, "Master engineer", "Reduce overload failure by 2.");
 
 
 
@@ -313,7 +317,8 @@ public enum Perk {
         || this == Perk.SPY_MASTER
         || this == Perk.SECRET_AGENT
         || this == Perk.TRADER
-        || this == Perk.SKILLFUL) {
+        || this == Perk.SKILLFUL
+        || this == Perk.MASTER_ENGINEER) {
       return true;
     }
     return false;
@@ -536,6 +541,7 @@ public enum Perk {
         break;
       }
       case FTL_ENGINEER:
+      case MASTER_ENGINEER:
       case EXPLORER: {
         if (knowledgeBonus > 4) {
           return true;

@@ -165,7 +165,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.19.15Beta";
+  public static final String GAME_VERSION = "0.19.16Beta";
 
   /**
    * Animation timer used for animation
@@ -2086,6 +2086,10 @@ public class Game implements ActionListener {
           sb.append(i + 1);
           sb.append(". ");
           sb.append(" Improves planet suitability.\n");
+        } else if (tech.getName().equals("Improved engineer")) {
+          sb.append(i + 1);
+          sb.append(". ");
+          sb.append(" Reduces overload failure by 2.\n");
         } else {
           throw new IllegalArgumentException("Tech with not actually used: "
              + tech.getName());

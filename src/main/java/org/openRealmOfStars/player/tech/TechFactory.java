@@ -385,6 +385,12 @@ public final class TechFactory {
   public static final String[] ELECTRONICS_TECH_LEVEL3_NAMES = {"Scanner Mk2",
       "Planetary scanner Mk2", "Espionage module Mk2" };
   /**
+   * Rare electronics tech names for level 3.
+   */
+  public static final String[] ELECTRONICS_RARE_TECH_LEVEL3_NAMES = {
+      "Improved engineer"};
+
+  /**
    * Electronics tech names for level 4
    */
   public static final String[] ELECTRONICS_TECH_LEVEL4_NAMES = {
@@ -1004,7 +1010,8 @@ public final class TechFactory {
       list = ELECTRONICS_TECH_LEVEL2_NAMES;
       break;
     case 3:
-      list = ELECTRONICS_TECH_LEVEL3_NAMES;
+      list = TextUtilities.concanateStringArrays(ELECTRONICS_TECH_LEVEL3_NAMES,
+          ELECTRONICS_RARE_TECH_LEVEL3_NAMES);
       break;
     case 4:
       list = ELECTRONICS_TECH_LEVEL4_NAMES;
@@ -1034,7 +1041,9 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Electrics, level);
-        if (techName.startsWith("Planetary scanner Mk")
+        if (techName.startsWith("Improved engineering")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));
+        } else if (techName.startsWith("Planetary scanner Mk")
             || techName.startsWith("Deep space scanner")
             || techName.startsWith("Broadcasting")) {
           tech.setImprovement(techName);

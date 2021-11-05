@@ -240,7 +240,7 @@ public enum Perk {
   /**
    * Perk which allows leader more to component overloads during combat.
    */
-  MASTER_ENGINEER(42, "Master engineer", "Reduce overload failure by 2.");
+  MASTER_ENGINEER(42, "Master engineer", "Reduces overload failure by 2.");
 
 
 

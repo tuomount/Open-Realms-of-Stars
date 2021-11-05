@@ -6,6 +6,7 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -504,6 +505,10 @@ public class CombatShip implements Comparable<CombatShip> {
     }
     int amount = 5;
     if (commander != null && commander.hasPerk(Perk.MASTER_ENGINEER)) {
+      amount = amount - 2;
+    }
+    if (getPlayer().getTechList().hasTech(
+        TechType.Electrics, "Improved engineer")) {
       amount = amount - 2;
     }
     setOverloadFailure(getOverloadFailure() + amount);

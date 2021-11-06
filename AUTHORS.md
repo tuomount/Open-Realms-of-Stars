@@ -43,6 +43,11 @@ Scaurian ships are done with BizmasterStudios's SpaceShip Building Kit
 Licensed under CC BY 4.0
 https://creativecommons.org/licenses/by/4.0/
 
+Smaugirian ships are done Wuhu's spaceships by Wuhu.
+https://opengameart.org/content/spaceships-1
+Licensed under CC BY 3.0
+http://creativecommons.org/licenses/by/3.0/
+
 Explosions by Csaba Felvegi aka Chabull
 
 Alien pictures by Surt - http://opengameart.org/forumtopic/cc0-scraps

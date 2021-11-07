@@ -285,6 +285,17 @@ public final class ShipImages {
   }
 
   /**
+   * Get Smaugirian ship images
+   * @return Smaugirian ship images
+   */
+  public static ShipImage smaugirians() {
+    if (smaugirians == null) {
+      initImages();
+    }
+    return smaugirians;
+  }
+
+  /**
    * Get ship images for certain race
    * @param race Space race which images to get
    * @return ShipImage
@@ -319,6 +330,8 @@ public final class ShipImages {
       return lithorians();
     case ALTEIRIANS:
       return alteirians();
+    case SMAUGIRIANS:
+      return smaugirians();
     default:
       return humans();
     }

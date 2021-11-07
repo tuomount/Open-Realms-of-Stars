@@ -1907,6 +1907,9 @@ public class Planet {
   public void setPlanetOwner(final int ownerIndex, final PlayerInfo info) {
     this.planetOwner = ownerIndex;
     this.planetOwnerInfo = info;
+    if (planetOwnerInfo == null) {
+      setOrbital(null);
+    }
   }
 
   /**

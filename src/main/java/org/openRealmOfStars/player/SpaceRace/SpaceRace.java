@@ -1028,8 +1028,7 @@ public enum SpaceRace {
     case ALTEIRIANS:
       return MusicPlayer.SKY_PORTAL;
     case SMAUGIRIANS:
-      // TODO Change music
-      return MusicPlayer.SKY_PORTAL;
+      return MusicPlayer.GUITAR_SONG;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }

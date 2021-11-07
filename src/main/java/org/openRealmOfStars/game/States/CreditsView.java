@@ -422,7 +422,13 @@ public class CreditsView extends BlackPanel {
       + "Sky Portal by\n"
       + "Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov\n"
       + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Guitar Song by Nicole Marie T\n"
+      + "https://opengameart.org/content/guitar-song-loops-indie-game-seamless-"
+      + "looping-rpg-level-stage-etc\n"
+      + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";
+
 
 
 

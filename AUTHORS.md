@@ -465,4 +465,8 @@ Sky Portal by
 Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
+Guitar Song by Nicole Marie T
+https://opengameart.org/content/guitar-song-loops-indie-game-seamless-looping-rpg-level-stage-etc
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
 

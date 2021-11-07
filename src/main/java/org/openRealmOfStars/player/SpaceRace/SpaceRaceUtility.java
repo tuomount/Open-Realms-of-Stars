@@ -148,6 +148,8 @@ public final class SpaceRaceUtility {
         sb.append(buildSecondaryName(race, "Bionian"));
       } else if (race == SpaceRace.LITHORIANS) {
         sb.append(buildSecondaryName(race, "Metavore"));
+      } else if (race == SpaceRace.SMAUGIRIANS) {
+        sb.append(buildSecondaryName(race, "Hareans"));
       } else {
         sb.append(race.getNameSingle());
       }

@@ -154,6 +154,26 @@ public class SpaceRaceUtilityTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorAlteirians() {
+    SpaceRace race = SpaceRace.ALTEIRIANS;
+    assertEquals(Attitude.SCIENTIFIC, race.getAttitude());
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.DEMOCRACY);
+    assertEquals(true, str.contains("Alteirian") || str.contains("Floteirian"));
+    assertEquals(true, str.contains("Democracy"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorSmaugirians() {
+    SpaceRace race = SpaceRace.SMAUGIRIANS;
+    assertEquals(Attitude.MILITARISTIC, race.getAttitude());
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.REGIME);
+    assertEquals(true, str.contains("Smaugirian") || str.contains("Harean"));
+    assertEquals(true, str.contains("Regime"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFullDescriptions() {
     String[] expectedResult = new String[SpaceRaceUtility.RACE_SELECTION.length];
     expectedResult[0] = "### Humans\n"+

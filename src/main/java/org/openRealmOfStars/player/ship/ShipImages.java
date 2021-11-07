@@ -98,6 +98,11 @@ public final class ShipImages {
   private static ShipImage alteirians;
 
   /**
+   * Smaugirian ships
+   */
+  private static ShipImage smaugirians;
+
+  /**
    * Hiding the constructor
    */
   private ShipImages() {
@@ -122,6 +127,7 @@ public final class ShipImages {
     reborgians = new ShipImage("reborgianships.png");
     lithorians = new ShipImage("lithorianships.png");
     alteirians = new ShipImage("alteirianships.png");
+    smaugirians = new ShipImage("smaugirianships.png");
   }
 
   /**

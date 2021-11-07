@@ -532,6 +532,7 @@ public class ImageInstruction {
         && !SpaceRace.REBORGIANS.getNameSingle().equals(image)
         && !SpaceRace.LITHORIANS.getNameSingle().equals(image)
         && !SpaceRace.ALTEIRIANS.getNameSingle().equals(image)
+        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(image)
         && !LOGO.equals(image)
         && !BIG_BAN.equals(image)
         && !BIG_PEACE.equals(image)
@@ -590,7 +591,8 @@ public class ImageInstruction {
         && !SpaceRace.CHIRALOIDS.getNameSingle().equals(image)
         && !SpaceRace.REBORGIANS.getNameSingle().equals(image)
         && !SpaceRace.LITHORIANS.getNameSingle().equals(image)
-        && !SpaceRace.ALTEIRIANS.getNameSingle().equals(image)) {
+        && !SpaceRace.ALTEIRIANS.getNameSingle().equals(image)
+        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -690,7 +692,8 @@ public class ImageInstruction {
         && !SpaceRace.CHIRALOIDS.getNameSingle().equals(logoType)
         && !SpaceRace.REBORGIANS.getNameSingle().equals(logoType)
         && !SpaceRace.LITHORIANS.getNameSingle().equals(logoType)
-        && !SpaceRace.ALTEIRIANS.getNameSingle().equals(logoType)) {
+        && !SpaceRace.ALTEIRIANS.getNameSingle().equals(logoType)
+        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }
     if (!SIZE_FULL.equals(size)

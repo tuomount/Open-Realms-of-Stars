@@ -737,6 +737,10 @@ public class Diplomacy {
     if (info.getDiplomacy().isTradeAlliance(playerIndex) && military == 0) {
       type = DiplomacyView.AI_REGULAR;
     }
+    if (info.getDiplomacy().isTradeAlliance(playerIndex)
+        && fleet.isSmugglerFleet()) {
+      type = DiplomacyView.AI_REGULAR;
+    }
     if (info.getDiplomacy().isDefensivePact(playerIndex) && military >= 0) {
       type = DiplomacyView.AI_REGULAR;
     }

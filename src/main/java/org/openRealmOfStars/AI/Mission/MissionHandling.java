@@ -3215,8 +3215,11 @@ public final class MissionHandling {
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (infoAtTarget != null) {
         int index = map.getPlayerList().getIndex(infoAtTarget);
-        boolean nothingToTrade = info.getDiplomacy().getDiplomacyList(index)
-            .isBonusType(DiplomacyBonusType.NOTHING_TO_TRADE);
+        boolean nothingToTrade = false;
+        if (info.getDiplomacy().getDiplomacyList(index) != null) {
+          nothingToTrade = info.getDiplomacy().getDiplomacyList(index)
+              .isBonusType(DiplomacyBonusType.NOTHING_TO_TRADE);
+        }
         if (infoAtTarget.isHuman()) {
           if (!nothingToTrade) {
             SoundPlayer.playSound(SoundPlayer.RADIO_CALL);

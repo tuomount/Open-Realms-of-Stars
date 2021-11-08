@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
@@ -957,6 +958,28 @@ public class Fleet {
     return result;
   }
 
+  /**
+   * Smuggler fleet is one with no apparent military power on fleet.
+   * Only Freighter ships are allowed to have weapons, if they are
+   * Smaugirians.
+   * @return True if fleet is smuggler fleet.
+   */
+  public boolean isSmugglerFleet() {
+    int result = 0;
+    for (Ship ship : ships) {
+      if (!ship.isStarBase() || ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
+        result = result + ship.getTotalMilitaryPower();
+        if (ship.getHull().getRace() == SpaceRace.SMAUGIRIANS
+            && ship.getHull().getHullType() == ShipHullType.FREIGHTER) {
+          result = result - ship.getTotalMilitaryPower();
+        }
+      }
+    }
+    if (result > 0) {
+      return false;
+    }
+    return true;
+  }
   /**
    * Calculate fleet's total cultural value
    * @return Total cultural value for fleet

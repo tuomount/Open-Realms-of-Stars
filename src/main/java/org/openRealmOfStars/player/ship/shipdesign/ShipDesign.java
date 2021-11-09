@@ -816,7 +816,8 @@ public class ShipDesign {
     if (getFreeSlots() == 0 && hull.getHullType() == ShipHullType.FREIGHTER) {
       flawNoCargoSpace = true;
     }
-    if (hull.getRace() == SpaceRace.SMAUGIRIANS) {
+    if (hull.getRace() == SpaceRace.SMAUGIRIANS
+        && hull.getHullType() == ShipHullType.FREIGHTER) {
       if (countWeapons() > 1) {
         designOk = false;
         sb.append(ShipDesignConsts.SINGLE_WEAPON_ALLOWED)

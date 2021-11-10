@@ -263,12 +263,19 @@ public class ShipHull {
 
   @Override
   public String toString() {
+    String hullDescription = IOUtilities.stringWrapper(
+        getHullType().getDescription(), LINE_LENGTH);
+    if (originalBuilder == SpaceRace.SMAUGIRIANS
+        && getHullType() == ShipHullType.FREIGHTER) {
+      hullDescription = IOUtilities.stringWrapper(
+          "Freighter, single weapon and privateer module allowed. Cargo ship",
+          LINE_LENGTH);
+    }
     return getName() + "\n" + "Cost: " + getCost() + " Metal: " + getMetalCost()
         + "\n" + "Slots:" + getMaxSlot() + " Hull:"
         + getMaxSlot() * getSlotHull() + "\n" + "Size:" + getSize().toString()
         + " Fleet capacity: " + getFleetCapacity()
-        + "\n" + IOUtilities.stringWrapper(getHullType().getDescription(),
-        LINE_LENGTH);
+        + "\n" + hullDescription;
   }
 
 }

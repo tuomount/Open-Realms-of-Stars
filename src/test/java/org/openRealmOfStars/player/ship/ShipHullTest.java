@@ -10,7 +10,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2019 Tuomo Untinen
+ * Copyright (C) 2016, 2019, 2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -68,5 +68,25 @@ public class ShipHullTest {
     assertEquals(4, hull.getMaxSlot());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testShipHullSmaugirians() {
+    ShipHull hull = new ShipHull(0, "Test", 6, 1, ShipHullType.FREIGHTER,
+        ShipSize.MEDIUM, 8, 10, SpaceRace.SMAUGIRIANS);
+    assertEquals(8, hull.getCost());
+    assertEquals(10, hull.getMetalCost());
+    assertEquals(0, hull.getIndex());
+    assertEquals("Test", hull.getName());
+    assertEquals(SpaceRace.SMAUGIRIANS, hull.getRace());
+    assertEquals(1, hull.getSlotHull());
+    assertEquals(ShipSize.MEDIUM, hull.getSize());
+    assertEquals(6, hull.getMaxSlot());
+    assertEquals("Test\n"
+        + "Cost: 8 Metal: 10\n"
+        + "Slots:6 Hull:6\n"
+        + "Size:Medium Fleet capacity: 0.1\n"
+        + "Freighter, single weapon and privateer\n"
+        + "module allowed. Cargo ship", hull.toString());
+  }
 
 }

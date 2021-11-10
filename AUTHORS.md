@@ -43,6 +43,11 @@ Scaurian ships are done with BizmasterStudios's SpaceShip Building Kit
 Licensed under CC BY 4.0
 https://creativecommons.org/licenses/by/4.0/
 
+Smaugirian ships are done with Wuhu's spaceships by Wuhu.
+https://opengameart.org/content/spaceships-1
+Licensed under CC BY 3.0
+http://creativecommons.org/licenses/by/3.0/
+
 Explosions by Csaba Felvegi aka Chabull
 
 Alien pictures by Surt - http://opengameart.org/forumtopic/cc0-scraps
@@ -56,6 +61,8 @@ Reborgian race picture by Tuomo Untinen, original art by Surt - http://opengamea
 Lithorian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
 Alteirian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
+
+Smaugirian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
 Space Captain by Justin Nichol 
 Tuomo Untinen added legs for the captain. -https://opengameart.org/content/space-captain-with-legs
@@ -456,6 +463,10 @@ Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
 Sky Portal by
 Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
+Guitar Song by Nicole Marie T
+https://opengameart.org/content/guitar-song-loops-indie-game-seamless-looping-rpg-level-stage-etc
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
 

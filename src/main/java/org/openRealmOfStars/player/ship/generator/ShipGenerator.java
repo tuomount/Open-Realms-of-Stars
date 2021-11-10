@@ -948,6 +948,12 @@ public final class ShipGenerator {
       ShipComponent power = ShipComponentFactory.createByName(
           player.getTechList().getBestEnergySource().getComponent());
       result.addComponent(power);
+      if (player.getRace() == SpaceRace.SMAUGIRIANS
+          && result.getFreeSlots() > 2) {
+        ShipComponent weapon = ShipComponentFactory
+            .createByName(player.getTechList().getBestWeapon().getComponent());
+        result.addComponent(weapon);
+      }
       Attitude attitude = player.getAiAttitude();
       if (attitude == Attitude.AGGRESSIVE
           || attitude == Attitude.MILITARISTIC) {
@@ -1010,7 +1016,14 @@ public final class ShipGenerator {
           }
         }
       }
-
+      if (player.getRace() == SpaceRace.SMAUGIRIANS
+          && result.getFreeSlots() > 3
+          && (player.getTechList().hasTech("Privateer Mk1")
+              || player.getTechList().hasTech("Privateer Mk2")
+              || player.getTechList().hasTech("Privateer Mk3"))) {
+        result.addComponent(ShipComponentFactory.createByName(
+            "Privateer module"));
+      }
     }
     return result;
   }

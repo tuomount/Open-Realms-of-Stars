@@ -98,6 +98,11 @@ public final class ShipImages {
   private static ShipImage alteirians;
 
   /**
+   * Smaugirian ships
+   */
+  private static ShipImage smaugirians;
+
+  /**
    * Hiding the constructor
    */
   private ShipImages() {
@@ -122,6 +127,7 @@ public final class ShipImages {
     reborgians = new ShipImage("reborgianships.png");
     lithorians = new ShipImage("lithorianships.png");
     alteirians = new ShipImage("alteirianships.png");
+    smaugirians = new ShipImage("smaugirianships.png");
   }
 
   /**
@@ -279,6 +285,17 @@ public final class ShipImages {
   }
 
   /**
+   * Get Smaugirian ship images
+   * @return Smaugirian ship images
+   */
+  public static ShipImage smaugirians() {
+    if (smaugirians == null) {
+      initImages();
+    }
+    return smaugirians;
+  }
+
+  /**
    * Get ship images for certain race
    * @param race Space race which images to get
    * @return ShipImage
@@ -313,6 +330,8 @@ public final class ShipImages {
       return lithorians();
     case ALTEIRIANS:
       return alteirians();
+    case SMAUGIRIANS:
+      return smaugirians();
     default:
       return humans();
     }

@@ -145,7 +145,15 @@ public enum SpaceRace {
       "Alteirian are creatures that live in zero gravity. Because of this they"
       + " need special suites to move planet surface. Most of their time they"
       + " live on planet's orbit. Their orbitals are more improved than other"
-      + " space race.");
+      + " space race."),
+  /**
+   * Smaugirians are humanoids that are known for smuggling goods.
+   * Their cargo ships can contain single weapon or privateering modules.
+   */
+  SMAUGIRIANS(14, "Smaugirians", "Smaugirian",
+      "Smaugirians are humanoids that are known for smuggling goods."
+      + " Their cargo ships can contain single weapon"
+      + " or privateering modules.");
 
 
 
@@ -226,6 +234,8 @@ public enum SpaceRace {
       return 100;
     case ALTEIRIANS:
       return 200;
+    case SMAUGIRIANS:
+      return 100;
     default:
       return 0;
     }
@@ -266,6 +276,8 @@ public enum SpaceRace {
         return Attitude.EXPANSIONIST;
       case ALTEIRIANS:
         return Attitude.SCIENTIFIC;
+      case SMAUGIRIANS:
+        return Attitude.MILITARISTIC;
       default:
         return Attitude.PEACEFUL;
     }
@@ -303,6 +315,8 @@ public enum SpaceRace {
     case LITHORIANS:
       return 7;
     case ALTEIRIANS:
+      return 5;
+    case SMAUGIRIANS:
       return 5;
     default:
       return -1;
@@ -343,6 +357,8 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_LITHORIAN_RACE;
     case ALTEIRIANS:
       return GuiStatics.IMAGE_ALTEIRIAN_RACE;
+    case SMAUGIRIANS:
+      return GuiStatics.IMAGE_SMAUGIRIAN_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -384,6 +400,8 @@ public enum SpaceRace {
         return start + "resources/images/lithorian_race.png";
       case ALTEIRIANS:
         return start + "resources/images/alteirian_race.png";
+      case SMAUGIRIANS:
+        return start + "resources/images/smaugirian_race.png";
       default:
         return start + "resources/images/centaur_race.png";
     }
@@ -442,6 +460,8 @@ public enum SpaceRace {
       return 200;
     case ALTEIRIANS:
       return 50;
+    case SMAUGIRIANS:
+      return 100;
     default:
       return 0;
     }
@@ -480,6 +500,8 @@ public enum SpaceRace {
       return 100;
     case ALTEIRIANS:
       return 150;
+    case SMAUGIRIANS:
+      return 100;
     default:
       return 0;
     }
@@ -518,6 +540,8 @@ public enum SpaceRace {
       return 12;
     case ALTEIRIANS:
       return 6;
+    case SMAUGIRIANS:
+      return 11;
     default:
       return 0;
     }
@@ -556,6 +580,8 @@ public enum SpaceRace {
       return 100;
     case ALTEIRIANS:
       return 50;
+    case SMAUGIRIANS:
+      return 100;
     default:
       return 0;
     }
@@ -593,6 +619,8 @@ public enum SpaceRace {
     case LITHORIANS:
       return 50;
     case ALTEIRIANS:
+      return 100;
+    case SMAUGIRIANS:
       return 100;
     default:
       return 0;
@@ -632,6 +660,8 @@ public enum SpaceRace {
       return 0;
     case ALTEIRIANS:
       return 100;
+    case SMAUGIRIANS:
+      return 100;
     default:
       return 100;
     }
@@ -669,6 +699,8 @@ public enum SpaceRace {
     case LITHORIANS:
       return 0;
     case ALTEIRIANS:
+      return 100;
+    case SMAUGIRIANS:
       return 100;
     default:
       return 0;
@@ -708,6 +740,8 @@ public enum SpaceRace {
       return -2;
     case ALTEIRIANS:
       return -1;
+    case SMAUGIRIANS:
+      return -2;
     default:
       return 0;
     }
@@ -751,6 +785,8 @@ public enum SpaceRace {
       return 70;
     case ALTEIRIANS:
       return 50;
+    case SMAUGIRIANS:
+      return 70;
     default:
       return 50;
     }
@@ -788,6 +824,8 @@ public enum SpaceRace {
     case LITHORIANS:
       return 0;
     case ALTEIRIANS:
+      return 0;
+    case SMAUGIRIANS:
       return 0;
     default:
       return 0;
@@ -827,6 +865,8 @@ public enum SpaceRace {
       return 13;
     case ALTEIRIANS:
       return 10;
+    case SMAUGIRIANS:
+      return 11;
     default:
       return 15;
     }
@@ -865,6 +905,8 @@ public enum SpaceRace {
       return 52;
     case ALTEIRIANS:
       return 50;
+    case SMAUGIRIANS:
+      return 52;
     default:
       return 50;
     }
@@ -902,6 +944,8 @@ public enum SpaceRace {
     case LITHORIANS:
       return 3;
     case ALTEIRIANS:
+      return 3;
+    case SMAUGIRIANS:
       return 3;
     default:
       return 3;
@@ -942,6 +986,8 @@ public enum SpaceRace {
       return 1;
     case ALTEIRIANS:
       return 2;
+    case SMAUGIRIANS:
+      return 1;
     default:
       return 1;
     }
@@ -981,6 +1027,8 @@ public enum SpaceRace {
       return MusicPlayer.TECHNODRIVE;
     case ALTEIRIANS:
       return MusicPlayer.SKY_PORTAL;
+    case SMAUGIRIANS:
+      return MusicPlayer.GUITAR_SONG;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }
@@ -1018,6 +1066,8 @@ public enum SpaceRace {
       return false;
     case ALTEIRIANS:
       return true;
+    case SMAUGIRIANS:
+      return true;
     default:
       return true;
     }
@@ -1054,6 +1104,8 @@ public enum SpaceRace {
     case LITHORIANS:
       return false;
     case ALTEIRIANS:
+      return false;
+    case SMAUGIRIANS:
       return false;
     default:
       return false;
@@ -1121,6 +1173,8 @@ public enum SpaceRace {
       return 110;
     case ALTEIRIANS:
       return 90;
+    case SMAUGIRIANS:
+      return 80;
     default:
       return 80;
     }
@@ -1160,6 +1214,8 @@ public enum SpaceRace {
       return SocialSystem.MATRIARCHY;
     case ALTEIRIANS:
       return SocialSystem.EQUAL;
+    case SMAUGIRIANS:
+      return SocialSystem.PATRIARCHY;
     default:
       return SocialSystem.EQUAL;
     }
@@ -1197,6 +1253,9 @@ public enum SpaceRace {
     case LITHORIANS:
       return BridgeCommandType.DARKEST;
     case ALTEIRIANS:
+      //FIXME: Check this when bridge image has been done
+      return BridgeCommandType.WARM_WHITE;
+    case SMAUGIRIANS:
       //FIXME: Check this when bridge image has been done
       return BridgeCommandType.WARM_WHITE;
     default:
@@ -1372,6 +1431,18 @@ public enum SpaceRace {
       // All planets are equal since this race lives in orbit.
       return 100;
     }
+    if (this == SMAUGIRIANS) {
+      switch (worldType) {
+      case SILICONWORLD: return 50;
+      case WATERWORLD: return 100;
+      case IRONWORLD: return 50;
+      case ICEWORLD: return 50;
+      case CARBONWORLD: return 100;
+      case DESERTWORLD: return 75;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
     return 100;
   }
   /**
@@ -1545,6 +1616,8 @@ public enum SpaceRace {
       sb.append("Population eats metal instead of food.");
     } else if (this == SpaceRace.ALTEIRIANS) {
       sb.append("Lives only on orbitals.");
+    } else if (this == SpaceRace.SMAUGIRIANS) {
+      sb.append("Weapon allowed in cargo ships.");
     } else {
       sb.append("None");
     }

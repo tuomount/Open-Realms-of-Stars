@@ -350,6 +350,27 @@ public class ShipDesign {
   }
 
   /**
+   * Count how many weapons ship has.
+   * @return Number of weapons.
+   */
+
+  public int countWeapons() {
+    int count = 0;
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.WEAPON_BEAM
+          || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
+          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+          || comp.getType() == ShipComponentType.WEAPON_RAILGUN
+          || comp.getType() == ShipComponentType.PLASMA_CANNON
+          || comp.getType() == ShipComponentType.ION_CANNON) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  /**
    * Does ship design have DefanseComponent?
    * True if one DefanseComponent is in place.
    * @return True if DefanseComponent is found, otherwise false
@@ -795,8 +816,21 @@ public class ShipDesign {
     if (getFreeSlots() == 0 && hull.getHullType() == ShipHullType.FREIGHTER) {
       flawNoCargoSpace = true;
     }
-    if (hasWeapons() && (hull.getHullType() == ShipHullType.FREIGHTER
-        || hull.getHullType() == ShipHullType.PROBE)) {
+    if (hull.getRace() == SpaceRace.SMAUGIRIANS
+        && hull.getHullType() == ShipHullType.FREIGHTER) {
+      if (countWeapons() > 1) {
+        designOk = false;
+        sb.append(ShipDesignConsts.SINGLE_WEAPON_ALLOWED)
+          .append(hull.getHullType().toString())
+          .append("!\n");
+      }
+    } else if (hasWeapons() && hull.getHullType() == ShipHullType.FREIGHTER) {
+      designOk = false;
+      sb.append(ShipDesignConsts.NO_WEAPONS_ALLOWED)
+        .append(hull.getHullType().toString())
+        .append("!\n");
+    }
+    if (hasWeapons() && hull.getHullType() == ShipHullType.PROBE) {
       designOk = false;
       sb.append(ShipDesignConsts.NO_WEAPONS_ALLOWED)
         .append(hull.getHullType().toString())
@@ -840,7 +874,14 @@ public class ShipDesign {
       }
       if (comp.getType() == ShipComponentType.PRIVATEERING_MODULE) {
         privateerModule = true;
-        if (hull.getHullType() != ShipHullType.PRIVATEER) {
+        if (hull.getRace() == SpaceRace.SMAUGIRIANS) {
+          if (hull.getHullType() != ShipHullType.PRIVATEER
+              && hull.getHullType() != ShipHullType.FREIGHTER) {
+            designOk = false;
+            sb.append(ShipDesignConsts.PRIVATEER_MODULE_IN_NOT_PRIVATEER);
+            sb.append("\n");
+          }
+        } else if (hull.getHullType() != ShipHullType.PRIVATEER) {
           designOk = false;
           sb.append(ShipDesignConsts.PRIVATEER_MODULE_IN_NOT_PRIVATEER);
           sb.append("\n");

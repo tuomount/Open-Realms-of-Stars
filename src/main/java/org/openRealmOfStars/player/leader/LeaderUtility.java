@@ -413,6 +413,9 @@ public final class LeaderUtility {
     case ENTERPRISE: {
       return "CEO";
     }
+    case SYNDICATE: {
+      return "Boss";
+    }
     case GUILD:
     case HEGEMONY:
     case REGIME:

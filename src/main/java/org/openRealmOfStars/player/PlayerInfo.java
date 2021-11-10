@@ -297,6 +297,7 @@ public class PlayerInfo {
     case MECHIONS:
     case CENTAURS:
     case TEUTHIDAES:
+    case SMAUGIRIANS:
     case HOMARIANS: {
       /*
        * Humans, Mechions and Centaurs get 1 Combat, 1 Defense, Scout and Colony

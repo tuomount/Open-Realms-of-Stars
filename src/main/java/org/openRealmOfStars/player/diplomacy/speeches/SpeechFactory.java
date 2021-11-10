@@ -128,6 +128,9 @@ public final class SpeechFactory {
       case ALTEIRIANS: return new SpeechLine(type,
           "Your pod " + fleetName
           + " has detected in my sector. Move it!");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "I have spotted your fleet " + fleetName
+          + " in my sector. Fleet must be moved!");
       default: return null;
     }
   }
@@ -183,6 +186,10 @@ public final class SpeechFactory {
       case ALTEIRIANS: return new SpeechLine(type,
           "Your spy pod " + fleetName
           + " has detected in my sector. Move it!");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "I have spotted your spy fleet " + fleetName
+          + " in my sector. Spy must be moved!");
+
       default: return null;
     }
   }
@@ -225,6 +232,8 @@ public final class SpeechFactory {
           "You don't seem to have even pebble to trade.");
       case ALTEIRIANS: return new SpeechLine(type,
           "We don't feel you have anything to trade.");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "You don't have anything we would like to trade...");
       default: return null;
     }
   }
@@ -265,6 +274,8 @@ public final class SpeechFactory {
           "I am moving the fleet from your sector.");
       case ALTEIRIANS: return new SpeechLine(type,
           "I'll be moving our pod.");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "I'll move my fleet.");
       default: return null;
     }
   }
@@ -307,6 +318,8 @@ public final class SpeechFactory {
           "Let's cool down and discuss, " + raceName + ".");
       case ALTEIRIANS: return new SpeechLine(type,
           "Let us feel for this moment, " + raceName + ".");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "This could be interesting, " + raceName + ".");
       default: return null;
     }
   }
@@ -347,6 +360,8 @@ public final class SpeechFactory {
           "Greetings, my fellow friend!");
       case ALTEIRIANS: return new SpeechLine(type,
           "Ah my friend!");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "Ah good old pal. Let's sit down and talk.");
       default: return null;
     }
   }
@@ -387,6 +402,8 @@ public final class SpeechFactory {
           "Nice to see warm person in cool space.");
       case ALTEIRIANS: return new SpeechLine(type,
           "It is nice to see you again!");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "Well met, my pal!");
       default: return null;
     }
   }
@@ -427,6 +444,8 @@ public final class SpeechFactory {
           "Ah, something to put into smelting pot and eat up...");
       case ALTEIRIANS: return new SpeechLine(type,
           "Hmm, do I smell foul gases here?");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "Are you ready to make proposal?");
       default: return null;
     }
   }
@@ -467,6 +486,8 @@ public final class SpeechFactory {
           "Be quick or I will explode...");
       case ALTEIRIANS: return new SpeechLine(type,
           "Urgh, I can feel and smell the foul gases...");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "Uh, oh. This could end really bad or...");
       default: return null;
     }
   }
@@ -507,6 +528,8 @@ public final class SpeechFactory {
           "Accept this or I will eat you like a pebble stone!");
       case ALTEIRIANS: return new SpeechLine(type,
           "Accept this offer or you will feel our wrath!");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "Quick, accept this or you will suffer!");
       default: return null;
     }
   }
@@ -556,6 +579,8 @@ public final class SpeechFactory {
           + " for war!" + extra);
       case ALTEIRIANS: return new SpeechLine(type,
           "Your offer is full gas and you will feel our wrath!" + extra);
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "You shall pay for your nonsense!" + extra);
       default: return null;
     }
   }
@@ -599,6 +624,8 @@ public final class SpeechFactory {
           "This offer makes me blazing hot and I getting close to explode!");
       case ALTEIRIANS: return new SpeechLine(type,
           "This offer is full of ether and gases!");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "What kind offer is this? There is not enough for me!");
       default: return null;
     }
   }
@@ -639,6 +666,8 @@ public final class SpeechFactory {
           "You seem like a good fuel for furnace...");
       case ALTEIRIANS: return new SpeechLine(type,
           "You are full of gases and you seem to leak it...");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "You are offer is full of junk, like yourself!");
       default: return null;
     }
   }
@@ -679,6 +708,8 @@ public final class SpeechFactory {
           "I'll have to cool down this offer.");
       case ALTEIRIANS: return new SpeechLine(type,
           "I cannot accept your offer.");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "Your offer is not high enough.");
       default: return null;
     }
   }
@@ -719,6 +750,8 @@ public final class SpeechFactory {
           "Suggest your counter offer then...");
       case ALTEIRIANS: return new SpeechLine(type,
           "So, what is your offer then?");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "I am waiting your offer then...");
       default: return null;
     }
   }
@@ -765,6 +798,8 @@ public final class SpeechFactory {
           "Prepare to encounter hot blazing war from us!" + extra);
       case ALTEIRIANS: return new SpeechLine(type,
           "Prepare to to feel wrath from us!" + extra);
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "Get ready for fight!" + extra);
       default: return null;
     }
   }
@@ -813,6 +848,9 @@ public final class SpeechFactory {
       case ALTEIRIANS: return new SpeechLine(type,
           "Your puny pod " + fleetName + " has been detected."
               + " Prepare to feel the wrath from us!");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "Your puny fleet " + fleetName + " is seen."
+              + " Prepare to fight with me!");
       default: return null;
     }
   }
@@ -852,7 +890,9 @@ public final class SpeechFactory {
       case LITHORIANS: return new SpeechLine(type,
           "I offer you our spy information for 20 turns. Interested?");
       case ALTEIRIANS: return new SpeechLine(type,
-          "Are you interested joining to my spy network for 20 turnsa?");
+          "Are you interested joining to my spy network for 20 turns?");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "I have good intel for you 20 turns. Interested?");
       default: return null;
     }
   }
@@ -901,6 +941,9 @@ public final class SpeechFactory {
       case ALTEIRIANS: return new SpeechLine(type,
           "Will you accept trade embargo for 20 turns against "
               + empire + "?");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "Let's put "
+              + empire + " to trade embargo for 20 turns?");
       default: return null;
     }
   }
@@ -950,6 +993,8 @@ public final class SpeechFactory {
           "Let's start trading together, what is your answer?");
       case ALTEIRIANS: return new SpeechLine(type,
           "Let's join to mutual trading, what say you?");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "How about if we start to trade?");
  default: return null;
     }
   }
@@ -992,6 +1037,8 @@ public final class SpeechFactory {
           "Let's stand together like rocks and defend ourselves!");
       case ALTEIRIANS: return new SpeechLine(type,
           "We should join side by side to rule the galaxy!");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "We should join to same alliance, what do you think?");
       default: return null;
     }
   }
@@ -1036,6 +1083,9 @@ public final class SpeechFactory {
       case ALTEIRIANS:
         return new SpeechLine(type,
           "We should join side by side to defend ourselves!");
+      case SMAUGIRIANS:
+        return new SpeechLine(type,
+          "I am ready to defend you. Are you ready for defensive pact?");
       default: return null;
     }
   }
@@ -1071,6 +1121,18 @@ public final class SpeechFactory {
       case CHIRALOIDS:
         return new SpeechLine(type,
           "I will nuke you!");
+      case REBORGIANS:
+        return new SpeechLine(type,
+          "We will synthetize you!");
+      case LITHORIANS:
+        return new SpeechLine(type,
+          "We will crush you like a pebble stone!");
+      case ALTEIRIANS:
+        return new SpeechLine(type,
+          "Prepare feel the wrath of us!");
+      case SMAUGIRIANS:
+        return new SpeechLine(type,
+          "We will fight now!");
       default: return null;
     }
   }
@@ -1116,6 +1178,9 @@ public final class SpeechFactory {
       case ALTEIRIANS:
         return new SpeechLine(type,
           "Most excellent deal!");
+      case SMAUGIRIANS:
+        return new SpeechLine(type,
+          "I agree with this!");
       default: return null;
     }
   }
@@ -1170,6 +1235,8 @@ public final class SpeechFactory {
           "I accept your offer with warm!");
       case ALTEIRIANS: return new SpeechLine(type,
           "I feel your offer. This is good!");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "This is good deal for both of us!");
       default: return null;
     }
   }
@@ -1210,6 +1277,8 @@ public final class SpeechFactory {
           "This is my offer!");
       case ALTEIRIANS: return new SpeechLine(type,
           "I am offering this one, are you feeling it?");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "I am offering you this. Interested?");
       default: return null;
     }
   }
@@ -1250,6 +1319,8 @@ public final class SpeechFactory {
           "There is room for both of us.");
       case ALTEIRIANS: return new SpeechLine(type,
           "Let's join together with peace...");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "How about peace contract?");
       default: return null;
     }
   }

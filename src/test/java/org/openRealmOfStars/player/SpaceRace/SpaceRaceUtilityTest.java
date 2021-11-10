@@ -154,6 +154,26 @@ public class SpaceRaceUtilityTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorAlteirians() {
+    SpaceRace race = SpaceRace.ALTEIRIANS;
+    assertEquals(Attitude.SCIENTIFIC, race.getAttitude());
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.DEMOCRACY);
+    assertEquals(true, str.contains("Alteirian") || str.contains("Floteirian"));
+    assertEquals(true, str.contains("Democracy"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorSmaugirians() {
+    SpaceRace race = SpaceRace.SMAUGIRIANS;
+    assertEquals(Attitude.MILITARISTIC, race.getAttitude());
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.REGIME);
+    assertEquals(true, str.contains("Smaugirian") || str.contains("Harean"));
+    assertEquals(true, str.contains("Regime"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFullDescriptions() {
     String[] expectedResult = new String[SpaceRaceUtility.RACE_SELECTION.length];
     expectedResult[0] = "### Humans\n"+
@@ -405,6 +425,24 @@ public class SpaceRaceUtilityTest {
         + "* Rush: Credit\n"
         + "* Start planet value: 100\n"
         + "* Special: Lives only on orbitals.";
+    expectedResult[13] = "### Smaugirians\n"
+        + "Smaugirians are humanoids that are known for smuggling goods. Their"
+        + " cargo ships can contain single weapon or privateering modules.\n"
+        + "* Max radiation: 5\n"
+        + "* Troop power: 11\n"
+        + "* Leader lifespan: 80\n"
+        + "* Production: 100%\n"
+        + "* Mining: 100%\n"
+        + "* Research: 100%\n"
+        + "* Food production: 100%\n"
+        + "* Growth: 10 turns\n"
+        + "* Food require: 100%\n"
+        + "* Culture: 100%\n"
+        + "* Diplomacy bonus: -2\n"
+        + "* War resistance: 70\n"
+        + "* Rush: Credit\n"
+        + "* Start planet value: 100\n"
+        + "* Special: Weapon allowed in cargo ships.";
     for (int i = 0; i <  SpaceRaceUtility.RACE_SELECTION.length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByName(
           SpaceRaceUtility.RACE_SELECTION[i]);
@@ -470,6 +508,9 @@ public class SpaceRaceUtilityTest {
         break;
       case ALTEIRIANS:
         assertEquals(800, result);
+        break;
+      case SMAUGIRIANS:
+        assertEquals(625, result);
         break;
       default:
         assertEquals(0, result);

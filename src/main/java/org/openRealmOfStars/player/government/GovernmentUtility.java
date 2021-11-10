@@ -211,6 +211,18 @@ public final class GovernmentUtility {
         };
         return governments;
     }
+    if (race == SpaceRace.SMAUGIRIANS) {
+      GovernmentType[] governments = {
+          GovernmentType.UNION, GovernmentType.SPACE_PIRATES,
+          GovernmentType.REPUBLIC, GovernmentType.GUILD,
+          GovernmentType.HEGEMONY, GovernmentType.TECHNOCRACY,
+          GovernmentType.SYNDICATE, GovernmentType.EMPIRE,
+          GovernmentType.HIERARCHY, GovernmentType.FEDERATION,
+          GovernmentType.UTOPIA, GovernmentType.ENTERPRISE,
+          GovernmentType.REGIME
+        };
+        return governments;
+    }
     return null;
   }
 }

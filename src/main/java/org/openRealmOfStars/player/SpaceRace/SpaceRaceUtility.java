@@ -39,7 +39,7 @@ public final class SpaceRaceUtility {
    */
   public static final String[] RACE_SELECTION = {"Human", "Mechion", "Spork",
       "Greyan", "Centaur", "Mothoid", "Teuthidae", "Scaurian", "Homarian",
-      "Chiraloid", "Reborgian", "Lithorian", "Alteirian" };
+      "Chiraloid", "Reborgian", "Lithorian", "Alteirian", "Smaugirian" };
 
 
   /**
@@ -102,6 +102,9 @@ public final class SpaceRaceUtility {
     if (name.equals(SpaceRace.ALTEIRIANS.getNameSingle())) {
       return SpaceRace.ALTEIRIANS;
     }
+    if (name.equals(SpaceRace.SMAUGIRIANS.getNameSingle())) {
+      return SpaceRace.SMAUGIRIANS;
+    }
     return null;
   }
 
@@ -148,6 +151,8 @@ public final class SpaceRaceUtility {
         sb.append(buildSecondaryName(race, "Bionian"));
       } else if (race == SpaceRace.LITHORIANS) {
         sb.append(buildSecondaryName(race, "Metavore"));
+      } else if (race == SpaceRace.SMAUGIRIANS) {
+        sb.append(buildSecondaryName(race, "Hareans"));
       } else {
         sb.append(race.getNameSingle());
       }

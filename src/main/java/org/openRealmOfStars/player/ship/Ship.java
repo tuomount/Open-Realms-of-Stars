@@ -1794,6 +1794,17 @@ private int increaseHitChanceByComponent() {
     return (int) Math.round(power);
   }
   /**
+   * Is ship a smuggler ship?
+   * @return True if smuggler ship.
+   */
+  public boolean isSmuggler() {
+    if (getHull().getRace() == SpaceRace.SMAUGIRIANS
+        && getHull().getHullType() == ShipHullType.FREIGHTER) {
+      return true;
+    }
+    return false;
+  }
+  /**
    * Calculate military power of design. Design needs to have at least single
    * weapon to be a military ship
    * @return Military power

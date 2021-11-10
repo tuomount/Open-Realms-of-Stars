@@ -252,6 +252,13 @@ public final class MusicPlayer {
       "/resources/musics/Sky Portal.ogg");
 
   /**
+   * Guitar Song By Nicole Marie T CC-BY 3.0
+   */
+  public static final MusicFileInfo GUITAR_SONG = new MusicFileInfo(
+      "Guitar Song", "Nicole Marie T",
+      "/resources/musics/Guitar Song.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

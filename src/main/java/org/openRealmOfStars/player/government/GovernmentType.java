@@ -111,9 +111,14 @@ public enum GovernmentType {
    */
   TECHNOCRACY(20, "Technocracy", 0, -1, false, 2),
   /**
-   * Technocracy government
+   * Pirate government
    */
-  SPACE_PIRATES(21, "Pirates", 0, 0, true, 3);
+  SPACE_PIRATES(21, "Pirates", 0, 0, true, 3),
+  /**
+   * Syndicate government
+   */
+  SYNDICATE(22, "Syndicate", 0, 1, false, 3);
+
 
 
   /**
@@ -231,7 +236,7 @@ public enum GovernmentType {
         || this == REPUBLIC || this == UTOPIA) {
       return 1;
     }
-    if (this == GUILD || this == ENTERPRISE) {
+    if (this == GUILD || this == ENTERPRISE || this == SYNDICATE) {
       return 2;
     }
     return 0;
@@ -320,7 +325,7 @@ public enum GovernmentType {
    */
   public boolean hasWarHappiness() {
     if (this == HORDE || this == CLAN || this == MECHANICAL_HORDE
-        || this == REGIME) {
+        || this == REGIME || this == SYNDICATE) {
       return true;
     }
     return false;
@@ -346,7 +351,7 @@ public enum GovernmentType {
   public boolean hasCreditRush() {
     if (this == GUILD || this == ENTERPRISE || this == DEMOCRACY
         || this == UNION || this == FEDERATION || this == REPUBLIC
-        || this == FEUDALISM || this == TECHNOCRACY) {
+        || this == FEUDALISM || this == TECHNOCRACY || this == SYNDICATE) {
       return true;
     }
     return false;
@@ -390,7 +395,8 @@ public enum GovernmentType {
       }
       case GUILD:
       case FEUDALISM:
-      case ENTERPRISE: {
+      case ENTERPRISE:
+      case SYNDICATE: {
         return 12;
       }
       case EMPIRE:
@@ -439,7 +445,8 @@ public enum GovernmentType {
       }
       case GUILD:
       case ENTERPRISE:
-      case UTOPIA: {
+      case UTOPIA:
+      case SYNDICATE: {
         return 12;
       }
       case HEGEMONY:
@@ -472,6 +479,7 @@ public enum GovernmentType {
       case COLLECTIVE:
       case UTOPIA:
       case TECHNOCRACY:
+      case SYNDICATE:
       case REGIME: {
         return false;
       }
@@ -511,6 +519,7 @@ public enum GovernmentType {
       case FEDERATION:
       case GUILD:
       case REPUBLIC:
+      case SYNDICATE:
       case SPACE_PIRATES: {
         return false;
       }
@@ -560,6 +569,7 @@ public enum GovernmentType {
       case NEST:
       case CLAN:
       case HORDE:
+      case SYNDICATE:
       case MECHANICAL_HORDE:
       case EMPIRE:
       case HIERARCHY:

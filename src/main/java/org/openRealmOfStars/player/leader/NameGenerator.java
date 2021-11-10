@@ -2456,6 +2456,173 @@ public final class NameGenerator {
   }
 
   /**
+   * Generate Alteirian leader name
+   * @param gender Leader gender
+   * @return Alteirian leader name
+   */
+  private static String generateSmaugirianName(final Gender gender) {
+    StringBuilder sb = new StringBuilder();
+    if (gender == Gender.MALE) {
+      switch (DiceGenerator.getRandom(22)) {
+        default:
+        case 0: sb.append("Bu"); break;
+        case 1: sb.append("Mor"); break;
+        case 2: sb.append("Rad"); break;
+        case 3: sb.append("Er"); break;
+        case 4: sb.append("Rick"); break;
+        case 5: sb.append("Nor"); break;
+        case 6: sb.append("Whea"); break;
+        case 7: sb.append("Hew"); break;
+        case 8: sb.append("Clay"); break;
+        case 9: sb.append("Beas"); break;
+        case 10: sb.append("Way"); break;
+        case 11: sb.append("Mil"); break;
+        case 12: sb.append("Brigh"); break;
+        case 13: sb.append("Mel"); break;
+        case 14: sb.append("Stan"); break;
+        case 15: sb.append("Til"); break;
+        case 16: sb.append("Kirk"); break;
+        case 17: sb.append("Ray"); break;
+        case 18: sb.append("Pen"); break;
+        case 19: sb.append("Gib"); break;
+        case 20: sb.append("Crom"); break;
+        case 21: sb.append("Ham"); break;
+        case 22: sb.append("Rich"); break;
+      }
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("ford"); break;
+        case 1: sb.append("se"); break;
+        case 2: sb.append("nor"); break;
+        case 3: sb.append("ling"); break;
+        case 4: sb.append("ward"); break;
+        case 5: sb.append("vin"); break;
+        case 6: sb.append("ton"); break;
+        case 7: sb.append("son"); break;
+        case 8: sb.append("ley"); break;
+        case 9: sb.append("land"); break;
+        case 10: sb.append("tan"); break;
+        case 11: sb.append("well"); break;
+        case 12: sb.append("man"); break;
+        case 13: sb.append("rell"); break;
+        case 14: sb.append("ger"); break;
+        case 15: sb.append("re"); break;
+        case 16: sb.append("dy"); break;
+        case 17: sb.append("sel"); break;
+        case 18: sb.append("dell"); break;
+        case 19: sb.append("mond"); break;
+      }
+    }
+    if (gender == Gender.FEMALE) {
+      switch (DiceGenerator.getRandom(25)) {
+        default:
+        case 0: sb.append("Eu"); break;
+        case 1: sb.append("Rel"); break;
+        case 2: sb.append("Fa"); break;
+        case 3: sb.append("Jes"); break;
+        case 4: sb.append("Mol"); break;
+        case 5: sb.append("Ken"); break;
+        case 6: sb.append("A"); break;
+        case 7: sb.append("Ce"); break;
+        case 8: sb.append("Max"); break;
+        case 9: sb.append("Mada"); break;
+        case 10: sb.append("Len"); break;
+        case 11: sb.append("Re"); break;
+        case 12: sb.append("Ange"); break;
+        case 13: sb.append("Ser"); break;
+        case 14: sb.append("Ros"); break;
+        case 15: sb.append("Lor"); break;
+        case 16: sb.append("Car"); break;
+        case 17: sb.append("Ele"); break;
+        case 18: sb.append("Las"); break;
+        case 19: sb.append("Day"); break;
+        case 20: sb.append("Cor"); break;
+        case 21: sb.append("Eri"); break;
+        case 22: sb.append("Bon"); break;
+        case 23: sb.append("Ni"); break;
+        case 24: sb.append("Don"); break;
+        case 25: sb.append("May"); break;
+      }
+      switch (DiceGenerator.getRandom(23)) {
+        default:
+        case 0: sb.append("ra"); break;
+        case 1: sb.append("la"); break;
+        case 2: sb.append("sica"); break;
+        case 3: sb.append("lie"); break;
+        case 4: sb.append("mie"); break;
+        case 5: sb.append("dra"); break;
+        case 6: sb.append("my"); break;
+        case 7: sb.append("lia"); break;
+        case 8: sb.append("welle"); break;
+        case 9: sb.append("ore"); break;
+        case 10: sb.append("ora"); break;
+        case 11: sb.append("nia"); break;
+        case 12: sb.append("ena"); break;
+        case 13: sb.append("anna"); break;
+        case 14: sb.append("aine"); break;
+        case 15: sb.append("men"); break;
+        case 16: sb.append("nora"); break;
+        case 17: sb.append("sie"); break;
+        case 18: sb.append("sy"); break;
+        case 19: sb.append("in"); break;
+        case 20: sb.append("ka"); break;
+        case 21: sb.append("nie"); break;
+        case 22: sb.append("na"); break;
+        case 23: sb.append("belle"); break;
+      }
+    }
+    sb.append(" ");
+    switch (DiceGenerator.getRandom(20)) {
+      default:
+      case 0: sb.append("Two "); break;
+      case 1: sb.append("Smiling "); break;
+      case 2: sb.append("Shadow "); break;
+      case 3: sb.append("Lazy "); break;
+      case 4: sb.append("Silver "); break;
+      case 5: sb.append("Clever "); break;
+      case 6: sb.append("Feral "); break;
+      case 7: sb.append("Furious "); break;
+      case 8: sb.append("Tricky "); break;
+      case 9: sb.append("No "); break;
+      case 10: sb.append("White "); break;
+      case 11: sb.append("Immortal "); break;
+      case 12: sb.append("Ruthless "); break;
+      case 13: sb.append("Honest "); break;
+      case 14: sb.append("Lost "); break;
+      case 15: sb.append("Softy "); break;
+      case 16: sb.append("Slugish "); break;
+      case 17: sb.append("Handsome "); break;
+      case 18: sb.append("Mad "); break;
+      case 19: sb.append("Cruel "); break;
+      case 20: sb.append("Rough "); break;
+    }
+    switch (DiceGenerator.getRandom(19)) {
+      default:
+      case 0: sb.append("Toe"); break;
+      case 1: sb.append("Eye"); break;
+      case 2: sb.append("Teeth"); break;
+      case 3: sb.append("Turner"); break;
+      case 4: sb.append("Leg"); break;
+      case 5: sb.append("Splinter"); break;
+      case 6: sb.append("Tide"); break;
+      case 7: sb.append("Soul"); break;
+      case 8: sb.append("Eyes"); break;
+      case 9: sb.append("Kraken"); break;
+      case 10: sb.append("Hair"); break;
+      case 11: sb.append("Beard"); break;
+      case 12: sb.append("Tail"); break;
+      case 13: sb.append("Marooner"); break;
+      case 14: sb.append("Snake"); break;
+      case 15: sb.append("Chest"); break;
+      case 16: sb.append("Heart"); break;
+      case 17: sb.append("Nest"); break;
+      case 18: sb.append("Wall"); break;
+      case 19: sb.append("Slayer"); break;
+    }
+    return sb.toString();
+  }
+
+  /**
    * Generate Leader name.
    * @param race SpaceRace for which name will generated
    * @param gender Leader gender
@@ -2477,6 +2644,7 @@ public final class NameGenerator {
         case 9: return generateMechionName();
         case 10: return generateReborgianName();
         case 11: return generateLithorianName(gender);
+        case 12: return generateAlteirianName(gender);
       }
     }
     if (race == SpaceRace.HUMAN) {
@@ -2517,6 +2685,9 @@ public final class NameGenerator {
     }
     if (race == SpaceRace.ALTEIRIANS) {
       return generateAlteirianName(gender);
+    }
+    if (race == SpaceRace.SMAUGIRIANS) {
+      return generateSmaugirianName(gender);
     }
     return "Noname";
   }

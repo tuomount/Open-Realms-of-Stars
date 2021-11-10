@@ -270,4 +270,24 @@ public class NameGeneratorTest {
     }
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSmaugirianMale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(SpaceRace.SMAUGIRIANS, Gender.MALE);
+      assertNotNull(name);
+      assertEquals(true, name.contains(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSmaugirianFemale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(SpaceRace.SMAUGIRIANS, Gender.FEMALE);
+      assertNotNull(name);
+      assertEquals(true, name.contains(" "));
+    }
+  }
+
 }

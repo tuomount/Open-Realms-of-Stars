@@ -1907,6 +1907,9 @@ public class Planet {
   public void setPlanetOwner(final int ownerIndex, final PlayerInfo info) {
     this.planetOwner = ownerIndex;
     this.planetOwnerInfo = info;
+    if (planetOwnerInfo == null) {
+      setOrbital(null);
+    }
   }
 
   /**
@@ -2666,7 +2669,8 @@ public class Planet {
         result = 2;
       }
     }
-    if (planetOwnerInfo.getRace() == SpaceRace.ALTEIRIANS) {
+    if (planetOwnerInfo != null
+        && planetOwnerInfo.getRace() == SpaceRace.ALTEIRIANS) {
       result = 0;
       if (getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
         result = getGroundSize();

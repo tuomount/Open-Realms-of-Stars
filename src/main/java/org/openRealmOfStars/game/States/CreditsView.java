@@ -84,6 +84,10 @@ public class CreditsView extends BlackPanel {
       + "BizmasterStudios's SpaceShip Building Kit\n"
       + "Licensed under CC BY 4.0\n"
       + "https://creativecommons.org/licenses/by/4.0/\n\n"
+      + "Smaugirian ships are done with Wuhu's spaceships by Wuhu.\n"
+      + "https://opengameart.org/content/spaceships-1\n"
+      + "Licensed under CC BY 3.0\n"
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
       + "Explosions by Csaba Felvegi aka Chabull\n\n"
       + "Alien pictures by Surt - "
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
@@ -96,6 +100,8 @@ public class CreditsView extends BlackPanel {
       + "Lithorian race picture by Tuomo Untinen, original art by Surt - "
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Alteirian race picture by Tuomo Untinen, original art by Surt - "
+      + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
+      + "Smaugirian race picture by Tuomo Untinen, original art by Surt - "
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Space Captain by Justin Nichol \n"
       + "Tuomo Untinen added legs for the captain. -"
@@ -416,7 +422,13 @@ public class CreditsView extends BlackPanel {
       + "Sky Portal by\n"
       + "Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov\n"
       + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Guitar Song by Nicole Marie T\n"
+      + "https://opengameart.org/content/guitar-song-loops-indie-game-seamless-"
+      + "looping-rpg-level-stage-etc\n"
+      + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";
+
 
 
 

@@ -57,6 +57,12 @@ public final class ShipDesignConsts {
    * Message when ship contains weapons even hull does not allow them.
    */
   public static final String NO_WEAPONS_ALLOWED = "No weapons allowed in ";
+  /**
+   * Message when ship contains weapons more weapons than single, even one is
+   * allowd.
+   */
+  public static final String SINGLE_WEAPON_ALLOWED = "Single weapon allowed"
+      + " in ";
 
   /**
    * Message when ship contains more than one jammer

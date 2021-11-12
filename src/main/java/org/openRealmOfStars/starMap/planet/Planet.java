@@ -677,6 +677,7 @@ public class Planet {
         for (int i = 0; i < workers.length; i++) {
           workers[i] = 0;
         }
+        killGovernor("conquest", " attacking troops", starMap);
         planetOwnerInfo = null;
         planetOwner = -1;
         // Fighting on planet drops the culture

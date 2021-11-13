@@ -454,17 +454,10 @@ public final class Research {
       ShipStat[] stats = info.getShipStatList();
       boolean notFound = true;
       for (ShipStat stat : stats) {
-        if (stat.getDesign().getHull().getName().equals("Minor orbital")
+        if (stat.getDesign().getHull().getName().startsWith("Minor orbital")
             && !stat.isObsolete()) {
           notFound = false;
           if (design.getTotalMilitaryPower() > stat.getDesign()
-              .getTotalMilitaryPower()) {
-            stat.setObsolete(true);
-            ShipStat ship = new ShipStat(design);
-            info.addShipStat(ship);
-            break;
-          }
-          if (design.getTotalMilitaryPower() == stat.getDesign()
               .getTotalMilitaryPower()) {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);

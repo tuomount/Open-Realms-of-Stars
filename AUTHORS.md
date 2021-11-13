@@ -174,6 +174,8 @@ using space ship models by greyoxide, Michael Davies, and Viktor Hahn,
 is licensed under the Creative Commons Attribution 3.0 Unported License.
 http://creativecommons.org/licenses/by/3.0/
 
+Big explosion by Tuomo Untinen
+
 Tutorial icon by Tuomo Untinen
 
 Meteor by Tuomo Untinen

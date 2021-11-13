@@ -174,6 +174,7 @@ public class CreditsView extends BlackPanel {
       + "is licensed under the Creative Commons Attribution 3.0 Unported"
       + " License.\n"
       + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Big explosion by Tuomo Untinen\n\n"
       + "Tutorial icon by Tuomo Untinen\n\n"
       + "Meteor by Tuomo Untinen\n\n"
       + "Mothoid Space Ship Bridge by Tuomo Untinen\n\n"

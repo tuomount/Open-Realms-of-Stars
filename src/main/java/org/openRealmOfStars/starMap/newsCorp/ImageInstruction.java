@@ -276,6 +276,14 @@ public class ImageInstruction {
    */
   public static final String BIG_NUKE = "big nuke";
   /**
+   * Big orbital
+   */
+  public static final String BIG_ORBITAL = "big orbital";
+  /**
+   * Big explosion
+   */
+  public static final String BIG_EXPLOSION = "big explosion";
+  /**
    * Galaxy image
    */
   public static final String GALAXY = "galaxy";
@@ -679,6 +687,8 @@ public class ImageInstruction {
         && !BIG_MONEY.equals(logoType)
         && !METEOR.equals(logoType)
         && !METEOR_HIT.equals(logoType)
+        && !BIG_EXPLOSION.equals(logoType)
+        && !BIG_ORBITAL.equals(logoType)
         && !SpaceRace.CENTAURS.getNameSingle().equals(logoType)
         && !SpaceRace.HUMAN.getNameSingle().equals(logoType)
         && !SpaceRace.SPORKS.getNameSingle().equals(logoType)
@@ -934,6 +944,12 @@ public class ImageInstruction {
     if (METEOR_HIT.equals(planetType)) {
       planetImg = GuiStatics.IMAGE_METEOR_HIT;
     }
+    if (BIG_EXPLOSION.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_BIG_EXPLOSION;
+    }
+    if (BIG_ORBITAL.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_BIG_ORBITAL;
+    }
     SpaceRace race = SpaceRaceUtility.getRaceByName(planetType);
     if (race != null) {
       planetImg = race.getRaceImage();
@@ -1126,6 +1142,12 @@ public class ImageInstruction {
     }
     if (TERROR.equals(image)) {
       drawImg = GuiStatics.IMAGE_TERROR;
+    }
+    if (BIG_ORBITAL.equals(image)) {
+      drawImg = GuiStatics.IMAGE_BIG_ORBITAL;
+    }
+    if (BIG_EXPLOSION.equals(image)) {
+      drawImg = GuiStatics.IMAGE_BIG_EXPLOSION;
     }
     BufferedImage img = workImage;
     if (img == null) {

@@ -2075,6 +2075,85 @@ public final class NewsFactory {
   }
 
   /**
+   * Attacker destroys defender's orbital
+   * @param attacker Player who is bombing
+   * @param defender Player who is defending
+   * @param planet Which planet where orbital was.
+   * @return NewsData
+   */
+  public static NewsData makeOrbitalDestroyedNews(final PlayerInfo attacker,
+      final PlayerInfo defender, final Planet planet) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    if (DiceGenerator.getRandom(1) == 0) {
+      instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+          planet.getImageInstructions(),
+          ImageInstruction.SIZE_FULL);
+      if (DiceGenerator.getRandom(1) == 0) {
+        instructions.addLogo(ImageInstruction.POSITION_LEFT,
+            ImageInstruction.BIG_ORBITAL, ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_LEFT,
+            ImageInstruction.BIG_EXPLOSION, ImageInstruction.SIZE_FULL);
+      } else {
+        instructions.addLogo(ImageInstruction.POSITION_RIGHT,
+            ImageInstruction.BIG_ORBITAL, ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_RIGHT,
+            ImageInstruction.BIG_EXPLOSION, ImageInstruction.SIZE_FULL);
+      }
+    } else {
+      if (DiceGenerator.getRandom(1) == 0) {
+        instructions.addPlanet(ImageInstruction.POSITION_LEFT,
+            planet.getImageInstructions(),
+            ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_ORBITAL, ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_EXPLOSION, ImageInstruction.SIZE_FULL);
+      } else {
+        instructions.addPlanet(ImageInstruction.POSITION_RIGHT,
+            planet.getImageInstructions(),
+            ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_ORBITAL, ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_EXPLOSION, ImageInstruction.SIZE_FULL);
+      }
+    }
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("ORBITAL DESTROYED!");
+        break;
+      }
+      case 1: {
+        instructions.addText("DESTRUCTION ON "
+            + planet.getName().toUpperCase() + "!");
+        break;
+      }
+      case 2: {
+        instructions.addText(planet.getName().toUpperCase() + " IS DESTROYED!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(attacker.getEmpireName());
+    sb.append(" made massive attack on ");
+    sb.append(planet.getName());
+    if (defender != null) {
+      sb.append(". Defender ");
+      sb.append(defender.getEmpireName());
+      sb.append(" fleet"
+          + " and orbital around the planet was defeated eventually. ");
+    } else {
+      sb.append(". ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
    * Attacker destroyed alteirian orbital
    * @param attacker Player who is attacking
    * @param defender Player who is defending
@@ -2087,9 +2166,40 @@ public final class NewsFactory {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
-    instructions.addPlanet(ImageInstruction.POSITION_CENTER,
-        planet.getImageInstructions(),
-        ImageInstruction.SIZE_FULL);
+    if (DiceGenerator.getRandom(1) == 0) {
+      instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+          planet.getImageInstructions(),
+          ImageInstruction.SIZE_FULL);
+      if (DiceGenerator.getRandom(1) == 0) {
+        instructions.addLogo(ImageInstruction.POSITION_LEFT,
+            ImageInstruction.BIG_ORBITAL, ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_LEFT,
+            ImageInstruction.BIG_EXPLOSION, ImageInstruction.SIZE_FULL);
+      } else {
+        instructions.addLogo(ImageInstruction.POSITION_RIGHT,
+            ImageInstruction.BIG_ORBITAL, ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_RIGHT,
+            ImageInstruction.BIG_EXPLOSION, ImageInstruction.SIZE_FULL);
+      }
+    } else {
+      if (DiceGenerator.getRandom(1) == 0) {
+        instructions.addPlanet(ImageInstruction.POSITION_LEFT,
+            planet.getImageInstructions(),
+            ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_ORBITAL, ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_EXPLOSION, ImageInstruction.SIZE_FULL);
+      } else {
+        instructions.addPlanet(ImageInstruction.POSITION_RIGHT,
+            planet.getImageInstructions(),
+            ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_ORBITAL, ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_EXPLOSION, ImageInstruction.SIZE_FULL);
+      }
+    }
     switch (DiceGenerator.getRandom(2)) {
       case 0:
       default: {

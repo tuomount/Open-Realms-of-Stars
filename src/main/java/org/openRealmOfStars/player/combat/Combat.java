@@ -203,6 +203,10 @@ public class Combat {
    */
   private NewsData leaderKilledNews;
   /**
+   * News for orbital destroyed
+   */
+  private NewsData orbitalDestroyedNews;
+  /**
    * Is attacker privateer?
    */
   private boolean attackerPrivateer;
@@ -245,6 +249,7 @@ public class Combat {
     this.attackerInfo = attackerInfo;
     this.defenderInfo = defenderInfo;
     leaderKilledNews = null;
+    orbitalDestroyedNews = null;
     starbaseFleet = null;
     escapePosition = escapePos;
     orbitalInCombat = false;
@@ -394,6 +399,13 @@ public class Combat {
    */
   public NewsData getLeaderKilledNews() {
     return leaderKilledNews;
+  }
+  /**
+   * Get possible news if orbital was destroyed in combat.
+   * @return NewsData or null.
+   */
+  public NewsData getOrbitalDestoyedNews() {
+    return orbitalDestroyedNews;
   }
   /**
    * Add combatShip to combatShipList
@@ -660,8 +672,7 @@ public boolean launchIntercept(final int distance,
       msg.setMatchByString(planet.getName());
       defenderInfo.getMsgList().addNewMessage(msg);
       if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.ALTEIRIANS) {
-        // TODO: This should be same news as when orbital is being destroyed.
-        leaderKilledNews = NewsFactory.makeAlteirianLoseOrbitalNews(
+        orbitalDestroyedNews = NewsFactory.makeAlteirianLoseOrbitalNews(
             attackerInfo, defenderInfo, planet);
         if (planet.getGovernor() != null) {
           planet.getGovernor().setJob(Job.DEAD);
@@ -669,8 +680,10 @@ public boolean launchIntercept(final int distance,
         }
         // Alteirians lose planet if orbital is destroyed.
         planet.setPlanetOwner(-1, null);
+      } else {
+        orbitalDestroyedNews = NewsFactory.makeOrbitalDestroyedNews(
+            attackerInfo, defenderInfo, planet);
       }
-      // TODO: Make news about orbital being destroyed.
     }
     if (attackerFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, attackerFleet);

@@ -860,6 +860,7 @@ public class Fleet {
         return true;
       }
       if (ship.getHull().getSize() == ShipSize.SMALL
+          && ship.getHull().getHullType() != ShipHullType.FREIGHTER
           && !ship.isColonyModule() && !ship.isStarBase()) {
         return true;
       }

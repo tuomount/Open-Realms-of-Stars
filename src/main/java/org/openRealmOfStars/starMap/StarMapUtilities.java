@@ -934,7 +934,7 @@ public final class StarMapUtilities {
         cost = 0;
       }
       if (metalCost > planet.getMetal()) {
-        int left = planet.getMetal() - metalCost;
+        int left = metalCost - planet.getMetal();
         metalCost = planet.getMetal();
         cost = cost + left * 2;
       }

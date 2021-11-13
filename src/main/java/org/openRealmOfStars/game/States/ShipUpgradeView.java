@@ -371,7 +371,7 @@ public class ShipUpgradeView extends BlackPanel
           prodUpgradeCost = 0;
         }
         if (metalUpgradeCost > planet.getMetal()) {
-          int left = planet.getMetal() - metalUpgradeCost;
+          int left = metalUpgradeCost - planet.getMetal();
           metalUpgradeCost = planet.getMetal();
           prodUpgradeCost = prodUpgradeCost + left * 2;
         }

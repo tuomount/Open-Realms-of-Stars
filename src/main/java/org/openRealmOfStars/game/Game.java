@@ -885,6 +885,10 @@ public class Game implements ActionListener {
             getStarMap().getNewsCorpData().addNews(
                 combat.getLeaderKilledNews());
           }
+          if (combat.getOrbitalDestoyedNews() != null) {
+            getStarMap().getNewsCorpData().addNews(
+                combat.getOrbitalDestoyedNews());
+          }
         }
       } else {
         fleet.setPos(new Coordinate(nx, ny));
@@ -909,6 +913,10 @@ public class Game implements ActionListener {
               && getStarMap().isAllNewsEnabled()) {
             getStarMap().getNewsCorpData().addNews(
                 anomaly.getCombat().getLeaderKilledNews());
+          }
+          if (anomaly.getCombat().getOrbitalDestoyedNews() != null) {
+            getStarMap().getNewsCorpData().addNews(
+                anomaly.getCombat().getOrbitalDestoyedNews());
           }
         }
         if (anomaly != null && anomaly.getType() == AnomalyType.TIME_WARP
@@ -3086,6 +3094,10 @@ public class Game implements ActionListener {
         getStarMap().getHistory().addEvent(combat.getCombatEvent());
         if (combat.getLeaderKilledNews() != null) {
           getStarMap().getNewsCorpData().addNews(combat.getLeaderKilledNews());
+        }
+        if (combat.getOrbitalDestoyedNews() != null) {
+          getStarMap().getNewsCorpData().addNews(
+              combat.getOrbitalDestoyedNews());
         }
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);

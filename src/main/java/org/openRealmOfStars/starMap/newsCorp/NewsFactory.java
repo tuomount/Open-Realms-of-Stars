@@ -2079,10 +2079,12 @@ public final class NewsFactory {
    * @param attacker Player who is bombing
    * @param defender Player who is defending
    * @param planet Which planet where orbital was.
+   * @param attackerPrivateer Attacker is privateer?
    * @return NewsData
    */
   public static NewsData makeOrbitalDestroyedNews(final PlayerInfo attacker,
-      final PlayerInfo defender, final Planet planet) {
+      final PlayerInfo defender, final Planet planet,
+      final boolean attackerPrivateer) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -2138,7 +2140,11 @@ public final class NewsFactory {
     }
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);
-    sb.append(attacker.getEmpireName());
+    if (attackerPrivateer) {
+      sb.append("Privateer fleet");
+    } else {
+      sb.append(attacker.getEmpireName());
+    }
     sb.append(" made massive attack on ");
     sb.append(planet.getName());
     if (defender != null) {
@@ -2158,11 +2164,12 @@ public final class NewsFactory {
    * @param attacker Player who is attacking
    * @param defender Player who is defending
    * @param planet Which planet was conquered
+   * @param attackerPrivateer Attacker is privateer?
    * @return NewsData
    */
   public static NewsData makeAlteirianLoseOrbitalNews(
       final PlayerInfo attacker, final PlayerInfo defender,
-      final Planet planet) {
+      final Planet planet, final boolean attackerPrivateer) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -2218,7 +2225,11 @@ public final class NewsFactory {
     }
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);
-    sb.append(attacker.getEmpireName());
+    if (attackerPrivateer) {
+      sb.append("Privateer fleet");
+    } else {
+      sb.append(attacker.getEmpireName());
+    }
     sb.append(" made massive attack on ");
     sb.append(planet.getName());
     if (defender != null) {

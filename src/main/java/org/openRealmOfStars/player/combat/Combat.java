@@ -673,7 +673,7 @@ public boolean launchIntercept(final int distance,
       defenderInfo.getMsgList().addNewMessage(msg);
       if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.ALTEIRIANS) {
         orbitalDestroyedNews = NewsFactory.makeAlteirianLoseOrbitalNews(
-            attackerInfo, defenderInfo, planet);
+            attackerInfo, defenderInfo, planet, attackerPrivateer);
         if (planet.getGovernor() != null) {
           planet.getGovernor().setJob(Job.DEAD);
           planet.setGovernor(null);
@@ -682,7 +682,7 @@ public boolean launchIntercept(final int distance,
         planet.setPlanetOwner(-1, null);
       } else {
         orbitalDestroyedNews = NewsFactory.makeOrbitalDestroyedNews(
-            attackerInfo, defenderInfo, planet);
+            attackerInfo, defenderInfo, planet, attackerPrivateer);
       }
     }
     if (attackerFleet.isShipInFleet(ship.getShip())) {

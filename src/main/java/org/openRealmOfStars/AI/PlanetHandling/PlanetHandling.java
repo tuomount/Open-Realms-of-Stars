@@ -935,9 +935,11 @@ public final class PlanetHandling {
    * Score ship, scoring also depends on missions under planning
    * @param ship Ship to score
    * @param state Current gameLengthState
+   * @param planet Planet which is about to build something
    * @return Ship score
    */
-  public static int scoreShip(final Ship ship, final GameLengthState state) {
+  public static int scoreShip(final Ship ship, final GameLengthState state,
+      final Planet planet) {
     int score;
     // Does not take a planet space
     score = 20;
@@ -955,6 +957,29 @@ public final class PlanetHandling {
     // High cost drops the value
     score = score - ship.getMetalCost() / 10;
     score = score - ship.getProdCost() / 10;
+    if (ship.getHull().getHullType() == ShipHullType.ORBITAL) {
+      if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.ALTEIRIANS) {
+        // Alteirians should built orbitals more frequently
+        score = score + 50;
+      }
+      score = score + ship.getHull().getSize().getMass() * 5;
+      if (ship.getHull().getName().startsWith("Minor orbital")) {
+        // Minor orbital should not be built.
+        score = 0;
+      }
+      if (planet.getOrbital() != null
+          && planet.getOrbital().getHull().getSize().getMass()
+          > ship.getHull().getSize().getMass()) {
+        // Planet has orbital which is already bigger.
+        score = 0;
+      }
+      if (planet.getOrbital() != null
+          && planet.getOrbital().getTotalMilitaryPower()
+          > ship.getTotalMilitaryPower()) {
+        // Planet has orbital is better
+        score = 0;
+      }
+    }
     return score;
   }
 
@@ -1139,7 +1164,7 @@ public final class PlanetHandling {
       }
       if (constructions[i] instanceof Ship) {
         Ship ship = (Ship) constructions[i];
-        int score = scoreShip(ship, map.getGameLengthState());
+        int score = scoreShip(ship, map.getGameLengthState(), planet);
         if (ship.getTotalMilitaryPower() > 0) {
           Mission mission = info.getMissions()
               .getMissionForPlanet(planet.getName(), MissionType.DEFEND);

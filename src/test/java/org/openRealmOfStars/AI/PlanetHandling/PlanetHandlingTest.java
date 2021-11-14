@@ -23,6 +23,9 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipHull;
+import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -685,17 +688,128 @@ public class PlanetHandlingTest {
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(16);
     Mockito.when(ship.getMetalCost()).thenReturn(14);
     Mockito.when(ship.getProdCost()).thenReturn(22);
-    
-    int score = PlanetHandling.scoreShip(ship, GameLengthState.START_GAME);
+    Planet planet = Mockito.mock(Planet.class);
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getHullType()).thenReturn(ShipHullType.NORMAL);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    int score = PlanetHandling.scoreShip(ship, GameLengthState.START_GAME,
+        planet);
     assertEquals(49, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.EARLY_GAME);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
     assertEquals(49, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.MIDDLE_GAME);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
     assertEquals(65, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.LATE_GAME);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.LATE_GAME, planet);
     assertEquals(81, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.END_GAME);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.END_GAME, planet);
     assertEquals(97, score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testOrbitalScoring() {
+    Ship ship = Mockito.mock(Ship.class);
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getHullType()).thenReturn(ShipHullType.ORBITAL);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.MEDIUM);
+    Mockito.when(hull.getName()).thenReturn("Medium orbital");
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(16);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getMetalCost()).thenReturn(14);
+    Mockito.when(ship.getProdCost()).thenReturn(22);
+    Planet planet = Mockito.mock(Planet.class);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.ALTEIRIANS);
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info);
+    int score = PlanetHandling.scoreShip(ship, GameLengthState.START_GAME,
+        planet);
+    assertEquals(109, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
+    assertEquals(109, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
+    assertEquals(125, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.LATE_GAME, planet);
+    assertEquals(141, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.END_GAME, planet);
+    assertEquals(157, score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testOrbitalScoring2() {
+    Ship ship = Mockito.mock(Ship.class);
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getHullType()).thenReturn(ShipHullType.ORBITAL);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.MEDIUM);
+    Mockito.when(hull.getName()).thenReturn("Medium orbital");
+    ShipHull hull2 = Mockito.mock(ShipHull.class);
+    Mockito.when(hull2.getHullType()).thenReturn(ShipHullType.ORBITAL);
+    Mockito.when(hull2.getSize()).thenReturn(ShipSize.LARGE);
+    Mockito.when(hull2.getName()).thenReturn("Large orbital");
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(16);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getMetalCost()).thenReturn(14);
+    Mockito.when(ship.getProdCost()).thenReturn(22);
+    Planet planet = Mockito.mock(Planet.class);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Ship ship2 = Mockito.mock(Ship.class);
+    Mockito.when(ship2.getTotalMilitaryPower()).thenReturn(32);
+    Mockito.when(ship2.getHull()).thenReturn(hull2);
+    Mockito.when(ship2.getMetalCost()).thenReturn(14);
+    Mockito.when(ship2.getProdCost()).thenReturn(22);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.ALTEIRIANS);
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info);
+    Mockito.when(planet.getOrbital()).thenReturn(ship2);
+    int score = PlanetHandling.scoreShip(ship, GameLengthState.START_GAME,
+        planet);
+    assertEquals(0, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
+    assertEquals(0, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
+    assertEquals(0, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.LATE_GAME, planet);
+    assertEquals(0, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.END_GAME, planet);
+    assertEquals(0, score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testOrbitalScoring3() {
+    Ship ship = Mockito.mock(Ship.class);
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getHullType()).thenReturn(ShipHullType.ORBITAL);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.MEDIUM);
+    Mockito.when(hull.getName()).thenReturn("Medium orbital");
+    ShipHull hull2 = Mockito.mock(ShipHull.class);
+    Mockito.when(hull2.getHullType()).thenReturn(ShipHullType.ORBITAL);
+    Mockito.when(hull2.getSize()).thenReturn(ShipSize.MEDIUM);
+    Mockito.when(hull2.getName()).thenReturn("Medium orbital");
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(16);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getMetalCost()).thenReturn(14);
+    Mockito.when(ship.getProdCost()).thenReturn(22);
+    Planet planet = Mockito.mock(Planet.class);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Ship ship2 = Mockito.mock(Ship.class);
+    Mockito.when(ship2.getTotalMilitaryPower()).thenReturn(32);
+    Mockito.when(ship2.getHull()).thenReturn(hull2);
+    Mockito.when(ship2.getMetalCost()).thenReturn(14);
+    Mockito.when(ship2.getProdCost()).thenReturn(22);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.ALTEIRIANS);
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info);
+    Mockito.when(planet.getOrbital()).thenReturn(ship2);
+    int score = PlanetHandling.scoreShip(ship, GameLengthState.START_GAME,
+        planet);
+    assertEquals(0, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
+    assertEquals(0, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
+    assertEquals(0, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.LATE_GAME, planet);
+    assertEquals(0, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.END_GAME, planet);
+    assertEquals(0, score);
   }
 
   @Test

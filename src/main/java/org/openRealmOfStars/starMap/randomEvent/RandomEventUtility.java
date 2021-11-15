@@ -388,10 +388,17 @@ public final class RandomEventUtility {
           sb.append(" and one population died in accident.");
           planet.killOneWorker("accident", "accident", map);
         }
+        ImageInstruction instructions = new ImageInstruction();
+        instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        instructions.addImage(ImageInstruction.FACTORY);
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_EXPLOSION, ImageInstruction.SIZE_FULL);
+        event.setImageInstructions(instructions.build());
         event.setText(sb.toString());
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_DEATH));
         message.setCoordinate(planet.getCoordinate());
+        message.setRandomEventPop(true);
         info.getMsgList().addFirstMessage(message);
       }
     }

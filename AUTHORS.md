@@ -174,6 +174,11 @@ using space ship models by greyoxide, Michael Davies, and Viktor Hahn,
 is licensed under the Creative Commons Attribution 3.0 Unported License.
 http://creativecommons.org/licenses/by/3.0/
 
+Factory image by Viktor Hahn (Viktor.Hahn@web.de)
+using space ship models by greyoxide, Michael Davies, and Viktor Hahn, background is made by Tuomo Untinen
+is licensed under the Creative Commons Attribution 3.0 Unported License.
+http://creativecommons.org/licenses/by/3.0/
+
 Big explosion by Tuomo Untinen
 
 Tutorial icon by Tuomo Untinen

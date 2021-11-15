@@ -1230,6 +1230,11 @@ public final class GuiStatics {
   public static final BufferedImage IMAGE_TIME_WARP = IOUtilities.loadImage(
       GuiStatics.class.getResource("/resources/images/timewarp.png"));
   /**
+   * Factory
+   */
+  public static final BufferedImage IMAGE_FACTORY = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/factory.png"));
+  /**
    * Pirate lair
    */
   public static final BufferedImage IMAGE_PIRATE_LAIR = IOUtilities.loadImage(

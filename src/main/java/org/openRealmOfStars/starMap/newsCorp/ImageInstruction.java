@@ -227,6 +227,10 @@ public class ImageInstruction {
    */
   public static final String CLOAKED_SHIP = "cloaked-ship";
   /**
+   * Factory
+   */
+  public static final String FACTORY = "factory";
+  /**
    * Shuttle2
    */
   public static final String SHUTTLE2 = "shuttle2";
@@ -564,7 +568,8 @@ public class ImageInstruction {
         && !SHUTTLE.equals(image)
         && !SPINOSAURUS.equals(image)
         && !CONTAINERS.equals(image)
-        && !TERROR.equals(image)) {
+        && !TERROR.equals(image)
+        && !FACTORY.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -1148,6 +1153,9 @@ public class ImageInstruction {
     }
     if (BIG_EXPLOSION.equals(image)) {
       drawImg = GuiStatics.IMAGE_BIG_EXPLOSION;
+    }
+    if (FACTORY.equals(image)) {
+      drawImg = GuiStatics.IMAGE_FACTORY;
     }
     BufferedImage img = workImage;
     if (img == null) {

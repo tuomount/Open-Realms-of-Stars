@@ -186,6 +186,7 @@ public final class RandomEventUtility {
     if (event.getBadType() == BadRandomType.ACCIDENT) {
       PlayerInfo info = event.getRealm();
       Leader leader = LeaderUtility.getRandomLivingLeader(info);
+      ImageInstruction instructions = new ImageInstruction();
       if (leader != null) {
         event.setLeader(leader);
         if (leader.hasPerk(Perk.WEALTHY)) {
@@ -198,6 +199,9 @@ public final class RandomEventUtility {
           Message message = new Message(MessageType.INFORMATION,
               event.getText(), Icons.getIconByName(Icons.ICON_LEADERS));
           info.getMsgList().addFirstMessage(message);
+          instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+          instructions.addLogo(ImageInstruction.POSITION_CENTER,
+              leader.getRace().getNameSingle(), ImageInstruction.SIZE_FULL);
         } else {
           event.setText(leader.getCallName() + " encounter deadly accident"
               + " and "  + leader.getGender().getHisHer()
@@ -208,6 +212,11 @@ public final class RandomEventUtility {
           Message message = new Message(MessageType.INFORMATION,
               event.getText(), Icons.getIconByName(Icons.ICON_LEADERS));
           info.getMsgList().addFirstMessage(message);
+          instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+          instructions.addSiluete(leader.getRace().getNameSingle(),
+              ImageInstruction.POSITION_CENTER);
+          event.setImageInstructions(instructions.build());
+          message.setRandomEventPop(true);
           leader.setJob(Job.DEAD);
         }
       }
@@ -233,12 +242,18 @@ public final class RandomEventUtility {
         event.setLeader(leader);
         leader.setLevel(leader.getLevel() + 1);
         LeaderUtility.addRandomPerks(leader);
+        ImageInstruction instructions = new ImageInstruction();
+        instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+        instructions.addSiluete(leader.getRace().getNameSingle(),
+            ImageInstruction.POSITION_CENTER);
+        event.setImageInstructions(instructions.build());
         event.setText(leader.getCallName()
             + " has reached " + leader.getGender().getHisHer()
             + " achievements earlier and gains extra level.");
         Message msg = new Message(MessageType.LEADER, event.getText(),
             LeaderUtility.getIconBasedOnLeaderJob(leader));
         msg.setMatchByString("Index:" + info.getLeaderIndex(leader));
+        msg.setRandomEventPop(true);
         info.getMsgList().addFirstMessage(msg);
         if (leader.getJob() == Job.COMMANDER
             && leader.getMilitaryRank() != MilitaryRank.CIVILIAN) {

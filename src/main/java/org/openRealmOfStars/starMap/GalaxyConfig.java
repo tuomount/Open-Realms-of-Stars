@@ -275,9 +275,8 @@ public class GalaxyConfig {
     setAiOnly(false);
     setAllNews(false);
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
-
-      setPlayerColor(i, PlayerColor.getByIndex(i));
       setRace(i, SpaceRaceUtility.getRandomRace());
+      setPlayerColor(i, getRace(i).getPrimaryColor());
       while (true) {
         GovernmentType gov = GovernmentUtility.getRandomGovernment(getRace(i));
         setPlayerGovernment(i, gov);

@@ -424,9 +424,15 @@ public class PlayerSetupView extends BlackPanel {
     comboRealmColor[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     comboRealmColor[index].setBorder(new SimpleBorder());
     comboRealmColor[index].setFont(GuiStatics.getFontCubellan());
-    int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
-    PlayerColor color = randomListOfColors.get(colorIndex);
-    randomListOfColors.remove(colorIndex);
+    PlayerColor color = config.getRace(index).getPrimaryColor();
+    if (!randomListOfColors.contains(color)) {
+      color = config.getRace(index).getSecondaryColor();
+      if (!randomListOfColors.contains(color)) {
+        int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
+        color = randomListOfColors.get(colorIndex);
+      }
+    }
+    randomListOfColors.remove(color);
     comboRealmColor[index].getModel()
         .setSelectedItem(color);
     PlayerColorListRenderer pclr = new PlayerColorListRenderer();

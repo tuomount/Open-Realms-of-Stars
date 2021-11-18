@@ -6,6 +6,7 @@ import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.WorldType;
@@ -664,6 +665,88 @@ public enum SpaceRace {
       return 100;
     default:
       return 100;
+    }
+  }
+
+  /**
+   * Get space race default color
+   * @return PlayerColor
+   */
+  public PlayerColor getPrimaryColor() {
+    switch (this) {
+    case HUMAN:
+      return PlayerColor.WHITE;
+    case SPACE_PIRATE:
+      return PlayerColor.BLACK;
+    case MECHIONS:
+      return PlayerColor.ORANGE;
+    case SPORKS:
+      return PlayerColor.LIME;
+    case GREYANS:
+      return PlayerColor.BLUE;
+    case CENTAURS:
+      return PlayerColor.PURPLE;
+    case MOTHOIDS:
+      return PlayerColor.GREEN;
+    case TEUTHIDAES:
+      return PlayerColor.GRAY;
+    case SCAURIANS:
+      return PlayerColor.CYAN;
+    case HOMARIANS:
+      return PlayerColor.BROWN;
+    case CHIRALOIDS:
+      return PlayerColor.RED;
+    case REBORGIANS:
+      return PlayerColor.CHESTNUT;
+    case LITHORIANS:
+      return PlayerColor.YELLOW;
+    case ALTEIRIANS:
+      return PlayerColor.BLUE;
+    case SMAUGIRIANS:
+      return PlayerColor.TAN;
+    default:
+      return PlayerColor.CORAL;
+    }
+  }
+
+  /**
+   * Get space race secondary color
+   * @return PlayerColor
+   */
+  public PlayerColor getSecondaryColor() {
+    switch (this) {
+    case HUMAN:
+      return PlayerColor.ROSE;
+    case SPACE_PIRATE:
+      return PlayerColor.GRAY;
+    case MECHIONS:
+      return PlayerColor.YELLOW;
+    case SPORKS:
+      return PlayerColor.GREEN;
+    case GREYANS:
+      return PlayerColor.CYAN;
+    case CENTAURS:
+      return PlayerColor.PINK;
+    case MOTHOIDS:
+      return PlayerColor.PINK;
+    case TEUTHIDAES:
+      return PlayerColor.BLACK;
+    case SCAURIANS:
+      return PlayerColor.BLUE;
+    case HOMARIANS:
+      return PlayerColor.CORAL;
+    case CHIRALOIDS:
+      return PlayerColor.CORAL;
+    case REBORGIANS:
+      return PlayerColor.BLACK;
+    case LITHORIANS:
+      return PlayerColor.BANANA;
+    case ALTEIRIANS:
+      return PlayerColor.CYAN;
+    case SMAUGIRIANS:
+      return PlayerColor.GREEN;
+    default:
+      return PlayerColor.CORAL;
     }
   }
 

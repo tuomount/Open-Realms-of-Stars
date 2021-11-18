@@ -165,7 +165,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.19.22Beta";
+  public static final String GAME_VERSION = "0.19.23Beta";
 
   /**
    * Animation timer used for animation
@@ -2844,6 +2844,7 @@ public class Game implements ActionListener {
       }
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {
+        galaxyConfig = null;
         SoundPlayer.playMenuSound();
         changeGameState(GameState.GALAXY_CREATION);
         return;

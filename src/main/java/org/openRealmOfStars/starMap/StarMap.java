@@ -423,6 +423,9 @@ public class StarMap {
       if (config.getStartingPosition() == GalaxyConfig.ANCIENTS_IN_MIDDLE) {
         solarSystem = createAncientsInMiddleStart(config, solarSystem);
       }
+      if (config.getStartingPosition() == GalaxyConfig.TWO_RINGS) {
+        solarSystem = createTwoCirclesStartingSystems(config, solarSystem);
+      }
     } catch (IllegalStateException illegalState) {
       ErrorLogger.log(illegalState);
       loop = MAX_LOOPS;
@@ -859,6 +862,67 @@ public class StarMap {
     }
     return null;
   }
+  /**
+   * Create two circles starting solar systems
+   * @param config Galaxy Config
+   * @param solarSystem Solar system map
+   * @return Map of updated solarsystems
+   */
+  private int[][] createTwoCirclesStartingSystems(final GalaxyConfig config,
+      final int[][] solarSystem) {
+    int ancients = 0;
+    int regular = 0;
+    for (int i = 0; i < config.getMaxPlayers(); i++) {
+      if (config.getPlayerAncientRealm(i)) {
+        ancients++;
+      } else {
+        regular++;
+      }
+    }
+    // First starting Systems
+    int sx = SOLAR_SYSTEM_WIDTH;
+    int sy = SOLAR_SYSTEM_WIDTH;
+    int planets = DiceGenerator.getRandom(3, 5);
+    int gasGiants = DiceGenerator.getRandom(2);
+    int[][] mapOfSolars = solarSystem;
+    int fineTune = 10;
+    if (config.getSizeX() < 75) {
+      fineTune = 5;
+    }
+    int length = maxX / 2 - fineTune;
+    int lengthAncients = maxX / 4;
+    int angle = DiceGenerator.getRandom(359);
+    int angleAncients = DiceGenerator.getRandom(359);
+    for (int i = 0; i < config.getMaxPlayers(); i++) {
+      if (config.getPlayerAncientRealm(i)) {
+        double rad = Math.toRadians(angleAncients);
+        sx = (int) (maxX / 2 + Math.cos(rad) * lengthAncients);
+        sy = (int) (maxX / 2 + Math.sin(rad) * lengthAncients);
+        planets = DiceGenerator.getRandom(3, 5);
+        gasGiants = DiceGenerator.getRandom(2);
+        mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
+            i, config);
+        angleAncients = angleAncients + 360 / ancients;
+        if (angleAncients > 359) {
+          angleAncients = angleAncients - 360;
+        }
+      } else {
+        double rad = Math.toRadians(angle);
+        sx = (int) (maxX / 2 + Math.cos(rad) * length);
+        sy = (int) (maxX / 2 + Math.sin(rad) * length);
+        planets = DiceGenerator.getRandom(3, 5);
+        gasGiants = DiceGenerator.getRandom(2);
+        mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
+            i, config);
+        angle = angle + 360 / regular;
+        if (angle > 359) {
+          angle = angle - 360;
+        }
+      }
+    }
+    return mapOfSolars;
+  }
+
   /**
    * Create border starting solar system
    * @param config Galaxy Config

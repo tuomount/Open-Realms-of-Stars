@@ -97,6 +97,11 @@ public class GalaxyConfig {
   public static final int ANCIENTS_IN_MIDDLE = 2;
 
   /**
+   * Ancient realms are in the middle ring and others on outer ring.
+   */
+  public static final int TWO_RINGS = 3;
+
+  /**
    * Where players start
    */
   private int startingPosition;

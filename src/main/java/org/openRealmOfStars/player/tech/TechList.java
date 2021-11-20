@@ -348,7 +348,8 @@ public class TechList {
       if (ownComponent != null) {
         ShipComponent component = ShipComponentFactory.createByName(
             tech.getComponent());
-        if (component.getType() == ownComponent.getType()
+        if (component != null
+            && component.getType() == ownComponent.getType()
             && ownTech.getLevel() > tech.getLevel()) {
           return true;
         }

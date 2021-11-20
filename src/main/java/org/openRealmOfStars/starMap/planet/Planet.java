@@ -1704,6 +1704,10 @@ public class Planet {
           // No need for radiation well or dampener on small radiation planets
           tmp = null;
         }
+        if (tmp != null && tmp.isOrbitalElevator() && getOrbital() == null) {
+          // Orbital elevator requires orbital.
+          tmp = null;
+        }
         if (tmp != null) {
           if (tmp.getType() == BuildingType.FARM
               && planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
@@ -2250,6 +2254,7 @@ public class Planet {
           && prodResource >= requiredProdCost) {
         if (underConstruction instanceof Building
             && groundSize > buildings.size()) {
+          boolean canBeBuilt = true;
           Building building = (Building) underConstruction;
           if (building.getScientificAchievement() && map != null) {
             NewsData news = NewsFactory.makeScientificAchivementNews(
@@ -2318,22 +2323,47 @@ public class Planet {
               }
             }
           }
-          metal = metal - requiredMetalCost;
-          prodResource = prodResource - requiredProdCost;
-          if (governor != null) {
-            governor.setExperience(governor.getExperience()
-                + underConstruction.getProdCost() / 2);
-            governor.getStats().addOne(StatType.NUMBER_OF_BUILDINGS_BUILT);
+          if (building.isOrbitalElevator()) {
+            Building oldElevator = null;
+            if (getOrbital() != null) {
+              for (Building planetBuilding : getBuildingList()) {
+                if (planetBuilding.isOrbitalElevator()) {
+                  oldElevator = planetBuilding;
+                  break;
+                }
+              }
+              if (oldElevator != null) {
+                removeBuilding(oldElevator);
+              }
+            } else {
+              canBeBuilt = false;
+              msg = new Message(MessageType.CONSTRUCTION,
+                  getName() + " cannot be built " + underConstruction.getName()
+                  + " since there is no orbital on the planet.",
+                  Icons.getIconByName(Icons.ICON_STARBASE));
+              msg.setCoordinate(getCoordinate());
+              msg.setMatchByString(getName());
+              planetOwnerInfo.getMsgList().addNewMessage(msg);
+            }
           }
-          buildings.add((Building) underConstruction);
-          msg = new Message(MessageType.CONSTRUCTION,
-              getName() + " built " + underConstruction.getName(),
-              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-          msg.setCoordinate(getCoordinate());
-          msg.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-          if (building.isSingleAllowed()) {
-            setUnderConstruction(getProductionList()[0]);
+          if (canBeBuilt) {
+            metal = metal - requiredMetalCost;
+            prodResource = prodResource - requiredProdCost;
+            if (governor != null) {
+              governor.setExperience(governor.getExperience()
+                  + underConstruction.getProdCost() / 2);
+              governor.getStats().addOne(StatType.NUMBER_OF_BUILDINGS_BUILT);
+            }
+            buildings.add((Building) underConstruction);
+            msg = new Message(MessageType.CONSTRUCTION,
+                getName() + " built " + underConstruction.getName(),
+                Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+            msg.setCoordinate(getCoordinate());
+            msg.setMatchByString(getName());
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
+            if (building.isSingleAllowed()) {
+              setUnderConstruction(getProductionList()[0]);
+            }
           }
         } else if (underConstruction instanceof Ship && !enemyOrbiting) {
           metal = metal - requiredMetalCost;

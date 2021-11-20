@@ -405,6 +405,10 @@ public final class Icons {
    * Prison icon
    */
   public static final String ICON_PRISON = "IconPrison";
+  /**
+   * Orbital elevator
+   */
+  public static final String ICON_ORBITAL_ELEVATOR = "IconOrbitalElevator";
 
   /**
    * List of Icon
@@ -703,6 +707,8 @@ public final class Icons {
     icon = new Icon16x16(image, 0, 3, ICON_PHOTON_TORPEDO);
     addIcon(icon);
     icon = new Icon16x16(image, 1, 3, ICON_PRISON);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 3, ICON_ORBITAL_ELEVATOR);
     addIcon(icon);
   }
 

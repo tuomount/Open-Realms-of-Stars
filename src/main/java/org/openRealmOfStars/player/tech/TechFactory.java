@@ -130,7 +130,8 @@ public final class TechFactory {
    * Defense tech names for level 2
    */
   public static final String[] DEFENSE_TECH_LEVEL2_NAMES = {"Shield Mk2",
-      "Armor plating Mk2", "Planetary defense turret Mk1" };
+      "Armor plating Mk2", "Planetary defense turret Mk1",
+      "Orbital elevator Mk1" };
   /**
    * Defense tech names for level 3
    */
@@ -155,7 +156,8 @@ public final class TechFactory {
    * Defense tech names for level 5
    */
   public static final String[] DEFENSE_TECH_LEVEL5_NAMES = {"Shield Mk5",
-      "Armor plating Mk5", "Planetary defense turret Mk2", "Jammer Mk2" };
+      "Armor plating Mk5", "Planetary defense turret Mk2", "Jammer Mk2",
+      "Orbital elevator Mk2"};
   /**
    * Defense tech names for level 6
    */
@@ -175,7 +177,8 @@ public final class TechFactory {
    * Defense tech names for level 8
    */
   public static final String[] DEFENSE_TECH_LEVEL8_NAMES = {"Shield Mk8",
-      "Armor plating Mk8", "Planetary defense turret Mk3" };
+      "Armor plating Mk8", "Planetary defense turret Mk3",
+      "Orbital elevator Mk3"};
   /**
    * Defense rare tech names for level 8.
    */
@@ -648,8 +651,17 @@ public final class TechFactory {
           tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
         } else if (techName.startsWith("Planetary defense turret Mk")
             || techName.startsWith("Orbital shield")
-            || techName.equals("Space academy")) {
+            || techName.equals("Space academy")
+            || techName.startsWith("Orbital elevator Mk")) {
           tech.setImprovement(techName);
+          if (techName.startsWith("Planetary defense turret Mk")) {
+            tech.setExcludeList(true);
+            tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
+          }
+          if (techName.startsWith("Orbital elevator Mk")) {
+            tech.setExcludeList(false);
+            tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
+          }
         } else {
           tech.setComponent(techName);
         }
@@ -659,6 +671,8 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ARMOR));
         } else if (techName.startsWith("Planetary defense turret Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANETARY_TURRET));
+        } else if (techName.startsWith("Orbital elevator Mk")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR));
         } else if (techName.startsWith("Jammer Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_CIRCUIT_BOARD));
         } else if (techName.startsWith("Space academy")) {

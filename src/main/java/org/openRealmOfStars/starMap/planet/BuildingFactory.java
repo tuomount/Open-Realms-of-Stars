@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 61;
+  private static final int MAX_BUILDING = 64;
 
   /**
    * Component Basic mine
@@ -332,6 +332,18 @@ public final class BuildingFactory {
    * Component Planetary furnace
    */
   public static final int COMPONENT_PLANETARY_FURNACE = 60;
+  /**
+   * Component Orbital elevator Mk1
+   */
+  public static final int COMPONENT_ORBITAL_ELEVATOR_MK1 = 61;
+  /**
+   * Component Orbital elevator Mk2
+   */
+  public static final int COMPONENT_ORBITAL_ELEVATOR_MK2 = 62;
+  /**
+   * Component Orbital elevator Mk3
+   */
+  public static final int COMPONENT_ORBITAL_ELEVATOR_MK3 = 63;
 
   /**
    * Create planetary building with index
@@ -524,6 +536,15 @@ public final class BuildingFactory {
     case COMPONENT_PLANETARY_FURNACE:
       tmp = createProductionFacility(index);
       break; // Planetary furnace
+    case COMPONENT_ORBITAL_ELEVATOR_MK1:
+      tmp = createPlanetaryImprovement(index);
+      break; // Orbital elevator Mk1
+    case COMPONENT_ORBITAL_ELEVATOR_MK2:
+      tmp = createPlanetaryImprovement(index);
+      break; // Orbital elevator Mk2
+    case COMPONENT_ORBITAL_ELEVATOR_MK3:
+      tmp = createPlanetaryImprovement(index);
+      break; // Orbital elevator Mk3
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -1268,6 +1289,50 @@ public final class BuildingFactory {
       tmp.setSingleAllowed(true);
       tmp.setMaintenanceCost(0.3);
       tmp.setDescription("Research matrix for robotic minds.");
+      return tmp;
+    }
+    if (index == COMPONENT_ORBITAL_ELEVATOR_MK1) {
+      tmp = new Building(index, "Orbital elevator Mk1",
+          Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR),
+          BuildingType.FACTORY);
+      tmp.setProdCost(20);
+      tmp.setMetalCost(20);
+      tmp.setDescription("Orbital elevator that increases production"
+          + " and give happiness.");
+      tmp.setFactBonus(1);
+      tmp.setHappiness(1);
+      tmp.setSingleAllowed(true);
+      tmp.setOrbitalElevator(true);
+      return tmp;
+    }
+    if (index == COMPONENT_ORBITAL_ELEVATOR_MK2) {
+      tmp = new Building(index, "Orbital elevator Mk2",
+          Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR),
+          BuildingType.FACTORY);
+      tmp.setProdCost(30);
+      tmp.setMetalCost(30);
+      tmp.setDescription("Orbital elevator that increases production"
+          + " and give happiness.");
+      tmp.setFactBonus(1);
+      tmp.setCredBonus(1);
+      tmp.setHappiness(1);
+      tmp.setSingleAllowed(true);
+      tmp.setOrbitalElevator(true);
+      return tmp;
+    }
+    if (index == COMPONENT_ORBITAL_ELEVATOR_MK3) {
+      tmp = new Building(index, "Orbital elevator Mk3",
+          Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR),
+          BuildingType.FACTORY);
+      tmp.setProdCost(40);
+      tmp.setMetalCost(40);
+      tmp.setDescription("Orbital elevator that increases production"
+          + " and give happiness.");
+      tmp.setFactBonus(2);
+      tmp.setCredBonus(1);
+      tmp.setHappiness(1);
+      tmp.setSingleAllowed(true);
+      tmp.setOrbitalElevator(true);
       return tmp;
     }
 

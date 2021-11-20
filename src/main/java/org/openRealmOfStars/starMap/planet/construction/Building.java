@@ -121,6 +121,11 @@ public class Building extends Construction {
    */
   private boolean broadcaster;
   /**
+   * Flag for orbital Elevator.
+   * Only single one of these buildings are allowed and orbital is required.
+   */
+  private boolean orbitalElevator;
+  /**
    * Construct building for planet
    * @param index Unique number for building
    * @param name Building name
@@ -623,5 +628,22 @@ public class Building extends Construction {
    */
   public void setBroadcaster(final boolean broadcaster) {
     this.broadcaster = broadcaster;
+  }
+
+  /**
+   * Is building orbital elevator. There can be only one orbital elevator
+   * and requires orbital building.
+   * @return True or false
+   */
+  public boolean isOrbitalElevator() {
+    return orbitalElevator;
+  }
+
+  /**
+   * Set orbital elevator flag.
+   * @param orbitalElevator Flag for orbital elevator.
+   */
+  public void setOrbitalElevator(final boolean orbitalElevator) {
+    this.orbitalElevator = orbitalElevator;
   }
 }

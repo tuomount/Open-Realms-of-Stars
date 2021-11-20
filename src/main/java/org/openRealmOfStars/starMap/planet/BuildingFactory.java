@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 64;
+  private static final int MAX_BUILDING = 65;
 
   /**
    * Component Basic mine
@@ -344,6 +344,10 @@ public final class BuildingFactory {
    * Component Orbital elevator Mk3
    */
   public static final int COMPONENT_ORBITAL_ELEVATOR_MK3 = 63;
+  /**
+   * Component Orbital lift
+   */
+  public static final int COMPONENT_ORBITAL_LIFT = 64;
 
   /**
    * Create planetary building with index
@@ -545,6 +549,9 @@ public final class BuildingFactory {
     case COMPONENT_ORBITAL_ELEVATOR_MK3:
       tmp = createPlanetaryImprovement(index);
       break; // Orbital elevator Mk3
+    case COMPONENT_ORBITAL_LIFT:
+      tmp = createPlanetaryImprovement(index);
+      break; // Orbital lift
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -1331,6 +1338,20 @@ public final class BuildingFactory {
       tmp.setFactBonus(2);
       tmp.setCredBonus(1);
       tmp.setHappiness(1);
+      tmp.setSingleAllowed(true);
+      tmp.setOrbitalElevator(true);
+      return tmp;
+    }
+    if (index == COMPONENT_ORBITAL_LIFT) {
+      tmp = new Building(index, "Orbital lift",
+          Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR),
+          BuildingType.FACTORY);
+      tmp.setProdCost(30);
+      tmp.setMetalCost(30);
+      tmp.setDescription("Orbital lift that increases production"
+          + " and credits income.");
+      tmp.setFactBonus(1);
+      tmp.setCredBonus(1);
       tmp.setSingleAllowed(true);
       tmp.setOrbitalElevator(true);
       return tmp;

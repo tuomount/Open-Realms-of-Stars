@@ -279,7 +279,7 @@ public final class TechFactory {
    * Planetary Improvement rare tech names for level 4
    */
   public static final String[] IMPROVEMENT_RARE_TECH_LEVEL4_NAMES = {
-      "Deadly virus"
+      "Deadly virus", "Orbital lift"
   };
   /**
    * Planetary Improvement tech names for level 5
@@ -871,6 +871,7 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else if (techName.startsWith("Deadly virus")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DEATH));
+          tech.setRareTech(true);
         } else {
           tech.setImprovement(techName);
           if (techName.startsWith("Barracks")) {
@@ -882,6 +883,9 @@ public final class TechFactory {
               || techName.startsWith("Neural research center")
               || techName.startsWith("Super AI Center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
+          } else if (techName.startsWith("Orbital lift")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR));
+            tech.setRareTech(true);
           } else if (techName.startsWith("Tax center")
               || techName.startsWith("Market center")
               || techName.startsWith("Trade center")
@@ -1055,7 +1059,7 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Electrics, level);
-        if (techName.startsWith("Improved engineering")) {
+        if (techName.startsWith("Improved engineer")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));
         } else if (techName.startsWith("Planetary scanner Mk")
             || techName.startsWith("Deep space scanner")
@@ -1325,6 +1329,12 @@ public final class TechFactory {
     if (hasTech("Organic armor Mk2", techList) && !hasTech("Organic armor Mk3",
         techList)) {
       choices.add(createDefenseTech("Organic armor Mk3", 8));
+    }
+    if (!hasTech("Orbital lift", techList)) {
+      choices.add(createImprovementTech("Orbital lift", 4));
+    }
+    if (!hasTech("Improved engineer", techList)) {
+      choices.add(createElectronicsTech("Improved engineer", 3));
     }
     if (choices.size() > 1) {
       int index = DiceGenerator.getRandom(0, choices.size() - 1);

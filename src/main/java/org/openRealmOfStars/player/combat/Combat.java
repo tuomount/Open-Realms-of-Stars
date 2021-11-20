@@ -671,7 +671,8 @@ public boolean launchIntercept(final int distance,
           Icons.getIconByName(Icons.ICON_STARBASE));
       msg.setMatchByString(planet.getName());
       defenderInfo.getMsgList().addNewMessage(msg);
-      if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.ALTEIRIANS) {
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetPlayerInfo().getRace() == SpaceRace.ALTEIRIANS) {
         orbitalDestroyedNews = NewsFactory.makeAlteirianLoseOrbitalNews(
             attackerInfo, defenderInfo, planet, attackerPrivateer);
         if (planet.getGovernor() != null) {

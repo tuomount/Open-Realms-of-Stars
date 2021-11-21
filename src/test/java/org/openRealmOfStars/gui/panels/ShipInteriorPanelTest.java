@@ -54,7 +54,8 @@ public class ShipInteriorPanelTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNebulae() {
     DiceGenerator.initializeGenerators(10,10,10);
-    ShipInteriorPanel panel = new ShipInteriorPanel(SpaceRace.GREYANS, null);
+    ShipInteriorPanel panel = new ShipInteriorPanel(SpaceRace.GREYANS,
+        GuiStatics.NEBULAE_IMAGE);
     assertEquals(SpaceRace.GREYANS, panel.getRace());
     assertEquals(GuiStatics.NEBULAE_IMAGE, panel.getPlanetImage());
   }

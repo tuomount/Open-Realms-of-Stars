@@ -1034,9 +1034,17 @@ public final class GuiStatics {
   /**
    * Star field image for parallax scrolling
    */
-  public static final BufferedImage STAR_FIELD_IMAGE = IOUtilities
+  private static final BufferedImage STAR_FIELD_IMAGE = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/starfield.png"));
 
+  /**
+   * Generated star field image.
+   */
+  private static BufferedImage starField = null;
+  /**
+   * Separate thread to generate background stars.
+   */
+  private static ProceduralRenderer proceduralRenderer = null;
   /**
    * Nebula image for parallax scrolling
    */
@@ -1580,5 +1588,21 @@ public final class GuiStatics {
     GuiStatics.useLargerFonts = largerFonts;
   }
 
-
+  /**
+   * Get star field image and generate if not available.
+   * @return BufferedImage
+   */
+  public static BufferedImage getStarField() {
+    if (starField == null) {
+      if (proceduralRenderer == null) {
+        proceduralRenderer = new ProceduralRenderer();
+        proceduralRenderer.start();
+      }
+      starField = proceduralRenderer.getStars();
+      if (starField == null) {
+        return STAR_FIELD_IMAGE;
+      }
+    }
+    return starField;
+  }
 }

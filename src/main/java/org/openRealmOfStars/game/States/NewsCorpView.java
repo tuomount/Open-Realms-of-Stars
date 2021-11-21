@@ -191,7 +191,7 @@ public class NewsCorpView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)
         && animation < 180) {
       Graphics2D g = (Graphics2D) newsReader.getGraphics();
-      g.drawImage(GuiStatics.STAR_FIELD_IMAGE, -10 - animation,
+      g.drawImage(GuiStatics.getStarField(), -10 - animation,
           -200 + animation, null);
       if (animation < 64) {
         g.drawImage(GuiStatics.IMAGE_GBNC,

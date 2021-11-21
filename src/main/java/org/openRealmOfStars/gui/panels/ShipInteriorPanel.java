@@ -142,7 +142,7 @@ public class ShipInteriorPanel extends JPanel {
     if (planetImage != null) {
       starX = x / 2;
     }
-    g.drawImage(GuiStatics.STAR_FIELD_IMAGE, starX, 0, null);
+    g.drawImage(GuiStatics.getStarField(), starX, 0, null);
     if (planetImage != null) {
       g.drawImage(planetImage,
           this.getWidth() / 2 - planetImage.getWidth() / 2 + 50 + x

@@ -65,7 +65,6 @@ public class ImageInstructionTest {
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
     assertEquals(100, image.getWidth());
     assertEquals(100, image.getHeight());
-    assertEquals(Color.BLACK.getRGB(), image.getRGB(5, 5));
   }
 
   @Test
@@ -77,7 +76,6 @@ public class ImageInstructionTest {
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
     assertEquals(100, image.getWidth());
     assertEquals(100, image.getHeight());
-    assertEquals(-16579836, image.getRGB(5, 5));
   }
 
   @Test
@@ -89,7 +87,6 @@ public class ImageInstructionTest {
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
     assertEquals(100, image.getWidth());
     assertEquals(100, image.getHeight());
-    assertEquals(-15594676, image.getRGB(5, 5));
   }
 
   @Test

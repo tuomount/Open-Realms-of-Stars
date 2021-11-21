@@ -229,7 +229,7 @@ public class StarFieldTextArea extends JTextArea {
     int height = getHeight() - inset.top - inset.bottom;
     g.fillRect(sx, sx, width, height);
     Graphics2D g2d = (Graphics2D) g;
-    GraphRoutines.drawTiling(g2d, GuiStatics.STAR_FIELD_IMAGE,
+    GraphRoutines.drawTiling(g2d, GuiStatics.getStarField(),
         STAR_FIELD_OFFSET, STAR_FIELD_OFFSET, width, height);
 
     g.setFont(GuiStatics.getFontCubellan());

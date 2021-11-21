@@ -519,9 +519,9 @@ public class MapPanel extends JPanel {
     if (speedY < 5) {
       speedY = 5;
     }
-    int speedStarX = (GuiStatics.STAR_FIELD_IMAGE.getWidth() - this.getWidth()
+    int speedStarX = (GuiStatics.getStarField().getWidth() - this.getWidth()
         - SAFETY_OFFSET) / starMap.getMaxX();
-    int speedStarY = (GuiStatics.STAR_FIELD_IMAGE.getHeight() - this.getHeight()
+    int speedStarY = (GuiStatics.getStarField().getHeight() - this.getHeight()
         - SAFETY_OFFSET) / starMap.getMaxY();
     if (speedStarX < 3) {
       speedStarX = 3;
@@ -530,7 +530,7 @@ public class MapPanel extends JPanel {
       speedStarY = 3;
     }
     // Parallax Scrolling with just two lines!!!
-    GraphRoutines.drawTiling(gr, GuiStatics.STAR_FIELD_IMAGE,
+    GraphRoutines.drawTiling(gr, GuiStatics.getStarField(),
         -PARALLAX_OFFSET - cx * speedStarX, -PARALLAX_OFFSET - cy * speedStarY,
         this.getWidth(), this.getHeight());
     GraphRoutines.drawTiling(gr, GuiStatics.NEBULAE_IMAGE,
@@ -967,9 +967,9 @@ public class MapPanel extends JPanel {
     if (speedY < 5) {
       speedY = 5;
     }
-    int speedStarX = (GuiStatics.STAR_FIELD_IMAGE.getWidth() - this.getWidth()
+    int speedStarX = (GuiStatics.getStarField().getWidth() - this.getWidth()
         - SAFETY_OFFSET) / starMap.getMaxX();
-    int speedStarY = (GuiStatics.STAR_FIELD_IMAGE.getHeight() - this.getHeight()
+    int speedStarY = (GuiStatics.getStarField().getHeight() - this.getHeight()
         - SAFETY_OFFSET) / starMap.getMaxY();
     if (speedStarX < 3) {
       speedStarX = 3;
@@ -978,7 +978,7 @@ public class MapPanel extends JPanel {
       speedStarY = 3;
     }
     // Parallax Scrolling with just two lines!!!
-    GraphRoutines.drawTiling(gr, GuiStatics.STAR_FIELD_IMAGE,
+    GraphRoutines.drawTiling(gr, GuiStatics.getStarField(),
         -PARALLAX_OFFSET - cx * speedStarX, -PARALLAX_OFFSET - cy * speedStarY,
         this.getWidth(), this.getHeight());
     GraphRoutines.drawTiling(gr, GuiStatics.NEBULAE_IMAGE,
@@ -1223,11 +1223,11 @@ public class MapPanel extends JPanel {
     int cy = starMap.getDrawY();
 
     // -20 for safety
-    int speedStarX = (GuiStatics.STAR_FIELD_IMAGE.getWidth() - this.getWidth()
+    int speedStarX = (GuiStatics.getStarField().getWidth() - this.getWidth()
         - SAFETY_OFFSET) / starMap.getMaxX();
-    int speedStarY = (GuiStatics.STAR_FIELD_IMAGE.getHeight()
+    int speedStarY = (GuiStatics.getStarField().getHeight()
         - this.getHeight() - SAFETY_OFFSET) / starMap.getMaxY();
-    GraphRoutines.drawTiling(gr, GuiStatics.STAR_FIELD_IMAGE,
+    GraphRoutines.drawTiling(gr, GuiStatics.getStarField(),
         -PARALLAX_OFFSET - cx * speedStarX, -PARALLAX_OFFSET - cy * speedStarY,
         this.getWidth(), this.getHeight());
     if (combat.getPlanet() != null && !combat.getPlanet().isGasGiant()) {

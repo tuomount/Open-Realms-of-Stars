@@ -423,7 +423,9 @@ public class BigImagePanel extends JPanel {
     }
     if (drawStarField) {
       //g2d.drawImage(GuiStatics.STAR_FIELD_IMAGE, -sx, -sy, null);
-      GraphRoutines.drawTiling(g2d, GuiStatics.STAR_FIELD_IMAGE, -sx, -sy,
+/*      GraphRoutines.drawTiling(g2d, GuiStatics.STAR_FIELD_IMAGE, -sx, -sy,
+          this.getWidth(), this.getHeight());*/
+      GraphRoutines.drawTiling(g2d, GuiStatics.getStarField(), -sx, -sy,
           this.getWidth(), this.getHeight());
     } else {
       this.setBackground(Color.black);

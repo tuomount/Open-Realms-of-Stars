@@ -802,13 +802,13 @@ public class ImageInstruction {
       Graphics2D g = (Graphics2D) workImage.getGraphics();
       g.setColor(Color.BLACK);
       g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
-      g.drawImage(GuiStatics.STAR_FIELD_IMAGE, 0, 0, null);
+      g.drawImage(GuiStatics.getStarField(), 0, 0, null);
     }
     if (BACKGROUND_NEBULAE.equals(backgroundType)) {
       Graphics2D g = (Graphics2D) workImage.getGraphics();
       g.setColor(Color.BLACK);
       g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
-      g.drawImage(GuiStatics.STAR_FIELD_IMAGE, -50, -50, null);
+      g.drawImage(GuiStatics.getStarField(), -50, -50, null);
       g.drawImage(GuiStatics.NEBULAE_IMAGE, -25, -25, null);
     }
   }

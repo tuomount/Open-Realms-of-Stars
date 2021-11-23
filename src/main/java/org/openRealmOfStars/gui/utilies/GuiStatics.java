@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.Tiles;
@@ -1594,6 +1595,9 @@ public final class GuiStatics {
    */
   public static BufferedImage getStarField() {
     if (starField == null) {
+      if (!Game.isMainMethodCalled()) {
+        return STAR_FIELD_IMAGE;
+      }
       if (proceduralRenderer == null) {
         proceduralRenderer = new ProceduralRenderer();
         proceduralRenderer.start();

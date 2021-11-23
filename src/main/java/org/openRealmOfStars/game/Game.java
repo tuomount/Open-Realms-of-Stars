@@ -388,6 +388,10 @@ public class Game implements ActionListener {
    */
   private static TutorialList tutorialList;
   /**
+   * Flag if main method has called.
+   */
+  private static boolean mainMethodCalled;
+  /**
    * Ambient light bridge
    */
   private Bridge bridge;
@@ -2324,11 +2328,19 @@ public class Game implements ActionListener {
         System.out.println("Debugging enabled.");
         ErrorLogger.enabledDebugging();
       }
+      mainMethodCalled = true;
       new Game(true);
     }
 
   }
 
+  /**
+   * Has main method called or not.
+   * @return True if game is actually being run. False for example JUnits.
+   */
+  public static boolean isMainMethodCalled() {
+    return mainMethodCalled;
+  }
   /**
    * Focus on active message
    * @param mapOnly focus only message which move map

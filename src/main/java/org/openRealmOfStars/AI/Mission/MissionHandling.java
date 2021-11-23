@@ -131,7 +131,7 @@ public final class MissionHandling {
    * done inside the distance.
    * @param info Player who is doing the search
    * @param game Game
-   * @param fleet Fleet whos is searching
+   * @param fleet Fleet who is searching
    * @param distance Maximum search distance
    * @return Space anomaly coordinate or null
    */
@@ -162,6 +162,35 @@ public final class MissionHandling {
       }
     }
     return targetCoord;
+  }
+
+  /**
+   * Search for nearby orbital. Search is
+   * done inside the distance.
+   * @param info Player who is doing the search
+   * @param game Game
+   * @param fleet Fleet which is searching
+   * @param distance Maximum search distance
+   * @return Planet with orbital or null
+   */
+  public static Planet getNearByOrbital(final PlayerInfo info,
+      final Game game, final Fleet fleet, final int distance) {
+    StarMap starMap = game.getStarMap();
+    Coordinate center = fleet.getCoordinate();
+    double maxDist = 9999;
+    Planet result = null;
+    for (Planet planet : starMap.getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetPlayerInfo() != info
+          && planet.getOrbital() != null) {
+        double dist = center.calculateDistance(planet.getCoordinate());
+        if (dist < maxDist) {
+          maxDist = dist;
+          result = planet;
+        }
+      }
+    }
+    return result;
   }
 
   /**
@@ -204,6 +233,19 @@ public final class MissionHandling {
           search.doSearch();
           search.doRoute();
           fleet.setaStarSearch(search);
+        } else {
+          Planet targetOrbital = getNearByOrbital(info, game, fleet,
+              fleet.getMovesLeft());
+          if (targetOrbital != null) {
+            mission.setPhase(MissionPhase.EXECUTING);
+            fleet.setRoute(null);
+            AStarSearch search = new AStarSearch(game.getStarMap(),
+                fleet.getX(), fleet.getY(), targetOrbital.getX(),
+                targetOrbital.getY(), false);
+            search.doSearch();
+            search.doRoute();
+            fleet.setaStarSearch(search);
+          }
         }
       }
       if (mission.getPhase() == MissionPhase.TREKKING
@@ -3286,7 +3328,7 @@ public final class MissionHandling {
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (infoAtTarget != null) {
         int index = map.getPlayerList().getIndex(infoAtTarget);
-        if (infoAtTarget.isHuman()) {
+        if (infoAtTarget.isHuman() && fleetAtTarget != null) {
           Message msg = new Message(MessageType.FLEET,
               "Fleet " + fleetAtTarget.getName() + " evaded bumping in FTL with"
                   + " fleet " + fleet.getName() + "!",

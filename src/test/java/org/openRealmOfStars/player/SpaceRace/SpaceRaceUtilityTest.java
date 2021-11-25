@@ -181,6 +181,7 @@ public class SpaceRaceUtilityTest {
         "* Max radiation: 4\n"+
         "* Troop power: 10\n"+
         "* Leader lifespan: 80\n"+
+        "* Minimum leader population: 5\n"+
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
@@ -198,6 +199,7 @@ public class SpaceRaceUtilityTest {
         "* Max radiation: 8\n"+
         "* Troop power: 12\n"+
         "* Leader lifespan: 2000\n"+
+        "* Minimum leader population: 5\n"+
         "* Production: 100%\n"+
         "* Mining: 150%\n"+
         "* Research: 50%\n"+
@@ -215,6 +217,7 @@ public class SpaceRaceUtilityTest {
         "* Max radiation: 5\n"+
         "* Troop power: 12\n"+
         "* Leader lifespan: 75\n"+
+        "* Minimum leader population: 5\n"+
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
@@ -232,6 +235,7 @@ public class SpaceRaceUtilityTest {
         "* Max radiation: 6\n"+
         "* Troop power: 8\n"+
         "* Leader lifespan: 110\n"+
+        "* Minimum leader population: 5\n"+
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 150%\n"+
@@ -251,6 +255,7 @@ public class SpaceRaceUtilityTest {
         "* Max radiation: 3\n"+
         "* Troop power: 14\n"+
         "* Leader lifespan: 120\n"+
+        "* Minimum leader population: 5\n"+
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
@@ -272,6 +277,7 @@ public class SpaceRaceUtilityTest {
         "* Max radiation: 6\n"+
         "* Troop power: 9\n"+
         "* Leader lifespan: 70\n"+
+        "* Minimum leader population: 5\n"+
         "* Production: 100%\n"+
         "* Mining: 50%\n"+
         "* Research: 100%\n"+
@@ -291,6 +297,7 @@ public class SpaceRaceUtilityTest {
         + "* Max radiation: 4\n"
         + "* Troop power: 10\n"
         + "* Leader lifespan: 80\n"
+        + "* Minimum leader population: 5\n"
         + "* Production: 100%\n"
         + "* Mining: 100%\n"
         + "* Research: 150%\n"
@@ -310,6 +317,7 @@ public class SpaceRaceUtilityTest {
         + "* Max radiation: 5\n"
         + "* Troop power: 10\n"
         + "* Leader lifespan: 90\n"
+        + "* Minimum leader population: 5\n"
         + "* Production: 100%\n"
         + "* Mining: 50%\n"
         + "* Research: 100%\n"
@@ -330,6 +338,7 @@ public class SpaceRaceUtilityTest {
         + "* Max radiation: 3\n"
         + "* Troop power: 11\n"
         + "* Leader lifespan: 70\n"
+        + "* Minimum leader population: 5\n"
         + "* Production: 150%\n"
         + "* Mining: 150%\n"
         + "* Research: 50%\n"
@@ -350,6 +359,7 @@ public class SpaceRaceUtilityTest {
         + "* Max radiation: 10\n"
         + "* Troop power: 9\n"
         + "* Leader lifespan: 100\n"
+        + "* Minimum leader population: 5\n"
         + "* Production: 50%\n"
         + "* Mining: 100%\n"
         + "* Research: 50%\n"
@@ -371,6 +381,7 @@ public class SpaceRaceUtilityTest {
         + "* Max radiation: 5\n"
         + "* Troop power: 13\n"
         + "* Leader lifespan: 150\n"
+        + "* Minimum leader population: 5\n"
         + "* Production: 100%\n"
         + "* Mining: 100%\n"
         + "* Research: 100%\n"
@@ -392,6 +403,7 @@ public class SpaceRaceUtilityTest {
         + "* Max radiation: 7\n"
         + "* Troop power: 12\n"
         + "* Leader lifespan: 110\n"
+        + "* Minimum leader population: 5\n"
         + "* Production: 100%\n"
         + "* Mining: 200%\n"
         + "* Research: 100%\n"
@@ -410,9 +422,10 @@ public class SpaceRaceUtilityTest {
         + " they need special suites to move planet surface."
         + " Most of their time they live on planet's orbit. Their orbitals are"
         + " more improved than other space race.\n"
-        + "* Max radiation: 5\n"
+        + "* Max radiation: 7\n"
         + "* Troop power: 6\n"
         + "* Leader lifespan: 90\n"
+        + "* Minimum leader population: 4\n"
         + "* Production: 50%\n"
         + "* Mining: 50%\n"
         + "* Research: 200%\n"
@@ -431,6 +444,7 @@ public class SpaceRaceUtilityTest {
         + "* Max radiation: 5\n"
         + "* Troop power: 11\n"
         + "* Leader lifespan: 80\n"
+        + "* Minimum leader population: 5\n"
         + "* Production: 100%\n"
         + "* Mining: 100%\n"
         + "* Research: 100%\n"

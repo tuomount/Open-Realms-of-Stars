@@ -324,7 +324,7 @@ public final class LeaderUtility {
     for (Planet planet : planets) {
       if (planet.getPlanetPlayerInfo() == realm) {
         int value = planet.getTotalPopulation();
-        if (value > 4) {
+        if (value >= realm.getRace().getMinimumPopulationForLeader()) {
           for (Building building : planet.getBuildingList()) {
             if (building.getName().equals("Barracks")) {
               value = value + 20;

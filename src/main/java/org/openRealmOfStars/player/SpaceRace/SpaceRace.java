@@ -316,7 +316,7 @@ public enum SpaceRace {
     case LITHORIANS:
       return 7;
     case ALTEIRIANS:
-      return 5;
+      return 7;
     case SMAUGIRIANS:
       return 5;
     default:
@@ -1347,6 +1347,32 @@ public enum SpaceRace {
   }
 
   /**
+   * Get Minimum population for leader on planet.
+   * @return Minimum population number.
+   */
+  public int getMinimumPopulationForLeader() {
+    switch (this) {
+    default:
+    case HUMAN:
+    case SPACE_PIRATE:
+    case MECHIONS:
+    case SPORKS:
+    case GREYANS:
+    case CENTAURS:
+    case MOTHOIDS:
+    case TEUTHIDAES:
+    case SCAURIANS:
+    case HOMARIANS:
+    case CHIRALOIDS:
+    case REBORGIANS:
+    case LITHORIANS:
+    case SMAUGIRIANS:
+      return 5;
+    case ALTEIRIANS:
+      return 4;
+    }
+  }
+  /**
    * Get World base value for space race.
    * This will tell how much of population world type can
    * hold.
@@ -1593,6 +1619,10 @@ public enum SpaceRace {
     sb.append(dot);
     sb.append(" Leader lifespan: ");
     sb.append(getLifeSpan());
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Minimum leader population: ");
+    sb.append(getMinimumPopulationForLeader());
     sb.append(lf);
     sb.append(dot);
     sb.append(" Production: ");

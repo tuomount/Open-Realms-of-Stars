@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
@@ -1065,6 +1066,11 @@ public final class GuiStatics {
    * Generated star field image.
    */
   private static BufferedImage starField = null;
+
+  /**
+   * Generated star nebula image.
+   */
+  private static BufferedImage starNebulae = null;
   /**
    * Separate thread to generate background stars.
    */
@@ -1644,5 +1650,20 @@ public final class GuiStatics {
       }
     }
     return starField;
+  }
+
+  /**
+   * Generate both stars and nebulae in same pictue.
+   * @return Buffered Image.
+   */
+  public static BufferedImage getStarNebulae() {
+    if (starNebulae == null) {
+      starNebulae = new BufferedImage(2100, 1600,
+          BufferedImage.TYPE_4BYTE_ABGR);
+      Graphics graphics = starNebulae.getGraphics();
+      graphics.drawImage(getStarField(), 0, 0, null);
+      graphics.drawImage(NEBULAE_IMAGE, 0, 0, null);
+    }
+    return starNebulae;
   }
 }

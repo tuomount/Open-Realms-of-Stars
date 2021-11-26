@@ -1718,6 +1718,9 @@ public class Game implements ActionListener {
       break;
     case STARMAP:
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
+      if (animationTimer != null) {
+        animationTimer.setDelay(30);
+      }
       MusicPlayer.activeFadeout();
       showStarMap(dataObject);
       break;

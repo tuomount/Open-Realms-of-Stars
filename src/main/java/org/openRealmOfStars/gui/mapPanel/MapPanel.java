@@ -530,13 +530,13 @@ public class MapPanel extends JPanel {
       speedStarY = 3;
     }
     // Parallax Scrolling with just two lines!!!
-    GraphRoutines.drawTiling(gr, GuiStatics.getStarField(),
+    GraphRoutines.drawTiling(gr, GuiStatics.getStarNebulae(),
         -PARALLAX_OFFSET - cx * speedStarX, -PARALLAX_OFFSET - cy * speedStarY,
         this.getWidth(), this.getHeight());
-    GraphRoutines.drawTiling(gr, GuiStatics.NEBULAE_IMAGE,
+/*    GraphRoutines.drawTiling(gr, GuiStatics.NEBULAE_IMAGE,
         -PARALLAX_OFFSET - cx * speedX,
         -PARALLAX_OFFSET - cy * speedY,
-        this.getWidth(), this.getHeight());
+        this.getWidth(), this.getHeight());*/
 
     lastDrawnCenterX = cx;
     lastDrawnCenterY = cy;

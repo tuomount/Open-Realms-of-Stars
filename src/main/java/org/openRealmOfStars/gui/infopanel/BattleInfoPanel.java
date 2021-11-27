@@ -164,7 +164,7 @@ public class BattleInfoPanel extends InfoPanel {
       if (cBtn[i] != null) {
         ShipComponent component = ship.getComponent(i);
         if (component != null && component.isWeapon()
-            && component.getWeaponRange() >= distance
+            && ship.getWeaponRange(component) >= distance
             && !cBtn[i].isUsed()
             && ship.componentIsWorking(i)) {
           int damage = component.getDamage();

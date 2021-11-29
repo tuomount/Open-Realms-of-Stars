@@ -80,8 +80,10 @@ public class AiThread extends Thread {
     }
     boolean turnEnd = false;
     do {
-      turnEnd = view.handleAiTurn();
-    } while (!turnEnd);
+      do {
+        turnEnd = view.handleAiTurn();
+      } while (!turnEnd);
+    } while (!view.exitThread());
     synchronized (this) {
       running = false;
     }

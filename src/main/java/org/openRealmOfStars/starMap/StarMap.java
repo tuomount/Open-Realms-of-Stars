@@ -268,6 +268,10 @@ public class StarMap {
   private boolean gameEnd;
 
   /**
+   * Human player has lost the game.
+   */
+  private boolean humanLost;
+  /**
    * Pirate difficulty level.
    */
   private PirateDifficultLevel pirateDifficulty;
@@ -330,6 +334,7 @@ public class StarMap {
    */
   public StarMap(final GalaxyConfig config, final PlayerList players) {
     setDebug(false);
+    setHumanLost(false);
     nameGenerator = new RandomSystemNameGenerator();
     setScoreVictoryTurn(config.getScoringVictoryTurns());
     setScoreCulture(config.getScoreLimitCulture());
@@ -1078,6 +1083,7 @@ public class StarMap {
    */
   public StarMap(final DataInputStream dis) throws IOException {
     setDebug(false);
+    setHumanLost(false);
     history = new History();
     votes = new Votes();
     shownTutorialIndexes = new ArrayList<>();
@@ -4785,5 +4791,21 @@ public class StarMap {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Has human realm lost the game or not?
+   * @return True if has lost.
+   */
+  public boolean isHumanLost() {
+    return humanLost;
+  }
+
+  /**
+   * Set flag if human has lost the game.
+   * @param humanLost Boolean flag
+   */
+  public void setHumanLost(final boolean humanLost) {
+    this.humanLost = humanLost;
   }
 }

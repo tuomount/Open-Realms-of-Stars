@@ -47,6 +47,11 @@ public final class GameCommands {
   public static final String COMMAND_OK = "OK";
 
   /**
+   * AI Finish the game
+   */
+  public static final String COMMAND_AI_FINISH = "AiFinish";
+
+  /**
    * Apply command
    */
   public static final String COMMAND_APPLY = "Apply";

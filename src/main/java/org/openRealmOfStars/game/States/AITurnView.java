@@ -231,26 +231,55 @@ public class AITurnView extends BlackPanel {
    */
   public void updateText() {
     switch (textAnim) {
+    default:
     case 0:
-      setText("Please wait.....");
+      if (game.getStarMap().isHumanLost()) {
+        setText("Turn " + game.getStarMap().getTurn() + "/"
+            + game.getStarMap().getScoreVictoryTurn() + ".....");
+      } else {
+        setText("Please wait.....");
+      }
       break;
     case 1:
-      setText("Please wait*....");
+      if (game.getStarMap().isHumanLost()) {
+        setText("Turn " + game.getStarMap().getTurn() + "/"
+            + game.getStarMap().getScoreVictoryTurn() + "*....");
+      } else {
+        setText("Please wait*....");
+      }
       break;
     case 2:
-      setText("Please wait.*...");
+      if (game.getStarMap().isHumanLost()) {
+        setText("Turn " + game.getStarMap().getTurn() + "/"
+            + game.getStarMap().getScoreVictoryTurn() + ".*...");
+      } else {
+        setText("Please wait.*...");
+      }
       break;
     case 3:
-      setText("Please wait..*..");
+      if (game.getStarMap().isHumanLost()) {
+        setText("Turn " + game.getStarMap().getTurn() + "/"
+            + game.getStarMap().getScoreVictoryTurn() + "..*..");
+      } else {
+        setText("Please wait..*..");
+      }
       break;
     case 4:
-      setText("Please wait...*.");
+      if (game.getStarMap().isHumanLost()) {
+        setText("Turn " + game.getStarMap().getTurn() + "/"
+            + game.getStarMap().getScoreVictoryTurn() + "...*.");
+      } else {
+        setText("Please wait...*.");
+      }
       break;
     case 5:
-      setText("Please wait....*");
+      if (game.getStarMap().isHumanLost()) {
+        setText("Turn " + game.getStarMap().getTurn() + "/"
+            + game.getStarMap().getScoreVictoryTurn() + "....*");
+      } else {
+        setText("Please wait....*");
+      }
       break;
-    default:
-      setText("Please wait.....");
     }
     textAnim++;
     if (textAnim > 5) {
@@ -3212,6 +3241,11 @@ public class AITurnView extends BlackPanel {
     boolean terminateNews = false;
     for (int i = 0; i < numberOfPlanets.length; i++) {
       if (numberOfPlanets[i] == 0) {
+        PlayerInfo realm = game.getStarMap().getPlayerList()
+            .getPlayerInfoByIndex(i);
+        if (realm.isHuman() && !game.getStarMap().isHumanLost()) {
+          setNextState(GameState.GAME_END_VIEW, realm);
+        }
         boolean lost = false;
         for (int j = 0;
             j < game.getStarMap().getPlayerList().getCurrentMaxRealms(); j++) {
@@ -3221,14 +3255,10 @@ public class AITurnView extends BlackPanel {
           if (list != null) {
             lost = list.addBonus(DiplomacyBonusType.REALM_LOST,
                 info.getRace());
-            if (lost) {
-              PlayerInfo realm = game.getStarMap().getPlayerList()
-                  .getPlayerInfoByIndex(i);
-              if (!terminateNews) {
-                terminateNews = true;
-                NewsData news = NewsFactory.makeLostNews(realm);
-                game.getStarMap().getNewsCorpData().addNews(news);
-              }
+            if (lost && !terminateNews) {
+              terminateNews = true;
+              NewsData news = NewsFactory.makeLostNews(realm);
+              game.getStarMap().getNewsCorpData().addNews(news);
             }
           }
         }
@@ -3519,6 +3549,16 @@ public class AITurnView extends BlackPanel {
         }
       }
     }
+  }
+  /**
+   * Check if it is okay to end AI thread.
+   * @return True if thread can be ended.
+   */
+  public boolean exitThread() {
+    if (game.getStarMap().isHumanLost()) {
+      return game.getStarMap().isGameEnded();
+    }
+    return true;
   }
   /**
    * Handle Ai Turn

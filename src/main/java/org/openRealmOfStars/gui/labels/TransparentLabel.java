@@ -125,7 +125,8 @@ public class TransparentLabel extends JLabel {
     int x = 0;
     int y = 0;
     if (border) {
-      this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
+          GuiStatics.COLOR_GREY_80, GuiStatics.COLOR_GREY_40));
     }
     g.setFont(this.getFont());
     g.setColor(this.getForeground());

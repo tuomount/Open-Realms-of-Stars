@@ -121,7 +121,9 @@ public class ImageLabel extends JLabel {
       g.fillRect(0, 0, getImage().getWidth(), getImage().getHeight());
     }
     if (isBorder()) {
-      this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
+          GuiStatics.COLOR_GREY_80,
+          GuiStatics.COLOR_GREY_40));
       if (getImage() != null) {
         int x = 0;
         int y = 0;

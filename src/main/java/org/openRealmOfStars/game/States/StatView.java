@@ -310,7 +310,8 @@ public class StatView extends BlackPanel {
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
       BlackPanel invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
-      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
+          GuiStatics.COLOR_GREY_80, GuiStatics.COLOR_GREY_40));
       invis.add(image);
       invis.add(label);
       panel.add(invis);
@@ -324,7 +325,8 @@ public class StatView extends BlackPanel {
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
-      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
+          GuiStatics.COLOR_GREY_80, GuiStatics.COLOR_GREY_40));
       invis.add(image);
       invis.add(label);
       panel.add(invis);
@@ -338,7 +340,8 @@ public class StatView extends BlackPanel {
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
-      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
+          GuiStatics.COLOR_GREY_80, GuiStatics.COLOR_GREY_40));
       invis.add(image);
       invis.add(label);
       panel.add(invis);
@@ -352,7 +355,8 @@ public class StatView extends BlackPanel {
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
-      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
+          GuiStatics.COLOR_GREY_80, GuiStatics.COLOR_GREY_40));
       invis.add(image);
       invis.add(label);
       panel.add(invis);
@@ -366,7 +370,8 @@ public class StatView extends BlackPanel {
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
-      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
+          GuiStatics.COLOR_GREY_80, GuiStatics.COLOR_GREY_40));
       invis.add(image);
       invis.add(label);
       panel.add(invis);
@@ -380,7 +385,8 @@ public class StatView extends BlackPanel {
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
-      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+      invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
+          GuiStatics.COLOR_GREY_80, GuiStatics.COLOR_GREY_40));
       invis.add(image);
       invis.add(label);
       panel.add(invis);

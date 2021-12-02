@@ -3239,26 +3239,29 @@ public class AITurnView extends BlackPanel {
         game.getPlayers());
     handleOlympicGames(game.getStarMap());
     boolean terminateNews = false;
-    for (int i = 0; i < numberOfPlanets.length; i++) {
-      if (numberOfPlanets[i] == 0) {
-        PlayerInfo realm = game.getStarMap().getPlayerList()
-            .getPlayerInfoByIndex(i);
-        if (realm.isHuman() && !game.getStarMap().isHumanLost()) {
-          setNextState(GameState.GAME_END_VIEW, realm);
-        }
-        boolean lost = false;
-        for (int j = 0;
-            j < game.getStarMap().getPlayerList().getCurrentMaxRealms(); j++) {
-          PlayerInfo info = game.getStarMap().getPlayerList()
-              .getPlayerInfoByIndex(j);
-          DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(i);
-          if (list != null) {
-            lost = list.addBonus(DiplomacyBonusType.REALM_LOST,
-                info.getRace());
-            if (lost && !terminateNews) {
-              terminateNews = true;
-              NewsData news = NewsFactory.makeLostNews(realm);
-              game.getStarMap().getNewsCorpData().addNews(news);
+    if (game.getStarMap().getTurn() > 0) {
+      for (int i = 0; i < numberOfPlanets.length; i++) {
+        if (numberOfPlanets[i] == 0) {
+          PlayerInfo realm = game.getStarMap().getPlayerList()
+              .getPlayerInfoByIndex(i);
+          if (realm.isHuman() && !game.getStarMap().isHumanLost()) {
+            setNextState(GameState.GAME_END_VIEW, realm);
+          }
+          boolean lost = false;
+          for (int j = 0;
+              j < game.getStarMap().getPlayerList().getCurrentMaxRealms();
+              j++) {
+            PlayerInfo info = game.getStarMap().getPlayerList()
+                .getPlayerInfoByIndex(j);
+            DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(i);
+            if (list != null) {
+              lost = list.addBonus(DiplomacyBonusType.REALM_LOST,
+                  info.getRace());
+              if (lost && !terminateNews) {
+                terminateNews = true;
+                NewsData news = NewsFactory.makeLostNews(realm);
+                game.getStarMap().getNewsCorpData().addNews(news);
+              }
             }
           }
         }

@@ -503,7 +503,7 @@ public final class RandomEventUtility {
           sb.append("Terrorist were captured alive and sentence for life!");
         }
         ImageInstruction instructions = new ImageInstruction();
-        instructions.addImage(ImageInstruction.CONTAINERS);
+        instructions.addImage(ImageInstruction.TERROR);
         event.setImageInstructions(instructions.build());
         event.setText(sb.toString());
         Message message = new Message(MessageType.PLANETARY, event.getText(),

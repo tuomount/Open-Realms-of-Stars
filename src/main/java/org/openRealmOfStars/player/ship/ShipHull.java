@@ -151,6 +151,10 @@ public class ShipHull {
       this.metalCost = this.metalCost * 2;
       this.cost = this.cost * 3 / 2;
     }
+    if (race == SpaceRace.ALTEIRIANS && this.hullType == ShipHullType.ORBITAL) {
+      this.metalCost = this.metalCost / 2;
+      this.cost = this.cost / 2;
+    }
   }
 
   /**

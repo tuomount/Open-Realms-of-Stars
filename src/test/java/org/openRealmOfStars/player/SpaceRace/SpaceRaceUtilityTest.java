@@ -437,7 +437,8 @@ public class SpaceRaceUtilityTest {
         + "* War resistance: 50\n"
         + "* Rush: Credit\n"
         + "* Start planet value: 100\n"
-        + "* Special: Lives only on orbitals.";
+        + "* Special: Lives only on orbitals. Orbitals are cheaper and"
+        + " colonized planets have space port.";
     expectedResult[13] = "### Smaugirians\n"
         + "Smaugirians are humanoids that are known for smuggling goods. Their"
         + " cargo ships can contain single weapon or privateering modules.\n"

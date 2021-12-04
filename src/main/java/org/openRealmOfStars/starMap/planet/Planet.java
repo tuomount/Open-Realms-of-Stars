@@ -2163,6 +2163,9 @@ public class Planet {
     stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
     stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
     orbital = ship;
+    if (!hasCertainBuilding("Space port")) {
+      addBuilding(BuildingFactory.createByName("Space port"));
+    }
   }
   /**
    * Update planet for one turn

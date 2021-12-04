@@ -1728,7 +1728,8 @@ public enum SpaceRace {
     } else if (this == SpaceRace.LITHORIANS) {
       sb.append("Population eats metal instead of food.");
     } else if (this == SpaceRace.ALTEIRIANS) {
-      sb.append("Lives only on orbitals.");
+      sb.append("Lives only on orbitals. Orbitals are cheaper and colonized"
+          + " planets have space port.");
     } else if (this == SpaceRace.SMAUGIRIANS) {
       sb.append("Weapon allowed in cargo ships.");
     } else {

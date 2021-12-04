@@ -707,15 +707,14 @@ public class PlayerInfo {
     }
     case ALTEIRIANS: {
       /*
-       * Alteirians get 1 Combat, 1 Defense, Scout, Colony, minor orbital
+       * Alteirians get Railgun, shield, nuclear drive, Scout, Colony,
+       * minor orbital
        */
-      Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
+      Tech tech = TechFactory.createCombatTech("Railgun Mk1", 1);
       if (tech != null) {
         techList.addTech(tech);
       }
-      tech = TechFactory.createRandomTech(TechType.Defense, 1,
-          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
+      tech = TechFactory.createDefenseTech("Shield Mk1", 1);
       if (tech != null) {
         techList.addTech(tech);
       }
@@ -731,7 +730,7 @@ public class PlayerInfo {
       if (tech != null) {
         techList.addTech(tech);
       }
-      tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
+      tech = TechFactory.createPropulsionTech("Nuclear drive Mk1", 1);
       if (tech != null) {
         techList.addTech(tech);
       }

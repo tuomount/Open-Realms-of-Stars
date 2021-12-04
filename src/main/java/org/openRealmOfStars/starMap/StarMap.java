@@ -1378,7 +1378,9 @@ public class StarMap {
     playerInfo.getMsgList().addNewMessage(msg);
     playerInfo.setRuler(ruler);
 
-    planet.addBuilding(BuildingFactory.createByName("Space port"));
+    if (playerInfo.getRace() != SpaceRace.ALTEIRIANS) {
+      planet.addBuilding(BuildingFactory.createByName("Space port"));
+    }
     if (playerInfo.isHuman()) {
       // Adding starting building for human.
       planet.setUnderConstruction(ConstructionFactory.createByName(

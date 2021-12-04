@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -118,8 +119,10 @@ public final class PlanetHandling {
         .getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_CREDITS, index);
     PlayerInfo info = map.getPlayerByIndex(index);
     if (info != null) {
+      int totalResearch = map.getTotalProductionByPlayerPerTurn(
+          Planet.PRODUCTION_RESEARCH, index);
       Attitude attitude = info.getAiAttitude();
-      handlePlanetPopulation(planet, info);
+      handlePlanetPopulation(planet, info, totalResearch);
       if (credit < 0
           && planet.getTax() < planet.getTotalProduction(
               Planet.PRODUCTION_PRODUCTION) + 2) {
@@ -1342,15 +1345,18 @@ public final class PlanetHandling {
    * Handle Mechion population on planet
    * @param planet Which to handle
    * @param info Planet owner
+   * @param totalResearch Total research of realm
    */
   protected static void handleMechionPopulation(final Planet planet,
-      final PlayerInfo info) {
+      final PlayerInfo info, final int totalResearch) {
     int total = planet.getTotalPopulation();
     int metalProd = planet.getTotalProductionFromBuildings(
         Planet.PRODUCTION_METAL);
     int prodProd = planet.getTotalProductionFromBuildings(
         Planet.PRODUCTION_PRODUCTION);
     int resProd = planet.getTotalProductionFromBuildings(
+        Planet.PRODUCTION_RESEARCH);
+    int otherWorldResearch = totalResearch - planet.getTotalProduction(
         Planet.PRODUCTION_RESEARCH);
     int happiness = planet.calculateHappiness();
     if (!info.getGovernment().isImmuneToHappiness()) {
@@ -1362,7 +1368,7 @@ public final class PlanetHandling {
       int reseAdd = 0;
       int cultAdd = 0;
       total--;
-      if (resProd < 2) {
+      if (resProd < 2 && otherWorldResearch < 2) {
         reseAdd = 2;
         total = total - 2;
       }
@@ -1398,19 +1404,53 @@ public final class PlanetHandling {
         break;
       }
       case 2: {
-        planet.setWorkers(Planet.FOOD_FARMERS, 0);
-        planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-        planet.setWorkers(Planet.METAL_MINERS, 1);
-        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL
+            || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          if (otherWorldResearch > 3) {
+            planet.setWorkers(Planet.FOOD_FARMERS, 0);
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+            planet.setWorkers(Planet.METAL_MINERS, 1);
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+          } else {
+            planet.setWorkers(Planet.FOOD_FARMERS, 0);
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+            planet.setWorkers(Planet.METAL_MINERS, 0);
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+          }
+        } else {
+          planet.setWorkers(Planet.FOOD_FARMERS, 0);
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          planet.setWorkers(Planet.METAL_MINERS, 1);
+          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        }
         break;
       }
       case 3: {
-        planet.setWorkers(Planet.FOOD_FARMERS, 0);
-        planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-        planet.setWorkers(Planet.METAL_MINERS, 0);
-        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL
+            || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          if (otherWorldResearch > 3) {
+            planet.setWorkers(Planet.FOOD_FARMERS, 0);
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+            planet.setWorkers(Planet.METAL_MINERS, 2);
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+          } else {
+            planet.setWorkers(Planet.FOOD_FARMERS, 0);
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+            planet.setWorkers(Planet.METAL_MINERS, 0);
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+          }
+        } else {
+          planet.setWorkers(Planet.FOOD_FARMERS, 0);
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          planet.setWorkers(Planet.METAL_MINERS, 0);
+          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        }
         break;
       }
       default: {
@@ -1727,14 +1767,18 @@ public final class PlanetHandling {
    * Handle Alteirian population
    * @param planet Planet to handle
    * @param info Owner of the planet
+   * @param totalResearch Total research of the realm
    */
   protected static void handleAlteirianPopulation(final Planet planet,
-      final PlayerInfo info) {
+      final PlayerInfo info, final int totalResearch) {
     int food = planet.getFoodProdByPlanetAndBuildings();
     int total = planet.getTotalPopulation();
     int foodReq = total * info.getRace().getFoodRequire() / 100;
     int farmersReq = foodReq - food;
     int happy = planet.calculateHappiness();
+    int otherWorldResearch = totalResearch - planet.getTotalProduction(
+        Planet.PRODUCTION_RESEARCH);
+    int buildingTime = planet.getProductionTime(planet.getUnderConstruction());
     if (total < planet.getPopulationLimit() && farmersReq >= 0
         && farmersReq < total) {
       farmersReq++;
@@ -1751,6 +1795,11 @@ public final class PlanetHandling {
     if (farmersReq > 0) {
       planet.setWorkers(Planet.FOOD_FARMERS, farmersReq);
       total = total - farmersReq;
+    }
+    if (info.getAiDifficulty() == AiDifficulty.CHALLENGING
+      && buildingTime > 5 && otherWorldResearch > 1 && total > 1) {
+      workers = workers + 2;
+      total = total - 2;
     }
     if (planet.getTotalProductionFromBuildings(
         Planet.PRODUCTION_RESEARCH) == 0 && total > 0) {
@@ -1907,9 +1956,10 @@ public final class PlanetHandling {
    * Handle planet population positions
    * @param planet Planet to handle
    * @param info Player who owns the planet
+   * @param totalResearch Total research value for whole realm
    */
   protected static void handlePlanetPopulation(final Planet planet,
-      final PlayerInfo info) {
+      final PlayerInfo info, final int totalResearch) {
     int population = planet.getTotalPopulation();
     if (population <= 0) {
       throw new IllegalArgumentException("Population less than one!"
@@ -1917,7 +1967,7 @@ public final class PlanetHandling {
     }
     int branch = -1;
     if (info.getRace() == SpaceRace.MECHIONS) {
-      handleMechionPopulation(planet, info);
+      handleMechionPopulation(planet, info, totalResearch);
       branch = 0;
     } else if (info.getRace() == SpaceRace.HOMARIANS) {
       handleHomarianPopulation(planet, info);
@@ -1929,7 +1979,7 @@ public final class PlanetHandling {
       handleLithorianPopulation(planet, info);
       branch = 3;
     } else if (info.getRace() == SpaceRace.ALTEIRIANS) {
-      handleAlteirianPopulation(planet, info);
+      handleAlteirianPopulation(planet, info, totalResearch);
       branch = 4;
     } else {
       // Handle races whom need something to eat and have regular research

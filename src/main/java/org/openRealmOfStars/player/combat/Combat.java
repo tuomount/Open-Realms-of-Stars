@@ -675,6 +675,11 @@ public boolean launchIntercept(final int distance,
           && planet.getPlanetPlayerInfo().getRace() == SpaceRace.ALTEIRIANS) {
         orbitalDestroyedNews = NewsFactory.makeAlteirianLoseOrbitalNews(
             attackerInfo, defenderInfo, planet, attackerPrivateer);
+        planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+        planet.setWorkers(Planet.FOOD_FARMERS, 0);
+        planet.setWorkers(Planet.METAL_MINERS, 0);
+        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
         if (planet.getGovernor() != null) {
           planet.getGovernor().setJob(Job.DEAD);
           planet.setGovernor(null);

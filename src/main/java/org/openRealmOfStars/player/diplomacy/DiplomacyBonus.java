@@ -37,13 +37,16 @@ public class DiplomacyBonus {
    switch (type) {
      case BORDER_CROSSED: {
        if (race == SpaceRace.SPORKS || race == SpaceRace.SCAURIANS) {
-         bonusValue = -1;
-         bonusLasting = 10;
+         bonusValue = -2;
+         bonusLasting = 15;
        } else if (race == SpaceRace.MECHIONS) {
          bonusValue = -3;
-         bonusLasting = 10;
+         bonusLasting = 15;
+       } else if (race == SpaceRace.SMAUGIRIANS) {
+         bonusValue = -1;
+         bonusLasting = 20;
        } else {
-         bonusValue = -2;
+         bonusValue = -3;
          bonusLasting = 20;
        }
        break;

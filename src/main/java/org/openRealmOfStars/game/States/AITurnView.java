@@ -2816,7 +2816,7 @@ public class AITurnView extends BlackPanel {
           if (ruler != null) {
             handlePowerHungryKill(leader, realm, ruler);
           } else {
-            Leader nextheir = LeaderUtility.getNextHeir(realm);
+            Leader nextheir = LeaderUtility.getNextPossbileHeir(realm);
             if (nextheir != null && nextheir.getJob() == Job.TOO_YOUNG) {
               handlePowerHungryKill(leader, realm, nextheir);
             }

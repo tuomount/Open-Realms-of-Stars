@@ -694,6 +694,27 @@ public final class LeaderUtility {
     }
     return bestLeader;
   }
+  /**
+   * Get next possible heir leader for ruler.
+   * @param realm PlayerInfo
+   * @return heir leader in realm.
+   */
+  public static Leader getNextPossbileHeir(final PlayerInfo realm) {
+    Leader bestLeader = null;
+    int value = 0;
+    for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() == Job.DEAD
+          || leader.getJob() == Job.PRISON) {
+        continue;
+      }
+      int score = getStrongHeirPoints(leader);
+      if (score > value) {
+        bestLeader = leader;
+        value = score;
+      }
+    }
+    return bestLeader;
+  }
 
   /**
    * Get How strong heir is.

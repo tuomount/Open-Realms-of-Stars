@@ -7,7 +7,7 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018, 2019 Tuomo Untinen
+ * Copyright (C) 2016, 2018-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -588,7 +588,7 @@ public final class BuildingFactory {
           BuildingType.MILITARY);
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
-      tmp.setDescription("Big and powerful defense turret");
+      tmp.setDescription("Big and powerful defense turret.");
       tmp.setDefenseDamage(3);
       tmp.setHappiness(1);
       return tmp;
@@ -599,7 +599,7 @@ public final class BuildingFactory {
           BuildingType.MILITARY);
       tmp.setProdCost(50);
       tmp.setMetalCost(50);
-      tmp.setDescription("Huge defense turret");
+      tmp.setDescription("Huge defense turret.");
       tmp.setDefenseDamage(6);
       tmp.setHappiness(1);
       return tmp;
@@ -610,7 +610,7 @@ public final class BuildingFactory {
           BuildingType.MILITARY);
       tmp.setProdCost(70);
       tmp.setMetalCost(70);
-      tmp.setDescription("Biggest and meanest defense turret");
+      tmp.setDescription("Biggest and meanest defense turret.");
       tmp.setDefenseDamage(9);
       tmp.setHappiness(1);
       return tmp;
@@ -620,7 +620,7 @@ public final class BuildingFactory {
           Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
       tmp.setProdCost(16);
       tmp.setMetalCost(16);
-      tmp.setDescription("Planetary scanner Mk1");
+      tmp.setDescription("Planetary scanner to scan fleets around the planet.");
       tmp.setScanRange(3);
       tmp.setScanCloakingDetection(40);
       tmp.setSingleAllowed(true);
@@ -631,7 +631,8 @@ public final class BuildingFactory {
           Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
       tmp.setProdCost(24);
       tmp.setMetalCost(24);
-      tmp.setDescription("Planetary scanner Mk2");
+      tmp.setDescription("Planetary scanner to scan fleets around the planet.\n"
+          + "This is the improved version.");
       tmp.setScanRange(4);
       tmp.setScanCloakingDetection(80);
       tmp.setSingleAllowed(true);
@@ -642,7 +643,8 @@ public final class BuildingFactory {
           Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
       tmp.setProdCost(40);
       tmp.setMetalCost(40);
-      tmp.setDescription("Planetary scanner Mk3");
+      tmp.setDescription("Planetary scanner to scan fleets around the planet.\n"
+          + "Now with increased range.");
       tmp.setScanRange(5);
       tmp.setScanCloakingDetection(100);
       tmp.setSingleAllowed(true);
@@ -653,7 +655,8 @@ public final class BuildingFactory {
           Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
       tmp.setProdCost(60);
       tmp.setMetalCost(60);
-      tmp.setDescription("Planetary scanner Mk4");
+      tmp.setDescription("Planetary scanner to scan fleets around the planet.\n"
+          + "Even longer range.");
       tmp.setScanRange(6);
       tmp.setScanCloakingDetection(120);
       tmp.setSingleAllowed(true);
@@ -664,7 +667,8 @@ public final class BuildingFactory {
           Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
       tmp.setProdCost(80);
       tmp.setMetalCost(80);
-      tmp.setDescription("Planetary scanner Mk5");
+      tmp.setDescription("Planetary scanner to scan fleet around the planet.\n"
+          + "Best planetary scanner available.");
       tmp.setScanRange(7);
       tmp.setScanCloakingDetection(140);
       tmp.setSingleAllowed(true);
@@ -938,7 +942,7 @@ public final class BuildingFactory {
       tmp.setHappiness(0);
       tmp.setProdCost(200);
       tmp.setMetalCost(40);
-      tmp.setDescription("Massive material replicator");
+      tmp.setDescription("Massive material replicator.");
       tmp.setScientificAchievement(true);
       tmp.setSingleAllowed(true);
       tmp.setMaterialBonus(2);
@@ -999,7 +1003,7 @@ public final class BuildingFactory {
     if (index == COMPONENT_SPACE_PORT) {
       tmp = new Building(index, "Space port",
           Icons.getIconByName(Icons.ICON_STARBASE), BuildingType.MILITARY);
-      tmp.setDescription("Allows building the space ships.");
+      tmp.setDescription("Allows building the space ships and orbitals.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(0.5);
@@ -1035,7 +1039,7 @@ public final class BuildingFactory {
     if (index == COMPONENT_MARKET_CENTER) {
       tmp = new Building(index, "Market center",
           Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
-      tmp.setDescription("All sort of goods are sold.");
+      tmp.setDescription("Market center has all sort of goods to sell.");
       tmp.setProdCost(12);
       tmp.setMetalCost(6);
       tmp.setMaintenanceCost(0);
@@ -1068,7 +1072,8 @@ public final class BuildingFactory {
     if (index == COMPONENT_EXTREME_SPORTS_CENTER) {
       tmp = new Building(index, "Extreme sports center",
           Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
-      tmp.setDescription("Violent sports is a culture too.");
+      tmp.setDescription("Violent sports is a culture too. Violet sports fans\n"
+          + "get very angry if they are going miss next match due invasion.");
       tmp.setProdCost(30);
       tmp.setMetalCost(22);
       tmp.setMaintenanceCost(0.5);
@@ -1105,7 +1110,8 @@ public final class BuildingFactory {
     if (index == COMPONENT_STOCK_MARKET) {
       tmp = new Building(index, "Stock market",
           Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
-      tmp.setDescription("Planetary stock market");
+      tmp.setDescription("Planetary stock market, where stonks\n"
+          + "rising to the orbit.");
       tmp.setProdCost(36);
       tmp.setMetalCost(24);
       tmp.setMaintenanceCost(0);
@@ -1118,7 +1124,8 @@ public final class BuildingFactory {
           Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
       tmp.setDescription(
             "Galactic Olympics stadium where \n"
-          + "best atheletes compete each others.");
+          + "best atheletes compete each others. Building Galactic Olympics\n"
+          + "stadium has possible diplomacy bonuses towards other realms.");
       tmp.setProdCost(40);
       tmp.setMetalCost(30);
       tmp.setMaintenanceCost(1);
@@ -1143,7 +1150,8 @@ public final class BuildingFactory {
     if (index == COMPONENT_VR_MOVIE_CENTER) {
       tmp = new Building(index, "VR movie center",
           Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
-      tmp.setDescription("Galactic VR movie studio");
+      tmp.setDescription("Galactic VR movie studio, where big galatic\n"
+          + "block buster are being made.");
       tmp.setProdCost(30);
       tmp.setMetalCost(30);
       tmp.setCredBonus(2);
@@ -1168,7 +1176,8 @@ public final class BuildingFactory {
     if (index == COMPONENT_GALACTIC_BANK) {
       tmp = new Building(index, "Galactic bank",
           Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
-      tmp.setDescription("Galactic bank is good business.");
+      tmp.setDescription("Galactic bank is good business. Does stonks go all\n"
+          + "the way to out space?");
       tmp.setProdCost(40);
       tmp.setMetalCost(20);
       tmp.setCredBonus(4);
@@ -1319,7 +1328,7 @@ public final class BuildingFactory {
       tmp.setProdCost(30);
       tmp.setMetalCost(30);
       tmp.setDescription("Orbital elevator that increases production"
-          + " and give happiness.");
+          + " and give happiness. Plus makes a bit credit for builder.");
       tmp.setFactBonus(1);
       tmp.setCredBonus(1);
       tmp.setHappiness(1);
@@ -1334,7 +1343,7 @@ public final class BuildingFactory {
       tmp.setProdCost(40);
       tmp.setMetalCost(40);
       tmp.setDescription("Orbital elevator that increases production"
-          + " and give happiness.");
+          + " and give happiness. Now with bigger elevator.");
       tmp.setFactBonus(2);
       tmp.setCredBonus(1);
       tmp.setHappiness(1);

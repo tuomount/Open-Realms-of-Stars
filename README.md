@@ -48,8 +48,8 @@ See more [screenshots](https://github.com/tuomount/Open-Realms-of-Stars/tree/mas
 ### Features
 
  * Randomized galaxy with three different starting placements
- * 12 different space races to play
- * 21 different government types to play
+ * 14 different space races to play
+ * 23 different government types to play
  * Any realm can start as ancient realm even human player
  * Random events
  * Planetary events
@@ -69,6 +69,7 @@ See more [screenshots](https://github.com/tuomount/Open-Realms-of-Stars/tree/mas
  * Each new technology will give either new ship component, ship hull or planetary improvement.
  * All ships are designed based on currently available technology
  * AI does not cheat and each AI is trying to make their own realm as strong as possible
+ * 3 Difficulty levels to choose for each AI realm.
  * Turn based space combat
  * Planets can conquered with troops and bombs
 
@@ -92,15 +93,6 @@ marks need to correspond to the correct build version.
 Git project also contains an Eclipse project which should automatically compile it.
 All java files under src folder needs to be compiled. Even when compiling Eclipse
 run first maven command (``mvn install``) to fetch all the dependencies.
-
-### Troubleshooting on compile
-
-If you encounter following error while running command ``mvn install``:
-``Error: Could not find or load main class org.apache.maven.surefire.booter.ForkedBooter``
-it is due bug in certain OpenJDK or Oracle Java version. See more information on Launchpad:
-https://bugs.launchpad.net/ubuntu/+source/openjdk-8/+bug/1800792
-
-Workaround is to use following command instead: (``mvn install -DforkCount=0``)
 
 ## Warning about using non stable version
 Compiling non-stable releases is not recommended.
@@ -133,6 +125,7 @@ Run the code through JUnits and checkstyle before making a pull request. This ca
  * Commit messages should be descriptive. If you are fixing an issue start commit line with #ISSUENUMBER.
  * Pull request should not contain merge commits from other branches.
  * Contributors retain their original copyrights. All code contributions must be under GPL2.0.
+ * Please try to implement JUnit for your code.
  
 I will try to take a look at pull requests as fast as I can. 
 If you are adding any new assets take a look at the next section for instructions.

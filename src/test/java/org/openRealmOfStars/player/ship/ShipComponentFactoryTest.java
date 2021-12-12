@@ -64,6 +64,12 @@ public class ShipComponentFactoryTest {
     assertEquals(3, weapon.getEnergyRequirement());
     assertEquals(5, weapon.getCost());
     assertEquals(5, weapon.getMetalCost());
+    weapon = ShipComponentFactory.createByName("Callisto multicannon Mk1");
+    assertEquals(5, weapon.getDamage());
+    assertEquals(1, weapon.getWeaponRange());
+    assertEquals(0, weapon.getEnergyRequirement());
+    assertEquals(4, weapon.getCost());
+    assertEquals(4, weapon.getMetalCost());
   }
 
   @Test

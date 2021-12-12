@@ -96,7 +96,7 @@ public final class TechFactory {
    * Rare combat tech names for level 6.
    */
   public static final String[] COMBAT_RARE_TECH_LEVEL7_NAMES = {
-      "Ion cannon Mk3", "Plasma cannon Mk4"};
+      "Ion cannon Mk3", "Plasma cannon Mk4", "Callisto multicannon Mk1"};
   /**
    * Combat tech names for level 8
    */
@@ -544,6 +544,9 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_TROOPS));
         } else if (techName.startsWith("Tractor beam")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_TRACTOR_BEAM));
+          tech.setRareTech(true);
+        } else if (techName.startsWith("Callisto multicannon Mk1")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));
           tech.setRareTech(true);
         } else if (techName.startsWith("Ion cannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));

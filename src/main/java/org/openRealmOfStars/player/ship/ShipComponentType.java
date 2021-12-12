@@ -152,7 +152,12 @@ public enum ShipComponentType {
   /**
    * Ion cannon to make destroy shields and hull.
    */
-  ION_CANNON;
+  ION_CANNON,
+   /**
+   * Callisto is a multicannon and it has been defined as a hybrid weapon.
+   * Callisto is between railgun and missiles.
+   */
+  CALLISTO_MULTICANNON;
 
   /**
    * Get ShipComponentType index
@@ -220,6 +225,8 @@ public enum ShipComponentType {
       return 28;
     case ION_CANNON:
       return 29;
+    case CALLISTO_MULTICANNON:
+      return 30;
     default:
       return 0;
     }
@@ -292,6 +299,8 @@ public enum ShipComponentType {
       return ShipComponentType.PLASMA_CANNON;
     case 29:
       return ShipComponentType.ION_CANNON;
+    case 30:
+      return ShipComponentType.CALLISTO_MULTICANNON;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -360,6 +369,8 @@ public enum ShipComponentType {
       return "Plasma cannon";
     case ION_CANNON:
       return "Ion cannon";
+    case CALLISTO_MULTICANNON:
+      return "Callisto multicannon";
     default:
       return "Error - Unknown";
     }
@@ -431,6 +442,8 @@ public enum ShipComponentType {
       return Icons.ICON_PLASMA_CANNON;
     case ION_CANNON:
       return Icons.ICON_ION_CANNON;
+    case CALLISTO_MULTICANNON:
+      return Icons.ICON_ION_CANNON;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }
@@ -455,6 +468,7 @@ public enum ShipComponentType {
           return 75;
       case WEAPON_ECM_TORPEDO:
       case WEAPON_HE_MISSILE:
+      case CALLISTO_MULTICANNON:
       default:
           return 50;
       }

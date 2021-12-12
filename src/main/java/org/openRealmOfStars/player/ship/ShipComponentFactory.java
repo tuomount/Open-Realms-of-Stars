@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 176;
+  private static final int MAX_SHIPCOMPONENT = 177;
 
   /**
    * Component Ion drive Mk1
@@ -897,6 +897,10 @@ public final class ShipComponentFactory {
    * Ion cannon Mk4
    */
   public static final int COMPONENT_ION_CANNON_MK4 = 175;
+  /**
+   * Callisto multicannon Mk1
+   */
+  public static final int COMPONENT_CALLISTO_MULTICANNON_MK1 = 176;
 
 /**
    * Create ShipComponent with matching name
@@ -1479,6 +1483,9 @@ public final class ShipComponentFactory {
     case COMPONENT_ION_CANNON_MK4:
       tmp = createWeapon(index);
       break; // Ion cannon Mk4
+    case COMPONENT_CALLISTO_MULTICANNON_MK1:
+      tmp = createWeapon(index);
+      break; // Callisto multicannon Mk1
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -2531,6 +2538,13 @@ public final class ShipComponentFactory {
       tmp.setDamage(9);
       tmp.setWeaponRange(3);
       tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_CALLISTO_MULTICANNON_MK1) {
+      tmp = new ShipComponent(index, "Callisto multicannon Mk1", 4, 4,
+          ShipComponentType.CALLISTO_MULTICANNON);
+      tmp.setDamage(5);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(0);
     }
     return tmp;
 

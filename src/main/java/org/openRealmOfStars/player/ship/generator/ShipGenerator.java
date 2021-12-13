@@ -282,6 +282,7 @@ public final class ShipGenerator {
       case WEAPON_PHOTON_TORPEDO:
       case PLASMA_CANNON:
       case ION_CANNON:
+      case CALLISTO_MULTICANNON:
       case WEAPON_RAILGUN: {
         scores[i] = scores[i] + comp.getDamage() * 5;
         break;
@@ -540,6 +541,12 @@ public final class ShipGenerator {
       }
       weapTech = player.getTechList()
           .getBestWeapon(ShipComponentType.WEAPON_RAILGUN);
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList()
+          .getBestWeapon(ShipComponentType.CALLISTO_MULTICANNON);
       if (weapTech != null) {
         components
             .add(ShipComponentFactory.createByName(weapTech.getComponent()));
@@ -1170,6 +1177,12 @@ public final class ShipGenerator {
               .add(ShipComponentFactory.createByName(weapTech.getComponent()));
         }
         weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.CALLISTO_MULTICANNON);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
             .getBestWeapon(ShipComponentType.PLASMA_CANNON);
         if (weapTech != null) {
           components
@@ -1395,6 +1408,12 @@ public final class ShipGenerator {
         }
         weapTech = player.getTechList()
             .getBestWeapon(ShipComponentType.WEAPON_RAILGUN);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.CALLISTO_MULTICANNON);
         if (weapTech != null) {
           components
               .add(ShipComponentFactory.createByName(weapTech.getComponent()));

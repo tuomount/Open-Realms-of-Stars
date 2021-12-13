@@ -41,12 +41,13 @@ public final class TechFactory {
    * Combat tech names for level 1
    */
   public static final String[] COMBAT_TECH_LEVEL1_NAMES = {"Laser Mk1",
-      "Railgun Mk1", "Photon torpedo Mk1" };
+      "Railgun Mk1", "Photon torpedo Mk1", "Callisto multicannon Mk1" };
   /**
    * Combat tech names for level 2
    */
   public static final String[] COMBAT_TECH_LEVEL2_NAMES = {"Laser Mk2",
-      "Railgun Mk2", "Photon torpedo Mk2", "Planetary invasion module" };
+      "Railgun Mk2", "Photon torpedo Mk2",
+      "Planetary invasion module", "Callisto multicannon Mk2" };
   /**
    * Rare combat tech names for level 2.
    */
@@ -57,7 +58,7 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL3_NAMES = {"Laser Mk3",
       "Railgun Mk3", "Photon torpedo Mk3", "ECM torpedo Mk1",
-      "HE missile Mk1", "Orbital bombs Mk1"};
+      "HE missile Mk1", "Orbital bombs Mk1", "Callisto multicannon Mk3" };
   /**
    * Rare combat tech names for level 3.
    */
@@ -68,13 +69,13 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL4_NAMES = {"Laser Mk4",
       "Railgun Mk4", "Photon torpedo Mk4", "ECM torpedo Mk2", "HE missile Mk2",
-      "Orbital nuke" };
+      "Orbital nuke", "Callisto multicannon Mk4" };
   /**
    * Combat tech names for level 5
    */
   public static final String[] COMBAT_TECH_LEVEL5_NAMES = {"Laser Mk5",
       "Railgun Mk5", "Photon torpedo Mk5", "ECM torpedo Mk3", "HE missile Mk3",
-      "Orbital bombs Mk2" };
+      "Orbital bombs Mk2", "Callisto multicannon Mk5" };
   /**
    * Rare combat tech names for level 5.
    */
@@ -85,7 +86,7 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL6_NAMES = {"Phasors Mk1",
       "Massdrive Mk1", "Photon torpedo Mk6", "ECM torpedo Mk4",
-      "HE missile Mk4", "Orbital fusion bomb" };
+      "HE missile Mk4", "Orbital fusion bomb", "Callisto multicannon Mk6" };
   /**
    * Combat tech names for level 7
    */
@@ -96,7 +97,7 @@ public final class TechFactory {
    * Rare combat tech names for level 6.
    */
   public static final String[] COMBAT_RARE_TECH_LEVEL7_NAMES = {
-      "Ion cannon Mk3", "Plasma cannon Mk4", "Callisto multicannon Mk1"};
+      "Ion cannon Mk3", "Plasma cannon Mk4" };
   /**
    * Combat tech names for level 8
    */
@@ -545,9 +546,8 @@ public final class TechFactory {
         } else if (techName.startsWith("Tractor beam")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_TRACTOR_BEAM));
           tech.setRareTech(true);
-        } else if (techName.startsWith("Callisto multicannon Mk1")) {
+        } else if (techName.startsWith("Callisto multicannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));
-          tech.setRareTech(true);
         } else if (techName.startsWith("Ion cannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));
           tech.setRareTech(true);

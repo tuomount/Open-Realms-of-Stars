@@ -466,9 +466,10 @@ public enum ShipComponentType {
       case PLASMA_CANNON:
       case ION_CANNON:
           return 75;
+      case CALLISTO_MULTICANNON:
+          return 60;
       case WEAPON_ECM_TORPEDO:
       case WEAPON_HE_MISSILE:
-      case CALLISTO_MULTICANNON:
       default:
           return 50;
       }

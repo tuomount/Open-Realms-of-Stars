@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 177;
+  private static final int MAX_SHIPCOMPONENT = 182;
 
   /**
    * Component Ion drive Mk1
@@ -901,6 +901,26 @@ public final class ShipComponentFactory {
    * Callisto multicannon Mk1
    */
   public static final int COMPONENT_CALLISTO_MULTICANNON_MK1 = 176;
+    /**
+   * Callisto multicannon Mk2
+   */
+  public static final int COMPONENT_CALLISTO_MULTICANNON_MK2 = 177;
+  /**
+   * Callisto multicannon Mk3
+   */
+  public static final int COMPONENT_CALLISTO_MULTICANNON_MK3 = 178;
+  /**
+   * Callisto multicannon Mk4
+   */
+  public static final int COMPONENT_CALLISTO_MULTICANNON_MK4 = 179;
+    /**
+   * Callisto multicannon Mk5
+   */
+  public static final int COMPONENT_CALLISTO_MULTICANNON_MK5 = 180;
+    /**
+   * Callisto multicannon Mk6
+   */
+  public static final int COMPONENT_CALLISTO_MULTICANNON_MK6 = 181;
 
 /**
    * Create ShipComponent with matching name
@@ -1486,6 +1506,21 @@ public final class ShipComponentFactory {
     case COMPONENT_CALLISTO_MULTICANNON_MK1:
       tmp = createWeapon(index);
       break; // Callisto multicannon Mk1
+    case COMPONENT_CALLISTO_MULTICANNON_MK2:
+      tmp = createWeapon(index);
+      break; // Callisto multicannon Mk2
+    case COMPONENT_CALLISTO_MULTICANNON_MK3:
+      tmp = createWeapon(index);
+      break; // Callisto multicannon Mk3
+    case COMPONENT_CALLISTO_MULTICANNON_MK4:
+      tmp = createWeapon(index);
+      break; // Callisto multicannon Mk4
+    case COMPONENT_CALLISTO_MULTICANNON_MK5:
+      tmp = createWeapon(index);
+      break; // Callisto multicannon Mk5
+    case COMPONENT_CALLISTO_MULTICANNON_MK6:
+      tmp = createWeapon(index);
+      break; // Callisto multicannon Mk6
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -2540,9 +2575,44 @@ public final class ShipComponentFactory {
       tmp.setEnergyRequirement(2);
     }
     if (index == COMPONENT_CALLISTO_MULTICANNON_MK1) {
-      tmp = new ShipComponent(index, "Callisto multicannon Mk1", 4, 4,
+      tmp = new ShipComponent(index, "Callisto multicannon Mk1", 3, 3,
+          ShipComponentType.CALLISTO_MULTICANNON);
+      tmp.setDamage(1);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(0);
+    }
+    if (index == COMPONENT_CALLISTO_MULTICANNON_MK2) {
+      tmp = new ShipComponent(index, "Callisto multicannon Mk2", 3, 3,
+          ShipComponentType.CALLISTO_MULTICANNON);
+      tmp.setDamage(2);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(0);
+    }
+    if (index == COMPONENT_CALLISTO_MULTICANNON_MK3) {
+      tmp = new ShipComponent(index, "Callisto multicannon Mk3", 3, 3,
+          ShipComponentType.CALLISTO_MULTICANNON);
+      tmp.setDamage(3);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(0);
+    }
+    if (index == COMPONENT_CALLISTO_MULTICANNON_MK4) {
+      tmp = new ShipComponent(index, "Callisto multicannon Mk4", 3, 3,
+          ShipComponentType.CALLISTO_MULTICANNON);
+      tmp.setDamage(4);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(0);
+    }
+    if (index == COMPONENT_CALLISTO_MULTICANNON_MK5) {
+      tmp = new ShipComponent(index, "Callisto multicannon Mk5", 3, 3,
           ShipComponentType.CALLISTO_MULTICANNON);
       tmp.setDamage(5);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(0);
+    }
+    if (index == COMPONENT_CALLISTO_MULTICANNON_MK6) {
+      tmp = new ShipComponent(index, "Callisto multicannon Mk6", 3, 3,
+          ShipComponentType.CALLISTO_MULTICANNON);
+      tmp.setDamage(6);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(0);
     }

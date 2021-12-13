@@ -170,6 +170,7 @@ public class CombatTest {
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
     info1.setEmpireName("Terran alliance");
     info2.setEmpireName("Spork empire");
+    info1.getTechList().addTech(TechFactory.createCombatTech("Photon torpedo Mk2", 2));
     ShipDesign design1 = ShipGenerator.createBattleShip(
         info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createColony(info2, false);
@@ -232,6 +233,7 @@ public class CombatTest {
   public void testRealCombat2() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    info1.getTechList().addTech(TechFactory.createCombatTech("Photon torpedo Mk2", 2));
     ShipDesign design1 = ShipGenerator.createBattleShip(
         info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createColony(info2, false);

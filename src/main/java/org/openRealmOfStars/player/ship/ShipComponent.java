@@ -176,6 +176,7 @@ public class ShipComponent {
         || type == ShipComponentType.WEAPON_HE_MISSILE
         || type == ShipComponentType.WEAPON_PHOTON_TORPEDO
         || type == ShipComponentType.WEAPON_RAILGUN
+        || type == ShipComponentType.CALLISTO_MULTICANNON
         || type == ShipComponentType.PLASMA_CANNON
         || type == ShipComponentType.ION_CANNON) {
       return true;
@@ -682,6 +683,17 @@ public class ShipComponent {
       sb.append("\nHit: 75%, 50% penetrates shields");
       sb.append("\n\n");
       sb.append("Medium range weapon with 75% accuracy.");
+      sb.append("\n");
+      break;
+    }
+    case CALLISTO_MULTICANNON: {
+      sb.append("Damage: ");
+      sb.append(getDamage());
+      sb.append(" Range: ");
+      sb.append(getWeaponRange());
+      sb.append("\nHit: 60%, 50% penetrates shields");
+      sb.append("\n\n");
+      sb.append("Short range weapon with 60% accuracy.");
       sb.append("\n");
       break;
     }

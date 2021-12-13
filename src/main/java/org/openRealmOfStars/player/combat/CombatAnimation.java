@@ -325,6 +325,7 @@ public class CombatAnimation {
         initType = CombatAnimationType.PLASMA_BEAM;
         break;
       }
+      case CALLISTO_MULTICANNON:
       case WEAPON_RAILGUN: {
         initType = CombatAnimationType.RAILGUN;
         break;

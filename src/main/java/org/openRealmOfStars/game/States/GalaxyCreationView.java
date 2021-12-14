@@ -206,7 +206,14 @@ public class GalaxyCreationView extends BlackPanel {
 
     InvisiblePanel invisible = new InvisiblePanel(imgBase);
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
-    invisible.add(Box.createRigidArea(new Dimension(500, 150)));
+    int extraBoxHeight = 150;
+    if (listener instanceof Game) {
+      Game game = (Game) listener;
+      if (game.getHeight() < 960) {
+        extraBoxHeight = 100;
+      }
+    }
+    invisible.add(Box.createRigidArea(new Dimension(500, extraBoxHeight)));
 
     InvisiblePanel xinvis = new InvisiblePanel(invisible);
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
@@ -226,7 +233,7 @@ public class GalaxyCreationView extends BlackPanel {
     xinvis.add(createRealmSetupPanel(listener));
     xinvis.add(Box.createRigidArea(new Dimension(extraBoxWidth, 5)));
     invisible.add(xinvis);
-    invisible.add(Box.createRigidArea(new Dimension(200, 300)));
+    invisible.add(Box.createRigidArea(new Dimension(200, extraBoxHeight * 2)));
 
     imgBase.add(invisible, BorderLayout.CENTER);
 

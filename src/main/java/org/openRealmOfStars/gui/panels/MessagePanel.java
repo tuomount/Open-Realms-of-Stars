@@ -122,8 +122,11 @@ public class MessagePanel extends JPanel {
 
     msgText = new BaseInfoTextArea(2, 15);
     msgText.setEditable(false);
+    msgText.setLineWrap(true);
+    msgText.setWrapStyleWord(true);
     JScrollPane scroll = new JScrollPane(msgText);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     this.add(scroll);
 
     updatePanel(msg, index, maxIndex);

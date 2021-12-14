@@ -153,6 +153,8 @@ public class VoteView extends BlackPanel {
     votingInfoText = new InfoTextArea();
     votingInfoText.setEditable(false);
     votingInfoText.setFont(GuiStatics.getFontCubellanSmaller());
+    votingInfoText.setWrapStyleWord(true);
+    votingInfoText.setLineWrap(true);
     votingInfoTitle.add(votingInfoText, BorderLayout.CENTER);
     center.add(votingInfoTitle);
     EmptyInfoPanel panelx = new EmptyInfoPanel();

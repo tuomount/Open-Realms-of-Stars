@@ -18,6 +18,7 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.utilities.TextUtilities;
 
 /**
  *
@@ -143,7 +144,8 @@ public class MessagePanel extends JPanel {
     countLabel.setText(msgIndex + "/" + max);
     titleLabel.setText(msg.getType().toString());
     titleLabel.setLeftIcon(msg.getIcon());
-    msgText.setText(msg.getMessage());
+    msgText.setText(TextUtilities.removeLineChanges(msg.getMessage()));
+    msgText.setCaretPosition(0);
     if (msg.getType() == MessageType.INFORMATION) {
       btnFocus.setEnabled(false);
     } else {

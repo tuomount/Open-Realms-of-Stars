@@ -454,6 +454,10 @@ public class Game implements ActionListener {
    */
   private boolean fullscreenMode = false;
   /**
+   * Has resolution changed in options.
+   */
+  private boolean resolutionChanged = false;
+  /**
    * Constructor of Game class
    * @param visible Is game actually visible or not
    */
@@ -1014,6 +1018,7 @@ public class Game implements ActionListener {
    * @param resolution Resolution as String NNNxMMM
    */
   public void setNewResolution(final String resolution) {
+    changeResolution();
     String[] resolutionParts = resolution.split("x");
     int resolutionWidth = Integer.parseInt(resolutionParts[0]);
     int resolutionHeight = Integer.parseInt(resolutionParts[1]);
@@ -2780,7 +2785,9 @@ public class Game implements ActionListener {
             optionsView.getHardwareAcceleration());
         configFile.setFullscreen(optionsView.getFullscreen());
         configFile.setLargerFonts(optionsView.getLargerFonts());
-        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
+        if (isResolutionChanged()) {
+          configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
+        }
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
@@ -2809,7 +2816,9 @@ public class Game implements ActionListener {
             optionsView.getHardwareAcceleration());
         configFile.setFullscreen(optionsView.getFullscreen());
         configFile.setLargerFonts(optionsView.getLargerFonts());
-        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
+        if (isResolutionChanged()) {
+          configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
+        }
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
@@ -3638,5 +3647,20 @@ public class Game implements ActionListener {
    */
   public static TutorialList getTutorial() {
     return tutorialList;
+  }
+
+  /**
+   * Is resolution changed in options.
+   * @return True if has changed
+   */
+  public boolean isResolutionChanged() {
+    return resolutionChanged;
+  }
+
+  /**
+   * Set flag if resolution has changed in options.
+   */
+  public void changeResolution() {
+    this.resolutionChanged = true;
   }
 }

@@ -1163,10 +1163,10 @@ public final class GuiStatics {
           "/resources/images/privateer_race.png"));
 
   /**
-   * Android image for GBNC
+   * Newsreader image for GBNC
    */
-  public static final BufferedImage IMAGE_ANDROID = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/android.png"));
+  public static final BufferedImage IMAGE_NEWSREADER = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/newsreader.png"));
 
   /**
    * GBNC logo

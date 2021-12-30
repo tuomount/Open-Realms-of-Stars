@@ -214,6 +214,7 @@ public class CreditsView extends BlackPanel {
       + "Scanner animation by Tuomo Untinen\n\n"
       + "Warzone Concept by Justin Nichol\n"
       + "https://opengameart.org/content/warzone-concept\n\n"
+      + "News reader robot by Tuomo Untinen\n\n"
       + "\n\nFonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

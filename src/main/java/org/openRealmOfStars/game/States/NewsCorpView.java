@@ -203,15 +203,15 @@ public class NewsCorpView extends BlackPanel {
             newsReader.getWidth() / 2 - GuiStatics.IMAGE_GBNC.getWidth() / 2,
             -16 + 128, null);
         if (animation < 162) {
-          g.drawImage(GuiStatics.IMAGE_ANDROID,
+          g.drawImage(GuiStatics.IMAGE_NEWSREADER,
               newsReader.getWidth() / 2
-              - GuiStatics.IMAGE_ANDROID.getWidth() / 2,
+              - GuiStatics.IMAGE_NEWSREADER.getWidth() / 2,
               newsReader.getHeight() - (animation - 64) * 2, null);
           animation++;
         } else {
-          g.drawImage(GuiStatics.IMAGE_ANDROID,
+          g.drawImage(GuiStatics.IMAGE_NEWSREADER,
               newsReader.getWidth() / 2
-              - GuiStatics.IMAGE_ANDROID.getWidth() / 2,
+              - GuiStatics.IMAGE_NEWSREADER.getWidth() / 2,
               newsReader.getHeight() - (162 - 64) * 2, null);
           animation++;
         }

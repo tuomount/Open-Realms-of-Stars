@@ -301,13 +301,13 @@ public class HistoryView extends BlackPanel {
           textArea.getText());
       if (event.getType() == EventType.GALACTIC_NEWS) {
         if (infos.length == 1) {
-          mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_ANDROID);
+          mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_NEWSREADER);
           mapPanel.setRightSpaceImage(infos[0].getRace().getRaceImage());
         } else if (infos.length >= 2) {
           mapPanel.setLeftSpaceImage(infos[0].getRace().getRaceImage());
           mapPanel.setRightSpaceImage(infos[1].getRace().getRaceImage());
         } else {
-          mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_ANDROID);
+          mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_NEWSREADER);
           mapPanel.setRightSpaceImage(null);
         }
       } else {

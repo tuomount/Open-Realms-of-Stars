@@ -708,7 +708,8 @@ public class ImageInstruction {
         && !SpaceRace.REBORGIANS.getNameSingle().equals(logoType)
         && !SpaceRace.LITHORIANS.getNameSingle().equals(logoType)
         && !SpaceRace.ALTEIRIANS.getNameSingle().equals(logoType)
-        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(logoType)) {
+        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(logoType)
+        && !SpaceRace.SPACE_MONSTERS.getNameSingle().equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }
     if (!SIZE_FULL.equals(size)

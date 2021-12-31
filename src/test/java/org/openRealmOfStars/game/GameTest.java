@@ -230,6 +230,7 @@ public class GameTest {
     config.setSize(128, 2);
     config.setScoringVictoryTurns(400);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setSpacePiratesDifficulty(PirateDifficultLevel.HARD);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);

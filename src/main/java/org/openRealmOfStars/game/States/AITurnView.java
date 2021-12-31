@@ -1690,6 +1690,7 @@ public class AITurnView extends BlackPanel {
     Research.handleShipDesigns(pirates);
     boolean added = false;
     int numberOfFleets = pirates.getFleets().getNumberOfFleets();
+    boolean colonyAdded = false;
     for (int i = 0; i < numberOfFleets; i++) {
       Fleet fleet = pirates.getFleets().getByIndex(i);
       if (fleet != null && fleet.isStarBaseDeployed()) {
@@ -1702,6 +1703,24 @@ public class AITurnView extends BlackPanel {
               pirates);
           game.getStarMap().addSpacePirate(fleet.getX(), fleet.getY(),
               pirates);
+          if (difficulty == PirateDifficultLevel.NORMAL
+              && DiceGenerator.getRandom(100) < 10 && !colonyAdded) {
+            colonyAdded = true;
+            game.getStarMap().addSpacePirateColony(fleet.getX(), fleet.getY(),
+                pirates);
+          }
+          if (difficulty == PirateDifficultLevel.HARD
+              && DiceGenerator.getRandom(100) < 20 && !colonyAdded) {
+            colonyAdded = true;
+            game.getStarMap().addSpacePirateColony(fleet.getX(), fleet.getY(),
+                pirates);
+          }
+          if (difficulty == PirateDifficultLevel.VERY_HARD
+              && DiceGenerator.getRandom(100) < 30 && !colonyAdded) {
+            colonyAdded = true;
+            game.getStarMap().addSpacePirateColony(fleet.getX(), fleet.getY(),
+                pirates);
+          }
         }
       }
     }

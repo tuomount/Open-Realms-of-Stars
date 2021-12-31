@@ -124,6 +124,10 @@ public class StarMap {
    * Enemy type for space monster
    */
   public static final int ENEMY_MONSTER = 2;
+  /**
+   * Enemy type for pirate colony ship.
+   */
+  public static final int ENEMY_PIRATE_COLONY = 3;
 
   /**
    * Star map's maximum X coordinate
@@ -769,6 +773,16 @@ public class StarMap {
       final PlayerInfo playerInfo) {
     addSpaceAnomalyEnemy(x, y, playerInfo, ENEMY_PIRATE_LAIR);
   }
+  /**
+   * Adds one pirate colony ship into coordinate
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   * @param playerInfo Board player info
+   */
+  public void addSpacePirateColony(final int x, final int y,
+      final PlayerInfo playerInfo) {
+    addSpaceAnomalyEnemy(x, y, playerInfo, ENEMY_PIRATE_COLONY);
+  }
 
   /**
    * Calculate how many artificial planets player has.
@@ -782,6 +796,40 @@ public class StarMap {
       if (planet.getPlanetPlayerInfo() == info
           && planet.getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
         result++;
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Find Suitable planet for space pirates.
+   * @param pirate PlayerInfo for pirates
+   * @param x X coordinate where fleet is going to be created.
+   * @param y Y coordinate where fleet is going to be created.
+   * @return Found planet or null
+   */
+  public Planet findSuitablePlanetForPirates(final PlayerInfo pirate,
+      final int x, final int y) {
+    Planet result = null;
+    double distance = 999;
+    int maxRad = pirate.getRace().getMaxRad();
+    if (pirate.getTechList().isTech("Radiation dampener")) {
+      maxRad++;
+    }
+    if (pirate.getTechList().isTech("Radiation well")) {
+      maxRad++;
+    }
+    for (Planet planet : getPlanetList()) {
+      if (planet.getTotalRadiationLevel() <= maxRad
+          && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
+          && pirate.getSectorVisibility(planet.getCoordinate())
+          > PlayerInfo.UNCHARTED && planet.getPlanetOwnerIndex() == -1) {
+        Coordinate from = new Coordinate(x, y);
+        double dist = planet.getCoordinate().calculateDistance(from);
+        if (dist < distance) {
+          result = planet;
+          distance = dist;
+        }
       }
     }
     return result;
@@ -814,6 +862,9 @@ public class StarMap {
         if (type == ENEMY_PIRATE && ship.getTotalMilitaryPower() > 0
             && !ship.isStarBase()
             && ship.getHull().getHullType() != ShipHullType.ORBITAL) {
+          listStats.add(stat);
+        }
+        if (type == ENEMY_PIRATE_COLONY && ship.isColonyModule()) {
           listStats.add(stat);
         }
       }
@@ -862,6 +913,19 @@ public class StarMap {
         mission.setFleetName(fleet.getName());
         mission.setSunName(sun.getName());
         playerInfo.getMissions().add(mission);
+      }
+      if (type == ENEMY_PIRATE_COLONY) {
+        Planet planet = findSuitablePlanetForPirates(playerInfo, x, y);
+        if (planet != null) {
+          fleet = new Fleet(ship, x, y);
+          ship.setColonist(1);
+          playerInfo.getFleets().add(fleet);
+          fleet.setName(playerInfo.getFleets().generateUniqueName(
+              "pirate colony"));
+          Mission mission = new Mission(MissionType.COLONIZE,
+            MissionPhase.TREKKING, planet.getCoordinate());
+          playerInfo.getMissions().add(mission);
+        }
       }
       return fleet;
     }

@@ -122,7 +122,7 @@ public final class ShipImages {
     teuthidaes = new ShipImage("teuthidaeships.png");
     scaurians = new ShipImage("scaurianships.png");
     homarians = new ShipImage("homarianships.png");
-    spacePirate = new ShipImage("privateerships.png");
+    spacePirate = new ShipImage("privateerships.png", true);
     chiraloids = new ShipImage("chiraloidships.png");
     reborgians = new ShipImage("reborgianships.png");
     lithorians = new ShipImage("lithorianships.png");
@@ -320,6 +320,7 @@ public final class ShipImages {
       return scaurians();
     case HOMARIANS:
       return homarians();
+    case SPACE_MONSTERS:
     case SPACE_PIRATE:
       return spacePirates();
     case CHIRALOIDS:

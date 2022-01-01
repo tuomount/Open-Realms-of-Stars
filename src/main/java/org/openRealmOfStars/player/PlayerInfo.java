@@ -299,41 +299,7 @@ public class PlayerInfo {
     case TEUTHIDAES:
     case SMAUGIRIANS:
     case HOMARIANS: {
-      /*
-       * Humans, Mechions and Centaurs get 1 Combat, 1 Defense, Scout and Colony
-       */
-      Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-          techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-      if (tech != null) {
-        techList.addTech(tech);
-      }
-      tech = TechFactory.createRandomTech(TechType.Defense, 1,
-          techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
-      if (tech != null) {
-        techList.addTech(tech);
-      }
-      tech = TechFactory.createHullTech("Colony", 1);
-      if (tech != null) {
-        techList.addTech(tech);
-      }
-      tech = TechFactory.createHullTech("Scout Mk1", 1);
-      if (tech != null) {
-        techList.addTech(tech);
-      }
-      tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
-      if (tech != null) {
-        techList.addTech(tech);
-      }
-      tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-      if (tech != null) {
-        techList.addTech(tech);
-      }
-      ShipDesign design = ShipGenerator.createScout(this);
-      ShipStat stat = new ShipStat(design);
-      addShipStat(stat);
-      design = ShipGenerator.createColony(this, false);
-      stat = new ShipStat(design);
-      addShipStat(stat);
+      addDefaultTechs();
       break;
     }
     case LITHORIANS: {
@@ -749,12 +715,129 @@ public class PlayerInfo {
       addShipStat(stat);
       break;
     }
+    case SPACE_MONSTERS: {
+      addSpaceMonsterTechs();
+      break;
+    }
     default:
-      ErrorLogger.log("Unexpected race:" + getRace());
+      ErrorLogger.log("PlayerInfo.class: Unexpected race:" + getRace());
     }
 
   }
 
+  /**
+   * Default techs and ship design.
+   */
+  private void addDefaultTechs() {
+    /*
+     * Humans, Mechions and Centaurs get 1 Combat, 1 Defense, Scout and Colony
+     */
+    Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
+        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createRandomTech(TechType.Defense, 1,
+        techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createHullTech("Colony", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createHullTech("Scout Mk1", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    ShipDesign design = ShipGenerator.createScout(this);
+    ShipStat stat = new ShipStat(design);
+    addShipStat(stat);
+    design = ShipGenerator.createColony(this, false);
+    stat = new ShipStat(design);
+    addShipStat(stat);
+  }
+  /**
+   * Add Space monster techs and ship designs.
+   */
+  private void addSpaceMonsterTechs() {
+    /*
+     * Space monsters get space monster tech.
+     * Space monsters get all their tech.
+     */
+    Tech tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 1,
+        "Massive mouth with teeth Mk1");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 2,
+        "Massive mouth with teeth Mk2");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 3,
+        "Massive mouth with teeth Mk3");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createSpaceMonsterTech(TechType.Defense, 1,
+        "Organic armor Mk1");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createSpaceMonsterTech(TechType.Defense, 2,
+        "Organic armor Mk2");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createSpaceMonsterTech(TechType.Defense, 3,
+        "Organic armor Mk3");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createSpaceMonsterTech(TechType.Propulsion, 1,
+        "Space fin");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createSpaceMonsterTech(TechType.Propulsion, 1,
+        "Heart");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createSpaceMonsterTech(TechType.Propulsion, 2,
+        "Large heart");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 1,
+        "Tentacle Mk1");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 2,
+        "Tentacle Mk2");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    ShipDesign design = ShipGenerator.createScout(this);
+    ShipStat stat = new ShipStat(design);
+    addShipStat(stat);
+    design = ShipGenerator.createColony(this, false);
+    stat = new ShipStat(design);
+    addShipStat(stat);
+    design = ShipGenerator.createMinorOrbital(this);
+    stat = new ShipStat(design);
+    addShipStat(stat);
+  }
   /**
    * Constructor player info.
    * This constructor should be used only when

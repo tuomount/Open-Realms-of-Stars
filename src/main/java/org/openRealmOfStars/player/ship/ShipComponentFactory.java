@@ -5,7 +5,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2020,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 182;
+  private static final int MAX_SHIPCOMPONENT = 190;
 
   /**
    * Component Ion drive Mk1
@@ -913,14 +913,46 @@ public final class ShipComponentFactory {
    * Callisto multicannon Mk4
    */
   public static final int COMPONENT_CALLISTO_MULTICANNON_MK4 = 179;
-    /**
+  /**
    * Callisto multicannon Mk5
    */
   public static final int COMPONENT_CALLISTO_MULTICANNON_MK5 = 180;
-    /**
+  /**
    * Callisto multicannon Mk6
    */
   public static final int COMPONENT_CALLISTO_MULTICANNON_MK6 = 181;
+  /**
+   * Massive mouth with teeth Mk1
+   */
+  public static final int COMPONENT_MASSIVE_MOUTH_MK1 = 182;
+  /**
+   * Massive mouth with teeth Mk2
+   */
+  public static final int COMPONENT_MASSIVE_MOUTH_MK2 = 183;
+  /**
+   * Massive mouth with teeth Mk3
+   */
+  public static final int COMPONENT_MASSIVE_MOUTH_MK3 = 184;
+  /**
+   * Space fin.
+   */
+  public static final int COMPONENT_SPACE_FIN = 185;
+  /**
+   * Heart.
+   */
+  public static final int COMPONENT_HEART = 186;
+  /**
+   * Large Heart.
+   */
+  public static final int COMPONENT_LARGE_HEART = 187;
+  /**
+   * Tentacle Mk1
+   */
+  public static final int COMPONENT_TENTACLE_MK1 = 188;
+  /**
+   * Tentacle Mk2
+   */
+  public static final int COMPONENT_TENTACLE_MK2 = 189;
 
 /**
    * Create ShipComponent with matching name
@@ -1532,6 +1564,48 @@ public final class ShipComponentFactory {
 
   /**
    * Create Ship component with index
+   * Part 3 just to make method shorter.
+   * @param index Index to create
+   * @return ShipComponent or null if index is not found
+   */
+  private static ShipComponent createPart3(final int index) {
+    ShipComponent tmp = null;
+    switch (index) {
+    case COMPONENT_MASSIVE_MOUTH_MK1:
+      tmp = createWeapon(index);
+      break; // Massive mouth with teeth Mk1
+    case COMPONENT_MASSIVE_MOUTH_MK2:
+      tmp = createWeapon(index);
+      break; // Massive mouth with teeth Mk2
+    case COMPONENT_MASSIVE_MOUTH_MK3:
+      tmp = createWeapon(index);
+      break; // Massive mouth with teeth Mk3
+    case COMPONENT_SPACE_FIN:
+      tmp = createEngine(index);
+      break; // Space fin
+    case COMPONENT_HEART:
+      tmp = createElectronics(index);
+      break; // Heart
+    case COMPONENT_LARGE_HEART:
+      tmp = createElectronics(index);
+      break; // Large heart
+    case COMPONENT_TENTACLE_MK1:
+      tmp = createWeapon(index);
+      break; // Tentacle Mk1
+    case COMPONENT_TENTACLE_MK2:
+      tmp = createWeapon(index);
+      break; // Tentacle Mk2
+    default: {
+      ErrorLogger.log("Unexpected component with index: " + index);
+      throw new IllegalArgumentException("Unexpected component index: "
+                                        + index + "!");
+    }
+    }
+    return tmp;
+  }
+
+  /**
+   * Create Ship component with index
    * @param index Index to create
    * @return ShipComponent or null if index is not found
    */
@@ -1539,8 +1613,10 @@ public final class ShipComponentFactory {
     ShipComponent tmp = null;
     if (index < COMPONENT_ORBITAL_BOMBS_MK2) {
       tmp = createPart1(index);
-    } else {
+    } else if (index < COMPONENT_CALLISTO_MULTICANNON_MK6) {
       tmp = createPart2(index);
+    } else {
+      tmp = createPart3(index);
     }
     return tmp;
   }
@@ -1773,6 +1849,14 @@ public final class ShipComponentFactory {
           ShipComponentType.THRUSTERS);
       tmp.setTacticSpeed(1);
       tmp.setInitiativeBoost(1);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_SPACE_FIN) {
+      tmp = new ShipComponent(index, "Space fin", 0, 0,
+          ShipComponentType.ENGINE);
+      tmp.setSpeed(1);
+      tmp.setFtlSpeed(1);
+      tmp.setTacticSpeed(1);
       tmp.setEnergyRequirement(1);
     }
     return tmp;
@@ -2170,6 +2254,16 @@ public final class ShipComponentFactory {
           ShipComponentType.ORBITAL_NUKE);
       tmp.setEnergyRequirement(0);
       tmp.setDamage(100);
+    }
+    if (index == COMPONENT_HEART) {
+      tmp = new ShipComponent(index, "Heart", 2, 2,
+          ShipComponentType.POWERSOURCE);
+      tmp.setEnergyResource(6);
+    }
+    if (index == COMPONENT_LARGE_HEART) {
+      tmp = new ShipComponent(index, "Large heart", 3, 3,
+          ShipComponentType.POWERSOURCE);
+      tmp.setEnergyResource(9);
     }
     return tmp;
 
@@ -2615,6 +2709,46 @@ public final class ShipComponentFactory {
       tmp.setDamage(6);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(0);
+    }
+    if (index == COMPONENT_MASSIVE_MOUTH_MK1) {
+      //FIXME: Change correct type
+      tmp = new ShipComponent(index, "Massive mouth with teeth Mk1", 0, 0,
+          ShipComponentType.WEAPON_BEAM);
+      tmp.setDamage(2);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_MASSIVE_MOUTH_MK2) {
+      //FIXME: Change correct type
+      tmp = new ShipComponent(index, "Massive mouth with teeth Mk2", 0, 0,
+          ShipComponentType.WEAPON_BEAM);
+      tmp.setDamage(4);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_MASSIVE_MOUTH_MK3) {
+      //FIXME: Change correct type
+      tmp = new ShipComponent(index, "Massive mouth with teeth Mk3", 0, 0,
+          ShipComponentType.WEAPON_BEAM);
+      tmp.setDamage(6);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_TENTACLE_MK1) {
+      //FIXME: Change correct type
+      tmp = new ShipComponent(index, "Tentacle Mk1", 0, 0,
+          ShipComponentType.WEAPON_BEAM);
+      tmp.setDamage(3);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_TENTACLE_MK2) {
+      //FIXME: Change correct type
+      tmp = new ShipComponent(index, "Tentacle Mk2", 0, 0,
+          ShipComponentType.WEAPON_BEAM);
+      tmp.setDamage(5);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(1);
     }
     return tmp;
 

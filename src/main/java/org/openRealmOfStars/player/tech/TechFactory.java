@@ -1132,25 +1132,45 @@ public final class TechFactory {
     Tech tech = new Tech(techName, type, level);
     if (techName.startsWith("Organic armor")) {
       tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
     }
     if (techName.startsWith("Heart")) {
       tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
       //TODO: Change icon
     }
     if (techName.startsWith("Large heart")) {
       tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
       //TODO: Change icon
     }
     if (techName.startsWith("Space fin")) {
       tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
       //TODO: Change icon
     }
     if (techName.startsWith("Massive mouth with teeth")) {
       tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
       //TODO: Change icon
     }
     if (techName.startsWith("Tentacle")) {
       tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
+      //TODO: Change icon
+    }
+    if (techName.startsWith("Space worm")
+        || techName.startsWith("Kraken")
+        || techName.startsWith("Large kraken")) {
+      tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setHull(techName);
       //TODO: Change icon
     }
     return tech;

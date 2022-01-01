@@ -1613,7 +1613,7 @@ public final class ShipComponentFactory {
     ShipComponent tmp = null;
     if (index < COMPONENT_ORBITAL_BOMBS_MK2) {
       tmp = createPart1(index);
-    } else if (index < COMPONENT_CALLISTO_MULTICANNON_MK6) {
+    } else if (index < COMPONENT_MASSIVE_MOUTH_MK1) {
       tmp = createPart2(index);
     } else {
       tmp = createPart3(index);

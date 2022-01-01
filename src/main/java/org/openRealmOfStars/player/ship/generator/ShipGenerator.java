@@ -683,6 +683,112 @@ public final class ShipGenerator {
   }
 
   /**
+   * Create Space worm ship.
+   * @param player PlayerInfo
+   * @return Space worm ship or null.
+   */
+  public static ShipDesign createSpaceWorm(final PlayerInfo player) {
+    ShipDesign result = null;
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    Tech hullTech = TechList.getBestTech(hullTechs, "Space worm");
+    if (hullTech != null) {
+      ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
+          player.getRace());
+      result = new ShipDesign(hull);
+      result.setName("Space worm");
+      ShipComponent engine = ShipComponentFactory
+          .createByName(player.getTechList().getBestEngine().getComponent());
+      result.addComponent(engine);
+      ShipComponent power = ShipComponentFactory.createByName("Heart");
+      result.addComponent(power);
+      ShipComponent weapon = ShipComponentFactory
+          .createByName("Massive mouth with teeth Mk1");
+      result.addComponent(weapon);
+      ShipComponent armor = ShipComponentFactory
+          .createByName("Organic armor Mk1");
+      result.addComponent(armor);
+    }
+    return result;
+  }
+
+  /**
+   * Create Space kraken ship.
+   * @param player PlayerInfo
+   * @return Space worm ship or null.
+   */
+  public static ShipDesign createSpaceKraken(final PlayerInfo player) {
+    ShipDesign result = null;
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    Tech hullTech = TechList.getBestTech(hullTechs, "Kraken");
+    if (hullTech != null) {
+      ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
+          player.getRace());
+      result = new ShipDesign(hull);
+      result.setName("Space Kraken");
+      ShipComponent engine = ShipComponentFactory
+          .createByName("Space fin");
+      result.addComponent(engine);
+      ShipComponent power = ShipComponentFactory.createByName("Heart");
+      result.addComponent(power);
+      ShipComponent weapon = ShipComponentFactory
+          .createByName("Massive mouth with teeth Mk2");
+      result.addComponent(weapon);
+      ShipComponent armor = ShipComponentFactory
+          .createByName("Organic armor Mk2");
+      result.addComponent(armor);
+      weapon = ShipComponentFactory
+          .createByName("Tentacle Mk1");
+      result.addComponent(weapon);
+      result.addComponent(weapon);
+    }
+    return result;
+  }
+
+  /**
+   * Create large space kraken ship.
+   * @param player PlayerInfo
+   * @param variant True for one with two hearts
+   * @return Space worm ship or null.
+   */
+  public static ShipDesign createLargeKraken(final PlayerInfo player,
+      final boolean variant) {
+    ShipDesign result = null;
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    Tech hullTech = TechList.getBestTech(hullTechs, "Large kraken");
+    if (hullTech != null) {
+      ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
+          player.getRace());
+      result = new ShipDesign(hull);
+      result.setName("Space Kraken");
+      ShipComponent weapon = ShipComponentFactory
+          .createByName("Massive mouth with teeth Mk3");
+      result.addComponent(weapon);
+      ShipComponent armor = ShipComponentFactory
+          .createByName("Organic armor Mk3");
+      result.addComponent(armor);
+      weapon = ShipComponentFactory
+          .createByName("Tentacle Mk2");
+      result.addComponent(weapon);
+      result.addComponent(weapon);
+      if (variant) {
+        ShipComponent power = ShipComponentFactory.createByName("Heart");
+        result.addComponent(power);
+        result.addComponent(power);
+        result.addComponent(armor);
+      } else {
+        ShipComponent power = ShipComponentFactory.createByName("Large heart");
+        result.addComponent(power);
+        result.addComponent(weapon);
+        result.addComponent(weapon);
+      }
+      ShipComponent engine = ShipComponentFactory
+          .createByName("Space fin");
+      result.addComponent(engine);
+    }
+    return result;
+  }
+
+  /**
    * Create scout ship with best possible technology. This is used
    * for human players in beginning and AI every time they design
    * new scout ship.
@@ -700,10 +806,9 @@ public final class ShipGenerator {
       result = new ShipDesign(hull);
       result.setName("Scout Mk1");
       ShipComponent engine = ShipComponentFactory
-          .createByName(player.getTechList().getBestEngine().getComponent());
+          .createByName("Space fin");
       result.addComponent(engine);
-      ShipComponent power = ShipComponentFactory.createByName(
-          player.getTechList().getBestEnergySource().getComponent());
+      ShipComponent power = ShipComponentFactory.createByName("Heart");
       result.addComponent(power);
       ShipComponent weapon = ShipComponentFactory
           .createByName(player.getTechList().getBestWeapon().getComponent());

@@ -828,13 +828,29 @@ public class PlayerInfo {
     if (tech != null) {
       techList.addTech(tech);
     }
-    ShipDesign design = ShipGenerator.createScout(this);
+    tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 1, "Space worm");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 2, "Kraken");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 3,
+        "Large kraken");
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    ShipDesign design = ShipGenerator.createSpaceWorm(this);
     ShipStat stat = new ShipStat(design);
     addShipStat(stat);
-    design = ShipGenerator.createColony(this, false);
+    design = ShipGenerator.createSpaceKraken(this);
     stat = new ShipStat(design);
     addShipStat(stat);
-    design = ShipGenerator.createMinorOrbital(this);
+    design = ShipGenerator.createLargeKraken(this, false);
+    stat = new ShipStat(design);
+    addShipStat(stat);
+    design = ShipGenerator.createLargeKraken(this, true);
     stat = new ShipStat(design);
     addShipStat(stat);
   }

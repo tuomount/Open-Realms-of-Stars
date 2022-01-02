@@ -3,7 +3,7 @@ package org.openRealmOfStars.AI.Mission;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017, 2018, 2020, 2021 Tuomo Untinen
+ * Copyright (C) 2016-2018, 2020-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -93,7 +93,11 @@ public enum MissionType {
   /**
    * Destroy fleet from coordinate.
    */
-  DESTROY_FLEET;
+  DESTROY_FLEET,
+  /**
+   * Space monsters roam around their starting position.
+   */
+  ROAM;
 
   /**
    * Get Mission type with index
@@ -133,6 +137,8 @@ public enum MissionType {
       return 14;
     case DESTROY_FLEET:
       return 15;
+    case ROAM:
+      return 16;
     default:
       return 0;
     }
@@ -173,6 +179,8 @@ public enum MissionType {
       return "Intercept";
     case DESTROY_FLEET:
       return "Destroy fleet";
+    case ROAM:
+      return "Roam";
     default:
       return "Unknown";
     }

@@ -105,6 +105,8 @@ public class MissionRepository {
       return MissionType.INTERCEPT;
     case 15:
       return MissionType.DESTROY_FLEET;
+    case 16:
+      return MissionType.ROAM;
     default:
       ErrorLogger.log("Warning: Unknown mission type: " + index
           + ". Defaulting to explore.");

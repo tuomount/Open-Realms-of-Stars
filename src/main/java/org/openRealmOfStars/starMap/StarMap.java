@@ -4874,4 +4874,19 @@ public class StarMap {
   public void setHumanLost(final boolean humanLost) {
     this.humanLost = humanLost;
   }
+
+  /**
+   * Get Space monster realm index.
+   * @return Space monster realm index or -1 if not enabled.
+   */
+  public int getSpaceMonsterIndex() {
+    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+      PlayerInfo info = players.getPlayerInfoByIndex(i);
+      if (info.isBoard()
+          && info.getRace() == SpaceRace.SPACE_MONSTERS) {
+        return i;
+      }
+    }
+    return -1;
+  }
 }

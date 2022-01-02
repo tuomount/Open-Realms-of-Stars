@@ -18,7 +18,7 @@ import org.openRealmOfStars.starMap.StarMapUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2021 Tuomo Untinen
+* Copyright (C) 2017-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -149,7 +149,7 @@ public class Diplomacy {
     for (int i = 0; i < maxPlayers; i++) {
       if (i != playerIndex) {
         diplomacyList[i] = new DiplomacyBonusList(i);
-        if (boardPlayerIndex != -1 && boardPlayerIndex == i) {
+        if (boardPlayerIndex != -1 && boardPlayerIndex <= i) {
           diplomacyList[i].addBonus(DiplomacyBonusType.BOARD_PLAYER,
               SpaceRace.SPACE_PIRATE);
         }

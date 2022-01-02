@@ -1074,6 +1074,10 @@ public class ImageInstruction {
     if (race != null) {
       drawImg = race.getRaceImage();
     }
+    if (SpaceRace.SPACE_MONSTERS.getNameSingle().equals(image)) {
+      //FIXME: This might be needed for changing...
+      drawImg = SpaceRace.SPACE_PIRATE.getRaceImage();
+    }
     if (SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)) {
       drawImg = SpaceRace.SPACE_PIRATE.getRaceImage();
     }

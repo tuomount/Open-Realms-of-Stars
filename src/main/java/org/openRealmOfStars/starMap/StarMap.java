@@ -616,7 +616,7 @@ public class StarMap {
             && getPlanetByCoordinate(sx, sy) == null) {
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
           tiles[sx][sy] = anchor.getIndex();
-          PlayerInfo board = players.getBoardPlayer();
+          PlayerInfo board = players.getSpacePiratePlayer();
           if (board != null && i < pirateLairs) {
             addSpacePirateLair(sx, sy, board);
           }
@@ -629,7 +629,8 @@ public class StarMap {
     loop = 0;
     int numberOfAnomalies = 0;
     boolean harmful = false;
-    boolean board = players.getBoardPlayer() != null;
+    boolean pirate = players.getSpacePiratePlayer() != null;
+//    boolean monsters = players.getSpaceMonsterPlayer() != null;
     if (config.getSpaceAnomaliesLevel() == 1) {
       numberOfAnomalies = config.getMaxPlayers() * 5;
     }
@@ -652,7 +653,7 @@ public class StarMap {
             maxX - 2);
         if (Tiles.getTileByIndex(tiles[sx][sy]) == empty
             && getPlanetByCoordinate(sx, sy) == null) {
-          String tileName = TileNames.getRandomSpaceAnomaly(harmful, board);
+          String tileName = TileNames.getRandomSpaceAnomaly(harmful, pirate);
           Tile anomaly = Tiles.getTileByName(tileName);
           tiles[sx][sy] = anomaly.getIndex();
           break;

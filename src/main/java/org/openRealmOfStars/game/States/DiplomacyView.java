@@ -65,7 +65,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2019  Tuomo Untinen
+* Copyright (C) 2017-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -850,7 +850,7 @@ public class DiplomacyView extends BlackPanel {
    * @param techs Which are used for creating Tech List
    * @return JList full of tech
    */
-  private JList<Tech> createTechList(final Tech[] techs) {
+  private static JList<Tech> createTechList(final Tech[] techs) {
     JList<Tech> techList = new JList<>(techs);
     techList.setCellRenderer(new TechListRenderer());
     techList.setBackground(Color.BLACK);
@@ -863,7 +863,7 @@ public class DiplomacyView extends BlackPanel {
    * @param fleets Which are used for creating Fleet List
    * @return JList full of fleets
    */
-  private JList<Fleet> createFleetList(final Fleet[] fleets) {
+  private static JList<Fleet> createFleetList(final Fleet[] fleets) {
     JList<Fleet> fleetList = new JList<>(fleets);
     fleetList.setCellRenderer(new FleetListRenderer());
     fleetList.setBackground(Color.BLACK);
@@ -876,7 +876,7 @@ public class DiplomacyView extends BlackPanel {
    * @param planets Which are used for creating planet List
    * @return JList full of planets
    */
-  private JList<Planet> createPlanetList(final Planet[] planets) {
+  private static JList<Planet> createPlanetList(final Planet[] planets) {
     JList<Planet> planetList = new JList<>(planets);
     planetList.setCellRenderer(new PlanetListRenderer());
     planetList.setBackground(Color.BLACK);
@@ -1029,7 +1029,7 @@ public class DiplomacyView extends BlackPanel {
     }
     if (credits > 0) {
       NegotiationOffer offer = new NegotiationOffer(NegotiationType.CREDIT,
-          new Integer(credits));
+          Integer.valueOf(credits));
       list.add(offer);
     }
     return list;
@@ -1265,25 +1265,23 @@ public class DiplomacyView extends BlackPanel {
         if (value < 0) {
           value = DiplomaticTrade.minFive(value);
           return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
-              new Integer(value));
-        } else {
-          value = DiplomaticTrade.minFive(value);
-          value = value * 2;
-          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
-              new Integer(value));
+              Integer.valueOf(value));
         }
+        value = DiplomaticTrade.minFive(value);
+        value = value * 2;
+        return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
+            Integer.valueOf(value));
       }
       if (humanVoteYes.isSelected()) {
         if (value < 0) {
           value = DiplomaticTrade.minFive(value);
           value = value * 2;
           return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
-              new Integer(value));
-        } else {
-          value = DiplomaticTrade.minFive(value);
-          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
-              new Integer(value));
+              Integer.valueOf(value));
         }
+        value = DiplomaticTrade.minFive(value);
+        return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
+            Integer.valueOf(value));
       }
     }
     return null;
@@ -1302,25 +1300,23 @@ public class DiplomacyView extends BlackPanel {
         if (value < 0) {
           value = DiplomaticTrade.minFive(value);
           return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
-              new Integer(value));
-        } else {
-          value = DiplomaticTrade.minFive(value);
-          value = value * 2;
-          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
-              new Integer(value));
+              Integer.valueOf(value));
         }
+        value = DiplomaticTrade.minFive(value);
+        value = value * 2;
+        return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
+            Integer.valueOf(value));
       }
       if (aiVoteYes.isSelected()) {
         if (value < 0) {
           value = DiplomaticTrade.minFive(value);
           value = value * 2;
           return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
-              new Integer(value));
-        } else {
-          value = DiplomaticTrade.minFive(value);
-          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
-              new Integer(value));
+              Integer.valueOf(value));
         }
+        value = DiplomaticTrade.minFive(value);
+        return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
+            Integer.valueOf(value));
       }
     }
     return null;

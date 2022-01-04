@@ -34,7 +34,7 @@ import org.openRealmOfStars.utilities.TextUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2021 Tuomo Untinen
+* Copyright (C) 2017-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -2779,7 +2779,7 @@ public final class NewsFactory {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     StringBuilder sb = new StringBuilder();
-    PlayerInfo pirates = map.getPlayerList().getBoardPlayer();
+    PlayerInfo pirates = map.getPlayerList().getSpacePiratePlayer();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
     int value = DiceGenerator.getRandom(2);
     switch (value) {

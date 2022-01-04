@@ -236,7 +236,7 @@ public class SpaceAnomaly {
               + " Battle begins...");
           result.setImage(GuiStatics.IMAGE_PIRATE_LAIR);
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
-          PlayerInfo board = map.getPlayerList().getBoardPlayer();
+          PlayerInfo board = map.getPlayerList().getSpacePiratePlayer();
           Fleet lair = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
               board, StarMap.ENEMY_PIRATE_LAIR);
           Combat fight = new Combat(fleet, lair, info, board);
@@ -250,7 +250,7 @@ public class SpaceAnomaly {
               + " Battle begins...");
           result.setImage(GuiStatics.IMAGE_PIRATE_PILOT);
           map.setTile(fleet.getX(), fleet.getY(), empty);
-          PlayerInfo board = map.getPlayerList().getBoardPlayer();
+          PlayerInfo board = map.getPlayerList().getSpacePiratePlayer();
           Fleet pirate = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
               board, StarMap.ENEMY_PIRATE);
           Combat fight = new Combat(fleet, pirate, info, board);

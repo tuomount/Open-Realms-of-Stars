@@ -92,7 +92,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1265,7 +1265,7 @@ public class AITurnView extends BlackPanel {
    * Handle Space pirate search for black hole.
    */
   public void searchForBlackHole() {
-    PlayerInfo board = game.getPlayers().getBoardPlayer();
+    PlayerInfo board = game.getPlayers().getSpacePiratePlayer();
     if (board != null && !board.getTechList().hasTech("Tractor beam")) {
       StarMap map = game.getStarMap();
       int centerx = map.getMaxX() / 2;
@@ -3305,14 +3305,14 @@ public class AITurnView extends BlackPanel {
     }
     GameLengthState newState = game.getStarMap().getGameLengthState();
     if (game.getStarMap().getTurn() > 1) {
-      PlayerInfo board = game.getPlayers().getBoardPlayer();
+      PlayerInfo pirate = game.getPlayers().getSpacePiratePlayer();
       boolean pirateNews = false;
-      if (oldState != newState && board != null) {
-        pirateNews = updateSpacePirates(board,
+      if (oldState != newState && pirate != null) {
+        pirateNews = updateSpacePirates(pirate,
             game.getStarMap().getPirateDifficulty(), false);
       }
-      if (board != null && !pirateNews) {
-        pirateNews = updateSpacePirates(board,
+      if (pirate != null && !pirateNews) {
+        pirateNews = updateSpacePirates(pirate,
             game.getStarMap().getPirateDifficulty(),
             game.getStarMap().getTurn());
       }

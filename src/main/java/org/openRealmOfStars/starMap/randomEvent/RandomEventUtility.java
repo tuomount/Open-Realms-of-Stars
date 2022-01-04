@@ -36,7 +36,7 @@ import org.openRealmOfStars.utilities.namegenerators.OriginalWorkNameGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019-2021 Tuomo Untinen
+* Copyright (C) 2019-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -1259,11 +1259,12 @@ public final class RandomEventUtility {
           planets.add(planet);
         }
       }
-      if (planets.size() > 0 && map.getPlayerList().getBoardPlayer() != null) {
+      if (planets.size() > 0
+          && map.getPlayerList().getSpacePiratePlayer() != null) {
         int index = DiceGenerator.getRandom(planets.size() - 1);
         Planet planet = planets.get(index);
         event.setPlanet(planet);
-        PlayerInfo board = map.getPlayerList().getBoardPlayer();
+        PlayerInfo board = map.getPlayerList().getSpacePiratePlayer();
         int x = planet.getCoordinate().getX();
         int y = planet.getCoordinate().getY();
         int count = DiceGenerator.getRandom(1, 4);
@@ -1404,7 +1405,7 @@ public final class RandomEventUtility {
           break;
         }
         case MUTINY: {
-          handleMutiny(event, map.getPlayerList().getBoardPlayer());
+          handleMutiny(event, map.getPlayerList().getSpacePiratePlayer());
           break;
         }
         case RAIDERS: {

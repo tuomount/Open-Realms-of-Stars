@@ -118,14 +118,16 @@ public class TileTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testAnomalyTileNames() {
-    DiceGenerator.initializeGenerators(0,0,0,8,7);
-    String str = TileNames.getRandomSpaceAnomaly(true, true);
+    DiceGenerator.initializeGenerators(0,0,0,8,7,8);
+    String str = TileNames.getRandomSpaceAnomaly(true, true, false);
     assertEquals(TileNames.SPACE_ANOMALY_CREDITS, str);
-    str = TileNames.getRandomSpaceAnomaly(true, false);
+    str = TileNames.getRandomSpaceAnomaly(true, false, false);
     assertEquals(TileNames.SPACE_ANOMALY_CREDITS, str);
-    str = TileNames.getRandomSpaceAnomaly(false, false);
+    str = TileNames.getRandomSpaceAnomaly(false, false, false);
     assertEquals(TileNames.SPACE_ANOMALY_CREDITS, str);
-    str = TileNames.getRandomSpaceAnomaly(true, true);
+    str = TileNames.getRandomSpaceAnomaly(true, true, false);
+    assertEquals(TileNames.SPACE_ANOMALY_TIME_WARP, str);
+    str = TileNames.getRandomSpaceAnomaly(true, true, true);
     assertEquals(TileNames.SPACE_ANOMALY, str);
   }
 

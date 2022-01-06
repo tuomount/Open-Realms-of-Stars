@@ -806,9 +806,10 @@ public final class ShipGenerator {
       result = new ShipDesign(hull);
       result.setName("Scout Mk1");
       ShipComponent engine = ShipComponentFactory
-          .createByName("Space fin");
+          .createByName(player.getTechList().getBestEngine().getComponent());
       result.addComponent(engine);
-      ShipComponent power = ShipComponentFactory.createByName("Heart");
+      ShipComponent power = ShipComponentFactory.createByName(
+                    player.getTechList().getBestEnergySource().getComponent());
       result.addComponent(power);
       ShipComponent weapon = ShipComponentFactory
           .createByName(player.getTechList().getBestWeapon().getComponent());

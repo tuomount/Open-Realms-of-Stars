@@ -267,7 +267,7 @@ public class ShipImage {
    * @return BufferedImage
    */
   public BufferedImage getShipImage(final int index) {
-    if (index >= 0 && index < NUMBER_OF_IMAGES) {
+    if (index >= 0 && index < shipImages.length) {
       return shipImages[index];
     }
     return shipImages[0];
@@ -280,8 +280,7 @@ public class ShipImage {
    * @return BufferedImage
    */
   public BufferedImage getSmallShipImage(final int index) {
-    if (index >= 0
-        && index < NUMBER_OF_IMAGES) {
+    if (index >= 0 && index < smallShipImages.length) {
       return smallShipImages[index];
     }
     return smallShipImages[0];

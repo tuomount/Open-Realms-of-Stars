@@ -257,6 +257,19 @@ public class SpaceAnomaly {
           result.setCombat(fight);
           break;
         }
+        case TileNames.SPACE_ANOMALY_MONSTER: {
+          result = new SpaceAnomaly(AnomalyType.MONSTER, 0);
+          result.setImage(GuiStatics.IMAGE_PIRATE_PILOT);
+          map.setTile(fleet.getX(), fleet.getY(), empty);
+          PlayerInfo board = map.getPlayerList().getSpaceMonsterPlayer();
+          Fleet monster = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
+              board, StarMap.ENEMY_MONSTER);
+          result.setText(monster.getBiggestShip().getName()
+              + " was found in the nebulae. Battle begins...");
+          Combat fight = new Combat(fleet, monster, info, board);
+          result.setCombat(fight);
+          break;
+        }
         case TileNames.SPACE_ANOMALY_SHIP: {
           ShipStat[] stats = info.getShipStatList();
           ArrayList<ShipStat> listStats = new ArrayList<>();

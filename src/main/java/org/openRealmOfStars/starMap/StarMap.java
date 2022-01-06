@@ -630,7 +630,7 @@ public class StarMap {
     int numberOfAnomalies = 0;
     boolean harmful = false;
     boolean pirate = players.getSpacePiratePlayer() != null;
-//    boolean monsters = players.getSpaceMonsterPlayer() != null;
+    boolean monsters = players.getSpaceMonsterPlayer() != null;
     if (config.getSpaceAnomaliesLevel() == 1) {
       numberOfAnomalies = config.getMaxPlayers() * 5;
     }
@@ -653,7 +653,8 @@ public class StarMap {
             maxX - 2);
         if (Tiles.getTileByIndex(tiles[sx][sy]) == empty
             && getPlanetByCoordinate(sx, sy) == null) {
-          String tileName = TileNames.getRandomSpaceAnomaly(harmful, pirate);
+          String tileName = TileNames.getRandomSpaceAnomaly(harmful, pirate,
+              monsters);
           Tile anomaly = Tiles.getTileByName(tileName);
           tiles[sx][sy] = anomaly.getIndex();
           break;
@@ -868,6 +869,11 @@ public class StarMap {
         if (type == ENEMY_PIRATE_COLONY && ship.isColonyModule()) {
           listStats.add(stat);
         }
+        if (type == ENEMY_MONSTER && ship.getTheoreticalMilitaryPower() > 0
+            && !ship.isStarBase()
+            && ship.getHull().getHullType() != ShipHullType.ORBITAL) {
+          listStats.add(stat);
+        }
       }
     }
     if (listStats.size() > 0) {
@@ -927,6 +933,16 @@ public class StarMap {
             MissionPhase.TREKKING, planet.getCoordinate());
           playerInfo.getMissions().add(mission);
         }
+      }
+      if (type == ENEMY_MONSTER) {
+        fleet = new Fleet(ship, x, y);
+        playerInfo.getFleets().add(fleet);
+        fleet.setName(playerInfo.getFleets().generateUniqueName(
+            ship.getName()));
+        Mission mission = new Mission(MissionType.ROAM,
+            MissionPhase.TREKKING, new Coordinate(fleet.getCoordinate()));
+        mission.setFleetName(fleet.getName());
+        playerInfo.getMissions().add(mission);
       }
       return fleet;
     }

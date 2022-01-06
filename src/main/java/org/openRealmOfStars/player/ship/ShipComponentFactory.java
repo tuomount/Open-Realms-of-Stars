@@ -2711,41 +2711,36 @@ public final class ShipComponentFactory {
       tmp.setEnergyRequirement(0);
     }
     if (index == COMPONENT_MASSIVE_MOUTH_MK1) {
-      //FIXME: Change correct type
       tmp = new ShipComponent(index, "Massive mouth with teeth Mk1", 0, 0,
-          ShipComponentType.WEAPON_BEAM);
+          ShipComponentType.BITE);
       tmp.setDamage(2);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(1);
     }
     if (index == COMPONENT_MASSIVE_MOUTH_MK2) {
-      //FIXME: Change correct type
       tmp = new ShipComponent(index, "Massive mouth with teeth Mk2", 0, 0,
-          ShipComponentType.WEAPON_BEAM);
+          ShipComponentType.BITE);
       tmp.setDamage(4);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(1);
     }
     if (index == COMPONENT_MASSIVE_MOUTH_MK3) {
-      //FIXME: Change correct type
       tmp = new ShipComponent(index, "Massive mouth with teeth Mk3", 0, 0,
-          ShipComponentType.WEAPON_BEAM);
+          ShipComponentType.BITE);
       tmp.setDamage(6);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(1);
     }
     if (index == COMPONENT_TENTACLE_MK1) {
-      //FIXME: Change correct type
       tmp = new ShipComponent(index, "Tentacle Mk1", 0, 0,
-          ShipComponentType.WEAPON_BEAM);
+          ShipComponentType.TENTACLE);
       tmp.setDamage(3);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(1);
     }
     if (index == COMPONENT_TENTACLE_MK2) {
-      //FIXME: Change correct type
       tmp = new ShipComponent(index, "Tentacle Mk2", 0, 0,
-          ShipComponentType.WEAPON_BEAM);
+          ShipComponentType.TENTACLE);
       tmp.setDamage(5);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(1);

@@ -223,6 +223,9 @@ public class CombatAnimation {
     } else if (animType == CombatAnimationType.PRIVATEERING) {
       explosionAnim = GuiStatics.PRIVATEER;
       explosionSfx = SoundPlayer.ALARM;
+    } else if (animType == CombatAnimationType.BITE) {
+      explosionAnim = GuiStatics.BITE;
+      explosionSfx = SoundPlayer.BITE;
     } else if (animType == CombatAnimationType.LIGHTNING) {
       explosionAnim = GuiStatics.LIGHTNING;
       explosionSfx = SoundPlayer.ELECTRIC;
@@ -277,6 +280,14 @@ public class CombatAnimation {
       break;
     }
     case PRIVATEERING: {
+      count = explosionAnim.getMaxFrames();
+      break;
+    }
+    case BITE: {
+      count = explosionAnim.getMaxFrames() * 2;
+      break;
+    }
+    case TENTACLE: {
       count = explosionAnim.getMaxFrames();
       break;
     }
@@ -358,6 +369,15 @@ public class CombatAnimation {
         } else {
           initType = CombatAnimationType.LASER_BEAM;
         }
+        break;
+      }
+      case BITE: {
+        initType = CombatAnimationType.BITE;
+        break;
+      }
+      case TENTACLE: {
+        //FIXME: Change correct animation
+        initType = CombatAnimationType.BITE;
         break;
       }
       case PRIVATEERING_MODULE: {
@@ -656,6 +676,31 @@ public class CombatAnimation {
         } else {
           showAnim = false;
         }
+      }
+    } else if (type == CombatAnimationType.BITE) {
+      count--;
+      if (animFrame < explosionAnim.getMaxFrames()) {
+        showAnim = true;
+        if (animFrame == 0 && hit && loopCount == 0) {
+          SoundPlayer.playSound(explosionSfx);
+        }
+        if (count % 2 == 0) {
+          animFrame++;
+        }
+      } else {
+        showAnim = false;
+      }
+    } else if (type == CombatAnimationType.TENTACLE) {
+      //FIXME
+      count--;
+      if (animFrame < explosionAnim.getMaxFrames()) {
+        showAnim = true;
+        if (animFrame == 0 && hit && loopCount == 0) {
+          SoundPlayer.playSound(explosionSfx);
+        }
+        animFrame++;
+      } else {
+        showAnim = false;
       }
     }
   }

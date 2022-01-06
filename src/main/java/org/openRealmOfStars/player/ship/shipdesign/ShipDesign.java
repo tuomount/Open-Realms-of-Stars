@@ -343,7 +343,9 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.WEAPON_RAILGUN
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
-          || comp.getType() == ShipComponentType.ION_CANNON) {
+          || comp.getType() == ShipComponentType.ION_CANNON
+          || comp.getType() == ShipComponentType.BITE
+          || comp.getType() == ShipComponentType.TENTACLE) {
         return true;
       }
     }
@@ -363,9 +365,11 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.WEAPON_RAILGUN
-              || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
+          || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
           || comp.getType() == ShipComponentType.PLASMA_CANNON
-          || comp.getType() == ShipComponentType.ION_CANNON) {
+          || comp.getType() == ShipComponentType.ION_CANNON
+          || comp.getType() == ShipComponentType.BITE
+          || comp.getType() == ShipComponentType.TENTACLE) {
         count++;
       }
     }
@@ -403,7 +407,9 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.PLASMA_CANNON
-          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+          || comp.getType() == ShipComponentType.BITE
+          || comp.getType() == ShipComponentType.TENTACLE) {
         return true;
       }
     }
@@ -558,7 +564,9 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.WEAPON_RAILGUN)
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
-          || comp.getType() == ShipComponentType.PLASMA_CANNON) {
+          || comp.getType() == ShipComponentType.PLASMA_CANNON
+          || comp.getType() == ShipComponentType.BITE
+          || comp.getType() == ShipComponentType.TENTACLE) {
         militaryShip = true;
         power = power + comp.getDamage();
       }

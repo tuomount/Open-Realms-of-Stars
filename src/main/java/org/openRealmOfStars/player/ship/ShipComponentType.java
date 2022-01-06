@@ -157,7 +157,15 @@ public enum ShipComponentType {
    * Callisto is a multicannon and it has been defined as a hybrid weapon.
    * Callisto is between railgun and missiles.
    */
-  CALLISTO_MULTICANNON;
+  CALLISTO_MULTICANNON,
+  /**
+   * Bite is space monster's bite attack.
+   */
+  BITE,
+  /**
+   * Tentacle is space monster's tentacle attack.
+   */
+  TENTACLE;
 
   /**
    * Get ShipComponentType index
@@ -227,6 +235,10 @@ public enum ShipComponentType {
       return 29;
     case CALLISTO_MULTICANNON:
       return 30;
+    case BITE:
+      return 31;
+    case TENTACLE:
+      return 32;
     default:
       return 0;
     }
@@ -301,6 +313,10 @@ public enum ShipComponentType {
       return ShipComponentType.ION_CANNON;
     case 30:
       return ShipComponentType.CALLISTO_MULTICANNON;
+    case 31:
+      return ShipComponentType.BITE;
+    case 32:
+      return ShipComponentType.TENTACLE;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -371,6 +387,10 @@ public enum ShipComponentType {
       return "Ion cannon";
     case CALLISTO_MULTICANNON:
       return "Callisto multicannon";
+    case BITE:
+      return "Bite";
+    case TENTACLE:
+      return "Tentacle";
     default:
       return "Error - Unknown";
     }
@@ -444,6 +464,10 @@ public enum ShipComponentType {
       return Icons.ICON_ION_CANNON;
     case CALLISTO_MULTICANNON:
       return Icons.ICON_ION_CANNON;
+    case BITE:
+      return Icons.ICON_ORGANIC_ARMOR;
+    case TENTACLE:
+      return Icons.ICON_ORGANIC_ARMOR;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }
@@ -465,7 +489,9 @@ public enum ShipComponentType {
       case WEAPON_PHOTON_TORPEDO:
       case PLASMA_CANNON:
       case ION_CANNON:
+      case TENTACLE:
           return 75;
+      case BITE:
       case CALLISTO_MULTICANNON:
           return 60;
       case WEAPON_ECM_TORPEDO:

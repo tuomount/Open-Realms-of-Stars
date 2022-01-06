@@ -497,7 +497,9 @@ public class TechList {
             || comp.getType() == ShipComponentType.WEAPON_RAILGUN
             || comp.getType() == ShipComponentType.PLASMA_CANNON
             || comp.getType() == ShipComponentType.ION_CANNON
-            || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON) {
+            || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
+            || comp.getType() == ShipComponentType.BITE
+            || comp.getType() == ShipComponentType.TENTACLE) {
           compValue = comp.getDamage();
         }
         if (compValue > bestValue) {

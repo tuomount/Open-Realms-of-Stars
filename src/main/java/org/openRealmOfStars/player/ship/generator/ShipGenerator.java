@@ -283,7 +283,9 @@ public final class ShipGenerator {
       case PLASMA_CANNON:
       case ION_CANNON:
       case CALLISTO_MULTICANNON:
-      case WEAPON_RAILGUN: {
+      case WEAPON_RAILGUN:
+      case BITE:
+      case TENTACLE: {
         scores[i] = scores[i] + comp.getDamage() * 5;
         break;
       }

@@ -1474,6 +1474,14 @@ public class MapPanel extends JPanel {
           SoundPlayer.playSound(SoundPlayer.TRACTORBEAM);
           break;
           }
+        case BITE: {
+          SoundPlayer.playSound(SoundPlayer.BITE);
+          break;
+          }
+        case TENTACLE: {
+          SoundPlayer.playSound(SoundPlayer.TENTACLE);
+          break;
+          }
         default: {
           ErrorLogger.log("Unexpected weapon type, sound effect is missing!");
         }

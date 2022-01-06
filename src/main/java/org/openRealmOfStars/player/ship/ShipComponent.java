@@ -178,7 +178,9 @@ public class ShipComponent {
         || type == ShipComponentType.WEAPON_RAILGUN
         || type == ShipComponentType.CALLISTO_MULTICANNON
         || type == ShipComponentType.PLASMA_CANNON
-        || type == ShipComponentType.ION_CANNON) {
+        || type == ShipComponentType.ION_CANNON
+        || type == ShipComponentType.BITE
+        || type == ShipComponentType.TENTACLE) {
       return true;
     }
     return false;
@@ -633,6 +635,28 @@ public class ShipComponent {
       sb.append("\nHit: 50%, 50% penetrates shields");
       sb.append("\n\n");
       sb.append("Long range weapon with 50% accuracy.");
+      sb.append("\n");
+      break;
+    }
+    case BITE: {
+      sb.append("Damage: ");
+      sb.append(getDamage());
+      sb.append(" Range: ");
+      sb.append(getWeaponRange());
+      sb.append("\nHit: 60%, 66% penetrates shields");
+      sb.append("\n\n");
+      sb.append("Natural weapon with 60% accuracy.");
+      sb.append("\n");
+      break;
+    }
+    case TENTACLE: {
+      sb.append("Damage: ");
+      sb.append(getDamage());
+      sb.append(" Range: ");
+      sb.append(getWeaponRange());
+      sb.append("\nHit: 75%, 66% penetrates shields");
+      sb.append("\n\n");
+      sb.append("Natural weapon with 75% accuracy.");
       sb.append("\n");
       break;
     }

@@ -798,6 +798,12 @@ public final class GuiStatics {
       "/resources/images/privateer.png");
 
   /**
+   * Bite animation
+   */
+  public static final AnimatedImage BITE = new AnimatedImage(64, 64,
+      "/resources/images/bite.png");
+
+  /**
    * Wormhole animation
    */
   public static final AnimatedImage WORMHOLE = new AnimatedImage(64, 64,

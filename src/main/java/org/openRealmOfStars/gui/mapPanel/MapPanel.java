@@ -1505,6 +1505,21 @@ public class MapPanel extends JPanel {
             anim.getSy() + viewPointOffsetY
                 - GuiStatics.PHOTON_TORPEDO.getHeight() / 2,
             null);
+      } else if (anim.getType() == CombatAnimationType.TENTACLE) {
+        Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
+            BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
+        gr.setStroke(full);
+        gr.setColor(GuiStatics.TENTACLE_COLOR_1);
+        gr.drawLine(anim.getSx() + viewPointOffsetX,
+            anim.getSy() + viewPointOffsetY, anim.getEx() + viewPointOffsetX,
+            anim.getEy() + viewPointOffsetY);
+        Stroke dots = new BasicStroke(3.0f, BasicStroke.CAP_ROUND,
+            BasicStroke.JOIN_BEVEL, 10.0f, new float[] {10.0f }, 0.0f);
+        gr.setStroke(dots);
+        gr.setColor(GuiStatics.TENTACLE_COLOR_2);
+        gr.drawLine(anim.getSx() + viewPointOffsetX,
+            anim.getSy() + viewPointOffsetY, anim.getEx() + viewPointOffsetX,
+            anim.getEy() + viewPointOffsetY);
       } else if (anim.getType() == CombatAnimationType.PLASMA_CANNON) {
         gr.drawImage(GuiStatics.PLASMA_BULLET,
             anim.getSx() + viewPointOffsetX

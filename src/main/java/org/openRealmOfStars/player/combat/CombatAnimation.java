@@ -376,8 +376,7 @@ public class CombatAnimation {
         break;
       }
       case TENTACLE: {
-        //FIXME: Change correct animation
-        initType = CombatAnimationType.BITE;
+        initType = CombatAnimationType.TENTACLE;
         break;
       }
       case PRIVATEERING_MODULE: {
@@ -692,15 +691,30 @@ public class CombatAnimation {
       }
     } else if (type == CombatAnimationType.TENTACLE) {
       //FIXME
-      count--;
-      if (animFrame < explosionAnim.getMaxFrames()) {
-        showAnim = true;
-        if (animFrame == 0 && hit && loopCount == 0) {
-          SoundPlayer.playSound(explosionSfx);
+      if (Math.round(sx) == Math.round(ex)
+          && Math.round(sy) == Math.round(ey)) {
+        count--;
+        doAnimationHit(13);
+        if (animFrame < explosionAnim.getMaxFrames()) {
+          if (animFrame == 0 && hit) {
+            SoundPlayer.playSound(explosionSfx);
+            if (getShieldAnimFrame() != null) {
+              SoundPlayer.playShieldSound();
+            }
+          }
+          animFrame++;
+        } else {
+          showAnim = false;
         }
-        animFrame++;
       } else {
-        showAnim = false;
+        for (int i = 0; i < 5; i++) {
+          sx = sx + mx;
+          sy = sy + my;
+          if (Math.round(sx) == Math.round(ex)
+              && Math.round(sy) == Math.round(ey)) {
+            break;
+          }
+        }
       }
     }
   }

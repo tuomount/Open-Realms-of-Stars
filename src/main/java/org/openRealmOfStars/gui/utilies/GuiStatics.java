@@ -610,6 +610,14 @@ public final class GuiStatics {
       BEAM_COLOR_3, BEAM_COLOR_4, BEAM_COLOR_5, };
 
   /**
+   * Base color for tentacle.
+   */
+  public static final Color TENTACLE_COLOR_1 = new Color(65, 50, 44);
+  /**
+   * Second color for tentacle.
+   */
+  public static final Color TENTACLE_COLOR_2 = new Color(78, 63, 42);
+  /**
    * Green beam colors
    */
   public static final Color[] GREEN_BEAM_COLORS = {

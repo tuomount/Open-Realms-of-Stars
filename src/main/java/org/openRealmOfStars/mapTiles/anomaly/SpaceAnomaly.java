@@ -36,7 +36,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018,2020,2021 Tuomo Untinen
+* Copyright (C) 2018,2020-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -259,7 +259,7 @@ public class SpaceAnomaly {
         }
         case TileNames.SPACE_ANOMALY_MONSTER: {
           result = new SpaceAnomaly(AnomalyType.MONSTER, 0);
-          result.setImage(GuiStatics.IMAGE_PIRATE_PILOT);
+          result.setImage(GuiStatics.IMAGE_KRAKEN);
           map.setTile(fleet.getX(), fleet.getY(), empty);
           PlayerInfo board = map.getPlayerList().getSpaceMonsterPlayer();
           Fleet monster = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),

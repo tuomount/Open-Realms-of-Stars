@@ -682,6 +682,7 @@ public class CombatAnimation {
         showAnim = true;
         if (animFrame == 0 && hit && loopCount == 0) {
           SoundPlayer.playSound(explosionSfx);
+          doAnimationHit(20);
         }
         if (count % 2 == 0) {
           animFrame++;

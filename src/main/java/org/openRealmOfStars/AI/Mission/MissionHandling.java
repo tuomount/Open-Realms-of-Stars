@@ -214,6 +214,7 @@ public final class MissionHandling {
         search.doSearch();
         search.doRoute();
         fleet.setaStarSearch(search);
+        makeRegularMoves(game, fleet, info);
       } else {
         if (mission.getPhase() == MissionPhase.TREKKING) {
           if (fleet.getaStarSearch() == null) {
@@ -261,6 +262,7 @@ public final class MissionHandling {
               search.doSearch();
               search.doRoute();
               fleet.setaStarSearch(search);
+              makeRegularMoves(game, fleet, info);
             }
           }
           if (fleet.getaStarSearch() != null) {

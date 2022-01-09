@@ -2112,6 +2112,16 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Is Ship actually space monster?
+   * @return True if ship is space monster.
+   */
+  public boolean isMonster() {
+    if (getHull().getRace() == SpaceRace.SPACE_MONSTERS) {
+      return true;
+    }
+    return false;
+  }
+  /**
    * Get Cargo Type
    * @return CARGO_TYPE
    */

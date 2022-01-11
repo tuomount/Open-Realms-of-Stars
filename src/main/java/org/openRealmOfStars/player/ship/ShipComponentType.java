@@ -465,9 +465,9 @@ public enum ShipComponentType {
     case CALLISTO_MULTICANNON:
       return Icons.ICON_ION_CANNON;
     case BITE:
-      return Icons.ICON_ORGANIC_ARMOR;
+      return Icons.ICON_MOUTH;
     case TENTACLE:
-      return Icons.ICON_ORGANIC_ARMOR;
+      return Icons.ICON_TENTACLE;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

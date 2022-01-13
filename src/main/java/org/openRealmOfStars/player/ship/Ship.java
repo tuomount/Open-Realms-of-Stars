@@ -663,6 +663,10 @@ private int getRemainingEnergy(final int index) {
           && hasComponentEnergy(i) && comp.getSpeed() > speed) {
         speed = comp.getSpeed();
       }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SPACE_FIN
+          && hasComponentEnergy(i) && comp.getSpeed() > speed) {
+        speed = comp.getSpeed();
+      }
     }
     return speed;
   }
@@ -677,6 +681,10 @@ private int getRemainingEnergy(final int index) {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
+          && hasComponentEnergy(i) && comp.getTacticSpeed() > speed) {
+        speed = comp.getTacticSpeed();
+      }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SPACE_FIN
           && hasComponentEnergy(i) && comp.getTacticSpeed() > speed) {
         speed = comp.getTacticSpeed();
       }
@@ -742,7 +750,10 @@ private int getRemainingEnergy(final int index) {
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
           && hasComponentEnergy(i) && comp.getFtlSpeed() > ftlSpeed) {
           ftlSpeed = comp.getFtlSpeed();
-        break;
+      }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SPACE_FIN
+          && hasComponentEnergy(i) && comp.getFtlSpeed() > ftlSpeed) {
+          ftlSpeed = comp.getFtlSpeed();
       }
     }
     if (hull.getHullType() == ShipHullType.PROBE) {
@@ -1807,6 +1818,10 @@ private int increaseHitChanceByComponent() {
           && getHull().getHullType() != ShipHullType.STARBASE) {
         power = power + comp.getTacticSpeed() - 1;
       }
+      if (comp.getType() == ShipComponentType.SPACE_FIN
+          && getHull().getHullType() != ShipHullType.STARBASE) {
+        power = power + comp.getTacticSpeed() - 1;
+      }
       if (comp.getType() == ShipComponentType.TARGETING_COMPUTER) {
         power = power + comp.getDamage() / 10.0;
       }
@@ -1881,6 +1896,11 @@ private int increaseHitChanceByComponent() {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE
+          && getHull().getHullType() != ShipHullType.STARBASE
+          && componentIsWorking(i)) {
+        power = power + comp.getTacticSpeed() - 1;
+      }
+      if (comp.getType() == ShipComponentType.SPACE_FIN
           && getHull().getHullType() != ShipHullType.STARBASE
           && componentIsWorking(i)) {
         power = power + comp.getTacticSpeed() - 1;

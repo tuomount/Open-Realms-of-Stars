@@ -691,7 +691,6 @@ public class CombatAnimation {
         showAnim = false;
       }
     } else if (type == CombatAnimationType.TENTACLE) {
-      //FIXME
       if (Math.round(sx) == Math.round(ex)
           && Math.round(sy) == Math.round(ey)) {
         count--;

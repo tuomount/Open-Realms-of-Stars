@@ -561,6 +561,7 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case HEART:
     case POWERSOURCE: {
       // Do nothing
       break;
@@ -571,6 +572,7 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case SPACE_FIN:
     case ENGINE: {
       sb.append("Speed: ");
       sb.append(getSpeed());

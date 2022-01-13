@@ -1853,7 +1853,7 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_SPACE_FIN) {
       tmp = new ShipComponent(index, "Space fin", 0, 0,
-          ShipComponentType.ENGINE);
+          ShipComponentType.SPACE_FIN);
       tmp.setSpeed(1);
       tmp.setFtlSpeed(1);
       tmp.setTacticSpeed(1);
@@ -2257,12 +2257,12 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_HEART) {
       tmp = new ShipComponent(index, "Heart", 2, 2,
-          ShipComponentType.POWERSOURCE);
+          ShipComponentType.HEART);
       tmp.setEnergyResource(6);
     }
     if (index == COMPONENT_LARGE_HEART) {
       tmp = new ShipComponent(index, "Large heart", 3, 3,
-          ShipComponentType.POWERSOURCE);
+          ShipComponentType.HEART);
       tmp.setEnergyResource(9);
     }
     return tmp;

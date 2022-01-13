@@ -172,6 +172,9 @@ public class CombatShip implements Comparable<CombatShip> {
     if (index == -1) {
       index = getComponentForUse(ShipComponentType.ENGINE);
     }
+    if (index == -1) {
+      index = getComponentForUse(ShipComponentType.SPACE_FIN);
+    }
     return index;
   }
 

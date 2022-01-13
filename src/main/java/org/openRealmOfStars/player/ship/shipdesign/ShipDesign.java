@@ -243,6 +243,10 @@ public class ShipDesign {
           && comp.getSpeed() > speed) {
         speed = comp.getSpeed();
       }
+      if (comp.getType() == ShipComponentType.SPACE_FIN
+          && comp.getSpeed() > speed) {
+        speed = comp.getSpeed();
+      }
     }
     return speed;
   }
@@ -257,6 +261,10 @@ public class ShipDesign {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (comp.getType() == ShipComponentType.ENGINE
+          && comp.getTacticSpeed() > speed) {
+        speed = comp.getTacticSpeed();
+      }
+      if (comp.getType() == ShipComponentType.SPACE_FIN
           && comp.getTacticSpeed() > speed) {
         speed = comp.getTacticSpeed();
       }
@@ -279,6 +287,10 @@ public class ShipDesign {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (comp.getType() == ShipComponentType.ENGINE
+          && comp.getFtlSpeed() > result) {
+        result = comp.getFtlSpeed();
+      }
+      if (comp.getType() == ShipComponentType.SPACE_FIN
           && comp.getFtlSpeed() > result) {
         result = comp.getFtlSpeed();
       }
@@ -489,6 +501,9 @@ public class ShipDesign {
       if (comp.getType() == ShipComponentType.ENGINE) {
         return true;
       }
+      if (comp.getType() == ShipComponentType.SPACE_FIN) {
+        return true;
+      }
     }
     return false;
   }
@@ -577,6 +592,10 @@ public class ShipDesign {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE
+          && getHull().getHullType() != ShipHullType.STARBASE) {
+        power = power + comp.getTacticSpeed() - 1;
+      }
+      if (comp.getType() == ShipComponentType.SPACE_FIN
           && getHull().getHullType() != ShipHullType.STARBASE) {
         power = power + comp.getTacticSpeed() - 1;
       }
@@ -1014,6 +1033,9 @@ public class ShipDesign {
     }
     for (ShipComponent comp : components) {
       if (comp.getType() == ShipComponentType.ENGINE) {
+        result = result + comp.getSpeed() + comp.getTacticSpeed();
+      }
+      if (comp.getType() == ShipComponentType.SPACE_FIN) {
         result = result + comp.getSpeed() + comp.getTacticSpeed();
       }
       if (comp.getInitiativeBoost() > 0) {

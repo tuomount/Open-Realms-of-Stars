@@ -455,7 +455,9 @@ public class TechList {
     for (Tech tech : list) {
       ShipComponent comp = ShipComponentFactory
           .createByName(tech.getComponent());
-      if (comp != null && comp.getType() == ShipComponentType.ENGINE) {
+      if (comp != null
+          && (comp.getType() == ShipComponentType.ENGINE
+          || comp.getType() == ShipComponentType.SPACE_FIN)) {
         int compValue = -1;
         if (comp.getFtlSpeed() > 1 && comp.getSpeed() == 1
             && comp.getTacticSpeed() == 1) {
@@ -497,7 +499,9 @@ public class TechList {
             || comp.getType() == ShipComponentType.WEAPON_RAILGUN
             || comp.getType() == ShipComponentType.PLASMA_CANNON
             || comp.getType() == ShipComponentType.ION_CANNON
-            || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON) {
+            || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
+            || comp.getType() == ShipComponentType.BITE
+            || comp.getType() == ShipComponentType.TENTACLE) {
           compValue = comp.getDamage();
         }
         if (compValue > bestValue) {

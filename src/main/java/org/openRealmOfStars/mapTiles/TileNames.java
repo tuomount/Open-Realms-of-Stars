@@ -501,42 +501,60 @@ public final class TileNames {
   /**
    * List of non harmful space anomalies
    */
-  public static final String[] NON_HARMULFUL_SPACE_ANOMALIES = {
+  public static final String[] NON_HARMFUL_SPACE_ANOMALIES = {
       SPACE_ANOMALY_CREDITS, SPACE_ANOMALY_TECH, SPACE_ANOMALY_DSA,
       SPACE_ANOMALY_MAP, SPACE_ANOMALY_SHIP, SPACE_ANOMALY_MECHION,
       SPACE_ANOMALY_RARE_TECH};
 
   /**
-   * List of harmful space anomalies
+   * List of harmful space anomalies which are not related to space pirates or
+   * monsters.
    */
-  public static final String[] HARMULFUL_SPACE_ANOMALIES = {
-      SPACE_ANOMALY_LAIR, SPACE_ANOMALY, SPACE_ANOMALY_PIRATE,
-      SPACE_ANOMALY_TIME_WARP};
+  public static final String[] HARMFUL_SPACE_ANOMALIES = {
+      SPACE_ANOMALY, SPACE_ANOMALY_TIME_WARP};
+
+  /**
+   * List of harmful space anomalies which are related to space pirates.
+   */
+  public static final String[] HARMFUL_SPACE_PIRATES = {
+      SPACE_ANOMALY_LAIR, SPACE_ANOMALY_PIRATE
+  };
+  /**
+   * List of harmful space anomalies which are related to space monsters.
+   */
+  public static final String[] HARMFUL_SPACE_MONSTERS = {
+      SPACE_ANOMALY_MONSTER};
 
   /**
    * Get random space anomaly
    * @param harmful Is harmful anomalies allowed
-   * @param board Is board player present
+   * @param pirate Is board pirate player present
+   * @param monster Is board monster player present
    * @return Space anomaly
    */
   public static String getRandomSpaceAnomaly(final boolean harmful,
-      final boolean board) {
+      final boolean pirate, final boolean monster) {
     ArrayList<String> list = new ArrayList<>();
-    for (String str : NON_HARMULFUL_SPACE_ANOMALIES) {
+    for (String str : NON_HARMFUL_SPACE_ANOMALIES) {
       list.add(str);
     }
     if (harmful) {
-      for (String str : HARMULFUL_SPACE_ANOMALIES) {
-        if (!board) {
-          if (str.equals(SPACE_ANOMALY)) {
-            list.add(str);
-          }
-        } else {
+      for (String str : HARMFUL_SPACE_ANOMALIES) {
+        list.add(str);
+      }
+      if (pirate) {
+        for (String str : HARMFUL_SPACE_PIRATES) {
+          list.add(str);
+        }
+      }
+      if (monster) {
+        for (String str : HARMFUL_SPACE_MONSTERS) {
           list.add(str);
         }
       }
     }
     int value = DiceGenerator.getRandom(list.size() - 1);
+    //int value = list.size() - 1;
     return list.get(value);
   }
   /**

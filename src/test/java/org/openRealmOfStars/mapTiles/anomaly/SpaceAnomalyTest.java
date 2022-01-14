@@ -208,7 +208,7 @@ public class SpaceAnomalyTest {
         (PlayerInfo) Mockito.any(), Mockito.anyInt())).thenReturn(fleet);
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
-    Mockito.when(playerList.getBoardPlayer()).thenReturn(board);
+    Mockito.when(playerList.getSpacePiratePlayer()).thenReturn(board);
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.LAIR, anomaly.getType());
     assertEquals(GuiStatics.IMAGE_PIRATE_LAIR, anomaly.getImage());
@@ -240,7 +240,7 @@ public class SpaceAnomalyTest {
         (PlayerInfo) Mockito.any(), Mockito.anyInt())).thenReturn(fleet);
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
-    Mockito.when(playerList.getBoardPlayer()).thenReturn(board);
+    Mockito.when(playerList.getSpacePiratePlayer()).thenReturn(board);
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.PIRATE, anomaly.getType());
     assertEquals(GuiStatics.IMAGE_PIRATE_PILOT, anomaly.getImage());

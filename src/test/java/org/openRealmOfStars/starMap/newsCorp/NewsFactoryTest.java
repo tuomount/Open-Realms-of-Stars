@@ -770,7 +770,7 @@ public class NewsFactoryTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.SPACE_PIRATE);
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList list = Mockito.mock(PlayerList.class);
-    Mockito.when(list.getBoardPlayer()).thenReturn(info);
+    Mockito.when(list.getSpacePiratePlayer()).thenReturn(info);
     Mockito.when(map.getPlayerList()).thenReturn(list);
     
     NewsData news = NewsFactory.makeSpacePiratesNews(map);

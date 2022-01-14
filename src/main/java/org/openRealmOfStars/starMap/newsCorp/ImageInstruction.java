@@ -14,7 +14,7 @@ import org.openRealmOfStars.starMap.planet.PlanetTypes;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2021 Tuomo Untinen
+* Copyright (C) 2017-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -300,6 +300,10 @@ public class ImageInstruction {
    */
   public static final String PIRATE_PILOT = "pirate pilot";
   /**
+   * Kraken
+   */
+  public static final String KRAKEN = "kraken";
+  /**
    * Pirate raiders
    */
   public static final String PIRATE_RAIDERS = "pirate raiders";
@@ -554,6 +558,7 @@ public class ImageInstruction {
         && !SOLAR_FLARES.equals(image)
         && !SOLAR_NO_FLARES.equals(image)
         && !PIRATE_PILOT.equals(image)
+        && !KRAKEN.equals(image)
         && !PIRATE_RAIDERS.equals(image)
         && !MUTINY.equals(image)
         && !DATALOSS.equals(image)
@@ -708,7 +713,8 @@ public class ImageInstruction {
         && !SpaceRace.REBORGIANS.getNameSingle().equals(logoType)
         && !SpaceRace.LITHORIANS.getNameSingle().equals(logoType)
         && !SpaceRace.ALTEIRIANS.getNameSingle().equals(logoType)
-        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(logoType)) {
+        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(logoType)
+        && !SpaceRace.SPACE_MONSTERS.getNameSingle().equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }
     if (!SIZE_FULL.equals(size)
@@ -1073,6 +1079,10 @@ public class ImageInstruction {
     if (race != null) {
       drawImg = race.getRaceImage();
     }
+    if (SpaceRace.SPACE_MONSTERS.getNameSingle().equals(image)) {
+      //FIXME: This might be needed for changing...
+      drawImg = SpaceRace.SPACE_PIRATE.getRaceImage();
+    }
     if (SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)) {
       drawImg = SpaceRace.SPACE_PIRATE.getRaceImage();
     }
@@ -1105,6 +1115,9 @@ public class ImageInstruction {
     }
     if (PIRATE_PILOT.equals(image)) {
       drawImg = GuiStatics.IMAGE_PIRATE_PILOT;
+    }
+    if (KRAKEN.equals(image)) {
+      drawImg = GuiStatics.IMAGE_KRAKEN;
     }
     if (PIRATE_RAIDERS.equals(image)) {
       drawImg = GuiStatics.IMAGE_PIRATE_RAIDERS;

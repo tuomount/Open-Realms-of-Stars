@@ -30,7 +30,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2017-2020 Tuomo Untinen
+ * Copyright (C) 2017-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -153,9 +153,17 @@ public class DiplomaticTrade {
     first = index1;
     second = index2;
     diplomacyWithPirates = false;
-    int max = starMap.getPlayerList().getCurrentMaxRealms();
-    if (map.getPlayerList().getBoardPlayer() != null
-        && first == max || second == max) {
+    PlayerInfo pirate = starMap.getPlayerList().getSpacePiratePlayer();
+    int pirateIndex = starMap.getPlayerList().getIndex(pirate);
+    PlayerInfo monster = starMap.getPlayerList().getSpaceMonsterPlayer();
+    int monsterIndex = starMap.getPlayerList().getIndex(monster);
+    int max = starMap.getPlayerList().getCurrentMaxPlayers();
+    if (pirate != null
+        && first == pirateIndex || second == pirateIndex) {
+      diplomacyWithPirates = true;
+    }
+    if (monster != null
+        && first == monsterIndex || second == monsterIndex) {
       diplomacyWithPirates = true;
     }
     if (!diplomacyWithPirates) {
@@ -224,7 +232,7 @@ public class DiplomaticTrade {
    * @param attitude AI attitude
    * @return Index for best tech
    */
-  private int getBestTech(final ArrayList<Tech> techList,
+  private static int getBestTech(final ArrayList<Tech> techList,
       final Attitude attitude) {
     int bestIndex = 0;
     for (int i = 0; i < techList.size(); i++) {
@@ -314,11 +322,11 @@ public class DiplomaticTrade {
           value = minFive(value);
           value = value * 2;
           return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
-              new Integer(value));
+              Integer.valueOf(value));
         } else if (value > 0) {
           value = minFive(value);
           return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
-              new Integer(value));
+              Integer.valueOf(value));
         }
     }
     return null;
@@ -336,12 +344,12 @@ public class DiplomaticTrade {
         if (value < 0) {
           value = minFive(value);
           return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
-              new Integer(value));
+              Integer.valueOf(value));
         } else if (value > 0) {
           value = minFive(value);
           value = value * 2;
           return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
-              new Integer(value));
+              Integer.valueOf(value));
         }
     }
     return null;
@@ -359,9 +367,8 @@ public class DiplomaticTrade {
       if (voteNo.getOfferValue(agree.getRace()) < voteYes.getOfferValue(
           agree.getRace())) {
         return voteNo;
-      } else {
-        return voteYes;
       }
+      return voteYes;
     }
     if (voteYes != null) {
       return voteYes;
@@ -426,7 +433,7 @@ public class DiplomaticTrade {
           }
           if (value > 0) {
             secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-                new Integer(value)));
+                Integer.valueOf(value)));
           }
           break;
         }
@@ -441,7 +448,7 @@ public class DiplomaticTrade {
       }
       firstOffer = new NegotiationList();
       firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-          new Integer(value)));
+          Integer.valueOf(value)));
       secondOffer = new NegotiationList();
       int index = getBestTech(techListForSecond, offerMaker.getAiAttitude());
       secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
@@ -460,7 +467,7 @@ public class DiplomaticTrade {
     }
     secondOffer = new NegotiationList();
     secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-          new Integer(credit)));
+        Integer.valueOf(credit)));
   }
   /**
    * Generate tech demand or money demand
@@ -478,7 +485,7 @@ public class DiplomaticTrade {
       }
       firstOffer = new NegotiationList();
       firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-            new Integer(credit)));
+          Integer.valueOf(credit)));
     }
     secondOffer = new NegotiationList();
   }
@@ -512,7 +519,7 @@ public class DiplomaticTrade {
       firstOffer.add(offer);
       if (value > 0) {
         secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-            new Integer(value)));
+            Integer.valueOf(value)));
       }
     } else if (tradeType == TRADE) {
       firstOffer = new NegotiationList();
@@ -533,7 +540,7 @@ public class DiplomaticTrade {
       }
       firstOffer = new NegotiationList();
       firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-          new Integer(value)));
+          Integer.valueOf(value)));
       secondOffer = new NegotiationList();
       secondOffer.add(offer);
     }
@@ -582,7 +589,7 @@ public class DiplomaticTrade {
       if (value > 0 && value > originalValue / 2) {
         firstOffer = new NegotiationList();
         firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-            new Integer(value)));
+            Integer.valueOf(value)));
         secondOffer = new NegotiationList();
         secondOffer.add(new NegotiationOffer(NegotiationType.FLEET,
             fleet));
@@ -655,7 +662,7 @@ public class DiplomaticTrade {
    * @param planet PLanet to calculate
    * @return Planet value.
    */
-  private int calculatePlanetValue(final PlayerInfo demander,
+  private static int calculatePlanetValue(final PlayerInfo demander,
       final Planet planet) {
     int result = 0;
     result = result + planet.getAmountMetalInGround() / 1000;
@@ -846,7 +853,7 @@ public class DiplomaticTrade {
           credit = info2.getTotalCredits();
         }
         firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-            new Integer(credit)));
+            Integer.valueOf(credit)));
       }
     } else if (power > 50 + powerDiff) {
       if (fatigue > -2 && techListForFirst.size() > 0) {
@@ -868,7 +875,7 @@ public class DiplomaticTrade {
           credit = info2.getTotalCredits();
         }
         firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-            new Integer(credit)));
+            Integer.valueOf(credit)));
       }
     } else if (power > -50 + powerDiff) {
       generateEqualTrade(NegotiationType.PEACE);
@@ -899,7 +906,7 @@ public class DiplomaticTrade {
           credit = info.getTotalCredits();
         }
         secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-            new Integer(credit)));
+            Integer.valueOf(credit)));
       }
     } else {
       if (fatigue <= -2) {
@@ -921,7 +928,7 @@ public class DiplomaticTrade {
           credit = info.getTotalCredits();
         }
         secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-            new Integer(credit)));
+            Integer.valueOf(credit)));
       }
     }
   }

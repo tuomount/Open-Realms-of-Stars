@@ -87,6 +87,14 @@ public enum CombatAnimationType {
   /**
    * Scanning
    */
-  SCANNING;
+  SCANNING,
+  /**
+   * BITE
+   */
+  BITE,
+  /**
+   * Tentacle
+   */
+  TENTACLE;
 
 }

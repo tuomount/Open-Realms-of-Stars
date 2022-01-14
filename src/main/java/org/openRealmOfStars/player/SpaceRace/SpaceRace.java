@@ -154,7 +154,15 @@ public enum SpaceRace {
   SMAUGIRIANS(14, "Smaugirians", "Smaugirian",
       "Smaugirians are humanoids that are known for smuggling goods."
       + " Their cargo ships can contain single weapon"
-      + " or privateering modules.");
+      + " or privateering modules."),
+  /**
+   * Humans are about average in everything and space pirates are probably
+   * humans or are just average.
+   */
+  SPACE_MONSTERS(15, "Space Monsters", "Space monsters",
+         "Generic space monsters which are aggressive and try cause\n"
+       + " trouble. No diplomacy with these guys.");
+
 
 
 
@@ -210,6 +218,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 100;
     case MECHIONS:
       return 50;
@@ -256,6 +265,7 @@ public enum SpaceRace {
         return Attitude.LOGICAL;
       case SPORKS:
       case SPACE_PIRATE:
+      case SPACE_MONSTERS:
         return Attitude.AGGRESSIVE;
       case GREYANS:
         return Attitude.SCIENTIFIC;
@@ -292,6 +302,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 4;
     case MECHIONS:
       return 8;
@@ -348,6 +359,7 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_SCAURIAN_RACE;
     case HOMARIANS:
       return GuiStatics.IMAGE_HOMARIAN_RACE;
+    case SPACE_MONSTERS: // No diplomacy so image should not matter
     case SPACE_PIRATE:
       return GuiStatics.IMAGE_PRIVATEER_RACE;
     case CHIRALOIDS:
@@ -391,6 +403,7 @@ public enum SpaceRace {
         return start + "resources/images/scaurian_race.png";
       case HOMARIANS:
         return start + "resources/images/homarian_race.png";
+      case SPACE_MONSTERS: // Should not matter
       case SPACE_PIRATE:
         return start + "resources/images/privateer_race.png";
       case CHIRALOIDS:
@@ -436,6 +449,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 100;
     case MECHIONS:
       return 150;
@@ -476,6 +490,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 100;
     case MECHIONS:
       return 50;
@@ -516,6 +531,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 10;
     case MECHIONS:
       return 12;
@@ -556,6 +572,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 100;
     case MECHIONS:
       return 100;
@@ -596,6 +613,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 100;
     case MECHIONS:
       return 0;
@@ -636,6 +654,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 100;
     case MECHIONS:
       return 0;
@@ -676,6 +695,8 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
       return PlayerColor.WHITE;
+    case SPACE_MONSTERS:
+      return PlayerColor.RED;
     case SPACE_PIRATE:
       return PlayerColor.BLACK;
     case MECHIONS:
@@ -717,6 +738,8 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
       return PlayerColor.ROSE;
+    case SPACE_MONSTERS:
+      return PlayerColor.CORAL;
     case SPACE_PIRATE:
       return PlayerColor.GRAY;
     case MECHIONS:
@@ -758,6 +781,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 100;
     case MECHIONS:
       return 0;
@@ -798,6 +822,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 2;
     case MECHIONS:
       return -2;
@@ -843,6 +868,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 60;
     case MECHIONS:
       return 50;
@@ -883,6 +909,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 0;
     case MECHIONS:
       return 0;
@@ -923,6 +950,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 15;
     case MECHIONS:
       return 15;
@@ -963,6 +991,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 50;
     case MECHIONS:
       return 50;
@@ -1003,6 +1032,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 3;
     case MECHIONS:
       return 3;
@@ -1044,6 +1074,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 1;
     case MECHIONS:
       return 1;
@@ -1100,6 +1131,7 @@ public enum SpaceRace {
       return MusicPlayer.INTERPLANETARY_ODYSSEY;
     case HOMARIANS:
       return MusicPlayer.MALLOGA_BALLING;
+    case SPACE_MONSTERS: // No diplomacy so should not matter
     case SPACE_PIRATE:
       return MusicPlayer.SET_FIRE_TO_REALITY;
     case CHIRALOIDS:
@@ -1124,6 +1156,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return true;
     case MECHIONS:
       return false;
@@ -1163,6 +1196,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return false;
     case MECHIONS:
       return true;
@@ -1229,6 +1263,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return 80;
     case MECHIONS:
       // Robots can be always fixed and parts replaced.
@@ -1271,6 +1306,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
       return SocialSystem.EQUAL;
     case MECHIONS:
       // Mechions cannot have empires or kingdoms.
@@ -1311,6 +1347,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN:
       return BridgeCommandType.WARM_WHITE;
+    case SPACE_MONSTERS:
     case SPACE_PIRATE:
       return BridgeCommandType.DARKEST;
     case MECHIONS:
@@ -1355,6 +1392,7 @@ public enum SpaceRace {
     default:
     case HUMAN:
     case SPACE_PIRATE:
+    case SPACE_MONSTERS:
     case MECHIONS:
     case SPORKS:
     case GREYANS:
@@ -1488,7 +1526,7 @@ public enum SpaceRace {
       case ARTIFICALWORLD: return 100;
       }
     }
-    if (this == SPACE_PIRATE) {
+    if (this == SPACE_PIRATE || this == SPACE_MONSTERS) {
       switch (worldType) {
       case SILICONWORLD: return 75;
       case WATERWORLD: return 100;

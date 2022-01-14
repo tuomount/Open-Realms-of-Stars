@@ -33,7 +33,7 @@ import org.openRealmOfStars.starMap.vote.VotingType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2017-2021 Tuomo Untinen
+ * Copyright (C) 2017-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -104,7 +104,7 @@ public class DiplomaticTradeTest {
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
     Mockito.when(players.getPlayerInfoByIndex(maxPlayer))
         .thenReturn(player2);
-    Mockito.when(players.getBoardPlayer()).thenReturn(player2);
+    Mockito.when(players.getSpacePiratePlayer()).thenReturn(player2);
     Mockito.when(map.getPlayerList()).thenReturn(players);
     Mockito.when(map.getPlayerByIndex(0)).thenReturn(player1);
     Mockito.when(map.getPlayerByIndex(maxPlayer)).thenReturn(player2);

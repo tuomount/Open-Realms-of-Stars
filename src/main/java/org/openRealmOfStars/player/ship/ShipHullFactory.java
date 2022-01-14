@@ -37,7 +37,7 @@ public final class ShipHullFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPHULL = 38;
+  private static final int MAX_SHIPHULL = 41;
 
   /**
    * Create ShipHull with matching name
@@ -242,6 +242,18 @@ public final class ShipHullFactory {
    * Hull for massive orbital
    */
   public static final int HULL_MASSIVE_ORBITAL = 37;
+  /**
+   * Hull for space worm
+   */
+  public static final int HULL_SPACE_WORM = 38;
+  /**
+   * Hull for Kraken
+   */
+  public static final int HULL_KRAKEN = 39;
+  /**
+   * Hull for Large kraken
+   */
+  public static final int HULL_LARGE_KRAKEN = 40;
 
   /**
    * Create ship hull with index
@@ -515,6 +527,27 @@ public final class ShipHullFactory {
           ShipHullType.ORBITAL, ShipSize.HUGE, 16, 24, race);
       tmp.setFleetCapacity(0);
       tmp.setImageIndex(ShipImage.MASSIVE_STARBASE);
+      return tmp;
+    }
+    if (index == HULL_SPACE_WORM) {
+      tmp = new ShipHull(index, "Space worm", 4, 1, ShipHullType.NORMAL,
+          ShipSize.SMALL, 0, 0, race);
+      tmp.setFleetCapacity(0.15);
+      tmp.setImageIndex(ShipImage.SPACE_WORM);
+      return tmp;
+    }
+    if (index == HULL_KRAKEN) {
+      tmp = new ShipHull(index, "Kraken", 6, 2, ShipHullType.NORMAL,
+          ShipSize.MEDIUM, 0, 0, race);
+      tmp.setFleetCapacity(0.2);
+      tmp.setImageIndex(ShipImage.SPACE_KRAKEN);
+      return tmp;
+    }
+    if (index == HULL_LARGE_KRAKEN) {
+      tmp = new ShipHull(index, "Large kraken", 8, 3, ShipHullType.NORMAL,
+          ShipSize.LARGE, 0, 0, race);
+      tmp.setFleetCapacity(0.4);
+      tmp.setImageIndex(ShipImage.LARGE_SPACE_KRAKEN);
       return tmp;
     }
 

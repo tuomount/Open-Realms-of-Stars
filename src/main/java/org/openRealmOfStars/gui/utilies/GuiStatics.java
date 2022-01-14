@@ -20,7 +20,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -610,6 +610,14 @@ public final class GuiStatics {
       BEAM_COLOR_3, BEAM_COLOR_4, BEAM_COLOR_5, };
 
   /**
+   * Base color for tentacle.
+   */
+  public static final Color TENTACLE_COLOR_1 = new Color(65, 50, 44);
+  /**
+   * Second color for tentacle.
+   */
+  public static final Color TENTACLE_COLOR_2 = new Color(88, 73, 52);
+  /**
    * Green beam colors
    */
   public static final Color[] GREEN_BEAM_COLORS = {
@@ -796,6 +804,12 @@ public final class GuiStatics {
    */
   public static final AnimatedImage PRIVATEER = new AnimatedImage(64, 64,
       "/resources/images/privateer.png");
+
+  /**
+   * Bite animation
+   */
+  public static final AnimatedImage BITE = new AnimatedImage(64, 64,
+      "/resources/images/bite.png");
 
   /**
    * Wormhole animation
@@ -1187,6 +1201,12 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/pirate_pilot.png"));
 
   /**
+   * Space kraken
+   */
+  public static final BufferedImage IMAGE_KRAKEN = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/kraken.png"));
+
+  /**
    * Pirate raiders
    */
   public static final BufferedImage IMAGE_PIRATE_RAIDERS =
@@ -1301,7 +1321,7 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/bigpeace.png"));
   /**
-   * Big ban peace
+   * Big pirate ship.
    */
   public static final BufferedImage IMAGE_PRIVATEER = IOUtilities.loadImage(
       GuiStatics.class.getResource(

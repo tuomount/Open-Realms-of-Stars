@@ -223,6 +223,9 @@ public class CombatAnimation {
     } else if (animType == CombatAnimationType.PRIVATEERING) {
       explosionAnim = GuiStatics.PRIVATEER;
       explosionSfx = SoundPlayer.ALARM;
+    } else if (animType == CombatAnimationType.BITE) {
+      explosionAnim = GuiStatics.BITE;
+      explosionSfx = SoundPlayer.BITE;
     } else if (animType == CombatAnimationType.LIGHTNING) {
       explosionAnim = GuiStatics.LIGHTNING;
       explosionSfx = SoundPlayer.ELECTRIC;
@@ -277,6 +280,14 @@ public class CombatAnimation {
       break;
     }
     case PRIVATEERING: {
+      count = explosionAnim.getMaxFrames();
+      break;
+    }
+    case BITE: {
+      count = explosionAnim.getMaxFrames() * 2;
+      break;
+    }
+    case TENTACLE: {
       count = explosionAnim.getMaxFrames();
       break;
     }
@@ -358,6 +369,14 @@ public class CombatAnimation {
         } else {
           initType = CombatAnimationType.LASER_BEAM;
         }
+        break;
+      }
+      case BITE: {
+        initType = CombatAnimationType.BITE;
+        break;
+      }
+      case TENTACLE: {
+        initType = CombatAnimationType.TENTACLE;
         break;
       }
       case PRIVATEERING_MODULE: {
@@ -655,6 +674,46 @@ public class CombatAnimation {
           animFrame = 0;
         } else {
           showAnim = false;
+        }
+      }
+    } else if (type == CombatAnimationType.BITE) {
+      count--;
+      if (animFrame < explosionAnim.getMaxFrames()) {
+        showAnim = true;
+        if (animFrame == 0 && hit && loopCount == 0) {
+          SoundPlayer.playSound(explosionSfx);
+          doAnimationHit(20);
+        }
+        if (count % 2 == 0) {
+          animFrame++;
+        }
+      } else {
+        showAnim = false;
+      }
+    } else if (type == CombatAnimationType.TENTACLE) {
+      if (Math.round(sx) == Math.round(ex)
+          && Math.round(sy) == Math.round(ey)) {
+        count--;
+        doAnimationHit(13);
+        if (animFrame < explosionAnim.getMaxFrames()) {
+          if (animFrame == 0 && hit) {
+            SoundPlayer.playSound(explosionSfx);
+            if (getShieldAnimFrame() != null) {
+              SoundPlayer.playShieldSound();
+            }
+          }
+          animFrame++;
+        } else {
+          showAnim = false;
+        }
+      } else {
+        for (int i = 0; i < 5; i++) {
+          sx = sx + mx;
+          sy = sy + my;
+          if (Math.round(sx) == Math.round(ex)
+              && Math.round(sy) == Math.round(ey)) {
+            break;
+          }
         }
       }
     }

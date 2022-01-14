@@ -2013,6 +2013,12 @@ public class Game implements ActionListener {
       maxPlayers++;
       boardIndex = galaxyConfig.getMaxPlayers();
     }
+    if (galaxyConfig.getSpaceAnomaliesLevel() == 2) {
+      maxPlayers++;
+      if (boardIndex == -1) {
+        boardIndex = galaxyConfig.getMaxPlayers();
+      }
+    }
     ArrayList<PlayerColor> randomListOfColors = new ArrayList<>();
     for (PlayerColor color : PlayerColor.values()) {
       randomListOfColors.add(color);
@@ -2054,6 +2060,21 @@ public class Game implements ActionListener {
           || difficultyLevel == PirateDifficultLevel.VERY_HARD) {
         info.setAiDifficulty(AiDifficulty.CHALLENGING);
       }
+      int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
+      info.setColor(randomListOfColors.get(colorIndex));
+      players.addPlayer(info);
+    }
+    if (galaxyConfig.getSpaceAnomaliesLevel() == 2) {
+      int index = galaxyConfig.getMaxPlayers();
+      if (galaxyConfig.getSpacePiratesLevel() > 0) {
+        index++;
+      }
+      PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_MONSTERS, maxPlayers,
+          index, boardIndex);
+      info.setBoard(true);
+      info.setGovernment(GovernmentType.SPACE_PIRATES);
+      info.setEmpireName("Space monsters");
+      info.setAiDifficulty(AiDifficulty.WEAK);
       int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
       info.setColor(randomListOfColors.get(colorIndex));
       players.addPlayer(info);

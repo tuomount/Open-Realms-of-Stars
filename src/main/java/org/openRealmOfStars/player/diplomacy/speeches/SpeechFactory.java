@@ -95,6 +95,7 @@ public final class SpeechFactory {
       case GREYANS: return new SpeechLine(type,
           "Your fleet " + fleetName + " is on my sector!");
       case HUMAN:
+      case SPACE_MONSTERS:
       case SPACE_PIRATE:
         return new SpeechLine(type,
           "Your fleet " + fleetName
@@ -170,6 +171,7 @@ public final class SpeechFactory {
       case HOMARIANS: return new SpeechLine(type,
           "Your spy fleet has enter on my sector."
           + " Move " + fleetName + " it away, please!");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE:
         return new SpeechLine(type,
           "Yarr! Your espionage fleet " + fleetName
@@ -222,6 +224,7 @@ public final class SpeechFactory {
           + "I have excellent deals just for you.");
       case HOMARIANS: return new SpeechLine(type,
           "I am sorry, but I couldn't find anything to trade with you.");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, you got no loot!");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -264,6 +267,7 @@ public final class SpeechFactory {
           "I will call the fleet back!");
       case HOMARIANS: return new SpeechLine(type,
           "I am calling the fleet back!");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, I am towing my sails back!");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -308,6 +312,7 @@ public final class SpeechFactory {
           "Let's do some trading " +  raceName + "!");
       case HOMARIANS: return new SpeechLine(type,
           "Let's do excellent deals today " +  raceName + "!");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, Let's look some loot " +  raceName + "!");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -350,6 +355,7 @@ public final class SpeechFactory {
           "My friend, I have my pockets full of credits! Let's do business.");
       case HOMARIANS: return new SpeechLine(type,
           "My fellow, let's shake chelae!");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Matey, let's split some loot!");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -392,6 +398,7 @@ public final class SpeechFactory {
           "Fellow trade companion, nice to meet again!");
       case HOMARIANS: return new SpeechLine(type,
           "Nice to meet you again, my fellow!");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr!");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -434,6 +441,7 @@ public final class SpeechFactory {
           "Hmph, the one with no credits...");
       case HOMARIANS: return new SpeechLine(type,
           "Just be quick and tell your thing...");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Hmph, yarr...");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -476,6 +484,7 @@ public final class SpeechFactory {
           "This is going to be a fight, but...");
       case HOMARIANS: return new SpeechLine(type,
           "I really hate these meeting with you...");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, I'll be needing sum rum after this!");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -518,6 +527,7 @@ public final class SpeechFactory {
           "You better accept this deal or suffer!");
       case HOMARIANS: return new SpeechLine(type,
           "Accept this deal or prepare to be boiled!");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, Accept this or slice your throat!");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -567,6 +577,7 @@ public final class SpeechFactory {
           "I will take last credits from your cold body!" + extra);
       case HOMARIANS: return new SpeechLine(type,
           "Prepare to be sliced!" + extra);
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, Prepate to be boarded and destroyed!" + extra);
       case CHIRALOIDS: return new SpeechLine(type,
@@ -614,6 +625,7 @@ public final class SpeechFactory {
           "Your offer insults me!");
       case HOMARIANS: return new SpeechLine(type,
           "Your offer stinks ancient mold!");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, My socks smell better than your offer!");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -656,6 +668,7 @@ public final class SpeechFactory {
           "Insults do not help here!");
       case HOMARIANS: return new SpeechLine(type,
           "You are making fool of yourself with your insults!");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, You start getting my nerve!");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -698,6 +711,7 @@ public final class SpeechFactory {
           "Your offer isn't good enough!");
       case HOMARIANS: return new SpeechLine(type,
           "I have to turn down this offer.");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, I cannot accept this!");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -740,6 +754,7 @@ public final class SpeechFactory {
           "Do you have counter offer?");
       case HOMARIANS: return new SpeechLine(type,
           "Any counter offers then?");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, I'll wait your counter offer then...");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -788,6 +803,7 @@ public final class SpeechFactory {
           "Time to die!" + extra);
       case HOMARIANS: return new SpeechLine(type,
           "Time to get sliced and boiled!" + extra);
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, Time to die!" + extra);
       case CHIRALOIDS: return new SpeechLine(type,
@@ -834,6 +850,7 @@ public final class SpeechFactory {
       case HOMARIANS: return new SpeechLine(type,
           "Fleet " + fleetName + "has been seen."
               + " Time to get sliced and boiled!");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, scurvy fleet " + fleetName + " spotted. Time to die!");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -881,6 +898,7 @@ public final class SpeechFactory {
           "Let's build together awesome spy network for 20 turns?");
       case HOMARIANS: return new SpeechLine(type,
           "Do you have spies? We should work together for 20 turns?");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, Are you interested in espionage trade for 20 turns?");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -926,6 +944,7 @@ public final class SpeechFactory {
       case HOMARIANS: return new SpeechLine(type,
           "We should work together embargo for 20 turns against " + empire
               + "?");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, Are you interested in trade emparbo for 20 turns against "
               + empire + "?");
@@ -983,6 +1002,7 @@ public final class SpeechFactory {
           "Let's build magnificent trade alliance!");
       case HOMARIANS: return new SpeechLine(type,
           "Are you insterested in trade alliance?");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, Are you interested in trade alliance?");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -1025,6 +1045,7 @@ public final class SpeechFactory {
           "Let's build awesome alliance!");
       case HOMARIANS: return new SpeechLine(type,
           "Are you insterested in alliance?");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, Are you interested in alliance?");
       case CHIRALOIDS:
@@ -1069,6 +1090,7 @@ public final class SpeechFactory {
           "Let's build awesome defending power!");
       case HOMARIANS: return new SpeechLine(type,
           "Are you insterested in defensive pact?");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, Are you interested in defensive pact?");
       case CHIRALOIDS:
@@ -1164,6 +1186,7 @@ public final class SpeechFactory {
           "Agreed!");
       case HOMARIANS: return new SpeechLine(type,
           "Let's shake chelae for this!");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, I agreed!");
       case CHIRALOIDS:
@@ -1225,6 +1248,7 @@ public final class SpeechFactory {
       }
       case HOMARIANS: return new SpeechLine(type,
           "I glad to shake chelae with you!");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, Most excellent deal!");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -1267,6 +1291,7 @@ public final class SpeechFactory {
           "What do you say about my offer?");
       case HOMARIANS: return new SpeechLine(type,
           "What do you think about my offer?");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, What say you about my loot?");
       case CHIRALOIDS: return new SpeechLine(type,
@@ -1309,6 +1334,7 @@ public final class SpeechFactory {
           "Let's sign a peace contract?");
       case HOMARIANS: return new SpeechLine(type,
           "Interested to sign peace with me?");
+      case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
           "Care to sign peace?");
       case CHIRALOIDS: return new SpeechLine(type,

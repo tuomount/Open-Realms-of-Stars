@@ -194,6 +194,101 @@ public final class MissionHandling {
   }
 
   /**
+   * Handle roaming mission.
+   * @param mission Roaming mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleRoaming(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.ROAM) {
+      Fleet targetFleet = getNearByFleet(info, game, fleet,
+          fleet.getMovesLeft());
+      if (targetFleet != null && targetFleet.getMilitaryValue() > 0) {
+        mission.setPhase(MissionPhase.EXECUTING);
+        fleet.setRoute(null);
+        AStarSearch search = new AStarSearch(game.getStarMap(),
+            fleet.getX(), fleet.getY(), targetFleet.getX(), targetFleet.getY(),
+            false);
+        search.doSearch();
+        search.doRoute();
+        fleet.setaStarSearch(search);
+        makeRegularMoves(game, fleet, info);
+      } else {
+        if (mission.getPhase() == MissionPhase.TREKKING) {
+          if (fleet.getaStarSearch() == null) {
+            fleet.setRoute(null);
+            AStarSearch search = new AStarSearch(game.getStarMap(),
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(),
+                false);
+            search.doSearch();
+            search.doRoute();
+            fleet.setaStarSearch(search);
+          } else {
+            makeRegularMoves(game, fleet, info);
+          }
+          if (fleet.getX() == mission.getX()
+              && fleet.getY() == mission.getY()) {
+            mission.setPhase(MissionPhase.EXECUTING);
+            fleet.setRoute(null);
+            fleet.setaStarSearch(null);
+          }
+        } else if (mission.getPhase() == MissionPhase.EXECUTING) {
+          if (fleet.getaStarSearch() == null) {
+            Coordinate coord = new Coordinate(mission.getX(), mission.getY());
+            double bestDist = 0;
+            Coordinate bestCoord = null;
+            for (int x = -1; x < 2; x++) {
+              for (int y = -1; y < 2; y++) {
+                Coordinate targetCoord = new Coordinate(fleet.getX() + x,
+                    fleet.getY() + y);
+                double dist = coord.calculateDistance(targetCoord);
+                if (dist > bestDist) {
+                  bestDist = dist;
+                  bestCoord = targetCoord;
+                } else if (dist == bestDist
+                    && DiceGenerator.getRandom(100) < 33) {
+                  bestDist = dist;
+                  bestCoord = targetCoord;
+                }
+              }
+            }
+            if (bestCoord != null) {
+              fleet.setRoute(null);
+              AStarSearch search = new AStarSearch(game.getStarMap(),
+                  fleet.getX(), fleet.getY(), bestCoord.getX(),
+                  bestCoord.getY(), false);
+              search.doSearch();
+              search.doRoute();
+              fleet.setaStarSearch(search);
+              makeRegularMoves(game, fleet, info);
+            }
+          }
+          if (fleet.getaStarSearch() != null) {
+            makeRegularMoves(game, fleet, info);
+            Coordinate coord = new Coordinate(mission.getX(), mission.getY());
+            double dist = fleet.getCoordinate().calculateDistance(coord);
+            // Max roaming distance
+            if (dist > 5) {
+              mission.setPhase(MissionPhase.TREKKING);
+              fleet.setRoute(null);
+              fleet.setaStarSearch(null);
+            }
+          } else {
+            mission.setPhase(MissionPhase.TREKKING);
+            fleet.setRoute(null);
+            fleet.setaStarSearch(null);
+          }
+        } else {
+          mission.setPhase(MissionPhase.TREKKING);
+          fleet.setRoute(null);
+          fleet.setaStarSearch(null);
+        }
+      }
+    }
+  }
+  /**
    * Handle privateering mission
    * @param mission Privateering mission, does nothing if type is wrong
    * @param fleet Fleet on mission

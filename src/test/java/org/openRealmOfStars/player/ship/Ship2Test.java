@@ -1212,7 +1212,7 @@ public class Ship2Test {
         assertEquals(1, ship.getShield());
         assertEquals(1, ship.getArmor());
         ship.damageBy(weaponRailgun, 0);
-        assertEquals(1, ship.getShield());
+        assertEquals(0, ship.getShield());
         assertEquals(0, ship.getArmor());
         ship.damageBy(weaponRailgun, 0);
         assertEquals(0, ship.getShield());

@@ -22,7 +22,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017,2019  Tuomo Untinen
+ * Copyright (C) 2016,2017,2019-2022  Tuomo Untinen
  * Copyright (C) 2017 Lucas
  *
  * This program is free software; you can redistribute it and/or
@@ -663,6 +663,10 @@ private int getRemainingEnergy(final int index) {
           && hasComponentEnergy(i) && comp.getSpeed() > speed) {
         speed = comp.getSpeed();
       }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SPACE_FIN
+          && hasComponentEnergy(i) && comp.getSpeed() > speed) {
+        speed = comp.getSpeed();
+      }
     }
     return speed;
   }
@@ -677,6 +681,10 @@ private int getRemainingEnergy(final int index) {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
+          && hasComponentEnergy(i) && comp.getTacticSpeed() > speed) {
+        speed = comp.getTacticSpeed();
+      }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SPACE_FIN
           && hasComponentEnergy(i) && comp.getTacticSpeed() > speed) {
         speed = comp.getTacticSpeed();
       }
@@ -704,9 +712,11 @@ private int getRemainingEnergy(final int index) {
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.WEAPON_RAILGUN
-              || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
+          || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
           || comp.getType() == ShipComponentType.PLASMA_CANNON
-          || comp.getType() == ShipComponentType.ION_CANNON)) {
+          || comp.getType() == ShipComponentType.ION_CANNON
+          || comp.getType() == ShipComponentType.BITE
+          || comp.getType() == ShipComponentType.TENTACLE)) {
         return true;
       }
     }
@@ -740,7 +750,10 @@ private int getRemainingEnergy(final int index) {
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
           && hasComponentEnergy(i) && comp.getFtlSpeed() > ftlSpeed) {
           ftlSpeed = comp.getFtlSpeed();
-        break;
+      }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SPACE_FIN
+          && hasComponentEnergy(i) && comp.getFtlSpeed() > ftlSpeed) {
+          ftlSpeed = comp.getFtlSpeed();
       }
     }
     if (hull.getHullType() == ShipHullType.PROBE) {
@@ -1089,26 +1102,58 @@ private int increaseHitChanceByComponent() {
       }
       break;
     }
+    case BITE:
+    case TENTACLE: {
+      damage = weapon.getDamage();
+      damage = damage - this.getShield() / 3;
+      if (damage >= 0) {
+        this.setShield(this.getShield() - 1);
+        damage = damage - this.getArmor();
+        if (damage > 0) {
+          this.setArmor(this.getArmor() - 1);
+        } else {
+          if (this.getArmor() / 2 <= weapon.getDamage()
+              || DiceGenerator.getRandom(99) < chance) {
+            this.setArmor(this.getArmor() - 1);
+            return new ShipDamage(ShipDamage.NO_DAMAGE,
+                "Attack hit the armor!");
+          }
+          return new ShipDamage(ShipDamage.NO_DAMAGE_NO_DENT,
+              "Attack deflected to armor!");
+        }
+      } else {
+        damage = damage + this.getShield() / 3;
+        if (this.getShield() / 4 <= damage
+            || DiceGenerator.getRandom(99) < chance) {
+          this.setShield(this.getShield() - 1);
+          return new ShipDamage(ShipDamage.NO_DAMAGE,
+              "Attack hit the shield!");
+        }
+        return new ShipDamage(ShipDamage.NO_DAMAGE,
+            "Attack deflected to shield!");
+      }
+      break;
+    }
     case CALLISTO_MULTICANNON:
     case WEAPON_RAILGUN:
     case WEAPON_HE_MISSILE: {
       damage = weapon.getDamage();
-      damage = damage - this.getArmor();
-      if (damage > 0) {
-        this.setArmor(this.getArmor() - 1);
-      } else {
-        if (this.getArmor() / 2 <= weapon.getDamage()
-            || DiceGenerator.getRandom(99) < chance) {
-          this.setArmor(this.getArmor() - 1);
-          return new ShipDamage(ShipDamage.NO_DAMAGE,
-              "Attack hit the armor!");
-        }
-        return new ShipDamage(ShipDamage.NO_DAMAGE_NO_DENT,
-            "Attack deflected to armor!");
-      }
       damage = damage - this.getShield() / 2;
       if (damage >= 0) {
         this.setShield(this.getShield() - 1);
+        damage = damage - this.getArmor();
+        if (damage > 0) {
+          this.setArmor(this.getArmor() - 1);
+        } else {
+          if (this.getArmor() / 2 <= weapon.getDamage()
+              || DiceGenerator.getRandom(99) < chance) {
+            this.setArmor(this.getArmor() - 1);
+            return new ShipDamage(ShipDamage.NO_DAMAGE,
+                "Attack hit the armor!");
+          }
+          return new ShipDamage(ShipDamage.NO_DAMAGE_NO_DENT,
+              "Attack deflected to armor!");
+        }
       } else {
         damage = damage + this.getShield() / 2;
         if (this.getShield() / 4 <= damage
@@ -1755,7 +1800,9 @@ private int increaseHitChanceByComponent() {
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
-          || comp.getType() == ShipComponentType.ION_CANNON) {
+          || comp.getType() == ShipComponentType.ION_CANNON
+          || comp.getType() == ShipComponentType.BITE
+          || comp.getType() == ShipComponentType.TENTACLE) {
         militaryShip = true;
         power = power + comp.getDamage();
       }
@@ -1768,6 +1815,10 @@ private int increaseHitChanceByComponent() {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE
+          && getHull().getHullType() != ShipHullType.STARBASE) {
+        power = power + comp.getTacticSpeed() - 1;
+      }
+      if (comp.getType() == ShipComponentType.SPACE_FIN
           && getHull().getHullType() != ShipHullType.STARBASE) {
         power = power + comp.getTacticSpeed() - 1;
       }
@@ -1828,7 +1879,9 @@ private int increaseHitChanceByComponent() {
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
-          || comp.getType() == ShipComponentType.ION_CANNON)
+          || comp.getType() == ShipComponentType.ION_CANNON
+          || comp.getType() == ShipComponentType.BITE
+          || comp.getType() == ShipComponentType.TENTACLE)
           && componentIsWorking(i)) {
         militaryShip = true;
         power = power + comp.getDamage();
@@ -1843,6 +1896,11 @@ private int increaseHitChanceByComponent() {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE
+          && getHull().getHullType() != ShipHullType.STARBASE
+          && componentIsWorking(i)) {
+        power = power + comp.getTacticSpeed() - 1;
+      }
+      if (comp.getType() == ShipComponentType.SPACE_FIN
           && getHull().getHullType() != ShipHullType.STARBASE
           && componentIsWorking(i)) {
         power = power + comp.getTacticSpeed() - 1;
@@ -2073,6 +2131,16 @@ private int increaseHitChanceByComponent() {
     return false;
   }
 
+  /**
+   * Is Ship actually space monster?
+   * @return True if ship is space monster.
+   */
+  public boolean isMonster() {
+    if (getHull().getRace() == SpaceRace.SPACE_MONSTERS) {
+      return true;
+    }
+    return false;
+  }
   /**
    * Get Cargo Type
    * @return CARGO_TYPE

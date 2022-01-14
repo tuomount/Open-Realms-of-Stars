@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonus;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
@@ -13,7 +14,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2018,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -149,13 +150,27 @@ public class PlayerList {
   }
 
   /**
-   * Get board player info
+   * Get board space monster player info
    * @return The board player info or null
    */
-  public PlayerInfo getBoardPlayer() {
+  public PlayerInfo getSpaceMonsterPlayer() {
     for (int i = list.size() - 1; i > -1; i--) {
       PlayerInfo info = list.get(i);
-      if (info.isBoard()) {
+      if (info.isBoard() && info.getRace() == SpaceRace.SPACE_MONSTERS) {
+        return info;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Get board space pirate player info
+   * @return The board player info or null
+   */
+  public PlayerInfo getSpacePiratePlayer() {
+    for (int i = list.size() - 1; i > -1; i--) {
+      PlayerInfo info = list.get(i);
+      if (info.isBoard() && info.getRace() == SpaceRace.SPACE_PIRATE) {
         return info;
       }
     }

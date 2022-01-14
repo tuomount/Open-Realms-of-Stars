@@ -657,6 +657,82 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
+   * Possibility to learn organic armor when fighting against space monsters.
+   * @param info PlayerInfo
+   * @param leader Leader who makes the discovery.
+   */
+  private static void learnOrganicArmor(final PlayerInfo info,
+      final Leader leader) {
+    String organicArmorTech = null;
+    int level = 0;
+    if (!info.getTechList().hasTech("Organic armor Mk1")) {
+      organicArmorTech = "Organic armor Mk1";
+      level = 3;
+    } else if (!info.getTechList().hasTech("Organic armor Mk2")) {
+      organicArmorTech = "Organic armor Mk2";
+      level = 6;
+    } else if (!info.getTechList().hasTech("Organic armor Mk3")) {
+      organicArmorTech = "Organic armor Mk3";
+      level = 8;
+    }
+    if (organicArmorTech != null) {
+      int chance = 20;
+      if (level == 3) {
+        chance = chance + 10;
+      }
+      if (level == 8) {
+        chance = chance - 10;
+      }
+      if (leader.hasPerk(Perk.SCIENTIST)) {
+        chance = chance + 20;
+      }
+      if (leader.hasPerk(Perk.ACADEMIC)) {
+        chance = chance + 10;
+      }
+      if (leader.hasPerk(Perk.MASTER_ENGINEER)) {
+        chance = chance + 10;
+      }
+      if (leader.hasPerk(Perk.STUPID)) {
+        chance = chance - 10;
+      }
+      if (leader.hasPerk(Perk.INCOMPETENT)) {
+        chance = chance - 10;
+      }
+      if (leader.hasPerk(Perk.SKILLFUL)) {
+        chance = chance + 5;
+      }
+      if (leader.hasPerk(Perk.MILITARISTIC)) {
+        chance = chance + 5;
+      }
+      if (leader.hasPerk(Perk.EXPLORER)) {
+        chance = chance + 5;
+      }
+      if (leader.hasPerk(Perk.MAD)) {
+        chance = chance - 5;
+      }
+      if (leader.hasPerk(Perk.SLOW_LEARNER)) {
+        chance = chance - 5;
+      }
+      if (chance < 5) {
+        chance = 5;
+      }
+      if (chance > 95) {
+        chance = 95;
+      }
+      if (DiceGenerator.getRandom(99) < chance) {
+        info.getTechList().addTech(
+            TechFactory.createDefenseTech(organicArmorTech, level));
+        leader.setExperience(leader.getExperience() + level * 10);
+        Message msg = new Message(MessageType.RESEARCH,
+            "Commander " + leader.getCallName() + " has discovered "
+            + organicArmorTech + " when fighting against space monster.",
+            Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+        msg.setMatchByString(leader.getName());
+        info.getMsgList().addNewMessage(msg);
+      }
+    }
+  }
+  /**
    * Destroy one single ship from the fleet and combat
    * @param ship Combat ship
    */
@@ -692,6 +768,9 @@ public boolean launchIntercept(final int distance,
       }
     }
     if (attackerFleet.isShipInFleet(ship.getShip())) {
+      if (ship.getShip().isMonster() && defenderFleet.getCommander() != null) {
+        learnOrganicArmor(defenderInfo, defenderFleet.getCommander());
+      }
       destroyShipFromFleet(ship, attackerFleet);
       if (attackerFleet.getNumberOfShip() == 0
           && attackerFleet.getCommander() != null) {
@@ -727,6 +806,9 @@ public boolean launchIntercept(final int distance,
       }
       attackerInfo.getFleets().recalculateList();
     } else if (defenderFleet.isShipInFleet(ship.getShip())) {
+      if (ship.getShip().isMonster() && attackerFleet.getCommander() != null) {
+        learnOrganicArmor(attackerInfo, attackerFleet.getCommander());
+      }
       destroyShipFromFleet(ship, defenderFleet);
       if (defenderFleet.getNumberOfShip() == 0
           && defenderFleet.getCommander() != null) {
@@ -1809,6 +1891,9 @@ public boolean launchIntercept(final int distance,
         handleOverloading(textLogger, index);
       }
 
+    }
+    if (ai.getShip().isMonster() && deadliest == null) {
+      return handleAiNonMilitaryShip(textLogger, infoPanel);
     }
     int range = ai.getShip().getMaxWeaponRange();
     if (privateer) {

@@ -432,7 +432,7 @@ public class RandomEventUtilityTest {
     planets.add(planet);
     Mockito.when(starMap.getPlanetList()).thenReturn(planets);
     PlayerList playerList = Mockito.mock(PlayerList.class);
-    Mockito.when(playerList.getBoardPlayer()).thenReturn(board);
+    Mockito.when(playerList.getSpacePiratePlayer()).thenReturn(board);
     Mockito.when(starMap.getPlayerList()).thenReturn(playerList);
     RandomEvent event = new RandomEvent(BadRandomType.RAIDERS,
         info);

@@ -236,6 +236,13 @@ https://opengameart.org/content/warzone-concept
 
 News reader robot by Tuomo Untinen
 
+Space worm and Kraken ships by Tuomo Untinen
+
+Heart and mouth icons modified by Tuomo Untinen
+Originals from 141 Military Icons Set by AngryMeteor.com
+
+Space fin and tentacle icons by Tuomo Untinen
+
 
 
 Fonts are under SIL Open Font License, Version 1.1.
@@ -360,6 +367,10 @@ https://opengameart.org/content/sci-fi-trooper-voice-pack-54-lines
 Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
 Scanner overload sound by
+Tuomo Untinen
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
+Bite and tentacle sounds by
 Tuomo Untinen
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 

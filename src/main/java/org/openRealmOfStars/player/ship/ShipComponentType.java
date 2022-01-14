@@ -157,7 +157,23 @@ public enum ShipComponentType {
    * Callisto is a multicannon and it has been defined as a hybrid weapon.
    * Callisto is between railgun and missiles.
    */
-  CALLISTO_MULTICANNON;
+  CALLISTO_MULTICANNON,
+  /**
+   * Bite is space monster's bite attack.
+   */
+  BITE,
+  /**
+   * Tentacle is space monster's tentacle attack.
+   */
+  TENTACLE,
+  /**
+   * Basically same as power source just different icon.
+   */
+  HEART,
+  /**
+   * Basically same as engine just different icon.
+   */
+  SPACE_FIN;
 
   /**
    * Get ShipComponentType index
@@ -227,6 +243,14 @@ public enum ShipComponentType {
       return 29;
     case CALLISTO_MULTICANNON:
       return 30;
+    case BITE:
+      return 31;
+    case TENTACLE:
+      return 32;
+    case HEART:
+      return 33;
+    case SPACE_FIN:
+      return 34;
     default:
       return 0;
     }
@@ -301,6 +325,14 @@ public enum ShipComponentType {
       return ShipComponentType.ION_CANNON;
     case 30:
       return ShipComponentType.CALLISTO_MULTICANNON;
+    case 31:
+      return ShipComponentType.BITE;
+    case 32:
+      return ShipComponentType.TENTACLE;
+    case 33:
+      return ShipComponentType.HEART;
+    case 34:
+      return ShipComponentType.SPACE_FIN;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -371,6 +403,14 @@ public enum ShipComponentType {
       return "Ion cannon";
     case CALLISTO_MULTICANNON:
       return "Callisto multicannon";
+    case BITE:
+      return "Bite";
+    case TENTACLE:
+      return "Tentacle";
+    case HEART:
+      return "Heart";
+    case SPACE_FIN:
+      return "Space fin";
     default:
       return "Error - Unknown";
     }
@@ -444,6 +484,14 @@ public enum ShipComponentType {
       return Icons.ICON_ION_CANNON;
     case CALLISTO_MULTICANNON:
       return Icons.ICON_ION_CANNON;
+    case BITE:
+      return Icons.ICON_MOUTH;
+    case TENTACLE:
+      return Icons.ICON_TENTACLE;
+    case HEART:
+      return Icons.ICON_HEART;
+    case SPACE_FIN:
+      return Icons.ICON_SPACE_FIN;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }
@@ -465,7 +513,9 @@ public enum ShipComponentType {
       case WEAPON_PHOTON_TORPEDO:
       case PLASMA_CANNON:
       case ION_CANNON:
+      case TENTACLE:
           return 75;
+      case BITE:
       case CALLISTO_MULTICANNON:
           return 60;
       case WEAPON_ECM_TORPEDO:

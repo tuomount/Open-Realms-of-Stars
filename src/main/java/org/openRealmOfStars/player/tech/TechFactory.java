@@ -1118,6 +1118,63 @@ public final class TechFactory {
       return null;
     }
   }
+
+  /**
+   * Create space monster tech. This method can create pretty much any tech.
+   * There couple of fixed names which set correct icon for tech.
+   * @param type TechType
+   * @param level Tech Level
+   * @param techName Tech Name
+   * @return Tech
+   */
+  public static Tech createSpaceMonsterTech(final TechType type,
+      final int level, final String techName) {
+    Tech tech = new Tech(techName, type, level);
+    if (techName.startsWith("Organic armor")) {
+      tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
+    }
+    if (techName.startsWith("Heart")) {
+      tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
+      //TODO: Change icon
+    }
+    if (techName.startsWith("Large heart")) {
+      tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
+      //TODO: Change icon
+    }
+    if (techName.startsWith("Space fin")) {
+      tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
+      //TODO: Change icon
+    }
+    if (techName.startsWith("Massive mouth with teeth")) {
+      tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
+      //TODO: Change icon
+    }
+    if (techName.startsWith("Tentacle")) {
+      tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setComponent(techName);
+      //TODO: Change icon
+    }
+    if (techName.startsWith("Space worm")
+        || techName.startsWith("Kraken")
+        || techName.startsWith("Large kraken")) {
+      tech.setIcon(Icons.getIconByName(Icons.ICON_ORGANIC_ARMOR));
+      tech.setTradeable(false);
+      tech.setHull(techName);
+      //TODO: Change icon
+    }
+    return tech;
+  }
   /**
    * Create random tech by tech type and level, but not choose those tech
    * player already has

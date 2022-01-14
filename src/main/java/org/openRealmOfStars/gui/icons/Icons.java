@@ -409,6 +409,22 @@ public final class Icons {
    * Orbital elevator
    */
   public static final String ICON_ORBITAL_ELEVATOR = "IconOrbitalElevator";
+  /**
+   * Space fin
+   */
+  public static final String ICON_SPACE_FIN = "IconSpaceFin";
+  /**
+   * Heart
+   */
+  public static final String ICON_HEART = "IconHeart";
+  /**
+   * Mouth
+   */
+  public static final String ICON_MOUTH = "IconMount";
+  /**
+   * Tentacle
+   */
+  public static final String ICON_TENTACLE = "IconTentacle";
 
   /**
    * List of Icon
@@ -709,6 +725,14 @@ public final class Icons {
     icon = new Icon16x16(image, 1, 3, ICON_PRISON);
     addIcon(icon);
     icon = new Icon16x16(image, 2, 3, ICON_ORBITAL_ELEVATOR);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 3, ICON_SPACE_FIN);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 3, ICON_HEART);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 3, ICON_MOUTH);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 3, ICON_TENTACLE);
     addIcon(icon);
   }
 

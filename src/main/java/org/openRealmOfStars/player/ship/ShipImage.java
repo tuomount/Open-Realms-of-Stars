@@ -10,7 +10,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2018,2021  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -132,19 +132,58 @@ public class ShipImage {
   public static final int ARTIFICIAL_PLANET = 19;
 
   /**
+   * Index for space worm
+   */
+  public static final int SPACE_WORM = 20;
+  /**
+   * Index for space kraken
+   */
+  public static final int SPACE_KRAKEN = 21;
+  /**
+   * Index for large space kraken
+   */
+  public static final int LARGE_SPACE_KRAKEN = 22;
+  /**
    * Must be one bigger than last ship
    */
   private static final int NUMBER_OF_IMAGES = 20;
+
+  /**
+   * Number of monster images.
+   */
+  private static final int NUMBER_OF_MONSTER_IMAGES = 3;
 
   /**
    * Initialize ship images
    * @param fileToRead Needs to be inside JAR file
    */
   public ShipImage(final String fileToRead) {
+    loadImages(fileToRead, false);
+  }
+
+  /**
+   * Initialize ship images
+   * @param fileToRead Needs to be inside JAR file
+   * @param monsters Read space monster images if true.
+   */
+  public ShipImage(final String fileToRead, final boolean monsters) {
+    loadImages(fileToRead, monsters);
+  }
+
+  /**
+   * Initialize ship images.
+   * @param fileToRead Needs to be inside JAR file
+   * @param monsters Read space monster images if true.
+   */
+  private void loadImages(final String fileToRead, final boolean monsters) {
     BufferedImage image = IOUtilities
         .loadImage(Icons.class.getResource("/resources/images/" + fileToRead));
-    shipImages = new BufferedImage[NUMBER_OF_IMAGES];
-    smallShipImages = new BufferedImage[NUMBER_OF_IMAGES];
+    int number = NUMBER_OF_IMAGES;
+    if (monsters) {
+      number = number + NUMBER_OF_MONSTER_IMAGES;
+    }
+    shipImages = new BufferedImage[number];
+    smallShipImages = new BufferedImage[number];
     shipImages[SCOUT] = image64x64(image, 0, 0);
     smallShipImages[SCOUT] = scaleTo32x32(shipImages[SCOUT]);
     shipImages[COLONY] = image64x64(image, 1, 0);
@@ -193,8 +232,16 @@ public class ShipImage {
     shipImages[ARTIFICIAL_PLANET] = image64x64(image, 4, 3);
     smallShipImages[ARTIFICIAL_PLANET] = scaleTo32x32(
         shipImages[ARTIFICIAL_PLANET]);
+    if (monsters) {
+      shipImages[SPACE_WORM] = image64x64(image, 0, 4);
+      smallShipImages[SPACE_WORM] = scaleTo32x32(shipImages[SPACE_WORM]);
+      shipImages[SPACE_KRAKEN] = image64x64(image, 1, 4);
+      smallShipImages[SPACE_KRAKEN] = scaleTo32x32(shipImages[SPACE_KRAKEN]);
+      shipImages[LARGE_SPACE_KRAKEN] = image64x64(image, 2, 4);
+      smallShipImages[LARGE_SPACE_KRAKEN] = scaleTo32x32(
+          shipImages[LARGE_SPACE_KRAKEN]);
+    }
   }
-
   /**
    * Capture 64x64 image from bigger one
    * @param image Image where to capture
@@ -220,7 +267,7 @@ public class ShipImage {
    * @return BufferedImage
    */
   public BufferedImage getShipImage(final int index) {
-    if (index >= 0 && index < NUMBER_OF_IMAGES) {
+    if (index >= 0 && index < shipImages.length) {
       return shipImages[index];
     }
     return shipImages[0];
@@ -233,8 +280,7 @@ public class ShipImage {
    * @return BufferedImage
    */
   public BufferedImage getSmallShipImage(final int index) {
-    if (index >= 0
-        && index < NUMBER_OF_IMAGES) {
+    if (index >= 0 && index < smallShipImages.length) {
       return smallShipImages[index];
     }
     return smallShipImages[0];

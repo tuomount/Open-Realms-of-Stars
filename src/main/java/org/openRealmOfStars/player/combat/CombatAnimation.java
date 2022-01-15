@@ -256,6 +256,7 @@ public class CombatAnimation {
       break;
     }
     case ANTIMATTER_BEAM:
+    case MULTICANNON:
     case PHASOR_BEAM:
     case LASER_BEAM:
     case ION_CANNON: {
@@ -336,7 +337,10 @@ public class CombatAnimation {
         initType = CombatAnimationType.PLASMA_BEAM;
         break;
       }
-      case CALLISTO_MULTICANNON:
+      case CALLISTO_MULTICANNON: {
+        initType = CombatAnimationType.MULTICANNON;
+        break;
+      }
       case WEAPON_RAILGUN: {
         initType = CombatAnimationType.RAILGUN;
         break;
@@ -494,6 +498,64 @@ public class CombatAnimation {
         } else {
           ParticleEffect particle = new ParticleEffect(
               ParticleEffectType.LASER_PARTICLE, px, py);
+          particles.add(particle);
+        }
+      }
+    } else if (type == CombatAnimationType.MULTICANNON) {
+      count--;
+      if (count < FRAME_MARKER_WHEN_EXPLODE) {
+        doAnimationHit(20);
+        if (animFrame < explosionAnim.getMaxFrames()) {
+          if (animFrame == 0 && hit) {
+            SoundPlayer.playSound(explosionSfx);
+            if (getShieldAnimFrame() != null) {
+              SoundPlayer.playShieldSound();
+            }
+          }
+          animFrame++;
+        } else {
+          showAnim = false;
+        }
+      }
+      if (count > FRAME_MARKER_WHEN_EXPLODE && count % 2 == 0) {
+        int dist = distance;
+        int px = (int) Math.round(sx);
+        int py = (int) Math.round(sy);
+        double nx = DiceGenerator.getRandom(5) / 10;
+        double ny = DiceGenerator.getRandom(5) / 10;
+        if (DiceGenerator.getRandom(1) == 0) {
+          nx = nx * -1;
+        }
+        if (DiceGenerator.getRandom(1) == 0) {
+          ny = ny * -1;
+        }
+        double mvx = mx * 5 + nx;
+        double mvy = my * 5 + ny;
+        int dx = (int) Math.round(Math.abs(dist / mvx));
+        int dy = (int) Math.round(Math.abs(dist / mvy));
+        for (int i = 0; i < 4; i++) {
+          int x = 0;
+          int y = 0;
+          if (i == 1) {
+            x = 1;
+            y = 0;
+          }
+          if (i == 2) {
+            x = 0;
+            y = 1;
+          }
+          if (i == 3) {
+            x = 1;
+            y = 1;
+          }
+          ParticleEffect particle = new ParticleEffect(
+                ParticleEffectType.BULLET_PARTICLE, px + x, py + y);
+          particle.setMovementVector(mvx, mvy);
+          if (dx > dy) {
+            particle.setTtl(dx);
+          } else {
+            particle.setTtl(dy);
+          }
           particles.add(particle);
         }
       }

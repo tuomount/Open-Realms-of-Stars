@@ -143,6 +143,13 @@ public class ParticleEffect {
           .getRandom(GuiStatics.BEAM_COLORS.length - 1)];
       break;
     }
+    case BULLET_PARTICLE: {
+      mx = 0;
+      my = 0;
+      ttl = 2;
+      color = GuiStatics.COLOR_BRIGHT_WHITE;
+      break;
+    }
     case PHASOR_PARTICLE: {
       mx = 0;
       my = 0;
@@ -280,6 +287,13 @@ public class ParticleEffect {
     return ttl;
   }
 
+  /**
+   * Set particle Time to live value.
+   * @param ttl Time to live in frames.
+   */
+  public void setTtl(final int ttl) {
+    this.ttl = ttl;
+  }
   /**
    * Get particle type
    * @return Particle effect type

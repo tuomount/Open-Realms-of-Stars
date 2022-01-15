@@ -523,12 +523,18 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_LASERGUN));
         } else if (techName.startsWith("Railgun")
             || techName.startsWith("Massdrive")) {
+          tech.setExcludeList(true);
+          tech.setSpaceRaces(SpaceRace.HUMAN, SpaceRace.SPORKS,
+              SpaceRace.SCAURIANS, SpaceRace.MOTHOIDS,
+              SpaceRace.SMAUGIRIANS);
           tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
         } else if (techName.startsWith("ECM torpedo")
             || techName.startsWith("HE missile")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_MISSILE));
         } else if (techName.startsWith("Photon torpedo")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PHOTON_TORPEDO));
+          tech.setExcludeList(true);
+          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
         } else if (techName.startsWith("Orbital bomb")
             || techName.startsWith("Orbital smart bomb")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_BOMB));
@@ -548,6 +554,10 @@ public final class TechFactory {
           tech.setRareTech(true);
         } else if (techName.startsWith("Callisto multicannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));
+          tech.setExcludeList(false);
+          tech.setSpaceRaces(SpaceRace.HUMAN, SpaceRace.SPORKS,
+              SpaceRace.SPACE_PIRATE, SpaceRace.SCAURIANS,
+              SpaceRace.MOTHOIDS, SpaceRace.SMAUGIRIANS, SpaceRace.ALTEIRIANS);
         } else if (techName.startsWith("Ion cannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));
           tech.setRareTech(true);

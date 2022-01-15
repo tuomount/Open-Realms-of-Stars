@@ -267,6 +267,11 @@ public final class SoundPlayer {
    */
   public static final String TENTACLE =
       "/resources/sounds/tentacle.wav";
+  /**
+   * Sound effect for machine gun/chaingun/multicannon
+   */
+  public static final String MACHINEGUN =
+      "/resources/sounds/machinegun.wav";
 
   /**
    * Is Sound enabled

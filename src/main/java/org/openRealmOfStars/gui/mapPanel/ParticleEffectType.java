@@ -62,5 +62,9 @@ public enum ParticleEffectType {
   /**
    * Yellow plasma particle
    */
-  PLASMA_PARTICLE;
+  PLASMA_PARTICLE,
+  /**
+   * Bullet particle
+   */
+  BULLET_PARTICLE;
 }

@@ -95,6 +95,10 @@ public enum CombatAnimationType {
   /**
    * Tentacle
    */
-  TENTACLE;
+  TENTACLE,
+  /**
+   * Multicannon
+   */
+  MULTICANNON;
 
 }

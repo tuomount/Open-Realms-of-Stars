@@ -1445,6 +1445,10 @@ public class MapPanel extends JPanel {
           SoundPlayer.playSound(SoundPlayer.WEAPON_RAILGUN);
           break;
           }
+        case MULTICANNON: {
+          SoundPlayer.playSound(SoundPlayer.MACHINEGUN);
+          break;
+          }
         case ECM_TORPEDO:
         case HE_MISSILE: {
           SoundPlayer.playSound(SoundPlayer.WEAPON_MISSILE);

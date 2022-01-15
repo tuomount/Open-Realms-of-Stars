@@ -158,7 +158,6 @@ public class TechListTest {
     TechList list = new TechList(SpaceRace.HUMAN);
     assertEquals(false, list.isUpgradeable(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
-    list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Callisto multicannon Mk1", 1));
     Tech[] missing = list.getListMissingTech(TechType.Combat, 1);
     assertEquals(1, missing.length);
@@ -252,11 +251,9 @@ public class TechListTest {
     list = new TechList(SpaceRace.HUMAN);
     assertEquals(1, list.getTechLevel(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
-    list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
     assertEquals(1, list.getTechLevel(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Laser Mk2", 2));
     assertEquals(1, list.getTechLevel(TechType.Combat));
-    list.addTech(TechFactory.createCombatTech("Railgun Mk2", 2));
     list.addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
     assertEquals(1, list.getTechLevel(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Photon torpedo Mk1", 1));
@@ -323,9 +320,6 @@ public class TechListTest {
     PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS, 2, 0);
     info.getTechList().updateResearchPointByTurn(30, info, 300, false);
     assertEquals(1, info.getTechList().getTechLevel(TechType.Combat));
-    assertEquals(MessageType.RESEARCH, info.getMsgList().getMsg().getType());
-    info.getMsgList().clearMessages();
-    info.getTechList().updateResearchPointByTurn(30, info, 300, true);
     assertEquals(MessageType.RESEARCH, info.getMsgList().getMsg().getType());
     info.getMsgList().clearMessages();
     info.getTechList().updateResearchPointByTurn(30, info, 300, true);

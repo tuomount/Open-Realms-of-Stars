@@ -337,14 +337,12 @@ public class ResearchTest {
     TechList list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
-    list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Callisto multicannon Mk1", 1));
     assertEquals(1, list.getTechLevel(TechType.Combat));
     Research.checkUpdateCombat(info, Attitude.MILITARISTIC);
     assertEquals(2, list.getTechLevel(TechType.Combat));
     list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
-    list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Photon torpedo Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Callisto multicannon Mk1", 1));
     assertEquals(1, list.getTechLevel(TechType.Combat));

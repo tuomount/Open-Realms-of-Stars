@@ -517,7 +517,7 @@ public class CombatAnimation {
           showAnim = false;
         }
       }
-      if (count > FRAME_MARKER_WHEN_EXPLODE && count % 2 == 0) {
+      if (count > 30) {
         int dist = distance;
         int px = (int) Math.round(sx);
         int py = (int) Math.round(sy);
@@ -531,8 +531,14 @@ public class CombatAnimation {
         }
         double mvx = mx * 5 + nx;
         double mvy = my * 5 + ny;
-        int dx = (int) Math.round(Math.abs(dist / mvx));
-        int dy = (int) Math.round(Math.abs(dist / mvy));
+        int dx = 0;
+        int dy = 0;
+        if (mvx != 0) {
+          dx = (int) Math.round(Math.abs(dist / mvx));
+        }
+        if (mvy != 0) {
+          dy = (int) Math.round(Math.abs(dist / mvy));
+        }
         for (int i = 0; i < 4; i++) {
           int x = 0;
           int y = 0;

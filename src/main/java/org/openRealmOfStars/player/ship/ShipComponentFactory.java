@@ -2727,6 +2727,7 @@ public final class ShipComponentFactory {
     if (index == COMPONENT_AUTOCANNON_MK1) {
       tmp = new ShipComponent(index, "Autocannon Mk1", 5, 4,
           ShipComponentType.CALLISTO_MULTICANNON);
+      tmp.setHitBonus(15);
       tmp.setDamage(5);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(0);
@@ -2734,6 +2735,7 @@ public final class ShipComponentFactory {
     if (index == COMPONENT_AUTOCANNON_MK2) {
       tmp = new ShipComponent(index, "Autocannon Mk2", 5, 4,
           ShipComponentType.CALLISTO_MULTICANNON);
+      tmp.setHitBonus(15);
       tmp.setDamage(6);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(0);
@@ -2786,6 +2788,7 @@ public final class ShipComponentFactory {
     if (index == COMPONENT_AUTOCANNON_MK3) {
       tmp = new ShipComponent(index, "Autocannon Mk3", 5, 4,
           ShipComponentType.CALLISTO_MULTICANNON);
+      tmp.setHitBonus(15);
       tmp.setDamage(7);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(0);
@@ -2793,6 +2796,7 @@ public final class ShipComponentFactory {
     if (index == COMPONENT_CALLISTO_MULTICANNON_MK1) {
       tmp = new ShipComponent(index, "Callisto multicannon Mk1", 3, 4,
           ShipComponentType.CALLISTO_MULTICANNON);
+      tmp.setHitBonus(30);
       tmp.setDamage(8);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(0);
@@ -2800,6 +2804,7 @@ public final class ShipComponentFactory {
     if (index == COMPONENT_CALLISTO_MULTICANNON_MK2) {
       tmp = new ShipComponent(index, "Callisto multicannon Mk2", 4, 4,
           ShipComponentType.CALLISTO_MULTICANNON);
+      tmp.setHitBonus(30);
       tmp.setDamage(9);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(0);
@@ -2807,6 +2812,7 @@ public final class ShipComponentFactory {
     if (index == COMPONENT_CALLISTO_MULTICANNON_MK3) {
       tmp = new ShipComponent(index, "Callisto multicannon Mk3", 5, 4,
           ShipComponentType.CALLISTO_MULTICANNON);
+      tmp.setHitBonus(30);
       tmp.setDamage(10);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(0);

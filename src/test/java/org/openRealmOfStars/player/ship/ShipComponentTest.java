@@ -137,7 +137,7 @@ public class ShipComponentTest {
         + "Damage: 3 Range: 3\n"
         + "Hit: 50%, 50% penetrates shields\n"
         + "\n"
-        + "Long range weapon with 50% accuracy.\n", component.toString());
+        + "Long range weapon with poor accuracy.\n", component.toString());
   }
 
   @Test

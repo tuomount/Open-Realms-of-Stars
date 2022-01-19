@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017,2019 Tuomo Untinen
+* Copyright (C) 2017,2019,2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -64,7 +64,7 @@ public class ShipComponentFactoryTest {
     assertEquals(3, weapon.getEnergyRequirement());
     assertEquals(5, weapon.getCost());
     assertEquals(5, weapon.getMetalCost());
-    weapon = ShipComponentFactory.createByName("Callisto multicannon Mk1");
+    weapon = ShipComponentFactory.createByName("Chaingun Mk1");
     assertEquals(1, weapon.getDamage());
     assertEquals(1, weapon.getWeaponRange());
     assertEquals(0, weapon.getEnergyRequirement());

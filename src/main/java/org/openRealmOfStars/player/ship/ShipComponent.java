@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.ship;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -134,6 +134,10 @@ public class ShipComponent {
   private int fleetCapacityBonus;
 
   /**
+   * Component hit bonus;
+   */
+  private int hitBonus;
+  /**
    * Constructor for ship component
    * @param index Index for saving component
    * @param name Component name
@@ -164,6 +168,7 @@ public class ShipComponent {
     this.creditBonus = 0;
     this.cultureBonus = 0;
     this.setEspionageBonus(0);
+    this.setHitBonus(0);
   }
 
   /**
@@ -442,11 +447,13 @@ public class ShipComponent {
   }
 
   /**
-   * Get hitChance by type
+   * Get hitChance by type and increased by hit bonus.
    * @return hitChance
    */
   public int getHitChance() {
-      return type.getHitChance();
+    int value = type.getHitChance();
+    value = value + getHitBonus();
+    return value;
   }
 
   @Override
@@ -610,9 +617,11 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range: ");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 100%, 50% penetrates armor");
+      sb.append("\nHit: ");
+      sb.append(getHitChance());
+      sb.append("%, 50% penetrates armor");
       sb.append("\n\n");
-      sb.append("Short range weapon with good accuracy."
+      sb.append("Short range weapon with perfect accuracy."
           + "\nBeam weapon has 5% bigger critical chance.");
       sb.append("\n");
 
@@ -623,7 +632,9 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range: ");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 50%, damages only shields");
+      sb.append("\nHit: ");
+      sb.append(getHitChance());
+      sb.append("%, damages only shields");
       sb.append("\n\n");
       sb.append("ECM torpedo only work against shields.");
       sb.append("\n");
@@ -634,9 +645,11 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range: ");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 50%, 50% penetrates shields");
+      sb.append("\nHit: ");
+      sb.append(getHitChance());
+      sb.append("%, 50% penetrates shields");
       sb.append("\n\n");
-      sb.append("Long range weapon with 50% accuracy.");
+      sb.append("Long range weapon with poor accuracy.");
       sb.append("\n");
       break;
     }
@@ -645,9 +658,11 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range: ");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 60%, 66% penetrates shields");
+      sb.append("\nHit: ");
+      sb.append(getHitChance());
+      sb.append("%, 66% penetrates shields");
       sb.append("\n\n");
-      sb.append("Natural weapon with 60% accuracy.");
+      sb.append("Natural weapon.");
       sb.append("\n");
       break;
     }
@@ -656,9 +671,11 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range: ");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 75%, 66% penetrates shields");
+      sb.append("\nHit: ");
+      sb.append(getHitChance());
+      sb.append("%, 66% penetrates shields");
       sb.append("\n\n");
-      sb.append("Natural weapon with 75% accuracy.");
+      sb.append("Natural weapon.");
       sb.append("\n");
       break;
     }
@@ -667,9 +684,11 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range: ");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 75%, 50% penetrates armor");
+      sb.append("\nHit: ");
+      sb.append(getHitChance());
+      sb.append("%, 50% penetrates armor");
       sb.append("\n\n");
-      sb.append("Medium range weapon with 75% accuracy.");
+      sb.append("Medium range weapon.");
       sb.append("\n");
       break;
     }
@@ -678,8 +697,9 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range: ");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 75%");
-      sb.append("\n\n");
+      sb.append("\nHit: ");
+      sb.append(getHitChance());
+      sb.append("%\n\n");
       sb.append("Medium range weapon and cannot be fully"
           + "\ndeflected with armor or shields.");
       sb.append("\n");
@@ -692,7 +712,9 @@ public class ShipComponent {
       sb.append(" Damage: 1");
       sb.append(" Range: ");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 75%, Armor stops");
+      sb.append("\nHit: ");
+      sb.append(getHitChance());
+      sb.append("%, Armor stops");
       sb.append("\n\n");
       sb.append("Medium range weapons against shields."
           + "\nIf target has any armor ion cannot is deflected."
@@ -706,9 +728,11 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range: ");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 75%, 50% penetrates shields");
+      sb.append("\nHit: ");
+      sb.append(getHitChance());
+      sb.append("%, 50% penetrates shields");
       sb.append("\n\n");
-      sb.append("Medium range weapon with 75% accuracy.");
+      sb.append("Medium range weapon.");
       sb.append("\n");
       break;
     }
@@ -717,9 +741,11 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range: ");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 60%, 50% penetrates shields");
+      sb.append("\nHit: ");
+      sb.append(getHitChance());
+      sb.append("%, 50% penetrates shields");
       sb.append("\n\n");
-      sb.append("Short range weapon with 60% accuracy.");
+      sb.append("Short range weapon.");
       sb.append("\n");
       break;
     }
@@ -928,6 +954,22 @@ public class ShipComponent {
     } else {
       this.espionageBonus = espionageBonus;
     }
+  }
+
+  /**
+   * Get Component hit bonus
+   * @return Hit bonus
+   */
+  public int getHitBonus() {
+    return hitBonus;
+  }
+
+  /**
+   * Set component hit bonus.
+   * @param hitBonus Hit bonus to set
+   */
+  public void setHitBonus(final int hitBonus) {
+    this.hitBonus = hitBonus;
   }
 
 }

@@ -23,7 +23,7 @@ import org.openRealmOfStars.starMap.StarMap;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2017-2019, 2021 Tuomo Untinen
+ * Copyright (C) 2017-2019, 2021,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -344,7 +344,7 @@ public class ResearchTest {
     list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createCombatTech("Photon torpedo Mk1", 1));
-    list.addTech(TechFactory.createCombatTech("Callisto multicannon Mk1", 1));
+    list.addTech(TechFactory.createCombatTech("Chaingun Mk1", 1));
     assertEquals(1, list.getTechLevel(TechType.Combat));
     Research.checkUpdateCombat(info, Attitude.AGGRESSIVE);
     assertEquals(2, list.getTechLevel(TechType.Combat));

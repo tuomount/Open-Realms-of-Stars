@@ -10,7 +10,7 @@ import org.openRealmOfStars.utilities.TextUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,13 +41,13 @@ public final class TechFactory {
    * Combat tech names for level 1
    */
   public static final String[] COMBAT_TECH_LEVEL1_NAMES = {"Laser Mk1",
-      "Railgun Mk1", "Photon torpedo Mk1", "Callisto multicannon Mk1" };
+      "Railgun Mk1", "Photon torpedo Mk1", "Chaingun Mk1" };
   /**
    * Combat tech names for level 2
    */
   public static final String[] COMBAT_TECH_LEVEL2_NAMES = {"Laser Mk2",
       "Railgun Mk2", "Photon torpedo Mk2",
-      "Planetary invasion module", "Callisto multicannon Mk2" };
+      "Planetary invasion module", "Chaingun Mk2" };
   /**
    * Rare combat tech names for level 2.
    */
@@ -58,7 +58,7 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL3_NAMES = {"Laser Mk3",
       "Railgun Mk3", "Photon torpedo Mk3", "ECM torpedo Mk1",
-      "HE missile Mk1", "Orbital bombs Mk1", "Callisto multicannon Mk3" };
+      "HE missile Mk1", "Orbital bombs Mk1", "Chaingun Mk3" };
   /**
    * Rare combat tech names for level 3.
    */
@@ -69,13 +69,13 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL4_NAMES = {"Laser Mk4",
       "Railgun Mk4", "Photon torpedo Mk4", "ECM torpedo Mk2", "HE missile Mk2",
-      "Orbital nuke", "Callisto multicannon Mk4" };
+      "Orbital nuke", "Chaingun Mk4" };
   /**
    * Combat tech names for level 5
    */
   public static final String[] COMBAT_TECH_LEVEL5_NAMES = {"Laser Mk5",
       "Railgun Mk5", "Photon torpedo Mk5", "ECM torpedo Mk3", "HE missile Mk3",
-      "Orbital bombs Mk2", "Callisto multicannon Mk5" };
+      "Orbital bombs Mk2", "Autocannon Mk1" };
   /**
    * Rare combat tech names for level 5.
    */
@@ -86,13 +86,14 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL6_NAMES = {"Phasors Mk1",
       "Massdrive Mk1", "Photon torpedo Mk6", "ECM torpedo Mk4",
-      "HE missile Mk4", "Orbital fusion bomb", "Callisto multicannon Mk6" };
+      "HE missile Mk4", "Orbital fusion bomb", "Autocannon Mk1" };
   /**
    * Combat tech names for level 7
    */
   public static final String[] COMBAT_TECH_LEVEL7_NAMES = {"Phasors Mk2",
       "Massdrive Mk2", "Photon torpedo Mk7", "ECM torpedo Mk5",
-      "HE missile Mk5", "Shock trooper module", "Orbital antimatter bomb" };
+      "HE missile Mk5", "Shock trooper module", "Orbital antimatter bomb",
+      "Autocannon Mk1"};
   /**
    * Rare combat tech names for level 6.
    */
@@ -103,13 +104,14 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL8_NAMES = {"Phasors Mk3",
       "Massdrive Mk3", "Photon torpedo Mk8", "ECM torpedo Mk6",
-      "HE missile Mk6", "Orbital smart bombs"};
+      "HE missile Mk6", "Orbital smart bombs", "Callisto multicannon Mk1"};
   /**
    * Combat tech names for level 9
    */
   public static final String[] COMBAT_TECH_LEVEL9_NAMES = {
       "Antimatter beam Mk1", "Massdrive Mk4", "Photon torpedo Mk9",
-      "ECM torpedo Mk7", "HE missile Mk7", "Orbital neutron bomb" };
+      "ECM torpedo Mk7", "HE missile Mk7", "Orbital neutron bomb",
+      "Callisto multicannon Mk2"};
   /**
    * Rare combat tech names for level 7.
    */
@@ -120,7 +122,7 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL10_NAMES = {
       "Antimatter beam Mk2", "Massdrive Mk5", "Photon torpedo Mk10",
-      "ECM torpedo Mk8", "HE missile Mk8" };
+      "ECM torpedo Mk8", "HE missile Mk8", "Callisto multicannon Mk3" };
 
   /**
    * Defense tech names for level 1
@@ -552,7 +554,9 @@ public final class TechFactory {
         } else if (techName.startsWith("Tractor beam")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_TRACTOR_BEAM));
           tech.setRareTech(true);
-        } else if (techName.startsWith("Callisto multicannon")) {
+        } else if (techName.startsWith("Callisto multicannon")
+            || techName.startsWith("Autocannon")
+            || techName.startsWith("Chaingun")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));
           tech.setExcludeList(false);
           tech.setSpaceRaces(SpaceRace.HUMAN, SpaceRace.SPORKS,

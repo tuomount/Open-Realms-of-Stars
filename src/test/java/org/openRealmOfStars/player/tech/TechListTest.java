@@ -13,7 +13,7 @@ import org.openRealmOfStars.player.message.MessageType;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017, 2019-2021 Tuomo Untinen
+* Copyright (C) 2017, 2019-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -158,7 +158,7 @@ public class TechListTest {
     TechList list = new TechList(SpaceRace.HUMAN);
     assertEquals(false, list.isUpgradeable(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
-    list.addTech(TechFactory.createCombatTech("Callisto multicannon Mk1", 1));
+    list.addTech(TechFactory.createCombatTech("Chaingun Mk1", 1));
     Tech[] missing = list.getListMissingTech(TechType.Combat, 1);
     assertEquals(1, missing.length);
     assertEquals("Photon torpedo Mk1", missing[0].getName());
@@ -257,8 +257,8 @@ public class TechListTest {
     list.addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
     assertEquals(1, list.getTechLevel(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Photon torpedo Mk1", 1));
-    list.addTech(TechFactory.createCombatTech("Callisto multicannon Mk1", 1));
-    list.addTech(TechFactory.createCombatTech("Callisto multicannon Mk2", 2));
+    list.addTech(TechFactory.createCombatTech("Chaingun Mk1", 1));
+    list.addTech(TechFactory.createCombatTech("Chaingun Mk2", 2));
     assertEquals(2, list.getTechLevel(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Photon torpedo Mk2", 2));
     assertEquals(3, list.getTechLevel(TechType.Combat));

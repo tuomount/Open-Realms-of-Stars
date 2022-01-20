@@ -483,7 +483,7 @@ public enum ShipComponentType {
     case ION_CANNON:
       return Icons.ICON_ION_CANNON;
     case CALLISTO_MULTICANNON:
-      return Icons.ICON_ION_CANNON;
+      return Icons.ICON_MULTI_CANNON;
     case BITE:
       return Icons.ICON_MOUTH;
     case TENTACLE:

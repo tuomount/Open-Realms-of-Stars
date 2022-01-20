@@ -425,6 +425,10 @@ public final class Icons {
    * Tentacle
    */
   public static final String ICON_TENTACLE = "IconTentacle";
+  /**
+   * Multicannon
+   */
+  public static final String ICON_MULTI_CANNON = "IconMultiCannon";
 
   /**
    * List of Icon
@@ -733,6 +737,8 @@ public final class Icons {
     icon = new Icon16x16(image, 5, 3, ICON_MOUTH);
     addIcon(icon);
     icon = new Icon16x16(image, 6, 3, ICON_TENTACLE);
+    addIcon(icon);
+    icon = new Icon16x16(image, 7, 3, ICON_MULTI_CANNON);
     addIcon(icon);
   }
 

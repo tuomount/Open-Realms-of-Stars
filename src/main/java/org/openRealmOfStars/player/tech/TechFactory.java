@@ -557,7 +557,7 @@ public final class TechFactory {
         } else if (techName.startsWith("Callisto multicannon")
             || techName.startsWith("Autocannon")
             || techName.startsWith("Chaingun")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));
+          tech.setIcon(Icons.getIconByName(Icons.ICON_MULTI_CANNON));
           tech.setExcludeList(false);
           tech.setSpaceRaces(SpaceRace.HUMAN, SpaceRace.SPORKS,
               SpaceRace.SPACE_PIRATE, SpaceRace.SCAURIANS,

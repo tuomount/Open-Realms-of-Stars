@@ -331,6 +331,14 @@ public final class TileNames {
    * Culture tile for player CORAL (Overlay)
    */
   public static final String PLAYER_CORAL = "Player_CORAL";
+  /**
+   * Culture tile for player OLIVE (Overlay)
+   */
+  public static final String PLAYER_OLIVE = "Player_OLIVE";
+  /**
+   * Culture tile for player SKY (Overlay)
+   */
+  public static final String PLAYER_SKY = "Player_SKY";
 
   /**
    * Ship color tile for player BLUE (Overlay)
@@ -404,6 +412,14 @@ public final class TileNames {
    * Ship color tile for player CORAL(Overlay)
    */
   public static final String PLAYER_SHIP_CORAL = "Player_Ship_CORAL";
+  /**
+   * Ship color tile for player OLIVE(Overlay)
+   */
+  public static final String PLAYER_SHIP_OLIVE = "Player_Ship_OLIVE";
+  /**
+   * Ship color tile for player SKY(Overlay)
+   */
+  public static final String PLAYER_SHIP_SKY = "Player_Ship_SKY";
   /**
    * Space anomaly tile: Credits
    */

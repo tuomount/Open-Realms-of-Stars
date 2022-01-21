@@ -9,7 +9,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021  Tuomo Untinen
+ * Copyright (C) 2016-2022  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -421,6 +421,14 @@ public final class Tiles {
     tile = new Tile(tilesImage, 11, 4, TileNames.PLAYER_CORAL);
     addTile(tile);
     tile = new Tile(tilesImage, 11, 5, TileNames.PLAYER_SHIP_CORAL);
+    addTile(tile);
+    tile = new Tile(tilesImage, 3, 6, TileNames.PLAYER_OLIVE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 4, 6, TileNames.PLAYER_SHIP_OLIVE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 5, 6, TileNames.PLAYER_SKY);
+    addTile(tile);
+    tile = new Tile(tilesImage, 6, 6, TileNames.PLAYER_SHIP_SKY);
     addTile(tile);
   }
 

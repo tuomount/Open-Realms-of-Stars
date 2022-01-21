@@ -9,7 +9,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018,2019 Tuomo Untinen
+ * Copyright (C) 2016,2018-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,7 +61,7 @@ public class GalaxyConfigTest {
     config.setPlayerName(0, "Test of Human");
     assertEquals("Test of Human",config.getPlayerName(0));
     assertEquals(false,config.isUniqueName("Test of Human"));
-    assertEquals(null,config.getPlayerName(13));
+    assertEquals(null,config.getPlayerName(StarMap.MAX_PLAYERS + 1));
     config.setMaxPlayers(3);
     assertEquals(3, config.getMaxPlayers());
     config.setSolarSystemDistance(13, 0);

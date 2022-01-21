@@ -710,6 +710,15 @@ public final class GuiStatics {
    */
   public static final Color PLAYER_CORAL = new Color(236, 117, 120);
 
+  /**
+   * Player color olive.
+   */
+  public static final Color PLAYER_OLIVE = new Color(97, 114, 24);
+
+  /**
+   * Player color sky.
+   */
+  public static final Color PLAYER_SKY = new Color(110, 127, 217);
 
   /**
    * Relation unknown icon

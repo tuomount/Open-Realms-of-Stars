@@ -45,7 +45,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -162,7 +162,7 @@ public class PlayerSetupView extends BlackPanel {
     comboRealmColor = new SpaceComboBox[StarMap.MAX_PLAYERS];
 
     SpaceGreyPanel xgrey = new SpaceGreyPanel();
-    xgrey.setLayout(new GridLayout(3, 4));
+    xgrey.setLayout(new GridLayout(4, 4));
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
       xgrey.add(createPlayerRaceSelection(xgrey, i, listener));
     }

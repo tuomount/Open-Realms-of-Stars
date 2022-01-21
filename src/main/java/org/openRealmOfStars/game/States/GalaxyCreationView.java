@@ -495,7 +495,7 @@ public class GalaxyCreationView extends BlackPanel {
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    String[] players = new String[11];
+    String[] players = new String[15];
     players[0] = "Two realms";
     players[1] = "Three realms";
     players[2] = "Four realms";
@@ -507,6 +507,10 @@ public class GalaxyCreationView extends BlackPanel {
     players[8] = "Ten realms";
     players[9] = "Eleven realms";
     players[10] = "Twelve realms";
+    players[11] = "13 realms";
+    players[12] = "14 realms";
+    players[13] = "15 realms";
+    players[14] = "16 realms";
     comboPlayers = new SpaceCombo<>(players);
     comboPlayers.setSelectedIndex(this.config.getMaxPlayers() - 2);
     comboPlayers.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
@@ -845,6 +849,11 @@ public class GalaxyCreationView extends BlackPanel {
       if (config.getMaxPlayers() > 8 && config.getGalaxySizeIndex() < 2) {
         config.setSize(GALAXY_SIZE_MEDIUM, 2);
         comboGalaxySize.setSelectedIndex(2);
+        this.repaint();
+      }
+      if (config.getMaxPlayers() > 12 && config.getGalaxySizeIndex() < 3) {
+        config.setSize(GALAXY_SIZE_MEDIUM, 3);
+        comboGalaxySize.setSelectedIndex(3);
         this.repaint();
       }
       switch (comboSunDensity.getSelectedIndex()) {

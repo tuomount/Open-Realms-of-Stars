@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.StarMap;
 
 /**
 *
@@ -41,10 +42,10 @@ public class CultureEventTest {
     assertEquals(EventType.CULTURE_CHANGE, event.getType());
     assertEquals(coord, event.getCoordinate());
     assertEquals(0, event.getPlayerIndex());
-    event = new CultureEvent(coord, 13);
+    event = new CultureEvent(coord, StarMap.MAX_PLAYERS + 1);
     assertEquals(EventType.CULTURE_CHANGE, event.getType());
     assertEquals(coord, event.getCoordinate());
-    assertEquals(11, event.getPlayerIndex());
+    assertEquals(StarMap.MAX_PLAYERS - 1, event.getPlayerIndex());
     event = new CultureEvent(coord, -2);
     assertEquals(EventType.CULTURE_CHANGE, event.getType());
     assertEquals(coord, event.getCoordinate());

@@ -32,7 +32,7 @@ import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2021,2022  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -115,7 +115,7 @@ public class EspionageView extends BlackPanel {
 
     InfoPanel centerPanel = new InfoPanel();
     centerPanel.setTitle("Espionage");
-    centerPanel.setLayout(new GridLayout(3, 4));
+    centerPanel.setLayout(new GridLayout(4, 4));
     int maxPlayer = playerList.getCurrentMaxRealms();
     for (int i = 0; i < maxPlayer; i++) {
       PlayerInfo realmInfo = playerList.getPlayerInfoByIndex(i);

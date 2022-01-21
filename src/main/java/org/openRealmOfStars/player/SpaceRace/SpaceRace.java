@@ -722,7 +722,7 @@ public enum SpaceRace {
     case LITHORIANS:
       return PlayerColor.YELLOW;
     case ALTEIRIANS:
-      return PlayerColor.BLUE;
+      return PlayerColor.SKY;
     case SMAUGIRIANS:
       return PlayerColor.TAN;
     default:
@@ -747,11 +747,11 @@ public enum SpaceRace {
     case SPORKS:
       return PlayerColor.GREEN;
     case GREYANS:
-      return PlayerColor.CYAN;
+      return PlayerColor.SKY;
     case CENTAURS:
       return PlayerColor.PINK;
     case MOTHOIDS:
-      return PlayerColor.PINK;
+      return PlayerColor.OLIVE;
     case TEUTHIDAES:
       return PlayerColor.BLACK;
     case SCAURIANS:
@@ -765,9 +765,9 @@ public enum SpaceRace {
     case LITHORIANS:
       return PlayerColor.BANANA;
     case ALTEIRIANS:
-      return PlayerColor.CYAN;
+      return PlayerColor.BLUE;
     case SMAUGIRIANS:
-      return PlayerColor.GREEN;
+      return PlayerColor.OLIVE;
     default:
       return PlayerColor.CORAL;
     }

@@ -71,7 +71,7 @@ import org.openRealmOfStars.utilities.repository.SunRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -95,7 +95,7 @@ public class StarMap {
   /**
    * Maximum number of player
    */
-  public static final int MAX_PLAYERS = 12;
+  public static final int MAX_PLAYERS = 16;
 
   /**
    * Maximum map size x

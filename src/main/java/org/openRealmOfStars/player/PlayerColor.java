@@ -8,7 +8,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2021 Tuomo Untinen
+* Copyright (C) 2021,2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -100,7 +100,15 @@ public enum PlayerColor {
   /**
    * Coral
    */
-  CORAL(17, "Coral");
+  CORAL(17, "Coral"),
+  /**
+   * Olive
+   */
+  OLIVE(18, "Olive"),
+  /**
+   * Sky
+   */
+  SKY(19, "Sky");
   /**
    * Player Color constructor
    * @param index Color index
@@ -148,6 +156,8 @@ public enum PlayerColor {
     case GRAY: return TileNames.PLAYER_GRAY;
     case TAN: return TileNames.PLAYER_TAN;
     case CORAL: return TileNames.PLAYER_CORAL;
+    case OLIVE: return TileNames.PLAYER_OLIVE;
+    case SKY: return TileNames.PLAYER_SKY;
    }
   }
   /**
@@ -175,6 +185,8 @@ public enum PlayerColor {
     case GRAY: return TileNames.PLAYER_SHIP_GRAY;
     case TAN: return TileNames.PLAYER_SHIP_TAN;
     case CORAL: return TileNames.PLAYER_SHIP_CORAL;
+    case OLIVE: return TileNames.PLAYER_SHIP_OLIVE;
+    case SKY: return TileNames.PLAYER_SHIP_SKY;
    }
   }
   /**
@@ -202,6 +214,8 @@ public enum PlayerColor {
     case GRAY: return GuiStatics.PLAYER_GRAY;
     case TAN: return GuiStatics.PLAYER_TAN;
     case CORAL: return GuiStatics.PLAYER_CORAL;
+    case OLIVE: return GuiStatics.PLAYER_OLIVE;
+    case SKY: return GuiStatics.PLAYER_SKY;
    }
   }
   /**

@@ -8,7 +8,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018,2021  Tuomo Untinen
+ * Copyright (C) 2016-2018,2021,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -88,7 +88,10 @@ public class Route {
    * @return Number of turns routing takes
    */
   public int timeEstimate() {
-    return getDistance() / ftlSpeed;
+    if (ftlSpeed > 0) {
+      return getDistance() / ftlSpeed;
+    }
+    return 0;
   }
 
   /**
@@ -224,9 +227,45 @@ public class Route {
   public static BufferedImage getRouteDot() {
     if (routeDot == null) {
       routeDot = IOUtilities
-          .loadImage(Icons.class.getResource("/resources/images/routedot.png"));
+          .loadImage(Icons.class.getResource(
+              "/resources/images/ftl_routedot.png"));
     }
     return routeDot;
+  }
+
+  /**
+   * Green Route dot image
+   */
+  private static BufferedImage greenRouteDot;
+
+  /**
+   * Get green route dot image
+   * @return BufferedImage
+   */
+  public static BufferedImage getGreenRouteDot() {
+    if (greenRouteDot == null) {
+      greenRouteDot = IOUtilities
+          .loadImage(Icons.class.getResource(
+              "/resources/images/green_routedot.png"));
+    }
+    return greenRouteDot;
+  }
+
+  /**
+   * Yellow Route dot image
+   */
+  private static BufferedImage yellowRouteDot;
+
+  /**
+   * Get yellow route dot image
+   * @return BufferedImage
+   */
+  public static BufferedImage getYellowRouteDot() {
+    if (yellowRouteDot == null) {
+      yellowRouteDot = IOUtilities
+          .loadImage(Icons.class.getResource("/resources/images/routedot.png"));
+    }
+    return yellowRouteDot;
   }
 
   /**

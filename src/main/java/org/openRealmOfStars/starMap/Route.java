@@ -88,8 +88,12 @@ public class Route {
    * @return Number of turns routing takes
    */
   public int timeEstimate() {
-    if (ftlSpeed > 0) {
-      return getDistance() / ftlSpeed;
+    int speed = getFtlSpeed();
+    if (speed == 0) {
+      speed = getRegularSpeed();
+    }
+    if (speed > 0) {
+      return getDistance() / speed;
     }
     return 0;
   }
@@ -134,7 +138,11 @@ public class Route {
    * @return true if move was possible and false if not
    */
   public boolean makeNextMove(final StarMap starMap) {
-    for (int i = 0; i < ftlSpeed; i++) {
+    int speed = getFtlSpeed();
+    if (speed == 0) {
+      speed = getRegularSpeed();
+    }
+    for (int i = 0; i < speed; i++) {
       if (getDistance() > 0) {
         if (starMap == null) {
           startX = startX + getMx();
@@ -385,19 +393,51 @@ public class Route {
   }
 
   /**
-   * Get FTL speed
-   * @return FTL speed
+   * Get Ftl speed of route.
+   * @return ftl speed of route.
    */
   public int getFtlSpeed() {
+    return ftlSpeed & 0xff;
+  }
+  /**
+   * Set FTL speed of route.
+   * @param speed FTL Speed.
+   */
+  public void setFtlSpeed(final int speed) {
+    if (speed > 0 && speed < 256) {
+      ftlSpeed = speed;
+    }
+  }
+  /**
+   * Get regular speed of route.
+   * @return regular speed of route.
+   */
+  public int getRegularSpeed() {
+    return ftlSpeed >> 8 & 0xff;
+  }
+  /**
+   * Set regular speed of route.
+   * @param speed regular Speed.
+   */
+  public void setRegularSpeed(final int speed) {
+    if (speed > 0 && speed < 256) {
+      ftlSpeed = speed << 8;
+    }
+  }
+  /**
+   * Get Raw value for route.
+   * @return raw value
+   */
+  public int getRawValue() {
     return ftlSpeed;
   }
 
   /**
-   * Set FTL speed
-   * @param ftlSpeed FTL speed
+   * Set raw value for whole route.
+   * @param value Raw value
    */
-  public void setFtlSpeed(final int ftlSpeed) {
-    this.ftlSpeed = ftlSpeed;
+  public void setRawValue(final int value) {
+    this.ftlSpeed = value;
   }
 
   /**

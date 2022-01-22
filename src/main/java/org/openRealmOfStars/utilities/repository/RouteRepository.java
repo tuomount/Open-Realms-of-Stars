@@ -42,7 +42,7 @@ public class RouteRepository {
     dos.writeDouble(route.getStartY());
     dos.writeDouble(route.getEndX());
     dos.writeDouble(route.getEndY());
-    dos.writeInt(route.getFtlSpeed());
+    dos.writeInt(route.getRawValue());
   }
 
   /**
@@ -57,7 +57,7 @@ public class RouteRepository {
     route.setStartY(dis.readDouble());
     route.setEndX(dis.readDouble());
     route.setEndY(dis.readDouble());
-    route.setFtlSpeed(dis.readInt());
+    route.setRawValue(dis.readInt());
     return route;
   }
 }

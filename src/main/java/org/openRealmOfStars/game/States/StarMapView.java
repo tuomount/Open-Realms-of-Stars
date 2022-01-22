@@ -510,6 +510,7 @@ public class StarMapView extends BlackPanel {
         SoundPlayer.playMenuSound();
         SoundPlayer.playSound(SoundPlayer.WARP_ENGINE_ENGAGE);
         getStarMapMouseListener().setRoutePlanning(true);
+        getStarMapMouseListener().setRegularRoute(false);
       }
     }
 

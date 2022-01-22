@@ -61,6 +61,10 @@ public class StarMapMouseListener extends MouseAdapter
    * Is route being planned
    */
   private boolean routePlanning;
+  /**
+   * Is route regular or FTL planning.
+   */
+  private boolean regularRoute;
 
   /**
    * Constructor for StarMap Mouse Listener
@@ -177,6 +181,9 @@ public class StarMapMouseListener extends MouseAdapter
         Route route = new Route(lastClickedFleet.getX(),
             lastClickedFleet.getY(), coord.getMapX(), coord.getMapY(),
             lastClickedFleet.getFleetFtlSpeed());
+        if (isRegularRoute()) {
+          route.setRegularSpeed(lastClickedFleet.getFleetSpeed());
+        }
         mapPanel.setRoute(route);
       } else {
         routePlanning = false;
@@ -318,6 +325,9 @@ public class StarMapMouseListener extends MouseAdapter
                 moveCoordinate);
             if (distance < 2 && distance > 0) {
               moveClicked = true;
+            } else {
+              setRoutePlanning(true);
+              setRegularRoute(true);
             }
           }
         } else if (e.getClickCount() == 1
@@ -459,6 +469,22 @@ public class StarMapMouseListener extends MouseAdapter
    */
   public void setRoutePlanning(final boolean routePlanning) {
     this.routePlanning = routePlanning;
+  }
+
+  /**
+   * Is regular or ftl route planning in use.
+   * @return True for regular.
+   */
+  public boolean isRegularRoute() {
+    return regularRoute;
+  }
+
+  /**
+   * Set regular or FTL route planning.
+   * @param regularRoute True for regular planning.
+   */
+  public void setRegularRoute(final boolean regularRoute) {
+    this.regularRoute = regularRoute;
   }
 
   /**

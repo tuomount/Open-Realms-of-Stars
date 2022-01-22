@@ -838,6 +838,12 @@ public class MapPanel extends JPanel {
             gr.drawImage(Route.getRouteDot(), pixelX, pixelY, null);
           }
         }
+        if (routeData != null && routeData[i + cx][j + cy] == 2) {
+          gr.drawImage(Route.getGreenRouteDot(), pixelX, pixelY, null);
+        }
+        if (routeData != null && routeData[i + cx][j + cy] == 3) {
+          gr.drawImage(Route.getYellowRouteDot(), pixelX, pixelY, null);
+        }
         pixelX = pixelX + Tile.MAX_WIDTH;
       }
       pixelX = viewPointOffsetX;

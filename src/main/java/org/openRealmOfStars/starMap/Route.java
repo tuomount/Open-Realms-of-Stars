@@ -184,6 +184,10 @@ public class Route {
    */
   public byte[][] getRouteOnMap(final int maxX, final int maxY) {
     byte[][] result = new byte[maxX][maxY];
+    boolean ftlRoute = true;
+    if (getRegularSpeed() > 0) {
+      ftlRoute = false;
+    }
     double originalStartX = startX;
     double originalStartY = startY;
     double tmpX = startX;
@@ -194,7 +198,15 @@ public class Route {
       int sx = getX();
       int sy = getY();
       if (sx >= 0 && sy >= 0 && sx < maxX && sy < maxY) {
-        result[sx][sy] = 1;
+        if (ftlRoute) {
+          result[sx][sy] = 1;
+        } else {
+          if (i <= getRegularSpeed()) {
+            result[sx][sy] = 2;
+          } else {
+            result[sx][sy] = 3;
+          }
+        }
       }
       startX = startX + getMx();
       startY = startY + getMy();
@@ -397,7 +409,10 @@ public class Route {
    * @return ftl speed of route.
    */
   public int getFtlSpeed() {
-    return ftlSpeed & 0xff;
+    if (ftlSpeed > 0 && ftlSpeed < 256) {
+      return ftlSpeed;
+    }
+    return 0;
   }
   /**
    * Set FTL speed of route.
@@ -413,7 +428,10 @@ public class Route {
    * @return regular speed of route.
    */
   public int getRegularSpeed() {
-    return ftlSpeed >> 8 & 0xff;
+    if (ftlSpeed > 255) {
+      return ftlSpeed >> 8 & 0xff;
+    }
+    return 0;
   }
   /**
    * Set regular speed of route.

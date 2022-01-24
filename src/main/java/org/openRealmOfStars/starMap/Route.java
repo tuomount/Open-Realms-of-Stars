@@ -8,7 +8,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018,2021  Tuomo Untinen
+ * Copyright (C) 2016-2018,2021,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -88,7 +88,14 @@ public class Route {
    * @return Number of turns routing takes
    */
   public int timeEstimate() {
-    return getDistance() / ftlSpeed;
+    int speed = getFtlSpeed();
+    if (speed == 0) {
+      speed = getRegularSpeed();
+    }
+    if (speed > 0) {
+      return getDistance() / speed;
+    }
+    return 0;
   }
 
   /**
@@ -131,7 +138,11 @@ public class Route {
    * @return true if move was possible and false if not
    */
   public boolean makeNextMove(final StarMap starMap) {
-    for (int i = 0; i < ftlSpeed; i++) {
+    int speed = getFtlSpeed();
+    if (speed == 0) {
+      speed = getRegularSpeed();
+    }
+    for (int i = 0; i < speed; i++) {
       if (getDistance() > 0) {
         if (starMap == null) {
           startX = startX + getMx();
@@ -173,6 +184,10 @@ public class Route {
    */
   public byte[][] getRouteOnMap(final int maxX, final int maxY) {
     byte[][] result = new byte[maxX][maxY];
+    boolean ftlRoute = true;
+    if (getRegularSpeed() > 0) {
+      ftlRoute = false;
+    }
     double originalStartX = startX;
     double originalStartY = startY;
     double tmpX = startX;
@@ -183,7 +198,15 @@ public class Route {
       int sx = getX();
       int sy = getY();
       if (sx >= 0 && sy >= 0 && sx < maxX && sy < maxY) {
-        result[sx][sy] = 1;
+        if (ftlRoute) {
+          result[sx][sy] = 1;
+        } else {
+          if (i <= getRegularSpeed()) {
+            result[sx][sy] = 2;
+          } else {
+            result[sx][sy] = 3;
+          }
+        }
       }
       startX = startX + getMx();
       startY = startY + getMy();
@@ -224,9 +247,45 @@ public class Route {
   public static BufferedImage getRouteDot() {
     if (routeDot == null) {
       routeDot = IOUtilities
-          .loadImage(Icons.class.getResource("/resources/images/routedot.png"));
+          .loadImage(Icons.class.getResource(
+              "/resources/images/ftl_routedot.png"));
     }
     return routeDot;
+  }
+
+  /**
+   * Green Route dot image
+   */
+  private static BufferedImage greenRouteDot;
+
+  /**
+   * Get green route dot image
+   * @return BufferedImage
+   */
+  public static BufferedImage getGreenRouteDot() {
+    if (greenRouteDot == null) {
+      greenRouteDot = IOUtilities
+          .loadImage(Icons.class.getResource(
+              "/resources/images/green_routedot.png"));
+    }
+    return greenRouteDot;
+  }
+
+  /**
+   * Yellow Route dot image
+   */
+  private static BufferedImage yellowRouteDot;
+
+  /**
+   * Get yellow route dot image
+   * @return BufferedImage
+   */
+  public static BufferedImage getYellowRouteDot() {
+    if (yellowRouteDot == null) {
+      yellowRouteDot = IOUtilities
+          .loadImage(Icons.class.getResource("/resources/images/routedot.png"));
+    }
+    return yellowRouteDot;
   }
 
   /**
@@ -346,19 +405,57 @@ public class Route {
   }
 
   /**
-   * Get FTL speed
-   * @return FTL speed
+   * Get Ftl speed of route.
+   * @return ftl speed of route.
    */
   public int getFtlSpeed() {
+    if (ftlSpeed > 0 && ftlSpeed < 256) {
+      return ftlSpeed;
+    }
+    return 0;
+  }
+  /**
+   * Set FTL speed of route.
+   * @param speed FTL Speed.
+   */
+  public void setFtlSpeed(final int speed) {
+    if (speed > 0 && speed < 256) {
+      ftlSpeed = speed;
+    }
+  }
+  /**
+   * Get regular speed of route.
+   * @return regular speed of route.
+   */
+  public int getRegularSpeed() {
+    if (ftlSpeed > 255) {
+      return ftlSpeed >> 8 & 0xff;
+    }
+    return 0;
+  }
+  /**
+   * Set regular speed of route.
+   * @param speed regular Speed.
+   */
+  public void setRegularSpeed(final int speed) {
+    if (speed > 0 && speed < 256) {
+      ftlSpeed = speed << 8;
+    }
+  }
+  /**
+   * Get Raw value for route.
+   * @return raw value
+   */
+  public int getRawValue() {
     return ftlSpeed;
   }
 
   /**
-   * Set FTL speed
-   * @param ftlSpeed FTL speed
+   * Set raw value for whole route.
+   * @param value Raw value
    */
-  public void setFtlSpeed(final int ftlSpeed) {
-    this.ftlSpeed = ftlSpeed;
+  public void setRawValue(final int value) {
+    this.ftlSpeed = value;
   }
 
   /**

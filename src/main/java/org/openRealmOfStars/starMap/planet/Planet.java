@@ -44,7 +44,7 @@ import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -300,6 +300,31 @@ public class Planet {
    * What building / Planetary improvement is currently under construction
    */
   private Construction underConstruction;
+
+  /**
+   * Guide for governor how to rule the planet.
+   */
+  private int governorGuide;
+  /**
+   * Governor guide for general guide. This is the regular handling.
+   */
+  public static final int GENERALIST_PLANET = 0;
+  /**
+   * Governor guide for getting more credits.
+   */
+  public static final int CREDIT_PLANET = 1;
+  /**
+   * Governor guide for getting more research.
+   */
+  public static final int RESEARCH_PLANET = 2;
+  /**
+   * Governor guide for getting more culture.
+   */
+  public static final int CULTURE_PLANET = 3;
+  /**
+   * Governor guide for getting more military ships from the planet.
+   */
+  public static final int MILITARY_PLANET = 4;
   /**
    * Maximum number of different production
    */
@@ -366,6 +391,7 @@ public class Planet {
     this.setCoordinate(coordinate);
     governor = null;
     orbital = null;
+    setGovernorGuide(GENERALIST_PLANET);
     if (orderNumber == 0) {
       // Rogue planet
       this.name = name;
@@ -3728,5 +3754,21 @@ public class Planet {
    */
   public void setOrbital(final Ship orbital) {
     this.orbital = orbital;
+  }
+
+  /**
+   * Get Governor guide information for planet.
+   * @return Governor guide as int
+   */
+  public int getGovernorGuide() {
+    return governorGuide;
+  }
+
+  /**
+   * Set Governor guide information for planet.
+   * @param governorGuide Guide as a int
+   */
+  public void setGovernorGuide(final int governorGuide) {
+    this.governorGuide = governorGuide;
   }
 }

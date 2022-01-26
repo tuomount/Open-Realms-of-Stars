@@ -20,7 +20,7 @@ import java.io.IOException;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018, 2020, 2021 Tuomo Untinen
+ * Copyright (C) 2016, 2018, 2020-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -84,10 +84,14 @@ public class PlanetRepository {
     planet.setPlanetOwner(planetOwner, planetOwnerInfo);
     int governorIndex = dis.readInt();
     planet.setGovernor(null);
-    if (planet.getPlanetPlayerInfo() != null && governorIndex != -1) {
-      Leader leader = planet.getPlanetPlayerInfo().getLeaderPool()
-          .get(governorIndex);
-      planet.setGovernor(leader);
+    if (planet.getPlanetPlayerInfo() != null) {
+      int governorGuide = dis.read();
+      planet.setGovernorGuide(governorGuide);
+      if (governorIndex != -1) {
+        Leader leader = planet.getPlanetPlayerInfo().getLeaderPool()
+            .get(governorIndex);
+        planet.setGovernor(leader);
+      }
     }
     planet.setExtraFood(dis.readInt());
     planet.setTax(dis.readInt(), true);
@@ -148,6 +152,7 @@ public class PlanetRepository {
     if (planet.getPlanetPlayerInfo() != null) {
       dos.writeInt(planet.getPlanetPlayerInfo().getLeaderIndex(
           planet.getGovernor()));
+      dos.writeByte(planet.getGovernorGuide());
     } else {
       dos.writeInt(-1);
     }

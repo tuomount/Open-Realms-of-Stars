@@ -406,11 +406,20 @@ public final class PlanetHandling {
 
     // Production score
     score = score + building.getFactBonus() * 60;
+    if (building.getFactBonus() > 0
+        && planet.getEffectiveGovernorGuide() == Planet.MILITARY_PLANET) {
+      score = score + 40;
+    }
+
     if (planet.getAmountMetalInGround() > 30) {
       score = score + building.getMineBonus() * 40;
       if (info.getRace() == SpaceRace.MOTHOIDS
           || info.getRace() == SpaceRace.SCAURIANS) {
         score = score + building.getMineBonus() * 30;
+      }
+      if (building.getMineBonus() > 0
+          && planet.getEffectiveGovernorGuide() == Planet.MILITARY_PLANET) {
+        score = score + 40;
       }
     }
     int metalProd = planet.getTotalProduction(Planet.PRODUCTION_METAL);
@@ -447,12 +456,24 @@ public final class PlanetHandling {
       score = score + building.getReseBonus() * 60;
       score = score + building.getCultBonus() * 40;
     }
+    if (building.getReseBonus() > 0
+        && planet.getEffectiveGovernorGuide() == Planet.RESEARCH_PLANET) {
+      score = score + 50;
+    }
+    if (building.getCultBonus() > 0
+        && planet.getEffectiveGovernorGuide() == Planet.CULTURE_PLANET) {
+      score = score + 50;
+    }
     if (planet.getMaintenanceCost() >= planet
         .getTotalProduction(Planet.PRODUCTION_CREDITS)) {
       // Planet has much expenses so build credit production is important
       score = score + building.getCredBonus() * 80;
     } else {
       score = score + building.getCredBonus() * 50;
+    }
+    if (building.getCredBonus() > 0
+        && planet.getEffectiveGovernorGuide() == Planet.CREDIT_PLANET) {
+      score = score + 50;
     }
     score = score + building.getRecycleBonus();
     if (attitude == Attitude.DIPLOMATIC) {
@@ -956,6 +977,9 @@ public final class PlanetHandling {
     if (state == GameLengthState.END_GAME) {
       militaryFocus = 5;
     }
+    if (planet.getEffectiveGovernorGuide() == Planet.MILITARY_PLANET) {
+      militaryFocus++;
+    }
     score = score + ship.getTotalMilitaryPower() * militaryFocus;
     // High cost drops the value
     score = score - ship.getMetalCost() / 10;
@@ -1022,6 +1046,9 @@ public final class PlanetHandling {
         } else if (attitude == Attitude.MILITARISTIC
             || attitude == Attitude.AGGRESSIVE) {
           score = score - 10;
+        }
+        if (planet.getEffectiveGovernorGuide() == Planet.CULTURE_PLANET) {
+          score = score + 10;
         }
         if (ship.getEspionageBonus() > 0 && info.researchSpyShips()) {
           // Spy trade is plus if AI likes spy ships
@@ -1290,16 +1317,31 @@ public final class PlanetHandling {
             } else {
               score = score + ship.getTotalResearchBonus() * 3;
             }
+            if (ship.getTotalResearchBonus() > 0
+                && planet.getEffectiveGovernorGuide()
+                == Planet.RESEARCH_PLANET) {
+              score = score + 10;
+            }
             if (attitude == Attitude.DIPLOMATIC
                 || attitude == Attitude.PEACEFUL) {
               score = score + ship.getTotalCultureBonus() * 5;
             } else {
               score = score + ship.getTotalCultureBonus() * 3;
             }
+            if (ship.getTotalCultureBonus() > 0
+                && planet.getEffectiveGovernorGuide()
+                == Planet.CULTURE_PLANET) {
+              score = score + 10;
+            }
             if (attitude == Attitude.MERCHANTICAL) {
               score = score + ship.getTotalCreditBonus() * 5;
             } else {
               score = score + ship.getTotalCreditBonus() * 3;
+            }
+            if (ship.getTotalCreditBonus() > 0
+                && planet.getEffectiveGovernorGuide()
+                == Planet.CREDIT_PLANET) {
+              score = score + 10;
             }
           } else {
             score = -1;

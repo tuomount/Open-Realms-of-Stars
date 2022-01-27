@@ -3771,4 +3771,15 @@ public class Planet {
   public void setGovernorGuide(final int governorGuide) {
     this.governorGuide = governorGuide;
   }
+
+  /**
+   * Get Effective governor guide if governor is available.
+   * @return Effective governor guide or general planet.
+   */
+  public int getEffectiveGovernorGuide() {
+    if (getGovernor() != null) {
+      return governorGuide;
+    }
+    return GENERALIST_PLANET;
+  }
 }

@@ -19,6 +19,7 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.ProductionListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.buttons.SpaceCombo;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
@@ -40,7 +41,7 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -207,6 +208,12 @@ public class PlanetView extends BlackPanel {
    * Background image
    */
   private BigImagePanel imgBase;
+
+  /**
+   * JCombobox for selected governor guide.
+   */
+  private SpaceCombo<String> governorGuideSelect;
+
   /**
    * Planet view constructor. Planet view for viewing planet.
    * @param planet Planet to view
@@ -418,7 +425,7 @@ public class PlanetView extends BlackPanel {
     northPanel.add(topPanel);
     northPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceGreyPanel governorPanel = new SpaceGreyPanel();
-    governorPanel.setLayout(new BorderLayout());
+    governorPanel.setLayout(new BoxLayout(governorPanel, BoxLayout.X_AXIS));
     governorLabel = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_GOVERNOR),
         ": Planet's governor with very long name");
@@ -432,7 +439,36 @@ public class PlanetView extends BlackPanel {
         BoxLayout.X_AXIS));
     governorLabelPanel.add(Box.createRigidArea(new Dimension(15, 5)));
     governorLabelPanel.add(governorLabel);
-    governorPanel.add(governorLabelPanel, BorderLayout.WEST);
+    governorPanel.add(governorLabelPanel);
+    governorPanel.add(Box.createRigidArea(new Dimension(20, 5)));
+    SpaceGreyPanel governorGuidePanel = new SpaceGreyPanel();
+    governorGuidePanel.setLayout(new BoxLayout(governorGuidePanel,
+        BoxLayout.X_AXIS));
+    governorGuidePanel.add(Box.createRigidArea(new Dimension(25, 15)));
+    SpaceLabel guideLabel = new SpaceLabel("Governor guide: ");
+    governorGuidePanel.add(guideLabel);
+    governorGuidePanel.add(Box.createRigidArea(new Dimension(5, 15)));
+    String[] guides = new String[5];
+    guides[0] = "Generic";
+    guides[1] = "Focus on credits";
+    guides[2] = "Focus on reseatch";
+    guides[3] = "Focus on culture";
+    guides[4] = "Focus on military";
+    governorGuideSelect = new SpaceCombo<>(guides);
+    governorGuideSelect.setSelectedIndex(planet.getEffectiveGovernorGuide());
+    governorGuideSelect.setActionCommand(GameCommands.COMMAND_GOVERNOR_GUIDE);
+    governorGuideSelect.addActionListener(listener);
+    governorGuideSelect.setToolTipText("<html>Gives guide which direction"
+        + " governor should design the planet."
+        + "</html>");
+    governorGuideSelect.setEnabled(interactive);
+    if (interactive && planet.getGovernor() == null) {
+      governorGuideSelect.setEnabled(false);
+    }
+    governorGuidePanel.add(governorGuideSelect);
+    governorGuidePanel.add(Box.createRigidArea(new Dimension(50, 15)));
+    governorPanel.add(governorGuidePanel);
+    governorPanel.add(Box.createRigidArea(new Dimension(175, 5)));
     leaderViewBtn = new SpaceButton("Assign governor  ",
         GameCommands.COMMAND_VIEW_LEADERS);
     leaderViewBtn.addActionListener(listener);
@@ -442,7 +478,7 @@ public class PlanetView extends BlackPanel {
         BoxLayout.X_AXIS));
     governorBtnPanel.add(leaderViewBtn);
     governorBtnPanel.add(Box.createRigidArea(new Dimension(15, 5)));
-    governorPanel.add(governorBtnPanel, BorderLayout.EAST);
+    governorPanel.add(governorBtnPanel);
     northPanel.add(governorPanel);
     northPanel.setTitle(planet.getName());
 

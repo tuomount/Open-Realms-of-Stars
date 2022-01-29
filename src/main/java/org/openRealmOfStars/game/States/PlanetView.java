@@ -718,6 +718,16 @@ public class PlanetView extends BlackPanel {
       }
     }
     if (arg0.getActionCommand()
+        .equals(GameCommands.COMMAND_GOVERNOR_GUIDE)) {
+      if (planet.getGovernor() != null) {
+        SoundPlayer.playMenuSound();
+        planet.setGovernorGuide(governorGuideSelect.getSelectedIndex());
+      } else {
+        SoundPlayer.playMenuDisabled();
+      }
+      updatePanel();
+    }
+    if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_RUSH_WITH_CREDITS)) {
       planet.doRush(true, info);
       SoundPlayer.playSound(SoundPlayer.COINS);

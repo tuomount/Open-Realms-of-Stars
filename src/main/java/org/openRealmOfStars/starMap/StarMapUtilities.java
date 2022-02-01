@@ -3,6 +3,7 @@ package org.openRealmOfStars.starMap;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
@@ -968,5 +969,71 @@ public final class StarMapUtilities {
       }
     }
     return false;
+  }
+
+  public static void makeGovernorGuideAdjustments(final StarMap map,
+      final PlayerInfo realm) {
+    int planets = 0;
+    int general = 0;
+    int research = 0;
+    int culture = 0;
+    int credit = 0;
+    int military = 0;
+    int targetResearch = 0;
+    int targetCulture = 0;
+    int targetCredit = 0;
+    int targetMilitary = 0;
+    for (Planet planet : map.getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() == realm
+          && planet.getGovernor() != null) {
+        planets++;
+      }
+      if (planet.getPlanetPlayerInfo() == realm
+          && planet.getGovernor() == null) {
+        general++;
+      }
+    }
+    if (realm.getStrategy() == WinningStrategy.GENERIC) {
+      targetResearch = 1;
+      targetCulture = 0;
+      targetCredit = 0;
+      targetMilitary = 0;
+    }
+    if (realm.getStrategy() == WinningStrategy.CONQUER) {
+      targetResearch = planets / 2;
+      targetCulture = 0;
+      targetCredit = 0;
+      targetMilitary = planets / 2;
+    }
+    if (realm.getStrategy() == WinningStrategy.CULTURAL) {
+      targetResearch = planets / 2;
+      targetCulture = planets / 2;
+      targetCredit = 0;
+      targetMilitary = 0;
+    }
+    if (realm.getStrategy() == WinningStrategy.DIPLOMATIC) {
+      targetResearch = planets / 3;
+      targetCulture = planets / 3;
+      targetCredit = 0;
+      targetMilitary = planets / 3;
+    }
+    if (realm.getStrategy() == WinningStrategy.POPULATION) {
+      targetResearch = planets / 3;
+      targetCulture = 0;
+      targetCredit = planets / 3;
+      targetMilitary = planets / 3;
+    }
+    if (realm.getStrategy() == WinningStrategy.SCIENCE) {
+      targetResearch = planets;
+      targetCulture = 0;
+      targetCredit = 0;
+      targetMilitary = 0;
+    }
+    
+    for (Planet planet : map.getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() == realm
+          && planet.getGovernor() != null) {
+      }
+    }
   }
 }

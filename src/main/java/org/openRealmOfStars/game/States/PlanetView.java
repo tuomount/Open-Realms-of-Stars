@@ -448,12 +448,13 @@ public class PlanetView extends BlackPanel {
     SpaceLabel guideLabel = new SpaceLabel("Governor guide: ");
     governorGuidePanel.add(guideLabel);
     governorGuidePanel.add(Box.createRigidArea(new Dimension(5, 15)));
-    String[] guides = new String[5];
+    String[] guides = new String[6];
     guides[0] = "Generic";
     guides[1] = "Focus on credits";
     guides[2] = "Focus on reseatch";
     guides[3] = "Focus on culture";
     guides[4] = "Focus on military";
+    guides[5] = "Focus on population";
     governorGuideSelect = new SpaceCombo<>(guides);
     governorGuideSelect.setSelectedIndex(planet.getEffectiveGovernorGuide());
     governorGuideSelect.setActionCommand(GameCommands.COMMAND_GOVERNOR_GUIDE);

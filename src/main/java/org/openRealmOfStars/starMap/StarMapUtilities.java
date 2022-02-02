@@ -971,6 +971,11 @@ public final class StarMapUtilities {
     return false;
   }
 
+  /**
+   * Makes governor guide adjustments for planet.
+   * @param map StarMap
+   * @param realm Realm making adjustments
+   */
   public static void makeGovernorGuideAdjustments(final StarMap map,
       final PlayerInfo realm) {
     int planets = 0;
@@ -1028,12 +1033,6 @@ public final class StarMapUtilities {
       targetCulture = 0;
       targetCredit = 0;
       targetMilitary = 0;
-    }
-    
-    for (Planet planet : map.getPlanetList()) {
-      if (planet.getPlanetPlayerInfo() == realm
-          && planet.getGovernor() != null) {
-      }
     }
   }
 }

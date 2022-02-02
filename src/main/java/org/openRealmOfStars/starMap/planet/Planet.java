@@ -329,6 +329,10 @@ public class Planet {
    */
   public static final int MILITARY_PLANET = 4;
   /**
+   * Governor guide for getting more population quickly for the planet.
+   */
+  public static final int POPULATION_PLANET = 5;
+  /**
    * Maximum number of different production
    */
   public static final int MAX_PRODUCTION_TYPE = 6;

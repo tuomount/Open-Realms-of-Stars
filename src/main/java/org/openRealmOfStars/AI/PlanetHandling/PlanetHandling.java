@@ -461,6 +461,10 @@ public final class PlanetHandling {
       score = score - building.getFarmBonus() * 40;
     } else if (info.getRace() != SpaceRace.MECHIONS) {
       score = score + building.getFarmBonus() * 40;
+      if (building.getFarmBonus() > 0
+          && planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
+        score = score + 40;
+      }
     } else {
       score = score - building.getFarmBonus() * 40;
     }
@@ -1157,6 +1161,9 @@ public final class PlanetHandling {
         }
         score = score + info.getMissions().getNumberOfMissionTypes(
             MissionType.COLONIZE, MissionPhase.PLANNING) * 5;
+        if (planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
+          score = score + 40;
+        }
       } else {
         score = -1;
       }

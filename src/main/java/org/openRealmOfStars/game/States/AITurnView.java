@@ -3447,6 +3447,14 @@ public class AITurnView extends BlackPanel {
     }
     game.getStarMap().getNewsCorpData().clearNewsList();
     game.getStarMap().updateWinningStrategies();
+    for (int i = 0;
+        i < game.getStarMap().getPlayerList().getCurrentMaxRealms(); i++) {
+      if (game.getStarMap().getPlayerByIndex(i).isHuman()) {
+        continue;
+      }
+      StarMapUtilities.makeGovernorGuideAdjustments(game.getStarMap(),
+          game.getStarMap().getPlayerByIndex(i));
+    }
   }
 
   /**

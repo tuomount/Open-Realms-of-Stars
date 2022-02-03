@@ -3872,4 +3872,122 @@ public class Planet {
     }
     return GENERALIST_PLANET;
   }
+
+  /**
+   * Get suggestion for governor guide.
+   * This will be used by AI.
+   * @return Planetary guide value.
+   */
+  public int getGuideSuggestion() {
+    // Generalist planet is always good.
+    int bestGuide = GENERALIST_PLANET;
+    int bestScore = 0;
+    // Get scoring for population planet
+    int score = 0;
+    int maxPop = getPopulationLimit();
+    if (maxPop > 11) {
+      score = score + 1;
+    }
+    if (getTotalPopulation() < maxPop) {
+      score = score + 1;
+    }
+    if (planetOwnerInfo.getWorldTypeValue(planetType.getWorldType()) > 100) {
+      score = score + 1;
+    }
+    if (planetOwnerInfo.getWorldTypeValue(planetType.getWorldType()) < 75) {
+      score = score - 1;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.LUSH_VEGETATION) {
+      score = score + 1;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.PARADISE) {
+      score = score + 2;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.ARID) {
+      score = score - 1;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.MOLTEN_LAVA) {
+      score = score - 1;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.DESERT) {
+      score = score - 2;
+    }
+    if (score > bestScore) {
+      bestGuide = POPULATION_PLANET;
+      score = bestScore;
+    }
+    // Get scoring for military planet
+    score = 0;
+    if (getGroundSize() > 14) {
+      score = score + 1;
+    }
+    if (getGroundSize() > 11) {
+      score = score + 1;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.MOLTEN_LAVA) {
+      score = score + 2;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.METAL_RICH_SURFACE) {
+      score = score + 1;
+    }
+    if (score > bestScore) {
+      bestGuide = MILITARY_PLANET;
+      score = bestScore;
+    }
+    // Get scoring for culture planet
+    score = 0;
+    if (getGroundSize() > 12) {
+      score = score + 1;
+    }
+    if (getGroundSize() > 9) {
+      score = score + 1;
+    }
+    if (getCulture() > 50) {
+      score = score + 1;
+    }
+    if (getTotalCultureProduction() > 1) {
+      score = score + 1;
+    }
+    if (score > bestScore) {
+      bestGuide = CULTURE_PLANET;
+      score = bestScore;
+    }
+    // Get scoring for research planet
+    score = 0;
+    if (getGroundSize() > 10) {
+      score = score + 1;
+    }
+    if (getGroundSize() > 8) {
+      score = score + 1;
+    }
+    if (getTotalResearchProduction() > 1) {
+      score = score + 1;
+    }
+    if (getTotalResearchProduction() > 3) {
+      score = score + 1;
+    }
+    if (score > bestScore) {
+      bestGuide = RESEARCH_PLANET;
+      score = bestScore;
+    }
+    // Get scoring for credit planet
+    score = 0;
+    if (getGroundSize() > 10) {
+      score = score + 1;
+    }
+    if (getGroundSize() > 8) {
+      score = score + 1;
+    }
+    if (getTotalCreditProduction() > 1) {
+      score = score + 1;
+    }
+    if (getTotalCreditProduction() > 3) {
+      score = score + 1;
+    }
+    if (score > bestScore) {
+      bestGuide = CREDIT_PLANET;
+      score = bestScore;
+    }
+    return bestGuide;
+  }
 }

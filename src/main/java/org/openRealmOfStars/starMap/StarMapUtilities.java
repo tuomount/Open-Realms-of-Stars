@@ -979,60 +979,102 @@ public final class StarMapUtilities {
   public static void makeGovernorGuideAdjustments(final StarMap map,
       final PlayerInfo realm) {
     int planets = 0;
-    int general = 0;
-    int research = 0;
-    int culture = 0;
-    int credit = 0;
-    int military = 0;
-    int targetResearch = 0;
-    int targetCulture = 0;
-    int targetCredit = 0;
-    int targetMilitary = 0;
+    int[] target = new int[6];
     for (Planet planet : map.getPlanetList()) {
       if (planet.getPlanetPlayerInfo() == realm
           && planet.getGovernor() != null) {
         planets++;
       }
-      if (planet.getPlanetPlayerInfo() == realm
-          && planet.getGovernor() == null) {
-        general++;
-      }
     }
     if (realm.getStrategy() == WinningStrategy.GENERIC) {
-      targetResearch = 1;
-      targetCulture = 0;
-      targetCredit = 0;
-      targetMilitary = 0;
+      target[Planet.RESEARCH_PLANET] = 1;
+      target[Planet.CULTURE_PLANET] = 0;
+      target[Planet.POPULATION_PLANET] = 0;
+      target[Planet.CREDIT_PLANET] = 0;
+      target[Planet.MILITARY_PLANET] = 0;
+      target[Planet.GENERALIST_PLANET] = 0;
     }
     if (realm.getStrategy() == WinningStrategy.CONQUER) {
-      targetResearch = planets / 2;
-      targetCulture = 0;
-      targetCredit = 0;
-      targetMilitary = planets / 2;
+      int leftOver = planets % 2;
+      target[Planet.RESEARCH_PLANET] = planets / 2;
+      target[Planet.CULTURE_PLANET] = 0;
+      target[Planet.POPULATION_PLANET] = 0;
+      target[Planet.CREDIT_PLANET] = 0;
+      target[Planet.MILITARY_PLANET] = planets / 2 + leftOver;
+      target[Planet.GENERALIST_PLANET] = 0;
     }
     if (realm.getStrategy() == WinningStrategy.CULTURAL) {
-      targetResearch = planets / 2;
-      targetCulture = planets / 2;
-      targetCredit = 0;
-      targetMilitary = 0;
+      int leftOver = planets % 2;
+      target[Planet.RESEARCH_PLANET] = planets / 2;
+      target[Planet.CULTURE_PLANET] = planets / 2 + leftOver;
+      target[Planet.POPULATION_PLANET] = 0;
+      target[Planet.CREDIT_PLANET] = 0;
+      target[Planet.MILITARY_PLANET] = 0;
+      target[Planet.GENERALIST_PLANET] = 0;
     }
     if (realm.getStrategy() == WinningStrategy.DIPLOMATIC) {
-      targetResearch = planets / 3;
-      targetCulture = planets / 3;
-      targetCredit = 0;
-      targetMilitary = planets / 3;
+      int leftOver = planets % 4;
+      target[Planet.RESEARCH_PLANET] = planets / 4;
+      target[Planet.CULTURE_PLANET] = 0;
+      target[Planet.POPULATION_PLANET] = planets / 4;
+      target[Planet.CREDIT_PLANET] = planets / 4;
+      target[Planet.MILITARY_PLANET] = planets / 4;
+      target[Planet.GENERALIST_PLANET] = 0;
+      if (leftOver > 0) {
+        target[Planet.POPULATION_PLANET]++;
+        leftOver--;
+      }
+      if (leftOver > 0) {
+        target[Planet.RESEARCH_PLANET]++;
+        leftOver--;
+      }
+      if (leftOver > 0) {
+        target[Planet.CREDIT_PLANET]++;
+        leftOver--;
+      }
     }
     if (realm.getStrategy() == WinningStrategy.POPULATION) {
-      targetResearch = planets / 3;
-      targetCulture = 0;
-      targetCredit = planets / 3;
-      targetMilitary = planets / 3;
+      int leftOver = planets % 2;
+      target[Planet.RESEARCH_PLANET] = planets / 2;
+      target[Planet.CULTURE_PLANET] = 0;
+      target[Planet.POPULATION_PLANET] = planets / 2 + leftOver;
+      target[Planet.CREDIT_PLANET] = 0;
+      target[Planet.MILITARY_PLANET] = 0;
+      target[Planet.GENERALIST_PLANET] = 0;
     }
     if (realm.getStrategy() == WinningStrategy.SCIENCE) {
-      targetResearch = planets;
-      targetCulture = 0;
-      targetCredit = 0;
-      targetMilitary = 0;
+      target[Planet.RESEARCH_PLANET] = planets;
+      target[Planet.CULTURE_PLANET] = 0;
+      target[Planet.POPULATION_PLANET] = 0;
+      target[Planet.CREDIT_PLANET] = 0;
+      target[Planet.MILITARY_PLANET] = 0;
+      target[Planet.GENERALIST_PLANET] = 0;
     }
+    for (Planet planet : map.getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() == realm
+          && planet.getGovernor() != null) {
+        int guide = planet.getGuideSuggestion();
+        if (target[guide] > 0) {
+          planet.setGovernorGuide(guide);
+          target[guide]--;
+        } else {
+          if (guide == Planet.GENERALIST_PLANET) {
+            boolean guideSet = false;
+            for (int i = 1; i < target.length; i++) {
+              if (target[i] > 0) {
+                planet.setGovernorGuide(i);
+                target[i]--;
+                guideSet = true;
+                break;
+              }
+            }
+            if (!guideSet) {
+              planet.setGovernorGuide(guide);
+            }
+          }
+        }
+      }
+    }
+
   }
 }

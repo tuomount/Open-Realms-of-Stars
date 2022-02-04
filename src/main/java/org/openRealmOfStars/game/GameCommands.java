@@ -486,6 +486,11 @@ public final class GameCommands {
   public static final String COMMAND_GALAXY_SETUP = "GalaxySetup";
 
   /**
+   * Governor guide has changed.
+   */
+  public static final String COMMAND_GOVERNOR_GUIDE = "GovernorGuide";
+
+  /**
    * Realm color has changed in setup
    */
   public static final String COMMAND_COLOR_SETUP = "ColorSetup";

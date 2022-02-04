@@ -3,6 +3,7 @@ package org.openRealmOfStars.starMap;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
@@ -968,5 +969,112 @@ public final class StarMapUtilities {
       }
     }
     return false;
+  }
+
+  /**
+   * Makes governor guide adjustments for planet.
+   * @param map StarMap
+   * @param realm Realm making adjustments
+   */
+  public static void makeGovernorGuideAdjustments(final StarMap map,
+      final PlayerInfo realm) {
+    int planets = 0;
+    int[] target = new int[6];
+    for (Planet planet : map.getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() == realm
+          && planet.getGovernor() != null) {
+        planets++;
+      }
+    }
+    if (realm.getStrategy() == WinningStrategy.GENERIC) {
+      target[Planet.RESEARCH_PLANET] = 1;
+      target[Planet.CULTURE_PLANET] = 0;
+      target[Planet.POPULATION_PLANET] = 0;
+      target[Planet.CREDIT_PLANET] = 0;
+      target[Planet.MILITARY_PLANET] = 0;
+      target[Planet.GENERALIST_PLANET] = 0;
+    }
+    if (realm.getStrategy() == WinningStrategy.CONQUER) {
+      int leftOver = planets % 2;
+      target[Planet.RESEARCH_PLANET] = planets / 2;
+      target[Planet.CULTURE_PLANET] = 0;
+      target[Planet.POPULATION_PLANET] = 0;
+      target[Planet.CREDIT_PLANET] = 0;
+      target[Planet.MILITARY_PLANET] = planets / 2 + leftOver;
+      target[Planet.GENERALIST_PLANET] = 0;
+    }
+    if (realm.getStrategy() == WinningStrategy.CULTURAL) {
+      int leftOver = planets % 2;
+      target[Planet.RESEARCH_PLANET] = planets / 2;
+      target[Planet.CULTURE_PLANET] = planets / 2 + leftOver;
+      target[Planet.POPULATION_PLANET] = 0;
+      target[Planet.CREDIT_PLANET] = 0;
+      target[Planet.MILITARY_PLANET] = 0;
+      target[Planet.GENERALIST_PLANET] = 0;
+    }
+    if (realm.getStrategy() == WinningStrategy.DIPLOMATIC) {
+      int leftOver = planets % 4;
+      target[Planet.RESEARCH_PLANET] = planets / 4;
+      target[Planet.CULTURE_PLANET] = 0;
+      target[Planet.POPULATION_PLANET] = planets / 4;
+      target[Planet.CREDIT_PLANET] = planets / 4;
+      target[Planet.MILITARY_PLANET] = planets / 4;
+      target[Planet.GENERALIST_PLANET] = 0;
+      if (leftOver > 0) {
+        target[Planet.POPULATION_PLANET]++;
+        leftOver--;
+      }
+      if (leftOver > 0) {
+        target[Planet.RESEARCH_PLANET]++;
+        leftOver--;
+      }
+      if (leftOver > 0) {
+        target[Planet.CREDIT_PLANET]++;
+        leftOver--;
+      }
+    }
+    if (realm.getStrategy() == WinningStrategy.POPULATION) {
+      int leftOver = planets % 2;
+      target[Planet.RESEARCH_PLANET] = planets / 2;
+      target[Planet.CULTURE_PLANET] = 0;
+      target[Planet.POPULATION_PLANET] = planets / 2 + leftOver;
+      target[Planet.CREDIT_PLANET] = 0;
+      target[Planet.MILITARY_PLANET] = 0;
+      target[Planet.GENERALIST_PLANET] = 0;
+    }
+    if (realm.getStrategy() == WinningStrategy.SCIENCE) {
+      target[Planet.RESEARCH_PLANET] = planets;
+      target[Planet.CULTURE_PLANET] = 0;
+      target[Planet.POPULATION_PLANET] = 0;
+      target[Planet.CREDIT_PLANET] = 0;
+      target[Planet.MILITARY_PLANET] = 0;
+      target[Planet.GENERALIST_PLANET] = 0;
+    }
+    for (Planet planet : map.getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() == realm
+          && planet.getGovernor() != null) {
+        int guide = planet.getGuideSuggestion();
+        if (target[guide] > 0) {
+          planet.setGovernorGuide(guide);
+          target[guide]--;
+        } else {
+          if (guide == Planet.GENERALIST_PLANET) {
+            boolean guideSet = false;
+            for (int i = 1; i < target.length; i++) {
+              if (target[i] > 0) {
+                planet.setGovernorGuide(i);
+                target[i]--;
+                guideSet = true;
+                break;
+              }
+            }
+            if (!guideSet) {
+              planet.setGovernorGuide(guide);
+            }
+          }
+        }
+      }
+    }
+
   }
 }

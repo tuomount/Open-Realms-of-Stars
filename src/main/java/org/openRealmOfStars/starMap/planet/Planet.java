@@ -6,16 +6,19 @@ import java.util.ArrayList;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
@@ -44,7 +47,7 @@ import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -300,6 +303,35 @@ public class Planet {
    * What building / Planetary improvement is currently under construction
    */
   private Construction underConstruction;
+
+  /**
+   * Guide for governor how to rule the planet.
+   */
+  private int governorGuide;
+  /**
+   * Governor guide for general guide. This is the regular handling.
+   */
+  public static final int GENERALIST_PLANET = 0;
+  /**
+   * Governor guide for getting more credits.
+   */
+  public static final int CREDIT_PLANET = 1;
+  /**
+   * Governor guide for getting more research.
+   */
+  public static final int RESEARCH_PLANET = 2;
+  /**
+   * Governor guide for getting more culture.
+   */
+  public static final int CULTURE_PLANET = 3;
+  /**
+   * Governor guide for getting more military ships from the planet.
+   */
+  public static final int MILITARY_PLANET = 4;
+  /**
+   * Governor guide for getting more population quickly for the planet.
+   */
+  public static final int POPULATION_PLANET = 5;
   /**
    * Maximum number of different production
    */
@@ -366,6 +398,7 @@ public class Planet {
     this.setCoordinate(coordinate);
     governor = null;
     orbital = null;
+    setGovernorGuide(GENERALIST_PLANET);
     if (orderNumber == 0) {
       // Rogue planet
       this.name = name;
@@ -1698,7 +1731,7 @@ public class Planet {
         if (tmp == null) {
           System.out.println("Null building: " + buildingsNames[i]);
         }
-        if (getTotalRadiationLevel() == 1
+        if (getTotalRadiationLevel() == 1 && tmp != null
             && (tmp.getName().equals("Radiation dampener")
                 || tmp.getName().equals("Radiation well"))) {
           // No need for radiation well or dampener on small radiation planets
@@ -2168,6 +2201,450 @@ public class Planet {
       addBuilding(BuildingFactory.createByName("Space port"));
     }
   }
+
+  /**
+   * Check if construction is done.
+   * @param enemyOrbiting if true it means that other player,
+   *        has fleet orbiting on planet.
+   * @param map StarMap can be null in tests
+   */
+  private void checkIfConstructionisDone(final boolean enemyOrbiting,
+      final StarMap map) {
+    Message msg;
+    int requiredMetalCost = getActualCost(underConstruction,
+        Planet.PRODUCTION_METAL);
+    int requiredProdCost = getActualCost(underConstruction,
+        Planet.PRODUCTION_PRODUCTION);
+    // Making building happens at the end
+    if (underConstruction != null
+        && metal >= requiredMetalCost
+        && prodResource >= requiredProdCost) {
+      if (underConstruction instanceof Building
+          && groundSize > buildings.size()) {
+        boolean canBeBuilt = true;
+        Building building = (Building) underConstruction;
+        if (building.getScientificAchievement() && map != null) {
+          NewsData news = NewsFactory.makeScientificAchivementNews(
+              planetOwnerInfo, this, building);
+          map.getNewsCorpData().addNews(news);
+          EventOnPlanet eventOnPlanet = new EventOnPlanet(
+              EventType.PLANET_BUILDING, getCoordinate(),
+              getName(), getPlanetOwnerIndex());
+          eventOnPlanet.setText(news.getNewsText());
+          map.getHistory().addEvent(eventOnPlanet);
+        }
+        if (building.getName().equals("United Galaxy Tower") && map != null) {
+          NewsData news = NewsFactory.makeUnitedGalaxyTowerNews(
+              planetOwnerInfo, this);
+          map.getNewsCorpData().addNews(news);
+          EventOnPlanet eventOnPlanet = new EventOnPlanet(
+              EventType.PLANET_BUILDING, getCoordinate(),
+              getName(), getPlanetOwnerIndex());
+          eventOnPlanet.setText(news.getNewsText());
+          map.getHistory().addEvent(eventOnPlanet);
+          if (Game.getTutorial() != null
+              && map.isTutorialEnabled()
+              && map.getPlayerList().getPlayerInfoByIndex(0).isHuman()) {
+            String tutorialText = Game.getTutorial().showTutorialText(155);
+            if (tutorialText != null) {
+              Message msgTut = new Message(MessageType.INFORMATION,
+                  tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+              map.getPlayerList().getPlayerInfoByIndex(0).getMsgList()
+                  .addUpcomingMessage(msgTut);
+            }
+          }
+        }
+        if (building.isBroadcaster() && map != null) {
+          NewsData news = NewsFactory.makeBroadcasterBuildingNews(
+              planetOwnerInfo, this, building);
+          map.getNewsCorpData().addNews(news);
+          EventOnPlanet eventOnPlanet = new EventOnPlanet(
+              EventType.PLANET_BUILDING, getCoordinate(),
+              getName(), getPlanetOwnerIndex());
+          eventOnPlanet.setText(news.getNewsText());
+          map.getHistory().addEvent(eventOnPlanet);
+        }
+        if (building.getName().equals("Galactic sports center")
+            && map != null) {
+          NewsData news = NewsFactory.makeGalacticSportsNews(
+              planetOwnerInfo, this);
+          map.getNewsCorpData().addNews(news);
+          EventOnPlanet eventOnPlanet = new EventOnPlanet(
+              EventType.PLANET_BUILDING, getCoordinate(),
+              getName(), getPlanetOwnerIndex());
+          eventOnPlanet.setText(news.getNewsText());
+          map.getHistory().addEvent(eventOnPlanet);
+          Vote vote = new Vote(VotingType.GALACTIC_OLYMPIC_PARTICIPATE,
+              map.getPlayerList().getCurrentMaxRealms(), 10);
+          vote.setOrganizerIndex(this.getPlanetOwnerIndex());
+          vote.setPlanetName(getName());
+          map.getVotes().getVotes().add(vote);
+          if (Game.getTutorial() != null && map.isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(98);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.INFORMATION, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(getCoordinate());
+              map.getPlayerList().getPlayerInfoByIndex(0).getMsgList()
+                 .addNewMessage(msg);
+            }
+          }
+        }
+        if (building.isOrbitalElevator()) {
+          Building oldElevator = null;
+          if (getOrbital() != null) {
+            for (Building planetBuilding : getBuildingList()) {
+              if (planetBuilding.isOrbitalElevator()) {
+                oldElevator = planetBuilding;
+                break;
+              }
+            }
+            if (oldElevator != null) {
+              removeBuilding(oldElevator);
+            }
+          } else {
+            canBeBuilt = false;
+            msg = new Message(MessageType.CONSTRUCTION,
+                getName() + " cannot be built " + underConstruction.getName()
+                + " since there is no orbital on the planet.",
+                Icons.getIconByName(Icons.ICON_STARBASE));
+            msg.setCoordinate(getCoordinate());
+            msg.setMatchByString(getName());
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
+          }
+        }
+        if (canBeBuilt) {
+          metal = metal - requiredMetalCost;
+          prodResource = prodResource - requiredProdCost;
+          if (governor != null) {
+            governor.setExperience(governor.getExperience()
+                + underConstruction.getProdCost() / 2);
+            governor.getStats().addOne(StatType.NUMBER_OF_BUILDINGS_BUILT);
+          }
+          buildings.add((Building) underConstruction);
+          if (building.isSingleAllowed()) {
+            setUnderConstruction(getProductionList()[0]);
+          }
+          String nextBuilding = "";
+          if (governor != null) {
+            int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+            Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+            PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+            nextBuilding = governor.getCallName() + " selected new "
+                + "construction process where "
+                + getUnderConstruction().getName()
+                + " will be built. Estimated building time is "
+                + getProductionTimeAsString(underConstruction) + ".";
+          }
+          msg = new Message(MessageType.CONSTRUCTION,
+              getName() + " built " + underConstruction.getName()
+              + ". " + nextBuilding,
+              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+          msg.setCoordinate(getCoordinate());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        }
+      } else if (underConstruction instanceof Ship && !enemyOrbiting) {
+        metal = metal - requiredMetalCost;
+        prodResource = prodResource - requiredProdCost;
+        if (governor != null) {
+          governor.setExperience(governor.getExperience()
+              + underConstruction.getProdCost() / 2);
+        }
+        ShipStat stat = planetOwnerInfo.getShipStatByName(
+            underConstruction.getName());
+        if (stat == null) {
+          msg = new Message(MessageType.CONSTRUCTION,
+              getName() + " cannot built ship "
+          + underConstruction.getName()
+          + " due that blue prints are missing!",
+              Icons.getIconByName(Icons.ICON_HULL_TECH));
+          msg.setCoordinate(getCoordinate());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        } else {
+          // We need to create here a new instance
+          Ship ship = new Ship(stat.getDesign());
+          stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+          stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+          if (stat.getDesign().getTotalMilitaryPower() > 0) {
+            culture = culture + stat.getDesign().getTotalMilitaryPower() / 4;
+          }
+          if (ship.getHull().getHullType() == ShipHullType.ORBITAL) {
+            StringBuilder sb = new StringBuilder();
+            if (orbital != null) {
+              sb.append(orbital.getName());
+              sb.append(" upgraded to ");
+              sb.append(ship.getName());
+              sb.append(" at ");
+            } else {
+              sb.append(ship.getName());
+              sb.append(" built at ");
+            }
+            sb.append(getName());
+            sb.append(".");
+            if (governor != null) {
+              int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+              Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+              PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+              sb.append(" " + governor.getCallName() + " selected new "
+                  + "construction process where "
+                  + getUnderConstruction().getName()
+                  + " will be built. Estimated building time is "
+                  + getProductionTimeAsString(underConstruction) + ".");
+            }
+            orbital = ship;
+            msg = new Message(MessageType.CONSTRUCTION, sb.toString(),
+                Icons.getIconByName(Icons.ICON_STARBASE));
+            msg.setCoordinate(getCoordinate());
+            msg.setMatchByString(getName());
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
+          } else {
+            Fleet fleet = new Fleet(ship, getX(), getY());
+            if (governor != null) {
+              governor.getStats().addOne(StatType.NUMBER_OF_SHIPS_BUILT);
+            }
+            planetOwnerInfo.getFleets().add(fleet);
+            if (planetOwnerInfo.getMissions() != null) {
+              Mission mission = planetOwnerInfo.getMissions()
+                  .getMissionForPlanet(getName(), MissionPhase.BUILDING);
+              if (mission != null) {
+                if (mission.getFleetName() == null) {
+                  if (mission.getType() == MissionType.COLONIZE) {
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Colony"));
+                    mission.setFleetName(fleet.getName());
+                  }
+                  if (mission.getType() == MissionType.DEPLOY_STARBASE
+                      && fleet.getStarbaseShip() != null) {
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Space Station"));
+                    mission.setFleetName(fleet.getName());
+                  }
+                  if (mission.getType() == MissionType.TRADE_FLEET) {
+                    String nameFleet = "Trader";
+                    if (DiceGenerator.getRandom(1) == 0) {
+                      nameFleet = "Merchant";
+                    }
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName(nameFleet));
+                    mission.setFleetName(fleet.getName());
+                  }
+                  if (mission.getType() == MissionType.SPY_MISSION) {
+                    fleet.setName(planetOwnerInfo.getFleets(
+                        ).generateUniqueName(ship.getName()));
+                    mission.setFleetName(fleet.getName());
+                  }
+                  if (mission.getType() == MissionType.DIPLOMATIC_DELEGACY) {
+                    fleet.setName(planetOwnerInfo.getFleets(
+                        ).generateUniqueName(ship.getName()));
+                    mission.setFleetName(fleet.getName());
+                  }
+                  if (mission.getType() == MissionType.EXPLORE) {
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Scout"));
+                    mission.setFleetName(fleet.getName());
+                  }
+                } else {
+                  fleet.setName(planetOwnerInfo.getFleets()
+                      .generateUniqueName(mission.getFleetName()));
+                }
+                if (mission.getType() == MissionType.DEFEND) {
+                  // For now one ship is enough for defend
+                  mission.setPhase(MissionPhase.EXECUTING);
+                } else if (mission.getType() == MissionType.COLONIZE) {
+                  mission.setPhase(MissionPhase.LOADING);
+                } else if (mission.getType() == MissionType.TRADE_FLEET) {
+                  mission.setPhase(MissionPhase.LOADING);
+                } else if (mission.getType() == MissionType.GATHER) {
+                  if (ship.isTrooperModule()) {
+                    // Loads trooper first
+                    mission.setPhase(MissionPhase.LOADING);
+                  } else {
+                    mission.setPhase(MissionPhase.TREKKING);
+                  }
+                  fleet.setName(planetOwnerInfo.getFleets()
+                      .generateUniqueName("Gather"));
+                  mission.setFleetName(fleet.getName());
+                } else if (mission.getType() == MissionType.EXPLORE) {
+                  mission.setPhase(MissionPhase.TREKKING);
+                  Sun sun = map.getAboutNearestSolarSystem(fleet.getX(),
+                      fleet.getY(), getPlanetPlayerInfo(), fleet, null);
+                  mission.setTarget(sun.getCenterCoordinate());
+                  mission.setSunName(sun.getName());
+                } else {
+                  if (mission.getFleetName() != null) {
+                    mission.setPhase(MissionPhase.TREKKING);
+                  } else {
+                    // Failed to build the correct fleet.
+                    mission.setPhase(MissionPhase.PLANNING);
+                  }
+                }
+              } else {
+                if (ship.getTotalMilitaryPower() > 0) {
+                  if (ship.isSpyShip()) {
+                    mission = new Mission(MissionType.SPY_MISSION,
+                        MissionPhase.LOADING, getCoordinate());
+                    if (!planetOwnerInfo.isHuman()) {
+                      planetOwnerInfo.getMissions().add(mission);
+                    }
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName(ship.getName()));
+                    mission.setFleetName(fleet.getName());
+                  } else if (fleet.isScoutFleet()) {
+                    if (DiceGenerator.getRandom(3) == 0) {
+                      // Scout ship is for defending too
+                      fleet.setName(planetOwnerInfo.getFleets()
+                          .generateUniqueName("Defender"));
+                    } else {
+                      fleet.setName(planetOwnerInfo.getFleets()
+                          .generateUniqueName("Scout"));
+                    }
+                  } else if (fleet.isPrivateerFleet()) {
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Privateer"));
+                  } else {
+                    // No mission for planet, so just adding defender
+                    // If not human player
+                    if (!planetOwnerInfo.isHuman()) {
+                      fleet.setName(planetOwnerInfo.getFleets()
+                          .generateUniqueName("Defender"));
+                    } else {
+                      // For humans just take the ship name for fleet name
+                      fleet.setName(planetOwnerInfo.getFleets()
+                          .generateUniqueName(ship.getName()));
+                    }
+                  }
+                }
+              }
+            }
+            String nextBuilding = "";
+            if (governor != null) {
+              int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+              Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+              PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+              nextBuilding = governor.getCallName() + " selected new "
+                  + "construction process where "
+                  + getUnderConstruction().getName()
+                  + " will be built. Estimated building time is "
+                  + getProductionTimeAsString(underConstruction) + ".";
+            }
+            msg = new Message(MessageType.CONSTRUCTION,
+                getName() + " built " + underConstruction.getName()
+                + ". " + nextBuilding,
+                Icons.getIconByName(Icons.ICON_HULL_TECH));
+            msg.setCoordinate(getCoordinate());
+            msg.setMatchByString(getName());
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
+          }
+        }
+      } else  if (underConstruction instanceof Building
+          && groundSize <= buildings.size()) {
+        msg = new Message(MessageType.CONSTRUCTION, getName()
+            + " is already full of buildings! "
+            + underConstruction.getName() + " cannot be complete!",
+            Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+        msg.setCoordinate(getCoordinate());
+        msg.setMatchByString(getName());
+        planetOwnerInfo.getMsgList().addNewMessage(msg);
+      } else if (underConstruction instanceof Ship && enemyOrbiting) {
+        msg = new Message(MessageType.PLANETARY, getName()
+            + " has another Realm's fleet orbiting so ship construction of "
+            + underConstruction.getName() + " cannot be complete!",
+            Icons.getIconByName(Icons.ICON_HULL_TECH));
+        msg.setCoordinate(getCoordinate());
+        msg.setMatchByString(getName());
+        planetOwnerInfo.getMsgList().addNewMessage(msg);
+        if (!planetOwnerInfo.isHuman()
+            && planetOwnerInfo.getAiDifficulty()
+            == AiDifficulty.CHALLENGING
+            && planetOwnerInfo.getMissions().getDestroyFleetMission(
+                getCoordinate()) == null) {
+          Mission destroy = new Mission(MissionType.DESTROY_FLEET,
+              MissionPhase.PLANNING, getCoordinate());
+          planetOwnerInfo.getMissions().add(destroy);
+        }
+      } else {
+        if (underConstruction.getName()
+            .equals(ConstructionFactory.MECHION_CITIZEN)) {
+          if (governor != null) {
+            governor.getStats().addOne(StatType.POPULATION_GROWTH);
+          }
+          metal = metal - requiredMetalCost;
+          prodResource = prodResource - requiredProdCost;
+          workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
+          String nextBuilding = "";
+          if (governor != null) {
+            int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+            Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+            PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+            nextBuilding = governor.getCallName() + " selected new "
+                + "construction process where "
+                + getUnderConstruction().getName()
+                + " will be built. Estimated building time is "
+                + getProductionTimeAsString(underConstruction) + ".";
+          }
+          msg = new Message(MessageType.CONSTRUCTION,
+              getName() + " built " + underConstruction.getName()
+              + ". " + nextBuilding,
+              Icons.getIconByName(Icons.ICON_PEOPLE));
+          msg.setCoordinate(getCoordinate());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        }
+        if (underConstruction.getName()
+            .equals(ConstructionFactory.EXTRA_CULTURE)) {
+          metal = metal - requiredMetalCost;
+          prodResource = prodResource - requiredProdCost;
+          culture = culture + 5;
+          String nextBuilding = "";
+          if (governor != null) {
+            int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+            Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+            PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+            nextBuilding = governor.getCallName() + " selected new "
+                + "construction process where "
+                + getUnderConstruction().getName()
+                + " will be built. Estimated building time is "
+                + getProductionTimeAsString(underConstruction) + ".";
+          }
+          msg = new Message(MessageType.CONSTRUCTION,
+              getName() + " built " + underConstruction.getName()
+              + ". " + nextBuilding,
+              Icons.getIconByName(Icons.ICON_CULTURE));
+          msg.setCoordinate(getCoordinate());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        }
+        if (underConstruction.getName()
+            .equals(ConstructionFactory.EXTRA_CREDIT)) {
+          metal = metal - requiredMetalCost;
+          prodResource = prodResource - requiredProdCost;
+          planetOwnerInfo
+              .setTotalCredits(planetOwnerInfo.getTotalCredits() + 12);
+          String nextBuilding = "";
+          if (governor != null) {
+            int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+            Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+            PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+            nextBuilding = governor.getCallName() + " selected new "
+                + "construction process where "
+                + getUnderConstruction().getName()
+                + " will be built. Estimated building time is "
+                + getProductionTimeAsString(underConstruction) + ".";
+          }
+          msg = new Message(MessageType.CONSTRUCTION,
+              getName() + " built " + underConstruction.getName()
+              + ". " + nextBuilding,
+              Icons.getIconByName(Icons.ICON_CREDIT));
+          msg.setCoordinate(getCoordinate());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        }
+      }
+    }
+
+  }
   /**
    * Update planet for one turn
    * @param enemyOrbiting if true it means that other player,
@@ -2248,368 +2725,7 @@ public class Planet {
         // Forcing planet to have something to construct if player is human.
         setUnderConstruction(ConstructionFactory.createByName("Extra credit"));
       }
-      int requiredMetalCost = getActualCost(underConstruction,
-          Planet.PRODUCTION_METAL);
-      int requiredProdCost = getActualCost(underConstruction,
-          Planet.PRODUCTION_PRODUCTION);
-      // Making building happens at the end
-      if (underConstruction != null
-          && metal >= requiredMetalCost
-          && prodResource >= requiredProdCost) {
-        if (underConstruction instanceof Building
-            && groundSize > buildings.size()) {
-          boolean canBeBuilt = true;
-          Building building = (Building) underConstruction;
-          if (building.getScientificAchievement() && map != null) {
-            NewsData news = NewsFactory.makeScientificAchivementNews(
-                planetOwnerInfo, this, building);
-            map.getNewsCorpData().addNews(news);
-            EventOnPlanet eventOnPlanet = new EventOnPlanet(
-                EventType.PLANET_BUILDING, getCoordinate(),
-                getName(), getPlanetOwnerIndex());
-            eventOnPlanet.setText(news.getNewsText());
-            map.getHistory().addEvent(eventOnPlanet);
-          }
-          if (building.getName().equals("United Galaxy Tower") && map != null) {
-            NewsData news = NewsFactory.makeUnitedGalaxyTowerNews(
-                planetOwnerInfo, this);
-            map.getNewsCorpData().addNews(news);
-            EventOnPlanet eventOnPlanet = new EventOnPlanet(
-                EventType.PLANET_BUILDING, getCoordinate(),
-                getName(), getPlanetOwnerIndex());
-            eventOnPlanet.setText(news.getNewsText());
-            map.getHistory().addEvent(eventOnPlanet);
-            if (Game.getTutorial() != null
-                && map.isTutorialEnabled()
-                && map.getPlayerList().getPlayerInfoByIndex(0).isHuman()) {
-              String tutorialText = Game.getTutorial().showTutorialText(155);
-              if (tutorialText != null) {
-                Message msgTut = new Message(MessageType.INFORMATION,
-                    tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
-                map.getPlayerList().getPlayerInfoByIndex(0).getMsgList()
-                    .addUpcomingMessage(msgTut);
-              }
-            }
-          }
-          if (building.isBroadcaster() && map != null) {
-            NewsData news = NewsFactory.makeBroadcasterBuildingNews(
-                planetOwnerInfo, this, building);
-            map.getNewsCorpData().addNews(news);
-            EventOnPlanet eventOnPlanet = new EventOnPlanet(
-                EventType.PLANET_BUILDING, getCoordinate(),
-                getName(), getPlanetOwnerIndex());
-            eventOnPlanet.setText(news.getNewsText());
-            map.getHistory().addEvent(eventOnPlanet);
-          }
-          if (building.getName().equals("Galactic sports center")
-              && map != null) {
-            NewsData news = NewsFactory.makeGalacticSportsNews(
-                planetOwnerInfo, this);
-            map.getNewsCorpData().addNews(news);
-            EventOnPlanet eventOnPlanet = new EventOnPlanet(
-                EventType.PLANET_BUILDING, getCoordinate(),
-                getName(), getPlanetOwnerIndex());
-            eventOnPlanet.setText(news.getNewsText());
-            map.getHistory().addEvent(eventOnPlanet);
-            Vote vote = new Vote(VotingType.GALACTIC_OLYMPIC_PARTICIPATE,
-                map.getPlayerList().getCurrentMaxRealms(), 10);
-            vote.setOrganizerIndex(this.getPlanetOwnerIndex());
-            vote.setPlanetName(getName());
-            map.getVotes().getVotes().add(vote);
-            if (Game.getTutorial() != null && map.isTutorialEnabled()) {
-              String tutorialText = Game.getTutorial().showTutorialText(98);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                msg.setCoordinate(getCoordinate());
-                map.getPlayerList().getPlayerInfoByIndex(0).getMsgList()
-                   .addNewMessage(msg);
-              }
-            }
-          }
-          if (building.isOrbitalElevator()) {
-            Building oldElevator = null;
-            if (getOrbital() != null) {
-              for (Building planetBuilding : getBuildingList()) {
-                if (planetBuilding.isOrbitalElevator()) {
-                  oldElevator = planetBuilding;
-                  break;
-                }
-              }
-              if (oldElevator != null) {
-                removeBuilding(oldElevator);
-              }
-            } else {
-              canBeBuilt = false;
-              msg = new Message(MessageType.CONSTRUCTION,
-                  getName() + " cannot be built " + underConstruction.getName()
-                  + " since there is no orbital on the planet.",
-                  Icons.getIconByName(Icons.ICON_STARBASE));
-              msg.setCoordinate(getCoordinate());
-              msg.setMatchByString(getName());
-              planetOwnerInfo.getMsgList().addNewMessage(msg);
-            }
-          }
-          if (canBeBuilt) {
-            metal = metal - requiredMetalCost;
-            prodResource = prodResource - requiredProdCost;
-            if (governor != null) {
-              governor.setExperience(governor.getExperience()
-                  + underConstruction.getProdCost() / 2);
-              governor.getStats().addOne(StatType.NUMBER_OF_BUILDINGS_BUILT);
-            }
-            buildings.add((Building) underConstruction);
-            msg = new Message(MessageType.CONSTRUCTION,
-                getName() + " built " + underConstruction.getName(),
-                Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-            msg.setCoordinate(getCoordinate());
-            msg.setMatchByString(getName());
-            planetOwnerInfo.getMsgList().addNewMessage(msg);
-            if (building.isSingleAllowed()) {
-              setUnderConstruction(getProductionList()[0]);
-            }
-          }
-        } else if (underConstruction instanceof Ship && !enemyOrbiting) {
-          metal = metal - requiredMetalCost;
-          prodResource = prodResource - requiredProdCost;
-          if (governor != null) {
-            governor.setExperience(governor.getExperience()
-                + underConstruction.getProdCost() / 2);
-          }
-          ShipStat stat = planetOwnerInfo.getShipStatByName(
-              underConstruction.getName());
-          if (stat == null) {
-            msg = new Message(MessageType.CONSTRUCTION,
-                getName() + " cannot built ship "
-            + underConstruction.getName()
-            + " due that blue prints are missing!",
-                Icons.getIconByName(Icons.ICON_HULL_TECH));
-            msg.setCoordinate(getCoordinate());
-            msg.setMatchByString(getName());
-            planetOwnerInfo.getMsgList().addNewMessage(msg);
-          } else {
-            // We need to create here a new instance
-            Ship ship = new Ship(stat.getDesign());
-            stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
-            stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
-            if (stat.getDesign().getTotalMilitaryPower() > 0) {
-              culture = culture + stat.getDesign().getTotalMilitaryPower() / 4;
-            }
-            if (ship.getHull().getHullType() == ShipHullType.ORBITAL) {
-              StringBuilder sb = new StringBuilder();
-              if (orbital != null) {
-                sb.append(orbital.getName());
-                sb.append(" upgraded to ");
-                sb.append(ship.getName());
-                sb.append(" at ");
-              } else {
-                sb.append(ship.getName());
-                sb.append(" built at ");
-              }
-              sb.append(getName());
-              sb.append(".");
-              orbital = ship;
-              msg = new Message(MessageType.CONSTRUCTION, sb.toString(),
-                  Icons.getIconByName(Icons.ICON_STARBASE));
-              msg.setCoordinate(getCoordinate());
-              msg.setMatchByString(getName());
-              planetOwnerInfo.getMsgList().addNewMessage(msg);
-            } else {
-              Fleet fleet = new Fleet(ship, getX(), getY());
-              if (governor != null) {
-                governor.getStats().addOne(StatType.NUMBER_OF_SHIPS_BUILT);
-              }
-              planetOwnerInfo.getFleets().add(fleet);
-              if (planetOwnerInfo.getMissions() != null) {
-                Mission mission = planetOwnerInfo.getMissions()
-                    .getMissionForPlanet(getName(), MissionPhase.BUILDING);
-                if (mission != null) {
-                  if (mission.getFleetName() == null) {
-                    if (mission.getType() == MissionType.COLONIZE) {
-                      fleet.setName(planetOwnerInfo.getFleets()
-                          .generateUniqueName("Colony"));
-                      mission.setFleetName(fleet.getName());
-                    }
-                    if (mission.getType() == MissionType.DEPLOY_STARBASE
-                        && fleet.getStarbaseShip() != null) {
-                      fleet.setName(planetOwnerInfo.getFleets()
-                          .generateUniqueName("Space Station"));
-                      mission.setFleetName(fleet.getName());
-                    }
-                    if (mission.getType() == MissionType.TRADE_FLEET) {
-                      String nameFleet = "Trader";
-                      if (DiceGenerator.getRandom(1) == 0) {
-                        nameFleet = "Merchant";
-                      }
-                      fleet.setName(planetOwnerInfo.getFleets()
-                          .generateUniqueName(nameFleet));
-                      mission.setFleetName(fleet.getName());
-                    }
-                    if (mission.getType() == MissionType.SPY_MISSION) {
-                      fleet.setName(planetOwnerInfo.getFleets(
-                          ).generateUniqueName(ship.getName()));
-                      mission.setFleetName(fleet.getName());
-                    }
-                    if (mission.getType() == MissionType.DIPLOMATIC_DELEGACY) {
-                      fleet.setName(planetOwnerInfo.getFleets(
-                          ).generateUniqueName(ship.getName()));
-                      mission.setFleetName(fleet.getName());
-                    }
-                    if (mission.getType() == MissionType.EXPLORE) {
-                      fleet.setName(planetOwnerInfo.getFleets()
-                          .generateUniqueName("Scout"));
-                      mission.setFleetName(fleet.getName());
-                    }
-                  } else {
-                    fleet.setName(planetOwnerInfo.getFleets()
-                        .generateUniqueName(mission.getFleetName()));
-                  }
-                  if (mission.getType() == MissionType.DEFEND) {
-                    // For now one ship is enough for defend
-                    mission.setPhase(MissionPhase.EXECUTING);
-                  } else if (mission.getType() == MissionType.COLONIZE) {
-                    mission.setPhase(MissionPhase.LOADING);
-                  } else if (mission.getType() == MissionType.TRADE_FLEET) {
-                    mission.setPhase(MissionPhase.LOADING);
-                  } else if (mission.getType() == MissionType.GATHER) {
-                    if (ship.isTrooperModule()) {
-                      // Loads trooper first
-                      mission.setPhase(MissionPhase.LOADING);
-                    } else {
-                      mission.setPhase(MissionPhase.TREKKING);
-                    }
-                    fleet.setName(planetOwnerInfo.getFleets()
-                        .generateUniqueName("Gather"));
-                    mission.setFleetName(fleet.getName());
-                  } else if (mission.getType() == MissionType.EXPLORE) {
-                    mission.setPhase(MissionPhase.TREKKING);
-                    Sun sun = map.getAboutNearestSolarSystem(fleet.getX(),
-                        fleet.getY(), getPlanetPlayerInfo(), fleet, null);
-                    mission.setTarget(sun.getCenterCoordinate());
-                    mission.setSunName(sun.getName());
-                  } else {
-                    if (mission.getFleetName() != null) {
-                      mission.setPhase(MissionPhase.TREKKING);
-                    } else {
-                      // Failed to build the correct fleet.
-                      mission.setPhase(MissionPhase.PLANNING);
-                    }
-                  }
-                } else {
-                  if (ship.getTotalMilitaryPower() > 0) {
-                    if (ship.isSpyShip()) {
-                      mission = new Mission(MissionType.SPY_MISSION,
-                          MissionPhase.LOADING, getCoordinate());
-                      if (!planetOwnerInfo.isHuman()) {
-                        planetOwnerInfo.getMissions().add(mission);
-                      }
-                      fleet.setName(planetOwnerInfo.getFleets()
-                          .generateUniqueName(ship.getName()));
-                      mission.setFleetName(fleet.getName());
-                    } else if (fleet.isScoutFleet()) {
-                      if (DiceGenerator.getRandom(3) == 0) {
-                        // Scout ship is for defending too
-                        fleet.setName(planetOwnerInfo.getFleets()
-                            .generateUniqueName("Defender"));
-                      } else {
-                        fleet.setName(planetOwnerInfo.getFleets()
-                            .generateUniqueName("Scout"));
-                      }
-                    } else if (fleet.isPrivateerFleet()) {
-                      fleet.setName(planetOwnerInfo.getFleets()
-                          .generateUniqueName("Privateer"));
-                    } else {
-                      // No mission for planet, so just adding defender
-                      // If not human player
-                      if (!planetOwnerInfo.isHuman()) {
-                        fleet.setName(planetOwnerInfo.getFleets()
-                            .generateUniqueName("Defender"));
-                      } else {
-                        // For humans just take the ship name for fleet name
-                        fleet.setName(planetOwnerInfo.getFleets()
-                            .generateUniqueName(ship.getName()));
-                      }
-                    }
-                  }
-                }
-              }
-              msg = new Message(MessageType.CONSTRUCTION,
-                  getName() + " built " + underConstruction.getName(),
-                  Icons.getIconByName(Icons.ICON_HULL_TECH));
-              msg.setCoordinate(getCoordinate());
-              msg.setMatchByString(getName());
-              planetOwnerInfo.getMsgList().addNewMessage(msg);
-            }
-          }
-        } else  if (underConstruction instanceof Building
-            && groundSize <= buildings.size()) {
-          msg = new Message(MessageType.CONSTRUCTION, getName()
-              + " is already full of buildings! "
-              + underConstruction.getName() + " cannot be complete!",
-              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-          msg.setCoordinate(getCoordinate());
-          msg.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-        } else if (underConstruction instanceof Ship && enemyOrbiting) {
-          msg = new Message(MessageType.PLANETARY, getName()
-              + " has another Realm's fleet orbiting so ship construction of "
-              + underConstruction.getName() + " cannot be complete!",
-              Icons.getIconByName(Icons.ICON_HULL_TECH));
-          msg.setCoordinate(getCoordinate());
-          msg.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-          if (!planetOwnerInfo.isHuman()
-              && planetOwnerInfo.getAiDifficulty()
-              == AiDifficulty.CHALLENGING
-              && planetOwnerInfo.getMissions().getDestroyFleetMission(
-                  getCoordinate()) == null) {
-            Mission destroy = new Mission(MissionType.DESTROY_FLEET,
-                MissionPhase.PLANNING, getCoordinate());
-            planetOwnerInfo.getMissions().add(destroy);
-          }
-        } else {
-          if (underConstruction.getName()
-              .equals(ConstructionFactory.MECHION_CITIZEN)) {
-            if (governor != null) {
-              governor.getStats().addOne(StatType.POPULATION_GROWTH);
-            }
-            metal = metal - requiredMetalCost;
-            prodResource = prodResource - requiredProdCost;
-            workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
-            msg = new Message(MessageType.CONSTRUCTION,
-                getName() + " built " + underConstruction.getName(),
-                Icons.getIconByName(Icons.ICON_PEOPLE));
-            msg.setCoordinate(getCoordinate());
-            msg.setMatchByString(getName());
-            planetOwnerInfo.getMsgList().addNewMessage(msg);
-          }
-          if (underConstruction.getName()
-              .equals(ConstructionFactory.EXTRA_CULTURE)) {
-            metal = metal - requiredMetalCost;
-            prodResource = prodResource - requiredProdCost;
-            culture = culture + 5;
-            msg = new Message(MessageType.CONSTRUCTION,
-                getName() + " built " + underConstruction.getName(),
-                Icons.getIconByName(Icons.ICON_CULTURE));
-            msg.setCoordinate(getCoordinate());
-            msg.setMatchByString(getName());
-            planetOwnerInfo.getMsgList().addNewMessage(msg);
-          }
-          if (underConstruction.getName()
-              .equals(ConstructionFactory.EXTRA_CREDIT)) {
-            metal = metal - requiredMetalCost;
-            prodResource = prodResource - requiredProdCost;
-            planetOwnerInfo
-                .setTotalCredits(planetOwnerInfo.getTotalCredits() + 12);
-            msg = new Message(MessageType.CONSTRUCTION,
-                getName() + " built " + underConstruction.getName(),
-                Icons.getIconByName(Icons.ICON_CREDIT));
-            msg.setCoordinate(getCoordinate());
-            msg.setMatchByString(getName());
-            planetOwnerInfo.getMsgList().addNewMessage(msg);
-          }
-        }
-      }
+      checkIfConstructionisDone(enemyOrbiting, map);
       if (happinessEffect.getType() == HappinessBonus.KILL_POPULATION) {
         // Need to remember owner if last population is killed
         PlayerInfo oldOwner = planetOwnerInfo;
@@ -3728,5 +3844,150 @@ public class Planet {
    */
   public void setOrbital(final Ship orbital) {
     this.orbital = orbital;
+  }
+
+  /**
+   * Get Governor guide information for planet.
+   * @return Governor guide as int
+   */
+  public int getGovernorGuide() {
+    return governorGuide;
+  }
+
+  /**
+   * Set Governor guide information for planet.
+   * @param governorGuide Guide as a int
+   */
+  public void setGovernorGuide(final int governorGuide) {
+    this.governorGuide = governorGuide;
+  }
+
+  /**
+   * Get Effective governor guide if governor is available.
+   * @return Effective governor guide or general planet.
+   */
+  public int getEffectiveGovernorGuide() {
+    if (getGovernor() != null) {
+      return governorGuide;
+    }
+    return GENERALIST_PLANET;
+  }
+
+  /**
+   * Get suggestion for governor guide.
+   * This will be used by AI.
+   * @return Planetary guide value.
+   */
+  public int getGuideSuggestion() {
+    // Generalist planet is always good.
+    int bestGuide = GENERALIST_PLANET;
+    int bestScore = 0;
+    // Get scoring for population planet
+    int score = 0;
+    int maxPop = getPopulationLimit();
+    if (maxPop > 11) {
+      score = score + 1;
+    }
+    if (getTotalPopulation() < maxPop) {
+      score = score + 1;
+    }
+    if (planetOwnerInfo.getWorldTypeValue(planetType.getWorldType()) > 100) {
+      score = score + 1;
+    }
+    if (planetOwnerInfo.getWorldTypeValue(planetType.getWorldType()) < 75) {
+      score = score - 1;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.LUSH_VEGETATION) {
+      score = score + 1;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.PARADISE) {
+      score = score + 2;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.ARID) {
+      score = score - 1;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.MOLTEN_LAVA) {
+      score = score - 1;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.DESERT) {
+      score = score - 2;
+    }
+    if (score > bestScore) {
+      bestGuide = POPULATION_PLANET;
+      score = bestScore;
+    }
+    // Get scoring for military planet
+    score = 0;
+    if (getGroundSize() > 14) {
+      score = score + 1;
+    }
+    if (getGroundSize() > 11) {
+      score = score + 1;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.MOLTEN_LAVA) {
+      score = score + 2;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.METAL_RICH_SURFACE) {
+      score = score + 1;
+    }
+    if (score > bestScore) {
+      bestGuide = MILITARY_PLANET;
+      score = bestScore;
+    }
+    // Get scoring for culture planet
+    score = 0;
+    if (getGroundSize() > 12) {
+      score = score + 1;
+    }
+    if (getGroundSize() > 9) {
+      score = score + 1;
+    }
+    if (getCulture() > 50) {
+      score = score + 1;
+    }
+    if (getTotalCultureProduction() > 1) {
+      score = score + 1;
+    }
+    if (score > bestScore) {
+      bestGuide = CULTURE_PLANET;
+      score = bestScore;
+    }
+    // Get scoring for research planet
+    score = 0;
+    if (getGroundSize() > 10) {
+      score = score + 1;
+    }
+    if (getGroundSize() > 8) {
+      score = score + 1;
+    }
+    if (getTotalResearchProduction() > 1) {
+      score = score + 1;
+    }
+    if (getTotalResearchProduction() > 3) {
+      score = score + 1;
+    }
+    if (score > bestScore) {
+      bestGuide = RESEARCH_PLANET;
+      score = bestScore;
+    }
+    // Get scoring for credit planet
+    score = 0;
+    if (getGroundSize() > 10) {
+      score = score + 1;
+    }
+    if (getGroundSize() > 8) {
+      score = score + 1;
+    }
+    if (getTotalCreditProduction() > 1) {
+      score = score + 1;
+    }
+    if (getTotalCreditProduction() > 3) {
+      score = score + 1;
+    }
+    if (score > bestScore) {
+      bestGuide = CREDIT_PLANET;
+      score = bestScore;
+    }
+    return bestGuide;
   }
 }

@@ -2326,6 +2326,7 @@ public class Planet {
             setUnderConstruction(getProductionList()[0]);
           }
           String nextBuilding = "";
+          String finishedBuilding = underConstruction.getName();
           if (governor != null) {
             int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
             Attitude attitude = LeaderUtility.getRulerAttitude(governor);
@@ -2337,7 +2338,7 @@ public class Planet {
                 + getProductionTimeAsString(underConstruction) + ".";
           }
           msg = new Message(MessageType.CONSTRUCTION,
-              getName() + " built " + underConstruction.getName()
+              getName() + " built " + finishedBuilding
               + ". " + nextBuilding,
               Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
           msg.setCoordinate(getCoordinate());
@@ -2519,6 +2520,7 @@ public class Planet {
               }
             }
             String nextBuilding = "";
+            String finishedBuilding = underConstruction.getName();
             if (governor != null) {
               int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
               Attitude attitude = LeaderUtility.getRulerAttitude(governor);
@@ -2530,7 +2532,7 @@ public class Planet {
                   + getProductionTimeAsString(underConstruction) + ".";
             }
             msg = new Message(MessageType.CONSTRUCTION,
-                getName() + " built " + underConstruction.getName()
+                getName() + " built " + finishedBuilding
                 + ". " + nextBuilding,
                 Icons.getIconByName(Icons.ICON_HULL_TECH));
             msg.setCoordinate(getCoordinate());
@@ -2574,6 +2576,7 @@ public class Planet {
           prodResource = prodResource - requiredProdCost;
           workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
           String nextBuilding = "";
+          String finishedBuilding = underConstruction.getName();
           if (governor != null) {
             int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
             Attitude attitude = LeaderUtility.getRulerAttitude(governor);
@@ -2585,12 +2588,13 @@ public class Planet {
                 + getProductionTimeAsString(underConstruction) + ".";
           }
           msg = new Message(MessageType.CONSTRUCTION,
-              getName() + " built " + underConstruction.getName()
+              getName() + " built " + finishedBuilding
               + ". " + nextBuilding,
               Icons.getIconByName(Icons.ICON_PEOPLE));
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
+          return;
         }
         if (underConstruction.getName()
             .equals(ConstructionFactory.EXTRA_CULTURE)) {
@@ -2598,6 +2602,7 @@ public class Planet {
           prodResource = prodResource - requiredProdCost;
           culture = culture + 5;
           String nextBuilding = "";
+          String finishedBuilding = underConstruction.getName();
           if (governor != null) {
             int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
             Attitude attitude = LeaderUtility.getRulerAttitude(governor);
@@ -2609,12 +2614,13 @@ public class Planet {
                 + getProductionTimeAsString(underConstruction) + ".";
           }
           msg = new Message(MessageType.CONSTRUCTION,
-              getName() + " built " + underConstruction.getName()
+              getName() + " built " + finishedBuilding
               + ". " + nextBuilding,
               Icons.getIconByName(Icons.ICON_CULTURE));
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
+          return;
         }
         if (underConstruction.getName()
             .equals(ConstructionFactory.EXTRA_CREDIT)) {
@@ -2623,6 +2629,7 @@ public class Planet {
           planetOwnerInfo
               .setTotalCredits(planetOwnerInfo.getTotalCredits() + 12);
           String nextBuilding = "";
+          String finishedBuilding = underConstruction.getName();
           if (governor != null) {
             int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
             Attitude attitude = LeaderUtility.getRulerAttitude(governor);
@@ -2634,7 +2641,7 @@ public class Planet {
                 + getProductionTimeAsString(underConstruction) + ".";
           }
           msg = new Message(MessageType.CONSTRUCTION,
-              getName() + " built " + underConstruction.getName()
+              getName() + " built " + finishedBuilding
               + ". " + nextBuilding,
               Icons.getIconByName(Icons.ICON_CREDIT));
           msg.setCoordinate(getCoordinate());

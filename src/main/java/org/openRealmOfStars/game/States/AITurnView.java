@@ -3128,6 +3128,9 @@ public class AITurnView extends BlackPanel {
                 speed = 1;
               }
               for (int k = 0; k < speed; k++) {
+                if (fleet.getRoute() == null) {
+                  break;
+                }
                 // Make sure fleet can actually move
                 if (fleet.getRoute().makeNextMove(game.getStarMap())
                     && !game.getStarMap().isBlocked(fleet.getRoute().getX(),

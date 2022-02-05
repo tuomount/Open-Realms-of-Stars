@@ -451,7 +451,7 @@ public class PlanetView extends BlackPanel {
     String[] guides = new String[6];
     guides[0] = "Generic";
     guides[1] = "Focus on credits";
-    guides[2] = "Focus on reseatch";
+    guides[2] = "Focus on research";
     guides[3] = "Focus on culture";
     guides[4] = "Focus on military";
     guides[5] = "Focus on population";

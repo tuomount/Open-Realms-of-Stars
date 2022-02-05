@@ -3122,45 +3122,53 @@ public class AITurnView extends BlackPanel {
               }
             } else if (fleet.getMovesLeft() > 0
                 && !fleet.isStarBaseDeployed()) {
-              // Make sure fleet can actually move
-              if (fleet.getRoute().makeNextMove(game.getStarMap())
-                  && !game.getStarMap().isBlocked(fleet.getRoute().getX(),
-                  fleet.getRoute().getY())
-                  && !game.getStarMap().isDangerous(fleet.getRoute().getX(),
-                      fleet.getRoute().getY())) {
-                // Not blocked so fleet is moving
-                MissionHandling.makeFleetMove(game, fleet.getRoute().getX(),
-                    fleet.getRoute().getY(), info, fleet);
-                Mission mission = info.getMissions().getMissionForFleet(
-                    fleet.getName());
-                if (mission != null && mission.getType() == MissionType.MOVE
-                    && mission.getPhase() == MissionPhase.TREKKING) {
-                  mission.setMissionTime(mission.getMissionTime() + 1);
-                }
-                if (fleet.getRoute() != null && fleet.getRoute().isEndReached()
-                    && mission == null) {
-                  // End is reached giving a message
+              int speed = fleet.getRoute().getRegularSpeed();
+              if (speed == 0) {
+                // Need to make makeNextMove at least once
+                speed = 1;
+              }
+              for (int k = 0; k < speed; k++) {
+                // Make sure fleet can actually move
+                if (fleet.getRoute().makeNextMove(game.getStarMap())
+                    && !game.getStarMap().isBlocked(fleet.getRoute().getX(),
+                    fleet.getRoute().getY())
+                    && !game.getStarMap().isDangerous(fleet.getRoute().getX(),
+                        fleet.getRoute().getY())) {
+                  // Not blocked so fleet is moving
+                  MissionHandling.makeFleetMove(game, fleet.getRoute().getX(),
+                      fleet.getRoute().getY(), info, fleet);
+                  Mission mission = info.getMissions().getMissionForFleet(
+                      fleet.getName());
+                  if (mission != null && mission.getType() == MissionType.MOVE
+                      && mission.getPhase() == MissionPhase.TREKKING) {
+                    mission.setMissionTime(mission.getMissionTime() + 1);
+                  }
+                  if (fleet.getRoute() != null
+                      && fleet.getRoute().isEndReached() && mission == null) {
+                    // End is reached giving a message
+                    fleet.setRoute(null);
+                    Message msg = new Message(MessageType.FLEET,
+                        fleet.getName()
+                            + " has reached it's target and waiting for"
+                            + " orders.",
+                        Icons.getIconByName(Icons.ICON_HULL_TECH));
+                    msg.setMatchByString(fleet.getName());
+                    msg.setCoordinate(fleet.getCoordinate());
+                    info.getMsgList().addNewMessage(msg);
+                  }
+                } else {
                   fleet.setRoute(null);
-                  Message msg = new Message(MessageType.FLEET,
-                      fleet.getName()
-                          + " has reached it's target and waiting for orders.",
-                      Icons.getIconByName(Icons.ICON_HULL_TECH));
-                  msg.setMatchByString(fleet.getName());
-                  msg.setCoordinate(fleet.getCoordinate());
-                  info.getMsgList().addNewMessage(msg);
-                }
-              } else {
-                fleet.setRoute(null);
-                if (info.getMissions().getMissionForFleet(
-                    fleet.getName()) == null) {
-                  // Movement was blocked, giving a message
-                  Message msg = new Message(MessageType.FLEET,
-                      fleet.getName()
-                      + " has encouter obstacle and waiting for more orders.",
-                      Icons.getIconByName(Icons.ICON_HULL_TECH));
-                  msg.setMatchByString(fleet.getName());
-                  msg.setCoordinate(fleet.getCoordinate());
-                  info.getMsgList().addNewMessage(msg);
+                  if (info.getMissions().getMissionForFleet(
+                      fleet.getName()) == null) {
+                    // Movement was blocked, giving a message
+                    Message msg = new Message(MessageType.FLEET,
+                        fleet.getName()
+                        + " has encouter obstacle and waiting for more orders.",
+                        Icons.getIconByName(Icons.ICON_HULL_TECH));
+                    msg.setMatchByString(fleet.getName());
+                    msg.setCoordinate(fleet.getCoordinate());
+                    info.getMsgList().addNewMessage(msg);
+                  }
                 }
               }
             }

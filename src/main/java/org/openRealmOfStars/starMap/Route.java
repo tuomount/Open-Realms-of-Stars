@@ -139,8 +139,8 @@ public class Route {
    */
   public boolean makeNextMove(final StarMap starMap) {
     int speed = getFtlSpeed();
-    if (speed == 0) {
-      speed = getRegularSpeed();
+    if (speed == 0 && getRegularSpeed() > 0) {
+      speed = 1;
     }
     for (int i = 0; i < speed; i++) {
       if (getDistance() > 0) {

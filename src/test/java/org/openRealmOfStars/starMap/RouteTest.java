@@ -241,8 +241,8 @@ public class RouteTest {
     route.setRegularSpeed(3);
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.isBlocked(3, 3)).thenReturn(false);
-    Mockito.when(map.isBlocked(3, 4)).thenReturn(false);
-    Mockito.when(map.isBlocked(3, 5)).thenReturn(true);
+    Mockito.when(map.isBlocked(3, 4)).thenReturn(true);
+    Mockito.when(map.isBlocked(3, 5)).thenReturn(false);
     Mockito.when(map.isBlocked(3, 6)).thenReturn(false);
     Mockito.when(map.isBlocked(3, 7)).thenReturn(false);
     assertEquals(false, route.makeNextMove(map));
@@ -251,7 +251,7 @@ public class RouteTest {
     route.setEndX(3);
     route.setEndY(6);
     route.setRegularSpeed(3);
-    Mockito.when(map.isBlocked(3, 5)).thenReturn(false);
+    Mockito.when(map.isBlocked(3, 4)).thenReturn(false);
     assertEquals(true, route.makeNextMove(map));
   }
 

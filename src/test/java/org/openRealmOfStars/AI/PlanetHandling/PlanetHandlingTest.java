@@ -739,6 +739,7 @@ public class PlanetHandlingTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testOrbitalScoring2() {
     Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getName()).thenReturn("Medium orbital");
     ShipHull hull = Mockito.mock(ShipHull.class);
     Mockito.when(hull.getHullType()).thenReturn(ShipHullType.ORBITAL);
     Mockito.when(hull.getSize()).thenReturn(ShipSize.MEDIUM);
@@ -754,6 +755,7 @@ public class PlanetHandlingTest {
     Planet planet = Mockito.mock(Planet.class);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Ship ship2 = Mockito.mock(Ship.class);
+    Mockito.when(ship2.getName()).thenReturn("Large orbital");
     Mockito.when(ship2.getTotalMilitaryPower()).thenReturn(32);
     Mockito.when(ship2.getHull()).thenReturn(hull2);
     Mockito.when(ship2.getMetalCost()).thenReturn(14);
@@ -778,6 +780,7 @@ public class PlanetHandlingTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testOrbitalScoring3() {
     Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getName()).thenReturn("Medium orbital");
     ShipHull hull = Mockito.mock(ShipHull.class);
     Mockito.when(hull.getHullType()).thenReturn(ShipHullType.ORBITAL);
     Mockito.when(hull.getSize()).thenReturn(ShipSize.MEDIUM);
@@ -793,6 +796,7 @@ public class PlanetHandlingTest {
     Planet planet = Mockito.mock(Planet.class);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Ship ship2 = Mockito.mock(Ship.class);
+    Mockito.when(ship2.getName()).thenReturn("Medium orbital Mk2");
     Mockito.when(ship2.getTotalMilitaryPower()).thenReturn(32);
     Mockito.when(ship2.getHull()).thenReturn(hull2);
     Mockito.when(ship2.getMetalCost()).thenReturn(14);

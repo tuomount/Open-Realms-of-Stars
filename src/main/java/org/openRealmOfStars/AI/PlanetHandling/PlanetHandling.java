@@ -1025,6 +1025,11 @@ public final class PlanetHandling {
         // Planet has orbital is better
         score = 0;
       }
+      if (planet.getOrbital() != null
+          && planet.getOrbital().getName().equals(ship.getName())) {
+        // Don't rebuild same orbital over and over.
+        score = 0;
+      }
     }
     return score;
   }

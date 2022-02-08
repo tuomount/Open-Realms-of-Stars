@@ -451,6 +451,11 @@ public final class PlanetHandling {
     if (metalProd < prodProd) {
       score = score + building.getMineBonus() * 20;
     }
+    if (building.getMineBonus() > 0
+        && planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET
+        && info.getRace() == SpaceRace.LITHORIANS) {
+      score = score + 20;
+    }
     score = score + building.getMaterialBonus() * 60;
     if (info.getRace() == SpaceRace.CENTAURS
         || info.getRace() == SpaceRace.TEUTHIDAES) {
@@ -1212,6 +1217,9 @@ public final class PlanetHandling {
         }
         if (planet.getTotalProduction(Planet.PRODUCTION_METAL) < 4) {
           scores[i] = scores[i] / 2;
+        }
+        if (planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
+          scores[i] = scores[i] + 40;
         }
       }
       if (constructions[i] instanceof Building) {

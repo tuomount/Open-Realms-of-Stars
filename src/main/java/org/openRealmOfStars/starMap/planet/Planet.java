@@ -2322,11 +2322,11 @@ public class Planet {
             governor.getStats().addOne(StatType.NUMBER_OF_BUILDINGS_BUILT);
           }
           buildings.add((Building) underConstruction);
+          String nextBuilding = "";
+          String finishedBuilding = underConstruction.getName();
           if (building.isSingleAllowed()) {
             setUnderConstruction(getProductionList()[0]);
           }
-          String nextBuilding = "";
-          String finishedBuilding = underConstruction.getName();
           if (governor != null) {
             int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
             Attitude attitude = LeaderUtility.getRulerAttitude(governor);

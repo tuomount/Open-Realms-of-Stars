@@ -107,6 +107,36 @@ public final class PlanetHandling {
   private static final int GREYAN_RESEARCH_VALUE_SCORE = 15;
 
   /**
+   * Remove worst building from the planet.
+   * @param map StarMap
+   * @param planet Planet where to remove building
+   * @param index PlayerInfo index
+   * @param attitude Attitude for scoring the buildings.
+   * @return true if worst was removed.
+   */
+  public static boolean removeWorstBuilding(final StarMap map,
+      final Planet planet, final int index, final Attitude attitude) {
+    PlayerInfo info = map.getPlayerByIndex(index);
+    if (info == null) {
+      return false;
+    }
+    int fleetCap = map.getTotalFleetCapacity(info);
+    double fleetSize = info.getFleets().getTotalFleetCapacity();
+    boolean nearFleetLimit = false;
+    if (fleetSize + 1 > fleetCap) {
+      nearFleetLimit = true;
+    }
+    Building newBuild = (Building) planet.getUnderConstruction();
+    Building worst = getWorstBuilding(planet, info, attitude, newBuild,
+        nearFleetLimit);
+    if  (worst != null) {
+      // Removing the worst building
+      planet.removeBuilding(worst);
+      return true;
+    }
+    return false;
+  }
+  /**
    * Choose next construction for planet.
    * @param map StarMap
    * @param planet Planet which will choose next construction
@@ -238,25 +268,18 @@ public final class PlanetHandling {
       int freeSlot = planet.getGroundSize() - planet.getUsedPlanetSize();
       if (planet.getUnderConstruction() instanceof Building
           && freeSlot == 0) {
-        int fleetCap = map.getTotalFleetCapacity(info);
-        double fleetSize = info.getFleets().getTotalFleetCapacity();
-        boolean nearFleetLimit = false;
-        if (fleetSize + 1 > fleetCap) {
-          nearFleetLimit = true;
+        boolean isHuman = info.isHuman();
+        boolean isWeakAi = false;
+        if (info.getAiDifficulty() == AiDifficulty.WEAK) {
+          isWeakAi = true;
         }
-        Building newBuild = (Building) planet.getUnderConstruction();
-        Building worst = getWorstBuilding(planet, info, attitude, newBuild,
-            nearFleetLimit);
-        if  (worst != null) {
-          // Removing the worst building
-          planet.removeBuilding(worst);
-        } else {
+        if (!isHuman && isWeakAi
+            && !removeWorstBuilding(map, planet, index, attitude)) {
           // Could not remove the worst building so no selection can be
           // made
           planet.setUnderConstruction(null);
           constructionSelected = false;
         }
-
       }
     }
     if (!constructionSelected) {

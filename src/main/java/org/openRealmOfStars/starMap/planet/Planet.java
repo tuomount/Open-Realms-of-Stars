@@ -2542,6 +2542,15 @@ public class Planet {
         }
       } else  if (underConstruction instanceof Building
           && groundSize <= buildings.size()) {
+        if (!planetOwnerInfo.isHuman()
+            && planetOwnerInfo.getAiDifficulty() != AiDifficulty.WEAK) {
+          Attitude attitude = null;
+          if (governor != null) {
+            attitude = LeaderUtility.getRulerAttitude(governor);
+          }
+          PlanetHandling.removeWorstBuilding(map, this, getPlanetOwnerIndex(),
+              attitude);
+        }
         msg = new Message(MessageType.CONSTRUCTION, getName()
             + " is already full of buildings! "
             + underConstruction.getName() + " cannot be complete!",

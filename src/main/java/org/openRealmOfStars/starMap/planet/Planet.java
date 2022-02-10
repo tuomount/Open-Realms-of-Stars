@@ -1791,7 +1791,14 @@ public class Planet {
       if (this.hasSpacePort()) {
         ShipStat[] ships = planetOwnerInfo.getShipStatList();
         for (ShipStat stat : ships) {
-          if (!stat.isObsolete()) {
+          boolean addStat = !stat.isObsolete();
+          if (orbital != null
+              && stat.getDesign().getHull().getHullType()
+              == ShipHullType.ORBITAL
+              && orbital.getName().equals(stat.getDesign().getName())) {
+            addStat = false;
+          }
+          if (addStat) {
             result.add(new Ship(stat.getDesign()));
           }
         }

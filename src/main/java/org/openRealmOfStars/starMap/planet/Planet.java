@@ -2558,9 +2558,28 @@ public class Planet {
           PlanetHandling.removeWorstBuilding(map, this, getPlanetOwnerIndex(),
               attitude);
         }
+        String suggestion = "";
+        if (governor != null) {
+          Building newBuild = (Building) getUnderConstruction();
+          Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+          int fleetCap = map.getTotalFleetCapacity(getPlanetPlayerInfo());
+          double fleetSize = getPlanetPlayerInfo().getFleets()
+              .getTotalFleetCapacity();
+          boolean nearFleetLimit = false;
+          if (fleetSize + 1 > fleetCap) {
+            nearFleetLimit = true;
+          }
+
+          Building worst = PlanetHandling.getWorstBuilding(this,
+              getPlanetPlayerInfo(), attitude, newBuild, nearFleetLimit);
+          if (worst != null) {
+            suggestion = " " + governor.getCallName() + " suggest destroying "
+                + worst.getName() + " from the planet.";
+          }
+        }
         msg = new Message(MessageType.CONSTRUCTION, getName()
             + " is already full of buildings! "
-            + underConstruction.getName() + " cannot be complete!",
+            + underConstruction.getName() + " cannot be complete!" + suggestion,
             Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
         msg.setCoordinate(getCoordinate());
         msg.setMatchByString(getName());

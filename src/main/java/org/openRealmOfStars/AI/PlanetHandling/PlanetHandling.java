@@ -949,13 +949,14 @@ public final class PlanetHandling {
     if (constructionSelected
         && planet.getUnderConstruction() instanceof Building
         && needToRemoveWorst) {
-      Building newBuild = (Building) planet.getUnderConstruction();
-      Building worst = getWorstBuilding(planet, info, attitude, newBuild,
-          nearFleetLimit);
-      if  (worst != null) {
-        // Removing the worst building
-        planet.removeBuilding(worst);
-      } else {
+      boolean isHuman = info.isHuman();
+      boolean isWeakAi = false;
+      if (info.getAiDifficulty() == AiDifficulty.WEAK) {
+        isWeakAi = true;
+      }
+      if (!isHuman && isWeakAi
+          && !removeWorstBuilding(map, planet, planet.getPlanetOwnerIndex(),
+              attitude)) {
         // Could not remove the worst building so no selection can be
         // made
         planet.setUnderConstruction(null);

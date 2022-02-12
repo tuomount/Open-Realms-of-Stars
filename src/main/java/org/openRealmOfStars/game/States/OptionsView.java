@@ -69,6 +69,11 @@ public class OptionsView extends BlackPanel {
   private SpaceCheckBox hardwareAccelerationBox;
 
   /**
+   * Improved parallax checkbox options
+   */
+  private SpaceCheckBox improvedParallaxBox;
+
+  /**
    * Resolution selector
    */
   private JComboBox<String> resolutionSelection;
@@ -247,6 +252,17 @@ public class OptionsView extends BlackPanel {
     hardwareAccelerationBox.createToolTip();
     hardwareAccelerationBox.setSelected(config.isHardwareAcceleration());
     xPanel.add(hardwareAccelerationBox);
+    screenPanel.add(xPanel);
+    screenPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    improvedParallaxBox = new SpaceCheckBox("Improved parallax on space map");
+    improvedParallaxBox.setToolTipText("Enables 2 layer parallax effect on"
+        + " space map.");
+    improvedParallaxBox.createToolTip();
+    improvedParallaxBox.setSelected(config.isImprovedParallax());
+    xPanel.add(improvedParallaxBox);
     screenPanel.add(xPanel);
     screenPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
@@ -456,6 +472,13 @@ public class OptionsView extends BlackPanel {
    */
   public boolean getFullscreen() {
     return fullscreenBox.isSelected();
+  }
+  /**
+   * Get improved parallax
+   * @return Improved parallax value
+   */
+  public boolean getImprovedParallax() {
+    return improvedParallaxBox.isSelected();
   }
   /**
    * Get hardware acceleration value

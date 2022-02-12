@@ -2808,6 +2808,7 @@ public class Game implements ActionListener {
         configFile.setHardwareAcceleration(
             optionsView.getHardwareAcceleration());
         configFile.setFullscreen(optionsView.getFullscreen());
+        configFile.setImprovedParallax(optionsView.getImprovedParallax());
         configFile.setLargerFonts(optionsView.getLargerFonts());
         if (isResolutionChanged()) {
           configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
@@ -2839,6 +2840,7 @@ public class Game implements ActionListener {
         configFile.setHardwareAcceleration(
             optionsView.getHardwareAcceleration());
         configFile.setFullscreen(optionsView.getFullscreen());
+        configFile.setImprovedParallax(optionsView.getImprovedParallax());
         configFile.setLargerFonts(optionsView.getLargerFonts());
         if (isResolutionChanged()) {
           configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
@@ -2863,6 +2865,7 @@ public class Game implements ActionListener {
         configFile.setHardwareAcceleration(
             optionsView.getHardwareAcceleration());
         configFile.setFullscreen(optionsView.getFullscreen());
+        configFile.setImprovedParallax(optionsView.getImprovedParallax());
         configFile.setLargerFonts(optionsView.getLargerFonts());
         configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
@@ -3649,6 +3652,13 @@ public class Game implements ActionListener {
     return showMiniMapFlag;
   }
 
+  /**
+   * Is improved parallax enabled?
+   * @return True if enabled.
+   */
+  public boolean isImprovedParallax() {
+    return configFile.isImprovedParallax();
+  }
   /**
    * Set minimap showing flag.
    * @param showMiniMapFlag true to show minimap.

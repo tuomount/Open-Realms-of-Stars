@@ -98,7 +98,7 @@ public class ConfigFile {
   /**
    * Config option for improved parallax.
    */
-  public static final String CONFIG_IMPROVED_PARALLAX = "ImprovedParaLlax";
+  public static final String CONFIG_IMPROVED_PARALLAX = "ImprovedParallax";
   /**
    * String true
    */

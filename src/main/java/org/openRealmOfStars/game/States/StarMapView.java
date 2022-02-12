@@ -169,7 +169,7 @@ public class StarMapView extends BlackPanel {
 
     map.getFleetTiles();
     BlackPanel base = new BlackPanel();
-    mapPanel = new MapPanel(false);
+    mapPanel = new MapPanel(game, false);
     mapPanel.setShowMiniMap(game.isShowMiniMapFlag());
     // Side panel
     infoPanel = new MapInfoPanel(game);

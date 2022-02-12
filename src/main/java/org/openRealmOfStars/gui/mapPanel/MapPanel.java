@@ -222,6 +222,21 @@ public class MapPanel extends JPanel {
    */
   private int transparency;
   /**
+   * Flag for improved parallax.
+   */
+  private boolean improvedParallax;
+
+  /**
+   * Constructor for Map Panel. This can be used for drawing star map
+   * or battle map
+   * @param game GameFrame containing frame size
+   * @param battle True if drawing battle map.
+   */
+  public MapPanel(final Game game, final boolean battle) {
+    initMapPanel(game, battle);
+  }
+
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -252,6 +267,10 @@ public class MapPanel extends JPanel {
     historyCoordinates = null;
     setShowMiniMap(false);
     tileOverride = null;
+    improvedParallax = false;
+    if (game != null) {
+      improvedParallax = game.isImprovedParallax();
+    }
     if (battle && game == null) {
       width = BATTLE_VIEW_SIZE;
       height = BATTLE_VIEW_SIZE;
@@ -529,14 +548,22 @@ public class MapPanel extends JPanel {
     if (speedStarY < 3) {
       speedStarY = 3;
     }
-    // Parallax Scrolling with just two lines!!!
-    GraphRoutines.drawTiling(gr, GuiStatics.getStarField(),
-        -PARALLAX_OFFSET - cx * speedStarX, -PARALLAX_OFFSET - cy * speedStarY,
-        this.getWidth(), this.getHeight());
-    GraphRoutines.drawTiling(gr, GuiStatics.NEBULAE_IMAGE,
-        -PARALLAX_OFFSET - cx * speedX,
-        -PARALLAX_OFFSET - cy * speedY,
-        this.getWidth(), this.getHeight());
+    if (!improvedParallax) {
+      GraphRoutines.drawTiling(gr, GuiStatics.getStarNebulae(),
+          -PARALLAX_OFFSET - cx * speedStarX,
+          -PARALLAX_OFFSET - cy * speedStarY,
+          this.getWidth(), this.getHeight());
+    } else {
+      // Parallax Scrolling with just two lines!!!
+      GraphRoutines.drawTiling(gr, GuiStatics.getStarField(),
+          -PARALLAX_OFFSET - cx * speedStarX,
+          -PARALLAX_OFFSET - cy * speedStarY,
+          this.getWidth(), this.getHeight());
+      GraphRoutines.drawTiling(gr, GuiStatics.NEBULAE_IMAGE,
+          -PARALLAX_OFFSET - cx * speedX,
+          -PARALLAX_OFFSET - cy * speedY,
+          this.getWidth(), this.getHeight());
+    }
 
     lastDrawnCenterX = cx;
     lastDrawnCenterY = cy;

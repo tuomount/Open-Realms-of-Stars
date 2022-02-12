@@ -96,6 +96,10 @@ public class ConfigFile {
       + "Open Realm of Stars";
 
   /**
+   * Config option for improved parallax.
+   */
+  public static final String CONFIG_IMPROVED_PARALLAX = "ImprovedParallax";
+  /**
    * String true
    */
   private static final String TRUE = "true";
@@ -451,6 +455,21 @@ public class ConfigFile {
    */
   public void setFullscreen(final boolean fullscreen) {
     setBoolean(CONFIG_FULLSCREEN, fullscreen);
+  }
+
+  /**
+   * Is Improved parallax enabled?
+   * @return True if enabled
+   */
+  public boolean isImprovedParallax() {
+    return getBoolean(CONFIG_IMPROVED_PARALLAX);
+  }
+  /**
+   * Set Improved parallax setting.
+   * @param improvedParallax Improved parallax to set.
+   */
+  public void setImprovedParallax(final boolean improvedParallax) {
+    setBoolean(CONFIG_IMPROVED_PARALLAX, improvedParallax);
   }
   /**
    * Is Hardware acceleration enabled or not.

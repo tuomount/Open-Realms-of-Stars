@@ -445,6 +445,11 @@ public class Game implements ActionListener {
   private static final int ANIMATION_DELAY_CREDITS = 30;
 
   /**
+   * Animation timer delay in milli seconds for credits
+   */
+  private static final int ANIMATION_DELAY_STARMAP = 42;
+
+  /**
    * Animation timer delay in milli seconds for combat
    */
   private static final int ANIMATION_DELAY_COMBAT = 60;
@@ -1718,6 +1723,9 @@ public class Game implements ActionListener {
       break;
     case STARMAP:
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
+      if (animationTimer != null) {
+        animationTimer.setDelay(ANIMATION_DELAY_STARMAP);
+      }
       MusicPlayer.activeFadeout();
       showStarMap(dataObject);
       break;
@@ -2805,6 +2813,7 @@ public class Game implements ActionListener {
         configFile.setHardwareAcceleration(
             optionsView.getHardwareAcceleration());
         configFile.setFullscreen(optionsView.getFullscreen());
+        configFile.setImprovedParallax(optionsView.getImprovedParallax());
         configFile.setLargerFonts(optionsView.getLargerFonts());
         if (isResolutionChanged()) {
           configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
@@ -2836,6 +2845,7 @@ public class Game implements ActionListener {
         configFile.setHardwareAcceleration(
             optionsView.getHardwareAcceleration());
         configFile.setFullscreen(optionsView.getFullscreen());
+        configFile.setImprovedParallax(optionsView.getImprovedParallax());
         configFile.setLargerFonts(optionsView.getLargerFonts());
         if (isResolutionChanged()) {
           configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
@@ -2860,6 +2870,7 @@ public class Game implements ActionListener {
         configFile.setHardwareAcceleration(
             optionsView.getHardwareAcceleration());
         configFile.setFullscreen(optionsView.getFullscreen());
+        configFile.setImprovedParallax(optionsView.getImprovedParallax());
         configFile.setLargerFonts(optionsView.getLargerFonts());
         configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
@@ -3646,6 +3657,13 @@ public class Game implements ActionListener {
     return showMiniMapFlag;
   }
 
+  /**
+   * Is improved parallax enabled?
+   * @return True if enabled.
+   */
+  public boolean isImprovedParallax() {
+    return configFile.isImprovedParallax();
+  }
   /**
    * Set minimap showing flag.
    * @param showMiniMapFlag true to show minimap.

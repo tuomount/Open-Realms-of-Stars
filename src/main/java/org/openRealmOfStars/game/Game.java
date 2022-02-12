@@ -445,6 +445,11 @@ public class Game implements ActionListener {
   private static final int ANIMATION_DELAY_CREDITS = 30;
 
   /**
+   * Animation timer delay in milli seconds for credits
+   */
+  private static final int ANIMATION_DELAY_STARMAP = 42;
+
+  /**
    * Animation timer delay in milli seconds for combat
    */
   private static final int ANIMATION_DELAY_COMBAT = 60;
@@ -1719,7 +1724,7 @@ public class Game implements ActionListener {
     case STARMAP:
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       if (animationTimer != null) {
-        animationTimer.setDelay(30);
+        animationTimer.setDelay(ANIMATION_DELAY_STARMAP);
       }
       MusicPlayer.activeFadeout();
       showStarMap(dataObject);

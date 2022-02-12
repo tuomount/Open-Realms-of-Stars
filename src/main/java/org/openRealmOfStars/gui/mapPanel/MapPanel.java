@@ -80,11 +80,11 @@ public class MapPanel extends JPanel {
   /**
    * Map drawing area size width
    */
-  private static final int WIDTH = 864;
+  private static final int DEFAULT_WIDTH = 864;
   /**
    * Map drawing area size height
    */
-  private static final int HEIGHT = 608;
+  private static final int DEFAULT_HEIGHT = 608;
 
   /**
    * Battle Map view size. This size is both width and height
@@ -227,6 +227,10 @@ public class MapPanel extends JPanel {
   private boolean improvedParallax;
 
   /**
+   * Flag for update animation.
+   */
+  private boolean updateAnimation;
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param game GameFrame containing frame size
@@ -261,8 +265,8 @@ public class MapPanel extends JPanel {
   private void initMapPanel(final Game game, final boolean battleMode) {
     cursorFocus = 0;
     battle = battleMode;
-    int width = WIDTH;
-    int height = HEIGHT;
+    int width = DEFAULT_WIDTH;
+    int height = DEFAULT_HEIGHT;
     historyCultures = null;
     historyCoordinates = null;
     setShowMiniMap(false);
@@ -472,6 +476,11 @@ public class MapPanel extends JPanel {
    */
   public void drawMap(final StarMap starMap) {
     PlayerInfo info = starMap.getCurrentPlayerInfo();
+    if (updateAnimation) {
+      updateAnimation = false;
+    } else {
+      updateAnimation = true;
+    }
     if (minimap == null) {
       minimap = new Minimap(starMap);
       minimap.setDrawPoint(0, 0);
@@ -637,7 +646,7 @@ public class MapPanel extends JPanel {
         if (tile == null) {
           continue;
         }
-        if (tile.getAnimationIndex() != tile.getIndex()) {
+        if (tile.getAnimationIndex() != tile.getIndex() && updateAnimation) {
           // Change map tile for next drawing
           starMap.setTile(i + cx, j + cy,
               Tiles.getTileByIndex(tile.getAnimationIndex()));

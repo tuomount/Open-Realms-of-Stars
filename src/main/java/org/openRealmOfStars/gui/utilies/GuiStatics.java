@@ -1658,7 +1658,10 @@ public final class GuiStatics {
    */
   public static BufferedImage getStarNebulae() {
     if (starNebulae == null) {
-      starNebulae = new BufferedImage(2100, 1600,
+      int width = Math.min(NEBULAE_IMAGE.getWidth(), getStarField().getWidth());
+      int height = Math.min(NEBULAE_IMAGE.getHeight(),
+          getStarField().getHeight());
+      starNebulae = new BufferedImage(width, height,
           BufferedImage.TYPE_4BYTE_ABGR);
       Graphics graphics = starNebulae.getGraphics();
       graphics.drawImage(getStarField(), 0, 0, null);

@@ -181,7 +181,7 @@ public class ShipComponent {
         || type == ShipComponentType.WEAPON_HE_MISSILE
         || type == ShipComponentType.WEAPON_PHOTON_TORPEDO
         || type == ShipComponentType.WEAPON_RAILGUN
-        || type == ShipComponentType.CALLISTO_MULTICANNON
+        || type == ShipComponentType.MULTICANNON
         || type == ShipComponentType.PLASMA_CANNON
         || type == ShipComponentType.ION_CANNON
         || type == ShipComponentType.BITE
@@ -736,7 +736,7 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
-    case CALLISTO_MULTICANNON: {
+    case MULTICANNON: {
       sb.append("Damage: ");
       sb.append(getDamage());
       sb.append(" Range: ");

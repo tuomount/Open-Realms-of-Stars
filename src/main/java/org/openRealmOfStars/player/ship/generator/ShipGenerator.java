@@ -282,7 +282,7 @@ public final class ShipGenerator {
       case WEAPON_PHOTON_TORPEDO:
       case PLASMA_CANNON:
       case ION_CANNON:
-      case CALLISTO_MULTICANNON:
+      case MULTICANNON:
       case WEAPON_RAILGUN:
       case BITE:
       case TENTACLE: {
@@ -548,7 +548,7 @@ public final class ShipGenerator {
             .add(ShipComponentFactory.createByName(weapTech.getComponent()));
       }
       weapTech = player.getTechList()
-          .getBestWeapon(ShipComponentType.CALLISTO_MULTICANNON);
+          .getBestWeapon(ShipComponentType.MULTICANNON);
       if (weapTech != null) {
         components
             .add(ShipComponentFactory.createByName(weapTech.getComponent()));
@@ -1285,7 +1285,7 @@ public final class ShipGenerator {
               .add(ShipComponentFactory.createByName(weapTech.getComponent()));
         }
         weapTech = player.getTechList()
-            .getBestWeapon(ShipComponentType.CALLISTO_MULTICANNON);
+            .getBestWeapon(ShipComponentType.MULTICANNON);
         if (weapTech != null) {
           components
               .add(ShipComponentFactory.createByName(weapTech.getComponent()));
@@ -1521,7 +1521,7 @@ public final class ShipGenerator {
               .add(ShipComponentFactory.createByName(weapTech.getComponent()));
         }
         weapTech = player.getTechList()
-            .getBestWeapon(ShipComponentType.CALLISTO_MULTICANNON);
+            .getBestWeapon(ShipComponentType.MULTICANNON);
         if (weapTech != null) {
           components
               .add(ShipComponentFactory.createByName(weapTech.getComponent()));

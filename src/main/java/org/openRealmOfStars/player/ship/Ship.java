@@ -712,7 +712,7 @@ private int getRemainingEnergy(final int index) {
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.WEAPON_RAILGUN
-          || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
+          || comp.getType() == ShipComponentType.MULTICANNON
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.BITE
@@ -1134,7 +1134,7 @@ private int increaseHitChanceByComponent() {
       }
       break;
     }
-    case CALLISTO_MULTICANNON:
+    case MULTICANNON:
     case WEAPON_RAILGUN:
     case WEAPON_HE_MISSILE: {
       damage = weapon.getDamage();
@@ -1799,7 +1799,7 @@ private int increaseHitChanceByComponent() {
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.PLASMA_CANNON
-          || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
+          || comp.getType() == ShipComponentType.MULTICANNON
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.BITE
           || comp.getType() == ShipComponentType.TENTACLE) {
@@ -1878,7 +1878,7 @@ private int increaseHitChanceByComponent() {
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.PLASMA_CANNON
-          || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
+          || comp.getType() == ShipComponentType.MULTICANNON
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.BITE
           || comp.getType() == ShipComponentType.TENTACLE)

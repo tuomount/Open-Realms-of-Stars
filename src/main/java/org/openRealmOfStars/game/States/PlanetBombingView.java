@@ -539,7 +539,7 @@ public class PlanetBombingView extends BlackPanel {
             || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
             || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
             || comp.getType() == ShipComponentType.WEAPON_RAILGUN
-            || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
+            || comp.getType() == ShipComponentType.MULTICANNON
             || comp.getType() == ShipComponentType.PLASMA_CANNON) {
           planetTurretShoot();
           updatePanel();
@@ -758,7 +758,7 @@ public class PlanetBombingView extends BlackPanel {
         }
         if (comp.getType() == ShipComponentType.WEAPON_BEAM
             || comp.getType() == ShipComponentType.WEAPON_RAILGUN
-                || comp.getType() == ShipComponentType.CALLISTO_MULTICANNON
+                || comp.getType() == ShipComponentType.MULTICANNON
             || comp.getType() == ShipComponentType.PLASMA_CANNON) {
           if (!allAi && game != null) {
             game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
@@ -1057,7 +1057,7 @@ public class PlanetBombingView extends BlackPanel {
              || component.getType() == ShipComponentType.WEAPON_HE_MISSILE
              || component.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
              || component.getType() == ShipComponentType.WEAPON_RAILGUN
-             || component.getType() == ShipComponentType.CALLISTO_MULTICANNON
+             || component.getType() == ShipComponentType.MULTICANNON
              || component.getType() == ShipComponentType.PLASMA_CANNON) {
             // Always bombing or shooting
             shipComponentUsage(aiComponentIndex);

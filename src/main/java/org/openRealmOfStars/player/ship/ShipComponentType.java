@@ -154,10 +154,11 @@ public enum ShipComponentType {
    */
   ION_CANNON,
    /**
-   * Callisto is a multicannon and it has been defined as a hybrid weapon.
-   * Callisto is between railgun and missiles.
+   * Multicannon is between railgun and missiles.
+   * It's good weapon for small ship since it does not require
+   * energy.
    */
-  CALLISTO_MULTICANNON,
+  MULTICANNON,
   /**
    * Bite is space monster's bite attack.
    */
@@ -241,7 +242,7 @@ public enum ShipComponentType {
       return 28;
     case ION_CANNON:
       return 29;
-    case CALLISTO_MULTICANNON:
+    case MULTICANNON:
       return 30;
     case BITE:
       return 31;
@@ -324,7 +325,7 @@ public enum ShipComponentType {
     case 29:
       return ShipComponentType.ION_CANNON;
     case 30:
-      return ShipComponentType.CALLISTO_MULTICANNON;
+      return ShipComponentType.MULTICANNON;
     case 31:
       return ShipComponentType.BITE;
     case 32:
@@ -401,8 +402,8 @@ public enum ShipComponentType {
       return "Plasma cannon";
     case ION_CANNON:
       return "Ion cannon";
-    case CALLISTO_MULTICANNON:
-      return "Callisto multicannon";
+    case MULTICANNON:
+      return "Multicannon";
     case BITE:
       return "Bite";
     case TENTACLE:
@@ -482,7 +483,7 @@ public enum ShipComponentType {
       return Icons.ICON_PLASMA_CANNON;
     case ION_CANNON:
       return Icons.ICON_ION_CANNON;
-    case CALLISTO_MULTICANNON:
+    case MULTICANNON:
       return Icons.ICON_MULTI_CANNON;
     case BITE:
       return Icons.ICON_MOUTH;
@@ -516,7 +517,7 @@ public enum ShipComponentType {
       case TENTACLE:
           return 75;
       case BITE:
-      case CALLISTO_MULTICANNON:
+      case MULTICANNON:
           return 60;
       case WEAPON_ECM_TORPEDO:
       case WEAPON_HE_MISSILE:

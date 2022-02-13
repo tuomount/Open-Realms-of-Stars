@@ -253,13 +253,13 @@ public class OptionsView extends BlackPanel {
     hardwareAccelerationBox.setSelected(config.isHardwareAcceleration());
     xPanel.add(hardwareAccelerationBox);
     screenPanel.add(xPanel);
-    screenPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     xPanel = new EmptyInfoPanel();
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
     improvedParallaxBox = new SpaceCheckBox("Improved parallax on space map");
-    improvedParallaxBox.setToolTipText("Enables 2 layer parallax effect on"
-        + " space map.");
+    improvedParallaxBox.setToolTipText("<html>Enables 2 layer parallax effect"
+        + " on space map.<br>This requires quite a lot of CPU.<br>"
+        + "This has great impact on battery usage on laptops.</html>");
     improvedParallaxBox.createToolTip();
     improvedParallaxBox.setSelected(config.isImprovedParallax());
     xPanel.add(improvedParallaxBox);

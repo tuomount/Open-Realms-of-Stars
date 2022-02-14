@@ -225,6 +225,7 @@ public final class MissionHandling {
             search.doSearch();
             search.doRoute();
             fleet.setaStarSearch(search);
+            makeRegularMoves(game, fleet, info);
           } else {
             makeRegularMoves(game, fleet, info);
           }

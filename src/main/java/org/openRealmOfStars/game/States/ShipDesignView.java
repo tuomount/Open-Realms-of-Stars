@@ -17,6 +17,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -47,6 +48,7 @@ import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesignConsts;
 import org.openRealmOfStars.player.tech.Tech;
@@ -55,7 +57,7 @@ import org.openRealmOfStars.player.tech.TechType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018-2020 Tuomo Untinen
+ * Copyright (C) 2016,2018-2020,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -275,6 +277,7 @@ public class ShipDesignView extends BlackPanel {
     hullImage = new ImageLabel(
         ShipImages.humans().getShipImage(ShipImage.COLONY), true);
     hullImage.setFillColor(Color.BLACK);
+    hullImage.setAlignmentX(JComponent.CENTER_ALIGNMENT);
     greyPanel.add(hullImage);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new SpaceLabel("Confirm hull change");
@@ -284,6 +287,18 @@ public class ShipDesignView extends BlackPanel {
     SpaceButton btn = new SpaceButton("Change hull",
         GameCommands.COMMAND_SHIPDESIGN_CHANGEHULL);
     btn.addActionListener(listener);
+    btn.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    btn.setToolTipText("<html>"
+        + "Change hull to selected one and removes all components.</html>");
+    greyPanel.add(btn);
+    greyPanel.add(Box.createRigidArea(new Dimension(25, 10)));
+    btn = new SpaceButton("Auto design",
+        GameCommands.COMMAND_SHIPDESIGN_AUTODESIGN);
+    btn.addActionListener(listener);
+    btn.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    btn.setToolTipText("<html>"
+        + "Auto design ship based on ship hull and available components."
+        + "</html>");
     greyPanel.add(btn);
     greyPanel.add(Box.createRigidArea(new Dimension(25, 40)));
     hullPanel.add(greyPanel);
@@ -597,6 +612,20 @@ public class ShipDesignView extends BlackPanel {
       SoundPlayer.playMenuSound();
       updatePanels();
     }
+    if (arg0.getActionCommand()
+        .equals(GameCommands.COMMAND_SHIPDESIGN_AUTODESIGN)) {
+      SoundPlayer.playMenuSound();
+      ShipHull hull = (ShipHull) hullSelect.getSelectedItem();
+      if (hull != null) {
+        design = ShipGenerator.createBattleShip(player, hull.getSize(),
+            false, banNukes);
+        design.setName(designNameText.getText());
+        designInfoText.setText(design.getDesignInfo());
+        designInfoText.repaint();
+      }
+      updatePanels();
+    }
+
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTFILTERED)) {
       String filter = (String) componentFilter.getSelectedItem();

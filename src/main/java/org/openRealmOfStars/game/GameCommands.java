@@ -632,6 +632,11 @@ public final class GameCommands {
   public static final String COMMAND_SHIPDESIGN_CHANGEHULL = "ChangeHull";
 
   /**
+   * Auto design button pressed
+   */
+  public static final String COMMAND_SHIPDESIGN_AUTODESIGN = "AutoDesign";
+
+  /**
    * Ship Component selected from the list
    */
   public static final String COMMAND_SHIPDESIGN_COMPONENTSELECTED =

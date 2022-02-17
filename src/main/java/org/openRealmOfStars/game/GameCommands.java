@@ -3,7 +3,7 @@ package org.openRealmOfStars.game;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -647,6 +647,12 @@ public final class GameCommands {
    */
   public static final String COMMAND_SHIPDESIGN_COMPONENTFILTERED =
       "ShipComponentFiltered";
+
+  /**
+   * Ship Design Variant Selected
+   */
+  public static final String COMMAND_SHIPDESIGN_VARIANT_SELECTED =
+      "ShipDesignVariantSelected";
 
   /**
    * Ship Component added

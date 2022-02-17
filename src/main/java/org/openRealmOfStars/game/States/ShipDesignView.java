@@ -111,6 +111,11 @@ public class ShipDesignView extends BlackPanel {
   private JComboBox<String> componentFilter;
 
   /**
+   * ComboBox where to select automatic design variants.
+   */
+  private JComboBox<String> variantSelection;
+
+  /**
    * Text is containing information about the ship hull
    */
   private InfoTextArea hullInfoText;
@@ -157,6 +162,29 @@ public class ShipDesignView extends BlackPanel {
    * Are nukes banned?
    */
   private boolean banNukes;
+
+  /**
+   * Variant Military
+   */
+  private static final String VARIANT_MILITARY = "Military";
+  /**
+   * Variant Bomber
+   */
+  private static final String VARIANT_BOMBER = "Bomber";
+  /**
+   * Variant Spy
+   */
+  private static final String VARIANT_SPY = "Spy";
+  /**
+   * List of military variants
+   */
+  private static final  String[] MILITARY_VARIANTS = {VARIANT_MILITARY,
+      VARIANT_BOMBER, VARIANT_SPY};
+/*  /**
+   * List of freighter variants
+   */
+/*  private static final  String[] FREIGHTER_VARIANTS = {"Colony", "Freighter",
+      "Trooper"};*/
   /**
    * Constructor for ShipDesignView
    * @param player Player whom is design the new ship design
@@ -301,6 +329,20 @@ public class ShipDesignView extends BlackPanel {
         + "Auto design ship based on ship hull and available components."
         + "</html>");
     greyPanel.add(btn);
+    greyPanel.add(Box.createRigidArea(new Dimension(25, 10)));
+    variantSelection = new JComboBox<>(MILITARY_VARIANTS);
+    variantSelection
+        .setActionCommand(GameCommands.COMMAND_SHIPDESIGN_VARIANT_SELECTED);
+    variantSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    variantSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    variantSelection.setBorder(new SimpleBorder());
+    variantSelection.setFont(GuiStatics.getFontCubellan());
+    variantSelection.setMaximumSize(new Dimension(200,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    variantSelection.addActionListener(listener);
+    variantSelection.setToolTipText("<html>Select variant for auto design"
+        + " feature.</html>");
+    greyPanel.add(variantSelection);
     greyPanel.add(Box.createRigidArea(new Dimension(25, 40)));
     hullPanel.add(greyPanel);
 
@@ -614,13 +656,21 @@ public class ShipDesignView extends BlackPanel {
       updatePanels();
     }
     if (arg0.getActionCommand()
+        .equals(GameCommands.COMMAND_SHIPDESIGN_VARIANT_SELECTED)) {
+      SoundPlayer.playMenuSound();
+      updatePanels();
+    }
+    if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_AUTODESIGN)) {
       SoundPlayer.playMenuSound();
       ShipHull hull = (ShipHull) hullSelect.getSelectedItem();
+      String selected = (String) variantSelection.getSelectedItem();
       if (hull != null) {
         int shipType = ShipGenerator.SHIP_TYPE_REGULAR;
         if (hull.getHullType() == ShipHullType.PRIVATEER) {
           shipType = ShipGenerator.SHIP_TYPE_PRIVATEER;
+        } else if (selected.equals(VARIANT_BOMBER)) {
+          shipType = ShipGenerator.SHIP_TYPE_BOMBER;
         }
         design = ShipGenerator.createMilitaryShip(player, hull, shipType,
             banNukes);

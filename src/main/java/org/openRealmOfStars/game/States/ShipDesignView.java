@@ -45,6 +45,7 @@ import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -617,8 +618,12 @@ public class ShipDesignView extends BlackPanel {
       SoundPlayer.playMenuSound();
       ShipHull hull = (ShipHull) hullSelect.getSelectedItem();
       if (hull != null) {
-        design = ShipGenerator.createBattleShip(player, hull.getSize(),
-            false, banNukes);
+        int shipType = ShipGenerator.SHIP_TYPE_REGULAR;
+        if (hull.getHullType() == ShipHullType.PRIVATEER) {
+          shipType = ShipGenerator.SHIP_TYPE_PRIVATEER;
+        }
+        design = ShipGenerator.createMilitaryShip(player, hull, shipType,
+            banNukes);
         design.setName(designNameText.getText());
         designInfoText.setText(design.getDesignInfo());
         designInfoText.repaint();

@@ -56,15 +56,15 @@ public final class ShipGenerator {
   /**
    * Ship type for regular military ship
    */
-  private static final int SHIP_TYPE_REGULAR = 0;
+  public static final int SHIP_TYPE_REGULAR = 0;
   /**
    * Ship type for bomber
    */
-  private static final int SHIP_TYPE_BOMBER = 1;
+  public static final int SHIP_TYPE_BOMBER = 1;
   /**
    * Ship type for privateer
    */
-  private static final int SHIP_TYPE_PRIVATEER = 2;
+  public static final int SHIP_TYPE_PRIVATEER = 2;
 
   /**
    * Score components for battle ship
@@ -378,15 +378,11 @@ public final class ShipGenerator {
    */
   private static ShipDesign createMilitaryShip(final PlayerInfo player,
       final ShipSize size, final int shipType, final boolean banNukes) {
-    ShipDesign result = null;
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     ShipHull hull = null;
-    boolean bomber = false;
     ShipHullType hullType = ShipHullType.NORMAL;
     if (shipType == SHIP_TYPE_PRIVATEER) {
       hullType = ShipHullType.PRIVATEER;
-    } else if (shipType == SHIP_TYPE_BOMBER) {
-      bomber = true;
     }
     int value = 0;
     for (Tech tech : hullTechs) {
@@ -402,6 +398,29 @@ public final class ShipGenerator {
           hull = tempHull;
         }
       }
+    }
+    return createMilitaryShip(player, hull, shipType, banNukes);
+  }
+
+  /**
+   * Create Military ship based on certain hull.
+   *
+   * @param player Player doing the design
+   * @param hull Used ship hull.
+   * @param shipType SHIP_TYPE_REGULAR, SHIP_TYPE_BOMBER
+   *        or SHIP_TYPE_PRIVATEER}
+   * @param banNukes Are nucleare weapons banned?
+   * @return ShipDesign if doable. Null if not doable for that size.
+   */
+  public static ShipDesign createMilitaryShip(final PlayerInfo player,
+      final ShipHull hull, final int shipType, final boolean banNukes) {
+    ShipDesign result = null;
+    boolean bomber = false;
+    ShipHullType hullType = ShipHullType.NORMAL;
+    if (shipType == SHIP_TYPE_PRIVATEER) {
+      hullType = ShipHullType.PRIVATEER;
+    } else if (shipType == SHIP_TYPE_BOMBER) {
+      bomber = true;
     }
     if (hull != null) {
       result = new ShipDesign(hull);

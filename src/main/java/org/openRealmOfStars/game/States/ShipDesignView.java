@@ -176,15 +176,31 @@ public class ShipDesignView extends BlackPanel {
    */
   private static final String VARIANT_SPY = "Spy";
   /**
+   * Variant colony
+   */
+  private static final String VARIANT_COLONY = "Colony";
+  /**
+   * Variant freighter
+   */
+  private static final String VARIANT_FREIGHTER = "Freighter";
+  /**
+   * Variant Trooper
+   */
+  private static final String VARIANT_TROOPER = "Trooper";
+  /**
    * List of military variants
    */
   private static final  String[] MILITARY_VARIANTS = {VARIANT_MILITARY,
       VARIANT_BOMBER, VARIANT_SPY};
-/*  /**
+  /**
+   * No variants
+   */
+  private static final  String[] NO_VARIANTS = {"No variants"};
+  /**
    * List of freighter variants
    */
-/*  private static final  String[] FREIGHTER_VARIANTS = {"Colony", "Freighter",
-      "Trooper"};*/
+  private static final  String[] FREIGHTER_VARIANTS = {VARIANT_FREIGHTER,
+      VARIANT_COLONY, VARIANT_TROOPER};
   /**
    * Constructor for ShipDesignView
    * @param player Player whom is design the new ship design
@@ -509,6 +525,7 @@ public class ShipDesignView extends BlackPanel {
 
     designInfoText.setText(design.getDesignInfo());
     designInfoText.repaint();
+    updateVariants();
     updatePanels();
   }
 
@@ -646,6 +663,27 @@ public class ShipDesignView extends BlackPanel {
   }
 
   /**
+   * Update variants by selected ship hull.
+   */
+  private void updateVariants() {
+    ShipHull hull = (ShipHull) hullSelect.getSelectedItem();
+    if (hull == null) {
+      variantSelection.setModel(
+          new DefaultComboBoxModel<>(NO_VARIANTS));
+      return;
+    }
+    if (hull.getHullType() == ShipHullType.NORMAL) {
+      variantSelection.setModel(
+          new DefaultComboBoxModel<>(MILITARY_VARIANTS));
+    } else if (hull.getHullType() == ShipHullType.FREIGHTER) {
+      variantSelection.setModel(
+          new DefaultComboBoxModel<>(FREIGHTER_VARIANTS));
+    } else {
+      variantSelection.setModel(
+          new DefaultComboBoxModel<>(NO_VARIANTS));
+    }
+  }
+  /**
    * Handle action events for ShipDesignView
    * @param arg0 ActionEvent
    */
@@ -653,6 +691,7 @@ public class ShipDesignView extends BlackPanel {
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_HULLSELECTED)) {
       SoundPlayer.playMenuSound();
+      updateVariants();
       updatePanels();
     }
     if (arg0.getActionCommand()
@@ -675,6 +714,14 @@ public class ShipDesignView extends BlackPanel {
         if (hull.getHullType() == ShipHullType.PROBE
             || selected.equals(VARIANT_SPY)) {
           design = ShipGenerator.createSpy(player, hull);
+        } else if (hull.getHullType() == ShipHullType.FREIGHTER) {
+          if (selected.equals(VARIANT_COLONY)) {
+            design = ShipGenerator.createColony(player, hull, false);
+          } else if (selected.equals(VARIANT_TROOPER)) {
+            design = ShipGenerator.createColony(player, hull, true);
+          } else {
+            design = ShipGenerator.createFreighter(player, hull);
+          }
         } else {
           design = ShipGenerator.createMilitaryShip(player, hull, shipType,
               banNukes);

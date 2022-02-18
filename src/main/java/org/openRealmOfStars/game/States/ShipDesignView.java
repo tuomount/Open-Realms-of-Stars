@@ -672,8 +672,13 @@ public class ShipDesignView extends BlackPanel {
         } else if (selected.equals(VARIANT_BOMBER)) {
           shipType = ShipGenerator.SHIP_TYPE_BOMBER;
         }
-        design = ShipGenerator.createMilitaryShip(player, hull, shipType,
-            banNukes);
+        if (hull.getHullType() == ShipHullType.PROBE
+            || selected.equals(VARIANT_SPY)) {
+          design = ShipGenerator.createSpy(player, hull);
+        } else {
+          design = ShipGenerator.createMilitaryShip(player, hull, shipType,
+              banNukes);
+        }
         design.setName(designNameText.getText());
         designInfoText.setText(design.getDesignInfo());
         designInfoText.repaint();

@@ -875,15 +875,35 @@ public final class ShipGenerator {
         TechType.Electrics);
     Tech spyTech = TechList.getBestTech(electronicTechs, "Espionage module");
     Tech hullTech = TechList.getBestTech(hullTechs, "Corvette");
-    boolean probe = false;
     if (hullTech == null) {
       hullTech = TechList.getBestTech(hullTechs, "Probe");
-      probe = true;
     }
     if (hullTech != null && spyTech != null) {
       ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
           player.getRace());
+      result = createSpy(player, hull);
+    }
+    return result;
+  }
+
+  /**
+   * Create spy ship with best possible technology.
+   * @param player whom is designing the new ship
+   * @param hull ShipHull to use design spy ship.
+   * @return ShipDesign or null if fails
+   */
+  public static ShipDesign createSpy(final PlayerInfo player,
+      final ShipHull hull) {
+    ShipDesign result = null;
+    Tech[] electronicTechs = player.getTechList().getListForType(
+        TechType.Electrics);
+    Tech spyTech = TechList.getBestTech(electronicTechs, "Espionage module");
+    boolean probe = false;
+    if (spyTech != null) {
       result = new ShipDesign(hull);
+      if (hull.getName().equals("Probe")) {
+        probe = true;
+      }
       result.setName(
            "Spy Mk" + (player.getShipStatHighestNumber(
               "Spy ") + 1));

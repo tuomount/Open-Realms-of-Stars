@@ -722,6 +722,14 @@ public class ShipDesignView extends BlackPanel {
           } else {
             design = ShipGenerator.createFreighter(player, hull);
           }
+        } else if (hull.getHullType() == ShipHullType.STARBASE) {
+          design = ShipGenerator.createStarbase(player, hull);
+        } else if (hull.getHullType() == ShipHullType.ORBITAL) {
+          if (hull.getName().equals("Minor orbital")) {
+            design = ShipGenerator.createMinorOrbital(player);
+          } else {
+            design = ShipGenerator.createOrbital(player, hull);
+          }
         } else {
           design = ShipGenerator.createMilitaryShip(player, hull, shipType,
               banNukes);

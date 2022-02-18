@@ -878,6 +878,9 @@ public final class ShipGenerator {
     if (hullTech == null) {
       hullTech = TechList.getBestTech(hullTechs, "Probe");
     }
+    if (hullTech == null) {
+      hullTech = TechList.getBestTech(hullTechs, "Scout");
+    }
     if (hullTech != null && spyTech != null) {
       ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
           player.getRace());
@@ -902,6 +905,9 @@ public final class ShipGenerator {
     if (spyTech != null) {
       result = new ShipDesign(hull);
       if (hull.getName().equals("Probe")) {
+        probe = true;
+      }
+      if (hull.getMaxSlot() == 4) {
         probe = true;
       }
       result.setName(
@@ -1239,6 +1245,21 @@ public final class ShipGenerator {
       }
     }
     if (hull != null) {
+      result = createStarbase(player, hull);
+    }
+    return result;
+  }
+
+  /**
+   * Design new Starbase for certain size
+   * @param player Player doing the design
+   * @param hull ShipHull used in design.
+   * @return ShipDesign if doable. Null if not doable for that size.
+   */
+  public static ShipDesign createStarbase(final PlayerInfo player,
+      final ShipHull hull) {
+    ShipDesign result = null;
+    if (hull != null) {
       result = new ShipDesign(hull);
       String[] part = hull.getName().split("Mk");
       result.setName(
@@ -1447,7 +1468,6 @@ public final class ShipGenerator {
   public static ShipDesign createOrbital(final PlayerInfo player,
       final ShipSize size) {
     ShipDesign result = null;
-    boolean military = false;
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     ShipHull hull = null;
     int value = 0;
@@ -1466,6 +1486,22 @@ public final class ShipGenerator {
         }
       }
     }
+    if (hull != null) {
+      result = createOrbital(player, hull);
+    }
+    return result;
+  }
+
+  /**
+   * Design new Orbital for certain size
+   * @param player Player doing the design
+   * @param hull ShipHull used in design.
+   * @return ShipDesign if doable. Null if not doable for that size.
+   */
+  public static ShipDesign createOrbital(final PlayerInfo player,
+      final ShipHull hull) {
+    ShipDesign result = null;
+    boolean military = false;
     if (hull != null) {
       result = new ShipDesign(hull);
       String[] part = hull.getName().split("Mk");

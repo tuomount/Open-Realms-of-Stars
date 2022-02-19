@@ -428,8 +428,28 @@ public final class ShipGenerator {
       result.setName(
           part[0].trim() + " Mk" + (player.getShipStatHighestNumber(
               part[0]) + 1));
-      ShipComponent engine = ShipComponentFactory
-          .createByName(player.getTechList().getBestEngine().getComponent());
+      ShipComponent engine = null;
+      boolean tacticalEngine = false;
+      if (hull.getSize() == ShipSize.MEDIUM
+          || hull.getSize() == ShipSize.SMALL) {
+        tacticalEngine = true;
+        if (DiceGenerator.getRandom(99) < 49) {
+          tacticalEngine = false;
+        }
+      }
+      if (hull.getHullType() == ShipHullType.PRIVATEER) {
+        tacticalEngine = false;
+        engine = ShipComponentFactory
+            .createByName(player.getTechList().getFastestEngine()
+                .getComponent());
+      } else if (tacticalEngine) {
+        engine = ShipComponentFactory
+            .createByName(player.getTechList().getBestTacticalEngine()
+                .getComponent());
+      } else {
+        engine = ShipComponentFactory
+            .createByName(player.getTechList().getBestEngine().getComponent());
+      }
       result.addComponent(engine);
       ShipComponent power = ShipComponentFactory.createByName(
           player.getTechList().getBestEnergySource().getComponent());
@@ -914,7 +934,7 @@ public final class ShipGenerator {
            "Spy Mk" + (player.getShipStatHighestNumber(
               "Spy ") + 1));
       ShipComponent engine = ShipComponentFactory
-          .createByName(player.getTechList().getBestEngine().getComponent());
+          .createByName(player.getTechList().getFastestEngine().getComponent());
       result.addComponent(engine);
       ShipComponent power = ShipComponentFactory.createByName(
           player.getTechList().getBestEnergySource().getComponent());

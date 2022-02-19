@@ -466,12 +466,75 @@ public class TechList {
           compValue = comp.getFtlSpeed() + (comp.getSpeed() - 1)
               + (comp.getTacticSpeed() - 1) + comp.getEnergyResource();
         }
+        if (comp.getEnergyRequirement() > 1) {
+          compValue = compValue - (comp.getEnergyRequirement() - 1);
+        }
         if (compValue > bestValue) {
           best = tech;
           bestValue = compValue;
         } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
           best = tech;
           bestValue = compValue;
+        }
+      }
+    }
+    return best;
+  }
+
+  /**
+   * Get fastest regular speed Engine for current technology.
+   * @return Best engine tech or null if not found
+   */
+  public Tech getFastestEngine() {
+    Tech best = null;
+    int bestValue = -1;
+    int ftl = 0;
+    Tech[] list = getListForType(TechType.Propulsion);
+    for (Tech tech : list) {
+      ShipComponent comp = ShipComponentFactory
+          .createByName(tech.getComponent());
+      if (comp != null
+          && (comp.getType() == ShipComponentType.ENGINE
+          || comp.getType() == ShipComponentType.SPACE_FIN)) {
+        int compValue = comp.getFtlSpeed();
+        if (comp.getSpeed() > bestValue) {
+          best = tech;
+          bestValue = comp.getSpeed();
+          ftl = compValue;
+        } else if (comp.getSpeed() == bestValue && compValue > ftl) {
+          best = tech;
+          bestValue = comp.getSpeed();
+          ftl = compValue;
+        }
+      }
+    }
+    return best;
+  }
+
+  /**
+   * Get best tactical Engine for current technology.
+   * @return Best engine tech or null if not found
+   */
+  public Tech getBestTacticalEngine() {
+    Tech best = null;
+    int bestValue = -1;
+    int energy = 0;
+    Tech[] list = getListForType(TechType.Propulsion);
+    for (Tech tech : list) {
+      ShipComponent comp = ShipComponentFactory
+          .createByName(tech.getComponent());
+      if (comp != null
+          && (comp.getType() == ShipComponentType.ENGINE
+          || comp.getType() == ShipComponentType.SPACE_FIN)) {
+        int compValue = comp.getEnergyResource() - comp.getEnergyRequirement();
+        if (comp.getTacticSpeed() > bestValue) {
+          best = tech;
+          bestValue = comp.getTacticSpeed();
+          energy = compValue;
+        } else if (comp.getTacticSpeed() == bestValue && compValue > energy) {
+          best = tech;
+          bestValue = comp.getTacticSpeed();
+          energy = compValue;
         }
       }
     }

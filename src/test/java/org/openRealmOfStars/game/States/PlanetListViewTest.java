@@ -22,7 +22,7 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018 Tuomo Untinen
+* Copyright (C) 2018,2021,2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -53,6 +53,33 @@ public class PlanetListViewTest {
     listOfPlanets.add(planet1);
     listOfPlanets.add(planet2);
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(realm);
+    Mockito.when(planet1.getPlanetType()).thenReturn(PlanetTypes.ICEWORLD1);
+    Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(realm);
+    Mockito.when(planet2.getPlanetType()).thenReturn(PlanetTypes.WATERWORLD1);
+    Construction[] list = new Construction[1];
+    list[0] = Mockito.mock(Construction.class);
+    Mockito.when(list[0].getName()).thenReturn("Test building");
+    Mockito.when(planet1.getProductionList()).thenReturn(list);
+    Mockito.when(planet2.getProductionList()).thenReturn(list);
+    Mockito.when(map.getPlanetList()).thenReturn(listOfPlanets);
+    ActionListener listener = Mockito.mock(ActionListener.class);
+    PlanetListView view = new PlanetListView(realm, map, listener);
+    assertEquals(realm, view.getRealm());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBasicLithorian() {
+    StarMap map = Mockito.mock(StarMap.class);
+    ArrayList<Planet> listOfPlanets = new ArrayList<>();
+    Planet planet1 = Mockito.mock(Planet.class);
+    Planet planet2 = Mockito.mock(Planet.class);
+    listOfPlanets.add(planet1);
+    listOfPlanets.add(planet2);
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getRace()).thenReturn(SpaceRace.LITHORIANS);
     Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(realm);
     Mockito.when(planet1.getPlanetType()).thenReturn(PlanetTypes.ICEWORLD1);
     Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(realm);

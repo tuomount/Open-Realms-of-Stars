@@ -588,7 +588,12 @@ public class PlanetView extends BlackPanel {
     }
     farmProd.setText(": " + planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     farmProd.setToolTipText(planet.getFarmProdExplanation());
-    mineProd.setText(": " + planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    int metalProd = planet.getTotalProduction(Planet.PRODUCTION_METAL);
+    if (planet.getPlanetPlayerInfo() != null
+        && planet.getPlanetPlayerInfo().getRace().isLithovorian()) {
+      metalProd = metalProd - planet.getTotalPopulation() / 2;
+    }
+    mineProd.setText(": " + metalProd);
     mineProd.setToolTipText(planet.getMetalProdExplanation());
     prodProd.setText(
         ": " + planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));

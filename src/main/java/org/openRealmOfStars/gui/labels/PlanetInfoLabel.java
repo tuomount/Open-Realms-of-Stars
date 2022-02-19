@@ -98,8 +98,13 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
     addIcon(icon);
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_FARM),
         String.valueOf(planet.getTotalProduction(Planet.PRODUCTION_FOOD)));
+    int metalProd = planet.getTotalProduction(Planet.PRODUCTION_METAL);
+    if (planet.getPlanetPlayerInfo() != null
+        && planet.getPlanetPlayerInfo().getRace().isLithovorian()) {
+      metalProd = metalProd - planet.getTotalPopulation() / 2;
+    }
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_MINE),
-        String.valueOf(planet.getTotalProduction(Planet.PRODUCTION_METAL)));
+        String.valueOf(metalProd));
     addIcon(icon);
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_FACTORY),
         String.valueOf(planet.getTotalProduction(

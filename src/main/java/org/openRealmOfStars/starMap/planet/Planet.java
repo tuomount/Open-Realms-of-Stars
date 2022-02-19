@@ -1365,15 +1365,15 @@ public class Planet {
       sb.append("<li> governor +1");
       sb.append("<br>");
     }
+    if (result > getAmountMetalInGround()) {
+      result = getAmountMetalInGround();
+      sb.append("Limited by amount of metal available on planet!");
+    }
     int pop = getTotalPopulation() / 2;
     if (planetOwnerInfo.getRace().isLithovorian() && pop > 0) {
       sb.append("<li> lithovorian -");
       sb.append(pop);
       sb.append("<br>");
-    }
-    if (result > getAmountMetalInGround()) {
-      result = getAmountMetalInGround();
-      sb.append("Limited by amount of metal available on planet!");
     }
     sb.append("</html>");
     metaProdExplain = sb.toString();
@@ -2747,7 +2747,7 @@ public class Planet {
       if (minedMetal <= amountMetalInGround && minedMetal >= 0) {
         amountMetalInGround = amountMetalInGround - minedMetal;
         metal = metal + minedMetal;
-      } else {
+      } else if (minedMetal > 0) {
         metal = metal + amountMetalInGround;
         amountMetalInGround = 0;
       }

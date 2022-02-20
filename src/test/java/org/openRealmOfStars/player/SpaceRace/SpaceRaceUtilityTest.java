@@ -519,7 +519,7 @@ public class SpaceRaceUtilityTest {
         assertEquals(650, result);
         break;
       case LITHORIANS:
-        assertEquals(625, result);
+        assertEquals(575, result);
         break;
       case ALTEIRIANS:
         assertEquals(800, result);

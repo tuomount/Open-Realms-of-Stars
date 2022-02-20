@@ -1571,7 +1571,7 @@ public enum SpaceRace {
       case CARBONWORLD: return 50;
       case DESERTWORLD: return 75;
       default:
-      case ARTIFICALWORLD: return 100;
+      case ARTIFICALWORLD: return 75;
       }
     }
     if (this == ALTEIRIANS) {

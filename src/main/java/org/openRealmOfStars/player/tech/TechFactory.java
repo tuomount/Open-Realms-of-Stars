@@ -86,14 +86,14 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL6_NAMES = {"Phasors Mk1",
       "Massdrive Mk1", "Photon torpedo Mk6", "ECM torpedo Mk4",
-      "HE missile Mk4", "Orbital fusion bomb", "Autocannon Mk1" };
+      "HE missile Mk4", "Orbital fusion bomb", "Autocannon Mk2" };
   /**
    * Combat tech names for level 7
    */
   public static final String[] COMBAT_TECH_LEVEL7_NAMES = {"Phasors Mk2",
       "Massdrive Mk2", "Photon torpedo Mk7", "ECM torpedo Mk5",
       "HE missile Mk5", "Shock trooper module", "Orbital antimatter bomb",
-      "Autocannon Mk1"};
+      "Autocannon Mk3"};
   /**
    * Rare combat tech names for level 6.
    */

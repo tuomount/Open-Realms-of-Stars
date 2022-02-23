@@ -1185,6 +1185,13 @@ public final class GuiStatics {
           "/resources/images/smaugirian_race.png"));
 
   /**
+   * Synthdroid race selection image
+   */
+  public static final BufferedImage IMAGE_SYNTHDROID_RACE =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/synthdroid_race.png"));
+
+  /**
    * Privateer race selection image
    */
   public static final BufferedImage IMAGE_PRIVATEER_RACE =

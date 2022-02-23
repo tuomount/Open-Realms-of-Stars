@@ -161,7 +161,13 @@ public enum SpaceRace {
    */
   SPACE_MONSTERS(15, "Space Monsters", "Space monsters",
          "Generic space monsters which are aggressive and try cause\n"
-       + " trouble. No diplomacy with these guys.");
+       + " trouble. No diplomacy with these guys."),
+  /**
+   * Artificial beings that eat only small amount of food.
+   * Each population must be built. Alternative name Huskdroid.
+   */
+  SYNTHDROIDS(16, "Synthdroids", "Synthdroid", "Artifical beings that eat only "
+      + "small amount of food. Each population must be built.");
 
 
 
@@ -246,6 +252,8 @@ public enum SpaceRace {
       return 200;
     case SMAUGIRIANS:
       return 100;
+    case SYNTHDROIDS:
+      return 100;
     default:
       return 0;
     }
@@ -261,6 +269,7 @@ public enum SpaceRace {
     switch (this) {
       case HUMAN:
         return Attitude.DIPLOMATIC;
+      case SYNTHDROIDS:
       case MECHIONS:
         return Attitude.LOGICAL;
       case SPORKS:
@@ -330,6 +339,8 @@ public enum SpaceRace {
       return 7;
     case SMAUGIRIANS:
       return 5;
+    case SYNTHDROIDS:
+      return 5;
     default:
       return -1;
     }
@@ -372,6 +383,8 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_ALTEIRIAN_RACE;
     case SMAUGIRIANS:
       return GuiStatics.IMAGE_SMAUGIRIAN_RACE;
+    case SYNTHDROIDS:
+      return GuiStatics.IMAGE_SYNTHDROID_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -416,6 +429,8 @@ public enum SpaceRace {
         return start + "resources/images/alteirian_race.png";
       case SMAUGIRIANS:
         return start + "resources/images/smaugirian_race.png";
+      case SYNTHDROIDS:
+        return start + "resources/images/synthdroid_race.png";
       default:
         return start + "resources/images/centaur_race.png";
     }
@@ -477,6 +492,8 @@ public enum SpaceRace {
       return 50;
     case SMAUGIRIANS:
       return 100;
+    case SYNTHDROIDS:
+      return 100;
     default:
       return 0;
     }
@@ -518,6 +535,8 @@ public enum SpaceRace {
       return 150;
     case SMAUGIRIANS:
       return 100;
+    case SYNTHDROIDS:
+      return 50;
     default:
       return 0;
     }
@@ -559,6 +578,8 @@ public enum SpaceRace {
       return 6;
     case SMAUGIRIANS:
       return 11;
+    case SYNTHDROIDS:
+      return 10;
     default:
       return 0;
     }
@@ -599,6 +620,8 @@ public enum SpaceRace {
     case ALTEIRIANS:
       return 50;
     case SMAUGIRIANS:
+      return 100;
+    case SYNTHDROIDS:
       return 100;
     default:
       return 0;
@@ -641,6 +664,8 @@ public enum SpaceRace {
       return 100;
     case SMAUGIRIANS:
       return 100;
+    case SYNTHDROIDS:
+      return 0;
     default:
       return 0;
     }
@@ -681,6 +706,8 @@ public enum SpaceRace {
     case ALTEIRIANS:
       return 100;
     case SMAUGIRIANS:
+      return 100;
+    case SYNTHDROIDS:
       return 100;
     default:
       return 100;
@@ -725,6 +752,8 @@ public enum SpaceRace {
       return PlayerColor.SKY;
     case SMAUGIRIANS:
       return PlayerColor.TAN;
+    case SYNTHDROIDS:
+      return PlayerColor.WHITE;
     default:
       return PlayerColor.CORAL;
     }
@@ -768,6 +797,8 @@ public enum SpaceRace {
       return PlayerColor.BLUE;
     case SMAUGIRIANS:
       return PlayerColor.OLIVE;
+    case SYNTHDROIDS:
+      return PlayerColor.ROSE;
     default:
       return PlayerColor.CORAL;
     }
@@ -809,6 +840,8 @@ public enum SpaceRace {
       return 100;
     case SMAUGIRIANS:
       return 100;
+    case SYNTHDROIDS:
+      return 50;
     default:
       return 0;
     }
@@ -850,6 +883,8 @@ public enum SpaceRace {
       return -1;
     case SMAUGIRIANS:
       return -2;
+    case SYNTHDROIDS:
+      return 0;
     default:
       return 0;
     }
@@ -896,6 +931,8 @@ public enum SpaceRace {
       return 50;
     case SMAUGIRIANS:
       return 70;
+    case SYNTHDROIDS:
+      return 60;
     default:
       return 50;
     }
@@ -936,6 +973,8 @@ public enum SpaceRace {
     case ALTEIRIANS:
       return 0;
     case SMAUGIRIANS:
+      return 0;
+    case SYNTHDROIDS:
       return 0;
     default:
       return 0;
@@ -978,6 +1017,8 @@ public enum SpaceRace {
       return 10;
     case SMAUGIRIANS:
       return 11;
+    case SYNTHDROIDS:
+      return 15;
     default:
       return 15;
     }
@@ -1019,6 +1060,8 @@ public enum SpaceRace {
       return 50;
     case SMAUGIRIANS:
       return 52;
+    case SYNTHDROIDS:
+      return 50;
     default:
       return 50;
     }
@@ -1059,6 +1102,8 @@ public enum SpaceRace {
     case ALTEIRIANS:
       return 3;
     case SMAUGIRIANS:
+      return 3;
+    case SYNTHDROIDS:
       return 3;
     default:
       return 3;
@@ -1102,6 +1147,8 @@ public enum SpaceRace {
       return 2;
     case SMAUGIRIANS:
       return 1;
+    case SYNTHDROIDS:
+      return 1;
     default:
       return 1;
     }
@@ -1144,6 +1191,9 @@ public enum SpaceRace {
       return MusicPlayer.SKY_PORTAL;
     case SMAUGIRIANS:
       return MusicPlayer.GUITAR_SONG;
+    case SYNTHDROIDS:
+      // FIXME: Change something else...
+      return MusicPlayer.DRIFTING_BEYOND_STARS;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }
@@ -1184,6 +1234,8 @@ public enum SpaceRace {
       return true;
     case SMAUGIRIANS:
       return true;
+    case SYNTHDROIDS:
+      return false;
     default:
       return true;
     }
@@ -1223,6 +1275,8 @@ public enum SpaceRace {
     case ALTEIRIANS:
       return false;
     case SMAUGIRIANS:
+      return false;
+    case SYNTHDROIDS:
       return false;
     default:
       return false;
@@ -1293,6 +1347,10 @@ public enum SpaceRace {
       return 90;
     case SMAUGIRIANS:
       return 80;
+    case SYNTHDROIDS:
+      // Droids can be always fixed and parts replaced.
+      // Game last maximum of 1120 turns so 2000 is more than enough.
+      return 2000;
     default:
       return 80;
     }
@@ -1335,6 +1393,8 @@ public enum SpaceRace {
       return SocialSystem.EQUAL;
     case SMAUGIRIANS:
       return SocialSystem.PATRIARCHY;
+    case SYNTHDROIDS:
+      return SocialSystem.MATRIARCHY;
     default:
       return SocialSystem.EQUAL;
     }
@@ -1378,6 +1438,9 @@ public enum SpaceRace {
     case SMAUGIRIANS:
       //FIXME: Check this when bridge image has been done
       return BridgeCommandType.WARM_WHITE;
+    case SYNTHDROIDS:
+      //FIXME: Check this when bridge image has been done
+      return BridgeCommandType.WARM_WHITE;
     default:
       return BridgeCommandType.WARM_WHITE;
     }
@@ -1405,6 +1468,7 @@ public enum SpaceRace {
     case REBORGIANS:
     case LITHORIANS:
     case SMAUGIRIANS:
+    case SYNTHDROIDS:
       return 5;
     case ALTEIRIANS:
       return 4;
@@ -1590,6 +1654,18 @@ public enum SpaceRace {
       case ARTIFICALWORLD: return 100;
       }
     }
+    if (this == SYNTHDROIDS) {
+      switch (worldType) {
+      case SILICONWORLD: return 50;
+      case WATERWORLD: return 100;
+      case IRONWORLD: return 50;
+      case ICEWORLD: return 25;
+      case CARBONWORLD: return 100;
+      case DESERTWORLD: return 75;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
     return 100;
   }
   /**
@@ -1742,7 +1818,7 @@ public enum SpaceRace {
     sb.append(" Special: ");
     if (this == CENTAURS) {
       sb.append("Stronger ships");
-    } else if (this == MECHIONS) {
+    } else if (this == MECHIONS || this == SYNTHDROIDS) {
       sb.append("Population needs to be built and no heirs");
     } else if (this == SPORKS) {
       sb.append("Extra scout ship and higher combat tech at start");

@@ -122,6 +122,9 @@ public final class LeaderUtility {
         gender = Gender.getRandom();
       }
     }
+    if (info.getRace() == SpaceRace.SYNTHDROIDS) {
+      gender = Gender.FEMALE;
+    }
     Leader leader = new Leader(NameGenerator.generateName(info.getRace(),
         gender));
     leader.setGender(gender);
@@ -2042,7 +2045,7 @@ public final class LeaderUtility {
       }
       if (!young && living) {
         sb.append(" is still live and ");
-        if (leader.getRace() == SpaceRace.MECHIONS) {
+        if (leader.getRace().isRoboticRace()) {
           sb.append("functional and");
         } else if (leader.hasPerk(Perk.HEALTHY)) {
           sb.append("has healthy lifestyle and");

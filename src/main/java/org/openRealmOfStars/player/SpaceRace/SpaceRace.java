@@ -1295,6 +1295,19 @@ public enum SpaceRace {
   }
 
   /**
+   * Is space race robotic race?
+   * @return True if robotic.
+   */
+  public boolean isRoboticRace() {
+    if (this == SpaceRace.MECHIONS) {
+      return true;
+    }
+    if (this == SpaceRace.SYNTHDROIDS) {
+      return true;
+    }
+    return false;
+  }
+  /**
    * Extra population for each planet.
    * @return Extra population per planet
    */

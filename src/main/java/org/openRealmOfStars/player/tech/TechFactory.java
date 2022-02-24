@@ -914,17 +914,19 @@ public final class TechFactory {
               || techName.startsWith("Hydropodic farming center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
             tech.setExcludeList(true);
-            tech.setSpaceRaces(SpaceRace.LITHORIANS, SpaceRace.MECHIONS);
+            tech.setSpaceRaces(SpaceRace.LITHORIANS, SpaceRace.MECHIONS,
+                SpaceRace.SYNTHDROIDS);
           } else if (techName.startsWith("Cyber lab")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
             tech.setExcludeList(false);
-            tech.setSpaceRaces(SpaceRace.MECHIONS);
+            tech.setSpaceRaces(SpaceRace.MECHIONS, SpaceRace.SYNTHDROIDS);
             tech.setTradeable(false);
           } else if (techName.startsWith("Collective research center")
               || techName.startsWith("Research Matrix")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
             tech.setExcludeList(false);
-            tech.setSpaceRaces(SpaceRace.REBORGIANS, SpaceRace.MECHIONS);
+            tech.setSpaceRaces(SpaceRace.REBORGIANS, SpaceRace.MECHIONS,
+                SpaceRace.SYNTHDROIDS);
             tech.setTradeable(false);
           } else if (techName.startsWith("Advanced furnace")
               || techName.startsWith("Massive blast furnace")

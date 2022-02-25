@@ -611,7 +611,8 @@ public class ImageInstruction {
         && !SpaceRace.REBORGIANS.getNameSingle().equals(image)
         && !SpaceRace.LITHORIANS.getNameSingle().equals(image)
         && !SpaceRace.ALTEIRIANS.getNameSingle().equals(image)
-        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(image)) {
+        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(image)
+        && !SpaceRace.SYNTHDROIDS.getNameSingle().equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }

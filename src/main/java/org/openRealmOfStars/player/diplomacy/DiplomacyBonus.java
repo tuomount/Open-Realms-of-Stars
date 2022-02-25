@@ -128,7 +128,7 @@ public class DiplomacyBonus {
      }
      case IN_WAR: {
        onlyOne = true;
-       if (race == SpaceRace.GREYANS) {
+       if (race == SpaceRace.GREYANS || race == SpaceRace.ALTEIRIANS) {
          bonusValue = -40;
          bonusLasting = 255;
        } else {
@@ -164,7 +164,8 @@ public class DiplomacyBonus {
        if (race == SpaceRace.SPORKS || race == SpaceRace.CHIRALOIDS) {
          bonusValue = -2;
          bonusLasting = 60;
-       } else if (race == SpaceRace.MECHIONS || race == SpaceRace.REBORGIANS) {
+       } else if (race == SpaceRace.MECHIONS || race == SpaceRace.REBORGIANS
+           || race == SpaceRace.SYNTHDROIDS) {
          bonusValue = -1;
          bonusLasting = 20;
        } else {
@@ -188,13 +189,14 @@ public class DiplomacyBonus {
        break;
      }
      case NUKED: {
-       if (race == SpaceRace.CENTAURS) {
+       if (race == SpaceRace.CENTAURS || race == SpaceRace.HOMARIANS) {
          bonusValue = -8;
          bonusLasting = 120;
        } else if (race == SpaceRace.HUMAN || race == SpaceRace.TEUTHIDAES) {
          bonusValue = -6;
          bonusLasting = 120;
-       } else if (race == SpaceRace.SPORKS || race == SpaceRace.SCAURIANS) {
+       } else if (race == SpaceRace.SPORKS || race == SpaceRace.SCAURIANS
+           || race == SpaceRace.SYNTHDROIDS) {
          bonusValue = -4;
          bonusLasting = 100;
        } else if (race == SpaceRace.MECHIONS) {
@@ -238,6 +240,9 @@ public class DiplomacyBonus {
        } else if (race == SpaceRace.MECHIONS) {
          bonusValue = -6;
          bonusLasting = 20;
+       } else if (race == SpaceRace.SYNTHDROIDS) {
+         bonusValue = -5;
+         bonusLasting = 25;
        } else {
          bonusValue = -4;
          bonusLasting = 30;
@@ -334,7 +339,8 @@ public class DiplomacyBonus {
        if (race == SpaceRace.HUMAN || race == SpaceRace.SPORKS) {
          bonusValue = 10;
          bonusLasting = 110;
-       } else if (race == SpaceRace.MECHIONS) {
+       } else if (race == SpaceRace.MECHIONS
+           || race == SpaceRace.SYNTHDROIDS) {
          bonusValue = 5;
          bonusLasting = 90;
        } else {
@@ -347,7 +353,8 @@ public class DiplomacyBonus {
        if (race == SpaceRace.SPORKS) {
          bonusValue = -10;
          bonusLasting = 110;
-       } else if (race == SpaceRace.MECHIONS) {
+       } else if (race == SpaceRace.MECHIONS
+           || race == SpaceRace.SYNTHDROIDS) {
          bonusValue = -5;
          bonusLasting = 90;
        } else {
@@ -360,7 +367,8 @@ public class DiplomacyBonus {
        if (race == SpaceRace.HUMAN) {
          bonusValue = 8;
          bonusLasting = 110;
-       } else if (race == SpaceRace.MECHIONS) {
+       } else if (race == SpaceRace.MECHIONS
+           || race == SpaceRace.SYNTHDROIDS) {
          bonusValue = 4;
          bonusLasting = 90;
        } else {

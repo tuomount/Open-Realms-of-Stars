@@ -187,7 +187,6 @@ public class DiplomacyBonusTest {
     for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
       DiplomacyBonus bonus = new DiplomacyBonus(
           DiplomacyBonusType.getTypeByIndex(i), SpaceRace.HOMARIANS);
-      System.out.println(i);
       assertEquals(bonusValues[i], bonus.getBonusValue());
     
       assertEquals(bonusLasting[i], bonus.getBonusLasting());

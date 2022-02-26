@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2018,2021-2022  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -103,6 +103,11 @@ public final class ShipImages {
   private static ShipImage smaugirians;
 
   /**
+   * Synthdroids ships
+   */
+  private static ShipImage synthdroids;
+
+  /**
    * Hiding the constructor
    */
   private ShipImages() {
@@ -128,6 +133,7 @@ public final class ShipImages {
     lithorians = new ShipImage("lithorianships.png");
     alteirians = new ShipImage("alteirianships.png");
     smaugirians = new ShipImage("smaugirianships.png");
+    synthdroids = new ShipImage("synthdroidships.png");
   }
 
   /**
@@ -296,6 +302,17 @@ public final class ShipImages {
   }
 
   /**
+   * Get Smaugirian ship images
+   * @return Smaugirian ship images
+   */
+  public static ShipImage synthdroids() {
+    if (synthdroids == null) {
+      initImages();
+    }
+    return synthdroids;
+  }
+
+  /**
    * Get ship images for certain race
    * @param race Space race which images to get
    * @return ShipImage
@@ -333,6 +350,8 @@ public final class ShipImages {
       return alteirians();
     case SMAUGIRIANS:
       return smaugirians();
+    case SYNTHDROIDS:
+      return synthdroids();
     default:
       return humans();
     }

@@ -240,6 +240,16 @@ public final class PlanetHandling {
         constructionSelected = true;
       }
     }
+    if (!constructionSelected && info.getRace() == SpaceRace.SYNTHDROIDS
+        && planet.getTotalPopulation() < 3
+        && planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION) > 3) {
+      int i = getConstruction(ConstructionFactory.SYNTHDROID_CITIZEN,
+          constructions);
+      if (i != -1) {
+        planet.setUnderConstruction(constructions[i]);
+        constructionSelected = true;
+      }
+    }
     if (gotSpacePort == -1 && !constructionSelected
         && planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION) > 3
         && planet.getTotalProduction(Planet.PRODUCTION_METAL) > 3) {
@@ -803,7 +813,7 @@ public final class PlanetHandling {
             sum = sum + scores[i];
           } else if (constructions[i].getName()
               .equals(ConstructionFactory.MECHION_CITIZEN) && freeSlot < 3
-              && planet.getTotalPopulation() < planet.getGroundSize()
+              && planet.getTotalPopulation() < planet.getPopulationLimit()
               && scores[i] > 0) {
             list.add(constructions[i]);
             listScore.add(Integer.valueOf(scores[i]));
@@ -1240,6 +1250,29 @@ public final class PlanetHandling {
           scores[i] = scores[i] / 2;
         }
         if (planet.getTotalProduction(Planet.PRODUCTION_METAL) < 4) {
+          scores[i] = scores[i] / 2;
+        }
+        if (planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
+          scores[i] = scores[i] + 40;
+        }
+      }
+      if (constructions[i].getName()
+          .equals(ConstructionFactory.SYNTHDROID_CITIZEN)) {
+        scores[i] = planet.getPopulationLimit() * 4
+            - 2 * planet.getTotalPopulation();
+        if (planet.getBuildingList().length < 4) {
+          scores[i] = scores[i] + 5;
+        } else {
+          // Does not take a planet space
+          scores[i] = scores[i] + 20;
+        }
+        int index = map.getPlayerList().getIndex(info);
+        if (map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
+            index) == 0 && !info.getTechList().hasTech("Basic lab")) {
+          // No research so focusing on building more population
+          scores[i] = scores[i] + 50;
+        }
+        if (planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION) < 4) {
           scores[i] = scores[i] / 2;
         }
         if (planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {

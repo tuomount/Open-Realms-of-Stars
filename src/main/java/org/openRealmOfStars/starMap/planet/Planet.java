@@ -1701,6 +1701,15 @@ public class Planet {
       if (tmp != null && !exceedRadiation()) {
         result.add(tmp);
       }
+      if (planetOwnerInfo != null
+        && planetOwnerInfo.getRace() == SpaceRace.SYNTHDROIDS
+        && getTotalPopulation() < getPopulationLimit()) {
+        tmp2 = ConstructionFactory
+            .createByName(ConstructionFactory.SYNTHDROID_CITIZEN);
+        if (tmp2 != null && !exceedRadiation()) {
+          result.add(tmp2);
+        }
+      }
     }
     tmp = BuildingFactory.createByName("Basic factory");
     if (tmp != null) {

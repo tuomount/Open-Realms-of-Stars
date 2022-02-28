@@ -1989,7 +1989,7 @@ public final class PlanetHandling {
     int farmersReq = foodReq - food;
     int happy = planet.calculateHappiness();
     if (total < planet.getPopulationLimit() && farmersReq >= 0 && !startPlanet
-        && farmersReq < total) {
+        && farmersReq < total && info.getRace() != SpaceRace.SYNTHDROIDS) {
       farmersReq++;
     }
     if (info.getRace().getFoodSpeed() == 200) {

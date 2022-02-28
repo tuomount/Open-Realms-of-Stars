@@ -1746,6 +1746,131 @@ public final class NameGenerator {
   }
 
   /**
+   * Generate synthdroid leader name
+   * @return Synthdroid leader name
+   */
+  private static String generateSynthdroidName() {
+    StringBuilder sb = new StringBuilder();
+    int type = DiceGenerator.getRandom(1);
+    if (type == 0) {
+      switch (DiceGenerator.getRandom(5)) {
+      default:
+      case 0: sb.append("A"); break;
+      case 1: sb.append("E"); break;
+      case 2: sb.append("I"); break;
+      case 3: sb.append("O"); break;
+      case 4: sb.append("U"); break;
+      case 5: sb.append("Y"); break;
+      }
+      switch (DiceGenerator.getRandom(10)) {
+      default:
+      case 0: sb.append("nna"); break;
+      case 1: sb.append("lsa"); break;
+      case 2: sb.append("nn"); break;
+      case 3: sb.append("ve"); break;
+      case 4: sb.append("va"); break;
+      case 5: sb.append("livia"); break;
+      case 6: sb.append("lse"); break;
+      case 7: sb.append("rika"); break;
+      case 8: sb.append("lia"); break;
+      case 9: sb.append("dia"); break;
+      case 10: sb.append("via"); break;
+      }
+    }
+    if (type == 1) {
+      switch (DiceGenerator.getRandom(14)) {
+      default:
+      case 0: sb.append("Li"); break;
+      case 1: sb.append("Ma"); break;
+      case 2: sb.append("Ro"); break;
+      case 3: sb.append("Ri"); break;
+      case 4: sb.append("Ti"); break;
+      case 5: sb.append("Ju"); break;
+      case 6: sb.append("Ka"); break;
+      case 7: sb.append("Ca"); break;
+      case 8: sb.append("Ce"); break;
+      case 9: sb.append("Le"); break;
+      case 10: sb.append("Lay"); break;
+      case 11: sb.append("Da"); break;
+      case 12: sb.append("De"); break;
+      case 13: sb.append("Di"); break;
+      case 14: sb.append("Ly"); break;
+      }
+      switch (DiceGenerator.getRandom(11)) {
+      default:
+      case 0: sb.append("sa"); break;
+      case 1: sb.append("rie"); break;
+      case 2: sb.append("se"); break;
+      case 3: {
+        if (sb.toString().endsWith("a")) {
+          sb.append("e");
+        } else {
+          sb.append("a");
+        }
+        break;
+      }
+      case 4: sb.append("ka"); break;
+      case 5: sb.append("na"); break;
+      case 6: sb.append("lia"); break;
+      case 7: sb.append("ren"); break;
+      case 8: sb.append("na"); break;
+      case 9: sb.append("dia"); break;
+      case 10: sb.append("via"); break;
+      case 11: sb.append("ne"); break;
+      case 12: sb.append("ly"); break;
+      }
+    }
+    sb.append(" ");
+    if (DiceGenerator.getRandom(1) == 0) {
+      switch (DiceGenerator.getRandom(9)) {
+        default:
+        case 0: sb.append("X-"); break;
+        case 1: sb.append("Y-"); break;
+        case 2: sb.append("Z-"); break;
+        case 3: sb.append("Q-"); break;
+        case 4: sb.append("A-"); break;
+        case 5: sb.append("B-"); break;
+        case 6: sb.append("E-"); break;
+        case 7: sb.append("G-"); break;
+        case 8: sb.append("W-"); break;
+        case 9: sb.append("K-"); break;
+      }
+      switch (DiceGenerator.getRandom(4)) {
+        default:
+        case 0: sb.append(DiceGenerator.getRandom(1, 10)); break;
+        case 1: sb.append(DiceGenerator.getRandom(20, 100)); break;
+        case 2: sb.append(DiceGenerator.getRandom(2, 9) * 100); break;
+        case 3: sb.append(DiceGenerator.getRandom(1, 9) * 1000); break;
+        case 4: sb.append(DiceGenerator.getRandom(1, 9) * 10000); break;
+      }
+    } else {
+      switch (DiceGenerator.getRandom(4)) {
+        default:
+        case 0: sb.append(DiceGenerator.getRandom(1, 10)); break;
+        case 1: sb.append(DiceGenerator.getRandom(20, 100)); break;
+        case 2: sb.append(DiceGenerator.getRandom(2, 9) * 100); break;
+        case 3: sb.append(DiceGenerator.getRandom(1, 9) * 1000); break;
+        case 4: sb.append(DiceGenerator.getRandom(1, 9) * 10000); break;
+      }
+      switch (DiceGenerator.getRandom(10)) {
+        default:
+        case 0: sb.append("X"); break;
+        case 1: sb.append("Y"); break;
+        case 2: sb.append("Z"); break;
+        case 3: sb.append("Q"); break;
+        case 4: sb.append("K"); break;
+        case 5: sb.append("M"); break;
+        case 6: sb.append("E"); break;
+        case 7: sb.append("G"); break;
+        case 8: sb.append("W"); break;
+        case 9: sb.append("J"); break;
+        case 10: sb.append("F"); break;
+      }
+    }
+    return sb.toString();
+  }
+
+  /**
    * Generate mechion leader name
    * @return Mechion leader name
    */
@@ -2688,6 +2813,9 @@ public final class NameGenerator {
     }
     if (race == SpaceRace.SMAUGIRIANS) {
       return generateSmaugirianName(gender);
+    }
+    if (race == SpaceRace.SYNTHDROIDS) {
+      return generateSynthdroidName();
     }
     return "Noname";
   }

@@ -41,6 +41,16 @@ public class NameGeneratorTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSynthdroid() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(SpaceRace.SYNTHDROIDS,
+          Gender.FEMALE);
+      assertNotNull(name);
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testReborgian() {
     for (int i = 0; i < 50; i++) {
       String name = NameGenerator.generateName(SpaceRace.REBORGIANS, Gender.NONE);

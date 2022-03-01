@@ -1007,7 +1007,14 @@ public class Planet {
       // Planet does not have population bonus
       result = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
           * planetOwnerInfo.getRace().getFoodRequire() / 100;
-      require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
+      if (planetOwnerInfo.getRace() == SpaceRace.SYNTHDROIDS) {
+        require = 10;
+        if (result > 0) {
+          result = 0;
+        }
+      } else {
+        require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
+      }
       if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && result > 0) {
         // Limit cyborg grow rate
         result = 1;
@@ -2063,8 +2070,15 @@ public class Planet {
           food = 1;
         }
       }
+      int require = 10;
+      if (planetOwnerInfo.getRace() == SpaceRace.SYNTHDROIDS) {
+        if (food > 0) {
+          food = 0;
+        }
+      } else {
+        require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
+      }
       extraFood = extraFood + food;
-      int require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
       if (exceedRadiation() && extraFood > 0) {
         // Clear extra food if radiation is exceeded
         extraFood = 0;

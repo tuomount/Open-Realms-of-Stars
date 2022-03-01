@@ -576,6 +576,11 @@ public class PlanetView extends BlackPanel {
         peopleGrowth.setText("no growth");
         peopleGrowth.setToolTipText(
             "Mechions needs to be built to get more population.");
+      } else if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetPlayerInfo().getRace() == SpaceRace.SYNTHDROIDS) {
+        peopleGrowth.setText("no growth");
+        peopleGrowth.setToolTipText(
+            "Synthdroids needs to be cloned to get more population.");
       } else {
         peopleGrowth.setText("stable ");
       }

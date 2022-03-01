@@ -458,6 +458,25 @@ public class SpaceRaceUtilityTest {
         + "* Rush: Credit\n"
         + "* Start planet value: 100\n"
         + "* Special: Weapon allowed in cargo ships.";
+    expectedResult[14] = "### Synthdroids\n"
+        + "Artificial beings that eat only small amount of food. Each "
+        + "population must be cloned.\n"
+        + "* Max radiation: 5\n"
+        + "* Troop power: 10\n"
+        + "* Leader lifespan: 2000\n"
+        + "* Minimum leader population: 5\n"
+        + "* Production: 100%\n"
+        + "* Mining: 100%\n"
+        + "* Research: 100%\n"
+        + "* Food production: 100%\n"
+        + "* Growth: never\n"
+        + "* Food require: 50%\n"
+        + "* Culture: 50%\n"
+        + "* Diplomacy bonus: 0\n"
+        + "* War resistance: 60\n"
+        + "* Rush: None\n"
+        + "* Start planet value: 100\n"
+        + "* Special: Population needs to be built and no heirs";
     for (int i = 0; i <  SpaceRaceUtility.RACE_SELECTION.length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByName(
           SpaceRaceUtility.RACE_SELECTION[i]);
@@ -526,6 +545,9 @@ public class SpaceRaceUtilityTest {
         break;
       case SMAUGIRIANS:
         assertEquals(625, result);
+        break;
+      case SYNTHDROIDS:
+        assertEquals(600, result);
         break;
       default:
         assertEquals(0, result);

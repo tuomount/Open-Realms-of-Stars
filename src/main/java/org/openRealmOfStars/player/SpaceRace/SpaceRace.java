@@ -166,8 +166,8 @@ public enum SpaceRace {
    * Artificial beings that eat only small amount of food.
    * Each population must be built. Alternative name Huskdroid.
    */
-  SYNTHDROIDS(16, "Synthdroids", "Synthdroid", "Artifical beings that eat only "
-      + "small amount of food. Each population must be built.");
+  SYNTHDROIDS(16, "Synthdroids", "Synthdroid", "Artificial beings that eat only"
+      + " small amount of food. Each population must be cloned.");
 
 
 

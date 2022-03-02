@@ -2655,6 +2655,35 @@ public class Planet {
           return;
         }
         if (underConstruction.getName()
+            .equals(ConstructionFactory.SYNTHDROID_CITIZEN)) {
+          if (governor != null) {
+            governor.getStats().addOne(StatType.POPULATION_GROWTH);
+          }
+          metal = metal - requiredMetalCost;
+          prodResource = prodResource - requiredProdCost;
+          workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
+          String nextBuilding = "";
+          String finishedBuilding = underConstruction.getName();
+          if (governor != null) {
+            int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+            Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+            PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+            nextBuilding = governor.getCallName() + " selected new "
+                + "construction process where "
+                + getUnderConstruction().getName()
+                + " will be built. Estimated building time is "
+                + getProductionTimeAsString(underConstruction) + ".";
+          }
+          msg = new Message(MessageType.CONSTRUCTION,
+              getName() + " cloned " + finishedBuilding
+              + ". " + nextBuilding,
+              Icons.getIconByName(Icons.ICON_PEOPLE));
+          msg.setCoordinate(getCoordinate());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+          return;
+        }
+        if (underConstruction.getName()
             .equals(ConstructionFactory.EXTRA_CULTURE)) {
           metal = metal - requiredMetalCost;
           prodResource = prodResource - requiredProdCost;

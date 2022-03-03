@@ -2045,7 +2045,8 @@ public final class PlanetHandling {
     }
     if (part == 1) {
       if (info.getRace() == SpaceRace.GREYANS
-          || info.getRace() == SpaceRace.TEUTHIDAES) {
+          || info.getRace() == SpaceRace.TEUTHIDAES
+          || info.getRace() == SpaceRace.SYNTHDROIDS) {
         scientist++;
       } else if (info.getRace() == SpaceRace.MOTHOIDS) {
         artists++;
@@ -2055,7 +2056,8 @@ public final class PlanetHandling {
     }
     if (part == 2) {
       if (info.getRace() == SpaceRace.GREYANS
-          || info.getRace() == SpaceRace.TEUTHIDAES) {
+          || info.getRace() == SpaceRace.TEUTHIDAES
+          || info.getRace() == SpaceRace.SYNTHDROIDS) {
         scientist++;
         workers++;
       } else if (info.getRace() == SpaceRace.MOTHOIDS) {
@@ -2072,7 +2074,8 @@ public final class PlanetHandling {
     }
     if (part == 3) {
       if (info.getRace() == SpaceRace.GREYANS
-          || info.getRace() == SpaceRace.TEUTHIDAES) {
+          || info.getRace() == SpaceRace.TEUTHIDAES
+          || info.getRace() == SpaceRace.SYNTHDROIDS) {
         scientist = scientist + 2;
         workers++;
       } else {

@@ -1192,8 +1192,7 @@ public enum SpaceRace {
     case SMAUGIRIANS:
       return MusicPlayer.GUITAR_SONG;
     case SYNTHDROIDS:
-      // FIXME: Change something else...
-      return MusicPlayer.DRIFTING_BEYOND_STARS;
+      return MusicPlayer.CYBORG;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }

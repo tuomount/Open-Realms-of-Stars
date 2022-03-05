@@ -448,11 +448,9 @@ public class CreditsView extends BlackPanel {
       + "https://opengameart.org/content/guitar-song-loops-indie-game-seamless-"
       + "looping-rpg-level-stage-etc\n"
       + "Licensed under CC BY 3.0 "
-      + "http://creativecommons.org/licenses/by/3.0/\n\n";
-
-
-
-
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Cyborg by\n"
+      + "Umplix (CC0)\n\n";
 
   /**
    * Constructor for Credits view

@@ -68,6 +68,7 @@ Space Captain by Justin Nichol
 Tuomo Untinen added legs for the captain. -https://opengameart.org/content/space-captain-with-legs
 
 The Husk- Human Analog Android by Justin Nichol - https://opengameart.org/content/the-husk-human-analog-android
+Tuomo Untinen modified to Synthdroid(Husk with legs)
 
 GBNC logo by Tuomo Untinen
 
@@ -492,5 +493,8 @@ Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 Guitar Song by Nicole Marie T
 https://opengameart.org/content/guitar-song-loops-indie-game-seamless-looping-rpg-level-stage-etc
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
+Cyborg by
+Umplix (CC0)
 
 

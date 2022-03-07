@@ -11,7 +11,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2021  Tuomo Untinen
+* Copyright (C) 2017-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -257,6 +257,13 @@ public final class MusicPlayer {
   public static final MusicFileInfo GUITAR_SONG = new MusicFileInfo(
       "Guitar Song", "Nicole Marie T",
       "/resources/musics/Guitar Song.ogg");
+
+  /**
+   * Cyborg By Umplix CC0
+   */
+  public static final MusicFileInfo CYBORG = new MusicFileInfo(
+      "Cyborg", "Umplix",
+      "/resources/musics/Cyborg.ogg");
 
   /**
    * List of music to played while playing

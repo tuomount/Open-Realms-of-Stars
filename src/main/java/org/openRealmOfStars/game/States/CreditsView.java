@@ -107,7 +107,8 @@ public class CreditsView extends BlackPanel {
       + "Tuomo Untinen added legs for the captain. -"
       + "https://opengameart.org/content/space-captain-with-legs\n\n"
       + "The Husk- Human Analog Android by Justin Nichol - "
-      + "https://opengameart.org/content/the-husk-human-analog-android\n\n"
+      + "https://opengameart.org/content/the-husk-human-analog-android\n"
+      + "Tuomo Untinen modified to Synthdroid(Husk with legs)\n\n"
       + "GBNC logo by Tuomo Untinen\n\n"
       + "Worm hole by Tuomo Untinen\n\n"
       + "Privateering effect in combat by Tuomo Untinen\n\n"
@@ -447,11 +448,9 @@ public class CreditsView extends BlackPanel {
       + "https://opengameart.org/content/guitar-song-loops-indie-game-seamless-"
       + "looping-rpg-level-stage-etc\n"
       + "Licensed under CC BY 3.0 "
-      + "http://creativecommons.org/licenses/by/3.0/\n\n";
-
-
-
-
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Cyborg by\n"
+      + "Umplix (CC0)\n\n";
 
   /**
    * Constructor for Credits view

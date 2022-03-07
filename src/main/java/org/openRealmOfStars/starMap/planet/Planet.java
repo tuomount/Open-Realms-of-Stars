@@ -1007,7 +1007,14 @@ public class Planet {
       // Planet does not have population bonus
       result = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
           * planetOwnerInfo.getRace().getFoodRequire() / 100;
-      require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
+      if (planetOwnerInfo.getRace() == SpaceRace.SYNTHDROIDS) {
+        require = 10;
+        if (result > 0) {
+          result = 0;
+        }
+      } else {
+        require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
+      }
       if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && result > 0) {
         // Limit cyborg grow rate
         result = 1;
@@ -1701,6 +1708,15 @@ public class Planet {
       if (tmp != null && !exceedRadiation()) {
         result.add(tmp);
       }
+      if (planetOwnerInfo != null
+        && planetOwnerInfo.getRace() == SpaceRace.SYNTHDROIDS
+        && getTotalPopulation() < getPopulationLimit()) {
+        tmp2 = ConstructionFactory
+            .createByName(ConstructionFactory.SYNTHDROID_CITIZEN);
+        if (tmp2 != null && !exceedRadiation()) {
+          result.add(tmp2);
+        }
+      }
     }
     tmp = BuildingFactory.createByName("Basic factory");
     if (tmp != null) {
@@ -2054,8 +2070,15 @@ public class Planet {
           food = 1;
         }
       }
+      int require = 10;
+      if (planetOwnerInfo.getRace() == SpaceRace.SYNTHDROIDS) {
+        if (food > 0) {
+          food = 0;
+        }
+      } else {
+        require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
+      }
       extraFood = extraFood + food;
-      int require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
       if (exceedRadiation() && extraFood > 0) {
         // Clear extra food if radiation is exceeded
         extraFood = 0;
@@ -2624,6 +2647,35 @@ public class Planet {
           }
           msg = new Message(MessageType.CONSTRUCTION,
               getName() + " built " + finishedBuilding
+              + ". " + nextBuilding,
+              Icons.getIconByName(Icons.ICON_PEOPLE));
+          msg.setCoordinate(getCoordinate());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+          return;
+        }
+        if (underConstruction.getName()
+            .equals(ConstructionFactory.SYNTHDROID_CITIZEN)) {
+          if (governor != null) {
+            governor.getStats().addOne(StatType.POPULATION_GROWTH);
+          }
+          metal = metal - requiredMetalCost;
+          prodResource = prodResource - requiredProdCost;
+          workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
+          String nextBuilding = "";
+          String finishedBuilding = underConstruction.getName();
+          if (governor != null) {
+            int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+            Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+            PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+            nextBuilding = governor.getCallName() + " selected new "
+                + "construction process where "
+                + getUnderConstruction().getName()
+                + " will be built. Estimated building time is "
+                + getProductionTimeAsString(underConstruction) + ".";
+          }
+          msg = new Message(MessageType.CONSTRUCTION,
+              getName() + " cloned " + finishedBuilding
               + ". " + nextBuilding,
               Icons.getIconByName(Icons.ICON_PEOPLE));
           msg.setCoordinate(getCoordinate());

@@ -5,7 +5,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ public final class ConstructionFactory {
    * Remember to increase this when new construction is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_CONSTRUCTION = 3;
+  private static final int MAX_CONSTRUCTION = 4;
 
   /**
    * Construction extra credit
@@ -55,6 +55,10 @@ public final class ConstructionFactory {
    * Construction mechion citizen
    */
   private static final int CONSTRUCTION_MECHION_CITIZEN = 2;
+  /**
+   * Construction synthdroid citizen
+   */
+  private static final int CONSTRUCTION_SYNTHDROID_CITIZEN = 3;
 
   /**
    * Create planetary construction with index
@@ -73,6 +77,9 @@ public final class ConstructionFactory {
     case CONSTRUCTION_MECHION_CITIZEN:
       tmp = createConstruction(index);
       break; // Mechion citizen
+    case CONSTRUCTION_SYNTHDROID_CITIZEN:
+      tmp = createConstruction(index);
+      break; // Synthdroid citizen
     default:
       throw new IllegalArgumentException("Unknown construction: " + index);
     }
@@ -91,6 +98,10 @@ public final class ConstructionFactory {
    * Extra culture construction
    */
   public static final String EXTRA_CULTURE = "Extra culture";
+  /**
+   * Synthdroid citizen construction
+   */
+  public static final String SYNTHDROID_CITIZEN = "Synthdroid citizen";
 
   /**
    * Create planetary construction with matching name
@@ -137,6 +148,14 @@ public final class ConstructionFactory {
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setDescription("Build new mechion citizen");
+      return tmp;
+    }
+    if (index == CONSTRUCTION_SYNTHDROID_CITIZEN) {
+      tmp = new Construction(SYNTHDROID_CITIZEN,
+          Icons.getIconByName(Icons.ICON_PEOPLE));
+      tmp.setProdCost(30);
+      tmp.setMetalCost(0);
+      tmp.setDescription("Clone new synthdroid citizen");
       return tmp;
     }
     return tmp;

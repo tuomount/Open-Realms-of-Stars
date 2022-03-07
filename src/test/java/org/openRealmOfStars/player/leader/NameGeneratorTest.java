@@ -9,7 +9,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020,2021 Tuomo Untinen
+* Copyright (C) 2020-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -35,6 +35,16 @@ public class NameGeneratorTest {
   public void testMechion() {
     for (int i = 0; i < 50; i++) {
       String name = NameGenerator.generateName(SpaceRace.MECHIONS, Gender.NONE);
+      assertNotNull(name);
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSynthdroid() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(SpaceRace.SYNTHDROIDS,
+          Gender.FEMALE);
       assertNotNull(name);
     }
   }

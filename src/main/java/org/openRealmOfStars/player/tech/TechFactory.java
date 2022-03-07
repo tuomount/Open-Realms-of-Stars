@@ -909,22 +909,27 @@ public final class TechFactory {
               || techName.startsWith("Stock market")
               || techName.startsWith("Galactic bank")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_CREDIT));
-          } else if (techName.startsWith("Advanced farm")
-              || techName.startsWith("Farming center")
-              || techName.startsWith("Hydropodic farming center")) {
+          } else if (techName.startsWith("Advanced farm")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
             tech.setExcludeList(true);
             tech.setSpaceRaces(SpaceRace.LITHORIANS, SpaceRace.MECHIONS);
+          } else if (techName.startsWith("Farming center")
+              || techName.startsWith("Hydropodic farming center")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
+            tech.setExcludeList(true);
+            tech.setSpaceRaces(SpaceRace.LITHORIANS, SpaceRace.MECHIONS,
+                SpaceRace.SYNTHDROIDS);
           } else if (techName.startsWith("Cyber lab")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
             tech.setExcludeList(false);
-            tech.setSpaceRaces(SpaceRace.MECHIONS);
+            tech.setSpaceRaces(SpaceRace.MECHIONS, SpaceRace.SYNTHDROIDS);
             tech.setTradeable(false);
           } else if (techName.startsWith("Collective research center")
               || techName.startsWith("Research Matrix")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
             tech.setExcludeList(false);
-            tech.setSpaceRaces(SpaceRace.REBORGIANS, SpaceRace.MECHIONS);
+            tech.setSpaceRaces(SpaceRace.REBORGIANS, SpaceRace.MECHIONS,
+                SpaceRace.SYNTHDROIDS);
             tech.setTradeable(false);
           } else if (techName.startsWith("Advanced furnace")
               || techName.startsWith("Massive blast furnace")

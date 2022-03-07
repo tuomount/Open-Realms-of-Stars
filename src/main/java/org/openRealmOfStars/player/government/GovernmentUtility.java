@@ -111,6 +111,17 @@ public final class GovernmentUtility {
       };
       return governments;
     }
+    if (race == SpaceRace.SYNTHDROIDS) {
+      GovernmentType[] governments = {
+        GovernmentType.UNION, GovernmentType.DEMOCRACY,
+        GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+        GovernmentType.ENTERPRISE, GovernmentType.UTOPIA,
+        GovernmentType.COLLECTIVE, GovernmentType.REGIME,
+        GovernmentType.AI, GovernmentType.TECHNOCRACY,
+        GovernmentType.HEGEMONY, GovernmentType.HIERARCHY
+      };
+      return governments;
+    }
     if (race == SpaceRace.SPORKS) {
       GovernmentType[] governments = {
         GovernmentType.UNION, GovernmentType.REGIME,

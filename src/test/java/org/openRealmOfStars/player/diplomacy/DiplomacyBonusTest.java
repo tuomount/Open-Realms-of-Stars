@@ -9,7 +9,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2017-2021 Tuomo Untinen
+ * Copyright (C) 2017-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -180,9 +180,9 @@ public class DiplomacyBonusTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testHomarians() {
     //                 IN_WAR,WDEC,INTA,IN_A,DICA,BOCR,GVAL,DEMA,DTR,SRAC,LONG_PEACE 
-    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -3,   2,  -5,  4,   5,  5, -3, -5, 0, 30, -4,
+    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -3,   2,  -5,  4,   5,  5, -3, -8, 0, 30, -4,
         8, 1, 3, 0, -5, 2, -2, 0, 7, -7, 6, 3, 3, 8, -8, -12, -4, -2};
-    int[] bonusLasting = {255, 150, 255, 255, 200,  20,  50, 80, 100, 255, 1, 70, 100, 10, 255, 30,
+    int[] bonusLasting = {255, 150, 255, 255, 200,  20,  50, 80, 100, 255, 1, 70, 120, 10, 255, 30,
         20, 255, 255, 255, 20, 60, 60, 255, 100, 100, 100, 40, 40, 100, 100, 255, 60, 60};
     for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
       DiplomacyBonus bonus = new DiplomacyBonus(

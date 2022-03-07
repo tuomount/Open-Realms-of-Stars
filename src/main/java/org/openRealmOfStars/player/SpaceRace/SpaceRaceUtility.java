@@ -6,7 +6,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016-2018,2020,2021  Tuomo Untinen
+* Copyright (C) 2016-2018,2020-2022  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -39,7 +39,8 @@ public final class SpaceRaceUtility {
    */
   public static final String[] RACE_SELECTION = {"Human", "Mechion", "Spork",
       "Greyan", "Centaur", "Mothoid", "Teuthidae", "Scaurian", "Homarian",
-      "Chiraloid", "Reborgian", "Lithorian", "Alteirian", "Smaugirian" };
+      "Chiraloid", "Reborgian", "Lithorian", "Alteirian", "Smaugirian",
+      "Synthdroid" };
 
 
   /**
@@ -104,6 +105,9 @@ public final class SpaceRaceUtility {
     }
     if (name.equals(SpaceRace.SMAUGIRIANS.getNameSingle())) {
       return SpaceRace.SMAUGIRIANS;
+    }
+    if (name.equals(SpaceRace.SYNTHDROIDS.getNameSingle())) {
+      return SpaceRace.SYNTHDROIDS;
     }
     return null;
   }

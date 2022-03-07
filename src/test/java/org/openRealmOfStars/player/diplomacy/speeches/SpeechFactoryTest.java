@@ -9,7 +9,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018,2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -56,7 +56,7 @@ public class SpeechFactoryTest {
       assertEquals(SpeechType.MAKE_WAR, line.getType());
       line = SpeechFactory.createLine(SpeechType.DECLINE_ANGER, race, null);
       assertNotEquals(null, line);
-      if (race != SpaceRace.MECHIONS) {
+      if (race != SpaceRace.MECHIONS && race != SpaceRace.SYNTHDROIDS) {
         assertEquals(SpeechType.DECLINE_ANGER, line.getType());
       } else {
         assertEquals(SpeechType.DECLINE, line.getType());

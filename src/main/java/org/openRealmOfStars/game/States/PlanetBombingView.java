@@ -881,8 +881,7 @@ public class PlanetBombingView extends BlackPanel {
             String extraPop = "";
             if (planet.getPlanetPlayerInfo() != null
                 && attacker.getRace() == SpaceRace.REBORGIANS
-                && planet.getPlanetPlayerInfo().getRace()
-                != SpaceRace.MECHIONS) {
+                && !planet.getPlanetPlayerInfo().getRace().isRoboticRace()) {
               extraPop = " Recently dead population is synthesized into your"
                   + " population by adding cybergenetic implants.";
               if (stealableTechs != null && stealableTechs.length > 0) {

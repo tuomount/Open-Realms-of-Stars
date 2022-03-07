@@ -696,7 +696,8 @@ public class DiplomacyView extends BlackPanel {
             human.getRace(), null));
         speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE,
             human.getRace(), null));
-        if (human.getRace() != SpaceRace.MECHIONS) {
+        if (human.getRace() != SpaceRace.MECHIONS
+            && human.getRace() != SpaceRace.SYNTHDROIDS) {
           speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_ANGER,
               human.getRace(), null));
         }

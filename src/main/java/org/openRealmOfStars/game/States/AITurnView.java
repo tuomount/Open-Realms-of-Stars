@@ -3277,6 +3277,17 @@ public class AITurnView extends BlackPanel {
         if (numberOfPlanets[i] == 0) {
           PlayerInfo realm = game.getStarMap().getPlayerList()
               .getPlayerInfoByIndex(i);
+          boolean colonyShips = false;
+          for (int k = 0; k < realm.getFleets().getNumberOfFleets(); k++) {
+            Fleet fleet = realm.getFleets().getByIndex(k);
+            if (fleet != null && fleet.getColonyShip() != null) {
+              colonyShips = true;
+              break;
+            }
+          }
+          if (colonyShips) {
+            continue;
+          }
           if (realm.isHuman() && !game.getStarMap().isHumanLost()) {
             setNextState(GameState.GAME_END_VIEW, realm);
           }

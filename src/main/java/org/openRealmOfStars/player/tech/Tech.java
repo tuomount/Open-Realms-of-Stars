@@ -433,7 +433,7 @@ public class Tech {
    * Set list of space race. This can be both exlude or include
    * @param spaceRaces Spacerace as var args.
    */
-  public void setSpaceRaces(final SpaceRace ...spaceRaces) {
+  public void setSpaceRaces(final SpaceRace... spaceRaces) {
     this.spaceRaces = spaceRaces;
   }
 

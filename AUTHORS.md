@@ -64,6 +64,8 @@ Alteirian race picture by Tuomo Untinen, original art by Surt - http://opengamea
 
 Smaugirian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
+Alonian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
+
 Space Captain by Justin Nichol 
 Tuomo Untinen added legs for the captain. -https://opengameart.org/content/space-captain-with-legs
 

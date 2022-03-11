@@ -103,6 +103,8 @@ public class CreditsView extends BlackPanel {
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Smaugirian race picture by Tuomo Untinen, original art by Surt - "
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
+      + "Alonian race picture by Tuomo Untinen, original art by Surt - "
+      + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Space Captain by Justin Nichol \n"
       + "Tuomo Untinen added legs for the captain. -"
       + "https://opengameart.org/content/space-captain-with-legs\n\n"

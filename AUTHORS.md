@@ -50,6 +50,8 @@ http://creativecommons.org/licenses/by/3.0/
 
 Explosions by Csaba Felvegi aka Chabull
 
+Alonian ships by Tuomo Untinen
+
 Alien pictures by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
 Scaurian trader picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps

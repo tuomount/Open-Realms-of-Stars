@@ -89,6 +89,7 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 3.0\n"
       + "http://creativecommons.org/licenses/by/3.0/\n\n"
       + "Explosions by Csaba Felvegi aka Chabull\n\n"
+      + "Alonian ships by Tuomo Untinen\n\n"
       + "Alien pictures by Surt - "
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Scaurian trader picture by Tuomo Untinen, original art by Surt - "

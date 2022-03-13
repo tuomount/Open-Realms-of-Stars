@@ -1524,6 +1524,14 @@ public class StarMap {
           && stat.getDesign().isMilitaryShip()) {
         numShip = 2;
       }
+      if (playerInfo.getRace() == SpaceRace.ALONIANS) {
+        if (stat.getDesign().isMilitaryShip()) {
+          numShip = 4;
+        }
+        if (stat.getDesign().getName().startsWith("Colony")) {
+          numShip = 2;
+        }
+      }
       for (int j = 0; j < numShip; j++) {
         if (stat.getDesign().getHull().getHullType() == ShipHullType.ORBITAL) {
           continue;

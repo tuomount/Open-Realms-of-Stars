@@ -298,6 +298,8 @@ public class PlanetHandlingTest {
     Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
     Mockito.when(planet.howManyBuildings(building.getName())).thenReturn(0);
     Mockito.when(planet.exceedRadiation()).thenReturn(false);
+    Mockito.when(planet.getTotalPopulation()).thenReturn(2);
+    Mockito.when(planet.getPopulationLimit()).thenReturn(12);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     TechList techList = Mockito.mock(TechList.class);
@@ -664,6 +666,8 @@ public class PlanetHandlingTest {
     Building advancedFactory = createAdvancedFactory();
 
     Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getTotalPopulation()).thenReturn(2);
+    Mockito.when(planet.getPopulationLimit()).thenReturn(12);
     Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
     Mockito.when(planet.howManyBuildings(farm.getName())).thenReturn(0);
     Mockito.when(planet.exceedRadiation()).thenReturn(false);

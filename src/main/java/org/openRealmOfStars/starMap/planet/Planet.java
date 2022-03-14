@@ -2039,6 +2039,23 @@ public class Planet {
     return requiredMetalCost;
   }
   /**
+   * Calculate sur plus food for planet. This does not take count possible
+   * limitations which space race might have for sur plus food. This will return
+   * zero for mechions or lithovorians.
+   * @return Sur plus food.
+   */
+  public int calculateSurPlusFood() {
+    if (planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
+      return 0;
+    }
+    if (planetOwnerInfo.getRace().isLithovorian()) {
+      return 0;
+    }
+    int food = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
+        * planetOwnerInfo.getRace().getFoodRequire() / 100;
+    return food;
+  }
+  /**
    * Update planet foor for one turn.
    * @param map StarMap
    * @return true if planet is still populated, otherwise false
@@ -2064,8 +2081,7 @@ public class Planet {
           setMetal(0);
         }
       } else {
-        food = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
-            * planetOwnerInfo.getRace().getFoodRequire() / 100;
+        food = calculateSurPlusFood();
         if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && food > 0) {
           food = 1;
         }

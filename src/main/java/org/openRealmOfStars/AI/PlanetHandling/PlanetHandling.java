@@ -506,6 +506,15 @@ public final class PlanetHandling {
     } else {
       score = score - building.getFarmBonus() * 40;
     }
+    if (info.getRace() != SpaceRace.MECHIONS
+        && info.getRace() != SpaceRace.LITHORIANS
+        && building.getFarmBonus() > 0
+        && planet.getTotalPopulation() == planet.getPopulationLimit()
+        && planet.calculateSurPlusFood() >= 0) {
+      // Planet population is already max out and food is enough.
+      // No need for building more food production.
+      score = 0;
+    }
     if (info.getRace() == SpaceRace.MECHIONS) {
       score = score + building.getReseBonus() * 80;
       score = score + building.getCultBonus() * 60;

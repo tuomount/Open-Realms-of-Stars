@@ -2677,7 +2677,11 @@ public class Planet {
           }
           metal = metal - requiredMetalCost;
           prodResource = prodResource - requiredProdCost;
-          workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
+          if (calculateSurPlusFood() > 0) {
+            workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
+          } else {
+            workers[FOOD_FARMERS] = workers[FOOD_FARMERS] + 1;
+          }
           String nextBuilding = "";
           String finishedBuilding = underConstruction.getName();
           if (governor != null) {

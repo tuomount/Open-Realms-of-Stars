@@ -3785,8 +3785,16 @@ public class StarMap {
         && info.getRuler().hasPerk(Perk.MERCHANT)) {
       result++;
     }
+    boolean alonianColonyInDeepSpace = false;
     for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
       Fleet fleet = info.getFleets().getByIndex(i);
+      if (production == Planet.PRODUCTION_RESEARCH
+          && fleet.hasColonyShip(SpaceRace.ALONIANS)) {
+        Planet planet = getPlanetByCoordinate(fleet.getX(), fleet.getY());
+        if (planet == null) {
+          alonianColonyInDeepSpace = true;
+        }
+      }
       if (production == Planet.PRODUCTION_RESEARCH) {
         result = result + fleet.getTotalReseachBonus();
       }
@@ -3804,6 +3812,10 @@ public class StarMap {
       if (production == Planet.PRODUCTION_CULTURE) {
         result = result + fleet.getTotalCultureBonus();
       }
+    }
+    if (production == Planet.PRODUCTION_RESEARCH && alonianColonyInDeepSpace) {
+      // Alonians get extra research based on colony not on planet.
+      result = result + 1;
     }
     if (production == Planet.PRODUCTION_RESEARCH) {
       if (info.getRuler() != null

@@ -900,6 +900,24 @@ public class Fleet {
   }
 
   /**
+   * Fleet has colony ship with working colony module and at least one colonist.
+   * @param race Required space race for colony ship. Null if non required.
+   * @return True if has working colony ship.
+   */
+  public boolean hasColonyShip(final SpaceRace race) {
+    for (Ship ship : ships) {
+      if (ship.isColonyShip() && ship.getColonist() > 0) {
+        if (race == null) {
+          return true;
+        }
+        if (race == ship.getHull().getRace()) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  /**
    * Does fleet have trooper ship?
    * @return True if has trooper
    */
@@ -1050,10 +1068,18 @@ public class Fleet {
    */
   public int getTotalReseachBonus() {
     int result = 0;
+    boolean alonianShips = false;
     if (isStarBaseDeployed()) {
       for (Ship ship : ships) {
         result = result + ship.getTotalResearchBonus();
+        if (ship.getHull().getRace() == SpaceRace.ALONIANS) {
+          alonianShips = true;
+        }
       }
+    }
+    if (result > 0 && alonianShips) {
+      // Alonians get research bonus.
+      result++;
     }
     return result;
   }

@@ -1589,6 +1589,119 @@ public class StarMap {
   }
 
   /**
+   * Create realm to galaxy without planet. This will add required ships.
+   * This will also add message about new realm starting.
+   * @param x X coordinate where to start
+   * @param y Y coordinate where to start
+   * @param playerInfo Realm who is starting
+   * @param playerIndex Index for player
+   */
+  public void createRealmToGalaxy(final int x, final int y,
+      final PlayerInfo playerInfo, final int playerIndex) {
+    Coordinate startCoord = new Coordinate(x, y);
+    if (Game.getTutorial() != null && playerInfo.isHuman()
+        && isTutorialEnabled()) {
+      String tutorialText = Game.getTutorial().showTutorialText(0);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        playerInfo.getMsgList().addNewMessage(msg);
+      }
+      tutorialText = Game.getTutorial().showTutorialText(3);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.FLEET, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        msg.setCoordinate(startCoord);
+        msg.setMatchByString("Colony #0");
+        playerInfo.getMsgList().addNewMessage(msg);
+      }
+    }
+    Message msg = new Message(
+        MessageType.FLEET, playerInfo.getEmpireName() + " starts at "
+            + "deep space.",
+        Icons.getIconByName(Icons.ICON_CULTURE));
+    PlayerStartEvent event = new PlayerStartEvent(startCoord, "Deep space",
+        playerIndex);
+    history.addEvent(event);
+    msg.setCoordinate(startCoord);
+    msg.setMatchByString("Colony #0");
+    Leader ruler = LeaderUtility.createLeader(playerInfo, null,
+        LeaderUtility.LEVEL_START_RULER);
+    ruler.setJob(Job.RULER);
+    ruler.setTitle(LeaderUtility.createTitleForLeader(ruler, playerInfo));
+    playerInfo.getLeaderPool().add(ruler);
+    playerInfo.getMsgList().addNewMessage(msg);
+    playerInfo.setRuler(ruler);
+
+    ShipStat[] stats = playerInfo.getShipStatList();
+    int count = 0;
+    for (ShipStat stat : stats) {
+      int numShip = 1;
+      if (playerInfo.getRace() == SpaceRace.ALONIANS) {
+        if (stat.getDesign().isMilitaryShip()) {
+          numShip = 4;
+        }
+        if (stat.getDesign().getName().startsWith("Colony")) {
+          numShip = 2;
+        }
+      }
+      for (int j = 0; j < numShip; j++) {
+        if (stat.getDesign().getHull().getHullType() == ShipHullType.ORBITAL) {
+          continue;
+        }
+        Ship ship = new Ship(stat.getDesign());
+        stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+        stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+        Fleet fleet = new Fleet(ship, x, y);
+        playerInfo.getFleets().add(fleet);
+        if (ship.isColonyModule()) {
+          fleet.setName("Colony #" + count);
+          if (Game.getTutorial() != null && playerInfo.isHuman()
+              && isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(7);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.FLEET, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(fleet.getCoordinate());
+              msg.setMatchByString(fleet.getName());
+              playerInfo.getMsgList().addNewMessage(msg);
+            }
+          }
+        } else {
+          fleet.setName("Scout #" + count);
+          if (Game.getTutorial() != null && playerInfo.isHuman()
+              && isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(5);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.FLEET, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(fleet.getCoordinate());
+              msg.setMatchByString(fleet.getName());
+              playerInfo.getMsgList().addNewMessage(msg);
+            }
+            tutorialText = Game.getTutorial().showTutorialText(6);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.FLEET, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(fleet.getCoordinate());
+              msg.setMatchByString(fleet.getName());
+              playerInfo.getMsgList().addNewMessage(msg);
+            }
+          }
+
+        }
+        msg = new Message(MessageType.FLEET,
+            fleet.getName() + " is waiting for orders.",
+            Icons.getIconByName(Icons.ICON_HULL_TECH));
+        msg.setCoordinate(fleet.getCoordinate());
+        msg.setMatchByString(fleet.getName());
+        playerInfo.getMsgList().addNewMessage(msg);
+        count++;
+      }
+    }
+  }
+
+  /**
    * Create Solar System
    * @param solarSystem map of solar systems
    * @param sunx Sun's about coordinates
@@ -1603,6 +1716,27 @@ public class StarMap {
   private int[][] createSolarSystem(final int[][] solarSystem, final int sunx,
       final int suny, final int planetsToCreate, final int gasGiantsToCreate,
       final int playerIndex, final GalaxyConfig config) {
+    boolean ancientRealmStart = false;
+    for (int i = 0; i < config.getMaxPlayers(); i++) {
+      if (config.getPlayerAncientRealm(i)) {
+        ancientRealmStart = true;
+      }
+    }
+    if (playerIndex != -1) {
+      PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
+      if (playerInfo.getRace() == SpaceRace.ALONIANS) {
+        int sx = sunx + DiceGenerator.getRandom(-1, 1);
+        int sy = suny + DiceGenerator.getRandom(-1, 1);
+        if (!ancientRealmStart) {
+          createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
+        } else if (playerInfo.isAncientRealm()) {
+          createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
+        }
+        int[][] mapOfSolar = StarMapUtilities.setSolarSystem(solarSystem, sx,
+            sy, getMaxX(), getMaxY());
+        return mapOfSolar;
+      }
+    }
     int[][] mapOfSolar = solarSystem;
     int numberOfPlanets = planetsToCreate;
     int numberOfGasGiants = gasGiantsToCreate;
@@ -1611,12 +1745,6 @@ public class StarMap {
     }
     if (numberOfGasGiants > 2) {
       numberOfGasGiants = 2;
-    }
-    boolean ancientRealmStart = false;
-    for (int i = 0; i < config.getMaxPlayers(); i++) {
-      if (config.getPlayerAncientRealm(i)) {
-        ancientRealmStart = true;
-      }
     }
     // The Sun
     int sx = sunx + DiceGenerator.getRandom(-1, 1);

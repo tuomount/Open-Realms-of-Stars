@@ -326,8 +326,16 @@ public class StarMapMouseListener extends MouseAdapter
             if (distance < 2 && distance > 0) {
               moveClicked = true;
             } else {
-              setRoutePlanning(true);
-              setRegularRoute(true);
+              FleetTileInfo[][] tiles = starMap.getFleetTiles();
+              PlayerInfo owner = starMap.getPlayerByIndex(
+                  tiles[lastClickedFleetCoordinate.getX()]
+                      [lastClickedFleetCoordinate.getY()].getPlayerIndex());
+              if (owner == starMap.getCurrentPlayerInfo()) {
+                setRoutePlanning(true);
+                setRegularRoute(true);
+              } else {
+                SoundPlayer.playMenuDisabled();
+              }
             }
           }
         } else if (e.getClickCount() == 1

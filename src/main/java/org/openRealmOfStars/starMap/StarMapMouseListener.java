@@ -330,7 +330,8 @@ public class StarMapMouseListener extends MouseAdapter
               PlayerInfo owner = starMap.getPlayerByIndex(
                   tiles[lastClickedFleetCoordinate.getX()]
                       [lastClickedFleetCoordinate.getY()].getPlayerIndex());
-              if (owner == starMap.getCurrentPlayerInfo()) {
+              if (owner == starMap.getCurrentPlayerInfo()
+                  && !lastClickedFleet.isStarBaseDeployed()) {
                 setRoutePlanning(true);
                 setRegularRoute(true);
               } else {

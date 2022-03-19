@@ -2510,6 +2510,7 @@ public boolean launchIntercept(final int distance,
       result = new ShipDamage(1, "Target is being pulled by tractor beam!");
       if (target.getShip().getTotalMilitaryPower() == 0
           && target.getShip().getSpeed() == 0) {
+        //FIXME: Should this happen also for space krakens?
         result = new ShipDamage(1, "Target is being pulled by tractor beam and"
             + " captured since all weapons and engines are down!");
         Fleet origin = null;

@@ -334,20 +334,20 @@ public enum Perk {
       // Agricultural perk has no use for mechions.
       result = false;
     }
-    if (this == Perk.ADDICTED && race == SpaceRace.MECHIONS) {
-      // Addicted is not allowed for mechions.
+    if (this == Perk.ADDICTED && race.isRoboticRace()) {
+      // Addicted is not allowed for robots.
       result = false;
     }
-    if (this == Perk.HEALTHY && race == SpaceRace.MECHIONS) {
-      // Mechions are robots, and are not healthy
+    if (this == Perk.HEALTHY && race.isRoboticRace()) {
+      // Robotic races are robots, and are not healthy
       result = false;
     }
     if (this == Perk.HEALTHY && race == SpaceRace.REBORGIANS) {
       // Reborgians are cyborg, and are not healthy
       result = false;
     }
-    if (this == Perk.MAD && race == SpaceRace.MECHIONS) {
-      // Mechions are robots, they have no mental problems
+    if (this == Perk.MAD && race.isRoboticRace()) {
+      // Robitic races are robots, they have no mental problems
       result = false;
     }
     if (this == Perk.PEACEFUL && race == SpaceRace.SPORKS) {
@@ -374,12 +374,12 @@ public enum Perk {
       // Reborgians cannot be charismatic
       result = false;
     }
-    if (this == Perk.SKILLFUL && race == SpaceRace.MECHIONS) {
-      // Mechions cannot be skillful
+    if (this == Perk.SKILLFUL && race.isRoboticRace()) {
+      // Robots cannot be skillful
       result = false;
     }
-    if (this == Perk.INCOMPETENT && race == SpaceRace.MECHIONS) {
-      // Mechions cannot be incompetent
+    if (this == Perk.INCOMPETENT && race.isRoboticRace()) {
+      // Robots cannot be incompetent
       result = false;
     }
     return result;

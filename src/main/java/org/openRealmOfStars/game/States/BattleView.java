@@ -440,7 +440,7 @@ public class BattleView extends BlackPanel {
         combat.setComponentUse(index);
         ShipComponent component = combat.getCurrentShip().getShip(
             ).getComponent(index);
-        if (component.isWeapon()) {
+        if (component.isWeapon() || component.isTractor()) {
           infoPanel.disableAllWeapons();
         }
         if (combat.getCurrentShip().getShip().isStarBase()

@@ -174,6 +174,16 @@ public class SpaceRaceUtilityTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorSynthdroids() {
+    SpaceRace race = SpaceRace.SYNTHDROIDS;
+    assertEquals(Attitude.LOGICAL, race.getAttitude());
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.AI);
+    assertEquals(true, str.contains("Synthdroid") || str.contains("Huskdroid"));
+    assertEquals(true, str.contains("AI"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFullDescriptions() {
     String[] expectedResult = new String[SpaceRaceUtility.RACE_SELECTION.length];
     expectedResult[0] = "### Humans\n"+

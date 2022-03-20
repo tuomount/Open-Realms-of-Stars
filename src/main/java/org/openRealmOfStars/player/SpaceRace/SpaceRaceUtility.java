@@ -156,7 +156,9 @@ public final class SpaceRaceUtility {
       } else if (race == SpaceRace.LITHORIANS) {
         sb.append(buildSecondaryName(race, "Metavore"));
       } else if (race == SpaceRace.SMAUGIRIANS) {
-        sb.append(buildSecondaryName(race, "Hareans"));
+        sb.append(buildSecondaryName(race, "Harean"));
+      } else if (race == SpaceRace.SYNTHDROIDS) {
+        sb.append(buildSecondaryName(race, "Huskdroid"));
       } else {
         sb.append(race.getNameSingle());
       }
@@ -166,11 +168,33 @@ public final class SpaceRaceUtility {
       sb.append(government.getName());
       sb.append(" of ");
       if (race == SpaceRace.HUMAN) {
-        if (DiceGenerator.getRandom(1) == 0) {
-          sb.append("Terran");
-        } else {
-          sb.append(race.getNameSingle());
-        }
+        sb.append(buildSecondaryName(race, "Terran"));
+      } else if (race == SpaceRace.MECHIONS) {
+          sb.append(buildSecondaryName(race, "Steel"));
+      } else if (race == SpaceRace.SPORKS) {
+          sb.append(buildSecondaryName(race, "Taurus"));
+      } else if (race == SpaceRace.GREYANS) {
+          sb.append(buildSecondaryName(race, "Aesir"));
+      } else if (race == SpaceRace.CENTAURS) {
+          sb.append(buildSecondaryName(race, "Sagittarian"));
+      } else if (race == SpaceRace.TEUTHIDAES) {
+          sb.append(buildSecondaryName(race, "Squiddan"));
+      } else if (race == SpaceRace.MOTHOIDS) {
+          sb.append(buildSecondaryName(race, "Scorpio"));
+      } else if (race == SpaceRace.SCAURIANS) {
+          sb.append(buildSecondaryName(race, "Nemean"));
+      } else if (race == SpaceRace.HOMARIANS) {
+          sb.append(buildSecondaryName(race, "Cancerian"));
+      } else if (race == SpaceRace.CHIRALOIDS) {
+          sb.append(buildSecondaryName(race, "Capricorn"));
+      } else if (race == SpaceRace.REBORGIANS) {
+        sb.append(buildSecondaryName(race, "Bionian"));
+      } else if (race == SpaceRace.LITHORIANS) {
+        sb.append(buildSecondaryName(race, "Metavore"));
+      } else if (race == SpaceRace.SMAUGIRIANS) {
+        sb.append(buildSecondaryName(race, "Harean"));
+      } else if (race == SpaceRace.SYNTHDROIDS) {
+        sb.append(buildSecondaryName(race, "Huskdroid"));
       } else {
         sb.append(race.getNameSingle());
       }

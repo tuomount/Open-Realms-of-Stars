@@ -40,7 +40,7 @@ public final class SpaceRaceUtility {
   public static final String[] RACE_SELECTION = {"Human", "Mechion", "Spork",
       "Greyan", "Centaur", "Mothoid", "Teuthidae", "Scaurian", "Homarian",
       "Chiraloid", "Reborgian", "Lithorian", "Alteirian", "Smaugirian",
-      "Synthdroid" };
+      "Synthdroid", "Alonian" };
 
 
   /**
@@ -108,6 +108,9 @@ public final class SpaceRaceUtility {
     }
     if (name.equals(SpaceRace.SYNTHDROIDS.getNameSingle())) {
       return SpaceRace.SYNTHDROIDS;
+    }
+    if (name.equals(SpaceRace.ALONIANS.getNameSingle())) {
+      return SpaceRace.ALONIANS;
     }
     return null;
   }

@@ -1656,6 +1656,7 @@ public class StarMap {
         playerInfo.getFleets().add(fleet);
         if (ship.isColonyModule()) {
           fleet.setName("Colony #" + count);
+          fleet.getColonyShip(false).setColonist(2);
           if (Game.getTutorial() != null && playerInfo.isHuman()
               && isTutorialEnabled()) {
             String tutorialText = Game.getTutorial().showTutorialText(7);

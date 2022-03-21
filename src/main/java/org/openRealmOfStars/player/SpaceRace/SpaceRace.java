@@ -174,10 +174,10 @@ public enum SpaceRace {
    * produces one research point. Also starbase's laboratories produces
    * more research points.
    */
-  ALONIANS(17, "Alonians", "Alonian", "Alonian realm always starts without"
-      + " homeplanet. How ever they get higher starting technology and have"
-      + " special ability where single colony ship produces one research point."
-      + "Also starbase's laboratories produces more research points.");
+  ALONIANS(17, "Alonians", "Alonian", "Alonian realm starts without"
+      + " homeplanet.\nHowever they get higher starting technology and have"
+      + " special ability\nwhere single colony ship produces one research"
+      + " point.\nAlso starbase's laboratories produces more research points.");
 
 
 

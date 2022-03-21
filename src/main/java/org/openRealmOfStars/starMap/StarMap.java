@@ -1732,6 +1732,11 @@ public class StarMap {
           createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
         } else if (playerInfo.isAncientRealm()) {
           createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
+        } else {
+          SquareInfo info = new SquareInfo(SquareInfo.TYPE_ALONIAN_START,
+              playerIndex);
+          tileInfo[sx][sy] = info;
+          tiles[sx][sy] = Tiles.getTileByName(TileNames.EMPTY).getIndex();
         }
         int[][] mapOfSolar = StarMapUtilities.setSolarSystem(solarSystem, sx,
             sy, getMaxX(), getMaxY());
@@ -4018,6 +4023,17 @@ public class StarMap {
     return null;
   }
 
+  /**
+   * Clear square info from certain point of space.
+   * Checks that space is in valid coordinates.
+   * @param x X coordinate
+   * @param y Y Coordinate
+   */
+  public void clearTileInfo(final int x, final int y) {
+    if (isValidCoordinate(x, y)) {
+      tileInfo[x][y] = SquareInfo.EMPTY_TILE;
+    }
+  }
   /**
    * Get culture power
    * @param x The X coordinate

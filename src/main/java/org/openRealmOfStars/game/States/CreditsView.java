@@ -453,7 +453,10 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n"
       + "Cyborg by\n"
-      + "Umplix (CC0)\n\n";
+      + "Umplix (CC0)\n\n"
+      + "Dark Intro by\n"
+      + "Nikke (CC0)\n\n";
+
 
   /**
    * Constructor for Credits view

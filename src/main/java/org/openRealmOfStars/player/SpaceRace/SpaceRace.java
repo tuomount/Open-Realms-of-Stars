@@ -1246,8 +1246,7 @@ public enum SpaceRace {
     case SYNTHDROIDS:
       return MusicPlayer.CYBORG;
     case ALONIANS:
-      // TODO: Change diplomatic music later
-      return MusicPlayer.MILLION_LIGHT_YEARS;
+      return MusicPlayer.DARK_INTRO;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }

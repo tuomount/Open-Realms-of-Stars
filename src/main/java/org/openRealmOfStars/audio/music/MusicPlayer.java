@@ -266,6 +266,13 @@ public final class MusicPlayer {
       "/resources/musics/Cyborg.ogg");
 
   /**
+   * Dark Intro By Nikke CC0
+   */
+  public static final MusicFileInfo DARK_INTRO = new MusicFileInfo(
+      "Dark Intro", "Nikke",
+      "/resources/musics/Dark Intro.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

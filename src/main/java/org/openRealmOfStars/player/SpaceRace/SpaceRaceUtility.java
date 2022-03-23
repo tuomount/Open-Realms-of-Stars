@@ -162,6 +162,8 @@ public final class SpaceRaceUtility {
         sb.append(buildSecondaryName(race, "Harean"));
       } else if (race == SpaceRace.SYNTHDROIDS) {
         sb.append(buildSecondaryName(race, "Huskdroid"));
+      } else if (race == SpaceRace.ALONIANS) {
+        sb.append(buildSecondaryName(race, "Warfling"));
       } else {
         sb.append(race.getNameSingle());
       }
@@ -198,6 +200,8 @@ public final class SpaceRaceUtility {
         sb.append(buildSecondaryName(race, "Harean"));
       } else if (race == SpaceRace.SYNTHDROIDS) {
         sb.append(buildSecondaryName(race, "Huskdroid"));
+      } else if (race == SpaceRace.ALONIANS) {
+        sb.append(buildSecondaryName(race, "Warfling"));
       } else {
         sb.append(race.getNameSingle());
       }

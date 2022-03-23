@@ -439,7 +439,7 @@ public class DiplomaticTrade {
         }
         i++;
       } while (firstOffer.getOfferValue(offerMaker.getRace())
-          < secondOffer.getOfferValue(offerMaker.getRace()));
+          > secondOffer.getOfferValue(offerMaker.getRace()));
     }
     if (tradeType == SELL && techListForSecond.size() > 0) {
       int value = techListForSecond.get(0).getLevel() * 2;
@@ -472,12 +472,15 @@ public class DiplomaticTrade {
   /**
    * Generate tech demand or money demand
    * @param agreePlayer Who is need to agree with trade
+   * @param demander Realm who is making the demand
    */
-  protected void generateTechDemand(final PlayerInfo agreePlayer) {
+  protected void generateTechDemand(final PlayerInfo agreePlayer,
+      final PlayerInfo demander) {
     if (techListForFirst.size() > 0) {
       firstOffer = new NegotiationList();
+      int index = getBestTech(techListForFirst, demander.getAiAttitude());
       firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
-          techListForFirst.get(0)));
+          techListForFirst.get(index)));
     } else {
       int credit = agreePlayer.getTotalCredits();
       if (credit > 10) {
@@ -1123,7 +1126,7 @@ public class DiplomaticTrade {
         PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
         generateTradeEmbargoOffer(embagoed);
       } else {
-        generateTechDemand(agree);
+        generateTechDemand(agree, info);
       }
     }
   }
@@ -1204,7 +1207,7 @@ public class DiplomaticTrade {
       if (value < 5) {
         generateEqualTrade(NegotiationType.WAR);
       } else if (value < 10) {
-        generateTechDemand(agree);
+        generateTechDemand(agree, info);
       }
     }
     int value = DiceGenerator.getRandom(100);
@@ -1225,7 +1228,7 @@ public class DiplomaticTrade {
         PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
         generateTradeEmbargoOffer(embagoed);
       } else {
-        generateTechDemand(agree);
+        generateTechDemand(agree, info);
       }
     }
   }
@@ -1714,7 +1717,7 @@ public class DiplomaticTrade {
     } else {
       if (!info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.DEFENSIVE_PACT)) {
-        generateTechDemand(agree);
+        generateTechDemand(agree, info);
       } else {
         generateMapTrade(BUY, true);
       }

@@ -451,12 +451,15 @@ public final class ShipGenerator {
             .createByName(player.getTechList().getBestEngine().getComponent());
       }
       result.addComponent(engine);
+      // Getting the best powersource
       ShipComponent power = ShipComponentFactory.createByName(
           player.getTechList().getBestEnergySource().getComponent());
-      result.addComponent(power);
       ShipComponent weapon = ShipComponentFactory
           .createByName(player.getTechList().getBestWeapon().getComponent());
       result.addComponent(weapon);
+      if (result.getFreeEnergy() < 0) {
+        result.addComponent(power);
+      }
       if (result.getFreeSlots() > 1 && bomber) {
         Tech[] combatTechs = player.getTechList()
             .getListForType(TechType.Combat);
@@ -493,6 +496,9 @@ public final class ShipGenerator {
       if (result.getFreeSlots() >= 1 && hullType == ShipHullType.PRIVATEER) {
           result.addComponent(ShipComponentFactory.createByName(
               "Privateer module"));
+          if (result.getFreeEnergy() < 0) {
+            result.addComponent(power);
+          }
       }
 
       Tech[] defenseTechs = player.getTechList()
@@ -851,10 +857,12 @@ public final class ShipGenerator {
       result.addComponent(engine);
       ShipComponent power = ShipComponentFactory.createByName(
                     player.getTechList().getBestEnergySource().getComponent());
-      result.addComponent(power);
       ShipComponent weapon = ShipComponentFactory
           .createByName(player.getTechList().getBestWeapon().getComponent());
       result.addComponent(weapon);
+      if (result.getFreeEnergy() < 0) {
+        result.addComponent(power);
+      }
       Tech shield = TechList.getBestTech(defenseTechs, "Shield");
       Tech armor = TechList.getBestTech(defenseTechs, "Armor plating");
       ShipComponent shieldComp = null;
@@ -877,6 +885,21 @@ public final class ShipGenerator {
           result.addComponent(shieldComp);
         } else if (armorComp != null) {
           result.addComponent(armorComp);
+        }
+      }
+      if (result.getNumberOfComponents() == 2) {
+        if (shieldComp != null) {
+          result.addComponent(shieldComp);
+          result.addComponent(power);
+        }
+      } else if (result.getNumberOfComponents()
+          < result.getHull().getMaxSlot()) {
+        if (weapon.getEnergyRequirement() < result.getFreeEnergy()) {
+          result.addComponent(weapon);
+        } else if (armorComp != null) {
+          result.addComponent(armorComp);
+        } else {
+          result.addComponent(power);
         }
       }
     }

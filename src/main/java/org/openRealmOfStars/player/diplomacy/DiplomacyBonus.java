@@ -65,7 +65,8 @@ public class DiplomacyBonus {
        break;
      }
      case GIVEN_VALUABLE_FREE: {
-       if (race == SpaceRace.HUMAN || race == SpaceRace.SCAURIANS) {
+       if (race == SpaceRace.HUMAN || race == SpaceRace.SCAURIANS
+           || race == SpaceRace.ALONIANS) {
          bonusValue = 3;
          bonusLasting = 50;
        } else {

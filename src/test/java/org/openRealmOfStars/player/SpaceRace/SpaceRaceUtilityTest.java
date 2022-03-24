@@ -487,6 +487,30 @@ public class SpaceRaceUtilityTest {
         + "* Rush: None\n"
         + "* Start planet value: 100\n"
         + "* Special: Population needs to be built and no heirs";
+    expectedResult[15] = "### Alonians\n"
+        + "Alonian realm starts without"
+        + " homeplanet.\nHowever they get higher starting technology and have"
+        + " special ability\nwhere single colony ship produces one research point."
+        + "\nAlso starbase's laboratories produces more research points.\n"
+        + "* Max radiation: 6\n"
+        + "* Troop power: 11\n"
+        + "* Leader lifespan: 100\n"
+        + "* Minimum leader population: 4\n"
+        + "* Production: 100%\n"
+        + "* Mining: 100%\n"
+        + "* Research: 100%\n"
+        + "* Food production: 100%\n"
+        + "* Growth: 10 turns\n"
+        + "* Food require: 100%\n"
+        + "* Population limit: +1\n"
+        + "* Culture: 100%\n"
+        + "* Diplomacy bonus: 1\n"
+        + "* War resistance: 50\n"
+        + "* Rush: Credit\n"
+        + "* Start planet value: 100\n"
+        + "* Special: No starting planet, but starbase labs have higher"
+        + " research. One colony ship in realm produces one research point"
+        + " if not orbiting planet.";
     for (int i = 0; i <  SpaceRaceUtility.RACE_SELECTION.length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByName(
           SpaceRaceUtility.RACE_SELECTION[i]);
@@ -558,6 +582,9 @@ public class SpaceRaceUtilityTest {
         break;
       case SYNTHDROIDS:
         assertEquals(600, result);
+        break;
+      case ALONIANS:
+        assertEquals(625, result);
         break;
       default:
         assertEquals(0, result);

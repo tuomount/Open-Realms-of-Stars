@@ -550,6 +550,7 @@ public class ImageInstruction {
         && !SpaceRace.ALTEIRIANS.getNameSingle().equals(image)
         && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(image)
         && !SpaceRace.SYNTHDROIDS.getNameSingle().equals(image)
+        && !SpaceRace.ALONIANS.getNameSingle().equals(image)
         && !LOGO.equals(image)
         && !BIG_BAN.equals(image)
         && !BIG_PEACE.equals(image)
@@ -612,7 +613,8 @@ public class ImageInstruction {
         && !SpaceRace.LITHORIANS.getNameSingle().equals(image)
         && !SpaceRace.ALTEIRIANS.getNameSingle().equals(image)
         && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(image)
-        && !SpaceRace.SYNTHDROIDS.getNameSingle().equals(image)) {
+        && !SpaceRace.SYNTHDROIDS.getNameSingle().equals(image)
+        && !SpaceRace.ALONIANS.getNameSingle().equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -717,6 +719,7 @@ public class ImageInstruction {
         && !SpaceRace.ALTEIRIANS.getNameSingle().equals(logoType)
         && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(logoType)
         && !SpaceRace.SYNTHDROIDS.getNameSingle().equals(logoType)
+        && !SpaceRace.ALONIANS.getNameSingle().equals(logoType)
         && !SpaceRace.SPACE_MONSTERS.getNameSingle().equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }

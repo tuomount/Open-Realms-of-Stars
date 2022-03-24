@@ -134,6 +134,8 @@ public final class SpeechFactory {
           + " in my sector. Fleet must be moved!");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Detected border crossing. Fleet " + fleetName + ". Move it!");
+      case ALONIANS: return new SpeechLine(type,
+          "Your fleet " + fleetName + " has crossed border. Move it away!");
       default: return null;
     }
   }
@@ -196,7 +198,8 @@ public final class SpeechFactory {
       case SYNTHDROIDS: return new SpeechLine(type,
           "Detected spy and border crossing. Fleet " + fleetName
               + ". Move it!");
-
+      case ALONIANS: return new SpeechLine(type,
+          "Your spy fleet " + fleetName + " has crossed border. Move it away!");
       default: return null;
     }
   }
@@ -244,6 +247,8 @@ public final class SpeechFactory {
           "You don't have anything we would like to trade...");
       case SYNTHDROIDS: return new SpeechLine(type,
           "No trade detected!");
+      case ALONIANS: return new SpeechLine(type,
+          "Sorry but I thought you had something to trade.");
       default: return null;
     }
   }
@@ -289,6 +294,8 @@ public final class SpeechFactory {
           "I'll move my fleet.");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake for fleet moving out!");
+      case ALONIANS: return new SpeechLine(type,
+          "My sincere apologize, I'll call back the fleet.");
       default: return null;
     }
   }
@@ -336,6 +343,8 @@ public final class SpeechFactory {
           "This could be interesting, " + raceName + ".");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Starting neutral encounter protocol with " + raceName + ".");
+      case ALONIANS: return new SpeechLine(type,
+          "Salutations to you " + raceName + ".");
       default: return null;
     }
   }
@@ -381,6 +390,8 @@ public final class SpeechFactory {
           "Ah good old pal. Let's sit down and talk.");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Starting peer encounter!");
+      case ALONIANS: return new SpeechLine(type,
+          "Sincere salutations to you my friend.");
       default: return null;
     }
   }
@@ -426,6 +437,8 @@ public final class SpeechFactory {
           "Well met, my pal!");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Starting liking encounter...");
+      case ALONIANS: return new SpeechLine(type,
+          "Formal salutations to you.");
       default: return null;
     }
   }
@@ -471,6 +484,8 @@ public final class SpeechFactory {
           "Are you ready to make proposal?");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Preparing for negative meeting...");
+      case ALONIANS: return new SpeechLine(type,
+          "Salutations! I hope for the best but expect the worst.");
       default: return null;
     }
   }
@@ -516,6 +531,8 @@ public final class SpeechFactory {
           "Uh, oh. This could end really bad or...");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Starting hate encounter...");
+      case ALONIANS: return new SpeechLine(type,
+          "Hmph, salutations and all that. Let's get this over.");
       default: return null;
     }
   }
@@ -561,6 +578,8 @@ public final class SpeechFactory {
           "Quick, accept this or you will suffer!");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake this OR start war protocol!");
+      case ALONIANS: return new SpeechLine(type,
+          "I demand you accept this deal!");
       default: return null;
     }
   }
@@ -615,6 +634,8 @@ public final class SpeechFactory {
           "You shall pay for your nonsense!" + extra);
       case SYNTHDROIDS: return new SpeechLine(type,
           "Starting war protocol!" + extra);
+      case ALONIANS: return new SpeechLine(type,
+          "You will regret this! Prepare for war!" + extra);
       default: return null;
     }
   }
@@ -666,6 +687,8 @@ public final class SpeechFactory {
         type = SpeechType.DECLINE;
         return new SpeechLine(type, "Cannot comply!");
       }
+      case ALONIANS: return new SpeechLine(type,
+          "This is ridicilous! I will not accept this one!");
       default: return null;
     }
   }
@@ -711,6 +734,8 @@ public final class SpeechFactory {
           "You are offer is full of junk, like yourself!");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Guru mediatation?");
+      case ALONIANS: return new SpeechLine(type,
+          "Is that all, you infant?");
       default: return null;
     }
   }
@@ -756,6 +781,8 @@ public final class SpeechFactory {
           "Your offer is not high enough.");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake failure!");
+      case ALONIANS: return new SpeechLine(type,
+          "I have to turn down this deal.");
       default: return null;
     }
   }
@@ -801,6 +828,8 @@ public final class SpeechFactory {
           "I am waiting your offer then...");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake failre! Restart offer?");
+      case ALONIANS: return new SpeechLine(type,
+          "Too tough bargain, eh? How about you make an offer.");
       default: return null;
     }
   }
@@ -852,6 +881,8 @@ public final class SpeechFactory {
           "Get ready for fight!" + extra);
       case SYNTHDROIDS: return new SpeechLine(type,
           "Starting war protocol!" + extra);
+      case ALONIANS: return new SpeechLine(type,
+          "Prepare to meet my space weapons!" + extra);
       default: return null;
     }
   }
@@ -906,6 +937,8 @@ public final class SpeechFactory {
               + " Prepare to fight with me!");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Detected fleet " + fleetName + " again! Starting war protocol!");
+      case ALONIANS: return new SpeechLine(type,
+          "Your puny " + fleetName + " shall meet my space weapons!");
       default: return null;
     }
   }
@@ -931,7 +964,7 @@ public final class SpeechFactory {
       case SPORKS: return new SpeechLine(type,
           "How about share spy information for 20 turns?");
       case TEUTHIDAES: return new SpeechLine(type,
-          "Are you interested in intellingece trading for 20 turns?");
+          "Are you interested in intellingence trading for 20 turns?");
       case SCAURIANS: return new SpeechLine(type,
           "Let's build together awesome spy network for 20 turns?");
       case HOMARIANS: return new SpeechLine(type,
@@ -951,6 +984,8 @@ public final class SpeechFactory {
           "I have good intel for you 20 turns. Interested?");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake for espionage information? 20 turns?");
+      case ALONIANS: return new SpeechLine(type,
+          "How about share some intel trades for 20 turns?");
       default: return null;
     }
   }
@@ -1005,6 +1040,9 @@ public final class SpeechFactory {
               + empire + " to trade embargo for 20 turns?");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake for trade embargo? 20 turns? " + empire + "?");
+      case ALONIANS: return new SpeechLine(type,
+          "Are you ready for trade embargo for 20 turns against "
+              + empire + "?");
       default: return null;
     }
   }
@@ -1059,6 +1097,8 @@ public final class SpeechFactory {
           "How about if we start to trade?");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake for trade alliance?");
+      case ALONIANS: return new SpeechLine(type,
+          "Would you form trade alliance with me?");
       default: return null;
     }
   }
@@ -1106,6 +1146,8 @@ public final class SpeechFactory {
           "We should join to same alliance, what do you think?");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake for alliance?");
+      case ALONIANS: return new SpeechLine(type,
+          "Would you form alliance with me?");
       default: return null;
     }
   }
@@ -1156,6 +1198,8 @@ public final class SpeechFactory {
           "I am ready to defend you. Are you ready for defensive pact?");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake for defending together?");
+      case ALONIANS: return new SpeechLine(type,
+          "Would you form defensice pact with me?");
       default: return null;
     }
   }
@@ -1205,6 +1249,8 @@ public final class SpeechFactory {
           "We will fight now!");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Starting war protocols!");
+      case ALONIANS: return new SpeechLine(type,
+          "Prepare to meet my space weapons!");
       default: return null;
     }
   }
@@ -1256,6 +1302,8 @@ public final class SpeechFactory {
           "I agree with this!");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake for agreement!");
+      case ALONIANS: return new SpeechLine(type,
+          "You and me made a deal!");
       default: return null;
     }
   }
@@ -1315,6 +1363,8 @@ public final class SpeechFactory {
           "This is good deal for both of us!");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake done!");
+      case ALONIANS: return new SpeechLine(type,
+          "You made a deal! I'll accept.");
       default: return null;
     }
   }
@@ -1360,6 +1410,8 @@ public final class SpeechFactory {
           "I am offering you this. Interested?");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake?");
+      case ALONIANS: return new SpeechLine(type,
+          "Here is my deal for you. What is your answer?");
       default: return null;
     }
   }
@@ -1405,6 +1457,8 @@ public final class SpeechFactory {
           "How about peace contract?");
       case SYNTHDROIDS: return new SpeechLine(type,
           "Handshake for peace?");
+      case ALONIANS: return new SpeechLine(type,
+          "I propose a deal. Let's make a peace?");
       default: return null;
     }
   }

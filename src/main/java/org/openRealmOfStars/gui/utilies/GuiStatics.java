@@ -1192,6 +1192,13 @@ public final class GuiStatics {
           "/resources/images/synthdroid_race.png"));
 
   /**
+   * Alonian race selection image
+   */
+  public static final BufferedImage IMAGE_ALONIAN_RACE =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/alonian_race.png"));
+
+  /**
    * Privateer race selection image
    */
   public static final BufferedImage IMAGE_PRIVATEER_RACE =

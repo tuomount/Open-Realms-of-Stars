@@ -234,6 +234,17 @@ public final class GovernmentUtility {
         };
         return governments;
     }
+    if (race == SpaceRace.ALONIANS) {
+      GovernmentType[] governments = {
+        GovernmentType.SPACE_PIRATES, GovernmentType.DEMOCRACY,
+        GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+        GovernmentType.ENTERPRISE, GovernmentType.UTOPIA,
+        GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+        GovernmentType.FEUDALISM, GovernmentType.TECHNOCRACY,
+        GovernmentType.HIERARCHY, GovernmentType.KINGDOM
+      };
+      return governments;
+    }
     return null;
   }
 }

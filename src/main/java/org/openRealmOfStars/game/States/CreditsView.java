@@ -89,6 +89,7 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 3.0\n"
       + "http://creativecommons.org/licenses/by/3.0/\n\n"
       + "Explosions by Csaba Felvegi aka Chabull\n\n"
+      + "Alonian ships by Tuomo Untinen\n\n"
       + "Alien pictures by Surt - "
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Scaurian trader picture by Tuomo Untinen, original art by Surt - "
@@ -102,6 +103,8 @@ public class CreditsView extends BlackPanel {
       + "Alteirian race picture by Tuomo Untinen, original art by Surt - "
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Smaugirian race picture by Tuomo Untinen, original art by Surt - "
+      + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
+      + "Alonian race picture by Tuomo Untinen, original art by Surt - "
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Space Captain by Justin Nichol \n"
       + "Tuomo Untinen added legs for the captain. -"
@@ -450,7 +453,10 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n"
       + "Cyborg by\n"
-      + "Umplix (CC0)\n\n";
+      + "Umplix (CC0)\n\n"
+      + "Dark Intro by\n"
+      + "Nikke (CC0)\n\n";
+
 
   /**
    * Constructor for Credits view

@@ -14,7 +14,7 @@ import org.openRealmOfStars.starMap.planet.WorldType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -167,7 +167,17 @@ public enum SpaceRace {
    * Each population must be built. Alternative name Huskdroid.
    */
   SYNTHDROIDS(16, "Synthdroids", "Synthdroid", "Artificial beings that eat only"
-      + " small amount of food. Each population must be cloned.");
+      + " small amount of food. Each population must be cloned."),
+  /**
+   * Alonian realm always starts without homeplanet. How ever they get higher
+   * starting technology and have special ability where single colony ship
+   * produces one research point. Also starbase's laboratories produces
+   * more research points.
+   */
+  ALONIANS(17, "Alonians", "Alonian", "Alonian realm starts without"
+      + " homeplanet.\nHowever they get higher starting technology and have"
+      + " special ability\nwhere single colony ship produces one research"
+      + " point.\nAlso starbase's laboratories produces more research points.");
 
 
 
@@ -254,6 +264,8 @@ public enum SpaceRace {
       return 100;
     case SYNTHDROIDS:
       return 100;
+    case ALONIANS:
+      return 100;
     default:
       return 0;
     }
@@ -298,6 +310,8 @@ public enum SpaceRace {
         return Attitude.SCIENTIFIC;
       case SMAUGIRIANS:
         return Attitude.MILITARISTIC;
+      case ALONIANS:
+        return Attitude.DIPLOMATIC;
       default:
         return Attitude.PEACEFUL;
     }
@@ -341,6 +355,8 @@ public enum SpaceRace {
       return 5;
     case SYNTHDROIDS:
       return 5;
+    case ALONIANS:
+      return 6;
     default:
       return -1;
     }
@@ -385,6 +401,8 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_SMAUGIRIAN_RACE;
     case SYNTHDROIDS:
       return GuiStatics.IMAGE_SYNTHDROID_RACE;
+    case ALONIANS:
+      return GuiStatics.IMAGE_ALONIAN_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -431,6 +449,8 @@ public enum SpaceRace {
         return start + "resources/images/smaugirian_race.png";
       case SYNTHDROIDS:
         return start + "resources/images/synthdroid_race.png";
+      case ALONIANS:
+        return start + "resources/images/alonian_race.png";
       default:
         return start + "resources/images/centaur_race.png";
     }
@@ -494,6 +514,8 @@ public enum SpaceRace {
       return 100;
     case SYNTHDROIDS:
       return 100;
+    case ALONIANS:
+      return 100;
     default:
       return 0;
     }
@@ -537,6 +559,8 @@ public enum SpaceRace {
       return 100;
     case SYNTHDROIDS:
       return 50;
+    case ALONIANS:
+      return 100;
     default:
       return 0;
     }
@@ -580,6 +604,8 @@ public enum SpaceRace {
       return 11;
     case SYNTHDROIDS:
       return 10;
+    case ALONIANS:
+      return 11;
     default:
       return 0;
     }
@@ -622,6 +648,8 @@ public enum SpaceRace {
     case SMAUGIRIANS:
       return 100;
     case SYNTHDROIDS:
+      return 100;
+    case ALONIANS:
       return 100;
     default:
       return 0;
@@ -666,6 +694,8 @@ public enum SpaceRace {
       return 100;
     case SYNTHDROIDS:
       return 0;
+    case ALONIANS:
+      return 100;
     default:
       return 0;
     }
@@ -708,6 +738,8 @@ public enum SpaceRace {
     case SMAUGIRIANS:
       return 100;
     case SYNTHDROIDS:
+      return 100;
+    case ALONIANS:
       return 100;
     default:
       return 100;
@@ -754,6 +786,8 @@ public enum SpaceRace {
       return PlayerColor.TAN;
     case SYNTHDROIDS:
       return PlayerColor.WHITE;
+    case ALONIANS:
+      return PlayerColor.OLIVE;
     default:
       return PlayerColor.CORAL;
     }
@@ -799,6 +833,8 @@ public enum SpaceRace {
       return PlayerColor.OLIVE;
     case SYNTHDROIDS:
       return PlayerColor.ROSE;
+    case ALONIANS:
+      return PlayerColor.GREEN;
     default:
       return PlayerColor.CORAL;
     }
@@ -842,6 +878,8 @@ public enum SpaceRace {
       return 100;
     case SYNTHDROIDS:
       return 50;
+    case ALONIANS:
+      return 100;
     default:
       return 0;
     }
@@ -885,6 +923,8 @@ public enum SpaceRace {
       return -2;
     case SYNTHDROIDS:
       return 0;
+    case ALONIANS:
+      return 1;
     default:
       return 0;
     }
@@ -933,6 +973,8 @@ public enum SpaceRace {
       return 70;
     case SYNTHDROIDS:
       return 60;
+    case ALONIANS:
+      return 50;
     default:
       return 50;
     }
@@ -975,6 +1017,8 @@ public enum SpaceRace {
     case SMAUGIRIANS:
       return 0;
     case SYNTHDROIDS:
+      return 0;
+    case ALONIANS:
       return 0;
     default:
       return 0;
@@ -1019,6 +1063,8 @@ public enum SpaceRace {
       return 11;
     case SYNTHDROIDS:
       return 15;
+    case ALONIANS:
+      return 18;
     default:
       return 15;
     }
@@ -1062,6 +1108,8 @@ public enum SpaceRace {
       return 52;
     case SYNTHDROIDS:
       return 50;
+    case ALONIANS:
+      return 55;
     default:
       return 50;
     }
@@ -1104,6 +1152,8 @@ public enum SpaceRace {
     case SMAUGIRIANS:
       return 3;
     case SYNTHDROIDS:
+      return 3;
+    case ALONIANS:
       return 3;
     default:
       return 3;
@@ -1149,6 +1199,8 @@ public enum SpaceRace {
       return 1;
     case SYNTHDROIDS:
       return 1;
+    case ALONIANS:
+      return 1;
     default:
       return 1;
     }
@@ -1193,6 +1245,8 @@ public enum SpaceRace {
       return MusicPlayer.GUITAR_SONG;
     case SYNTHDROIDS:
       return MusicPlayer.CYBORG;
+    case ALONIANS:
+      return MusicPlayer.DARK_INTRO;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }
@@ -1235,6 +1289,8 @@ public enum SpaceRace {
       return true;
     case SYNTHDROIDS:
       return false;
+    case ALONIANS:
+      return true;
     default:
       return true;
     }
@@ -1277,6 +1333,8 @@ public enum SpaceRace {
       return false;
     case SYNTHDROIDS:
       return false;
+    case ALONIANS:
+      return false;
     default:
       return false;
     }
@@ -1316,6 +1374,9 @@ public enum SpaceRace {
     }
     if (this == SpaceRace.CENTAURS) {
       return 2;
+    }
+    if (this == SpaceRace.ALONIANS) {
+      return 1;
     }
     return 0;
   }
@@ -1363,6 +1424,8 @@ public enum SpaceRace {
       // Droids can be always fixed and parts replaced.
       // Game last maximum of 1120 turns so 2000 is more than enough.
       return 2000;
+    case ALONIANS:
+      return 100;
     default:
       return 80;
     }
@@ -1407,6 +1470,8 @@ public enum SpaceRace {
       return SocialSystem.PATRIARCHY;
     case SYNTHDROIDS:
       return SocialSystem.MATRIARCHY;
+    case ALONIANS:
+      return SocialSystem.EQUAL;
     default:
       return SocialSystem.EQUAL;
     }
@@ -1451,6 +1516,8 @@ public enum SpaceRace {
       //FIXME: Check this when bridge image has been done
       return BridgeCommandType.WARM_WHITE;
     case SYNTHDROIDS:
+      return BridgeCommandType.WARM_WHITE;
+    case ALONIANS:
       //FIXME: Check this when bridge image has been done
       return BridgeCommandType.WARM_WHITE;
     default:
@@ -1482,6 +1549,7 @@ public enum SpaceRace {
     case SMAUGIRIANS:
     case SYNTHDROIDS:
       return 5;
+    case ALONIANS:
     case ALTEIRIANS:
       return 4;
     }
@@ -1678,6 +1746,18 @@ public enum SpaceRace {
       case ARTIFICALWORLD: return 100;
       }
     }
+    if (this == ALONIANS) {
+      switch (worldType) {
+      case SILICONWORLD: return 25;
+      case WATERWORLD: return 75;
+      case IRONWORLD: return 75;
+      case ICEWORLD: return 50;
+      case CARBONWORLD: return 100;
+      case DESERTWORLD: return 100;
+      default:
+      case ARTIFICALWORLD: return 100;
+      }
+    }
     return 100;
   }
   /**
@@ -1858,6 +1938,10 @@ public enum SpaceRace {
           + " planets have space port.");
     } else if (this == SpaceRace.SMAUGIRIANS) {
       sb.append("Weapon allowed in cargo ships.");
+    } else if (this == SpaceRace.ALONIANS) {
+      sb.append("No starting planet, but starbase labs have higher research."
+          + " One colony ship in realm produces one research point"
+          + " if not orbiting planet.");
     } else {
       sb.append("None");
     }

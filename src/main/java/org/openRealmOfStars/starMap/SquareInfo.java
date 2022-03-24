@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2019 Tuomo Untinen
+ * Copyright (C) 2016,2019,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -58,6 +58,10 @@ public class SquareInfo {
    */
   public static final byte TYPE_BLACKHOLE_CENTER = 5;
 
+  /**
+   * Special alonian start info, value match on player inder.
+   */
+  public static final byte TYPE_ALONIAN_START = 6;
   /**
    * Square info type
    */
@@ -164,6 +168,8 @@ public class SquareInfo {
       return false;
     case TYPE_BLACKHOLE_CENTER:
       return true;
+    case TYPE_ALONIAN_START:
+      return true;
     default:
       return false;
     }
@@ -186,6 +192,8 @@ public class SquareInfo {
     case TYPE_BLACKHOLE:
       return true;
     case TYPE_BLACKHOLE_CENTER:
+      return true;
+    case TYPE_ALONIAN_START:
       return true;
     default:
       return false;

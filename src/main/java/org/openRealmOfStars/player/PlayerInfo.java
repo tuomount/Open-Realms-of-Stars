@@ -342,6 +342,10 @@ public class PlayerInfo {
       addSynthdroidTechs();
       break;
     }
+    case ALONIANS: {
+      addAlonianTechs();
+      break;
+    }
     case SPACE_MONSTERS: {
       addSpaceMonsterTechs();
       break;
@@ -798,6 +802,62 @@ public class PlayerInfo {
     stat = new ShipStat(design);
     addShipStat(stat);
   }
+  /**
+   * Add Alonian techs and ship designs.
+   */
+  private void addAlonianTechs() {
+    /*
+     * Alonian get 1 Combat, 1 defense, 1 basic lab, Scout and Colony
+     * 1 Electronics, 3 propulsion
+     */
+    Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
+        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createRandomTech(TechType.Defense, 1,
+        techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createHullTech("Colony", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createImprovementTech("Basic lab", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createHullTech("Scout Mk1", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createRandomTech(TechType.Propulsion, 1,
+        techList.getListForTypeAndLevel(TechType.Propulsion, 1), getRace());
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createRandomTech(TechType.Electrics, 1,
+        techList.getListForTypeAndLevel(TechType.Electrics, 1), getRace());
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    ShipDesign design = ShipGenerator.createScout(this);
+    ShipStat stat = new ShipStat(design);
+    addShipStat(stat);
+    design = ShipGenerator.createColony(this, false);
+    stat = new ShipStat(design);
+    addShipStat(stat);
+  }
+
   /**
    * Add space pirate techs and ship designs.
    */

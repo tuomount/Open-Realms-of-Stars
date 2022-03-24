@@ -93,7 +93,7 @@ public final class LeaderUtility {
   /**
    * Create new leader based on 3 parameters.
    * @param info Realm who is creating new leader.
-   * @param planet Home planet for leader.
+   * @param planet Home planet for leader. This can be null.
    * @param level Leader leve. Note this can be LEVEL_START_RULER for
    *        realm starting ruler.
    * @return Leader
@@ -130,7 +130,11 @@ public final class LeaderUtility {
     leader.setGender(gender);
     leader.setRace(info.getRace());
     leader.setExperience(0);
-    leader.setHomeworld(planet.getName());
+    if (planet != null) {
+      leader.setHomeworld(planet.getName());
+    } else {
+      leader.setHomeworld("Unknown");
+    }
     leader.setJob(Job.UNASSIGNED);
     leader.setTitle("");
     if (level == LEVEL_START_RULER) {

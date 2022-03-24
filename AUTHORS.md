@@ -50,6 +50,8 @@ http://creativecommons.org/licenses/by/3.0/
 
 Explosions by Csaba Felvegi aka Chabull
 
+Alonian ships by Tuomo Untinen
+
 Alien pictures by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
 Scaurian trader picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
@@ -63,6 +65,8 @@ Lithorian race picture by Tuomo Untinen, original art by Surt - http://opengamea
 Alteirian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
 Smaugirian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
+
+Alonian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
 Space Captain by Justin Nichol 
 Tuomo Untinen added legs for the captain. -https://opengameart.org/content/space-captain-with-legs
@@ -496,5 +500,8 @@ Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
 Cyborg by
 Umplix (CC0)
+
+Dark Intro by
+Nikke (CC0)
 
 

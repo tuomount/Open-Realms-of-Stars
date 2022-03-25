@@ -470,7 +470,7 @@ public class SpaceRaceUtilityTest {
         + "* Special: Weapon allowed in cargo ships.";
     expectedResult[14] = "### Synthdroids\n"
         + "Artificial beings that eat only small amount of food. Each "
-        + "population must be cloned.\n"
+        + "population must be built.\n"
         + "* Max radiation: 5\n"
         + "* Troop power: 10\n"
         + "* Leader lifespan: 2000\n"

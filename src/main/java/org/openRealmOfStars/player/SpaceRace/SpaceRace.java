@@ -167,7 +167,7 @@ public enum SpaceRace {
    * Each population must be built. Alternative name Huskdroid.
    */
   SYNTHDROIDS(16, "Synthdroids", "Synthdroid", "Artificial beings that eat only"
-      + " small amount of food. Each population must be cloned."),
+      + " small amount of food. Each population must be built."),
   /**
    * Alonian realm always starts without homeplanet. How ever they get higher
    * starting technology and have special ability where single colony ship

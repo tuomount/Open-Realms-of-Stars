@@ -2695,7 +2695,7 @@ public class Planet {
                 + getProductionTimeAsString(underConstruction) + ".";
           }
           msg = new Message(MessageType.CONSTRUCTION,
-              getName() + " cloned " + finishedBuilding
+              getName() + " built " + finishedBuilding
               + ". " + nextBuilding,
               Icons.getIconByName(Icons.ICON_PEOPLE));
           msg.setCoordinate(getCoordinate());

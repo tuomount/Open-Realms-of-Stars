@@ -154,8 +154,8 @@ public final class ConstructionFactory {
       tmp = new Construction(SYNTHDROID_CITIZEN,
           Icons.getIconByName(Icons.ICON_PEOPLE));
       tmp.setProdCost(30);
-      tmp.setMetalCost(0);
-      tmp.setDescription("Clone new synthdroid citizen");
+      tmp.setMetalCost(2);
+      tmp.setDescription("Build new synthdroid citizen");
       return tmp;
     }
     return tmp;

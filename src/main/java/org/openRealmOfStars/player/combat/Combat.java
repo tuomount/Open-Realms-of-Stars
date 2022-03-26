@@ -2510,9 +2510,14 @@ public boolean launchIntercept(final int distance,
       result = new ShipDamage(1, "Target is being pulled by tractor beam!");
       if (target.getShip().getTotalMilitaryPower() == 0
           && target.getShip().getSpeed() == 0) {
-        //FIXME: Should this happen also for space krakens?
-        result = new ShipDamage(1, "Target is being pulled by tractor beam and"
-            + " captured since all weapons and engines are down!");
+        if (target.getShip().isMonster()) {
+          result = new ShipDamage(1, "Target is being pulled by tractor beam"
+              + " and tamed since " + target.getShip().getName()
+              + " is sleeping.");
+        } else {
+          result = new ShipDamage(1, "Target is being pulled by tractor beam"
+              + " and captured since all weapons and engines are down!");
+        }
         Fleet origin = null;
         Fleet stealer = null;
         PlayerInfo stealInfo = null;

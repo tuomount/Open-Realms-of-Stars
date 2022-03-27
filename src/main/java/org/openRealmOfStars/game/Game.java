@@ -1939,7 +1939,7 @@ public class Game implements ActionListener {
   /**
    * Make new Game State
    * @param allowHumanAncientRealm Flag for allowing human player to be
-   *  ancient too.
+   *  elder too.
    */
   public void makeNewGame(final boolean allowHumanAncientRealm) {
     setPlayerInfo();
@@ -1947,17 +1947,17 @@ public class Game implements ActionListener {
     starMap.updateStarMapOnStartGame();
     NewsCorpData corpData = starMap.getNewsCorpData();
     calculateCorpData(corpData);
-    boolean ancientRealmStart = false;
+    boolean elderRealmStart = false;
     for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
-      if (galaxyConfig.getPlayerAncientRealm(i)) {
-        ancientRealmStart = true;
+      if (galaxyConfig.getPlayerElderRealm(i)) {
+        elderRealmStart = true;
       }
     }
-    if (ancientRealmStart) {
+    if (elderRealmStart) {
       if (allowHumanAncientRealm) {
         starMap.getPlayerByIndex(0).setHuman(false);
       }
-      starMap.setTurn(-galaxyConfig.getAncientHeadStart());
+      starMap.setTurn(-galaxyConfig.getElderHeadStart());
       while (starMap.getTurn() < 0) {
         setAITurnView(new AITurnView(this));
         boolean singleTurnEnd = false;
@@ -1980,7 +1980,7 @@ public class Game implements ActionListener {
         if (planet.getstartRealmIndex() != -1) {
           int index = planet.getstartRealmIndex();
           PlayerInfo info = starMap.getPlayerByIndex(index);
-          if (!info.isAncientRealm()) {
+          if (!info.isElderRealm()) {
             starMap.createRealmToPlanet(planet, info, index);
           }
         }
@@ -2052,7 +2052,7 @@ public class Game implements ActionListener {
           maxPlayers, i, boardIndex);
       info.setGovernment(galaxyConfig.getPlayerGovernment(i));
       info.setEmpireName(galaxyConfig.getPlayerName(i));
-      info.setAncientRealm(galaxyConfig.getPlayerAncientRealm(i));
+      info.setElderRealm(galaxyConfig.getPlayerElderRealm(i));
       info.setAiDifficulty(galaxyConfig.getDifficulty(i));
       info.setColor(galaxyConfig.getPlayerColor(i));
       randomListOfColors.remove(galaxyConfig.getPlayerColor(i));

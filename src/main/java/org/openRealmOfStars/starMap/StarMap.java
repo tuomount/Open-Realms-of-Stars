@@ -356,14 +356,14 @@ public class StarMap {
     votes = new Votes();
     shownTutorialIndexes = new ArrayList<>();
     tutorialEnabled = config.isEnableTutorial();
-    boolean ancientRealmStart = false;
+    boolean elderRealmStart = false;
     for (int i = 0; i < config.getMaxPlayers(); i++) {
-      if (config.getPlayerAncientRealm(i)) {
-        ancientRealmStart = true;
+      if (config.getPlayerElderRealm(i)) {
+        elderRealmStart = true;
       }
     }
-    if (ancientRealmStart) {
-      history.addTurn(-config.getAncientHeadStart());
+    if (elderRealmStart) {
+      history.addTurn(-config.getElderHeadStart());
     } else {
       history.addTurn(0);
     }
@@ -430,7 +430,7 @@ public class StarMap {
         solarSystem = createRandomStartSystems(config, solarSystem);
       }
       if (config.getStartingPosition() == GalaxyConfig.ANCIENTS_IN_MIDDLE) {
-        solarSystem = createAncientsInMiddleStart(config, solarSystem);
+        solarSystem = createEldersInMiddleStart(config, solarSystem);
       }
       if (config.getStartingPosition() == GalaxyConfig.TWO_RINGS) {
         solarSystem = createTwoCirclesStartingSystems(config, solarSystem);
@@ -451,8 +451,8 @@ public class StarMap {
         tileInfo = new SquareInfo[maxX][maxY];
         culture = new CulturePower[maxX][maxY];
         history = new History();
-        if (ancientRealmStart) {
-          history.addTurn(-config.getAncientHeadStart());
+        if (elderRealmStart) {
+          history.addTurn(-config.getElderHeadStart());
         } else {
           history.addTurn(0);
         }
@@ -706,13 +706,13 @@ public class StarMap {
   }
 
   /**
-   * Create random start systems so that ancients are in middle.
+   * Create random start systems so that elders are in middle.
    * @param config GalaxyConfig
    * @param solarSystemIn Array of solar systems.
    * @return array of solar systems.
    * @throws IllegalStateException of system cannot be created.
    */
-  private int[][] createAncientsInMiddleStart(final GalaxyConfig config,
+  private int[][] createEldersInMiddleStart(final GalaxyConfig config,
       final int[][] solarSystemIn) throws IllegalStateException {
     int[][] solarSystem = solarSystemIn;
     int loop = 0;
@@ -720,12 +720,12 @@ public class StarMap {
     int realms = 0;
     for (int i = 0; i < config.getMaxPlayers(); i++) {
       while (loop < MAX_LOOPS) {
-        boolean ancient = config.getPlayerAncientRealm(i);
+        boolean elder = config.getPlayerElderRealm(i);
         int sx = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
             maxX - SOLAR_SYSTEM_WIDTH);
         int sy = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
             maxY - SOLAR_SYSTEM_WIDTH);
-        if (ancient) {
+        if (elder) {
           sx = DiceGenerator.getRandom(oneThird, 2 * oneThird);
           sy = DiceGenerator.getRandom(oneThird, 2 * oneThird);
         }
@@ -737,7 +737,7 @@ public class StarMap {
         int planets = DiceGenerator.getRandom(3, 5);
         int gasGiants = DiceGenerator.getRandom(2);
         if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
-            config.getSolarSystemDistance()) == 0 && middle == ancient) {
+            config.getSolarSystemDistance()) == 0 && middle == elder) {
           solarSystem = createSolarSystem(solarSystem, sx, sy, planets,
               gasGiants, i, config);
           break;
@@ -956,11 +956,11 @@ public class StarMap {
    */
   private int[][] createTwoCirclesStartingSystems(final GalaxyConfig config,
       final int[][] solarSystem) {
-    int ancients = 0;
+    int elders = 0;
     int regular = 0;
     for (int i = 0; i < config.getMaxPlayers(); i++) {
-      if (config.getPlayerAncientRealm(i)) {
-        ancients++;
+      if (config.getPlayerElderRealm(i)) {
+        elders++;
       } else {
         regular++;
       }
@@ -976,21 +976,21 @@ public class StarMap {
       fineTune = 5;
     }
     int length = maxX / 2 - fineTune;
-    int lengthAncients = maxX / 4;
+    int lengthElders = maxX / 4;
     int angle = DiceGenerator.getRandom(359);
-    int angleAncients = DiceGenerator.getRandom(359);
+    int angleElders = DiceGenerator.getRandom(359);
     for (int i = 0; i < config.getMaxPlayers(); i++) {
-      if (config.getPlayerAncientRealm(i)) {
-        double rad = Math.toRadians(angleAncients);
-        sx = (int) (maxX / 2 + Math.cos(rad) * lengthAncients);
-        sy = (int) (maxX / 2 + Math.sin(rad) * lengthAncients);
+      if (config.getPlayerElderRealm(i)) {
+        double rad = Math.toRadians(angleElders);
+        sx = (int) (maxX / 2 + Math.cos(rad) * lengthElders);
+        sy = (int) (maxX / 2 + Math.sin(rad) * lengthElders);
         planets = DiceGenerator.getRandom(3, 5);
         gasGiants = DiceGenerator.getRandom(2);
         mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
             i, config);
-        angleAncients = angleAncients + 360 / ancients;
-        if (angleAncients > 359) {
-          angleAncients = angleAncients - 360;
+        angleElders = angleElders + 360 / elders;
+        if (angleElders > 359) {
+          angleElders = angleElders - 360;
         }
       } else {
         double rad = Math.toRadians(angle);
@@ -1409,8 +1409,8 @@ public class StarMap {
     if (planet.getPlanetPlayerInfo() != null && planet.getGovernor() != null) {
       planet.getGovernor().setJob(Job.UNASSIGNED);
       planet.setGovernor(null);
-      //TODO: What to do when ancient realm conquers other realm's starting
-      //Planet? Set culture 0 and destroy all buildings? Ancient realm knows
+      //TODO: What to do when elder realm conquers other realm's starting
+      //Planet? Set culture 0 and destroy all buildings? Elder realm knows
       //where is another realm's home planet.
     }
     planet.setPlanetOwner(playerIndex, playerInfo);
@@ -1717,10 +1717,10 @@ public class StarMap {
   private int[][] createSolarSystem(final int[][] solarSystem, final int sunx,
       final int suny, final int planetsToCreate, final int gasGiantsToCreate,
       final int playerIndex, final GalaxyConfig config) {
-    boolean ancientRealmStart = false;
+    boolean elderRealmStart = false;
     for (int i = 0; i < config.getMaxPlayers(); i++) {
-      if (config.getPlayerAncientRealm(i)) {
-        ancientRealmStart = true;
+      if (config.getPlayerElderRealm(i)) {
+        elderRealmStart = true;
       }
     }
     if (playerIndex != -1) {
@@ -1728,9 +1728,9 @@ public class StarMap {
       if (playerInfo.getRace() == SpaceRace.ALONIANS) {
         int sx = sunx + DiceGenerator.getRandom(-1, 1);
         int sy = suny + DiceGenerator.getRandom(-1, 1);
-        if (!ancientRealmStart) {
+        if (!elderRealmStart) {
           createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
-        } else if (playerInfo.isAncientRealm()) {
+        } else if (playerInfo.isElderRealm()) {
           createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
         } else {
           SquareInfo info = new SquareInfo(SquareInfo.TYPE_ALONIAN_START,
@@ -1792,7 +1792,7 @@ public class StarMap {
         planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
         if (planets == 1 && playerIndex != -1) {
           PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
-          playerInfo.setAncientRealm(config.getPlayerAncientRealm(playerIndex));
+          playerInfo.setElderRealm(config.getPlayerElderRealm(playerIndex));
           PlanetTypes planetType = PlanetTypes.getRandomStartPlanetType(
               playerInfo.getRace());
           if (planetType != null) {
@@ -1803,9 +1803,9 @@ public class StarMap {
           planet.setAmountMetalInGround(HOMEWORLD_METAL);
           planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
           planet.setStartRealmIndex(playerIndex);
-          if (!ancientRealmStart) {
+          if (!elderRealmStart) {
             createRealmToPlanet(planet, playerInfo, playerIndex);
-          } else if (playerInfo.isAncientRealm()) {
+          } else if (playerInfo.isElderRealm()) {
             createRealmToPlanet(planet, playerInfo, playerIndex);
           }
         } else {
@@ -2866,7 +2866,7 @@ public class StarMap {
        * Making sure that there are enough exploration ships
        */
       if ((getGameLengthState() == GameLengthState.START_GAME
-          || getGameLengthState() == GameLengthState.ANCIENT_HEAD_START)
+          || getGameLengthState() == GameLengthState.ELDER_HEAD_START)
           && exploreMissions < 2 + extraExploring) {
         Mission mission = new Mission(MissionType.EXPLORE,
             MissionPhase.PLANNING, null);

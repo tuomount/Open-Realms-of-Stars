@@ -44,12 +44,12 @@ public class GameLengthStateTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testAncientGameState() {
-    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-1, 50));
-    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-30, 200));
-    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-50, 400));
-    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-100, 800));
-    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-200, 1000));
-    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-1, 10));
+    assertEquals(GameLengthState.ELDER_HEAD_START, GameLengthState.getGameLengthState(-1, 50));
+    assertEquals(GameLengthState.ELDER_HEAD_START, GameLengthState.getGameLengthState(-30, 200));
+    assertEquals(GameLengthState.ELDER_HEAD_START, GameLengthState.getGameLengthState(-50, 400));
+    assertEquals(GameLengthState.ELDER_HEAD_START, GameLengthState.getGameLengthState(-100, 800));
+    assertEquals(GameLengthState.ELDER_HEAD_START, GameLengthState.getGameLengthState(-200, 1000));
+    assertEquals(GameLengthState.ELDER_HEAD_START, GameLengthState.getGameLengthState(-1, 10));
   }
 
   @Test
@@ -100,7 +100,7 @@ public class GameLengthStateTest {
 
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNegative() {
-    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-10, 600));
+    assertEquals(GameLengthState.ELDER_HEAD_START, GameLengthState.getGameLengthState(-10, 600));
   }
 
   @Test(expected=IllegalArgumentException.class)

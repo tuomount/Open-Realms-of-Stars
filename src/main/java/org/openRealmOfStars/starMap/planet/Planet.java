@@ -206,7 +206,7 @@ public class Planet {
   private String credProdExplain;
 
   /**
-   * Starting realm index for ancient realm start.
+   * Starting realm index for elder realm start.
    * This value is only used when creating galaxy.
    * This will no be saved on file.
    */

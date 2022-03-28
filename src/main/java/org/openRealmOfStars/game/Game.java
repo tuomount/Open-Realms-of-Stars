@@ -1938,10 +1938,10 @@ public class Game implements ActionListener {
 
   /**
    * Make new Game State
-   * @param allowHumanAncientRealm Flag for allowing human player to be
+   * @param allowHumanElderRealm Flag for allowing human player to be
    *  elder too.
    */
-  public void makeNewGame(final boolean allowHumanAncientRealm) {
+  public void makeNewGame(final boolean allowHumanElderRealm) {
     setPlayerInfo();
     starMap = new StarMap(galaxyConfig, players);
     starMap.updateStarMapOnStartGame();
@@ -1954,7 +1954,7 @@ public class Game implements ActionListener {
       }
     }
     if (elderRealmStart) {
-      if (allowHumanAncientRealm) {
+      if (allowHumanElderRealm) {
         starMap.getPlayerByIndex(0).setHuman(false);
       }
       starMap.setTurn(-galaxyConfig.getElderHeadStart());
@@ -1965,7 +1965,7 @@ public class Game implements ActionListener {
           singleTurnEnd = getAITurnView().handleAiTurn();
         } while (!singleTurnEnd);
       }
-      if (allowHumanAncientRealm && !galaxyConfig.isAiOnly()) {
+      if (allowHumanElderRealm && !galaxyConfig.isAiOnly()) {
         starMap.getPlayerByIndex(0).setHuman(true);
         starMap.getPlayerByIndex(0).getMissions().clearMissions();
         PlayerInfo info = starMap.getPlayerByIndex(0);

@@ -538,7 +538,7 @@ public class GalaxyCreationView extends BlackPanel {
     String[] startPos = new String[4];
     startPos[0] = "Border";
     startPos[1] = "Random";
-    startPos[2] = "Ancient middle";
+    startPos[2] = "Elder middle";
     startPos[3] = "Two rings";
     comboPlayerPos = new SpaceCombo<>(startPos);
     comboPlayerPos.setSelectedIndex(this.config.getStartingPosition());
@@ -546,7 +546,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayerPos.addActionListener(listener);
     info.add(comboPlayerPos);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new SpaceLabel("Ancient realm headstart");
+    label = new SpaceLabel("Elder realm headstart");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));

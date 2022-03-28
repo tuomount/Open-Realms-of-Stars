@@ -429,7 +429,7 @@ public class StarMap {
       if (config.getStartingPosition() == GalaxyConfig.START_POSITION_RANDOM) {
         solarSystem = createRandomStartSystems(config, solarSystem);
       }
-      if (config.getStartingPosition() == GalaxyConfig.ANCIENTS_IN_MIDDLE) {
+      if (config.getStartingPosition() == GalaxyConfig.ELDERS_IN_MIDDLE) {
         solarSystem = createEldersInMiddleStart(config, solarSystem);
       }
       if (config.getStartingPosition() == GalaxyConfig.TWO_RINGS) {
@@ -750,7 +750,7 @@ public class StarMap {
     }
     if (loop >= MAX_LOOPS) {
       throw new IllegalStateException(
-          "Ancient in middle space was too crowded. "
+          "Elder in middle space was too crowded. "
           + realms + " / " + config.getMaxPlayers() + " were fit on space.");
     }
     return solarSystem;

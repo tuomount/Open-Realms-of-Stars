@@ -291,7 +291,7 @@ public class PlayerSetupView extends BlackPanel {
   public void getNamesToConfig() {
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
       config.setPlayerName(i, playerName[i].getText());
-      config.setPlayerAncientRealm(i, checkElderRealm[i].isSelected());
+      config.setPlayerElderRealm(i, checkElderRealm[i].isSelected());
     }
 
   }
@@ -373,7 +373,7 @@ public class PlayerSetupView extends BlackPanel {
     info2.add(comboGovernmentSelect[index]);
     info2.add(Box.createRigidArea(new Dimension(5, 5)));
     checkElderRealm[index] = new SpaceCheckBox("");
-    checkElderRealm[index].setType(SpaceCheckBox.CHECKBOX_TYPE_ANCIENT);
+    checkElderRealm[index].setType(SpaceCheckBox.CHECKBOX_TYPE_ELDER);
     checkElderRealm[index].setToolTipText("<html>Select rune to mark Realm"
         + " as an elder realm.<br> This will allow realm head"
         + " start and will make realm more stronger than others.<br>"

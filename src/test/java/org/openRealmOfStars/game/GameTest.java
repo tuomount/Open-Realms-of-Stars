@@ -530,7 +530,7 @@ public class GameTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunFullGameWithAncient() throws IOException {
+  public void testRunFullGameWithElder() throws IOException {
     Game game;
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(8);
@@ -548,8 +548,8 @@ public class GameTest {
     config.setPlayerDifficult(6, AiDifficulty.NORMAL);
     config.setPlayerDifficult(7, AiDifficulty.NORMAL);
     config.setElderHeadStart(40);
-    config.setPlayerAncientRealm(1, true);
-    config.setPlayerAncientRealm(2, true);
+    config.setPlayerElderRealm(1, true);
+    config.setPlayerElderRealm(2, true);
     config.setSize(75, 1);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     game = null;

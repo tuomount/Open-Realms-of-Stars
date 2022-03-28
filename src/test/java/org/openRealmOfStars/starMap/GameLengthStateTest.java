@@ -43,7 +43,7 @@ public class GameLengthStateTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testAncientGameState() {
+  public void testElderGameState() {
     assertEquals(GameLengthState.ELDER_HEAD_START, GameLengthState.getGameLengthState(-1, 50));
     assertEquals(GameLengthState.ELDER_HEAD_START, GameLengthState.getGameLengthState(-30, 200));
     assertEquals(GameLengthState.ELDER_HEAD_START, GameLengthState.getGameLengthState(-50, 400));

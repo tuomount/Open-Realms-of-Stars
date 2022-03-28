@@ -92,12 +92,12 @@ public class GalaxyConfig {
   public static final int START_POSITION_RANDOM = 1;
 
   /**
-   * Ancient realms are in the middle
+   * Elder realms are in the middle
    */
-  public static final int ANCIENTS_IN_MIDDLE = 2;
+  public static final int ELDERS_IN_MIDDLE = 2;
 
   /**
-   * Ancient realms are in the middle ring and others on outer ring.
+   * Elder realms are in the middle ring and others on outer ring.
    */
   public static final int TWO_RINGS = 3;
 
@@ -430,7 +430,7 @@ public class GalaxyConfig {
    * @param index Player Index
    * @param elderRealm Elder realm flag
    */
-  public void setPlayerAncientRealm(final int index,
+  public void setPlayerElderRealm(final int index,
       final boolean elderRealm) {
     if (index >= 0 && index < StarMap.MAX_PLAYERS) {
       playerElderRealm[index] = elderRealm;

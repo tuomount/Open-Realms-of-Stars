@@ -326,13 +326,13 @@ public final class Icons {
    */
   public static final String ICON_MAP = "IconMap";
   /**
-   * Ancient Checkbox icon
+   * Elder Checkbox icon
    */
-  public static final String ICON_ANCIENT_BOX = "IconAncient";
+  public static final String ICON_ELDER_BOX = "IconElder";
   /**
    * Anceint Checkbox tick icon
    */
-  public static final String ICON_ANCIENT_BOX_TICK = "IconAncientTick";
+  public static final String ICON_ELDER_BOX_TICK = "IconElderTick";
   /**
    * Tutorial icon
    */
@@ -688,9 +688,9 @@ public final class Icons {
     addIcon(icon);
     icon = new Icon16x16(image, 5, 0, ICON_MAP);
     addIcon(icon);
-    icon = new Icon16x16(image, 6, 0, ICON_ANCIENT_BOX_TICK);
+    icon = new Icon16x16(image, 6, 0, ICON_ELDER_BOX_TICK);
     addIcon(icon);
-    icon = new Icon16x16(image, 7, 0, ICON_ANCIENT_BOX);
+    icon = new Icon16x16(image, 7, 0, ICON_ELDER_BOX);
     addIcon(icon);
     icon = new Icon16x16(image, 0, 1, ICON_TUTORIAL);
     addIcon(icon);

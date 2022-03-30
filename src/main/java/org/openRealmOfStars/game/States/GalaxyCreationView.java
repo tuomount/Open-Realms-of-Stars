@@ -538,8 +538,8 @@ public class GalaxyCreationView extends BlackPanel {
     String[] startPos = new String[4];
     startPos[0] = "Border";
     startPos[1] = "Random";
-    startPos[2] = "Elder middle";
-    startPos[3] = "Two rings";
+    startPos[2] = "Elders in middle";
+    startPos[3] = "Two rings, elders in middle";
     comboPlayerPos = new SpaceCombo<>(startPos);
     comboPlayerPos.setSelectedIndex(this.config.getStartingPosition());
     comboPlayerPos.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);

@@ -82,9 +82,9 @@ public class PlayerSetupView extends BlackPanel {
   private SpaceComboBox<GovernmentType>[] comboGovernmentSelect;
 
   /**
-   * Checkbox for ancient realm
+   * Checkbox for elder realm
    */
-  private SpaceCheckBox[] checkAncientRealm;
+  private SpaceCheckBox[] checkElderRealm;
 
   /**
    * Player name
@@ -156,7 +156,7 @@ public class PlayerSetupView extends BlackPanel {
     comboRaceSelect = new SpaceComboBox[StarMap.MAX_PLAYERS];
     comboGovernmentSelect = new SpaceComboBox[StarMap.MAX_PLAYERS];
     comboDifficult = new SpaceComboBox[StarMap.MAX_PLAYERS];
-    checkAncientRealm = new SpaceCheckBox[StarMap.MAX_PLAYERS];
+    checkElderRealm = new SpaceCheckBox[StarMap.MAX_PLAYERS];
     raceImgs = new RaceImagePanel[StarMap.MAX_PLAYERS];
     playerName = new JTextField[StarMap.MAX_PLAYERS];
     comboRealmColor = new SpaceComboBox[StarMap.MAX_PLAYERS];
@@ -291,7 +291,7 @@ public class PlayerSetupView extends BlackPanel {
   public void getNamesToConfig() {
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
       config.setPlayerName(i, playerName[i].getText());
-      config.setPlayerAncientRealm(i, checkAncientRealm[i].isSelected());
+      config.setPlayerElderRealm(i, checkElderRealm[i].isSelected());
     }
 
   }
@@ -372,13 +372,13 @@ public class PlayerSetupView extends BlackPanel {
         governments[i].getDescription(false));
     info2.add(comboGovernmentSelect[index]);
     info2.add(Box.createRigidArea(new Dimension(5, 5)));
-    checkAncientRealm[index] = new SpaceCheckBox("");
-    checkAncientRealm[index].setType(SpaceCheckBox.CHECKBOX_TYPE_ANCIENT);
-    checkAncientRealm[index].setToolTipText("<html>Select rune to mark Realm"
-        + " as an ancient realm.<br> This will allow realm ancient head"
+    checkElderRealm[index] = new SpaceCheckBox("");
+    checkElderRealm[index].setType(SpaceCheckBox.CHECKBOX_TYPE_ELDER);
+    checkElderRealm[index].setToolTipText("<html>Select rune to mark Realm"
+        + " as an elder realm.<br> This will allow realm head"
         + " start and will make realm more stronger than others.<br>"
-        + "Ancient realms are played by AI for amount of head start.</html>");
-    info2.add(checkAncientRealm[index]);
+        + "Elder realms are played by AI for amount of head start.</html>");
+    info2.add(checkElderRealm[index]);
     info.add(info2);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     playerName[index] = new JTextField(

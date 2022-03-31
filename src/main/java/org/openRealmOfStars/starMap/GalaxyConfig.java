@@ -92,12 +92,12 @@ public class GalaxyConfig {
   public static final int START_POSITION_RANDOM = 1;
 
   /**
-   * Ancient realms are in the middle
+   * Elder realms are in the middle
    */
-  public static final int ANCIENTS_IN_MIDDLE = 2;
+  public static final int ELDERS_IN_MIDDLE = 2;
 
   /**
-   * Ancient realms are in the middle ring and others on outer ring.
+   * Elder realms are in the middle ring and others on outer ring.
    */
   public static final int TWO_RINGS = 3;
 
@@ -129,9 +129,9 @@ public class GalaxyConfig {
    */
   private AiDifficulty[] playerDifficult;
   /**
-   * Player ancient realm.
+   * Player elder realm.
    */
-  private boolean[] playerAncientRealm;
+  private boolean[] playerElderRealm;
 
   /**
    * Chance for planetary event
@@ -224,9 +224,9 @@ public class GalaxyConfig {
   private int spaceAnomaliesLevel;
 
   /**
-   * How many turns ancient realms player before others start.
+   * How many turns elder realms player before others start.
    */
-  private int ancientHeadStart;
+  private int elderHeadStart;
 
   /**
    * Flag for enabled tutorial
@@ -267,13 +267,13 @@ public class GalaxyConfig {
     setScoreLimitDiplomacy(2);
     setScoreLimitPopulation(2);
     setMaxPlayers(6);
-    setAncientHeadStart(60);
+    setElderHeadStart(60);
     setSolarSystemDistance(12, 0);
     setStartingPosition(START_POSITION_RANDOM);
     playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
     playerName = new String[StarMap.MAX_PLAYERS];
     playerGovernment = new GovernmentType[StarMap.MAX_PLAYERS];
-    playerAncientRealm = new boolean[StarMap.MAX_PLAYERS];
+    playerElderRealm = new boolean[StarMap.MAX_PLAYERS];
     playerDifficult = new AiDifficulty[StarMap.MAX_PLAYERS];
     playerColors = new PlayerColor[StarMap.MAX_PLAYERS];
     setEnableTutorial(true);
@@ -426,25 +426,25 @@ public class GalaxyConfig {
     }
   }
   /**
-   * Set Ancient realm for player
+   * Set Elder realm for player
    * @param index Player Index
-   * @param ancientRealm Ancient realm flag
+   * @param elderRealm Elder realm flag
    */
-  public void setPlayerAncientRealm(final int index,
-      final boolean ancientRealm) {
+  public void setPlayerElderRealm(final int index,
+      final boolean elderRealm) {
     if (index >= 0 && index < StarMap.MAX_PLAYERS) {
-      playerAncientRealm[index] = ancientRealm;
+      playerElderRealm[index] = elderRealm;
     }
   }
 
   /**
-   * Get Ancient realm for player
+   * Get Elder realm for player
    * @param index Player index
-   * @return True for ancient realm
+   * @return True for elder realm
    */
-  public boolean getPlayerAncientRealm(final int index) {
+  public boolean getPlayerElderRealm(final int index) {
     if (index >= 0 && index < StarMap.MAX_PLAYERS) {
-      return playerAncientRealm[index];
+      return playerElderRealm[index];
     }
     return false;
   }
@@ -786,19 +786,19 @@ public class GalaxyConfig {
   }
 
   /**
-   * Get Ancient realm head start
-   * @return Ancient realm head start in turns.
+   * Get Elder realm head start
+   * @return Elder realm head start in turns.
    */
-  public int getAncientHeadStart() {
-    return ancientHeadStart;
+  public int getElderHeadStart() {
+    return elderHeadStart;
   }
 
   /**
-   * Set ancient realm head start
-   * @param ancientHeadStart in turns
+   * Set elder realm head start
+   * @param elderHeadStart in turns
    */
-  public void setAncientHeadStart(final int ancientHeadStart) {
-    this.ancientHeadStart = ancientHeadStart;
+  public void setElderHeadStart(final int elderHeadStart) {
+    this.elderHeadStart = elderHeadStart;
   }
 
   /**

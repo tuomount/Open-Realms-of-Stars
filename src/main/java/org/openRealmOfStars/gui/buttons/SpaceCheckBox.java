@@ -16,7 +16,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017, 2022  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -47,9 +47,9 @@ public class SpaceCheckBox extends JCheckBox {
    */
   public static final int CHECKBOX_TYPE_NORMAL = 0;
   /**
-   * Ancient check box type
+   * Elder check box type
    */
-  public static final int CHECKBOX_TYPE_ANCIENT = 1;
+  public static final int CHECKBOX_TYPE_ELDER = 1;
   /**
    * Space check icon
    */
@@ -158,15 +158,15 @@ public class SpaceCheckBox extends JCheckBox {
         if (type == CHECKBOX_TYPE_NORMAL) {
           icon = Icons.getIconByName(Icons.ICON_CHECKBOX_TICK);
         }
-        if (type == CHECKBOX_TYPE_ANCIENT) {
-          icon = Icons.getIconByName(Icons.ICON_ANCIENT_BOX_TICK);
+        if (type == CHECKBOX_TYPE_ELDER) {
+          icon = Icons.getIconByName(Icons.ICON_ELDER_BOX_TICK);
         }
       } else {
         if (type == CHECKBOX_TYPE_NORMAL) {
           icon = Icons.getIconByName(Icons.ICON_CHECKBOX);
         }
-        if (type == CHECKBOX_TYPE_ANCIENT) {
-          icon = Icons.getIconByName(Icons.ICON_ANCIENT_BOX);
+        if (type == CHECKBOX_TYPE_ELDER) {
+          icon = Icons.getIconByName(Icons.ICON_ELDER_BOX);
         }
       }
       icon.draw(g2d, sx, sy);

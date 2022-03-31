@@ -180,9 +180,9 @@ public class PlayerInfo {
   private WinningStrategy strategy;
 
   /**
-   * Is player Ancient Realm or not
+   * Is player elder Realm or not
    */
-  private boolean ancientRealm;
+  private boolean elderRealm;
 
   /**
    * All the leaders realm has or have had.
@@ -275,7 +275,7 @@ public class PlayerInfo {
     this.msgList = new MessageList();
     shipStatList = new ArrayList<>();
     fleets = new FleetList();
-    ancientRealm = false;
+    elderRealm = false;
     leaderPool = new ArrayList<>();
     ruler = null;
     color = PlayerColor.getByIndex(index);
@@ -1038,11 +1038,11 @@ public class PlayerInfo {
     strategy = WinningStrategy.GENERIC;
     empireName = IOUtilities.readString(dis);
     race = SpaceRaceUtility.getRaceByIndex(dis.readInt());
-    int ancient = dis.read();
-    if (ancient == 1) {
-      ancientRealm = true;
+    int elder = dis.read();
+    if (elder == 1) {
+      elderRealm = true;
     } else {
-      ancientRealm = false;
+      elderRealm = false;
     }
     color = PlayerColor.getByIndex(dis.read());
     aiDifficulty = AiDifficulty.getByIndex(dis.read());
@@ -1069,7 +1069,7 @@ public class PlayerInfo {
       setRuler(null);
     }
     techList = new TechList(dis, race);
-    ancientRealm = false;
+    elderRealm = false;
     msgList = new MessageList(dis);
     int count = dis.readInt();
     shipStatList = new ArrayList<>();
@@ -1152,7 +1152,7 @@ public class PlayerInfo {
   public void savePlayerInfo(final DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, empireName);
     dos.writeInt(race.getIndex());
-    if (ancientRealm) {
+    if (elderRealm) {
       dos.writeByte(1);
     } else {
       dos.writeByte(0);
@@ -1299,7 +1299,7 @@ public class PlayerInfo {
    */
   public int getFakeMilitarySetting(final GameLengthState state) {
     if (state == GameLengthState.START_GAME
-        || state == GameLengthState.ANCIENT_HEAD_START) {
+        || state == GameLengthState.ELDER_HEAD_START) {
       switch (getAiAttitude()) {
         case AGGRESSIVE: return 120;
         case MILITARISTIC: return 120;
@@ -2442,19 +2442,19 @@ public class PlayerInfo {
   }
 
   /**
-   * Is realm ancient or not ancient realm.
-   * @return True for ancient realm.
+   * Is realm elder or not elder realm.
+   * @return True for elder realm.
    */
-  public boolean isAncientRealm() {
-    return ancientRealm;
+  public boolean isElderRealm() {
+    return elderRealm;
   }
 
   /**
-   * Set Ancient realm flag.
-   * @param ancientRealm True for ancient realm.
+   * Set Elder realm flag.
+   * @param elderRealm True for elder realm.
    */
-  public void setAncientRealm(final boolean ancientRealm) {
-    this.ancientRealm = ancientRealm;
+  public void setElderRealm(final boolean elderRealm) {
+    this.elderRealm = elderRealm;
   }
   /**
    * Get current ruler of the realm

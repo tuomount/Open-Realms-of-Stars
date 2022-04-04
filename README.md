@@ -48,7 +48,7 @@ See more [screenshots](https://github.com/tuomount/Open-Realms-of-Stars/tree/mas
 ### Features
 
  * Randomized galaxy with three different starting placements
- * 14 different space races to play
+ * 16 different space races to play
  * 23 different government types to play
  * Any realm can start as ancient realm even human player
  * Random events
@@ -57,6 +57,7 @@ See more [screenshots](https://github.com/tuomount/Open-Realms-of-Stars/tree/mas
  * Space pirates
  * Privateering, trade fleets are actual ships which can be privateered
  * Possibility to steal other ships with tractor beam
+ * Possibility to tame space monster with tractor beam
  * Diplomatic relations between realms (War, Peace, Trade war, Trade Alliance, Defensive Pact and Alliance)
  * AI remembers how it has been treated and will treat others accordingly
  * Galactic Olympics to influence to other realms

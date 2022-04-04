@@ -94,9 +94,9 @@ public class GalaxyConfigTest {
     assertEquals(PirateDifficultLevel.EASY, config.getSpacePiratesDifficulty());
     config.setSpacePiratesDifficulty(PirateDifficultLevel.VERY_HARD);
     assertEquals(PirateDifficultLevel.VERY_HARD, config.getSpacePiratesDifficulty());
-    assertEquals(60, config.getAncientHeadStart());
-    config.setAncientHeadStart(40);
-    assertEquals(40, config.getAncientHeadStart());
+    assertEquals(60, config.getElderHeadStart());
+    config.setElderHeadStart(40);
+    assertEquals(40, config.getElderHeadStart());
   }
 
   @Test

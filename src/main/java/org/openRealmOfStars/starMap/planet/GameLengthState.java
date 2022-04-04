@@ -24,9 +24,9 @@ package org.openRealmOfStars.starMap.planet;
 */
 public enum GameLengthState {
   /**
-   * Game start where ancients are playing alone.
+   * Game start where elder are playing alone.
    */
-  ANCIENT_HEAD_START,
+  ELDER_HEAD_START,
   /**
    * Game length state: early game. First 25% of turns
    */
@@ -67,7 +67,7 @@ public enum GameLengthState {
           + " current turn!");
     }
     if (currentTurn < 0) {
-      return ANCIENT_HEAD_START;
+      return ELDER_HEAD_START;
     }
     int value = currentTurn * 100 / lastTurn;
     if (value <= 24) {

@@ -1938,26 +1938,26 @@ public class Game implements ActionListener {
 
   /**
    * Make new Game State
-   * @param allowHumanAncientRealm Flag for allowing human player to be
-   *  ancient too.
+   * @param allowHumanElderRealm Flag for allowing human player to be
+   *  elder too.
    */
-  public void makeNewGame(final boolean allowHumanAncientRealm) {
+  public void makeNewGame(final boolean allowHumanElderRealm) {
     setPlayerInfo();
     starMap = new StarMap(galaxyConfig, players);
     starMap.updateStarMapOnStartGame();
     NewsCorpData corpData = starMap.getNewsCorpData();
     calculateCorpData(corpData);
-    boolean ancientRealmStart = false;
+    boolean elderRealmStart = false;
     for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
-      if (galaxyConfig.getPlayerAncientRealm(i)) {
-        ancientRealmStart = true;
+      if (galaxyConfig.getPlayerElderRealm(i)) {
+        elderRealmStart = true;
       }
     }
-    if (ancientRealmStart) {
-      if (allowHumanAncientRealm) {
+    if (elderRealmStart) {
+      if (allowHumanElderRealm) {
         starMap.getPlayerByIndex(0).setHuman(false);
       }
-      starMap.setTurn(-galaxyConfig.getAncientHeadStart());
+      starMap.setTurn(-galaxyConfig.getElderHeadStart());
       while (starMap.getTurn() < 0) {
         setAITurnView(new AITurnView(this));
         boolean singleTurnEnd = false;
@@ -1965,7 +1965,7 @@ public class Game implements ActionListener {
           singleTurnEnd = getAITurnView().handleAiTurn();
         } while (!singleTurnEnd);
       }
-      if (allowHumanAncientRealm && !galaxyConfig.isAiOnly()) {
+      if (allowHumanElderRealm && !galaxyConfig.isAiOnly()) {
         starMap.getPlayerByIndex(0).setHuman(true);
         starMap.getPlayerByIndex(0).getMissions().clearMissions();
         PlayerInfo info = starMap.getPlayerByIndex(0);
@@ -1980,7 +1980,7 @@ public class Game implements ActionListener {
         if (planet.getstartRealmIndex() != -1) {
           int index = planet.getstartRealmIndex();
           PlayerInfo info = starMap.getPlayerByIndex(index);
-          if (!info.isAncientRealm()) {
+          if (!info.isElderRealm()) {
             starMap.createRealmToPlanet(planet, info, index);
           }
         }
@@ -2052,7 +2052,7 @@ public class Game implements ActionListener {
           maxPlayers, i, boardIndex);
       info.setGovernment(galaxyConfig.getPlayerGovernment(i));
       info.setEmpireName(galaxyConfig.getPlayerName(i));
-      info.setAncientRealm(galaxyConfig.getPlayerAncientRealm(i));
+      info.setElderRealm(galaxyConfig.getPlayerElderRealm(i));
       info.setAiDifficulty(galaxyConfig.getDifficulty(i));
       info.setColor(galaxyConfig.getPlayerColor(i));
       randomListOfColors.remove(galaxyConfig.getPlayerColor(i));

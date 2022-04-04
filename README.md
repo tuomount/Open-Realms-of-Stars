@@ -50,7 +50,7 @@ See more [screenshots](https://github.com/tuomount/Open-Realms-of-Stars/tree/mas
  * Randomized galaxy with three different starting placements
  * 16 different space races to play
  * 23 different government types to play
- * Any realm can start as ancient realm even human player
+ * Any realm can start as an elder realm even human player
  * Random events
  * Planetary events
  * Space anomalies

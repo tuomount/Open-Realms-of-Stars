@@ -129,7 +129,7 @@ public final class PlanetHandling {
     Building newBuild = (Building) planet.getUnderConstruction();
     Building worst = getWorstBuilding(planet, info, attitude, newBuild,
         nearFleetLimit);
-    if  (worst != null) {
+    if  (worst != null && planet.fightAgainstWildLife(worst)) {
       // Removing the worst building
       planet.removeBuilding(worst);
       return true;
@@ -706,6 +706,9 @@ public final class PlanetHandling {
     for (Building building : buildings) {
       int score = scoreBuilding(building, planet, info, attitude,
           nearFleetLimit);
+      if (building.getWildLifePower() > 0) {
+        score = score - building.getWildLifePower() * 2;
+      }
       if (newBuild != null && building.getType() == newBuild.getType()) {
         // This should increase the chance for upgrading the building.
         int newBonus = newBuild.getBattleBonus() + newBuild.getCredBonus()

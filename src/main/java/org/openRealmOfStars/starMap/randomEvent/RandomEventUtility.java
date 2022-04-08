@@ -1258,7 +1258,7 @@ public final class RandomEventUtility {
           if (building != null) {
             planet.addBuilding(building);
           } else {
-            ErrorLogger.debug("Could not find building name " + name +".");
+            ErrorLogger.debug("Could not find building name " + name + ".");
           }
           sb.append("These " + animalType + " have occupied "
               + " sector from planet surface.");

@@ -473,7 +473,22 @@ public class Planet {
         }
       }
     }
+  }
 
+  /**
+   * Planet fights against wildlife.
+   * @param building Wildlife building
+   * @return True if fight succeed and false if not
+   */
+  public boolean fightAgainstWildLife(final Building building) {
+    if (building.getWildLifePower() > 0) {
+      if (getTroopPower() <= building.getWildLifePower()) {
+        return false;
+      }
+      fightAgainstAttacker(building.getWildLifePower(), null, "wild life",
+          "fighting against wildlife", "fighting against wildlife");
+    }
+    return true;
   }
   /**
    * Get production time as in turns
@@ -692,9 +707,14 @@ public class Planet {
    * somewhere else.
    * @param attackTroops Attacking troop power
    * @param starMap StarMap for history writing
+   * @param attackType Attack type, used for creating explanation why governor
+   *                   or worker died.
+   * @param reasonGovernor Reason for governor if dies
+   * @param reasonWorker Reason for worker if dies
    */
   public void fightAgainstAttacker(final int attackTroops,
-      final StarMap starMap) {
+      final StarMap starMap, final String attackType,
+      final String reasonGovernor, final String reasonWorker) {
     if (planetOwnerInfo != null) {
       int troop = planetOwnerInfo.getRace().getTrooperPower();
       int multiply = 100;
@@ -710,7 +730,7 @@ public class Planet {
         for (int i = 0; i < workers.length; i++) {
           workers[i] = 0;
         }
-        killGovernor("conquest", " attacking troops", starMap);
+        killGovernor(attackType, " " + reasonGovernor, starMap);
         planetOwnerInfo = null;
         planetOwner = -1;
         // Fighting on planet drops the culture
@@ -725,10 +745,24 @@ public class Planet {
         }
         int dies = getTotalPopulation() - left;
         for (int i = 0; i < dies; i++) {
-          killOneWorker("conquest", " conquest of planet", starMap);
+          killOneWorker(attackType, " " + reasonWorker, starMap);
         }
       }
     }
+  }
+
+  /**
+   * Attack troops try to occupy planet by troops.
+   * This will cause planet colonist to be decreased according by attacking
+   * troops. If attacking troops win then left over must be calculated
+   * somewhere else.
+   * @param attackTroops Attacking troop power
+   * @param starMap StarMap for history writing
+   */
+  public void fightAgainstAttacker(final int attackTroops,
+      final StarMap starMap) {
+    fightAgainstAttacker(attackTroops, starMap, "conquest", "attacking troops",
+        "conquest of planet");
   }
 
   /**

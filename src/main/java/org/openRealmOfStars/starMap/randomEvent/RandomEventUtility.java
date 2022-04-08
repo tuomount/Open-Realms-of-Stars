@@ -1215,37 +1215,30 @@ public final class RandomEventUtility {
             + " are peaceful. Some reason these animals attack against "
             + "planet's population.");
         String animalType = "animal";
-        int maxBuildings = 1;
         switch (value) {
           default:
           case 10: {
             animalType = "big canine animals";
-            maxBuildings = 4;
             break;
           }
           case 11: {
             animalType = "big feline animals";
-            maxBuildings = 4;
             break;
           }
           case 12: {
             animalType = "big lizard animals";
-            maxBuildings = 4;
             break;
           }
           case 13: {
             animalType = "massive herding pack animals";
-            maxBuildings = 3;
             break;
           }
           case 14: {
             animalType = "ferocious bipedal reptiles";
-            maxBuildings = 2;
             break;
           }
           case 15: {
             animalType = "massive bug like creature";
-            maxBuildings = 3;
             break;
           }
         }
@@ -1259,20 +1252,16 @@ public final class RandomEventUtility {
           sb.append(". ");
         }
         int freeSlots = planet.getGroundSize() - planet.getNumberOfBuildings();
-        int max = Math.min(freeSlots, maxBuildings);
-        if (max > 0) {
-          int buildings = DiceGenerator.getRandom(1, max);
+        if (freeSlots > 0) {
           String name = "Wildlife: " + animalType;
-          for (int i = 0; i < buildings; i++) {
-            Building building = BuildingFactory.createByName(name);
-            if (building != null) {
-              planet.addBuilding(building);
-            } else {
-              ErrorLogger.debug("Could not find building name " + name +".");
-            }
+          Building building = BuildingFactory.createByName(name);
+          if (building != null) {
+            planet.addBuilding(building);
+          } else {
+            ErrorLogger.debug("Could not find building name " + name +".");
           }
-          sb.append("These " + animalType + " have occupied " + buildings +
-              " sectors from planet surface.");
+          sb.append("These " + animalType + " have occupied "
+              + " sector from planet surface.");
         }
         event.setText(sb.toString());
         ImageInstruction instructions = new ImageInstruction();

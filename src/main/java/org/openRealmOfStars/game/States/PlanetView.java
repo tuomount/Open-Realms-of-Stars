@@ -721,11 +721,15 @@ public class PlanetView extends BlackPanel {
         .equals(GameCommands.COMMAND_DEMOLISH_BUILDING)) {
       Building building = buildingList.getSelectedValue();
       if (building != null) {
-        planet.removeBuilding(building);
-        SoundPlayer.playMenuSound();
-        SoundPlayer.playSound(SoundPlayer.EXPLOSION_SMALL);
-        SoundPlayer.playSound(SoundPlayer.DESTROY_BUILDING);
-        updatePanel();
+        if (planet.fightAgainstWildLife(building)) {
+          planet.removeBuilding(building);
+          SoundPlayer.playMenuSound();
+          SoundPlayer.playSound(SoundPlayer.EXPLOSION_SMALL);
+          SoundPlayer.playSound(SoundPlayer.DESTROY_BUILDING);
+          updatePanel();
+        } else {
+          SoundPlayer.playMenuDisabled();
+        }
       }
     }
     if (arg0.getActionCommand()

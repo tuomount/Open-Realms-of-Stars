@@ -632,7 +632,7 @@ public final class BuildingFactory {
       tmp.setMetalCost(0);
       tmp.setDescription("Dangerous big canine animals."
           + " Population must fight against to destroy them.");
-      tmp.setWildLifePower(10);
+      tmp.setWildLifePower(24);
       tmp.setHappiness(-1);
       return tmp;
     }
@@ -644,7 +644,7 @@ public final class BuildingFactory {
       tmp.setMetalCost(0);
       tmp.setDescription("Dangerous big feline animals."
           + " Population must fight against to destroy them.");
-      tmp.setWildLifePower(12);
+      tmp.setWildLifePower(28);
       tmp.setHappiness(-1);
       return tmp;
     }
@@ -656,7 +656,7 @@ public final class BuildingFactory {
       tmp.setMetalCost(0);
       tmp.setDescription("Dangerous big feline animals."
           + " Population must fight against to destroy them.");
-      tmp.setWildLifePower(11);
+      tmp.setWildLifePower(26);
       tmp.setHappiness(-1);
       return tmp;
     }
@@ -668,7 +668,7 @@ public final class BuildingFactory {
       tmp.setMetalCost(0);
       tmp.setDescription("Dangerous ferocious bipedal reptiles."
           + " Population must fight against to destroy them.");
-      tmp.setWildLifePower(13);
+      tmp.setWildLifePower(20);
       tmp.setHappiness(0);
       return tmp;
     }
@@ -680,7 +680,7 @@ public final class BuildingFactory {
       tmp.setMetalCost(0);
       tmp.setDescription("Dangerous ferocious bipedal reptiles."
           + " Population must fight against to destroy them.");
-      tmp.setWildLifePower(15);
+      tmp.setWildLifePower(36);
       tmp.setHappiness(-2);
       return tmp;
     }
@@ -692,8 +692,8 @@ public final class BuildingFactory {
       tmp.setMetalCost(0);
       tmp.setDescription("Dangerous massive bug like creature."
           + " Population must fight against to destroy them.");
-      tmp.setWildLifePower(14);
-      tmp.setHappiness(-1);
+      tmp.setWildLifePower(30);
+      tmp.setHappiness(-2);
       return tmp;
     }
     return tmp;

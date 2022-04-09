@@ -324,6 +324,16 @@ public final class PlanetHandling {
         .getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_CREDITS, index);
     PlayerInfo info = map.getPlayerByIndex(index);
     if (info != null) {
+      if (info.getAiDifficulty() == AiDifficulty.NORMAL
+          || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+        for (Building building : planet.getBuildingList()) {
+          if (planet.fightAgainstWildLife(building)) {
+              // Removing the wild life
+            planet.removeBuilding(building);
+            break;
+          }
+        }
+      }
       int totalResearch = map.getTotalProductionByPlayerPerTurn(
           Planet.PRODUCTION_RESEARCH, index);
       Attitude attitude = info.getAiAttitude();

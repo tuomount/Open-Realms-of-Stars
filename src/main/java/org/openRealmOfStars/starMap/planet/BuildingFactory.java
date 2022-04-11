@@ -626,7 +626,7 @@ public final class BuildingFactory {
     Building tmp = null;
     if (index == COMPONENT_WL_BIG_CANINE_ANIMALS) {
       tmp = new Building(index, "Wildlife: big canine animals",
-          Icons.getIconByName(Icons.ICON_DEATH),
+          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
           BuildingType.FARM);
       tmp.setProdCost(0);
       tmp.setMetalCost(0);
@@ -638,7 +638,7 @@ public final class BuildingFactory {
     }
     if (index == COMPONENT_WL_BIG_FELINE_ANIMALS) {
       tmp = new Building(index, "Wildlife: big feline animals",
-          Icons.getIconByName(Icons.ICON_DEATH),
+          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
           BuildingType.FARM);
       tmp.setProdCost(0);
       tmp.setMetalCost(0);
@@ -650,7 +650,7 @@ public final class BuildingFactory {
     }
     if (index == COMPONENT_WL_BIG_LIZARD_ANIMALS) {
       tmp = new Building(index, "Wildlife: big lizard animals",
-          Icons.getIconByName(Icons.ICON_DEATH),
+          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
           BuildingType.FARM);
       tmp.setProdCost(0);
       tmp.setMetalCost(0);
@@ -662,7 +662,7 @@ public final class BuildingFactory {
     }
     if (index == COMPONENT_WL_MASSIVE_HERDING_PACK_ANIMALS) {
       tmp = new Building(index, "Wildlife: massive herding pack animals",
-          Icons.getIconByName(Icons.ICON_DEATH),
+          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
           BuildingType.FARM);
       tmp.setProdCost(0);
       tmp.setMetalCost(0);
@@ -674,7 +674,7 @@ public final class BuildingFactory {
     }
     if (index == COMPONENT_WL_FEROCIOUS_BIPEDAL_REPTILES) {
       tmp = new Building(index, "Wildlife: ferocious bipedal reptiles",
-          Icons.getIconByName(Icons.ICON_DEATH),
+          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
           BuildingType.FARM);
       tmp.setProdCost(0);
       tmp.setMetalCost(0);
@@ -686,7 +686,7 @@ public final class BuildingFactory {
     }
     if (index == COMPONENT_WL_MASSIVE_BUG_LIKE_CREATURE) {
       tmp = new Building(index, "Wildlife: massive bug like creature",
-          Icons.getIconByName(Icons.ICON_DEATH),
+          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
           BuildingType.FARM);
       tmp.setProdCost(0);
       tmp.setMetalCost(0);

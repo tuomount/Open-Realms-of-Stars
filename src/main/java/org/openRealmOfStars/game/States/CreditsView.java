@@ -194,6 +194,7 @@ public class CreditsView extends BlackPanel {
       + "Time warp by Tuomo Untinen\n\n"
       + "Homarian Space Ship Bridge by Tuomo Untinen\n\n"
       + "Spinosaurus by Tuomo Untinen\n\n"
+      + "Spinosaurus icon by Tuomo Untinen\n\n"
       + "Lightning animation from Sci-fi effects by Skorpio\n"
       + "https://opengameart.org/content/sci-fi-effects\n"
       + "Licensed under CC BY 4.0\n\n"

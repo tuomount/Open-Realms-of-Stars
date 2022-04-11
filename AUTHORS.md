@@ -204,6 +204,8 @@ Homarian Space Ship Bridge by Tuomo Untinen
 
 Spinosaurus by Tuomo Untinen
 
+Spinosaurus icon by Tuomo Untinen
+
 Lightning animation from Sci-fi effects by Skorpio
 https://opengameart.org/content/sci-fi-effects
 Licensed under CC BY 4.0

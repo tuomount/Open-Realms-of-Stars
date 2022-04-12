@@ -129,7 +129,7 @@ public final class PlanetHandling {
     Building newBuild = (Building) planet.getUnderConstruction();
     Building worst = getWorstBuilding(planet, info, attitude, newBuild,
         nearFleetLimit);
-    if  (worst != null) {
+    if  (worst != null && planet.fightAgainstWildLife(worst)) {
       // Removing the worst building
       planet.removeBuilding(worst);
       return true;
@@ -324,6 +324,16 @@ public final class PlanetHandling {
         .getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_CREDITS, index);
     PlayerInfo info = map.getPlayerByIndex(index);
     if (info != null) {
+      if (info.getAiDifficulty() == AiDifficulty.NORMAL
+          || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+        for (Building building : planet.getBuildingList()) {
+          if (planet.fightAgainstWildLife(building)) {
+              // Removing the wild life
+            planet.removeBuilding(building);
+            break;
+          }
+        }
+      }
       int totalResearch = map.getTotalProductionByPlayerPerTurn(
           Planet.PRODUCTION_RESEARCH, index);
       Attitude attitude = info.getAiAttitude();
@@ -706,6 +716,9 @@ public final class PlanetHandling {
     for (Building building : buildings) {
       int score = scoreBuilding(building, planet, info, attitude,
           nearFleetLimit);
+      if (building.getWildLifePower() > 0) {
+        score = score - building.getWildLifePower() * 2;
+      }
       if (newBuild != null && building.getType() == newBuild.getType()) {
         // This should increase the chance for upgrading the building.
         int newBonus = newBuild.getBattleBonus() + newBuild.getCredBonus()

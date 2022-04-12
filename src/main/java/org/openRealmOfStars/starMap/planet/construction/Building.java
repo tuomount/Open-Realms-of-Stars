@@ -126,6 +126,10 @@ public class Building extends Construction {
    */
   private boolean orbitalElevator;
   /**
+   * Wild life power.
+   */
+  private int wildLifePower;
+  /**
    * Construct building for planet
    * @param index Unique number for building
    * @param name Building name
@@ -156,6 +160,7 @@ public class Building extends Construction {
     this.happinessBonus = 0;
     this.fleetCapacityBonus = 0;
     this.setBroadcaster(false);
+    this.setWildLifePower(0);
   }
 
   /**
@@ -645,5 +650,21 @@ public class Building extends Construction {
    */
   public void setOrbitalElevator(final boolean orbitalElevator) {
     this.orbitalElevator = orbitalElevator;
+  }
+
+  /**
+   * Get Wild life Power for destroying them.
+   * @return Wild life power
+   */
+  public int getWildLifePower() {
+    return wildLifePower;
+  }
+
+  /**
+   * Set Wild life Power for destroying them.
+   * @param wildLifePower Power of wild life
+   */
+  public void setWildLifePower(final int wildLifePower) {
+    this.wildLifePower = wildLifePower;
   }
 }

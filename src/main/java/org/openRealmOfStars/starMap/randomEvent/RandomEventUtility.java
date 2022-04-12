@@ -28,9 +28,11 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
+import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.namegenerators.OriginalWorkNameGenerator;
 
 /**
@@ -1215,12 +1217,30 @@ public final class RandomEventUtility {
         String animalType = "animal";
         switch (value) {
           default:
-          case 10: animalType = "big canine animals"; break;
-          case 11: animalType = "big feline animals"; break;
-          case 12: animalType = "big lizard animals"; break;
-          case 13: animalType = "massive herding pack animals"; break;
-          case 14: animalType = "ferocious bipedal reptiles"; break;
-          case 15: animalType = "massive bug like creature"; break;
+          case 10: {
+            animalType = "big canine animals";
+            break;
+          }
+          case 11: {
+            animalType = "big feline animals";
+            break;
+          }
+          case 12: {
+            animalType = "big lizard animals";
+            break;
+          }
+          case 13: {
+            animalType = "massive herding pack animals";
+            break;
+          }
+          case 14: {
+            animalType = "ferocious bipedal reptiles";
+            break;
+          }
+          case 15: {
+            animalType = "massive bug like creature";
+            break;
+          }
         }
         if (planet.getTotalPopulation() > 0) {
           sb.append(" Population however survived from the attack of ");
@@ -1230,6 +1250,18 @@ public final class RandomEventUtility {
           sb.append(" All population died from the attack of ");
           sb.append(animalType);
           sb.append(". ");
+        }
+        int freeSlots = planet.getGroundSize() - planet.getNumberOfBuildings();
+        if (freeSlots > 0) {
+          String name = "Wildlife: " + animalType;
+          Building building = BuildingFactory.createByName(name);
+          if (building != null) {
+            planet.addBuilding(building);
+          } else {
+            ErrorLogger.debug("Could not find building name " + name + ".");
+          }
+          sb.append("These " + animalType + " have occupied "
+              + " sector from planet surface.");
         }
         event.setText(sb.toString());
         ImageInstruction instructions = new ImageInstruction();

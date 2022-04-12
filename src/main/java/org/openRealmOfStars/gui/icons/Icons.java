@@ -10,7 +10,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -429,6 +429,10 @@ public final class Icons {
    * Multicannon
    */
   public static final String ICON_MULTI_CANNON = "IconMultiCannon";
+  /**
+   * Spinosaurus
+   */
+  public static final String ICON_SPINOSAURUS = "IconSpinosaurus";
 
   /**
    * List of Icon
@@ -739,6 +743,8 @@ public final class Icons {
     icon = new Icon16x16(image, 6, 3, ICON_TENTACLE);
     addIcon(icon);
     icon = new Icon16x16(image, 7, 3, ICON_MULTI_CANNON);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 4, ICON_SPINOSAURUS);
     addIcon(icon);
   }
 

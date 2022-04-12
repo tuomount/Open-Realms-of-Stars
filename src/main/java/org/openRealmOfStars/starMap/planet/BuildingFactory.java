@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 65;
+  private static final int MAX_BUILDING = 71;
 
   /**
    * Component Basic mine
@@ -348,6 +348,30 @@ public final class BuildingFactory {
    * Component Orbital lift
    */
   public static final int COMPONENT_ORBITAL_LIFT = 64;
+  /**
+   * Component Wild life: big canine animals
+   */
+  public static final int COMPONENT_WL_BIG_CANINE_ANIMALS = 65;
+  /**
+   * Component Wild life: big feline animals
+   */
+  public static final int COMPONENT_WL_BIG_FELINE_ANIMALS = 66;
+  /**
+   * Component Wild life: big lizard animals
+   */
+  public static final int COMPONENT_WL_BIG_LIZARD_ANIMALS = 67;
+  /**
+   * Component Wild life: massive herding pack animals
+   */
+  public static final int COMPONENT_WL_MASSIVE_HERDING_PACK_ANIMALS = 68;
+  /**
+   * Component Wild life: ferocious bipedal reptiles
+   */
+  public static final int COMPONENT_WL_FEROCIOUS_BIPEDAL_REPTILES = 69;
+  /**
+   * Component Wild life: massive bug like creature
+   */
+  public static final int COMPONENT_WL_MASSIVE_BUG_LIKE_CREATURE = 70;
 
   /**
    * Create planetary building with index
@@ -552,6 +576,24 @@ public final class BuildingFactory {
     case COMPONENT_ORBITAL_LIFT:
       tmp = createPlanetaryImprovement(index);
       break; // Orbital lift
+    case COMPONENT_WL_BIG_CANINE_ANIMALS:
+      tmp = createWildLife(index);
+      break; // Wildlife Big canine animals
+    case COMPONENT_WL_BIG_FELINE_ANIMALS:
+      tmp = createWildLife(index);
+      break; // Wildlife Big feline animals
+    case COMPONENT_WL_BIG_LIZARD_ANIMALS:
+      tmp = createWildLife(index);
+      break; // Wildlife Big lizard animals
+    case COMPONENT_WL_MASSIVE_HERDING_PACK_ANIMALS:
+      tmp = createWildLife(index);
+      break; // Wildlife massive herding pack animals
+    case COMPONENT_WL_FEROCIOUS_BIPEDAL_REPTILES:
+      tmp = createWildLife(index);
+      break; // Wildlife ferocious bipedal reptiles
+    case COMPONENT_WL_MASSIVE_BUG_LIKE_CREATURE:
+      tmp = createWildLife(index);
+      break; // Wildlife massive bug like creature
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -575,6 +617,87 @@ public final class BuildingFactory {
     return null;
   }
 
+  /**
+   * Create wild life
+   * @param index for creating a new building
+   * @return Building or null if not found with index
+   */
+  private static Building createWildLife(final int index) {
+    Building tmp = null;
+    if (index == COMPONENT_WL_BIG_CANINE_ANIMALS) {
+      tmp = new Building(index, "Wildlife: big canine animals",
+          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
+          BuildingType.FARM);
+      tmp.setProdCost(0);
+      tmp.setMetalCost(0);
+      tmp.setDescription("Dangerous big canine animals."
+          + " Population must fight against to destroy them.");
+      tmp.setWildLifePower(24);
+      tmp.setHappiness(-1);
+      return tmp;
+    }
+    if (index == COMPONENT_WL_BIG_FELINE_ANIMALS) {
+      tmp = new Building(index, "Wildlife: big feline animals",
+          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
+          BuildingType.FARM);
+      tmp.setProdCost(0);
+      tmp.setMetalCost(0);
+      tmp.setDescription("Dangerous big feline animals."
+          + " Population must fight against to destroy them.");
+      tmp.setWildLifePower(28);
+      tmp.setHappiness(-1);
+      return tmp;
+    }
+    if (index == COMPONENT_WL_BIG_LIZARD_ANIMALS) {
+      tmp = new Building(index, "Wildlife: big lizard animals",
+          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
+          BuildingType.FARM);
+      tmp.setProdCost(0);
+      tmp.setMetalCost(0);
+      tmp.setDescription("Dangerous big feline animals."
+          + " Population must fight against to destroy them.");
+      tmp.setWildLifePower(26);
+      tmp.setHappiness(-1);
+      return tmp;
+    }
+    if (index == COMPONENT_WL_MASSIVE_HERDING_PACK_ANIMALS) {
+      tmp = new Building(index, "Wildlife: massive herding pack animals",
+          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
+          BuildingType.FARM);
+      tmp.setProdCost(0);
+      tmp.setMetalCost(0);
+      tmp.setDescription("Dangerous ferocious bipedal reptiles."
+          + " Population must fight against to destroy them.");
+      tmp.setWildLifePower(20);
+      tmp.setHappiness(0);
+      return tmp;
+    }
+    if (index == COMPONENT_WL_FEROCIOUS_BIPEDAL_REPTILES) {
+      tmp = new Building(index, "Wildlife: ferocious bipedal reptiles",
+          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
+          BuildingType.FARM);
+      tmp.setProdCost(0);
+      tmp.setMetalCost(0);
+      tmp.setDescription("Dangerous ferocious bipedal reptiles."
+          + " Population must fight against to destroy them.");
+      tmp.setWildLifePower(36);
+      tmp.setHappiness(-2);
+      return tmp;
+    }
+    if (index == COMPONENT_WL_MASSIVE_BUG_LIKE_CREATURE) {
+      tmp = new Building(index, "Wildlife: massive bug like creature",
+          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
+          BuildingType.FARM);
+      tmp.setProdCost(0);
+      tmp.setMetalCost(0);
+      tmp.setDescription("Dangerous massive bug like creature."
+          + " Population must fight against to destroy them.");
+      tmp.setWildLifePower(30);
+      tmp.setHappiness(-2);
+      return tmp;
+    }
+    return tmp;
+  }
   /**
    * Create military facility
    * @param index for creating a new building

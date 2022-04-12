@@ -244,6 +244,31 @@ public class StarMapMouseListener extends MouseAdapter
     }
   }
 
+  /**
+   * Show new route planning
+   */
+  public void showRoutePlanning() {
+    if (routePlanning && lastClickedFleet != null) {
+      Route route = new Route(lastClickedFleet.getX(),
+          lastClickedFleet.getY(), coord.getMapX(), coord.getMapY(),
+          lastClickedFleet.getFleetFtlSpeed());
+      if (isRegularRoute()) {
+        route.setRegularSpeed(lastClickedFleet.getFleetSpeed());
+      }
+      mapPanel.setRoute(route);
+    } else {
+      routePlanning = false;
+      mapPanel.setRoute(null);
+    }
+  }
+  /**
+   * Hide current route planning
+   */
+  public void hideRoutePlanning() {
+    routePlanning = false;
+    mapPanel.setRoute(null);
+  }
+
   @Override
   public void mouseClicked(final MouseEvent e) {
     setDoubleClicked(false);
@@ -334,6 +359,7 @@ public class StarMapMouseListener extends MouseAdapter
                   && !lastClickedFleet.isStarBaseDeployed()) {
                 setRoutePlanning(true);
                 setRegularRoute(true);
+                showRoutePlanning();
               } else {
                 SoundPlayer.playMenuDisabled();
               }

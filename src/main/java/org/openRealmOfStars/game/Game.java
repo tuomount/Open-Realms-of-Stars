@@ -2439,6 +2439,19 @@ public class Game implements ActionListener {
         starMapView.setShowPlanet(planet);
         starMapView.setCursorFocus(20);
         starMapView.getStarMapMouseListener().setLastClickedPlanet(planet);
+        starMapView.getStarMapMouseListener().setLastClickedFleet(null);
+      }
+    }
+    if ((msg.getType() == MessageType.POPULATION
+        || msg.getType() == MessageType.CONSTRUCTION) && mapOnly) {
+      starMap.setCursorPos(msg.getX(), msg.getY());
+      starMap.setDrawPos(msg.getX(), msg.getY());
+      Planet planet = starMap.getPlanetByCoordinate(msg.getX(), msg.getY());
+      if (planet != null) {
+        starMapView.setShowPlanet(planet);
+        starMapView.setCursorFocus(20);
+        starMapView.getStarMapMouseListener().setLastClickedPlanet(planet);
+        starMapView.getStarMapMouseListener().setLastClickedFleet(null);
       }
     }
     if (msg.getType() == MessageType.FLEET) {

@@ -443,6 +443,8 @@ public class StarMapView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_MSG)) {
       Message msg = players.getCurrentPlayerInfo().getMsgList()
           .getPrevMessage();
+      getStarMapMouseListener().hideRoutePlanning();
+      mapPanel.setRoute(null);
       if (msg.getX() != -1 && msg.getY() != -1) {
         map.setCursorPos(msg.getX(), msg.getY());
         map.setDrawPos(msg.getX(), msg.getY());
@@ -452,7 +454,7 @@ public class StarMapView extends BlackPanel {
       msgPanel.updatePanel(msg,
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
           players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
-    }
+   }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_VIEW_MINIMAP)) {
       SoundPlayer.playMenuSound();
       if (mapPanel.isShowMiniMap()) {
@@ -466,6 +468,8 @@ public class StarMapView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_MSG)) {
       Message msg = players.getCurrentPlayerInfo().getMsgList()
           .getNextMessage();
+      getStarMapMouseListener().hideRoutePlanning();
+      mapPanel.setRoute(null);
       if (msg.getX() != -1 && msg.getY() != -1) {
         map.setCursorPos(msg.getX(), msg.getY());
         map.setDrawPos(msg.getX(), msg.getY());
@@ -475,6 +479,7 @@ public class StarMapView extends BlackPanel {
       msgPanel.updatePanel(msg,
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
           players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
+      getStarMapMouseListener().hideRoutePlanning();
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_DEFEND_SECTOR)
@@ -487,6 +492,7 @@ public class StarMapView extends BlackPanel {
       fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
           fleet.getY(), Route.ROUTE_DEFEND));
       infoPanel.updatePanel(map.isDebug());
+      getStarMapMouseListener().hideRoutePlanning();
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_FIX_FLEET)
         && getStarMapMouseListener().getLastClickedFleet() != null
@@ -497,6 +503,7 @@ public class StarMapView extends BlackPanel {
       fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
           fleet.getY(), Route.ROUTE_FIX));
       infoPanel.updatePanel(map.isDebug());
+      getStarMapMouseListener().hideRoutePlanning();
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ROUTE_FLEET)
@@ -511,6 +518,7 @@ public class StarMapView extends BlackPanel {
         SoundPlayer.playSound(SoundPlayer.WARP_ENGINE_ENGAGE);
         getStarMapMouseListener().setRoutePlanning(true);
         getStarMapMouseListener().setRegularRoute(false);
+        getStarMapMouseListener().showRoutePlanning();
       }
     }
 

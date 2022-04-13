@@ -43,6 +43,10 @@ public class StarMapMouseListener extends MouseAdapter
     implements MouseMotionListener {
 
   /**
+   * How many pixel is requred to move on sector
+   */
+  private static final int PIXEL_SCROLL_AMOUNT = 16;
+  /**
    * Star map which to use
    */
   private StarMap starMap;
@@ -126,6 +130,26 @@ public class StarMapMouseListener extends MouseAdapter
    */
   private int moveY;
 
+  /**
+   * Original dragging point on screen, X-Coordinate
+   */
+  private int dragOrigX;
+  /**
+   * Original dragging point on screen, y-Coordinate
+   */
+  private int dragOrigY;
+  /**
+   * Original map coordinate when dragging, X-Coordinate.
+   */
+  private int dragOrigMapX;
+  /**
+   * Original map coordinate when dragging, Y-Coordinate.
+   */
+  private int dragOrigMapY;
+  /**
+   * Is dragging done?
+   */
+  private boolean dragging = false;
   /**
    * Get the move point where clicked on map X coord
    * @return move point where clicked on map X coord
@@ -267,6 +291,29 @@ public class StarMapMouseListener extends MouseAdapter
   public void hideRoutePlanning() {
     routePlanning = false;
     mapPanel.setRoute(null);
+  }
+
+  @Override
+  public void mouseDragged(final MouseEvent e) {
+    super.mouseDragged(e);
+    if (!dragging) {
+      dragOrigMapX = starMap.getDrawX();
+      dragOrigMapY = starMap.getDrawY();
+      dragOrigX = e.getX();
+      dragOrigY = e.getY();
+      dragging = true;
+    }
+    int diffX = dragOrigX - e.getX();
+    int diffY = dragOrigY - e.getY();
+    diffX = diffX / PIXEL_SCROLL_AMOUNT;
+    diffY = diffY / PIXEL_SCROLL_AMOUNT;
+    starMap.setDrawPos(dragOrigMapX + diffX, dragOrigMapY + diffY);
+  }
+
+  @Override
+  public void mouseReleased(final MouseEvent e) {
+    super.mouseReleased(e);
+    dragging = false;
   }
 
   @Override

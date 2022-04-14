@@ -688,6 +688,12 @@ public class Game implements ActionListener {
       line = new ConfigLine(ConfigFile.CONFIG_RESOLUTION + "="
           + WINDOW_X_SIZE + "x" + WINDOW_Y_SIZE);
       configFile.add(line);
+      line = new ConfigLine(ConfigFile.CONFIG_BORDER_SCROLLING + "="
+          + ConfigFile.FALSE);
+      configFile.add(line);
+      line = new ConfigLine(ConfigFile.CONFIG_SHOW_MINIMAP + "="
+          + ConfigFile.TRUE);
+      configFile.add(line);
     }
   }
 
@@ -2850,6 +2856,8 @@ public class Game implements ActionListener {
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
+        configFile.setBorderScrolling(optionsView.isBorderScrolling());
+        configFile.setShowMinimap(optionsView.isShowMinimap());
         setBridgeCommand(BridgeCommandType.EXIT);
         writeConfigFile();
         initBridge();
@@ -2882,6 +2890,8 @@ public class Game implements ActionListener {
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
+        configFile.setBorderScrolling(optionsView.isBorderScrolling());
+        configFile.setShowMinimap(optionsView.isShowMinimap());
         writeConfigFile();
         changeGameState(GameState.SETUP_AMBIENT_LIGHTS);
         return;
@@ -2905,6 +2915,8 @@ public class Game implements ActionListener {
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
+        configFile.setBorderScrolling(optionsView.isBorderScrolling());
+        configFile.setShowMinimap(optionsView.isShowMinimap());
         return;
       }
       if (arg0.getActionCommand()

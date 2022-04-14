@@ -7,7 +7,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018, 2020, 2021 Tuomo Untinen
+* Copyright (C) 2018, 2020-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -100,13 +100,21 @@ public class ConfigFile {
    */
   public static final String CONFIG_IMPROVED_PARALLAX = "ImprovedParallax";
   /**
+   * Config option for border scrolling.
+   */
+  public static final String CONFIG_BORDER_SCROLLING = "BorderScrolling";
+  /**
+   * Config option for show minimap.
+   */
+  public static final String CONFIG_SHOW_MINIMAP = "ShowMinimap";
+  /**
    * String true
    */
-  private static final String TRUE = "true";
+  public static final String TRUE = "true";
   /**
    * String false
    */
-  private static final String FALSE = "false";
+  public static final String FALSE = "false";
   /**
    * ConfigFile lines
    */
@@ -531,6 +539,36 @@ public class ConfigFile {
    */
   public void setAmbientLights(final boolean lights) {
     setBoolean(CONFIG_ENABLE_LIGHTS, lights);
+  }
+
+  /**
+   * Is Border scrolling enabled?
+   * @return True if enabled
+   */
+  public boolean isBorderScrolling() {
+    return getBoolean(CONFIG_BORDER_SCROLLING);
+  }
+  /**
+   * Set border scrolling setting.
+   * @param borderScrolling borderScrolling to be set.
+   */
+  public void setBorderScrolling(final boolean borderScrolling) {
+    setBoolean(CONFIG_BORDER_SCROLLING, borderScrolling);
+  }
+
+  /**
+   * Is Minimap enabled?
+   * @return True if enabled
+   */
+  public boolean isShowMinimap() {
+    return getBoolean(CONFIG_SHOW_MINIMAP);
+  }
+  /**
+   * Set show minimap setting.
+   * @param showMinimap Show minimap to be set.
+   */
+  public void setShowMinimap(final boolean showMinimap) {
+    setBoolean(CONFIG_SHOW_MINIMAP, showMinimap);
   }
 
   /**

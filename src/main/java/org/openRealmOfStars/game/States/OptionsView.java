@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
+import javax.swing.JTabbedPane;
 
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
@@ -27,7 +28,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018,2020,2021  Tuomo Untinen
+* Copyright (C) 2018,2020-2022  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -113,6 +114,16 @@ public class OptionsView extends BlackPanel {
   private boolean resized = false;
 
   /**
+   * Borderscrolling checkbox options
+   */
+  private SpaceCheckBox borderScrollingBox;
+
+  /**
+   * Show Minimap checkbox options
+   */
+  private SpaceCheckBox showMinimapBox;
+
+  /**
    * Constructor for OptionsView
    * @param config Current ConfigFile
    * @param gameFrame Game frame
@@ -154,6 +165,10 @@ public class OptionsView extends BlackPanel {
     EmptyInfoPanel xPanel = new EmptyInfoPanel();
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    JTabbedPane tabs = new JTabbedPane();
+    tabs.setFont(GuiStatics.getFontCubellanSmaller());
+    tabs.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER);
+    tabs.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     // Screen panel starts here
     InfoPanel screenPanel = new InfoPanel();
     screenPanel.setLayout(new BoxLayout(screenPanel, BoxLayout.Y_AXIS));
@@ -265,10 +280,39 @@ public class OptionsView extends BlackPanel {
     xPanel.add(improvedParallaxBox);
     screenPanel.add(xPanel);
     screenPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
-    allOptions.add(screenPanel);
-    allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
-    // Music panel starts here
+    tabs.add("Graphics", screenPanel);
+    // Gameplay panel starts here
+    InfoPanel gameplayPanel = new InfoPanel();
+    gameplayPanel.setLayout(new BoxLayout(gameplayPanel, BoxLayout.Y_AXIS));
+    gameplayPanel.setTitle("Gameplay Options");
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    borderScrollingBox = new SpaceCheckBox("Automatic border scrolling");
+    borderScrollingBox.setToolTipText("<html>Starmap can be scrolled by moving"
+        + " mouse on border.<br>"
+        + "Other option is by dragging the mouse over starmap.</html>");
+    borderScrollingBox.createToolTip();
+    borderScrollingBox.setSelected(config.isBorderScrolling());
+    xPanel.add(borderScrollingBox);
+    gameplayPanel.add(xPanel);
+    gameplayPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    showMinimapBox = new SpaceCheckBox("Show minimap on starmap");
+    showMinimapBox.setToolTipText("<html>Minimap is shown when game starts."
+        + "<br>This can be changed during game.</html>");
+    showMinimapBox.createToolTip();
+    showMinimapBox.setSelected(config.isShowMinimap());
+    xPanel.add(showMinimapBox);
+    gameplayPanel.add(xPanel);
+    gameplayPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    tabs.add("Gameplay", gameplayPanel);
+
+    // Sound & Music panel starts here
+    EmptyInfoPanel soundMusicPanel = new EmptyInfoPanel();
+    soundMusicPanel.setLayout(new BoxLayout(soundMusicPanel, BoxLayout.Y_AXIS));
     InfoPanel musicPanel = new InfoPanel();
     musicPanel.setTitle("Music Options");
     musicPanel.setLayout(new BoxLayout(musicPanel, BoxLayout.Y_AXIS));
@@ -288,8 +332,8 @@ public class OptionsView extends BlackPanel {
     xPanel.add(musicSlider);
     musicPanel.add(xPanel);
     musicPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    allOptions.add(musicPanel);
-    allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
+    soundMusicPanel.add(musicPanel);
+    soundMusicPanel.add(Box.createRigidArea(new Dimension(20, 20)));
     // Sound panel starts here
     InfoPanel soundPanel = new InfoPanel();
     soundPanel.setTitle("Sound Options");
@@ -310,8 +354,9 @@ public class OptionsView extends BlackPanel {
     xPanel.add(soundSlider);
     soundPanel.add(xPanel);
     soundPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    allOptions.add(soundPanel);
-    allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
+    soundMusicPanel.add(soundPanel);
+    soundMusicPanel.add(Box.createRigidArea(new Dimension(20, 20)));
+    tabs.add("Sound", soundMusicPanel);
     // Lights panel starts here
     InfoPanel lightsPanel = new InfoPanel();
     lightsPanel.setTitle("Ambient lights");
@@ -372,9 +417,8 @@ public class OptionsView extends BlackPanel {
     xPanel.add(lightsSlider);
     lightsPanel.add(xPanel);
     lightsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    allOptions.add(lightsPanel);
-    allOptions.add(Box.createRigidArea(new Dimension(20,
-        game.getHeight() - 280)));
+    tabs.add("Ambient Lights", lightsPanel);
+    allOptions.add(tabs);
     base.add(allOptions, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
   }
@@ -509,6 +553,22 @@ public class OptionsView extends BlackPanel {
    */
   public boolean isLightsEnabled() {
     return ambientLightsBox.isSelected();
+  }
+
+  /**
+   * Is border scrolling enabled or not?
+   * @return True if border scrolling is enabled.
+   */
+  public boolean isBorderScrolling() {
+    return borderScrollingBox.isSelected();
+  }
+
+  /**
+   * Is show minimap enabled or not?
+   * @return True if show minimap is enabled.
+   */
+  public boolean isShowMinimap() {
+    return showMinimapBox.isSelected();
   }
 
 }

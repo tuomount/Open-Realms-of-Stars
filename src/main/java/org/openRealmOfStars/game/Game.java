@@ -469,7 +469,7 @@ public class Game implements ActionListener {
    */
   public Game(final boolean visible) {
     readConfigFile();
-    setShowMiniMapFlag(false);
+    setShowMiniMapFlag(configFile.isShowMinimap());
     int musicVolume = configFile.getMusicVolume();
     int soundVolume = configFile.getSoundVolume();
     int resolutionWidth = configFile.getResolutionWidth();
@@ -687,6 +687,12 @@ public class Game implements ActionListener {
       configFile.add(line);
       line = new ConfigLine(ConfigFile.CONFIG_RESOLUTION + "="
           + WINDOW_X_SIZE + "x" + WINDOW_Y_SIZE);
+      configFile.add(line);
+      line = new ConfigLine(ConfigFile.CONFIG_BORDER_SCROLLING + "="
+          + ConfigFile.FALSE);
+      configFile.add(line);
+      line = new ConfigLine(ConfigFile.CONFIG_SHOW_MINIMAP + "="
+          + ConfigFile.TRUE);
       configFile.add(line);
     }
   }
@@ -2850,6 +2856,9 @@ public class Game implements ActionListener {
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
+        configFile.setBorderScrolling(optionsView.isBorderScrolling());
+        configFile.setShowMinimap(optionsView.isShowMinimap());
+        setShowMiniMapFlag(configFile.isShowMinimap());
         setBridgeCommand(BridgeCommandType.EXIT);
         writeConfigFile();
         initBridge();
@@ -2882,6 +2891,8 @@ public class Game implements ActionListener {
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
+        configFile.setBorderScrolling(optionsView.isBorderScrolling());
+        configFile.setShowMinimap(optionsView.isShowMinimap());
         writeConfigFile();
         changeGameState(GameState.SETUP_AMBIENT_LIGHTS);
         return;
@@ -2905,6 +2916,8 @@ public class Game implements ActionListener {
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
+        configFile.setBorderScrolling(optionsView.isBorderScrolling());
+        configFile.setShowMinimap(optionsView.isShowMinimap());
         return;
       }
       if (arg0.getActionCommand()
@@ -3701,6 +3714,13 @@ public class Game implements ActionListener {
     this.showMiniMapFlag = showMiniMapFlag;
   }
 
+  /**
+   * Is border scrolling enabled?
+   * @return True if border scrolling enabled.
+   */
+  public boolean isBorderScrolling() {
+    return configFile.isBorderScrolling();
+  }
   /**
    * Get last set save game file name.
    * @return Save game file name.

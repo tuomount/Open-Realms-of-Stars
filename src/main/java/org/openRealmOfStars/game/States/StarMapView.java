@@ -424,7 +424,7 @@ public class StarMapView extends BlackPanel {
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
-      if (starMapMouseListener != null) {
+      if (starMapMouseListener != null && game.isBorderScrolling()) {
         starMapMouseListener.updateScrollingIfOnBorder();
       }
       if (mapPanel.getRoute() == null && infoPanel.getFleetShowing() != null

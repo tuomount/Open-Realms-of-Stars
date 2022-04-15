@@ -469,7 +469,7 @@ public class Game implements ActionListener {
    */
   public Game(final boolean visible) {
     readConfigFile();
-    setShowMiniMapFlag(false);
+    setShowMiniMapFlag(configFile.isShowMinimap());
     int musicVolume = configFile.getMusicVolume();
     int soundVolume = configFile.getSoundVolume();
     int resolutionWidth = configFile.getResolutionWidth();
@@ -2858,6 +2858,7 @@ public class Game implements ActionListener {
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
         configFile.setShowMinimap(optionsView.isShowMinimap());
+        setShowMiniMapFlag(configFile.isShowMinimap());
         setBridgeCommand(BridgeCommandType.EXIT);
         writeConfigFile();
         initBridge();
@@ -3713,6 +3714,13 @@ public class Game implements ActionListener {
     this.showMiniMapFlag = showMiniMapFlag;
   }
 
+  /**
+   * Is border scrolling enabled?
+   * @return True if border scrolling enabled.
+   */
+  public boolean isBorderScrolling() {
+    return configFile.isBorderScrolling();
+  }
   /**
    * Get last set save game file name.
    * @return Save game file name.

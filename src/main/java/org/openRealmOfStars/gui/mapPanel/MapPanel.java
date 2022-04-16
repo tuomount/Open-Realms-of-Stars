@@ -1145,7 +1145,10 @@ public class MapPanel extends JPanel {
         }
 
         // Draw sun's text
-        if (tile.getName().equals(TileNames.SUN_E) && i > -viewPointX + 1) {
+        if ((tile.getName().equals(TileNames.SUN_E)
+            || tile.getName().equals(TileNames.BLUE_STAR_E)
+            || tile.getName().equals(TileNames.STAR_E))
+            && i > -viewPointX + 1) {
           Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
           if (sun != null) {
             int textWidth = (int) GuiStatics.getFontCubellanSC()

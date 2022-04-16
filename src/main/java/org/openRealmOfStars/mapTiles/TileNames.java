@@ -7,7 +7,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -76,6 +76,80 @@ public final class TileNames {
    * Sun Center
    */
   public static final String SUN_C = "SUN_C";
+
+  /**
+   * Blue Star North West
+   */
+  public static final String BLUE_STAR_NW = "BLUE_STAR_NW";
+  /**
+   * Blue Star North
+   */
+  public static final String BLUE_STAR_N = "BLUE_STAR_N";
+  /**
+   * Blue Star North East
+   */
+  public static final String BLUE_STAR_NE = "BLUE_STAR_NE";
+  /**
+   * Blue Star East
+   */
+  public static final String BLUE_STAR_E = "BLUE_STAR_E";
+  /**
+   * Blue Star South East
+   */
+  public static final String BLUE_STAR_SE = "BLUE_STAR_SE";
+  /**
+   * Blue Star South
+   */
+  public static final String BLUE_STAR_S = "BLUE_STAR_S";
+  /**
+   * Blue Star South West
+   */
+  public static final String BLUE_STAR_SW = "BLUE_STAR_SW";
+  /**
+   * Blue Star West
+   */
+  public static final String BLUE_STAR_W = "BLUE_STAR_W";
+  /**
+   * Blue Star Center
+   */
+  public static final String BLUE_STAR_C = "BLUE_STAR_C";
+
+  /**
+   * Star North West
+   */
+  public static final String STAR_NW = "STAR_NW";
+  /**
+   * Star North
+   */
+  public static final String STAR_N = "STAR_N";
+  /**
+   * Star North East
+   */
+  public static final String STAR_NE = "STAR_NE";
+  /**
+   * Star East
+   */
+  public static final String STAR_E = "STAR_E";
+  /**
+   * Star South East
+   */
+  public static final String STAR_SE = "STAR_SE";
+  /**
+   * Star South
+   */
+  public static final String STAR_S = "STAR_S";
+  /**
+   * Star South West
+   */
+  public static final String STAR_SW = "STAR_SW";
+  /**
+   * Star West
+   */
+  public static final String STAR_W = "STAR_W";
+  /**
+   * Star Center
+   */
+  public static final String STAR_C = "STAR_C";
 
   /**
    * Gas Giant 1 North West

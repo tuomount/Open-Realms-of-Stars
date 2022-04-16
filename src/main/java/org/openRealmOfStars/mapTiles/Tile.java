@@ -229,7 +229,25 @@ public class Tile {
         || name.equals(TileNames.SUN_NE)
         || name.equals(TileNames.SUN_SE)
         || name.equals(TileNames.SUN_NW)
-        || name.equals(TileNames.SUN_SW)) {
+        || name.equals(TileNames.SUN_SW)
+        || name.equals(TileNames.BLUE_STAR_C)
+        || name.equals(TileNames.BLUE_STAR_E)
+        || name.equals(TileNames.BLUE_STAR_W)
+        || name.equals(TileNames.BLUE_STAR_N)
+        || name.equals(TileNames.BLUE_STAR_S)
+        || name.equals(TileNames.BLUE_STAR_NE)
+        || name.equals(TileNames.BLUE_STAR_SE)
+        || name.equals(TileNames.BLUE_STAR_NW)
+        || name.equals(TileNames.BLUE_STAR_SW)
+        || name.equals(TileNames.STAR_C)
+        || name.equals(TileNames.STAR_E)
+        || name.equals(TileNames.STAR_W)
+        || name.equals(TileNames.STAR_N)
+        || name.equals(TileNames.STAR_S)
+        || name.equals(TileNames.STAR_NE)
+        || name.equals(TileNames.STAR_SE)
+        || name.equals(TileNames.STAR_NW)
+        || name.equals(TileNames.STAR_SW)) {
       return true;
     }
     return false;

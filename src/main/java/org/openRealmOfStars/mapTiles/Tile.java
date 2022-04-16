@@ -254,6 +254,63 @@ public class Tile {
   }
 
   /**
+   * Is tile a blue star tile
+   * @return True if tile is blue star tile
+   */
+  public boolean isBlueStarTile() {
+    if (name.equals(TileNames.BLUE_STAR_C)
+        || name.equals(TileNames.BLUE_STAR_E)
+        || name.equals(TileNames.BLUE_STAR_W)
+        || name.equals(TileNames.BLUE_STAR_N)
+        || name.equals(TileNames.BLUE_STAR_S)
+        || name.equals(TileNames.BLUE_STAR_NE)
+        || name.equals(TileNames.BLUE_STAR_SE)
+        || name.equals(TileNames.BLUE_STAR_NW)
+        || name.equals(TileNames.BLUE_STAR_SW)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Is tile a yellow star tile
+   * @return True if tile is yellow star tile
+   */
+  public boolean isYellowStarTile() {
+    if (name.equals(TileNames.STAR_C)
+        || name.equals(TileNames.STAR_E)
+        || name.equals(TileNames.STAR_W)
+        || name.equals(TileNames.STAR_N)
+        || name.equals(TileNames.STAR_S)
+        || name.equals(TileNames.STAR_NE)
+        || name.equals(TileNames.STAR_SE)
+        || name.equals(TileNames.STAR_NW)
+        || name.equals(TileNames.STAR_SW)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Is tile a sun tile
+   * @return True if tile is sun tile
+   */
+  public boolean isSunTile() {
+    if (name.equals(TileNames.SUN_C)
+        || name.equals(TileNames.SUN_E)
+        || name.equals(TileNames.SUN_W)
+        || name.equals(TileNames.SUN_N)
+        || name.equals(TileNames.SUN_S)
+        || name.equals(TileNames.SUN_NE)
+        || name.equals(TileNames.SUN_SE)
+        || name.equals(TileNames.SUN_NW)
+        || name.equals(TileNames.SUN_SW)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Is tile potentially dangerous
    * @return True if dangerous
    */

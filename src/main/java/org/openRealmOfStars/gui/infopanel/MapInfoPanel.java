@@ -387,6 +387,18 @@ public class MapInfoPanel extends InfoPanel {
         Tile star2 = Tiles.getTileByName(TileNames.SUN_NE);
         Tile star3 = Tiles.getTileByName(TileNames.SUN_SE);
         Tile star4 = Tiles.getTileByName(TileNames.SUN_SW);
+        if (tile.isBlueStarTile()) {
+          star1 = Tiles.getTileByName(TileNames.BLUE_STAR_NW);
+          star2 = Tiles.getTileByName(TileNames.BLUE_STAR_NE);
+          star3 = Tiles.getTileByName(TileNames.BLUE_STAR_SE);
+          star4 = Tiles.getTileByName(TileNames.BLUE_STAR_SW);
+        }
+        if (tile.isYellowStarTile()) {
+          star1 = Tiles.getTileByName(TileNames.STAR_NW);
+          star2 = Tiles.getTileByName(TileNames.STAR_NE);
+          star3 = Tiles.getTileByName(TileNames.STAR_SE);
+          star4 = Tiles.getTileByName(TileNames.STAR_SW);
+        }
         star1.draw(g2d, 0, 0);
         star2.draw(g2d, 32, 0);
         star3.draw(g2d, 32, 32);

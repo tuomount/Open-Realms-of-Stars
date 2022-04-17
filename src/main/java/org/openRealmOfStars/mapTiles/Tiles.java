@@ -81,6 +81,82 @@ public final class Tiles {
   }
 
   /**
+   * Get sun tiles by name. Initializes tiles if they are uninitialized.
+   * @param name For search the tile
+   * @param type There are three types of sun 0,1,2
+   * @return Always returns a tile if not found tile then first index is
+   * returned.
+   */
+  public static Tile getSunTile(final String name, final int type) {
+    if (hashOfTiles == null) {
+      initTiles();
+    }
+    Tile tile = null;
+    if (type == 1) {
+      if (name.equals(TileNames.SUN_C)) {
+        tile = getTileByName(TileNames.BLUE_STAR_C);
+      }
+      if (name.equals(TileNames.SUN_NW)) {
+        tile = getTileByName(TileNames.BLUE_STAR_NW);
+      }
+      if (name.equals(TileNames.SUN_N)) {
+        tile = getTileByName(TileNames.BLUE_STAR_N);
+      }
+      if (name.equals(TileNames.SUN_NE)) {
+        tile = getTileByName(TileNames.BLUE_STAR_NE);
+      }
+      if (name.equals(TileNames.SUN_W)) {
+        tile = getTileByName(TileNames.BLUE_STAR_W);
+      }
+      if (name.equals(TileNames.SUN_E)) {
+        tile = getTileByName(TileNames.BLUE_STAR_E);
+      }
+      if (name.equals(TileNames.SUN_SW)) {
+        tile = getTileByName(TileNames.BLUE_STAR_SW);
+      }
+      if (name.equals(TileNames.SUN_S)) {
+        tile = getTileByName(TileNames.BLUE_STAR_S);
+      }
+      if (name.equals(TileNames.SUN_SE)) {
+        tile = getTileByName(TileNames.BLUE_STAR_SE);
+      }
+    } else if (type == 2) {
+      if (name.equals(TileNames.SUN_C)) {
+        tile = getTileByName(TileNames.STAR_C);
+      }
+      if (name.equals(TileNames.SUN_NW)) {
+        tile = getTileByName(TileNames.STAR_NW);
+      }
+      if (name.equals(TileNames.SUN_N)) {
+        tile = getTileByName(TileNames.STAR_N);
+      }
+      if (name.equals(TileNames.SUN_NE)) {
+        tile = getTileByName(TileNames.STAR_NE);
+      }
+      if (name.equals(TileNames.SUN_W)) {
+        tile = getTileByName(TileNames.STAR_W);
+      }
+      if (name.equals(TileNames.SUN_E)) {
+        tile = getTileByName(TileNames.STAR_E);
+      }
+      if (name.equals(TileNames.SUN_SW)) {
+        tile = getTileByName(TileNames.STAR_SW);
+      }
+      if (name.equals(TileNames.SUN_S)) {
+        tile = getTileByName(TileNames.STAR_S);
+      }
+      if (name.equals(TileNames.SUN_SE)) {
+        tile = getTileByName(TileNames.STAR_SE);
+      }
+    } else {
+      tile = getTileByName(name);
+    }
+    if (tile == null) {
+      return getTileByIndex(0);
+    }
+    return tile;
+  }
+  /**
    * Get Maximum count of tiles
    * @return Maximum count of tiles
    */
@@ -429,6 +505,62 @@ public final class Tiles {
     tile = new Tile(tilesImage, 5, 6, TileNames.PLAYER_SKY);
     addTile(tile);
     tile = new Tile(tilesImage, 6, 6, TileNames.PLAYER_SHIP_SKY);
+    addTile(tile);
+    // Reading the Blue star 3x3
+    tile = new Tile(tilesImage, 0, 7, TileNames.BLUE_STAR_NW);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 1, 7, TileNames.BLUE_STAR_N);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 2, 7, TileNames.BLUE_STAR_NE);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 0, 8, TileNames.BLUE_STAR_W);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 1, 8, TileNames.BLUE_STAR_C);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 2, 8, TileNames.BLUE_STAR_E);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 0, 9, TileNames.BLUE_STAR_SW);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 1, 9, TileNames.BLUE_STAR_S);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 2, 9, TileNames.BLUE_STAR_SE);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    // Reading the Star 3x3
+    tile = new Tile(tilesImage, 3, 7, TileNames.STAR_NW);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 4, 7, TileNames.STAR_N);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 5, 7, TileNames.STAR_NE);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 3, 8, TileNames.STAR_W);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 4, 8, TileNames.STAR_C);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 5, 8, TileNames.STAR_E);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 3, 9, TileNames.STAR_SW);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 4, 9, TileNames.STAR_S);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 5, 9, TileNames.STAR_SE);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
     addTile(tile);
   }
 

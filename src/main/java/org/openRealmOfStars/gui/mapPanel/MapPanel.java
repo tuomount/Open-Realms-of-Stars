@@ -802,7 +802,10 @@ public class MapPanel extends JPanel {
         }
 
         // Draw sun's text
-        if (tile.getName().equals(TileNames.SUN_E) && i > -viewPointX + 1) {
+        if ((tile.getName().equals(TileNames.SUN_E)
+            || tile.getName().equals(TileNames.BLUE_STAR_E)
+            || tile.getName().equals(TileNames.STAR_E))
+            && i > -viewPointX + 1) {
           Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
           if (sun != null) {
             int textWidth = (int) GuiStatics.getFontCubellanSC()
@@ -810,7 +813,15 @@ public class MapPanel extends JPanel {
                 .getWidth();
             int offset = Tile.MAX_WIDTH / 2 + textWidth / 2 - 2;
             gr.setStroke(GuiStatics.TEXT_LINE);
-            gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
+            if (tile.getName().equals(TileNames.SUN_E)) {
+              gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
+            }
+            if (tile.getName().equals(TileNames.STAR_E)) {
+              gr.setColor(GuiStatics.COLOR_SPACE_YELLOW);
+            }
+            if (tile.getName().equals(TileNames.BLUE_STAR_E)) {
+              gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
+            }
             gr.drawLine(pixelX - offset, pixelY + Tile.MAX_HEIGHT / 2 - 3,
                 pixelX - Tile.MAX_WIDTH + offset,
                 pixelY + Tile.MAX_HEIGHT / 2 - 3);
@@ -1150,7 +1161,10 @@ public class MapPanel extends JPanel {
         }
 
         // Draw sun's text
-        if (tile.getName().equals(TileNames.SUN_E) && i > -viewPointX + 1) {
+        if ((tile.getName().equals(TileNames.SUN_E)
+            || tile.getName().equals(TileNames.BLUE_STAR_E)
+            || tile.getName().equals(TileNames.STAR_E))
+            && i > -viewPointX + 1) {
           Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
           if (sun != null) {
             int textWidth = (int) GuiStatics.getFontCubellanSC()

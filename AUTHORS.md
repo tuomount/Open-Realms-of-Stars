@@ -27,6 +27,10 @@ Moons and planet made by Unnamed (Viktor.Hahn@web.de)
 
 SunRed by Priest865 (http://opengameart.org/content/space-assets)
 
+O-Class Star by cogitollc (CC0) (https://opengameart.org/content/o-class-star)
+
+Red dwarf star (first try) by cogitollc (CC0) (https://opengameart.org/content/red-dwarf-star-first-try)
+
 141 Military Icons Set by AngryMeteor.com - http://opengameart.org/content/140-military-icons-set-fixed
 
 Nebulae, star field and space panel by Tuomo Untinen

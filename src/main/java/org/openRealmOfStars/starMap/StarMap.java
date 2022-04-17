@@ -1770,15 +1770,20 @@ public class StarMap {
     tileInfo[sx - 1][sy + 1] = info;
     tileInfo[sx][sy + 1] = info;
     tileInfo[sx + 1][sy + 1] = info;
-    tiles[sx][sy] = Tiles.getTileByName(TileNames.SUN_C).getIndex();
-    tiles[sx - 1][sy - 1] = Tiles.getTileByName(TileNames.SUN_NW).getIndex();
-    tiles[sx][sy - 1] = Tiles.getTileByName(TileNames.SUN_N).getIndex();
-    tiles[sx + 1][sy - 1] = Tiles.getTileByName(TileNames.SUN_NE).getIndex();
-    tiles[sx - 1][sy] = Tiles.getTileByName(TileNames.SUN_W).getIndex();
-    tiles[sx + 1][sy] = Tiles.getTileByName(TileNames.SUN_E).getIndex();
-    tiles[sx - 1][sy + 1] = Tiles.getTileByName(TileNames.SUN_SW).getIndex();
-    tiles[sx][sy + 1] = Tiles.getTileByName(TileNames.SUN_S).getIndex();
-    tiles[sx + 1][sy + 1] = Tiles.getTileByName(TileNames.SUN_SE).getIndex();
+    int sunType = DiceGenerator.getRandom(0, 2);
+    tiles[sx][sy] = Tiles.getSunTile(TileNames.SUN_C, sunType).getIndex();
+    tiles[sx - 1][sy - 1] = Tiles.getSunTile(TileNames.SUN_NW,
+        sunType).getIndex();
+    tiles[sx][sy - 1] = Tiles.getSunTile(TileNames.SUN_N, sunType).getIndex();
+    tiles[sx + 1][sy - 1] = Tiles.getSunTile(TileNames.SUN_NE,
+        sunType).getIndex();
+    tiles[sx - 1][sy] = Tiles.getSunTile(TileNames.SUN_W, sunType).getIndex();
+    tiles[sx + 1][sy] = Tiles.getSunTile(TileNames.SUN_E, sunType).getIndex();
+    tiles[sx - 1][sy + 1] = Tiles.getSunTile(TileNames.SUN_SW,
+        sunType).getIndex();
+    tiles[sx][sy + 1] = Tiles.getSunTile(TileNames.SUN_S, sunType).getIndex();
+    tiles[sx + 1][sy + 1] = Tiles.getSunTile(TileNames.SUN_SE,
+        sunType).getIndex();
     int planets = 0;
     while (planets < numberOfPlanets) {
       int px = sx + DiceGenerator.getRandom(-SOLAR_SYSTEM_WIDTH,

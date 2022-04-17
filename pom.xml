@@ -6,7 +6,7 @@
 
     <groupId>org.openRealmOfStars</groupId>
     <artifactId>Open-Realm-of-Stars</artifactId>
-    <version>0.21.3Beta</version>
+    <version>0.21.4Beta</version>
     <packaging>jar</packaging>
     <url>https://github.com/tuomount/Open-Realms-of-Stars</url>
     <properties>

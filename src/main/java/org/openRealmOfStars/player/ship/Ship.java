@@ -1549,7 +1549,7 @@ private int increaseHitChanceByComponent() {
   /**
    * Maximum weapon range, theoritical, no weapon will have this range really
    */
-  private static final int MAX_WEAPON_RANGE = 999;
+  public static final int MAX_WEAPON_RANGE = 999;
 
   /**
    * Get Weapon range for component index.
@@ -1612,7 +1612,8 @@ private int increaseHitChanceByComponent() {
     int range = MAX_WEAPON_RANGE;
     for (int i = 0; i < components.size(); i++) {
       if (components.get(i).isWeapon()) {
-        int componentRange = getWeaponRange(i);
+        ShipComponent weapon = components.get(i);
+        int componentRange = getWeaponRange(weapon);
         if (componentRange < range) {
           range = componentRange;
         }

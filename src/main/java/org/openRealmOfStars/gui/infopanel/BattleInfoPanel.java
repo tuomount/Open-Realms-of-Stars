@@ -73,6 +73,10 @@ public class BattleInfoPanel extends InfoPanel {
    */
   private SpaceCheckBox useAllWeapons;
   /**
+   * Check box to show weapon range.
+   */
+  private SpaceCheckBox showRange;
+  /**
    * Maximum number of buttons on panel. These are the component buttons.
    */
   private static final int MAX_BTN = 12;
@@ -128,13 +132,31 @@ public class BattleInfoPanel extends InfoPanel {
       this.add(overloadInfo);
     }
     if (combat) {
+      EmptyInfoPanel panel = new EmptyInfoPanel();
+      panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
       this.add(Box.createRigidArea(new Dimension(5, 5)));
       useAllWeapons = new SpaceCheckBox("Use all weapons");
       useAllWeapons.setSelected(true);
       useAllWeapons.addActionListener(listener);
       useAllWeapons.setActionCommand(GameCommands.COMMAND_USE_ALL_WEAPONS);
-      useAllWeapons.setAlignmentX(Component.CENTER_ALIGNMENT);
-      this.add(useAllWeapons);
+      useAllWeapons.setToolTipText("<html>"
+          + "Use all weapons when attacking.<br>Automatically choose"
+          + " which weapon to fire when clicking the target."
+          + "</html>");
+      //useAllWeapons.setAlignmentX(Component.CENTER_ALIGNMENT);
+      panel.add(useAllWeapons);
+      panel.add(Box.createRigidArea(new Dimension(5, 5)));
+      showRange = new SpaceCheckBox("Show weapon range");
+      showRange.setSelected(false);
+      showRange.addActionListener(listener);
+      showRange.setActionCommand(GameCommands.COMMAND_SHOW_WEAPON_RANGE);
+      showRange.setToolTipText("<html>"
+          + "Yellow sectors are where all ships weapons reach.<br>"
+          + "Red sectors where only weapons with maximum range reaches.<br>"
+          + "Note that sectors do not check if there is line of fire."
+          + "</html>");
+      panel.add(showRange);
+      this.add(panel);
     }
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new GridLayout(6, 2));
@@ -318,5 +340,13 @@ public class BattleInfoPanel extends InfoPanel {
    */
   public void updatePanel() {
     updatePanel(null);
+  }
+
+  /**
+   * Is Show weapon range selected or not.
+   * @return boolean
+   */
+  public boolean isShowWeaponRange() {
+    return showRange.isSelected();
   }
 }

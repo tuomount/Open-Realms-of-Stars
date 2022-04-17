@@ -146,6 +146,11 @@ public final class GameCommands {
   public static final String COMMAND_USE_ALL_WEAPONS = "UseAllWeapons";
 
   /**
+   * Show weapon range
+   */
+  public static final String COMMAND_SHOW_WEAPON_RANGE = "ShowWeaponRange";
+
+  /**
    * Defend sector command
    */
   public static final String COMMAND_DEFEND_SECTOR = "DefendCommand";

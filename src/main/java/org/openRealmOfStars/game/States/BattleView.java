@@ -426,6 +426,15 @@ public class BattleView extends BlackPanel {
       SoundPlayer.playMenuSound();
       updatePanels();
     }
+    if (arg0.getActionCommand().startsWith(
+        GameCommands.COMMAND_USE_ALL_WEAPONS)) {
+      SoundPlayer.playMenuSound();
+    }
+    if (arg0.getActionCommand().startsWith(
+        GameCommands.COMMAND_SHOW_WEAPON_RANGE)) {
+      SoundPlayer.playMenuSound();
+      mapPanel.setDrawWeaponRange(infoPanel.isShowWeaponRange());
+    }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
         && combat.getCurrentShip() != null
         && combat.getCurrentShip().getPlayer().isHuman()) {

@@ -486,6 +486,17 @@ public final class GuiStatics {
       11, 255);
 
   /**
+   * Weapon Range Max
+   */
+  public static final Color COLOR_WEAPON_RANGE_MAX = new Color(255, 45,
+      11, 64);
+  /**
+   * Weapon Range Min
+   */
+  public static final Color COLOR_WEAPON_RANGE_MIN = new Color(253, 248,
+      110, 64);
+
+  /**
    * Damage destroyed
    */
   public static final Color COLOR_DESTROYED = new Color(255, 28, 11, 255);

@@ -33,6 +33,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
@@ -230,6 +231,10 @@ public class MapPanel extends JPanel {
    * Flag for update animation.
    */
   private boolean updateAnimation;
+  /**
+   * Draw weapon range for combat.
+   */
+  private boolean drawWeaponRange;
   /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
@@ -1351,13 +1356,27 @@ public class MapPanel extends JPanel {
           gr.drawLine(pixelX, pixelY + ShipImage.MAX_HEIGHT - 1,
               pixelX + ShipImage.MAX_WIDTH - 1,
               pixelY + ShipImage.MAX_HEIGHT - 1);
-          gr.setStroke(dashed);
-          gr.setColor(colorDarkBlue);
-
-        } else {
-          gr.setStroke(dashed);
-          gr.setColor(colorDarkBlue);
         }
+        if (combat.getCurrentShip() != null && drawWeaponRange) {
+          CombatShip combatShip = combat.getCurrentShip();
+          int min = combatShip.getShip().getMinWeaponRange();
+          int max = combatShip.getShip().getMaxWeaponRange();
+          if (min < Ship.MAX_WEAPON_RANGE && max > 0) {
+            int disX = Math.abs(i - combatShip.getX());
+            int disY = Math.abs(j - combatShip.getY());
+            if (disX <= min && disY <= min) {
+              gr.setColor(GuiStatics.COLOR_WEAPON_RANGE_MIN);
+              gr.fillRect(pixelX, pixelY, ShipImage.MAX_WIDTH,
+                  ShipImage.MAX_HEIGHT);
+            } else if (disX <= max && disY <= max) {
+              gr.setColor(GuiStatics.COLOR_WEAPON_RANGE_MAX);
+              gr.fillRect(pixelX, pixelY, ShipImage.MAX_WIDTH,
+                  ShipImage.MAX_HEIGHT);
+            }
+          }
+        }
+        gr.setStroke(dashed);
+        gr.setColor(colorDarkBlue);
         if (i == 0) {
           // Left line
           gr.drawLine(pixelX, pixelY, pixelX,
@@ -1836,6 +1855,22 @@ public class MapPanel extends JPanel {
     this.showMiniMap = showMiniMap;
   }
 
+  /**
+   * Is draw weapon range enabled.
+   * This only affects combat drawing.
+   * @return boolean
+   */
+  public boolean isDrawWeaponRange() {
+    return drawWeaponRange;
+  }
+
+  /**
+   * Set Draw weapon range. This only affects to combat drawing.
+   * @param drawWeaponRange True to draw weapon range.
+   */
+  public void setDrawWeaponRange(final boolean drawWeaponRange) {
+    this.drawWeaponRange = drawWeaponRange;
+  }
   /**
    * Get minimap Top corner's x coordinate.
    * @return X coordinate

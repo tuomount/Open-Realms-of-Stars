@@ -3290,12 +3290,24 @@ public class Game implements ActionListener {
       voteView.handleActions(arg0);
       return;
     }
-    if (gameState == GameState.REALM_VIEW && realmView != null
-        && arg0.getActionCommand()
+    if (gameState == GameState.REALM_VIEW && realmView != null) {
+      if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
-      SoundPlayer.playMenuSound();
-      changeGameState(previousState);
-      return;
+        SoundPlayer.playMenuSound();
+        changeGameState(previousState);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_PREV_TARGET)) {
+        PlayerInfo info = realmView.getRealm();
+        SoundPlayer.playMenuSound();
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT_TARGET)) {
+        SoundPlayer.playMenuSound();
+        return;
+      }
     }
     if (gameState == GameState.PLANET_LIST_VIEW && planetListView != null) {
       if (arg0.getActionCommand()

@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.HyperLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
@@ -49,6 +51,23 @@ public class RealmView extends BlackPanel {
   private static final long serialVersionUID = 1L;
 
   /**
+   * Currently showing realm.
+   */
+  private PlayerInfo realm;
+
+  /**
+   * Race Image to show.
+   */
+  private RaceImagePanel raceImage;
+  /**
+   * Race Description to show.
+   */
+  private HyperLabel raceDescription;
+  /**
+   * Race Description to show.
+   */
+  private HyperLabel leaderDescription;
+  /**
    * Realm view constructor
    * @param realm Realm which is being shown
    * @param listener ActionListener
@@ -57,22 +76,36 @@ public class RealmView extends BlackPanel {
    */
   public RealmView(final PlayerInfo realm, final ActionListener listener,
       final int knowledgeBonus, final int meetings) {
+    this.realm = realm;
     this.setLayout(new BorderLayout());
     InfoPanel base = new InfoPanel();
     base.setLayout(new BoxLayout(base, BoxLayout.Y_AXIS));
     base.setTitle(realm.getEmpireName());
     this.add(base, BorderLayout.CENTER);
+    EmptyInfoPanel panelX = new EmptyInfoPanel();
+    panelX.setLayout(new BoxLayout(panelX, BoxLayout.X_AXIS));
+    IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
+        GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_TARGET,
+        this);
+    iBtn.addActionListener(listener);
+    panelX.add(iBtn);
     RaceImagePanel raceImage = new RaceImagePanel();
     raceImage.setRaceToShow(realm.getRace().getNameSingle());
     raceImage.setSize(220, 220);
     raceImage.setMaximumSize(new Dimension(220, 220));
-    base.add(raceImage);
-    EmptyInfoPanel panelX = new EmptyInfoPanel();
+    panelX.add(raceImage);
+    iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
+        GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_TARGET,
+        this);
+    iBtn.addActionListener(listener);
+    panelX.add(iBtn);
+    base.add(panelX);
+    panelX = new EmptyInfoPanel();
     panelX.setLayout(new GridLayout(1, 0));
     InfoPanel info = new InfoPanel();
     info.setTitle("Racial information");
     info.setLayout(new BorderLayout());
-    HyperLabel raceDescription = new HyperLabel(
+    raceDescription = new HyperLabel(
         realm.getRace().getFullDescription(false, false));
     info.add(raceDescription, BorderLayout.CENTER);
     panelX.add(info);
@@ -82,6 +115,31 @@ public class RealmView extends BlackPanel {
     HyperLabel governmentDescription = new HyperLabel(
         realm.getGovernment().getDescription(false));
     info.add(governmentDescription, BorderLayout.CENTER);
+    leaderDescription = new HyperLabel(generateRulerDescriptionText(
+        knowledgeBonus, meetings));
+    info.add(leaderDescription);
+    panelX.add(info);
+    base.add(panelX);
+    // Bottom panel
+    InfoPanel bottomPanel = new InfoPanel();
+    bottomPanel.setLayout(new BorderLayout());
+    bottomPanel.setTitle(null);
+    SpaceButton btn = new SpaceButton("Back to star map",
+        GameCommands.COMMAND_VIEW_STARMAP);
+    btn.addActionListener(listener);
+    bottomPanel.add(btn, BorderLayout.CENTER);
+    // Add panels to base
+    this.add(bottomPanel, BorderLayout.SOUTH);
+  }
+
+  /**
+   * Generate Ruler description text.
+   * @param knowledgeBonus Knowledge bonus between 0-10.
+   * @param meetings Number of meetings human player has with this realm.
+   * @return String
+   */
+  private String generateRulerDescriptionText(final int knowledgeBonus,
+      final int meetings) {
     String leaderDesc = "<html>No leader as ruler.</html>";
     if (realm.getRuler() != null) {
       StringBuilder sb = new StringBuilder();
@@ -115,19 +173,28 @@ public class RealmView extends BlackPanel {
         leaderDesc = "<html>No leader as ruler.</html>";
       }
     }
-    HyperLabel leaderDescription = new HyperLabel(leaderDesc);
-    info.add(leaderDescription);
-    panelX.add(info);
-    base.add(panelX);
-    // Bottom panel
-    InfoPanel bottomPanel = new InfoPanel();
-    bottomPanel.setLayout(new BorderLayout());
-    bottomPanel.setTitle(null);
-    SpaceButton btn = new SpaceButton("Back to star map",
-        GameCommands.COMMAND_VIEW_STARMAP);
-    btn.addActionListener(listener);
-    bottomPanel.add(btn, BorderLayout.CENTER);
-    // Add panels to base
-    this.add(bottomPanel, BorderLayout.SOUTH);
+    return leaderDesc;
+  }
+  /**
+   * Get current realm.
+   * @return PlayerInfo
+   */
+  public PlayerInfo getRealm() {
+    return realm;
+  }
+
+  /**
+   * Update realm info.
+   * @param playerInfo Realm info to show.
+   * @param knowledgeBonus Knowledge bonus between 0-10.
+   * @param meetings Number of meetings human player has with this realm.
+   */
+  public void updateRealm(final PlayerInfo playerInfo, final int knowledgeBonus,
+      final int meetings) {
+    this.realm = playerInfo;
+    raceImage.setRaceToShow(this.realm.getRace().getNameSingle());
+    raceDescription.setText(this.realm.getRace().getDescription());
+    leaderDescription.setText(generateRulerDescriptionText(knowledgeBonus,
+        meetings));
   }
 }

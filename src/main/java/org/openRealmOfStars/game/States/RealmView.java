@@ -68,6 +68,10 @@ public class RealmView extends BlackPanel {
    */
   private HyperLabel leaderDescription;
   /**
+   * Goverment description to show.
+   */
+  private HyperLabel governmentDescription;
+  /**
    * Realm view constructor
    * @param realm Realm which is being shown
    * @param listener ActionListener
@@ -89,7 +93,7 @@ public class RealmView extends BlackPanel {
         this);
     iBtn.addActionListener(listener);
     panelX.add(iBtn);
-    RaceImagePanel raceImage = new RaceImagePanel();
+    raceImage = new RaceImagePanel();
     raceImage.setRaceToShow(realm.getRace().getNameSingle());
     raceImage.setSize(220, 220);
     raceImage.setMaximumSize(new Dimension(220, 220));
@@ -112,7 +116,7 @@ public class RealmView extends BlackPanel {
     info = new InfoPanel();
     info.setTitle("Government information");
     info.setLayout(new GridLayout(0, 1));
-    HyperLabel governmentDescription = new HyperLabel(
+    governmentDescription = new HyperLabel(
         realm.getGovernment().getDescription(false));
     info.add(governmentDescription, BorderLayout.CENTER);
     leaderDescription = new HyperLabel(generateRulerDescriptionText(
@@ -193,8 +197,11 @@ public class RealmView extends BlackPanel {
       final int meetings) {
     this.realm = playerInfo;
     raceImage.setRaceToShow(this.realm.getRace().getNameSingle());
-    raceDescription.setText(this.realm.getRace().getDescription());
+    raceDescription.setText(this.realm.getRace().getFullDescription(false,
+        false));
     leaderDescription.setText(generateRulerDescriptionText(knowledgeBonus,
         meetings));
+    governmentDescription.setText(this.realm.getGovernment()
+        .getDescription(false));
   }
 }

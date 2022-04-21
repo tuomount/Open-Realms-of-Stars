@@ -3290,12 +3290,65 @@ public class Game implements ActionListener {
       voteView.handleActions(arg0);
       return;
     }
-    if (gameState == GameState.REALM_VIEW && realmView != null
-        && arg0.getActionCommand()
+    if (gameState == GameState.REALM_VIEW && realmView != null) {
+      if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
-      SoundPlayer.playMenuSound();
-      changeGameState(previousState);
-      return;
+        SoundPlayer.playMenuSound();
+        changeGameState(previousState);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_PREV_TARGET)) {
+        PlayerInfo info = realmView.getRealm();
+        int index = getPlayers().getIndex(info);
+        if (index > 0) {
+          index--;
+        } else {
+          index = getPlayers().getCurrentMaxRealms() - 1;
+        }
+        info = getPlayers().getPlayerInfoByIndex(index);
+        if (info != null) {
+          int knowledge = players.getCurrentPlayerInfo().getKnowledgeBonus(
+              index);
+          DiplomacyBonusList diplomacy = players.getCurrentPlayerInfo()
+              .getDiplomacy().getDiplomacyList(index);
+          int meetings = 0;
+          if (diplomacy != null) {
+            meetings = diplomacy.getNumberOfMeetings();
+          }
+          realmView.updateRealm(info, knowledge, meetings);
+          SoundPlayer.playMenuSound();
+        } else {
+          SoundPlayer.playMenuDisabled();
+        }
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT_TARGET)) {
+        PlayerInfo info = realmView.getRealm();
+        int index = getPlayers().getIndex(info);
+        if (index < getPlayers().getCurrentMaxRealms() - 1) {
+          index++;
+        } else {
+          index = 0;
+        }
+        info = getPlayers().getPlayerInfoByIndex(index);
+        if (info != null) {
+          int knowledge = players.getCurrentPlayerInfo().getKnowledgeBonus(
+              index);
+          DiplomacyBonusList diplomacy = players.getCurrentPlayerInfo()
+              .getDiplomacy().getDiplomacyList(index);
+          int meetings = 0;
+          if (diplomacy != null) {
+            meetings = diplomacy.getNumberOfMeetings();
+          }
+          realmView.updateRealm(info, knowledge, meetings);
+          SoundPlayer.playMenuSound();
+        } else {
+          SoundPlayer.playMenuDisabled();
+        }
+        return;
+      }
     }
     if (gameState == GameState.PLANET_LIST_VIEW && planetListView != null) {
       if (arg0.getActionCommand()

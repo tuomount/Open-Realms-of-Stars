@@ -832,7 +832,7 @@ public final class MissionHandling {
           }
           makeReroute(game, fleet, info, mission);
         } else {
-          if (info.getSectorVisibility(coord) == PlayerInfo.FOG_OF_WAR) {
+          if (info.getSectorVisibility(coord) >= PlayerInfo.FOG_OF_WAR) {
             Planet planet = game.getStarMap().getPlanetByCoordinate(
                 coord.getX(), coord.getY());
             if (planet.getPlanetOwnerIndex() != -1) {

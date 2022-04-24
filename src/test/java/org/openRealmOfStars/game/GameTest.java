@@ -13,6 +13,7 @@ import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.KarmaType;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
@@ -178,9 +179,9 @@ public class GameTest {
     config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
     config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
     config.setPlayerDifficult(3, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(4, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(5, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(6, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(4, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(5, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(6, AiDifficulty.WEAK);
     config.setPlayerDifficult(7, AiDifficulty.WEAK);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
@@ -196,16 +197,28 @@ public class GameTest {
     } while (!game.getStarMap().isGameEnded());
     int planets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     int maxPlanets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int charted[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     for (Planet planet : game.getStarMap().getPlanetList()) {
       if (planet.getPlanetOwnerIndex() != -1) {
         planets[planet.getPlanetOwnerIndex()]++;
       }
+      int maxSectors = game.getStarMap().getMaxX() * game.getStarMap().getMaxY();
       for (int j = 0; j < game.getPlayers().getCurrentMaxPlayers(); j++) {
         if (planet.getRadiationLevel() <= game.getPlayers()
             .getPlayerInfoByIndex(j).getRace().getMaxRad()
             && planet.getPlanetOwnerIndex() == -1) {
           maxPlanets[j]++;
         }
+        int charting = 0;
+        for (int y = 0; y < game.getStarMap().getMaxY(); y++) {
+          for (int x = 0; x < game.getStarMap().getMaxX(); x++) {
+            if (game.getPlayers().getPlayerInfoByIndex(j).getSectorVisibility(
+                new Coordinate(x, y)) > PlayerInfo.UNCHARTED) {
+              charting++;
+            }
+          }
+        }
+        charted[j] = charting * 100 / maxSectors;
       }
     }
     for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
@@ -213,7 +226,8 @@ public class GameTest {
           + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
           + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
           .toString() + ")"
-          + " - planets " + planets[i] + "/" + maxPlanets[i]);
+          + " - planets " + planets[i] + "/" + maxPlanets[i] + " - Charted: "
+          + charted[i] + "%");
     }
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
     System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");

@@ -327,7 +327,8 @@ public final class PlanetHandling {
       if (info.getAiDifficulty() == AiDifficulty.NORMAL
           || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
         for (Building building : planet.getBuildingList()) {
-          if (planet.fightAgainstWildLife(building)) {
+          if (building.getWildLifePower() > 0
+              && planet.fightAgainstWildLife(building)) {
               // Removing the wild life
             planet.removeBuilding(building);
             break;

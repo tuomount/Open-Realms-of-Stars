@@ -1691,10 +1691,13 @@ public final class PlanetHandling {
    * Handle Homarian population planet
    * @param planet Planet to handle
    * @param info Planet owner
+   * @param totalResearch Total research value for whole realm
    */
   protected static void handleHomarianPopulation(final Planet planet,
-      final PlayerInfo info) {
+      final PlayerInfo info, final int totalResearch) {
     int total = planet.getTotalPopulation();
+    int otherWorldResearch = totalResearch - planet.getTotalProduction(
+        Planet.PRODUCTION_RESEARCH);
     if (total > 5) {
       int food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
       int foodReq = total * info.getRace().getFoodRequire() / 100;
@@ -1718,6 +1721,7 @@ public final class PlanetHandling {
       }
       if (planet.getTotalProductionFromBuildings(
           Planet.PRODUCTION_RESEARCH) == 0
+          && otherWorldResearch == 0
           && planet.getWorkers(Planet.RESEARCH_SCIENTIST) == 0) {
         planet.moveWorker(Planet.PRODUCTION_WORKERS,
             Planet.RESEARCH_SCIENTIST);
@@ -1749,7 +1753,7 @@ public final class PlanetHandling {
       }
       case 3: {
         if (planet.getTotalProductionFromBuildings(
-            Planet.PRODUCTION_RESEARCH) > 0) {
+            Planet.PRODUCTION_RESEARCH) > 0 || otherWorldResearch > 0) {
           planet.setWorkers(Planet.FOOD_FARMERS, 1);
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
           planet.setWorkers(Planet.METAL_MINERS, 1);
@@ -1762,7 +1766,7 @@ public final class PlanetHandling {
       case 4: {
         planet.setWorkers(Planet.FOOD_FARMERS, 2);
         if (planet.getTotalProductionFromBuildings(
-            Planet.PRODUCTION_RESEARCH) > 0) {
+            Planet.PRODUCTION_RESEARCH) > 0 || otherWorldResearch > 0) {
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
           planet.setWorkers(Planet.METAL_MINERS, 1);
         } else {
@@ -1773,7 +1777,7 @@ public final class PlanetHandling {
       case 5: {
         planet.setWorkers(Planet.PRODUCTION_FOOD, 2);
         if (planet.getTotalProductionFromBuildings(
-            Planet.PRODUCTION_RESEARCH) > 0) {
+            Planet.PRODUCTION_RESEARCH) > 0 || otherWorldResearch > 0) {
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
           planet.setWorkers(Planet.METAL_MINERS, 1);
         } else {
@@ -2130,7 +2134,7 @@ public final class PlanetHandling {
       handleMechionPopulation(planet, info, totalResearch);
       branch = 0;
     } else if (info.getRace() == SpaceRace.HOMARIANS) {
-      handleHomarianPopulation(planet, info);
+      handleHomarianPopulation(planet, info, totalResearch);
       branch = 1;
     } else if (info.getRace() == SpaceRace.CHIRALOIDS) {
       handleChiraloidPopulation(planet, info);

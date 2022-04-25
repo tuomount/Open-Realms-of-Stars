@@ -1623,9 +1623,12 @@ public final class PlanetHandling {
    * Handle Lithorian population on planet
    * @param planet Which to handle
    * @param info Planet owner
+   * @param totalResearch Total research value for whole realm
    */
   protected static void handleLithorianPopulation(final Planet planet,
-      final PlayerInfo info) {
+      final PlayerInfo info, final int totalResearch) {
+    int otherWorldResearch = totalResearch - planet.getTotalProduction(
+        Planet.PRODUCTION_RESEARCH);
     int total = planet.getTotalPopulation();
     int mining = 1 + planet.getTotalProductionFromBuildings(
         Planet.PRODUCTION_METAL);
@@ -1646,7 +1649,7 @@ public final class PlanetHandling {
     int research = 0;
     int worker = 0;
     int artist = 0;
-    if (total > 0) {
+    if (total > 0 && otherWorldResearch == 0) {
       research++;
       total--;
     }
@@ -2150,7 +2153,7 @@ public final class PlanetHandling {
       handleChiraloidPopulation(planet, info, totalResearch);
       branch = 2;
     } else if (info.getRace() == SpaceRace.LITHORIANS) {
-      handleLithorianPopulation(planet, info);
+      handleLithorianPopulation(planet, info,  totalResearch);
       branch = 3;
     } else if (info.getRace() == SpaceRace.ALTEIRIANS) {
       handleAlteirianPopulation(planet, info, totalResearch);

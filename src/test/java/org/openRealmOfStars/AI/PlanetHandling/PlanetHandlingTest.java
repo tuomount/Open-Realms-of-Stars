@@ -40,7 +40,7 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019,2021 Tuomo Untinen
+ * Copyright (C) 2016-2019,2021,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1613,8 +1613,8 @@ public class PlanetHandlingTest {
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 1);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
@@ -1645,12 +1645,15 @@ public class PlanetHandlingTest {
     planet.addBuilding(BuildingFactory.createByName("Basic Lab"));
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
-    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getTotalPopulation());
+    int farmers = planet.getWorkers(Planet.FOOD_FARMERS);
     int workers = planet.getWorkers(Planet.PRODUCTION_WORKERS);
     int miners = planet.getWorkers(Planet.METAL_MINERS);
     int artists = planet.getWorkers(Planet.CULTURE_ARTIST);
-    if (workers < 1 || workers > 2) {
+    if (farmers > 1) {
+      assertEquals(true, false);
+    }
+    if (workers == 1) {
       assertEquals(true, false);
     }
     if (miners < 0 || miners > 1) {
@@ -1669,8 +1672,8 @@ public class PlanetHandlingTest {
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 3);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));

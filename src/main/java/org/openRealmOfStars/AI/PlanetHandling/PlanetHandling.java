@@ -31,7 +31,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019, 2021 Tuomo Untinen
+ * Copyright (C) 2016-2019, 2021,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1818,9 +1818,12 @@ public final class PlanetHandling {
    * Handle Chiraloid population on planet
    * @param planet Planet to handle
    * @param info Owner of the planet
+   * @param totalResearch Total research value for whole realm
    */
   protected static void handleChiraloidPopulation(final Planet planet,
-      final PlayerInfo info) {
+      final PlayerInfo info, final int totalResearch) {
+    int otherWorldResearch = totalResearch - planet.getTotalProduction(
+        Planet.PRODUCTION_RESEARCH);
     int total = planet.getTotalPopulation();
     if (total > 3) {
       int rad = planet.getRadiationLevel();
@@ -1842,7 +1845,8 @@ public final class PlanetHandling {
         total = total - requiredFarmers;
       }
       if (planet.getTotalProductionFromBuildings(
-          Planet.PRODUCTION_RESEARCH) == 0 && total > 1) {
+          Planet.PRODUCTION_RESEARCH) == 0 && total > 1
+          && otherWorldResearch == 0) {
         planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
         total = total - 2;
       }
@@ -1883,25 +1887,27 @@ public final class PlanetHandling {
       planet.setWorkers(Planet.CULTURE_ARTIST, 0);
       switch (total) {
         case 1: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          planet.setWorkers(Planet.METAL_MINERS, 1);
           break;
         }
         case 2: {
           if (planet.getTotalProductionFromBuildings(
-              Planet.PRODUCTION_RESEARCH) == 0) {
+              Planet.PRODUCTION_RESEARCH) == 0
+              && otherWorldResearch == 0) {
             planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
           } else {
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
             switch (DiceGenerator.getRandom(2)) {
               case 0: {
                 planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
                 break;
               }
               case 1: {
+                planet.setWorkers(Planet.FOOD_FARMERS, 1);
                 planet.setWorkers(Planet.METAL_MINERS, 1);
                 break;
               }
               case 2: {
+                planet.setWorkers(Planet.FOOD_FARMERS, 1);
                 planet.setWorkers(Planet.CULTURE_ARTIST, 1);
                 break;
               }
@@ -1913,8 +1919,12 @@ public final class PlanetHandling {
           break;
         }
         case 3: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+          planet.setWorkers(Planet.METAL_MINERS, 1);
+          if (otherWorldResearch == 0) {
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+          } else {
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
+          }
           break;
         }
         default: {
@@ -2137,7 +2147,7 @@ public final class PlanetHandling {
       handleHomarianPopulation(planet, info, totalResearch);
       branch = 1;
     } else if (info.getRace() == SpaceRace.CHIRALOIDS) {
-      handleChiraloidPopulation(planet, info);
+      handleChiraloidPopulation(planet, info, totalResearch);
       branch = 2;
     } else if (info.getRace() == SpaceRace.LITHORIANS) {
       handleLithorianPopulation(planet, info);

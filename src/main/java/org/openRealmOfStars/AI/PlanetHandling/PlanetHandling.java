@@ -27,6 +27,7 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
  *
@@ -1649,7 +1650,7 @@ public final class PlanetHandling {
     int research = 0;
     int worker = 0;
     int artist = 0;
-    if (total > 0 && otherWorldResearch == 0) {
+    if (total > 0 && otherWorldResearch < 1) {
       research++;
       total--;
     }
@@ -1724,7 +1725,7 @@ public final class PlanetHandling {
       }
       if (planet.getTotalProductionFromBuildings(
           Planet.PRODUCTION_RESEARCH) == 0
-          && otherWorldResearch == 0
+          && otherWorldResearch < 1
           && planet.getWorkers(Planet.RESEARCH_SCIENTIST) == 0) {
         planet.moveWorker(Planet.PRODUCTION_WORKERS,
             Planet.RESEARCH_SCIENTIST);
@@ -1849,7 +1850,7 @@ public final class PlanetHandling {
       }
       if (planet.getTotalProductionFromBuildings(
           Planet.PRODUCTION_RESEARCH) == 0 && total > 1
-          && otherWorldResearch == 0) {
+          && otherWorldResearch < 1) {
         planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
         total = total - 2;
       }
@@ -1896,7 +1897,7 @@ public final class PlanetHandling {
         case 2: {
           if (planet.getTotalProductionFromBuildings(
               Planet.PRODUCTION_RESEARCH) == 0
-              && otherWorldResearch == 0) {
+              && otherWorldResearch < 1) {
             planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
           } else {
             switch (DiceGenerator.getRandom(2)) {
@@ -1923,7 +1924,7 @@ public final class PlanetHandling {
         }
         case 3: {
           planet.setWorkers(Planet.METAL_MINERS, 1);
-          if (otherWorldResearch == 0) {
+          if (otherWorldResearch < 1) {
             planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
           } else {
             planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
@@ -2015,9 +2016,12 @@ public final class PlanetHandling {
    * Handle generic population
    * @param planet Planet to handle
    * @param info Owner of the planet
+   * @param totalResearch Total research value for whole realm
    */
   protected static void handleGenericPopulation(final Planet planet,
-      final PlayerInfo info) {
+      final PlayerInfo info, final int totalResearch) {
+    int otherWorldResearch = totalResearch - planet.getTotalProduction(
+        Planet.PRODUCTION_RESEARCH);
     int food = planet.getFoodProdByPlanetAndBuildings();
     boolean startPlanet = false;
     int total = planet.getTotalPopulation();
@@ -2056,7 +2060,8 @@ public final class PlanetHandling {
       total = total - farmersReq;
     }
     if (planet.getTotalProductionFromBuildings(
-        Planet.PRODUCTION_RESEARCH) == 0 && total > 0) {
+        Planet.PRODUCTION_RESEARCH) == 0 && total > 0
+        && otherWorldResearch < 1) {
       scientist = 1;
       total = total - 1;
     }
@@ -2139,6 +2144,9 @@ public final class PlanetHandling {
       final PlayerInfo info, final int totalResearch) {
     int population = planet.getTotalPopulation();
     if (population <= 0) {
+      ErrorLogger.debug("Planet " + planet.getName() + " has no population."
+          + " Planet is being owned by " + info.getEmpireName() + " ("
+          + info.getRace().getName() + ").");
       throw new IllegalArgumentException("Population less than one!"
           + " Population: " + population);
     }
@@ -2160,7 +2168,7 @@ public final class PlanetHandling {
       branch = 4;
     } else {
       // Handle races whom need something to eat and have regular research
-      handleGenericPopulation(planet, info);
+      handleGenericPopulation(planet, info, totalResearch);
       branch = 5;
     }
     if (population != planet.getTotalPopulation()) {

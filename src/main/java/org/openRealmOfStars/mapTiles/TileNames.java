@@ -589,6 +589,11 @@ public final class TileNames {
   public static final String BLACKHOLE_C = "BLACKHOLE_C";
 
   /**
+   * Planet Earth
+   */
+  public static final String PLANET_EARTH = "PLANET_EARTH";
+
+  /**
    * List of non harmful space anomalies
    */
   public static final String[] NON_HARMFUL_SPACE_ANOMALIES = {

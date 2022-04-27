@@ -562,6 +562,8 @@ public final class Tiles {
     tile = new Tile(tilesImage, 5, 9, TileNames.STAR_SE);
     tile.setDescription(TileNames.STAR_DESCRIPTION);
     addTile(tile);
+    tile = new Tile(tilesImage, 18, 3, TileNames.PLANET_EARTH);
+    addTile(tile);
   }
 
   /**

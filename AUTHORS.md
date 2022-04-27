@@ -78,6 +78,10 @@ Tuomo Untinen added legs for the captain. -https://opengameart.org/content/space
 The Husk- Human Analog Android by Justin Nichol - https://opengameart.org/content/the-husk-human-analog-android
 Tuomo Untinen modified to Synthdroid(Husk with legs)
 
+Earth by Justin Nichol - https://opengameart.org/content/earth
+Licensed under CC BY 3.0
+http://creativecommons.org/licenses/by/3.0/
+
 GBNC logo by Tuomo Untinen
 
 Worm hole by Tuomo Untinen

@@ -13,7 +13,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2021,2022  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -212,7 +212,13 @@ public enum PlanetTypes {
    */
   ARTIFICIALWORLD1(Tiles.getTileByName(TileNames.ARTIFICIALWORLD1).getIndex(),
       GuiStatics.BIG_PLANET_ARTIFICIALPLANET1, WorldType.ARTIFICALWORLD,
-      ImageInstruction.PLANET_ARTIFICIALWORLD1, false, false);
+      ImageInstruction.PLANET_ARTIFICIALWORLD1, false, false),
+  /**
+   * Planet Earth
+   */
+  PLANET_EARTH(Tiles.getTileByName(TileNames.PLANET_EARTH).getIndex(),
+      GuiStatics.BIG_PLANET_EARTH, WorldType.WATERWORLD,
+      ImageInstruction.PLANET_EARTH, false, true);
 
 
   /**
@@ -410,6 +416,7 @@ public enum PlanetTypes {
       case DESERTWORLD3: return 24;
       case CARBONWORLD3: return 25;
       case ARTIFICIALWORLD1: return 26;
+      case PLANET_EARTH: return 27;
       default:
         throw new IllegalArgumentException("Unknown planet index!!");
     }
@@ -462,6 +469,7 @@ public enum PlanetTypes {
       case 24: return DESERTWORLD3;
       case 25: return CARBONWORLD3;
       case 26: return ARTIFICIALWORLD1;
+      case 27: return PLANET_EARTH;
       default:
         throw new IllegalArgumentException("No planet type available "
             + "for this index!!");
@@ -505,6 +513,7 @@ public enum PlanetTypes {
       case DESERTWORLD2:
       case DESERTWORLD3: return "Desert world";
       case ARTIFICIALWORLD1: return "Artificial world";
+      case PLANET_EARTH: return "Water world";
       default:
         throw new IllegalArgumentException("Unknown planet type!!");
     }

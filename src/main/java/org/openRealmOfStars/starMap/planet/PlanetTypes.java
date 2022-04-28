@@ -38,181 +38,181 @@ public enum PlanetTypes {
    */
   SILICONWORLD1(Tiles.getTileByName(TileNames.ROCK1).getIndex(),
       GuiStatics.BIG_PLANET_ROCK1, WorldType.SILICONWORLD,
-      ImageInstruction.PLANET_ROCK1, false),
+      ImageInstruction.PLANET_ROCK1, false, false),
   /**
    * First water world images
    */
   WATERWORLD1(Tiles.getTileByName(TileNames.WATERWORLD1).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD1, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD1, false),
+      ImageInstruction.PLANET_WATERWORLD1, false,  false),
   /**
    * Second water world images
    */
   WATERWORLD2(Tiles.getTileByName(TileNames.WATERWORLD2).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD2, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD2, false),
+      ImageInstruction.PLANET_WATERWORLD2, false, false),
   /**
    * First iron world images
    */
   IRONWORLD1(Tiles.getTileByName(TileNames.IRONPLANET1).getIndex(),
       GuiStatics.BIG_PLANET_IRONPLANET1, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD1, false),
+      ImageInstruction.PLANET_IRONWORLD1, false, false),
   /**
    * Gas giant 1
    */
   GASGIANT1(Tiles.getTileByName(TileNames.GAS_GIANT_1_NE).getIndex(),
       GuiStatics.BIG_GASWORLD1, WorldType.GASWORLD,
-      ImageInstruction.PLANET_GASGIANT1, true),
+      ImageInstruction.PLANET_GASGIANT1, true, false),
   /**
    * Second iron world images
    */
   IRONWORLD2(Tiles.getTileByName(TileNames.IRONPLANET2).getIndex(),
       GuiStatics.BIG_PLANET_IRONPLANET2, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD2, false),
+      ImageInstruction.PLANET_IRONWORLD2, false, false),
   /**
    * Third water world images
    */
   WATERWORLD3(Tiles.getTileByName(TileNames.WATERWORLD3).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD3, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD3, false),
+      ImageInstruction.PLANET_WATERWORLD3, false, false),
   /**
    * Fourth water world images
    */
   WATERWORLD4(Tiles.getTileByName(TileNames.WATERWORLD4).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD4, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD4, false),
+      ImageInstruction.PLANET_WATERWORLD4, false, false),
   /**
    * Gas giant 2
    */
   GASGIANT2(Tiles.getTileByName(TileNames.GAS_GIANT_2_NE).getIndex(),
       GuiStatics.BIG_GASWORLD2, WorldType.GASWORLD,
-      ImageInstruction.PLANET_GASGIANT2, true),
+      ImageInstruction.PLANET_GASGIANT2, true, false),
   /**
    * First ice world images
    */
   ICEWORLD1(Tiles.getTileByName(TileNames.ICEWORLD1).getIndex(),
       GuiStatics.BIG_PLANET_ICEWORLD1, WorldType.ICEWORLD,
-      ImageInstruction.PLANET_ICEWORLD1, false),
+      ImageInstruction.PLANET_ICEWORLD1, false, false),
   /**
    * Second ice world images
    */
   ICEWORLD2(Tiles.getTileByName(TileNames.ICEWORLD2).getIndex(),
       GuiStatics.BIG_PLANET_ICEWORLD2, WorldType.ICEWORLD,
-      ImageInstruction.PLANET_ICEWORLD2, false),
+      ImageInstruction.PLANET_ICEWORLD2, false, false),
   /**
    * Third iron world images
    */
   IRONWORLD3(Tiles.getTileByName(TileNames.IRONPLANET3).getIndex(),
       GuiStatics.BIG_PLANET_IRONPLANET3, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD3, false),
+      ImageInstruction.PLANET_IRONWORLD3, false, false),
   /**
    * First carbon world images
    */
   CARBONWORLD1(Tiles.getTileByName(TileNames.CARBONWORLD1).getIndex(),
       GuiStatics.BIG_PLANET_CARBONWORLD1, WorldType.CARBONWORLD,
-      ImageInstruction.PLANET_CARBONWORLD1, false),
+      ImageInstruction.PLANET_CARBONWORLD1, false, false),
   /**
    * Gas giant 3
    */
   GASGIANT3(Tiles.getTileByName(TileNames.GAS_GIANT_3_NE).getIndex(),
       GuiStatics.BIG_GASWORLD3, WorldType.GASWORLD,
-      ImageInstruction.PLANET_GASGIANT3, true),
+      ImageInstruction.PLANET_GASGIANT3, true, false),
   /**
    * Third ice world images
    */
   ICEWORLD3(Tiles.getTileByName(TileNames.ICEWORLD3).getIndex(),
       GuiStatics.BIG_PLANET_ICEWORLD3, WorldType.ICEWORLD,
-      ImageInstruction.PLANET_ICEWORLD3, false),
+      ImageInstruction.PLANET_ICEWORLD3, false, false),
   /**
    * Fourth iron world images
    */
   IRONWORLD4(Tiles.getTileByName(TileNames.IRONPLANET4).getIndex(),
       GuiStatics.BIG_PLANET_IRONPLANET4, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD4, false),
+      ImageInstruction.PLANET_IRONWORLD4, false, false),
   /**
    * second carbon world images
    */
   CARBONWORLD2(Tiles.getTileByName(TileNames.CARBONWORLD2).getIndex(),
       GuiStatics.BIG_PLANET_CARBONWORLD2, WorldType.CARBONWORLD,
-      ImageInstruction.PLANET_CARBONWORLD2, false),
+      ImageInstruction.PLANET_CARBONWORLD2, false, false),
   /**
    * First desert world images
    */
   DESERTWORLD1(Tiles.getTileByName(TileNames.DESERTWORLD1).getIndex(),
       GuiStatics.BIG_PLANET_DESERTWORLD1, WorldType.DESERTWORLD,
-      ImageInstruction.PLANET_DESERTWORLD1, false),
+      ImageInstruction.PLANET_DESERTWORLD1, false, false),
   /**
    * Fifth water world images
    */
   WATERWORLD5(Tiles.getTileByName(TileNames.WATERWORLD5).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD5, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD5, false),
+      ImageInstruction.PLANET_WATERWORLD5, false, false),
   /**
    * Sixth water world images
    */
   WATERWORLD6(Tiles.getTileByName(TileNames.WATERWORLD6).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD6, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD6, false),
+      ImageInstruction.PLANET_WATERWORLD6, false, false),
   /**
    * Seventh water world images
    */
   WATERWORLD7(Tiles.getTileByName(TileNames.WATERWORLD7).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD7, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD7, false),
+      ImageInstruction.PLANET_WATERWORLD7, false, false),
   /**
    * Fourth ice world images
    */
   ICEWORLD4(Tiles.getTileByName(TileNames.ICEWORLD4).getIndex(),
       GuiStatics.BIG_PLANET_ICEWORLD4, WorldType.ICEWORLD,
-      ImageInstruction.PLANET_ICEWORLD4, false),
+      ImageInstruction.PLANET_ICEWORLD4, false, false),
   /**
    * Eigth water world images
    */
   WATERWORLD8(Tiles.getTileByName(TileNames.WATERWORLD8).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD8, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD8, false),
+      ImageInstruction.PLANET_WATERWORLD8, false, false),
   /**
    * Second desert world images
    */
   DESERTWORLD2(Tiles.getTileByName(TileNames.DESERTWORLD2).getIndex(),
       GuiStatics.BIG_PLANET_DESERTWORLD2, WorldType.DESERTWORLD,
-      ImageInstruction.PLANET_DESERTWORLD2, false),
+      ImageInstruction.PLANET_DESERTWORLD2, false, false),
   /**
    * Nineth water world images
    */
   WATERWORLD9(Tiles.getTileByName(TileNames.WATERWORLD9).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD9, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD9, false),
+      ImageInstruction.PLANET_WATERWORLD9, false, false),
   /**
    * Fifth iron world images
    */
   IRONWORLD5(Tiles.getTileByName(TileNames.IRONPLANET5).getIndex(),
       GuiStatics.BIG_PLANET_IRONPLANET5, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD5, false),
+      ImageInstruction.PLANET_IRONWORLD5, false, false),
   /**
    * Sixth iron world images
    */
   IRONWORLD6(Tiles.getTileByName(TileNames.IRONPLANET6).getIndex(),
       GuiStatics.BIG_PLANET_IRONPLANET6, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD6, false),
+      ImageInstruction.PLANET_IRONWORLD6, false, false),
   /**
    * Third desert world images
    */
   DESERTWORLD3(Tiles.getTileByName(TileNames.DESERTWORLD3).getIndex(),
       GuiStatics.BIG_PLANET_DESERTWORLD3, WorldType.DESERTWORLD,
-      ImageInstruction.PLANET_DESERTWORLD3, false),
+      ImageInstruction.PLANET_DESERTWORLD3, false, false),
   /**
    * Third carbon world images
    */
   CARBONWORLD3(Tiles.getTileByName(TileNames.CARBONWORLD3).getIndex(),
       GuiStatics.BIG_PLANET_CARBONWORLD3, WorldType.CARBONWORLD,
-      ImageInstruction.PLANET_CARBONWORLD3, false),
+      ImageInstruction.PLANET_CARBONWORLD3, false, false),
   /**
    * First artificial world images
    */
   ARTIFICIALWORLD1(Tiles.getTileByName(TileNames.ARTIFICIALWORLD1).getIndex(),
       GuiStatics.BIG_PLANET_ARTIFICIALPLANET1, WorldType.ARTIFICALWORLD,
-      ImageInstruction.PLANET_ARTIFICIALWORLD1, false);
+      ImageInstruction.PLANET_ARTIFICIALWORLD1, false, false);
 
 
   /**
@@ -231,9 +231,8 @@ public enum PlanetTypes {
   public static PlanetTypes getRandomPlanetType(final boolean gasGiant) {
     if (gasGiant) {
       return getRandomPlanetType(true, false, false);
-    } else {
-      return getRandomPlanetType(false, true, false);
     }
+    return getRandomPlanetType(false, true, false);
   }
   /**
    * Get random planet type
@@ -246,6 +245,9 @@ public enum PlanetTypes {
       final boolean normalPlanet, final boolean artificalPlanets) {
     ArrayList<PlanetTypes> list = new ArrayList<>();
     for (PlanetTypes type : PlanetTypes.values()) {
+      if (type.isNamedPlanet()) {
+        continue;
+      }
       if (type.worldType == WorldType.ARTIFICALWORLD && artificalPlanets) {
         list.add(type);
       } else if (type.isGasGiant() && gasGiant) {
@@ -274,6 +276,9 @@ public enum PlanetTypes {
       }
     }
     for (PlanetTypes type : PlanetTypes.values()) {
+      if (type.isNamedPlanet()) {
+        continue;
+      }
       if (type.worldType != WorldType.ARTIFICALWORLD && !type.isGasGiant()) {
         int value = race.getWorldTypeBaseValue(type.getWorldType());
         if (value == highestValue) {
@@ -313,21 +318,28 @@ public enum PlanetTypes {
   private String instructions;
 
   /**
+   * Planet is known named planet.
+   * For example Earth would be planet like this.
+   */
+  private boolean namedPlanet;
+  /**
    * Constructor for planet type enum
    * @param tileIndex TileIndex number
    * @param bigImage Buffered Image for full size planet
    * @param type WorldType
    * @param imageInstruction Image instructions for news
    * @param isGasGiant True for gas giants
+   * @param namedPlanet True for named planets
    */
   PlanetTypes(final int tileIndex, final BufferedImage bigImage,
       final WorldType type, final String imageInstruction,
-      final boolean isGasGiant) {
+      final boolean isGasGiant, final boolean namedPlanet) {
     tile = tileIndex;
     image = bigImage;
     worldType = type;
     instructions = imageInstruction;
     gasGiant = isGasGiant;
+    this.namedPlanet = namedPlanet;
   }
 
   /**
@@ -516,5 +528,13 @@ public enum PlanetTypes {
    */
   public boolean isGasGiant() {
     return this.gasGiant;
+  }
+
+  /**
+   * Is planet something which is well known and named?
+   * @return True if named planet.
+   */
+  public boolean isNamedPlanet() {
+    return this.namedPlanet;
   }
 }

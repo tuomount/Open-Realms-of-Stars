@@ -218,7 +218,13 @@ public enum PlanetTypes {
    */
   PLANET_EARTH(Tiles.getTileByName(TileNames.PLANET_EARTH).getIndex(),
       GuiStatics.BIG_PLANET_EARTH, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_EARTH, false, true);
+      ImageInstruction.PLANET_EARTH, false, true),
+  /**
+   * Planet MARS
+   */
+  PLANET_MARS(Tiles.getTileByName(TileNames.PLANET_MARS).getIndex(),
+      GuiStatics.BIG_PLANET_MARS, WorldType.IRONWORLD,
+      ImageInstruction.PLANET_MARS, false, true);
 
 
   /**
@@ -417,6 +423,7 @@ public enum PlanetTypes {
       case CARBONWORLD3: return 25;
       case ARTIFICIALWORLD1: return 26;
       case PLANET_EARTH: return 27;
+      case PLANET_MARS: return 28;
       default:
         throw new IllegalArgumentException("Unknown planet index!!");
     }
@@ -470,6 +477,7 @@ public enum PlanetTypes {
       case 25: return CARBONWORLD3;
       case 26: return ARTIFICIALWORLD1;
       case 27: return PLANET_EARTH;
+      case 28: return PLANET_MARS;
       default:
         throw new IllegalArgumentException("No planet type available "
             + "for this index!!");
@@ -514,6 +522,7 @@ public enum PlanetTypes {
       case DESERTWORLD3: return "Desert world";
       case ARTIFICIALWORLD1: return "Artificial world";
       case PLANET_EARTH: return "Water world";
+      case PLANET_MARS: return "Iron world";
       default:
         throw new IllegalArgumentException("Unknown planet type!!");
     }

@@ -82,6 +82,13 @@ Earth by Justin Nichol - https://opengameart.org/content/earth
 Licensed under CC BY 3.0
 http://creativecommons.org/licenses/by/3.0/
 
+Mars at Opposition (the Acidalia Region)
+by Steve Lee (University of Colorado), Jim Bell (Cornell University),
+Mike Wolff (Space Science Institute), and NASA/ESA
+This includes full planet image and map tile scaled from original
+Licensed under CC BY 4.0
+http://creativecommons.org/licenses/by/4.0/
+
 GBNC logo by Tuomo Untinen
 
 Worm hole by Tuomo Untinen

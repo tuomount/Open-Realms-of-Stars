@@ -564,6 +564,8 @@ public final class Tiles {
     addTile(tile);
     tile = new Tile(tilesImage, 18, 3, TileNames.PLANET_EARTH);
     addTile(tile);
+    tile = new Tile(tilesImage, 19, 3, TileNames.PLANET_MARS);
+    addTile(tile);
   }
 
   /**

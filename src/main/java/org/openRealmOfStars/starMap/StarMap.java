@@ -1804,7 +1804,7 @@ public class StarMap {
           }
         }
         if (planets == 4) {
-          planet.setPlanetType(PlanetTypes.IRONWORLD5);
+          planet.setPlanetType(PlanetTypes.PLANET_MARS);
           planet.setRadiationLevel(2);
           planet.setGroundSize(8);
           planet.setName("Mars");

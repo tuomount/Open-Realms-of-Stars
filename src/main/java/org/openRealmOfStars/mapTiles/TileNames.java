@@ -592,6 +592,10 @@ public final class TileNames {
    * Planet Earth
    */
   public static final String PLANET_EARTH = "PLANET_EARTH";
+  /**
+   * Planet Mars
+   */
+  public static final String PLANET_MARS = "PLANET_MARS";
 
   /**
    * List of non harmful space anomalies

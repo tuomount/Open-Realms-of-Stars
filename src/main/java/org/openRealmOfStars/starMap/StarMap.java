@@ -1774,13 +1774,13 @@ public class StarMap {
             planets, false);
         planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
         if (planets == 1) {
-          planet.setPlanetType(PlanetTypes.IRONWORLD1);
+          planet.setPlanetType(PlanetTypes.SILICONWORLD1);
           planet.setRadiationLevel(9);
           planet.setGroundSize(7);
           planet.setName("Mercury");
         }
         if (planets == 2) {
-          planet.setPlanetType(PlanetTypes.CARBONWORLD3);
+          planet.setPlanetType(PlanetTypes.CARBONWORLD2);
           planet.setRadiationLevel(6);
           planet.setGroundSize(11);
           planet.setName("Venus");
@@ -1831,7 +1831,10 @@ public class StarMap {
         gasGiants++;
         Planet planet = new Planet(new Coordinate(px, py), sun.getName(),
             planets + gasGiants, true);
-        planet.setPlanetType(PlanetTypes.getRandomPlanetType(true));
+        if (gasGiants == 1) {
+          planet.setPlanetType(PlanetTypes.PLANET_JUPITER);
+          planet.setName("Jupiter");
+        }
         planetList.add(planet);
         int planetNumber = planetList.size() - 1;
         info = new SquareInfo(SquareInfo.TYPE_GAS_PLANET, planetNumber);
@@ -1874,6 +1877,21 @@ public class StarMap {
           tiles[px][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_3_SW)
               .getIndex();
           tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_3_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 29: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.JUPITER_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.JUPITER_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.JUPITER_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.JUPITER_SE)
               .getIndex();
           tileInfo[px][py] = info;
           tileInfo[px + 1][py] = info;

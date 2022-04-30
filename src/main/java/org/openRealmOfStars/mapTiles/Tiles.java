@@ -566,6 +566,16 @@ public final class Tiles {
     addTile(tile);
     tile = new Tile(tilesImage, 19, 3, TileNames.PLANET_MARS);
     addTile(tile);
+    // Reading the gas planet 2x2
+    tile = new Tile(tilesImage, 12, 3, TileNames.JUPITER_NW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 3, TileNames.JUPITER_NE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 12, 4, TileNames.JUPITER_SW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 4, TileNames.JUPITER_SE);
+    addTile(tile);
+
   }
 
   /**

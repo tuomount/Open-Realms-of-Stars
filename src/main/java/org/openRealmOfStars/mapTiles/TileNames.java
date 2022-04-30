@@ -201,6 +201,22 @@ public final class TileNames {
    * Gas Giant 3 South West
    */
   public static final String GAS_GIANT_3_SW = "GAS_GIANT_3_SW";
+  /**
+   * Jupiter North West
+   */
+  public static final String JUPITER_NW = "JUPITER_NW";
+  /**
+   * Jupiter North East
+   */
+  public static final String JUPITER_NE = "JUPITER_NE";
+  /**
+   * Jupiter South East
+   */
+  public static final String JUPITER_SE = "JUPITER_SE";
+  /**
+   * Jupiter South West
+   */
+  public static final String JUPITER_SW = "JUPITER_SW";
 
   /**
    * Planet 1 Rock world 1
@@ -596,6 +612,10 @@ public final class TileNames {
    * Planet Mars
    */
   public static final String PLANET_MARS = "PLANET_MARS";
+  /**
+   * Planet Jupiter
+   */
+  public static final String PLANET_JUPITER = "PLANET_JUPITER";
 
   /**
    * List of non harmful space anomalies

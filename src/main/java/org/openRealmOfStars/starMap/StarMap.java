@@ -1835,6 +1835,10 @@ public class StarMap {
           planet.setPlanetType(PlanetTypes.PLANET_JUPITER);
           planet.setName("Jupiter");
         }
+        if (gasGiants == 2) {
+          planet.setPlanetType(PlanetTypes.PLANET_SATURN);
+          planet.setName("Saturn");
+        }
         planetList.add(planet);
         int planetNumber = planetList.size() - 1;
         info = new SquareInfo(SquareInfo.TYPE_GAS_PLANET, planetNumber);
@@ -1892,6 +1896,21 @@ public class StarMap {
           tiles[px][py + 1] = Tiles.getTileByName(TileNames.JUPITER_SW)
               .getIndex();
           tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.JUPITER_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 30: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.SATURN_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.SATURN_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.SATURN_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.SATURN_SE)
               .getIndex();
           tileInfo[px][py] = info;
           tileInfo[px + 1][py] = info;

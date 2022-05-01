@@ -223,6 +223,10 @@ public class ImageInstruction {
    */
   public static final String PLANET_JUPITER = "jupiter";
   /**
+   * Planet type Saturn
+   */
+  public static final String PLANET_SATURN = "saturn";
+  /**
    * Sports logo around the planet image
    */
   public static final String PLANET_SPORTS = "sportslogo";
@@ -918,6 +922,9 @@ public class ImageInstruction {
     }
     if (PLANET_JUPITER.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_JUPITER;
+    }
+    if (PLANET_SATURN.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_SATURN;
     }
     if (PLANET_IRONWORLD1.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_IRONPLANET1;

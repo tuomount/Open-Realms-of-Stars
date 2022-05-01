@@ -217,6 +217,22 @@ public final class TileNames {
    * Jupiter South West
    */
   public static final String JUPITER_SW = "JUPITER_SW";
+  /**
+   * Saturn North West
+   */
+  public static final String SATURN_NW = "SATURN_NW";
+  /**
+   * Saturn North East
+   */
+  public static final String SATURN_NE = "SATURN_NE";
+  /**
+   * Saturn South East
+   */
+  public static final String SATURN_SE = "SATURN_SE";
+  /**
+   * Saturn South West
+   */
+  public static final String SATURN_SW = "SATURN_SW";
 
   /**
    * Planet 1 Rock world 1
@@ -616,6 +632,10 @@ public final class TileNames {
    * Planet Jupiter
    */
   public static final String PLANET_JUPITER = "PLANET_JUPITER";
+  /**
+   * Planet Saturn
+   */
+  public static final String PLANET_SATURN = "PLANET_SATURN";
 
   /**
    * List of non harmful space anomalies

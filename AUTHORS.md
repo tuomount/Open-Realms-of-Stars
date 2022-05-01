@@ -95,6 +95,12 @@ This includes full planet image and map tile scaled from original
 Licensed under CC BY 4.0
 http://creativecommons.org/licenses/by/4.0/
 
+Hubble's Latest Saturn Picture Precedes Cassini's Arrival
+by NASA, ESA and E. Karkoschka (University of Arizona)
+This includes full planet image and map tile scaled from original
+Licensed under CC BY 4.0
+http://creativecommons.org/licenses/by/4.0/
+
 GBNC logo by Tuomo Untinen
 
 Worm hole by Tuomo Untinen

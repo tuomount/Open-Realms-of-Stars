@@ -101,6 +101,11 @@ This includes full planet image and map tile scaled from original
 Licensed under CC BY 4.0
 http://creativecommons.org/licenses/by/4.0/
 
+18 Planet Variations by Hansjörg Malthaner
+http://opengameart.org/users/varkalandar
+Licensed under CC BY 3.0
+http://creativecommons.org/licenses/by/3.0/
+
 GBNC logo by Tuomo Untinen
 
 Worm hole by Tuomo Untinen

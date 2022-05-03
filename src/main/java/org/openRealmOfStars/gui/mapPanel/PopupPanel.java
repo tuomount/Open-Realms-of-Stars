@@ -142,6 +142,18 @@ public class PopupPanel {
           title = "Space pirates!";
           break;
         }
+        case RULER_STRESS: {
+          title = "Ruler stress!";
+          break;
+        }
+        case ACCIDENT: {
+          title = "Accident!";
+          break;
+        }
+        case TERRORIST_ATTACK: {
+          title = "Terrorist attack!";
+          break;
+        }
         default:
         case SOLAR_ACTIVITY_INCREASE: {
           title = "Solar activity increased";
@@ -172,6 +184,14 @@ public class PopupPanel {
         }
         case SOLAR_ACTIVITY_DIMISHED: {
           title = "Solar activity decreased";
+          break;
+        }
+        case LEADER_LEVEL: {
+          title = "Experienced leader";
+          break;
+        }
+        case CULTURAL_HIT: {
+          title = "Cultural hit";
           break;
         }
         default:

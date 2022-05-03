@@ -233,6 +233,38 @@ public final class TileNames {
    * Saturn South West
    */
   public static final String SATURN_SW = "SATURN_SW";
+  /**
+   * IceGiant1 North West
+   */
+  public static final String ICEGIANT1_NW = "ICEGIANT1_NW";
+  /**
+   * IceGiant1 North East
+   */
+  public static final String ICEGIANT1_NE = "ICEGIANT1_NE";
+  /**
+   * IceGiant1 South East
+   */
+  public static final String ICEGIANT1_SE = "ICEGIANT1_SE";
+  /**
+   * IceGiant1 South West
+   */
+  public static final String ICEGIANT1_SW = "ICEGIANT1_SW";
+  /**
+   * IceGiant2 North West
+   */
+  public static final String ICEGIANT2_NW = "ICEGIANT2_NW";
+  /**
+   * IceGiant2 North East
+   */
+  public static final String ICEGIANT2_NE = "ICEGIANT2_NE";
+  /**
+   * IceGiant2 South East
+   */
+  public static final String ICEGIANT2_SE = "ICEGIANT2_SE";
+  /**
+   * IceGiant2 South West
+   */
+  public static final String ICEGIANT2_SW = "ICEGIANT2_SW";
 
   /**
    * Planet 1 Rock world 1
@@ -636,6 +668,14 @@ public final class TileNames {
    * Planet Saturn
    */
   public static final String PLANET_SATURN = "PLANET_SATURN";
+  /**
+   * Ice Giant 1
+   */
+  public static final String ICEGIANT1 = "ICEGIANT1";
+  /**
+   * Ice Giant 2
+   */
+  public static final String ICEGIANT2 = "ICEGIANT2";
 
   /**
    * List of non harmful space anomalies

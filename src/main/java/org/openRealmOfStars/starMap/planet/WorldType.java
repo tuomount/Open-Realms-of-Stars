@@ -3,7 +3,7 @@ package org.openRealmOfStars.starMap.planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2022  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -54,5 +54,9 @@ public enum WorldType {
   /**
    * Artificial world
    */
-  ARTIFICALWORLD;
+  ARTIFICALWORLD,
+  /**
+   * Ice Giant World
+   */
+  ICEGIANTWORLD;
 }

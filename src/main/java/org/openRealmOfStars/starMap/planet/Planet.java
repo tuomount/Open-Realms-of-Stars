@@ -1924,10 +1924,20 @@ public class Planet {
     sb.append(this.getName());
     sb.append("\n");
     if (isGasGiant()) {
-      sb.append("\n");
-      sb.append("Gas Giant");
-      sb.append("\n");
-      sb.append("Planet is inhabitable, but planet can block scanners.");
+      if (planetType.getWorldType() == WorldType.ICEGIANTWORLD) {
+        sb.append("\n");
+        sb.append("Ice Giant");
+        sb.append("\n");
+        sb.append("Planet is inhabitable, but planet can block scanners.");
+        sb.append(" Ice giants are mostly oxygen, methane,"
+            + " ammonia and hydrogen.");
+      } else {
+        sb.append("\n");
+        sb.append("Gas Giant");
+        sb.append("\n");
+        sb.append("Planet is inhabitable, but planet can block scanners.");
+        sb.append(" Gas giants are mostly hydrogen and helium.");
+      }
     } else {
       sb.append(planetType.getTypeAsString());
       sb.append("\n");

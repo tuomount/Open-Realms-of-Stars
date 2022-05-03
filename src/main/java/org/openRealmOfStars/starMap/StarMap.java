@@ -1839,6 +1839,14 @@ public class StarMap {
           planet.setPlanetType(PlanetTypes.PLANET_SATURN);
           planet.setName("Saturn");
         }
+        if (gasGiants == 3) {
+          planet.setPlanetType(PlanetTypes.ICEGIANT1);
+          planet.setName("Uranus");
+        }
+        if (gasGiants == 4) {
+          planet.setPlanetType(PlanetTypes.ICEGIANT2);
+          planet.setName("Neptune");
+        }
         planetList.add(planet);
         int planetNumber = planetList.size() - 1;
         info = new SquareInfo(SquareInfo.TYPE_GAS_PLANET, planetNumber);
@@ -1911,6 +1919,36 @@ public class StarMap {
           tiles[px][py + 1] = Tiles.getTileByName(TileNames.SATURN_SW)
               .getIndex();
           tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.SATURN_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 31: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.ICEGIANT1_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.ICEGIANT1_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT1_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT1_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 32: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.ICEGIANT2_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.ICEGIANT2_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT2_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT2_SE)
               .getIndex();
           tileInfo[px][py] = info;
           tileInfo[px + 1][py] = info;
@@ -2112,6 +2150,36 @@ public class StarMap {
           tiles[px][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_3_SW)
               .getIndex();
           tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_3_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 31: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.ICEGIANT1_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.ICEGIANT1_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT1_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT1_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 32: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.ICEGIANT2_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.ICEGIANT2_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT2_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT2_SE)
               .getIndex();
           tileInfo[px][py] = info;
           tileInfo[px + 1][py] = info;

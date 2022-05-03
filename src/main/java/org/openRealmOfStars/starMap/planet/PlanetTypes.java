@@ -236,7 +236,19 @@ public enum PlanetTypes {
    */
   PLANET_SATURN(Tiles.getTileByName(TileNames.PLANET_SATURN).getIndex(),
       GuiStatics.BIG_PLANET_SATURN, WorldType.GASWORLD,
-      ImageInstruction.PLANET_SATURN, true, true);
+      ImageInstruction.PLANET_SATURN, true, true),
+  /**
+   * Ice Giant1
+   */
+  ICEGIANT1(Tiles.getTileByName(TileNames.ICEGIANT1).getIndex(),
+      GuiStatics.BIG_PLANET_ICEGIANT1, WorldType.ICEGIANTWORLD,
+      ImageInstruction.PLANET_ICEGIANT1, true, false),
+  /**
+   * Ice Giant2
+   */
+  ICEGIANT2(Tiles.getTileByName(TileNames.ICEGIANT2).getIndex(),
+      GuiStatics.BIG_PLANET_ICEGIANT2, WorldType.ICEGIANTWORLD,
+      ImageInstruction.PLANET_ICEGIANT2, true, false);
 
 
 
@@ -440,6 +452,8 @@ public enum PlanetTypes {
       case PLANET_MARS: return 28;
       case PLANET_JUPITER: return 29;
       case PLANET_SATURN: return 30;
+      case ICEGIANT1: return 31;
+      case ICEGIANT2: return 32;
       default:
         throw new IllegalArgumentException("Unknown planet index!!");
     }
@@ -461,6 +475,8 @@ public enum PlanetTypes {
         case  2: return GASGIANT3;
         case  29: return PLANET_JUPITER;
         case  30: return PLANET_SATURN;
+        case  31: return ICEGIANT1;
+        case  32: return ICEGIANT2;
         default:
           throw new IllegalArgumentException("No planet type available "
               + "for this index!!");
@@ -543,6 +559,8 @@ public enum PlanetTypes {
       case PLANET_MARS: return "Iron world";
       case PLANET_JUPITER: return "Gas giant";
       case PLANET_SATURN: return "Gas giant";
+      case ICEGIANT1: return "Ice giant";
+      case ICEGIANT2: return "Ice giant";
       default:
         throw new IllegalArgumentException("Unknown planet type!!");
     }

@@ -1085,6 +1085,18 @@ public final class GuiStatics {
   public static final BufferedImage BIG_PLANET_SATURN = IOUtilities
       .loadImage(Tiles.class.getResource(
           "/resources/images/saturn.png"));
+  /**
+   * Big planet screen IceGiant1
+   */
+  public static final BufferedImage BIG_PLANET_ICEGIANT1 = IOUtilities
+      .loadImage(Tiles.class.getResource(
+          "/resources/images/icegiant1.png"));
+  /**
+   * Big planet screen IceGiant2
+   */
+  public static final BufferedImage BIG_PLANET_ICEGIANT2 = IOUtilities
+      .loadImage(Tiles.class.getResource(
+          "/resources/images/icegiant2.png"));
 
   /**
    * Big sports logo

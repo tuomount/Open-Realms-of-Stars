@@ -584,6 +584,24 @@ public final class Tiles {
     addTile(tile);
     tile = new Tile(tilesImage, 13, 6, TileNames.SATURN_SE);
     addTile(tile);
+    // Reading the ice giant 2x2
+    tile = new Tile(tilesImage, 12, 7, TileNames.ICEGIANT1_NW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 7, TileNames.ICEGIANT1_NE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 12, 8, TileNames.ICEGIANT1_SW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 8, TileNames.ICEGIANT1_SE);
+    addTile(tile);
+    // Reading the ice giant 2x2
+    tile = new Tile(tilesImage, 12, 9, TileNames.ICEGIANT2_NW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 9, TileNames.ICEGIANT2_NE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 12, 10, TileNames.ICEGIANT2_SW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 10, TileNames.ICEGIANT2_SE);
+    addTile(tile);
 
   }
 

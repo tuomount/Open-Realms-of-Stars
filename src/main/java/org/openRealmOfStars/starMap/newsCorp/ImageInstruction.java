@@ -227,6 +227,14 @@ public class ImageInstruction {
    */
   public static final String PLANET_SATURN = "saturn";
   /**
+   * Planet type Icegiant1
+   */
+  public static final String PLANET_ICEGIANT1 = "icegiant1";
+  /**
+   * Planet type Icegiant2
+   */
+  public static final String PLANET_ICEGIANT2 = "icegiant2";
+  /**
    * Sports logo around the planet image
    */
   public static final String PLANET_SPORTS = "sportslogo";

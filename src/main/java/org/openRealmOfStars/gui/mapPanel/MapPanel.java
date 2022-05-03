@@ -838,6 +838,14 @@ public class MapPanel extends JPanel {
             || tile.getName().equals(TileNames.GAS_GIANT_2_SE)
                 && i > -viewPointX
             || tile.getName().equals(TileNames.GAS_GIANT_3_SE)
+                && i > -viewPointX
+            || tile.getName().equals(TileNames.JUPITER_SE)
+                && i > -viewPointX
+            || tile.getName().equals(TileNames.SATURN_SE)
+                && i > -viewPointX
+            || tile.getName().equals(TileNames.ICEGIANT1_SE)
+                && i > -viewPointX
+            || tile.getName().equals(TileNames.ICEGIANT2_SE)
                 && i > -viewPointX)
             && planet != null && info != null && info
                 .getSectorVisibility(new Coordinate(i + cx,
@@ -1187,6 +1195,16 @@ public class MapPanel extends JPanel {
         // Draw Gas giant text
         if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE) && i > -viewPointX
             || tile.getName().equals(TileNames.GAS_GIANT_2_SE)
+                && i > -viewPointX
+            || tile.getName().equals(TileNames.GAS_GIANT_3_SE)
+                && i > -viewPointX
+            || tile.getName().equals(TileNames.JUPITER_SE)
+                && i > -viewPointX
+            || tile.getName().equals(TileNames.SATURN_SE)
+                && i > -viewPointX
+            || tile.getName().equals(TileNames.ICEGIANT1_SE)
+                && i > -viewPointX
+            || tile.getName().equals(TileNames.ICEGIANT2_SE)
                 && i > -viewPointX)
             && planet != null) {
           int textWidth = (int) GuiStatics.getFontCubellanSC()

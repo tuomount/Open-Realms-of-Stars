@@ -1570,6 +1570,7 @@ public enum SpaceRace {
       case ICEWORLD: return 75;
       case CARBONWORLD: return 100;
       case DESERTWORLD: return 75;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1582,6 +1583,7 @@ public enum SpaceRace {
       case ICEWORLD: return 25;
       case CARBONWORLD: return 75;
       case DESERTWORLD: return 50;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1594,6 +1596,7 @@ public enum SpaceRace {
       case ICEWORLD: return 50;
       case CARBONWORLD: return 100;
       case DESERTWORLD: return 75;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1606,6 +1609,7 @@ public enum SpaceRace {
       case ICEWORLD: return 50;
       case CARBONWORLD: return 100;
       case DESERTWORLD: return 50;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1618,6 +1622,7 @@ public enum SpaceRace {
       case ICEWORLD: return 100;
       case CARBONWORLD: return 125;
       case DESERTWORLD: return 100;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1630,6 +1635,7 @@ public enum SpaceRace {
       case ICEWORLD: return 25;
       case CARBONWORLD: return 100;
       case DESERTWORLD: return 75;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1642,6 +1648,7 @@ public enum SpaceRace {
       case ICEWORLD: return 75;
       case CARBONWORLD: return 125;
       case DESERTWORLD: return 25;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1654,6 +1661,7 @@ public enum SpaceRace {
       case ICEWORLD: return 75;
       case CARBONWORLD: return 75;
       case DESERTWORLD: return 75;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1666,6 +1674,7 @@ public enum SpaceRace {
       case ICEWORLD: return 100;
       case CARBONWORLD: return 125;
       case DESERTWORLD: return 50;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1678,6 +1687,7 @@ public enum SpaceRace {
       case ICEWORLD: return 75;
       case CARBONWORLD: return 75;
       case DESERTWORLD: return 75;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1690,6 +1700,7 @@ public enum SpaceRace {
       case ICEWORLD: return 50;
       case CARBONWORLD: return 100;
       case DESERTWORLD: return 50;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1702,6 +1713,7 @@ public enum SpaceRace {
       case ICEWORLD: return 50;
       case CARBONWORLD: return 75;
       case DESERTWORLD: return 50;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1714,6 +1726,7 @@ public enum SpaceRace {
       case ICEWORLD: return 25;
       case CARBONWORLD: return 50;
       case DESERTWORLD: return 75;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 75;
       }
@@ -1730,6 +1743,7 @@ public enum SpaceRace {
       case ICEWORLD: return 50;
       case CARBONWORLD: return 100;
       case DESERTWORLD: return 75;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1742,6 +1756,7 @@ public enum SpaceRace {
       case ICEWORLD: return 25;
       case CARBONWORLD: return 100;
       case DESERTWORLD: return 75;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }
@@ -1754,6 +1769,7 @@ public enum SpaceRace {
       case ICEWORLD: return 50;
       case CARBONWORLD: return 100;
       case DESERTWORLD: return 100;
+      case ICEGIANTWORLD: return 0;
       default:
       case ARTIFICALWORLD: return 100;
       }

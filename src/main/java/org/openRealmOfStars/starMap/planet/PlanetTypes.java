@@ -283,7 +283,7 @@ public enum PlanetTypes {
       final boolean normalPlanet, final boolean artificalPlanets) {
     ArrayList<PlanetTypes> list = new ArrayList<>();
     for (PlanetTypes type : PlanetTypes.values()) {
-      if (type.isNamedPlanet()) {
+      if (type.isNamedPlanet() && !artificalPlanets) {
         continue;
       }
       if (type.worldType == WorldType.ARTIFICALWORLD && artificalPlanets) {

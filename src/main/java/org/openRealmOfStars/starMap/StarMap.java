@@ -1802,12 +1802,56 @@ public class StarMap {
               createRealmToPlanet(planet, playerInfo, playerIndex);
             }
           }
+          if (playerIndex == -1) {
+            int index = DiceGenerator.getRandom(4);
+            switch (index) {
+              case 0: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
+                break;
+              }
+              case 1: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_LAB);
+                break;
+              }
+              case 2: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_PALACE);
+                break;
+              }
+              case 3: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_TEMPLE);
+                break;
+              }
+              default:
+              case 4: {
+                planet.setPlanetaryEvent(PlanetaryEvent.BLACK_MONOLITH);
+                break;
+              }
+            }
+          }
         }
         if (planets == 4) {
           planet.setPlanetType(PlanetTypes.PLANET_MARS);
           planet.setRadiationLevel(2);
           planet.setGroundSize(8);
           planet.setName("Mars");
+          if (playerIndex == -1 && DiceGenerator.getRandom(99) <= 25) {
+            int index = DiceGenerator.getRandom(2);
+            switch (index) {
+              case 0: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
+                break;
+              }
+              case 1: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_LAB);
+                break;
+              }
+              default:
+              case 2: {
+                planet.setPlanetaryEvent(PlanetaryEvent.BLACK_MONOLITH);
+                break;
+              }
+            }
+          }
         }
         planetList.add(planet);
         int planetNumber = planetList.size() - 1;
@@ -2009,6 +2053,11 @@ public class StarMap {
             sy, getMaxX(), getMaxY());
         return mapOfSolar;
       }
+    }
+    if (playerIndex == -1 && !solHasAdded
+        && DiceGenerator.getRandom(99) < 10) {
+      solHasAdded = true;
+      return createSolSystem(solarSystem, sunx, suny, -1, config);
     }
     int[][] mapOfSolar = solarSystem;
     int numberOfPlanets = planetsToCreate;

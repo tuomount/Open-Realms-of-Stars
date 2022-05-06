@@ -322,6 +322,11 @@ public class StarMap {
    */
   private boolean aiOrAutomateTakingMoves = false;
   /**
+   * Just flag for galaxy generation. When this is true Sol is no longer added
+   * to starmap. This will not be saved on file.
+   */
+  private boolean solHasAdded = false;
+  /**
    * Magic string to save game files
    */
   public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.22";
@@ -354,6 +359,7 @@ public class StarMap {
     setAllNewsEnabled(config.isAllNews());
     history = new History();
     votes = new Votes();
+    solHasAdded = false;
     shownTutorialIndexes = new ArrayList<>();
     tutorialEnabled = config.isEnableTutorial();
     boolean elderRealmStart = false;
@@ -1169,6 +1175,7 @@ public class StarMap {
     votes = new Votes();
     shownTutorialIndexes = new ArrayList<>();
     tutorialEnabled = false;
+    solHasAdded = false;
     setPirateDifficulty(PirateDifficultLevel.NORMAL);
     setKarmaType(KarmaType.DISABLED);
     setKarmaSpeed(1);
@@ -1703,6 +1710,306 @@ public class StarMap {
   }
 
   /**
+   * Create Sol System
+   * @param solarSystem map of solar systems
+   * @param sunx Sun's about coordinates
+   * @param suny Sun's about coordinates
+   * @param playerIndex if Player index is else than -1 then SolarSystem
+   * is created as home system for that player index.
+   * @param config GalaxyConfig
+   * @return updated solarsystem map
+   */
+  private int[][] createSolSystem(final int[][] solarSystem, final int sunx,
+      final int suny, final int playerIndex, final GalaxyConfig config) {
+    boolean elderRealmStart = false;
+    for (int i = 0; i < config.getMaxPlayers(); i++) {
+      if (config.getPlayerElderRealm(i)) {
+        elderRealmStart = true;
+      }
+    }
+    int[][] mapOfSolar = solarSystem;
+    int numberOfPlanets = 4;
+    int numberOfGasGiants = 4;
+    // The Sun
+    int sx = sunx + DiceGenerator.getRandom(-1, 1);
+    int sy = suny + DiceGenerator.getRandom(-1, 1);
+    mapOfSolar = StarMapUtilities.setSolarSystem(solarSystem, sx, sy, getMaxX(),
+        getMaxY());
+    Sun sun = new Sun(new Coordinate(sx, sy), nameGenerator);
+    sunList.add(sun);
+    int sunNumber = sunList.size() - 1;
+    SquareInfo info = new SquareInfo(SquareInfo.TYPE_SUN, sunNumber);
+    tileInfo[sx - 1][sy - 1] = info;
+    tileInfo[sx][sy - 1] = info;
+    tileInfo[sx + 1][sy - 1] = info;
+    tileInfo[sx - 1][sy] = info;
+    tileInfo[sx][sy] = info;
+    tileInfo[sx + 1][sy] = info;
+    tileInfo[sx - 1][sy + 1] = info;
+    tileInfo[sx][sy + 1] = info;
+    tileInfo[sx + 1][sy + 1] = info;
+    int sunType = DiceGenerator.getRandom(0, 2);
+    tiles[sx][sy] = Tiles.getSunTile(TileNames.SUN_C, sunType).getIndex();
+    tiles[sx - 1][sy - 1] = Tiles.getSunTile(TileNames.SUN_NW,
+        sunType).getIndex();
+    tiles[sx][sy - 1] = Tiles.getSunTile(TileNames.SUN_N, sunType).getIndex();
+    tiles[sx + 1][sy - 1] = Tiles.getSunTile(TileNames.SUN_NE,
+        sunType).getIndex();
+    tiles[sx - 1][sy] = Tiles.getSunTile(TileNames.SUN_W, sunType).getIndex();
+    tiles[sx + 1][sy] = Tiles.getSunTile(TileNames.SUN_E, sunType).getIndex();
+    tiles[sx - 1][sy + 1] = Tiles.getSunTile(TileNames.SUN_SW,
+        sunType).getIndex();
+    tiles[sx][sy + 1] = Tiles.getSunTile(TileNames.SUN_S, sunType).getIndex();
+    tiles[sx + 1][sy + 1] = Tiles.getSunTile(TileNames.SUN_SE,
+        sunType).getIndex();
+    int planets = 0;
+    while (planets < numberOfPlanets) {
+      int px = sx + DiceGenerator.getRandom(-SOLAR_SYSTEM_WIDTH,
+              SOLAR_SYSTEM_WIDTH);
+      int py = sy + DiceGenerator.getRandom(-SOLAR_SYSTEM_WIDTH,
+              SOLAR_SYSTEM_WIDTH);
+      if (is9NeighboursEmpty(px, py)) {
+        planets++;
+        Planet planet = new Planet(new Coordinate(px, py), sun.getName(),
+            planets, false);
+        planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
+        if (planets == 1) {
+          planet.setPlanetType(PlanetTypes.SILICONWORLD1);
+          planet.setRadiationLevel(9);
+          planet.setGroundSize(7);
+          planet.setName("Mercury");
+        }
+        if (planets == 2) {
+          planet.setPlanetType(PlanetTypes.CARBONWORLD2);
+          planet.setRadiationLevel(6);
+          planet.setGroundSize(11);
+          planet.setName("Venus");
+        }
+        if (planets == 3) {
+          planet.setPlanetType(PlanetTypes.PLANET_EARTH);
+          planet.setRadiationLevel(1);
+          planet.setGroundSize(12);
+          planet.setName("Earth");
+          if (playerIndex != -1) {
+            PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
+            playerInfo.setElderRealm(config.getPlayerElderRealm(playerIndex));
+            planet.setAmountMetalInGround(HOMEWORLD_METAL);
+            planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
+            planet.setStartRealmIndex(playerIndex);
+            if (!elderRealmStart) {
+              createRealmToPlanet(planet, playerInfo, playerIndex);
+            } else if (playerInfo.isElderRealm()) {
+              createRealmToPlanet(planet, playerInfo, playerIndex);
+            }
+          }
+          if (playerIndex == -1) {
+            int index = DiceGenerator.getRandom(4);
+            switch (index) {
+              case 0: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
+                break;
+              }
+              case 1: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_LAB);
+                break;
+              }
+              case 2: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_PALACE);
+                break;
+              }
+              case 3: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_TEMPLE);
+                break;
+              }
+              default:
+              case 4: {
+                planet.setPlanetaryEvent(PlanetaryEvent.BLACK_MONOLITH);
+                break;
+              }
+            }
+          }
+        }
+        if (planets == 4) {
+          planet.setPlanetType(PlanetTypes.PLANET_MARS);
+          planet.setRadiationLevel(2);
+          planet.setGroundSize(8);
+          planet.setName("Mars");
+          if (playerIndex == -1 && DiceGenerator.getRandom(99) <= 25) {
+            int index = DiceGenerator.getRandom(2);
+            switch (index) {
+              case 0: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
+                break;
+              }
+              case 1: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_LAB);
+                break;
+              }
+              default:
+              case 2: {
+                planet.setPlanetaryEvent(PlanetaryEvent.BLACK_MONOLITH);
+                break;
+              }
+            }
+          }
+        }
+        planetList.add(planet);
+        int planetNumber = planetList.size() - 1;
+        info = new SquareInfo(SquareInfo.TYPE_PLANET, planetNumber);
+        tileInfo[px][py] = info;
+        tiles[px][py] = planet.getPlanetType().getTileIndex();
+      }
+    }
+    int gasGiants = 0;
+    int loops = 0;
+    while (gasGiants < numberOfGasGiants) {
+      loops++;
+      if (loops > 100) {
+        break;
+      }
+      int px = sx + DiceGenerator.getRandom(-SOLAR_SYSTEM_WIDTH,
+              SOLAR_SYSTEM_WIDTH);
+      int py = sy + DiceGenerator.getRandom(-SOLAR_SYSTEM_WIDTH,
+              SOLAR_SYSTEM_WIDTH);
+      if (is16NeighboursEmpty(px, py)) {
+        gasGiants++;
+        Planet planet = new Planet(new Coordinate(px, py), sun.getName(),
+            planets + gasGiants, true);
+        if (gasGiants == 1) {
+          planet.setPlanetType(PlanetTypes.PLANET_JUPITER);
+          planet.setName("Jupiter");
+        }
+        if (gasGiants == 2) {
+          planet.setPlanetType(PlanetTypes.PLANET_SATURN);
+          planet.setName("Saturn");
+        }
+        if (gasGiants == 3) {
+          planet.setPlanetType(PlanetTypes.ICEGIANT1);
+          planet.setName("Uranus");
+        }
+        if (gasGiants == 4) {
+          planet.setPlanetType(PlanetTypes.ICEGIANT2);
+          planet.setName("Neptune");
+        }
+        planetList.add(planet);
+        int planetNumber = planetList.size() - 1;
+        info = new SquareInfo(SquareInfo.TYPE_GAS_PLANET, planetNumber);
+        switch (planet.getPlanetTypeIndex()) {
+        case 0: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_1_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_1_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 1: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_2_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.GAS_GIANT_2_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_2_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_2_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 2: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_3_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.GAS_GIANT_3_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_3_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_3_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 29: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.JUPITER_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.JUPITER_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.JUPITER_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.JUPITER_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 30: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.SATURN_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.SATURN_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.SATURN_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.SATURN_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 31: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.ICEGIANT1_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.ICEGIANT1_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT1_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT1_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 32: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.ICEGIANT2_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.ICEGIANT2_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT2_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT2_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        default:
+          throw new IllegalArgumentException("Unexpected gas giant type:"
+             + planet.getPlanetTypeIndex());
+        }
+      }
+    }
+    return mapOfSolar;
+  }
+
+  /**
    * Create Solar System
    * @param solarSystem map of solar systems
    * @param sunx Sun's about coordinates
@@ -1725,6 +2032,10 @@ public class StarMap {
     }
     if (playerIndex != -1) {
       PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
+      if (playerInfo.getRace() == SpaceRace.HUMAN && !solHasAdded) {
+        solHasAdded = true;
+        return createSolSystem(solarSystem, sunx, suny, playerIndex, config);
+      }
       if (playerInfo.getRace() == SpaceRace.ALONIANS) {
         int sx = sunx + DiceGenerator.getRandom(-1, 1);
         int sy = suny + DiceGenerator.getRandom(-1, 1);
@@ -1742,6 +2053,11 @@ public class StarMap {
             sy, getMaxX(), getMaxY());
         return mapOfSolar;
       }
+    }
+    if (playerIndex == -1 && !solHasAdded
+        && DiceGenerator.getRandom(99) < 10) {
+      solHasAdded = true;
+      return createSolSystem(solarSystem, sunx, suny, -1, config);
     }
     int[][] mapOfSolar = solarSystem;
     int numberOfPlanets = planetsToCreate;
@@ -1883,6 +2199,36 @@ public class StarMap {
           tiles[px][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_3_SW)
               .getIndex();
           tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_3_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 31: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.ICEGIANT1_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.ICEGIANT1_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT1_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT1_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
+        case 32: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.ICEGIANT2_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.ICEGIANT2_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT2_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.ICEGIANT2_SE)
               .getIndex();
           tileInfo[px][py] = info;
           tileInfo[px + 1][py] = info;

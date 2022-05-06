@@ -211,6 +211,30 @@ public class ImageInstruction {
    */
   public static final String PLANET_ARTIFICIALWORLD1 = "artificialtworld1";
   /**
+   * Planet type Earth
+   */
+  public static final String PLANET_EARTH = "earth";
+  /**
+   * Planet type Mars
+   */
+  public static final String PLANET_MARS = "mars";
+  /**
+   * Planet type Jupiter
+   */
+  public static final String PLANET_JUPITER = "jupiter";
+  /**
+   * Planet type Saturn
+   */
+  public static final String PLANET_SATURN = "saturn";
+  /**
+   * Planet type Icegiant1
+   */
+  public static final String PLANET_ICEGIANT1 = "icegiant1";
+  /**
+   * Planet type Icegiant2
+   */
+  public static final String PLANET_ICEGIANT2 = "icegiant2";
+  /**
    * Sports logo around the planet image
    */
   public static final String PLANET_SPORTS = "sportslogo";
@@ -897,6 +921,18 @@ public class ImageInstruction {
     }
     if (PLANET_ARTIFICIALWORLD1.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_ARTIFICIALPLANET1;
+    }
+    if (PLANET_EARTH.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_EARTH;
+    }
+    if (PLANET_MARS.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_MARS;
+    }
+    if (PLANET_JUPITER.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_JUPITER;
+    }
+    if (PLANET_SATURN.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_SATURN;
     }
     if (PLANET_IRONWORLD1.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_IRONPLANET1;

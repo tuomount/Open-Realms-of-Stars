@@ -562,6 +562,47 @@ public final class Tiles {
     tile = new Tile(tilesImage, 5, 9, TileNames.STAR_SE);
     tile.setDescription(TileNames.STAR_DESCRIPTION);
     addTile(tile);
+    tile = new Tile(tilesImage, 18, 3, TileNames.PLANET_EARTH);
+    addTile(tile);
+    tile = new Tile(tilesImage, 19, 3, TileNames.PLANET_MARS);
+    addTile(tile);
+    // Reading the gas planet 2x2
+    tile = new Tile(tilesImage, 12, 3, TileNames.JUPITER_NW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 3, TileNames.JUPITER_NE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 12, 4, TileNames.JUPITER_SW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 4, TileNames.JUPITER_SE);
+    addTile(tile);
+    // Reading the gas planet 2x2
+    tile = new Tile(tilesImage, 12, 5, TileNames.SATURN_NW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 5, TileNames.SATURN_NE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 12, 6, TileNames.SATURN_SW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 6, TileNames.SATURN_SE);
+    addTile(tile);
+    // Reading the ice giant 2x2
+    tile = new Tile(tilesImage, 12, 7, TileNames.ICEGIANT1_NW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 7, TileNames.ICEGIANT1_NE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 12, 8, TileNames.ICEGIANT1_SW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 8, TileNames.ICEGIANT1_SE);
+    addTile(tile);
+    // Reading the ice giant 2x2
+    tile = new Tile(tilesImage, 12, 9, TileNames.ICEGIANT2_NW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 9, TileNames.ICEGIANT2_NE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 12, 10, TileNames.ICEGIANT2_SW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 10, TileNames.ICEGIANT2_SE);
+    addTile(tile);
+
   }
 
   /**

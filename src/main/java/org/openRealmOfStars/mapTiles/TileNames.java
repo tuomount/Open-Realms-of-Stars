@@ -201,6 +201,70 @@ public final class TileNames {
    * Gas Giant 3 South West
    */
   public static final String GAS_GIANT_3_SW = "GAS_GIANT_3_SW";
+  /**
+   * Jupiter North West
+   */
+  public static final String JUPITER_NW = "JUPITER_NW";
+  /**
+   * Jupiter North East
+   */
+  public static final String JUPITER_NE = "JUPITER_NE";
+  /**
+   * Jupiter South East
+   */
+  public static final String JUPITER_SE = "JUPITER_SE";
+  /**
+   * Jupiter South West
+   */
+  public static final String JUPITER_SW = "JUPITER_SW";
+  /**
+   * Saturn North West
+   */
+  public static final String SATURN_NW = "SATURN_NW";
+  /**
+   * Saturn North East
+   */
+  public static final String SATURN_NE = "SATURN_NE";
+  /**
+   * Saturn South East
+   */
+  public static final String SATURN_SE = "SATURN_SE";
+  /**
+   * Saturn South West
+   */
+  public static final String SATURN_SW = "SATURN_SW";
+  /**
+   * IceGiant1 North West
+   */
+  public static final String ICEGIANT1_NW = "ICEGIANT1_NW";
+  /**
+   * IceGiant1 North East
+   */
+  public static final String ICEGIANT1_NE = "ICEGIANT1_NE";
+  /**
+   * IceGiant1 South East
+   */
+  public static final String ICEGIANT1_SE = "ICEGIANT1_SE";
+  /**
+   * IceGiant1 South West
+   */
+  public static final String ICEGIANT1_SW = "ICEGIANT1_SW";
+  /**
+   * IceGiant2 North West
+   */
+  public static final String ICEGIANT2_NW = "ICEGIANT2_NW";
+  /**
+   * IceGiant2 North East
+   */
+  public static final String ICEGIANT2_NE = "ICEGIANT2_NE";
+  /**
+   * IceGiant2 South East
+   */
+  public static final String ICEGIANT2_SE = "ICEGIANT2_SE";
+  /**
+   * IceGiant2 South West
+   */
+  public static final String ICEGIANT2_SW = "ICEGIANT2_SW";
 
   /**
    * Planet 1 Rock world 1
@@ -587,6 +651,31 @@ public final class TileNames {
    * Blackhole Center
    */
   public static final String BLACKHOLE_C = "BLACKHOLE_C";
+
+  /**
+   * Planet Earth
+   */
+  public static final String PLANET_EARTH = "PLANET_EARTH";
+  /**
+   * Planet Mars
+   */
+  public static final String PLANET_MARS = "PLANET_MARS";
+  /**
+   * Planet Jupiter
+   */
+  public static final String PLANET_JUPITER = "PLANET_JUPITER";
+  /**
+   * Planet Saturn
+   */
+  public static final String PLANET_SATURN = "PLANET_SATURN";
+  /**
+   * Ice Giant 1
+   */
+  public static final String ICEGIANT1 = "ICEGIANT1";
+  /**
+   * Ice Giant 2
+   */
+  public static final String ICEGIANT2 = "ICEGIANT2";
 
   /**
    * List of non harmful space anomalies

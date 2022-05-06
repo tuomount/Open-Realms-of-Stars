@@ -1060,6 +1060,43 @@ public final class GuiStatics {
   public static final BufferedImage BIG_PLANET_ARTIFICIALPLANET1 = IOUtilities
       .loadImage(Tiles.class.getResource(
           "/resources/images/artificialworld1.png"));
+  /**
+   * Big planet screen Earth
+   */
+  public static final BufferedImage BIG_PLANET_EARTH = IOUtilities
+      .loadImage(Tiles.class.getResource(
+          "/resources/images/earth.png"));
+  /**
+   * Big planet screen Mars
+   */
+  public static final BufferedImage BIG_PLANET_MARS = IOUtilities
+      .loadImage(Tiles.class.getResource(
+          "/resources/images/mars.png"));
+
+  /**
+   * Big planet screen Jupiter
+   */
+  public static final BufferedImage BIG_PLANET_JUPITER = IOUtilities
+      .loadImage(Tiles.class.getResource(
+          "/resources/images/jupiter.png"));
+  /**
+   * Big planet screen Saturn
+   */
+  public static final BufferedImage BIG_PLANET_SATURN = IOUtilities
+      .loadImage(Tiles.class.getResource(
+          "/resources/images/saturn.png"));
+  /**
+   * Big planet screen IceGiant1
+   */
+  public static final BufferedImage BIG_PLANET_ICEGIANT1 = IOUtilities
+      .loadImage(Tiles.class.getResource(
+          "/resources/images/icegiant1.png"));
+  /**
+   * Big planet screen IceGiant2
+   */
+  public static final BufferedImage BIG_PLANET_ICEGIANT2 = IOUtilities
+      .loadImage(Tiles.class.getResource(
+          "/resources/images/icegiant2.png"));
 
   /**
    * Big sports logo

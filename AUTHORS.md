@@ -78,6 +78,34 @@ Tuomo Untinen added legs for the captain. -https://opengameart.org/content/space
 The Husk- Human Analog Android by Justin Nichol - https://opengameart.org/content/the-husk-human-analog-android
 Tuomo Untinen modified to Synthdroid(Husk with legs)
 
+Earth by Justin Nichol - https://opengameart.org/content/earth
+Licensed under CC BY 3.0
+http://creativecommons.org/licenses/by/3.0/
+
+Mars at Opposition (the Acidalia Region)
+by Steve Lee (University of Colorado), Jim Bell (Cornell University),
+Mike Wolff (Space Science Institute), and NASA/ESA
+This includes full planet image and map tile scaled from original
+Licensed under CC BY 4.0
+http://creativecommons.org/licenses/by/4.0/
+
+Hubble's View of Jupiter and Europa in August 2020
+by NASA, ESA, A. Simon (Goddard Space Flight Center), and M. H. Wong (University of California, Berkeley) and the OPAL team.
+This includes full planet image and map tile scaled from original
+Licensed under CC BY 4.0
+http://creativecommons.org/licenses/by/4.0/
+
+Hubble's Latest Saturn Picture Precedes Cassini's Arrival
+by NASA, ESA and E. Karkoschka (University of Arizona)
+This includes full planet image and map tile scaled from original
+Licensed under CC BY 4.0
+http://creativecommons.org/licenses/by/4.0/
+
+18 Planet Variations by Hansjörg Malthaner
+http://opengameart.org/users/varkalandar
+Licensed under CC BY 3.0
+http://creativecommons.org/licenses/by/3.0/
+
 GBNC logo by Tuomo Untinen
 
 Worm hole by Tuomo Untinen

@@ -1619,6 +1619,13 @@ public final class GuiStatics {
           "/resources/images/smaugirian_bridge.png"));
 
   /**
+   * Ship Alteirian bridge interior
+   */
+  public static final BufferedImage IMAGE_INTERIOR_ALTEIRIAN =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/alteirian_bridge.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

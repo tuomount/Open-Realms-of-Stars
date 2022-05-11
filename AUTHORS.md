@@ -268,6 +268,12 @@ Cloaked ship and shuttle 2 by Tuomo Untinen
 
 Lithorian Space Ship Bridge by Tuomo Untinen
 
+Reborgian Space Ship Bridge by Tuomo Untinen
+
+Smaugirian Space Ship Bridge by Tuomo Untinen
+
+Alteirian Space Ship Bridge by Tuomo Untinen
+
 Scanner animation by Tuomo Untinen
 
 Warzone Concept by Justin Nichol
@@ -537,5 +543,8 @@ Umplix (CC0)
 
 Dark Intro by
 Nikke (CC0)
+
+Cosmic Creature by Vitalezzz
+Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
 

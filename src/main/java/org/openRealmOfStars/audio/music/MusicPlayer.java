@@ -271,13 +271,19 @@ public final class MusicPlayer {
   public static final MusicFileInfo DARK_INTRO = new MusicFileInfo(
       "Dark Intro", "Nikke",
       "/resources/musics/Dark Intro.ogg");
+  /**
+   * Cosmic Creature By Vitalezzz CC-BY 4.0
+   */
+  public static final MusicFileInfo COSMIC_CREATURE = new MusicFileInfo(
+      "Cosmic Creature", "Vitalezz",
+      "/resources/musics/cosmic_creature.ogg");
 
   /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
       MILLION_LIGHT_YEARS, NAUTILUS, BRAVE_SPACE_EXPLORERS, LOST_SIGNAL,
-      I_DO_KNOW_YOU, OUT_OF_TIME, DRIFTING_BEYOND_STARS};
+      I_DO_KNOW_YOU, OUT_OF_TIME, DRIFTING_BEYOND_STARS, COSMIC_CREATURE};
   /**
    * List of music to played while combat
    */

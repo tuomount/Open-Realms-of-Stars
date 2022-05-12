@@ -277,13 +277,20 @@ public final class MusicPlayer {
   public static final MusicFileInfo COSMIC_CREATURE = new MusicFileInfo(
       "Cosmic Creature", "Vitalezz",
       "/resources/musics/cosmic_creature.ogg");
+  /**
+   * Planetary Assault By Vitalezzz CC-BY 4.0
+   */
+  public static final MusicFileInfo PLANETARY_ASSAULT = new MusicFileInfo(
+      "Planetary Assault", "Vitalezz",
+      "/resources/musics/cosmic_creature.ogg");
 
   /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
       MILLION_LIGHT_YEARS, NAUTILUS, BRAVE_SPACE_EXPLORERS, LOST_SIGNAL,
-      I_DO_KNOW_YOU, OUT_OF_TIME, DRIFTING_BEYOND_STARS, COSMIC_CREATURE};
+      I_DO_KNOW_YOU, OUT_OF_TIME, DRIFTING_BEYOND_STARS, COSMIC_CREATURE,
+      PLANETARY_ASSAULT};
   /**
    * List of music to played while combat
    */

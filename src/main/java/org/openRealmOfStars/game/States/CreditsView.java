@@ -495,6 +495,9 @@ public class CreditsView extends BlackPanel {
       + "http://creativecommons.org/licenses/by/4.0/\n\n"
       + "Planetary Assault by Vitalezzz\n"
       + "Licensed under CC BY 4.0 "
+      + "http://creativecommons.org/licenses/by/4.0/\n\n"
+      + "Solar Sail by Vitalezzz\n"
+      + "Licensed under CC BY 4.0 "
       + "http://creativecommons.org/licenses/by/4.0/\n\n";
 
 

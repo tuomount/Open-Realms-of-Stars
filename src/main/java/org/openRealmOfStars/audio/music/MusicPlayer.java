@@ -283,6 +283,12 @@ public final class MusicPlayer {
   public static final MusicFileInfo PLANETARY_ASSAULT = new MusicFileInfo(
       "Planetary Assault", "Vitalezz",
       "/resources/musics/cosmic_creature.ogg");
+  /**
+   * Solar Sail By Vitalezzz CC-BY 4.0
+   */
+  public static final MusicFileInfo SOLAR_SAIL = new MusicFileInfo(
+      "Solar Sail", "Vitalezz",
+      "/resources/musics/solar_sail.ogg");
 
   /**
    * List of music to played while playing
@@ -290,7 +296,7 @@ public final class MusicPlayer {
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
       MILLION_LIGHT_YEARS, NAUTILUS, BRAVE_SPACE_EXPLORERS, LOST_SIGNAL,
       I_DO_KNOW_YOU, OUT_OF_TIME, DRIFTING_BEYOND_STARS, COSMIC_CREATURE,
-      PLANETARY_ASSAULT};
+      PLANETARY_ASSAULT, SOLAR_SAIL};
   /**
    * List of music to played while combat
    */

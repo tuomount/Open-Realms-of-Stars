@@ -1513,8 +1513,7 @@ public enum SpaceRace {
       //FIXME: Check this when bridge image has been done
       return BridgeCommandType.WARM_WHITE;
     case SMAUGIRIANS:
-      //FIXME: Check this when bridge image has been done
-      return BridgeCommandType.WARM_WHITE;
+      return BridgeCommandType.ORANGE_BLINK;
     case SYNTHDROIDS:
       return BridgeCommandType.WARM_WHITE;
     case ALONIANS:

@@ -112,7 +112,11 @@ public enum BridgeCommandType {
   /**
    * Fade in
    */
-  FADE_IN;
+  FADE_IN,
+  /**
+   * Blinking orange light
+   */
+  ORANGE_BLINK;
 
 
 }

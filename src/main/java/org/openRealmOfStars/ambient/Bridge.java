@@ -15,6 +15,7 @@ import javax.net.ssl.TrustManager;
 
 import org.openRealmOfStars.ambient.connection.BlindTrustManager;
 import org.openRealmOfStars.ambient.connection.BridgeHostnameVerifier;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.json.JsonParser;
@@ -108,6 +109,10 @@ public class Bridge {
    * Effect fade in
    */
   public static final String EFFECT_FADE_IN = "Fade in";
+  /**
+   * Effect orange blink
+   */
+  public static final String EFFECT_ORANGE_BLINK = "Orange Blink";
   /**
    * Name for contact Hue bridge.
    */
@@ -642,6 +647,57 @@ public class Bridge {
     makeLightEffect(light, 49000, 80, 0);
     light = getCenterLight();
     makeLightEffect(light, 47000, 80, 0);
+  }
+
+  /**
+   * Changes all light for dark orange light.
+   */
+  public void effectBlinkOrange() {
+    int dark = 0;
+    int bright = 240;
+    if (intense == 4) {
+      dark = 20;
+      bright = 235;
+    }
+    if (intense == 3) {
+      dark = 30;
+      bright = 235;
+    }
+    if (intense == 2) {
+      dark = 60;
+      bright = 235;
+    }
+    if (intense == 1) {
+      dark = 80;
+      bright = 235;
+    }
+    if (DiceGenerator.getRandom(100) < 2) {
+      Light light = getLeftLight();
+      makeLightEffect(light, 8000, 230, dark);
+      light = getRightLight();
+      makeLightEffect(light, 9000, 230, dark);
+      light = getCenterLight();
+      makeLightEffect(light, 8500, 200, dark);
+    } else {
+      Light light = getLeftLight();
+      if (DiceGenerator.getRandom(100) < 2) {
+        makeLightEffect(light, 36000, 230, bright);
+      } else {
+        makeLightEffect(light, 8000, 230, bright);
+      }
+      light = getRightLight();
+      if (DiceGenerator.getRandom(100) < 2) {
+        makeLightEffect(light, 36000, 230, bright);
+      } else {
+        makeLightEffect(light, 9000, 230, bright);
+      }
+      light = getCenterLight();
+      if (DiceGenerator.getRandom(100) < 2) {
+        makeLightEffect(light, 36000, 230, bright);
+      } else {
+        makeLightEffect(light, 8500, 200, bright);
+      }
+    }
   }
 
   /**

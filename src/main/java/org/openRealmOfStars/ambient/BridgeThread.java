@@ -178,6 +178,8 @@ public class BridgeThread extends Thread {
         if (bridge.isEffectEnded()) {
           bridge.setNextCommand(null);
         }
+      } else if (command == BridgeCommandType.ORANGE_BLINK) {
+        bridge.effectBlinkOrange();
       } else if (command == BridgeCommandType.EXIT) {
         bridge.setNextCommand(null);
         endThread = true;

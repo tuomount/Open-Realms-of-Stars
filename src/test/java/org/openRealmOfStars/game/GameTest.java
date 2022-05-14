@@ -19,6 +19,7 @@ import org.openRealmOfStars.starMap.KarmaType;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
 *

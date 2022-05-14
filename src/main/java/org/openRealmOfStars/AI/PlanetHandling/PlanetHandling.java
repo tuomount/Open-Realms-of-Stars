@@ -2144,6 +2144,7 @@ public final class PlanetHandling {
       final PlayerInfo info, final int totalResearch) {
     int population = planet.getTotalPopulation();
     if (population <= 0) {
+      ErrorLogger.enabledDebugging();
       ErrorLogger.debug("Planet " + planet.getName() + " has no population."
           + " Planet is being owned by " + info.getEmpireName() + " ("
           + info.getRace().getName() + ").");

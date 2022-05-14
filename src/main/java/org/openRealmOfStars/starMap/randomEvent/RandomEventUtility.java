@@ -1208,7 +1208,8 @@ public final class RandomEventUtility {
         Planet planet = planets.get(index);
         event.setPlanet(planet);
         int value = DiceGenerator.getRandom(10, 15);
-        planet.fightAgainstAttacker(value, map);
+        planet.fightAgainstAttacker(value, null, "wild life",
+            "fighting against wildlife", "fighting against wildlife");
         StringBuilder sb = new StringBuilder();
         sb.append(planet.getName());
         sb.append(" has dangerous animals which usually"
@@ -1247,6 +1248,10 @@ public final class RandomEventUtility {
           sb.append(animalType);
           sb.append(". ");
         } else {
+          ErrorLogger.enabledDebugging();
+          ErrorLogger.debug(planet.getName()
+              + " is uncolonized due wild life.");
+          planet.setPlanetOwner(-1, null);
           sb.append(" All population died from the attack of ");
           sb.append(animalType);
           sb.append(". ");

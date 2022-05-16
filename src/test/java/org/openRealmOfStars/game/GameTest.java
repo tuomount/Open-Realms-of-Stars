@@ -19,7 +19,6 @@ import org.openRealmOfStars.starMap.KarmaType;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
 *
@@ -545,7 +544,7 @@ public class GameTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunFullGameWithElder() throws IOException {
+  public void testRunFullGameWithElder() {
     Game game;
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(8);

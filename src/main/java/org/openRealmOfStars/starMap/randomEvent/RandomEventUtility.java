@@ -1248,9 +1248,6 @@ public final class RandomEventUtility {
           sb.append(animalType);
           sb.append(". ");
         } else {
-          ErrorLogger.enabledDebugging();
-          ErrorLogger.debug(planet.getName()
-              + " is uncolonized due wild life.");
           planet.setPlanetOwner(-1, null);
           sb.append(" All population died from the attack of ");
           sb.append(animalType);

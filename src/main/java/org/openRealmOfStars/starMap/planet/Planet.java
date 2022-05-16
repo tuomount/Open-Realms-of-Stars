@@ -716,16 +716,8 @@ public class Planet {
       final StarMap starMap, final String attackType,
       final String reasonGovernor, final String reasonWorker) {
     if (planetOwnerInfo != null) {
-      int troop = planetOwnerInfo.getRace().getTrooperPower();
-      int multiply = 100;
-      Building[] buildingsArray = getBuildingList();
-      for (Building building : buildingsArray) {
-        if (building.getBattleBonus() > 0) {
-          multiply = multiply + building.getBattleBonus();
-        }
-      }
-      troop = troop * multiply / 100;
-      int total = getTotalPopulation() * troop;
+      int troop = getTroopPowerBonus();
+      int total = getTroopPower();
       if (attackTroops >= total) {
         for (int i = 0; i < workers.length; i++) {
           workers[i] = 0;
@@ -3932,7 +3924,7 @@ public class Planet {
         getGovernor().setJob(Job.DEAD);
         Message msg = new Message(MessageType.LEADER,
             getGovernor().getCallName()
-                + " has died at " + attackType + "of " + getName() + ". ",
+                + " has died at " + attackType + " of " + getName() + ". ",
             Icons.getIconByName(Icons.ICON_DEATH));
         msg.setMatchByString("Index:" + getPlanetPlayerInfo().getLeaderIndex(
             getGovernor()));

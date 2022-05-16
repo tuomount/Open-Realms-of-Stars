@@ -544,7 +544,7 @@ public class GameTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunFullGameWithElder() throws IOException {
+  public void testRunFullGameWithElder() {
     Game game;
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(8);

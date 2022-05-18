@@ -1,11 +1,17 @@
 package org.openRealmOfStars.utilities;
 
+import java.io.File;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 import java.util.Random;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018,2020  Tuomo Untinen
+ * Copyright (C) 2016,2018,2020,2022  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -81,16 +87,126 @@ public final class DiceGenerator {
   }
 
   /**
+   * Get Java envinronment safely
+   * @param param Envinronment parameter
+   * @return Envinronment parameter or default value.
+   */
+  private static String getEnvSafely(final String param) {
+    try {
+      return System.getenv(param);
+    } catch (SecurityException e) {
+      ErrorLogger.log(e);
+    }
+    return param + " not available";
+  }
+  /**
+   * Gather Envinronment data. This data will be run through
+   * digest function if any of digest function is available.
+   * This should be good for random generator starting value.
+   * @return Digested envinronment data.
+   */
+  private static byte[] gatherEnvData() {
+    StringBuilder sb = new StringBuilder();
+    long startTime = System.nanoTime();
+    sb.append(startTime);
+    for (File file : File.listRoots()) {
+      try {
+        sb.append(file.getAbsolutePath());
+        sb.append(": ");
+        sb.append(file.getFreeSpace());
+        sb.append("/");
+        sb.append(file.getTotalSpace());
+      } catch (SecurityException e) {
+        ErrorLogger.log(e);
+      }
+    }
+    sb.append(getEnvSafely("PATH"));
+    try {
+      Map<String, String> map = System.getenv();
+      sb.append(map.toString());
+    } catch (SecurityException e) {
+      ErrorLogger.log(e);
+    }
+    sb.append("CPUs: " + Runtime.getRuntime().availableProcessors());
+    sb.append("Free memory: " + Runtime.getRuntime().freeMemory());
+    sb.append("Total memory: " + Runtime.getRuntime().totalMemory());
+    sb.append("Max memory: " + Runtime.getRuntime().maxMemory());
+    long endTime = System.nanoTime();
+    sb.append(endTime);
+    try {
+      MessageDigest md = MessageDigest.getInstance("SHA-256");
+      md.update(sb.toString().getBytes(StandardCharsets.UTF_8));
+      return md.digest();
+    } catch (NoSuchAlgorithmException e) {
+      try {
+        MessageDigest md = MessageDigest.getInstance("SHA-1");
+        md.update(sb.toString().getBytes(StandardCharsets.UTF_8));
+        return md.digest();
+      } catch (NoSuchAlgorithmException e1) {
+        try {
+          MessageDigest md = MessageDigest.getInstance("MD5");
+          md.update(sb.toString().getBytes(StandardCharsets.UTF_8));
+          return md.digest();
+        } catch (NoSuchAlgorithmException e2) {
+          ErrorLogger.log("All MessageDigests failed.");
+        }
+      }
+    }
+    return sb.toString().getBytes(StandardCharsets.US_ASCII);
+  }
+  /**
+   * Pseudo random function.
+   * @param initialValue Initial value for PRF.
+   * @param loops How many times PRF is looped.
+   * @return PRF value
+   */
+  private static byte[] loopPrf(final byte[] initialValue, final int loops) {
+    byte[] value = initialValue;
+    for (int i = 0; i < loops; i++) {
+      StringBuilder sb = new StringBuilder();
+      sb.append(System.nanoTime());
+      sb.append(i);
+      sb.append(new String(value, StandardCharsets.UTF_8));
+      try {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(sb.toString().getBytes(StandardCharsets.UTF_8));
+        value = md.digest();
+      } catch (NoSuchAlgorithmException e) {
+        try {
+          MessageDigest md = MessageDigest.getInstance("SHA-1");
+          md.update(sb.toString().getBytes(StandardCharsets.UTF_8));
+          value = md.digest();
+        } catch (NoSuchAlgorithmException e1) {
+          try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(sb.toString().getBytes(StandardCharsets.UTF_8));
+            value = md.digest();
+          } catch (NoSuchAlgorithmException e2) {
+            ErrorLogger.log("All MessageDigests failed.");
+          }
+        }
+      }
+    }
+    return value;
+  }
+  /**
    * Initialize generator. This only needs to be called once.
    */
   private static void initializeGenerators() {
     if (!initialized) {
-      generator1 = new Random(System.nanoTime());
-      generator2 = new Random(generator1.nextLong());
-      mz = (int) System.nanoTime();
-      mw = (int) System.currentTimeMillis();
+      BigInteger big = new BigInteger(gatherEnvData());
+      generator1 = new Random(big.longValue());
+      big = new BigInteger(loopPrf(gatherEnvData(),
+          generator1.nextInt(512) + 512));
+      generator2 = new Random(big.longValue());
+      mz = big.intValue();
+      big = new BigInteger(loopPrf(gatherEnvData(),
+          generator1.nextInt(512) + 512));
+      mw = big.intValue();
       mw = mw >> 8;
-      x = System.nanoTime();
+      big = new BigInteger(loopPrf(gatherEnvData(),
+        generator1.nextInt(512) + 512));
+      x = big.longValue();
       numbers = null;
       initialized = true;
     }
@@ -138,7 +254,7 @@ public final class DiceGenerator {
       return 0;
     }
     if (numbers == null) {
-      switch (getRandomJava(3)) {
+      switch (generator1.nextInt(3)) {
       case 0:
         result = getRandomJava(maxValue + 1);
         break;
@@ -189,11 +305,6 @@ public final class DiceGenerator {
    */
   private static int getRandomJava(final int maxValue) {
     int result = generator2.nextInt(maxValue);
-    int result2 = generator1.nextInt();
-    if (result2 % 5 == 0) {
-      generator1 = new Random(System.nanoTime());
-      generator2 = new Random(generator1.nextLong());
-    }
     return result;
 
   }

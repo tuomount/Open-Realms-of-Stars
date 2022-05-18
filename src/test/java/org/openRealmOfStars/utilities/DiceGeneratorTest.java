@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020,2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -40,8 +40,9 @@ public class DiceGeneratorTest {
       scores[index]++;
     }
     boolean success = true;
+    int maxDeviation = loop * 100 / 90 / max;
     for (int i = 0; i < max; i++) {
-      if (Math.abs(scores[i] - loop/max) > loop / max) {
+      if (Math.abs(scores[i] - loop/max) > maxDeviation) {
         success = false;
         System.out.println("Possible deviation of randomness!");
         System.out.println(i + ": " + scores[i]);
@@ -61,8 +62,9 @@ public class DiceGeneratorTest {
       scores[index]++;
     }
     boolean success = true;
+    int maxDeviation = loop * 100 / 90 / max;
     for (int i = 0; i < max; i++) {
-      if (Math.abs(scores[i] - loop/max) > loop / max) {
+      if (Math.abs(scores[i] - loop/max) > maxDeviation) {
         success = false;
         System.out.println("Possible deviation of randomness!");
         System.out.println(i + ": " + scores[i]);
@@ -83,8 +85,9 @@ public class DiceGeneratorTest {
       scores[index]++;
     }
     boolean success = true;
+    int maxDeviation = loop * 100 / 90 / max;
     for (int i = 0; i < max; i++) {
-      if (Math.abs(scores[i] - loop/max) > loop / max) {
+      if (Math.abs(scores[i] - loop/max) > maxDeviation) {
         success = false;
         System.out.println("Possible deviation of randomness!");
         System.out.println(i + ": " + scores[i]);

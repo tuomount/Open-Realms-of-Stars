@@ -289,6 +289,12 @@ public final class MusicPlayer {
   public static final MusicFileInfo SOLAR_SAIL = new MusicFileInfo(
       "Solar Sail", "Vitalezz",
       "/resources/musics/solar_sail.ogg");
+  /**
+   * Unstoppable Driver By Alexandr Zhelanov CC-BY 4.0
+   */
+  public static final MusicFileInfo UNSTOPPABLE_DRIVER = new MusicFileInfo(
+      "Unstoppable Driver", "Alexandr Zhelanov",
+      "/resources/musics/unstoppable_driver.ogg");
 
   /**
    * List of music to played while playing
@@ -301,7 +307,7 @@ public final class MusicPlayer {
    * List of music to played while combat
    */
   protected static final MusicFileInfo[] COMBAT_MUSIC_LIST = {NEON_TRANSIT,
-      THRUST_SEQUENCE, FIGHT_THEME01, LAW_IN_THE_CITY};
+      THRUST_SEQUENCE, FIGHT_THEME01, LAW_IN_THE_CITY, UNSTOPPABLE_DRIVER};
 
   /**
    * What music file is currently playing

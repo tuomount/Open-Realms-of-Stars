@@ -1,9 +1,5 @@
 package org.openRealmOfStars.player.artefact;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
 /**
 *
 * Open Realm of Stars game project
@@ -23,22 +19,32 @@ import org.junit.experimental.categories.Category;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Artefact JUnit test
+* Artifact Type
 *
 */
-public class ArtefactTest {
-
-  @Test
-  @Category(org.openRealmOfStars.UnitTest.class)
-  public void testBasic() {
-    Artefact artefact = new Artefact(0, "Test artefact",
-        ArtefactType.ELECTRONIC);
-    assertEquals(0, artefact.getIndex());
-    assertEquals("Test artefact", artefact.getName());
-    assertEquals(ArtefactType.ELECTRONIC, artefact.getArtefactType());
-    assertEquals(0, artefact.getOneTimeTechBonus());
-    artefact.setOneTimeTechBonus(15);
-    assertEquals(15, artefact.getOneTimeTechBonus());
-  }
-
+public enum ArtifactType {
+  /**
+   * Military artifact.
+   */
+  MILITARY,
+  /**
+   * Defense artifact
+   */
+  DEFENSE,
+  /**
+   * Ship hull artifact
+   */
+  SHIPHULL,
+  /**
+   * Planetary facility artifact
+   */
+  FACILITY,
+  /**
+   * Energy Artifact
+   */
+  ENERGY,
+  /**
+   * Electronic Artifact
+   */
+  ELECTRONIC;
 }

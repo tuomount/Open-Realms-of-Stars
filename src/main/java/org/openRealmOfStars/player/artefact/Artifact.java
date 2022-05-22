@@ -19,62 +19,62 @@ package org.openRealmOfStars.player.artefact;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Artefact
+* Artifact
 *
 */
-public class Artefact {
+public class Artifact {
 
   /**
-   * Artefact index
+   * Artifact index
    */
   private int index;
   /**
-   * Artefact name.
+   * Artifact name.
    */
   private String name;
   /**
-   * Artefact type.
+   * Artifact type.
    */
-  private ArtefactType artefactType;
+  private ArtifactType artifactType;
   /**
    * One time tech bonus;
    */
   private int oneTimeTechBonus;
   /**
-   * Get Artefact index.
-   * @return Artefact index.
+   * Get Artifact index.
+   * @return Artifact index.
    */
   public int getIndex() {
     return index;
   }
   /**
-   * Constructor for Artefact
-   * @param index Artefact index
-   * @param name Artefact name
-   * @param type Artefact type
+   * Constructor for Artifact
+   * @param index Artifact index
+   * @param name Artifact name
+   * @param type Artifact type
    */
-  public Artefact(final int index, final String name,
-      final ArtefactType type) {
+  public Artifact(final int index, final String name,
+      final ArtifactType type) {
     this.index = index;
     this.name = name;
-    this.artefactType = type;
+    this.artifactType = type;
   }
   /**
-   * Get Artefact name.
+   * Get Artifact name.
    * @return String
    */
   public String getName() {
     return name;
   }
   /**
-   * Get Artefact type
-   * @return Artefact type
+   * Get Artifact type
+   * @return Artifact type
    */
-  public ArtefactType getArtefactType() {
-    return artefactType;
+  public ArtifactType getArtifactType() {
+    return artifactType;
   }
   /**
-   * Get Artefact one time bonus for research
+   * Get Artifact one time bonus for research
    * @return Research bonus
    */
   public int getOneTimeTechBonus() {
@@ -82,7 +82,7 @@ public class Artefact {
   }
   /**
    * Set one time research bonus.
-   * @param oneTimeTechBonus
+   * @param oneTimeTechBonus Research bonus
    */
   public void setOneTimeTechBonus(final int oneTimeTechBonus) {
     this.oneTimeTechBonus = oneTimeTechBonus;

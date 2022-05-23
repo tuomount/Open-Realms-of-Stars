@@ -55,6 +55,38 @@ public final class ArtifactFactory {
    * Artifact Shattered deflector
    */
   public static final int ARTIFACT_SHATTERED_DEFLECTOR = 3;
+  /**
+   * Artifact Hull fragment
+   */
+  public static final int ARTIFACT_HULL_FRAGMENT = 4;
+  /**
+   * Artifact Shattered hull
+   */
+  public static final int ARTIFACT_SHATTERED_HULL = 5;
+  /**
+   * Artifact Facility fragment
+   */
+  public static final int ARTIFACT_FACILITY_FRAGMENT = 6;
+  /**
+   * Artifact Facility fragment
+   */
+  public static final int ARTIFACT_SHATTERED_FACILITY = 7;
+  /**
+   * Artifact Powersource fragment
+   */
+  public static final int ARTIFACT_POWERSOURCE_FRAGMENT = 8;
+  /**
+   * Artifact Shattered Powersource
+   */
+  public static final int ARTIFACT_SHATTERED_POWERSOURCE = 9;
+  /**
+   * Artifact Electronic fragment
+   */
+  public static final int ARTIFACT_ELECTRONIC_FRAGMENT = 10;
+  /**
+   * Artifact Shattered Electronic
+   */
+  public static final int ARTIFACT_SHATTERED_ELECTRONIC = 11;
 
   /**
    * Create artifact with index
@@ -77,6 +109,40 @@ public final class ArtifactFactory {
     }
     if (index == ARTIFACT_SHATTERED_DEFLECTOR) {
       tmp = new Artifact(index, "Shattered deflector", ArtifactType.DEFENSE);
+      tmp.setOneTimeTechBonus(30);
+    }
+    if (index == ARTIFACT_HULL_FRAGMENT) {
+      tmp = new Artifact(index, "Hull fragment", ArtifactType.SHIPHULL);
+      tmp.setOneTimeTechBonus(10);
+    }
+    if (index == ARTIFACT_SHATTERED_HULL) {
+      tmp = new Artifact(index, "Shattered hull", ArtifactType.SHIPHULL);
+      tmp.setOneTimeTechBonus(30);
+    }
+    if (index == ARTIFACT_FACILITY_FRAGMENT) {
+      tmp = new Artifact(index, "Facility fragment", ArtifactType.FACILITY);
+      tmp.setOneTimeTechBonus(10);
+    }
+    if (index == ARTIFACT_SHATTERED_FACILITY) {
+      tmp = new Artifact(index, "Shattered facility", ArtifactType.FACILITY);
+      tmp.setOneTimeTechBonus(30);
+    }
+    if (index == ARTIFACT_POWERSOURCE_FRAGMENT) {
+      tmp = new Artifact(index, "Powersource fragment", ArtifactType.ENERGY);
+      tmp.setOneTimeTechBonus(10);
+    }
+    if (index == ARTIFACT_SHATTERED_POWERSOURCE) {
+      tmp = new Artifact(index, "Shattered powersource", ArtifactType.ENERGY);
+      tmp.setOneTimeTechBonus(30);
+    }
+    if (index == ARTIFACT_ELECTRONIC_FRAGMENT) {
+      tmp = new Artifact(index, "Electronic fragment",
+          ArtifactType.ELECTRONIC);
+      tmp.setOneTimeTechBonus(10);
+    }
+    if (index == ARTIFACT_SHATTERED_ELECTRONIC) {
+      tmp = new Artifact(index, "Shattered electronic",
+          ArtifactType.ELECTRONIC);
       tmp.setOneTimeTechBonus(30);
     }
     return tmp;

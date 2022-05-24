@@ -1803,7 +1803,7 @@ public class StarMap {
             }
           }
           if (playerIndex == -1) {
-            int index = DiceGenerator.getRandom(4);
+            int index = DiceGenerator.getRandom(5);
             switch (index) {
               case 0: {
                 planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
@@ -1826,6 +1826,10 @@ public class StarMap {
                 planet.setPlanetaryEvent(PlanetaryEvent.BLACK_MONOLITH);
                 break;
               }
+              case 5: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_ARTIFACT);
+                break;
+              }
             }
           }
         }
@@ -1835,7 +1839,7 @@ public class StarMap {
           planet.setGroundSize(8);
           planet.setName("Mars");
           if (playerIndex == -1 && DiceGenerator.getRandom(99) <= 25) {
-            int index = DiceGenerator.getRandom(2);
+            int index = DiceGenerator.getRandom(3);
             switch (index) {
               case 0: {
                 planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
@@ -1848,6 +1852,10 @@ public class StarMap {
               default:
               case 2: {
                 planet.setPlanetaryEvent(PlanetaryEvent.BLACK_MONOLITH);
+                break;
+              }
+              case 3: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_ARTIFACT);
                 break;
               }
             }

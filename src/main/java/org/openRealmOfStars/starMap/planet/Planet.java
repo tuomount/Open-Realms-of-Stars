@@ -3560,15 +3560,26 @@ public class Planet {
       msgText.append(" colonist found ");
       eventFound = true;
       if (event.oneTimeOnly()) {
-        Building building = event.getBuilding();
-        addBuilding(building);
-        event = PlanetaryEvent.NONE;
-        msgText.append(building.getName());
-        msgText.append(". Colonists has taken it in use now.");
-        Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-            Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-        msg.setCoordinate(getCoordinate());
-        planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+        if (event == PlanetaryEvent.ANCIENT_ARTIFACT) {
+          event = PlanetaryEvent.NONE;
+          msgText.append(getName() + " has strange ancient artifact.");
+          msgText.append(" Colonists send it immediately for research.");
+          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+          msg.setCoordinate(getCoordinate());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+          // FIXME: Give the actual artifact to playerinfo
+        } else {
+          Building building = event.getBuilding();
+          addBuilding(building);
+          event = PlanetaryEvent.NONE;
+          msgText.append(building.getName());
+          msgText.append(". Colonists has taken it in use now.");
+          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+          msg.setCoordinate(getCoordinate());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+        }
       } else {
         if (event == PlanetaryEvent.LUSH_VEGETATION) {
           msgText.append(" that planet has lot's of edible vegetation. ");

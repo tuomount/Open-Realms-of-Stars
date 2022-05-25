@@ -126,9 +126,9 @@ public class TileTest {
     str = TileNames.getRandomSpaceAnomaly(false, false, false);
     assertEquals(TileNames.SPACE_ANOMALY_CREDITS, str);
     str = TileNames.getRandomSpaceAnomaly(true, true, false);
-    assertEquals(TileNames.SPACE_ANOMALY_TIME_WARP, str);
-    str = TileNames.getRandomSpaceAnomaly(true, true, true);
     assertEquals(TileNames.SPACE_ANOMALY, str);
+    str = TileNames.getRandomSpaceAnomaly(true, true, true);
+    assertEquals(TileNames.SPACE_ANOMALY_ANCIENT_ARTIFACT, str);
   }
 
 }

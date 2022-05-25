@@ -602,6 +602,10 @@ public final class Tiles {
     addTile(tile);
     tile = new Tile(tilesImage, 13, 10, TileNames.ICEGIANT2_SE);
     addTile(tile);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_RARE_TECH);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    addTile(tile);
 
   }
 

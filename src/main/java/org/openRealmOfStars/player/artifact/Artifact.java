@@ -1,4 +1,4 @@
-package org.openRealmOfStars.player.artefact;
+package org.openRealmOfStars.player.artifact;
 
 /**
 *

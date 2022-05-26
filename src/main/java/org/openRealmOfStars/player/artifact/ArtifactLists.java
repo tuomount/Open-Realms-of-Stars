@@ -1,5 +1,8 @@
 package org.openRealmOfStars.player.artifact;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -50,7 +53,49 @@ public class ArtifactLists {
     researchedArtifacts = new ArrayList<>();
     setArtifactResearchPoints(0);
   }
+  /**
+   * Read Artifact lists for DataInputStream
+   * @param dis Data input stream
+   * @throws IOException if there is any problem with DataInputStream
+   */
+  public ArtifactLists(final DataInputStream dis)
+      throws IOException {
+    artifactResearchPoints = dis.readDouble();
+    discoveredArtifacts = new ArrayList<>();
+    researchedArtifacts = new ArrayList<>();
+    int numberOfDiscovered = dis.read();
+    int numberOfResearched = dis.read();
+    for (int i = 0; i < numberOfDiscovered; i++) {
+      int index = dis.read();
+      Artifact artifact = ArtifactFactory.createArtifact(index);
+      discoveredArtifacts.add(artifact);
+    }
+    for (int i = 0; i < numberOfResearched; i++) {
+      int index = dis.read();
+      Artifact artifact = ArtifactFactory.createArtifact(index);
+      researchedArtifacts.add(artifact);
+    }
+  }
 
+  /**
+   * Save Artifact lists for DataOutputStream
+   * @param dos Data output stream
+   * @throws IOException if there is any problem with DataOutputStream
+   */
+  public void saveArtifactLists(final DataOutputStream dos)
+      throws IOException {
+    dos.writeDouble(artifactResearchPoints);
+    dos.writeByte(discoveredArtifacts.size());
+    dos.writeByte(researchedArtifacts.size());
+    for (int i = 0; i < discoveredArtifacts.size(); i++) {
+      Artifact artifact = discoveredArtifacts.get(i);
+      dos.writeByte(artifact.getIndex());
+    }
+    for (int i = 0; i < researchedArtifacts.size(); i++) {
+      Artifact artifact = researchedArtifacts.get(i);
+      dos.writeByte(artifact.getIndex());
+    }
+  }
   /**
    * Get Artifact research points.
    * @return Artifact research points.

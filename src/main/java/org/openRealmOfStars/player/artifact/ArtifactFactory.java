@@ -1,5 +1,9 @@
 package org.openRealmOfStars.player.artifact;
 
+import java.util.ArrayList;
+
+import org.openRealmOfStars.utilities.DiceGenerator;
+
 /**
 *
 * Open Realm of Stars game project
@@ -36,7 +40,7 @@ public final class ArtifactFactory {
    * Remember to increase this when new artifact is added to game.
    * It should be one bigger than last index.
    */
-  //private static final int MAX_ARTIFACT = 2;
+  private static final int MAX_ARTIFACT = 12;
 
   /**
    * Artifact Weapon fragment
@@ -146,6 +150,31 @@ public final class ArtifactFactory {
       tmp.setOneTimeTechBonus(30);
     }
     return tmp;
+  }
+
+  /**
+   * Get random non facility artifact.
+   * @return Random artifact
+   */
+  public static Artifact getRandomNonFacility() {
+    ArrayList<Artifact> choices = new ArrayList<>();
+    for (int i = 0; i < MAX_ARTIFACT; i++) {
+      Artifact artifact = createArtifact(i);
+      if (artifact.getArtifactType() != ArtifactType.FACILITY) {
+        choices.add(artifact);
+      }
+    }
+    int index = DiceGenerator.getRandom(choices.size() - 1);
+    return choices.get(index);
+  }
+
+  /**
+   * Get random artifact.
+   * @return Random artifact
+   */
+  public static Artifact getRandomArtifact() {
+    int index = DiceGenerator.getRandom(MAX_ARTIFACT - 1);
+    return createArtifact(index);
   }
 
 }

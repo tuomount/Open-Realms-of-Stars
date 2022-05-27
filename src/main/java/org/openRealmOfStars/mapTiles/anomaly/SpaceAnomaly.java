@@ -11,6 +11,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.artifact.ArtifactFactory;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Gender;
@@ -490,10 +491,11 @@ public class SpaceAnomaly {
                 + ". This seems to be unusual piece of history."
                 + " This finding requires some research time.");
             result.setImage(GuiStatics.IMAGE_RARE_TECH);
-            info.getTechList().addTech(tech);
-            //FIXME: ANCIENT ARTIFACT
+            info.getArtifactLists().addDiscoveredArtifact(
+                ArtifactFactory.getRandomNonFacility());
             if (Game.getTutorial() != null  && info.isHuman()
                 && map.isTutorialEnabled()) {
+              // FIXME: Add tutorial about artifacts.
               String tutorialText = Game.getTutorial().showTutorialText(14);
               if (tutorialText != null) {
                 Message msg = new Message(MessageType.INFORMATION, tutorialText,

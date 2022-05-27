@@ -13,6 +13,7 @@ import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.artifact.ArtifactFactory;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
@@ -3568,7 +3569,8 @@ public class Planet {
               Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
           msg.setCoordinate(getCoordinate());
           planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
-          // FIXME: Give the actual artifact to playerinfo
+          planetOwnerInfo.getArtifactLists().addDiscoveredArtifact(
+              ArtifactFactory.getRandomArtifact());
         } else {
           Building building = event.getBuilding();
           addBuilding(building);

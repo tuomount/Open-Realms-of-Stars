@@ -9,13 +9,14 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.artifact.ArtifactLists;
 import org.openRealmOfStars.player.tech.TechList;
 
 
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017 Tuomo Untinen
+* Copyright (C) 2017,2018,2021,2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -42,6 +43,8 @@ public class ResearchViewTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     TechList list = new TechList(info.getRace());
+    ArtifactLists artifactList = new ArtifactLists();
+    Mockito.when(info.getArtifactLists()).thenReturn(artifactList);
     Mockito.when(info.getTechList()).thenReturn(list);
     int totalResearch = 5;
     String focusTech = null;

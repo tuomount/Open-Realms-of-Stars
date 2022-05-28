@@ -1,5 +1,8 @@
 package org.openRealmOfStars.player.artifact;
 
+import org.openRealmOfStars.gui.icons.Icon16x16;
+import org.openRealmOfStars.gui.icons.Icons;
+
 /**
 *
 * Open Realm of Stars game project
@@ -41,6 +44,10 @@ public class Artifact {
    */
   private int oneTimeTechBonus;
   /**
+   * Artifact icon
+   */
+  private Icon16x16 icon;
+  /**
    * Get Artifact index.
    * @return Artifact index.
    */
@@ -58,6 +65,7 @@ public class Artifact {
     this.index = index;
     this.name = name;
     this.artifactType = type;
+    this.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
   }
   /**
    * Get Artifact name.
@@ -86,5 +94,19 @@ public class Artifact {
    */
   public void setOneTimeTechBonus(final int oneTimeTechBonus) {
     this.oneTimeTechBonus = oneTimeTechBonus;
+  }
+  /**
+   * Get Icon16x16 icon.
+   * @return Icon16x16
+   */
+  public Icon16x16 getIcon() {
+    return icon;
+  }
+  /**
+   * Set Icon16x16.
+   * @param icon Icon to set.
+   */
+  public void setIcon(final Icon16x16 icon) {
+    this.icon = icon;
   }
 }

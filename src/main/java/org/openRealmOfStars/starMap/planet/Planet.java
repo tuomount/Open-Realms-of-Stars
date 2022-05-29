@@ -379,6 +379,11 @@ public class Planet {
   public static final int PRODUCTION_MATERIAL = 7;
 
   /**
+   * Artifact research production
+   */
+  public static final int PRODUCTION_ARTIFACT_RESEARCH = 8;
+
+  /**
    * Minimum amount of ore on planets
    */
   private static final int MINIMUM_ORE = 2000;
@@ -899,6 +904,10 @@ public class Planet {
       result = getTotalPopulationProduction();
       break;
     }
+    case PRODUCTION_ARTIFACT_RESEARCH: {
+      result = getTotalArtifactResearchProduction();
+      break;
+    }
     default: {
       throw new IllegalArgumentException("Illegal production type!");
     }
@@ -1004,6 +1013,33 @@ public class Planet {
     return result;
   }
 
+  /**
+   * Get total artifact research production value.
+   * @return Total artifact research production.
+   */
+  private int getTotalArtifactResearchProduction() {
+    int result = 0;
+    if (planetOwnerInfo.getArtifactLists().hasDiscoveredArtifacts()) {
+      // FIXME: Add here buildings that improve artifact research.
+      if (governor != null) {
+        if (governor.hasPerk(Perk.ACADEMIC)) {
+          result++;
+        }
+        if (governor.hasPerk(Perk.SCIENTIST)) {
+          result++;
+        }
+        if (governor.hasPerk(Perk.STUPID)) {
+          result--;
+        }
+        if (governor.hasPerk(Perk.EXPLORER)) {
+          result++;
+        }
+      }
+    } else {
+      result = 0;
+    }
+    return result;
+  }
   /**
    * Get total population production from planet. This includes racial, worker,
    * planetary improvement bonus

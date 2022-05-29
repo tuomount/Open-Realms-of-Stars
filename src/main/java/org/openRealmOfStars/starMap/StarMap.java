@@ -4302,6 +4302,24 @@ public class StarMap {
           result--;
         }
       }
+      if (production == Planet.PRODUCTION_ARTIFACT_RESEARCH
+          && info.getArtifactLists().hasDiscoveredArtifacts()) {
+        Leader leader = fleet.getCommander();
+        if (leader != null) {
+          if (leader.hasPerk(Perk.ACADEMIC)) {
+            result++;
+          }
+          if (leader.hasPerk(Perk.SCIENTIST)) {
+            result++;
+          }
+          if (leader.hasPerk(Perk.STUPID)) {
+            result--;
+          }
+          if (leader.hasPerk(Perk.EXPLORER)) {
+            result++;
+          }
+        }
+      }
       if (production == Planet.PRODUCTION_CULTURE) {
         result = result + fleet.getTotalCultureBonus();
       }
@@ -4338,7 +4356,23 @@ public class StarMap {
       if (poorest == playerIndex && getVotes().isTaxationOfRichestEnabled()) {
         result = result + 1;
       }
-
+    }
+    if (production == Planet.PRODUCTION_ARTIFACT_RESEARCH
+        && info.getArtifactLists().hasDiscoveredArtifacts()
+        && info.getRuler() != null) {
+      Leader leader = info.getRuler();
+      if (leader.hasPerk(Perk.ACADEMIC)) {
+        result++;
+      }
+      if (leader.hasPerk(Perk.SCIENTIST)) {
+        result++;
+      }
+      if (leader.hasPerk(Perk.STUPID)) {
+        result--;
+      }
+      if (leader.hasPerk(Perk.EXPLORER)) {
+        result++;
+      }
     }
     return result;
   }

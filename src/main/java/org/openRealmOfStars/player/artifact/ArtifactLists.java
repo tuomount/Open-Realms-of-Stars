@@ -153,4 +153,14 @@ public class ArtifactLists {
     return null;
   }
 
+  /**
+   * If list has discovered artifacts which could be research.
+   * @return True if above statement is true.
+   */
+  public boolean hasDiscoveredArtifacts() {
+    if (discoveredArtifacts.size() > 0) {
+      return true;
+    }
+    return false;
+  }
 }

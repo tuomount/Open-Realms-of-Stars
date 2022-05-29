@@ -177,4 +177,71 @@ public final class ArtifactFactory {
     return createArtifact(index);
   }
 
+  /**
+   * Get artifact level cost as research points
+   * @param level Level to research
+   * @param gameLength Maximum game length in turns
+   * @return Amount of research points required
+   */
+  public static int getResearchCost(final int level, final int gameLength) {
+    int veryLowBonus = 0;
+    int lowBonus = 0;
+    int mediumBonus = 0;
+    int highBonus = 0;
+    if (gameLength <= 200) {
+      veryLowBonus = -2;
+      lowBonus = -4;
+      mediumBonus = -8;
+      highBonus = -12;
+    } else if (gameLength <= 300) {
+      veryLowBonus = 0;
+      lowBonus = 0;
+      mediumBonus = 0;
+      highBonus = 0;
+    } else if (gameLength <= 400) {
+      veryLowBonus = 0;
+      lowBonus = 2;
+      mediumBonus = 4;
+      highBonus = 8;
+    } else if (gameLength <= 600) {
+      veryLowBonus = 2;
+      lowBonus = 4;
+      mediumBonus = 8;
+      highBonus = 16;
+    } else if (gameLength <= 800) {
+      veryLowBonus = 3;
+      lowBonus = 6;
+      mediumBonus = 9;
+      highBonus = 18;
+    } else if (gameLength <= 1000) {
+      veryLowBonus = 4;
+      lowBonus = 8;
+      mediumBonus = 12;
+      highBonus = 24;
+    }
+    switch (level) {
+      case 0:
+        return 10;
+      case 1:
+        return 12;
+      case 2:
+        return 16 + veryLowBonus;
+      case 3:
+        return 18 + veryLowBonus;
+      case 4:
+        return 22 + lowBonus;
+      case 5:
+        return 24 + lowBonus;
+      case 6:
+        return 28 + mediumBonus;
+      case 7:
+        return 30 + mediumBonus;
+      case 8:
+        return 34 + highBonus;
+      case 9:
+        return 36 + highBonus;
+      default:
+        return 40 + highBonus;
+    }
+  }
 }

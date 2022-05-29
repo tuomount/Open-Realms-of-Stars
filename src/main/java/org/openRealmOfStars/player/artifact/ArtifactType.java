@@ -47,4 +47,28 @@ public enum ArtifactType {
    * Electronic Artifact
    */
   ELECTRONIC;
+
+  /**
+   * Get Tech/Artifact type index
+   * @return int
+   */
+  public int getIndex() {
+    switch (this) {
+    case MILITARY:
+      return 0;
+    case DEFENSE:
+      return 1;
+    case SHIPHULL:
+      return 2;
+    case FACILITY:
+      return 3;
+    case ENERGY:
+      return 4;
+    case ELECTRONIC:
+      return 5;
+    default:
+      throw new IllegalArgumentException("Unexpected Tech type!");
+    }
+  }
+
 }

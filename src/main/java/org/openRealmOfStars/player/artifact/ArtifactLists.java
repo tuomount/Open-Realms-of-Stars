@@ -5,6 +5,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -43,7 +48,7 @@ public class ArtifactLists {
   /**
    * Amount of research points achieved in artifact research.
    */
-  private double artifactResearchPoints;
+  private int artifactResearchPoints;
 
   /**
    * Constructor for artifact lists.
@@ -60,7 +65,7 @@ public class ArtifactLists {
    */
   public ArtifactLists(final DataInputStream dis)
       throws IOException {
-    artifactResearchPoints = dis.readDouble();
+    artifactResearchPoints = dis.readInt();
     discoveredArtifacts = new ArrayList<>();
     researchedArtifacts = new ArrayList<>();
     int numberOfDiscovered = dis.read();
@@ -100,7 +105,7 @@ public class ArtifactLists {
    * Get Artifact research points.
    * @return Artifact research points.
    */
-  public double getArtifactResearchPoints() {
+  public int getArtifactResearchPoints() {
     return artifactResearchPoints;
   }
 
@@ -108,7 +113,7 @@ public class ArtifactLists {
    * Set Artifact research points.
    * @param artifactResearchPoints to set.
    */
-  public void setArtifactResearchPoints(final double artifactResearchPoints) {
+  public void setArtifactResearchPoints(final int artifactResearchPoints) {
     this.artifactResearchPoints = artifactResearchPoints;
   }
 
@@ -162,5 +167,42 @@ public class ArtifactLists {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Update artifact research points by turn.
+   * @param totalResearchPoints Total research points to add
+   * @param info PlayerInfo who is research.
+   * @param gameLength Game length
+   */
+  public void updateResearchPointByTurn(final int totalResearchPoints,
+      final PlayerInfo info, final int gameLength) {
+    artifactResearchPoints = artifactResearchPoints + totalResearchPoints;
+    int lvl = researchedArtifacts.size();
+    int limit = ArtifactFactory.getResearchCost(lvl, gameLength);
+    if (artifactResearchPoints >= limit) {
+      Artifact artifact = researchArtifact();
+      artifactResearchPoints = artifactResearchPoints - limit;
+      StringBuilder sb = new StringBuilder();
+      sb.append(info.getEmpireName());
+      sb.append(" researched ");
+      sb.append(artifact.getName());
+      sb.append(". This will boost ");
+      sb.append(TechType.getTypeByIndex(artifact.getArtifactType().getIndex())
+          .toString());
+      sb.append(" research by ");
+      sb.append(artifact.getOneTimeTechBonus());
+      sb.append(". ");
+      Double value = info.getTechList().getTechResearchPoints(
+          TechType.getTypeByIndex(artifact.getArtifactType().getIndex()));
+      info.getTechList().setTechResearchPoints(
+          TechType.getTypeByIndex(artifact.getArtifactType().getIndex()),
+          value + artifact.getOneTimeTechBonus());
+      Message msg = new Message(MessageType.RESEARCH, sb.toString(),
+          Icons.getIconByName(Icons.ICON_RESEARCH));
+      msg.setMatchByString(artifact.getName());
+      info.getMsgList().addNewMessage(msg);
+
+    }
   }
 }

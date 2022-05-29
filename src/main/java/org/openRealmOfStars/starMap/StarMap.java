@@ -4358,20 +4358,28 @@ public class StarMap {
       }
     }
     if (production == Planet.PRODUCTION_ARTIFACT_RESEARCH
-        && info.getArtifactLists().hasDiscoveredArtifacts()
-        && info.getRuler() != null) {
-      Leader leader = info.getRuler();
-      if (leader.hasPerk(Perk.ACADEMIC)) {
-        result++;
+        && info.getArtifactLists().hasDiscoveredArtifacts()) {
+      int research = getTotalProductionByPlayerPerTurn(
+          Planet.PRODUCTION_RESEARCH, playerIndex);
+      research = research / 10;
+      if (research < 1) {
+        research = 1;
       }
-      if (leader.hasPerk(Perk.SCIENTIST)) {
-        result++;
-      }
-      if (leader.hasPerk(Perk.STUPID)) {
-        result--;
-      }
-      if (leader.hasPerk(Perk.EXPLORER)) {
-        result++;
+      result = result + research;
+      if (info.getRuler() != null) {
+        Leader leader = info.getRuler();
+        if (leader.hasPerk(Perk.ACADEMIC)) {
+          result++;
+        }
+        if (leader.hasPerk(Perk.SCIENTIST)) {
+          result++;
+        }
+        if (leader.hasPerk(Perk.STUPID)) {
+          result--;
+        }
+        if (leader.hasPerk(Perk.EXPLORER)) {
+          result++;
+        }
       }
     }
     return result;

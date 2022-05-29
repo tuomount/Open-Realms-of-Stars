@@ -3654,6 +3654,10 @@ public class AITurnView extends BlackPanel {
             .getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i),
             info, game.getStarMap().getScoreVictoryTurn(),
             game.getStarMap().isTutorialEnabled());
+        info.getArtifactLists().updateResearchPointByTurn(
+            game.getStarMap().getTotalProductionByPlayerPerTurn(
+                Planet.PRODUCTION_ARTIFACT_RESEARCH, i), info,
+            game.getStarMap().getScoreVictoryTurn());
         int creditFlow = game.getStarMap().getTotalProductionByPlayerPerTurn(
             Planet.PRODUCTION_CREDITS, i);
         handleLowCreditWarning(info, creditFlow);

@@ -102,52 +102,93 @@ public final class ArtifactFactory {
     if (index == ARTIFACT_WEAPON_FRAGMENT) {
       tmp = new Artifact(index, "Weapon fragment", ArtifactType.MILITARY);
       tmp.setOneTimeTechBonus(10);
+      tmp.setDescription("This artifact is small piece of ancient space"
+          + " weapon. It is very difficult to say what weapons was"
+          + " originally but you can get material ideas for it.");
     }
     if (index == ARTIFACT_SHATTERED_WEAPON) {
       tmp = new Artifact(index, "Shattered weapon", ArtifactType.MILITARY);
       tmp.setOneTimeTechBonus(30);
+      tmp.setDescription("This artifact is ancient space weapon"
+          + " which has been broken into pieces. Main idea how it works"
+          + " and how it was used is possible to understand with"
+          + " extensive research.");
     }
     if (index == ARTIFACT_ARMOR_FRAGMENT) {
       tmp = new Artifact(index, "Armor fragment", ArtifactType.DEFENSE);
       tmp.setOneTimeTechBonus(10);
+      tmp.setDescription("This artifact is small piece of ancient space"
+          + " armor. This piece give idea what was the material base "
+          + "for armor and possible design elements.");
     }
     if (index == ARTIFACT_SHATTERED_DEFLECTOR) {
       tmp = new Artifact(index, "Shattered deflector", ArtifactType.DEFENSE);
       tmp.setOneTimeTechBonus(30);
+      tmp.setDescription("This artifact is ancient space deflektor."
+          + " Main function how it works and also smaller details"
+          + "is able to solve by through studies.");
     }
     if (index == ARTIFACT_HULL_FRAGMENT) {
       tmp = new Artifact(index, "Hull fragment", ArtifactType.SHIPHULL);
       tmp.setOneTimeTechBonus(10);
+      tmp.setDescription("This artifact is small piece of ancient space"
+          + " hull. This piece give idea what was the material for hull"
+          + " and possible design elements and layouts.");
     }
     if (index == ARTIFACT_SHATTERED_HULL) {
       tmp = new Artifact(index, "Shattered hull", ArtifactType.SHIPHULL);
       tmp.setOneTimeTechBonus(30);
+      tmp.setDescription("This artifact is ancient space hull."
+          + " Main purpose and design choices made can be discovered"
+          + " by major research work.");
     }
     if (index == ARTIFACT_FACILITY_FRAGMENT) {
       tmp = new Artifact(index, "Facility fragment", ArtifactType.FACILITY);
       tmp.setOneTimeTechBonus(10);
+      tmp.setDescription("This artifact is small piece of ancient"
+          + " facility. This piece give idea what was the material for"
+          + " facility and based on that scientists can guess what was"
+          + " the purpose of the facility.");
     }
     if (index == ARTIFACT_SHATTERED_FACILITY) {
       tmp = new Artifact(index, "Shattered facility", ArtifactType.FACILITY);
       tmp.setOneTimeTechBonus(30);
+      tmp.setDescription("This artifact is ancient facility."
+          + " These pieces give idea what was the material for"
+          + " facility and based on that scientists can guess what was"
+          + " the purpose of the facility.");
     }
     if (index == ARTIFACT_POWERSOURCE_FRAGMENT) {
       tmp = new Artifact(index, "Powersource fragment", ArtifactType.ENERGY);
       tmp.setOneTimeTechBonus(10);
+      tmp.setDescription("This artifact is small piece of ancient space"
+          + " powersource. This piece give idea what was the material for "
+          + "powersource and theoretical power output capabilities.");
     }
     if (index == ARTIFACT_SHATTERED_POWERSOURCE) {
       tmp = new Artifact(index, "Shattered powersource", ArtifactType.ENERGY);
       tmp.setOneTimeTechBonus(30);
+      tmp.setDescription("This artifact is ancient powersource."
+          + " This broken powersource give good insight how"
+          + " power output worked and how much energy could be"
+          + " drawn from it.");
     }
     if (index == ARTIFACT_ELECTRONIC_FRAGMENT) {
       tmp = new Artifact(index, "Electronic fragment",
           ArtifactType.ELECTRONIC);
       tmp.setOneTimeTechBonus(10);
+      tmp.setDescription("This artifact is small piece of ancient space"
+          + " electronic. This piece give idea what was the material for "
+          + "electronic and theoretical functions of it.");
     }
     if (index == ARTIFACT_SHATTERED_ELECTRONIC) {
       tmp = new Artifact(index, "Shattered electronic",
           ArtifactType.ELECTRONIC);
       tmp.setOneTimeTechBonus(30);
+      tmp.setDescription("This artifact is ancient space electronic."
+          + " This broken electronic tells much about it's designers"
+          + " and how this thing could have worked and where it has been"
+          + " used for.");
     }
     return tmp;
   }

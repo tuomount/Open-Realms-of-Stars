@@ -48,6 +48,10 @@ public class Artifact {
    */
   private Icon16x16 icon;
   /**
+   * Artifact description.
+   */
+  private String description;
+  /**
    * Get Artifact index.
    * @return Artifact index.
    */
@@ -108,5 +112,19 @@ public class Artifact {
    */
   public void setIcon(final Icon16x16 icon) {
     this.icon = icon;
+  }
+  /**
+   * Get Artifact description
+   * @return Artifact description
+   */
+  public String getDescription() {
+    return description;
+  }
+  /**
+   * Set Artifact description.
+   * @param description Artifact description
+   */
+  public void setDescription(final String description) {
+    this.description = description;
   }
 }

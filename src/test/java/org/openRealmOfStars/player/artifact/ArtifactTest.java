@@ -31,14 +31,42 @@ public class ArtifactTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
-    Artifact artefact = new Artifact(0, "Test artefact",
+    Artifact artifact = new Artifact(0, "Test artifact",
         ArtifactType.ELECTRONIC);
-    assertEquals(0, artefact.getIndex());
-    assertEquals("Test artefact", artefact.getName());
-    assertEquals(ArtifactType.ELECTRONIC, artefact.getArtifactType());
-    assertEquals(0, artefact.getOneTimeTechBonus());
-    artefact.setOneTimeTechBonus(15);
-    assertEquals(15, artefact.getOneTimeTechBonus());
+    assertEquals(0, artifact.getIndex());
+    assertEquals("Test artifact", artifact.getName());
+    assertEquals(ArtifactType.ELECTRONIC, artifact.getArtifactType());
+    assertEquals(0, artifact.getOneTimeTechBonus());
+    artifact.setOneTimeTechBonus(15);
+    assertEquals(15, artifact.getOneTimeTechBonus());
+    artifact.setDescription("Description");
+    assertEquals("Description", artifact.getDescription());
+    assertEquals("Test artifact - Electronic\n"
+        + "Tech bonus: 15\n"
+        + "Description", artifact.getFullDescription());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTypes() {
+    Artifact artifact = new Artifact(0, "Test artifact",
+        ArtifactType.MILITARY);
+    assertEquals("Military", artifact.getArtifactType().toString());
+    artifact = new Artifact(0, "Test artifact",
+        ArtifactType.DEFENSE);
+    assertEquals("Defense", artifact.getArtifactType().toString());
+    artifact = new Artifact(0, "Test artifact",
+        ArtifactType.SHIPHULL);
+    assertEquals("Shiphull", artifact.getArtifactType().toString());
+    artifact = new Artifact(0, "Test artifact",
+        ArtifactType.FACILITY);
+    assertEquals("Facility", artifact.getArtifactType().toString());
+    artifact = new Artifact(0, "Test artifact",
+        ArtifactType.ENERGY);
+    assertEquals("Energy", artifact.getArtifactType().toString());
+    artifact = new Artifact(0, "Test artifact",
+        ArtifactType.ELECTRONIC);
+    assertEquals("Electronic", artifact.getArtifactType().toString());
   }
 
 }

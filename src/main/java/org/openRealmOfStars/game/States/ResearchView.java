@@ -869,7 +869,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     if (e.getSource() == artifactList
         && artifactList.getSelectedIndex() != -1) {
       Artifact artifact = artifactList.getSelectedValue();
-      String strTmp = artifact.getName();
+      String strTmp = artifact.getFullDescription();
       if (!strTmp.equals(infoText.getText())) {
         infoText.setLineWrap(false);
         infoText.setText(strTmp);

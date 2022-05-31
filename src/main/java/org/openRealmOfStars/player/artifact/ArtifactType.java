@@ -71,4 +71,23 @@ public enum ArtifactType {
     }
   }
 
+  @Override
+  public String toString() {
+    switch (this) {
+    case MILITARY:
+      return "Military";
+    case DEFENSE:
+      return "Defense";
+    case SHIPHULL:
+      return "Shiphull";
+    case FACILITY:
+      return "Facility";
+    case ENERGY:
+      return "Energy";
+    case ELECTRONIC:
+      return "Electronic";
+    default:
+      throw new IllegalArgumentException("Unexpected Tech type!");
+    }
+  }
 }

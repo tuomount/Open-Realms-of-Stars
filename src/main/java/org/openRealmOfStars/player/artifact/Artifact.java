@@ -127,4 +127,21 @@ public class Artifact {
   public void setDescription(final String description) {
     this.description = description;
   }
+
+  /**
+   * Get full description of artifact.
+   * @return String
+   */
+  public String getFullDescription() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getName());
+    sb.append(" - ");
+    sb.append(getArtifactType().toString());
+    sb.append("\n");
+    sb.append("Tech bonus: ");
+    sb.append(getOneTimeTechBonus());
+    sb.append("\n");
+    sb.append(getDescription());
+    return sb.toString();
+  }
 }

@@ -1051,8 +1051,7 @@ public class PlayerInfo {
     } else {
       elderRealm = false;
     }
-    //FIXME: Add loading of artifact lists.
-    artifactLists = new ArtifactLists();
+    artifactLists = new ArtifactLists(dis);
     color = PlayerColor.getByIndex(dis.read());
     aiDifficulty = AiDifficulty.getByIndex(dis.read());
     government = GovernmentUtility.getGovernmentByIndex(dis.readInt());
@@ -1166,6 +1165,7 @@ public class PlayerInfo {
     } else {
       dos.writeByte(0);
     }
+    artifactLists.saveArtifactLists(dos);
     dos.writeByte(color.getIndex());
     dos.writeByte(aiDifficulty.getIndex());
     dos.writeInt(government.getIndex());

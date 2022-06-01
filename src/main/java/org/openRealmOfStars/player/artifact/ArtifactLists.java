@@ -89,7 +89,7 @@ public class ArtifactLists {
    */
   public void saveArtifactLists(final DataOutputStream dos)
       throws IOException {
-    dos.writeDouble(artifactResearchPoints);
+    dos.writeInt(artifactResearchPoints);
     dos.writeByte(discoveredArtifacts.size());
     dos.writeByte(researchedArtifacts.size());
     for (int i = 0; i < discoveredArtifacts.size(); i++) {

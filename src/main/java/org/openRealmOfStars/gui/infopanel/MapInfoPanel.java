@@ -466,7 +466,7 @@ public class MapInfoPanel extends InfoPanel {
       }
       g2d.dispose();
       imageLabel.setImage(img);
-      setTitle("Galatic info");
+      setTitle("Galactic info");
       textArea.setText(tile.getDescription());
       this.repaint();
     } else {

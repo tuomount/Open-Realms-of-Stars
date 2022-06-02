@@ -433,6 +433,34 @@ public final class Icons {
    * Spinosaurus
    */
   public static final String ICON_SPINOSAURUS = "IconSpinosaurus";
+  /**
+   * Ancient Electronic
+   */
+  public static final String ICON_ANCIENT_ELECTRONIC = "IconAncientElectronic";
+  /**
+   * Ancient fragment
+   */
+  public static final String ICON_ANCIENT_FRAGMENT = "IconAncientFragment";
+  /**
+   * Ancient Military
+   */
+  public static final String ICON_ANCIENT_MILITARY = "IconAncientMilitary";
+  /**
+   * Ancient Defense
+   */
+  public static final String ICON_ANCIENT_DEFENSE = "IconAncientDefense";
+  /**
+   * Ancient Hull
+   */
+  public static final String ICON_ANCIENT_HULL = "IconAncientHull";
+  /**
+   * Ancient Facility
+   */
+  public static final String ICON_ANCIENT_FACILITY = "IconAncientFacility";
+  /**
+   * Ancient Energy
+   */
+  public static final String ICON_ANCIENT_ENERGY = "IconAncientEnergy";
 
   /**
    * List of Icon
@@ -745,6 +773,20 @@ public final class Icons {
     icon = new Icon16x16(image, 7, 3, ICON_MULTI_CANNON);
     addIcon(icon);
     icon = new Icon16x16(image, 0, 4, ICON_SPINOSAURUS);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 4, ICON_ANCIENT_ELECTRONIC);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 4, ICON_ANCIENT_FRAGMENT);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 4, ICON_ANCIENT_MILITARY);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 4, ICON_ANCIENT_DEFENSE);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 4, ICON_ANCIENT_HULL);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 4, ICON_ANCIENT_FACILITY);
+    addIcon(icon);
+    icon = new Icon16x16(image, 7, 4, ICON_ANCIENT_ENERGY);
     addIcon(icon);
   }
 

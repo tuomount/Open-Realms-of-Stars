@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.artifact;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -113,6 +114,7 @@ public final class ArtifactFactory {
           + " which has been broken into pieces. Main idea how it works"
           + " and how it was used is possible to understand with"
           + " extensive research.");
+      tmp.setIcon(Icons.getIconByName(Icons.ICON_ANCIENT_MILITARY));
     }
     if (index == ARTIFACT_ARMOR_FRAGMENT) {
       tmp = new Artifact(index, "Armor fragment", ArtifactType.DEFENSE);
@@ -127,6 +129,7 @@ public final class ArtifactFactory {
       tmp.setDescription("This artifact is ancient space deflektor."
           + " Main function how it works and also smaller details"
           + "is able to solve by through studies.");
+      tmp.setIcon(Icons.getIconByName(Icons.ICON_ANCIENT_DEFENSE));
     }
     if (index == ARTIFACT_HULL_FRAGMENT) {
       tmp = new Artifact(index, "Hull fragment", ArtifactType.SHIPHULL);
@@ -141,6 +144,7 @@ public final class ArtifactFactory {
       tmp.setDescription("This artifact is ancient space hull."
           + " Main purpose and design choices made can be discovered"
           + " by major research work.");
+      tmp.setIcon(Icons.getIconByName(Icons.ICON_ANCIENT_HULL));
     }
     if (index == ARTIFACT_FACILITY_FRAGMENT) {
       tmp = new Artifact(index, "Facility fragment", ArtifactType.FACILITY);
@@ -157,6 +161,7 @@ public final class ArtifactFactory {
           + " These pieces give idea what was the material for"
           + " facility and based on that scientists can guess what was"
           + " the purpose of the facility.");
+      tmp.setIcon(Icons.getIconByName(Icons.ICON_ANCIENT_FACILITY));
     }
     if (index == ARTIFACT_POWERSOURCE_FRAGMENT) {
       tmp = new Artifact(index, "Powersource fragment", ArtifactType.ENERGY);
@@ -172,6 +177,7 @@ public final class ArtifactFactory {
           + " This broken powersource give good insight how"
           + " power output worked and how much energy could be"
           + " drawn from it.");
+      tmp.setIcon(Icons.getIconByName(Icons.ICON_ANCIENT_ENERGY));
     }
     if (index == ARTIFACT_ELECTRONIC_FRAGMENT) {
       tmp = new Artifact(index, "Electronic fragment",
@@ -189,6 +195,7 @@ public final class ArtifactFactory {
           + " This broken electronic tells much about it's designers"
           + " and how this thing could have worked and where it has been"
           + " used for.");
+      tmp.setIcon(Icons.getIconByName(Icons.ICON_ANCIENT_ELECTRONIC));
     }
     return tmp;
   }

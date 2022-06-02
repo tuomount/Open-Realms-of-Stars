@@ -69,7 +69,7 @@ public class Artifact {
     this.index = index;
     this.name = name;
     this.artifactType = type;
-    this.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
+    this.setIcon(Icons.getIconByName(Icons.ICON_ANCIENT_FRAGMENT));
   }
   /**
    * Get Artifact name.

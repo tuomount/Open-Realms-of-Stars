@@ -651,7 +651,9 @@ public class StarMap {
     if (numberOfAnomalies < 20) {
       numberOfAnomalies = 20;
     }
-    for (int i = 0; i < numberOfAnomalies; i++) {
+    int numberOfArtifacts = config.getMaxPlayers() * 3
+        + 3 * config.getGalaxySizeIndex();
+    for (int i = 0; i < numberOfAnomalies + numberOfArtifacts; i++) {
       while (loop < MAX_LOOPS) {
         int sx = DiceGenerator.getRandom(1,
             maxX - 2);
@@ -659,8 +661,13 @@ public class StarMap {
             maxX - 2);
         if (Tiles.getTileByIndex(tiles[sx][sy]) == empty
             && getPlanetByCoordinate(sx, sy) == null) {
-          String tileName = TileNames.getRandomSpaceAnomaly(harmful, pirate,
-              monsters);
+          String tileName = TileNames.SPACE_ANOMALY_CREDITS;
+          if (i < numberOfAnomalies) {
+            tileName = TileNames.getRandomSpaceAnomaly(harmful, pirate,
+                monsters);
+          } else {
+            tileName = TileNames.SPACE_ANOMALY_ANCIENT_ARTIFACT;
+          }
           Tile anomaly = Tiles.getTileByName(tileName);
           tiles[sx][sy] = anomaly.getIndex();
           break;

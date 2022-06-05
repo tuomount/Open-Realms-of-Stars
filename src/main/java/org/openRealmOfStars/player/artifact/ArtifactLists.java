@@ -151,9 +151,10 @@ public class ArtifactLists {
   public Artifact researchArtifact() {
     if (discoveredArtifacts.size() > 0) {
       int index = DiceGenerator.getRandom(0, discoveredArtifacts.size() - 1);
+      Artifact artifact = discoveredArtifacts.get(index);
       researchedArtifacts.add(discoveredArtifacts.get(index));
       discoveredArtifacts.remove(index);
-      return researchedArtifacts.get(index);
+      return artifact;
     }
     return null;
   }

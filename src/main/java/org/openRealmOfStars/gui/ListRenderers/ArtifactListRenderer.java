@@ -49,6 +49,7 @@ public class ArtifactListRenderer implements ListCellRenderer<Artifact> {
         list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
     renderer.setIcon(value.getIcon().getAsIcon());
+    renderer.setText(value.getName());
     if (isSelected) {
       renderer.setForeground(GuiStatics.COLOR_GREEN_TEXT);
       renderer.setBackground(Color.BLACK);

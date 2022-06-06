@@ -140,7 +140,7 @@ public class Artifact {
     sb.append("\n");
     sb.append("Tech bonus: ");
     sb.append(getOneTimeTechBonus());
-    sb.append("\n");
+    sb.append("\n\n");
     sb.append(getDescription());
     return sb.toString();
   }

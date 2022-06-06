@@ -42,7 +42,7 @@ public class ArtifactTest {
     artifact.setDescription("Description");
     assertEquals("Description", artifact.getDescription());
     assertEquals("Test artifact - Electronic\n"
-        + "Tech bonus: 15\n"
+        + "Tech bonus: 15\n\n"
         + "Description", artifact.getFullDescription());
   }
 

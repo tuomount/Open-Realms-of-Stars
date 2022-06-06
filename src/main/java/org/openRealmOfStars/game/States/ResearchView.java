@@ -307,6 +307,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     infoText = new InfoTextArea(20, 35);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
+    infoText.setCharacterWidth(8);
     greyPanel.add(infoText);
     greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     if (focusTech != null) {
@@ -871,7 +872,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
       Artifact artifact = artifactList.getSelectedValue();
       String strTmp = artifact.getFullDescription();
       if (!strTmp.equals(infoText.getText())) {
-        infoText.setLineWrap(false);
+        infoText.setLineWrap(true);
         infoText.setText(strTmp);
         infoText.repaint();
       }

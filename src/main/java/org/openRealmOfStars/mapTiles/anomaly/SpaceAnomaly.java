@@ -495,8 +495,7 @@ public class SpaceAnomaly {
                 ArtifactFactory.getRandomNonFacility());
             if (Game.getTutorial() != null  && info.isHuman()
                 && map.isTutorialEnabled()) {
-              // FIXME: Add tutorial about artifacts.
-              String tutorialText = Game.getTutorial().showTutorialText(14);
+              String tutorialText = Game.getTutorial().showTutorialText(15);
               if (tutorialText != null) {
                 Message msg = new Message(MessageType.INFORMATION, tutorialText,
                     Icons.getIconByName(Icons.ICON_TUTORIAL));

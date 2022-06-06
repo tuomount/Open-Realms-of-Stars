@@ -3587,9 +3587,10 @@ public class Planet {
   }
 
   /**
-   * Event activation
+   * Event activation.
+   * @param isTutorialEnabled Boolean if tutorial is enabled.
    */
-  public void eventActivation() {
+  public void eventActivation(final boolean isTutorialEnabled) {
     if (planetOwnerInfo != null && !eventFound) {
       StringBuilder msgText = new StringBuilder();
       msgText.append("When colonizating ");
@@ -3607,6 +3608,15 @@ public class Planet {
           planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
           planetOwnerInfo.getArtifactLists().addDiscoveredArtifact(
               ArtifactFactory.getRandomArtifact());
+          if (Game.getTutorial() != null  && planetOwnerInfo.isHuman()
+              && isTutorialEnabled) {
+            String tutorialText = Game.getTutorial().showTutorialText(15);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.INFORMATION, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              planetOwnerInfo.getMsgList().addNewMessage(msg);
+            }
+          }
         } else {
           Building building = event.getBuilding();
           addBuilding(building);

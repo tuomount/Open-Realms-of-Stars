@@ -269,27 +269,27 @@ public final class ArtifactFactory {
     }
     switch (level) {
       case 0:
-        return 10;
+        return 20;
       case 1:
-        return 12;
+        return 22;
       case 2:
-        return 16 + veryLowBonus;
+        return 26 + veryLowBonus;
       case 3:
-        return 18 + veryLowBonus;
+        return 28 + veryLowBonus;
       case 4:
-        return 22 + lowBonus;
+        return 32 + lowBonus;
       case 5:
-        return 24 + lowBonus;
+        return 34 + lowBonus;
       case 6:
-        return 28 + mediumBonus;
+        return 38 + mediumBonus;
       case 7:
-        return 30 + mediumBonus;
+        return 40 + mediumBonus;
       case 8:
-        return 34 + highBonus;
+        return 44 + highBonus;
       case 9:
-        return 36 + highBonus;
+        return 46 + highBonus;
       default:
-        return 40 + highBonus;
+        return 50 + highBonus;
     }
   }
 }

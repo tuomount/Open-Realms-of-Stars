@@ -301,6 +301,26 @@ public final class GameCommands {
    * Plus AI credit in diplomacy view
    */
   public static final String COMMAND_PLUS_AI_CREDIT = "PlusCreditAi";
+  /**
+   * Minus Human artifact in diplomacy view
+   */
+  public static final String COMMAND_MINUS_HUMAN_ARTIFACT =
+      "MinusArtifactHuman";
+  /**
+   * Plus Human artifact in diplomacy view
+   */
+  public static final String COMMAND_PLUS_HUMAN_ARTIFACT =
+      "PlusArtifactHuman";
+  /**
+   * Minus AI artifact in diplomacy view
+   */
+  public static final String COMMAND_MINUS_AI_ARTIFACT =
+      "MinusArtifactAi";
+  /**
+   * Plus AI artifact in diplomacy view
+   */
+  public static final String COMMAND_PLUS_AI_ARTIFACT =
+      "PlusArtifactAi";
 
   /**
    * Minus Combat research

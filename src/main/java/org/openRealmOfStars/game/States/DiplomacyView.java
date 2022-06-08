@@ -176,6 +176,15 @@ public class DiplomacyView extends BlackPanel {
    */
   private int humanCredits;
   /**
+   * Human discovered ancient artifact offer
+   */
+  private WorkerProductionPanel humanArtifactOffer;
+  /**
+   * Actual human artifact offering
+   */
+  private int humanArtifacts;
+
+  /**
    * AI credit offering UI component
    */
   private WorkerProductionPanel aiCreditOffer;
@@ -183,6 +192,15 @@ public class DiplomacyView extends BlackPanel {
    * Actual ai credit offering
    */
   private int aiCredits;
+  /**
+   * AI discovered ancient artifact offer
+   */
+  private WorkerProductionPanel aiArtifactOffer;
+  /**
+   * Actual ai artifact offering
+   */
+  private int aiArtifacts;
+
   /**
    * Human player lines
    */
@@ -461,10 +479,21 @@ public class DiplomacyView extends BlackPanel {
     humanOffer.add(scroll);
     humanCreditOffer = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_HUMAN_CREDIT,
-        GameCommands.COMMAND_PLUS_HUMAN_CREDIT, Icons.ICON_CREDIT, "0 Credits",
+        GameCommands.COMMAND_PLUS_HUMAN_CREDIT, Icons.ICON_CREDIT, "0 / "
+        + human.getTotalCredits() + " Credits",
         "How much credits you are offering.", listener);
     humanCreditOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(humanCreditOffer);
+    int maxArtifacts = human.getArtifactLists()
+        .getDiscoveredArtifacts().length;
+    humanArtifactOffer = new WorkerProductionPanel(
+        GameCommands.COMMAND_MINUS_HUMAN_ARTIFACT,
+        GameCommands.COMMAND_PLUS_HUMAN_ARTIFACT, Icons.ICON_ANCIENT_FRAGMENT,
+        "0 / " + maxArtifacts + " Discovered artifacts",
+        "How many discovered artifact, but not researched you are offering.",
+        listener);
+    humanArtifactOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
+    humanOffer.add(humanArtifactOffer);
     center.add(humanOffer);
 
     SpaceGreyPanel panel = new SpaceGreyPanel();
@@ -597,10 +626,21 @@ public class DiplomacyView extends BlackPanel {
     aiOffer.add(scroll);
     aiCreditOffer = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_AI_CREDIT,
-        GameCommands.COMMAND_PLUS_AI_CREDIT, Icons.ICON_CREDIT, "0 Credits",
-        "How much credits " + ai.getEmpireName() + "is offering.", listener);
+        GameCommands.COMMAND_PLUS_AI_CREDIT, Icons.ICON_CREDIT, "0 / "
+        +  ai.getTotalCredits() + " Credits",
+        "How much credits " + ai.getEmpireName() + " is offering.", listener);
     aiCreditOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(aiCreditOffer);
+    maxArtifacts = ai.getArtifactLists()
+        .getDiscoveredArtifacts().length;
+    aiArtifactOffer = new WorkerProductionPanel(
+        GameCommands.COMMAND_MINUS_AI_ARTIFACT,
+        GameCommands.COMMAND_PLUS_AI_ARTIFACT, Icons.ICON_ANCIENT_FRAGMENT,
+        "0 / " + maxArtifacts + " Discovered artifacts",
+        "How many discovered artifact, but not researched "
+        + ai.getEmpireName() + " is offering.", listener);
+    aiArtifactOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
+    aiOffer.add(aiArtifactOffer);
     center.add(aiOffer);
 
     this.add(center);
@@ -1052,7 +1092,8 @@ public class DiplomacyView extends BlackPanel {
         switch (offer.getNegotiationType()) {
           case CREDIT: {
             aiCredits = offer.getCreditValue();
-            aiCreditOffer.setText(aiCredits + " Credits");
+            aiCreditOffer.setText(aiCredits + " / " + ai.getTotalCredits()
+                + " Credits");
             break;
           }
           case FLEET: {
@@ -1124,7 +1165,8 @@ public class DiplomacyView extends BlackPanel {
         switch (offer.getNegotiationType()) {
           case CREDIT: {
             humanCredits = offer.getCreditValue();
-            humanCreditOffer.setText(humanCredits + " Credits");
+            humanCreditOffer.setText(humanCredits + " / "
+                + human.getTotalCredits() + " Credits");
             break;
           }
           case FLEET: {
@@ -1231,8 +1273,13 @@ public class DiplomacyView extends BlackPanel {
     }
     humanFleetListOffer.setListData(trade.getTradeableFleetListForFirst());
     humanPlanetListOffer.setListData(trade.getTradeablePlanetListForFirst());
-    humanCreditOffer.setText("0 Credits");
+    humanCreditOffer.setText("0 / " + human.getTotalCredits() + " Credits");
     humanCreditOffer.setInteractive(true);
+    int maxArtifacts = human.getArtifactLists()
+        .getDiscoveredArtifacts().length;
+    humanArtifactOffer.setText("0 / " + maxArtifacts
+        + " Discovered artifacts");
+    humanArtifactOffer.setInteractive(true);
 
     humanLines.setListData(createOfferLines(HUMAN_REGULAR));
 
@@ -1249,8 +1296,13 @@ public class DiplomacyView extends BlackPanel {
     }
     aiFleetListOffer.setListData(trade.getTradeableFleetListForSecond());
     aiPlanetListOffer.setListData(trade.getTradeablePlanetListForSecond());
-    aiCreditOffer.setText("0 Credits");
+    aiCreditOffer.setText("0 / " + ai.getTotalCredits() + " Credits");
     aiCreditOffer.setInteractive(true);
+    maxArtifacts = ai.getArtifactLists()
+        .getDiscoveredArtifacts().length;
+    aiArtifactOffer.setText("0 / " + maxArtifacts
+        + " Discovered artifacts");
+    aiArtifactOffer.setInteractive(true);
   }
 
   /**
@@ -1926,7 +1978,8 @@ public class DiplomacyView extends BlackPanel {
       if (humanCredits > 0) {
         humanCredits--;
       }
-      humanCreditOffer.setText(humanCredits + " Credits");
+      humanCreditOffer.setText(humanCredits + "/" + human.getTotalCredits()
+          + " Credits");
     }
     if (GameCommands.COMMAND_PLUS_HUMAN_CREDIT.equals(
         arg0.getActionCommand())) {
@@ -1934,14 +1987,16 @@ public class DiplomacyView extends BlackPanel {
       if (humanCredits < human.getTotalCredits()) {
         humanCredits++;
       }
-      humanCreditOffer.setText(humanCredits + " Credits");
+      humanCreditOffer.setText(humanCredits + "/" + human.getTotalCredits()
+      + " Credits");
     }
     if (GameCommands.COMMAND_MINUS_AI_CREDIT.equals(arg0.getActionCommand())) {
       SoundPlayer.playMenuSound();
       if (aiCredits > 0) {
         aiCredits--;
       }
-      aiCreditOffer.setText(aiCredits + " Credits");
+      aiCreditOffer.setText(aiCredits + "/" + ai.getTotalCredits()
+          + " Credits");
     }
     if (GameCommands.COMMAND_PLUS_AI_CREDIT.equals(arg0.getActionCommand())) {
       SoundPlayer.playMenuSound();
@@ -1953,6 +2008,51 @@ public class DiplomacyView extends BlackPanel {
     if (GameCommands.COMMAND_OK.equals(arg0.getActionCommand())) {
       handleActionCommandOK();
     }
+    if (GameCommands.COMMAND_MINUS_HUMAN_ARTIFACT.equals(
+        arg0.getActionCommand())) {
+      SoundPlayer.playMenuSound();
+      if (humanArtifacts > 0) {
+        humanArtifacts--;
+      }
+      int maxArtifacts = human.getArtifactLists()
+          .getDiscoveredArtifacts().length;
+      humanArtifactOffer.setText(humanArtifacts + "/"
+          + maxArtifacts + " Discovered artifacts");
+    }
+    if (GameCommands.COMMAND_PLUS_HUMAN_ARTIFACT.equals(
+        arg0.getActionCommand())) {
+      SoundPlayer.playMenuSound();
+      int maxArtifacts = human.getArtifactLists()
+          .getDiscoveredArtifacts().length;
+      if (humanArtifacts < maxArtifacts) {
+        humanArtifacts++;
+      }
+      humanArtifactOffer.setText(humanArtifacts + "/" + maxArtifacts
+          + " Discovered artifacts");
+    }
+    if (GameCommands.COMMAND_MINUS_AI_ARTIFACT.equals(
+        arg0.getActionCommand())) {
+      SoundPlayer.playMenuSound();
+      if (aiArtifacts > 0) {
+        aiArtifacts--;
+      }
+      int maxArtifacts = ai.getArtifactLists()
+          .getDiscoveredArtifacts().length;
+      aiArtifactOffer.setText(aiArtifacts + "/"
+          + maxArtifacts + " Discovered artifacts");
+    }
+    if (GameCommands.COMMAND_PLUS_AI_ARTIFACT.equals(
+        arg0.getActionCommand())) {
+      SoundPlayer.playMenuSound();
+      int maxArtifacts = ai.getArtifactLists()
+          .getDiscoveredArtifacts().length;
+      if (aiArtifacts < maxArtifacts) {
+        aiArtifacts++;
+      }
+      aiArtifactOffer.setText(aiArtifacts + "/" + maxArtifacts
+          + " Discovered artifacts");
+    }
+
   }
 
   /**

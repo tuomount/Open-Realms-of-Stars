@@ -3,6 +3,7 @@ package org.openRealmOfStars.game.States;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JList;
@@ -477,6 +479,7 @@ public class DiplomacyView extends BlackPanel {
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(scroll);
+    humanOffer.add(Box.createRigidArea(new Dimension(3, 3)));
     humanCreditOffer = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_HUMAN_CREDIT,
         GameCommands.COMMAND_PLUS_HUMAN_CREDIT, Icons.ICON_CREDIT, "0 / "
@@ -624,6 +627,7 @@ public class DiplomacyView extends BlackPanel {
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(scroll);
+    aiOffer.add(Box.createRigidArea(new Dimension(3, 3)));
     aiCreditOffer = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_AI_CREDIT,
         GameCommands.COMMAND_PLUS_AI_CREDIT, Icons.ICON_CREDIT, "0 / "

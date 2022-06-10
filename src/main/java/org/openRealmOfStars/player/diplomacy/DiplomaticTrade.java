@@ -8,6 +8,7 @@ import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.artifact.Artifact;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
@@ -428,6 +429,20 @@ public class DiplomaticTrade {
             secondOffer.add(voteOffer);
             value = value - voteOffer.getOfferValue(offerMaker.getRace());
           }
+          if (value > 0) {
+            int maxAmount = offerMaker.getArtifactLists()
+                .getDiscoveredArtifacts().length;
+            if (maxAmount > 0) {
+              int amount = value / 5;
+              if (amount == 0) {
+                amount = 1;
+              }
+              secondOffer.add(new NegotiationOffer(
+                  NegotiationType.DISCOVERED_ARTIFACT,
+                  Integer.valueOf(amount)));
+              value = value - amount * 5;
+            }
+          }
           if (offerMaker.getTotalCredits() < value) {
             value = offerMaker.getTotalCredits();
           }
@@ -461,16 +476,25 @@ public class DiplomaticTrade {
    */
   protected void generateGift(final PlayerInfo giver) {
     firstOffer = new NegotiationList();
-    int credit = giver.getTotalCredits();
+    int credit = giver.getTotalCredits() / 2;
     if (credit > 15) {
       credit = 15;
     }
-    secondOffer = new NegotiationList();
-    secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-        Integer.valueOf(credit)));
+    if (credit > 0) {
+      secondOffer = new NegotiationList();
+      secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+          Integer.valueOf(credit)));
+    } else {
+      int artifacts = giver.getArtifactLists().getDiscoveredArtifacts().length;
+      if (artifacts > 0) {
+        secondOffer = new NegotiationList();
+        secondOffer.add(new NegotiationOffer(
+            NegotiationType.DISCOVERED_ARTIFACT, Integer.valueOf(1)));
+      }
+    }
   }
   /**
-   * Generate tech demand or money demand
+   * Generate tech demand or artifact demand or money demand
    * @param agreePlayer Who is need to agree with trade
    * @param demander Realm who is making the demand
    */
@@ -481,6 +505,18 @@ public class DiplomaticTrade {
       int index = getBestTech(techListForFirst, demander.getAiAttitude());
       firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
           techListForFirst.get(index)));
+    } else if (agreePlayer.getArtifactLists().hasDiscoveredArtifacts()) {
+      int amount = agreePlayer.getArtifactLists()
+          .getDiscoveredArtifacts().length;
+      if (amount > 9) {
+        amount = 3;
+      }
+      if (amount > 5) {
+        amount = 2;
+      }
+      firstOffer = new NegotiationList();
+      firstOffer.add(new NegotiationOffer(NegotiationType.DISCOVERED_ARTIFACT,
+          Integer.valueOf(amount)));
     } else {
       int credit = agreePlayer.getTotalCredits();
       if (credit > 10) {
@@ -2601,6 +2637,19 @@ public class DiplomaticTrade {
         countAsDiplomaticTrade = true;
         break;
       }
+      case DISCOVERED_ARTIFACT: {
+        int amount = offer.getDiscoveredArtifacts();
+        for (int k = 0; k < amount; k++) {
+          Artifact artifact = giver.getArtifactLists()
+              .takeRandomDiscoveredArtifact();
+          if (artifact != null) {
+            info.getArtifactLists().addDiscoveredArtifact(artifact);
+            countAsDiplomaticTrade = true;
+          }
+        }
+        break;
+      }
+
       default:
         //DO nothing
         break;

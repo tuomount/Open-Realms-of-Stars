@@ -171,6 +171,20 @@ public class ArtifactLists {
   }
 
   /**
+   * Take random discovered artifact away from the list and return it.
+   * @return Artifact or null
+   */
+  public Artifact takeRandomDiscoveredArtifact() {
+    if (discoveredArtifacts.size() > 0) {
+      int index = DiceGenerator.getRandom(0, discoveredArtifacts.size() - 1);
+      Artifact artifact = discoveredArtifacts.get(index);
+      discoveredArtifacts.remove(index);
+      return artifact;
+    }
+    return null;
+
+  }
+  /**
    * Update artifact research points by turn.
    * @param totalResearchPoints Total research points to add
    * @param info PlayerInfo who is research.

@@ -457,7 +457,8 @@ public class DiplomaticTrade {
           > secondOffer.getOfferValue(offerMaker.getRace()));
     }
     if (tradeType == SELL && techListForSecond.size() > 0) {
-      int value = techListForSecond.get(0).getLevel() * 2;
+      int index = getBestTech(techListForSecond, agree.getAiAttitude());
+      int value = techListForSecond.get(index).getLevel() * 2;
       if (agree.getTotalCredits() < value) {
         value = agree.getTotalCredits();
       }
@@ -465,9 +466,21 @@ public class DiplomaticTrade {
       firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
           Integer.valueOf(value)));
       secondOffer = new NegotiationList();
-      int index = getBestTech(techListForSecond, offerMaker.getAiAttitude());
       secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
           techListForSecond.get(index)));
+    }
+    if (tradeType == SELL && techListForSecond.size() == 0
+        && offerMaker.getArtifactLists().hasDiscoveredArtifacts()) {
+      int value = 5;
+      if (agree.getTotalCredits() < value) {
+        value = agree.getTotalCredits();
+      }
+      firstOffer = new NegotiationList();
+      firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+          Integer.valueOf(value)));
+      secondOffer = new NegotiationList();
+      secondOffer.add(new NegotiationOffer(NegotiationType.DISCOVERED_ARTIFACT,
+          Integer.valueOf(1)));
     }
   }
   /**
@@ -783,6 +796,11 @@ public class DiplomaticTrade {
       int index = getBestTech(techListForFirst, attitude);
       lowDemand = new NegotiationOffer(NegotiationType.TECH,
           techListForFirst.get(index));
+    }
+    if (lowDemand == null
+        && info2.getArtifactLists().hasDiscoveredArtifacts()) {
+      lowDemand = new NegotiationOffer(NegotiationType.DISCOVERED_ARTIFACT,
+          Integer.valueOf(1));
     }
     Fleet fleet = getTradeableFleet(info2, fleetListForSecond);
     if (fleet != null) {

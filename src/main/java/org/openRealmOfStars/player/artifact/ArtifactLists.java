@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.tech.TechType;
@@ -212,6 +213,7 @@ public class ArtifactLists {
       sb.append(" research by ");
       sb.append(artifact.getOneTimeTechBonus());
       sb.append(". ");
+      scientist.getStats().addOne(StatType.RESEARCH_ARTIFACTS);
       Double value = info.getTechList().getTechResearchPoints(
           TechType.getTypeByIndex(artifact.getArtifactType().getIndex()));
       info.getTechList().setTechResearchPoints(

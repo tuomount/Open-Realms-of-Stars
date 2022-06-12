@@ -2262,6 +2262,23 @@ public final class LeaderUtility {
       }
       sb.append(". ");
     }
+    if (leader.getStats().getStat(StatType.RESEARCH_ARTIFACTS) > 0) {
+      sb.append(leader.getName());
+      boolean famous = false;
+      if (leader.getStats().getStat(StatType.RESEARCH_ARTIFACTS) > 2) {
+        famous = true;
+      }
+      if (living) {
+        sb.append(" is ");
+      } else {
+        sb.append(" was ");
+      }
+      if (famous) {
+        sb.append("famous ancient artifact researcher. ");
+      } else {
+        sb.append("interested in ancient artifact research. ");
+      }
+    }
     return sb.toString();
   }
 }

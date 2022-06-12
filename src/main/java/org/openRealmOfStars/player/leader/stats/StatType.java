@@ -95,7 +95,11 @@ public enum StatType {
   /**
    * How many times has made war as a ruler.
    */
-  WAR_DECLARATIONS;
+  WAR_DECLARATIONS,
+  /**
+   * How many artifacts leader has been researched.
+   */
+  RESEARCH_ARTIFACTS;
 
   /**
    * Get Stat Type as byte.
@@ -121,6 +125,7 @@ public enum StatType {
       case POPULATION_GROWTH: return 15;
       case DIPLOMATIC_TRADE: return 16;
       case WAR_DECLARATIONS: return 17;
+      case RESEARCH_ARTIFACTS: return 18;
       default:
         throw new IllegalArgumentException("Unexpected StatType:"
             + this.toString());
@@ -152,6 +157,7 @@ public enum StatType {
       case 15: return POPULATION_GROWTH;
       case 16: return DIPLOMATIC_TRADE;
       case 17: return WAR_DECLARATIONS;
+      case 18: return RESEARCH_ARTIFACTS;
       default:
         throw new IllegalArgumentException("Unexpected StatType:"
             + index);

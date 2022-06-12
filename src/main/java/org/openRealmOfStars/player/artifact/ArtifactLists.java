@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.tech.TechType;
@@ -189,9 +190,10 @@ public class ArtifactLists {
    * @param totalResearchPoints Total research points to add
    * @param info PlayerInfo who is research.
    * @param gameLength Game length
+   * @param scientist which is make the research
    */
   public void updateResearchPointByTurn(final int totalResearchPoints,
-      final PlayerInfo info, final int gameLength) {
+      final PlayerInfo info, final int gameLength, final Leader scientist) {
     artifactResearchPoints = artifactResearchPoints + totalResearchPoints;
     int lvl = researchedArtifacts.size();
     int limit = ArtifactFactory.getResearchCost(lvl, gameLength);
@@ -199,9 +201,11 @@ public class ArtifactLists {
       Artifact artifact = researchArtifact();
       artifactResearchPoints = artifactResearchPoints - limit;
       StringBuilder sb = new StringBuilder();
-      sb.append(info.getEmpireName());
+      sb.append(scientist.getCallName());
       sb.append(" researched ");
       sb.append(artifact.getName());
+      sb.append(" for ");
+      sb.append(info.getEmpireName());
       sb.append(". This will boost ");
       sb.append(TechType.getTypeByIndex(artifact.getArtifactType().getIndex())
           .toString());

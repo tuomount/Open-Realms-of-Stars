@@ -31,6 +31,8 @@ import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.artifact.Artifact;
+import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
@@ -274,10 +276,18 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     InfoPanel artifactPanel = new InfoPanel();
     artifactPanel.setTitle("Ancient artifacts");
     artifactPanel.setLayout(new BoxLayout(artifactPanel, BoxLayout.Y_AXIS));
-    SpaceLabel label = new SpaceLabel("Discovered artifacts: "
+    Leader scientist = LeaderUtility.getBestScientist(player);
+    String scientistName = "No scientist available";
+    if (scientist != null) {
+      scientistName = scientist.getCallName();
+    }
+    SpaceLabel label = new SpaceLabel("Best scientist: " + scientistName);
+    artifactPanel.add(label);
+    artifactPanel.add(Box.createRigidArea(new Dimension(2, 2)));
+    label = new SpaceLabel("Discovered artifacts: "
         + player.getArtifactLists().getDiscoveredArtifacts().length);
     artifactPanel.add(label);
-    artifactPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    artifactPanel.add(Box.createRigidArea(new Dimension(2, 2)));
     label = new SpaceLabel("Researched artifacts: ");
     artifactPanel.add(label);
     Artifact[] artifacts = player.getArtifactLists().getResearchedArtifacts();

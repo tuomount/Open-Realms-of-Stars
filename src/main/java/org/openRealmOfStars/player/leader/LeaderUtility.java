@@ -29,7 +29,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020,2021 Tuomo Untinen
+* Copyright (C) 2020-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -1006,6 +1006,131 @@ public final class LeaderUtility {
         continue;
       }
       int score = getDemocraticPoints(leader);
+      if (score > value) {
+        bestLeader = leader;
+        value = score;
+      }
+    }
+    return bestLeader;
+  }
+
+  /**
+   * Get scientist scores for leader.
+   * @param leader Leader to evaluate
+   * @return Scientist score
+   */
+  private static int getScientistPoints(final Leader leader) {
+    int result = 0;
+    if (leader.getAge() > 30) {
+      result = result + 1;
+    }
+    if (leader.getAge() > 40) {
+      result = result + 1;
+    }
+    if (leader.getAge() > 50) {
+      result = result + 1;
+    }
+    if (leader.getAge() > 60) {
+      result = result + 1;
+    }
+    if (leader.getAge() > 70) {
+      result = result + 1;
+    }
+    if (leader.getAge() > 80) {
+      result = result + 1;
+    }
+    if (leader.hasPerk(Perk.CRUEL)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.DIPLOMATIC)) {
+      result = result + 1;
+    }
+    if (leader.hasPerk(Perk.GOOD_LEADER)) {
+      result = result + 1;
+    }
+    if (leader.hasPerk(Perk.INDUSTRIAL)) {
+      result = result + 2;
+    }
+    if (leader.hasPerk(Perk.MINER)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.MERCHANT)) {
+      result = result + 2;
+    }
+    if (leader.hasPerk(Perk.ACADEMIC)) {
+      result = result + 25;
+    }
+    if (leader.hasPerk(Perk.ADDICTED)) {
+      result = result - 5;
+    }
+    if (leader.hasPerk(Perk.POWER_HUNGRY)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.WEALTHY)) {
+      result = result + 3;
+    }
+    if (leader.hasPerk(Perk.CORRUPTED)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.ARTISTIC)) {
+      result = result + 2;
+    }
+    if (leader.hasPerk(Perk.REPULSIVE)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.MICRO_MANAGER)) {
+      result = result + 1;
+    }
+    if (leader.hasPerk(Perk.SLOW_LEARNER)) {
+      result = result - 15;
+    }
+    if (leader.hasPerk(Perk.STUPID)) {
+      result = result - 20;
+    }
+    if (leader.hasPerk(Perk.SCIENTIST)) {
+      result = result + 30;
+    }
+    if (leader.hasPerk(Perk.EXPLORER)) {
+      result = result + 3;
+    }
+    if (leader.hasPerk(Perk.SCANNER_EXPERT)) {
+      result = result + 3;
+    }
+    if (leader.hasPerk(Perk.FTL_ENGINEER)) {
+      result = result + 3;
+    }
+    if (leader.hasPerk(Perk.MASTER_ENGINEER)) {
+      result = result + 3;
+    }
+    if (leader.hasPerk(Perk.LOGICAL)) {
+      result = result + 1;
+    }
+    if (leader.hasPerk(Perk.MAD)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.SKILLFUL)) {
+      result = result + 1;
+    }
+    if (leader.hasPerk(Perk.INCOMPETENT)) {
+      result = result - 10;
+    }
+    return result;
+  }
+
+  /**
+   * Get best scientist leader.
+   * @param realm Realm who is evaluating best scientist
+   * @return Best scientist
+   */
+  public static Leader getBestScientist(final PlayerInfo realm) {
+    Leader bestLeader = null;
+    int value = 0;
+    for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG
+          || leader.getJob() == Job.PRISON) {
+        continue;
+      }
+      int score = getScientistPoints(leader);
       if (score > value) {
         bestLeader = leader;
         value = score;

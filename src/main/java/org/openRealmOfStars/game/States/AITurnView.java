@@ -3654,10 +3654,15 @@ public class AITurnView extends BlackPanel {
             .getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i),
             info, game.getStarMap().getScoreVictoryTurn(),
             game.getStarMap().isTutorialEnabled());
-        info.getArtifactLists().updateResearchPointByTurn(
-            game.getStarMap().getTotalProductionByPlayerPerTurn(
-                Planet.PRODUCTION_ARTIFACT_RESEARCH, i), info,
-            game.getStarMap().getScoreVictoryTurn());
+        if (!info.areLeadersDead()) {
+          Leader scientist = LeaderUtility.getBestScientist(info);
+          if (scientist != null) {
+            info.getArtifactLists().updateResearchPointByTurn(
+                game.getStarMap().getTotalProductionByPlayerPerTurn(
+                    Planet.PRODUCTION_ARTIFACT_RESEARCH, i), info,
+                game.getStarMap().getScoreVictoryTurn(), scientist);
+          }
+        }
         int creditFlow = game.getStarMap().getTotalProductionByPlayerPerTurn(
             Planet.PRODUCTION_CREDITS, i);
         handleLowCreditWarning(info, creditFlow);

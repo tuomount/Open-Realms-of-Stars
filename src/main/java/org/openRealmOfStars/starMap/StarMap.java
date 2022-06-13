@@ -4325,6 +4325,9 @@ public class StarMap {
           if (leader.hasPerk(Perk.EXPLORER)) {
             result++;
           }
+          if (leader.hasPerk(Perk.ARCHAEOLOGIST)) {
+            result = result + 2;
+          }
         }
       }
       if (production == Planet.PRODUCTION_CULTURE) {
@@ -4386,6 +4389,9 @@ public class StarMap {
         }
         if (leader.hasPerk(Perk.EXPLORER)) {
           result++;
+        }
+        if (leader.hasPerk(Perk.ARCHAEOLOGIST)) {
+          result = result + 2;
         }
       }
     }

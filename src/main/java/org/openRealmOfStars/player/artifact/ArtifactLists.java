@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -214,6 +215,11 @@ public class ArtifactLists {
       sb.append(artifact.getOneTimeTechBonus());
       sb.append(". ");
       scientist.getStats().addOne(StatType.RESEARCH_ARTIFACTS);
+      if (scientist.getStats().getStat(StatType.RESEARCH_ARTIFACTS) == 2) {
+        scientist.addPerk(Perk.ARCHAEOLOGIST);
+        sb.append(scientist.getName());
+        sb.append(" becomes expert on researching artifacts.");
+      }
       Double value = info.getTechList().getTechResearchPoints(
           TechType.getTypeByIndex(artifact.getArtifactType().getIndex()));
       info.getTechList().setTechResearchPoints(

@@ -1034,6 +1034,9 @@ public class Planet {
         if (governor.hasPerk(Perk.EXPLORER)) {
           result++;
         }
+        if (governor.hasPerk(Perk.ARCHAEOLOGIST)) {
+          result = result + 2;
+        }
       }
     } else {
       result = 0;

@@ -1090,6 +1090,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.SCIENTIST)) {
       result = result + 30;
     }
+    if (leader.hasPerk(Perk.ARCHAEOLOGIST)) {
+      result = result + 20;
+    }
     if (leader.hasPerk(Perk.EXPLORER)) {
       result = result + 3;
     }
@@ -1303,6 +1306,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.SCIENTIST)) {
       result = result + 10;
     }
+    if (leader.hasPerk(Perk.ARCHAEOLOGIST)) {
+      result = result + 10;
+    }
     if (leader.hasPerk(Perk.ACADEMIC)) {
       result = result + 20;
     }
@@ -1405,6 +1411,9 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.SCIENTIST)) {
       result = result + 20;
+    }
+    if (leader.hasPerk(Perk.ARCHAEOLOGIST)) {
+      result = result + 10;
     }
     if (leader.hasPerk(Perk.ACADEMIC)) {
       result = result + 10;
@@ -1665,7 +1674,8 @@ public final class LeaderUtility {
     AttitudeScore peaceful = new AttitudeScore(Attitude.PEACEFUL);
     AttitudeScore scientific = new AttitudeScore(Attitude.SCIENTIFIC);
     for (Perk perk : leader.getPerkList()) {
-      if (perk == Perk.ACADEMIC || perk == Perk.SCIENTIST) {
+      if (perk == Perk.ACADEMIC || perk == Perk.SCIENTIST
+          || perk == Perk.ARCHAEOLOGIST) {
         scientific.setValue(scientific.getValue() + 5);
       }
       if (perk == Perk.ARTISTIC) {

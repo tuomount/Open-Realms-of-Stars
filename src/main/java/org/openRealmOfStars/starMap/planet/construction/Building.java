@@ -7,7 +7,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018  Tuomo Untinen
+ * Copyright (C) 2016,2018,2019,2021,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -130,6 +130,10 @@ public class Building extends Construction {
    */
   private int wildLifePower;
   /**
+   * Ancient artifact research
+   */
+  private int ancientArtifactResearch;
+  /**
    * Construct building for planet
    * @param index Unique number for building
    * @param name Building name
@@ -161,6 +165,7 @@ public class Building extends Construction {
     this.fleetCapacityBonus = 0;
     this.setBroadcaster(false);
     this.setWildLifePower(0);
+    this.setAncientArtifactResearch(0);
   }
 
   /**
@@ -348,6 +353,14 @@ public class Building extends Construction {
       }
       sb.append("Resea.: +");
       sb.append(getReseBonus());
+      space = true;
+    }
+    if (getAncientArtifactResearch() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
+      sb.append("Ancient artifact resea.: +");
+      sb.append(getAncientArtifactResearch());
       space = true;
     }
     if (getCredBonus() > 0) {
@@ -666,5 +679,21 @@ public class Building extends Construction {
    */
   public void setWildLifePower(final int wildLifePower) {
     this.wildLifePower = wildLifePower;
+  }
+
+  /**
+   * Get Ancient artifact research
+   * @return Ancient artifact research value.
+   */
+  public int getAncientArtifactResearch() {
+    return ancientArtifactResearch;
+  }
+
+  /**
+   * Set Ancient artifact research value.
+   * @param ancientArtifactResearch Research value for ancient artifacts.
+   */
+  public void setAncientArtifactResearch(final int ancientArtifactResearch) {
+    this.ancientArtifactResearch = ancientArtifactResearch;
   }
 }

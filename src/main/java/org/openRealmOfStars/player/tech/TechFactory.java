@@ -273,6 +273,12 @@ public final class TechFactory {
       "Advanced laboratory", "Market center", "Culture center",
       "Starbase market" };
   /**
+   * Planetary Improvement rare tech names for level 3
+   */
+  public static final String[] IMPROVEMENT_RARE_TECH_LEVEL3_NAMES = {
+      "College of history"
+  };
+  /**
    * Planetary Improvement tech names for level 4
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL4_NAMES = {"Trade center",
@@ -842,7 +848,8 @@ public final class TechFactory {
       list = IMPROVEMENT_TECH_LEVEL2_NAMES;
       break;
     case 3:
-      list = IMPROVEMENT_TECH_LEVEL3_NAMES;
+      list = TextUtilities.concanateStringArrays(IMPROVEMENT_TECH_LEVEL3_NAMES,
+          IMPROVEMENT_RARE_TECH_LEVEL3_NAMES);
       break;
     case 4:
       list = TextUtilities.concanateStringArrays(IMPROVEMENT_TECH_LEVEL4_NAMES,
@@ -898,7 +905,8 @@ public final class TechFactory {
               || techName.startsWith("Research center")
               || techName.startsWith("New technology center")
               || techName.startsWith("Neural research center")
-              || techName.startsWith("Super AI Center")) {
+              || techName.startsWith("Super AI Center")
+              || techName.startsWith("College of history")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
           } else if (techName.startsWith("Orbital lift")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR));

@@ -835,6 +835,12 @@ public class Planet {
       }
       break;
     }
+    case PRODUCTION_ARTIFACT_RESEARCH: {
+      for (Building build : getBuildingList()) {
+        result = result + build.getAncientArtifactResearch();
+      }
+      break;
+    }
     default: {
       throw new IllegalArgumentException("Illegal production type!");
     }
@@ -1020,7 +1026,8 @@ public class Planet {
   private int getTotalArtifactResearchProduction() {
     int result = 0;
     if (planetOwnerInfo.getArtifactLists().hasDiscoveredArtifacts()) {
-      // FIXME: Add here buildings that improve artifact research.
+      result = result + getTotalProductionFromBuildings(
+          PRODUCTION_ARTIFACT_RESEARCH);
       if (governor != null) {
         if (governor.hasPerk(Perk.ACADEMIC)) {
           result++;

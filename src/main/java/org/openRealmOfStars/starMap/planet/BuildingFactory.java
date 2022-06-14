@@ -7,7 +7,7 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018-2021 Tuomo Untinen
+ * Copyright (C) 2016, 2018-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 71;
+  private static final int MAX_BUILDING = 72;
 
   /**
    * Component Basic mine
@@ -372,6 +372,10 @@ public final class BuildingFactory {
    * Component Wild life: massive bug like creature
    */
   public static final int COMPONENT_WL_MASSIVE_BUG_LIKE_CREATURE = 70;
+  /**
+   * Component College of history
+   */
+  public static final int COMPONENT_COLLEGE_OF_HISTORY = 71;
 
   /**
    * Create planetary building with index
@@ -594,6 +598,9 @@ public final class BuildingFactory {
     case COMPONENT_WL_MASSIVE_BUG_LIKE_CREATURE:
       tmp = createWildLife(index);
       break; // Wildlife massive bug like creature
+    case COMPONENT_COLLEGE_OF_HISTORY:
+      tmp = createProductionFacility(index);
+      break; // College of history
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -1113,6 +1120,19 @@ public final class BuildingFactory {
       tmp.setFactBonus(2);
       return tmp;
     }
+    if (index == COMPONENT_COLLEGE_OF_HISTORY) {
+      tmp = new Building(index, "College of history",
+          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+      tmp.setReseBonus(1);
+      tmp.setAncientArtifactResearch(2);
+      tmp.setProdCost(20);
+      tmp.setMetalCost(6);
+      tmp.setDescription("College of history which allows doing basic research"
+          + " and improved study on ancient artifacts.");
+      tmp.setSingleAllowed(true);
+      return tmp;
+    }
+
     return tmp;
   }
 

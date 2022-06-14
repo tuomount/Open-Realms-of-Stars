@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -218,7 +219,17 @@ public class ArtifactLists {
       if (scientist.getStats().getStat(StatType.RESEARCH_ARTIFACTS) == 2) {
         scientist.addPerk(Perk.ARCHAEOLOGIST);
         sb.append(scientist.getName());
-        sb.append(" becomes expert on researching artifacts.");
+        sb.append(" becomes expert on researching artifacts. ");
+      }
+      int chance = researchedArtifacts.size() * 10;
+      if (scientist.hasPerk(Perk.ARCHAEOLOGIST)) {
+        chance = chance + 20;
+      }
+      if (DiceGenerator.getRandom(100) < chance) {
+        sb.append(info.getEmpireName());
+        sb.append(" has learned College of history while studying artifacts.");
+        info.getTechList().addTech(TechFactory.createImprovementTech(
+            "College of history", 3));
       }
       Double value = info.getTechList().getTechResearchPoints(
           TechType.getTypeByIndex(artifact.getArtifactType().getIndex()));

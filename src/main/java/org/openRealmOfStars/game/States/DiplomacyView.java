@@ -483,7 +483,7 @@ public class DiplomacyView extends BlackPanel {
     humanCreditOffer = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_HUMAN_CREDIT,
         GameCommands.COMMAND_PLUS_HUMAN_CREDIT, Icons.ICON_CREDIT, "0 / "
-        + human.getTotalCredits() + " Credits",
+        + human.getTotalCredits() + " Credits   ",
         "How much credits you are offering.", listener);
     humanCreditOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(humanCreditOffer);
@@ -492,7 +492,7 @@ public class DiplomacyView extends BlackPanel {
     humanArtifactOffer = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_HUMAN_ARTIFACT,
         GameCommands.COMMAND_PLUS_HUMAN_ARTIFACT, Icons.ICON_ANCIENT_FRAGMENT,
-        "0 / " + maxArtifacts + " Discovered artifacts",
+        "0 / " + maxArtifacts + " Discovered artifacts  ",
         "How many discovered artifact, but not researched you are offering.",
         listener);
     humanArtifactOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -631,7 +631,7 @@ public class DiplomacyView extends BlackPanel {
     aiCreditOffer = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_AI_CREDIT,
         GameCommands.COMMAND_PLUS_AI_CREDIT, Icons.ICON_CREDIT, "0 / "
-        +  ai.getTotalCredits() + " Credits",
+        +  ai.getTotalCredits() + " Credits   ",
         "How much credits " + ai.getEmpireName() + " is offering.", listener);
     aiCreditOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(aiCreditOffer);
@@ -640,7 +640,7 @@ public class DiplomacyView extends BlackPanel {
     aiArtifactOffer = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_AI_ARTIFACT,
         GameCommands.COMMAND_PLUS_AI_ARTIFACT, Icons.ICON_ANCIENT_FRAGMENT,
-        "0 / " + maxArtifacts + " Discovered artifacts",
+        "0 / " + maxArtifacts + " Discovered artifacts  ",
         "How many discovered artifact, but not researched "
         + ai.getEmpireName() + " is offering.", listener);
     aiArtifactOffer.setAlignmentX(Component.LEFT_ALIGNMENT);

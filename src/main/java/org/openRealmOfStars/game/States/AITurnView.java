@@ -33,6 +33,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.artifact.ArtifactFactory;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -1691,6 +1692,29 @@ public class AITurnView extends BlackPanel {
     updateSinglePirateTech(pirates, difficulty, TechType.Hulls);
     updateSinglePirateTech(pirates, difficulty, TechType.Electrics);
     Research.handleShipDesigns(pirates);
+    int chanceForArtifact = 10;
+    if (difficulty == PirateDifficultLevel.VERY_EASY) {
+      chanceForArtifact = chanceForArtifact - 5;
+    }
+    if (difficulty == PirateDifficultLevel.NORMAL) {
+      chanceForArtifact = chanceForArtifact + 7;
+    }
+    if (difficulty == PirateDifficultLevel.HARD) {
+      chanceForArtifact = chanceForArtifact + 14;
+    }
+    if (difficulty == PirateDifficultLevel.VERY_HARD) {
+      chanceForArtifact = chanceForArtifact + 20;
+    }
+    chanceForArtifact = chanceForArtifact + pirates.getTotalCredits() / 5;
+    chanceForArtifact = chanceForArtifact
+        + pirates.getArtifactLists().getDiscoveredArtifacts().length;
+    if (chanceForArtifact > 90) {
+      chanceForArtifact = 90;
+    }
+    if (DiceGenerator.getRandom(100) < chanceForArtifact) {
+      pirates.getArtifactLists().addDiscoveredArtifact(
+          ArtifactFactory.getRandomArtifact());
+    }
     boolean added = false;
     int numberOfFleets = pirates.getFleets().getNumberOfFleets();
     boolean colonyAdded = false;
@@ -3654,7 +3678,7 @@ public class AITurnView extends BlackPanel {
             .getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i),
             info, game.getStarMap().getScoreVictoryTurn(),
             game.getStarMap().isTutorialEnabled());
-        if (!info.areLeadersDead()) {
+        if (!info.areLeadersDead() && !info.isBoard()) {
           Leader scientist = LeaderUtility.getBestScientist(info);
           if (scientist != null) {
             info.getArtifactLists().updateResearchPointByTurn(

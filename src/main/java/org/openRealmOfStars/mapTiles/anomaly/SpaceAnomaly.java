@@ -483,27 +483,21 @@ public class SpaceAnomaly {
         }
         case TileNames.SPACE_ANOMALY_ANCIENT_ARTIFACT: {
           result = new SpaceAnomaly(AnomalyType.ANCIENT_ARTIFACT, 0);
-          Tech tech = TechFactory.getRandomRareTech(
-              info.getTechList().getRareTechs());
-          if (tech != null) {
-            result.setText("Found ancient capsule floating around which"
-                + " contained strange piece of ancient artifact. "
-                + ". This seems to be unusual piece of history."
-                + " This finding requires some research time.");
-            result.setImage(GuiStatics.IMAGE_RARE_TECH);
-            info.getArtifactLists().addDiscoveredArtifact(
-                ArtifactFactory.getRandomNonFacility());
-            if (Game.getTutorial() != null  && info.isHuman()
-                && map.isTutorialEnabled()) {
-              String tutorialText = Game.getTutorial().showTutorialText(15);
-              if (tutorialText != null) {
-                Message msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
+          result.setText("Found ancient capsule floating around which"
+              + " contained strange piece of ancient artifact. "
+              + ". This seems to be unusual piece of history."
+              + " This finding requires some research time.");
+          result.setImage(GuiStatics.IMAGE_RARE_TECH);
+          info.getArtifactLists().addDiscoveredArtifact(
+              ArtifactFactory.getRandomNonFacility());
+          if (Game.getTutorial() != null  && info.isHuman()
+              && map.isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(15);
+            if (tutorialText != null) {
+              Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              info.getMsgList().addNewMessage(msg);
             }
-          } else {
-            result = null;
           }
           map.setTile(fleet.getX(), fleet.getY(), empty);
           break;

@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.leader.Leader;
@@ -194,13 +195,23 @@ public class ArtifactLists {
    * @param info PlayerInfo who is research.
    * @param gameLength Game length
    * @param scientist which is make the research
+   * @param tutorialEnabled is tutorial enabled or not.
    */
   public void updateResearchPointByTurn(final int totalResearchPoints,
-      final PlayerInfo info, final int gameLength, final Leader scientist) {
+      final PlayerInfo info, final int gameLength, final Leader scientist,
+      final boolean tutorialEnabled) {
     artifactResearchPoints = artifactResearchPoints + totalResearchPoints;
     int lvl = researchedArtifacts.size();
     int limit = ArtifactFactory.getResearchCost(lvl, gameLength);
     if (artifactResearchPoints >= limit) {
+      if (Game.getTutorial() != null  && info.isHuman() && tutorialEnabled) {
+        String tutorialText = Game.getTutorial().showTutorialText(16);
+        if (tutorialText != null) {
+          Message msg = new Message(MessageType.INFORMATION, tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
+          info.getMsgList().addNewMessage(msg);
+        }
+      }
       Artifact artifact = researchArtifact();
       artifactResearchPoints = artifactResearchPoints - limit;
       StringBuilder sb = new StringBuilder();

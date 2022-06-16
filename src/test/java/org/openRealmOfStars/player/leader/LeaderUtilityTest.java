@@ -295,7 +295,7 @@ public class LeaderUtilityTest {
         LeaderUtility.LEVEL_START_RULER);
     Perk[] perks = LeaderUtility.getNewPerks(leader,
         LeaderUtility.PERK_TYPE_GOOD);
-    assertEquals(26, perks.length);
+    assertEquals(27, perks.length);
   }
 
   @Test
@@ -531,6 +531,7 @@ public class LeaderUtilityTest {
     Leader leader2 = new Leader("Test Leader2");
     leader2.setAge(85);
     leader2.getPerkList().add(Perk.SCIENTIST);
+    leader2.getPerkList().add(Perk.ARCHAEOLOGIST);
     leader2.getPerkList().add(Perk.FTL_ENGINEER);
     leader2.getPerkList().add(Perk.EXPLORER);
     leader2.getPerkList().add(Perk.CHARISMATIC);
@@ -561,6 +562,7 @@ public class LeaderUtilityTest {
     Leader leader2 = new Leader("Test Leader2");
     leader2.setAge(18);
     leader2.getPerkList().add(Perk.SCIENTIST);
+    leader2.getPerkList().add(Perk.ARCHAEOLOGIST);
     leader2.getPerkList().add(Perk.FTL_ENGINEER);
     leader2.getPerkList().add(Perk.EXPLORER);
     leader2.getPerkList().add(Perk.CHARISMATIC);

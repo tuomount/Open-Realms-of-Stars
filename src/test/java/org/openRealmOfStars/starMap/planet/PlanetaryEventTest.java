@@ -197,7 +197,7 @@ public class PlanetaryEventTest {
     assertEquals(PlanetaryEvent.METAL_RICH_SURFACE, event);
     DiceGenerator.initializeGenerators(0, 30, 30);
     event = PlanetaryEvent.getRandomEvent(PlanetTypes.IRONWORLD2, 100);
-    assertEquals(PlanetaryEvent.ANCIENT_LAB, event);
+    assertEquals(PlanetaryEvent.ANCIENT_ARTIFACT, event);
     DiceGenerator.initializeGenerators(0, 97, 97);
     event = PlanetaryEvent.getRandomEvent(PlanetTypes.SILICONWORLD1, 100);
     assertEquals(PlanetaryEvent.BLACK_MONOLITH, event);

@@ -101,6 +101,10 @@ public class LeaderStats {
    */
   private int warDeclarations;
   /**
+   * How many artifact leader has been researched.
+   */
+  private int researchArtifacts;
+  /**
    * Constructor of leader stats.
    */
   public LeaderStats() {
@@ -122,6 +126,7 @@ public class LeaderStats {
     populationGrowth = 0;
     diplomaticTrades = 0;
     warDeclarations = 0;
+    researchArtifacts = 0;
   }
 
   /**
@@ -222,6 +227,7 @@ public class LeaderStats {
         case POPULATION_GROWTH: populationGrowth = value; break;
         case DIPLOMATIC_TRADE: diplomaticTrades = value; break;
         case WAR_DECLARATIONS: warDeclarations = value; break;
+        case RESEARCH_ARTIFACTS: researchArtifacts = value; break;
         default: throw new IllegalArgumentException("Unexpected stat type: "
             + type.toString());
       }
@@ -253,6 +259,7 @@ public class LeaderStats {
       case POPULATION_GROWTH: return populationGrowth;
       case DIPLOMATIC_TRADE: return diplomaticTrades;
       case WAR_DECLARATIONS: return warDeclarations;
+      case RESEARCH_ARTIFACTS: return researchArtifacts;
       default: throw new IllegalArgumentException("Unexpected stat type: "
           + type.toString());
     }

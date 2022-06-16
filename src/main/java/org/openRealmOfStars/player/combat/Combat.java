@@ -686,6 +686,9 @@ public boolean launchIntercept(final int distance,
       if (leader.hasPerk(Perk.SCIENTIST)) {
         chance = chance + 20;
       }
+      if (leader.hasPerk(Perk.ARCHAEOLOGIST)) {
+        chance = chance + 10;
+      }
       if (leader.hasPerk(Perk.ACADEMIC)) {
         chance = chance + 10;
       }

@@ -10,6 +10,7 @@ import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.artifact.ArtifactLists;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -222,6 +223,11 @@ public class PlayerInfo {
    * AI Difficulty for realm. Assuming that realm is being played by AI.
    */
   private AiDifficulty aiDifficulty;
+
+  /**
+   * Artifact lists realm has found and discovered.
+   */
+  private ArtifactLists artifactLists;
   /**
    * Uncharted map sector, only suns are visible
    */
@@ -277,6 +283,7 @@ public class PlayerInfo {
     fleets = new FleetList();
     elderRealm = false;
     leaderPool = new ArrayList<>();
+    artifactLists = new ArtifactLists();
     ruler = null;
     color = PlayerColor.getByIndex(index);
     aiDifficulty = AiDifficulty.NORMAL;
@@ -1044,6 +1051,7 @@ public class PlayerInfo {
     } else {
       elderRealm = false;
     }
+    artifactLists = new ArtifactLists(dis);
     color = PlayerColor.getByIndex(dis.read());
     aiDifficulty = AiDifficulty.getByIndex(dis.read());
     government = GovernmentUtility.getGovernmentByIndex(dis.readInt());
@@ -1157,6 +1165,7 @@ public class PlayerInfo {
     } else {
       dos.writeByte(0);
     }
+    artifactLists.saveArtifactLists(dos);
     dos.writeByte(color.getIndex());
     dos.writeByte(aiDifficulty.getIndex());
     dos.writeInt(government.getIndex());
@@ -1390,6 +1399,13 @@ public class PlayerInfo {
     return attitude;
   }
 
+  /**
+   * Get Realm's artifact lists.
+   * @return Artifact lists.
+   */
+  public ArtifactLists getArtifactLists() {
+    return artifactLists;
+  }
   /**
    * Set Attitude for AI
    * @param attitude the attitude to set

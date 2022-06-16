@@ -17,17 +17,22 @@ import javax.swing.event.ListSelectionListener;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.ListRenderers.ArtifactListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ResearchTechPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.artifact.Artifact;
+import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
@@ -36,7 +41,7 @@ import org.openRealmOfStars.player.tech.TechType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2019,2021,2022  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -101,6 +106,10 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
    */
   private JList<Tech> techList;
 
+  /**
+   * Artifacts which have been researched.
+   */
+  private JList<Artifact> artifactList;
   /**
    * Info Text for tech
    */
@@ -263,7 +272,34 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     techPane.add(iBtn);
     techPane.add(electronicsRese);
     focusPanel.add(techPane);
-    // focusPanel.add(Box.createRigidArea(new Dimension(10,10)));
+    focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    InfoPanel artifactPanel = new InfoPanel();
+    artifactPanel.setTitle("Ancient artifacts");
+    artifactPanel.setLayout(new BoxLayout(artifactPanel, BoxLayout.Y_AXIS));
+    Leader scientist = LeaderUtility.getBestScientist(player);
+    String scientistName = "No scientist available";
+    if (scientist != null) {
+      scientistName = scientist.getCallName();
+    }
+    SpaceLabel label = new SpaceLabel("Best scientist: " + scientistName);
+    artifactPanel.add(label);
+    artifactPanel.add(Box.createRigidArea(new Dimension(2, 2)));
+    label = new SpaceLabel("Discovered artifacts: "
+        + player.getArtifactLists().getDiscoveredArtifacts().length);
+    artifactPanel.add(label);
+    artifactPanel.add(Box.createRigidArea(new Dimension(2, 2)));
+    label = new SpaceLabel("Researched artifacts: ");
+    artifactPanel.add(label);
+    Artifact[] artifacts = player.getArtifactLists().getResearchedArtifacts();
+    artifactList = new JList<>(artifacts);
+    artifactList.setCellRenderer(new ArtifactListRenderer());
+    artifactList.addListSelectionListener(this);
+    JScrollPane scroll = new JScrollPane(artifactList);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    artifactList.setBackground(Color.BLACK);
+    artifactList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    artifactPanel.add(scroll);
+    focusPanel.add(artifactPanel);
     base.add(focusPanel, BorderLayout.EAST);
 
     SpaceGreyPanel greyPanel = new SpaceGreyPanel();
@@ -272,7 +308,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     techList = new JList<>(techs);
     techList.setCellRenderer(new TechListRenderer());
     techList.addListSelectionListener(this);
-    JScrollPane scroll = new JScrollPane(techList);
+    scroll = new JScrollPane(techList);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     techList.setBackground(Color.BLACK);
     techList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -281,6 +317,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     infoText = new InfoTextArea(20, 35);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
+    infoText.setCharacterWidth(8);
     greyPanel.add(infoText);
     greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     if (focusTech != null) {
@@ -831,11 +868,21 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
 
   @Override
   public void valueChanged(final ListSelectionEvent e) {
-    if (techList.getSelectedIndex() != -1) {
+    if (e.getSource() == techList && techList.getSelectedIndex() != -1) {
       Tech tech = techList.getSelectedValue();
       String strTmp = tech.getTechInfo(player.getRace());
       if (!strTmp.equals(infoText.getText())) {
         infoText.setLineWrap(false);
+        infoText.setText(strTmp);
+        infoText.repaint();
+      }
+    }
+    if (e.getSource() == artifactList
+        && artifactList.getSelectedIndex() != -1) {
+      Artifact artifact = artifactList.getSelectedValue();
+      String strTmp = artifact.getFullDescription();
+      if (!strTmp.equals(infoText.getText())) {
+        infoText.setLineWrap(true);
         infoText.setText(strTmp);
         infoText.repaint();
       }

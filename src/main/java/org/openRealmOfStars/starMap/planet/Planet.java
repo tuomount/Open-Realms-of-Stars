@@ -13,6 +13,7 @@ import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.artifact.ArtifactFactory;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
@@ -376,6 +377,11 @@ public class Planet {
    * Material production from empty
    */
   public static final int PRODUCTION_MATERIAL = 7;
+
+  /**
+   * Artifact research production
+   */
+  public static final int PRODUCTION_ARTIFACT_RESEARCH = 8;
 
   /**
    * Minimum amount of ore on planets
@@ -829,6 +835,12 @@ public class Planet {
       }
       break;
     }
+    case PRODUCTION_ARTIFACT_RESEARCH: {
+      for (Building build : getBuildingList()) {
+        result = result + build.getAncientArtifactResearch();
+      }
+      break;
+    }
     default: {
       throw new IllegalArgumentException("Illegal production type!");
     }
@@ -896,6 +908,10 @@ public class Planet {
     }
     case PRODUCTION_POPULATION: {
       result = getTotalPopulationProduction();
+      break;
+    }
+    case PRODUCTION_ARTIFACT_RESEARCH: {
+      result = getTotalArtifactResearchProduction();
       break;
     }
     default: {
@@ -1003,6 +1019,37 @@ public class Planet {
     return result;
   }
 
+  /**
+   * Get total artifact research production value.
+   * @return Total artifact research production.
+   */
+  private int getTotalArtifactResearchProduction() {
+    int result = 0;
+    if (planetOwnerInfo.getArtifactLists().hasDiscoveredArtifacts()) {
+      result = result + getTotalProductionFromBuildings(
+          PRODUCTION_ARTIFACT_RESEARCH);
+      if (governor != null) {
+        if (governor.hasPerk(Perk.ACADEMIC)) {
+          result++;
+        }
+        if (governor.hasPerk(Perk.SCIENTIST)) {
+          result++;
+        }
+        if (governor.hasPerk(Perk.STUPID)) {
+          result--;
+        }
+        if (governor.hasPerk(Perk.EXPLORER)) {
+          result++;
+        }
+        if (governor.hasPerk(Perk.ARCHAEOLOGIST)) {
+          result = result + 2;
+        }
+      }
+    } else {
+      result = 0;
+    }
+    return result;
+  }
   /**
    * Get total population production from planet. This includes racial, worker,
    * planetary improvement bonus
@@ -3550,9 +3597,10 @@ public class Planet {
   }
 
   /**
-   * Event activation
+   * Event activation.
+   * @param isTutorialEnabled Boolean if tutorial is enabled.
    */
-  public void eventActivation() {
+  public void eventActivation(final boolean isTutorialEnabled) {
     if (planetOwnerInfo != null && !eventFound) {
       StringBuilder msgText = new StringBuilder();
       msgText.append("When colonizating ");
@@ -3560,15 +3608,36 @@ public class Planet {
       msgText.append(" colonist found ");
       eventFound = true;
       if (event.oneTimeOnly()) {
-        Building building = event.getBuilding();
-        addBuilding(building);
-        event = PlanetaryEvent.NONE;
-        msgText.append(building.getName());
-        msgText.append(". Colonists has taken it in use now.");
-        Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-            Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-        msg.setCoordinate(getCoordinate());
-        planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+        if (event == PlanetaryEvent.ANCIENT_ARTIFACT) {
+          event = PlanetaryEvent.NONE;
+          msgText.append(getName() + " has strange ancient artifact.");
+          msgText.append(" Colonists send it immediately for research.");
+          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+          msg.setCoordinate(getCoordinate());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+          planetOwnerInfo.getArtifactLists().addDiscoveredArtifact(
+              ArtifactFactory.getRandomArtifact());
+          if (Game.getTutorial() != null  && planetOwnerInfo.isHuman()
+              && isTutorialEnabled) {
+            String tutorialText = Game.getTutorial().showTutorialText(15);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.INFORMATION, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              planetOwnerInfo.getMsgList().addNewMessage(msg);
+            }
+          }
+        } else {
+          Building building = event.getBuilding();
+          addBuilding(building);
+          event = PlanetaryEvent.NONE;
+          msgText.append(building.getName());
+          msgText.append(". Colonists has taken it in use now.");
+          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+          msg.setCoordinate(getCoordinate());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+        }
       } else {
         if (event == PlanetaryEvent.LUSH_VEGETATION) {
           msgText.append(" that planet has lot's of edible vegetation. ");

@@ -329,7 +329,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.22";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.23";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -651,7 +651,9 @@ public class StarMap {
     if (numberOfAnomalies < 20) {
       numberOfAnomalies = 20;
     }
-    for (int i = 0; i < numberOfAnomalies; i++) {
+    int numberOfArtifacts = config.getMaxPlayers() * 3
+        + 3 * config.getGalaxySizeIndex();
+    for (int i = 0; i < numberOfAnomalies + numberOfArtifacts; i++) {
       while (loop < MAX_LOOPS) {
         int sx = DiceGenerator.getRandom(1,
             maxX - 2);
@@ -659,8 +661,13 @@ public class StarMap {
             maxX - 2);
         if (Tiles.getTileByIndex(tiles[sx][sy]) == empty
             && getPlanetByCoordinate(sx, sy) == null) {
-          String tileName = TileNames.getRandomSpaceAnomaly(harmful, pirate,
-              monsters);
+          String tileName = TileNames.SPACE_ANOMALY_CREDITS;
+          if (i < numberOfAnomalies) {
+            tileName = TileNames.getRandomSpaceAnomaly(harmful, pirate,
+                monsters);
+          } else {
+            tileName = TileNames.SPACE_ANOMALY_ANCIENT_ARTIFACT;
+          }
           Tile anomaly = Tiles.getTileByName(tileName);
           tiles[sx][sy] = anomaly.getIndex();
           break;
@@ -1273,7 +1280,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.22");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.23");
     // Turn number
     dos.writeInt(turn);
     // Victory conditions
@@ -1803,7 +1810,7 @@ public class StarMap {
             }
           }
           if (playerIndex == -1) {
-            int index = DiceGenerator.getRandom(4);
+            int index = DiceGenerator.getRandom(5);
             switch (index) {
               case 0: {
                 planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
@@ -1826,6 +1833,10 @@ public class StarMap {
                 planet.setPlanetaryEvent(PlanetaryEvent.BLACK_MONOLITH);
                 break;
               }
+              case 5: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_ARTIFACT);
+                break;
+              }
             }
           }
         }
@@ -1835,7 +1846,7 @@ public class StarMap {
           planet.setGroundSize(8);
           planet.setName("Mars");
           if (playerIndex == -1 && DiceGenerator.getRandom(99) <= 25) {
-            int index = DiceGenerator.getRandom(2);
+            int index = DiceGenerator.getRandom(3);
             switch (index) {
               case 0: {
                 planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
@@ -1848,6 +1859,10 @@ public class StarMap {
               default:
               case 2: {
                 planet.setPlanetaryEvent(PlanetaryEvent.BLACK_MONOLITH);
+                break;
+              }
+              case 3: {
+                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_ARTIFACT);
                 break;
               }
             }
@@ -4294,6 +4309,27 @@ public class StarMap {
           result--;
         }
       }
+      if (production == Planet.PRODUCTION_ARTIFACT_RESEARCH
+          && info.getArtifactLists().hasDiscoveredArtifacts()) {
+        Leader leader = fleet.getCommander();
+        if (leader != null) {
+          if (leader.hasPerk(Perk.ACADEMIC)) {
+            result++;
+          }
+          if (leader.hasPerk(Perk.SCIENTIST)) {
+            result++;
+          }
+          if (leader.hasPerk(Perk.STUPID)) {
+            result--;
+          }
+          if (leader.hasPerk(Perk.EXPLORER)) {
+            result++;
+          }
+          if (leader.hasPerk(Perk.ARCHAEOLOGIST)) {
+            result = result + 2;
+          }
+        }
+      }
       if (production == Planet.PRODUCTION_CULTURE) {
         result = result + fleet.getTotalCultureBonus();
       }
@@ -4330,7 +4366,34 @@ public class StarMap {
       if (poorest == playerIndex && getVotes().isTaxationOfRichestEnabled()) {
         result = result + 1;
       }
-
+    }
+    if (production == Planet.PRODUCTION_ARTIFACT_RESEARCH
+        && info.getArtifactLists().hasDiscoveredArtifacts()) {
+      int research = getTotalProductionByPlayerPerTurn(
+          Planet.PRODUCTION_RESEARCH, playerIndex);
+      research = research / 10;
+      if (research < 1) {
+        research = 1;
+      }
+      result = result + research;
+      if (info.getRuler() != null) {
+        Leader leader = info.getRuler();
+        if (leader.hasPerk(Perk.ACADEMIC)) {
+          result++;
+        }
+        if (leader.hasPerk(Perk.SCIENTIST)) {
+          result++;
+        }
+        if (leader.hasPerk(Perk.STUPID)) {
+          result--;
+        }
+        if (leader.hasPerk(Perk.EXPLORER)) {
+          result++;
+        }
+        if (leader.hasPerk(Perk.ARCHAEOLOGIST)) {
+          result = result + 2;
+        }
+      }
     }
     return result;
   }

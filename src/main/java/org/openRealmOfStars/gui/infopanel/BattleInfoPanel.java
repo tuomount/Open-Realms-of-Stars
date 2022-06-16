@@ -122,7 +122,7 @@ public class BattleInfoPanel extends InfoPanel {
     g2d.dispose();
     this.add(imageLabel);
     this.add(Box.createRigidArea(new Dimension(10, 10)));
-    textArea = new InfoTextArea();
+    textArea = new InfoTextArea(10, 40);
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);

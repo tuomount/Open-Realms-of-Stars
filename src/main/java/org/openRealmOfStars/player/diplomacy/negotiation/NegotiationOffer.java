@@ -65,6 +65,8 @@ public class NegotiationOffer {
         || type == NegotiationType.RECALL_FLEET && offer instanceof Fleet
         || type == NegotiationType.PLANET && offer instanceof Planet
         || type == NegotiationType.TECH && offer instanceof Tech
+        || type == NegotiationType.DISCOVERED_ARTIFACT
+        && offer instanceof Integer
         || type == NegotiationType.TRADE_EMBARGO
         && offer instanceof PlayerInfo
         || type == NegotiationType.PROMISE_VOTE_YES
@@ -170,6 +172,9 @@ public class NegotiationOffer {
     case PROMISE_VOTE_YES:
       offerValue = getPromiseValue();
       break;
+    case DISCOVERED_ARTIFACT:
+      offerValue = getDiscoveredArtifacts() * 5;
+      break;
     default:
       offerValue = 0;
       break;
@@ -184,6 +189,21 @@ public class NegotiationOffer {
    */
   public int getCreditValue() {
     if (negotiationType == NegotiationType.CREDIT
+        && offerObject instanceof Integer) {
+      return ((Integer) offerObject).intValue();
+    }
+    return 0;
+  }
+
+  /**
+   * Get Amount of discovered artifacts offered
+   * @return Get amount of discovered artifacts offered in discovered
+   *             artifact offer.
+   * This returns always zero if offer was something else than
+   * discovered artifact
+   */
+  public int getDiscoveredArtifacts() {
+    if (negotiationType == NegotiationType.DISCOVERED_ARTIFACT
         && offerObject instanceof Integer) {
       return ((Integer) offerObject).intValue();
     }

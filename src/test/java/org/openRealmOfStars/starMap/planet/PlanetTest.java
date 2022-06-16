@@ -519,7 +519,7 @@ public class PlanetTest {
     planet.setPlanetaryEvent(PlanetaryEvent.METAL_RICH_SURFACE);
     assertEquals(PlanetaryEvent.METAL_RICH_SURFACE, planet.getPlanetaryEvent());
     assertEquals(false, planet.isEventActivated());
-    planet.eventActivation();
+    planet.eventActivation(false);
     assertEquals(true, planet.isEventActivated());
     info.getMsgList().clearMessages();
     assertEquals(Icons.getIconByName(Icons.ICON_METAL_ORE),
@@ -537,7 +537,7 @@ public class PlanetTest {
     planet.setPlanetaryEvent(PlanetaryEvent.LUSH_VEGETATION);
     assertEquals(PlanetaryEvent.LUSH_VEGETATION, planet.getPlanetaryEvent());
     assertEquals(false, planet.isEventActivated());
-    planet.eventActivation();
+    planet.eventActivation(false);
     assertEquals(true, planet.isEventActivated());
     info.getMsgList().clearMessages();
     assertEquals(Icons.getIconByName(Icons.ICON_FARM),
@@ -555,7 +555,7 @@ public class PlanetTest {
     planet.setPlanetaryEvent(PlanetaryEvent.PARADISE);
     assertEquals(PlanetaryEvent.PARADISE, planet.getPlanetaryEvent());
     assertEquals(false, planet.isEventActivated());
-    planet.eventActivation();
+    planet.eventActivation(false);
     assertEquals(true, planet.isEventActivated());
     info.getMsgList().clearMessages();
     assertEquals(Icons.getIconByName(Icons.ICON_FARM),
@@ -573,7 +573,7 @@ public class PlanetTest {
     planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_LAB);
     assertEquals(PlanetaryEvent.ANCIENT_LAB, planet.getPlanetaryEvent());
     assertEquals(false, planet.isEventActivated());
-    planet.eventActivation();
+    planet.eventActivation(true);
     assertEquals(true, planet.isEventActivated());
     info.getMsgList().clearMessages();
     assertEquals(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
@@ -592,7 +592,7 @@ public class PlanetTest {
     planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
     assertEquals(PlanetaryEvent.ANCIENT_FACTORY, planet.getPlanetaryEvent());
     assertEquals(false, planet.isEventActivated());
-    planet.eventActivation();
+    planet.eventActivation(true);
     assertEquals(true, planet.isEventActivated());
     info.getMsgList().clearMessages();
     assertEquals(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
@@ -611,7 +611,7 @@ public class PlanetTest {
     planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_TEMPLE);
     assertEquals(PlanetaryEvent.ANCIENT_TEMPLE, planet.getPlanetaryEvent());
     assertEquals(false, planet.isEventActivated());
-    planet.eventActivation();
+    planet.eventActivation(true);
     assertEquals(true, planet.isEventActivated());
     info.getMsgList().clearMessages();
     assertEquals(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),

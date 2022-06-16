@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019-2021 Tuomo Untinen
+* Copyright (C) 2019-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -240,7 +240,11 @@ public enum Perk {
   /**
    * Perk which allows leader more to component overloads during combat.
    */
-  MASTER_ENGINEER(42, "Master engineer", "Reduces overload failure by 2.");
+  MASTER_ENGINEER(42, "Master engineer", "Reduces overload failure by 2."),
+  /**
+   * Increases ancient artifact study by 2.
+   */
+  ARCHAEOLOGIST(43, "Archaeologist", "Increase ancient artifact study by 2.");
 
 
 
@@ -279,7 +283,8 @@ public enum Perk {
         || this == Perk.MERCHANT
         || this == Perk.GOOD_LEADER
         || this == Perk.DIPLOMATIC
-        || this == Perk.SKILLFUL) {
+        || this == Perk.SKILLFUL
+        || this == Perk.ARCHAEOLOGIST) {
       return true;
     }
     return false;
@@ -297,7 +302,8 @@ public enum Perk {
         || this == Perk.MERCHANT
         || this == Perk.DISCIPLINE
         || this == Perk.GOOD_LEADER
-        || this == Perk.SKILLFUL) {
+        || this == Perk.SKILLFUL
+        || this == Perk.ARCHAEOLOGIST) {
       return true;
     }
     return false;
@@ -318,7 +324,8 @@ public enum Perk {
         || this == Perk.SECRET_AGENT
         || this == Perk.TRADER
         || this == Perk.SKILLFUL
-        || this == Perk.MASTER_ENGINEER) {
+        || this == Perk.MASTER_ENGINEER
+        || this == Perk.ARCHAEOLOGIST) {
       return true;
     }
     return false;
@@ -523,6 +530,7 @@ public enum Perk {
       case SLOW_LEARNER:
       case SCIENTIST:
       case WARLORD:
+      case ARCHAEOLOGIST:
       case AGGRESSIVE: {
         if (knowledgeBonus > 2) {
           return true;

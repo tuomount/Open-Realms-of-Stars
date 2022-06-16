@@ -6,7 +6,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2019,2022  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -74,7 +74,11 @@ public enum PlanetaryEvent {
   /**
    * Desert climate
    */
-  DESERT;
+  DESERT,
+  /**
+   * Ancient artifact
+   */
+  ANCIENT_ARTIFACT;
 
 
 
@@ -132,6 +136,9 @@ public enum PlanetaryEvent {
       return true;
     }
     if (this == PlanetaryEvent.BLACK_MONOLITH) {
+      return true;
+    }
+    if (this == PlanetaryEvent.ANCIENT_ARTIFACT) {
       return true;
     }
     return false;
@@ -203,6 +210,7 @@ public enum PlanetaryEvent {
       case MOLTEN_LAVA: return 9;
       case ARID: return 10;
       case DESERT: return 11;
+      case ANCIENT_ARTIFACT: return 12;
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -226,6 +234,7 @@ public enum PlanetaryEvent {
       case MOLTEN_LAVA: return "Molten lava";
       case ARID: return "Arid climate";
       case DESERT: return "Desert climate";
+      case ANCIENT_ARTIFACT: return "Ancient artefact";
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -250,6 +259,7 @@ public enum PlanetaryEvent {
           + " -1 happiness";
       case ARID: return "Arid climate -1 Food";
       case DESERT: return "Desert climate -2 Food";
+      case ANCIENT_ARTIFACT: return "Ancient artifact found on planet";
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -274,6 +284,7 @@ public enum PlanetaryEvent {
       case 9: return MOLTEN_LAVA;
       case 10: return ARID;
       case 11: return DESERT;
+      case 12: return ANCIENT_ARTIFACT;
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -296,8 +307,10 @@ public enum PlanetaryEvent {
           value = DiceGenerator.getRandom(99);
           if (value < 25) {
             return LUSH_VEGETATION;
-          } else if (value < 50) {
+          } else if (value < 40) {
             return PlanetaryEvent.METAL_RICH_SURFACE;
+          } else if (value < 50) {
+            return PlanetaryEvent.ANCIENT_ARTIFACT;
           } else if (value < 61) {
             return PlanetaryEvent.ANCIENT_LAB;
           } else if (value < 72) {
@@ -314,8 +327,10 @@ public enum PlanetaryEvent {
           value = DiceGenerator.getRandom(99);
           if (value < 25) {
             return PlanetaryEvent.METAL_RICH_SURFACE;
-          } else if (value < 50) {
+          } else if (value < 40) {
             return PlanetaryEvent.ANCIENT_LAB;
+          } else if (value < 50) {
+            return PlanetaryEvent.ANCIENT_ARTIFACT;
           } else if (value < 65) {
             return PlanetaryEvent.ANCIENT_FACTORY;
           } else if (value < 80) {
@@ -331,10 +346,12 @@ public enum PlanetaryEvent {
         case ICEWORLD3:
         case ICEWORLD4:
           value = DiceGenerator.getRandom(99);
-          if (value < 20) {
+          if (value < 15) {
             return PlanetaryEvent.METAL_RICH_SURFACE;
-          } else if (value < 40) {
+          } else if (value < 30) {
             return PlanetaryEvent.ANCIENT_LAB;
+          } else if (value < 40) {
+            return PlanetaryEvent.ANCIENT_ARTIFACT;
           } else if (value < 60) {
             return PlanetaryEvent.ANCIENT_FACTORY;
           } else if (value < 80) {
@@ -349,10 +366,12 @@ public enum PlanetaryEvent {
         case DESERTWORLD2:
         case DESERTWORLD3:
           value = DiceGenerator.getRandom(99);
-          if (value < 20) {
+          if (value < 15) {
             return PlanetaryEvent.METAL_RICH_SURFACE;
-          } else if (value < 40) {
+          } else if (value < 30) {
             return PlanetaryEvent.ANCIENT_LAB;
+          } else if (value < 40) {
+            return PlanetaryEvent.ANCIENT_ARTIFACT;
           } else if (value < 60) {
             return PlanetaryEvent.ARID;
           } else if (value < 80) {
@@ -372,8 +391,10 @@ public enum PlanetaryEvent {
           value = DiceGenerator.getRandom(99);
           if (value < 20) {
             return PlanetaryEvent.METAL_RICH_SURFACE;
-          } else if (value < 35) {
+          } else if (value < 30) {
             return PlanetaryEvent.ANCIENT_LAB;
+          } else if (value < 37) {
+            return PlanetaryEvent.ANCIENT_ARTIFACT;
           } else if (value < 50) {
             return PlanetaryEvent.ANCIENT_FACTORY;
           } else if (value < 60) {
@@ -402,8 +423,10 @@ public enum PlanetaryEvent {
             return PlanetaryEvent.ANCIENT_PALACE;
           } else if (value < 66) {
             return PlanetaryEvent.ANCIENT_LAB;
-          } else if (value < 82) {
+          } else if (value < 80) {
             return PlanetaryEvent.ANCIENT_FACTORY;
+          } else if (value < 87) {
+            return PlanetaryEvent.ANCIENT_ARTIFACT;
           } else if (value < 95) {
             return PlanetaryEvent.ANCIENT_TEMPLE;
           } else if (value < 100) {

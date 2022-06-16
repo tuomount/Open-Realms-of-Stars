@@ -2553,7 +2553,7 @@ public class Game implements ActionListener {
           + ". ");
       SoundPlayer.playSound(SoundPlayer.COLONIZED);
       starMap.getHistory().addEvent(event);
-      fleetView.getPlanet().eventActivation();
+      fleetView.getPlanet().eventActivation(starMap.isTutorialEnabled());
       changeGameState(GameState.PLANETVIEW);
     }
   }

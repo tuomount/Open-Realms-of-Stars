@@ -164,5 +164,10 @@ public enum GameState {
   /**
    * Text screen when game ends.
    */
-  GAME_END_VIEW;
+  GAME_END_VIEW,
+  /**
+   * 3D Sphere, just for testing purposes
+   */
+  SPHERE_3D_VIEW,
+
 }

@@ -62,6 +62,7 @@ import org.openRealmOfStars.game.States.SaveGameNameView;
 import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipUpgradeView;
 import org.openRealmOfStars.game.States.ShipView;
+import org.openRealmOfStars.game.States.Sphere3dView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.game.States.StatView;
 import org.openRealmOfStars.game.States.VoteView;
@@ -232,6 +233,11 @@ public class Game implements ActionListener {
    * Main menu for the game
    */
   private MainMenu mainMenu;
+
+  /**
+   * Sphere 3D view
+   */
+  private Sphere3dView sphere3dView;
 
   /**
    * Galaxy Creation view
@@ -1436,6 +1442,14 @@ public class Game implements ActionListener {
     mainMenu = new MainMenu(this, text);
     this.updateDisplay(mainMenu);
   }
+  /**
+   * Show 3d sphere view
+   * @param text Text should be shown on front of planet.
+   */
+  public void show3dSphere(final String text) {
+    sphere3dView = new Sphere3dView(text);
+    this.updateDisplay(sphere3dView);
+  }
 /**
    * Show Realm View
    * @param realm PlayerInfo whose realm is shown.
@@ -1645,6 +1659,12 @@ public class Game implements ActionListener {
       if (dataObject instanceof String) {
         setBridgeCommand(BridgeCommandType.WARM_WHITE);
         showMainMenu((String) dataObject);
+      }
+      break;
+    case SPHERE_3D_VIEW:
+      if (dataObject instanceof String) {
+        setBridgeCommand(BridgeCommandType.WARM_WHITE);
+        show3dSphere((String) dataObject);
       }
       break;
     case MAIN_MENU:
@@ -2403,6 +2423,11 @@ public class Game implements ActionListener {
       MusicPlayer.setMusicEnabled(false);
       Game game = new Game(true);
       game.changeGameState(GameState.TEXT_SCREEN_VIEW, args[1]);
+    } else if (args.length > 1 && args[0].equals("--3D")) {
+      System.out.println("Disabling the music...");
+      MusicPlayer.setMusicEnabled(false);
+      Game game = new Game(true);
+      game.changeGameState(GameState.SPHERE_3D_VIEW, args[1]);
     } else {
       if (args.length > 0 && args[0].equals("--no-music")) {
         System.out.println("Disabling the music...");
@@ -2971,6 +2996,12 @@ public class Game implements ActionListener {
         return;
       }
       ambientLightsView.handleAction(arg0);
+      return;
+    }
+    if (gameState == GameState.SPHERE_3D_VIEW
+        && arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)
+        && sphere3dView != null) {
+      sphere3dView.repaint();
       return;
     }
     if (gameState == GameState.MAIN_MENU
@@ -3665,6 +3696,7 @@ public class Game implements ActionListener {
         || gameState == GameState.SETUP_AMBIENT_LIGHTS
         || gameState == GameState.MAIN_MENU
         || gameState == GameState.TEXT_SCREEN_VIEW
+        || gameState == GameState.SPHERE_3D_VIEW
         || gameState == GameState.CREDITS
         || gameState == GameState.GAME_END_VIEW) {
       actionPerformedMenus(arg0);

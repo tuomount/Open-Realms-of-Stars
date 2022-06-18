@@ -606,6 +606,16 @@ public final class Tiles {
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_NEWS_STATION);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 7, 6, TileNames.NEWSTATION1);
+    tile.setDescription(TileNames.NEWS_STATION_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 8, 6, TileNames.NEWSTATION2);
+    tile.setDescription(TileNames.NEWS_STATION_DESCRIPTION);
+    addTile(tile);
 
   }
 

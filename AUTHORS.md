@@ -281,6 +281,8 @@ https://opengameart.org/content/warzone-concept
 
 News reader robot by Tuomo Untinen
 
+UFO Spritesheet by mieki256 (CC0)
+
 Space worm and Kraken ships by Tuomo Untinen
 
 Heart and mouth icons modified by Tuomo Untinen

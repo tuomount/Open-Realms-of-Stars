@@ -612,6 +612,11 @@ public final class TileNames {
   public static final String SPACE_ANOMALY_ANCIENT_ARTIFACT =
       "SpaceAnomalyAncientArtifact";
   /**
+   * Space anomaly tile: News station
+   */
+  public static final String SPACE_ANOMALY_NEWS_STATION =
+      "SpaceAnomalyNewsStation";
+  /**
    * Worm hole tile 1
    */
   public static final String WORM_HOLE1 = "WormHole1";
@@ -619,6 +624,14 @@ public final class TileNames {
    * Worm hole tile 2
    */
   public static final String WORM_HOLE2 = "WormHole2";
+  /**
+   * Newstation 1
+   */
+  public static final String NEWSTATION1 = "Newstation1";
+  /**
+   * Newstation 2
+   */
+  public static final String NEWSTATION2 = "Newstation2";
 
   /**
    * Black North West
@@ -773,5 +786,12 @@ public final class TileNames {
   public static final String WORM_HOLE_DESCRIPTION = "Worm hole is a tunnel"
       + " between two locations in spacetime continuum. Since space is"
       + " constantly moving also other end of tunnel is moving.";
+  /**
+   * Description about news station
+   */
+  public static final String NEWS_STATION_DESCRIPTION = "This is ancient"
+      + " news station that still keeps broadcasting whole galaxy wide news."
+      + " It is mystery how it can still operate and who built it."
+      + " It must have been built some of ancient realms.";
 
 }

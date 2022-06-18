@@ -1302,6 +1302,12 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/dataloss.png"));
 
   /**
+   * Newstation
+   */
+  public static final BufferedImage IMAGE_NEWSTATION = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/newstation.png"));
+
+  /**
    * Shuttle
    */
   public static final BufferedImage IMAGE_SHUTTLE = IOUtilities.loadImage(

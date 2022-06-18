@@ -340,6 +340,10 @@ public class ImageInstruction {
    */
   public static final String DATALOSS = "dataloss";
   /**
+   * Newstation
+   */
+  public static final String NEWSTATION = "newstation";
+  /**
    * Old ship
    */
   public static final String OLD_SHIP = "old ship";
@@ -588,6 +592,7 @@ public class ImageInstruction {
         && !PIRATE_RAIDERS.equals(image)
         && !MUTINY.equals(image)
         && !DATALOSS.equals(image)
+        && !NEWSTATION.equals(image)
         && !OLD_SHIP.equals(image)
         && !DESERT.equals(image)
         && !PARADISE.equals(image)
@@ -1169,6 +1174,9 @@ public class ImageInstruction {
     }
     if (DATALOSS.equals(image)) {
       drawImg = GuiStatics.IMAGE_DATALOSS;
+    }
+    if (NEWSTATION.equals(image)) {
+      drawImg = GuiStatics.IMAGE_NEWSTATION;
     }
     if (OLD_SHIP.equals(image)) {
       drawImg = GuiStatics.IMAGE_OLD_SHIP;

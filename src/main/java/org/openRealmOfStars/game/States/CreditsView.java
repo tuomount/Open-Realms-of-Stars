@@ -253,6 +253,7 @@ public class CreditsView extends BlackPanel {
       + "Warzone Concept by Justin Nichol\n"
       + "https://opengameart.org/content/warzone-concept\n\n"
       + "News reader robot by Tuomo Untinen\n\n"
+      + "UFO Spritesheet by mieki256 (CC0)\n\n"
       + "Space worm and Kraken ships by Tuomo Untinen\n\n"
       + "Heart and mouth icons modified by Tuomo Untinen\n"
       + "Originals from 141 Military Icons Set by AngryMeteor.com\n\n"

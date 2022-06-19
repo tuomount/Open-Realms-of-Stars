@@ -655,10 +655,8 @@ public class StarMap {
         + 3 * config.getGalaxySizeIndex();
     for (int i = 0; i < numberOfAnomalies + numberOfArtifacts; i++) {
       while (loop < MAX_LOOPS) {
-        int sx = DiceGenerator.getRandom(1,
-            maxX - 2);
-        int sy = DiceGenerator.getRandom(1,
-            maxX - 2);
+        int sx = DiceGenerator.getRandom(1, maxX - 2);
+        int sy = DiceGenerator.getRandom(1, maxX - 2);
         if (Tiles.getTileByIndex(tiles[sx][sy]) == empty
             && getPlanetByCoordinate(sx, sy) == null) {
           String tileName = TileNames.SPACE_ANOMALY_CREDITS;
@@ -674,6 +672,34 @@ public class StarMap {
         }
         loop++;
       }
+    }
+    int bx = -1;
+    int by = -1;
+    double bestValue = -1;
+    for (int sy = 0; sy < maxY; sy++) {
+      for (int sx = 0; sx < maxX; sx++) {
+        if (Tiles.getTileByIndex(tiles[sx][sy]) == empty
+            && getPlanetByCoordinate(sx, sy) == null
+            && locateSolarSystem(sx, sy) == null) {
+          Coordinate coord = new Coordinate(sx, sy);
+          double shortestDistance = maxX * 10;
+          for (Planet planet : planetList) {
+            double value = planet.getCoordinate().calculateDistance(coord);
+            if (value < shortestDistance) {
+              shortestDistance = value;
+            }
+          }
+          if (shortestDistance > bestValue) {
+            bx = sx;
+            by = sy;
+            bestValue = shortestDistance;
+          }
+        }
+      }
+    }
+    if (bestValue > 0) {
+      Tile anomaly = Tiles.getTileByName(TileNames.SPACE_ANOMALY_NEWS_STATION);
+      tiles[bx][by] = anomaly.getIndex();
     }
     // No need to have generator after creation
     nameGenerator = null;

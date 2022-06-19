@@ -3194,6 +3194,11 @@ public final class MissionHandling {
     if (index == secondIndex) {
       return;
     }
+    PlayerInfo secondInfo = game.getStarMap().getPlayerByIndex(secondIndex);
+    if (secondInfo.getRace() == SpaceRace.SPACE_MONSTERS) {
+      // No diplomacy with space monsters.
+      return;
+    }
     DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
         index, secondIndex);
     if (fleet == null) {

@@ -943,7 +943,8 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
         conquerBtn.setEnabled(false);
       }
       PlayerInfo fleetOwner = starMap.getPlayerInfoByFleet(fleet);
-      if (fleetOwner.getRace() == SpaceRace.SPACE_MONSTERS) {
+      if (fleetOwner != null
+          && fleetOwner.getRace() == SpaceRace.SPACE_MONSTERS) {
         hailBtn.setEnabled(false);
       }
       int x = fleet.getCoordinate().getX();

@@ -565,6 +565,12 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       } else {
         hailBtn.setEnabled(true);
       }
+      if (starMap != null) {
+        PlayerInfo fleetOwner = starMap.getPlayerInfoByFleet(fleet);
+        if (fleetOwner.getRace() == SpaceRace.SPACE_MONSTERS) {
+          hailBtn.setEnabled(false);
+        }
+      }
     }
     if (colonistSelection != null) {
       colonistSelection.setText("Colonist: " + fleet.getTotalCargoColonist()
@@ -935,6 +941,10 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       PlayerInfo fleetInfo = starMap.getPlayerInfoByFleet(fleet);
       if (fleetInfo != info && conquerBtn != null) {
         conquerBtn.setEnabled(false);
+      }
+      PlayerInfo fleetOwner = starMap.getPlayerInfoByFleet(fleet);
+      if (fleetOwner.getRace() == SpaceRace.SPACE_MONSTERS) {
+        hailBtn.setEnabled(false);
       }
       int x = fleet.getCoordinate().getX();
       int y = fleet.getCoordinate().getY();

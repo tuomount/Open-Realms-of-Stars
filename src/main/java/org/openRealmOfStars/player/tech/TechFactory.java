@@ -905,11 +905,13 @@ public final class TechFactory {
               || techName.startsWith("Research center")
               || techName.startsWith("New technology center")
               || techName.startsWith("Neural research center")
-              || techName.startsWith("Super AI Center")
-              || techName.startsWith("College of history")) {
+              || techName.startsWith("Super AI Center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
           } else if (techName.startsWith("Orbital lift")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR));
+            tech.setRareTech(true);
+          } else if (techName.startsWith("College of history")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
             tech.setRareTech(true);
           } else if (techName.startsWith("Tax center")
               || techName.startsWith("Market center")

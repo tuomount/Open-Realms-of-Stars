@@ -41,7 +41,7 @@ public final class ArtifactFactory {
    * Remember to increase this when new artifact is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_ARTIFACT = 12;
+  private static final int MAX_ARTIFACT = 13;
 
   /**
    * Artifact Weapon fragment
@@ -92,6 +92,10 @@ public final class ArtifactFactory {
    * Artifact Shattered Electronic
    */
   public static final int ARTIFACT_SHATTERED_ELECTRONIC = 11;
+  /**
+   * Artifact broadcasting electronic
+   */
+  public static final int BROADCASTING_ELETRONIC = 12;
 
   /**
    * Create artifact with index
@@ -196,6 +200,15 @@ public final class ArtifactFactory {
           + " and how this thing could have worked and where it has been"
           + " used for.");
       tmp.setIcon(Icons.getIconByName(Icons.ICON_ANCIENT_ELECTRONIC));
+    }
+    if (index == BROADCASTING_ELETRONIC) {
+      tmp = new Artifact(index, "Broadcasting electronic",
+          ArtifactType.ELECTRONIC);
+      tmp.setOneTimeTechBonus(50);
+      tmp.setDescription("This artifact is piece of ancient broadcasting"
+          + " technology. This is taken from working ancient news station."
+          + " This is really advanced technology considering how old it is.");
+      tmp.setIcon(Icons.getIconByName(Icons.ICON_ANTENNA));
     }
     return tmp;
   }

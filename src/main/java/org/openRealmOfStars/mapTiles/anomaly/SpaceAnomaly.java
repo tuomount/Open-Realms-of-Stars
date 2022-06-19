@@ -82,6 +82,28 @@ public class SpaceAnomaly {
   private Combat combat;
 
   /**
+   * News station text.
+   */
+  private static final String NEWS_STATION_TEXT_BEGIN =
+      "Ancient but functional news station is floating in "
+      + "space. This is the place where all galactic news are sent."
+      + " There is single robot sitting behind the desk and automation"
+      + " is doing all the news gathering. Robot or station does not"
+      + " seem to care about or react on visitors.";
+  /**
+   * News station text.
+   */
+  private static final String NEWS_STATION_TEXT =
+      NEWS_STATION_TEXT_BEGIN + " Your fleet crew gathers some ancient"
+          + " technology for later research.";
+  /**
+   * News station text already visited.
+   */
+  private static final String NEWS_STATION_VISITED_TEXT =
+      NEWS_STATION_TEXT_BEGIN + " Your fleet crew does not find anything"
+          + " unseen electronic.";
+
+  /**
    * Constructor for Space anomaly
    * @param type AnomalyType
    * @param value Space anomaly value
@@ -169,6 +191,7 @@ public class SpaceAnomaly {
     SpaceAnomaly result = null;
     Tile tile = map.getTile(fleet.getX(), fleet.getY());
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
+    boolean addExp = true;
     if (tile != null) {
       switch (tile.getName()) {
         case TileNames.SPACE_ANOMALY_CREDITS: {
@@ -502,11 +525,57 @@ public class SpaceAnomaly {
           map.setTile(fleet.getX(), fleet.getY(), empty);
           break;
         }
+        case TileNames.SPACE_ANOMALY_NEWS_STATION: {
+          result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
+          result.setText(NEWS_STATION_TEXT);
+          result.setImage(GuiStatics.IMAGE_NEWSTATION);
+          info.getArtifactLists().addDiscoveredArtifact(
+              ArtifactFactory.createArtifact(
+                  ArtifactFactory.BROADCASTING_ELETRONIC));
+          if (Game.getTutorial() != null  && info.isHuman()
+              && map.isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(15);
+            if (tutorialText != null) {
+              Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              info.getMsgList().addNewMessage(msg);
+            }
+          }
+          Tile station = Tiles.getTileByName(TileNames.NEWSTATION1);
+          map.setTile(fleet.getX(), fleet.getY(), station);
+          break;
+        }
+        case TileNames.NEWSTATION1:
+        case TileNames.NEWSTATION2: {
+          if (!info.getArtifactLists().hasBroadcastingArtifact()) {
+            result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
+            result.setText(NEWS_STATION_TEXT);
+            result.setImage(GuiStatics.IMAGE_NEWSTATION);
+            info.getArtifactLists().addDiscoveredArtifact(
+                ArtifactFactory.createArtifact(
+                    ArtifactFactory.BROADCASTING_ELETRONIC));
+            if (Game.getTutorial() != null  && info.isHuman()
+                && map.isTutorialEnabled()) {
+              String tutorialText = Game.getTutorial().showTutorialText(15);
+              if (tutorialText != null) {
+                Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+            }
+          } else {
+            addExp = false;
+            result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
+            result.setText(NEWS_STATION_VISITED_TEXT);
+            result.setImage(GuiStatics.IMAGE_NEWSTATION);
+          }
+          break;
+        }
         default: {
           break;
         }
       }
-      if (fleet.getCommander() != null && result != null) {
+      if (fleet.getCommander() != null && result != null && addExp) {
         fleet.getCommander().setExperience(
             fleet.getCommander().getExperience() + 50);
       }

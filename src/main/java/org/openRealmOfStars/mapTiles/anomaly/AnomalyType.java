@@ -75,5 +75,9 @@ public enum AnomalyType {
   /**
    * Ancient artifact found in space. One time anomaly.
    */
-  ANCIENT_ARTIFACT;
+  ANCIENT_ARTIFACT,
+  /**
+   * Ancient News station broadcasting the galactic news.
+   */
+  NEWS_STATION;
 }

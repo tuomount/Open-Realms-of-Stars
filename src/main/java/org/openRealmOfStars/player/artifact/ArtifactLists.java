@@ -176,6 +176,27 @@ public class ArtifactLists {
   }
 
   /**
+   * If list has broadcasting electornic from news station.
+   * @return True if above statement is true.
+   */
+  public boolean hasBroadcastingArtifact() {
+    boolean result = false;
+    for (Artifact artifact : discoveredArtifacts) {
+      if (artifact.getIndex() == ArtifactFactory.BROADCASTING_ELETRONIC) {
+        result = true;
+      }
+    }
+    if (!result) {
+      for (Artifact artifact : researchedArtifacts) {
+        if (artifact.getIndex() == ArtifactFactory.BROADCASTING_ELETRONIC) {
+          result = true;
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
    * Take random discovered artifact away from the list and return it.
    * @return Artifact or null
    */

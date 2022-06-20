@@ -17,6 +17,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
@@ -265,12 +266,24 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener,
   public void setFocusToIndex(final int index) {
     Leader leaderToFind = player.getLeaderPool().get(index);
     if (leaderToFind != null) {
-      for (int i = 0; i < leaderList.getModel().getSize(); i++) {
-        Leader leader = leaderList.getModel().getElementAt(i);
-        if (leaderToFind == leader) {
-          leaderList.setSelectedIndex(i);
-          updatePanel();
-          break;
+      TreeModel model = leaderTree.getModel();
+      for (int i = 0; i < model.getChildCount(model.getRoot()); i++) {
+        if (model.getChild(model.getRoot(), index)
+            instanceof DefaultMutableTreeNode) {
+          Object object = ((DefaultMutableTreeNode)
+            model.getChild(model.getRoot(), index)).getUserObject();
+          if (object instanceof Leader) {
+            Leader leader = (Leader) object;
+            if (leaderToFind == leader) {
+             Object[] array = new Object[2];
+             array[0] = model.getRoot();
+             array[1] = model.getChild(model.getRoot(), index);
+             TreePath path = new TreePath(array);
+             leaderTree.setSelectionPath(path);
+             updatePanel();
+             break;
+            }
+          }
         }
       }
     }

@@ -15,6 +15,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
@@ -138,7 +140,7 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener,
     center.setTitle("Leader");
     center.setLayout(new BorderLayout());
     //Leader[] leaders = sortLeaders(player.getLeaderPool());
-    buildTreeOfLeaders();
+    leaderTree = new JTree(buildTreeOfLeaders());
     //leaderList = new JList<>(leaders);
     leaderTree.setCellRenderer(new LeaderTreeCellRenderer());
     //leaderList.setCellRenderer(new LeaderListRenderer());
@@ -230,8 +232,9 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener,
   }
   /**
    * Build tree of heirs and leaders.
+   * @return Root node for tree.
    */
-  private void buildTreeOfLeaders() {
+  private DefaultMutableTreeNode buildTreeOfLeaders() {
     DefaultMutableTreeNode root = new DefaultMutableTreeNode("Leaders of "
         + player.getEmpireName());
     Leader[] leaders = sortLeaders(player.getLeaderPool());
@@ -239,7 +242,7 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener,
       DefaultMutableTreeNode leaderNode = searchForHeirs(null, leader, leaders);
       root.add(leaderNode);
     }
-    leaderTree = new JTree(root);
+    return root;
   }
   /**
    * Set active planet.
@@ -309,6 +312,24 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener,
     } else {
       setLeaderBtn.setEnabled(false);
     }
+  }
+  /**
+   * Get Selected leader from JTree.
+   * @return Leader or null
+   */
+  private Leader getSelectedLeaderFromTree() {
+    Leader leader = null;
+    if (leaderTree.getSelectionPath() != null
+        && leaderTree.getSelectionPath().getLastPathComponent()
+        instanceof DefaultMutableTreeNode) {
+      Object object = ((DefaultMutableTreeNode)
+          leaderTree.getSelectionPath().getLastPathComponent())
+          .getUserObject();
+      if (object instanceof Leader) {
+        leader = (Leader) object;
+      }
+    }
+    return leader;
   }
   /**
    * Update all panels.
@@ -444,14 +465,11 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener,
    * @param arg0 Action event to handle
    */
   public void handleActions(final ActionEvent arg0) {
-    if (leaderList == null) {
-      return;
-    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_RECRUIT_LEADER)
         && player.getTotalCredits() >= leaderCost) {
       LeaderUtility.recruiteLeader(map.getPlanetList(), player);
-      Leader[] leaders = sortLeaders(player.getLeaderPool());
-      leaderList.setListData(leaders);
+      TreeModel model = new DefaultTreeModel(buildTreeOfLeaders());
+      leaderTree.setModel(model);
       leaderCost = LeaderUtility.leaderRecruitCost(player);
       trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
           map.getPlanetList(), player);
@@ -460,7 +478,7 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener,
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ASSIGN_LEADER)) {
       boolean soundPlayed = false;
-      Leader leader = leaderList.getSelectedValue();
+      Leader leader = getSelectedLeaderFromTree();
       if (leader != null && (leader.getTimeInJob() > 19
           || leader.getJob() == Job.UNASSIGNED)) {
         Object target = null;
@@ -472,7 +490,8 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener,
         }
         soundPlayed = LeaderUtility.assignLeader(leader, player,
             map.getPlanetList(), target);
-        leaderList.setListData(sortLeaders(player.getLeaderPool()));
+        TreeModel model = new DefaultTreeModel(buildTreeOfLeaders());
+        leaderTree.setModel(model);
         updatePanel();
       }
       if (soundPlayed) {

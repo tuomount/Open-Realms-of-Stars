@@ -9,13 +9,17 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
+import javax.swing.JTree;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.gui.ListRenderers.LeaderListRenderer;
+import org.openRealmOfStars.gui.ListRenderers.LeaderTreeCellRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
@@ -53,7 +57,8 @@ import org.openRealmOfStars.starMap.planet.Planet;
 * Research view for handling researching technology for player
 *
 */
-public class LeaderView extends BlackPanel  implements ListSelectionListener {
+public class LeaderView extends BlackPanel  implements ListSelectionListener,
+   TreeSelectionListener {
 
   /**
   *
@@ -73,6 +78,10 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
    */
   private JList<Leader> leaderList;
 
+  /**
+   * JTree of leaders in order and their heirs.
+   */
+  private JTree leaderTree;
   /**
    * Info Text for Leader
    */
@@ -128,14 +137,20 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     InfoPanel center = new InfoPanel();
     center.setTitle("Leader");
     center.setLayout(new BorderLayout());
-    Leader[] leaders = sortLeaders(player.getLeaderPool());
-    leaderList = new JList<>(leaders);
-    leaderList.setCellRenderer(new LeaderListRenderer());
-    leaderList.addListSelectionListener(this);
-    JScrollPane scroll = new JScrollPane(leaderList);
+    //Leader[] leaders = sortLeaders(player.getLeaderPool());
+    buildTreeOfLeaders();
+    //leaderList = new JList<>(leaders);
+    leaderTree.setCellRenderer(new LeaderTreeCellRenderer());
+    //leaderList.setCellRenderer(new LeaderListRenderer());
+    leaderTree.addTreeSelectionListener(this);
+    //leaderList.addListSelectionListener(this);
+    JScrollPane scroll = new JScrollPane(leaderTree);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    leaderList.setBackground(Color.BLACK);
-    leaderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    //leaderList.setBackground(Color.BLACK);
+    //leaderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    leaderTree.getSelectionModel().setSelectionMode(
+        TreeSelectionModel.SINGLE_TREE_SELECTION);
+    leaderTree.setBackground(Color.BLACK);
     base.add(scroll);
     scroll.setAlignmentX(CENTER_ALIGNMENT);
     recruitBtn = new SpaceButton("Recruit leader",
@@ -176,6 +191,56 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     this.add(center, BorderLayout.CENTER);
   }
 
+  /**
+   * Get Leader heirs
+   * @param leader Leader whose heirs are being searched
+   * @param leaders List of all leaders
+   * @return List of heirs
+   */
+  private static Leader[] getHeirs(final Leader leader,
+      final Leader[] leaders) {
+    ArrayList<Leader> heirs = new ArrayList<>();
+    for (int i = 0; i < leaders.length; i++) {
+      if (leaders[i].getParent() == leader) {
+        heirs.add(leaders[i]);
+      }
+    }
+    return heirs.toArray(new Leader[heirs.size()]);
+  }
+  /**
+   * Searches recursive for heirs and addes them to node.
+   * @param node Tree node where to add.
+   * @param leader Leader whose heirs are being searched.
+   * @param leaders List of all leaders.
+   * @return Tree node with leader and heirs.
+   */
+  private DefaultMutableTreeNode searchForHeirs(
+      final DefaultMutableTreeNode node, final Leader leader,
+      final Leader[] leaders) {
+    DefaultMutableTreeNode result = node;
+    if (result == null) {
+      result = new DefaultMutableTreeNode(leader);
+    }
+    Leader[] heirs = getHeirs(leader, leaders);
+    for (Leader heir : heirs) {
+      DefaultMutableTreeNode heirNode = searchForHeirs(null, heir, leaders);
+      result.add(heirNode);
+    }
+    return result;
+  }
+  /**
+   * Build tree of heirs and leaders.
+   */
+  private void buildTreeOfLeaders() {
+    DefaultMutableTreeNode root = new DefaultMutableTreeNode("Leaders of "
+        + player.getEmpireName());
+    Leader[] leaders = sortLeaders(player.getLeaderPool());
+    for (Leader leader : leaders) {
+      DefaultMutableTreeNode leaderNode = searchForHeirs(null, leader, leaders);
+      root.add(leaderNode);
+    }
+    leaderTree = new JTree(root);
+  }
   /**
    * Set active planet.
    * @param planet Planet where to set leader
@@ -249,7 +314,17 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
    * Update all panels.
    */
   public void updatePanel() {
-    Leader leader = leaderList.getSelectedValue();
+    Leader leader = null;
+    if (leaderTree.getSelectionPath() != null
+        && leaderTree.getSelectionPath().getLastPathComponent()
+        instanceof DefaultMutableTreeNode) {
+      Object object = ((DefaultMutableTreeNode)
+          leaderTree.getSelectionPath().getLastPathComponent())
+          .getUserObject();
+      if (object instanceof Leader) {
+        leader = (Leader) object;
+      }
+    }
     if (leader != null) {
       if (leader.getJob() == Job.RULER) {
         for (Planet planet : map.getPlanetList()) {
@@ -369,6 +444,9 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
    * @param arg0 Action event to handle
    */
   public void handleActions(final ActionEvent arg0) {
+    if (leaderList == null) {
+      return;
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_RECRUIT_LEADER)
         && player.getTotalCredits() >= leaderCost) {
       LeaderUtility.recruiteLeader(map.getPlanetList(), player);
@@ -403,5 +481,10 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
         SoundPlayer.playMenuDisabled();
       }
     }
+  }
+
+  @Override
+  public void valueChanged(final TreeSelectionEvent e) {
+    updatePanel();
   }
 }

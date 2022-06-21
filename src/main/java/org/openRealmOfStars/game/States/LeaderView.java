@@ -134,17 +134,11 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener,
     InfoPanel center = new InfoPanel();
     center.setTitle("Leader");
     center.setLayout(new BorderLayout());
-    //Leader[] leaders = sortLeaders(player.getLeaderPool());
     leaderTree = new JTree(buildTreeOfLeaders());
-    //leaderList = new JList<>(leaders);
     leaderTree.setCellRenderer(new LeaderTreeCellRenderer());
-    //leaderList.setCellRenderer(new LeaderListRenderer());
     leaderTree.addTreeSelectionListener(this);
-    //leaderList.addListSelectionListener(this);
     JScrollPane scroll = new JScrollPane(leaderTree);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    //leaderList.setBackground(Color.BLACK);
-    //leaderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     leaderTree.getSelectionModel().setSelectionMode(
         TreeSelectionModel.SINGLE_TREE_SELECTION);
     leaderTree.setBackground(Color.BLACK);

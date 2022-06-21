@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.event.ListSelectionEvent;
@@ -75,11 +74,6 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener,
    * Star map
    */
   private StarMap map;
-
-  /**
-   * JList of leaders in order
-   */
-  private JList<Leader> leaderList;
 
   /**
    * JTree of leaders in order and their heirs.

@@ -253,16 +253,16 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
     if (leaderToFind != null) {
       TreeModel model = leaderTree.getModel();
       for (int i = 0; i < model.getChildCount(model.getRoot()); i++) {
-        if (model.getChild(model.getRoot(), index)
+        if (model.getChild(model.getRoot(), i)
             instanceof DefaultMutableTreeNode) {
           Object object = ((DefaultMutableTreeNode)
-            model.getChild(model.getRoot(), index)).getUserObject();
+            model.getChild(model.getRoot(), i)).getUserObject();
           if (object instanceof Leader) {
             Leader leader = (Leader) object;
             if (leaderToFind == leader) {
              Object[] array = new Object[2];
              array[0] = model.getRoot();
-             array[1] = model.getChild(model.getRoot(), index);
+             array[1] = model.getChild(model.getRoot(), i);
              TreePath path = new TreePath(array);
              leaderTree.setSelectionPath(path);
              updatePanel();

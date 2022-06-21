@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -59,8 +57,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 * Research view for handling researching technology for player
 *
 */
-public class LeaderView extends BlackPanel  implements ListSelectionListener,
-   TreeSelectionListener {
+public class LeaderView extends BlackPanel  implements TreeSelectionListener {
 
   /**
   *
@@ -454,11 +451,6 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener,
       }
     }
     return result;
-  }
-
-  @Override
-  public void valueChanged(final ListSelectionEvent arg0) {
-    updatePanel();
   }
 
   /**

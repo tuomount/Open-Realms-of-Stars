@@ -1039,14 +1039,23 @@ public final class MissionHandling {
             defendPlanet = game.getStarMap().getClosestHomePort(info,
                 fleet.getCoordinate());
           }
-          Mission defend = new Mission(MissionType.DEFEND,
-              MissionPhase.TREKKING, defendPlanet.getCoordinate());
-          defend.setTarget(defendPlanet.getCoordinate());
-          defend.setTargetPlanet(defendPlanet.getName());
-          defend.setFleetName(fleet.getName());
-          defend.setMissionTime(0);
-          info.getMissions().remove(mission);
-          info.getMissions().add(defend);
+          if (defendPlanet == null) {
+            // There is no planet for defend so just explore
+            Mission explore = new Mission(MissionType.EXPLORE,
+                MissionPhase.TREKKING, fleet.getCoordinate());
+            explore.setFleetName(fleet.getName());
+            info.getMissions().remove(mission);
+            info.getMissions().add(explore);
+          } else {
+            Mission defend = new Mission(MissionType.DEFEND,
+                MissionPhase.TREKKING, defendPlanet.getCoordinate());
+            defend.setTarget(defendPlanet.getCoordinate());
+            defend.setTargetPlanet(defendPlanet.getName());
+            defend.setFleetName(fleet.getName());
+            defend.setMissionTime(0);
+            info.getMissions().remove(mission);
+            info.getMissions().add(defend);
+          }
         }
       }
     } // End of destroy fleet

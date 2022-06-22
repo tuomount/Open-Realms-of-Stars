@@ -682,14 +682,19 @@ public class StarMap {
             && getPlanetByCoordinate(sx, sy) == null
             && locateSolarSystem(sx, sy) == null) {
           Coordinate coord = new Coordinate(sx, sy);
+          Coordinate center = new Coordinate(maxX / 2, maxY / 2);
           double shortestDistance = maxX * 10;
-          for (Planet planet : planetList) {
-            double value = planet.getCoordinate().calculateDistance(coord);
+          double centerDist = center.calculateDistance(coord);
+          for (Sun sun : sunList) {
+            double value = coord.calculateDistance(
+                new Coordinate(sun.getCenterX(), sun.getCenterY()));
             if (value < shortestDistance) {
               shortestDistance = value;
             }
           }
-          if (shortestDistance > bestValue) {
+          if (shortestDistance > bestValue
+              && centerDist > (maxX / 2) * 0.75
+              && centerDist < (maxX / 2) * 0.95) {
             bx = sx;
             by = sy;
             bestValue = shortestDistance;

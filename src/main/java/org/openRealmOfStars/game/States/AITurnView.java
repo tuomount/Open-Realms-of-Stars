@@ -3035,7 +3035,8 @@ public class AITurnView extends BlackPanel {
         if (realm.getGovernment().hasHeirs()) {
           for (Leader leaderAsHeir :realm.getLeaderPool()) {
             if (leaderAsHeir.getParent() != null
-                && leaderAsHeir.getJob() != Job.DEAD) {
+                && leaderAsHeir.getJob() != Job.DEAD
+                && leaderAsHeir.getJob() != Job.RULER) {
               heirs++;
             }
           }
@@ -3043,17 +3044,28 @@ public class AITurnView extends BlackPanel {
           if ((realm.getGovernment() == GovernmentType.CLAN
                || realm.getGovernment() == GovernmentType.HORDE)
               && heirs == 0) {
-            chance = 4;
+            chance = 6;
           }
+          if ((realm.getGovernment() == GovernmentType.CLAN
+              || realm.getGovernment() == GovernmentType.HORDE)
+             && heirs == 1) {
+           chance = 4;
+         }
           if ((realm.getGovernment() == GovernmentType.EMPIRE
               || realm.getGovernment() == GovernmentType.KINGDOM
-              || realm.getGovernment() == GovernmentType.NEST)
+              || realm.getGovernment() == GovernmentType.NEST
+              || realm.getGovernment() == GovernmentType.FEUDALISM)
               && heirs == 0) {
             chance = 10;
           }
           if ((realm.getGovernment() == GovernmentType.EMPIRE
-              || realm.getGovernment() == GovernmentType.KINGDOM)
-              && heirs > 1) {
+              || realm.getGovernment() == GovernmentType.KINGDOM
+              || realm.getGovernment() == GovernmentType.FEUDALISM)
+              && heirs == 1) {
+            chance = 5;
+          }
+          if (realm.getGovernment() == GovernmentType.NEST
+              && heirs == 1) {
             chance = 4;
           }
           if (leader.getRace() == SpaceRace.MECHIONS

@@ -2673,6 +2673,72 @@ public class AITurnView extends BlackPanel {
     }
   }
   /**
+   * Calculate whole realm wide corruption level.
+   * This will consider government, number of planets,
+   * how happy people are, amount of credits realm has and
+   * how many leader is corrupted.
+   * -100 means that Realm cannot be corrupted.
+   * Negative value means that there isn't any corruption.
+   * Positive means that there is corruption.
+   * @param map StarMap
+   * @param realm Realm whose corruption level is calculated.
+   * @return Corruption level.
+   */
+  public int calculateCorruptionLevel(final StarMap map,
+      final PlayerInfo realm) {
+    int result = 0;
+    if (realm.getGovernment().isImmuneToHappiness()) {
+      return -100;
+    }
+    int planets = 0;
+    int happiness = 0;
+    int population = 0;
+    for (Planet planet : map.getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() == realm) {
+        planets++;
+        happiness = happiness
+            + planet.calculateHappiness() * planet.getTotalPopulation();
+        population = population + planet.getTotalPopulation();
+      }
+    }
+    if (population > 0) {
+      happiness = happiness / population;
+    }
+    switch (planets) {
+    case 0:
+    case 1: {
+      result = result - 10;
+      break;
+    }
+    case 2: {
+      result = result - 5;
+      break;
+    }
+    case 3: {
+      result = result - 2;
+      break;
+    }
+    case 4: {
+      result = result - 1;
+      break;
+    }
+    default: {
+      result = result + planets - 5;
+      break;
+    }
+    }
+    if (realm.getTotalCredits() > 49) {
+      result = result + 1 + (realm.getTotalCredits() - 50) / 20;
+    }
+    result = result + happiness * -5;
+    for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() != Job.DEAD && leader.hasPerk(Perk.CORRUPTED)) {
+        result = result + 3;
+      }
+    }
+    return result;
+  }
+  /**
    * Handle leaders getting older.
    * Handle also ruler leader experience
    * @param realm Realm whose leaders are being handled
@@ -2717,6 +2783,51 @@ public class AITurnView extends BlackPanel {
       }
     }
     for (Leader leader : realm.getLeaderPool()) {
+      if (!leader.hasPerk(Perk.CORRUPTED)
+          && (leader.getJob() == Job.COMMANDER
+          || leader.getJob() == Job.GOVERNOR
+          || leader.getJob() == Job.RULER)) {
+        int chance = calculateCorruptionLevel(game.getStarMap(), realm);
+        if (chance > -100) {
+          chance = chance + leader.getTimeInJob() / 10;
+          if (leader.hasPerk(Perk.DISCIPLINE)) {
+            chance = chance - 25;
+          }
+          if (leader.hasPerk(Perk.LOGICAL)) {
+            chance = chance - 10;
+          }
+          if (leader.hasPerk(Perk.GOOD_LEADER)
+              || leader.hasPerk(Perk.COUNTER_AGENT)) {
+            chance = chance - 5;
+          }
+          if (leader.hasPerk(Perk.ADDICTED) || leader.hasPerk(Perk.MAD)) {
+            chance = chance + 5;
+          }
+          if (chance > 70) {
+            chance = 70;
+          }
+          if (DiceGenerator.getRandom(100) < chance) {
+            leader.addPerk(Perk.CORRUPTED);
+            Message msg = new Message(MessageType.LEADER,
+                leader.getCallName() + " morale has decreased. "
+                + "Some suspect that " + leader.getCallName()
+                + "might have corrupted.",
+                Icons.getIconByName(Icons.ICON_CREDIT));
+            msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+            realm.getMsgList().addUpcomingMessage(msg);
+            if (Game.getTutorial() != null
+                && game.getStarMap().isTutorialEnabled()) {
+                  String tutorialText = Game.getTutorial()
+                      .showTutorialText(131);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION,
+                    tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+                realm.getMsgList().addUpcomingMessage(msg);
+              }
+            }
+          }
+        }
+      }
       if (!leader.hasPerk(Perk.WEALTHY) && leader.hasPerk(Perk.CORRUPTED)
           && (leader.getJob() == Job.COMMANDER
           || leader.getJob() == Job.GOVERNOR

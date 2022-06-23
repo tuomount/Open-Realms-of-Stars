@@ -76,6 +76,7 @@ public final class SpeechFactory {
       case OFFER_SPY_TRADE: return createSpyTradeLine(race);
       case TRADE_EMBARGO: return createEmbargoLine(race, dynamicContent);
       case BORDER_WARS: return createMakeBorderWarLine(race, dynamicContent);
+      case ASK_PROTECTION: return createAskProtection(race);
       default: return null;
     }
   }
@@ -200,6 +201,66 @@ public final class SpeechFactory {
               + ". Move it!");
       case ALONIANS: return new SpeechLine(type,
           "Your spy fleet " + fleetName + " has crossed border. Move it away!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Ask protection. This works bit different than any other lines.
+   * For Space pirates they are asking payout for "protection", other realms
+   * are paying for space pirates not for attacking.
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createAskProtection(final SpaceRace race) {
+    SpeechType type = SpeechType.ASK_PROTECTION;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Hey, I could pay if you leave my fleet alone for 5 turns!");
+      case GREYANS: return new SpeechLine(type,
+          "I'll pay for leaving my fleet alone for 5 turns!");
+      case HUMAN:
+        return new SpeechLine(type,
+          "If you leave my fleet alone for 5 turns, I'll pay for it.");
+      case MECHIONS: return new SpeechLine(type,
+          "My fleet in danger. Safe for 5 turns?");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We pay for safety of our fleet for 5 turns, how you answer?");
+      case SPORKS: return new SpeechLine(type,
+          "I propose a deal. 5 turns safety and you will get all this?");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "You will get all these for 5 turn safety for my fleets.");
+      case SCAURIANS: return new SpeechLine(type,
+          "I offer you all this for 5 turn safety, what do you say?");
+      case HOMARIANS: return new SpeechLine(type,
+          "I am willing to pay for you not to attack my fleet for 5 turns.");
+      case SPACE_MONSTERS:
+      case SPACE_PIRATE:
+        switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: return new SpeechLine(type,
+          "Yarr! It would be a shame to scratch your fleet,"
+          + " but that can be avoid by paying this.");
+        case 1: return new SpeechLine(type,
+            "Ohoy, looks like you have nice fleet here."
+            + " Not to lose it will cost for you.");
+        case 2: return new SpeechLine(type,
+            "Are you interested in insurance? That's against pirates!");
+        }
+      case CHIRALOIDS: return new SpeechLine(type,
+          "I see our problem. I am willing to pay for 5 turn protection.");
+      case REBORGIANS: return new SpeechLine(type,
+          "We have detected danger. We are paying for protection of 5 turns.");
+      case LITHORIANS: return new SpeechLine(type,
+          "I am ready to pay for my fleet protection for 5 turns.");
+      case ALTEIRIANS: return new SpeechLine(type,
+          "My pod is in danger. I'll pay for it's protection for 5 turns.");
+      case SMAUGIRIANS: return new SpeechLine(type,
+          "Are you interested to get these for protection of my fleet?");
+      case SYNTHDROIDS: return new SpeechLine(type,
+          "Detected danger! Paying for protection of 5 turns.");
+      case ALONIANS: return new SpeechLine(type,
+          "Spare my fleet for 5 turns and I will pay for it.");
       default: return null;
     }
   }

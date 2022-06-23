@@ -2667,6 +2667,12 @@ public class DiplomaticTrade {
         }
         break;
       }
+      case ASK_PROTECTION: {
+        int index = starMap.getPlayerList().getIndex(giver);
+        info.getDiplomacy().getDiplomacyList(index).addBonus(
+            DiplomacyBonusType.PROMISED_PROTECTION, info.getRace());
+        break;
+      }
 
       default:
         //DO nothing

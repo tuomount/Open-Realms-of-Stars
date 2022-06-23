@@ -169,7 +169,11 @@ public enum DiplomacyBonusType {
   /**
    * Realm has free convicts without any good reasons.
    */
-  FREED_CONVICT;
+  FREED_CONVICT,
+  /**
+   * Space pirates have promised protection.
+   */
+  PROMISED_PROTECTION;
 
 
   /**

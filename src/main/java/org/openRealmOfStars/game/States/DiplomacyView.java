@@ -728,10 +728,17 @@ public class DiplomacyView extends BlackPanel {
       casusBelli = " (Casus belli)";
     }
     if (trade.isDiplomacyWithPirates()) {
-      speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
-          human.getRace(), null));
-      speechLines.add(SpeechFactory.createLine(SpeechType.ASK_PROTECTION,
-          human.getRace(), null));
+      if (startType == AI_REGULAR) {
+        speechLines.add(SpeechFactory.createLine(SpeechType.AGREE,
+            human.getRace(), null));
+        speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE,
+            human.getRace(), null));
+      } else {
+       speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
+            human.getRace(), null));
+        speechLines.add(SpeechFactory.createLine(SpeechType.ASK_PROTECTION,
+            human.getRace(), null));
+      }
     } else if (startType == AI_REGULAR) {
       if (trade.getFirstOffer() != null
           && trade.getFirstOffer().isWarInOffer()) {

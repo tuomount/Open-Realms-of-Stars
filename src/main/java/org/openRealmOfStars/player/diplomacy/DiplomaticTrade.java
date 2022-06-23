@@ -403,6 +403,40 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Generate Space pirate protection offer.
+   */
+  protected void generateProtectionOffer() {
+    PlayerInfo offerMaker = starMap.getPlayerByIndex(first);
+    PlayerInfo agree = starMap.getPlayerByIndex(second);
+    if (techListForFirst.size() > 0) {
+      firstOffer = new NegotiationList();
+      int index = getBestTech(techListForFirst, offerMaker.getAiAttitude());
+      firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
+          techListForFirst.get(index)));
+      int value = firstOffer.getOfferValue(offerMaker.getRace());
+      if (value < 15) {
+        int credit = 15 - value;
+        if (credit > agree.getTotalCredits()) {
+          credit = agree.getTotalCredits();
+        }
+        firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT, credit));
+      }
+      secondOffer = new NegotiationList();
+      secondOffer.add(new NegotiationOffer(NegotiationType.ASK_PROTECTION,
+          null));
+    } else {
+      int credit = 15;
+      if (credit > agree.getTotalCredits()) {
+        credit = agree.getTotalCredits();
+      }
+      firstOffer = new NegotiationList();
+      firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT, credit));
+      secondOffer.add(new NegotiationOffer(NegotiationType.ASK_PROTECTION,
+          null));
+    }
+  }
+
+  /**
    * Generate Tech trade between two players.
    * @param tradeType Choices are TRADE, BUY and SELL
    */
@@ -1465,10 +1499,12 @@ public class DiplomaticTrade {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int value = DiceGenerator.getRandom(100);
-    if (value < 40) {
+    if (value < 30) {
       if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
         generateTechTrade(TRADE);
       }
+    } else if (value < 50) {
+      generateProtectionOffer();
     } else if (value < 70) {
       generateTechTrade(BUY);
     } else if (value < 80) {
@@ -2673,7 +2709,6 @@ public class DiplomaticTrade {
             DiplomacyBonusType.PROMISED_PROTECTION, info.getRace());
         break;
       }
-
       default:
         //DO nothing
         break;

@@ -266,6 +266,7 @@ public enum DiplomacyBonusType {
       case WAR_DECLARATION_AGAINST_US: return 8;
       case FALSE_FLAG: return 8;
       case FREED_CONVICT: return 1;
+      case PROMISED_PROTECTION: return 0;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }

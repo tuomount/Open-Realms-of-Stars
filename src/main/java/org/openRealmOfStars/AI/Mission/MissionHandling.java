@@ -3371,6 +3371,19 @@ public final class MissionHandling {
       if (fleet.isPrivateerFleet()) {
         war = true;
       }
+      if (war && info != infoAtTarget
+          && info.getRace() == SpaceRace.SPACE_PIRATE) {
+        int pirateIndex = map.getPlayerList().getIndex(info);
+        if (pirateIndex != -1
+            && infoAtTarget.getDiplomacy().isProctected(pirateIndex)) {
+          war = false;
+        }
+        if (war && fleetAtTarget != null
+            && fleetAtTarget.getMilitaryValue() == 0
+            && DiceGenerator.getRandom(100) < 35) {
+          war = false; // Ask for protection
+        }
+      }
     }
     FleetTileInfo tile = map.getFleetTiles()[point.getX()][point.getY()];
     if (tile != null && tile.getPlanetIndex() != -1) {

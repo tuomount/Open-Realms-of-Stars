@@ -432,6 +432,7 @@ public class DiplomaticTrade {
         }
         firstOffer = new NegotiationList();
         firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT, credit));
+        secondOffer = new NegotiationList();
         secondOffer.add(new NegotiationOffer(NegotiationType.ASK_PROTECTION,
             null));
       }
@@ -459,6 +460,7 @@ public class DiplomaticTrade {
         }
         secondOffer = new NegotiationList();
         secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT, credit));
+        firstOffer = new NegotiationList();
         firstOffer.add(new NegotiationOffer(NegotiationType.ASK_PROTECTION,
             null));
       }

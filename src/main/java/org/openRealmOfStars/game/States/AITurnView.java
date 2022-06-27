@@ -1300,6 +1300,57 @@ public class AITurnView extends BlackPanel {
     }
   }
   /**
+   * Search newly found planets for colony missions for space pirates.
+   * This methods locates colonizable planets
+   */
+  public void searchPlanetsForSpacePirate() {
+    PlayerInfo info = game.getPlayers()
+        .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
+    if (info != null && !info.isHuman()) {
+      ArrayList<Planet> planets = game.getStarMap().getPlanetList();
+      int colonizations = info.getMissions().getNumberOfMissionTypes(
+          MissionType.COLONIZE, MissionPhase.PLANNING);
+      int maxRad = info.getRace().getMaxRad();
+      if (info.getTechList().isTech("Radiation dampener")) {
+        maxRad++;
+      }
+      if (info.getTechList().isTech("Radiation well")) {
+        maxRad++;
+      }
+      ArrayList<Mission> colonyMissions = new ArrayList<>();
+      for (Planet planet : planets) {
+        if (planet.getTotalRadiationLevel() <= maxRad
+            && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
+            && info.getSectorVisibility(planet.getCoordinate())
+            == PlayerInfo.VISIBLE) {
+          // New planet to colonize, adding it to mission list
+          Mission mission = new Mission(MissionType.COLONIZE,
+              MissionPhase.PLANNING, planet.getCoordinate());
+          if (info.getMissions().getColonizeMission(mission.getX(),
+              mission.getY()) == null && colonizations < LIMIT_COLONIZATIONS) {
+            // No colonize mission for this planet found, so adding it.
+            colonyMissions.add(mission);
+          }
+        }
+        if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
+            && !planet.isGasGiant()
+            && planet.getPlanetPlayerInfo() == null
+            && info.getSectorVisibility(planet.getCoordinate())
+            == PlayerInfo.FOG_OF_WAR) {
+          // New planet to colonize, adding it to mission list
+          Mission mission = new Mission(MissionType.COLONIZE,
+              MissionPhase.PLANNING, planet.getCoordinate());
+          if (info.getMissions().getColonizeMission(mission.getX(),
+              mission.getY()) == null && colonizations < LIMIT_COLONIZATIONS) {
+            colonyMissions.add(mission);
+          }
+        }
+      } // End of for loop of planets
+      findBestColonyMission(game.getStarMap(), colonyMissions, info);
+    }
+  }
+
+  /**
    * Search newly found planets for different missions.
    * This methods locates colonizable planets, attackable planets
    * and planets with to trade.
@@ -1615,6 +1666,7 @@ public class AITurnView extends BlackPanel {
           searchPlanetsForMissions();
           searchDeepSpaceAnchors();
         } else {
+          searchPlanetsForSpacePirate();
           searchForBlackHole();
         }
         game.getStarMap().setAIFleet(null);

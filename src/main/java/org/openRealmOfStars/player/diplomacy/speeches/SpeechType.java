@@ -130,7 +130,11 @@ public enum SpeechType {
   /**
    * Fleets have crossed borders too many times, declared the war.
    */
-  BORDER_WARS;
+  BORDER_WARS,
+  /**
+   * Space pirates could ask protection or realm could pay for protection
+   */
+  ASK_PROTECTION;
 
 
 
@@ -167,6 +171,8 @@ public enum SpeechType {
       case OFFER_SPY_TRADE:  return "Offer spy trade";
       case TRADE_EMBARGO:    return "Offer trade embargo";
       case TRADE_EMBARGO_REALM_CHOICE:    return "Embargo realm choice";
+      case BORDER_WARS:      return "Border wars";
+      case ASK_PROTECTION:   return "Ask protection";
       default: return "Unknown";
     }
   }

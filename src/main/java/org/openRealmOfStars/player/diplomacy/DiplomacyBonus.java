@@ -432,6 +432,11 @@ public class DiplomacyBonus {
        bonusLasting = 60;
        break;
      }
+     case PROMISED_PROTECTION: {
+       bonusValue = 3;
+       bonusLasting = 5;
+       break;
+     }
      default: {
        throw new IllegalArgumentException("Unknown bonus type!!");
      }

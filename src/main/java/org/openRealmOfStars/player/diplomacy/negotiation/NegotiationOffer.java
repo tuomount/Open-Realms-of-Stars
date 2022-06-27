@@ -11,7 +11,7 @@ import org.openRealmOfStars.starMap.planet.construction.Building;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2021 Tuomo Untinen
+* Copyright (C) 2017-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -56,6 +56,7 @@ public class NegotiationOffer {
         || type == NegotiationType.TRADE_ALLIANCE
         || type == NegotiationType.DIPLOMAT
         || type == NegotiationType.WAR
+        || type == NegotiationType.ASK_PROTECTION
         || type == NegotiationType.DEFENSIVE_PACT
         || type == NegotiationType.SPY_TRADE) {
       negotiationType = type;
@@ -174,6 +175,9 @@ public class NegotiationOffer {
       break;
     case DISCOVERED_ARTIFACT:
       offerValue = getDiscoveredArtifacts() * 5;
+      break;
+    case ASK_PROTECTION:
+      offerValue = 20;
       break;
     default:
       offerValue = 0;

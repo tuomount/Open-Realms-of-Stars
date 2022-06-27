@@ -728,8 +728,17 @@ public class DiplomacyView extends BlackPanel {
       casusBelli = " (Casus belli)";
     }
     if (trade.isDiplomacyWithPirates()) {
-      speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
-          human.getRace(), null));
+      if (startType == AI_REGULAR) {
+        speechLines.add(SpeechFactory.createLine(SpeechType.AGREE,
+            human.getRace(), null));
+        speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE,
+            human.getRace(), null));
+      } else {
+       speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
+            human.getRace(), null));
+        speechLines.add(SpeechFactory.createLine(SpeechType.ASK_PROTECTION,
+            human.getRace(), null));
+      }
     } else if (startType == AI_REGULAR) {
       if (trade.getFirstOffer() != null
           && trade.getFirstOffer().isWarInOffer()) {
@@ -1510,6 +1519,29 @@ public class DiplomacyView extends BlackPanel {
     if (speechSelected != null
         && speechSelected.getType() == SpeechType.AGREE) {
       handleActionCommandOkAgree();
+    }
+    if (speechSelected != null
+        && speechSelected.getType() == SpeechType.ASK_PROTECTION) {
+      NegotiationList list1 = getOfferingList(humanTechListOffer,
+          humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
+          createHumanVoteOffer(),
+          humanFleetListOffer, humanPlanetListOffer, humanCredits,
+          humanArtifacts);
+      NegotiationList list2 = getOfferingList(aiTechListOffer,
+          aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
+          createAiVoteOffer(),
+          aiFleetListOffer, aiPlanetListOffer, aiCredits, aiArtifacts);
+      list2.add(new NegotiationOffer(NegotiationType.ASK_PROTECTION, null));
+      trade.setFirstOffer(list2);
+      trade.setSecondOffer(list1);
+      if (trade.isOfferGoodForBoth()) {
+        trade.doTrades();
+        tradeHappened = true;
+        updatePanel(SpeechType.AGREE);
+        resetChoices();
+      } else {
+        updatePanel(SpeechType.DECLINE);
+      }
     }
     if (speechSelected != null
         && speechSelected.getType() == SpeechType.MOVE_FLEET) {

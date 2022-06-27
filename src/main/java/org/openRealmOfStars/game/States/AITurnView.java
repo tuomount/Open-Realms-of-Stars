@@ -2965,7 +2965,7 @@ public class AITurnView extends BlackPanel {
           }
         }
         if (leader.getJob() != Job.RULER && leader.getJob() != Job.PRISON
-            && leader.getJob() != Job.TOO_YOUNG
+            && leader.getJob() != Job.TOO_YOUNG && leader.getJob() != Job.DEAD
             && leader.hasPerk(Perk.POWER_HUNGRY)
             && LeaderUtility.isPowerHungryReadyForKill(
                 realm.getGovernment())) {

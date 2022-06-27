@@ -342,6 +342,19 @@ public class Diplomacy {
   }
 
   /**
+   * Is realm promised protection?
+   * @param index Space pirate index
+   * @return True if protected.
+   */
+  public boolean isProctected(final int index) {
+    if (index > -1 && index < diplomacyList.length
+        && diplomacyList[index] != null) {
+      return diplomacyList[index].isBonusType(
+          DiplomacyBonusType.PROMISED_PROTECTION);
+    }
+    return false;
+  }
+  /**
    * Is realm in alliance with someone
    * @return Index or -1 if not alliance
    */

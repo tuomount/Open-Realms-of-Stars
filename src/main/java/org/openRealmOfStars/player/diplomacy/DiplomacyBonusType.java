@@ -169,13 +169,17 @@ public enum DiplomacyBonusType {
   /**
    * Realm has free convicts without any good reasons.
    */
-  FREED_CONVICT;
+  FREED_CONVICT,
+  /**
+   * Space pirates have promised protection.
+   */
+  PROMISED_PROTECTION;
 
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 34;
+  public static final int MAX_BONUS_TYPE = 35;
 
   /**
    * Get ShipHullType index
@@ -217,6 +221,7 @@ public enum DiplomacyBonusType {
       case WAR_DECLARATION_AGAINST_US: return 31;
       case FALSE_FLAG: return 32;
       case FREED_CONVICT: return 33;
+      case PROMISED_PROTECTION: return 34;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -262,6 +267,7 @@ public enum DiplomacyBonusType {
       case WAR_DECLARATION_AGAINST_US: return 8;
       case FALSE_FLAG: return 8;
       case FREED_CONVICT: return 1;
+      case PROMISED_PROTECTION: return 0;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -306,6 +312,7 @@ public enum DiplomacyBonusType {
       case WAR_DECLARATION_AGAINST_US: return "war against us";
       case FALSE_FLAG: return "blown up ships";
       case FREED_CONVICT: return "freed convicted prisoners";
+      case PROMISED_PROTECTION: return "Promised protection";
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -385,6 +392,8 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.FALSE_FLAG;
     case 33:
       return DiplomacyBonusType.FREED_CONVICT;
+    case 34:
+      return DiplomacyBonusType.PROMISED_PROTECTION;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

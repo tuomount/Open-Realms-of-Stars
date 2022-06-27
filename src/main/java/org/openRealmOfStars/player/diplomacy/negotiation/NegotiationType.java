@@ -94,6 +94,10 @@ public enum NegotiationType {
   /**
    * Discovered ancient artifact.
    */
-  DISCOVERED_ARTIFACT;
+  DISCOVERED_ARTIFACT,
+  /**
+   * Ask protection from space pirates.
+   */
+  ASK_PROTECTION;
 
 }

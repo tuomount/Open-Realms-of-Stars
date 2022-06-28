@@ -565,7 +565,6 @@ public class PlayerInfoTest {
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testGetUnchartedValueSystem() {
         Sun sun = Mockito.mock(Sun.class);
-        Fleet fleet = Mockito.mock(Fleet.class);
         Mockito.when(sun.getCenterX()).thenReturn(3);
         Mockito.when(sun.getCenterY()).thenReturn(3);
         int maxX = 256, maxY = 256;
@@ -573,12 +572,12 @@ public class PlayerInfoTest {
         player.initMapData(maxX, maxY);
         int expect = 0;
         expect = 100;
-        int result = player.getUnchartedValueSystem(sun, fleet);
+        int result = player.getUnchartedValueSystem(sun);
         assertEquals(expect, result);
 
         player.setSectorVisibility(7, 7, FOG_OF_WAR);
         expect = 99;
-        result = player.getUnchartedValueSystem(sun, fleet);
+        result = player.getUnchartedValueSystem(sun);
         assertEquals(expect, result);
     }
 

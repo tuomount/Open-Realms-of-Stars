@@ -2346,6 +2346,89 @@ public class StarMap {
   }
 
   /**
+   * Get list of suns which should be ignored when starting to explore.
+   * @param info Realm which is exploring
+   * @return List of ignorable suns.
+   */
+  public String[] getListOfSunsToIgnore(final PlayerInfo info) {
+    ArrayList<String> listOfSuns = new ArrayList<>();
+    for (Sun sun : sunList) {
+      Mission mission = info.getMissions().getExploringForSun(sun.getName());
+      if (mission != null) {
+        listOfSuns.add(sun.getName());
+        continue;
+      }
+      int uncharted = info.getUnchartedValueSystem(sun);
+      if (uncharted < 30) {
+        listOfSuns.add(sun.getName());
+      }
+    }
+    return listOfSuns.toArray(new String[listOfSuns.size()]);
+  }
+  /**
+   * Get nearest uncharted Solar system for coordinate. This should never
+   * return null. Unless there are no suns in galaxy. This might not always
+   * return same result. If there are two suns with more than 50% uncharted
+   * then it is randomized which one is returned. This allows creating
+   * more varying for AI's explore missions.
+   * @param x coordinate
+   * @param y coordinate
+   * @param info Player who is doing the search
+   * @param fleet doing the search
+   * @param ignoreSuns Suns to ignore
+   * @param second true if possible to return second closest solar system
+   * @return Nearest sun
+   */
+  public Sun getNearestSolarSystem(final int x, final int y,
+      final PlayerInfo info, final Fleet fleet, final String[] ignoreSuns,
+      final boolean second) {
+    double distance = LONGEST_DISTANCE;
+    Sun result = null;
+    Sun secondChoice = null;
+    double secondDistance = LONGEST_DISTANCE;
+    int leastChartedValue = 100;
+    Sun leastCharted = null;
+    for (Sun sun : sunList) {
+      boolean ignore = false;
+      for (String ignoresun : ignoreSuns) {
+        if (sun.getName().equals(ignoresun)) {
+          ignore = true;
+          break;
+        }
+      }
+      if (ignore) {
+        continue;
+      }
+      Coordinate coordinate = new Coordinate(x, y);
+      double dist = coordinate.calculateDistance(sun.getCenterCoordinate());
+      if (dist < distance && info.getUnchartedValueSystem(sun) > 50) {
+        secondDistance = distance;
+        distance = dist;
+        secondChoice = result;
+        result = sun;
+      } else if (dist < secondDistance
+          && info.getUnchartedValueSystem(sun) > 50) {
+        secondDistance = dist;
+        secondChoice = sun;
+      }
+      if (info.getUnchartedValueSystem(sun) < leastChartedValue) {
+        leastCharted = sun;
+        leastChartedValue = info.getUnchartedValueSystem(sun);
+      }
+    }
+    if (result != null && secondChoice != null && second) {
+      if (DiceGenerator.getRandom(1) == 0) {
+        return result;
+      }
+      return secondChoice;
+    }
+    if (result != null) {
+      return result;
+    }
+    return leastCharted;
+  }
+
+  /**
    * Get nearest uncharted Solar system for coordinate. This should never
    * return null. Unless there are no suns in galaxy. This might not always
    * return same result. If there are two suns with more than 50% uncharted
@@ -2381,19 +2464,19 @@ public class StarMap {
       if (ignoreSun != null && ignoreSun.equals(sun.getName())) {
         dist = LONGEST_DISTANCE;
       }
-      if (dist < distance && info.getUnchartedValueSystem(sun, fleet) > 50) {
+      if (dist < distance && info.getUnchartedValueSystem(sun) > 50) {
         secondDistance = distance;
         distance = dist;
         secondChoice = result;
         result = sun;
       } else if (dist < secondDistance
-          && info.getUnchartedValueSystem(sun, fleet) > 50) {
+          && info.getUnchartedValueSystem(sun) > 50) {
         secondDistance = dist;
         secondChoice = sun;
       }
-      if (info.getUnchartedValueSystem(sun, fleet) < leastChartedValue) {
+      if (info.getUnchartedValueSystem(sun) < leastChartedValue) {
         leastCharted = sun;
-        leastChartedValue = info.getUnchartedValueSystem(sun, fleet);
+        leastChartedValue = info.getUnchartedValueSystem(sun);
       }
     }
     if (result != null && secondChoice != null && second) {

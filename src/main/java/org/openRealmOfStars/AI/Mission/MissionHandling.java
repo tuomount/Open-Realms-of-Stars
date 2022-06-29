@@ -424,7 +424,7 @@ public final class MissionHandling {
     } else {
       String ignoreSun = mission.getSunName();
       sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
-          fleet.getY(), info, fleet, ignoreSun);
+          fleet.getY(), info, ignoreSun);
     }
     if (sun == null) {
       Planet home = game.getStarMap().getClosestHomePort(info,
@@ -974,7 +974,7 @@ public final class MissionHandling {
           // End all moves to center and start privateering.
           info.getMissions().remove(mission);
           Sun sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
-              fleet.getY(), info, fleet, null);
+              fleet.getY(), info, null);
           Mission privateerMission = new Mission(MissionType.PRIVATEER,
               MissionPhase.TREKKING, sun.getCenterCoordinate());
           privateerMission.setFleetName(fleet.getName());

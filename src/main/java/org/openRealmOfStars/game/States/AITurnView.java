@@ -363,7 +363,7 @@ public class AITurnView extends BlackPanel {
       if (fleet.isScoutFleet() && !info.isBoard()) {
         // Scout fleet should go to explore
         Sun sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
-            fleet.getY(), info, fleet, null);
+            fleet.getY(), info, null);
         mission = new Mission(MissionType.EXPLORE, MissionPhase.TREKKING,
             sun.getCenterCoordinate());
         mission.setFleetName(fleet.getName());
@@ -391,7 +391,7 @@ public class AITurnView extends BlackPanel {
           && game.getStarMap().getTurn() < 2) {
         // Colony fleet should go to explore
         Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
-            fleet.getY(), info, fleet, null);
+            fleet.getY(), info, null);
         Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
             fleet.getY());
         mission = new Mission(MissionType.COLONY_EXPLORE,
@@ -410,7 +410,7 @@ public class AITurnView extends BlackPanel {
           || info.isBoard() && !fleet.isStarBaseDeployed()) {
         // Privateer fleet should go to explore and rob trade ships
         Sun sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
-            fleet.getY(), info, fleet, null);
+            fleet.getY(), info, null);
         mission = new Mission(MissionType.PRIVATEER, MissionPhase.TREKKING,
             sun.getCenterCoordinate());
         mission.setFleetName(fleet.getName());

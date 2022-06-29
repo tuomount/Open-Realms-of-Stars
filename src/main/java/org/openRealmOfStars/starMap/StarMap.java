@@ -958,7 +958,7 @@ public class StarMap {
         fleet = new Fleet(ship, x, y);
         playerInfo.getFleets().add(fleet);
         fleet.setName(playerInfo.getFleets().generateUniqueName("pirate"));
-        Sun sun = getAboutNearestSolarSystem(x, y, playerInfo, fleet, null);
+        Sun sun = getAboutNearestSolarSystem(x, y, playerInfo, null);
         Mission mission = new Mission(MissionType.PRIVATEER,
             MissionPhase.TREKKING, sun.getCenterCoordinate());
         mission.setFleetName(fleet.getName());
@@ -2319,13 +2319,12 @@ public class StarMap {
    * @param x coordinate
    * @param y coordinate
    * @param info Player who is doing the search
-   * @param fleet doing the search
    * @param ignoreSun Sun to ignore
    * @return Nearest sun
    */
   public Sun getNearestSolarSystem(final int x, final int y,
-      final PlayerInfo info, final Fleet fleet, final String ignoreSun) {
-    return getNearestSolarSystem(x, y, info, fleet, ignoreSun, false);
+      final PlayerInfo info, final String ignoreSun) {
+    return getNearestSolarSystem(x, y, info, ignoreSun, false);
   }
   /**
    * Get nearest uncharted Solar system for coordinate. This should never
@@ -2336,13 +2335,12 @@ public class StarMap {
    * @param x coordinate
    * @param y coordinate
    * @param info Player who is doing the search
-   * @param fleet doing the search
    * @param ignoreSun Sun to ignore
    * @return Nearest sun
    */
   public Sun getAboutNearestSolarSystem(final int x, final int y,
-      final PlayerInfo info, final Fleet fleet, final String ignoreSun) {
-    return getNearestSolarSystem(x, y, info, fleet, ignoreSun, true);
+      final PlayerInfo info, final String ignoreSun) {
+    return getNearestSolarSystem(x, y, info, ignoreSun, true);
   }
 
   /**
@@ -2437,13 +2435,12 @@ public class StarMap {
    * @param x coordinate
    * @param y coordinate
    * @param info Player who is doing the search
-   * @param fleet doing the search
    * @param ignoreSun Sun to ignore
    * @param second true if possible to return second closest solar system
    * @return Nearest sun
    */
   private Sun getNearestSolarSystem(final int x, final int y,
-      final PlayerInfo info, final Fleet fleet, final String ignoreSun,
+      final PlayerInfo info, final String ignoreSun,
       final boolean second) {
     double distance = LONGEST_DISTANCE;
     Sun result = null;
@@ -2451,8 +2448,8 @@ public class StarMap {
     double secondDistance = LONGEST_DISTANCE;
     int leastChartedValue = 100;
     Sun leastCharted = null;
+    Coordinate coordinate = new Coordinate(x, y);
     for (Sun sun : sunList) {
-      Coordinate coordinate = new Coordinate(x, y);
       if (info.getAiDifficulty() == AiDifficulty.NORMAL
           || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
         Mission mission = info.getMissions().getExploringForSun(sun.getName());

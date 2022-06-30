@@ -530,7 +530,7 @@ public class PlanetBombingView extends BlackPanel {
       return;
     }
     Ship ship = fleet.getShipByIndex(shipIndex);
-    if (!componentUsed[index] && ship.componentIsWorking(index)
+    if (ship != null && !componentUsed[index] && ship.componentIsWorking(index)
         && bombers.get(shipIndex).getActions() > 0) {
       componentUsed[index] = true;
       ShipComponent comp = ship.getComponent(index);

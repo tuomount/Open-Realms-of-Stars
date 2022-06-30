@@ -2350,6 +2350,7 @@ public class StarMap {
    */
   public String[] getListOfSunsToIgnore(final PlayerInfo info) {
     ArrayList<String> listOfSuns = new ArrayList<>();
+    ArrayList<String> exploredSuns = new ArrayList<>();
     for (Sun sun : sunList) {
       Mission mission = info.getMissions().getExploringForSun(sun.getName());
       if (mission != null) {
@@ -2358,8 +2359,11 @@ public class StarMap {
       }
       int uncharted = info.getUnchartedValueSystem(sun);
       if (uncharted < 30) {
-        listOfSuns.add(sun.getName());
+        exploredSuns.add(sun.getName());
       }
+    }
+    if (exploredSuns.size() + listOfSuns.size() <= sunList.size()) {
+      listOfSuns.addAll(exploredSuns);
     }
     return listOfSuns.toArray(new String[listOfSuns.size()]);
   }

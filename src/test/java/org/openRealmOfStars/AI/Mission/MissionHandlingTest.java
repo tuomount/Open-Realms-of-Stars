@@ -399,6 +399,8 @@ public class MissionHandlingTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testColonyExplore() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    MissionList missions = Mockito.mock(MissionList.class);
+    Mockito.when(info.getMissions()).thenReturn(missions);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
     Mission mission = new Mission(MissionType.COLONY_EXPLORE, MissionPhase.EXECUTING,
         new Coordinate(2, 2));

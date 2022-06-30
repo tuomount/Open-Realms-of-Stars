@@ -572,6 +572,20 @@ public final class MissionHandling {
   public static void handleColonyExplore(final Mission mission,
       final Fleet fleet, final PlayerInfo info, final Game game) {
     if (mission != null && mission.getType() == MissionType.COLONY_EXPLORE) {
+      if (info.getMissions().hasPlannedColonyMission()) {
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          // Challenging AI immediately goes for colonize
+          // going back to home
+          mission.setPhase(MissionPhase.TREKKING);
+        }
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL
+            && DiceGenerator.getRandom(9) < 2) {
+          // Normal AI 20% for each turn for colonize
+          // going back to home
+          mission.setPhase(MissionPhase.TREKKING);
+        }
+        // Easy always finishes colony explore first
+      }
       if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
         // Target acquired, mission complete

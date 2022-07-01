@@ -112,7 +112,9 @@ public class MissionList {
           || mission.getType() == MissionType.EXPLORE
           || mission.getType() == MissionType.PRIVATEER) {
         String missionSunName = mission.getSunName();
-        if (sunName.equals(missionSunName)) {
+        if (sunName.equals(missionSunName)
+            && (mission.getPhase() == MissionPhase.EXECUTING
+            || mission.getPhase() == MissionPhase.TREKKING)) {
           return mission;
         }
       }
@@ -221,6 +223,19 @@ public class MissionList {
 
   }
 
+  /**
+   * Has planned colony mission on the list?
+   * @return True or false
+   */
+  public boolean hasPlannedColonyMission() {
+    for (Mission mission : missions) {
+      if (mission.getPhase() == MissionPhase.PLANNING
+          && mission.getType() == MissionType.COLONIZE) {
+        return true;
+      }
+    }
+    return false;
+  }
   /**
    * Find a destroy fleet mission for coordinate
    * @param coordinate Coordinate where fleet should be destroyed

@@ -2599,7 +2599,7 @@ public class Planet {
                 } else if (mission.getType() == MissionType.EXPLORE) {
                   mission.setPhase(MissionPhase.TREKKING);
                   Sun sun = map.getAboutNearestSolarSystem(fleet.getX(),
-                      fleet.getY(), getPlanetPlayerInfo(), fleet, null);
+                      fleet.getY(), getPlanetPlayerInfo(), null);
                   mission.setTarget(sun.getCenterCoordinate());
                   mission.setSunName(sun.getName());
                 } else {

@@ -1459,12 +1459,11 @@ public class PlayerInfo {
   }
 
   /**
-  * Get best sector to explore in this Solar system
+  * How many percentage of system is uncharted.
   * @param sun Solar System
-  * @param fleet Fleet doing the exploring
   * @return How many percentage is uncharted
   */
-  public int getUnchartedValueSystem(final Sun sun, final Fleet fleet) {
+  public int getUnchartedValueSystem(final Sun sun) {
     int unCharted = 0;
     int charted = 0;
     for (int x = -StarMap.SOLAR_SYSTEM_WIDTH - 2;

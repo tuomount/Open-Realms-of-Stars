@@ -408,6 +408,49 @@ public final class MissionHandling {
   }
 
   /**
+   * Find Sun to explore.
+   * @param mission Exploring mission
+   * @param fleet Fleet exploring
+   * @param info Realm exploring
+   * @param game and whole game with starmap.
+   */
+  private static void findSunToExplore(final Mission mission, final Fleet fleet,
+      final PlayerInfo info, final Game game) {
+    Sun sun = null;
+    if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+      String[] ingorableSuns = game.getStarMap().getListOfSunsToIgnore(info);
+      sun = game.getStarMap().getNearestSolarSystem(fleet.getX(), fleet.getY(),
+          info, fleet, ingorableSuns, true);
+    } else {
+      String ignoreSun = mission.getSunName();
+      sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
+          fleet.getY(), info, ignoreSun);
+    }
+    if (sun == null) {
+      Planet home = game.getStarMap().getClosestHomePort(info,
+          fleet.getCoordinate());
+      if (home == null) {
+        info.getMissions().remove(mission);
+        return;
+      }
+      mission.setType(MissionType.MOVE);
+      mission.setTarget(home.getCoordinate());
+      mission.setPhase(MissionPhase.PLANNING);
+      mission.setTargetPlanet(home.getName());
+    } else {
+      if (!sun.getName().equals(mission.getSunName())) {
+        mission.setTarget(sun.getCenterCoordinate());
+        fleet.setRoute(new Route(fleet.getX(), fleet.getY(),
+            mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+        mission.setSunName(sun.getName());
+        mission.setPhase(MissionPhase.TREKKING);
+        // Starting the new exploring mission
+        mission.setMissionTime(0);
+        return;
+      }
+    }
+  }
+  /**
    * Handle exploring mission
    * @param mission Exploring mission, does nothing if type is wrong
    * @param fleet Fleet on mission
@@ -417,33 +460,9 @@ public final class MissionHandling {
   public static void handleExploring(final Mission mission, final Fleet fleet,
       final PlayerInfo info, final Game game) {
     if (mission != null && mission.getType() == MissionType.EXPLORE) {
-      String ignoreSun = null;
       if (mission.getPhase() == MissionPhase.LOADING) {
-        Sun sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
-            fleet.getY(), info, fleet, ignoreSun);
-        if (sun == null) {
-          Planet home = game.getStarMap().getClosestHomePort(info,
-              fleet.getCoordinate());
-          if (home == null) {
-            info.getMissions().remove(mission);
-            return;
-          }
-          mission.setType(MissionType.MOVE);
-          mission.setTarget(home.getCoordinate());
-          mission.setPhase(MissionPhase.PLANNING);
-          mission.setTargetPlanet(home.getName());
-        } else {
-          if (!sun.getName().equals(mission.getSunName())) {
-            mission.setTarget(sun.getCenterCoordinate());
-            fleet.setRoute(new Route(fleet.getX(), fleet.getY(),
-                mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
-            mission.setSunName(sun.getName());
-            mission.setPhase(MissionPhase.TREKKING);
-            // Starting the new exploring mission
-            mission.setMissionTime(0);
-            return;
-          }
-        }
+        findSunToExplore(mission, fleet, info, game);
+        return;
       }
       if (mission.getPhase() == MissionPhase.TREKKING) {
         int mult = 1;
@@ -507,40 +526,14 @@ public final class MissionHandling {
         if (mission.getMissionTime() >= info.getRace().getAIExploringAmount()) {
           // Depending on race it decides enough is enough
           fleet.setaStarSearch(null);
-          ignoreSun = mission.getSunName();
           missionComplete = true;
         }
         if (fleet.getaStarSearch() == null) {
-          Sun sun = null;
           if (missionComplete) {
-            sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
-                fleet.getY(), info, fleet, ignoreSun);
-            if (sun == null) {
-              Planet home = game.getStarMap().getClosestHomePort(info,
-                  fleet.getCoordinate());
-              if (home == null) {
-                info.getMissions().remove(mission);
-                return;
-              }
-              mission.setType(MissionType.MOVE);
-              mission.setTarget(home.getCoordinate());
-              mission.setPhase(MissionPhase.PLANNING);
-              mission.setTargetPlanet(home.getName());
-            } else {
-              if (!sun.getName().equals(mission.getSunName())) {
-                mission.setTarget(sun.getCenterCoordinate());
-                fleet.setRoute(new Route(fleet.getX(), fleet.getY(),
-                    mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
-                mission.setSunName(sun.getName());
-                mission.setPhase(MissionPhase.TREKKING);
-                // Starting the new exploring mission
-                mission.setMissionTime(0);
-                return;
-              }
-            }
-          } else {
-            sun = game.getStarMap().getSunByName(mission.getSunName());
+            findSunToExplore(mission, fleet, info, game);
+            return;
           }
+          Sun sun = game.getStarMap().getSunByName(mission.getSunName());
           PathPoint point = info.getBestUnchartedSector(sun, fleet);
 /*          if (point == null) {
             point = info.getClosestUnchartedSector(sun, fleet);
@@ -579,6 +572,20 @@ public final class MissionHandling {
   public static void handleColonyExplore(final Mission mission,
       final Fleet fleet, final PlayerInfo info, final Game game) {
     if (mission != null && mission.getType() == MissionType.COLONY_EXPLORE) {
+      if (info.getMissions().hasPlannedColonyMission()) {
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          // Challenging AI immediately goes for colonize
+          // going back to home
+          mission.setPhase(MissionPhase.TREKKING);
+        }
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL
+            && DiceGenerator.getRandom(9) < 2) {
+          // Normal AI 20% for each turn for colonize
+          // going back to home
+          mission.setPhase(MissionPhase.TREKKING);
+        }
+        // Easy always finishes colony explore first
+      }
       if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
         // Target acquired, mission complete
@@ -981,7 +988,7 @@ public final class MissionHandling {
           // End all moves to center and start privateering.
           info.getMissions().remove(mission);
           Sun sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
-              fleet.getY(), info, fleet, null);
+              fleet.getY(), info, null);
           Mission privateerMission = new Mission(MissionType.PRIVATEER,
               MissionPhase.TREKKING, sun.getCenterCoordinate());
           privateerMission.setFleetName(fleet.getName());

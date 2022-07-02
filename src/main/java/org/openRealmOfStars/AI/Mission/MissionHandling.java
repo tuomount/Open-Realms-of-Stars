@@ -474,6 +474,10 @@ public final class MissionHandling {
         }
         Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
             fleet.getMovesLeft() * mult);
+        if (info.isHuman()) {
+          // Human player should explore anomalies by it's own.
+          targetAnomaly = null;
+        }
         if (targetAnomaly != null) {
           // Focus on anomalies
           fleet.setRoute(null);
@@ -510,6 +514,10 @@ public final class MissionHandling {
         }
         Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
             fleet.getMovesLeft() * mult);
+        if (info.isHuman()) {
+          // Human player should explore anomalies by it's own.
+          targetAnomaly = null;
+        }
         if (targetAnomaly != null) {
           // Focus on anomalies
           fleet.setRoute(null);

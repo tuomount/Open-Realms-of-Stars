@@ -370,20 +370,30 @@ public class SpaceAnomaly {
           break;
         }
         case TileNames.SPACE_ANOMALY_MECHION: {
-          result = new SpaceAnomaly(AnomalyType.ANCIENT_MECHION, 0);
-          result.setText("Ancient Mechion was in long lasting stasis in "
+          result = new SpaceAnomaly(AnomalyType.ANCIENT_ROBOT, 0);
+          SpaceRace leaderRace = SpaceRace.MECHIONS;
+          String name = NameGenerator.generateName(SpaceRace.MECHIONS,
+              Gender.NONE);
+          String capitalDesc = "Ancient Mechion";
+          String desc = "Mechion";
+          if (DiceGenerator.getRandom(99) < 50) {
+            leaderRace = SpaceRace.SYNTHDROIDS;
+            name = NameGenerator.generateName(SpaceRace.SYNTHDROIDS,
+                Gender.FEMALE);
+            capitalDesc = "Ancient Synthdroid";
+            desc = "Synthdroid";
+          }
+          result.setText(capitalDesc + " was in long lasting stasis in "
               + "ancient ship floating in vastness of space. When entering "
-              + "the ship Mechion wakes and is willing to join your "
+              + "the ship " + desc + " wakes and is willing to join your "
               + "realm.");
           result.setImage(GuiStatics.IMAGE_OLD_SHIP);
           map.setTile(fleet.getX(), fleet.getY(), empty);
-          String name = NameGenerator.generateName(SpaceRace.MECHIONS,
-              Gender.NONE);
           Leader leader = new Leader(name);
           leader.setAge(DiceGenerator.getRandom(300, 1500));
           leader.setHomeworld("Unknown");
           leader.setLevel(DiceGenerator.getRandom(2, 5));
-          leader.setRace(SpaceRace.MECHIONS);
+          leader.setRace(leaderRace);
           leader.setJob(Job.UNASSIGNED);
           leader.setTitle("");
           for (int i = 0; i < leader.getLevel(); i++) {

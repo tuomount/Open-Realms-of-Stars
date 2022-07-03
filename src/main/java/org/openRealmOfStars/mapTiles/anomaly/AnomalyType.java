@@ -61,9 +61,9 @@ public enum AnomalyType {
    */
   DEEP_SPACE_ANCHOR,
   /**
-   * Space anomaly containing ancient mechion leader
+   * Space anomaly containing ancient mechion or synthdroid leader
    */
-  ANCIENT_MECHION,
+  ANCIENT_ROBOT,
   /**
    * Space anomaly containing time warp.
    */

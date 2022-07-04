@@ -617,6 +617,11 @@ public final class TileNames {
   public static final String SPACE_ANOMALY_NEWS_STATION =
       "SpaceAnomalyNewsStation";
   /**
+   * Space anomaly tile: Leader in stasis
+   */
+  public static final String SPACE_ANOMALY_LEADER_IN_STASIS =
+      "SpaceAnomalyLeaderInStasis";
+  /**
    * Worm hole tile 1
    */
   public static final String WORM_HOLE1 = "WormHole1";

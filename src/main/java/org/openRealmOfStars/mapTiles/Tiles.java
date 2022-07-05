@@ -616,6 +616,10 @@ public final class Tiles {
     tile = new Tile(tilesImage, 8, 6, TileNames.NEWSTATION2);
     tile.setDescription(TileNames.NEWS_STATION_DESCRIPTION);
     addTile(tile);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_LEADER_IN_STASIS);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    addTile(tile);
 
   }
 

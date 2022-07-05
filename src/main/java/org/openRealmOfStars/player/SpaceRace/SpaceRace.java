@@ -8,7 +8,6 @@ import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.diplomacy.Attitude;
-import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.WorldType;
 import org.openRealmOfStars.utilities.DiceGenerator;

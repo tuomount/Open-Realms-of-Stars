@@ -581,6 +581,46 @@ public class SpaceAnomaly {
           }
           break;
         }
+        case TileNames.SPACE_ANOMALY_LEADER_IN_STASIS: {
+          result = new SpaceAnomaly(AnomalyType.LEADER_IN_STASIS, 0);
+          SpaceRace leaderRace = SpaceRace.getRandomLivingRace();
+          Gender gender = Gender.getRandom();
+          String name = NameGenerator.generateName(leaderRace, gender);
+          String desc = leaderRace.getNameSingle();
+          String capitalDesc = desc.substring(0).toUpperCase()
+              + desc.substring(1);
+          result.setText(capitalDesc + " was in long lasting stasis in "
+              + "old ship floating in vastness of space. When entering "
+              + "the ship " + desc + " wakes and is willing to join your "
+              + "realm because of rescuing " + gender.getHisHer() + " life.");
+          result.setImage(GuiStatics.IMAGE_OLD_SHIP);
+          map.setTile(fleet.getX(), fleet.getY(), empty);
+          Leader leader = new Leader(name);
+          leader.setAge(DiceGenerator.getRandom(30, 50));
+          leader.setHomeworld("Unknown");
+          leader.setLevel(DiceGenerator.getRandom(1, 3));
+          leader.setRace(leaderRace);
+          leader.setJob(Job.UNASSIGNED);
+          leader.setTitle("");
+          for (int i = 0; i < leader.getLevel(); i++) {
+            Perk[] newPerks = LeaderUtility.getNewPerks(leader,
+                LeaderUtility.PERK_TYPE_GOOD);
+            int index = DiceGenerator.getRandom(newPerks.length - 1);
+            leader.getPerkList().add(newPerks[index]);
+            if (DiceGenerator.getRandom(99) < 10) {
+              newPerks = LeaderUtility.getNewPerks(leader,
+                  LeaderUtility.PERK_TYPE_BAD);
+              index = DiceGenerator.getRandom(newPerks.length - 1);
+              leader.getPerkList().add(newPerks[index]);
+            }
+          }
+          if (fleet.getCommander() != null) {
+            fleet.getCommander().setExperience(
+                fleet.getCommander().getExperience() + 10);
+          }
+          info.getLeaderPool().add(leader);
+          break;
+        }
         default: {
           break;
         }

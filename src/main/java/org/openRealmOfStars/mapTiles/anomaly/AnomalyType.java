@@ -79,5 +79,9 @@ public enum AnomalyType {
   /**
    * Ancient News station broadcasting the galactic news.
    */
-  NEWS_STATION;
+  NEWS_STATION,
+  /**
+   * Leader in stasis
+   */
+  LEADER_IN_STASIS;
 }

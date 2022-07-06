@@ -617,6 +617,11 @@ public final class TileNames {
   public static final String SPACE_ANOMALY_NEWS_STATION =
       "SpaceAnomalyNewsStation";
   /**
+   * Space anomaly tile: Leader in stasis
+   */
+  public static final String SPACE_ANOMALY_LEADER_IN_STASIS =
+      "SpaceAnomalyLeaderInStasis";
+  /**
    * Worm hole tile 1
    */
   public static final String WORM_HOLE1 = "WormHole1";
@@ -701,7 +706,8 @@ public final class TileNames {
   public static final String[] NON_HARMFUL_SPACE_ANOMALIES = {
       SPACE_ANOMALY_CREDITS, SPACE_ANOMALY_TECH, SPACE_ANOMALY_DSA,
       SPACE_ANOMALY_MAP, SPACE_ANOMALY_SHIP, SPACE_ANOMALY_MECHION,
-      SPACE_ANOMALY_RARE_TECH, SPACE_ANOMALY_ANCIENT_ARTIFACT};
+      SPACE_ANOMALY_RARE_TECH, SPACE_ANOMALY_ANCIENT_ARTIFACT,
+      SPACE_ANOMALY_LEADER_IN_STASIS};
 
   /**
    * List of harmful space anomalies which are not related to space pirates or

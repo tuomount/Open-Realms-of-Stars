@@ -556,7 +556,7 @@ public final class MissionHandling {
             AStarSearch search = new AStarSearch(game.getStarMap(),
                 fleet.getX(), fleet.getY(), mission.getX(), mission.getY(),
                 false);
-            search.doSearch();
+            search.doSearchPreferStraightLines();
             search.doRoute();
             fleet.setaStarSearch(search);
             makeRegularMoves(game, fleet, info);
@@ -630,7 +630,7 @@ public final class MissionHandling {
             AStarSearch search = new AStarSearch(game.getStarMap(),
                 fleet.getX(), fleet.getY(), mission.getX(), mission.getY(),
                 true);
-            search.doSearch();
+            search.doSearchPreferStraightLines();
             search.doRoute();
             fleet.setaStarSearch(search);
             makeRegularMoves(game, fleet, info);

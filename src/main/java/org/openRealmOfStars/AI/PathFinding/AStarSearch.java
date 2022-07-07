@@ -12,7 +12,7 @@ import org.openRealmOfStars.starMap.StarMap;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018  Tuomo Untinen
+ * Copyright (C) 2016, 2018, 2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -330,6 +330,111 @@ public class AStarSearch {
                 targetPoint = newPoint;
                 return true;
               }
+            }
+          }
+        }
+      } else {
+        noMorePoints = true;
+      }
+    }
+    // Target is not found, no path available
+    return false;
+  }
+
+  /**
+   * Do actual A Star search with initialized values.
+   * Prefer straight lines.
+   * @return True if successful and false if not
+   */
+  public boolean doSearchPreferStraightLines() {
+    boolean noMorePoints = false;
+    int count = 0;
+    if (isValidPos(tx, ty) && blockMap[tx][ty] == BLOCKED
+        && targetDistance == 0) {
+      targetDistance = 1;
+    }
+    while (!noMorePoints) {
+      count++;
+      if (points.size() > 0) {
+        PathPoint point = points.get(0);
+        points.remove(0);
+        for (int k = 0; k < 8; k++) {
+          int x = 0;
+          int y = 0;
+          switch (k) {
+          default:
+          case 0: {
+            x = -1;
+            y = 0;
+            break;
+          }
+          case 1: {
+            x = 1;
+            y = 0;
+            break;
+          }
+          case 2: {
+            x = 0;
+            y = -1;
+            break;
+          }
+          case 3: {
+            x = 0;
+            y = 1;
+            break;
+          }
+          case 4: {
+            x = -1;
+            y = -1;
+            break;
+          }
+          case 5: {
+            x = 1;
+            y = -1;
+            break;
+          }
+          case 6: {
+            x = -1;
+            y = 1;
+            break;
+          }
+          case 7: {
+            x = 1;
+            y = 1;
+            break;
+          }
+          }
+          int mx = x + point.getX();
+          int my = y + point.getY();
+          if (isValidPos(mx, my) && blockMap[mx][my] > count
+              && blockMap[mx][my] != BLOCKED) {
+            blockMap[mx][my] = count;
+            Coordinate coordinate = new Coordinate(mx, my);
+            Coordinate targetCoordinate = new Coordinate(tx, ty);
+            double distance = coordinate.calculateDistance(targetCoordinate);
+            PathPoint newPoint = new PathPoint(mx, my, distance);
+            if (distance < point.getDistance()) {
+              if (points.size() > 0) {
+                PathPoint first = points.get(0);
+                if (first != null && distance < first.getDistance()) {
+                  // Seems to be closer, so adding it to first one
+                  points.add(0, newPoint);
+                } else {
+                  // Seems to be closer, but not close as first one in list
+                  points.add(1, newPoint);
+                }
+              } else {
+                // Seems to be closer, so adding it to first one
+                points.add(0, newPoint);
+              }
+            } else {
+              // Seems to be more far away so adding it to end
+              points.add(newPoint);
+            }
+            if ((int) Math.ceil(distance) == targetDistance) {
+              // Target found and acquired
+              targetPoint = newPoint;
+              return true;
             }
           }
         }

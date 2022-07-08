@@ -266,6 +266,8 @@ https://opengameart.org/content/space-ship-building-bits-volume-1
 
 Cloaked ship and shuttle 2 by Tuomo Untinen
 
+Stasis chamber in shuttle by Tuomo Untinen
+
 Lithorian Space Ship Bridge by Tuomo Untinen
 
 Reborgian Space Ship Bridge by Tuomo Untinen

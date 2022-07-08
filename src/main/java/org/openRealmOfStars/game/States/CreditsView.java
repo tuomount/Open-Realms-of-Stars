@@ -245,6 +245,7 @@ public class CreditsView extends BlackPanel {
       + "by Stephen Challener (Redshrike), hosted by OpenGameArt.org\n"
       + "https://opengameart.org/content/space-ship-building-bits-volume-1\n\n"
       + "Cloaked ship and shuttle 2 by Tuomo Untinen\n\n"
+      + "Stasis chamber in shuttle by Tuomo Untinen\n\n"
       + "Lithorian Space Ship Bridge by Tuomo Untinen\n\n"
       + "Reborgian Space Ship Bridge by Tuomo Untinen\n\n"
       + "Smaugirian Space Ship Bridge by Tuomo Untinen\n\n"

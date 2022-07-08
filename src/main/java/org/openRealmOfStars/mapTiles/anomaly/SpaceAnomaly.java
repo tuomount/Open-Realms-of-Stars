@@ -593,7 +593,7 @@ public class SpaceAnomaly {
               + "old ship floating in vastness of space. When entering "
               + "the ship " + desc + " wakes and is willing to join your "
               + "realm because of rescuing " + gender.getHisHer() + " life.");
-          result.setImage(GuiStatics.IMAGE_OLD_SHIP);
+          result.setImage(GuiStatics.IMAGE_STASIS);
           map.setTile(fleet.getX(), fleet.getY(), empty);
           Leader leader = new Leader(name);
           leader.setAge(DiceGenerator.getRandom(30, 50));

@@ -412,6 +412,10 @@ public class ImageInstruction {
    */
   public static final String SPINOSAURUS = "spinosaurus";
   /**
+   * Instructions for stasis
+   */
+  public static final String STASIS = "stasis";
+  /**
    * Instructions for containers
    */
   public static final String CONTAINERS = "containers";
@@ -1204,6 +1208,9 @@ public class ImageInstruction {
     }
     if (SPINOSAURUS.equals(image)) {
       drawImg = GuiStatics.IMAGE_SPINOSAURUS;
+    }
+    if (STASIS.equals(image)) {
+      drawImg = GuiStatics.IMAGE_STASIS;
     }
     if (CONTAINERS.equals(image)) {
       drawImg = GuiStatics.IMAGE_CONTAINERS;

@@ -1501,6 +1501,12 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/spinosaurus.png"));
   /**
+   * Image stasis
+   */
+  public static final BufferedImage IMAGE_STASIS = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/stasis.png"));
+  /**
    * Image containers
    */
   public static final BufferedImage IMAGE_CONTAINERS = IOUtilities

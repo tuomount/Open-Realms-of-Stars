@@ -240,6 +240,7 @@ public class CreditsView extends BlackPanel {
       + "Sci-Fi containers by Rubberduck (CC0)\n\n"
       + "Space Pirate Space Ship Bridge by Tuomo Untinen\n\n"
       + "Rare tech capsule by Tuomo Untinen\n\n"
+      + "Floating artifacts by Tuomo Untinen\n\n"
       + "Lithorian ships are done by using"
       + " Space ship building bits, volume 1 ships\n"
       + "by Stephen Challener (Redshrike), hosted by OpenGameArt.org\n"

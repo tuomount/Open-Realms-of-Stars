@@ -260,6 +260,8 @@ Space Pirate Space Ship Bridge by Tuomo Untinen
 
 Rare tech capsule by Tuomo Untinen
 
+Floating artifacts by Tuomo Untinen
+
 Lithorian ships are done by using Space ship building bits, volume 1 ships
 by Stephen Challener (Redshrike), hosted by OpenGameArt.org
 https://opengameart.org/content/space-ship-building-bits-volume-1

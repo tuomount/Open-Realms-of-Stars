@@ -520,7 +520,11 @@ public class SpaceAnomaly {
               + " contained strange piece of ancient artifact. "
               + ". This seems to be unusual piece of history."
               + " This finding requires some research time.");
-          result.setImage(GuiStatics.IMAGE_RARE_TECH);
+          if (DiceGenerator.getRandom(1) == 0) {
+            result.setImage(GuiStatics.IMAGE_ARTIFACT1);
+          } else {
+            result.setImage(GuiStatics.IMAGE_ARTIFACT2);
+          }
           info.getArtifactLists().addDiscoveredArtifact(
               ArtifactFactory.getRandomNonFacility());
           if (Game.getTutorial() != null  && info.isHuman()

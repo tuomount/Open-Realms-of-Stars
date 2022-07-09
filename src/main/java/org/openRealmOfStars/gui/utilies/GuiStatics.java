@@ -1332,6 +1332,17 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/raretech.png"));
 
   /**
+   * Artifact 1
+   */
+  public static final BufferedImage IMAGE_ARTIFACT1 = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/artifact1.png"));
+  /**
+   * Artifact 2
+   */
+  public static final BufferedImage IMAGE_ARTIFACT2 = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/artifact2.png"));
+
+  /**
    * Old Ship
    */
   public static final BufferedImage IMAGE_OLD_SHIP = IOUtilities.loadImage(

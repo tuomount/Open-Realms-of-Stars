@@ -2390,6 +2390,7 @@ public class StarMap {
     double secondDistance = LONGEST_DISTANCE;
     int leastChartedValue = 100;
     Sun leastCharted = null;
+    double leastChartedDist = LONGEST_DISTANCE;
     for (Sun sun : sunList) {
       boolean ignore = false;
       for (String ignoresun : ignoreSuns) {
@@ -2403,19 +2404,21 @@ public class StarMap {
       }
       Coordinate coordinate = new Coordinate(x, y);
       double dist = coordinate.calculateDistance(sun.getCenterCoordinate());
-      if (dist < distance && info.getUnchartedValueSystem(sun) > 50) {
+      int uncharted = info.getUnchartedValueSystem(sun);
+      if (dist < distance && uncharted > 50) {
         secondDistance = distance;
         distance = dist;
         secondChoice = result;
         result = sun;
       } else if (dist < secondDistance
-          && info.getUnchartedValueSystem(sun) > 50) {
+          && uncharted > 50) {
         secondDistance = dist;
         secondChoice = sun;
       }
-      if (info.getUnchartedValueSystem(sun) < leastChartedValue) {
+      if (uncharted < leastChartedValue && dist < leastChartedDist) {
+        leastChartedDist = dist;
         leastCharted = sun;
-        leastChartedValue = info.getUnchartedValueSystem(sun);
+        leastChartedValue = uncharted;
       }
     }
     if (result != null && secondChoice != null && second) {

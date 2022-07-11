@@ -333,14 +333,22 @@ public final class MissionHandling {
           Planet targetOrbital = getNearByOrbital(info, game, fleet,
               fleet.getMovesLeft());
           if (targetOrbital != null) {
-            mission.setPhase(MissionPhase.EXECUTING);
-            fleet.setRoute(null);
-            AStarSearch search = new AStarSearch(game.getStarMap(),
-                fleet.getX(), fleet.getY(), targetOrbital.getX(),
-                targetOrbital.getY(), false);
-            search.doSearch();
-            search.doRoute();
-            fleet.setaStarSearch(search);
+            Fleet defenderFleet = game.getStarMap().getFleetByCoordinate(
+                targetOrbital.getX(), targetOrbital.getY());
+            int military = targetOrbital.getOrbital().getTotalMilitaryPower();
+            if (defenderFleet != null) {
+              military = military + defenderFleet.getMilitaryValue();
+            }
+            if (military < fleet.getMilitaryValue()) {
+              mission.setPhase(MissionPhase.EXECUTING);
+              fleet.setRoute(null);
+              AStarSearch search = new AStarSearch(game.getStarMap(),
+                  fleet.getX(), fleet.getY(), targetOrbital.getX(),
+                  targetOrbital.getY(), false);
+              search.doSearch();
+              search.doRoute();
+              fleet.setaStarSearch(search);
+            }
           }
         }
       }

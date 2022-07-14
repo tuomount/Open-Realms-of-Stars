@@ -257,7 +257,9 @@ public class ArtifactLists {
       if (scientist.hasPerk(Perk.ARCHAEOLOGIST)) {
         chance = chance + 20;
       }
-      if (DiceGenerator.getRandom(100) < chance) {
+      if (DiceGenerator.getRandom(100) < chance
+          && !info.getTechList().hasTech(TechType.Improvements,
+              "College of history")) {
         sb.append(info.getEmpireName());
         sb.append(" has learned College of history while studying artifacts.");
         info.getTechList().addTech(TechFactory.createImprovementTech(

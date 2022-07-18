@@ -270,6 +270,10 @@ public class Tech {
       result = "Improves survivality of colonies on water worlds.\n"
           + " This will increase water world suitability by 25%.";
     }
+    if (techName.equals("Improved engineer")) {
+      result = " Reduces overload failure by 2 when overloading\n"
+          + " components during combat.";
+    }
     return result;
   }
   /**

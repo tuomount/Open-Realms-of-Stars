@@ -633,7 +633,7 @@ public enum GovernmentType {
     }
     if (isImmuneToHappiness()) {
       sb.append(dot);
-      sb.append(" No effects on happines nor war fatigue");
+      sb.append(" No effects on happiness nor war fatigue");
       sb.append(lf);
     } else {
       if (getGenericHappiness() != 0) {

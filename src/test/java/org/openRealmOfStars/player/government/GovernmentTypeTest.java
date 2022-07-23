@@ -4,12 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.player.government.GovernmentType;
 
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018,2019-2021  Tuomo Untinen
+* Copyright (C) 2018,2019-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -106,20 +105,20 @@ public class GovernmentTypeTest {
         + "* Reign length: life time\n"
         + "* Rulers have heirs\n"
         + "* Possibility to internal power struggle\n"
-        + "* No effects on happines nor war fatigue\n";
+        + "* No effects on happiness nor war fatigue\n";
     expected[8] = "### Hive-mind\n"
         + "* Base fleet capacity: 4\n"
         + "* Leader capacity: 6\n"
         + "* Leader cost: 5\n"
         + "* Reign length: life time\n"
         + "* Possibility to internal power struggle\n"
-        + "* No effects on happines nor war fatigue\n";
+        + "* No effects on happiness nor war fatigue\n";
     expected[9] = "### AI\n"
         + "* Base fleet capacity: 3\n"
         + "* Leader capacity: 6\n"
         + "* Leader cost: 5\n"
         + "* Reign length: 100 turns\n"
-        + "* No effects on happines nor war fatigue\n";
+        + "* No effects on happiness nor war fatigue\n";
     expected[10] = "### Empire\n"
         + "* Base fleet capacity: 4\n"
         + "* Leader capacity: 7\n"
@@ -246,7 +245,7 @@ public class GovernmentTypeTest {
         + "* Leader capacity: 6\n"
         + "* Leader cost: 5\n"
         + "* Reign length: 100 turns\n"
-        + "* No effects on happines nor war fatigue\n";
+        + "* No effects on happiness nor war fatigue\n";
     expected[22] = "### Syndicate\n"
         + "* Base fleet capacity: 3\n"
         + "* Leader capacity: 12\n"

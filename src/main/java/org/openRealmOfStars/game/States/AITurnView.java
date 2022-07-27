@@ -2783,6 +2783,9 @@ public class AITurnView extends BlackPanel {
       result = result + 1 + (realm.getTotalCredits() - 50) / 20;
     }
     result = result + happiness * -5;
+    if (!LeaderUtility.isPowerHungryReadyForKill(realm.getGovernment())) {
+      result = result - 5;
+    }
     for (Leader leader : realm.getLeaderPool()) {
       if (leader.getJob() != Job.DEAD && leader.hasPerk(Perk.CORRUPTED)) {
         result = result + 3;
@@ -2848,12 +2851,20 @@ public class AITurnView extends BlackPanel {
           if (leader.hasPerk(Perk.LOGICAL)) {
             chance = chance - 10;
           }
-          if (leader.hasPerk(Perk.GOOD_LEADER)
-              || leader.hasPerk(Perk.COUNTER_AGENT)) {
+          if (leader.hasPerk(Perk.COUNTER_AGENT)) {
             chance = chance - 5;
           }
-          if (leader.hasPerk(Perk.ADDICTED) || leader.hasPerk(Perk.MAD)) {
+          if (leader.hasPerk(Perk.GOOD_LEADER)) {
+            chance = chance - 5;
+          }
+          if (leader.hasPerk(Perk.ADDICTED)) {
             chance = chance + 5;
+          }
+          if (leader.hasPerk(Perk.POWER_HUNGRY)) {
+            chance = chance + 7;
+          }
+          if (leader.hasPerk(Perk.MAD)) {
+            chance = chance + 3;
           }
           if (chance > 70) {
             chance = 70;

@@ -95,7 +95,7 @@ public class ProceduralRenderer extends Thread {
     synchronized (this) {
       running = true;
     }
-    stars = new BufferedImage(2100, 1600,
+    stars = new BufferedImage(2100, 2100,
         BufferedImage.TYPE_4BYTE_ABGR);
     Graphics graphics = stars.getGraphics();
     if (graphics instanceof Graphics2D) {

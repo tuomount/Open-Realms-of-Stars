@@ -746,7 +746,8 @@ public class MapPanel extends JPanel {
         if (fleet == null && fleetMap[i + cx][j + cy] != null) {
           Planet planetOrbital = starMap.getPlanetByFleetTileInfo(
               fleetMap[i + cx][j + cy]);
-          if (planetOrbital.getOrbital() != null && info != null
+          if (planetOrbital != null && planetOrbital.getOrbital() != null
+              && info != null
               && info.getSectorVisibility(planetOrbital.getCoordinate())
               == PlayerInfo.VISIBLE) {
             // Draw orbital

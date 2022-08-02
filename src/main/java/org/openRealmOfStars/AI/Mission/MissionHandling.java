@@ -1350,7 +1350,37 @@ public final class MissionHandling {
         info.getMissions().remove(mission);
       } else if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getRoute() == null) {
+        Coordinate targetCoord = new Coordinate(mission.getX(), mission.getY());
+        Double dist = fleet.getCoordinate().calculateDistance(targetCoord);
+        if (dist > 0 && dist < 2) {
+          // Route for gather point has been blocked moving back to home port.
+          Planet homePort = game.getStarMap().getClosestHomePort(info,
+              fleet.getCoordinate());
+          if (homePort != null) {
+            mission.setType(MissionType.MOVE);
+            mission.setTarget(homePort.getCoordinate());
+            Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+                mission.getY(), fleet.getFleetFtlSpeed());
+            fleet.setRoute(route);
+          }
+        }
         makeReroute(game, fleet, info, mission);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() != null) {
+        Coordinate targetCoord = new Coordinate(mission.getX(), mission.getY());
+        Double dist = fleet.getCoordinate().calculateDistance(targetCoord);
+        if (dist > 0 && dist < 2) {
+          // Route for gather point has been blocked moving back to home port.
+          Planet homePort = game.getStarMap().getClosestHomePort(info,
+              fleet.getCoordinate());
+          if (homePort != null) {
+            mission.setType(MissionType.MOVE);
+            mission.setTarget(homePort.getCoordinate());
+            Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+                mission.getY(), fleet.getFleetFtlSpeed());
+            fleet.setRoute(route);
+          }
+        }
       }
     } // End of Gather
 

@@ -1648,6 +1648,21 @@ public class AITurnView extends BlackPanel {
         if (!fleet.isStarBaseDeployed()) {
           Fleet interceptFleet = getClosestInterceptMission(
               game.getStarMap().getAIFleet(), info, game.getStarMap());
+          if (fleetMission == null && interceptFleet == null) {
+            Planet orbitingPlanet = game.getStarMap().getPlanetByCoordinate(
+                fleet.getX(), fleet.getY());
+            if (orbitingPlanet == null
+                || orbitingPlanet.getPlanetPlayerInfo() != info) {
+              Planet homePort = game.getStarMap().getClosestHomePort(info,
+                  fleet.getCoordinate());
+              if (homePort != null) {
+                Mission moveBackHome = new Mission(MissionType.MOVE,
+                    MissionPhase.LOADING, homePort.getCoordinate());
+                moveBackHome.setFleetName(fleet.getName());
+                info.getMissions().add(moveBackHome);
+              }
+            }
+          }
           if (interceptFleet != null) {
             Mission intercept = new Mission(MissionType.INTERCEPT,
                 MissionPhase.TREKKING, interceptFleet.getCoordinate());

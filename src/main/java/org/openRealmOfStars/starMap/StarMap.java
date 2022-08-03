@@ -1504,7 +1504,12 @@ public class StarMap {
     playerInfo.getMsgList().addNewMessage(msg);
     playerInfo.setRuler(ruler);
 
-    if (playerInfo.getRace() != SpaceRace.ALTEIRIANS) {
+    if (playerInfo.getRace() != SpaceRace.ALTEIRIANS
+        && !planet.hasSpacePort()) {
+       if (planet.getBuildingList().length >= planet.getGroundSize()) {
+         // Planet is full and no space for space port.
+         planet.destroyOneBuilding();
+       }
       planet.addBuilding(BuildingFactory.createByName("Space port"));
     }
     if (playerInfo.isHuman()) {

@@ -701,13 +701,13 @@ public final class TileNames {
   public static final String ICEGIANT2 = "ICEGIANT2";
 
   /**
-   * List of non harmful space anomalies
+   * List of non harmful space anomalies. This is the list used
+   * when generating random space anomalies which are harmless.
    */
   public static final String[] NON_HARMFUL_SPACE_ANOMALIES = {
       SPACE_ANOMALY_CREDITS, SPACE_ANOMALY_TECH, SPACE_ANOMALY_DSA,
       SPACE_ANOMALY_MAP, SPACE_ANOMALY_SHIP, SPACE_ANOMALY_MECHION,
-      SPACE_ANOMALY_RARE_TECH, SPACE_ANOMALY_ANCIENT_ARTIFACT,
-      SPACE_ANOMALY_LEADER_IN_STASIS};
+      SPACE_ANOMALY_RARE_TECH, SPACE_ANOMALY_LEADER_IN_STASIS};
 
   /**
    * List of harmful space anomalies which are not related to space pirates or

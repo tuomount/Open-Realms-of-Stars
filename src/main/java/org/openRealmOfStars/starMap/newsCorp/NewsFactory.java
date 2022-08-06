@@ -2742,7 +2742,7 @@ public final class NewsFactory {
         sb.append(winner.getEmpireName());
         sb.append(" has ");
         sb.append(biggestValue);
-        sb.append(" % of the galaxy population.");
+        sb.append(" percent of the galaxy population.");
         sb.append(" No other realm has enough population to challenge ");
         sb.append(winner.getEmpireName());
         sb.append(". ");
@@ -2760,7 +2760,7 @@ public final class NewsFactory {
         sb.append(info2.getEmpireName());
         sb.append(" has ");
         sb.append(biggestValue);
-        sb.append(" % of the galaxy population.");
+        sb.append(" percent of the galaxy population.");
         sb.append(" No other realm or alliance has enough population"
             + " to challenge these two. ");
       }

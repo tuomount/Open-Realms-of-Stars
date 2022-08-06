@@ -591,9 +591,7 @@ public class SpaceAnomaly {
           Gender gender = Gender.getRandom();
           String name = NameGenerator.generateName(leaderRace, gender);
           String desc = leaderRace.getNameSingle();
-          String capitalDesc = desc.substring(0).toUpperCase()
-              + desc.substring(1);
-          result.setText(capitalDesc + " was in long lasting stasis in "
+          result.setText(desc + " was in long lasting stasis in "
               + "old ship floating in vastness of space. When entering "
               + "the ship " + desc + " wakes and is willing to join your "
               + "realm because of rescuing " + gender.getHisHer() + " life.");

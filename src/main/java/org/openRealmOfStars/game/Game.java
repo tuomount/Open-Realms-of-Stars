@@ -2194,22 +2194,21 @@ public class Game implements ActionListener {
         noPrint = false;
       }
       if (noPrint) {
+        sb.append(i + 1);
+        sb.append(". ");
+        sb.append(tech.getName());
+        sb.append("\n");
         if (tech.getName().equals("Deadly virus")) {
-          sb.append(i + 1);
-          sb.append(". ");
           sb.append(" Allows deadly virus espionage mission.\n");
         } else if (tech.getName().contains("colonization")) {
-          sb.append(i + 1);
-          sb.append(". ");
           sb.append(" Improves planet suitability.\n");
         } else if (tech.getName().equals("Improved engineer")) {
-          sb.append(i + 1);
-          sb.append(". ");
           sb.append(" Reduces overload failure by 2.\n");
         } else {
           throw new IllegalArgumentException("Tech with not actually used: "
              + tech.getName());
         }
+        sb.append("\n\n");
       }
     }
     return sb.toString();

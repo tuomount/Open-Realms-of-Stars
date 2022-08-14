@@ -2069,7 +2069,8 @@ public class DiplomacyView extends BlackPanel {
       if (aiCredits < ai.getTotalCredits()) {
         aiCredits++;
       }
-      aiCreditOffer.setText(aiCredits + " Credits");
+      aiCreditOffer.setText(aiCredits + "/" + ai.getTotalCredits()
+          + " Credits");
     }
     if (GameCommands.COMMAND_OK.equals(arg0.getActionCommand())) {
       handleActionCommandOK();

@@ -2152,7 +2152,7 @@ public class StarMap {
     tiles[sx + 1][sy + 1] = Tiles.getSunTile(TileNames.SUN_SE,
         sunType).getIndex();
     int planets = 0;
-    int startingPlanet = DiceGenerator.getRandom(numberOfPlanets - 1);
+    int startingPlanet = DiceGenerator.getRandom(1, numberOfPlanets);
     while (planets < numberOfPlanets) {
       int px = sx + DiceGenerator.getRandom(-SOLAR_SYSTEM_WIDTH,
               SOLAR_SYSTEM_WIDTH);

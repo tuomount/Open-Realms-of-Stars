@@ -2152,6 +2152,7 @@ public class StarMap {
     tiles[sx + 1][sy + 1] = Tiles.getSunTile(TileNames.SUN_SE,
         sunType).getIndex();
     int planets = 0;
+    int startingPlanet = DiceGenerator.getRandom(numberOfPlanets - 1);
     while (planets < numberOfPlanets) {
       int px = sx + DiceGenerator.getRandom(-SOLAR_SYSTEM_WIDTH,
               SOLAR_SYSTEM_WIDTH);
@@ -2162,7 +2163,7 @@ public class StarMap {
         Planet planet = new Planet(new Coordinate(px, py), sun.getName(),
             planets, false);
         planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
-        if (planets == 1 && playerIndex != -1) {
+        if (planets == startingPlanet && playerIndex != -1) {
           PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
           playerInfo.setElderRealm(config.getPlayerElderRealm(playerIndex));
           PlanetTypes planetType = PlanetTypes.getRandomStartPlanetType(

@@ -211,6 +211,20 @@ public class ArtifactLists {
 
   }
   /**
+   * Get number of research certain type of artifacts.
+   * @param type Artifact type
+   * @return Number of research artifact from certain type.
+   */
+  public int getTypesResearched(final ArtifactType type) {
+    int result = 0;
+    for (Artifact artifact : researchedArtifacts) {
+      if (artifact.getArtifactType() == type) {
+        result++;
+      }
+    }
+    return result;
+  }
+  /**
    * Update artifact research points by turn.
    * @param totalResearchPoints Total research points to add
    * @param info PlayerInfo who is research.
@@ -252,6 +266,48 @@ public class ArtifactLists {
         scientist.addPerk(Perk.ARCHAEOLOGIST);
         sb.append(scientist.getName());
         sb.append(" becomes expert on researching artifacts. ");
+      }
+      if (artifact.getArtifactType() == ArtifactType.ENERGY) {
+        int techLevel = info.getTechList().getTechLevel(TechType.Propulsion);
+        if (techLevel >= 5) {
+          int chance = getTypesResearched(ArtifactType.ENERGY) * 10;
+          String techName = "Tachyon source Mk3";
+          if (DiceGenerator.getRandom(100) < chance
+              && !info.getTechList().hasTech(techName)) {
+            sb.append(info.getEmpireName());
+            sb.append(" has learned ");
+            sb.append(techName);
+            sb.append(" while studying artifacts.");
+            info.getTechList().addTech(TechFactory.createPropulsionTech(
+                techName, 5));
+          }
+        }
+        if (techLevel >= 8) {
+          int chance = getTypesResearched(ArtifactType.ENERGY) * 10;
+          String techName = "Antimatter source Mk3";
+          if (DiceGenerator.getRandom(100) < chance
+              && !info.getTechList().hasTech(techName)) {
+            sb.append(info.getEmpireName());
+            sb.append(" has learned ");
+            sb.append(techName);
+            sb.append(" while studying artifacts.");
+            info.getTechList().addTech(TechFactory.createPropulsionTech(
+                techName, 5));
+          }
+        }
+        if (techLevel >= 10) {
+          int chance = getTypesResearched(ArtifactType.ENERGY) * 10;
+          String techName = "Zero-point source Mk3";
+          if (DiceGenerator.getRandom(100) < chance
+              && !info.getTechList().hasTech(techName)) {
+            sb.append(info.getEmpireName());
+            sb.append(" has learned ");
+            sb.append(techName);
+            sb.append(" while studying artifacts.");
+            info.getTechList().addTech(TechFactory.createPropulsionTech(
+                techName, 5));
+          }
+        }
       }
       int chance = researchedArtifacts.size() * 10;
       if (scientist.hasPerk(Perk.ARCHAEOLOGIST)) {

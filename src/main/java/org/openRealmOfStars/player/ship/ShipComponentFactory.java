@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 194;
+  private static final int MAX_SHIPCOMPONENT = 197;
 
   /**
    * Component Ion drive Mk1
@@ -969,6 +969,19 @@ public final class ShipComponentFactory {
    * Callisto multicannon Mk3
    */
   public static final int COMPONENT_CALLISTO_MULTICANNON_MK3 = 193;
+  /**
+   * Component Tachyon source Mk3
+   */
+  public static final int COMPONENT_TACHYON_SOURCE_MK3 = 194;
+  /**
+   * Component Antimatter source Mk3
+   */
+  public static final int COMPONENT_ANTIMATTER_SOURCE_MK3 = 195;
+  /**
+   * Component Zeropoint source Mk3
+   */
+  public static final int COMPONENT_ZEROPOINT_SOURCE_MK3 = 196;
+
 
 /**
    * Create ShipComponent with matching name
@@ -1623,6 +1636,15 @@ public final class ShipComponentFactory {
     case COMPONENT_CALLISTO_MULTICANNON_MK3:
       tmp = createWeapon2(index);
       break; // Callisto Multicannon Mk3
+    case COMPONENT_TACHYON_SOURCE_MK3:
+      tmp = createElectronics(index);
+      break; // Tachyon source Mk3
+    case COMPONENT_ANTIMATTER_SOURCE_MK3:
+      tmp = createElectronics(index);
+      break; // Antimatter source Mk3
+    case COMPONENT_ZEROPOINT_SOURCE_MK3:
+      tmp = createElectronics(index);
+      break; // Zeropoint source Mk3
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -2292,6 +2314,21 @@ public final class ShipComponentFactory {
       tmp = new ShipComponent(index, "Large heart", 3, 3,
           ShipComponentType.HEART);
       tmp.setEnergyResource(9);
+    }
+    if (index == COMPONENT_TACHYON_SOURCE_MK3) {
+      tmp = new ShipComponent(index, "Tachyon source Mk3", 10, 7,
+          ShipComponentType.POWERSOURCE);
+      tmp.setEnergyResource(11);
+    }
+    if (index == COMPONENT_ANTIMATTER_SOURCE_MK3) {
+      tmp = new ShipComponent(index, "Antimatter source Mk3", 13, 10,
+          ShipComponentType.POWERSOURCE);
+      tmp.setEnergyResource(14);
+    }
+    if (index == COMPONENT_ZEROPOINT_SOURCE_MK3) {
+      tmp = new ShipComponent(index, "Zero-point source Mk3", 24, 4,
+          ShipComponentType.POWERSOURCE);
+      tmp.setEnergyResource(17);
     }
     return tmp;
 

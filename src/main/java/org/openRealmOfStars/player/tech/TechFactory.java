@@ -354,6 +354,11 @@ public final class TechFactory {
   public static final String[] PROPULSION_TECH_LEVEL5_NAMES = {"Warp drive Mk3",
       "Hyper drive Mk3", "Tachyon source Mk2", "Ice colonization" };
   /**
+   * Propulsion rare tech names for level 5.
+   */
+  public static final String[] PROPULSION_RARE_TECH_LEVEL5_NAMES = {
+      "Tachyon source Mk3"};
+  /**
    * Propulsion tech names for level 6
    */
   public static final String[] PROPULSION_TECH_LEVEL6_NAMES = {"Warp drive Mk4",
@@ -370,6 +375,11 @@ public final class TechFactory {
       "Hyper drive Mk6", "Impulse engine Mk2", "Antimatter source Mk2",
       "Nuclear drive Mk4" };
   /**
+   * Propulsion rare tech names for level 8.
+   */
+  public static final String[] PROPULSION_RARE_TECH_LEVEL8_NAMES = {
+      "Antimatter source Mk3"};
+  /**
    * Propulsion tech names for level 9
    */
   public static final String[] PROPULSION_TECH_LEVEL9_NAMES = {"Warp drive Mk7",
@@ -380,6 +390,11 @@ public final class TechFactory {
   public static final String[] PROPULSION_TECH_LEVEL10_NAMES = {
       "Warp drive Mk8", "Hyper drive Mk8", "Impulse engine Mk4",
       "Zero-point source Mk2" };
+  /**
+   * Propulsion rare tech names for level 10.
+   */
+  public static final String[] PROPULSION_RARE_TECH_LEVEL10_NAMES = {
+      "Zero-point source Mk3"};
 
   /**
    * Electronics tech names for level 1
@@ -998,7 +1013,8 @@ public final class TechFactory {
       list = PROPULSION_TECH_LEVEL4_NAMES;
       break;
     case 5:
-      list = PROPULSION_TECH_LEVEL5_NAMES;
+      list = TextUtilities.concanateStringArrays(PROPULSION_TECH_LEVEL5_NAMES,
+          PROPULSION_RARE_TECH_LEVEL5_NAMES);
       break;
     case 6:
       list = PROPULSION_TECH_LEVEL6_NAMES;
@@ -1007,13 +1023,15 @@ public final class TechFactory {
       list = PROPULSION_TECH_LEVEL7_NAMES;
       break;
     case 8:
-      list = PROPULSION_TECH_LEVEL8_NAMES;
+      list = TextUtilities.concanateStringArrays(PROPULSION_TECH_LEVEL8_NAMES,
+          PROPULSION_RARE_TECH_LEVEL8_NAMES);
       break;
     case 9:
       list = PROPULSION_TECH_LEVEL9_NAMES;
       break;
     case 10:
-      list = PROPULSION_TECH_LEVEL10_NAMES;
+      list = TextUtilities.concanateStringArrays(PROPULSION_TECH_LEVEL10_NAMES,
+          PROPULSION_RARE_TECH_LEVEL10_NAMES);
       break;
     default:
       return null;

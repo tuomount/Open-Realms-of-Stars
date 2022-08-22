@@ -268,12 +268,14 @@ public class ArtifactLists {
         sb.append(" becomes expert on researching artifacts. ");
       }
       if (artifact.getArtifactType() == ArtifactType.ENERGY) {
+        boolean techGained = false;
         int techLevel = info.getTechList().getTechLevel(TechType.Propulsion);
-        if (techLevel >= 5) {
+        if (techLevel >= 5 && !techGained) {
           int chance = getTypesResearched(ArtifactType.ENERGY) * 10;
           String techName = "Tachyon source Mk3";
           if (DiceGenerator.getRandom(100) < chance
               && !info.getTechList().hasTech(techName)) {
+            techGained = true;
             sb.append(info.getEmpireName());
             sb.append(" has learned ");
             sb.append(techName);
@@ -282,11 +284,12 @@ public class ArtifactLists {
                 techName, 5));
           }
         }
-        if (techLevel >= 8) {
+        if (techLevel >= 8 && !techGained) {
           int chance = getTypesResearched(ArtifactType.ENERGY) * 10;
           String techName = "Antimatter source Mk3";
           if (DiceGenerator.getRandom(100) < chance
               && !info.getTechList().hasTech(techName)) {
+            techGained = true;
             sb.append(info.getEmpireName());
             sb.append(" has learned ");
             sb.append(techName);
@@ -295,11 +298,12 @@ public class ArtifactLists {
                 techName, 5));
           }
         }
-        if (techLevel >= 10) {
+        if (techLevel >= 10 && !techGained) {
           int chance = getTypesResearched(ArtifactType.ENERGY) * 10;
           String techName = "Zero-point source Mk3";
           if (DiceGenerator.getRandom(100) < chance
               && !info.getTechList().hasTech(techName)) {
+            techGained = true;
             sb.append(info.getEmpireName());
             sb.append(" has learned ");
             sb.append(techName);

@@ -509,6 +509,19 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case MULTIDIMENSION_SHIELD: {
+      sb.append("Shield value: ");
+      sb.append(getDefenseValue());
+      sb.append(" Jammer: -");
+      sb.append(getDamage());
+      sb.append("%");
+      sb.append("\n\n");
+      sb.append("Multi-dimension shield works as a shield\n"
+          + "and jammer making hitting more difficult.\n"
+          + "Also protects against tractor beam and ascension portal.");
+      sb.append("\n");
+      break;
+    }
     case SHIELD: {
       sb.append("Shield value: ");
       sb.append(getDefenseValue());

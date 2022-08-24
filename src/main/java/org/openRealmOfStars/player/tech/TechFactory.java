@@ -177,6 +177,11 @@ public final class TechFactory {
   public static final String[] DEFENSE_TECH_LEVEL7_NAMES = {"Shield Mk7",
       "Armor plating Mk7", "Jammer Mk3", "Command center" };
   /**
+   * Defense rare tech names for level 7.
+   */
+  public static final String[] DEFENSE_RARE_TECH_LEVEL7_NAMES = {
+      "Multi-dimension shield"};
+  /**
    * Defense tech names for level 8
    */
   public static final String[] DEFENSE_TECH_LEVEL8_NAMES = {"Shield Mk8",
@@ -657,7 +662,8 @@ public final class TechFactory {
           DEFENSE_RARE_TECH_LEVEL6_NAMES);
       break;
     case 7:
-      list = DEFENSE_TECH_LEVEL7_NAMES;
+      list = TextUtilities.concanateStringArrays(DEFENSE_TECH_LEVEL7_NAMES,
+          DEFENSE_RARE_TECH_LEVEL7_NAMES);
       break;
     case 8:
       list = TextUtilities.concanateStringArrays(DEFENSE_TECH_LEVEL8_NAMES,
@@ -752,6 +758,9 @@ public final class TechFactory {
             tech.setNextTechOnTree("Distortion shield Mk3");
             tech.setNextTechLevel(8);
           }
+        } else if (techName.equals("Multi-dimension shield")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_DISTORTION_SHIELD));
+          tech.setRareTech(true);
         } else if (tech.getIcon() == Icons.getIconByName(Icons.ICON_RESEARCH)) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DEFENSE_TECH));
         }

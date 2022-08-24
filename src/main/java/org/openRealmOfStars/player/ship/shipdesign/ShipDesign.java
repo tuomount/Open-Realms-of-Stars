@@ -227,6 +227,10 @@ public class ShipDesign {
           && comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
         shield = shield + comp.getDefenseValue();
       }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD) {
+        shield = shield + comp.getDefenseValue();
+      }
     }
     return shield;
   }
@@ -399,6 +403,7 @@ public class ShipDesign {
       if (comp.getType() == ShipComponentType.ARMOR
           || comp.getType() == ShipComponentType.SHIELD
           || comp.getType() == ShipComponentType.DISTORTION_SHIELD
+          || comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD
           || comp.getType() == ShipComponentType.SOLAR_ARMOR
           || comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
         return true;
@@ -942,6 +947,15 @@ public class ShipDesign {
           && !jammer) {
         jammer = true;
       } else if (comp.getType() == ShipComponentType.DISTORTION_SHIELD
+          && jammer) {
+        designOk = false;
+        sb.append(ShipDesignConsts.MANY_JAMMERS);
+        sb.append("\n");
+      }
+      if (comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD
+          && !jammer) {
+        jammer = true;
+      } else if (comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD
           && jammer) {
         designOk = false;
         sb.append(ShipDesignConsts.MANY_JAMMERS);

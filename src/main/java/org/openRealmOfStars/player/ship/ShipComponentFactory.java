@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 197;
+  private static final int MAX_SHIPCOMPONENT = 198;
 
   /**
    * Component Ion drive Mk1
@@ -982,7 +982,10 @@ public final class ShipComponentFactory {
    */
   public static final int COMPONENT_ZEROPOINT_SOURCE_MK3 = 196;
 
-
+  /**
+   * Component multi-dimension shield.
+   */
+  public static final int COMPONENT_MULTIDIMENSION_SHIELD = 197;
 /**
    * Create ShipComponent with matching name
    * @param name Ship component name
@@ -1645,6 +1648,9 @@ public final class ShipComponentFactory {
     case COMPONENT_ZEROPOINT_SOURCE_MK3:
       tmp = createElectronics(index);
       break; // Zeropoint source Mk3
+    case COMPONENT_MULTIDIMENSION_SHIELD:
+      tmp = createDefense(index);
+      break; // Multi-dimension shield
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -3042,6 +3048,13 @@ public final class ShipComponentFactory {
           ShipComponentType.ORGANIC_ARMOR);
       tmp.setDefenseValue(6);
       tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_MULTIDIMENSION_SHIELD) {
+      tmp = new ShipComponent(index, "Multi-dimension shield", 18, 5,
+          ShipComponentType.MULTIDIMENSION_SHIELD);
+      tmp.setDefenseValue(7); // Shield bonus
+      tmp.setDamage(10); // Jammer bonus
+      tmp.setEnergyRequirement(5);
     }
     return tmp;
 

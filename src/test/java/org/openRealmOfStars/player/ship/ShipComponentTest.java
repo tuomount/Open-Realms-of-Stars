@@ -187,6 +187,23 @@ public class ShipComponentTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMultidimensionShield() {
+    ShipComponent component = new ShipComponent(0, "Multi-dimension shield", 8, 3,
+        ShipComponentType.MULTIDIMENSION_SHIELD);
+    component.setDefenseValue(3);
+    component.setDamage(5);
+    assertEquals("Multi-dimension shield\n"
+        + "Cost: 8 Metal: 3\n"
+        + "Shield value: 3 Jammer: -5%\n"
+        + "\n"
+        + "Multi-dimension shield works as a shield\n"
+        + "and jammer making hitting more difficult.\n"
+        + "Also protects against tractor beam and ascension portal.\n",
+        component.toString());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testShieldGenerator() {
     ShipComponent component = new ShipComponent(0, "Shield generator", 3, 3,
         ShipComponentType.SHIELD_GENERATOR);

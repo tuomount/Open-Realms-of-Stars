@@ -174,7 +174,12 @@ public enum ShipComponentType {
   /**
    * Basically same as engine just different icon.
    */
-  SPACE_FIN;
+  SPACE_FIN,
+  /**
+   * Shield component that protects againts tractor beam
+   * and ascension portals.
+   */
+  MULTIDIMENSION_SHIELD;
 
   /**
    * Get ShipComponentType index
@@ -252,6 +257,8 @@ public enum ShipComponentType {
       return 33;
     case SPACE_FIN:
       return 34;
+    case MULTIDIMENSION_SHIELD:
+      return 35;
     default:
       return 0;
     }
@@ -334,6 +341,8 @@ public enum ShipComponentType {
       return ShipComponentType.HEART;
     case 34:
       return ShipComponentType.SPACE_FIN;
+    case 35:
+      return ShipComponentType.MULTIDIMENSION_SHIELD;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -412,6 +421,8 @@ public enum ShipComponentType {
       return "Heart";
     case SPACE_FIN:
       return "Space fin";
+    case MULTIDIMENSION_SHIELD:
+      return "Multi-dimension shield";
     default:
       return "Error - Unknown";
     }
@@ -493,6 +504,8 @@ public enum ShipComponentType {
       return Icons.ICON_HEART;
     case SPACE_FIN:
       return Icons.ICON_SPACE_FIN;
+    case MULTIDIMENSION_SHIELD:
+      return Icons.ICON_DISTORTION_SHIELD;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

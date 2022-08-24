@@ -267,6 +267,24 @@ public class ArtifactLists {
         sb.append(scientist.getName());
         sb.append(" becomes expert on researching artifacts. ");
       }
+      if (artifact.getArtifactType() == ArtifactType.DEFENSE) {
+        boolean techGained = false;
+        int techLevel = info.getTechList().getTechLevel(TechType.Propulsion);
+        if (techLevel >= 7 && !techGained) {
+          int chance = getTypesResearched(ArtifactType.ENERGY) * 10;
+          String techName = "Multi-dimension shield";
+          if (DiceGenerator.getRandom(100) < chance
+              && !info.getTechList().hasTech(techName)) {
+            techGained = true;
+            sb.append(info.getEmpireName());
+            sb.append(" has learned ");
+            sb.append(techName);
+            sb.append(" while studying artifacts.");
+            info.getTechList().addTech(TechFactory.createDefenseTech(
+                techName, 7));
+          }
+        }
+      }
       if (artifact.getArtifactType() == ArtifactType.ENERGY) {
         boolean techGained = false;
         int techLevel = info.getTechList().getTechLevel(TechType.Propulsion);
@@ -295,7 +313,7 @@ public class ArtifactLists {
             sb.append(techName);
             sb.append(" while studying artifacts.");
             info.getTechList().addTech(TechFactory.createPropulsionTech(
-                techName, 5));
+                techName, 8));
           }
         }
         if (techLevel >= 10 && !techGained) {
@@ -309,7 +327,7 @@ public class ArtifactLists {
             sb.append(techName);
             sb.append(" while studying artifacts.");
             info.getTechList().addTech(TechFactory.createPropulsionTech(
-                techName, 5));
+                techName, 10));
           }
         }
       }

@@ -231,7 +231,11 @@ public final class ShipGenerator {
       }
       case DISTORTION_SHIELD: {
         scores[i] = scores[i] + comp.getDefenseValue();
-        scores[i] = scores[i] + 5; // Recharge
+        scores[i] = scores[i] + comp.getDamage(); // Jammer bonus
+        break;
+      }
+      case MULTIDIMENSION_SHIELD: {
+        scores[i] = scores[i] + comp.getDefenseValue();
         scores[i] = scores[i] + comp.getDamage(); // Jammer bonus
         break;
       }

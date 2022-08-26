@@ -294,6 +294,12 @@ Originals from 141 Military Icons Set by AngryMeteor.com
 
 Space fin and tentacle icons by Tuomo Untinen
 
+Expanding circle animation from Sci-fi effects by Skorpio
+https://opengameart.org/content/sci-fi-effects
+Modified to gravity ripper animation by Tuomo Untinen
+Licensed under CC BY 4.0
+https://creativecommons.org/licenses/by/4.0/
+
 
 
 Fonts are under SIL Open Font License, Version 1.1.

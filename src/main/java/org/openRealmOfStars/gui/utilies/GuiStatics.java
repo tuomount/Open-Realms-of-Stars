@@ -803,6 +803,12 @@ public final class GuiStatics {
       "/resources/images/explosion4.png");
 
   /**
+   * Gravity ripper animation
+   */
+  public static final AnimatedImage GRAVITY_RIPPER = new AnimatedImage(64, 64,
+      "/resources/images/gravity_ripper.png");
+
+  /**
    * Lighting animation
    */
   public static final AnimatedImage LIGHTNING = new AnimatedImage(64, 64,

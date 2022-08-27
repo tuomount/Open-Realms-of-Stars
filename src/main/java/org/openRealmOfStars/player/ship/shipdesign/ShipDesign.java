@@ -359,6 +359,7 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.WEAPON_RAILGUN
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.MULTICANNON
+          || comp.getType() == ShipComponentType.GRAVITY_RIPPER
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.BITE
           || comp.getType() == ShipComponentType.TENTACLE) {
@@ -382,6 +383,7 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.WEAPON_RAILGUN
           || comp.getType() == ShipComponentType.MULTICANNON
+          || comp.getType() == ShipComponentType.GRAVITY_RIPPER
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.BITE
@@ -424,6 +426,7 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.MULTICANNON
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.PLASMA_CANNON
+          || comp.getType() == ShipComponentType.GRAVITY_RIPPER
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.BITE
           || comp.getType() == ShipComponentType.TENTACLE) {
@@ -584,6 +587,7 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.WEAPON_RAILGUN)
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.MULTICANNON
+          || comp.getType() == ShipComponentType.GRAVITY_RIPPER
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.BITE
           || comp.getType() == ShipComponentType.TENTACLE) {

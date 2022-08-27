@@ -563,6 +563,7 @@ public class TechList {
             || comp.getType() == ShipComponentType.PLASMA_CANNON
             || comp.getType() == ShipComponentType.ION_CANNON
             || comp.getType() == ShipComponentType.MULTICANNON
+            || comp.getType() == ShipComponentType.GRAVITY_RIPPER
             || comp.getType() == ShipComponentType.BITE
             || comp.getType() == ShipComponentType.TENTACLE) {
           compValue = comp.getDamage();

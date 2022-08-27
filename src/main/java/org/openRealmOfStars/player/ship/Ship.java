@@ -727,6 +727,7 @@ private int getRemainingEnergy(final int index) {
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.WEAPON_RAILGUN
           || comp.getType() == ShipComponentType.MULTICANNON
+          || comp.getType() == ShipComponentType.GRAVITY_RIPPER
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.BITE
@@ -1116,6 +1117,21 @@ private int increaseHitChanceByComponent() {
       }
       break;
     }
+    case GRAVITY_RIPPER: {
+      if (this.getShield() > 0) {
+        return new ShipDamage(ShipDamage.NO_DAMAGE,
+            "Attack deflected to shield!");
+      }
+      damage = weapon.getDamage();
+      if (damage <= this.getArmor()) {
+        this.setArmor(this.getArmor() - damage);
+        return new ShipDamage(ShipDamage.NO_DAMAGE,
+            "Attack damaged armor by " + damage + "!");
+      }
+      this.setArmor(0);
+      damage = damage - this.getArmor();
+      break;
+    }
     case BITE:
     case TENTACLE: {
       damage = weapon.getDamage();
@@ -1186,7 +1202,7 @@ private int increaseHitChanceByComponent() {
       if (damage <= this.getShield()) {
         this.setShield(this.getShield() - damage);
         return new ShipDamage(ShipDamage.NO_DAMAGE,
-            "Attacked damage shield by " + damage + "!");
+            "Attack damaged shield by " + damage + "!");
       }
       this.setShield(0);
       if (this.getArmor() > 0) {
@@ -1200,7 +1216,7 @@ private int increaseHitChanceByComponent() {
       damage = weapon.getDamage();
       this.setShield(this.getShield() - damage);
       return new ShipDamage(ShipDamage.NO_DAMAGE,
-          "Attacked damage shield by " + damage + "!");
+          "Attack damaged shield by " + damage + "!");
     }
     default:
       /* Not a weapon */break;
@@ -1824,6 +1840,7 @@ private int increaseHitChanceByComponent() {
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.MULTICANNON
+          || comp.getType() == ShipComponentType.GRAVITY_RIPPER
           || comp.getType() == ShipComponentType.ION_CANNON
           || comp.getType() == ShipComponentType.BITE
           || comp.getType() == ShipComponentType.TENTACLE) {
@@ -1908,6 +1925,7 @@ private int increaseHitChanceByComponent() {
           || comp.getType() == ShipComponentType.PLASMA_CANNON
           || comp.getType() == ShipComponentType.MULTICANNON
           || comp.getType() == ShipComponentType.ION_CANNON
+          || comp.getType() == ShipComponentType.GRAVITY_RIPPER
           || comp.getType() == ShipComponentType.BITE
           || comp.getType() == ShipComponentType.TENTACLE)
           && componentIsWorking(i)) {

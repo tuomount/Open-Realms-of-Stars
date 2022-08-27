@@ -333,6 +333,7 @@ public class CombatAnimation {
       final ShipComponent weapon, final int hit) {
     CombatAnimationType initType = CombatAnimationType.PLASMA_BEAM;
     switch (weapon.getType()) {
+      case GRAVITY_RIPPER: // TODO Change better animation
       case PLASMA_BEAM: {
         initType = CombatAnimationType.PLASMA_BEAM;
         break;

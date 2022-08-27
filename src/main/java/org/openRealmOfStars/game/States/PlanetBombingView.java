@@ -540,6 +540,7 @@ public class PlanetBombingView extends BlackPanel {
             || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
             || comp.getType() == ShipComponentType.WEAPON_RAILGUN
             || comp.getType() == ShipComponentType.MULTICANNON
+            || comp.getType() == ShipComponentType.GRAVITY_RIPPER
             || comp.getType() == ShipComponentType.PLASMA_CANNON) {
           planetTurretShoot();
           updatePanel();
@@ -830,6 +831,41 @@ public class PlanetBombingView extends BlackPanel {
             textLogger.addLog("Orbital shield protects the planet!");
           }
         }
+        if (comp.getType() == ShipComponentType.GRAVITY_RIPPER) {
+          if (!allAi && game != null) {
+            game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
+          }
+          imgBase.setAnimation(new PlanetAnimation(
+              PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 0, 0, 1, 1));
+          if (!planet.isShieldForBombing()) {
+            int hit = DiceGenerator.getRandom(1, 100);
+            StringBuilder sb = new StringBuilder();
+            if (hit <= comp.getDamage() * 2) {
+              suppressionFire++;
+              sb.append(ship.getName());
+              sb.append(" causes suppression against defenders");
+              shot = true;
+            }
+            if (hit <= comp.getDamage() * 6 && planet.bombOneBuilding()) {
+              if (shot) {
+                sb.append(" and destroyers building...");
+              } else {
+                sb.append(ship.getName());
+                sb.append(" destroyers building...");
+                shot = true;
+              }
+            }
+            if (!shot) {
+              sb.append(ship.getName());
+              sb.append(" does not hit anything...");
+            }
+            attackType = "shooting";
+            reason = " space ship weapon";
+            textLogger.addLog(sb.toString());
+          } else {
+            textLogger.addLog("Orbital shield protects the planet!");
+          }
+        }
         if (comp.getType() == ShipComponentType.ORBITAL_BOMBS) {
           if (!allAi && game != null) {
             game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
@@ -1057,6 +1093,7 @@ public class PlanetBombingView extends BlackPanel {
              || component.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
              || component.getType() == ShipComponentType.WEAPON_RAILGUN
              || component.getType() == ShipComponentType.MULTICANNON
+             || component.getType() == ShipComponentType.GRAVITY_RIPPER
              || component.getType() == ShipComponentType.PLASMA_CANNON) {
             // Always bombing or shooting
             shipComponentUsage(aiComponentIndex);

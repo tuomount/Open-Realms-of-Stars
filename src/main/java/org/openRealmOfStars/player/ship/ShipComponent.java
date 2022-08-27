@@ -182,6 +182,7 @@ public class ShipComponent {
         || type == ShipComponentType.WEAPON_PHOTON_TORPEDO
         || type == ShipComponentType.WEAPON_RAILGUN
         || type == ShipComponentType.MULTICANNON
+        || type == ShipComponentType.GRAVITY_RIPPER
         || type == ShipComponentType.PLASMA_CANNON
         || type == ShipComponentType.ION_CANNON
         || type == ShipComponentType.BITE
@@ -729,8 +730,8 @@ public class ShipComponent {
       sb.append(getHitChance());
       sb.append("%, Armor stops");
       sb.append("\n\n");
-      sb.append("Medium range weapons against shields."
-          + "\nIf target has any armor ion cannot is deflected."
+      sb.append("Medium range weapon against shields."
+          + "\nIf target has any armor ion cannon is deflected."
           + "\nOnly one damage to hull.");
       sb.append("\n");
 
@@ -746,6 +747,20 @@ public class ShipComponent {
       sb.append("%, 50% penetrates shields");
       sb.append("\n\n");
       sb.append("Medium range weapon.");
+      sb.append("\n");
+      break;
+    }
+    case GRAVITY_RIPPER: {
+      sb.append("Damage: ");
+      sb.append(getDamage());
+      sb.append(" Range: ");
+      sb.append(getWeaponRange());
+      sb.append("\nHit: ");
+      sb.append(getHitChance());
+      sb.append("%, Shield stops");
+      sb.append("\n\n");
+      sb.append("Short range weapon against armor and hull."
+          + "\nIf target has any shield gravity ripper is deflected.");
       sb.append("\n");
       break;
     }

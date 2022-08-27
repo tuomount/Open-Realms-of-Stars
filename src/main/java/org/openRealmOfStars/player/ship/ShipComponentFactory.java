@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 198;
+  private static final int MAX_SHIPCOMPONENT = 201;
 
   /**
    * Component Ion drive Mk1
@@ -983,9 +983,21 @@ public final class ShipComponentFactory {
   public static final int COMPONENT_ZEROPOINT_SOURCE_MK3 = 196;
 
   /**
-   * Component multi-dimension shield.
+   * Component multi-dimension shield
    */
   public static final int COMPONENT_MULTIDIMENSION_SHIELD = 197;
+  /**
+   * Component Gravity ripper Mk1
+   */
+  public static final int COMPONENT_GRAVITY_RIPPER_MK1 = 198;
+  /**
+   * Component Gravity ripper Mk2
+   */
+  public static final int COMPONENT_GRAVITY_RIPPER_MK2 = 199;
+  /**
+   * Component Gravity ripper Mk3
+   */
+  public static final int COMPONENT_GRAVITY_RIPPER_MK3 = 200;
 /**
    * Create ShipComponent with matching name
    * @param name Ship component name
@@ -1651,6 +1663,15 @@ public final class ShipComponentFactory {
     case COMPONENT_MULTIDIMENSION_SHIELD:
       tmp = createDefense(index);
       break; // Multi-dimension shield
+    case COMPONENT_GRAVITY_RIPPER_MK1:
+      tmp = createWeapon2(index);
+      break; // Gravity ripper Mk1
+    case COMPONENT_GRAVITY_RIPPER_MK2:
+      tmp = createWeapon2(index);
+      break; // Gravity ripper Mk2
+    case COMPONENT_GRAVITY_RIPPER_MK3:
+      tmp = createWeapon2(index);
+      break; // Gravity ripper Mk3
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -2859,6 +2880,30 @@ public final class ShipComponentFactory {
       tmp.setDamage(10);
       tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(0);
+    }
+    if (index == COMPONENT_GRAVITY_RIPPER_MK1) {
+      tmp = new ShipComponent(index, "Gravity ripper Mk1", 15, 15,
+          ShipComponentType.GRAVITY_RIPPER);
+      tmp.setHitBonus(100);
+      tmp.setDamage(6);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(5);
+    }
+    if (index == COMPONENT_GRAVITY_RIPPER_MK2) {
+      tmp = new ShipComponent(index, "Gravity ripper Mk2", 16, 15,
+          ShipComponentType.GRAVITY_RIPPER);
+      tmp.setHitBonus(100);
+      tmp.setDamage(8);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(5);
+    }
+    if (index == COMPONENT_GRAVITY_RIPPER_MK3) {
+      tmp = new ShipComponent(index, "Gravity ripper Mk3", 16, 16,
+          ShipComponentType.GRAVITY_RIPPER);
+      tmp.setHitBonus(100);
+      tmp.setDamage(10);
+      tmp.setWeaponRange(1);
+      tmp.setEnergyRequirement(5);
     }
     return tmp;
   }

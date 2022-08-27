@@ -284,13 +284,17 @@ public final class ShipGenerator {
       case WEAPON_ECM_TORPEDO:
       case WEAPON_HE_MISSILE:
       case WEAPON_PHOTON_TORPEDO:
-      case PLASMA_CANNON:
       case ION_CANNON:
       case MULTICANNON:
       case WEAPON_RAILGUN:
       case BITE:
       case TENTACLE: {
         scores[i] = scores[i] + comp.getDamage() * 5;
+        break;
+      }
+      case PLASMA_CANNON: // These two should get slight better value.
+      case GRAVITY_RIPPER: {
+        scores[i] = scores[i] + comp.getDamage() * 5 + 1;
         break;
       }
       default: {
@@ -598,6 +602,12 @@ public final class ShipGenerator {
       }
       weapTech = player.getTechList()
           .getBestWeapon(ShipComponentType.MULTICANNON);
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList()
+          .getBestWeapon(ShipComponentType.GRAVITY_RIPPER);
       if (weapTech != null) {
         components
             .add(ShipComponentFactory.createByName(weapTech.getComponent()));
@@ -1427,6 +1437,12 @@ public final class ShipGenerator {
               .add(ShipComponentFactory.createByName(weapTech.getComponent()));
         }
         weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.GRAVITY_RIPPER);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
             .getBestWeapon(ShipComponentType.PLASMA_CANNON);
         if (weapTech != null) {
           components
@@ -1667,6 +1683,12 @@ public final class ShipGenerator {
         }
         weapTech = player.getTechList()
             .getBestWeapon(ShipComponentType.WEAPON_RAILGUN);
+        if (weapTech != null) {
+          components
+              .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+        }
+        weapTech = player.getTechList()
+            .getBestWeapon(ShipComponentType.GRAVITY_RIPPER);
         if (weapTech != null) {
           components
               .add(ShipComponentFactory.createByName(weapTech.getComponent()));

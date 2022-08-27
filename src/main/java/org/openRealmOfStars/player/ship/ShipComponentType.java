@@ -179,7 +179,13 @@ public enum ShipComponentType {
    * Shield component that protects againts tractor beam
    * and ascension portals.
    */
-  MULTIDIMENSION_SHIELD;
+  MULTIDIMENSION_SHIELD,
+  /**
+   * Alternates gravity in small area that it rips material.
+   * Real effective against armor and shield.
+   * When used against black hole, ascension portal becomes visible.
+   */
+  GRAVITY_RIPPER;
 
   /**
    * Get ShipComponentType index
@@ -259,6 +265,8 @@ public enum ShipComponentType {
       return 34;
     case MULTIDIMENSION_SHIELD:
       return 35;
+    case GRAVITY_RIPPER:
+      return 36;
     default:
       return 0;
     }
@@ -343,6 +351,8 @@ public enum ShipComponentType {
       return ShipComponentType.SPACE_FIN;
     case 35:
       return ShipComponentType.MULTIDIMENSION_SHIELD;
+    case 36:
+      return ShipComponentType.GRAVITY_RIPPER;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -423,6 +433,8 @@ public enum ShipComponentType {
       return "Space fin";
     case MULTIDIMENSION_SHIELD:
       return "Multi-dimension shield";
+    case GRAVITY_RIPPER:
+      return "Gravity ripper";
     default:
       return "Error - Unknown";
     }
@@ -506,6 +518,8 @@ public enum ShipComponentType {
       return Icons.ICON_SPACE_FIN;
     case MULTIDIMENSION_SHIELD:
       return Icons.ICON_DISTORTION_SHIELD;
+    case GRAVITY_RIPPER:
+      return Icons.ICON_MULTI_CANNON;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }
@@ -522,6 +536,7 @@ public enum ShipComponentType {
       case TRACTOR_BEAM:
           return 100;
       case PLASMA_BEAM:
+      case GRAVITY_RIPPER:
         return 100;
       case WEAPON_RAILGUN:
       case WEAPON_PHOTON_TORPEDO:

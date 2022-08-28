@@ -267,11 +267,57 @@ public class ArtifactLists {
         sb.append(scientist.getName());
         sb.append(" becomes expert on researching artifacts. ");
       }
+      if (artifact.getArtifactType() == ArtifactType.MILITARY) {
+        boolean techGained = false;
+        int techLevel = info.getTechList().getTechLevel(TechType.Combat);
+        if (techLevel >= 6 && !techGained) {
+          int chance = getTypesResearched(ArtifactType.MILITARY) * 10;
+          String techName = "Gravity ripper Mk1";
+          if (DiceGenerator.getRandom(100) < chance
+              && !info.getTechList().hasTech(techName)) {
+            techGained = true;
+            sb.append(info.getEmpireName());
+            sb.append(" has learned ");
+            sb.append(techName);
+            sb.append(" while studying artifacts.");
+            info.getTechList().addTech(TechFactory.createCombatTech(
+                techName, 6));
+          }
+        }
+        if (techLevel >= 8 && !techGained) {
+          int chance = getTypesResearched(ArtifactType.MILITARY) * 10;
+          String techName = "Gravity ripper Mk2";
+          if (DiceGenerator.getRandom(100) < chance
+              && !info.getTechList().hasTech(techName)) {
+            techGained = true;
+            sb.append(info.getEmpireName());
+            sb.append(" has learned ");
+            sb.append(techName);
+            sb.append(" while studying artifacts.");
+            info.getTechList().addTech(TechFactory.createCombatTech(
+                techName, 6));
+          }
+        }
+        if (techLevel >= 10 && !techGained) {
+          int chance = getTypesResearched(ArtifactType.MILITARY) * 10;
+          String techName = "Gravity ripper Mk3";
+          if (DiceGenerator.getRandom(100) < chance
+              && !info.getTechList().hasTech(techName)) {
+            techGained = true;
+            sb.append(info.getEmpireName());
+            sb.append(" has learned ");
+            sb.append(techName);
+            sb.append(" while studying artifacts.");
+            info.getTechList().addTech(TechFactory.createCombatTech(
+                techName, 6));
+          }
+        }
+      }
       if (artifact.getArtifactType() == ArtifactType.DEFENSE) {
         boolean techGained = false;
-        int techLevel = info.getTechList().getTechLevel(TechType.Propulsion);
+        int techLevel = info.getTechList().getTechLevel(TechType.Defense);
         if (techLevel >= 7 && !techGained) {
-          int chance = getTypesResearched(ArtifactType.ENERGY) * 10;
+          int chance = getTypesResearched(ArtifactType.DEFENSE) * 10;
           String techName = "Multi-dimension shield";
           if (DiceGenerator.getRandom(100) < chance
               && !info.getTechList().hasTech(techName)) {

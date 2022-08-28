@@ -88,6 +88,11 @@ public final class TechFactory {
       "Massdrive Mk1", "Photon torpedo Mk6", "ECM torpedo Mk4",
       "HE missile Mk4", "Orbital fusion bomb", "Autocannon Mk2" };
   /**
+   * Rare combat tech names for level 6.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL6_NAMES = {
+      "Gravity ripper Mk1" };
+  /**
    * Combat tech names for level 7
    */
   public static final String[] COMBAT_TECH_LEVEL7_NAMES = {"Phasors Mk2",
@@ -95,7 +100,7 @@ public final class TechFactory {
       "HE missile Mk5", "Shock trooper module", "Orbital antimatter bomb",
       "Autocannon Mk3"};
   /**
-   * Rare combat tech names for level 6.
+   * Rare combat tech names for level 7.
    */
   public static final String[] COMBAT_RARE_TECH_LEVEL7_NAMES = {
       "Ion cannon Mk3", "Plasma cannon Mk4" };
@@ -105,6 +110,11 @@ public final class TechFactory {
   public static final String[] COMBAT_TECH_LEVEL8_NAMES = {"Phasors Mk3",
       "Massdrive Mk3", "Photon torpedo Mk8", "ECM torpedo Mk6",
       "HE missile Mk6", "Orbital smart bombs", "Callisto multicannon Mk1"};
+  /**
+   * Rare combat tech names for level 8.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL8_NAMES = {
+      "Gravity ripper Mk2" };
   /**
    * Combat tech names for level 9
    */
@@ -123,6 +133,11 @@ public final class TechFactory {
   public static final String[] COMBAT_TECH_LEVEL10_NAMES = {
       "Antimatter beam Mk2", "Massdrive Mk5", "Photon torpedo Mk10",
       "ECM torpedo Mk8", "HE missile Mk8", "Callisto multicannon Mk3" };
+  /**
+   * Rare combat tech names for level 10.
+   */
+  public static final String[] COMBAT_RARE_TECH_LEVEL10_NAMES = {
+      "Gravity ripper Mk3" };
 
   /**
    * Defense tech names for level 1
@@ -522,21 +537,24 @@ public final class TechFactory {
           COMBAT_RARE_TECH_LEVEL5_NAMES);
       break;
     case 6:
-      list = COMBAT_TECH_LEVEL6_NAMES;
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL6_NAMES,
+          COMBAT_RARE_TECH_LEVEL6_NAMES);
       break;
     case 7:
       list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL7_NAMES,
           COMBAT_RARE_TECH_LEVEL7_NAMES);
       break;
     case 8:
-      list = COMBAT_TECH_LEVEL8_NAMES;
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL8_NAMES,
+          COMBAT_RARE_TECH_LEVEL8_NAMES);
       break;
     case 9:
       list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL9_NAMES,
           COMBAT_RARE_TECH_LEVEL9_NAMES);
       break;
     case 10:
-      list = COMBAT_TECH_LEVEL10_NAMES;
+      list = TextUtilities.concanateStringArrays(COMBAT_TECH_LEVEL10_NAMES,
+          COMBAT_RARE_TECH_LEVEL10_NAMES);
       break;
     default:
       return null;
@@ -622,6 +640,9 @@ public final class TechFactory {
             tech.setNextTechOnTree("Plasma cannon Mk5");
             tech.setNextTechLevel(9);
           }
+        } else if (techName.startsWith("Gravity ripper")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PLASMA_CANNON));
+          tech.setRareTech(true);
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
         }

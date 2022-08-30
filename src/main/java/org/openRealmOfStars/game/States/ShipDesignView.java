@@ -610,6 +610,7 @@ public class ShipDesignView extends BlackPanel {
                 || comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE
                 || comp.getType() == ShipComponentType.PRIVATEERING_MODULE
                 || comp.getType() == ShipComponentType.STARBASE_COMPONENT
+                || comp.getType() == ShipComponentType.REPAIR_MODULE
                 || comp.getType() == ShipComponentType.FIGHTER_BAY)) {
           components.add(comp);
           continue;

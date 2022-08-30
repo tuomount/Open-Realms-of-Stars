@@ -546,6 +546,11 @@ private boolean isIndexValid(final int index) {
           totalArmor = totalArmor + comp.getDefenseValue();
       }
       if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.REPAIR_MODULE
+          && componentIsWorking(i)) {
+          totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.ORGANIC_ARMOR
           && componentIsWorking(i)) {
           totalArmor = totalArmor + comp.getDefenseValue();
@@ -1852,6 +1857,7 @@ private int increaseHitChanceByComponent() {
       }
       if (comp.getType() == ShipComponentType.ARMOR
           || comp.getType() == ShipComponentType.SHIELD
+          || comp.getType() == ShipComponentType.REPAIR_MODULE
           || comp.getType() == ShipComponentType.SOLAR_ARMOR) {
         power = power + comp.getDefenseValue();
       }
@@ -1938,6 +1944,7 @@ private int increaseHitChanceByComponent() {
       }
       if (comp.getType() == ShipComponentType.ARMOR
           || comp.getType() == ShipComponentType.SHIELD
+          || comp.getType() == ShipComponentType.REPAIR_MODULE
           || comp.getType() == ShipComponentType.SOLAR_ARMOR) {
         power = power + comp.getDefenseValue();
       }

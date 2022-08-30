@@ -395,7 +395,7 @@ public class ShipDesign {
   }
 
   /**
-   * Does ship design have DefanseComponent?
+   * Does ship design have Defense Component?
    * True if one DefanseComponent is in place.
    * @return True if DefanseComponent is found, otherwise false
    */

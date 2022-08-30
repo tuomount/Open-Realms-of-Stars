@@ -487,6 +487,16 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case REPAIR_MODULE: {
+      sb.append("Repair module for fixing armor and hull damage\n");
+      sb.append("when overloaded in combat.");
+      if (getDefenseValue() > 0) {
+        sb.append("Armor value: ");
+        sb.append(getDefenseValue());
+      }
+      sb.append("\n");
+      break;
+    }
     case ORGANIC_ARMOR: {
       sb.append("Armor value: ");
       sb.append(getDefenseValue());

@@ -2300,6 +2300,41 @@ public boolean launchIntercept(final int distance,
         getCurrentShip().setOverloaded(true);
         return true;
       }
+      if (component.getType() == ShipComponentType.REPAIR_MODULE
+          && ship.componentIsWorking(index)
+          && getCurrentShip().getEnergyLevel() > 0
+          && (ship.getArmor() < ship.getTotalArmor()
+              || ship.getHullPoints() < ship.getMaxHullPoints())) {
+        getCurrentShip().setEnergyLevel(
+            getCurrentShip().getEnergyLevel() - 1);
+        if (!getCurrentShip().isOverloadFailure(index)) {
+          if (ship.getArmor() < ship.getTotalArmor()) {
+            ship.setArmor(ship.getArmor() + 1);
+          }
+          ship.fixShip(false);
+          //TODO: Change animation
+          CombatAnimation shieldAnim = new CombatAnimation(
+              getCurrentShip(), getCurrentShip(), CombatAnimationType.SHIELD,
+              1);
+          setAnimation(shieldAnim);
+          if (textLogger != null) {
+            textLogger.addLog(component.getName() + " overloaded!");
+            SoundPlayer.playShieldSound();
+          }
+        } else {
+          if (textLogger != null) {
+            textLogger.addLog(component.getName()
+                + " got damaged during overload!");
+            CombatAnimation shieldAnim = new CombatAnimation(
+                getCurrentShip(), getCurrentShip(),
+                CombatAnimationType.EXPLOSION, -1);
+            setAnimation(shieldAnim);
+          }
+        }
+        getCurrentShip().useComponent(index);
+        getCurrentShip().setOverloaded(true);
+        return true;
+      }
       if (component.getType() == ShipComponentType.JAMMER
           && ship.componentIsWorking(index)
           && getCurrentShip().getEnergyLevel() > 0) {

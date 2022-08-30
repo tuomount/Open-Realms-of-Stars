@@ -185,7 +185,12 @@ public enum ShipComponentType {
    * Real effective against armor and shield.
    * When used against black hole, ascension portal becomes visible.
    */
-  GRAVITY_RIPPER;
+  GRAVITY_RIPPER,
+  /**
+   * Repair module that will repair one hull point and armor point when
+   * overloaded during combat. Also fixes ship faster outside of combat.
+   */
+  REPAIR_MODULE;
 
   /**
    * Get ShipComponentType index
@@ -267,6 +272,8 @@ public enum ShipComponentType {
       return 35;
     case GRAVITY_RIPPER:
       return 36;
+    case REPAIR_MODULE:
+      return 37;
     default:
       return 0;
     }
@@ -353,6 +360,8 @@ public enum ShipComponentType {
       return ShipComponentType.MULTIDIMENSION_SHIELD;
     case 36:
       return ShipComponentType.GRAVITY_RIPPER;
+    case 37:
+      return ShipComponentType.REPAIR_MODULE;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -435,6 +444,8 @@ public enum ShipComponentType {
       return "Multi-dimension shield";
     case GRAVITY_RIPPER:
       return "Gravity ripper";
+    case REPAIR_MODULE:
+      return "Repair module";
     default:
       return "Error - Unknown";
     }
@@ -520,6 +531,8 @@ public enum ShipComponentType {
       return Icons.ICON_DISTORTION_SHIELD;
     case GRAVITY_RIPPER:
       return Icons.ICON_MULTI_CANNON;
+    case REPAIR_MODULE: //TODO Change for better icon
+      return Icons.ICON_IMPROVEMENT_TECH;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

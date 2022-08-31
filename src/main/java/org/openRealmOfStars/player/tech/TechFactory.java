@@ -239,6 +239,12 @@ public final class TechFactory {
   public static final String[] HULL_TECH_LEVEL3_NAMES = {"Destroyer Mk2",
       "Corvette Mk1", "Small starbase Mk2", "Advanced colonization"};
   /**
+   * Hull rare tech names for level 3.
+   */
+  public static final String[] HULL_RARE_TECH_LEVEL3_NAMES = {
+      "Repair module Mk1"};
+
+  /**
    * Hull tech names for level 4
    */
   public static final String[] HULL_TECH_LEVEL4_NAMES = {"Medium freighter",
@@ -248,6 +254,11 @@ public final class TechFactory {
    */
   public static final String[] HULL_TECH_LEVEL5_NAMES = {"Cruiser",
       "Battleship Mk1", "Privateer Mk1", "Fighter bay Mk2", "Large orbital" };
+  /**
+   * Hull rare tech names for level 5.
+   */
+  public static final String[] HULL_RARE_TECH_LEVEL5_NAMES = {
+      "Repair module Mk2"};
   /**
    * Hull tech names for level 6
    */
@@ -259,6 +270,11 @@ public final class TechFactory {
    */
   public static final String[] HULL_TECH_LEVEL7_NAMES = {"Battle cruiser Mk1",
       "Privateer Mk2", "Scout Mk3", "Fighter bay Mk3" };
+  /**
+   * Hull rare tech names for level 7.
+   */
+  public static final String[] HULL_RARE_TECH_LEVEL7_NAMES = {
+      "Repair module Mk3"};
   /**
    * Hull tech names for level 8
    */
@@ -807,19 +823,22 @@ public final class TechFactory {
       list = HULL_TECH_LEVEL2_NAMES;
       break;
     case 3:
-      list = HULL_TECH_LEVEL3_NAMES;
+      list = TextUtilities.concanateStringArrays(HULL_TECH_LEVEL3_NAMES,
+          HULL_RARE_TECH_LEVEL3_NAMES);
       break;
     case 4:
       list = HULL_TECH_LEVEL4_NAMES;
       break;
     case 5:
-      list = HULL_TECH_LEVEL5_NAMES;
+      list = TextUtilities.concanateStringArrays(HULL_TECH_LEVEL5_NAMES,
+          HULL_RARE_TECH_LEVEL5_NAMES);
       break;
     case 6:
       list = HULL_TECH_LEVEL6_NAMES;
       break;
     case 7:
-      list = HULL_TECH_LEVEL7_NAMES;
+      list = TextUtilities.concanateStringArrays(HULL_TECH_LEVEL7_NAMES,
+          HULL_RARE_TECH_LEVEL7_NAMES);
       break;
     case 8:
       list = HULL_TECH_LEVEL8_NAMES;
@@ -868,6 +887,11 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
         } else if (techName.startsWith("Fighter bay Mk")) {
           tech.setComponent(techName);
+        } else if (techName.startsWith("Repair module Mk")) {
+          tech.setComponent(techName);
+          tech.setRareTech(true);
+          //TODO: Change icon
+          tech.setIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
         } else {
           tech.setHull(techName);
         }

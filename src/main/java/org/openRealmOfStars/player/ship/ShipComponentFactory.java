@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 201;
+  private static final int MAX_SHIPCOMPONENT = 204;
 
   /**
    * Component Ion drive Mk1
@@ -998,6 +998,18 @@ public final class ShipComponentFactory {
    * Component Gravity ripper Mk3
    */
   public static final int COMPONENT_GRAVITY_RIPPER_MK3 = 200;
+  /**
+   * Component Repair module Mk1
+   */
+  public static final int COMPONENT_REPAIR_MODULE_MK1 = 201;
+  /**
+   * Component Repair module Mk2
+   */
+  public static final int COMPONENT_REPAIR_MODULE_MK2 = 202;
+  /**
+   * Component Repair module Mk3
+   */
+  public static final int COMPONENT_REPAIR_MODULE_MK3 = 203;
 /**
    * Create ShipComponent with matching name
    * @param name Ship component name
@@ -1672,6 +1684,15 @@ public final class ShipComponentFactory {
     case COMPONENT_GRAVITY_RIPPER_MK3:
       tmp = createWeapon2(index);
       break; // Gravity ripper Mk3
+    case COMPONENT_REPAIR_MODULE_MK1:
+      tmp = createDefense(index);
+      break; // Repair Module Mk1
+    case COMPONENT_REPAIR_MODULE_MK2:
+      tmp = createDefense(index);
+      break; // Repair Module Mk2
+    case COMPONENT_REPAIR_MODULE_MK3:
+      tmp = createDefense(index);
+      break; // Repair Module Mk3
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -3100,6 +3121,24 @@ public final class ShipComponentFactory {
       tmp.setDefenseValue(7); // Shield bonus
       tmp.setDamage(10); // Jammer bonus
       tmp.setEnergyRequirement(5);
+    }
+    if (index == COMPONENT_REPAIR_MODULE_MK1) {
+      tmp = new ShipComponent(index, "Repair module Mk1", 8, 8,
+          ShipComponentType.REPAIR_MODULE);
+      tmp.setDefenseValue(0); // Armor bonus
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_REPAIR_MODULE_MK2) {
+      tmp = new ShipComponent(index, "Repair module Mk2", 8, 9,
+          ShipComponentType.REPAIR_MODULE);
+      tmp.setDefenseValue(2); // Armor bonus
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_REPAIR_MODULE_MK3) {
+      tmp = new ShipComponent(index, "Repair module Mk3", 8, 9,
+          ShipComponentType.REPAIR_MODULE);
+      tmp.setDefenseValue(4); // Armor bonus
+      tmp.setEnergyRequirement(1);
     }
     return tmp;
 

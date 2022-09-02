@@ -331,6 +331,52 @@ public class ArtifactLists {
           }
         }
       }
+      if (artifact.getArtifactType() == ArtifactType.SHIPHULL) {
+        boolean techGained = false;
+        int techLevel = info.getTechList().getTechLevel(TechType.Hulls);
+        if (techLevel >= 3 && !techGained) {
+          int chance = getTypesResearched(ArtifactType.SHIPHULL) * 10;
+          String techName = "Repair module Mk1";
+          if (DiceGenerator.getRandom(100) < chance
+              && !info.getTechList().hasTech(techName)) {
+            techGained = true;
+            sb.append(info.getEmpireName());
+            sb.append(" has learned ");
+            sb.append(techName);
+            sb.append(" while studying artifacts.");
+            info.getTechList().addTech(TechFactory.createHullTech(
+                techName, 3));
+          }
+        }
+        if (techLevel >= 5 && !techGained) {
+          int chance = getTypesResearched(ArtifactType.SHIPHULL) * 10;
+          String techName = "Repair module Mk2";
+          if (DiceGenerator.getRandom(100) < chance
+              && !info.getTechList().hasTech(techName)) {
+            techGained = true;
+            sb.append(info.getEmpireName());
+            sb.append(" has learned ");
+            sb.append(techName);
+            sb.append(" while studying artifacts.");
+            info.getTechList().addTech(TechFactory.createHullTech(
+                techName, 5));
+          }
+        }
+        if (techLevel >= 7 && !techGained) {
+          int chance = getTypesResearched(ArtifactType.SHIPHULL) * 10;
+          String techName = "Repair module M32";
+          if (DiceGenerator.getRandom(100) < chance
+              && !info.getTechList().hasTech(techName)) {
+            techGained = true;
+            sb.append(info.getEmpireName());
+            sb.append(" has learned ");
+            sb.append(techName);
+            sb.append(" while studying artifacts.");
+            info.getTechList().addTech(TechFactory.createHullTech(
+                techName, 7));
+          }
+        }
+      }
       if (artifact.getArtifactType() == ArtifactType.ENERGY) {
         boolean techGained = false;
         int techLevel = info.getTechList().getTechLevel(TechType.Propulsion);

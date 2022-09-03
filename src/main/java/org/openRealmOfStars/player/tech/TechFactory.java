@@ -657,7 +657,7 @@ public final class TechFactory {
             tech.setNextTechLevel(9);
           }
         } else if (techName.startsWith("Gravity ripper")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_PLASMA_CANNON));
+          tech.setIcon(Icons.getIconByName(Icons.ICON_GRAVITY_RIPPER));
           tech.setRareTech(true);
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
@@ -796,7 +796,7 @@ public final class TechFactory {
             tech.setNextTechLevel(8);
           }
         } else if (techName.equals("Multi-dimension shield")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_DISTORTION_SHIELD));
+          tech.setIcon(Icons.getIconByName(Icons.ICON_MULTIDIMENSION_SHIELD));
           tech.setRareTech(true);
         } else if (tech.getIcon() == Icons.getIconByName(Icons.ICON_RESEARCH)) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DEFENSE_TECH));
@@ -890,8 +890,7 @@ public final class TechFactory {
         } else if (techName.startsWith("Repair module Mk")) {
           tech.setComponent(techName);
           tech.setRareTech(true);
-          //TODO: Change icon
-          tech.setIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+          tech.setIcon(Icons.getIconByName(Icons.ICON_WRENCH));
         } else {
           tech.setHull(techName);
         }

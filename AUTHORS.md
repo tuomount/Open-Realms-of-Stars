@@ -245,7 +245,8 @@ Licensed under CC BY 4.0
 Tractor beam, organic armor and solar armor icons modified by Tuomo Untinen
 Originals from 141 Military Icons Set by AngryMeteor.com 
 
-Plasma, Ion cannon and distortion shield icons modified by Tuomo Untinen
+Plasma, Ion cannon, distortion shield, gravity ripper
+and multidimension shield icons modified by Tuomo Untinen
 Originals from 141 Military Icons Set by AngryMeteor.com 
 
 Teuthidae Space Ship Bridge by Tuomo Untinen

@@ -461,6 +461,19 @@ public final class Icons {
    * Ancient Energy
    */
   public static final String ICON_ANCIENT_ENERGY = "IconAncientEnergy";
+  /**
+   * Wrench
+   */
+  public static final String ICON_WRENCH = "IconWrench";
+  /**
+   * Multi-dimension shield
+   */
+  public static final String ICON_MULTIDIMENSION_SHIELD =
+      "IconMultidimensionShield";
+  /**
+   * Gravity ripper
+   */
+  public static final String ICON_GRAVITY_RIPPER = "IconGravityRipper";
 
   /**
    * List of Icon
@@ -787,6 +800,12 @@ public final class Icons {
     icon = new Icon16x16(image, 6, 4, ICON_ANCIENT_FACILITY);
     addIcon(icon);
     icon = new Icon16x16(image, 7, 4, ICON_ANCIENT_ENERGY);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 5, ICON_WRENCH);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 5, ICON_MULTIDIMENSION_SHIELD);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 5, ICON_GRAVITY_RIPPER);
     addIcon(icon);
   }
 

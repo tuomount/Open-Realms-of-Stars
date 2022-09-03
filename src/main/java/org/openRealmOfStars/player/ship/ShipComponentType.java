@@ -528,11 +528,11 @@ public enum ShipComponentType {
     case SPACE_FIN:
       return Icons.ICON_SPACE_FIN;
     case MULTIDIMENSION_SHIELD:
-      return Icons.ICON_DISTORTION_SHIELD;
+      return Icons.ICON_MULTIDIMENSION_SHIELD;
     case GRAVITY_RIPPER:
-      return Icons.ICON_MULTI_CANNON;
-    case REPAIR_MODULE: //TODO Change for better icon
-      return Icons.ICON_IMPROVEMENT_TECH;
+      return Icons.ICON_GRAVITY_RIPPER;
+    case REPAIR_MODULE:
+      return Icons.ICON_WRENCH;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

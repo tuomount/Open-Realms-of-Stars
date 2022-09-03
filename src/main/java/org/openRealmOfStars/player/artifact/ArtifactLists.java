@@ -224,6 +224,69 @@ public class ArtifactLists {
     }
     return result;
   }
+
+  /**
+   * Generate ancient tech based on techname and level and type.
+   * Returns string if ancient tech was discoverd. Otherwise returns null.
+   * @param info Realm make the discovery
+   * @param techName Technology name
+   * @param techLevel Technology level
+   * @param techType Technology Type
+   * @param artifactType Artifact Type
+   * @return String or null
+   */
+  private String generateAncientTech(final PlayerInfo info,
+      final String techName, final int techLevel, final TechType techType,
+      final ArtifactType artifactType) {
+    String result = null;
+    int currentTechLevel = info.getTechList().getTechLevel(TechType.Combat);
+    if (currentTechLevel >= techLevel) {
+      int chance = getTypesResearched(artifactType) * 10;
+      if (DiceGenerator.getRandom(100) < chance
+          && !info.getTechList().hasTech(techName)) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(info.getEmpireName());
+        sb.append(" has learned ");
+        sb.append(techName);
+        sb.append(" while studying artifacts.");
+        switch (techType) {
+          default:
+          case Combat: {
+            info.getTechList().addTech(TechFactory.createCombatTech(
+                techName, techLevel));
+            break;
+          }
+          case Defense: {
+            info.getTechList().addTech(TechFactory.createDefenseTech(
+                techName, techLevel));
+            break;
+          }
+          case Hulls: {
+            info.getTechList().addTech(TechFactory.createHullTech(
+                techName, techLevel));
+            break;
+          }
+          case Improvements: {
+            info.getTechList().addTech(TechFactory.createImprovementTech(
+                techName, techLevel));
+            break;
+          }
+          case Propulsion: {
+            info.getTechList().addTech(TechFactory.createPropulsionTech(
+                techName, techLevel));
+            break;
+          }
+          case Electrics: {
+            info.getTechList().addTech(TechFactory.createElectronicsTech(
+                techName, techLevel));
+            break;
+          }
+        }
+        result = sb.toString();
+      }
+    }
+    return result;
+  }
   /**
    * Update artifact research points by turn.
    * @param totalResearchPoints Total research points to add
@@ -269,157 +332,87 @@ public class ArtifactLists {
       }
       if (artifact.getArtifactType() == ArtifactType.MILITARY) {
         boolean techGained = false;
-        int techLevel = info.getTechList().getTechLevel(TechType.Combat);
-        if (techLevel >= 6 && !techGained) {
-          int chance = getTypesResearched(ArtifactType.MILITARY) * 10;
-          String techName = "Gravity ripper Mk1";
-          if (DiceGenerator.getRandom(100) < chance
-              && !info.getTechList().hasTech(techName)) {
+        String techName = "Gravity ripper Mk1";
+        String event = generateAncientTech(info, techName, 6, TechType.Combat,
+            ArtifactType.MILITARY);
+        if (event != null) {
+          techGained = true;
+          sb.append(event);
+        }
+        techName = "Gravity ripper Mk2";
+        if (!techGained) {
+          event = generateAncientTech(info, techName, 8, TechType.Combat,
+              ArtifactType.MILITARY);
+          if (event != null) {
             techGained = true;
-            sb.append(info.getEmpireName());
-            sb.append(" has learned ");
-            sb.append(techName);
-            sb.append(" while studying artifacts.");
-            info.getTechList().addTech(TechFactory.createCombatTech(
-                techName, 6));
+            sb.append(event);
           }
         }
-        if (techLevel >= 8 && !techGained) {
-          int chance = getTypesResearched(ArtifactType.MILITARY) * 10;
-          String techName = "Gravity ripper Mk2";
-          if (DiceGenerator.getRandom(100) < chance
-              && !info.getTechList().hasTech(techName)) {
+        techName = "Gravity ripper Mk3";
+        if (!techGained) {
+          event = generateAncientTech(info, techName, 10, TechType.Combat,
+              ArtifactType.MILITARY);
+          if (event != null) {
             techGained = true;
-            sb.append(info.getEmpireName());
-            sb.append(" has learned ");
-            sb.append(techName);
-            sb.append(" while studying artifacts.");
-            info.getTechList().addTech(TechFactory.createCombatTech(
-                techName, 6));
-          }
-        }
-        if (techLevel >= 10 && !techGained) {
-          int chance = getTypesResearched(ArtifactType.MILITARY) * 10;
-          String techName = "Gravity ripper Mk3";
-          if (DiceGenerator.getRandom(100) < chance
-              && !info.getTechList().hasTech(techName)) {
-            techGained = true;
-            sb.append(info.getEmpireName());
-            sb.append(" has learned ");
-            sb.append(techName);
-            sb.append(" while studying artifacts.");
-            info.getTechList().addTech(TechFactory.createCombatTech(
-                techName, 6));
+            sb.append(event);
           }
         }
       }
       if (artifact.getArtifactType() == ArtifactType.DEFENSE) {
-        boolean techGained = false;
-        int techLevel = info.getTechList().getTechLevel(TechType.Defense);
-        if (techLevel >= 7 && !techGained) {
-          int chance = getTypesResearched(ArtifactType.DEFENSE) * 10;
-          String techName = "Multi-dimension shield";
-          if (DiceGenerator.getRandom(100) < chance
-              && !info.getTechList().hasTech(techName)) {
-            techGained = true;
-            sb.append(info.getEmpireName());
-            sb.append(" has learned ");
-            sb.append(techName);
-            sb.append(" while studying artifacts.");
-            info.getTechList().addTech(TechFactory.createDefenseTech(
-                techName, 7));
-          }
+        String techName = "Multi-dimension shield";
+        String event = generateAncientTech(info, techName, 7, TechType.Defense,
+            ArtifactType.DEFENSE);
+        if (event != null) {
+          sb.append(event);
         }
       }
       if (artifact.getArtifactType() == ArtifactType.SHIPHULL) {
         boolean techGained = false;
-        int techLevel = info.getTechList().getTechLevel(TechType.Hulls);
-        if (techLevel >= 3 && !techGained) {
-          int chance = getTypesResearched(ArtifactType.SHIPHULL) * 10;
-          String techName = "Repair module Mk1";
-          if (DiceGenerator.getRandom(100) < chance
-              && !info.getTechList().hasTech(techName)) {
-            techGained = true;
-            sb.append(info.getEmpireName());
-            sb.append(" has learned ");
-            sb.append(techName);
-            sb.append(" while studying artifacts.");
-            info.getTechList().addTech(TechFactory.createHullTech(
-                techName, 3));
+        String techName = "Repair module Mk1";
+        String event = generateAncientTech(info, techName, 3, TechType.Hulls,
+            ArtifactType.SHIPHULL);
+        if (event != null) {
+          sb.append(event);
+        }
+        if (!techGained) {
+          techName = "Repair module Mk2";
+          event = generateAncientTech(info, techName, 5, TechType.Hulls,
+              ArtifactType.SHIPHULL);
+          if (event != null) {
+            sb.append(event);
           }
         }
-        if (techLevel >= 5 && !techGained) {
-          int chance = getTypesResearched(ArtifactType.SHIPHULL) * 10;
-          String techName = "Repair module Mk2";
-          if (DiceGenerator.getRandom(100) < chance
-              && !info.getTechList().hasTech(techName)) {
-            techGained = true;
-            sb.append(info.getEmpireName());
-            sb.append(" has learned ");
-            sb.append(techName);
-            sb.append(" while studying artifacts.");
-            info.getTechList().addTech(TechFactory.createHullTech(
-                techName, 5));
-          }
-        }
-        if (techLevel >= 7 && !techGained) {
-          int chance = getTypesResearched(ArtifactType.SHIPHULL) * 10;
-          String techName = "Repair module M32";
-          if (DiceGenerator.getRandom(100) < chance
-              && !info.getTechList().hasTech(techName)) {
-            techGained = true;
-            sb.append(info.getEmpireName());
-            sb.append(" has learned ");
-            sb.append(techName);
-            sb.append(" while studying artifacts.");
-            info.getTechList().addTech(TechFactory.createHullTech(
-                techName, 7));
+        if (!techGained) {
+          techName = "Repair module Mk3";
+          event = generateAncientTech(info, techName, 7, TechType.Hulls,
+              ArtifactType.SHIPHULL);
+          if (event != null) {
+            sb.append(event);
           }
         }
       }
       if (artifact.getArtifactType() == ArtifactType.ENERGY) {
         boolean techGained = false;
-        int techLevel = info.getTechList().getTechLevel(TechType.Propulsion);
-        if (techLevel >= 5 && !techGained) {
-          int chance = getTypesResearched(ArtifactType.ENERGY) * 10;
-          String techName = "Tachyon source Mk3";
-          if (DiceGenerator.getRandom(100) < chance
-              && !info.getTechList().hasTech(techName)) {
-            techGained = true;
-            sb.append(info.getEmpireName());
-            sb.append(" has learned ");
-            sb.append(techName);
-            sb.append(" while studying artifacts.");
-            info.getTechList().addTech(TechFactory.createPropulsionTech(
-                techName, 5));
+        String techName = "Tachyon source Mk3";
+        String event = generateAncientTech(info, techName, 5,
+            TechType.Propulsion, ArtifactType.ENERGY);
+        if (event != null) {
+          sb.append(event);
+        }
+        if (!techGained) {
+          techName = "Antimatter source Mk3";
+          event = generateAncientTech(info, techName, 8,
+              TechType.Propulsion, ArtifactType.ENERGY);
+          if (event != null) {
+            sb.append(event);
           }
         }
-        if (techLevel >= 8 && !techGained) {
-          int chance = getTypesResearched(ArtifactType.ENERGY) * 10;
-          String techName = "Antimatter source Mk3";
-          if (DiceGenerator.getRandom(100) < chance
-              && !info.getTechList().hasTech(techName)) {
-            techGained = true;
-            sb.append(info.getEmpireName());
-            sb.append(" has learned ");
-            sb.append(techName);
-            sb.append(" while studying artifacts.");
-            info.getTechList().addTech(TechFactory.createPropulsionTech(
-                techName, 8));
-          }
-        }
-        if (techLevel >= 10 && !techGained) {
-          int chance = getTypesResearched(ArtifactType.ENERGY) * 10;
-          String techName = "Zero-point source Mk3";
-          if (DiceGenerator.getRandom(100) < chance
-              && !info.getTechList().hasTech(techName)) {
-            techGained = true;
-            sb.append(info.getEmpireName());
-            sb.append(" has learned ");
-            sb.append(techName);
-            sb.append(" while studying artifacts.");
-            info.getTechList().addTech(TechFactory.createPropulsionTech(
-                techName, 10));
+        if (!techGained) {
+          techName = "Zero-point source Mk3";
+          event = generateAncientTech(info, techName, 10,
+              TechType.Propulsion, ArtifactType.ENERGY);
+          if (event != null) {
+            sb.append(event);
           }
         }
       }

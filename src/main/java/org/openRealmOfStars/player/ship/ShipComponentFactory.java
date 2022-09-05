@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 204;
+  private static final int MAX_SHIPCOMPONENT = 205;
 
   /**
    * Component Ion drive Mk1
@@ -1010,6 +1010,10 @@ public final class ShipComponentFactory {
    * Component Repair module Mk3
    */
   public static final int COMPONENT_REPAIR_MODULE_MK3 = 203;
+  /**
+   * Component Starbase Ascension portal
+   */
+  public static final int COMPONENT_STARBASE_ASCENSION_PORTAL = 204;
 /**
    * Create ShipComponent with matching name
    * @param name Ship component name
@@ -1693,6 +1697,9 @@ public final class ShipComponentFactory {
     case COMPONENT_REPAIR_MODULE_MK3:
       tmp = createDefense(index);
       break; // Repair Module Mk3
+    case COMPONENT_STARBASE_ASCENSION_PORTAL:
+      tmp = createStarbaseModule(index);
+      break; // Starbase ascension portal
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -2015,6 +2022,11 @@ public final class ShipComponentFactory {
           ShipComponentType.STARBASE_COMPONENT);
       tmp.setEnergyRequirement(2);
       tmp.setFleetCapacityBonus(2);
+    }
+    if (index == COMPONENT_STARBASE_ASCENSION_PORTAL) {
+      tmp = new ShipComponent(index, "Starbase ascension portal", 40, 40,
+          ShipComponentType.STARBASE_COMPONENT);
+      tmp.setEnergyRequirement(8);
     }
 
     return tmp;

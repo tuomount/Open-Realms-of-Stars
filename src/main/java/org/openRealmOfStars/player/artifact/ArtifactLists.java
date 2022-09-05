@@ -416,6 +416,14 @@ public class ArtifactLists {
           }
         }
       }
+      if (artifact.getArtifactType() == ArtifactType.FACILITY) {
+        String techName = "Starbase ascension portal";
+        String event = generateAncientTech(info, techName, 7,
+            TechType.Improvements, ArtifactType.FACILITY);
+        if (event != null) {
+          sb.append(event);
+        }
+      }
       int chance = researchedArtifacts.size() * 10;
       if (scientist.hasPerk(Perk.ARCHAEOLOGIST)) {
         chance = chance + 20;

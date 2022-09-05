@@ -346,6 +346,12 @@ public final class TechFactory {
       "New technology center", "VR movie center", "Advanced recycle center",
       "Starbase nano lab", "Aquatic colonization"};
   /**
+   * Planetary Improvement rare tech names for level 7
+   */
+  public static final String[] IMPROVEMENT_RARE_TECH_LEVEL7_NAMES = {
+      "Starbase ascension portal"};
+
+  /**
    * Planetary Improvement tech names for level 8
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL8_NAMES = {"Galactic bank",
@@ -930,7 +936,8 @@ public final class TechFactory {
       list = IMPROVEMENT_TECH_LEVEL6_NAMES;
       break;
     case 7:
-      list = IMPROVEMENT_TECH_LEVEL7_NAMES;
+      list = TextUtilities.concanateStringArrays(IMPROVEMENT_TECH_LEVEL7_NAMES,
+          IMPROVEMENT_RARE_TECH_LEVEL7_NAMES);
       break;
     case 8:
       list = IMPROVEMENT_TECH_LEVEL8_NAMES;
@@ -961,6 +968,9 @@ public final class TechFactory {
         } else if (techName.startsWith("Starbase")) {
           tech.setComponent(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
+          if (techName.equals("Starbase ascension portal")) {
+            tech.setRareTech(true);
+          }
         } else if (techName.startsWith("Deadly virus")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DEATH));
           tech.setRareTech(true);

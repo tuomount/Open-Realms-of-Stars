@@ -372,6 +372,7 @@ public class ArtifactLists {
         String event = generateAncientTech(info, techName, 3, TechType.Hulls,
             ArtifactType.SHIPHULL);
         if (event != null) {
+          techGained = true;
           sb.append(event);
         }
         if (!techGained) {
@@ -379,6 +380,7 @@ public class ArtifactLists {
           event = generateAncientTech(info, techName, 5, TechType.Hulls,
               ArtifactType.SHIPHULL);
           if (event != null) {
+            techGained = true;
             sb.append(event);
           }
         }
@@ -387,6 +389,7 @@ public class ArtifactLists {
           event = generateAncientTech(info, techName, 7, TechType.Hulls,
               ArtifactType.SHIPHULL);
           if (event != null) {
+            techGained = true;
             sb.append(event);
           }
         }
@@ -397,6 +400,7 @@ public class ArtifactLists {
         String event = generateAncientTech(info, techName, 5,
             TechType.Propulsion, ArtifactType.ENERGY);
         if (event != null) {
+          techGained = true;
           sb.append(event);
         }
         if (!techGained) {
@@ -404,6 +408,7 @@ public class ArtifactLists {
           event = generateAncientTech(info, techName, 8,
               TechType.Propulsion, ArtifactType.ENERGY);
           if (event != null) {
+            techGained = true;
             sb.append(event);
           }
         }
@@ -412,16 +417,28 @@ public class ArtifactLists {
           event = generateAncientTech(info, techName, 10,
               TechType.Propulsion, ArtifactType.ENERGY);
           if (event != null) {
+            techGained = true;
             sb.append(event);
           }
         }
       }
       if (artifact.getArtifactType() == ArtifactType.FACILITY) {
+        boolean techGained = false;
         String techName = "Starbase ascension portal";
         String event = generateAncientTech(info, techName, 7,
             TechType.Improvements, ArtifactType.FACILITY);
         if (event != null) {
+          techGained = true;
           sb.append(event);
+        }
+        if (!techGained) {
+          techName = "Planetary ascension portal";
+          event = generateAncientTech(info, techName, 9,
+              TechType.Improvements, ArtifactType.FACILITY);
+          if (event != null) {
+            techGained = true;
+            sb.append(event);
+          }
         }
       }
       int chance = researchedArtifacts.size() * 10;

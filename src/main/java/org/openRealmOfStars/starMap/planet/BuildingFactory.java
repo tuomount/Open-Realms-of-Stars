@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 72;
+  private static final int MAX_BUILDING = 73;
 
   /**
    * Component Basic mine
@@ -376,6 +376,10 @@ public final class BuildingFactory {
    * Component College of history
    */
   public static final int COMPONENT_COLLEGE_OF_HISTORY = 71;
+  /**
+   * Component Ascension portal
+   */
+  public static final int COMPONENT_ASCENSION_PORTAL = 72;
 
   /**
    * Create planetary building with index
@@ -601,6 +605,9 @@ public final class BuildingFactory {
     case COMPONENT_COLLEGE_OF_HISTORY:
       tmp = createProductionFacility(index);
       break; // College of history
+    case COMPONENT_ASCENSION_PORTAL:
+      tmp = createMilitaryFacility(index);
+      break; // Planetary ascension portal
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -841,6 +848,16 @@ public final class BuildingFactory {
       tmp.setScientificAchievement(true);
       tmp.setBroadcaster(true);
       tmp.setReseBonus(2);
+      return tmp;
+    }
+    if (index == COMPONENT_ASCENSION_PORTAL) {
+      tmp = new Building(index, "Planetary ascension portal",
+          Icons.getIconByName(Icons.ICON_AIRLOCK_OPEN),
+          BuildingType.RESEARCH);
+      tmp.setProdCost(120);
+      tmp.setMetalCost(160);
+      tmp.setDescription("Creates ascension portal near planet.");
+      tmp.setHappiness(2);
       return tmp;
     }
     return tmp;

@@ -364,6 +364,11 @@ public final class TechFactory {
       "Nanobot manufacturing center", "Research Matrix",
       "Planetary furnace"};
   /**
+   * Planetary Improvement rare tech names for level 9
+   */
+  public static final String[] IMPROVEMENT_RARE_TECH_LEVEL9_NAMES = {
+      "Planetary ascension portal"};
+  /**
    * Planetary Improvement tech names for level 10
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL10_NAMES = {
@@ -943,7 +948,8 @@ public final class TechFactory {
       list = IMPROVEMENT_TECH_LEVEL8_NAMES;
       break;
     case 9:
-      list = IMPROVEMENT_TECH_LEVEL9_NAMES;
+      list = TextUtilities.concanateStringArrays(IMPROVEMENT_TECH_LEVEL9_NAMES,
+          IMPROVEMENT_RARE_TECH_LEVEL9_NAMES);
       break;
     case 10:
       list = IMPROVEMENT_TECH_LEVEL10_NAMES;
@@ -987,6 +993,9 @@ public final class TechFactory {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
           } else if (techName.startsWith("Orbital lift")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR));
+            tech.setRareTech(true);
+          } else if (techName.startsWith("Planetary ascension portal")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_AIRLOCK_OPEN));
             tech.setRareTech(true);
           } else if (techName.startsWith("College of history")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));

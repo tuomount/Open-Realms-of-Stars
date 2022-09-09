@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 205;
+  private static final int MAX_SHIPCOMPONENT = 208;
 
   /**
    * Component Ion drive Mk1
@@ -1014,6 +1014,18 @@ public final class ShipComponentFactory {
    * Component Starbase Ascension portal
    */
   public static final int COMPONENT_STARBASE_ASCENSION_PORTAL = 204;
+  /**
+   * Component Ascension portal scanner Mk1
+   */
+  public static final int COMPONENT_ASCENSION_PORTAL_SCANNER_MK1 = 205;
+  /**
+   * Component Ascension portal scanner Mk2
+   */
+  public static final int COMPONENT_ASCENSION_PORTAL_SCANNER_MK2 = 206;
+  /**
+   * Component Ascension portal scanner Mk3
+   */
+  public static final int COMPONENT_ASCENSION_PORTAL_SCANNER_MK3 = 207;
 /**
    * Create ShipComponent with matching name
    * @param name Ship component name
@@ -1700,6 +1712,15 @@ public final class ShipComponentFactory {
     case COMPONENT_STARBASE_ASCENSION_PORTAL:
       tmp = createStarbaseModule(index);
       break; // Starbase ascension portal
+    case COMPONENT_ASCENSION_PORTAL_SCANNER_MK1:
+      tmp = createElectronics(index);
+      break; // Ascension portal scanner Mk1
+    case COMPONENT_ASCENSION_PORTAL_SCANNER_MK2:
+      tmp = createElectronics(index);
+      break; // Ascension portal scanner Mk2
+    case COMPONENT_ASCENSION_PORTAL_SCANNER_MK3:
+      tmp = createElectronics(index);
+      break; // Ascension portal scanner Mk3
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -2389,6 +2410,27 @@ public final class ShipComponentFactory {
       tmp = new ShipComponent(index, "Zero-point source Mk3", 24, 4,
           ShipComponentType.POWERSOURCE);
       tmp.setEnergyResource(17);
+    }
+    if (index == COMPONENT_ASCENSION_PORTAL_SCANNER_MK1) {
+      tmp = new ShipComponent(index, "Ascension portal scanner Mk1", 3, 2,
+          ShipComponentType.SCANNER);
+      tmp.setScannerRange(4);
+      tmp.setCloakDetection(20);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_ASCENSION_PORTAL_SCANNER_MK2) {
+      tmp = new ShipComponent(index, "Ascension portal scanner Mk2", 3, 2,
+          ShipComponentType.SCANNER);
+      tmp.setScannerRange(5);
+      tmp.setCloakDetection(40);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_ASCENSION_PORTAL_SCANNER_MK2) {
+      tmp = new ShipComponent(index, "Ascension portal scanner Mk2", 3, 2,
+          ShipComponentType.SCANNER);
+      tmp.setScannerRange(5);
+      tmp.setCloakDetection(40);
+      tmp.setEnergyRequirement(1);
     }
     return tmp;
 

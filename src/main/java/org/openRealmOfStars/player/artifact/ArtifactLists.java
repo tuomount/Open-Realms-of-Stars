@@ -441,6 +441,34 @@ public class ArtifactLists {
           }
         }
       }
+      if (artifact.getArtifactType() == ArtifactType.ELECTRONIC) {
+        boolean techGained = false;
+        String techName = "Ascension portal scanner Mk1";
+        String event = generateAncientTech(info, techName, 4,
+            TechType.Electrics, ArtifactType.ELECTRONIC);
+        if (event != null) {
+          techGained = true;
+          sb.append(event);
+        }
+        if (!techGained) {
+          techName = "Ascension portal scanner Mk2";
+          event = generateAncientTech(info, techName, 6,
+              TechType.Electrics, ArtifactType.ELECTRONIC);
+          if (event != null) {
+            techGained = true;
+            sb.append(event);
+          }
+        }
+        if (!techGained) {
+          techName = "Ascension portal scanner Mk3";
+          event = generateAncientTech(info, techName, 8,
+              TechType.Electrics, ArtifactType.ELECTRONIC);
+          if (event != null) {
+            techGained = true;
+            sb.append(event);
+          }
+        }
+      }
       int chance = researchedArtifacts.size() * 10;
       if (scientist.hasPerk(Perk.ARCHAEOLOGIST)) {
         chance = chance + 20;

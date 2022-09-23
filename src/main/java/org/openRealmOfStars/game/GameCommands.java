@@ -97,6 +97,15 @@ public final class GameCommands {
   public static final String COMMAND_SOUND_VOLUME = "OptionsSoundVolume";
 
   /**
+   * Search backwards
+   */
+  public static final String COMMAND_SEARCH_BACKWARDS = "SearchBackwards";
+  /**
+   * Search forwards
+   */
+  public static final String COMMAND_SEARCH_FORWARDS = "SearchForwards";
+
+  /**
    * Ambient lights intense up
    */
   public static final String COMMAND_LIGHTS_UP = "OptionsLightsUp";

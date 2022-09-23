@@ -2,9 +2,15 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -16,11 +22,15 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.tutorial.HelpLine;
 import org.openRealmOfStars.game.tutorial.TutorialList;
 import org.openRealmOfStars.gui.ListRenderers.TutorialTreeCellRenderer;
+import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.utilities.TextUtilities;
 
@@ -67,6 +77,11 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
    * Check box for enabling the tutorial
    */
   private SpaceCheckBox checkBox;
+
+  /**
+   * Search text field
+   */
+  private JTextField searchText;
   /**
    * Constructor for help view.
    * @param tutorial Tutorial list of help lines
@@ -109,10 +124,58 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     base.add(infoText, BorderLayout.CENTER);
     checkBox = new SpaceCheckBox("Tutorial enabled");
     checkBox.setToolTipText("If checked then tutorial is enabled in game.");
+    checkBox.setAlignmentX(LEFT_ALIGNMENT);
     if (tutorialEnabled) {
       checkBox.setSelected(true);
     }
-    base.add(checkBox, BorderLayout.NORTH);
+    SpaceGreyPanel greyPanel = new SpaceGreyPanel();
+    greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
+    greyPanel.add(checkBox);
+    searchText = new JTextField();
+    searchText.setFont(GuiStatics.getFontCubellan());
+    searchText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    searchText.setBackground(Color.BLACK);
+    searchText.setMaximumSize(new Dimension(300,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    searchText.addKeyListener(new KeyListener() {
+
+      @Override
+      public void keyTyped(final KeyEvent e) {
+        // Nothing to do here
+      }
+
+      @Override
+      public void keyReleased(final KeyEvent e) {
+        // Nothing to do here
+      }
+
+      @Override
+      public void keyPressed(final KeyEvent e) {
+        // Nothing to do here
+      }
+    });
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    SpaceGreyPanel searchPanel = new SpaceGreyPanel();
+    searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.X_AXIS));
+    SpaceLabel label = new SpaceLabel("Search:");
+    searchPanel.add(label);
+    searchPanel.add(Box.createRigidArea(new Dimension(2, 2)));
+    searchPanel.add(searchText);
+    searchPanel.add(Box.createRigidArea(new Dimension(2, 2)));
+    IconButton button = new IconButton(
+        Icons.getIconByName(Icons.ICON_SCROLL_UP).getIcon(),
+        Icons.getIconByName(Icons.ICON_SCROLL_UP_PRESSED).getIcon(), false,
+        GameCommands.COMMAND_SEARCH_BACKWARDS, searchPanel);
+    searchPanel.add(button);
+    button = new IconButton(
+        Icons.getIconByName(Icons.ICON_SCROLL_DOWN).getIcon(),
+        Icons.getIconByName(Icons.ICON_SCROLL_DOWN_PRESSED).getIcon(), false,
+        GameCommands.COMMAND_SEARCH_FORWARDS, searchPanel);
+    searchPanel.add(button);
+    searchPanel.setAlignmentX(LEFT_ALIGNMENT);
+    greyPanel.add(searchPanel);
+
+    base.add(greyPanel, BorderLayout.NORTH);
     this.add(base, BorderLayout.CENTER);
 
     // Bottom panel

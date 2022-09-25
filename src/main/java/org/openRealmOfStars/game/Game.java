@@ -168,7 +168,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.22.16Beta";
+  public static final String GAME_VERSION = "0.22.17Beta";
 
   /**
    * Animation timer used for animation
@@ -3307,7 +3307,7 @@ public class Game implements ActionListener {
         changeGameState(GameState.STARMAP);
         return;
       }
-      //FIXME Do handling for help view
+      helpView.handleActions(arg0);
       return;
     }
     if (gameState == GameState.VOTE_VIEW && voteView != null) {

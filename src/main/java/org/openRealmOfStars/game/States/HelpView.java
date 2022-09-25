@@ -85,6 +85,10 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
    * Search text field
    */
   private JTextField searchText;
+  /**
+   * Matches text
+   */
+  private SpaceLabel matchesText;
 
   /**
    * Root node.
@@ -195,7 +199,11 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     button.addActionListener(listener);
     searchPanel.add(button);
     searchPanel.setAlignmentX(LEFT_ALIGNMENT);
+    searchPanel.add(Box.createRigidArea(new Dimension(2, 2)));
+    matchesText = new SpaceLabel("No matches");
+    searchPanel.add(matchesText);
     greyPanel.add(searchPanel);
+    greyPanel.add(Box.createRigidArea(new Dimension(2, 2)));
 
     base.add(greyPanel, BorderLayout.NORTH);
     this.add(base, BorderLayout.CENTER);
@@ -245,7 +253,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
    * @return TreeNode array for path
    */
   public TreeNode[] search(final String textToMatch, final boolean forward) {
-    if (lastSearchText.equals(textToMatch)) {
+    if (lastSearchText != null && lastSearchText.equals(textToMatch)) {
       lastSearchText = textToMatch;
       if (forward) {
         currentMatch++;
@@ -263,6 +271,9 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
       currentMatch = 1;
       numberOfMatches = -1;
     }
+    int count = 0;
+    TreeNode[] result = new TreeNode[3];
+    boolean match = false;
     for (int i = 0; i < root.getChildCount(); i++) {
       TreeNode node = root.getChildAt(i);
       for (int j = 0; j < node.getChildCount(); j++) {
@@ -274,15 +285,23 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
             HelpLine line = (HelpLine) object;
             if (line.getText().toLowerCase().contains(
                 lastSearchText.toLowerCase())) {
-              TreeNode[] result = new TreeNode[3];
-              result[0] = root;
-              result[1] = node;
-              result[2] = leaf;
-              return result;
+              count++;
+              if (count == currentMatch) {
+                result[0] = root;
+                result[1] = node;
+                result[2] = leaf;
+                match = true;
+              }
             }
           }
         }
       }
+    }
+    if (numberOfMatches == -1) {
+      numberOfMatches = count;
+    }
+    if (match) {
+      return result;
     }
     return null;
   }
@@ -295,7 +314,17 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
       if (!searchText.getText().isEmpty()) {
         SoundPlayer.playMenuSound();
         TreeNode[] path = search(searchText.getText(), true);
-        tutorialTree.setSelectionPath(new TreePath(path));
+        if (path != null) {
+          tutorialTree.setSelectionPath(new TreePath(path));
+        } else {
+          tutorialTree.setSelectionPath(null);
+        }
+        if (numberOfMatches > 0) {
+          matchesText.setText(currentMatch + "/" + numberOfMatches
+              + " matches");
+        } else {
+          matchesText.setText("Not found");
+        }
         repaint();
       } else {
         SoundPlayer.playMenuDisabled();
@@ -305,8 +334,18 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
         GameCommands.COMMAND_SEARCH_BACKWARDS)) {
       if (!searchText.getText().isEmpty()) {
         SoundPlayer.playMenuSound();
-        TreeNode[] path = search(searchText.getText(), true);
-        tutorialTree.setSelectionPath(new TreePath(path));
+        TreeNode[] path = search(searchText.getText(), false);
+        if (path != null) {
+          tutorialTree.setSelectionPath(new TreePath(path));
+        } else {
+          tutorialTree.setSelectionPath(null);
+        }
+        if (numberOfMatches > 0) {
+          matchesText.setText(currentMatch + "/" + numberOfMatches
+              + " matches");
+        } else {
+          matchesText.setText("Not found");
+        }
         repaint();
       } else {
         SoundPlayer.playMenuDisabled();

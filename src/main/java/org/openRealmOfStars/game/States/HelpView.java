@@ -3,6 +3,7 @@ package org.openRealmOfStars.game.States;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -15,6 +16,8 @@ import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
@@ -37,7 +40,7 @@ import org.openRealmOfStars.utilities.TextUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019  Tuomo Untinen
+* Copyright (C) 2019-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -82,6 +85,23 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
    * Search text field
    */
   private JTextField searchText;
+
+  /**
+   * Root node.
+   */
+  private DefaultMutableTreeNode root;
+  /**
+   * Number of matches
+   */
+  private int numberOfMatches;
+  /**
+   * Last search text
+   */
+  private String lastSearchText;
+  /**
+   * Current match index;
+   */
+  private int currentMatch;
   /**
    * Constructor for help view.
    * @param tutorial Tutorial list of help lines
@@ -96,7 +116,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     base.setLayout(new BorderLayout());
 
     String[] categories = tutorial.getCategories();
-    DefaultMutableTreeNode root = new DefaultMutableTreeNode("Tutorial");
+    root = new DefaultMutableTreeNode("Tutorial");
     for (String category : categories) {
       DefaultMutableTreeNode categoryNode = new DefaultMutableTreeNode(
           category);
@@ -166,11 +186,13 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
         Icons.getIconByName(Icons.ICON_SCROLL_UP).getIcon(),
         Icons.getIconByName(Icons.ICON_SCROLL_UP_PRESSED).getIcon(), false,
         GameCommands.COMMAND_SEARCH_BACKWARDS, searchPanel);
+    button.addActionListener(listener);
     searchPanel.add(button);
     button = new IconButton(
         Icons.getIconByName(Icons.ICON_SCROLL_DOWN).getIcon(),
         Icons.getIconByName(Icons.ICON_SCROLL_DOWN_PRESSED).getIcon(), false,
         GameCommands.COMMAND_SEARCH_FORWARDS, searchPanel);
+    button.addActionListener(listener);
     searchPanel.add(button);
     searchPanel.setAlignmentX(LEFT_ALIGNMENT);
     greyPanel.add(searchPanel);
@@ -214,5 +236,82 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
    */
   public boolean isTutorialEnabled() {
     return checkBox.isSelected();
+  }
+
+  /**
+   * Search method for find text in help lines.
+   * @param textToMatch Text to search
+   * @param forward True for forward, false for backward
+   * @return TreeNode array for path
+   */
+  public TreeNode[] search(final String textToMatch, final boolean forward) {
+    if (lastSearchText.equals(textToMatch)) {
+      lastSearchText = textToMatch;
+      if (forward) {
+        currentMatch++;
+      } else {
+        currentMatch--;
+      }
+      if (currentMatch > numberOfMatches) {
+        currentMatch = 1;
+      }
+      if (currentMatch <= 0) {
+        currentMatch = numberOfMatches;
+      }
+    } else {
+      lastSearchText = textToMatch;
+      currentMatch = 1;
+      numberOfMatches = -1;
+    }
+    for (int i = 0; i < root.getChildCount(); i++) {
+      TreeNode node = root.getChildAt(i);
+      for (int j = 0; j < node.getChildCount(); j++) {
+        TreeNode leaf = node.getChildAt(j);
+        if (leaf instanceof DefaultMutableTreeNode) {
+          DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) leaf;
+          Object object = treeNode.getUserObject();
+          if (object instanceof HelpLine) {
+            HelpLine line = (HelpLine) object;
+            if (line.getText().toLowerCase().contains(
+                lastSearchText.toLowerCase())) {
+              TreeNode[] result = new TreeNode[3];
+              result[0] = root;
+              result[1] = node;
+              result[2] = leaf;
+              return result;
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+  /**
+   * Handle actions in help view.
+   * @param arg0 Action event to handle
+   */
+  public void handleActions(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SEARCH_FORWARDS)) {
+      if (!searchText.getText().isEmpty()) {
+        SoundPlayer.playMenuSound();
+        TreeNode[] path = search(searchText.getText(), true);
+        tutorialTree.setSelectionPath(new TreePath(path));
+        repaint();
+      } else {
+        SoundPlayer.playMenuDisabled();
+      }
+    }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_SEARCH_BACKWARDS)) {
+      if (!searchText.getText().isEmpty()) {
+        SoundPlayer.playMenuSound();
+        TreeNode[] path = search(searchText.getText(), true);
+        tutorialTree.setSelectionPath(new TreePath(path));
+        repaint();
+      } else {
+        SoundPlayer.playMenuDisabled();
+      }
+    }
+
   }
 }

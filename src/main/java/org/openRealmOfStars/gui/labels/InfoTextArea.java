@@ -103,6 +103,18 @@ public class InfoTextArea extends JTextArea {
   private Color shadowColor;
 
   /**
+   * Highlight shadow color
+   */
+  private Color highlightShadowColor;
+  /**
+   * Highlight color
+   */
+  private Color highlightColor;
+  /**
+   * Text for highlighting.
+   */
+  private String highlightText;
+  /**
    * Construct InfoTextArea with default but set size on rows and
    * columns.
    * @param rows Number of rows
@@ -114,6 +126,8 @@ public class InfoTextArea extends JTextArea {
     this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
     this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
         GuiStatics.COLOR_GREEN_TEXT_DARK);
+    this.setTextHighlightColor(GuiStatics.COLOR_COOL_SPACE_BLUE,
+        GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
@@ -128,6 +142,8 @@ public class InfoTextArea extends JTextArea {
     this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
     this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
         GuiStatics.COLOR_GREEN_TEXT_DARK);
+    this.setTextHighlightColor(GuiStatics.COLOR_COOL_SPACE_BLUE,
+        GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
@@ -144,6 +160,8 @@ public class InfoTextArea extends JTextArea {
     this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
     this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
         GuiStatics.COLOR_GREEN_TEXT_DARK);
+    this.setTextHighlightColor(GuiStatics.COLOR_COOL_SPACE_BLUE,
+        GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
@@ -154,6 +172,13 @@ public class InfoTextArea extends JTextArea {
     return textToShow;
   }
 
+  /**
+   * Set text for highlight.
+   * @param t Text to highligth.
+   */
+  public void setHighlightText(final String t) {
+    highlightText = t;
+  }
   @Override
   public void setText(final String t) {
     textToShow = t;
@@ -167,6 +192,16 @@ public class InfoTextArea extends JTextArea {
   public void setTextColor(final Color foreground, final Color shadow) {
     setForeground(foreground);
     shadowColor = shadow;
+  }
+  /**
+   * Set text colors: Highlight and highlight shadow
+   * @param highlight Foreground color
+   * @param hightlightShadow Shadow color
+   */
+  public void setTextHighlightColor(final Color highlight,
+      final Color hightlightShadow) {
+    highlightColor = highlight;
+    highlightShadowColor = hightlightShadow;
   }
   /**
    * disable auto scroll
@@ -235,6 +270,58 @@ public class InfoTextArea extends JTextArea {
     super.paintImmediately(0, 0, getWidth(), getHeight());
   }
 
+  /**
+   * Draw string with specific graphics.
+   *
+   * @param g Graphics
+   * @param text String to draw
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @param highlightLocation boolean array if location should be highlighted.
+   *                          This can be null and highlight won't be used.
+   */
+  private void drawString(final Graphics g, final String text,
+      final int x, final int y, final boolean[] highlightLocation) {
+    if (highlightLocation != null) {
+      int offset = 0;
+      for (int i = 0; i < text.length(); i++) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(text.charAt(i));
+        if (highlightLocation[i]) {
+          g.setColor(highlightShadowColor);
+          g.drawString(sb.toString(), x + 3 + offset, y);
+          if (getFont() == GuiStatics.getFontCubellanSC()) {
+            g.drawString(sb.toString(), x + 1 + offset, y);
+            g.drawString(sb.toString(), x + 2 + offset, y - 1);
+          }
+          g.drawString(sb.toString(), x + 2 + offset, y + 1);
+          g.setColor(highlightColor);
+          g.drawString(sb.toString(), x + 2 + offset, y);
+        } else {
+          g.setColor(shadowColor);
+          g.drawString(sb.toString(), x + 3 + offset, y);
+          if (getFont() == GuiStatics.getFontCubellanSC()) {
+            g.drawString(sb.toString(), x + 1 + offset, y);
+            g.drawString(sb.toString(), x + 2 + offset, y - 1);
+          }
+          g.drawString(sb.toString(), x + 2 + offset, y + 1);
+          g.setColor(getForeground());
+          g.drawString(sb.toString(), x + 2 + offset, y);
+        }
+        offset = offset + GuiStatics.getTextWidth(getFont(), sb.toString());
+      }
+    } else {
+      g.setColor(shadowColor);
+      g.drawString(text, x + 3, y);
+      if (getFont() == GuiStatics.getFontCubellanSC()) {
+        g.drawString(text, x + 1, y);
+        g.drawString(text, x + 2, y - 1);
+      }
+      g.drawString(text, x + 2, y + 1);
+      g.setColor(getForeground());
+      g.drawString(text, x + 2, y);
+    }
+  }
   @Override
   protected void paintComponent(final Graphics g) {
     this.setCaretPosition(this.getDocument().getLength());
@@ -298,29 +385,32 @@ public class InfoTextArea extends JTextArea {
       }
       String[] texts = sb.toString().split("\n");
       for (int i = 0; i < texts.length; i++) {
+        boolean[] highlightLocation = null;
+        if (highlightText != null) {
+          String tmp = texts[i];
+          int index = tmp.toLowerCase().indexOf(highlightText.toLowerCase());
+          int offset = 0;
+          if (index != -1) {
+            highlightLocation = new boolean[texts[i].length()];
+            while (index != -1) {
+              for (int j = 0; j < highlightText.length(); j++) {
+                highlightLocation[offset + index + j] = true;
+              }
+              offset = offset + index + highlightText.length();
+              tmp = tmp.substring(index + highlightText.length());
+              index = tmp.toLowerCase().indexOf(highlightText.toLowerCase());
+            }
+          }
+        }
         g.setColor(shadowColor);
         int yHeight = GuiStatics.getTextHeight(getFont(), texts[i]);
         if (!smoothScroll) {
-          g.drawString(texts[i], sx + 3, sy + i * yHeight + yHeight);
-          if (getFont() == GuiStatics.getFontCubellanSC()) {
-            g.drawString(texts[i], sx + 1, sy + i * yHeight + yHeight);
-            g.drawString(texts[i], sx + 2, sy + i * yHeight - 1 + yHeight);
-          }
-          g.drawString(texts[i], sx + 2, sy + i * yHeight + 1 + yHeight);
-          g.setColor(getForeground());
-          g.drawString(texts[i], sx + 2, sy + i * yHeight + yHeight);
+          drawString(g, texts[i], sx, sy + i * yHeight + yHeight,
+              highlightLocation);
         } else {
-          g.drawString(texts[i], sx + 3,
-              sy + i * Y_OFFSET + Y_OFFSET - smoothScrollY);
-          g.drawString(texts[i], sx + 1,
-              sy + i * Y_OFFSET + Y_OFFSET - smoothScrollY);
-          g.drawString(texts[i], sx + 2,
-              sy + i * Y_OFFSET - 1 + Y_OFFSET - smoothScrollY);
-          g.drawString(texts[i], sx + 2,
-              sy + i * Y_OFFSET + 1 + Y_OFFSET - smoothScrollY);
-          g.setColor(this.getForeground());
-          g.drawString(texts[i], sx + 2,
-              sy + i * Y_OFFSET + Y_OFFSET - smoothScrollY);
+          drawString(g, texts[i], sx,
+              sy + i * Y_OFFSET + Y_OFFSET - smoothScrollY,
+              highlightLocation);
         }
 
       }

@@ -316,8 +316,10 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
         TreeNode[] path = search(searchText.getText(), true);
         if (path != null) {
           tutorialTree.setSelectionPath(new TreePath(path));
+          infoText.setHighlightText(searchText.getText());
         } else {
           tutorialTree.setSelectionPath(null);
+          infoText.setHighlightText(null);
         }
         if (numberOfMatches > 0) {
           matchesText.setText(currentMatch + "/" + numberOfMatches
@@ -337,8 +339,10 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
         TreeNode[] path = search(searchText.getText(), false);
         if (path != null) {
           tutorialTree.setSelectionPath(new TreePath(path));
+          infoText.setHighlightText(searchText.getText());
         } else {
           tutorialTree.setSelectionPath(null);
+          infoText.setHighlightText(null);
         }
         if (numberOfMatches > 0) {
           matchesText.setText(currentMatch + "/" + numberOfMatches

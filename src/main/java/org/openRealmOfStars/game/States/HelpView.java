@@ -170,7 +170,9 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
 
       @Override
       public void keyReleased(final KeyEvent e) {
-        // Nothing to do here
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+          applySearch(true);
+        }
       }
 
       @Override
@@ -306,6 +308,27 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     return null;
   }
   /**
+   * Apply actual search.
+   * @param forward True to search forward.
+   */
+  public void applySearch(final boolean forward) {
+    TreeNode[] path = search(searchText.getText(), forward);
+    if (path != null) {
+      tutorialTree.setSelectionPath(new TreePath(path));
+      infoText.setHighlightText(searchText.getText());
+    } else {
+      tutorialTree.setSelectionPath(null);
+      infoText.setHighlightText(null);
+    }
+    if (numberOfMatches > 0) {
+      matchesText.setText(currentMatch + "/" + numberOfMatches
+          + " matches");
+    } else {
+      matchesText.setText("Not found");
+    }
+    repaint();
+  }
+  /**
    * Handle actions in help view.
    * @param arg0 Action event to handle
    */
@@ -313,21 +336,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SEARCH_FORWARDS)) {
       if (!searchText.getText().isEmpty()) {
         SoundPlayer.playMenuSound();
-        TreeNode[] path = search(searchText.getText(), true);
-        if (path != null) {
-          tutorialTree.setSelectionPath(new TreePath(path));
-          infoText.setHighlightText(searchText.getText());
-        } else {
-          tutorialTree.setSelectionPath(null);
-          infoText.setHighlightText(null);
-        }
-        if (numberOfMatches > 0) {
-          matchesText.setText(currentMatch + "/" + numberOfMatches
-              + " matches");
-        } else {
-          matchesText.setText("Not found");
-        }
-        repaint();
+        applySearch(true);
       } else {
         SoundPlayer.playMenuDisabled();
       }
@@ -336,21 +345,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
         GameCommands.COMMAND_SEARCH_BACKWARDS)) {
       if (!searchText.getText().isEmpty()) {
         SoundPlayer.playMenuSound();
-        TreeNode[] path = search(searchText.getText(), false);
-        if (path != null) {
-          tutorialTree.setSelectionPath(new TreePath(path));
-          infoText.setHighlightText(searchText.getText());
-        } else {
-          tutorialTree.setSelectionPath(null);
-          infoText.setHighlightText(null);
-        }
-        if (numberOfMatches > 0) {
-          matchesText.setText(currentMatch + "/" + numberOfMatches
-              + " matches");
-        } else {
-          matchesText.setText("Not found");
-        }
-        repaint();
+        applySearch(false);
       } else {
         SoundPlayer.playMenuDisabled();
       }

@@ -2,9 +2,11 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JComboBox;
 
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -12,6 +14,7 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.vote.Vote;
 /**
 *
@@ -67,7 +70,21 @@ public class VotingSelectionView extends BlackPanel {
     InfoPanel base = new InfoPanel();
     base.setLayout(new BorderLayout());
     base.setTitle("Next Galactic Voting");
-
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addImage(ImageInstruction.OLD_DESK);
+    int widthHeadLine = 800;
+    int heightHeadLine = 600;
+    if (listener instanceof Game) {
+      Game game = (Game) listener;
+      widthHeadLine = game.getWidth();
+    }
+    BufferedImage image = new BufferedImage(widthHeadLine, heightHeadLine,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image,
+        instructions.build());
+    ImagePanel imagePanel = new ImagePanel(image);
+    base.add(imagePanel, BorderLayout.NORTH);
     this.add(base, BorderLayout.NORTH);
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());

@@ -423,6 +423,10 @@ public class ImageInstruction {
    * Instructions for terror
    */
   public static final String TERROR = "terror";
+  /**
+   * Instructions for old desk
+   */
+  public static final String OLD_DESK = "olddesk";
 
   /**
    * Instruction to draw image
@@ -609,6 +613,7 @@ public class ImageInstruction {
         && !SPINOSAURUS.equals(image)
         && !CONTAINERS.equals(image)
         && !TERROR.equals(image)
+        && !OLD_DESK.equals(image)
         && !FACTORY.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
@@ -1226,6 +1231,9 @@ public class ImageInstruction {
     }
     if (FACTORY.equals(image)) {
       drawImg = GuiStatics.IMAGE_FACTORY;
+    }
+    if (OLD_DESK.equals(image)) {
+      drawImg = GuiStatics.IMAGE_DESKTOP;
     }
     BufferedImage img = workImage;
     if (img == null) {

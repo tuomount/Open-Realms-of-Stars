@@ -1469,6 +1469,12 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/desert.png"));
   /**
+   * Image old table with book, lamp and court hammer
+   */
+  public static final BufferedImage IMAGE_DESKTOP = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/olddesk.png"));
+  /**
    * Image paradise planet
    */
   public static final BufferedImage IMAGE_PARADISE = IOUtilities

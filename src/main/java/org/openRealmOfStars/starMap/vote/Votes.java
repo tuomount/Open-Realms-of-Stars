@@ -143,6 +143,53 @@ public class Votes {
     }
     return null;
   }
+
+  /**
+   * Get List of voteable.
+   * @param maxNumberOfVotes Max number of votes
+   * @param numberOfRealms Number of realms in starmap
+   * @param turns When voting needs to be done.
+   * @return Array of votetables.
+   */
+  public Vote[] getListOfVoteables(final int maxNumberOfVotes,
+      final int numberOfRealms, final int turns) {
+    int count = 0;
+    ArrayList<Vote> votesAvailable = new ArrayList<>();
+    boolean secondCandidateVoted = false;
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() != VotingType.GALACTIC_OLYMPIC_PARTICIPATE
+          && vote.getType() != VotingType.FIRST_CANDIDATE
+          && vote.getType() != VotingType.SECOND_CANDIDATE) {
+        count++;
+      }
+      if (vote.getType() == VotingType.SECOND_CANDIDATE) {
+        secondCandidateVoted = true;
+      }
+    }
+    if (maxNumberOfVotes - count <= 1 && secondCandidateVoted) {
+      Vote vote = new Vote(VotingType.RULER_OF_GALAXY, numberOfRealms, turns);
+      vote.setOrganizerIndex(getFirstCandidate());
+      vote.setSecondCandidateIndex(getSecondCandidate());
+      votesAvailable.add(vote);
+    } else if (maxNumberOfVotes - count <= 2 && !secondCandidateVoted) {
+      Vote vote = new Vote(VotingType.SECOND_CANDIDATE_MILITARY,
+          numberOfRealms, turns);
+      votesAvailable.add(vote);
+    }
+    ArrayList<VotingType> types = new ArrayList<>();
+    types.add(VotingType.BAN_NUCLEAR_WEAPONS);
+    types.add(VotingType.BAN_PRIVATEER_SHIPS);
+    types.add(VotingType.GALACTIC_PEACE);
+    types.add(VotingType.TAXATION_OF_RICHEST_REALM);
+    for (Vote vote : listOfVotes) {
+      types.remove(vote.getType());
+    }
+    for (VotingType type : types) {
+      Vote vote = new Vote(type, numberOfRealms, turns);
+      votesAvailable.add(vote);
+    }
+    return votesAvailable.toArray(new Vote[votesAvailable.size()]);
+  }
   /**
    * Has first candidate selected or not.
    * @return True if selected.

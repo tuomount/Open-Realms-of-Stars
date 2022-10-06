@@ -86,6 +86,11 @@ public class VotingSelectionView extends BlackPanel {
     ImagePanel imagePanel = new ImagePanel(image);
     base.add(imagePanel, BorderLayout.NORTH);
     this.add(base, BorderLayout.NORTH);
+    int turns = map.getScoreVictoryTurn() * 5 / 100;
+    Vote[] votes = map.getVotes().getListOfVoteables(
+        map.getScoreDiplomacy() + 1, map.getPlayerList().getCurrentMaxRealms(),
+        turns);
+    componentSelect = new JComboBox<>(votes);
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);

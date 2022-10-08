@@ -265,6 +265,7 @@ public class CreditsView extends BlackPanel {
       + "Modified to gravity ripper animation by Tuomo Untinen\n"
       + "Licensed under CC BY 4.0\n"
       + "https://creativecommons.org/licenses/by/4.0/\n\n"
+      + "Alien ship by Tuomo Untinen with Stable Fusion\n\n"
       + "\n\nFonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

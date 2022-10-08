@@ -598,7 +598,7 @@ public final class RandomEventUtility {
                       + ".");
                   event.setFleet(fleet);
                   ImageInstruction instructions = new ImageInstruction();
-                  instructions.addImage(ImageInstruction.OLD_SHIP);
+                  instructions.addImage(ImageInstruction.ALIEN_SHIP);
                   event.setImageInstructions(instructions.build());
                   Message message = new Message(MessageType.FLEET,
                       event.getText(), Icons.getIconByName(

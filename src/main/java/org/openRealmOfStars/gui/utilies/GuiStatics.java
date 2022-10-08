@@ -1353,7 +1353,13 @@ public final class GuiStatics {
    */
   public static final BufferedImage IMAGE_OLD_SHIP = IOUtilities.loadImage(
       GuiStatics.class.getResource("/resources/images/oldship.png"));
+
   /**
+   * Alien Vessel
+   */
+  public static final BufferedImage IMAGE_ALIEN_SHIP = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/alienship.png"));
+/**
    * Time Warp
    */
   public static final BufferedImage IMAGE_TIME_WARP = IOUtilities.loadImage(

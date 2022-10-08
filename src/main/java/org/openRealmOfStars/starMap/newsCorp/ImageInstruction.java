@@ -348,6 +348,10 @@ public class ImageInstruction {
    */
   public static final String OLD_SHIP = "old ship";
   /**
+   * Alien ship
+   */
+  public static final String ALIEN_SHIP = "alien ship";
+  /**
    * United Galaxy Tower
    */
   public static final String UNITED_GALAXY_TOWER = "united galaxy tower";
@@ -598,6 +602,7 @@ public class ImageInstruction {
         && !DATALOSS.equals(image)
         && !NEWSTATION.equals(image)
         && !OLD_SHIP.equals(image)
+        && !ALIEN_SHIP.equals(image)
         && !DESERT.equals(image)
         && !PARADISE.equals(image)
         && !VIRUSES.equals(image)
@@ -1184,6 +1189,9 @@ public class ImageInstruction {
     }
     if (OLD_SHIP.equals(image)) {
       drawImg = GuiStatics.IMAGE_OLD_SHIP;
+    }
+    if (ALIEN_SHIP.equals(image)) {
+      drawImg = GuiStatics.IMAGE_ALIEN_SHIP;
     }
     if (DESERT.equals(image)) {
       drawImg = GuiStatics.IMAGE_DESERT;

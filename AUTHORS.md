@@ -301,6 +301,8 @@ Modified to gravity ripper animation by Tuomo Untinen
 Licensed under CC BY 4.0
 https://creativecommons.org/licenses/by/4.0/
 
+Alien ship by Tuomo Untinen with Stable Fusion
+
 
 
 Fonts are under SIL Open Font License, Version 1.1.

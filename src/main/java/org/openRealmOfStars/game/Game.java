@@ -2510,6 +2510,13 @@ public class Game implements ActionListener {
           true);
       msg.setRandomEventPop(false);
     }
+    if (msg.getType() == MessageType.PLANETARY && !msg.isRandomEventPop()
+        && msg.getImageInstruction() != null) {
+      PopupPanel popupPanel = new PopupPanel(msg.getMessage(),
+          "Planetary event");
+      starMapView.setPopup(popupPanel);
+    }
+
     if (mapOnly) {
       starMapView.setCursorFocus(20);
     }

@@ -2514,6 +2514,9 @@ public class Game implements ActionListener {
         && msg.getImageInstruction() != null) {
       PopupPanel popupPanel = new PopupPanel(msg.getMessage(),
           "Planetary event");
+      ImageInstruction imageInst = new ImageInstruction();
+      imageInst.addInstruction(msg.getImageInstruction());
+      popupPanel.setImageFromInstruction(imageInst);
       starMapView.setPopup(popupPanel);
     }
 

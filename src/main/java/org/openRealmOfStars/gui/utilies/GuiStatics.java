@@ -1560,6 +1560,12 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/ancientfactory.png"));
   /**
+   * Image ancient temple
+   */
+  public static final BufferedImage IMAGE_ANCIENT_TEMPLE = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/ancienttemple.png"));
+  /**
    * Big Orbital.
    */
   public static final BufferedImage IMAGE_BIG_ORBITAL = IOUtilities

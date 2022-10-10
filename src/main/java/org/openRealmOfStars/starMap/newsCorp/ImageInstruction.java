@@ -439,6 +439,10 @@ public class ImageInstruction {
    * Instructions for ancient factory
    */
   public static final String ANCIENT_FACTORY = "AncientFactory";
+  /**
+   * Instructions for ancient temple
+   */
+  public static final String ANCIENT_TEMPLE = "AncientTemple";
 
   /**
    * Instruction to draw image
@@ -629,6 +633,7 @@ public class ImageInstruction {
         && !METAL_RICH_SURFACE.equals(image)
         && !ANCIENT_LABORATORY.equals(image)
         && !ANCIENT_FACTORY.equals(image)
+        && !ANCIENT_TEMPLE.equals(image)
         && !FACTORY.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
@@ -1249,6 +1254,9 @@ public class ImageInstruction {
     }
     if (ANCIENT_LABORATORY.equals(image)) {
       drawImg = GuiStatics.IMAGE_ANCIENT_LABORATORY;
+    }
+    if (ANCIENT_TEMPLE.equals(image)) {
+      drawImg = GuiStatics.IMAGE_ANCIENT_TEMPLE;
     }
     if (BIG_ORBITAL.equals(image)) {
       drawImg = GuiStatics.IMAGE_BIG_ORBITAL;

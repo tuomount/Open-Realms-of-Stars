@@ -3635,7 +3635,17 @@ public class Planet {
           if (event == PlanetaryEvent.ANCIENT_LAB) {
             imageInst = new ImageInstruction();
             imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.METAL_RICH_SURFACE);
+            imageInst.addImage(ImageInstruction.ANCIENT_LABORATORY);
+          }
+          if (event == PlanetaryEvent.ANCIENT_FACTORY) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            imageInst.addImage(ImageInstruction.ANCIENT_FACTORY);
+          }
+          if (event == PlanetaryEvent.ANCIENT_TEMPLE) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            imageInst.addImage(ImageInstruction.ANCIENT_TEMPLE);
           }
           event = PlanetaryEvent.NONE;
           msgText.append(building.getName());

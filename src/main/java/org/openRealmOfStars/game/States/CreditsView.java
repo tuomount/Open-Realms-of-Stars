@@ -269,6 +269,7 @@ public class CreditsView extends BlackPanel {
       + "Metal rich surface by Tuomo Untinen with Stable Fusion\n\n"
       + "Ancient Factory by Tuomo Untinen with Stable Fusion\n\n"
       + "Ancient Laboratory by Tuomo Untinen with Stable Fusion\n\n"
+      + "Ancient Temple by Tuomo Untinen with Stable Fusion\n\n"
       + "\n\nFonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

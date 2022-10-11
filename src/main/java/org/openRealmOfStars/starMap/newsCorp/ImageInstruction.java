@@ -427,6 +427,22 @@ public class ImageInstruction {
    * Instructions for terror
    */
   public static final String TERROR = "terror";
+  /**
+   * Instructions for metal rich surface
+   */
+  public static final String METAL_RICH_SURFACE = "metalRichSurface";
+  /**
+   * Instructions for ancient laboratory
+   */
+  public static final String ANCIENT_LABORATORY = "AncientLaboratory";
+  /**
+   * Instructions for ancient factory
+   */
+  public static final String ANCIENT_FACTORY = "AncientFactory";
+  /**
+   * Instructions for ancient temple
+   */
+  public static final String ANCIENT_TEMPLE = "AncientTemple";
 
   /**
    * Instruction to draw image
@@ -614,6 +630,10 @@ public class ImageInstruction {
         && !SPINOSAURUS.equals(image)
         && !CONTAINERS.equals(image)
         && !TERROR.equals(image)
+        && !METAL_RICH_SURFACE.equals(image)
+        && !ANCIENT_LABORATORY.equals(image)
+        && !ANCIENT_FACTORY.equals(image)
+        && !ANCIENT_TEMPLE.equals(image)
         && !FACTORY.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
@@ -1225,6 +1245,18 @@ public class ImageInstruction {
     }
     if (TERROR.equals(image)) {
       drawImg = GuiStatics.IMAGE_TERROR;
+    }
+    if (METAL_RICH_SURFACE.equals(image)) {
+      drawImg = GuiStatics.IMAGE_METAL_RICH_SURFACE;
+    }
+    if (ANCIENT_FACTORY.equals(image)) {
+      drawImg = GuiStatics.IMAGE_ANCIENT_FACTORY;
+    }
+    if (ANCIENT_LABORATORY.equals(image)) {
+      drawImg = GuiStatics.IMAGE_ANCIENT_LABORATORY;
+    }
+    if (ANCIENT_TEMPLE.equals(image)) {
+      drawImg = GuiStatics.IMAGE_ANCIENT_TEMPLE;
     }
     if (BIG_ORBITAL.equals(image)) {
       drawImg = GuiStatics.IMAGE_BIG_ORBITAL;

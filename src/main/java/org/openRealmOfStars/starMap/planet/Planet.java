@@ -33,6 +33,7 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.construction.Building;
@@ -3630,12 +3631,31 @@ public class Planet {
         } else {
           Building building = event.getBuilding();
           addBuilding(building);
+          ImageInstruction imageInst = null;
+          if (event == PlanetaryEvent.ANCIENT_LAB) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            imageInst.addImage(ImageInstruction.ANCIENT_LABORATORY);
+          }
+          if (event == PlanetaryEvent.ANCIENT_FACTORY) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            imageInst.addImage(ImageInstruction.ANCIENT_FACTORY);
+          }
+          if (event == PlanetaryEvent.ANCIENT_TEMPLE) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            imageInst.addImage(ImageInstruction.ANCIENT_TEMPLE);
+          }
           event = PlanetaryEvent.NONE;
           msgText.append(building.getName());
           msgText.append(". Colonists has taken it in use now.");
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
               Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
           msg.setCoordinate(getCoordinate());
+          if (imageInst != null) {
+            msg.setImageInstructions(imageInst.build());
+          }
           planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
         }
       } else {
@@ -3659,6 +3679,10 @@ public class Planet {
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
               Icons.getIconByName(Icons.ICON_METAL_ORE));
           msg.setCoordinate(getCoordinate());
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          imageInst.addImage(ImageInstruction.METAL_RICH_SURFACE);
+          msg.setImageInstructions(imageInst.build());
           planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
         }
       }

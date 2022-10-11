@@ -1542,6 +1542,30 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/terror.png"));
   /**
+   * Image metal rich surface
+   */
+  public static final BufferedImage IMAGE_METAL_RICH_SURFACE = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/metal_rich_surface.png"));
+  /**
+   * Image ancient laboratory
+   */
+  public static final BufferedImage IMAGE_ANCIENT_LABORATORY = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/ancientlaboratory.png"));
+  /**
+   * Image ancient factory
+   */
+  public static final BufferedImage IMAGE_ANCIENT_FACTORY = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/ancientfactory.png"));
+  /**
+   * Image ancient temple
+   */
+  public static final BufferedImage IMAGE_ANCIENT_TEMPLE = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/ancienttemple.png"));
+  /**
    * Big Orbital.
    */
   public static final BufferedImage IMAGE_BIG_ORBITAL = IOUtilities

@@ -3647,6 +3647,11 @@ public class Planet {
             imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             imageInst.addImage(ImageInstruction.ANCIENT_TEMPLE);
           }
+          if (event == PlanetaryEvent.ANCIENT_PALACE) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            imageInst.addImage(ImageInstruction.ANCIENT_PALACE);
+          }
           event = PlanetaryEvent.NONE;
           msgText.append(building.getName());
           msgText.append(". Colonists has taken it in use now.");

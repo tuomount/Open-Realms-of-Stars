@@ -1572,6 +1572,12 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/ancientpalace.png"));
   /**
+   * Image Black Monolith
+   */
+  public static final BufferedImage IMAGE_BLACK_MONOLITH = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/blackmonolith.png"));
+  /**
    * Big Orbital.
    */
   public static final BufferedImage IMAGE_BIG_ORBITAL = IOUtilities

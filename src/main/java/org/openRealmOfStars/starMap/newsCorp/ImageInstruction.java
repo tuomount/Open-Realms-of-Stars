@@ -447,6 +447,10 @@ public class ImageInstruction {
    * Instructions for ancient palace
    */
   public static final String ANCIENT_PALACE = "AncientPalace";
+  /**
+   * Instructions for black monolith
+   */
+  public static final String BLACK_MONOLITH = "BlackMonolith";
 
   /**
    * Instruction to draw image
@@ -639,6 +643,7 @@ public class ImageInstruction {
         && !ANCIENT_FACTORY.equals(image)
         && !ANCIENT_TEMPLE.equals(image)
         && !ANCIENT_PALACE.equals(image)
+        && !BLACK_MONOLITH.equals(image)
         && !FACTORY.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
@@ -1265,6 +1270,9 @@ public class ImageInstruction {
     }
     if (ANCIENT_PALACE.equals(image)) {
       drawImg = GuiStatics.IMAGE_ANCIENT_PALACE;
+    }
+    if (BLACK_MONOLITH.equals(image)) {
+      drawImg = GuiStatics.IMAGE_BLACK_MONOLITH;
     }
     if (BIG_ORBITAL.equals(image)) {
       drawImg = GuiStatics.IMAGE_BIG_ORBITAL;

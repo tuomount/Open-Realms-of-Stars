@@ -451,6 +451,10 @@ public class ImageInstruction {
    * Instructions for black monolith
    */
   public static final String BLACK_MONOLITH = "BlackMonolith";
+  /**
+   * Instructions for molten lava
+   */
+  public static final String MOLTEN_LAVA = "MoltenLava";
 
   /**
    * Instruction to draw image
@@ -644,6 +648,7 @@ public class ImageInstruction {
         && !ANCIENT_TEMPLE.equals(image)
         && !ANCIENT_PALACE.equals(image)
         && !BLACK_MONOLITH.equals(image)
+        && !MOLTEN_LAVA.equals(image)
         && !FACTORY.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
@@ -1279,6 +1284,9 @@ public class ImageInstruction {
     }
     if (BIG_EXPLOSION.equals(image)) {
       drawImg = GuiStatics.IMAGE_BIG_EXPLOSION;
+    }
+    if (MOLTEN_LAVA.equals(image)) {
+      drawImg = GuiStatics.IMAGE_MOLTEN_LAVA;
     }
     if (FACTORY.equals(image)) {
       drawImg = GuiStatics.IMAGE_FACTORY;

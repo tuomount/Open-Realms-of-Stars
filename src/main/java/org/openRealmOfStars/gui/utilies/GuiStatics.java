@@ -1578,6 +1578,12 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/blackmonolith.png"));
   /**
+   * Image Molten lava
+   */
+  public static final BufferedImage IMAGE_MOLTEN_LAVA = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/moltenlava.png"));
+  /**
    * Big Orbital.
    */
   public static final BufferedImage IMAGE_BIG_ORBITAL = IOUtilities

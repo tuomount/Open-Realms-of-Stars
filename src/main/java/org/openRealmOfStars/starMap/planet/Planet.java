@@ -3657,6 +3657,11 @@ public class Planet {
             imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             imageInst.addImage(ImageInstruction.BLACK_MONOLITH);
           }
+          if (event == PlanetaryEvent.MOLTEN_LAVA) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            imageInst.addImage(ImageInstruction.MOLTEN_LAVA);
+          }
           event = PlanetaryEvent.NONE;
           msgText.append(building.getName());
           msgText.append(". Colonists has taken it in use now.");

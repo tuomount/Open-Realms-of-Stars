@@ -455,6 +455,10 @@ public class ImageInstruction {
    * Instructions for molten lava
    */
   public static final String MOLTEN_LAVA = "MoltenLava";
+  /**
+   * Instructions for Arid
+   */
+  public static final String ARID = "Arid";
 
   /**
    * Instruction to draw image
@@ -649,6 +653,7 @@ public class ImageInstruction {
         && !ANCIENT_PALACE.equals(image)
         && !BLACK_MONOLITH.equals(image)
         && !MOLTEN_LAVA.equals(image)
+        && !ARID.equals(image)
         && !FACTORY.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
@@ -1287,6 +1292,9 @@ public class ImageInstruction {
     }
     if (MOLTEN_LAVA.equals(image)) {
       drawImg = GuiStatics.IMAGE_MOLTEN_LAVA;
+    }
+    if (ARID.equals(image)) {
+      drawImg = GuiStatics.IMAGE_ARID;
     }
     if (FACTORY.equals(image)) {
       drawImg = GuiStatics.IMAGE_FACTORY;

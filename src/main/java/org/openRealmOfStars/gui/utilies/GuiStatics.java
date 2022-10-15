@@ -1584,6 +1584,12 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/moltenlava.png"));
   /**
+   * Image Arid
+   */
+  public static final BufferedImage IMAGE_ARID = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/arid.png"));
+  /**
    * Big Orbital.
    */
   public static final BufferedImage IMAGE_BIG_ORBITAL = IOUtilities

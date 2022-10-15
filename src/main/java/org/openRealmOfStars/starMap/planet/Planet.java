@@ -3662,6 +3662,21 @@ public class Planet {
             imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             imageInst.addImage(ImageInstruction.MOLTEN_LAVA);
           }
+          if (event == PlanetaryEvent.ARID) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            imageInst.addImage(ImageInstruction.ARID);
+          }
+          if (event == PlanetaryEvent.DESERT) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            imageInst.addImage(ImageInstruction.DESERT);
+          }
+          if (event == PlanetaryEvent.PARADISE) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            imageInst.addImage(ImageInstruction.PARADISE);
+          }
           event = PlanetaryEvent.NONE;
           msgText.append(building.getName());
           msgText.append(". Colonists has taken it in use now.");

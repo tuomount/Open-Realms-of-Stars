@@ -1107,8 +1107,7 @@ public final class GuiStatics {
   /**
    * Big sports logo
    */
-  public static final BufferedImage BIG_SPORT_LOGO = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/olympics.png"));
+  public static final String BIG_SPORT_LOGO = "/resources/images/olympics.png";
 
   /**
    * Star field image for parallax scrolling
@@ -1411,51 +1410,43 @@ public final class GuiStatics {
   /**
    * Big nuke image
    */
-  public static final BufferedImage IMAGE_BIG_NUKE = IOUtilities.loadImage(
-      GuiStatics.class.getResource(
-          "/resources/images/bignuke.png"));
+  public static final String IMAGE_BIG_NUKE =
+      "/resources/images/bignuke.png";
   /**
    * Big ban icon
    */
-  public static final BufferedImage IMAGE_BIG_BAN_ICON = IOUtilities.loadImage(
-      GuiStatics.class.getResource(
-          "/resources/images/bigban.png"));
+  public static final String IMAGE_BIG_BAN_ICON =
+      "/resources/images/bigban.png";
   /**
    * Big ban peace
    */
-  public static final BufferedImage IMAGE_BIG_PEACE_ICON = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/bigpeace.png"));
+  public static final String IMAGE_BIG_PEACE_ICON =
+      "/resources/images/bigpeace.png";
   /**
    * Big pirate ship.
    */
-  public static final BufferedImage IMAGE_PRIVATEER = IOUtilities.loadImage(
-      GuiStatics.class.getResource(
-          "/resources/images/pirateship.png"));
+  public static final String IMAGE_PRIVATEER =
+      "/resources/images/pirateship.png";
   /**
    * Galaxy image
    */
-  public static final BufferedImage IMAGE_GALAXY = IOUtilities.loadImage(
-      GuiStatics.class.getResource(
-          "/resources/images/galaxy.png"));
+  public static final String IMAGE_GALAXY =
+      "/resources/images/galaxy.png";
   /**
    * United Galaxy Tower image
    */
-  public static final BufferedImage IMAGE_UNITED_GALAXY_TOWER = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/unitedgalaxytower.png"));
+  public static final String IMAGE_UNITED_GALAXY_TOWER =
+      "/resources/images/unitedgalaxytower.png";
   /**
    * Big missile image
    */
-  public static final BufferedImage IMAGE_BIG_MISSILE = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/bigmissile.png"));
+  public static final String IMAGE_BIG_MISSILE =
+      "/resources/images/bigmissile.png";
   /**
    * Big money image
    */
-  public static final BufferedImage IMAGE_BIG_MONEY = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/bigmoney.png"));
+  public static final String IMAGE_BIG_MONEY =
+      "/resources/images/bigmoney.png";
   /**
    * Solar flares images
    */
@@ -1502,15 +1493,13 @@ public final class GuiStatics {
   /**
    * Image meteor
    */
-  public static final BufferedImage IMAGE_METEOR = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/meteor.png"));
+  public static final String IMAGE_METEOR =
+      "/resources/images/meteor.png";
   /**
    * Image meteor hit explosion
    */
-  public static final BufferedImage IMAGE_METEOR_HIT = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/meteorhit.png"));
+  public static final String IMAGE_METEOR_HIT =
+      "/resources/images/meteorhit.png";
   /**
    * Image ship destroyed
    */
@@ -1532,75 +1521,61 @@ public final class GuiStatics {
   /**
    * Image containers
    */
-  public static final BufferedImage IMAGE_CONTAINERS = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/containers.png"));
+  public static final String IMAGE_CONTAINERS =
+      "/resources/images/containers.png";
   /**
    * Image terror strike
    */
-  public static final BufferedImage IMAGE_TERROR = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/terror.png"));
+  public static final String IMAGE_TERROR = "/resources/images/terror.png";
   /**
    * Image metal rich surface
    */
-  public static final BufferedImage IMAGE_METAL_RICH_SURFACE = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/metal_rich_surface.png"));
+  public static final String IMAGE_METAL_RICH_SURFACE =
+      "/resources/images/metal_rich_surface.png";
   /**
    * Image ancient laboratory
    */
-  public static final BufferedImage IMAGE_ANCIENT_LABORATORY = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/ancientlaboratory.png"));
+  public static final String IMAGE_ANCIENT_LABORATORY =
+      "/resources/images/ancientlaboratory.png";
   /**
    * Image ancient factory
    */
-  public static final BufferedImage IMAGE_ANCIENT_FACTORY = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/ancientfactory.png"));
+  public static final String IMAGE_ANCIENT_FACTORY =
+      "/resources/images/ancientfactory.png";
   /**
    * Image ancient temple
    */
-  public static final BufferedImage IMAGE_ANCIENT_TEMPLE = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/ancienttemple.png"));
+  public static final String IMAGE_ANCIENT_TEMPLE =
+      "/resources/images/ancienttemple.png";
   /**
    * Image ancient palace
    */
-  public static final BufferedImage IMAGE_ANCIENT_PALACE = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/ancientpalace.png"));
+  public static final String IMAGE_ANCIENT_PALACE =
+      "/resources/images/ancientpalace.png";
   /**
    * Image Black Monolith
    */
-  public static final BufferedImage IMAGE_BLACK_MONOLITH = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/blackmonolith.png"));
+  public static final String IMAGE_BLACK_MONOLITH =
+      "/resources/images/blackmonolith.png";
   /**
    * Image Molten lava
    */
-  public static final BufferedImage IMAGE_MOLTEN_LAVA = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/moltenlava.png"));
+  public static final String IMAGE_MOLTEN_LAVA =
+      "/resources/images/moltenlava.png";
   /**
    * Image Arid
    */
-  public static final BufferedImage IMAGE_ARID = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/arid.png"));
+  public static final String IMAGE_ARID = "/resources/images/arid.png";
   /**
    * Big Orbital.
    */
-  public static final BufferedImage IMAGE_BIG_ORBITAL = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/bigorbital.png"));
+  public static final String IMAGE_BIG_ORBITAL =
+      "/resources/images/bigorbital.png";
   /**
    * Big Explosion
    */
-  public static final BufferedImage IMAGE_BIG_EXPLOSION = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/bigexplosion.png"));
+  public static final String IMAGE_BIG_EXPLOSION =
+      "/resources/images/bigexplosion.png";
 
   /**
    * Ship bridge interior 1

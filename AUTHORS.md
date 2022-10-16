@@ -311,6 +311,14 @@ Ancient Laboratory by Tuomo Untinen with Stable Fusion
 
 Ancient Temple by Tuomo Untinen with Stable Fusion
 
+Ancient Palace by Tuomo Untinen with Stable Fusion
+
+Black Monolith by Tuomo Untinen with Stable Fusion
+
+Molten Lava by Tuomo Untinen with Stable Fusion
+
+Arid by Tuomo Untinen with Stable Fusion
+
 
 
 Fonts are under SIL Open Font License, Version 1.1.

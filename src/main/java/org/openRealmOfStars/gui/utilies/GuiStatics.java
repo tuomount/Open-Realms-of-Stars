@@ -1566,6 +1566,30 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/ancienttemple.png"));
   /**
+   * Image ancient palace
+   */
+  public static final BufferedImage IMAGE_ANCIENT_PALACE = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/ancientpalace.png"));
+  /**
+   * Image Black Monolith
+   */
+  public static final BufferedImage IMAGE_BLACK_MONOLITH = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/blackmonolith.png"));
+  /**
+   * Image Molten lava
+   */
+  public static final BufferedImage IMAGE_MOLTEN_LAVA = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/moltenlava.png"));
+  /**
+   * Image Arid
+   */
+  public static final BufferedImage IMAGE_ARID = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/arid.png"));
+  /**
    * Big Orbital.
    */
   public static final BufferedImage IMAGE_BIG_ORBITAL = IOUtilities

@@ -2425,8 +2425,8 @@ public final class ShipComponentFactory {
       tmp.setCloakDetection(40);
       tmp.setEnergyRequirement(1);
     }
-    if (index == COMPONENT_ASCENSION_PORTAL_SCANNER_MK2) {
-      tmp = new ShipComponent(index, "Ascension portal scanner Mk2", 3, 2,
+    if (index == COMPONENT_ASCENSION_PORTAL_SCANNER_MK3) {
+      tmp = new ShipComponent(index, "Ascension portal scanner Mk3", 3, 2,
           ShipComponentType.SCANNER);
       tmp.setScannerRange(5);
       tmp.setCloakDetection(40);

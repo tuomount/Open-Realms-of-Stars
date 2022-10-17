@@ -1095,18 +1095,19 @@ public class ImageInstruction {
    */
   private static void paintTrader(final BufferedImage workImage,
       final String traderType, final String position, final String size) {
-    BufferedImage traderImg = GuiStatics.IMAGE_TRADE_SHIP;
+    BufferedImage traderImg = IOUtilities.loadImage(
+        GuiStatics.IMAGE_TRADE_SHIP);
     if (TRADER1.equals(traderType)) {
-      traderImg = GuiStatics.IMAGE_TRADE_SHIP;
+      traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_TRADE_SHIP);
     }
     if (TRADER2.equals(traderType)) {
-      traderImg = GuiStatics.IMAGE_TRADE_SHIP2;
+      traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_TRADE_SHIP2);
     }
     if (CLOAKED_SHIP.equals(traderType)) {
-      traderImg = GuiStatics.IMAGE_CLOAKED_SHIP;
+      traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_CLOAKED_SHIP);
     }
     if (SHUTTLE2.equals(traderType)) {
-      traderImg = GuiStatics.IMAGE_SHUTTLE2;
+      traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_SHUTTLE2);
     }
     if (SIZE_HALF.equals(size)) {
       traderImg = GuiStatics.scaleToHalf(traderImg);
@@ -1205,61 +1206,61 @@ public class ImageInstruction {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_PRIVATEER);
     }
     if (SOLAR_FLARES.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SOLAR_FLARES;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SOLAR_FLARES);
     }
     if (SOLAR_NO_FLARES.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SOLAR_NO_FLARES;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SOLAR_NO_FLARES);
     }
     if (PIRATE_PILOT.equals(image)) {
-      drawImg = GuiStatics.IMAGE_PIRATE_PILOT;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_PIRATE_PILOT);
     }
     if (KRAKEN.equals(image)) {
-      drawImg = GuiStatics.IMAGE_KRAKEN;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_KRAKEN);
     }
     if (PIRATE_RAIDERS.equals(image)) {
-      drawImg = GuiStatics.IMAGE_PIRATE_RAIDERS;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_PIRATE_RAIDERS);
     }
     if (MUTINY.equals(image)) {
-      drawImg = GuiStatics.IMAGE_MUTINY;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_MUTINY);
     }
     if (DATALOSS.equals(image)) {
-      drawImg = GuiStatics.IMAGE_DATALOSS;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_DATALOSS);
     }
     if (NEWSTATION.equals(image)) {
-      drawImg = GuiStatics.IMAGE_NEWSTATION;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_NEWSTATION);
     }
     if (OLD_SHIP.equals(image)) {
-      drawImg = GuiStatics.IMAGE_OLD_SHIP;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_OLD_SHIP);
     }
     if (ALIEN_SHIP.equals(image)) {
-      drawImg = GuiStatics.IMAGE_ALIEN_SHIP;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ALIEN_SHIP);
     }
     if (DESERT.equals(image)) {
-      drawImg = GuiStatics.IMAGE_DESERT;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_DESERT);
     }
     if (PARADISE.equals(image)) {
-      drawImg = GuiStatics.IMAGE_PARADISE;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_PARADISE);
     }
     if (VIRUSES.equals(image)) {
-      drawImg = GuiStatics.IMAGE_VIRUSES;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_VIRUSES);
     }
     if (SIGNAL.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SIGNAL;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SIGNAL);
     }
     if (TECHNICAL_BREAKTHROUGH.equals(image)) {
-      drawImg = GuiStatics.IMAGE_TECHNICAL_BREAKTHROUGH;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_TECHNICAL_BREAKTHROUGH);
     }
     if (SHIP_DESTROYED.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SHIP_DESTROYED;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SHIP_DESTROYED);
     }
     if (SHUTTLE.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SHUTTLE;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SHUTTLE);
     }
     if (SPINOSAURUS.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SPINOSAURUS;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SPINOSAURUS);
     }
     if (STASIS.equals(image)) {
-      drawImg = GuiStatics.IMAGE_STASIS;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_STASIS);
     }
     if (CONTAINERS.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_CONTAINERS);
@@ -1298,7 +1299,7 @@ public class ImageInstruction {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ARID);
     }
     if (FACTORY.equals(image)) {
-      drawImg = GuiStatics.IMAGE_FACTORY;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_FACTORY);
     }
     BufferedImage img = workImage;
     if (img == null) {

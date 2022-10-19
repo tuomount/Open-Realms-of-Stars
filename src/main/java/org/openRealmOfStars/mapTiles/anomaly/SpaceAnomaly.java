@@ -33,6 +33,7 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -272,7 +273,7 @@ public class SpaceAnomaly {
           result = new SpaceAnomaly(AnomalyType.PIRATE, 0);
           result.setText("Pirate ship was found in the nebulae."
               + " Battle begins...");
-          result.setImage(GuiStatics.IMAGE_PIRATE_PILOT);
+          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_PIRATE_PILOT));
           map.setTile(fleet.getX(), fleet.getY(), empty);
           PlayerInfo board = map.getPlayerList().getSpacePiratePlayer();
           Fleet pirate = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
@@ -283,7 +284,7 @@ public class SpaceAnomaly {
         }
         case TileNames.SPACE_ANOMALY_MONSTER: {
           result = new SpaceAnomaly(AnomalyType.MONSTER, 0);
-          result.setImage(GuiStatics.IMAGE_KRAKEN);
+          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_KRAKEN));
           map.setTile(fleet.getX(), fleet.getY(), empty);
           PlayerInfo board = map.getPlayerList().getSpaceMonsterPlayer();
           Fleet monster = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
@@ -341,7 +342,7 @@ public class SpaceAnomaly {
             result.setText("Found ancient ship floating around which contained"
                 + " schematics of " + tech.getName() + ". This invention"
                 + " is immediately taken to use.");
-            result.setImage(GuiStatics.IMAGE_OLD_SHIP);
+            result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_OLD_SHIP));
             if (fleet.getCommander() != null) {
               fleet.getCommander().setExperience(
                   fleet.getCommander().getExperience() + 10);
@@ -387,7 +388,7 @@ public class SpaceAnomaly {
               + "ancient ship floating in vastness of space. When entering "
               + "the ship " + desc + " wakes and is willing to join your "
               + "realm.");
-          result.setImage(GuiStatics.IMAGE_OLD_SHIP);
+          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_OLD_SHIP));
           map.setTile(fleet.getX(), fleet.getY(), empty);
           Leader leader = new Leader(name);
           leader.setAge(DiceGenerator.getRandom(300, 1500));
@@ -542,7 +543,7 @@ public class SpaceAnomaly {
         case TileNames.SPACE_ANOMALY_NEWS_STATION: {
           result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
           result.setText(NEWS_STATION_TEXT);
-          result.setImage(GuiStatics.IMAGE_NEWSTATION);
+          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_NEWSTATION));
           info.getArtifactLists().addDiscoveredArtifact(
               ArtifactFactory.createArtifact(
                   ArtifactFactory.BROADCASTING_ELETRONIC));
@@ -564,7 +565,7 @@ public class SpaceAnomaly {
           if (!info.getArtifactLists().hasBroadcastingArtifact()) {
             result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
             result.setText(NEWS_STATION_TEXT);
-            result.setImage(GuiStatics.IMAGE_NEWSTATION);
+            result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_NEWSTATION));
             info.getArtifactLists().addDiscoveredArtifact(
                 ArtifactFactory.createArtifact(
                     ArtifactFactory.BROADCASTING_ELETRONIC));
@@ -581,7 +582,7 @@ public class SpaceAnomaly {
             addExp = false;
             result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
             result.setText(NEWS_STATION_VISITED_TEXT);
-            result.setImage(GuiStatics.IMAGE_NEWSTATION);
+            result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_NEWSTATION));
           }
           break;
         }
@@ -595,7 +596,7 @@ public class SpaceAnomaly {
               + "old ship floating in vastness of space. When entering "
               + "the ship " + desc + " wakes and is willing to join your "
               + "realm because of rescuing " + gender.getHisHer() + " life.");
-          result.setImage(GuiStatics.IMAGE_STASIS);
+          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_STASIS));
           map.setTile(fleet.getX(), fleet.getY(), empty);
           Leader leader = new Leader(name);
           leader.setAge(DiceGenerator.getRandom(30, 50));

@@ -1541,6 +1541,11 @@ public final class GuiStatics {
    */
   public static final String IMAGE_ARID = "/resources/images/arid.png";
   /**
+   * Image Lush vegetation
+   */
+  public static final String IMAGE_LUSH_VEGETATION =
+      "/resources/images/lushvegetation.png";
+  /**
    * Big Orbital.
    */
   public static final String IMAGE_BIG_ORBITAL =

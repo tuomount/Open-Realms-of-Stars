@@ -3667,6 +3667,11 @@ public class Planet {
             imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             imageInst.addImage(ImageInstruction.ARID);
           }
+          if (event == PlanetaryEvent.LUSH_VEGETATION) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            imageInst.addImage(ImageInstruction.LUSH_VEGETATION);
+          }
           if (event == PlanetaryEvent.DESERT) {
             imageInst = new ImageInstruction();
             imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);

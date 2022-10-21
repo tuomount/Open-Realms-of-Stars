@@ -321,6 +321,8 @@ Arid by Tuomo Untinen with Stable Fusion
 
 Lush Vegetation by Tuomo Untinen with Stable Fusion
 
+Artifact on Planet by Tuomo Untinen with Stable Fusion
+
 
 
 Fonts are under SIL Open Font License, Version 1.1.

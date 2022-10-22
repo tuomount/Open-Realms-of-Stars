@@ -274,6 +274,8 @@ public class CreditsView extends BlackPanel {
       + "Black Monolith by Tuomo Untinen with Stable Fusion\n\n"
       + "Molten Lava by Tuomo Untinen with Stable Fusion\n\n"
       + "Arid by Tuomo Untinen with Stable Fusion\n\n"
+      + "Lush Vegetation by Tuomo Untinen with Stable Fusion\n\n"
+      + "Artifact on Planet by Tuomo Untinen with Stable Fusion\n\n"
       + "\n\nFonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

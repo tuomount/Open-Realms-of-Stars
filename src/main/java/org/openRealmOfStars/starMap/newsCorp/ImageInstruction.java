@@ -460,6 +460,14 @@ public class ImageInstruction {
    * Instructions for Arid
    */
   public static final String ARID = "Arid";
+  /**
+   * Instructions for Lush Vegetation
+   */
+  public static final String LUSH_VEGETATION = "LushVegetation";
+  /**
+   * Instructions for Artifact on planet
+   */
+  public static final String ARTIFACT_ON_PLANET = "ArtifactOnPlanet";
 
   /**
    * Instruction to draw image
@@ -655,6 +663,8 @@ public class ImageInstruction {
         && !BLACK_MONOLITH.equals(image)
         && !MOLTEN_LAVA.equals(image)
         && !ARID.equals(image)
+        && !LUSH_VEGETATION.equals(image)
+        && !ARTIFACT_ON_PLANET.equals(image)
         && !FACTORY.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
@@ -1297,6 +1307,12 @@ public class ImageInstruction {
     }
     if (ARID.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ARID);
+    }
+    if (LUSH_VEGETATION.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_LUSH_VEGETATION);
+    }
+    if (ARTIFACT_ON_PLANET.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ARTIFACT_ON_PLANET);
     }
     if (FACTORY.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_FACTORY);

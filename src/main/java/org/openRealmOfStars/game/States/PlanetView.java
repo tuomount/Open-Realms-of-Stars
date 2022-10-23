@@ -644,6 +644,9 @@ public class PlanetView extends BlackPanel {
         rushWithCreditsBtn.setToolTipText("Rush construction with " + rushCost
             + " credits!");
         rushingAvailable = true;
+      } else {
+        rushWithCreditsBtn.setEnabled(false);
+        rushWithCreditsBtn.setToolTipText(null);
       }
       if ((info.getRace().hasPopulationRush()
           || info.getGovernment().hasPopulationRush())
@@ -654,6 +657,9 @@ public class PlanetView extends BlackPanel {
           rushWithPopulationBtn.setToolTipText("Rush construction with "
               + populationCost + " population!");
           rushingAvailable = true;
+        } else {
+          rushWithPopulationBtn.setEnabled(false);
+          rushWithPopulationBtn.setToolTipText(null);
         }
       }
     }

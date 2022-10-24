@@ -1,18 +1,25 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.vote.Vote;
@@ -46,19 +53,19 @@ public class VotingSelectionView extends BlackPanel {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Voting selection image.
-   */
-  private ImagePanel backgroundImage;
-  /**
    * News text
    */
   private InfoTextArea textArea;
 
   /**
-   * ComboBox where to select component
+   * ComboBox where to select next voting
    */
-  private JComboBox<Vote> componentSelect;
+  private JComboBox<Vote> votingSelect;
 
+  /**
+   * StarMap
+   */
+  private StarMap map;
   /**
    * Voting selection view.
    * @param map StarMap
@@ -67,6 +74,7 @@ public class VotingSelectionView extends BlackPanel {
   public VotingSelectionView(final StarMap map,
       final ActionListener listener) {
     this.setLayout(new BorderLayout());
+    this.map = map;
     InfoPanel base = new InfoPanel();
     base.setLayout(new BorderLayout());
     base.setTitle("Next Galactic Voting");
@@ -90,7 +98,28 @@ public class VotingSelectionView extends BlackPanel {
     Vote[] votes = map.getVotes().getListOfVoteables(
         map.getScoreDiplomacy() + 1, map.getPlayerList().getCurrentMaxRealms(),
         turns);
-    componentSelect = new JComboBox<>(votes);
+    votingSelect = new JComboBox<>(votes);
+    votingSelect.setSelectedIndex(0);
+    votingSelect.addActionListener(listener);
+    votingSelect.setActionCommand(GameCommands.COMMAND_VOTING_SELECTED);
+    votingSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    votingSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    votingSelect.setBorder(new SimpleBorder());
+    votingSelect.setFont(GuiStatics.getFontCubellan());
+    votingSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    InfoPanel centerPanel = new InfoPanel();
+    centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+    centerPanel.add(votingSelect);
+    centerPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    textArea = new InfoTextArea();
+    textArea.setEditable(false);
+    textArea.setFont(GuiStatics.getFontCubellanSmaller());
+    Vote vote = (Vote) votingSelect.getSelectedItem();
+    textArea.setText(vote.getDescription(map));
+    centerPanel.add(textArea);
+    this.add(centerPanel, BorderLayout.CENTER);
+
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
@@ -101,5 +130,27 @@ public class VotingSelectionView extends BlackPanel {
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
 
+  }
+
+  /**
+   * Handle action events for Voting Slection
+   * @param arg0 ActionEvent
+   */
+  public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand()
+        .equals(GameCommands.COMMAND_VOTING_SELECTED)) {
+      SoundPlayer.playMenuSound();
+      Vote vote = (Vote) votingSelect.getSelectedItem();
+      textArea.setText(vote.getDescription(map));
+    }
+  }
+
+  /**
+   * Get Voting selected.
+   * @return Vote
+   */
+  public Vote getSelectedVote() {
+    Vote vote = (Vote) votingSelect.getSelectedItem();
+    return vote;
   }
 }

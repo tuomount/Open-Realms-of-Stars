@@ -659,6 +659,11 @@ public final class GameCommands {
    */
   public static final String COMMAND_SHIPDESIGN_HULLSELECTED =
       "ShipDesignHullSelected";
+  /**
+   * Voting type selected from the list
+   */
+  public static final String COMMAND_VOTING_SELECTED =
+      "VotingSelected";
 
   /**
    * Change Hull button pressed

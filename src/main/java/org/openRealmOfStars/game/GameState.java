@@ -3,7 +3,7 @@ package org.openRealmOfStars.game;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -169,5 +169,9 @@ public enum GameState {
    * 3D Sphere, just for testing purposes
    */
   SPHERE_3D_VIEW,
+  /**
+   * View where human player can select next galactic voting.
+   */
+  VOTING_SELECTION_VIEW
 
 }

@@ -129,6 +129,8 @@ import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.GenericFileFilter;
@@ -2600,6 +2602,71 @@ public class Game implements ActionListener {
     changeMessage.changeMessage(planet);
   }
 
+  /**
+   * Method for checking if human player needs to make voting selection.
+   * @return True if human player needs to next voting selection.
+   */
+  public boolean needForHumanVotingSelection() {
+    if (getStarMap().getVotes().firstCandidateSelected()) {
+      int index = getStarMap().getVotes().getFirstCandidate();
+      PlayerInfo candidate = getStarMap().getPlayerByIndex(index);
+      if (candidate != null && candidate.isHuman()
+          && getStarMap().getVotes().getNextImportantVote() == null) {
+        return true;
+      }
+    } else {
+      int[] towers = new int[getStarMap().getPlayerList()
+                             .getCurrentMaxRealms()];
+      for (int i = 0; i < getStarMap().getPlanetList().size(); i++) {
+        Planet planet = getStarMap().getPlanetList().get(i);
+        if (planet.getPlanetPlayerInfo() != null
+            && planet.getPlanetOwnerIndex() < towers.length
+            && planet.hasTower()) {
+          towers[planet.getPlanetOwnerIndex()]++;
+        }
+      }
+      int mostTowers = -1;
+      int towerCount = 0;
+      int secondIndex = -1;
+      int towerLimit = StarMapUtilities.calculateRequireTowerLimit(
+          getStarMap().getMaxX(), getStarMap().getMaxY());
+      boolean tie = false;
+      for (int i = 0; i < towers.length; i++) {
+        if (towers[i] >= towerLimit) {
+          if (towers[i] > towerCount && mostTowers != i) {
+            mostTowers = i;
+            towerCount = towers[i];
+            tie = false;
+          } else if (towers[i] == towerCount && mostTowers != -1) {
+            tie = true;
+            secondIndex = i;
+          }
+        }
+      }
+      if (!tie && mostTowers != -1) {
+        Vote vote = new Vote(VotingType.FIRST_CANDIDATE,
+            getPlayers().getCurrentMaxRealms(), 0);
+        vote.setOrganizerIndex(mostTowers);
+        PlayerInfo secretary = getPlayers().getPlayerInfoByIndex(
+            mostTowers);
+        NewsData news = NewsFactory.makeSecretaryOfGalaxyNews(secretary);
+        getStarMap().getNewsCorpData().addNews(news);
+        getStarMap().getVotes().getVotes().add(vote);
+        if (secretary.isHuman()) {
+          return true;
+        }
+      }
+      if (tie && getStarMap().getTurn() % 10 == 0) {
+        PlayerInfo first = getPlayers().getPlayerInfoByIndex(mostTowers);
+        PlayerInfo second = getPlayers().getPlayerInfoByIndex(
+            secondIndex);
+        NewsData news = NewsFactory.makeUnitedGalaxyTowerRaceTie(first,
+            second);
+        getStarMap().getNewsCorpData().addNews(news);
+      }
+    }
+    return false;
+  }
   /**
    * Create conflict ship image with possible planet background.
    * @param cloaked If ship is cloaked or not.

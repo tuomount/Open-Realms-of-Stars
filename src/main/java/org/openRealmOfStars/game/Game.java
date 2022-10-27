@@ -66,6 +66,7 @@ import org.openRealmOfStars.game.States.Sphere3dView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.game.States.StatView;
 import org.openRealmOfStars.game.States.VoteView;
+import org.openRealmOfStars.game.States.VotingSelectionView;
 import org.openRealmOfStars.game.config.ConfigFile;
 import org.openRealmOfStars.game.config.ConfigLine;
 import org.openRealmOfStars.game.tutorial.HelpLine;
@@ -361,6 +362,10 @@ public class Game implements ActionListener {
    */
   private AmbientLightView ambientLightsView;
 
+  /**
+   * Voting selection view.
+   */
+  private VotingSelectionView votingSelectionView;
   /**
    * Change Message Fleet or Planet
    */
@@ -1548,6 +1553,14 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show Voting selection view
+   */
+  public void showVotingSelectionView() {
+    votingSelectionView = new VotingSelectionView(getStarMap(), this);
+    this.updateDisplay(votingSelectionView);
+  }
+
+  /**
    * Show credits panel
    */
   public void showCredits() {
@@ -1700,6 +1713,10 @@ public class Game implements ActionListener {
     case NEW_GAME: {
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       makeNewGame(true);
+      break;
+    }
+    case VOTING_SELECTION_VIEW: {
+      showVotingSelectionView();
       break;
     }
     case LEADER_VIEW: {
@@ -3149,7 +3166,11 @@ public class Game implements ActionListener {
         SoundPlayer.playMenuSound();
         new GameRepository()
         .saveGame(GameRepository.DEFAULT_SAVE_FOLDER, "autosave.save", starMap);
-        changeGameState(GameState.AITURN);
+        if (needForHumanVotingSelection()) {
+          changeGameState(GameState.VOTING_SELECTION_VIEW);
+        } else {
+          changeGameState(GameState.AITURN);
+        }
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_FOCUS_MSG)) {
         SoundPlayer.playMenuSound();
@@ -3272,23 +3293,11 @@ public class Game implements ActionListener {
       }
     }
   }
-  @Override
-  public void actionPerformed(final ActionEvent arg0) {
-    if (arg0.getActionCommand() == GameCommands.COMMAND_MUSIC_TIMER) {
-      if (songText != null) {
-        if (MusicPlayer.isTextDisplayedEnough()) {
-          songText.setVisible(false);
-        } else {
-          MusicFileInfo info = MusicPlayer.getNowPlaying();
-          String text = "<html>Now playing:<br>" + info.getName() + "<br> by "
-              + info.getAuthor() + "</html>";
-          songText.setText(text);
-          songText.setVisible(true);
-        }
-      }
-      MusicPlayer.handleMusic(gameState);
-      return;
-    }
+  /**
+   * Fleet views action handler
+   * @param arg0 ActionEvent
+   */
+  public void actionPerformedFleetViews(final ActionEvent arg0) {
     if (gameState == GameState.FLEET_TRADE_VIEW && fleetTradeView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_START_TRADE_MISSION)
@@ -3322,6 +3331,174 @@ public class Game implements ActionListener {
         changeGameState(GameState.STARMAP);
         return;
       }
+    }
+    if (gameState == GameState.FLEETVIEW && fleetView != null) {
+      // Fleet view
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        Fleet fleet = fleetView.getFleet();
+        fleetView = null;
+        changeGameState(GameState.STARMAP, fleet);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_UPGRADE)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.SHIP_UPGRADE_VIEW);
+        return;
+      }
+      if (arg0.getActionCommand().equals(
+          GameCommands.COMMAND_ESPIONAGE_MISSIONS)) {
+        changeGameState(GameState.ESPIONAGE_MISSIONS_VIEW,
+            fleetView.getEspionagePlanet());
+        SoundPlayer.playMenuSound();
+      }
+      if (arg0.getActionCommand().equals(
+          GameCommands.COMMAND_VIEW_LEADERS)) {
+        changeGameState(GameState.LEADER_VIEW, fleetView.getFleet());
+        SoundPlayer.playMenuSound();
+      }
+      if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIZE)) {
+        SoundPlayer.playMenuSound();
+        colonizePlanetAction();
+        return;
+      }
+      if (arg0.getActionCommand().equals(GameCommands.COMMAND_CONQUEST)) {
+        Route route = fleetView.getFleet().getRoute();
+        if (route == null) {
+          Fleet fleet = fleetView.getFleet();
+          fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
+              fleet.getY(), Route.ROUTE_BOMBED));
+          fleet.setMovesLeft(0);
+          changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);
+          SoundPlayer.playMenuSound();
+          return;
+        }
+        SoundPlayer.playMenuDisabled();
+      }
+      if (arg0.getActionCommand().equals(
+          GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
+        Fleet fleet = fleetView.getFleet();
+        CulturePower power = starMap.getSectorCulture(fleet.getX(),
+            fleet.getY());
+        SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
+        if (power.getHighestCulture() == starMap.getPlayerList()
+            .getCurrentPlayer()) {
+          changeGameState(GameState.DIPLOMACY_VIEW, fleet);
+        } else {
+          changeGameState(GameState.DIPLOMACY_VIEW, fleetView);
+        }
+        return;
+      }
+      fleetView.handleAction(arg0);
+      return;
+    }
+    if (gameState == GameState.SHIP_UPGRADE_VIEW && shipUpgradeView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_FLEET)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.FLEETVIEW);
+        return;
+      }
+      shipUpgradeView.handleAction(arg0);
+    }
+    if (gameState == GameState.SHIPDESIGN && shipDesignView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.STARMAP);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN_DONE)
+          && shipDesignView != null && shipDesignView.isDesignOK()) {
+        SoundPlayer.playMenuSound();
+        shipDesignView.keepDesign();
+        changeGameState(GameState.VIEWSHIPS);
+        return;
+      }
+      if (arg0.getActionCommand().equalsIgnoreCase(
+          GameCommands.COMMAND_SHIPS)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.VIEWSHIPS);
+        return;
+      }
+      // Ship Design View
+      shipDesignView.handleAction(arg0);
+      return;
+    }
+    if (gameState == GameState.ESPIONAGE_MISSIONS_VIEW
+        && espionageMissionView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_FLEET)) {
+        changeGameState(GameState.FLEETVIEW, espionageMissionView.getFleet());
+        SoundPlayer.playMenuSound();
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
+        changeGameState(GameState.DIPLOMACY_VIEW,
+            espionageMissionView.getPlanet());
+        SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
+        return;
+      }
+      espionageMissionView.handleAction(arg0);
+      return;
+    }
+    if (gameState == GameState.VIEWSHIPS && shipView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.STARMAP);
+        return;
+      }
+      if (arg0.getActionCommand().equalsIgnoreCase(
+          GameCommands.COMMAND_DELETE_SHIP)) {
+        ShipStat stat = shipView.getSelectedStat();
+        PlayerInfo builder = shipView.getPlayerInfo();
+        if (!starMap.isShipStatBeingBuilt(stat, builder)) {
+          builder.removeShipStat(stat);
+          SoundPlayer.playMenuSound();
+          shipView.updateList();
+        }
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_COPY_SHIP)) {
+        SoundPlayer.playMenuSound();
+        shipView.setCopyClicked(true);
+        changeGameState(GameState.SHIPDESIGN);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN)) {
+        shipView.setCopyClicked(false);
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.SHIPDESIGN);
+        return;
+      }
+      // Handle View Ship
+      shipView.handleAction(arg0);
+      return;
+    }
+  }
+  @Override
+  public void actionPerformed(final ActionEvent arg0) {
+    if (arg0.getActionCommand() == GameCommands.COMMAND_MUSIC_TIMER) {
+      if (songText != null) {
+        if (MusicPlayer.isTextDisplayedEnough()) {
+          songText.setVisible(false);
+        } else {
+          MusicFileInfo info = MusicPlayer.getNowPlaying();
+          String text = "<html>Now playing:<br>" + info.getName() + "<br> by "
+              + info.getAuthor() + "</html>";
+          songText.setText(text);
+          songText.setVisible(true);
+        }
+      }
+      MusicPlayer.handleMusic(gameState);
+      return;
     }
     if (gameState == GameState.STARMAP) {
       actionPerformedStarMap(arg0);
@@ -3507,42 +3684,6 @@ public class Game implements ActionListener {
       leaderView.handleActions(arg0);
       return;
     }
-    if (gameState == GameState.VIEWSHIPS && shipView != null) {
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.STARMAP);
-        return;
-      }
-      if (arg0.getActionCommand().equalsIgnoreCase(
-          GameCommands.COMMAND_DELETE_SHIP)) {
-        ShipStat stat = shipView.getSelectedStat();
-        PlayerInfo builder = shipView.getPlayerInfo();
-        if (!starMap.isShipStatBeingBuilt(stat, builder)) {
-          builder.removeShipStat(stat);
-          SoundPlayer.playMenuSound();
-          shipView.updateList();
-        }
-        return;
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_COPY_SHIP)) {
-        SoundPlayer.playMenuSound();
-        shipView.setCopyClicked(true);
-        changeGameState(GameState.SHIPDESIGN);
-        return;
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN)) {
-        shipView.setCopyClicked(false);
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.SHIPDESIGN);
-        return;
-      }
-      // Handle View Ship
-      shipView.handleAction(arg0);
-      return;
-    }
     if (gameState == GameState.DIPLOMACY_VIEW && diplomacyView != null) {
       // Handle diplomacy view
       if (arg0.getActionCommand()
@@ -3563,31 +3704,7 @@ public class Game implements ActionListener {
       diplomacyView.handleAction(arg0);
       return;
     }
-    if (gameState == GameState.SHIPDESIGN && shipDesignView != null) {
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.STARMAP);
-        return;
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN_DONE)
-          && shipDesignView != null && shipDesignView.isDesignOK()) {
-        SoundPlayer.playMenuSound();
-        shipDesignView.keepDesign();
-        changeGameState(GameState.VIEWSHIPS);
-        return;
-      }
-      if (arg0.getActionCommand().equalsIgnoreCase(
-          GameCommands.COMMAND_SHIPS)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.VIEWSHIPS);
-        return;
-      }
-      // Ship Design View
-      shipDesignView.handleAction(arg0);
-      return;
-    }
+
     if (gameState == GameState.ESPIONAGE_VIEW && espionageView != null) {
       // Espionage  View
       if (arg0.getActionCommand()
@@ -3665,94 +3782,23 @@ public class Game implements ActionListener {
       planetView.handleAction(arg0);
       return;
     }
-    if (gameState == GameState.ESPIONAGE_MISSIONS_VIEW
-        && espionageMissionView != null) {
+    if (gameState == GameState.VOTING_SELECTION_VIEW
+        && votingSelectionView != null) {
       if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_FLEET)) {
-        changeGameState(GameState.FLEETVIEW, espionageMissionView.getFleet());
+          .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
         SoundPlayer.playMenuSound();
+        changeGameState(GameState.AITURN);
         return;
       }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
-        changeGameState(GameState.DIPLOMACY_VIEW,
-            espionageMissionView.getPlanet());
-        SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
-        return;
-      }
-      espionageMissionView.handleAction(arg0);
-      return;
+      votingSelectionView.handleAction(arg0);
     }
-    if (gameState == GameState.SHIP_UPGRADE_VIEW && shipUpgradeView != null) {
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_FLEET)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.FLEETVIEW);
-        return;
-      }
-      shipUpgradeView.handleAction(arg0);
-    }
-    if (gameState == GameState.FLEETVIEW && fleetView != null) {
-      // Fleet view
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
-        SoundPlayer.playMenuSound();
-        Fleet fleet = fleetView.getFleet();
-        fleetView = null;
-        changeGameState(GameState.STARMAP, fleet);
-        return;
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_UPGRADE)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.SHIP_UPGRADE_VIEW);
-        return;
-      }
-      if (arg0.getActionCommand().equals(
-          GameCommands.COMMAND_ESPIONAGE_MISSIONS)) {
-        changeGameState(GameState.ESPIONAGE_MISSIONS_VIEW,
-            fleetView.getEspionagePlanet());
-        SoundPlayer.playMenuSound();
-      }
-      if (arg0.getActionCommand().equals(
-          GameCommands.COMMAND_VIEW_LEADERS)) {
-        changeGameState(GameState.LEADER_VIEW, fleetView.getFleet());
-        SoundPlayer.playMenuSound();
-      }
-      if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIZE)) {
-        SoundPlayer.playMenuSound();
-        colonizePlanetAction();
-        return;
-      }
-      if (arg0.getActionCommand().equals(GameCommands.COMMAND_CONQUEST)) {
-        Route route = fleetView.getFleet().getRoute();
-        if (route == null) {
-          Fleet fleet = fleetView.getFleet();
-          fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
-              fleet.getY(), Route.ROUTE_BOMBED));
-          fleet.setMovesLeft(0);
-          changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);
-          SoundPlayer.playMenuSound();
-          return;
-        }
-        SoundPlayer.playMenuDisabled();
-      }
-      if (arg0.getActionCommand().equals(
-          GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
-        Fleet fleet = fleetView.getFleet();
-        CulturePower power = starMap.getSectorCulture(fleet.getX(),
-            fleet.getY());
-        SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
-        if (power.getHighestCulture() == starMap.getPlayerList()
-            .getCurrentPlayer()) {
-          changeGameState(GameState.DIPLOMACY_VIEW, fleet);
-        } else {
-          changeGameState(GameState.DIPLOMACY_VIEW, fleetView);
-        }
-        return;
-      }
-      fleetView.handleAction(arg0);
-      return;
+    if (gameState == GameState.FLEET_TRADE_VIEW
+        || gameState == GameState.FLEETVIEW
+        || gameState == GameState.SHIP_UPGRADE_VIEW
+        || gameState == GameState.SHIPDESIGN
+        || gameState == GameState.ESPIONAGE_MISSIONS_VIEW
+        || gameState == GameState.VIEWSHIPS) {
+      actionPerformedFleetViews(arg0);
     }
     if (gameState == GameState.GALAXY_CREATION
         || gameState == GameState.PLAYER_SETUP

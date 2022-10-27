@@ -124,7 +124,7 @@ public class VotingSelectionView extends BlackPanel {
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
     SpaceButton btn = new SpaceButton("Selecting voting and continue",
-        GameCommands.COMMAND_VIEW_STARMAP);
+        GameCommands.COMMAND_END_TURN);
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.CENTER);
     // Add panels to base

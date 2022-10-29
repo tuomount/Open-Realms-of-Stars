@@ -123,6 +123,7 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
+import org.openRealmOfStars.starMap.history.event.GalacticEvent;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
@@ -2684,6 +2685,33 @@ public class Game implements ActionListener {
     }
     return false;
   }
+
+  /**
+   * Handle human voting selection and make news about it.
+   */
+  public void handleHumanVotingSelection() {
+    Vote vote = votingSelectionView.getSelectedVote();
+    if (vote != null) {
+      // Vote has been already added to list in generateNextVote()
+      NewsData news = null;
+      if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+        PlayerInfo firstCandidate = getStarMap().getPlayerByIndex(
+            getStarMap().getVotes().getFirstCandidate());
+        PlayerInfo secondCandidate = getStarMap().getPlayerByIndex(
+            getStarMap().getVotes().getSecondCandidate());
+        news = NewsFactory.makeVotingNews(vote, firstCandidate,
+            secondCandidate);
+
+      } else {
+        news = NewsFactory.makeVotingNews(vote, null, null);
+      }
+      getStarMap().getNewsCorpData().addNews(news);
+      GalacticEvent event = new GalacticEvent(news.getNewsText());
+      getStarMap().getHistory().addEvent(event);
+    } else {
+      ErrorLogger.log("Next vote was null!");
+    }
+  }
   /**
    * Create conflict ship image with possible planet background.
    * @param cloaked If ship is cloaked or not.
@@ -3557,6 +3585,7 @@ public class Game implements ActionListener {
     if (gameState == GameState.VOTE_VIEW && voteView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        handleHumanVotingSelection();
         SoundPlayer.playMenuSound();
         changeGameState(GameState.STARMAP);
         return;

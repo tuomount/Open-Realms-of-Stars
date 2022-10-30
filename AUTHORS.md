@@ -301,6 +301,12 @@ Modified to gravity ripper animation by Tuomo Untinen
 Licensed under CC BY 4.0
 https://creativecommons.org/licenses/by/4.0/
 
+Victorian Era desk with court hammer, book and lamp
+A courthammer and an open book by mvdwoude. Victorian desk by philbgarner.
+Lamp base by mvdwoude from courthammer base. Rest of the lamp by Tuomo Untinen.
+Licensed under CC BY SA 4.0
+https://creativecommons.org/licenses/by-sa/4.0/
+
 Alien ship by Tuomo Untinen with Stable Fusion
 
 Metal rich surface by Tuomo Untinen with Stable Fusion

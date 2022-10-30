@@ -2029,8 +2029,10 @@ public class AITurnView extends BlackPanel {
     }
     if (game.getStarMap().getVotes().firstCandidateSelected()) {
       if (game.getStarMap().getVotes().getNextImportantVote() == null) {
+        PlayerInfo secretary = game.getPlayers().getPlayerInfoByIndex(
+            game.getStarMap().getVotes().getFirstCandidate());
         int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;
-        Vote vote = game.getStarMap().getVotes().generateNextVote(
+        Vote vote = game.getStarMap().getBestNextVotingForRealm(secretary,
             game.getStarMap().getScoreDiplomacy() + 1,
             game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
         if (vote != null) {
@@ -2083,7 +2085,7 @@ public class AITurnView extends BlackPanel {
         game.getStarMap().getNewsCorpData().addNews(news);
         game.getStarMap().getVotes().getVotes().add(vote);
         int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;
-        vote = game.getStarMap().getVotes().generateNextVote(
+        vote = game.getStarMap().getBestNextVotingForRealm(secretary,
             game.getStarMap().getScoreDiplomacy() + 1,
             game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
         if (vote != null) {

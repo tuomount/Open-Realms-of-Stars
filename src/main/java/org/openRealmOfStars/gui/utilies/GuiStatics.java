@@ -1450,6 +1450,12 @@ public final class GuiStatics {
    */
   public static final String IMAGE_DESERT = "/resources/images/desert.png";
   /**
+   * Image old table with book, lamp and court hammer
+   */
+  public static final BufferedImage IMAGE_DESKTOP = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/olddesk.png"));
+  /**
    * Image paradise planet
    */
   public static final String IMAGE_PARADISE = "/resources/images/landscape.png";

@@ -429,6 +429,9 @@ public class ImageInstruction {
    */
   public static final String TERROR = "terror";
   /**
+   * Instructions for old desk
+   */
+  public static final String OLD_DESK = "olddesk";
    * Instructions for metal rich surface
    */
   public static final String METAL_RICH_SURFACE = "metalRichSurface";
@@ -655,6 +658,7 @@ public class ImageInstruction {
         && !SPINOSAURUS.equals(image)
         && !CONTAINERS.equals(image)
         && !TERROR.equals(image)
+        && !OLD_DESK.equals(image)
         && !METAL_RICH_SURFACE.equals(image)
         && !ANCIENT_LABORATORY.equals(image)
         && !ANCIENT_FACTORY.equals(image)
@@ -1316,6 +1320,9 @@ public class ImageInstruction {
     }
     if (FACTORY.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_FACTORY);
+    }
+    if (OLD_DESK.equals(image)) {
+      drawImg = GuiStatics.IMAGE_DESKTOP;
     }
     BufferedImage img = workImage;
     if (img == null) {

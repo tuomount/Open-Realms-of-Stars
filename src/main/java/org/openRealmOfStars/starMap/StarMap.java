@@ -57,6 +57,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
+import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
@@ -5614,5 +5615,33 @@ public class StarMap {
       }
     }
     return -1;
+  }
+
+  /**
+   * Generate next best voting for secretary.
+   * @param secretary Galactic Secretary
+   * @param maxNumberOfVotes Maximum number of votes
+   * @param numberOfRealms NUmber of realms in starmap
+   * @param turns When voting needs to be done.
+   * @return Vote if able to add new one, otherwise null
+   */
+  public Vote getBestNextVotingForRealm(final PlayerInfo secretary,
+      final int maxNumberOfVotes, final int numberOfRealms, final int turns) {
+    Vote[] availableVotes = getVotes().getListOfVoteables(maxNumberOfVotes,
+        numberOfRealms, turns);
+    Vote bestVote = null;
+    int bestValue = -999;
+    for (Vote vote : availableVotes) {
+      int value = StarMapUtilities.getVotingSupport(secretary, vote, this);
+      if (value > bestValue) {
+        bestValue = value;
+        bestVote = vote;
+      }
+    }
+    if (bestVote == null) {
+      bestVote = getVotes().generateNextVote(maxNumberOfVotes, numberOfRealms,
+          turns);
+    }
+    return bestVote;
   }
 }

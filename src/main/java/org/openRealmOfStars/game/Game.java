@@ -3585,7 +3585,6 @@ public class Game implements ActionListener {
     if (gameState == GameState.VOTE_VIEW && voteView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
-        handleHumanVotingSelection();
         SoundPlayer.playMenuSound();
         changeGameState(GameState.STARMAP);
         return;
@@ -3816,6 +3815,7 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
         SoundPlayer.playMenuSound();
+        handleHumanVotingSelection();
         changeGameState(GameState.AITURN);
         return;
       }

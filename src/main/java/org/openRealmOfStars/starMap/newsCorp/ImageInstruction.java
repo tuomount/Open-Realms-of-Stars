@@ -432,6 +432,7 @@ public class ImageInstruction {
    * Instructions for old desk
    */
   public static final String OLD_DESK = "olddesk";
+  /**
    * Instructions for metal rich surface
    */
   public static final String METAL_RICH_SURFACE = "metalRichSurface";

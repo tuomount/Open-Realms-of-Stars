@@ -12,7 +12,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016,2019,2020 Tuomo Untinen
+ * Copyright (C) 2016,2019,2020,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -70,16 +70,37 @@ public class MessageTest {
   public void testLongMessage() {
     Icon16x16 icon = Mockito.mock(Icon16x16.class);
     Message message = new Message(MessageType.CONSTRUCTION,
-        "New construction is done! This construction is about very very"
+        "", icon);
+    message.setMessage("New construction is done! This construction is about very very"
         + " long text for message. This will test text wrapping for"
         + " message events. This text will be good text for not having extra"
-        + " space at beginning of the new line.", icon);
+        + " space at beginning of the new line.");
     assertEquals(
         "New construction is done! This construction is about"
         + " very very long text\nfor message. This will test "
         + "text wrapping for message events. This text\nwill "
         + "be good text for not having extra space at beginning"
         + " of the new line.", message.getMessage());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLongMessageWithImageInstruction() {
+    Icon16x16 icon = Mockito.mock(Icon16x16.class);
+    Message message = new Message(MessageType.CONSTRUCTION,
+        "Blaa blaa|image(cool image)", icon);
+    assertEquals(message.getImageInstruction(), "image(cool image)");
+    message.setMessage("New construction is done! This construction is about very very"
+        + " long text for message. This will test text wrapping for"
+        + " message events. This text will be good text for not having extra"
+        + " space at beginning of the new line.");
+    assertEquals(
+        "New construction is done! This construction is about"
+        + " very very long text\nfor message. This will test "
+        + "text wrapping for message events. This text\nwill "
+        + "be good text for not having extra space at beginning"
+        + " of the new line.", message.getMessage());
+    assertEquals(message.getImageInstruction(), "image(cool image)");
   }
 
   @Test
@@ -106,5 +127,40 @@ public class MessageTest {
     assertNotEquals(msg, message);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMessageWithImageInstructionsDirectAssignment() {
+    Icon16x16 icon = Mockito.mock(Icon16x16.class);
+    Message message = new Message(MessageType.CONSTRUCTION,
+        "New construction is done!|image(draw box)", icon);
+    assertEquals(false, message.isRandomEventPop());
+    assertEquals(MessageType.CONSTRUCTION, message.getType());
+    assertEquals(-1, message.getIndex());
+    assertEquals(-1, message.getX());
+    assertEquals(-1, message.getY());
+    assertEquals(null, message.getMatchByString());
+    assertEquals("New construction is done!", message.getMessage());
+    assertEquals("image(draw box)", message.getImageInstruction());
+    message.setImageInstructions(null);
+    assertEquals(null, message.getImageInstruction());
+    assertEquals("New construction is done!", message.getMessage());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMessageWithImageInstructions() {
+    Icon16x16 icon = Mockito.mock(Icon16x16.class);
+    Message message = new Message(MessageType.CONSTRUCTION,
+        "New construction is done!", icon);
+    message.setImageInstructions("image(draw box)");
+    assertEquals(false, message.isRandomEventPop());
+    assertEquals(MessageType.CONSTRUCTION, message.getType());
+    assertEquals(-1, message.getIndex());
+    assertEquals(-1, message.getX());
+    assertEquals(-1, message.getY());
+    assertEquals(null, message.getMatchByString());
+    assertEquals("New construction is done!", message.getMessage());
+    assertEquals("image(draw box)", message.getImageInstruction());
+  }
 
 }

@@ -14,6 +14,8 @@ import java.util.Calendar;
 
 import javax.imageio.ImageIO;
 
+import org.openRealmOfStars.gui.utilies.GuiStatics;
+
 /**
  *
  * Open Realm of Stars Game Project
@@ -43,6 +45,24 @@ public final class IOUtilities {
    */
   private IOUtilities() {
     // Nothing to do here
+  }
+
+  /**
+   * Load image with string. This will read image from inside of jar.
+   * @param urlToImage the String where url is build from
+   * @return BufferedImage if succeed null if fails
+   */
+  public static BufferedImage loadImage(final String urlToImage) {
+    try {
+      if (urlToImage == null) {
+        System.err.print("Null url, image cannot be loaded!");
+        return null;
+      }
+      return ImageIO.read(GuiStatics.class.getResource(urlToImage));
+    } catch (IOException e) {
+      System.err.print(urlToImage.toString() + " not found!");
+      return null;
+    }
   }
 
   /**

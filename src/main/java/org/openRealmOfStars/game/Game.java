@@ -172,7 +172,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.22.19Beta";
+  public static final String GAME_VERSION = "0.22.26Beta";
 
   /**
    * Animation timer used for animation
@@ -2530,6 +2530,16 @@ public class Game implements ActionListener {
           true);
       msg.setRandomEventPop(false);
     }
+    if (msg.getType() == MessageType.PLANETARY && !msg.isRandomEventPop()
+        && msg.getImageInstruction() != null) {
+      PopupPanel popupPanel = new PopupPanel(msg.getMessage(),
+          "Planetary event");
+      ImageInstruction imageInst = new ImageInstruction();
+      imageInst.addInstruction(msg.getImageInstruction());
+      popupPanel.setImageFromInstruction(imageInst);
+      starMapView.setPopup(popupPanel);
+    }
+
     if (mapOnly) {
       starMapView.setCursorFocus(20);
     }

@@ -12,7 +12,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2019 Tuomo Untinen
+ * Copyright (C) 2016,2019,2020,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -52,7 +52,7 @@ public class Message {
   private MessageType type;
 
   /**
-   * Message itself
+   * Message and image instruction separated with |.
    */
   private String message;
 
@@ -80,7 +80,7 @@ public class Message {
   public Message(final MessageType type, final String msg,
       final Icon16x16 icon) {
     this.type = type;
-    setMessage(msg);
+    message = msg;
     this.icon = icon;
     this.coordinate = new Coordinate(-1, -1);
     this.index = -1;
@@ -97,7 +97,7 @@ public class Message {
     this.type = MessageType.getTypeByIndex(dis.readInt());
     this.index = dis.readInt();
     this.coordinate = new Coordinate(dis.readInt(), dis.readInt());
-    setMessage(IOUtilities.readString(dis));
+    message = IOUtilities.readString(dis);
     this.matchByString = IOUtilities.readString(dis);
     if (this.matchByString.isEmpty()) {
       this.matchByString = null;
@@ -154,11 +154,30 @@ public class Message {
   }
 
   /**
-   * Get Message itself as a String
+   * Get Message part itself as a String.
    * @return Message
    */
   public String getMessage() {
-    return message;
+    if (message != null) {
+      String[] parts = message.split("\\|");
+      return parts[0];
+    }
+    return null;
+  }
+
+  /**
+   * Get Image instrutions part as a String.
+   * @return Image instructions or null.
+   */
+  public String getImageInstruction() {
+    if (message != null) {
+      String[] parts = message.split("\\|");
+      if (parts.length > 1) {
+        return parts[1];
+      }
+      return null;
+    }
+    return null;
   }
 
   /**
@@ -185,7 +204,25 @@ public class Message {
         split++;
       }
     }
-    this.message = sb.toString();
+    String imageInstructions = this.getImageInstruction();
+    if (imageInstructions == null) {
+      this.message = sb.toString();
+    } else {
+      this.message = sb.toString() + "|" + imageInstructions;
+    }
+  }
+
+  /**
+   * Set Image instructions into message part.
+   * @param instructions Image instruction or null to clear
+   */
+  public void setImageInstructions(final String instructions) {
+    String msg = this.getMessage();
+    if (instructions != null) {
+      this.message = msg + "|" + instructions;
+    } else {
+      this.message = msg;
+    }
   }
 
   /**

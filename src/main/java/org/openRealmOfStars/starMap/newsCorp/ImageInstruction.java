@@ -10,6 +10,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -348,6 +349,10 @@ public class ImageInstruction {
    */
   public static final String OLD_SHIP = "old ship";
   /**
+   * Alien ship
+   */
+  public static final String ALIEN_SHIP = "alien ship";
+  /**
    * United Galaxy Tower
    */
   public static final String UNITED_GALAXY_TOWER = "united galaxy tower";
@@ -427,6 +432,45 @@ public class ImageInstruction {
    * Instructions for old desk
    */
   public static final String OLD_DESK = "olddesk";
+   * Instructions for metal rich surface
+   */
+  public static final String METAL_RICH_SURFACE = "metalRichSurface";
+  /**
+   * Instructions for ancient laboratory
+   */
+  public static final String ANCIENT_LABORATORY = "AncientLaboratory";
+  /**
+   * Instructions for ancient factory
+   */
+  public static final String ANCIENT_FACTORY = "AncientFactory";
+  /**
+   * Instructions for ancient temple
+   */
+  public static final String ANCIENT_TEMPLE = "AncientTemple";
+  /**
+   * Instructions for ancient palace
+   */
+  public static final String ANCIENT_PALACE = "AncientPalace";
+  /**
+   * Instructions for black monolith
+   */
+  public static final String BLACK_MONOLITH = "BlackMonolith";
+  /**
+   * Instructions for molten lava
+   */
+  public static final String MOLTEN_LAVA = "MoltenLava";
+  /**
+   * Instructions for Arid
+   */
+  public static final String ARID = "Arid";
+  /**
+   * Instructions for Lush Vegetation
+   */
+  public static final String LUSH_VEGETATION = "LushVegetation";
+  /**
+   * Instructions for Artifact on planet
+   */
+  public static final String ARTIFACT_ON_PLANET = "ArtifactOnPlanet";
 
   /**
    * Instruction to draw image
@@ -602,6 +646,7 @@ public class ImageInstruction {
         && !DATALOSS.equals(image)
         && !NEWSTATION.equals(image)
         && !OLD_SHIP.equals(image)
+        && !ALIEN_SHIP.equals(image)
         && !DESERT.equals(image)
         && !PARADISE.equals(image)
         && !VIRUSES.equals(image)
@@ -614,6 +659,16 @@ public class ImageInstruction {
         && !CONTAINERS.equals(image)
         && !TERROR.equals(image)
         && !OLD_DESK.equals(image)
+        && !METAL_RICH_SURFACE.equals(image)
+        && !ANCIENT_LABORATORY.equals(image)
+        && !ANCIENT_FACTORY.equals(image)
+        && !ANCIENT_TEMPLE.equals(image)
+        && !ANCIENT_PALACE.equals(image)
+        && !BLACK_MONOLITH.equals(image)
+        && !MOLTEN_LAVA.equals(image)
+        && !ARID.equals(image)
+        && !LUSH_VEGETATION.equals(image)
+        && !ARTIFACT_ON_PLANET.equals(image)
         && !FACTORY.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
@@ -979,43 +1034,43 @@ public class ImageInstruction {
       planetImg = GuiStatics.BIG_GASWORLD3;
     }
     if (PLANET_SPORTS.equals(planetType)) {
-      planetImg = GuiStatics.BIG_SPORT_LOGO;
+      planetImg = IOUtilities.loadImage(GuiStatics.BIG_SPORT_LOGO);
     }
     if (BIG_BAN.equals(planetType)) {
-      planetImg = GuiStatics.IMAGE_BIG_BAN_ICON;
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_BAN_ICON);
     }
     if (BIG_PEACE.equals(planetType)) {
-      planetImg = GuiStatics.IMAGE_BIG_PEACE_ICON;
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_PEACE_ICON);
     }
     if (BIG_NUKE.equals(planetType)) {
-      planetImg = GuiStatics.IMAGE_BIG_NUKE;
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_NUKE);
     }
     if (GALAXY.equals(planetType)) {
-      planetImg = GuiStatics.IMAGE_GALAXY;
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_GALAXY);
     }
     if (BIG_PRIVATEER.equals(planetType)) {
-      planetImg = GuiStatics.IMAGE_PRIVATEER;
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_PRIVATEER);
     }
     if (UNITED_GALAXY_TOWER.equals(planetType)) {
-      planetImg = GuiStatics.IMAGE_UNITED_GALAXY_TOWER;
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_UNITED_GALAXY_TOWER);
     }
     if (BIG_MISSILE.equals(planetType)) {
-      planetImg = GuiStatics.IMAGE_BIG_MISSILE;
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_MISSILE);
     }
     if (BIG_MONEY.equals(planetType)) {
-      planetImg = GuiStatics.IMAGE_BIG_MONEY;
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_MONEY);
     }
     if (METEOR.equals(planetType)) {
-      planetImg = GuiStatics.IMAGE_METEOR;
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_METEOR);
     }
     if (METEOR_HIT.equals(planetType)) {
-      planetImg = GuiStatics.IMAGE_METEOR_HIT;
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_METEOR_HIT);
     }
     if (BIG_EXPLOSION.equals(planetType)) {
-      planetImg = GuiStatics.IMAGE_BIG_EXPLOSION;
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_EXPLOSION);
     }
     if (BIG_ORBITAL.equals(planetType)) {
-      planetImg = GuiStatics.IMAGE_BIG_ORBITAL;
+      planetImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_ORBITAL);
     }
     SpaceRace race = SpaceRaceUtility.getRaceByName(planetType);
     if (race != null) {
@@ -1054,18 +1109,19 @@ public class ImageInstruction {
    */
   private static void paintTrader(final BufferedImage workImage,
       final String traderType, final String position, final String size) {
-    BufferedImage traderImg = GuiStatics.IMAGE_TRADE_SHIP;
+    BufferedImage traderImg = IOUtilities.loadImage(
+        GuiStatics.IMAGE_TRADE_SHIP);
     if (TRADER1.equals(traderType)) {
-      traderImg = GuiStatics.IMAGE_TRADE_SHIP;
+      traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_TRADE_SHIP);
     }
     if (TRADER2.equals(traderType)) {
-      traderImg = GuiStatics.IMAGE_TRADE_SHIP2;
+      traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_TRADE_SHIP2);
     }
     if (CLOAKED_SHIP.equals(traderType)) {
-      traderImg = GuiStatics.IMAGE_CLOAKED_SHIP;
+      traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_CLOAKED_SHIP);
     }
     if (SHUTTLE2.equals(traderType)) {
-      traderImg = GuiStatics.IMAGE_SHUTTLE2;
+      traderImg = IOUtilities.loadImage(GuiStatics.IMAGE_SHUTTLE2);
     }
     if (SIZE_HALF.equals(size)) {
       traderImg = GuiStatics.scaleToHalf(traderImg);
@@ -1146,91 +1202,124 @@ public class ImageInstruction {
       drawImg = GuiStatics.IMAGE_GBNC;
     }
     if (BIG_BAN.equals(image)) {
-      drawImg = GuiStatics.IMAGE_BIG_BAN_ICON;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_BAN_ICON);
     }
     if (METEOR.equals(image)) {
-      drawImg = GuiStatics.IMAGE_METEOR;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_METEOR);
     }
     if (BIG_PEACE.equals(image)) {
-      drawImg = GuiStatics.IMAGE_BIG_PEACE_ICON;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_PEACE_ICON);
     }
     if (BIG_NUKE.equals(image)) {
-      drawImg = GuiStatics.IMAGE_BIG_NUKE;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_NUKE);
     }
     if (GALAXY.equals(image)) {
-      drawImg = GuiStatics.IMAGE_GALAXY;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_GALAXY);
     }
     if (BIG_PRIVATEER.equals(image)) {
-      drawImg = GuiStatics.IMAGE_PRIVATEER;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_PRIVATEER);
     }
     if (SOLAR_FLARES.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SOLAR_FLARES;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SOLAR_FLARES);
     }
     if (SOLAR_NO_FLARES.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SOLAR_NO_FLARES;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SOLAR_NO_FLARES);
     }
     if (PIRATE_PILOT.equals(image)) {
-      drawImg = GuiStatics.IMAGE_PIRATE_PILOT;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_PIRATE_PILOT);
     }
     if (KRAKEN.equals(image)) {
-      drawImg = GuiStatics.IMAGE_KRAKEN;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_KRAKEN);
     }
     if (PIRATE_RAIDERS.equals(image)) {
-      drawImg = GuiStatics.IMAGE_PIRATE_RAIDERS;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_PIRATE_RAIDERS);
     }
     if (MUTINY.equals(image)) {
-      drawImg = GuiStatics.IMAGE_MUTINY;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_MUTINY);
     }
     if (DATALOSS.equals(image)) {
-      drawImg = GuiStatics.IMAGE_DATALOSS;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_DATALOSS);
     }
     if (NEWSTATION.equals(image)) {
-      drawImg = GuiStatics.IMAGE_NEWSTATION;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_NEWSTATION);
     }
     if (OLD_SHIP.equals(image)) {
-      drawImg = GuiStatics.IMAGE_OLD_SHIP;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_OLD_SHIP);
+    }
+    if (ALIEN_SHIP.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ALIEN_SHIP);
     }
     if (DESERT.equals(image)) {
-      drawImg = GuiStatics.IMAGE_DESERT;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_DESERT);
     }
     if (PARADISE.equals(image)) {
-      drawImg = GuiStatics.IMAGE_PARADISE;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_PARADISE);
     }
     if (VIRUSES.equals(image)) {
-      drawImg = GuiStatics.IMAGE_VIRUSES;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_VIRUSES);
     }
     if (SIGNAL.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SIGNAL;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SIGNAL);
     }
     if (TECHNICAL_BREAKTHROUGH.equals(image)) {
-      drawImg = GuiStatics.IMAGE_TECHNICAL_BREAKTHROUGH;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_TECHNICAL_BREAKTHROUGH);
     }
     if (SHIP_DESTROYED.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SHIP_DESTROYED;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SHIP_DESTROYED);
     }
     if (SHUTTLE.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SHUTTLE;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SHUTTLE);
     }
     if (SPINOSAURUS.equals(image)) {
-      drawImg = GuiStatics.IMAGE_SPINOSAURUS;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SPINOSAURUS);
     }
     if (STASIS.equals(image)) {
-      drawImg = GuiStatics.IMAGE_STASIS;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_STASIS);
     }
     if (CONTAINERS.equals(image)) {
-      drawImg = GuiStatics.IMAGE_CONTAINERS;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_CONTAINERS);
     }
     if (TERROR.equals(image)) {
-      drawImg = GuiStatics.IMAGE_TERROR;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_TERROR);
+    }
+    if (METAL_RICH_SURFACE.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_METAL_RICH_SURFACE);
+    }
+    if (ANCIENT_FACTORY.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ANCIENT_FACTORY);
+    }
+    if (ANCIENT_LABORATORY.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ANCIENT_LABORATORY);
+    }
+    if (ANCIENT_TEMPLE.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ANCIENT_TEMPLE);
+    }
+    if (ANCIENT_PALACE.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ANCIENT_PALACE);
+    }
+    if (BLACK_MONOLITH.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BLACK_MONOLITH);
     }
     if (BIG_ORBITAL.equals(image)) {
-      drawImg = GuiStatics.IMAGE_BIG_ORBITAL;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_ORBITAL);
     }
     if (BIG_EXPLOSION.equals(image)) {
-      drawImg = GuiStatics.IMAGE_BIG_EXPLOSION;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_BIG_EXPLOSION);
+    }
+    if (MOLTEN_LAVA.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_MOLTEN_LAVA);
+    }
+    if (ARID.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ARID);
+    }
+    if (LUSH_VEGETATION.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_LUSH_VEGETATION);
+    }
+    if (ARTIFACT_ON_PLANET.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ARTIFACT_ON_PLANET);
     }
     if (FACTORY.equals(image)) {
-      drawImg = GuiStatics.IMAGE_FACTORY;
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_FACTORY);
     }
     if (OLD_DESK.equals(image)) {
       drawImg = GuiStatics.IMAGE_DESKTOP;

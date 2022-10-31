@@ -52,6 +52,10 @@ public class Artifact {
    */
   private String description;
   /**
+   * Is artifact unique so it cannot find from random location.
+   */
+  private boolean unique;
+  /**
    * Get Artifact index.
    * @return Artifact index.
    */
@@ -69,6 +73,7 @@ public class Artifact {
     this.index = index;
     this.name = name;
     this.artifactType = type;
+    this.unique = false;
     this.setIcon(Icons.getIconByName(Icons.ICON_ANCIENT_FRAGMENT));
   }
   /**
@@ -143,5 +148,19 @@ public class Artifact {
     sb.append("\n\n");
     sb.append(getDescription());
     return sb.toString();
+  }
+  /**
+   * Is artifact unique or common
+   * @return True if unique
+   */
+  public boolean isUnique() {
+    return unique;
+  }
+  /**
+   * Set artifact unique.
+   * @param unique True for unique.
+   */
+  public void setUnique(final boolean unique) {
+    this.unique = unique;
   }
 }

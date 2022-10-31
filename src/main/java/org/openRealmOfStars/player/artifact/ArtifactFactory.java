@@ -205,6 +205,7 @@ public final class ArtifactFactory {
       tmp = new Artifact(index, "Broadcasting electronic",
           ArtifactType.ELECTRONIC);
       tmp.setOneTimeTechBonus(50);
+      tmp.setUnique(true);
       tmp.setDescription("This artifact is piece of ancient broadcasting"
           + " technology. This is taken from working ancient news station."
           + " This is really advanced technology considering how old it is.");
@@ -214,14 +215,15 @@ public final class ArtifactFactory {
   }
 
   /**
-   * Get random non facility artifact.
+   * Get random non facility artifact and which are not unique.
    * @return Random artifact
    */
   public static Artifact getRandomNonFacility() {
     ArrayList<Artifact> choices = new ArrayList<>();
     for (int i = 0; i < MAX_ARTIFACT; i++) {
       Artifact artifact = createArtifact(i);
-      if (artifact.getArtifactType() != ArtifactType.FACILITY) {
+      if (artifact.getArtifactType() != ArtifactType.FACILITY
+          && !artifact.isUnique()) {
         choices.add(artifact);
       }
     }
@@ -230,11 +232,18 @@ public final class ArtifactFactory {
   }
 
   /**
-   * Get random artifact.
+   * Get random artifact which are not unique.
    * @return Random artifact
    */
   public static Artifact getRandomArtifact() {
-    int index = DiceGenerator.getRandom(MAX_ARTIFACT - 1);
+    ArrayList<Artifact> choices = new ArrayList<>();
+    for (int i = 0; i < MAX_ARTIFACT; i++) {
+      Artifact artifact = createArtifact(i);
+      if (!artifact.isUnique()) {
+        choices.add(artifact);
+      }
+    }
+    int index = DiceGenerator.getRandom(choices.size() - 1);
     return createArtifact(index);
   }
 

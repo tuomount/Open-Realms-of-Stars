@@ -1821,19 +1821,19 @@ public class StarMap {
           planet.setPlanetType(PlanetTypes.SILICONWORLD1);
           planet.setRadiationLevel(9);
           planet.setGroundSize(7);
-          planet.setName("Mercury");
+          planet.setName("Mercury I");
         }
         if (planets == 2) {
           planet.setPlanetType(PlanetTypes.CARBONWORLD2);
           planet.setRadiationLevel(6);
           planet.setGroundSize(11);
-          planet.setName("Venus");
+          planet.setName("Venus II");
         }
         if (planets == 3) {
           planet.setPlanetType(PlanetTypes.PLANET_EARTH);
           planet.setRadiationLevel(1);
           planet.setGroundSize(12);
-          planet.setName("Earth");
+          planet.setName("Earth III");
           if (playerIndex != -1) {
             PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
             playerInfo.setElderRealm(config.getPlayerElderRealm(playerIndex));
@@ -1881,7 +1881,7 @@ public class StarMap {
           planet.setPlanetType(PlanetTypes.PLANET_MARS);
           planet.setRadiationLevel(2);
           planet.setGroundSize(8);
-          planet.setName("Mars");
+          planet.setName("Mars IV");
           if (playerIndex == -1 && DiceGenerator.getRandom(99) <= 25) {
             int index = DiceGenerator.getRandom(3);
             switch (index) {
@@ -1929,19 +1929,19 @@ public class StarMap {
             planets + gasGiants, true);
         if (gasGiants == 1) {
           planet.setPlanetType(PlanetTypes.PLANET_JUPITER);
-          planet.setName("Jupiter");
+          planet.setName("Jupiter V");
         }
         if (gasGiants == 2) {
           planet.setPlanetType(PlanetTypes.PLANET_SATURN);
-          planet.setName("Saturn");
+          planet.setName("Saturn VI");
         }
         if (gasGiants == 3) {
           planet.setPlanetType(PlanetTypes.ICEGIANT1);
-          planet.setName("Uranus");
+          planet.setName("Uranus VII");
         }
         if (gasGiants == 4) {
           planet.setPlanetType(PlanetTypes.ICEGIANT2);
-          planet.setName("Neptune");
+          planet.setName("Neptune VIII");
         }
         planetList.add(planet);
         int planetNumber = planetList.size() - 1;

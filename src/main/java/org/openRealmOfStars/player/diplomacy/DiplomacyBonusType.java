@@ -182,7 +182,7 @@ public enum DiplomacyBonusType {
   public static final int MAX_BONUS_TYPE = 35;
 
   /**
-   * Get ShipHullType index
+   * Get DiplomacyBonus index
    * @return int
    */
   public int getIndex() {
@@ -222,6 +222,53 @@ public enum DiplomacyBonusType {
       case FALSE_FLAG: return 32;
       case FREED_CONVICT: return 33;
       case PROMISED_PROTECTION: return 34;
+      default: throw new IllegalArgumentException("No such Diplomacy Bonus"
+          + " Type!");
+    }
+  }
+
+  /**
+   * Get textual description of diplomacy bonus.
+   * @return String
+   */
+  public String getDescription() {
+    switch (this) {
+      case IN_WAR: return "We are at war";
+      case WAR_DECLARTION: return "You have made war declaration";
+      case IN_TRADE_ALLIANCE: return "We have trade alliance";
+      case IN_ALLIANCE: return "We are at alliance";
+      case DIPLOMAT_CAPTURED: return "Diplomat has been captured";
+      case BORDER_CROSSED: return "You have crossed borders";
+      case GIVEN_VALUABLE_FREE: return "You have given gift";
+      case MADE_DEMAND: return "You have demanded something";
+      case DIPLOMATIC_TRADE: return "We have done diplomatic trade";
+      case SAME_RACE: return "We are belong to same space race";
+      case LONG_PEACE: return "We have had long peace";
+      case INSULT: return "You have made insult";
+      case NUKED: return "You have used nuclear weapons";
+      case NOTHING_TO_TRADE: return "You have nothing to trade";
+      case IN_DEFENSIVE_PACT: return "We have defensive pact";
+      case ESPIONAGE_BORDER_CROSS: return "Your spy has crossed borders";
+      case SPY_TRADE: return "We have espionage trading";
+      case DIPLOMACY_BONUS: return "We share same diplomatic views";
+      case TRADE_FLEET: return "Our trade fleet has visited them";
+      case BOARD_PLAYER: return "Board player";
+      case EMBARGO: return "We are at embargo";
+      case LIKED_EMBARGO: return "We have mutual embargo against another realm";
+      case DISLIKED_EMBARGO: return "We are at embargo";
+      case REALM_LOST: return "Realm has lost";
+      case OLYMPICS: return "We participated in same olympics";
+      case DNS_OLYMPICS: return "You did not participate their olympics";
+      case OLYMPICS_EMBARGO: return "We share mutual views on same olympics";
+      case PROMISED_VOTE_YES: return "Promised vote yes";
+      case PROMISED_VOTE_NO: return "Promised vote no";
+      case PROMISE_KEPT: return "You have kept your promise";
+      case PROMISE_BROKEN: return "You have broken your promise";
+      case WAR_DECLARATION_AGAINST_US:
+        return "You have made war declaration against them";
+      case FALSE_FLAG: return "False flag";
+      case FREED_CONVICT: return "You have freed convict just because";
+      case PROMISED_PROTECTION: return "Space pirate have promised protection";
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }

@@ -990,6 +990,8 @@ public class DiplomacyView extends BlackPanel {
     }
     likenessLabel.setText(text);
     likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
+    likenessLabel.setToolTipText(
+        ai.getDiplomacy().generateRelationExplanation(humanIndex));
     NegotiationOffer offer = null;
     if (trade.getFirstOffer() != null) {
       offer = trade.getFirstOffer().getEmbargoOffer();

@@ -704,6 +704,34 @@ public class Diplomacy {
   }
 
   /**
+   * Generate relation explanation
+   * @param humanIndex Human relation index
+   * @return Relation explanation in HTML.
+   */
+  public String generateRelationExplanation(final int humanIndex) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<html><ul>");
+    DiplomacyBonusList list = getDiplomacyList(humanIndex);
+    if (list != null) {
+      for (int i = 0; i < list.getListSize(); i++) {
+        DiplomacyBonus bonus = list.get(i);
+        if (bonus.getBonusValue() != 0) {
+          sb.append("<li>");
+          sb.append(bonus.getType().getDescription());
+          sb.append(" ");
+          if (bonus.getBonusValue() > 0) {
+            sb.append("+");
+          }
+          sb.append(bonus.getBonusValue());
+          sb.append("</li>");
+        }
+      }
+    }
+    sb.append("</html></ul>");
+    return sb.toString();
+  }
+
+  /**
    * Activate defensive pact.
    * @param starMap Starmap for fetching empire names and playerinfos
    * @param attacker Player who is attacking

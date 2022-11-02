@@ -11,7 +11,7 @@ import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017-2020,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -72,6 +72,25 @@ public class DiplomacyBonusListTest {
     assertEquals(DiplomacyBonusType.GIVEN_VALUABLE_FREE, bonus.getType());
     bonus = list.get(2);
     assertEquals(DiplomacyBonusType.LONG_PEACE, bonus.getType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTypes() {
+    DiplomacyBonusList list = new DiplomacyBonusList(1);
+    list.addBonus(DiplomacyBonusType.BORDER_CROSSED, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.BORDER_CROSSED, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.GIVEN_VALUABLE_FREE, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.BORDER_CROSSED, SpaceRace.HUMAN);
+    DiplomacyBonusType[] types = list.getTypes();
+    assertEquals(4, types.length);
+    int value = list.getTotalBonusForType(DiplomacyBonusType.BORDER_CROSSED);
+    assertEquals(-9, value);
   }
 
   @Test

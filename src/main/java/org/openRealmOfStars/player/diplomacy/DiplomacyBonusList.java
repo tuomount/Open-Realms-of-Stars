@@ -10,7 +10,7 @@ import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2020 Tuomo Untinen
+* Copyright (C) 2017-2020,2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -194,6 +194,33 @@ public class DiplomacyBonusList {
     return false;
   }
 
+  /**
+   * Get All types in array.
+   * @return Array of diplomacy bonus types.
+   */
+  public DiplomacyBonusType[] getTypes() {
+    ArrayList<DiplomacyBonusType> types = new ArrayList<>();
+    for (DiplomacyBonus tmp : list) {
+      if (!types.contains(tmp.getType())) {
+        types.add(tmp.getType());
+      }
+    }
+    return types.toArray(new DiplomacyBonusType[types.size()]);
+  }
+  /**
+   * Get Total bonus for certain type
+   * @param type DiplomacyBonusType
+   * @return Total bonus for certain diplomacy bonus type
+   */
+  public int getTotalBonusForType(final DiplomacyBonusType type) {
+    int result = 0;
+    for (DiplomacyBonus tmp : list) {
+      if (tmp.getType() == type) {
+        result = result + tmp.getBonusValue();
+      }
+    }
+    return result;
+  }
   /**
    * Get the number of diplomacy bonuses on the list
    * @return Number of diplomacy bonuses on the list

@@ -713,16 +713,26 @@ public class Diplomacy {
     sb.append("<html><ul>");
     DiplomacyBonusList list = getDiplomacyList(humanIndex);
     if (list != null) {
-      for (int i = 0; i < list.getListSize(); i++) {
-        DiplomacyBonus bonus = list.get(i);
-        if (bonus.getBonusValue() != 0) {
+      DiplomacyBonusType[] types = list.getTypes();
+      for (DiplomacyBonusType type : types) {
+        int value = list.getTotalBonusForType(type);
+        if (value != 0) {
           sb.append("<li>");
-          sb.append(bonus.getType().getDescription());
-          sb.append(" ");
-          if (bonus.getBonusValue() > 0) {
-            sb.append("+");
+          if (type == DiplomacyBonusType.DIPLOMACY_BONUS) {
+            if (value > 0) {
+              sb.append("Your realm has diplomatic bonus");
+            } else {
+              sb.append("Your realm has negative diplomatic bonus");
+            }
+          } else {
+            sb.append(type.getDescription());
           }
-          sb.append(bonus.getBonusValue());
+          sb.append(" ");
+          if (value > 0) {
+            sb.append("+");
+          } else {
+            sb.append("-");
+          }
           sb.append("</li>");
         }
       }

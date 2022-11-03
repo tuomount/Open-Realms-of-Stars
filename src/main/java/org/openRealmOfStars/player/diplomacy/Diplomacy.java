@@ -704,6 +704,44 @@ public class Diplomacy {
   }
 
   /**
+   * Generate relation explanation
+   * @param humanIndex Human relation index
+   * @return Relation explanation in HTML.
+   */
+  public String generateRelationExplanation(final int humanIndex) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("<html><ul>");
+    DiplomacyBonusList list = getDiplomacyList(humanIndex);
+    if (list != null) {
+      DiplomacyBonusType[] types = list.getTypes();
+      for (DiplomacyBonusType type : types) {
+        int value = list.getTotalBonusForType(type);
+        if (value != 0) {
+          sb.append("<li>");
+          if (type == DiplomacyBonusType.DIPLOMACY_BONUS) {
+            if (value > 0) {
+              sb.append("Your realm has diplomatic bonus");
+            } else {
+              sb.append("Your realm has negative diplomatic bonus");
+            }
+          } else {
+            sb.append(type.getDescription());
+          }
+          sb.append(" ");
+          if (value > 0) {
+            sb.append("+");
+          } else {
+            sb.append("-");
+          }
+          sb.append("</li>");
+        }
+      }
+    }
+    sb.append("</html></ul>");
+    return sb.toString();
+  }
+
+  /**
    * Activate defensive pact.
    * @param starMap Starmap for fetching empire names and playerinfos
    * @param attacker Player who is attacking

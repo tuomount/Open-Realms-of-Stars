@@ -211,6 +211,10 @@ public class ShipInteriorPanel extends JPanel {
       interior = GuiStatics.IMAGE_INTERIOR_ALTEIRIAN;
       yOffset = 25;
     }
+    if (race == SpaceRace.ALONIANS) {
+      interior = GuiStatics.IMAGE_INTERIOR_ALONIAN;
+      yOffset = 25;
+    }
     g.drawImage(interior,
         this.getWidth() / 2 - interior.getWidth() / 2,
         this.getHeight() / 2 - interior.getHeight() / 2,

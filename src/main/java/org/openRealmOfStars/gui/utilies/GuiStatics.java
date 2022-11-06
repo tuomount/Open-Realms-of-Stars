@@ -1672,6 +1672,12 @@ public final class GuiStatics {
   public static final BufferedImage IMAGE_INTERIOR_ALTEIRIAN =
       IOUtilities.loadImage(GuiStatics.class.getResource(
           "/resources/images/alteirian_bridge.png"));
+  /**
+   * Ship Alonian bridge interior
+   */
+  public static final BufferedImage IMAGE_INTERIOR_ALONIAN =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/alonian_bridge.png"));
 
   /**
    * Get text width for certain font

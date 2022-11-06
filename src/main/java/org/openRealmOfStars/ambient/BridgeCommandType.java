@@ -116,7 +116,15 @@ public enum BridgeCommandType {
   /**
    * Blinking orange light
    */
-  ORANGE_BLINK;
+  ORANGE_BLINK,
+  /**
+   * Orange Blue
+   */
+  ORANGE_BLUE,
+  /**
+   * GreyBlue
+   */
+  GREYBLUE;
 
 
 }

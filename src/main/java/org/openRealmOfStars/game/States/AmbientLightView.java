@@ -387,7 +387,8 @@ public class AmbientLightView extends BlackPanel
         Bridge.EFFECT_BRIGHT_CYAN, Bridge.EFFECT_BLUEISH_WHITE,
         Bridge.EFFECT_DARK_ORANGE, Bridge.EFFECT_DARK_RED,
         Bridge.EFFECT_PURPLE_DREAM, Bridge.EFFECT_FADE_IN,
-        Bridge.EFFECT_ORANGE_BLINK};
+        Bridge.EFFECT_ORANGE_BLINK, Bridge.EFFECT_ORANGE_BLUE,
+        Bridge.EFFECT_GREY_BLUE};
     effectSelection = new JComboBox<>(effectList);
     effectSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     effectSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
@@ -529,6 +530,9 @@ public class AmbientLightView extends BlackPanel
         if (effectName.equals(Bridge.EFFECT_BLUEISH_WHITE)) {
           bridge.setNextCommand(BridgeCommandType.BLUEISH_WHITE);
         }
+        if (effectName.equals(Bridge.EFFECT_GREY_BLUE)) {
+          bridge.setNextCommand(BridgeCommandType.GREYBLUE);
+        }
         if (effectName.equals(Bridge.EFFECT_DARK_ORANGE)) {
           bridge.setNextCommand(BridgeCommandType.DARK_ORANGE);
         }
@@ -543,6 +547,9 @@ public class AmbientLightView extends BlackPanel
         }
         if (effectName.equals(Bridge.EFFECT_ORANGE_BLINK)) {
           bridge.setNextCommand(BridgeCommandType.ORANGE_BLINK);
+        }
+        if (effectName.equals(Bridge.EFFECT_ORANGE_BLUE)) {
+          bridge.setNextCommand(BridgeCommandType.ORANGE_BLUE);
         }
       }
     }

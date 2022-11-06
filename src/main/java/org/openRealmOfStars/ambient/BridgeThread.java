@@ -135,6 +135,9 @@ public class BridgeThread extends Thread {
       } else if (command == BridgeCommandType.BLUEISH_WHITE) {
         bridge.setNextCommand(null);
         bridge.effectBlueishWhiteLight();
+      } else if (command == BridgeCommandType.GREYBLUE) {
+        bridge.setNextCommand(null);
+        bridge.effectGreyBlueLight();
       } else if (command == BridgeCommandType.DARK_ORANGE) {
         bridge.setNextCommand(null);
         bridge.effectDarkOrangeLight();
@@ -180,6 +183,8 @@ public class BridgeThread extends Thread {
         }
       } else if (command == BridgeCommandType.ORANGE_BLINK) {
         bridge.effectBlinkOrange();
+      } else if (command == BridgeCommandType.ORANGE_BLUE) {
+        bridge.effectOrangeBlue();
       } else if (command == BridgeCommandType.EXIT) {
         bridge.setNextCommand(null);
         endThread = true;

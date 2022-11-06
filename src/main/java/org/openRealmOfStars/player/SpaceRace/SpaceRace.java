@@ -1511,15 +1511,13 @@ public enum SpaceRace {
     case LITHORIANS:
       return BridgeCommandType.DARKEST;
     case ALTEIRIANS:
-      //FIXME: Check this when bridge image has been done
-      return BridgeCommandType.WARM_WHITE;
+      return BridgeCommandType.GREYBLUE;
     case SMAUGIRIANS:
       return BridgeCommandType.ORANGE_BLINK;
     case SYNTHDROIDS:
       return BridgeCommandType.WARM_WHITE;
     case ALONIANS:
-      //FIXME: Check this when bridge image has been done
-      return BridgeCommandType.WARM_WHITE;
+      return BridgeCommandType.ORANGE_BLUE;
     default:
       return BridgeCommandType.WARM_WHITE;
     }

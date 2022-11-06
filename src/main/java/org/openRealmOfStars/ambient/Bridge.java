@@ -94,6 +94,10 @@ public class Bridge {
    */
   public static final String EFFECT_BLUEISH_WHITE = "Blueish white";
   /**
+   * Effect Grey blue light
+   */
+  public static final String EFFECT_GREY_BLUE = "GreyBlue";
+  /**
    * Effect dark orange
    */
   public static final String EFFECT_DARK_ORANGE = "Dark orange";
@@ -113,6 +117,10 @@ public class Bridge {
    * Effect orange blink
    */
   public static final String EFFECT_ORANGE_BLINK = "Orange Blink";
+  /**
+   * Effect orange blink
+   */
+  public static final String EFFECT_ORANGE_BLUE = "Orange Blue";
   /**
    * Name for contact Hue bridge.
    */
@@ -520,6 +528,17 @@ public class Bridge {
     makeLightEffect(light, 46000, 80, 255);
   }
   /**
+   * Changes all light for grey blue light.
+   */
+  public void effectGreyBlueLight() {
+    Light light = getLeftLight();
+    makeLightEffect(light, 46000, 128, 230);
+    light = getRightLight();
+    makeLightEffect(light, 46000, 128, 230);
+    light = getCenterLight();
+    makeLightEffect(light, 46000, 255, 255);
+  }
+  /**
    * Changes all light for Purple dream light.
    */
   public void effectPurpleDreamLight() {
@@ -697,6 +716,40 @@ public class Bridge {
       } else {
         makeLightEffect(light, 8500, 200, bright);
       }
+    }
+  }
+
+  /**
+   * Changes all dark orange light and blue in middle.
+   */
+  public void effectOrangeBlue() {
+    int dark = 0;
+    int bright = 240;
+    if (intense == 4) {
+      dark = 20;
+      bright = 235;
+    }
+    if (intense == 3) {
+      dark = 30;
+      bright = 235;
+    }
+    if (intense == 2) {
+      dark = 60;
+      bright = 235;
+    }
+    if (intense == 1) {
+      dark = 80;
+      bright = 235;
+    }
+    Light light = getLeftLight();
+    makeLightEffect(light, 8000, 230, bright);
+    light = getRightLight();
+    makeLightEffect(light, 9000, 230, bright);
+    light = getCenterLight();
+    if (DiceGenerator.getRandom(100) < 2) {
+      makeLightEffect(light, 46000, 230, dark);
+    } else {
+      makeLightEffect(light, 46000, 230, bright);
     }
   }
 

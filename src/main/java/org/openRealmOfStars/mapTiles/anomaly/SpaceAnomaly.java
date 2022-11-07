@@ -555,6 +555,12 @@ public class SpaceAnomaly {
                   Icons.getIconByName(Icons.ICON_TUTORIAL));
               info.getMsgList().addNewMessage(msg);
             }
+            tutorialText = Game.getTutorial().showTutorialText(45);
+            if (tutorialText != null) {
+              Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              info.getMsgList().addNewMessage(msg);
+            }
           }
           Tile station = Tiles.getTileByName(TileNames.NEWSTATION1);
           map.setTile(fleet.getX(), fleet.getY(), station);
@@ -572,6 +578,12 @@ public class SpaceAnomaly {
             if (Game.getTutorial() != null  && info.isHuman()
                 && map.isTutorialEnabled()) {
               String tutorialText = Game.getTutorial().showTutorialText(15);
+              if (tutorialText != null) {
+                Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
+              tutorialText = Game.getTutorial().showTutorialText(45);
               if (tutorialText != null) {
                 Message msg = new Message(MessageType.INFORMATION, tutorialText,
                     Icons.getIconByName(Icons.ICON_TUTORIAL));

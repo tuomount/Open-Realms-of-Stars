@@ -291,6 +291,15 @@ public class SpaceAnomaly {
               board, StarMap.ENEMY_MONSTER);
           result.setText(monster.getBiggestShip().getName()
               + " was found in the nebulae. Battle begins...");
+          if (Game.getTutorial() != null  && info.isHuman()
+              && map.isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(36);
+            if (tutorialText != null) {
+              Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              info.getMsgList().addNewMessage(msg);
+            }
+          }
           Combat fight = new Combat(fleet, monster, info, board);
           result.setCombat(fight);
           break;

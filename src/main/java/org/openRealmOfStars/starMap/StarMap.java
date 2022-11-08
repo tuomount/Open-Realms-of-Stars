@@ -4233,6 +4233,18 @@ public class StarMap {
               return;
             }
           }
+          if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
+            // High radiation
+            tutorialText = Game.getTutorial().showTutorialText(23);
+            if (tutorialText != null) {
+              Message msg = new Message(MessageType.PLANETARY, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(new Coordinate(sx, sy));
+              msg.setMatchByString(planet.getName());
+              info.getMsgList().addNewMessage(msg);
+              return;
+            }
+          }
         }
       }
       if (square.getType() == SquareInfo.TYPE_GAS_PLANET) {

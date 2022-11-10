@@ -3616,6 +3616,10 @@ public class Planet {
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
               Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
           msg.setCoordinate(getCoordinate());
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          imageInst.addImage(ImageInstruction.ARTIFACT_ON_PLANET);
+          msg.setImageInstructions(imageInst.build());
           planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
           planetOwnerInfo.getArtifactLists().addDiscoveredArtifact(
               ArtifactFactory.getRandomArtifact());
@@ -3667,25 +3671,10 @@ public class Planet {
             imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             imageInst.addImage(ImageInstruction.ARID);
           }
-          if (event == PlanetaryEvent.LUSH_VEGETATION) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.LUSH_VEGETATION);
-          }
-          if (event == PlanetaryEvent.ANCIENT_ARTIFACT) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.ARTIFACT_ON_PLANET);
-          }
           if (event == PlanetaryEvent.DESERT) {
             imageInst = new ImageInstruction();
             imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             imageInst.addImage(ImageInstruction.DESERT);
-          }
-          if (event == PlanetaryEvent.PARADISE) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.PARADISE);
           }
           event = PlanetaryEvent.NONE;
           msgText.append(building.getName());
@@ -3700,18 +3689,26 @@ public class Planet {
         }
       } else {
         if (event == PlanetaryEvent.LUSH_VEGETATION) {
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          imageInst.addImage(ImageInstruction.LUSH_VEGETATION);
           msgText.append(" that planet has lot's of edible vegetation. ");
           msgText.append("This gives one extra food per turn.");
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
               Icons.getIconByName(Icons.ICON_FARM));
           msg.setCoordinate(getCoordinate());
+          msg.setImageInstructions(imageInst.build());
           planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
         } else if (event == PlanetaryEvent.PARADISE) {
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          imageInst.addImage(ImageInstruction.PARADISE);
           msgText.append(" that planet is true paradise. ");
           msgText.append("This gives two extra food per turn.");
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
               Icons.getIconByName(Icons.ICON_FARM));
           msg.setCoordinate(getCoordinate());
+          msg.setImageInstructions(imageInst.build());
           planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
         } else if (event == PlanetaryEvent.METAL_RICH_SURFACE) {
           msgText.append(" that planet's surface is full of metal ore. ");

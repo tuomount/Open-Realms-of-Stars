@@ -3661,21 +3661,6 @@ public class Planet {
             imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             imageInst.addImage(ImageInstruction.BLACK_MONOLITH);
           }
-          if (event == PlanetaryEvent.MOLTEN_LAVA) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.MOLTEN_LAVA);
-          }
-          if (event == PlanetaryEvent.ARID) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.ARID);
-          }
-          if (event == PlanetaryEvent.DESERT) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.DESERT);
-          }
           event = PlanetaryEvent.NONE;
           msgText.append(building.getName());
           msgText.append(". Colonists has taken it in use now.");
@@ -3721,7 +3706,44 @@ public class Planet {
           imageInst.addImage(ImageInstruction.METAL_RICH_SURFACE);
           msg.setImageInstructions(imageInst.build());
           planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+        } else  if (event == PlanetaryEvent.MOLTEN_LAVA) {
+          msgText.append(" that there is massive amount of molten lava ");
+          msgText.append("on planet surface. This gives one extra metal and"
+              + " production per turn but adds also unhappiness of people.");
+          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+              Icons.getIconByName(Icons.ICON_METAL_ORE));
+          msg.setCoordinate(getCoordinate());
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          imageInst.addImage(ImageInstruction.MOLTEN_LAVA);
+          msg.setImageInstructions(imageInst.build());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+        } else if (event == PlanetaryEvent.ARID) {
+          msgText.append(" that planet is arid. Naturally growing food is");
+          msgText.append(" is challenging to find. This planet produces only"
+              + " one food without alterations.");
+          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+              Icons.getIconByName(Icons.ICON_FARM));
+          msg.setCoordinate(getCoordinate());
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          imageInst.addImage(ImageInstruction.ARID);
+          msg.setImageInstructions(imageInst.build());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+        } else if (event == PlanetaryEvent.DESERT) {
+          msgText.append(" that planet is dry and full of desert. There is no"
+              + " food growing on planet surface. This planet does not provide"
+              + " any food without alterations.");
+          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+              Icons.getIconByName(Icons.ICON_FARM));
+          msg.setCoordinate(getCoordinate());
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          imageInst.addImage(ImageInstruction.DESERT);
+          msg.setImageInstructions(imageInst.build());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
         }
+
       }
     }
   }

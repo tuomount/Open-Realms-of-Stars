@@ -3453,6 +3453,16 @@ public class Game implements ActionListener {
           && shipDesignView != null && shipDesignView.isDesignOK()) {
         SoundPlayer.playMenuSound();
         shipDesignView.keepDesign();
+        if (Game.getTutorial() != null
+            && players.getCurrentPlayerInfo().isHuman()
+            && starMap.isTutorialEnabled()) {
+          String tutorialText = Game.getTutorial().showTutorialText(85);
+          if (tutorialText != null) {
+            Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                Icons.getIconByName(Icons.ICON_TUTORIAL));
+            players.getCurrentPlayerInfo().getMsgList().addNewMessage(msg);
+          }
+        }
         changeGameState(GameState.VIEWSHIPS);
         return;
       }

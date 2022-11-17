@@ -11,7 +11,6 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
@@ -20,6 +19,7 @@ import org.openRealmOfStars.gui.ListRenderers.LeaderListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
@@ -76,6 +76,10 @@ public class LeaderPoolView extends BlackPanel
    */
   private JList<Leader> leaderList;
   /**
+   * SpaceLabel for realm credits.
+   */
+  private SpaceLabel credits;
+  /**
    * Info Text for Leader
    */
   private InfoTextArea infoText;
@@ -128,6 +132,13 @@ public class LeaderPoolView extends BlackPanel
     activeFleet = null;
     activePlanet = null;
     leadersInPool = buildLeaderPool();
+    InfoPanel top = new InfoPanel();
+    top.setTitle("Leader recruiment");
+    top.setLayout(new BorderLayout());
+    leaderCost = LeaderUtility.leaderRecruitCost(info);
+    credits = new SpaceLabel("Realm credits: " + player.getTotalCredits()
+        + " Recruit costs: " + leaderCost);
+    top.add(credits, BorderLayout.CENTER);
     InfoPanel base = new InfoPanel();
     base.setTitle("Leaders");
     this.setLayout(new BorderLayout());
@@ -178,48 +189,12 @@ public class LeaderPoolView extends BlackPanel
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.CENTER);
     // Add panels to base
+    this.add(top, BorderLayout.NORTH);
     this.add(bottomPanel, BorderLayout.SOUTH);
     this.add(base, BorderLayout.WEST);
     this.add(center, BorderLayout.CENTER);
   }
 
-  /**
-   * Get Leader heirs
-   * @param leader Leader whose heirs are being searched
-   * @param leaders List of all leaders
-   * @return List of heirs
-   */
-  private static Leader[] getHeirs(final Leader leader,
-      final Leader[] leaders) {
-    ArrayList<Leader> heirs = new ArrayList<>();
-    for (int i = 0; i < leaders.length; i++) {
-      if (leaders[i].getParent() == leader) {
-        heirs.add(leaders[i]);
-      }
-    }
-    return heirs.toArray(new Leader[heirs.size()]);
-  }
-  /**
-   * Searches recursive for heirs and addes them to node.
-   * @param node Tree node where to add.
-   * @param leader Leader whose heirs are being searched.
-   * @param leaders List of all leaders.
-   * @return Tree node with leader and heirs.
-   */
-  private DefaultMutableTreeNode searchForHeirs(
-      final DefaultMutableTreeNode node, final Leader leader,
-      final Leader[] leaders) {
-    DefaultMutableTreeNode result = node;
-    if (result == null) {
-      result = new DefaultMutableTreeNode(leader);
-    }
-    Leader[] heirs = getHeirs(leader, leaders);
-    for (Leader heir : heirs) {
-      DefaultMutableTreeNode heirNode = searchForHeirs(null, heir, leaders);
-      result.add(heirNode);
-    }
-    return result;
-  }
   /**
    * Build Leader pool for recruit
    * @return Leader pool for recruit
@@ -304,9 +279,8 @@ public class LeaderPoolView extends BlackPanel
    */
   private Leader getSelectedLeaderFromList() {
     Leader leader = null;
-    if (leaderList.getSelectedValue() != null
-        && leaderList.getSelectedValue() instanceof Leader) {
-        leader = (Leader) leaderList.getSelectedValue();
+    if (leaderList.getSelectedValue() != null) {
+      leader = leaderList.getSelectedValue();
     }
     return leader;
   }
@@ -315,30 +289,16 @@ public class LeaderPoolView extends BlackPanel
    */
   public void updatePanel() {
     Leader leader = getSelectedLeaderFromList();
+    boolean planetFound = false;
     if (leader != null) {
-      if (leader.getJob() == Job.RULER) {
-        for (Planet planet : map.getPlanetList()) {
-          if (planet.getPlanetPlayerInfo() == player) {
-            map.setDrawPos(planet.getX(), planet.getY());
-            break;
-          }
+      for (Planet planet : map.getPlanetList()) {
+        if (leader.getHomeworld().equalsIgnoreCase(planet.getName())) {
+          map.setDrawPos(planet.getX(), planet.getY());
+          planetFound = true;
+          break;
         }
-      } else if (leader.getJob() == Job.GOVERNOR) {
-        for (Planet planet : map.getPlanetList()) {
-          if (planet.getGovernor() == leader) {
-            map.setDrawPos(planet.getX(), planet.getY());
-            break;
-          }
-        }
-      } else if (leader.getJob() == Job.COMMANDER) {
-        for (int i = 0; i < player.getFleets().getNumberOfFleets(); i++) {
-          Fleet fleet = player.getFleets().getByIndex(i);
-          if (fleet.getCommander() == leader) {
-            map.setDrawPos(fleet.getX(), fleet.getY());
-            break;
-          }
-        }
-      } else {
+      }
+      if (!planetFound) {
         map.setDrawPos(map.getMaxX() / 2, map.getMaxY() / 2);
       }
       mapPanel.drawMap(map);

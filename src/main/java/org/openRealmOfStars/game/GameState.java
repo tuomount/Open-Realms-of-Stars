@@ -172,6 +172,10 @@ public enum GameState {
   /**
    * View where human player can select next galactic voting.
    */
-  VOTING_SELECTION_VIEW
+  VOTING_SELECTION_VIEW,
+  /**
+   * View where new leaders are recruited.
+   */
+  LEADER_RECRUIT_POOL
 
 }

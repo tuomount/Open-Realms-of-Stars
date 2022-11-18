@@ -184,8 +184,8 @@ public class LeaderPoolView extends BlackPanel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
-    SpaceButton btn = new SpaceButton("Back to star map",
-        GameCommands.COMMAND_VIEW_STARMAP);
+    SpaceButton btn = new SpaceButton("Back to leaders",
+        GameCommands.COMMAND_VIEW_LEADERS);
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.CENTER);
     // Add panels to base

@@ -24,7 +24,6 @@ import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
@@ -104,18 +103,6 @@ public class LeaderPoolView extends BlackPanel
    */
   private SpaceButton recruitBtn;
   /**
-   * Set leader button.
-   */
-  private SpaceButton setLeaderBtn;
-  /**
-   * Active planet from planet view
-   */
-  private Planet activePlanet;
-  /**
-   * Active fleet from fleet view
-   */
-  private Fleet activeFleet;
-  /**
    * Local version of realm's leader pool for recruits.
    */
   private Leader[] leadersInPool;
@@ -129,8 +116,6 @@ public class LeaderPoolView extends BlackPanel
       final ActionListener listener) {
     player = info;
     map = starMap;
-    activeFleet = null;
-    activePlanet = null;
     leadersInPool = buildLeaderPool();
     InfoPanel top = new InfoPanel();
     top.setTitle("Leader recruiment");
@@ -156,9 +141,9 @@ public class LeaderPoolView extends BlackPanel
     leaderList.setBackground(Color.BLACK);
     base.add(scroll);
     scroll.setAlignmentX(CENTER_ALIGNMENT);
-    recruitBtn = new SpaceButton("Recruit leader",
-        GameCommands.COMMAND_RECRUIT_LEADER);
     leaderCost = LeaderUtility.leaderRecruitCost(info);
+    recruitBtn = new SpaceButton("Recruit leader " + leaderCost + " credits",
+        GameCommands.COMMAND_RECRUIT_LEADER);
     trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
         map.getPlanetList(), player);
     recruitBtn.addActionListener(listener);
@@ -173,10 +158,6 @@ public class LeaderPoolView extends BlackPanel
     scroll = new JScrollPane(infoText);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     center.add(scroll, BorderLayout.WEST);
-    setLeaderBtn = new SpaceButton("Assign leader",
-        GameCommands.COMMAND_ASSIGN_LEADER);
-    setLeaderBtn.addActionListener(listener);
-    center.add(setLeaderBtn, BorderLayout.SOUTH);
     updateButtonToolTips();
     mapPanel = new MapPanel(false);
     center.add(mapPanel, BorderLayout.CENTER);
@@ -222,31 +203,18 @@ public class LeaderPoolView extends BlackPanel
     return leaders.toArray(new Leader[leaders.size()]);
   }
   /**
-   * Set active planet.
-   * @param planet Planet where to set leader
-   */
-  public void setPlanet(final Planet planet) {
-    activePlanet = planet;
-  }
-  /**
-   * Set active fleet.
-   * @param fleet Fleet where to set leader
-   */
-  public void setFleet(final Fleet fleet) {
-    activeFleet = fleet;
-  }
-  /**
    * Update button tool tips.
    */
   private void updateButtonToolTips() {
     if (trainingPlanet != null && leaderCost <= player.getTotalCredits()) {
       recruitBtn.setToolTipText("<html>Recruit new leader with " + leaderCost
-          + " credits.<br> This will also use one population from planet "
-          + trainingPlanet.getName() + "."
+          + " credits.<br> This will also use one population from that "
+          + " planet where leader is from."
           + "</html>");
     } else if (trainingPlanet == null) {
       recruitBtn.setToolTipText("<html>Your realm does not have more than"
-          + "<br> 4 population on any of your planets."
+          + "<br>" + player.getRace().getMinimumPopulationForLeader()
+          + " population on any of your planets."
           + "</html>");
       recruitBtn.setEnabled(false);
     } else if (leaderCost > player.getTotalCredits()) {
@@ -256,21 +224,6 @@ public class LeaderPoolView extends BlackPanel
           + " credits."
           + "</html>");
       recruitBtn.setEnabled(false);
-    }
-    if (activeFleet != null || activePlanet != null) {
-      if (activeFleet != null) {
-        setLeaderBtn.setToolTipText("<html>"
-            + "Assign current leader as a commander to "
-            + activeFleet.getName() + ".</html>");
-      }
-      if (activePlanet != null) {
-        setLeaderBtn.setToolTipText("<html>"
-            + "Assign current leader as a govennor to "
-            + activePlanet.getName() + ".</html>");
-      }
-      setLeaderBtn.setEnabled(true);
-    } else {
-      setLeaderBtn.setEnabled(false);
     }
   }
   /**
@@ -390,41 +343,17 @@ public class LeaderPoolView extends BlackPanel
    */
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_RECRUIT_LEADER)
-        && player.getTotalCredits() >= leaderCost) {
-      LeaderUtility.recruiteLeader(map.getPlanetList(), player);
-// TODO
-//      TreeModel model = new DefaultTreeModel(buildTreeOfLeaders());
-//      leaderTree.setModel(model);
-      leaderCost = LeaderUtility.leaderRecruitCost(player);
-      trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
-          map.getPlanetList(), player);
+        && player.getTotalCredits() >= leaderCost
+        && leaderList.getSelectedValue() != null) {
+      Leader leader = leaderList.getSelectedValue();
+      leader.assignJob(Job.UNASSIGNED, player);
+      player.getLeaderPool().add(leader);
+      Planet planet = map.getPlanetByName(leader.getHomeworld());
+      if (planet != null) {
+        planet.takeColonist();
+      }
       SoundPlayer.playMenuSound();
       updatePanel();
-    }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ASSIGN_LEADER)) {
-      boolean soundPlayed = false;
-      Leader leader = getSelectedLeaderFromList();
-      if (leader != null && (leader.getTimeInJob() > 19
-          || leader.getJob() == Job.UNASSIGNED)) {
-        Object target = null;
-        if (activePlanet != null) {
-          target = activePlanet;
-        }
-        if (activeFleet != null) {
-          target = activeFleet;
-        }
-        soundPlayed = LeaderUtility.assignLeader(leader, player,
-            map.getPlanetList(), target);
-        // TODO
-        // TreeModel model = new DefaultTreeModel(buildTreeOfLeaders());
-        // leaderTree.setModel(model);
-        updatePanel();
-      }
-      if (soundPlayed) {
-        SoundPlayer.playMenuSound();
-      } else {
-        SoundPlayer.playMenuDisabled();
-      }
     }
   }
 

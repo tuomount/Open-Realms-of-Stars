@@ -458,17 +458,6 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
    * @param arg0 Action event to handle
    */
   public void handleActions(final ActionEvent arg0) {
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_RECRUIT_LEADER)
-        && player.getTotalCredits() >= leaderCost) {
-      LeaderUtility.recruiteLeader(map.getPlanetList(), player);
-      TreeModel model = new DefaultTreeModel(buildTreeOfLeaders());
-      leaderTree.setModel(model);
-      leaderCost = LeaderUtility.leaderRecruitCost(player);
-      trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
-          map.getPlanetList(), player);
-      SoundPlayer.playMenuSound();
-      updatePanel();
-    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ASSIGN_LEADER)) {
       boolean soundPlayed = false;
       Leader leader = getSelectedLeaderFromTree();

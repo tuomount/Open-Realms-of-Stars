@@ -2,10 +2,12 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -79,6 +81,10 @@ public class LeaderPoolView extends BlackPanel
    */
   private SpaceLabel credits;
   /**
+   * Planet population
+   */
+  private SpaceLabel planetPopulation;
+  /**
    * Info Text for Leader
    */
   private InfoTextArea infoText;
@@ -119,11 +125,14 @@ public class LeaderPoolView extends BlackPanel
     leadersInPool = buildLeaderPool();
     InfoPanel top = new InfoPanel();
     top.setTitle("Leader recruiment");
-    top.setLayout(new BorderLayout());
+    top.setLayout(new BoxLayout(top, BoxLayout.Y_AXIS));
     leaderCost = LeaderUtility.leaderRecruitCost(info);
     credits = new SpaceLabel("Realm credits: " + player.getTotalCredits()
         + " Recruit costs: " + leaderCost);
     top.add(credits, BorderLayout.CENTER);
+    top.add(Box.createRigidArea(new Dimension(5, 5)));
+    planetPopulation = new SpaceLabel("Alpha Centauri II - Population: 12");
+    top.add(planetPopulation);
     InfoPanel base = new InfoPanel();
     base.setTitle("Leaders");
     this.setLayout(new BorderLayout());
@@ -247,6 +256,8 @@ public class LeaderPoolView extends BlackPanel
       for (Planet planet : map.getPlanetList()) {
         if (leader.getHomeworld().equalsIgnoreCase(planet.getName())) {
           map.setDrawPos(planet.getX(), planet.getY());
+          planetPopulation.setText(planet.getName() + " - Population:"
+          + planet.getTotalPopulation());
           planetFound = true;
           break;
         }
@@ -272,6 +283,9 @@ public class LeaderPoolView extends BlackPanel
       sb.append("\n");
       sb.append(LeaderUtility.createBioForLeader(leader, player));
       infoText.setText(sb.toString());
+    }
+    if (!planetFound) {
+      planetPopulation.setText("No home planet yet...");
     }
     updateButtonToolTips();
     this.repaint();
@@ -360,6 +374,6 @@ public class LeaderPoolView extends BlackPanel
 
   @Override
   public void valueChanged(final ListSelectionEvent e) {
-    // TODO Auto-generated method stub
+    updatePanel();
   }
 }

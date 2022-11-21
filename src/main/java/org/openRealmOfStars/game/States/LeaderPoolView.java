@@ -206,7 +206,10 @@ public class LeaderPoolView extends BlackPanel
         Leader leader = LeaderUtility.createLeader(player, planet, level);
         leader.setExperience(xp);
         leader.assignJob(Job.UNASSIGNED, player);
-        leaders.add(leader);
+        if (planet.getTotalPopulation() >= player.getRace()
+              .getMinimumPopulationForLeader()) {
+          leaders.add(leader);
+        }
       }
     }
     return leaders.toArray(new Leader[leaders.size()]);

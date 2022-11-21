@@ -191,6 +191,11 @@ public class PlayerInfo {
   private ArrayList<Leader> leaderPool;
 
   /**
+   * All the leaders realm has to recruit.
+   */
+  private ArrayList<Leader> leaderRecruitPool;
+
+  /**
    * Ruler of the realm.
    */
   private Leader ruler;
@@ -283,6 +288,7 @@ public class PlayerInfo {
     fleets = new FleetList();
     elderRealm = false;
     leaderPool = new ArrayList<>();
+    leaderRecruitPool = new ArrayList<>();
     artifactLists = new ArtifactLists();
     ruler = null;
     color = PlayerColor.getByIndex(index);
@@ -1059,6 +1065,7 @@ public class PlayerInfo {
     totalCredits = dis.readInt();
     attitude = Attitude.getTypeByIndex(dis.read());
     leaderPool = new ArrayList<>();
+    leaderRecruitPool = new ArrayList<>();
     int poolSize = dis.readInt();
     for (int i = 0; i < poolSize; i++) {
       Leader leader = new Leader(dis);
@@ -2497,6 +2504,28 @@ public class PlayerInfo {
     return leaderPool;
   }
 
+  /**
+   * Get leader recruit pool.
+   * @return Array list of all leader for recruit
+   */
+  public ArrayList<Leader> getLeaderRecruitPool() {
+    return leaderRecruitPool;
+  }
+
+  /**
+   * Add new recruit for recruit leader pool.
+   * @param newRecruit Leader
+   */
+  public void addRecruitLeader(final Leader newRecruit) {
+    leaderRecruitPool.add(newRecruit);
+  }
+  /**
+   * Remove recruit from recruit leader pool.
+   * @param newRecruit Leader
+   */
+  public void removeRecruitLeader(final Leader newRecruit) {
+    leaderRecruitPool.remove(newRecruit);
+  }
   /**
    * Get Leader index.
    * @param leader Leader which index is searched for

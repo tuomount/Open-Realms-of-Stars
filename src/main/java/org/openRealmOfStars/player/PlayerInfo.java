@@ -1066,7 +1066,14 @@ public class PlayerInfo {
     attitude = Attitude.getTypeByIndex(dis.read());
     leaderPool = new ArrayList<>();
     leaderRecruitPool = new ArrayList<>();
+    // Reads leader recruit pool
     int poolSize = dis.readInt();
+    for (int i = 0; i < poolSize; i++) {
+      Leader leader = new Leader(dis);
+      leaderRecruitPool.add(leader);
+    }
+    // Read leader pool
+    poolSize = dis.readInt();
     for (int i = 0; i < poolSize; i++) {
       Leader leader = new Leader(dis);
       leaderPool.add(leader);
@@ -1179,6 +1186,11 @@ public class PlayerInfo {
     dos.writeInt(warFatigue);
     dos.writeInt(totalCredits);
     dos.writeByte(attitude.getIndex());
+    dos.writeInt(leaderRecruitPool.size());
+    for (int i = 0; i < leaderRecruitPool.size(); i++) {
+      Leader leader = leaderRecruitPool.get(i);
+      leader.saveLeader(dos, this);
+    }
     dos.writeInt(leaderPool.size());
     for (int i = 0; i < leaderPool.size(); i++) {
       Leader leader = leaderPool.get(i);

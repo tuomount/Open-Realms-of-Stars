@@ -212,7 +212,20 @@ public class LeaderPoolView extends BlackPanel
         }
       }
     }
-    return leaders.toArray(new Leader[leaders.size()]);
+    ArrayList<Leader> currentLeaders = player.getLeaderRecruitPool();
+    for (Leader leader : leaders) {
+      boolean leaderFromPlanetAlready = false;
+      for (Leader comparison : currentLeaders) {
+        if (leader.getHomeworld().equals(comparison.getHomeworld())) {
+          leaderFromPlanetAlready = true;
+        }
+      }
+      if (!leaderFromPlanetAlready) {
+        player.addRecruitLeader(leader);
+      }
+    }
+    return player.getLeaderRecruitPool().toArray(
+        new Leader[player.getLeaderRecruitPool().size()]);
   }
   /**
    * Update button tool tips.

@@ -3749,12 +3749,6 @@ public class Game implements ActionListener {
         changeGameState(GameState.STARMAP);
         return;
       }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_RECRUIT_LEADER)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.LEADER_RECRUIT_POOL);
-        return;
-      }
       leaderView.handleActions(arg0);
       return;
     }

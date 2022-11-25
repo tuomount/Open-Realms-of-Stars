@@ -47,7 +47,6 @@ import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.GalaxyCreationView;
 import org.openRealmOfStars.game.States.HelpView;
 import org.openRealmOfStars.game.States.HistoryView;
-import org.openRealmOfStars.game.States.LeaderPoolView;
 import org.openRealmOfStars.game.States.LeaderView;
 import org.openRealmOfStars.game.States.LoadGameView;
 import org.openRealmOfStars.game.States.MainMenu;
@@ -355,10 +354,6 @@ public class Game implements ActionListener {
    * Leader view for showing all recruited leaders
    */
   private LeaderView leaderView;
-  /**
-   * Leader view for showing all recruitable leaders
-   */
-  private LeaderPoolView leaderPoolView;
   /**
    * Planet List view for showing all planets realm has
    */
@@ -1626,15 +1621,6 @@ public class Game implements ActionListener {
     this.updateDisplay(leaderView);
     leaderView.updatePanel();
   }
-  /**
-   * View Leader pool view.
-   */
-  public void viewLeaderPool() {
-    leaderPoolView = new LeaderPoolView(starMap.getCurrentPlayerInfo(),
-        starMap, this);
-    this.updateDisplay(leaderPoolView);
-    leaderPoolView.updatePanel();
-  }
 
   /**
    * Change game state so that focus is also changed to target message
@@ -1742,11 +1728,6 @@ public class Game implements ActionListener {
       } else {
         viewLeaders(focusMessage);
       }
-      break;
-    }
-    case LEADER_RECRUIT_POOL: {
-      setBridgeCommand(BridgeCommandType.SPACE_CONSOLE);
-      viewLeaderPool();
       break;
     }
     case NEWS_CORP_VIEW: {
@@ -3750,17 +3731,6 @@ public class Game implements ActionListener {
         return;
       }
       leaderView.handleActions(arg0);
-      return;
-    }
-    if (gameState == GameState.LEADER_RECRUIT_POOL && leaderPoolView != null) {
-      // Handle Leader Pool View
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_LEADERS)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.LEADER_VIEW);
-        return;
-      }
-      leaderPoolView.handleActions(arg0);
       return;
     }
     if (gameState == GameState.DIPLOMACY_VIEW && diplomacyView != null) {

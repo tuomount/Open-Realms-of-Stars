@@ -2810,12 +2810,31 @@ public class AITurnView extends BlackPanel {
     }
     return result;
   }
+
+  /**
+   * Handle recruitable leaders
+   * @param realm Realm to handle recruitable leader
+   */
+  private static void handleRecruitableLeaders(final PlayerInfo realm) {
+    ArrayList<Leader> removeLeader = new ArrayList<>();
+    for (Leader leader : realm.getLeaderRecruitPool()) {
+      leader.setAge(leader.getAge() + 1);
+      int chance = (leader.getAge() - 28) * 10;
+      if (chance > 0 && DiceGenerator.getRandom(100) < chance) {
+        removeLeader.add(leader);
+      }
+    }
+    for (Leader leader : removeLeader) {
+      realm.removeRecruitLeader(leader);
+    }
+  }
   /**
    * Handle leaders getting older.
    * Handle also ruler leader experience
    * @param realm Realm whose leaders are being handled
    */
   public void handleLeaders(final PlayerInfo realm) {
+    handleRecruitableLeaders(realm);
     Leader heir = null;
     if (realm.getRuler() == null) {
       Leader ruler = LeaderUtility.getNextRuler(realm);

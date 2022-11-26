@@ -270,6 +270,18 @@ public class LeaderView extends BlackPanel
         player.addRecruitLeader(leader);
       }
     }
+    ArrayList<Leader> removeLeader = new ArrayList<>();
+    for (Leader leader : player.getLeaderRecruitPool()) {
+      Planet homePlanet = map.getPlanetByName(leader.getHomeworld());
+      if (homePlanet != null
+          && homePlanet.getTotalPopulation()
+          < player.getRace().getMinimumPopulationForLeader()) {
+        removeLeader.add(leader);
+      }
+    }
+    for (Leader leader : removeLeader) {
+      player.removeRecruitLeader(leader);
+    }
     return player.getLeaderRecruitPool().toArray(
         new Leader[player.getLeaderRecruitPool().size()]);
   }

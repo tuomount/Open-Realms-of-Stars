@@ -41,7 +41,6 @@ import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.construction.Building;
 
 /**
 *
@@ -155,7 +154,7 @@ public class LeaderView extends BlackPanel
     activeFleet = null;
     activePlanet = null;
     standardLeaderSelected = true;
-    leadersInPool = buildLeaderPool();
+    leadersInPool = LeaderUtility.buildLeaderPool(map, player);
     InfoPanel recruitPanel = new InfoPanel();
     recruitPanel.setTitle("Leader recruiment");
     recruitPanel.setLayout(new BoxLayout(recruitPanel, BoxLayout.Y_AXIS));
@@ -231,60 +230,7 @@ public class LeaderView extends BlackPanel
     this.add(center, BorderLayout.CENTER);
   }
 
-  /**
-   * Build Leader pool for recruit
-   * @return Leader pool for recruit
-   */
-  private Leader[] buildLeaderPool() {
-    ArrayList<Leader> leaders = new ArrayList<>();
-    for (Planet planet : map.getPlanetList()) {
-      if (planet.getPlanetPlayerInfo() == player) {
-        int level = 1;
-        int xp = 0;
-        for (Building building : planet.getBuildingList()) {
-          if (building.getName().equals("Barracks")) {
-            xp = 50;
-          }
-          if (building.getName().equals("Space academy")) {
-            level++;
-          }
-        }
-        Leader leader = LeaderUtility.createLeader(player, planet, level);
-        leader.setExperience(xp);
-        leader.assignJob(Job.UNASSIGNED, player);
-        if (planet.getTotalPopulation() >= player.getRace()
-              .getMinimumPopulationForLeader()) {
-          leaders.add(leader);
-        }
-      }
-    }
-    ArrayList<Leader> currentLeaders = player.getLeaderRecruitPool();
-    for (Leader leader : leaders) {
-      boolean leaderFromPlanetAlready = false;
-      for (Leader comparison : currentLeaders) {
-        if (leader.getHomeworld().equals(comparison.getHomeworld())) {
-          leaderFromPlanetAlready = true;
-        }
-      }
-      if (!leaderFromPlanetAlready) {
-        player.addRecruitLeader(leader);
-      }
-    }
-    ArrayList<Leader> removeLeader = new ArrayList<>();
-    for (Leader leader : player.getLeaderRecruitPool()) {
-      Planet homePlanet = map.getPlanetByName(leader.getHomeworld());
-      if (homePlanet != null
-          && homePlanet.getTotalPopulation()
-          < player.getRace().getMinimumPopulationForLeader()) {
-        removeLeader.add(leader);
-      }
-    }
-    for (Leader leader : removeLeader) {
-      player.removeRecruitLeader(leader);
-    }
-    return player.getLeaderRecruitPool().toArray(
-        new Leader[player.getLeaderRecruitPool().size()]);
-  }
+
 
   /**
    * Get Leader heirs
@@ -635,7 +581,7 @@ public class LeaderView extends BlackPanel
       if (planet != null) {
         planet.takeColonist();
       }
-      leadersInPool = buildLeaderPool();
+      leadersInPool = LeaderUtility.buildLeaderPool(map, player);
       leaderList.setListData(leadersInPool);
       TreeModel model = new DefaultTreeModel(buildTreeOfLeaders());
       leaderTree.setModel(model);

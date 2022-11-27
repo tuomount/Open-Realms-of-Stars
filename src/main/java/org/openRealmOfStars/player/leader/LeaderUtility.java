@@ -169,7 +169,7 @@ public final class LeaderUtility {
   }
 
   /**
-   * Recruite leader to leader pool. This will find best planet to hire
+   * Recruit leader to leader pool. This will find best planet to hire
    * and cost for it. After this realm will have new leader ready to use.
    * This method will also return hired leader or null if hire is not possible.
    * @param planets Array of all planets
@@ -203,6 +203,63 @@ public final class LeaderUtility {
     return leader;
   }
 
+  /**
+   * Build Leader pool for recruit
+   * @param map StarMap
+   * @param player PlayerInfo which realm to add leader pool.
+   * @return Leader pool for recruit
+   */
+  public static Leader[] buildLeaderPool(final StarMap map,
+      final PlayerInfo player) {
+    ArrayList<Leader> leaders = new ArrayList<>();
+    for (Planet planet : map.getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() == player) {
+        int level = 1;
+        int xp = 0;
+        for (Building building : planet.getBuildingList()) {
+          if (building.getName().equals("Barracks")) {
+            xp = 50;
+          }
+          if (building.getName().equals("Space academy")) {
+            level++;
+          }
+        }
+        Leader leader = LeaderUtility.createLeader(player, planet, level);
+        leader.setExperience(xp);
+        leader.assignJob(Job.UNASSIGNED, player);
+        if (planet.getTotalPopulation() >= player.getRace()
+              .getMinimumPopulationForLeader()) {
+          leaders.add(leader);
+        }
+      }
+    }
+    ArrayList<Leader> currentLeaders = player.getLeaderRecruitPool();
+    for (Leader leader : leaders) {
+      boolean leaderFromPlanetAlready = false;
+      for (Leader comparison : currentLeaders) {
+        if (leader.getHomeworld().equals(comparison.getHomeworld())) {
+          leaderFromPlanetAlready = true;
+        }
+      }
+      if (!leaderFromPlanetAlready) {
+        player.addRecruitLeader(leader);
+      }
+    }
+    ArrayList<Leader> removeLeader = new ArrayList<>();
+    for (Leader leader : player.getLeaderRecruitPool()) {
+      Planet homePlanet = map.getPlanetByName(leader.getHomeworld());
+      if (homePlanet != null
+          && homePlanet.getTotalPopulation()
+          < player.getRace().getMinimumPopulationForLeader()) {
+        removeLeader.add(leader);
+      }
+    }
+    for (Leader leader : removeLeader) {
+      player.removeRecruitLeader(leader);
+    }
+    return player.getLeaderRecruitPool().toArray(
+        new Leader[player.getLeaderRecruitPool().size()]);
+  }
   /**
    * Assign leader for target job.
    * @param leader Leader to assign

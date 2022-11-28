@@ -283,8 +283,7 @@ public enum Perk {
         || this == Perk.MERCHANT
         || this == Perk.GOOD_LEADER
         || this == Perk.DIPLOMATIC
-        || this == Perk.SKILLFUL
-        || this == Perk.ARCHAEOLOGIST) {
+        || this == Perk.SKILLFUL) {
       return true;
     }
     return false;
@@ -302,8 +301,7 @@ public enum Perk {
         || this == Perk.MERCHANT
         || this == Perk.DISCIPLINE
         || this == Perk.GOOD_LEADER
-        || this == Perk.SKILLFUL
-        || this == Perk.ARCHAEOLOGIST) {
+        || this == Perk.SKILLFUL) {
       return true;
     }
     return false;
@@ -324,8 +322,7 @@ public enum Perk {
         || this == Perk.SECRET_AGENT
         || this == Perk.TRADER
         || this == Perk.SKILLFUL
-        || this == Perk.MASTER_ENGINEER
-        || this == Perk.ARCHAEOLOGIST) {
+        || this == Perk.MASTER_ENGINEER) {
       return true;
     }
     return false;
@@ -422,7 +419,8 @@ public enum Perk {
     if (this == Perk.ACADEMIC
         || this == Perk.POWER_HUNGRY
         || this == Perk.WEALTHY
-        || this == Perk.HEALTHY) {
+        || this == Perk.HEALTHY
+        || this == Perk.ARCHAEOLOGIST) {
       return true;
     }
     return false;
@@ -452,6 +450,33 @@ public enum Perk {
       return true;
     }
     return false;
+  }
+  /**
+   * Get Perk score for estimating best leader.
+   * @param leaderJob Job what leader is going to do.
+   * @return Perk score
+   */
+  public int getPerkScore(final Job leaderJob) {
+    int result = 0;
+    if (leaderJob == Job.COMMANDER && isFleetCommanderPerk()) {
+      result = result + 2;
+    }
+    if (leaderJob == Job.GOVERNOR && isGovernorPerk()) {
+      result = result + 2;
+    }
+    if (leaderJob == Job.RULER && isRulerPerk()) {
+      result = result + 2;
+    }
+    if (isGenericPerk()) {
+      result = result + 1;
+    }
+    if (isBadPerk()) {
+      result = result - 1;
+    }
+    if (this == POWER_HUNGRY) {
+      result = result - 2;
+    }
+    return result;
   }
   /**
    * Perk Index.

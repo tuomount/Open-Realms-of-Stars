@@ -169,38 +169,46 @@ public final class LeaderUtility {
   }
 
   /**
-   * Recruit leader to leader pool. This will find best planet to hire
-   * and cost for it. After this realm will have new leader ready to use.
+   * Recruit leader from recruit leader pool. This will find best planet to
+   * hire and cost for it. After this realm will have new leader ready to use.
    * This method will also return hired leader or null if hire is not possible.
-   * @param planets Array of all planets
+   * @param map StarMap
    * @param info Realm who is doing the hire
+   * @param leaderJob Which job hire the leader. Null for generic.
    * @return Leader or null
    */
-  public static Leader recruiteLeader(final ArrayList<Planet> planets,
-      final PlayerInfo info) {
-    Leader leader = null;
-    Planet trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
-        planets, info);
-    int leaderCost = LeaderUtility.leaderRecruitCost(info);
-    if (trainingPlanet != null && info.getTotalCredits() >= leaderCost) {
-      info.setTotalCredits(info.getTotalCredits() - leaderCost);
-      int level = 1;
-      int xp = 0;
-      for (Building building : trainingPlanet.getBuildingList()) {
-        if (building.getName().equals("Barracks")) {
-          xp = 50;
-        }
-        if (building.getName().equals("Space academy")) {
-          level++;
-        }
+  public static Leader recruiteLeader(final StarMap map,
+      final PlayerInfo info, final Job leaderJob) {
+    Leader bestLeader = null;
+    int bestScore = -999;
+    for (Leader leader : info.getLeaderRecruitPool()) {
+      int score = -999;
+      if (leaderJob == null) {
+        score = leader.calculateLeaderGenericScore();
+      } else {
+        score = leader.calculateLeaderScore(leaderJob);
       }
-      leader = LeaderUtility.createLeader(info, trainingPlanet, level);
-      leader.setExperience(xp);
-      leader.assignJob(Job.UNASSIGNED, info);
-      info.getLeaderPool().add(leader);
-      trainingPlanet.takeColonist();
+      if (score > bestScore) {
+        bestScore = score;
+        bestLeader = leader;
+      }
     }
-    return leader;
+    if (bestLeader != null) {
+      int leaderCost = LeaderUtility.leaderRecruitCost(info);
+      if (info.getTotalCredits() >= leaderCost) {
+        bestLeader.assignJob(Job.UNASSIGNED, info);
+        info.getLeaderPool().add(bestLeader);
+        info.removeRecruitLeader(bestLeader);
+        info.setTotalCredits(info.getTotalCredits() - leaderCost);
+        Planet planet = map.getPlanetByName(bestLeader.getHomeworld());
+        if (planet != null) {
+          planet.takeColonist();
+        }
+      } else {
+        bestLeader = null;
+      }
+    }
+    return bestLeader;
   }
 
   /**

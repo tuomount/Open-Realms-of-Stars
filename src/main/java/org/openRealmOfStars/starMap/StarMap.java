@@ -3413,7 +3413,8 @@ public class StarMap {
       // Handle Leaders
       if (info.getRuler() == null && info.areLeadersDead()) {
         // No ruler and no leaders in pool
-        Leader ruler = LeaderUtility.recruiteLeader(getPlanetList(), info);
+        LeaderUtility.buildLeaderPool(this, info);
+        Leader ruler = LeaderUtility.recruiteLeader(this, info, Job.RULER);
         if (ruler != null) {
           LeaderUtility.assignLeaderAsRuler(ruler, info, this);
           if (info.getRuler() != null) {
@@ -3434,7 +3435,8 @@ public class StarMap {
       int openLeaderPositions = calculateMaxLeaders(info);
       if (openLeaderPositions > 0
           && DiceGenerator.getRandom(99) < openLeaderPositions * 5) {
-        LeaderUtility.recruiteLeader(getPlanetList(), info);
+        LeaderUtility.buildLeaderPool(this, info);
+        LeaderUtility.recruiteLeader(this, info, null);
       }
       for (Leader leader : info.getLeaderPool()) {
         if (leader.getJob() == Job.UNASSIGNED

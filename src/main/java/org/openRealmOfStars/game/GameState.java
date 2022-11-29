@@ -173,5 +173,4 @@ public enum GameState {
    * View where human player can select next galactic voting.
    */
   VOTING_SELECTION_VIEW
-
 }

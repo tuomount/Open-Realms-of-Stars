@@ -540,6 +540,29 @@ public class Leader {
     return false;
   }
   /**
+   * Calculate leader score for certain job.
+   * @param scoreForJob Job for scoring
+   * @return Score
+   */
+  public int calculateLeaderScore(final Job scoreForJob) {
+    int result = 0;
+    for (Perk perk : perkList) {
+      result = result + perk.getPerkScore(scoreForJob);
+    }
+    return result;
+  }
+  /**
+   * Calculate generic leader score.
+   * @return Score
+   */
+  public int calculateLeaderGenericScore() {
+    int result = 0;
+    result = result + calculateLeaderScore(Job.RULER);
+    result = result + calculateLeaderScore(Job.GOVERNOR);
+    result = result + calculateLeaderScore(Job.COMMANDER);
+    return result;
+  }
+  /**
    * Adds new perk for leader. Checks if leader has perk before adding it.
    * @param perk New perk to add
    */

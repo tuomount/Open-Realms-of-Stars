@@ -351,7 +351,7 @@ public class Game implements ActionListener {
    */
   private RealmView realmView;
   /**
-   * Realm view for showing all realm information
+   * Leader view for showing all recruited leaders
    */
   private LeaderView leaderView;
   /**
@@ -1621,6 +1621,7 @@ public class Game implements ActionListener {
     this.updateDisplay(leaderView);
     leaderView.updatePanel();
   }
+
   /**
    * Change game state so that focus is also changed to target message
    * @param newState Game State where to change

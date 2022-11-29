@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019 Tuomo Untinen
+* Copyright (C) 2019,2020,2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -51,6 +51,29 @@ public class PerkTest {
       sb.append("\n");
     }
     //System.out.println(sb.toString());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPerkScore() {
+    assertEquals(-1, Perk.POWER_HUNGRY.getPerkScore(Job.COMMANDER));
+    assertEquals(-1, Perk.POWER_HUNGRY.getPerkScore(Job.RULER));
+    assertEquals(-1, Perk.POWER_HUNGRY.getPerkScore(Job.GOVERNOR));
+    assertEquals(1, Perk.ACADEMIC.getPerkScore(Job.COMMANDER));
+    assertEquals(1, Perk.ACADEMIC.getPerkScore(Job.RULER));
+    assertEquals(1, Perk.ACADEMIC.getPerkScore(Job.GOVERNOR));
+    assertEquals(2, Perk.COMBAT_TACTICIAN.getPerkScore(Job.COMMANDER));
+    assertEquals(0, Perk.COMBAT_TACTICIAN.getPerkScore(Job.RULER));
+    assertEquals(0, Perk.COMBAT_TACTICIAN.getPerkScore(Job.GOVERNOR));
+    assertEquals(0, Perk.DIPLOMATIC.getPerkScore(Job.COMMANDER));
+    assertEquals(2, Perk.DIPLOMATIC.getPerkScore(Job.RULER));
+    assertEquals(0, Perk.DIPLOMATIC.getPerkScore(Job.GOVERNOR));
+    assertEquals(0, Perk.GOOD_LEADER.getPerkScore(Job.COMMANDER));
+    assertEquals(2, Perk.GOOD_LEADER.getPerkScore(Job.RULER));
+    assertEquals(2, Perk.GOOD_LEADER.getPerkScore(Job.GOVERNOR));
+    assertEquals(-1, Perk.MICRO_MANAGER.getPerkScore(Job.COMMANDER));
+    assertEquals(-1, Perk.MICRO_MANAGER.getPerkScore(Job.RULER));
+    assertEquals(-1, Perk.MICRO_MANAGER.getPerkScore(Job.GOVERNOR));
   }
 
 }

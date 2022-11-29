@@ -2,13 +2,18 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -19,10 +24,12 @@ import javax.swing.tree.TreeSelectionModel;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.ListRenderers.LeaderListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.LeaderTreeCellRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
@@ -38,7 +45,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020, 2021 Tuomo Untinen
+* Copyright (C) 2020-2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -54,10 +61,11 @@ import org.openRealmOfStars.starMap.planet.Planet;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Research view for handling researching technology for player
+* Leader view for the realm.
 *
 */
-public class LeaderView extends BlackPanel  implements TreeSelectionListener {
+public class LeaderView extends BlackPanel
+    implements TreeSelectionListener, ListSelectionListener {
 
   /**
   *
@@ -76,6 +84,19 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
    * JTree of leaders in order and their heirs.
    */
   private JTree leaderTree;
+  /**
+   * JList of recruitable leaders.
+   */
+  private JList<Leader> leaderList;
+  /**
+   * SpaceLabel for realm credits.
+   */
+  private SpaceLabel credits;
+  /**
+   * Planet population
+   */
+  private SpaceLabel planetPopulation;
+
   /**
    * Info Text for Leader
    */
@@ -113,6 +134,14 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
    */
   private Fleet activeFleet;
   /**
+   * Local version of realm's leader pool for recruits.
+   */
+  private Leader[] leadersInPool;
+  /**
+   * Was regular/standard leader selected.
+   */
+  private boolean standardLeaderSelected;
+  /**
    * View Leader view.
    * @param info Player info
    * @param starMap Star map data
@@ -124,6 +153,28 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
     map = starMap;
     activeFleet = null;
     activePlanet = null;
+    standardLeaderSelected = true;
+    leadersInPool = LeaderUtility.buildLeaderPool(map, player);
+    InfoPanel recruitPanel = new InfoPanel();
+    recruitPanel.setTitle("Leader recruiment");
+    recruitPanel.setLayout(new BoxLayout(recruitPanel, BoxLayout.Y_AXIS));
+    leaderCost = LeaderUtility.leaderRecruitCost(info);
+    credits = new SpaceLabel("Realm credits: " + player.getTotalCredits()
+        + " Recruit costs: " + leaderCost);
+    recruitPanel.add(credits, BorderLayout.CENTER);
+    recruitPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    planetPopulation = new SpaceLabel("Alpha Centauri II - Population: 12");
+    recruitPanel.add(planetPopulation);
+    leaderList = new JList<>(leadersInPool);
+    leaderList.setCellRenderer(new LeaderListRenderer());
+    leaderList.addListSelectionListener(this);
+    JScrollPane scroll = new JScrollPane(leaderList);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    leaderList.getSelectionModel().setSelectionMode(
+        TreeSelectionModel.SINGLE_TREE_SELECTION);
+    leaderList.setBackground(Color.BLACK);
+    recruitPanel.add(scroll);
+
     InfoPanel base = new InfoPanel();
     base.setTitle("Leaders");
     this.setLayout(new BorderLayout());
@@ -134,21 +185,21 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
     leaderTree = new JTree(buildTreeOfLeaders());
     leaderTree.setCellRenderer(new LeaderTreeCellRenderer());
     leaderTree.addTreeSelectionListener(this);
-    JScrollPane scroll = new JScrollPane(leaderTree);
+    scroll = new JScrollPane(leaderTree);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     leaderTree.getSelectionModel().setSelectionMode(
         TreeSelectionModel.SINGLE_TREE_SELECTION);
     leaderTree.setBackground(Color.BLACK);
     base.add(scroll);
     scroll.setAlignmentX(CENTER_ALIGNMENT);
-    recruitBtn = new SpaceButton("Recruit leader",
+    recruitBtn = new SpaceButton("Recruit leader " + leaderCost + " credits",
         GameCommands.COMMAND_RECRUIT_LEADER);
-    leaderCost = LeaderUtility.leaderRecruitCost(info);
     trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
         map.getPlanetList(), player);
     recruitBtn.addActionListener(listener);
     recruitBtn.setAlignmentX(CENTER_ALIGNMENT);
-    base.add(recruitBtn);
+    recruitPanel.add(recruitBtn);
+    base.add(recruitPanel);
     infoText = new InfoTextArea(20, 35);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
@@ -178,6 +229,8 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
     this.add(base, BorderLayout.WEST);
     this.add(center, BorderLayout.CENTER);
   }
+
+
 
   /**
    * Get Leader heirs
@@ -279,12 +332,13 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
   private void updateButtonToolTips() {
     if (trainingPlanet != null && leaderCost <= player.getTotalCredits()) {
       recruitBtn.setToolTipText("<html>Recruit new leader with " + leaderCost
-          + " credits.<br> This will also use one population from planet "
-          + trainingPlanet.getName() + "."
+          + " credits.<br> This will also use one population from that "
+          + " planet where leader is from."
           + "</html>");
     } else if (trainingPlanet == null) {
       recruitBtn.setToolTipText("<html>Your realm does not have more than"
-          + "<br> 4 population on any of your planets."
+          + "<br>" + player.getRace().getMinimumPopulationForLeader()
+          + " population on any of your planets."
           + "</html>");
       recruitBtn.setEnabled(false);
     } else if (leaderCost > player.getTotalCredits()) {
@@ -312,6 +366,17 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
     }
   }
   /**
+   * Get Selected leader from JList.
+   * @return Leader or null
+   */
+  private Leader getSelectedLeaderFromList() {
+    Leader leader = null;
+    if (leaderList.getSelectedValue() != null) {
+      leader = leaderList.getSelectedValue();
+    }
+    return leader;
+  }
+  /**
    * Get Selected leader from JTree.
    * @return Leader or null
    */
@@ -334,14 +399,35 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
    */
   public void updatePanel() {
     Leader leader = null;
-    if (leaderTree.getSelectionPath() != null
-        && leaderTree.getSelectionPath().getLastPathComponent()
-        instanceof DefaultMutableTreeNode) {
-      Object object = ((DefaultMutableTreeNode)
-          leaderTree.getSelectionPath().getLastPathComponent())
-          .getUserObject();
-      if (object instanceof Leader) {
-        leader = (Leader) object;
+    credits.setText("Realm credits: " + player.getTotalCredits()
+        + " Recruit costs: " + leaderCost);
+    if (standardLeaderSelected) {
+      if (leaderTree.getSelectionPath() != null
+          && leaderTree.getSelectionPath().getLastPathComponent()
+          instanceof DefaultMutableTreeNode) {
+        Object object = ((DefaultMutableTreeNode)
+            leaderTree.getSelectionPath().getLastPathComponent())
+            .getUserObject();
+        if (object instanceof Leader) {
+          leader = (Leader) object;
+        }
+      }
+    } else {
+      leader = getSelectedLeaderFromList();
+      boolean planetFound = false;
+      if (leader != null) {
+        for (Planet planet : map.getPlanetList()) {
+          if (leader.getHomeworld().equalsIgnoreCase(planet.getName())) {
+            map.setDrawPos(planet.getX(), planet.getY());
+            planetPopulation.setText(planet.getName() + " - Population:"
+            + planet.getTotalPopulation());
+            planetFound = true;
+            break;
+          }
+        }
+        if (!planetFound) {
+          map.setDrawPos(map.getMaxX() / 2, map.getMaxY() / 2);
+        }
       }
     }
     if (leader != null) {
@@ -367,7 +453,7 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
             break;
           }
         }
-      } else {
+      } else if (standardLeaderSelected) {
         map.setDrawPos(map.getMaxX() / 2, map.getMaxY() / 2);
       }
       mapPanel.drawMap(map);
@@ -458,17 +544,6 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
    * @param arg0 Action event to handle
    */
   public void handleActions(final ActionEvent arg0) {
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_RECRUIT_LEADER)
-        && player.getTotalCredits() >= leaderCost) {
-      LeaderUtility.recruiteLeader(map.getPlanetList(), player);
-      TreeModel model = new DefaultTreeModel(buildTreeOfLeaders());
-      leaderTree.setModel(model);
-      leaderCost = LeaderUtility.leaderRecruitCost(player);
-      trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
-          map.getPlanetList(), player);
-      SoundPlayer.playMenuSound();
-      updatePanel();
-    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ASSIGN_LEADER)) {
       boolean soundPlayed = false;
       Leader leader = getSelectedLeaderFromTree();
@@ -493,10 +568,37 @@ public class LeaderView extends BlackPanel  implements TreeSelectionListener {
         SoundPlayer.playMenuDisabled();
       }
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_RECRUIT_LEADER)
+        && player.getTotalCredits() >= leaderCost
+        && leaderList.getSelectedValue() != null) {
+      Leader leader = leaderList.getSelectedValue();
+      leader.assignJob(Job.UNASSIGNED, player);
+      player.getLeaderPool().add(leader);
+      player.removeRecruitLeader(leader);
+      player.setTotalCredits(player.getTotalCredits() - leaderCost);
+      leaderCost = LeaderUtility.leaderRecruitCost(player);
+      Planet planet = map.getPlanetByName(leader.getHomeworld());
+      if (planet != null) {
+        planet.takeColonist();
+      }
+      leadersInPool = LeaderUtility.buildLeaderPool(map, player);
+      leaderList.setListData(leadersInPool);
+      TreeModel model = new DefaultTreeModel(buildTreeOfLeaders());
+      leaderTree.setModel(model);
+      SoundPlayer.playMenuSound();
+      updatePanel();
+    }
   }
 
   @Override
   public void valueChanged(final TreeSelectionEvent e) {
+    standardLeaderSelected = true;
+    updatePanel();
+  }
+
+  @Override
+  public void valueChanged(final ListSelectionEvent e) {
+    standardLeaderSelected = false;
     updatePanel();
   }
 }

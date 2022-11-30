@@ -144,7 +144,7 @@ public final class NewsFactory {
       }
     } else {
       String place = null;
-      if (meetingPlace instanceof Fleet) {
+      if (meetingPlace instanceof Fleet && map != null) {
         Fleet fleet = (Fleet) meetingPlace;
         CulturePower power = map.getSectorCulture(fleet.getCoordinate().getX(),
             fleet.getCoordinate().getY());
@@ -204,7 +204,7 @@ public final class NewsFactory {
           sb.append(" has done lately. ");
         }
       }
-    } else {
+    } else if (map != null) {
       sb.append(aggressor.getEmpireName());
       sb.append(" has justified war against ");
       sb.append(defender.getEmpireName());
@@ -2618,7 +2618,7 @@ public final class NewsFactory {
       }
     }
     NewsData news = null;
-    if (winner != null) {
+    if (winner != null && second != null) {
       news = new NewsData();
       ImageInstruction instructions = new ImageInstruction();
       news.setImageInstructions(instructions.build());
@@ -3327,7 +3327,8 @@ public final class NewsFactory {
     }
     int yes = vote.getVotingAmounts(VotingChoice.VOTED_YES);
     int no = vote.getVotingAmounts(VotingChoice.VOTED_NO);
-    int total = yes + no;
+    int notVoted = vote.getVotingAmounts(VotingChoice.NOT_VOTED);
+    int total = yes + no + notVoted;
     yes = yes * 100 / total;
     no = no * 100 / total;
     if (vote.getType() == VotingType.RULER_OF_GALAXY) {

@@ -30,7 +30,7 @@ import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019 Tuomo Untinen
+* Copyright (C) 2019,2021,2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -84,6 +84,10 @@ public class VoteView extends BlackPanel {
    * Button for voting no.
    */
   private SpaceButton voteNoBtn;
+  /**
+   * Button for abstain.
+   */
+  private SpaceButton voteAbstain;
   /**
    * Info text area which shows how realms voted or not have voted yet.
    */
@@ -159,14 +163,25 @@ public class VoteView extends BlackPanel {
     center.add(votingInfoTitle);
     EmptyInfoPanel panelx = new EmptyInfoPanel();
     panelx.setLayout(new BorderLayout());
+    EmptyInfoPanel panelButtons = new EmptyInfoPanel();
+    GridLayout layout = new GridLayout(0, 5);
+    layout.setVgap(50);
+    panelButtons.setLayout(layout);
     voteYesBtn = new SpaceButton("Participate vote",
         GameCommands.COMMAND_VOTE_YES);
     voteYesBtn.addActionListener(listener);
-    panelx.add(voteYesBtn, BorderLayout.WEST);
-    panelx.add(Box.createRigidArea(new Dimension(50, 10)));
+    panelButtons.add(voteYesBtn);
+    panelButtons.add(Box.createRigidArea(new Dimension(50, 10)));
+    panelx.add(Box.createRigidArea(new Dimension(50, 10)), BorderLayout.WEST);
+    panelx.add(Box.createRigidArea(new Dimension(50, 10)), BorderLayout.EAST);
+    voteAbstain = new SpaceButton("Abstain", GameCommands.COMMAND_ABSTAIN);
+    voteAbstain.addActionListener(listener);
+    panelButtons.add(voteAbstain);
+    panelButtons.add(Box.createRigidArea(new Dimension(50, 10)));
     voteNoBtn = new SpaceButton("Boycott voting", GameCommands.COMMAND_VOTE_NO);
     voteNoBtn.addActionListener(listener);
-    panelx.add(voteNoBtn, BorderLayout.EAST);
+    panelButtons.add(voteNoBtn);
+    panelx.add(panelButtons, BorderLayout.CENTER);
     EmptyInfoPanel north = new EmptyInfoPanel();
     north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS));
     north.add(panel);
@@ -275,6 +290,7 @@ public class VoteView extends BlackPanel {
         votingInfoTitle.setTitle("Voting results");
         voteYesBtn.setEnabled(false);
         voteNoBtn.setEnabled(false);
+        voteAbstain.setEnabled(false);
         int yes = 0;
         int no = 0;
         for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
@@ -304,10 +320,12 @@ public class VoteView extends BlackPanel {
       } else {
         voteYesBtn.setEnabled(true);
         voteNoBtn.setEnabled(true);
+        voteAbstain.setEnabled(false);
         if (vote.getType() != VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
           if (vote.getType() == VotingType.RULER_OF_GALAXY) {
             voteYesBtn.setText("1st Candidate");
             voteNoBtn.setText("2nd Candiate");
+            voteAbstain.setEnabled(true);
           } else {
             voteYesBtn.setText("Vote YES");
             voteNoBtn.setText("Vote NO");
@@ -401,6 +419,7 @@ public class VoteView extends BlackPanel {
     } else {
       voteYesBtn.setEnabled(false);
       voteNoBtn.setEnabled(false);
+      voteAbstain.setEnabled(false);
       voteLabel.setText("Vote 0/0");
       voteTitle.setText("No vote available!");
       votingTime.setText("Voting time: 0 turns");

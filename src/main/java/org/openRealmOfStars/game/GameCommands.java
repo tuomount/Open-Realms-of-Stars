@@ -829,6 +829,10 @@ public final class GameCommands {
    * Command for vote no
    */
   public static final String COMMAND_VOTE_NO = "VoteNo";
+  /**
+   * Command for abstain voting
+   */
+  public static final String COMMAND_ABSTAIN = "VoteAbstain";
 
   /**
    * Command for previous year

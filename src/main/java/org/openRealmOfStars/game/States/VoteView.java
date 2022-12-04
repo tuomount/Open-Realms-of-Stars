@@ -237,7 +237,7 @@ public class VoteView extends BlackPanel {
    * @param listener ActionListener
    * @return BottomPanel
    */
-  private InfoPanel createBottomPanel(final ActionListener listener) {
+  private static InfoPanel createBottomPanel(final ActionListener listener) {
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
@@ -445,6 +445,14 @@ public class VoteView extends BlackPanel {
       Vote vote = map.getVotes().getVotableVotes().get(voteIndex);
       int index = map.getPlayerList().getCurrentPlayer();
       vote.setChoice(index, VotingChoice.VOTED_NO);
+      updatePanels();
+      SoundPlayer.playMenuSound();
+      return;
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ABSTAIN)) {
+      Vote vote = map.getVotes().getVotableVotes().get(voteIndex);
+      int index = map.getPlayerList().getCurrentPlayer();
+      vote.setChoice(index, VotingChoice.ABSTAIN);
       updatePanels();
       SoundPlayer.playMenuSound();
       return;

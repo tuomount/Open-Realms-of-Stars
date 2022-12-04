@@ -1942,11 +1942,15 @@ public class AITurnView extends BlackPanel {
         } else if (value > 0) {
           vote.setChoice(i, VotingChoice.VOTED_YES);
         } else {
-          value = DiceGenerator.getRandom(1);
-          if (value == 0) {
-            vote.setChoice(i, VotingChoice.VOTED_YES);
+          if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+            vote.setChoice(i, VotingChoice.ABSTAIN);
           } else {
-            vote.setChoice(i, VotingChoice.VOTED_NO);
+            value = DiceGenerator.getRandom(1);
+            if (value == 0) {
+              vote.setChoice(i, VotingChoice.VOTED_YES);
+            } else {
+              vote.setChoice(i, VotingChoice.VOTED_NO);
+            }
           }
         }
       }

@@ -353,6 +353,7 @@ public final class StarMapUtilities {
   /**
    * Get Voting support value. Negative value is for
    * NO and positive value is for yes.
+   * Abstain value for zero.
    * @param info PlayerInfo
    * @param vote Voting
    * @param map StarMap
@@ -624,7 +625,22 @@ public final class StarMapUtilities {
       if (info.getDiplomacy().getLiking(second) == Diplomacy.HATE) {
         result = result + 10;
       }
-
+      if (Math.abs(result) < 10) {
+        boolean notKnowEnoughFirst = false;
+        boolean notKnowEnoughSecond = false;
+        DiplomacyBonusList bonusList = info.getDiplomacy().getDiplomacyList(
+            first);
+        if (bonusList != null && bonusList.getNumberOfMeetings() < 4) {
+          notKnowEnoughFirst = true;
+        }
+        bonusList = info.getDiplomacy().getDiplomacyList(second);
+        if (bonusList != null && bonusList.getNumberOfMeetings() < 4) {
+          notKnowEnoughSecond = true;
+        }
+        if (notKnowEnoughFirst && notKnowEnoughSecond) {
+          result = 0;
+        }
+      }
     }
 
 

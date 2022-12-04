@@ -2594,6 +2594,18 @@ public final class NewsFactory {
     if (limit == 0) {
       return null;
     }
+    int[] population = new int[map.getPlayerList().getCurrentMaxRealms()];
+    int galaxyPopulation = 0;
+    for (int i = 0; i < map.getPlanetList().size(); i++) {
+      Planet planet = map.getPlanetList().get(i);
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetOwnerIndex() < population.length) {
+        galaxyPopulation = galaxyPopulation + planet.getTotalPopulation();
+        population[planet.getPlanetOwnerIndex()] =
+            population[planet.getPlanetOwnerIndex()]
+            + planet.getTotalPopulation();
+      }
+    }
     PlayerInfo winner = null;
     PlayerInfo second = null;
     int votedWinner = 0;

@@ -2610,9 +2610,48 @@ public final class NewsFactory {
     PlayerInfo second = null;
     int votedWinner = 0;
     int votedSecond = 0;
+    int noVotes = 0;
+    int yesVotes = 0;
+    int abstainVotes = 0;
+    StringBuilder votingString = new StringBuilder();
     for (Vote vote : map.getVotes().getVotes()) {
       if (vote.getType() == VotingType.RULER_OF_GALAXY
           && vote.getTurnsToVote() == 0) {
+        for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
+          if (vote.getChoice(i) == VotingChoice.VOTED_NO) {
+            noVotes = noVotes + population[i];
+            String realm = map.getPlayerByIndex(
+                map.getVotes().getSecondCandidate()).getEmpireName();
+            votingString.append(map.getPlayerByIndex(i).getEmpireName());
+            votingString.append(" voted ");
+            votingString.append(realm);
+            votingString.append(" with ");
+            int percent = population[i] * 100 / galaxyPopulation;
+            votingString.append(percent);
+            votingString.append("%.");
+          }
+          if (vote.getChoice(i) == VotingChoice.VOTED_YES) {
+            yesVotes = yesVotes + population[i];
+            String realm = map.getPlayerByIndex(
+                map.getVotes().getFirstCandidate()).getEmpireName();
+            votingString.append(map.getPlayerByIndex(i).getEmpireName());
+            votingString.append(" voted ");
+            votingString.append(realm);
+            votingString.append(" with ");
+            int percent = population[i] * 100 / galaxyPopulation;
+            votingString.append(percent);
+            votingString.append("%.");
+          }
+          if (vote.getChoice(i) == VotingChoice.ABSTAIN) {
+            abstainVotes = abstainVotes + population[i];
+            votingString.append(map.getPlayerByIndex(i).getEmpireName());
+            votingString.append(" abstain voting");
+            votingString.append(" with ");
+            int percent = population[i] * 100 / galaxyPopulation;
+            votingString.append(percent);
+            votingString.append("%.");
+          }
+        }
         VotingChoice choice = vote.getResult(
             map.getVotes().getFirstCandidate());
         if (choice == VotingChoice.VOTED_YES) {

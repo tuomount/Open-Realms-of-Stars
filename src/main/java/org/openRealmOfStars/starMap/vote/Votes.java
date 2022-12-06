@@ -68,6 +68,18 @@ public class Votes {
   }
 
   /**
+   * Remove Ruler of Galaxy vote.
+   */
+  public void removeRulerVote() {
+    Vote removeVote = null;
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+        removeVote = vote;
+      }
+    }
+    listOfVotes.remove(removeVote);
+  }
+  /**
    * Get votes that are voteable.
    * @return ArrayList of votes
    */
@@ -114,7 +126,7 @@ public class Votes {
         count++;
       }
     }
-    if (maxNumberOfVotes - count == 1) {
+    if (maxNumberOfVotes - count <= 1) {
       Vote vote = new Vote(VotingType.RULER_OF_GALAXY, numberOfRealms, turns);
       vote.setOrganizerIndex(getFirstCandidate());
       vote.setSecondCandidateIndex(getSecondCandidate());

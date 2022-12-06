@@ -1783,6 +1783,8 @@ public class NewsFactoryTest {
   public void testDiplomaticVictory() {
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getScoreDiplomacy()).thenReturn(2);
+    Mockito.when(map.getTotalNumberOfPopulation(0)).thenReturn(55);
+    Mockito.when(map.getTotalNumberOfPopulation(1)).thenReturn(32);
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
@@ -1799,19 +1801,24 @@ public class NewsFactoryTest {
     Mockito.when(second.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(diplomacy2.getAllianceIndex()).thenReturn(-1);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
-    Mockito.when(map.getPlayerByIndex(2)).thenReturn(winner);
-    Mockito.when(map.getPlayerByIndex(3)).thenReturn(second);
+    Mockito.when(map.getPlayerByIndex(0)).thenReturn(winner);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(second);
     
     Votes votes = Mockito.mock(Votes.class);
     Mockito.when(map.getVotes()).thenReturn(votes);
     ArrayList<Vote> listVotes = new ArrayList<>();
     Mockito.when(votes.getVotes()).thenReturn(listVotes);
-    Mockito.when(votes.getFirstCandidate()).thenReturn(2);
-    Mockito.when(votes.getSecondCandidate()).thenReturn(3);
+    Mockito.when(votes.getFirstCandidate()).thenReturn(0);
+    Mockito.when(votes.getSecondCandidate()).thenReturn(1);
     Vote vote = Mockito.mock(Vote.class);
     listVotes.add(vote);
     Mockito.when(vote.getResult(2)).thenReturn(VotingChoice.VOTED_NO);
     Mockito.when(vote.getType()).thenReturn(VotingType.RULER_OF_GALAXY);
+    Mockito.when(vote.getChoice(0)).thenReturn(VotingChoice.VOTED_NO);
+    Mockito.when(vote.getChoice(1)).thenReturn(VotingChoice.VOTED_YES);
+    Mockito.when(vote.getNumberOfVotes(0)).thenReturn(55);
+    Mockito.when(vote.getNumberOfVotes(1)).thenReturn(32);
+    Mockito.when(vote.getChoice(1)).thenReturn(VotingChoice.VOTED_YES);
     Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_NO)).thenReturn(55);
     Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_YES)).thenReturn(32);
     NewsData news = NewsFactory.makeDiplomaticVictoryNewsAtEnd(map);
@@ -1825,6 +1832,8 @@ public class NewsFactoryTest {
   public void testDiplomaticVictoryAlliance() {
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getScoreDiplomacy()).thenReturn(2);
+    Mockito.when(map.getTotalNumberOfPopulation(0)).thenReturn(55);
+    Mockito.when(map.getTotalNumberOfPopulation(1)).thenReturn(32);
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
@@ -1847,20 +1856,26 @@ public class NewsFactoryTest {
     Mockito.when(second.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(diplomacy2.getAllianceIndex()).thenReturn(-1);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
-    Mockito.when(map.getPlayerByIndex(1)).thenReturn(alliance);
-    Mockito.when(map.getPlayerByIndex(2)).thenReturn(winner);
-    Mockito.when(map.getPlayerByIndex(3)).thenReturn(second);
+    Mockito.when(map.getPlayerByIndex(0)).thenReturn(alliance);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(winner);
+    Mockito.when(map.getPlayerByIndex(2)).thenReturn(second);
+    
     
     Votes votes = Mockito.mock(Votes.class);
     Mockito.when(map.getVotes()).thenReturn(votes);
     ArrayList<Vote> listVotes = new ArrayList<>();
     Mockito.when(votes.getVotes()).thenReturn(listVotes);
-    Mockito.when(votes.getFirstCandidate()).thenReturn(2);
-    Mockito.when(votes.getSecondCandidate()).thenReturn(3);
+    Mockito.when(votes.getFirstCandidate()).thenReturn(0);
+    Mockito.when(votes.getSecondCandidate()).thenReturn(2);
     Vote vote = Mockito.mock(Vote.class);
     listVotes.add(vote);
+    
     Mockito.when(vote.getResult(2)).thenReturn(VotingChoice.VOTED_YES);
     Mockito.when(vote.getType()).thenReturn(VotingType.RULER_OF_GALAXY);
+    Mockito.when(vote.getChoice(0)).thenReturn(VotingChoice.VOTED_NO);
+    Mockito.when(vote.getChoice(1)).thenReturn(VotingChoice.VOTED_YES);
+    Mockito.when(vote.getNumberOfVotes(0)).thenReturn(55);
+    Mockito.when(vote.getNumberOfVotes(1)).thenReturn(32);
     Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_NO)).thenReturn(22);
     Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_YES)).thenReturn(42);
     NewsData news = NewsFactory.makeDiplomaticVictoryNewsAtEnd(map);

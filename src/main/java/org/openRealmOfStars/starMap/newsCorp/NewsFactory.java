@@ -2594,17 +2594,10 @@ public final class NewsFactory {
     if (limit == 0) {
       return null;
     }
-    int[] population = new int[map.getPlayerList().getCurrentMaxRealms()];
     int galaxyPopulation = 0;
-    for (int i = 0; i < map.getPlanetList().size(); i++) {
-      Planet planet = map.getPlanetList().get(i);
-      if (planet.getPlanetPlayerInfo() != null
-          && planet.getPlanetOwnerIndex() < population.length) {
-        galaxyPopulation = galaxyPopulation + planet.getTotalPopulation();
-        population[planet.getPlanetOwnerIndex()] =
-            population[planet.getPlanetOwnerIndex()]
-            + planet.getTotalPopulation();
-      }
+    for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
+      galaxyPopulation = galaxyPopulation + map.getTotalNumberOfPopulation(
+          galaxyPopulation);
     }
     PlayerInfo winner = null;
     PlayerInfo second = null;
@@ -2613,63 +2606,93 @@ public final class NewsFactory {
     int noVotes = 0;
     int yesVotes = 0;
     int abstainVotes = 0;
+    boolean removeRulerVote = false;
+    boolean hasVoted = false;
     StringBuilder votingString = new StringBuilder();
     for (Vote vote : map.getVotes().getVotes()) {
       if (vote.getType() == VotingType.RULER_OF_GALAXY
           && vote.getTurnsToVote() == 0) {
+        hasVoted = true;
         for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
           if (vote.getChoice(i) == VotingChoice.VOTED_NO) {
-            noVotes = noVotes + population[i];
+            noVotes = noVotes + vote.getNumberOfVotes(i);
             String realm = map.getPlayerByIndex(
                 map.getVotes().getSecondCandidate()).getEmpireName();
             votingString.append(map.getPlayerByIndex(i).getEmpireName());
             votingString.append(" voted ");
             votingString.append(realm);
             votingString.append(" with ");
-            int percent = population[i] * 100 / galaxyPopulation;
+            int percent = vote.getNumberOfVotes(i) * 100 / galaxyPopulation;
             votingString.append(percent);
             votingString.append("%.");
           }
           if (vote.getChoice(i) == VotingChoice.VOTED_YES) {
-            yesVotes = yesVotes + population[i];
+            yesVotes = yesVotes + vote.getNumberOfVotes(i);
             String realm = map.getPlayerByIndex(
                 map.getVotes().getFirstCandidate()).getEmpireName();
             votingString.append(map.getPlayerByIndex(i).getEmpireName());
             votingString.append(" voted ");
             votingString.append(realm);
             votingString.append(" with ");
-            int percent = population[i] * 100 / galaxyPopulation;
+            int percent = vote.getNumberOfVotes(i) * 100 / galaxyPopulation;
             votingString.append(percent);
             votingString.append("%.");
           }
           if (vote.getChoice(i) == VotingChoice.ABSTAIN) {
-            abstainVotes = abstainVotes + population[i];
+            abstainVotes = abstainVotes + vote.getNumberOfVotes(i);
             votingString.append(map.getPlayerByIndex(i).getEmpireName());
             votingString.append(" abstain voting");
             votingString.append(" with ");
-            int percent = population[i] * 100 / galaxyPopulation;
+            int percent = vote.getNumberOfVotes(i) * 100 / galaxyPopulation;
             votingString.append(percent);
             votingString.append("%.");
           }
         }
-        VotingChoice choice = vote.getResult(
-            map.getVotes().getFirstCandidate());
+        VotingChoice choice = VotingChoice.NOT_VOTED;
+        if (yesVotes + noVotes > abstainVotes) {
+          // Enough voting that voting is accepted
+          if (yesVotes > noVotes) {
+            choice = VotingChoice.VOTED_YES;
+          }
+          if (yesVotes < noVotes) {
+            choice = VotingChoice.VOTED_NO;
+          }
+        }
         if (choice == VotingChoice.VOTED_YES) {
           winner = map.getPlayerByIndex(map.getVotes().getFirstCandidate());
           second = map.getPlayerByIndex(map.getVotes().getSecondCandidate());
           votedWinner = vote.getVotingAmounts(VotingChoice.VOTED_YES);
           votedSecond = vote.getVotingAmounts(VotingChoice.VOTED_NO);
-        } else {
+        } else if (choice == VotingChoice.VOTED_NO) {
           int index = map.getVotes().getSecondCandidate();
           winner = map.getPlayerByIndex(index);
           second = map.getPlayerByIndex(map.getVotes().getFirstCandidate());
           votedWinner = vote.getVotingAmounts(VotingChoice.VOTED_NO);
           votedSecond = vote.getVotingAmounts(VotingChoice.VOTED_YES);
+        } else {
+          winner = null;
+          second = null;
+          removeRulerVote = true;
+          votedWinner = vote.getVotingAmounts(VotingChoice.VOTED_YES);
+          votedSecond = vote.getVotingAmounts(VotingChoice.VOTED_NO);
         }
       }
     }
     NewsData news = null;
-    if (winner != null && second != null) {
+    if (hasVoted && winner == null && second == null) {
+      news = new NewsData();
+      ImageInstruction instructions = new ImageInstruction();
+      StringBuilder sb = new StringBuilder();
+      instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+      instructions.addText("NO RULER VOTED YET!");
+      sb.append(votingString.toString());
+      sb.append("\n\n");
+      sb.append("Neither of the voting party gained enough support and"
+          + " voting continues...");
+      news.setImageInstructions(instructions.build());
+      news.setNewsText(sb.toString());
+    }
+    if (hasVoted && winner != null && second != null) {
       news = new NewsData();
       ImageInstruction instructions = new ImageInstruction();
       news.setImageInstructions(instructions.build());
@@ -2679,6 +2702,8 @@ public final class NewsFactory {
         instructions.addText("THE DIPLOMATIC VICTORY!");
         instructions.addText(winner.getEmpireName());
         instructions.addImage(winner.getRace().getNameSingle());
+        sb.append(votingString.toString());
+        sb.append("\n\n");
         sb.append(winner.getEmpireName());
         sb.append(" has successfully win election to be Galactic ruler! ");
         sb.append("This voting was arranged across the whole galaxy."
@@ -2703,6 +2728,8 @@ public final class NewsFactory {
         instructions.addText("THE DIPLOMATIC ALLIANCE!");
         instructions.addText(info.getEmpireName());
         instructions.addImage(info.getRace().getNameSingle());
+        sb.append(votingString.toString());
+        sb.append("\n\n");
         sb.append("Alliance of ");
         sb.append(info.getEmpireName());
         sb.append(" and ");
@@ -2725,6 +2752,9 @@ public final class NewsFactory {
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
+    }
+    if (removeRulerVote) {
+      map.getVotes().removeRulerVote();
     }
     return news;
   }

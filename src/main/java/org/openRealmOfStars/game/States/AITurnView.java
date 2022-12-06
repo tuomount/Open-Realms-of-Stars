@@ -3694,9 +3694,24 @@ public class AITurnView extends BlackPanel {
       if (news != null) {
         GalacticEvent event = new GalacticEvent(news.getNewsText());
         game.getStarMap().getHistory().addEvent(event);
-        game.getStarMap().setGameEnded(true);
         NewsCorpData newsData = game.getStarMap().getNewsCorpData();
         newsData.addNews(news);
+        if (!news.getImageInstructions().contains("NO RULER VOTED YET!")) {
+          game.getStarMap().setGameEnded(true);
+        } else {
+          int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;
+          Vote vote = game.getStarMap().getVotes().generateNextVote(
+              game.getStarMap().getScoreDiplomacy() + 1,
+              game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
+          if (vote != null && vote.getType() == VotingType.RULER_OF_GALAXY) {
+            PlayerInfo firstCandidate = game.getStarMap().getPlayerByIndex(
+                game.getStarMap().getVotes().getFirstCandidate());
+            PlayerInfo secondCandidate = game.getStarMap().getPlayerByIndex(
+                game.getStarMap().getVotes().getSecondCandidate());
+            news = NewsFactory.makeVotingNews(vote, firstCandidate,
+                secondCandidate);
+          }
+        }
       }
       news = NewsFactory.makePopulationVictoryNewsAtEnd(game.getStarMap());
       if (news != null) {

@@ -3541,6 +3541,14 @@ public class AITurnView extends BlackPanel {
           if (realm.isHuman() && !game.getStarMap().isHumanLost()) {
             setNextState(GameState.GAME_END_VIEW, realm);
           }
+          if (realm.getRuler() != null) {
+            Leader leader = realm.getRuler();
+            leader.setJob(Job.DEAD);
+            NewsData news = NewsFactory.makeLeaderDies(leader, realm,
+                "realm lost all colonized planets and there are no"
+                + " usable colony ships left.");
+            game.getStarMap().getNewsCorpData().addNews(news);
+          }
           boolean lost = false;
           for (int j = 0;
               j < game.getStarMap().getPlayerList().getCurrentMaxRealms();

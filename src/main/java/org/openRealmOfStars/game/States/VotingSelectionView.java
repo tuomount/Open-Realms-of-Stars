@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.ListRenderers.VotingListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -104,6 +105,9 @@ public class VotingSelectionView extends BlackPanel {
     votingSelect.setActionCommand(GameCommands.COMMAND_VOTING_SELECTED);
     votingSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
     votingSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    VotingListRenderer renderer = new VotingListRenderer();
+    renderer.setStarMap(map);
+    votingSelect.setRenderer(renderer);
     votingSelect.setBorder(new SimpleBorder());
     votingSelect.setFont(GuiStatics.getFontCubellan());
     votingSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -142,6 +146,7 @@ public class VotingSelectionView extends BlackPanel {
       SoundPlayer.playMenuSound();
       Vote vote = (Vote) votingSelect.getSelectedItem();
       textArea.setText(vote.getDescription(map));
+      this.repaint();
     }
   }
 

@@ -68,6 +68,13 @@ public class Votes {
   }
 
   /**
+   * Add new vote for list.
+   * @param vote Vote to add.
+   */
+  public void addNewVote(final Vote vote) {
+    listOfVotes.add(vote);
+  }
+  /**
    * Remove Ruler of Galaxy vote.
    */
   public void removeRulerVote() {

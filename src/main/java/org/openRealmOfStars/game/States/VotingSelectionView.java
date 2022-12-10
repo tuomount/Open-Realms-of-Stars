@@ -87,6 +87,7 @@ public class VotingSelectionView extends BlackPanel {
     if (listener instanceof Game) {
       Game game = (Game) listener;
       widthHeadLine = game.getWidth();
+      heightHeadLine = game.getHeight() / 2;
     }
     BufferedImage image = new BufferedImage(widthHeadLine, heightHeadLine,
         BufferedImage.TYPE_4BYTE_ABGR);
@@ -119,8 +120,11 @@ public class VotingSelectionView extends BlackPanel {
     textArea = new InfoTextArea();
     textArea.setEditable(false);
     textArea.setFont(GuiStatics.getFontCubellanSmaller());
+    textArea.setWrapStyleWord(true);
+    textArea.setLineWrap(true);
+    textArea.setCharacterWidth(8);
     Vote vote = (Vote) votingSelect.getSelectedItem();
-    textArea.setText(vote.getDescription(map));
+    textArea.setText(vote.getLongDescription(map));
     centerPanel.add(textArea);
     this.add(centerPanel, BorderLayout.CENTER);
 
@@ -145,7 +149,7 @@ public class VotingSelectionView extends BlackPanel {
         .equals(GameCommands.COMMAND_VOTING_SELECTED)) {
       SoundPlayer.playMenuSound();
       Vote vote = (Vote) votingSelect.getSelectedItem();
-      textArea.setText(vote.getDescription(map));
+      textArea.setText(vote.getLongDescription(map));
       this.repaint();
     }
   }

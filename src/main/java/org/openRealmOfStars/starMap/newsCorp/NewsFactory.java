@@ -2596,8 +2596,7 @@ public final class NewsFactory {
     }
     int galaxyPopulation = 0;
     for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
-      galaxyPopulation = galaxyPopulation + map.getTotalNumberOfPopulation(
-          galaxyPopulation);
+      galaxyPopulation = galaxyPopulation + map.getTotalNumberOfPopulation(i);
     }
     PlayerInfo winner = null;
     PlayerInfo second = null;
@@ -2614,6 +2613,9 @@ public final class NewsFactory {
           && vote.getTurnsToVote() == 0) {
         hasVoted = true;
         for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
+          if (vote.getNumberOfVotes(i) == 0) {
+            continue;
+          }
           if (vote.getChoice(i) == VotingChoice.VOTED_NO) {
             noVotes = noVotes + vote.getNumberOfVotes(i);
             String realm = map.getPlayerByIndex(
@@ -2624,7 +2626,7 @@ public final class NewsFactory {
             votingString.append(" with ");
             int percent = vote.getNumberOfVotes(i) * 100 / galaxyPopulation;
             votingString.append(percent);
-            votingString.append("%.");
+            votingString.append(" votes.");
           }
           if (vote.getChoice(i) == VotingChoice.VOTED_YES) {
             yesVotes = yesVotes + vote.getNumberOfVotes(i);
@@ -2636,7 +2638,7 @@ public final class NewsFactory {
             votingString.append(" with ");
             int percent = vote.getNumberOfVotes(i) * 100 / galaxyPopulation;
             votingString.append(percent);
-            votingString.append("%.");
+            votingString.append(" votes.");
           }
           if (vote.getChoice(i) == VotingChoice.ABSTAIN) {
             abstainVotes = abstainVotes + vote.getNumberOfVotes(i);
@@ -2645,8 +2647,9 @@ public final class NewsFactory {
             votingString.append(" with ");
             int percent = vote.getNumberOfVotes(i) * 100 / galaxyPopulation;
             votingString.append(percent);
-            votingString.append("%.");
+            votingString.append(" votes.");
           }
+          votingString.append("\n");
         }
         VotingChoice choice = VotingChoice.NOT_VOTED;
         if (yesVotes + noVotes > abstainVotes) {

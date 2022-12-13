@@ -2594,10 +2594,6 @@ public final class NewsFactory {
     if (limit == 0) {
       return null;
     }
-    int galaxyPopulation = 0;
-    for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
-      galaxyPopulation = galaxyPopulation + map.getTotalNumberOfPopulation(i);
-    }
     PlayerInfo winner = null;
     PlayerInfo second = null;
     int votedWinner = 0;
@@ -2624,8 +2620,7 @@ public final class NewsFactory {
             votingString.append(" voted ");
             votingString.append(realm);
             votingString.append(" with ");
-            int percent = vote.getNumberOfVotes(i) * 100 / galaxyPopulation;
-            votingString.append(percent);
+            votingString.append(vote.getNumberOfVotes(i));
             votingString.append(" votes.");
           }
           if (vote.getChoice(i) == VotingChoice.VOTED_YES) {
@@ -2636,8 +2631,7 @@ public final class NewsFactory {
             votingString.append(" voted ");
             votingString.append(realm);
             votingString.append(" with ");
-            int percent = vote.getNumberOfVotes(i) * 100 / galaxyPopulation;
-            votingString.append(percent);
+            votingString.append(vote.getNumberOfVotes(i));
             votingString.append(" votes.");
           }
           if (vote.getChoice(i) == VotingChoice.ABSTAIN) {
@@ -2645,8 +2639,7 @@ public final class NewsFactory {
             votingString.append(map.getPlayerByIndex(i).getEmpireName());
             votingString.append(" abstain voting");
             votingString.append(" with ");
-            int percent = vote.getNumberOfVotes(i) * 100 / galaxyPopulation;
-            votingString.append(percent);
+            votingString.append(vote.getNumberOfVotes(i));
             votingString.append(" votes.");
           }
           votingString.append("\n");

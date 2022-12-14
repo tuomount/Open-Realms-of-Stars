@@ -3278,6 +3278,51 @@ public final class NewsFactory {
   }
 
   /**
+   * Create voting string. This means text how each realm voted.
+   * @param vote Vote where to write about text.
+   * @param realmNames In array.
+   * @return VotingString
+   */
+  private static String createVotingString(final Vote vote,
+      final String[] realmNames) {
+    int noVotes = 0;
+    int yesVotes = 0;
+    int abstainVotes = 0;
+    StringBuilder votingString = new StringBuilder();
+    for (int i = 0; i < vote.getNumberOfRealms(); i++) {
+      if (vote.getNumberOfVotes(i) == 0) {
+        continue;
+      }
+      if (vote.getChoice(i) == VotingChoice.VOTED_NO) {
+        noVotes = noVotes + vote.getNumberOfVotes(i);
+        votingString.append(realmNames[i]);
+        votingString.append(" voted NO");
+        votingString.append(" with ");
+        votingString.append(vote.getNumberOfVotes(i));
+        votingString.append(" votes.");
+      }
+      if (vote.getChoice(i) == VotingChoice.VOTED_YES) {
+        yesVotes = yesVotes + vote.getNumberOfVotes(i);
+        votingString.append(realmNames[i]);
+        votingString.append(" voted YES");
+        votingString.append(" with ");
+        votingString.append(vote.getNumberOfVotes(i));
+        votingString.append(" votes.");
+      }
+      if (vote.getChoice(i) == VotingChoice.ABSTAIN
+          || vote.getChoice(i) == VotingChoice.NOT_VOTED) {
+        abstainVotes = abstainVotes + vote.getNumberOfVotes(i);
+        votingString.append(realmNames[i]);
+        votingString.append(" abstain voting");
+        votingString.append(" with ");
+        votingString.append(vote.getNumberOfVotes(i));
+        votingString.append(" votes.");
+      }
+      votingString.append("\n");
+    }
+    return votingString.toString();
+  }
+  /**
    * Make Voting ended news
    * @param vote New vote to be organized
    * @param choice Which choice won the voting
@@ -3285,11 +3330,12 @@ public final class NewsFactory {
    *               If vote is something else this can be null.
    * @param secondCandidate for ruler of galaxy.
    *               If vote is something else this can be null.
+   * @param realmNames Realm names in array.
    * @return NewsData
    */
   public static NewsData makeVotingEndedNews(final Vote vote,
       final VotingChoice choice, final PlayerInfo firstCandidate,
-      final PlayerInfo secondCandidate) {
+      final PlayerInfo secondCandidate, final String[] realmNames) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -3424,6 +3470,8 @@ public final class NewsFactory {
       sb.append(no);
       sb.append(" per cent. ");
     }
+    sb.append("\n");
+    sb.append(createVotingString(vote, realmNames));
     news.setNewsText(sb.toString());
     return news;
   }

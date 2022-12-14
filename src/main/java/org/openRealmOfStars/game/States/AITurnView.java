@@ -2159,11 +2159,13 @@ public class AITurnView extends BlackPanel {
           VotingChoice choice = vote.getResult(
               game.getStarMap().getVotes().getFirstCandidate());
           news = NewsFactory.makeVotingEndedNews(vote, choice, firstCandidate,
-              secondCandidate);
+              secondCandidate,
+              game.getStarMap().getPlayerList().getRealmNamesInArray());
         } else {
           VotingChoice choice = vote.getResult(
               game.getStarMap().getVotes().getFirstCandidate());
-          news = NewsFactory.makeVotingEndedNews(vote, choice, null, null);
+          news = NewsFactory.makeVotingEndedNews(vote, choice, null, null,
+              game.getStarMap().getPlayerList().getRealmNamesInArray());
         }
         game.getStarMap().getNewsCorpData().addNews(news);
         GalacticEvent event = new GalacticEvent(news.getNewsText());

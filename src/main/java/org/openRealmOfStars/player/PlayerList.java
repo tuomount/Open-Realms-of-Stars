@@ -311,6 +311,13 @@ public class PlayerList {
         }
       }
     }
+  }
 
+  /**
+   * Get Realm Names in array
+   * @return Realm names in array
+   */
+  public String[] getRealmNamesInArray() {
+    return list.toArray(new String[list.size()]);
   }
 }

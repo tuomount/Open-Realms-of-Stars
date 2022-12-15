@@ -1942,11 +1942,15 @@ public class AITurnView extends BlackPanel {
         } else if (value > 0) {
           vote.setChoice(i, VotingChoice.VOTED_YES);
         } else {
-          value = DiceGenerator.getRandom(1);
-          if (value == 0) {
-            vote.setChoice(i, VotingChoice.VOTED_YES);
+          if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+            vote.setChoice(i, VotingChoice.ABSTAIN);
           } else {
-            vote.setChoice(i, VotingChoice.VOTED_NO);
+            value = DiceGenerator.getRandom(1);
+            if (value == 0) {
+              vote.setChoice(i, VotingChoice.VOTED_YES);
+            } else {
+              vote.setChoice(i, VotingChoice.VOTED_NO);
+            }
           }
         }
       }
@@ -2155,11 +2159,13 @@ public class AITurnView extends BlackPanel {
           VotingChoice choice = vote.getResult(
               game.getStarMap().getVotes().getFirstCandidate());
           news = NewsFactory.makeVotingEndedNews(vote, choice, firstCandidate,
-              secondCandidate);
+              secondCandidate,
+              game.getStarMap().getPlayerList().getRealmNamesInArray());
         } else {
           VotingChoice choice = vote.getResult(
               game.getStarMap().getVotes().getFirstCandidate());
-          news = NewsFactory.makeVotingEndedNews(vote, choice, null, null);
+          news = NewsFactory.makeVotingEndedNews(vote, choice, null, null,
+              game.getStarMap().getPlayerList().getRealmNamesInArray());
         }
         game.getStarMap().getNewsCorpData().addNews(news);
         GalacticEvent event = new GalacticEvent(news.getNewsText());
@@ -3537,6 +3543,14 @@ public class AITurnView extends BlackPanel {
           if (realm.isHuman() && !game.getStarMap().isHumanLost()) {
             setNextState(GameState.GAME_END_VIEW, realm);
           }
+          if (realm.getRuler() != null) {
+            Leader leader = realm.getRuler();
+            leader.setJob(Job.DEAD);
+            NewsData news = NewsFactory.makeLeaderDies(leader, realm,
+                "realm lost all colonized planets and there are no"
+                + " usable colony ships left.");
+            game.getStarMap().getNewsCorpData().addNews(news);
+          }
           boolean lost = false;
           for (int j = 0;
               j < game.getStarMap().getPlayerList().getCurrentMaxRealms();
@@ -3690,9 +3704,24 @@ public class AITurnView extends BlackPanel {
       if (news != null) {
         GalacticEvent event = new GalacticEvent(news.getNewsText());
         game.getStarMap().getHistory().addEvent(event);
-        game.getStarMap().setGameEnded(true);
         NewsCorpData newsData = game.getStarMap().getNewsCorpData();
         newsData.addNews(news);
+        if (!news.getImageInstructions().contains("NO RULER VOTED YET!")) {
+          game.getStarMap().setGameEnded(true);
+        } else {
+          int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;
+          Vote vote = game.getStarMap().getVotes().generateNextVote(
+              game.getStarMap().getScoreDiplomacy() + 1,
+              game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
+          if (vote != null && vote.getType() == VotingType.RULER_OF_GALAXY) {
+            PlayerInfo firstCandidate = game.getStarMap().getPlayerByIndex(
+                game.getStarMap().getVotes().getFirstCandidate());
+            PlayerInfo secondCandidate = game.getStarMap().getPlayerByIndex(
+                game.getStarMap().getVotes().getSecondCandidate());
+            news = NewsFactory.makeVotingNews(vote, firstCandidate,
+                secondCandidate);
+          }
+        }
       }
       news = NewsFactory.makePopulationVictoryNewsAtEnd(game.getStarMap());
       if (news != null) {

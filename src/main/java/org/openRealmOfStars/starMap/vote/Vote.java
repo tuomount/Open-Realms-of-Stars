@@ -11,7 +11,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019 Tuomo Untinen
+* Copyright (C) 2019,2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -311,6 +311,85 @@ public class Vote {
       sb.append(" VS ");
       sb.append(map.getPlayerList().getPlayerInfoByIndex(
           getSecondCandidateIndex()).getEmpireName());
+    }
+    return sb.toString();
+  }
+  /**
+   * Get Long description of voting. This will also contain the short
+   * description.
+   * @param map StarMap
+   * @return Description
+   */
+  public String getLongDescription(final StarMap map) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getDescription(map));
+    sb.append("\n\n");
+    switch (type) {
+    case BAN_NUCLEAR_WEAPONS: {
+      sb.append("Orbital nuclear bombs will be banned if this voting passes."
+          + " It means after this there cannot be new ship design with"
+          + " nuclear bombs and even old design cannot be build anymore."
+          + " However old existing ships with possible nuclear boms are still"
+          + " allowed.");
+      break;
+    }
+    case BAN_PRIVATEER_SHIPS: {
+      sb.append("Unmarked privateer ships will be banned if this voting"
+          + " passes. It means after this there cannot be new ship design with"
+          + " privateer ship hull and privateer module. Even old design cannot"
+          + " be build anymore. However old existing privateer ships are still"
+          + " allowed.");
+      break;
+    }
+    case FIRST_CANDIDATE: {
+      sb.append("Internal voting should not be visible to player.");
+      break;
+    }
+    default:
+    case SECOND_CANDIDATE: {
+      sb.append("Internal voting should not be visible to player.");
+      break;
+    }
+    case GALACTIC_OLYMPIC_PARTICIPATE: {
+      sb.append("Biggest and best galactic sport event until someone arranges"
+          + " new galactic olympics. Galactic olympics are good way to gain"
+          + " good reputation among supports but it can cause bad reputation"
+          + " along non supporting realms.");
+      break;
+    }
+    case GALACTIC_PEACE: {
+      sb.append("Galactic wide peace over all realms. If this voting passes"
+          + " all war is galaxy will be changed to peace. How ever this does"
+          + " not prevent getting new wars after voting has passed.");
+      break;
+    }
+    case TAXATION_OF_RICHEST_REALM: {
+      sb.append("Taxation of richest realm voting is that if this passes realm"
+          + " which has most of the wealth will pay one credit for poorest"
+          + " realm after this. Note that richest and poorest realm can be"
+          + " changed over the time.");
+      break;
+    }
+    case SECOND_CANDIDATE_MILITARY: {
+      sb.append("If this voting passes it means that second candidate for ruler"
+          + " of the galaxy will be the one with highest military. Second and"
+          + " first candidate cannot be the same realm. If this voting does"
+          + " not pass it means that second candidate will be the one with"
+          + " highest amount of United Galaxy Towers. Here applies same rule "
+          + " that second and first candidate cannot be the same realm.");
+      break;
+    }
+    case RULER_OF_GALAXY: {
+      sb.append("This is voting for Ruler of the Galaxy. There will be two"
+          + " candidates: First one is the Galaxy Secretary which build first"
+          + " required amount of United Galaxy Towers. Second candidate is"
+          + " one who either has biggest military or highest amount of"
+          + " United Galaxy Towers. In this voting 50% of galaxy population"
+          + " must vote in order this voting to be accepted. Each realm can"
+          + " vote either of the candidates or abstain voting. If ruler is not"
+          + " decided new voting will be arranged.");
+      break;
+    }
     }
     return sb.toString();
   }

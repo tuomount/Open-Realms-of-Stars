@@ -2716,6 +2716,7 @@ public class Game implements ActionListener {
       } else {
         news = NewsFactory.makeVotingNews(vote, null, null);
       }
+      getStarMap().getVotes().addNewVote(vote);
       getStarMap().getNewsCorpData().addNews(news);
       GalacticEvent event = new GalacticEvent(news.getNewsText());
       getStarMap().getHistory().addEvent(event);

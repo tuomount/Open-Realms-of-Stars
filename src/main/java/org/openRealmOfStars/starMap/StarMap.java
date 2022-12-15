@@ -5240,6 +5240,13 @@ public class StarMap {
         first = i;
       }
     }
+    for (int i = 0; i < towers.length; i++) {
+      if (first != i && towers[i] > 0 && second == -1) {
+        second = i;
+      } else if (first != i && second != -1 && towers[i] > towers[second]) {
+        second = i;
+      }
+    }
     if (second == -1) {
       // No other realm has tower choosing strongest military then
       second = getNewsCorpData().getMilitary().getBiggest();

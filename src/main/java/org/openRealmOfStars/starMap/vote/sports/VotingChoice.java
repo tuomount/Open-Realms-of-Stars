@@ -4,7 +4,7 @@ package org.openRealmOfStars.starMap.vote.sports;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019 Tuomo Untinen
+* Copyright (C) 2019,2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -35,7 +35,11 @@ public enum VotingChoice {
   /**
    * Realm has voted no.
    */
-  VOTED_NO;
+  VOTED_NO,
+  /**
+   * Vote has been abstained
+   */
+  ABSTAIN;
 
   /**
    * Get index as int for voting choice
@@ -46,6 +50,7 @@ public enum VotingChoice {
       case NOT_VOTED: return 0;
       case VOTED_YES: return 1;
       case VOTED_NO:  return 2;
+      case ABSTAIN:   return 3;
       default: return 0;
     }
   }
@@ -59,6 +64,7 @@ public enum VotingChoice {
       case NOT_VOTED: return "Not voted";
       case VOTED_YES: return "Yes";
       case VOTED_NO:  return "No";
+      case ABSTAIN:   return "Abstain";
       default: return "Not voted";
     }
   }
@@ -73,6 +79,7 @@ public enum VotingChoice {
       case 0: return NOT_VOTED;
       case 1: return VOTED_YES;
       case 2: return VOTED_NO;
+      case 3: return ABSTAIN;
       default: return NOT_VOTED;
     }
   }

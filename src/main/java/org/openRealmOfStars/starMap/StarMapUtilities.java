@@ -27,7 +27,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -353,6 +353,7 @@ public final class StarMapUtilities {
   /**
    * Get Voting support value. Negative value is for
    * NO and positive value is for yes.
+   * Abstain value for zero.
    * @param info PlayerInfo
    * @param vote Voting
    * @param map StarMap
@@ -624,7 +625,22 @@ public final class StarMapUtilities {
       if (info.getDiplomacy().getLiking(second) == Diplomacy.HATE) {
         result = result + 10;
       }
-
+      if (Math.abs(result) < 10) {
+        boolean notKnowEnoughFirst = false;
+        boolean notKnowEnoughSecond = false;
+        DiplomacyBonusList bonusList = info.getDiplomacy().getDiplomacyList(
+            first);
+        if (bonusList != null && bonusList.getNumberOfMeetings() < 4) {
+          notKnowEnoughFirst = true;
+        }
+        bonusList = info.getDiplomacy().getDiplomacyList(second);
+        if (bonusList != null && bonusList.getNumberOfMeetings() < 4) {
+          notKnowEnoughSecond = true;
+        }
+        if (notKnowEnoughFirst && notKnowEnoughSecond) {
+          result = 0;
+        }
+      }
     }
 
 

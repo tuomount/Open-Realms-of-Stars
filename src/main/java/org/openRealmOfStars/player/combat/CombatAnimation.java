@@ -232,6 +232,10 @@ public class CombatAnimation {
     } else if (animType == CombatAnimationType.SCANNING) {
       explosionAnim = GuiStatics.SCANNER;
       explosionSfx = SoundPlayer.SCANNER_OVERLOAD;
+    } else if (animType == CombatAnimationType.GRAVITY_RIPPER) {
+      explosionAnim = GuiStatics.GRAVITY_RIPPER;
+      // TODO: Change sound effect
+      explosionSfx = SoundPlayer.EXPLOSION_EMP;
     } else if (animType == CombatAnimationType.SHIELD) {
       explosionAnim = GuiStatics.SHIELD1;
     } else {
@@ -333,7 +337,10 @@ public class CombatAnimation {
       final ShipComponent weapon, final int hit) {
     CombatAnimationType initType = CombatAnimationType.PLASMA_BEAM;
     switch (weapon.getType()) {
-      case GRAVITY_RIPPER: // TODO Change better animation
+      case GRAVITY_RIPPER: {
+        initType = CombatAnimationType.GRAVITY_RIPPER;
+        break;
+      }
       case PLASMA_BEAM: {
         initType = CombatAnimationType.PLASMA_BEAM;
         break;
@@ -647,6 +654,38 @@ public class CombatAnimation {
       }
     } else if (type == CombatAnimationType.ECM_TORPEDO
         || type == CombatAnimationType.HE_MISSILE) {
+      if (Math.round(sx) == Math.round(ex)
+          && Math.round(sy) == Math.round(ey)) {
+        count--;
+        doAnimationHit(13);
+        if (animFrame < explosionAnim.getMaxFrames()) {
+          if (animFrame == 0 && hit) {
+            SoundPlayer.playSound(explosionSfx);
+            if (getShieldAnimFrame() != null) {
+              SoundPlayer.playShieldSound();
+            }
+          }
+          animFrame++;
+        } else {
+          showAnim = false;
+        }
+      } else {
+        for (int i = 0; i < 5; i++) {
+          sx = sx + mx;
+          sy = sy + my;
+          int px = (int) Math.round(sx);
+          int py = (int) Math.round(sy);
+          ParticleEffect particle = new ParticleEffect(
+              ParticleEffectType.MISSILE_FIRE, px, py);
+          particles.add(particle);
+          if (Math.round(sx) == Math.round(ex)
+              && Math.round(sy) == Math.round(ey)) {
+            break;
+          }
+        }
+      }
+    } else if (type == CombatAnimationType.GRAVITY_RIPPER) {
+      //TODO This might require tweaking
       if (Math.round(sx) == Math.round(ex)
           && Math.round(sy) == Math.round(ey)) {
         count--;

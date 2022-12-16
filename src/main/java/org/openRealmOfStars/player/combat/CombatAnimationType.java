@@ -99,6 +99,10 @@ public enum CombatAnimationType {
   /**
    * Multicannon
    */
-  MULTICANNON;
+  MULTICANNON,
+  /**
+   * Gravity Ripper
+   */
+  GRAVITY_RIPPER;
 
 }

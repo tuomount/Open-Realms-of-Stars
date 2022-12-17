@@ -1544,8 +1544,7 @@ public class MapPanel extends JPanel {
           break;
           }
         case GRAVITY_RIPPER: {
-          // TODO: Change better sound effect
-          SoundPlayer.playSound(SoundPlayer.ELECTRIC);
+          SoundPlayer.playSound(SoundPlayer.GRAVITY_RIPPER);
           break;
           }
         case ECM_TORPEDO:

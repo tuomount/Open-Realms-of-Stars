@@ -147,6 +147,10 @@ public class CombatAnimation {
   private int loopCount;
 
   /**
+   * Counter for slowing down animation
+   */
+  private int slowerAnimation;
+  /**
    * Combat Animation
    * @param shooter Ship who shot
    * @param target Ship who took the shot
@@ -180,6 +184,7 @@ public class CombatAnimation {
     this.shooter = start;
     loops = 0;
     loopCount = 0;
+    slowerAnimation = 0;
     if (hitType <= 0) {
       this.hit = true;
     } else {
@@ -234,8 +239,7 @@ public class CombatAnimation {
       explosionSfx = SoundPlayer.SCANNER_OVERLOAD;
     } else if (animType == CombatAnimationType.GRAVITY_RIPPER) {
       explosionAnim = GuiStatics.GRAVITY_RIPPER;
-      // TODO: Change sound effect
-      explosionSfx = SoundPlayer.EXPLOSION_EMP;
+      explosionSfx = SoundPlayer.GRAVITY_RIPPER;
     } else if (animType == CombatAnimationType.SHIELD) {
       explosionAnim = GuiStatics.SHIELD1;
     } else {
@@ -265,6 +269,10 @@ public class CombatAnimation {
     case LASER_BEAM:
     case ION_CANNON: {
       count = 40;
+      break;
+    }
+    case GRAVITY_RIPPER: {
+      count = 60;
       break;
     }
     case RAILGUN: {
@@ -457,9 +465,10 @@ public class CombatAnimation {
         || type == CombatAnimationType.LASER_BEAM
         || type == CombatAnimationType.PHASOR_BEAM
         || type == CombatAnimationType.PLASMA_BEAM
-        || type == CombatAnimationType.ION_CANNON) {
+        || type == CombatAnimationType.ION_CANNON
+        || type == CombatAnimationType.GRAVITY_RIPPER) {
       count--;
-      if (count < FRAME_MARKER_WHEN_EXPLODE) {
+      if (count < FRAME_MARKER_WHEN_EXPLODE * 2) {
         doAnimationHit(20);
         if (animFrame < explosionAnim.getMaxFrames()) {
           if (animFrame == 0 && hit) {
@@ -468,7 +477,15 @@ public class CombatAnimation {
               SoundPlayer.playShieldSound();
             }
           }
-          animFrame++;
+          if (type == CombatAnimationType.GRAVITY_RIPPER) {
+            slowerAnimation++;
+            if (slowerAnimation == 2) {
+              slowerAnimation = 0;
+              animFrame++;
+            }
+          } else {
+            animFrame++;
+          }
         } else {
           showAnim = false;
         }
@@ -477,6 +494,9 @@ public class CombatAnimation {
       boolean phasorsParticle = type == CombatAnimationType.PHASOR_BEAM;
       boolean antimatterParticle = type == CombatAnimationType.ANTIMATTER_BEAM;
       boolean ionParticle = type == CombatAnimationType.ION_CANNON;
+      if (type == CombatAnimationType.GRAVITY_RIPPER) {
+        phasorsParticle = true;
+      }
       for (int i = 0; i < parts; i++) {
         int dist = DiceGenerator.getRandom(distance);
         int px = (int) Math.round(dist * mx + sx);
@@ -654,38 +674,6 @@ public class CombatAnimation {
       }
     } else if (type == CombatAnimationType.ECM_TORPEDO
         || type == CombatAnimationType.HE_MISSILE) {
-      if (Math.round(sx) == Math.round(ex)
-          && Math.round(sy) == Math.round(ey)) {
-        count--;
-        doAnimationHit(13);
-        if (animFrame < explosionAnim.getMaxFrames()) {
-          if (animFrame == 0 && hit) {
-            SoundPlayer.playSound(explosionSfx);
-            if (getShieldAnimFrame() != null) {
-              SoundPlayer.playShieldSound();
-            }
-          }
-          animFrame++;
-        } else {
-          showAnim = false;
-        }
-      } else {
-        for (int i = 0; i < 5; i++) {
-          sx = sx + mx;
-          sy = sy + my;
-          int px = (int) Math.round(sx);
-          int py = (int) Math.round(sy);
-          ParticleEffect particle = new ParticleEffect(
-              ParticleEffectType.MISSILE_FIRE, px, py);
-          particles.add(particle);
-          if (Math.round(sx) == Math.round(ex)
-              && Math.round(sy) == Math.round(ey)) {
-            break;
-          }
-        }
-      }
-    } else if (type == CombatAnimationType.GRAVITY_RIPPER) {
-      //TODO This might require tweaking
       if (Math.round(sx) == Math.round(ex)
           && Math.round(sy) == Math.round(ey)) {
         count--;

@@ -274,6 +274,12 @@ public final class SoundPlayer {
       "/resources/sounds/machinegun.wav";
 
   /**
+   * Sound effect for Gravity Ripper
+   */
+  public static final String GRAVITY_RIPPER =
+      "/resources/sounds/gravity_ripper.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */

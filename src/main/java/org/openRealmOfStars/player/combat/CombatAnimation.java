@@ -239,7 +239,7 @@ public class CombatAnimation {
       explosionSfx = SoundPlayer.SCANNER_OVERLOAD;
     } else if (animType == CombatAnimationType.GRAVITY_RIPPER) {
       explosionAnim = GuiStatics.GRAVITY_RIPPER;
-      explosionSfx = SoundPlayer.GRAVITY_RIPPER;
+      explosionSfx = SoundPlayer.EXPLOSION;
     } else if (animType == CombatAnimationType.SHIELD) {
       explosionAnim = GuiStatics.SHIELD1;
     } else {

@@ -1123,11 +1123,16 @@ private int increaseHitChanceByComponent() {
       break;
     }
     case GRAVITY_RIPPER: {
-      if (this.getShield() > 0) {
+      if (this.getShield() > weapon.getDamage()) {
         return new ShipDamage(ShipDamage.NO_DAMAGE,
             "Attack deflected to shield!");
+      } else if (this.getShield() == weapon.getDamage()) {
+        this.setShield(this.getShield() - 1);
+        return new ShipDamage(ShipDamage.NO_DAMAGE,
+            "Attack lowered shield but was deflected!");
       }
-      damage = weapon.getDamage();
+      damage = weapon.getDamage() - this.getShield();
+      this.setShield(this.getShield() - 1);
       if (damage <= this.getArmor()) {
         this.setArmor(this.getArmor() - damage);
         return new ShipDamage(ShipDamage.NO_DAMAGE,

@@ -495,6 +495,7 @@ public final class MusicPlayer {
         play(nowPlaying);
       } else if (state == GameState.MAIN_MENU
           || state == GameState.CREDITS
+          || state == GameState.CHANGE_LOG
           || state == GameState.LOAD_GAME
           || state == GameState.NEW_GAME
           || state == GameState.GALAXY_CREATION

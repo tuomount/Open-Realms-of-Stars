@@ -115,6 +115,10 @@ public class MainMenu extends BlackPanel {
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
     invisible.add(btn);
+    btn = new SpaceButton("View change log", GameCommands.COMMAND_CHANGE_LOG);
+    btn.addActionListener(listener);
+    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    invisible.add(btn);
     btn = new SpaceButton("Quit", GameCommands.COMMAND_QUIT_GAME);
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);

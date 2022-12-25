@@ -534,20 +534,64 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 4.0 "
       + "http://creativecommons.org/licenses/by/4.0/\n\n";
 
+  /**
+   * Selection for credits and license text.
+   */
+  public static final int CREDITS_AND_LICENSE = 0;
+
+  /**
+   * Selection for change log.
+   */
+  public static final int CHANGE_LOG = 1;
 
   /**
    * Constructor for Credits view
    * @param listener Action Listener for command
    * @param title Program Title
    * @param version Program Version
+   * @param textType See CREDITS_AND_LICENSE and CHANGE_LOG.
    * @throws IOException If error happens on reading license files.
    */
   public CreditsView(final ActionListener listener, final String title,
+      final String version, final int textType) throws IOException {
+    String creditsText = "";
+    if (textType == CREDITS_AND_LICENSE) {
+      creditsText = generateCreditsAndLicense(title, version);
+    }
+    if (textType == CHANGE_LOG) {
+      creditsText = generateChangeLog(title, version);
+    }
+    this.setLayout(new BorderLayout());
+    textArea = new StarFieldTextArea();
+    textArea.setScrollText(creditsText, NUMBER_OF_LINES);
+    textArea.setText(creditsText);
+    textArea.setSmoothScroll(true);
+    textArea.setEditable(false);
+    this.add(textArea, BorderLayout.CENTER);
+
+    SpaceButton btn = new SpaceButton("OK", GameCommands.COMMAND_OK);
+    btn.addActionListener(listener);
+    this.add(btn, BorderLayout.SOUTH);
+
+  }
+
+  /**
+  * Generate credits and license text.
+  * @param title Program Title
+  * @param version Program Version
+  * @return Credit and license text
+  * @throws IOException If error happens on reading license files.
+  */
+  public String generateCreditsAndLicense(final String title,
       final String version) throws IOException {
-    String creditsText = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-        + "\n\n\n\n\n\n\n\n\n\n\n" + "# " + title + " " + version + "\n\n"
-        + "# Credits\n\n"
-        + MAIN_CREDITS;
+    StringBuilder sb = new StringBuilder();
+    sb.append("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        + "\n\n\n\n\n\n\n\n\n\n\n# ");
+    sb.append(title);
+    sb.append(" ");
+    sb.append(version);
+    sb.append("\n\n# Credits\n\n");
+    sb.append(MAIN_CREDITS);
 
     InputStream is = CreditsView.class
         .getResourceAsStream("/resources/GPL2.txt");
@@ -570,25 +614,42 @@ public class CreditsView extends BlackPanel {
     try (DataInputStream dis = new DataInputStream(bis)) {
       squarionLicense = IOUtilities.readTextFile(dis);
     }
-    creditsText = creditsText + "\n\n"
-        + "# GNU GENERAL PUBLIC LICENSE Version 2, June 1991\n" + gpl2License
-        + "\n\n" + "# Cubellan Font license\n\n"
-        + cubellanLicense + "\n\n" + "# Squarion Font License\n\n"
-        + squarionLicense;
-    this.setLayout(new BorderLayout());
-    textArea = new StarFieldTextArea();
-    textArea.setScrollText(creditsText, NUMBER_OF_LINES);
-    textArea.setText(creditsText);
-    textArea.setSmoothScroll(true);
-    textArea.setEditable(false);
-    this.add(textArea, BorderLayout.CENTER);
-
-    SpaceButton btn = new SpaceButton("OK", GameCommands.COMMAND_OK);
-    btn.addActionListener(listener);
-    this.add(btn, BorderLayout.SOUTH);
-
+    sb.append("\n\n"
+        + "# GNU GENERAL PUBLIC LICENSE Version 2, June 1991\n");
+    sb.append(gpl2License);
+    sb.append("\n\n# Cubellan Font license\n\n");
+    sb.append(cubellanLicense);
+    sb.append("\n\n# Squarion Font License\n\n");
+    sb.append(squarionLicense);
+    return sb.toString();
   }
+  /**
+  * Generate Change lgo.
+  * @param title Program Title
+  * @param version Program Version
+  * @return Change log text
+  * @throws IOException If error happens on reading license files.
+  */
+  public String generateChangeLog(final String title,
+      final String version) throws IOException {
+    StringBuilder sb = new StringBuilder();
+    sb.append("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        + "\n\n\n\n\n\n\n\n\n\n\n# ");
+    sb.append(title);
+    sb.append(" ");
+    sb.append(version);
+    sb.append("\n\n# Change log\n\n");
 
+    InputStream is = CreditsView.class
+        .getResourceAsStream("/resources/changelog.txt");
+    BufferedInputStream bis = new BufferedInputStream(is);
+    String changeLog = "";
+    try (DataInputStream dis = new DataInputStream(bis)) {
+      changeLog = IOUtilities.readTextFile(dis);
+    }
+    sb.append(changeLog);
+    return sb.toString();
+  }
   /**
    * Get full credits as a String
    * @return Full credits

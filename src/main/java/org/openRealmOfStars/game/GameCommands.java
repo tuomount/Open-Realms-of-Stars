@@ -508,6 +508,10 @@ public final class GameCommands {
    * Show credits command
    */
   public static final String COMMAND_CREDITS = "Credits";
+  /**
+   * Show change log command
+   */
+  public static final String COMMAND_CHANGE_LOG = "ChangeLog";
 
   /**
    * Quit Game command

@@ -1,0 +1,326 @@
+- New features and updates -
+
+* Tutorial has search option.
+* There is tool tip for showing diplomatic relation explanation.
+* Alonian ship bridge image.
+* Most of the images are only loaded when actually needed.
+* Starting planet could be something else than number 1.
+* New image for alien ship random event.
+* Galactic Ruler diplomatic voting must have over 50% of votes to pass.
+* Leader recruit pools is been added.
+* Diplomatic votings can be now selected from list. This used to be random.
+* Ancient Artifact technology has been added. This is very challenging to get.
+* Animation and sound effect for Gravity ripper weapon.
+* Tutorial texts has been updated.
+* Added 13 random event pictures. These were made using Stable Fusion.
+* Change Log viewer added to main menu.
+
+- Bugfixes -
+
+* Fixes Sol system name conflicts.
+* Fixes second realm Credit trade text when increasing the credit amount.
+* When merging fleet which has no move left, merged fleet should lose the moves too.
+* Rushing buildings purchase button might enabled, then view planet again it is disabled then
+* Broadcasting artifact cannot be found from regular artifact location anymore.
+* Fixes molten lava and arid planetary event activation.
+* Fixes issue where ruler was left alive when realm was lost.
+
+# Open Realm of Stars 0.22.0Beta 
+
+- New features and updates -
+
+* Adds three new star map music and one new combat music.
+* Starmap can be scrolled by dragging it with mouse. This is configurable from options.
+* In tactical combat weapon ranges can be show visually.
+* First human space race starts from Planet Earth. Also all other planets resemble Sol.
+* Ancient artifacts are discover-able.
+* Galactic News Reader Station is discover-able in the Galaxy.
+* Adds two new star images to game.
+* Leaders with heirs are shown in family tree.
+* AI Exploration has been improved
+* AI will change colonization target earlier if planet is being colonized other realm and planet is visible.
+* AI Handling of population now considers whole realm research production
+* Added arrows keys to change realm in realm view.
+* Space pirate can ask or pay protection credit not to attack against realm fleets.
+* Corruption has been redesigned.
+* Leaders can be corrupted based on amount of planets, credits realm has. Also how long leader has been in same job affects for corruption.
+* Random event: Aggressive wild life now place "building" on planet
+* New space anomaly Leader in stasis.
+* Other leaders than mechions can be found from this space anomaly
+* Synthdroids leader can be found same space anomaly as Mechions.
+
+- Bugfixes -
+
+* Fixes issue where possible route was not shown before cursor was moved.
+* Fixes issues where route was still shown until mouse was move when fleet was set to defend or fix.
+* Fixes issue where focus was not correct when browsing next and previous messages.
+* Changes wrong text on random event pop ups.
+* New seed generations for PRNGs.
+* Fixed typo in Galactic Info when clicking star.
+* Fixes bug where diplomacy can be done with space monsters.
+* Fixes NPE if destroy fleet mission do not have home planet.
+* Fixes wrongly calculated heir chance.
+* Fixes colony missions for space pirates.
+* Fixes possible NPE from PlanetBombingView class.
+* Stops autoexplore to search space anomalies for human player.
+* Fixes AI always attack againts orbitals.
+* Add missing description for Improved engineering rare tech.
+* Fixes wrong size generated stars background.
+* Fixes jammed gather mission fleet.
+* Escaped defending fleet returns now to closest home port.
+* Fixes rare NPE when drawing the star map.
+
+# Open Realm of Stars 0.21.0Beta
+
+- New Features and Updates -
+
+* Alonians, Space race which start without starting planet.
+* Synthdroids, Space race which are mechanical race but they still eat food compared to Mechions.
+* Realm does not lose if last planet is lost but they have colony ship with colonist(s).
+* Possibility to use AI designing ships for human player.
+* Regular moves can be also made as routes. This is done simply left clicking at least two sectors away from fleet.
+* New image for galactic news reader. Old one is used for Synthdroids.
+* New base weapon type: Multicannon. Some space race get this instead of railguns.
+* Not accurate as railguns and shorter range but this requires no energy to use.
+* Possibility to disable graphics level on starmap. Stars and nebulae can be on same layer.
+* Improves performance and should also increase battery life on laptops.
+* Space monsters in space anomalies. There can be space krakens and space worms in space anomalies.
+* Planet governor now automatically selects next building project based on selected guidance.
+* Building project can be changed if wanted.
+* If planet is full of buildings governor also suggest which building to destroy.
+* Ancient realms are now called elder realms.
+* Space pirates may get colony ships on medium or more difficult level.
+* Galaxy can now contain over 12 realms. New maximum is 16 realms in single galaxy.
+* Smaugirian ships have their own ship bridge image.
+
+- Bugfixes -
+
+* Textbox now scroll on downwards if text is too large to fit.
+* Galaxy creation did not fully fit into screen with 768 pixels height.
+* Fixes issue where resolution kept increase when game was launched in window mode.
+* Fixes issue where AI could rebuild same orbital again and again.
+* Remove already built orbital from the building list.
+* Fixes issue where amount of mining was shown wrong for Lithorians.
+* Actual calculation was correct, but textual information was wrong.
+* Tractor beam couldn't be used with auto shoot in combat
+* Fixes bug where AI could give every technology they had to diplomatic trade.
+
+# Open Realm of Stars 0.20.0Beta
+
+- New Features and updates -
+
+* Alteirians, Space race which only live in space orbitals not on planet surface.
+* Smaugirians, Space race that can put weapons to freighters and those are still counted as unarmed.
+* Overloading scanner may reveal overloaded cloaked ship during combat.
+* Perk Cruel, Power hungry leader wanna be who has killed heirs
+* Perk Engineering, Decreases component failure during overloads.
+* Game lost view which is shown when human realm is lost.
+* Adds tutorial texts about victory conditions during game play.
+* New star background is being procedural generated when game starts.
+* AI Difficulties
+* Two Rings at game start up. Ancient realms start from inner rings and others from outer rings.
+* Corrupted perk may give leader wealth perk.
+* Default colors are added for each realm.
+* Challenging AI cannot be blocked by moving any fleet on orbit. It will send another fleet to destroy it.
+* Possibility to choose when game is created that not all news are shown to human player. Only those realms which human has met.
+* Now each space race could have own tech tree. There are some tech that are not available for each space race.
+* Clicking enemy ship at combat causes automatically shoot with best weapon.
+* Random event image Terrorist attack
+* Random event image Catastrophic accident
+* Random event image Accident
+* Random event image Leader level up
+
+- Bug fixes -
+
+* Fixes issue where AI never checked border crossing if AI realm did not have any fleets in use.
+* Fixes issue where AI never started war against human player no matter how many times borders were crossed.
+* Fixes issue where auto exploring did not inform about newly discovered planets, space anchors and anomalies.
+* Fixes issue where AI's diplomatic delegation knew realm planet location which had not met yet.
+* Fixes issue where governor bonuses were calculated twice.
+* Fixes issue where non full screen is no longer resize able during game play. Resizing is done only from Options menu.
+* Fixes issue where news about governor death during planet conquest was not shown.
+* Fixes that AI no longer uses small freighters as a scout ship. This prevented freighters to use as a freighters.
+* Fixes Orbital weapon range.
+* Fixes issue where privateer ships did not attack against orbitals.
+* Fixes realm lost news showing if non-ancient realm has been lost.
+* Fixes and improves building description texts.
+
+# Open Realm of Stars 0.19.0Beta
+
+- New features and Updates -
+
+* AI attacks against star bases, both against realms and space pirates.
+* Certain governments do not allow another space race to be their ruler.
+* Space ships can be steal with tractor beam. Target ships must not have working engines and no military weapons.
+* Planet types have suitability for each space races. Planet suitability can be increased with technology.
+* AI Mechion does not start building population too early.
+* Game mode where every realm is controlled by AI
+* Auto exploring for space ships. (Exploration algorithm is still bad)
+* Planets can build orbitals.
+* Ships enter into combat where military ships are at first row.
+* There can be now 12 realms in one single game.
+* Not all tech is trade able. Planet suitability technology is not trade able with another realms.
+* Possible to enable auto combat in space combat.
+* Space pirate difficulty level is now tuned down.
+* Game supports full-screen mode.
+* Adds number of colonist/troops on fleet to be shown when view the fleet.
+* Forces deployed starbases to be automatically defending.
+* Changes cost of material replicator and orbital shield.
+* Parallax nebulae scrolling on planet views.
+* Space Ship Bridge interior for Reborgians.
+
+- Bug fixes -
+
+* Number of admires were calculated wrong.
+* Fixed parsing issue from JSON Parser.
+* Fixed issue where governor perks where not counted for realm production.
+* Fixed too wide galaxy creation view for 1024x768 resolution
+* Fixed possible Null Pointer-Exception from bombing view.
+* Fixes issue where AI did not attack against planet if planet had any defense
+* Fixes scaling issue on popup panels.
+* Fixes possible out of bounds exception while bombing the planet.
+
+# Open Realm of Stars 0.18.0Beta
+
+- New features and Updates -
+
+* Explain each ship component in description text. This should improve information what component is really for.
+* Explain how random events selection setting works in game configuration.
+* Leaders could be placed on jail. This can happen when doing espionage mission. Leaders can be still executed if doing espionage during war time.
+* Added new race Reborgian. These are cyborg race which can synthesize other races to themselves when conquering planets.
+* Added new race Lithorian. These are metal eating beings, since these will not eat no food is needed to produce.
+* Rare techs are now shown in research view if those are available for realm.
+* Leaders now contain information what they have done and this will be used for creating flavor text for them.
+* Planet conquering has now limits how many times it can be bombed. This depends for each ship how fast combat movement they have.
+* There is now warning if moving against fleet that was not visible while moving and it would cause a war. Accidental moves against privateers/pirates can still happen.
+* AI now designs star bases with star base components if available.
+* Improves AI planet handling(mining buildings should more in balance), combat movement and space anomaly exploration.
+* New government Collective, focuses on mining and military.
+* New government Technocracy, much like democracy but focuses on technology research.
+* New government Regime, Tyrant leader without heirs
+* New government Utopia, Peaceful government giving bonus to culture. Allows only small amount leaders.
+* Alliance government name is now Union. This should stop mixing Alliance of two realms and government alliances.
+* Each government type is now some unique. Only small changes to other governments.
+* Star base hulls can contain two more components.
+* Added new music when exploring space anomaly.
+
+- Bug fixes -
+
+* Fixes bug where Mechion population had no limit on planets.
+* Fixes bug where enemy's broadcasting planets where under fog of war.
+* Fixes bug where fleet's shield/armors were not reset after turn change.
+* Fixes bug where ruler died but still functioning as ruler. This happened with accident random event.
+* Fixes possible NPE when AI explores time warp anomaly.
+* Fixes bug where tutorial was shown even it was disabled.
+* Adds information when leader is assignable in leader view.
+* Fixes long wait before diplomatic delegacy actually leaves when asked.
+* Fixes issue where planet was missing on background when AI had crossed human player's borders.
+* Adds button sounds to voting view.
+* Fixes bug where rushing button is enabled even player does not have credits or population for rushing.
+* Fixes bug where two random event would happen for same realm and thus preventing the second popup.
+* Fixes bug where data loss and scientific breakthrough popup image wasn't always shown.
+* Fixes good event to use correct counter. Previously both good and bad events used same counter.
+* Fixes that space pirates ruler is no longer Main Process Noname.
+* Fixes issue where AI's privateer does not destroy military ship.
+* Fixes issue where not biggest fleet might not be the defender.
+* Fixes issue where Massdrives and HE missiles did not calculate critical chance correctly.
+* Fixes rare issue on some sound cards where sounds were not fully played.
+
+# Open Realm of Stars 0.17.0Beta
+
+- New features and Updates -
+
+* Adds direct support for Philips Hue Lights
+* Supports up to 3 RGB lights
+* Lights are based what is happening in the game, not directly what colors are visible on screen
+* Adds new image for rare tech space anomaly
+* Improves AI's design for ship ships
+* Tutorial text for ship design
+* Tutorial text about rogue planets
+* Tutorial text about leaders
+* AI improvements
+* Adds intercept mission for AI. AI attack enemy ships near AI's planets
+* AI does not focues planting starbase on around to left corner if map is revealed there
+* AI will start diplomacy even another fleet is being seen not just when two fleet try to encounter each others
+* AI will colonize planets more aggressively now
+* AI will send diplomatic fleets next to another realm
+* History events try to mention which realm's space event happened if that is possible
+* Worm holes have semi fixed heads. They are not still fully stable but fleets travel between the wormholes not random positions.
+* Cultural victory now requires admires from another realms. Highest cultural and broadcasting is no longer enough.
+* Ship design statistics are show at end of the game
+* Human player can now see with whom trade is going to happen
+* Game can be win now having certain amount of people of whole galaxy
+* Statistics view has sub page showing current victory conditions
+* Random event images for Massive data
+* Random event image for corruption scandal
+* Leaders might also get corruption perk when this happens.
+* New image rare tech space anomaly
+
+- Bug fixes -
+
+* Only bombing the planet did not cause historical event
+* Better error logging
+* Fixes rare bug where ship was destroyed by planetary turret and NullPointerException occurred
+* Fixes NullPointerException from help view
+* Fixes missing new ruler selected message
+* Fixes diplomacy tutorials indexes when trying to show those
+* Fixes issue where planetary turret damage was not immediately shown.
+* Fixes issue where combat music is played when AI starts conquering another AI's planet.
+* Fixes issue where AI designs scout or corvette to replace spy design
+* Fixes issue where AI could design banned ship
+* Enables fix fleet button after time warp space anomaly
+* Fixes scroll bars which leave traces while scrolling
+* AI can now win game with each winning possibility.
+* Fixes typo when realm wins by technology win
+* Fixes Deep Space Scanner not reveal full Gas Giants.
+
+# Open Realm of Stars 0.16.0Beta
+
+- New features and updates- 
+
+* Leader perks are shown in realm view depending on espionage and number of meetings two realms have had.
+* Tool tips for planet view how planet productions are calculated
+* Carrier ships are not able to do trading.
+* Carrier ships do not require cargo space.
+* New rare tech which can be found from space anomalies
+* Rare tech Plasma Cannon
+* Rare tech Ion Cannon
+* Rare tech Organic armor
+* Rare tech Solar armor
+* Rare tech Distortion shield
+* Tractor beam rare tech, which can be found when surveying the black hole.
+* Deadly virus event adds rare tech which can be used in espionage.
+* There is now message if there are unassigned leaders available.
+* Sound effect for privateering.
+* Alarm sound when combat starts.
+* New font for credits and displaying currently playing songs.
+* Privateer fleets are considered anonymous when making news about them or history events.
+* AI's privateer ships should not destroy trade ships.
+* AI selects espionage missions types with reasoning and not just randomly.
+* Casus Belli calculation. If realm is making border crossing, demands or other bad things, it is possible to gain casus belli against it. Possible casus belli reason is mentioned when war is declared when casus belli is possible.
+* New espionage mission: False Flag. This will increase possible casus belli calculation value.
+* Combat has been improved: Some of the passive components can be overloaded and these give more tactical choices for combat.
+* When planet is being nuked news about casualties will be calculated correctly.
+* Image added for random event: The Lost Treasure
+* Ship bridge background for Sporks.
+* Ship bridge background for Chiraloids.
+* All space races have secondary names.
+
+- Bug fixes -
+
+* Fixes null pointer if game screen was wider than full map.
+* Removes duplicate ship components when designing the new ships.
+* Changes correct icon for Nuclear bomb components.
+* Minor typos fixed.
+* Fix issue where saved games were not sorted.
+* Fleet tiles are updated when star map view is shown.
+* Historical events are cleared if realms do not fit into map on first try out.
+* Trade fleets now consider all space anomalous dangerous.
+* Planet governor is now killed if planet population is killed during conquer.
+* Realm view and government information had wrong font when using newer than Java 8.
+* Stupid and scientist perk now work correctly when leader is ruler.
+
+# Older change log available in Github.
+
+Not showing older change logs since these are over two years old. Please visit
+Github page to see those. Visit at https://github.com/tuomount/Open-Realms-of-Stars/releases

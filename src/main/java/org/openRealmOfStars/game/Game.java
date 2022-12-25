@@ -172,7 +172,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.22.41Beta";
+  public static final String GAME_VERSION = "0.22.42Beta";
 
   /**
    * Animation timer used for animation
@@ -1566,7 +1566,22 @@ public class Game implements ActionListener {
    */
   public void showCredits() {
     try {
-      creditsView = new CreditsView(this, GAME_TITLE, GAME_VERSION);
+      creditsView = new CreditsView(this, GAME_TITLE, GAME_VERSION,
+          CreditsView.CREDITS_AND_LICENSE);
+    } catch (IOException e) {
+      System.out.println("Could not show credits: " + e.getMessage());
+      System.exit(0);
+    }
+    this.updateDisplay(creditsView);
+  }
+
+  /**
+   * Show change log panel
+   */
+  public void showChangeLog() {
+    try {
+      creditsView = new CreditsView(this, GAME_TITLE, GAME_VERSION,
+          CreditsView.CHANGE_LOG);
     } catch (IOException e) {
       System.out.println("Could not show credits: " + e.getMessage());
       System.exit(0);
@@ -1768,6 +1783,13 @@ public class Game implements ActionListener {
         animationTimer.setDelay(ANIMATION_DELAY_CREDITS);
       }
       showCredits();
+      break;
+    case CHANGE_LOG:
+      setBridgeCommand(BridgeCommandType.DARKEST);
+      if (animationTimer != null) {
+        animationTimer.setDelay(ANIMATION_DELAY_CREDITS);
+      }
+      showChangeLog();
       break;
     case STARMAP:
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
@@ -2861,7 +2883,7 @@ public class Game implements ActionListener {
    * @param arg0 ActionEvent which has occured
    */
   private void actionPerformedMenus(final ActionEvent arg0) {
-    if (gameState == GameState.CREDITS) {
+    if (gameState == GameState.CREDITS || gameState == GameState.CHANGE_LOG) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
         creditsView.updateTextArea();
@@ -3152,6 +3174,12 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_CREDITS)) {
         SoundPlayer.playMenuSound();
         changeGameState(GameState.CREDITS);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CHANGE_LOG)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.CHANGE_LOG);
         return;
       }
       if (arg0.getActionCommand()
@@ -3861,6 +3889,7 @@ public class Game implements ActionListener {
         || gameState == GameState.TEXT_SCREEN_VIEW
         || gameState == GameState.SPHERE_3D_VIEW
         || gameState == GameState.CREDITS
+        || gameState == GameState.CHANGE_LOG
         || gameState == GameState.GAME_END_VIEW) {
       actionPerformedMenus(arg0);
     }

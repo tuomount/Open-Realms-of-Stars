@@ -2206,7 +2206,7 @@ public final class LeaderUtility {
     StringBuilder sb = new StringBuilder();
     sb.append(leader.getName());
     if (leader.getJob() == Job.TOO_YOUNG) {
-      sb.append(" is still growing up and whill achieve many things later.");
+      sb.append(" is still growing up and will achieve many things later.");
       return sb.toString();
     }
     if (living) {

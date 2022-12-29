@@ -106,6 +106,7 @@ public class StatView extends BlackPanel {
       names[i] = map.getPlayerByIndex(i).getEmpireName();
     }
     statPanel.setYDataNames(names);
+    statPanel.showLastValueNextNames();
     tabs.add(NewsCorpData.STAT_PLANETS, statPanel);
 
     statPanel = new StatisticPanel(playerColors);

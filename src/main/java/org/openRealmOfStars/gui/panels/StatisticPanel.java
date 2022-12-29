@@ -13,7 +13,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2019,2021,2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -76,6 +76,11 @@ public class StatisticPanel extends JPanel {
   private Color[] playerColors;
 
   /**
+   * Show last value after name.
+   */
+  private boolean showLastValue;
+
+  /**
    * Construct Statistics Panel.
    * @param colors Player Colors in array
    */
@@ -84,6 +89,7 @@ public class StatisticPanel extends JPanel {
     playerColors = colors;
     victoryScoreLimit = -1;
     this.setBackground(Color.black);
+    showLastValue = false;
   }
 
   /**
@@ -95,13 +101,36 @@ public class StatisticPanel extends JPanel {
   }
 
   /**
+   * Show last value of Y data next to Y Data names.
+   * This needs to be just called once.
+   */
+  public void showLastValueNextNames() {
+    showLastValue = true;
+  }
+
+  /**
+   * Get Full Y data name as String
+   * @param index Data index
+   * @return Y data name
+   */
+  public String getFullText(final int index) {
+    String nameText = yDataNames[index];
+    if (showLastValue) {
+      int len = data[index].length;
+      int value = data[index][len - 1];
+      nameText = nameText + " (" + value + ")";
+    }
+    return nameText;
+  }
+  /**
    * Get the widest Y data name AKA player name
    * @return Largest player name width in pixels.
    */
   public int getWidestDataName() {
     int largest = 0;
     if (yDataNames != null) {
-      for (String name : yDataNames) {
+      for (int i = 0; i < yDataNames.length; i++) {
+        String name = getFullText(i);
         int value = GuiStatics.getTextWidth(GuiStatics.getFontCubellanSC(),
             name);
         if (value > largest) {
@@ -248,20 +277,20 @@ public class StatisticPanel extends JPanel {
     if (GRID_DENSITY / scaleX < 1) {
       amount = largestX;
     } else {
-      mult = (int) Math.round(GRID_DENSITY / scaleX);
+      mult = Math.round(GRID_DENSITY / scaleX);
       amount = drawWidth / (GRID_DENSITY);
     }
     for (int i = 0; i <= amount; i++) {
       if (i > 0) {
         g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
-        g2d.drawLine((int) Math.round(offsetX + i * scaleX * mult),
+        g2d.drawLine(Math.round(offsetX + i * scaleX * mult),
             this.getHeight() - offsetY,
-            (int) Math.round(offsetX + i * scaleX * mult), topOffsetY);
+            Math.round(offsetX + i * scaleX * mult), topOffsetY);
       }
       if (i < amount) {
         g2d.setColor(GuiStatics.COLOR_GREEN_TEXT);
         g2d.drawString(String.valueOf(i * turnDistance),
-            (int) Math.round(offsetX + i * scaleX * mult),
+            Math.round(offsetX + i * scaleX * mult),
             this.getHeight() - offsetY + textHeight);
       }
     }
@@ -269,7 +298,7 @@ public class StatisticPanel extends JPanel {
     if (GRID_DENSITY / scaleY < 1) {
       amount = biggestY;
     } else {
-      mult = (int) Math.round(GRID_DENSITY / scaleY);
+      mult = Math.round(GRID_DENSITY / scaleY);
       amount = (int) Math.ceil((double) drawHeigth / GRID_DENSITY);
       if (mult * scaleY * amount < drawHeigth - GRID_DENSITY) {
         amount++;
@@ -282,13 +311,13 @@ public class StatisticPanel extends JPanel {
       if (i > 0) {
         g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
         g2d.drawLine(offsetX,
-            (int) Math.round(this.getHeight() - offsetY - i * scaleY * mult),
+            Math.round(this.getHeight() - offsetY - i * scaleY * mult),
             offsetX + drawWidth,
-            (int) Math.round(this.getHeight() - offsetY - i * scaleY * mult));
+            Math.round(this.getHeight() - offsetY - i * scaleY * mult));
       }
       g2d.setColor(GuiStatics.COLOR_GREEN_TEXT);
       g2d.drawString(String.valueOf(i * mult), offsetX - textWidth,
-          (int) Math.round(this.getHeight() - offsetY - i * scaleY
+          Math.round(this.getHeight() - offsetY - i * scaleY
               * mult));
     }
     if (victoryScoreLimit > -1) {
@@ -316,25 +345,26 @@ public class StatisticPanel extends JPanel {
     for (int p = 0; p < data.length; p++) {
       g2d.setColor(playerColors[p]);
       if (yDataNames != null && yDataNames.length == data.length) {
+        String nameText = getFullText(p);
         int nameHeight = GuiStatics.getTextHeight(
-            GuiStatics.getFontCubellanSC(), yDataNames[p]);
+            GuiStatics.getFontCubellanSC(), nameText);
         int nameWidth = GuiStatics.getTextWidth(
-            GuiStatics.getFontCubellanSC(), yDataNames[p]);
-        g2d.drawString(yDataNames[p], offsetX / 2 - nameWidth / 2 - 10,
+            GuiStatics.getFontCubellanSC(), nameText);
+        g2d.drawString(nameText, offsetX / 2 - nameWidth / 2 - 10,
             this.getHeight() / 2 - 4 * nameHeight + p * nameHeight);
       }
       if (data[p].length == 1) {
         g2d.drawLine(drawWidth / 2 + offsetX + p * 5,
             this.getHeight() - offsetY, drawWidth / 2 + offsetX + p * 5,
-            this.getHeight() - offsetY - (int) Math.round(
+            this.getHeight() - offsetY - Math.round(
                 data[p][0] * scaleY));
       } else {
         for (int i = 0; i < largestX; i++) {
-          g2d.drawLine(offsetX + (int) Math.round(i * scaleX),
-              this.getHeight() - offsetY - (int) Math.round(
+          g2d.drawLine(offsetX + Math.round(i * scaleX),
+              this.getHeight() - offsetY - Math.round(
                   data[p][i] * scaleY),
-               offsetX + (int) Math.round((i + 1) * scaleX),
-              this.getHeight() - offsetY - (int) Math.round(
+               offsetX + Math.round((i + 1) * scaleX),
+              this.getHeight() - offsetY - Math.round(
                   data[p][i + 1] * scaleY));
         }
       }

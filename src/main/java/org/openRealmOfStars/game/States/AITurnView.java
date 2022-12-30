@@ -2916,7 +2916,7 @@ public class AITurnView extends BlackPanel {
             Message msg = new Message(MessageType.LEADER,
                 leader.getCallName() + " morale has decreased. "
                 + "Some suspect that " + leader.getCallName()
-                + "might have corrupted.",
+                + " might have corrupted.",
                 Icons.getIconByName(Icons.ICON_CREDIT));
             msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
             realm.getMsgList().addUpcomingMessage(msg);

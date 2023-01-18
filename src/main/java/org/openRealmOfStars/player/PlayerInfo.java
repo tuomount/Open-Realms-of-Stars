@@ -234,6 +234,11 @@ public class PlayerInfo {
    */
   private ArtifactLists artifactLists;
   /**
+   * Flag if realm has been lost from the game.
+   * No more planets or colony ships with colonists left.
+   */
+  private boolean realmLost;
+  /**
    * Uncharted map sector, only suns are visible
    */
   public static final byte UNCHARTED = 0;
@@ -291,6 +296,7 @@ public class PlayerInfo {
     leaderRecruitPool = new ArrayList<>();
     artifactLists = new ArtifactLists();
     ruler = null;
+    setRealmLost(false);
     color = PlayerColor.getByIndex(index);
     aiDifficulty = AiDifficulty.NORMAL;
     setRandomEventOccured(null);
@@ -1048,6 +1054,7 @@ public class PlayerInfo {
    */
   public PlayerInfo(final DataInputStream dis) throws IOException {
     setRandomEventOccured(null);
+    setRealmLost(false);
     strategy = WinningStrategy.GENERIC;
     empireName = IOUtilities.readString(dis);
     race = SpaceRaceUtility.getRaceByIndex(dis.readInt());
@@ -2764,6 +2771,20 @@ public class PlayerInfo {
       }
     }
     return result;
+  }
+  /**
+   * Is Realm lost from the game?
+   * @return the realmLost
+   */
+  public boolean isRealmLost() {
+    return realmLost;
+  }
+  /**
+   * Set if realm has lost from the game.
+   * @param realmLost the realmLost to set
+   */
+  public void setRealmLost(final boolean realmLost) {
+    this.realmLost = realmLost;
   }
 
 }

@@ -1259,6 +1259,19 @@ public class StarMap {
       }
       // Players first
       players = new PlayerList(dis);
+      // Handle realm lost.
+      for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
+        PlayerInfo info = players.getPlayerInfoByIndex(i);
+        for (int j = 0; j < players.getCurrentMaxPlayers(); j++) {
+          if (info.getDiplomacy().isLost(j)) {
+            PlayerInfo realm = players.getPlayerInfoByIndex(j);
+            if (!realm.isRealmLost()) {
+              realm.setRealmLost(true);
+              makeRealmLost(realm);
+            }
+          }
+        }
+      }
       // Map data itself
       for (int x = 0; x < maxX; x++) {
         for (int y = 0; y < maxY; y++) {
@@ -5664,5 +5677,44 @@ public class StarMap {
           turns);
     }
     return bestVote;
+  }
+
+  /**
+   * Make realm lost from the starmap.
+   * This will move all fleets to space pirate or remove them.
+   * Also all leader are dead now.
+   * @param realm Realm which has lost the game.
+   */
+  public void makeRealmLost(final PlayerInfo realm) {
+    PlayerInfo pirates = players.getSpacePiratePlayer();
+    if (pirates != null && realm.getFleets().getNumberOfFleets() > 0) {
+      do {
+        Fleet fleet = realm.getFleets().getByIndex(0);
+        if (fleet != null) {
+          pirates.getFleets().add(fleet);
+          realm.getFleets().remove(0);
+          realm.getMissions().deleteMissionForFleet(fleet.getName());
+          String fleetName = realm.getRace().getNameSingle();
+          if (fleet.isStarBaseDeployed()) {
+            fleetName = fleetName + " lair";
+          } else {
+            fleetName = fleetName + " pirate";
+          }
+          fleet.setName(pirates.getFleets().generateUniqueName(fleetName));
+        }
+      } while (realm.getFleets().getNumberOfFleets() > 0);
+    }
+    if (pirates == null && realm.getFleets().getNumberOfFleets() > 0) {
+      do {
+        Fleet fleet = realm.getFleets().getByIndex(0);
+        if (fleet != null) {
+          realm.getFleets().remove(0);
+          realm.getMissions().deleteMissionForFleet(fleet.getName());
+        }
+      } while (realm.getFleets().getNumberOfFleets() > 0);
+    }
+    for (Leader leader : realm.getLeaderPool()) {
+      leader.setJob(Job.DEAD);
+    }
   }
 }

@@ -504,6 +504,16 @@ public final class RandomEventUtility {
         } else {
           sb.append("Terrorist were captured alive and sentence for life!");
         }
+        sb.append(" ");
+        sb.append(planet.getName());
+        int ownIndex = DiceGenerator.getRandom(2);
+        switch (ownIndex) {
+          case 0: sb.append(" is owned by "); break;
+          case 1: sb.append(" belongs to "); break;
+          default: sb.append(" is part of "); break;
+        }
+        sb.append(info.getEmpireName());
+        sb.append(".");
         ImageInstruction instructions = new ImageInstruction();
         instructions.addImage(ImageInstruction.TERROR);
         event.setImageInstructions(instructions.build());
@@ -778,6 +788,11 @@ public final class RandomEventUtility {
         sb.append(workName);
         sb.append("\"");
         sb.append(". It is huge success in whole galaxy!");
+        sb.append(" ");
+        sb.append(author);
+        sb.append(" is from ");
+        sb.append(info.getEmpireName());
+        sb.append(".");
         ImageInstruction instructions = new ImageInstruction();
         instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
         instructions.addPlanet(ImageInstruction.POSITION_CENTER,
@@ -864,6 +879,15 @@ public final class RandomEventUtility {
           StringBuilder sb = new StringBuilder();
           sb.append("Deadly virus outbreaks at ");
           sb.append(planet.getName());
+          sb.append(". ");
+          sb.append(planet.getName());
+          int ownIndex = DiceGenerator.getRandom(2);
+          switch (ownIndex) {
+            case 0: sb.append(" is owned by "); break;
+            case 1: sb.append(" belongs to "); break;
+            default: sb.append(" is part of "); break;
+          }
+          sb.append(info.getEmpireName());
           sb.append(". ");
           if (info.getRace() == SpaceRace.MECHIONS) {
             sb.append("Luckly planet is occupied by Mechions which are"

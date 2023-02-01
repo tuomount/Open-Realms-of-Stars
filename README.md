@@ -76,7 +76,7 @@ See more [screenshots](https://github.com/tuomount/Open-Realms-of-Stars/tree/mas
 
 ## Warning about saved games working on newer version
 
-Since Open Realms of Stars is still under development I cannot guarantee that
+Since Open Realm of Stars is still under development I cannot guarantee that
 old saves will work for new versions. Backwards compatibility will
 be broken when adding new features.
 
@@ -97,7 +97,7 @@ run first maven command (``mvn install``) to fetch all the dependencies.
 
 ## Warning about using non stable version
 Compiling non-stable releases is not recommended.
-Non-stable versions of Open Realms of Stars may contain game breaking bugs that make the game unplayable.
+Non-stable versions of Open Realm of Stars may contain game breaking bugs that make the game unplayable.
 The game is constantly being developed for and new features may introduce bugs.
 
 
@@ -107,7 +107,17 @@ If you're interested in contributing to the project you are welcome to fix it. C
 
 ## Running the game
 
-Open Realms of Stars can be run from the Jar file or running compiled class.
+In order to run Open Realm of Stars Java(Java 7 or newer) is required to be installed.
+There are many different OpenJDK which are suitable for this, here is link for one:
+[Adoptium](https://adoptium.net/temurin/releases/)
+
+Also if you are using linux, your distro's OpenJDK should work just fine. Instruction for installing OpenJDK in Ubuntu is following:
+``sudo apt install openjdk-11-jre``
+
+Open Realm of Stars can be run from the Jar file or running compiled class.
+On Windows double clicking the Jar file should be enough if Java has been installed correctly.
+It can be also run from terminal or command line with following command:
+``java -jar Open-Realm-of-Stars-0.22.0Beta.jar``
 
 
 ## How to contribute

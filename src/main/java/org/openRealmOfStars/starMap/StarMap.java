@@ -5713,6 +5713,7 @@ public class StarMap {
         }
       } while (realm.getFleets().getNumberOfFleets() > 0);
     }
+    realm.setRuler(null);
     for (Leader leader : realm.getLeaderPool()) {
       leader.setJob(Job.DEAD);
     }

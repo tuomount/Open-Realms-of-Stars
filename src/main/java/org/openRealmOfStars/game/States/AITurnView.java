@@ -3566,6 +3566,7 @@ public class AITurnView extends BlackPanel {
                 realm.setRealmLost(true);
                 NewsData news = NewsFactory.makeLostNews(realm);
                 game.getStarMap().getNewsCorpData().addNews(news);
+                game.getStarMap().makeRealmLost(realm);
               }
             }
           }

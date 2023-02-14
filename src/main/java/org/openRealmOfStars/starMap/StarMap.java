@@ -29,6 +29,7 @@ import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.espionage.EspionageBonusType;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -5712,6 +5713,14 @@ public class StarMap {
           realm.getMissions().deleteMissionForFleet(fleet.getName());
         }
       } while (realm.getFleets().getNumberOfFleets() > 0);
+    }
+    int myIndex = players.getIndex(realm);
+    for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
+      if (myIndex != i) {
+        DiplomaticTrade trade = new DiplomaticTrade(this, myIndex, i);
+        trade.generateEqualTrade(NegotiationType.PEACE);
+        trade.doTrades();
+      }
     }
     realm.setRuler(null);
     for (Leader leader : realm.getLeaderPool()) {

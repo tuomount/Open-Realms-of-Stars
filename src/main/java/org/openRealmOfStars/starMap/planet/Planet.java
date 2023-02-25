@@ -49,7 +49,7 @@ import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1475,6 +1475,9 @@ public class Planet {
     GovernmentType government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
+    sb.append("Food requirement: ");
+    sb.append(calculateFoodRequirement());
+    sb.append("<br><br>");
     sb.append("Total food production.<br>");
     sb.append("<li> planet +2");
     sb.append("<br>");
@@ -2136,6 +2139,16 @@ public class Planet {
       return 0;
     }
     int food = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
+        * planetOwnerInfo.getRace().getFoodRequire() / 100;
+    return food;
+  }
+
+  /**
+   * Calculate food requirement for planet.
+   * @return How many food is required for each turn.
+   */
+  public int calculateFoodRequirement() {
+    int food = getTotalPopulation()
         * planetOwnerInfo.getRace().getFoodRequire() / 100;
     return food;
   }

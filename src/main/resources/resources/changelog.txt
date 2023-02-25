@@ -1,29 +1,32 @@
 - New features and updates -
 
-* Tutorial has search option.
-* There is tool tip for showing diplomatic relation explanation.
-* Alonian ship bridge image.
-* Most of the images are only loaded when actually needed.
-* Starting planet could be something else than number 1.
+* Alonian Space Ship Bridge image.
+* In diplomatic trade view it is possible to see relation detail in mouse tool tip.
+* Tutorial has search option for free text search.
+* Updated and added new tutorial texts.
+* Ancient technology added, but no ascension victory yet.
+* Ancient technology Gravity Ripper has animation and sound effect.
+* Added abstain option in diplomatic victory voting.
+* At least 50% of galaxy population needs to vote before diplomatic victory can be achieved.
+* Galaxy secretary now choose what to vote in diplomatic voting, it is no longer random.
+* Added Change log into main menu.
+* Number of planets are shown in statistics view.
+* Leaders are now recruited from Pool which makes that one can choose possible leaders and not get random one.
+  * Pool size depends on planets which can supply new leader.
+* Some of the images are loaded when actually needed and not stored for ever. This lowers memory requirements.
+* Added 13 event pictures including planetary and random events.
+* Starting planet could be something else than planet number 1.
 * New image for alien ship random event.
-* Galactic Ruler diplomatic voting must have over 50% of votes to pass.
-* Leader recruit pools is been added.
-* Diplomatic votings can be now selected from list. This used to be random.
-* Ancient Artifact technology has been added. This is very challenging to get.
-* Animation and sound effect for Gravity ripper weapon.
-* Tutorial texts has been updated.
-* Added 13 random event pictures. These were made using Stable Fusion.
-* Change Log viewer added to main menu.
 
 - Bugfixes -
 
-* Fixes Sol system name conflicts.
-* Fixes second realm Credit trade text when increasing the credit amount.
-* When merging fleet which has no move left, merged fleet should lose the moves too.
-* Rushing buildings purchase button might enabled, then view planet again it is disabled then
-* Broadcasting artifact cannot be found from regular artifact location anymore.
-* Fixes molten lava and arid planetary event activation.
-* Fixes issue where ruler was left alive when realm was lost.
+* There should be no longer be news about terminated realms.
+* There should be no news about leaders from terminated realms.
+* Fixed a bug when rushing building project button was enabled even it should not be.
+* Fixed a but where broadcasting artifact could be found from regular artifact location.
+* Fixes Molten lava and Arid planetary event activation.
+* Fixes issue where ruler was left alive when realm was terminated.
+* Adds Realm names in to random events where it wasn't mentioned earlier.
 
 # Open Realm of Stars 0.22.0Beta 
 

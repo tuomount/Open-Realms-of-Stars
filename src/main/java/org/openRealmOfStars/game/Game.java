@@ -2283,17 +2283,6 @@ public class Game implements ActionListener {
         TechType.Combat, 9));
     sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL10_NAMES,
         TechType.Combat, 10));
-    sb.append("## Combat rare technology\n\n");
-    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL2_NAMES,
-        TechType.Combat, 2));
-    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL3_NAMES,
-        TechType.Combat, 3));
-    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL5_NAMES,
-        TechType.Combat, 5));
-    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL7_NAMES,
-        TechType.Combat, 7));
-    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL9_NAMES,
-        TechType.Combat, 9));
     sb.append("## Defense technology\n\n");
     sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL1_NAMES,
         TechType.Defense, 1));
@@ -2315,17 +2304,6 @@ public class Game implements ActionListener {
         TechType.Defense, 9));
     sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL10_NAMES,
         TechType.Defense, 10));
-    sb.append("## Defense rare technology\n\n");
-    sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL3_NAMES,
-        TechType.Defense, 3));
-    sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL4_NAMES,
-        TechType.Defense, 4));
-    sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL6_NAMES,
-        TechType.Defense, 6));
-    sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL8_NAMES,
-        TechType.Defense, 8));
-    sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL9_NAMES,
-        TechType.Defense, 9));
     sb.append("## Hull technology\n\n");
     sb.append(printTech(TechFactory.HULL_TECH_LEVEL1_NAMES,
         TechType.Hulls, 1));
@@ -2368,9 +2346,6 @@ public class Game implements ActionListener {
         TechType.Improvements, 9));
     sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL10_NAMES,
         TechType.Improvements, 10));
-    sb.append("## Planetary Improvement rare technology\n\n");
-    sb.append(printTech(TechFactory.IMPROVEMENT_RARE_TECH_LEVEL4_NAMES,
-        TechType.Improvements, 4));
     sb.append("## Propulsion technology\n\n");
     sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL1_NAMES,
         TechType.Propulsion, 1));
@@ -2417,6 +2392,77 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Print whole research wiki page contain all information about tech
+   * @return Research wiki page as a String
+   */
+  public static String printRareTechWiki() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("## Rare Combat technology\n\n");
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL2_NAMES,
+        TechType.Combat, 2));
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL3_NAMES,
+        TechType.Combat, 3));
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL5_NAMES,
+        TechType.Combat, 5));
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL6_NAMES,
+        TechType.Combat, 6));
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL7_NAMES,
+        TechType.Combat, 7));
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL8_NAMES,
+        TechType.Combat, 8));
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL9_NAMES,
+        TechType.Combat, 9));
+    sb.append(printTech(TechFactory.COMBAT_RARE_TECH_LEVEL10_NAMES,
+        TechType.Combat, 10));
+    sb.append("## Rare Defense technology\n\n");
+    sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL3_NAMES,
+        TechType.Defense, 3));
+    sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL4_NAMES,
+        TechType.Defense, 4));
+    sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL6_NAMES,
+        TechType.Defense, 6));
+    sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL7_NAMES,
+        TechType.Defense, 7));
+    sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL8_NAMES,
+        TechType.Defense, 8));
+    sb.append(printTech(TechFactory.DEFENSE_RARE_TECH_LEVEL9_NAMES,
+        TechType.Defense, 9));
+    sb.append("## Rare Hull technology\n\n");
+    sb.append(printTech(TechFactory.HULL_RARE_TECH_LEVEL3_NAMES,
+        TechType.Hulls, 3));
+    sb.append(printTech(TechFactory.HULL_RARE_TECH_LEVEL5_NAMES,
+        TechType.Hulls, 5));
+    sb.append(printTech(TechFactory.HULL_RARE_TECH_LEVEL7_NAMES,
+        TechType.Hulls, 7));
+    sb.append("## Rare Planetary Improvement technology\n\n");
+    sb.append(printTech(TechFactory.IMPROVEMENT_RARE_TECH_LEVEL3_NAMES,
+        TechType.Improvements, 3));
+    sb.append(printTech(TechFactory.IMPROVEMENT_RARE_TECH_LEVEL4_NAMES,
+        TechType.Improvements, 4));
+    sb.append(printTech(TechFactory.IMPROVEMENT_RARE_TECH_LEVEL7_NAMES,
+        TechType.Improvements, 7));
+    sb.append(printTech(TechFactory.IMPROVEMENT_RARE_TECH_LEVEL9_NAMES,
+        TechType.Improvements, 9));
+    sb.append("## Rare Propulsion technology\n\n");
+    sb.append(printTech(TechFactory.PROPULSION_RARE_TECH_LEVEL5_NAMES,
+        TechType.Propulsion, 5));
+    sb.append(printTech(TechFactory.PROPULSION_RARE_TECH_LEVEL8_NAMES,
+        TechType.Propulsion, 8));
+    sb.append(printTech(TechFactory.PROPULSION_RARE_TECH_LEVEL10_NAMES,
+        TechType.Propulsion, 10));
+    sb.append("## Rare Electronics technology\n\n");
+    sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL3_NAMES,
+        TechType.Electrics, 3));
+    sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL4_NAMES,
+        TechType.Electrics, 4));
+    sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL6_NAMES,
+        TechType.Electrics, 6));
+    sb.append(printTech(TechFactory.ELECTRONICS_RARE_TECH_LEVEL8_NAMES,
+        TechType.Electrics, 8));
+    return sb.toString();
+  }
+
+  /**
    * Update all save files in default save folder.
    * This is dev tool, which is use to upgrade previous
    * save format to new one.
@@ -2458,6 +2504,8 @@ public class Game implements ActionListener {
       System.out.println(CreditsView.MAIN_CREDITS);
     } else if (args.length > 0 && args[0].equals("--wiki-research")) {
       System.out.println(printTechWiki());
+    } else if (args.length > 0 && args[0].equals("--wiki-rare")) {
+      System.out.println(printRareTechWiki());
     } else if (args.length > 0 && args[0].equals("--save-update")) {
       saveGameUpdate();
     } else if (args.length > 1 && args[0].equals("--text")) {

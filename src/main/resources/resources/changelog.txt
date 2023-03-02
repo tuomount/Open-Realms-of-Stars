@@ -17,6 +17,7 @@
 * Added 13 event pictures including planetary and random events.
 * Starting planet could be something else than planet number 1.
 * New image for alien ship random event.
+* Food requirement is visible in Food production in planet view.
 
 - Bugfixes -
 

@@ -437,7 +437,7 @@ public class StatView extends BlackPanel {
     panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
     TransparentLabel label = new TransparentLabel(null, "", false, true);
     panel.add(label);
-    int maxTurns = map.getScoreVictoryTurn();
+    int maxTurns = map.getScoreVictoryTurn() + map.getStartStarYear();
     int maxAdmires = (map.getPlayerList().getCurrentMaxRealms() - 1) / 2;
     int votesLeft = map.getScoreDiplomacy() + 1;
     for (Vote vote : map.getVotes().getVotes()) {
@@ -451,11 +451,12 @@ public class StatView extends BlackPanel {
         votesLeft--;
       }
     }
-    label = new TransparentLabel(null, "Highest score at "
-        + maxTurns + " turns", true, true);
+    label = new TransparentLabel(null, "Highest score at star year "
+        + maxTurns, true, true);
     label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
     label.setToolTipText("<html>Winner is the one with"
-        + " highest score<br> when last turn of the game has played.</html>");
+        + " highest score<br> when last star year of the game has"
+        + " played.</html>");
     panel.add(label);
     if (cultureLabels) {
       label = new TransparentLabel(null, "Culture", true, true);

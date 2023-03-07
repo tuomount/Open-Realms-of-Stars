@@ -192,7 +192,10 @@ public class HistoryView extends BlackPanel {
     int historyTurns = map.getHistory().getLatestTurn().getTurn();
     HistoryTurn turn = map.getHistory().getByIndex(turnNumber);
     int events = turn.getNumberOfTextualEvents();
-    String text = "Turn " + turn.getTurn() + "/" + historyTurns;
+    int startYear = map.getStartStarYear();
+    int currentYear = turn.getTurn() + startYear;
+    int maxYear = historyTurns + startYear;
+    String text = "Star year " + currentYear + "/" + maxYear;
     text = text + " Event " + turn.getEventNumber(eventNumber) + "/" + events;
     turnLabel.setText(text);
   }

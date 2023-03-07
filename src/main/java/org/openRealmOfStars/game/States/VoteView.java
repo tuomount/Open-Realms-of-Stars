@@ -262,9 +262,11 @@ public class VoteView extends BlackPanel {
             + "</htlm>");
       }
       if (vote.getTurnsToVote() != 1) {
-        votingTime.setText("Voting time: " + vote.getTurnsToVote() + " turns");
+        votingTime.setText("Voting time: " + vote.getTurnsToVote()
+            + " star years");
       } else {
-        votingTime.setText("Voting time: " + vote.getTurnsToVote() + " turn");
+        votingTime.setText("Voting time: " + vote.getTurnsToVote()
+            + " star year");
       }
       StringBuilder sb = new StringBuilder(80);
       for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {

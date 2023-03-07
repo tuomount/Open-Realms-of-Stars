@@ -132,6 +132,11 @@ public class StarMap {
   public static final int ENEMY_PIRATE_COLONY = 3;
 
   /**
+   * Star year when game starts. Elder realms start earlier.
+   * This is for turn 0.
+   */
+  private static final int START_STARYEAR = 2400;
+  /**
    * Star map's maximum X coordinate
    */
   private int maxX;
@@ -3145,6 +3150,21 @@ public class StarMap {
     return turn;
   }
 
+  /**
+   * Get current star year
+   * @return Star year
+   */
+  public int getStarYear() {
+    return START_STARYEAR + turn;
+  }
+
+  /**
+   * Get Start staryear
+   * @return Start star year
+   */
+  public int getStartStarYear() {
+    return START_STARYEAR;
+  }
   /**
    * @param turn the turn to set
    */

@@ -16,7 +16,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -43,7 +43,8 @@ public class SaveGameListRendererTest {
     SavedGame save = Mockito.mock(SavedGame.class);
     Mockito.when(save.getFilename()).thenReturn("autosave.sav");
     Mockito.when(save.getTime()).thenReturn("11-01-2017");
-    Mockito.when(save.getTurnNumber()).thenReturn(10);
+    Mockito.when(save.getStarYear()).thenReturn(2410);
+    Mockito.when(save.getRealms()).thenReturn(6);
     Mockito.when(save.getEmpireName()).thenReturn("Empire of Saves");
     Mockito.when(save.getGalaxySize()).thenReturn("75 x 75");
     int index = 0;
@@ -54,7 +55,7 @@ public class SaveGameListRendererTest {
     SaveGameListRenderer renderer = new SaveGameListRenderer();
     JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
-    assertEquals("autosave.sav - 11-01-2017 Turn: 10 - Empire of Saves 75 x 75",label.getText());
+    assertEquals("autosave.sav - 11-01-2017 Star year: 2410 - Empire of Saves Realms: 6 - 75 x 75",label.getText());
     assertEquals(GuiStatics.COLOR_COOL_SPACE_BLUE, label.getForeground());
 
     selected = false;
@@ -62,7 +63,7 @@ public class SaveGameListRendererTest {
     renderer = new SaveGameListRenderer();
     label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
-    assertEquals("autosave.sav - 11-01-2017 Turn: 10 - Empire of Saves 75 x 75",label.getText());
+    assertEquals("autosave.sav - 11-01-2017 Star year: 2410 - Empire of Saves Realms: 6 - 75 x 75",label.getText());
     assertEquals(GuiStatics.COLOR_GREY_TEXT, label.getForeground());
     assertEquals(Color.BLACK, label.getBackground());
 

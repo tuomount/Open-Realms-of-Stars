@@ -14,7 +14,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,8 +49,10 @@ public class SaveGameListRenderer implements ListCellRenderer<SavedGame> {
         list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
     if (value != null) {
-      String text = value.getFilename() + " - " + value.getTime() + " Turn: "
-          + value.getTurnNumber() + " - " + value.getEmpireName() + " "
+      String text = value.getFilename() + " - " + value.getTime()
+          + " Star year: " + value.getStarYear() + " - "
+          + value.getEmpireName() + " Realms: "
+          + value.getRealms() + " - "
           + value.getGalaxySize();
       renderer.setText(text);
     }

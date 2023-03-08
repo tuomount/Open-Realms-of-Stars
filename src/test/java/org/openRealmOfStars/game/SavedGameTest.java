@@ -11,7 +11,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016  Tuomo Untinen
+* Copyright (C) 2016,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -36,7 +36,8 @@ public class SavedGameTest {
   public void testLoadingSavedGame() throws IOException {
     SavedGame game = new SavedGame("src/test/resources/saves", 
                                    "testGame.save");
-    assertEquals(128, game.getTurnNumber());
+    assertEquals(2528, game.getStarYear());
+    assertEquals(4, game.getRealms());
     assertEquals("Terran Alliance", game.getEmpireName());
     assertEquals("50 X 50", game.getGalaxySize());
     assertEquals(SpaceRace.HUMAN, game.getPlayerRace());

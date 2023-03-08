@@ -13,7 +13,7 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017,2019 Tuomo Untinen
+ * Copyright (C) 2016,2017,2019,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,10 +40,14 @@ public class SavedGame implements Comparable<SavedGame> {
   private SpaceRace playerRace;
 
   /**
-   * Which turn
+   * Which star year
    */
-  private int turnNumber;
+  private int starYear;
 
+  /**
+   * Number of realms, not counting pirates/monsters
+   */
+  private int realms;
   /**
    * Galaxy size as string
    */
@@ -89,7 +93,8 @@ public class SavedGame implements Comparable<SavedGame> {
           + folderName + "/" + filename);
     }
     this.filename = filename;
-    turnNumber = starMap.getTurn();
+    starYear = starMap.getTurn() + starMap.getStartStarYear();
+    realms = starMap.getPlayerList().getCurrentMaxRealms();
     galaxySize = starMap.getMaxX() + " X " + starMap.getMaxY();
     playerRace = starMap.getPlayerList().getPlayerInfoByIndex(0).getRace();
     empireName = starMap.getPlayerList().getPlayerInfoByIndex(0)
@@ -105,11 +110,11 @@ public class SavedGame implements Comparable<SavedGame> {
   }
 
   /**
-   * Get which turn number it was on saved game.
-   * @return Turn number
+   * Get which star year it was on saved game.
+   * @return Star year
    */
-  public int getTurnNumber() {
-    return turnNumber;
+  public int getStarYear() {
+    return starYear;
   }
 
   /**
@@ -145,6 +150,14 @@ public class SavedGame implements Comparable<SavedGame> {
     return creationTime;
   }
 
+  /**
+   * Get number of realms in game.
+   * @return Number of realms, not counting pirates/monsters
+   */
+  public int getRealms() {
+    return realms;
+  }
+
   @Override
   public int compareTo(final SavedGame arg0) {
     if (this.creationTimeMillis < arg0.creationTimeMillis) {
@@ -158,8 +171,9 @@ public class SavedGame implements Comparable<SavedGame> {
 
   @Override
   public String toString() {
-    String text = getFilename() + " - " + getTime() + " Turn: "
-        + getTurnNumber() + " - " + getEmpireName() + " "
+    String text = getFilename() + " - " + getTime() + " Star year: "
+        + getStarYear() + " - " + getEmpireName() + " Realms: "
+        + getRealms() + " "
         + getGalaxySize();
     return text;
   }

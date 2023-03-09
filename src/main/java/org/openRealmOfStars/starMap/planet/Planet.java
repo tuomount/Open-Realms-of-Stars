@@ -533,9 +533,9 @@ public class Planet {
     if (time == -1) {
       return "Never";
     } else if (time == 1) {
-      return "1 turn";
+      return "1 star year";
     }
-    return time + " turns";
+    return time + " star years";
   }
 
   /**

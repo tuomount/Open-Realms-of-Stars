@@ -41,7 +41,7 @@ import org.openRealmOfStars.player.tech.TechType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019,2021,2022  Tuomo Untinen
+ * Copyright (C) 2016-2019,2021-2023  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -171,7 +171,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     defenseRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_DEFENSE_RESEARCH,
         GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH, Icons.ICON_DEFENSE_TECH,
-        TechType.Defense.toString() + " 100% 1000 turns", "Level:10 (1/6)",
+        TechType.Defense.toString() + " 100% 1000 star years", "Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_DEFENSE, 16,
         GameCommands.COMMAND_SLIDER_DEFENSE_RESEARCH, listener);
     defenseRese.setLabelToolTip("Focus on defense technology");
@@ -191,7 +191,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     hullRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_HULL_RESEARCH,
         GameCommands.COMMAND_PLUS_HULL_RESEARCH, Icons.ICON_HULL_TECH,
-        TechType.Hulls.toString() + " 100% 1000 turns", "Level:10 (1/6)",
+        TechType.Hulls.toString() + " 100% 1000 star years", "Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_HULL, 16,
         GameCommands.COMMAND_SLIDER_HULL_RESEARCH, listener);
     hullRese.setLabelToolTip("Focus on hull technology");
@@ -212,7 +212,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
         GameCommands.COMMAND_MINUS_IMPROVEMENT_RESEARCH,
         GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH,
         Icons.ICON_IMPROVEMENT_TECH,
-        TechType.Improvements.toString() + " 100% 1000 turns",
+        TechType.Improvements.toString() + " 100% 1000 star years",
         "Level:10 (1/6)", GameCommands.COMMAND_UPGRADE_IMPROVEMENT, 16,
         GameCommands.COMMAND_SLIDER_IMPROVEMENT_RESEARCH, listener);
     improvementRese.setLabelToolTip("Focus on planetary improvement "
@@ -235,7 +235,8 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
         GameCommands.COMMAND_MINUS_PROPULSION_RESEARCH,
         GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH,
         Icons.ICON_PROPULSION_TECH,
-        TechType.Propulsion.toString() + " 100% 1000 turns", "Level:10 (1/6)",
+        TechType.Propulsion.toString() + " 100% 1000 star years",
+        "Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_PROPULSION, 16,
         GameCommands.COMMAND_SLIDER_PROPULSION_RESEARCH, listener);
     propulsionRese.setLabelToolTip("Focus on propulsion technology");
@@ -256,7 +257,8 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
         GameCommands.COMMAND_MINUS_ELECTRONICS_RESEARCH,
         GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH,
         Icons.ICON_ELECTRONICS_TECH,
-        TechType.Electrics.toString() + " 100% 1000 turns", "Level:10 (1/6)",
+        TechType.Electrics.toString() + " 100% 1000 star years",
+        "Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_ELECTRONICS, 16,
         GameCommands.COMMAND_SLIDER_ELECTRONICS_RESEARCH, listener);
     electronicsRese.setLabelToolTip("Focus on electronics technology");
@@ -679,7 +681,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     int turns = (int) Math.ceil(
         (required - player.getTechList().getTechResearchPoints(TechType.Combat))
             / (focus * totalResearch / 100.0));
-    String turnsInStr = turns + " turns";
+    String turnsInStr = turns + " star years";
     if (turns > TIME_LIMIT_NEVER) {
       turnsInStr = "never";
     }
@@ -706,7 +708,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     turns = (int) Math.ceil((required
         - player.getTechList().getTechResearchPoints(TechType.Defense))
         / (focus * totalResearch / 100.0));
-    turnsInStr = turns + " turns";
+    turnsInStr = turns + " star years";
     if (turns > TIME_LIMIT_NEVER) {
       turnsInStr = "never";
     }
@@ -733,7 +735,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     turns = (int) Math.ceil(
         (required - player.getTechList().getTechResearchPoints(TechType.Hulls))
             / (focus * totalResearch / 100.0));
-    turnsInStr = turns + " turns";
+    turnsInStr = turns + " star years";
     if (turns > TIME_LIMIT_NEVER) {
       turnsInStr = "never";
     }
@@ -760,7 +762,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     turns = (int) Math.ceil((required
         - player.getTechList().getTechResearchPoints(TechType.Improvements))
         / (focus * totalResearch / 100.0));
-    turnsInStr = turns + " turns";
+    turnsInStr = turns + " star years";
     if (turns > TIME_LIMIT_NEVER) {
       turnsInStr = "never";
     }
@@ -787,7 +789,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     turns = (int) Math.ceil((required
         - player.getTechList().getTechResearchPoints(TechType.Propulsion))
         / (focus * totalResearch / 100.0));
-    turnsInStr = turns + " turns";
+    turnsInStr = turns + " star years";
     if (turns > TIME_LIMIT_NEVER) {
       turnsInStr = "never";
     }
@@ -814,7 +816,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     turns = (int) Math.ceil((required
         - player.getTechList().getTechResearchPoints(TechType.Electrics))
         / (focus * totalResearch / 100.0));
-    turnsInStr = turns + " turns";
+    turnsInStr = turns + " star years";
     if (turns > TIME_LIMIT_NEVER) {
       turnsInStr = "never";
     }

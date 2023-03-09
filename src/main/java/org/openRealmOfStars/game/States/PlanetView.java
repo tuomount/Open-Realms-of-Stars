@@ -41,7 +41,7 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -285,8 +285,8 @@ public class PlanetView extends BlackPanel {
     panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     peopleGrowth = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_PEOPLE), "1000 turns");
-    peopleGrowth.setToolTipText("How many turns to population growth.");
+        Icons.getIconByName(Icons.ICON_PEOPLE), "1000 star years");
+    peopleGrowth.setToolTipText("How many star years to population growth.");
     peopleGrowth.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(peopleGrowth);
     farmProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_FARM),
@@ -387,7 +387,7 @@ public class PlanetView extends BlackPanel {
     constructionSelect.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(constructionSelect);
     panel.add(Box.createRigidArea(new Dimension(60, 5)));
-    buildingEstimate = new SpaceLabel("1000 turns");
+    buildingEstimate = new SpaceLabel("1000 star years");
     buildingEstimate.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(buildingEstimate);
     SpaceGreyPanel panelX = new SpaceGreyPanel();
@@ -564,11 +564,11 @@ public class PlanetView extends BlackPanel {
         peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_RADIATION));
       } else {
         peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
-        peopleGrowth.setText(peopleGrow + " turns.");
+        peopleGrowth.setText(peopleGrow + " star years");
       }
     } else if (peopleGrow < 0) {
       peopleGrow = peopleGrow * -1;
-      peopleGrowth.setText(peopleGrow + " turns.");
+      peopleGrowth.setText(peopleGrow + " star years");
       peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_DEATH));
     } else {
       if (planet.getPlanetPlayerInfo() != null

@@ -151,7 +151,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     combatRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_COMBAT_RESEARCH,
         GameCommands.COMMAND_PLUS_COMBAT_RESEARCH, Icons.ICON_COMBAT_TECH,
-        TechType.Combat.toString() + " 100% 1000 turns",
+        TechType.Combat.toString() + " 100% 1000 star years",
         "Level:10 (1/6)", GameCommands.COMMAND_UPGRADE_COMBAT, 16,
         GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH, listener);
     combatRese.setLabelToolTip("Focus on combat technology");

@@ -203,7 +203,7 @@ public class StatisticPanel extends JPanel {
 
   /**
    * Set what is the value between two x coordinate value.
-   * X is always number of turns
+   * X is always number of star years
    * @param turnDist Turn distance between two X values
    */
   public void setTurnDistance(final int turnDist) {

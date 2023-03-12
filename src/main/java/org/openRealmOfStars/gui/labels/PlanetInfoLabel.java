@@ -22,7 +22,7 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018,2020 Tuomo Untinen
+* Copyright (C) 2018,2020,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -146,7 +146,7 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
     constructionSelect.setEditable(false);
     this.add(constructionSelect);
     this.add(Box.createRigidArea(new Dimension(5, 25)));
-    buildingEstimate = new SpaceLabel("1000 turns");
+    buildingEstimate = new SpaceLabel("1000 star years");
     buildingEstimate.setText(planet.getProductionTimeAsString(
         (Construction) constructionSelect.getSelectedItem()));
     this.add(buildingEstimate);

@@ -433,7 +433,7 @@ public class SpaceAnomaly {
               + " it has immediately increase time in this sector. Sector time"
               + " has increased ");
           sb.append(result.getValue());
-          sb.append(" turns. After this"
+          sb.append(" star years. After this"
               + " time returns normal in sector. Your fleet ships have"
               + " taken damage due the passing time.");
           if (fleet.getCommander() != null) {

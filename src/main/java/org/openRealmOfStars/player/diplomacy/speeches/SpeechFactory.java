@@ -6,7 +6,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017,2018  Tuomo Untinen
+* Copyright (C) 2017-2023  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -216,24 +216,25 @@ public final class SpeechFactory {
     SpeechType type = SpeechType.ASK_PROTECTION;
     switch (race) {
       case CENTAURS: return new SpeechLine(type,
-          "Hey, I could pay if you leave my fleet alone for 5 turns!");
+          "Hey, I could pay if you leave my fleet alone for 5 star years!");
       case GREYANS: return new SpeechLine(type,
-          "I'll pay for leaving my fleet alone for 5 turns!");
+          "I'll pay for leaving my fleet alone for 5 star years!");
       case HUMAN:
         return new SpeechLine(type,
-          "If you leave my fleet alone for 5 turns, I'll pay for it.");
+          "If you leave my fleet alone for 5 star years, I'll pay for it.");
       case MECHIONS: return new SpeechLine(type,
-          "My fleet in danger. Safe for 5 turns?");
+          "My fleet in danger. Safe for 5 star years?");
       case MOTHOIDS: return new SpeechLine(type,
-          "We pay for safety of our fleet for 5 turns, how you answer?");
+          "We pay for safety of our fleet for 5 star years, how you answer?");
       case SPORKS: return new SpeechLine(type,
-          "I propose a deal. 5 turns safety and you will get all this?");
+          "I propose a deal. 5 star years safety and you will get all this?");
       case TEUTHIDAES: return new SpeechLine(type,
           "You will get all these for 5 turn safety for my fleets.");
       case SCAURIANS: return new SpeechLine(type,
           "I offer you all this for 5 turn safety, what do you say?");
       case HOMARIANS: return new SpeechLine(type,
-          "I am willing to pay for you not to attack my fleet for 5 turns.");
+          "I am willing to pay for you not to attack my fleet for 5 star"
+          + " years.");
       case SPACE_MONSTERS:
       case SPACE_PIRATE:
         switch (DiceGenerator.getRandom(2)) {
@@ -248,19 +249,22 @@ public final class SpeechFactory {
             "Are you interested in insurance? That's against pirates!");
         }
       case CHIRALOIDS: return new SpeechLine(type,
-          "I see our problem. I am willing to pay for 5 turn protection.");
+          "I see our problem. I am willing to pay for 5 star years"
+          + " protection.");
       case REBORGIANS: return new SpeechLine(type,
-          "We have detected danger. We are paying for protection of 5 turns.");
+          "We have detected danger. We are paying for protection of 5"
+          + " star years.");
       case LITHORIANS: return new SpeechLine(type,
-          "I am ready to pay for my fleet protection for 5 turns.");
+          "I am ready to pay for my fleet protection for 5 star years.");
       case ALTEIRIANS: return new SpeechLine(type,
-          "My pod is in danger. I'll pay for it's protection for 5 turns.");
+          "My pod is in danger. I'll pay for it's protection for 5"
+          + " star years.");
       case SMAUGIRIANS: return new SpeechLine(type,
           "Are you interested to get these for protection of my fleet?");
       case SYNTHDROIDS: return new SpeechLine(type,
-          "Detected danger! Paying for protection of 5 turns.");
+          "Detected danger! Paying for protection of 5 star years.");
       case ALONIANS: return new SpeechLine(type,
-          "Spare my fleet for 5 turns and I will pay for it.");
+          "Spare my fleet for 5 star years and I will pay for it.");
       default: return null;
     }
   }
@@ -1013,40 +1017,42 @@ public final class SpeechFactory {
     SpeechType type = SpeechType.OFFER_SPY_TRADE;
     switch (race) {
       case CENTAURS: return new SpeechLine(type,
-          "Let's change information for 20 turns?");
+          "Let's change information for 20 star years?");
       case GREYANS: return new SpeechLine(type,
-          "Let's trade espionage information for 20 turns?");
+          "Let's trade espionage information for 20 star years?");
       case HUMAN: return new SpeechLine(type,
-          "How about some intelligence trades for 20 turns?");
+          "How about some intelligence trades for 20 star years?");
       case MECHIONS: return new SpeechLine(type,
-          "Espionage information? 20 turns?");
+          "Espionage information? 20 star years?");
       case MOTHOIDS: return new SpeechLine(type,
-          "Join your spies with our spies for 20 turns?");
+          "Join your spies with our spies for 20 star years?");
       case SPORKS: return new SpeechLine(type,
-          "How about share spy information for 20 turns?");
+          "How about share spy information for 20 star years?");
       case TEUTHIDAES: return new SpeechLine(type,
-          "Are you interested in intellingence trading for 20 turns?");
+          "Are you interested in intellingence trading for 20 star years?");
       case SCAURIANS: return new SpeechLine(type,
-          "Let's build together awesome spy network for 20 turns?");
+          "Let's build together awesome spy network for 20 star years?");
       case HOMARIANS: return new SpeechLine(type,
-          "Do you have spies? We should work together for 20 turns?");
+          "Do you have spies? We should work together for 20 star years?");
       case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
-          "Yarr, Are you interested in espionage trade for 20 turns?");
+          "Yarr, Are you interested in espionage trade for 20 star years?");
       case CHIRALOIDS: return new SpeechLine(type,
-          "Are you willing to trade intel for 20 turns?");
+          "Are you willing to trade intel for 20 star years?");
       case REBORGIANS: return new SpeechLine(type,
-          "We are offering you our spy information for 20 turns. Interested?");
+          "We are offering you our spy information for 20 star years."
+          + " Interested?");
       case LITHORIANS: return new SpeechLine(type,
-          "I offer you our spy information for 20 turns. Interested?");
+          "I offer you our spy information for 20 star years."
+          + " Interested?");
       case ALTEIRIANS: return new SpeechLine(type,
-          "Are you interested joining to my spy network for 20 turns?");
+          "Are you interested joining to my spy network for 20 star years?");
       case SMAUGIRIANS: return new SpeechLine(type,
-          "I have good intel for you 20 turns. Interested?");
+          "I have good intel for you 20 star years. Interested?");
       case SYNTHDROIDS: return new SpeechLine(type,
-          "Handshake for espionage information? 20 turns?");
+          "Handshake for espionage information? 20 star years?");
       case ALONIANS: return new SpeechLine(type,
-          "How about share some intel trades for 20 turns?");
+          "How about share some intel trades for 20 star years?");
       default: return null;
     }
   }
@@ -1062,47 +1068,49 @@ public final class SpeechFactory {
     SpeechType type = SpeechType.TRADE_EMBARGO;
     switch (race) {
       case CENTAURS: return new SpeechLine(type,
-          "Let's do trade embargo for 20 turns for " + empire + "?");
+          "Let's do trade embargo for 20 star years for " + empire + "?");
       case GREYANS: return new SpeechLine(type,
-          "Let's make embargo for 20 turns against " + empire + "?");
+          "Let's make embargo for 20 star years against " + empire + "?");
       case HUMAN: return new SpeechLine(type,
-          "How about trade embargo for 20 turns against " + empire + "?");
+          "How about trade embargo for 20 star years against " + empire + "?");
       case MECHIONS: return new SpeechLine(type,
-          "Trade embargo? 20 turns? " + empire + "?");
+          "Trade embargo? 20 star years? " + empire + "?");
       case MOTHOIDS: return new SpeechLine(type,
-          "We should turn our backs for 20 turns against " + empire + ".");
+          "We should turn our backs for 20 star years against "
+          + empire + ".");
       case SPORKS: return new SpeechLine(type,
-          "How about embargo for 20 turns for " + empire + "?");
+          "How about embargo for 20 star years for " + empire + "?");
       case TEUTHIDAES: return new SpeechLine(type,
           "Are you interested in embargo for 20 against " + empire + "?");
       case SCAURIANS: return new SpeechLine(type,
-          "Let's build embargo of trade for 20 turns for " + empire + "?");
+          "Let's build embargo of trade for 20 star years for "
+          + empire + "?");
       case HOMARIANS: return new SpeechLine(type,
-          "We should work together embargo for 20 turns against " + empire
+          "We should work together embargo for 20 star years against " + empire
               + "?");
       case SPACE_MONSTERS:
       case SPACE_PIRATE: return new SpeechLine(type,
-          "Yarr, Are you interested in trade emparbo for 20 turns against "
+          "Yarr, Are you interested in trade emparbo for 20 star years against "
               + empire + "?");
       case CHIRALOIDS: return new SpeechLine(type,
-          "Are you willing make trade embargo for 20 turns against "
+          "Are you willing make trade embargo for 20 star years against "
               + empire + "?");
       case REBORGIANS: return new SpeechLine(type,
-          "We ask you to make trade embargo for 20 turns against "
+          "We ask you to make trade embargo for 20 star years against "
               + empire + "?");
       case LITHORIANS: return new SpeechLine(type,
-          "Are you will to do trade embargo for 20 turns against "
+          "Are you will to do trade embargo for 20 star years against "
               + empire + "?");
       case ALTEIRIANS: return new SpeechLine(type,
-          "Will you accept trade embargo for 20 turns against "
+          "Will you accept trade embargo for 20 star years against "
               + empire + "?");
       case SMAUGIRIANS: return new SpeechLine(type,
           "Let's put "
-              + empire + " to trade embargo for 20 turns?");
+              + empire + " to trade embargo for 20 star years?");
       case SYNTHDROIDS: return new SpeechLine(type,
-          "Handshake for trade embargo? 20 turns? " + empire + "?");
+          "Handshake for trade embargo? 20 star years? " + empire + "?");
       case ALONIANS: return new SpeechLine(type,
-          "Are you ready for trade embargo for 20 turns against "
+          "Are you ready for trade embargo for 20 star years against "
               + empire + "?");
       default: return null;
     }

@@ -424,7 +424,7 @@ public class VoteView extends BlackPanel {
       voteAbstain.setEnabled(false);
       voteLabel.setText("Vote 0/0");
       voteTitle.setText("No vote available!");
-      votingTime.setText("Voting time: 0 turns");
+      votingTime.setText("Voting time: 0 star years");
       votingInfoText.setText("No vote");
       votedText.setText("No votes");
     }

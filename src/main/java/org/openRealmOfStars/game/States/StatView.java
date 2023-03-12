@@ -37,7 +37,7 @@ import org.openRealmOfStars.starMap.vote.VotingType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2017-2019,2021 Tuomo Untinen
+ * Copyright (C) 2017-2019,2021,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -504,8 +504,8 @@ public class StatView extends BlackPanel {
       }
       label.setToolTipText("<html>Population victory is achieved when realm "
           + " has " + limit + "% of whole galaxy population.<br>Also "
-          + "100 turns must have been passed when this victory is possible."
-          + "</html>");
+          + "100 star years must have been passed when this victory is"
+          + " possible.</html>");
       panel.add(label);
     }
     // Precalculations for scoring

@@ -34,7 +34,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018-2021  Tuomo Untinen
+ * Copyright (C) 2016,2018-2021,2023  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -551,14 +551,14 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     String[] headStarts = new String[5];
-    headStarts[0] = "40 turns";
-    headStarts[1] = "60 turns";
-    headStarts[2] = "80 turns";
-    headStarts[3] = "100 turns";
-    headStarts[4] = "120 turns";
+    headStarts[0] = "40 star years";
+    headStarts[1] = "60 star years";
+    headStarts[2] = "80 star years";
+    headStarts[3] = "100 star years";
+    headStarts[4] = "120 star years";
     comboElderTurns = new SpaceCombo<>(headStarts);
-    comboElderTurns.setToolTipText("<html>How many turns Elder Realms play"
-        + " before actual game begins.<br>AI will play elder realms this"
+    comboElderTurns.setToolTipText("<html>How many star years Elder Realms"
+        + " play before actual game begins.<br>AI will play elder realms this"
         + " amount of turns.<br>These elder realms will be stronger than"
         + "other realms.<br>This will also create totally unique starts"
         + "for the game.</html>");
@@ -579,15 +579,15 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     String[] scoringVictory = new String[6];
-    scoringVictory[0] = "Very short (200 turns)";
-    scoringVictory[1] = "Short (300 turns)";
-    scoringVictory[2] = "Medium (400 turns)";
-    scoringVictory[3] = "Long (600 turns)";
-    scoringVictory[4] = "Very long (800 turns)";
-    scoringVictory[5] = "Massive (1000 turns)";
+    scoringVictory[0] = "Very short (200 star years)";
+    scoringVictory[1] = "Short (300 star years)";
+    scoringVictory[2] = "Medium (400 star years)";
+    scoringVictory[3] = "Long (600 star years)";
+    scoringVictory[4] = "Very long (800 star years)";
+    scoringVictory[5] = "Massive (1000 star years)";
     comboScoringVictory = new SpaceCombo<>(scoringVictory);
-    comboScoringVictory.setToolTipText("How many turns game is played before"
-        + " winner is decided by game score");
+    comboScoringVictory.setToolTipText("How many star years game is played"
+        + " before winner is decided by game score");
     switch (this.config.getScoringVictoryTurns()) {
       case 200: comboScoringVictory.setSelectedIndex(0); break;
       case 300: comboScoringVictory.setSelectedIndex(1); break;
@@ -724,7 +724,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboScoringPopulation.setToolTipText("<html>Realm or alliance must have"
         + " certain percentage of whole galaxy population to win."
         + "<br>"
-        + " Also at least 100 turns have to have passed before victory by"
+        + " Also at least 100 star years have to have passed before victory by"
         + " population is checked."
         + "</html>");
     comboScoringPopulation.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
@@ -949,28 +949,28 @@ public class GalaxyCreationView extends BlackPanel {
       }
       switch (comboElderTurns.getSelectedIndex()) {
       case 0: {
-        // Head start 40 turns
+        // Head start 40 star years
         config.setElderHeadStart(40);
         break;
       }
       case 1: {
-        // Head start 60 turns
+        // Head start 60 star years
         config.setElderHeadStart(60);
         break;
       }
       default:
       case 2: {
-        // Head start 80 turns
+        // Head start 80 star years
         config.setElderHeadStart(80);
         break;
       }
       case 3: {
-        // Head start 100 turns
+        // Head start 100 star years
         config.setElderHeadStart(100);
         break;
       }
       case 4: {
-        // Head start 120 turns
+        // Head start 120 star years
         config.setElderHeadStart(120);
         break;
       }
@@ -981,32 +981,32 @@ public class GalaxyCreationView extends BlackPanel {
       config.setSpaceAnomaliesLevel(comboSpaceAnomalies.getSelectedIndex());
       switch (comboScoringVictory.getSelectedIndex()) {
       case 0: {
-        // 200 turns
+        // 200 star years
         config.setScoringVictoryTurns(200);
         break;
       }
       case 1: {
-        // 300 turns
+        // 300 star years
         config.setScoringVictoryTurns(300);
         break;
       }
       case 2: {
-        // 400 turns
+        // 400 star years
         config.setScoringVictoryTurns(400);
         break;
       }
       case 3: {
-        // 600 turns
+        // 600 star years
         config.setScoringVictoryTurns(600);
         break;
       }
       case 4: {
-        // 800 turns
+        // 800 star years
         config.setScoringVictoryTurns(800);
         break;
       }
       case 5: {
-        // 1000 turns
+        // 1000 star years
         config.setScoringVictoryTurns(1000);
         break;
       }

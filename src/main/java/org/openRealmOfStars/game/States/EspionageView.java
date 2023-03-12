@@ -134,7 +134,7 @@ public class EspionageView extends BlackPanel {
              + "News value: " + newsValue + ".\n" + desc;
         int spyTrade = player.getDiplomacy().getSpyTradeLasting(i);
         if (spyTrade > 0) {
-          desc = desc + "\nSpy trading: " + spyTrade + " turns.";
+          desc = desc + "\nSpy trading: " + spyTrade + " star years.";
         }
         String text;
         Color relationColor = null;

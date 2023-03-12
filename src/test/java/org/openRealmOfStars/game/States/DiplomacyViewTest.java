@@ -21,7 +21,7 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -219,8 +219,8 @@ public class DiplomacyViewTest {
     diplomacyView.createTradeEmbargoLine("Spork Hiearchy");
     SpeechLine line = diplomacyView.getEmbargoLine();
     assertEquals(SpeechType.TRADE_EMBARGO, line.getType());
-    assertEquals("How about trade embargo for 20 turns against Spork Hiearchy?",
-        line.getLine());
+    assertEquals("How about trade embargo for 20 star years against"
+        + " Spork Hiearchy?", line.getLine());
   }
 
 }

@@ -250,7 +250,7 @@ public final class ArtifactFactory {
   /**
    * Get artifact level cost as research points
    * @param level Level to research
-   * @param gameLength Maximum game length in turns
+   * @param gameLength Maximum game length in star years
    * @return Amount of research points required
    */
   public static int getResearchCost(final int level, final int gameLength) {

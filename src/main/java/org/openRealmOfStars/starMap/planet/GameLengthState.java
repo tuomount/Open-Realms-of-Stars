@@ -3,7 +3,7 @@ package org.openRealmOfStars.starMap.planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2022,2023  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -28,23 +28,23 @@ public enum GameLengthState {
    */
   ELDER_HEAD_START,
   /**
-   * Game length state: early game. First 25% of turns
+   * Game length state: early game. First 25% of star years
    */
   START_GAME,
   /**
-   * Game length state: early game. 15% of turns after start game
+   * Game length state: early game. 15% of star years after start game
    */
   EARLY_GAME,
   /**
-   * Game length state: middle game. 20% of turns after early game
+   * Game length state: middle game. 20% of star years after early game
    */
   MIDDLE_GAME,
   /**
-   * Game length state: late game. 15% of turns after middle game
+   * Game length state: late game. 15% of star years after middle game
    */
   LATE_GAME,
   /**
-   * Game length state: end game. Last 25% of turns till the end
+   * Game length state: end game. Last 25% of star years till the end
    */
   END_GAME;
 
@@ -60,11 +60,11 @@ public enum GameLengthState {
   public static GameLengthState getGameLengthState(final int currentTurn,
       final int lastTurn) {
     if (lastTurn == 0) {
-      throw new IllegalArgumentException("Last turn cannot be zero!");
+      throw new IllegalArgumentException("Last star year cannot be zero!");
     }
     if (lastTurn < currentTurn) {
-      throw new IllegalArgumentException("Last turn cannot be greater than"
-          + " current turn!");
+      throw new IllegalArgumentException("Last star year cannot be greater"
+          + " than current turn!");
     }
     if (currentTurn < 0) {
       return ELDER_HEAD_START;

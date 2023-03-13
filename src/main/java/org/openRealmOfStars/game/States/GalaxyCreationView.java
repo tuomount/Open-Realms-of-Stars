@@ -34,7 +34,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018-2021,2023  Tuomo Untinen
+ * Copyright (C) 2016,2018-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -559,7 +559,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboElderTurns = new SpaceCombo<>(headStarts);
     comboElderTurns.setToolTipText("<html>How many star years Elder Realms"
         + " play before actual game begins.<br>AI will play elder realms this"
-        + " amount of turns.<br>These elder realms will be stronger than"
+        + " amount of star years.<br>These elder realms will be stronger than"
         + "other realms.<br>This will also create totally unique starts"
         + "for the game.</html>");
     switch (this.config.getElderHeadStart()) {

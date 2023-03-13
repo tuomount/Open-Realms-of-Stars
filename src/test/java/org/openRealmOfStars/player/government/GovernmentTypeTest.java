@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018,2019-2022 Tuomo Untinen
+* Copyright (C) 2018,2019-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -37,7 +37,7 @@ public class GovernmentTypeTest {
         + "* Base fleet capacity: 2\n"
         + "* Leader capacity: 10\n"
         + "* Leader cost: 10\n"
-        + "* Reign length: 20 turns\n"
+        + "* Reign length: 20 star years\n"
         + "* Generic happiness: 1\n"
         + "* Diplomatic bonus: 1\n"
         + "* Trade bonus: 1\n"
@@ -48,7 +48,7 @@ public class GovernmentTypeTest {
         + "* Base fleet capacity: 2\n"
         + "* Leader capacity: 10\n"
         + "* Leader cost: 10\n"
-        + "* Reign length: 20 turns\n"
+        + "* Reign length: 20 star years\n"
         + "* Generic happiness: 1\n"
         + "* Diplomatic bonus: 1\n"
         + "* Trade bonus: 1\n"
@@ -59,7 +59,7 @@ public class GovernmentTypeTest {
         + "* Base fleet capacity: 3\n"
         + "* Leader capacity: 10\n"
         + "* Leader cost: 10\n"
-        + "* Reign length: 20 turns\n"
+        + "* Reign length: 20 star years\n"
         + "* Generic happiness: 1\n"
         + "* Diplomatic bonus: 1\n"
         + "* Trade bonus: 1\n"
@@ -68,7 +68,7 @@ public class GovernmentTypeTest {
         + "* Base fleet capacity: 3\n"
         + "* Leader capacity: 10\n"
         + "* Leader cost: 10\n"
-        + "* Reign length: 20 turns\n"
+        + "* Reign length: 20 star years\n"
         + "* Diplomatic bonus: 1\n"
         + "* Trade bonus: 1\n"
         + "* Production bonus: 1\n"
@@ -77,7 +77,7 @@ public class GovernmentTypeTest {
         + "* Base fleet capacity: 3\n"
         + "* Leader capacity: 12\n"
         + "* Leader cost: 12\n"
-        + "* Reign length: 40 turns\n"
+        + "* Reign length: 40 star years\n"
         + "* Trade bonus: 2\n"
         + "* Production bonus: 1\n"
         + "* Credit rush\n";
@@ -85,7 +85,7 @@ public class GovernmentTypeTest {
         + "* Base fleet capacity: 3\n"
         + "* Leader capacity: 12\n"
         + "* Leader cost: 12\n"
-        + "* Reign length: 40 turns\n"
+        + "* Reign length: 40 star years\n"
         + "* Trade bonus: 2\n"
         + "* Credit bonus: 1\n"
         + "* Credit rush\n";
@@ -117,7 +117,7 @@ public class GovernmentTypeTest {
         + "* Base fleet capacity: 3\n"
         + "* Leader capacity: 6\n"
         + "* Leader cost: 5\n"
-        + "* Reign length: 100 turns\n"
+        + "* Reign length: 100 star years\n"
         + "* No effects on happiness nor war fatigue\n";
     expected[10] = "### Empire\n"
         + "* Base fleet capacity: 4\n"
@@ -191,14 +191,14 @@ public class GovernmentTypeTest {
         + "* Base fleet capacity: 4\n"
         + "* Leader capacity: 6\n"
         + "* Leader cost: 8\n"
-        + "* Reign length: 50 turns\n"
+        + "* Reign length: 50 star years\n"
         + "* War resistance: 1\n"
         + "* Mining bonus: 1\n";
     expected[17] = "### Utopia\n"
         + "* Base fleet capacity: 1\n"
         + "* Leader capacity: 6\n"
         + "* Leader cost: 12\n"
-        + "* Reign length: 40 turns\n"
+        + "* Reign length: 40 star years\n"
         + "* Generic happiness: 2\n"
         + "* Diplomatic bonus: 2\n"
         + "* Trade bonus: 1\n"
@@ -234,7 +234,7 @@ public class GovernmentTypeTest {
         + "* Base fleet capacity: 2\n"
         + "* Leader capacity: 8\n"
         + "* Leader cost: 10\n"
-        + "* Reign length: 20 turns\n"
+        + "* Reign length: 20 star years\n"
         + "* Diplomatic bonus: 1\n"
         + "* War resistance: -1\n"
         + "* Production bonus: 1\n"
@@ -244,7 +244,7 @@ public class GovernmentTypeTest {
         + "* Base fleet capacity: 3\n"
         + "* Leader capacity: 6\n"
         + "* Leader cost: 5\n"
-        + "* Reign length: 100 turns\n"
+        + "* Reign length: 100 star years\n"
         + "* No effects on happiness nor war fatigue\n";
     expected[22] = "### Syndicate\n"
         + "* Base fleet capacity: 3\n"

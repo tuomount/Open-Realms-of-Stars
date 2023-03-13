@@ -11,7 +11,7 @@ import org.openRealmOfStars.starMap.planet.WorldType;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -196,7 +196,7 @@ public class SpaceRaceUtilityTest {
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
         "* Food production: 100%\n"+
-        "* Growth: 10 turns\n"+
+        "* Growth: 10 star years\n"+
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: 2\n"+
@@ -232,7 +232,7 @@ public class SpaceRaceUtilityTest {
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
         "* Food production: 100%\n"+
-        "* Growth: 10 turns\n"+
+        "* Growth: 10 star years\n"+
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -3\n"+
@@ -250,7 +250,7 @@ public class SpaceRaceUtilityTest {
         "* Mining: 100%\n"+
         "* Research: 150%\n"+
         "* Food production: 100%\n"+
-        "* Growth: 20 turns\n"+
+        "* Growth: 20 star years\n"+
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: 0\n"+
@@ -270,7 +270,7 @@ public class SpaceRaceUtilityTest {
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
         "* Food production: 100%\n"+
-        "* Growth: 20 turns\n"+
+        "* Growth: 20 star years\n"+
         "* Food require: 100%\n"+
         "* Population limit: +2\n"+
         "* Culture: 100%\n"+
@@ -292,7 +292,7 @@ public class SpaceRaceUtilityTest {
         "* Mining: 50%\n"+
         "* Research: 100%\n"+
         "* Food production: 100%\n"+
-        "* Growth: 6 turns\n"+
+        "* Growth: 6 star years\n"+
         "* Food require: 100%\n"+
         "* Culture: 150%\n"+
         "* Diplomacy bonus: 0\n"+
@@ -312,7 +312,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 100%\n"
         + "* Research: 150%\n"
         + "* Food production: 100%\n"
-        + "* Growth: 10 turns\n"
+        + "* Growth: 10 star years\n"
         + "* Food require: 100%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: -2\n"
@@ -332,7 +332,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 50%\n"
         + "* Research: 100%\n"
         + "* Food production: 100%\n"
-        + "* Growth: 20 turns\n"
+        + "* Growth: 20 star years\n"
         + "* Food require: 100%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: 1\n"
@@ -353,7 +353,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 150%\n"
         + "* Research: 50%\n"
         + "* Food production: 200%\n"
-        + "* Growth: 10 turns\n"
+        + "* Growth: 10 star years\n"
         + "* Food require: 100%\n"
         + "* Culture: 50%\n"
         + "* Diplomacy bonus: 1\n"
@@ -374,7 +374,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 100%\n"
         + "* Research: 50%\n"
         + "* Food production: 100%\n"
-        + "* Growth: 20 turns\n"
+        + "* Growth: 20 star years\n"
         + "* Food require: 100%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: -4\n"
@@ -396,7 +396,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 100%\n"
         + "* Research: 100%\n"
         + "* Food production: 100%\n"
-        + "* Growth: always 20 turns\n"
+        + "* Growth: always 20 star years\n"
         + "* Food require: 50%\n"
         + "* Culture: 50%\n"
         + "* Diplomacy bonus: -8\n"
@@ -418,7 +418,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 200%\n"
         + "* Research: 100%\n"
         + "* Food production: 0%\n"
-        + "* Growth: 20 turns limited\n"
+        + "* Growth: 20 star years limited\n"
         + "* Food require: 0%\n"
         + "* Population limit: -2\n"
         + "* Culture: 100%\n"
@@ -440,7 +440,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 50%\n"
         + "* Research: 200%\n"
         + "* Food production: 100%\n"
-        + "* Growth: 10 turns\n"
+        + "* Growth: 10 star years\n"
         + "* Food require: 100%\n"
         + "* Culture: 150%\n"
         + "* Diplomacy bonus: -1\n"
@@ -460,7 +460,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 100%\n"
         + "* Research: 100%\n"
         + "* Food production: 100%\n"
-        + "* Growth: 10 turns\n"
+        + "* Growth: 10 star years\n"
         + "* Food require: 100%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: -2\n"
@@ -500,7 +500,7 @@ public class SpaceRaceUtilityTest {
         + "* Mining: 100%\n"
         + "* Research: 100%\n"
         + "* Food production: 100%\n"
-        + "* Growth: 10 turns\n"
+        + "* Growth: 10 star years\n"
         + "* Food require: 100%\n"
         + "* Population limit: +1\n"
         + "* Culture: 100%\n"

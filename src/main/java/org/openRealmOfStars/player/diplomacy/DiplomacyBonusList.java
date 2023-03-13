@@ -10,7 +10,7 @@ import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2020,2022 Tuomo Untinen
+* Copyright (C) 2017-2020,2021,2022 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -168,7 +168,7 @@ public class DiplomacyBonusList {
    * Returns number of turn bonus is lasting. Returns 0 if no bonus
    * type is found
    * @param type DiplomacyBonusType to find
-   * @return number of turns bonus is lasting
+   * @return number of star years bonus is lasting
    */
   public int getBonusTypeLasting(final DiplomacyBonusType type) {
     for (DiplomacyBonus tmp : list) {

@@ -10,7 +10,7 @@ import org.openRealmOfStars.player.government.GovernmentUtility;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018-2021 Tuomo Untinen
+ * Copyright (C) 2016, 2018-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -144,7 +144,7 @@ public class GalaxyConfig {
   private int numberOfRoguePlanets;
 
   /**
-   * How many turns to get scoring victory
+   * How many star years to get scoring victory
    */
   private int scoringVictoryTurns;
   /**
@@ -224,7 +224,7 @@ public class GalaxyConfig {
   private int spaceAnomaliesLevel;
 
   /**
-   * How many turns elder realms player before others start.
+   * How many star years elder realms player before others start.
    */
   private int elderHeadStart;
 
@@ -580,9 +580,9 @@ public class GalaxyConfig {
   }
 
   /**
-   * Set game playing time in turns. After last turn
-   * scoring is done. Maximum playing time is 1000 turns and
-   * minimum is 200 turns.
+   * Set game playing time in star years. After last turn
+   * scoring is done. Maximum playing time is 1000 star years and
+   * minimum is 200 star years.
    * @param scoringVictoryTurns the scoringVictoryTurns to set
    */
   public void setScoringVictoryTurns(final int scoringVictoryTurns) {
@@ -787,7 +787,7 @@ public class GalaxyConfig {
 
   /**
    * Get Elder realm head start
-   * @return Elder realm head start in turns.
+   * @return Elder realm head start in star years.
    */
   public int getElderHeadStart() {
     return elderHeadStart;
@@ -795,7 +795,7 @@ public class GalaxyConfig {
 
   /**
    * Set elder realm head start
-   * @param elderHeadStart in turns
+   * @param elderHeadStart in star years
    */
   public void setElderHeadStart(final int elderHeadStart) {
     this.elderHeadStart = elderHeadStart;

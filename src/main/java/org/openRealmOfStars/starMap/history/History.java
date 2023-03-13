@@ -20,7 +20,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2021,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -42,7 +42,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 public class History {
 
   /**
-   * List of turns in history
+   * List of star years in history
    */
   private ArrayList<HistoryTurn> listOfTurns;
 
@@ -59,18 +59,18 @@ public class History {
   }
 
   /**
-   * Get the number of turns in history. NOTE this does not
-   * mean actual number of turn, just turns which contain historical
+   * Get the number of star years in history. NOTE this does not
+   * mean actual number of star years, just star years which contain historical
    * information.
-   * @return Number of historically important turns
+   * @return Number of historically important star years
    */
   public int numberOfTurns() {
     return listOfTurns.size();
   }
 
   /**
-   * Get the latest turn from history
-   * @return Laster history turn or null if no turns at all.
+   * Get the latest star year from history
+   * @return Laster history turn or null if no star years at all.
    */
   public HistoryTurn getLatestTurn() {
     if (listOfTurns.size() > 0) {
@@ -80,8 +80,8 @@ public class History {
   }
 
   /**
-   * Add Event to latest turn. This throws IllegalArgumentException
-   * if no turns in history
+   * Add Event to latest star year. This throws IllegalArgumentException
+   * if no star years in history
    * @param event Event to add.
    */
   public void addEvent(final Event event) {
@@ -89,7 +89,7 @@ public class History {
     if (latest != null) {
       latest.addEvent(event);
     } else {
-      throw new IllegalArgumentException("No turns at all in history!");
+      throw new IllegalArgumentException("No star years at all in history!");
     }
   }
 
@@ -154,7 +154,8 @@ public class History {
     int hi = is.read();
     int lo = is.read();
     if (lo == -1 || hi == -1) {
-      throw new IOException("Stream does not contain valid count of turns!");
+      throw new IOException("Stream does not contain valid count of "
+          + "star years!");
     }
     int count = IOUtilities.convert16BitsToInt(hi, lo);
     History result = new History();

@@ -10,7 +10,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2019,2020 Tuomo Untinen
+ * Copyright (C) 2019,2020,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -69,7 +69,7 @@ public class LeaderTest {
         leader.toString());
     assertEquals("King of the world Test\n" + 
         "Position: Ruler\n" + 
-        "Ruler for 0 turns\n" + 
+        "Ruler for 0 star years\n" + 
         "Military status: Colonel\n" + 
         "Age: 33\n" + 
         "Parent: Governor Parent\n" + 

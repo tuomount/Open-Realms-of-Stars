@@ -10,7 +10,7 @@ import org.openRealmOfStars.utilities.TextUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1540,7 +1540,7 @@ public final class TechFactory {
   /**
    * Get tech level cost as research points
    * @param level Level to research
-   * @param gameLength Maximum game length in turns
+   * @param gameLength Maximum game length in star years
    * @return Amount of research points required
    */
   public static int getTechCost(final int level, final int gameLength) {

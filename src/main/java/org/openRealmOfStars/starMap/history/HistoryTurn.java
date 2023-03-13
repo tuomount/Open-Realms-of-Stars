@@ -14,7 +14,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2019,2023  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -153,7 +153,7 @@ public class HistoryTurn {
   /**
    * Parse history turn from inputstream
    * @param is InputStream
-   * @return Turn or null if no more turns found on stream.
+   * @return Turn or null if no more star years found on stream.
    * @throws IOException If parsing/reading fails
    */
   public static HistoryTurn parseHistoryTurn(final InputStream is)

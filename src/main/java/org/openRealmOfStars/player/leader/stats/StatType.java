@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.leader.stats;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2021 Tuomo Untinen
+* Copyright (C) 2021-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@ package org.openRealmOfStars.player.leader.stats;
 public enum StatType {
 
   /**
-   * Total amount of turns as ruler.
+   * Total amount of star years as ruler.
    */
   RULER_REIGN_LENGTH,
   /**
@@ -45,11 +45,11 @@ public enum StatType {
    */
   NUMBER_OF_ANOMALY,
   /**
-   * How many turns have been as commander.
+   * How many star years have been as commander.
    */
   COMMANDER_LENGTH,
   /**
-   * How many turns have been as governor.
+   * How many star years have been as governor.
    */
   GOVERNOR_LENGTH,
   /**
@@ -57,7 +57,7 @@ public enum StatType {
    */
   NUMBER_OF_JAIL_TIME,
   /**
-   * How many turns have been in jail.
+   * How many star years have been in jail.
    */
   JAIL_TIME,
   /**

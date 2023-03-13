@@ -18,7 +18,7 @@ import org.openRealmOfStars.starMap.StarMapUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2022 Tuomo Untinen
+* Copyright (C) 2017-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -280,7 +280,7 @@ public class Diplomacy {
   /**
    * Is certain player(index) with player who is asking in spy trade?
    * @param index Player index
-   * @return number of turns spy trade is lasting
+   * @return number of star years spy trade is lasting
    */
   public int getSpyTradeLasting(final int index) {
     if (index > -1 && index < diplomacyList.length

@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2019  Tuomo Untinen
+* Copyright (C) 2017-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -475,7 +475,7 @@ public class DiplomacyBonus {
   private int bonusValue;
 
   /**
-   * How long bonus has lasted or how many turns ago something happened.
+   * How long bonus has lasted or how many star years ago something happened.
    * Value 255 means that it will last for ever unless something happens
    * if Value goes zero then bonusValue goes also zero.
    */
@@ -511,16 +511,16 @@ public class DiplomacyBonus {
   }
 
   /**
-   * Get the diplomacy bonus lasting. This is value in turns.
-   * @return Diplomacy bonus lasting in turns.
+   * Get the diplomacy bonus lasting. This is value in star years.
+   * @return Diplomacy bonus lasting in star years.
    */
   public int getBonusLasting() {
     return bonusLasting;
   }
 
   /**
-   * Set Diplomacy bonus lasting in turns
-   * @param bonusLasting Diplomacy bonus lasting in turns
+   * Set Diplomacy bonus lasting in star years
+   * @param bonusLasting Diplomacy bonus lasting in star years
    */
   public void setBonusLasting(final int bonusLasting) {
     if (bonusLasting > 255) {

@@ -11,7 +11,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019,2022 Tuomo Untinen
+* Copyright (C) 2019,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -48,7 +48,7 @@ public class Vote {
   private int[] numberOfVotes;
 
   /**
-   * How many turns left before voting.
+   * How many star years left before voting.
    */
   private int turnsToVote;
 
@@ -71,7 +71,7 @@ public class Vote {
    * Constructor for vote. Contains all information for vote.
    * @param type Voting type
    * @param numberOfRealms Number of realms in game.
-   * @param turns Number of turns when vote happens.
+   * @param turns Number of star years when vote happens.
    */
   public Vote(final VotingType type, final int numberOfRealms,
       final int turns) {
@@ -193,16 +193,16 @@ public class Vote {
   }
 
   /**
-   * Get Number of turns to vote.
-   * @return Number of turns
+   * Get Number of star years to vote.
+   * @return Number of star years
    */
   public int getTurnsToVote() {
     return turnsToVote;
   }
 
   /**
-   * Set number of turns to vote.
-   * @param turnsToVote Number of turns
+   * Set number of star years to vote.
+   * @param turnsToVote Number of star years
    */
   public void setTurnsToVote(final int turnsToVote) {
     this.turnsToVote = turnsToVote;

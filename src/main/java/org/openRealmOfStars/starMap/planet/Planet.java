@@ -498,9 +498,9 @@ public class Planet {
     return true;
   }
   /**
-   * Get production time as in turns
+   * Get production time as in star years
    * @param build The construction
-   * @return The production time in turns.
+   * @return The production time in star years.
    *  -1 mean construction will never complete.
    */
   public int getProductionTime(final Construction build) {
@@ -609,7 +609,7 @@ public class Planet {
   * This can be used for both metal and production estimations.
   * @param productionReq How much production is required
   * @param productionType Either PRODUCTION_PRODUCTION or PRODUCTION_METAL
-  * @return Production time in turns
+  * @return Production time in star years
   */
   private int getProductionTimeByProductionType(final int productionReq,
       final int productionType) {

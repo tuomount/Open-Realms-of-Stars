@@ -3,7 +3,7 @@ package org.openRealmOfStars.starMap.vote;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019 Tuomo Untinen
+* Copyright (C) 2019,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -41,7 +41,7 @@ public enum VotingType {
    */
   GALACTIC_PEACE,
   /**
-   * Richest realm would give one credit for poorest for 20 turns.
+   * Richest realm would give one credit.
    */
   TAXATION_OF_RICHEST_REALM,
   /**

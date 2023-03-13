@@ -15,7 +15,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1027,7 +1027,7 @@ public enum SpaceRace {
   }
 
   /**
-   * Get how many turns to update defense
+   * Get how many star years to update defense
    * @return int
    */
   public int getAIDefenseUpdate() {
@@ -1072,7 +1072,7 @@ public enum SpaceRace {
   }
 
   /**
-   * Get how many turns to explore solar system
+   * Get how many star years to explore solar system
    * @return int
    */
   public int getAIExploringAmount() {
@@ -1395,7 +1395,7 @@ public enum SpaceRace {
       return 80;
     case MECHIONS:
       // Robots can be always fixed and parts replaced.
-      // Game last maximum of 1120 turns so 2000 is more than enough.
+      // Game last maximum of 1120 star years so 2000 is more than enough.
       return 2000;
     case SPORKS:
       return 75;
@@ -1423,7 +1423,7 @@ public enum SpaceRace {
       return 80;
     case SYNTHDROIDS:
       // Droids can be always fixed and parts replaced.
-      // Game last maximum of 1120 turns so 2000 is more than enough.
+      // Game last maximum of 1120 star years so 2000 is more than enough.
       return 2000;
     case ALONIANS:
       return 100;
@@ -1872,15 +1872,15 @@ public enum SpaceRace {
       if (this == REBORGIANS) {
         sb.append("always ");
       }
-      sb.append("20 turns");
+      sb.append("20 star years");
       if (this == LITHORIANS) {
         sb.append(" limited");
       }
       break;
     }
     default:
-    case 100: sb.append("10 turns"); break;
-    case 150: sb.append("6 turns"); break;
+    case 100: sb.append("10 star years"); break;
+    case 150: sb.append("6 star years"); break;
     }
     sb.append(lf);
     sb.append(dot);

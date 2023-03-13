@@ -539,7 +539,7 @@ public enum GovernmentType {
   }
   /**
    * Get ruler reign time.
-   * @return Reign time in turns or -1 if life time
+   * @return Reign time in star years or -1 if life time
    */
   public int reignTime() {
     switch (this) {
@@ -618,7 +618,7 @@ public enum GovernmentType {
       sb.append(lf);
     } else {
       sb.append(reignTime());
-      sb.append(" turns");
+      sb.append(" star years");
       sb.append(lf);
     }
     if (hasHeirs()) {

@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018, 2022  Tuomo Untinen
+ * Copyright (C) 2016-2018,2022,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -66,7 +66,7 @@ public class RouteTest {
     route.setEndY(5);
     route.setRawValue(1);
 
-    assertEquals("Estimated time should be 2 turns.", 2, route.timeEstimate());
+    assertEquals("Estimated time should be 2 star years.", 2, route.timeEstimate());
     assertEquals("The X coordinate should be 3 at the beginning.", 3,
         route.getX());
     assertEquals("The Y coordinate should be 3 at the beginning.", 3,
@@ -141,7 +141,7 @@ public class RouteTest {
     route.setEndY(5);
     route.setRawValue(1);
 
-    assertEquals("Estimated time should be 2 turns.", 2, route.timeEstimate());
+    assertEquals("Estimated time should be 2 star years.", 2, route.timeEstimate());
     assertEquals("The X coordinate should be 3 at the beginning.", 3,
         route.getX());
     assertEquals("The Y coordinate should be 3 at the beginning.", 4,

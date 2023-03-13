@@ -22,7 +22,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -990,7 +990,7 @@ public class TechList {
    * Update Research points by turn. This will also grant a new technology
    * @param totalResearchPoints player makes per turn
    * @param info PlayerInfo for message information
-   * @param gameLength Maximum game length in turns
+   * @param gameLength Maximum game length in star years
    * @param tutorialEnabled Is tutorial enabled or not
    */
   public void updateResearchPointByTurn(final int totalResearchPoints,

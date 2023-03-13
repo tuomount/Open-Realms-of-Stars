@@ -14,7 +14,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019-2021 Tuomo Untinen
+* Copyright (C) 2019-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -46,7 +46,7 @@ public class Leader {
   private String homeworld;
 
   /**
-   * Leader age in turns.
+   * Leader age in star years.
    */
   private int age;
 
@@ -215,16 +215,16 @@ public class Leader {
   }
 
   /**
-   * Get age of the leader in turns.
-   * @return Age in turns
+   * Get age of the leader in star years.
+   * @return Age in star years
    */
   public int getAge() {
     return age;
   }
 
   /**
-   * Set age of the leader in turns
-   * @param age in turns.
+   * Set age of the leader in star years
+   * @param age in star years.
    */
   public void setAge(final int age) {
     this.age = age;
@@ -387,12 +387,12 @@ public class Leader {
     if (getJob() == Job.RULER) {
       builder.append("Ruler for ");
       builder.append(getTimeInJob());
-      builder.append(" turns\n");
+      builder.append(" star years\n");
     }
     if (getJob() == Job.GOVERNOR) {
       builder.append("Governor for ");
       builder.append(getTimeInJob());
-      builder.append(" turns");
+      builder.append(" star years");
       if (getTimeInJob() > 19) {
         builder.append("  (assignable)");
       }
@@ -401,7 +401,7 @@ public class Leader {
     if (getJob() == Job.COMMANDER) {
       builder.append("Commander for ");
       builder.append(getTimeInJob());
-      builder.append(" turns");
+      builder.append(" star years");
       if (getTimeInJob() > 19) {
         builder.append("  (assignable)");
       }
@@ -410,7 +410,7 @@ public class Leader {
     if (getJob() == Job.PRISON) {
       builder.append("Prisoned for ");
       builder.append(getTimeInJob());
-      builder.append(" turns\n");
+      builder.append(" star years\n");
     }
     builder.append("Military status: ");
     builder.append(getMilitaryRank().toString());

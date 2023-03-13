@@ -19,7 +19,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021,2023 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -84,12 +84,12 @@ public class PlanetTest {
     assertEquals("The production time should be 15 star years.",
         "15 star years", planet.getProductionTimeAsString(factory));
     for (int i=0;i<5;i++) {
-      // 5 turns to grow one population
+      // 5 star years to grow one population
       planet.updateOneTurn(false, null);
     }
     assertEquals("The population of the planet should be two.", 2, planet.getTotalPopulation());
     for (int i=0;i<10;i++) {
-      // Total of 15 turns for basic factory
+      // Total of 15 star years for basic factory
       planet.updateOneTurn(false, null);
     }
     assertEquals("Planet should have only one building.", 1, planet.getBuildingList().length);
@@ -118,7 +118,7 @@ public class PlanetTest {
     assertEquals("The production time should be 15 star years.",
         "15 star years", planet.getProductionTimeAsString(shipConst));
     for (int i=0;i<15;i++) {
-      // 5 turns to grow one population
+      // 5 star years to grow one population
       planet.updateOneTurn(false, null);
     }
     list = planet.getProductionList();
@@ -128,7 +128,7 @@ public class PlanetTest {
     assertEquals("The production time should be 15 star years.",
         "15 star years", planet.getProductionTimeAsString(shipConst));
     for (int i=0;i<15;i++) {
-      // 5 turns to grow one population
+      // 5 star years to grow one population
       planet.updateOneTurn(true, null);
     }
     assertEquals(1, info.getFleets().getNumberOfFleets());

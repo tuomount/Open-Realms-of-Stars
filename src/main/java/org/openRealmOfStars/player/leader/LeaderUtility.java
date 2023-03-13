@@ -29,7 +29,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020-2022 Tuomo Untinen
+* Copyright (C) 2020-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -1979,7 +1979,7 @@ public final class LeaderUtility {
    * @param escapedMsg Message visible if leader escapes
    * @param prisonMsg Message visible if leader is prisoned
    * @param shortReason Short reason for prisoning
-   * @param time sentence time in turns.
+   * @param time sentence time in star years.
    * @param game Games for adding news about killed leader.
    */
   public static void handleLeaderPrison(final PlayerInfo info,

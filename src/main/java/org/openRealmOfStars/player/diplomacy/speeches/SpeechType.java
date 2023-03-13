@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.diplomacy.speeches;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2018  Tuomo Untinen
+* Copyright (C) 2017-2018,2021-2023  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -116,11 +116,11 @@ public enum SpeechType {
    */
   ASK_MOVE_SPY,
   /**
-   * Offer espionage trade for 20 turns.
+   * Offer espionage trade for 20 star years.
    */
   OFFER_SPY_TRADE,
   /**
-   * Offer trade embargo for 20 turns
+   * Offer trade embargo for 20 star years
    */
   TRADE_EMBARGO,
   /**

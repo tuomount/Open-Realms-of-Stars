@@ -458,7 +458,7 @@ public final class NewsFactory {
    *               This should short version.
    * @param reasonFull Reason why leader is going to jail.
    *               This should long version of reason.
-   * @param time Prison time in turns.
+   * @param time Prison time in star years.
    * @return NewsData
    */
   public static NewsData makeLeaderPrisoned(final Leader leader,
@@ -495,7 +495,7 @@ public final class NewsFactory {
     sb.append(leader.getCallName());
     sb.append(" has sentenced for prison for ");
     sb.append(time);
-    sb.append(" years. ");
+    sb.append(" star years. ");
     sb.append("Reason for ");
     sb.append(leader.getCallName());
     sb.append(" get jail was ");
@@ -3272,7 +3272,7 @@ public final class NewsFactory {
     sb.append(vote.getType().getDescription());
     sb.append("'. This voting has time ");
     sb.append(vote.getTurnsToVote());
-    sb.append(" turns. ");
+    sb.append(" star years. ");
     news.setNewsText(sb.toString());
     return news;
   }

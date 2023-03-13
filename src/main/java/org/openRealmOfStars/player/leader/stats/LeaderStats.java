@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2021 Tuomo Untinen
+* Copyright (C) 2021-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -28,7 +28,7 @@ import java.io.IOException;
 */
 public class LeaderStats {
   /**
-   * Ruler reign length in turns.
+   * Ruler reign length in star years.
    */
   private int reignLength;
   /**
@@ -60,7 +60,7 @@ public class LeaderStats {
    */
   private int numberOfJailTime;
   /**
-   * Total number of turns in jail.
+   * Total number of star years in jail.
    */
   private int jailTime;
   /**

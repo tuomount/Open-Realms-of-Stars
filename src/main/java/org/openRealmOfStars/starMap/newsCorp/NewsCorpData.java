@@ -11,7 +11,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017, 2018  Tuomo Untinen
+* Copyright (C) 2017, 2018, 2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -73,7 +73,7 @@ public class NewsCorpData {
   private ArrayList<NewsData> upComingNewsData;
 
   /**
-   * How many turns when new news is published
+   * How many star years when new news is published
    */
   public static final int NEWS_PUBLISH_RATE = 20;
   /**

@@ -4868,7 +4868,7 @@ public class StarMap {
 
   /**
    * Set the turn number where scoring victory happens.
-   * Minimum is 200 and maximum is 1000 turns.
+   * Minimum is 200 and maximum is 1000 star years.
    * @param scoreVictoryTurn the scoreVictoryTurn to set
    */
   public void setScoreVictoryTurn(final int scoreVictoryTurn) {

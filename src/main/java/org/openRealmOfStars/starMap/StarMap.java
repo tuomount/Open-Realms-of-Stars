@@ -1811,7 +1811,8 @@ public class StarMap {
     tileInfo[sx - 1][sy + 1] = info;
     tileInfo[sx][sy + 1] = info;
     tileInfo[sx + 1][sy + 1] = info;
-    int sunType = DiceGenerator.getRandom(0, 2);
+    // Sol has sun type 0.
+    int sunType = 0;
     tiles[sx][sy] = Tiles.getSunTile(TileNames.SUN_C, sunType).getIndex();
     tiles[sx - 1][sy - 1] = Tiles.getSunTile(TileNames.SUN_NW,
         sunType).getIndex();
@@ -2081,6 +2082,159 @@ public class StarMap {
   }
 
   /**
+   * Get radiation for planet based on sun type
+   * @param sunType 0 - red star, 1 - blue star, 2 - yellow star
+   * @return Radiation level 1-10
+   */
+  private static int getRadiationBasedBySunType(final int sunType) {
+    int result = DiceGenerator.getRandom(1, 10);
+    if (sunType == 0) {
+      // Red star aka SUN
+      switch (DiceGenerator.getRandom(0, 21)) {
+        default:
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5: {
+          result = 1;
+          break;
+        }
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10: {
+          result = 2;
+          break;
+        }
+        case 11:
+        case 12:
+        case 13:
+        case 14: {
+          result = 3;
+          break;
+        }
+        case 15:
+        case 16:
+        case 17: {
+          result = 4;
+          break;
+        }
+        case 18:
+        case 19: {
+          result = 5;
+          break;
+        }
+        case 20: {
+          result = 6;
+          break;
+        }
+        case 21: {
+          result = 7;
+          break;
+        }
+      }
+    }
+    if (sunType == 1) {
+      // Blue star
+      switch (DiceGenerator.getRandom(0, 21)) {
+        default:
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5: {
+          result = 10;
+          break;
+        }
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10: {
+          result = 9;
+          break;
+        }
+        case 11:
+        case 12:
+        case 13:
+        case 14: {
+          result = 8;
+          break;
+        }
+        case 15:
+        case 16:
+        case 17: {
+          result = 7;
+          break;
+        }
+        case 18:
+        case 19: {
+          result = 6;
+          break;
+        }
+        case 20: {
+          result = 5;
+          break;
+        }
+        case 21: {
+          result = 4;
+          break;
+        }
+      }
+    }
+    if (sunType == 2) {
+      // Yellow star
+      switch (DiceGenerator.getRandom(0, 15)) {
+        default:
+        case 0: {
+          result = 2;
+          break;
+        }
+        case 1:
+        case 2: {
+          result = 3;
+          break;
+        }
+        case 3:
+        case 4: {
+          result = 4;
+          break;
+        }
+        case 5:
+        case 6:
+        case 7: {
+          result = 5;
+          break;
+        }
+        case 8:
+        case 9:
+        case 10: {
+          result = 6;
+          break;
+        }
+        case 11:
+        case 12: {
+          result = 7;
+          break;
+        }
+        case 13:
+        case 14: {
+          result = 8;
+          break;
+        }
+        case 15: {
+          result = 9;
+          break;
+        }
+      }
+    }
+    return result;
+  }
+  /**
    * Create Solar System
    * @param solarSystem map of solar systems
    * @param sunx Sun's about coordinates
@@ -2158,6 +2312,10 @@ public class StarMap {
     tileInfo[sx][sy + 1] = info;
     tileInfo[sx + 1][sy + 1] = info;
     int sunType = DiceGenerator.getRandom(0, 2);
+    if (playerIndex != -1) {
+      // Realms start from red star aka sun.
+      sunType = 0;
+    }
     tiles[sx][sy] = Tiles.getSunTile(TileNames.SUN_C, sunType).getIndex();
     tiles[sx - 1][sy - 1] = Tiles.getSunTile(TileNames.SUN_NW,
         sunType).getIndex();
@@ -2204,6 +2362,7 @@ public class StarMap {
         } else {
             planet.setPlanetaryEvent(PlanetaryEvent.getRandomEvent(
                 planet.getPlanetType(), chanceForPlanetaryEvent));
+            planet.setRadiationLevel(getRadiationBasedBySunType(sunType));
             planet.setEventActivation(false);
         }
         planetList.add(planet);

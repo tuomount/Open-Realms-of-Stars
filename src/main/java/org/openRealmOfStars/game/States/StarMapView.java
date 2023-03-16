@@ -338,7 +338,7 @@ public class StarMapView extends BlackPanel {
     bottomPanel.add(Box.createRigidArea(new Dimension(10, 5)));
 
     endTurnButton = new SpaceButton(
-        "\t\n\t\nEnd Star year \n" + this.map.getStarYear() + "\t\n\t\n\t\n",
+        "\t\n\t\nEnd\nstar year\n" + this.map.getStarYear() + "\t\n\t\n\t\n",
         GameCommands.COMMAND_END_TURN);
     endTurnButton.addActionListener(game);
     bottomPanel.add(endTurnButton);

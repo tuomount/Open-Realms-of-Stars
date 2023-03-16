@@ -9,7 +9,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022  Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -84,6 +84,9 @@ public final class Tiles {
    * Get sun tiles by name. Initializes tiles if they are uninitialized.
    * @param name For search the tile
    * @param type There are three types of sun 0,1,2
+   *             0 is for Sun
+   *             1 is for blue star
+   *             2 is for yellow star
    * @return Always returns a tile if not found tile then first index is
    * returned.
    */

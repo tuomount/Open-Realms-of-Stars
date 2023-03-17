@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.openRealmOfStars.starMap.SunType;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -83,19 +84,16 @@ public final class Tiles {
   /**
    * Get sun tiles by name. Initializes tiles if they are uninitialized.
    * @param name For search the tile
-   * @param type There are three types of sun 0,1,2
-   *             0 is for Sun
-   *             1 is for blue star
-   *             2 is for yellow star
+   * @param type There are three types of sun Red, blue and yellow
    * @return Always returns a tile if not found tile then first index is
    * returned.
    */
-  public static Tile getSunTile(final String name, final int type) {
+  public static Tile getSunTile(final String name, final SunType type) {
     if (hashOfTiles == null) {
       initTiles();
     }
     Tile tile = null;
-    if (type == 1) {
+    if (type == SunType.BLUE_STAR) {
       if (name.equals(TileNames.SUN_C)) {
         tile = getTileByName(TileNames.BLUE_STAR_C);
       }
@@ -123,7 +121,7 @@ public final class Tiles {
       if (name.equals(TileNames.SUN_SE)) {
         tile = getTileByName(TileNames.BLUE_STAR_SE);
       }
-    } else if (type == 2) {
+    } else if (type == SunType.YELLOW_STAR) {
       if (name.equals(TileNames.SUN_C)) {
         tile = getTileByName(TileNames.STAR_C);
       }

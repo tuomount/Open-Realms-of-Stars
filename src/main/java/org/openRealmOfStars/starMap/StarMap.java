@@ -1812,7 +1812,7 @@ public class StarMap {
     tileInfo[sx][sy + 1] = info;
     tileInfo[sx + 1][sy + 1] = info;
     // Sol has sun type 0.
-    int sunType = 0;
+    SunType sunType = SunType.RED_STAR;
     tiles[sx][sy] = Tiles.getSunTile(TileNames.SUN_C, sunType).getIndex();
     tiles[sx - 1][sy - 1] = Tiles.getSunTile(TileNames.SUN_NW,
         sunType).getIndex();
@@ -1839,13 +1839,13 @@ public class StarMap {
         planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
         if (planets == 1) {
           planet.setPlanetType(PlanetTypes.SILICONWORLD1);
-          planet.setRadiationLevel(9);
+          planet.setRadiationLevel(6);
           planet.setGroundSize(7);
           planet.setName("Mercury I");
         }
         if (planets == 2) {
           planet.setPlanetType(PlanetTypes.CARBONWORLD2);
-          planet.setRadiationLevel(6);
+          planet.setRadiationLevel(4);
           planet.setGroundSize(11);
           planet.setName("Venus II");
         }
@@ -2086,9 +2086,9 @@ public class StarMap {
    * @param sunType 0 - red star, 1 - blue star, 2 - yellow star
    * @return Radiation level 1-10
    */
-  private static int getRadiationBasedBySunType(final int sunType) {
+  private static int getRadiationBasedBySunType(final SunType sunType) {
     int result = DiceGenerator.getRandom(1, 10);
-    if (sunType == 0) {
+    if (sunType == SunType.RED_STAR) {
       // Red star aka SUN
       switch (DiceGenerator.getRandom(0, 21)) {
         default:
@@ -2137,7 +2137,7 @@ public class StarMap {
         }
       }
     }
-    if (sunType == 1) {
+    if (sunType == SunType.BLUE_STAR) {
       // Blue star
       switch (DiceGenerator.getRandom(0, 21)) {
         default:
@@ -2186,7 +2186,7 @@ public class StarMap {
         }
       }
     }
-    if (sunType == 2) {
+    if (sunType == SunType.YELLOW_STAR) {
       // Yellow star
       switch (DiceGenerator.getRandom(0, 15)) {
         default:
@@ -2311,10 +2311,10 @@ public class StarMap {
     tileInfo[sx - 1][sy + 1] = info;
     tileInfo[sx][sy + 1] = info;
     tileInfo[sx + 1][sy + 1] = info;
-    int sunType = DiceGenerator.getRandom(0, 2);
+    SunType sunType = SunType.getRandomType();
     if (playerIndex != -1) {
       // Realms start from red star aka sun.
-      sunType = 0;
+      sunType = SunType.RED_STAR;
     }
     tiles[sx][sy] = Tiles.getSunTile(TileNames.SUN_C, sunType).getIndex();
     tiles[sx - 1][sy - 1] = Tiles.getSunTile(TileNames.SUN_NW,
@@ -2552,6 +2552,26 @@ public class StarMap {
     }
     return listOfSuns.toArray(new String[listOfSuns.size()]);
   }
+
+  /**
+   * Get sun type based on tile.
+   * @param sun Sun which type is to be get.
+   * @return SunType
+   */
+  public SunType getSunType(final Sun sun) {
+    SunType type = SunType.RED_STAR;
+    Tile tile = getTile(sun.getCenterX(), sun.getCenterY());
+    if (tile.getName().equals(TileNames.SUN_C)) {
+      type = SunType.RED_STAR;
+    }
+    if (tile.getName().equals(TileNames.BLUE_STAR_C)) {
+      type = SunType.BLUE_STAR;
+    }
+    if (tile.getName().equals(TileNames.STAR_C)) {
+      type = SunType.YELLOW_STAR;
+    }
+    return type;
+  }
   /**
    * Get nearest uncharted Solar system for coordinate. This should never
    * return null. Unless there are no suns in galaxy. This might not always
@@ -2570,6 +2590,31 @@ public class StarMap {
       final PlayerInfo info, final Fleet fleet, final String[] ignoreSuns,
       final boolean second) {
     double distance = LONGEST_DISTANCE;
+    double blueStarDistance = 10;
+    double yellowStarDistance = 10;
+    if (info.getRace().getMaxRad() < 4) {
+      blueStarDistance = 40;
+      yellowStarDistance = 15;
+    } else if (info.getRace().getMaxRad() == 4) {
+      blueStarDistance = 30;
+      yellowStarDistance = 10;
+    } else if (info.getRace().getMaxRad() == 5) {
+      blueStarDistance = 25;
+      yellowStarDistance = 10;
+    } else if (info.getRace().getMaxRad() == 6) {
+      blueStarDistance = 15;
+      yellowStarDistance = 5;
+    } else if (info.getRace().getMaxRad() == 7) {
+      blueStarDistance = 7;
+      yellowStarDistance = 0;
+    } else if (info.getRace().getMaxRad() == 7) {
+      blueStarDistance = 2;
+      yellowStarDistance = 0;
+    } else {
+      blueStarDistance = 0;
+      yellowStarDistance = 0;
+    }
+
     Sun result = null;
     Sun secondChoice = null;
     double secondDistance = LONGEST_DISTANCE;
@@ -2589,6 +2634,13 @@ public class StarMap {
       }
       Coordinate coordinate = new Coordinate(x, y);
       double dist = coordinate.calculateDistance(sun.getCenterCoordinate());
+      SunType type = getSunType(sun);
+      if (type == SunType.BLUE_STAR) {
+        dist = dist + blueStarDistance;
+      }
+      if (type == SunType.YELLOW_STAR) {
+        dist = dist + yellowStarDistance;
+      }
       int uncharted = info.getUnchartedValueSystem(sun);
       if (dist < distance && uncharted > 50) {
         secondDistance = distance;

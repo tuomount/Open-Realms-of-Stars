@@ -14,7 +14,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018,2022 Tuomo Untinen
+ * Copyright (C) 2016-2018,2022,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -318,6 +318,11 @@ public class PlayerList {
    * @return Realm names in array
    */
   public String[] getRealmNamesInArray() {
-    return list.toArray(new String[list.size()]);
+    String[] namesArray = new String[list.size()];
+    for (int i = 0; i < namesArray.length; i++) {
+      PlayerInfo info = list.get(i);
+      namesArray[i] = info.getEmpireName();
+    }
+    return namesArray;
   }
 }

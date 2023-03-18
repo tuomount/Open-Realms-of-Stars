@@ -7,7 +7,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -768,12 +768,29 @@ public final class TileNames {
       + " be safely build. This ideal place for Deep Space Stations.";
 
   /**
-   * Description about star
+   * Description about red star
    */
-  public static final String STAR_DESCRIPTION = "Stars are massive stellar "
+  public static final String RED_STAR_DESCRIPTION = "Stars are massive stellar "
       + "objects which radiants energy into outer space. Energy is genereated"
       + " from thermonuclear fusion of hydrogen and helium in "
-      + "core of the star.";
+      + "core of the star. Red stars emit least radiation around them."
+      + " Planets orbiting red stars are most likely low radiation planets.";
+  /**
+   * Description about blue star
+   */
+  public static final String BLUE_STAR_DESCRIPTION = "Stars are massive"
+      + " stellar objects which radiants energy into outer space. Energy is"
+      + " genereated from thermonuclear fusion of hydrogen and helium in "
+      + "core of the star. Blue stars emit most radiation around them."
+      + " Planets orbiting blues stars are most likely high radiation planets.";
+  /**
+   * Description about yellow star
+   */
+  public static final String YELLOW_STAR_DESCRIPTION = "Stars are massive"
+      + " stellar objects which radiants energy into outer space. Energy is"
+      + " genereated from thermonuclear fusion of hydrogen and helium in "
+      + "core of the star. Yellow stars emit radiation around them."
+      + " Planets orbiting yellow stars are average on radiation.";
   /**
    * Description about blackhole
    */

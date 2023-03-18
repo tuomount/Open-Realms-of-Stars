@@ -14,7 +14,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018,2020,2022 Tuomo Untinen
+ * Copyright (C) 2016-2018,2020,2022,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -85,7 +85,7 @@ public class TileTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testReadyTiles() {
     Tile tile = Tiles.getTileByName(TileNames.SUN_C);
-    assertEquals(TileNames.STAR_DESCRIPTION, tile.getDescription());
+    assertEquals(TileNames.RED_STAR_DESCRIPTION, tile.getDescription());
     assertEquals(true, tile.isStarTile());
     assertEquals(false, tile.isDangerous());
     assertEquals(false, tile.isSpaceAnomaly());

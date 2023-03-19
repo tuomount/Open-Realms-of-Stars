@@ -32,7 +32,7 @@ import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2022 Tuomo Untinen
+* Copyright (C) 2017-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -306,7 +306,7 @@ public class NewsFactoryTest {
     Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
     Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makePeaceNews(peaceMaker, acceptor, null);
+    NewsData news = NewsFactory.makePeaceNews(peaceMaker, acceptor, null, null);
     assertEquals(true, news.getImageInstructions().contains(
         peaceMaker.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -315,6 +315,28 @@ public class NewsFactoryTest {
         peaceMaker.getEmpireName()));
     assertEquals(true, news.getNewsText().contains(
         acceptor.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPeaceWithMajorDeal() {
+    PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
+    PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
+    String majorDeal = " Empire of Test gains 33 credits from Democracy of Defender. ";
+    NewsData news = NewsFactory.makePeaceNews(peaceMaker, acceptor, null,
+        majorDeal);
+    assertEquals(true, news.getImageInstructions().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        majorDeal));
   }
 
   @Test
@@ -363,7 +385,8 @@ public class NewsFactoryTest {
     Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.AGGRESSIVE);
     PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
     Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makePeaceNews(peaceMaker, acceptor, planet);
+    NewsData news = NewsFactory.makePeaceNews(peaceMaker, acceptor, planet,
+        null);
     assertEquals(true, news.getImageInstructions().contains(
         peaceMaker.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -389,7 +412,8 @@ public class NewsFactoryTest {
     Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.ICEWORLD1.getImageInstructions());
-    NewsData news = NewsFactory.makePeaceNews(peaceMaker, acceptor, planet);
+    NewsData news = NewsFactory.makePeaceNews(peaceMaker, acceptor, planet,
+        null);
     assertEquals(true, news.getImageInstructions().contains(
         peaceMaker.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -415,7 +439,8 @@ public class NewsFactoryTest {
     Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.PEACEFUL);
     PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
     Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makePeaceNews(peaceMaker, acceptor, planet);
+    NewsData news = NewsFactory.makePeaceNews(peaceMaker, acceptor, planet,
+        null);
     assertEquals(true, news.getImageInstructions().contains(
         peaceMaker.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(

@@ -93,7 +93,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1991,7 +1991,7 @@ public class AITurnView extends BlackPanel {
               trade.doTrades();
               PlayerInfo defender = game.getStarMap().getPlayerByIndex(j);
               NewsData newsData = NewsFactory.makePeaceNews(info, defender,
-                  null);
+                  null, null);
               game.getStarMap().getHistory().addEvent(
                   NewsFactory.makeDiplomaticEvent(null, newsData));
               game.getStarMap().getNewsCorpData().addNews(newsData);

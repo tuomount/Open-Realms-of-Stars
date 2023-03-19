@@ -67,7 +67,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2022 Tuomo Untinen
+* Copyright (C) 2017-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -1489,7 +1489,7 @@ public class DiplomacyView extends BlackPanel {
     }
     if (trade.getFirstOffer().isTypeInOffer(NegotiationType.PEACE)) {
       NewsData newsData = NewsFactory.makePeaceNews(ai, human,
-          meetingPlace);
+          meetingPlace, trade.getMajorDeals());
       starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
           meetingPlace, newsData));
       starMap.getNewsCorpData().addNews(newsData);
@@ -1971,7 +1971,7 @@ public class DiplomacyView extends BlackPanel {
         updatePanel(SpeechType.AGREE);
         resetChoices();
         NewsData newsData = NewsFactory.makePeaceNews(human, ai,
-            meetingPlace);
+            meetingPlace, trade.getMajorDeals());
         starMap.getNewsCorpData().addNews(newsData);
         starMap.getHistory().addEvent(
             NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));

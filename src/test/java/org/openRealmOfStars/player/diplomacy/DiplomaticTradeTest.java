@@ -33,7 +33,7 @@ import org.openRealmOfStars.starMap.vote.VotingType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2017-2022 Tuomo Untinen
+ * Copyright (C) 2017-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -53,7 +53,7 @@ import org.openRealmOfStars.starMap.vote.VotingType;
  */
 public class DiplomaticTradeTest {
 
-  private StarMap generateMap(final int maxPlayer) {
+  private static StarMap generateMap(final int maxPlayer) {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(maxPlayer);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(maxPlayer);
@@ -63,7 +63,7 @@ public class DiplomaticTradeTest {
     return map;
   }
 
-  private StarMap generateMapPirates(final int maxPlayer) {
+  private static StarMap generateMapPirates(final int maxPlayer) {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(maxPlayer);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(maxPlayer);
@@ -114,16 +114,17 @@ public class DiplomaticTradeTest {
 return map;
   }
 
-  private StarMap generateMapWithPlayer(final SpaceRace race) {
+  private static StarMap generateMapWithPlayer(final SpaceRace race) {
     return generateMapWithPlayer(race, 0);
   }
 
-  private StarMap generateMapWithPlayer(final SpaceRace race,
+  private static StarMap generateMapWithPlayer(final SpaceRace race,
       final int powerDifference) {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     PlayerInfo player1 = new PlayerInfo(race,2,0);
+    player1.setEmpireName("Terran");
     TechList tech1 = player1.getTechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -135,6 +136,7 @@ return map;
     player1.initMapData(5, 5);
 
     PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS, 2, 1);
+    player2.setEmpireName("Martian");
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -1135,11 +1137,15 @@ return map;
     StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     NegotiationList offerList1 = new NegotiationList();
-    offerList1.add(new NegotiationOffer(NegotiationType.CREDIT, new Integer(30)));
+    offerList1.add(new NegotiationOffer(NegotiationType.CREDIT,
+        Integer.valueOf(30)));
     NegotiationList offerList2 = new NegotiationList();
     trade.setFirstOffer(offerList1);
     trade.setSecondOffer(offerList2);
     trade.doTrades();
+    assertEquals(true, trade.getMajorDeals().contains("Terran"));
+    assertEquals(true, trade.getMajorDeals().contains("30 from"));
+    assertEquals(true, trade.getMajorDeals().contains("Martian."));
     int bonus = map.getPlayerByIndex(0).getDiplomacy().getDiplomacyList(1)
       .getDiplomacyBonus();
     assertEquals(3, bonus);
@@ -1643,6 +1649,7 @@ return map;
         .getNegotiationType();
     if (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
         || type1 == NegotiationType.MAP_PLANETS) {
+      // Success
     } else {
       assertFalse(true);
     }
@@ -1654,6 +1661,7 @@ return map;
         || type1 == NegotiationType.TECH
         || type1 == NegotiationType.CREDIT
         || type1 == NegotiationType.WAR) {
+      // Success
     } else {
       assertFalse(true);
     }

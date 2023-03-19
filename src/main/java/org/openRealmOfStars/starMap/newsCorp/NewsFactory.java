@@ -1331,10 +1331,12 @@ public final class NewsFactory {
    * @param peaceMaker Player who is make the peace offer
    * @param acceptor Player who is accepting
    * @param meetingPlace Where meeting happened, fleet or planet
+   * @param majorDeals Textual description of major deals that cause peace.
    * @return NewsData
    */
   public static NewsData makePeaceNews(final PlayerInfo peaceMaker,
-      final PlayerInfo acceptor, final Object meetingPlace) {
+      final PlayerInfo acceptor, final Object meetingPlace,
+      final String majorDeals) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
@@ -1368,6 +1370,26 @@ public final class NewsFactory {
     sb.append(" made peace with ");
     sb.append(acceptor.getEmpireName());
     sb.append("! ");
+    if (majorDeals != null) {
+      switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        sb.append("Peace did not come with cheap. ");
+        sb.append(majorDeals);
+        break;
+      }
+      case 1: {
+        sb.append("Peace come with a cost. ");
+        sb.append(majorDeals);
+        break;
+      }
+      case 2: {
+        sb.append("This peace happened due special deal. ");
+        sb.append(majorDeals);
+        break;
+      }
+    }
+    }
     if (meetingPlace instanceof Planet) {
       Planet planet = (Planet) meetingPlace;
       sb.append("This meeting happened in ");

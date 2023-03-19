@@ -31,7 +31,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2017-2022 Tuomo Untinen
+ * Copyright (C) 2017-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -120,6 +120,11 @@ public class DiplomaticTrade {
   private boolean diplomacyWithPirates = false;
 
   /**
+   * Textual description for major deals done in diplomatic trade.
+   * doTrades method will update this one. There is only getter for this.
+   */
+  private String majorDeals;
+  /**
    * Difference between two parties which is considered as
    * insult;
    */
@@ -153,6 +158,7 @@ public class DiplomaticTrade {
     starMap = map;
     first = index1;
     second = index2;
+    majorDeals = null;
     diplomacyWithPirates = false;
     PlayerInfo pirate = starMap.getPlayerList().getSpacePiratePlayer();
     int pirateIndex = starMap.getPlayerList().getIndex(pirate);
@@ -179,6 +185,13 @@ public class DiplomaticTrade {
     }
   }
 
+  /**
+   * Get textual description of major deals done in diplomatic trade.
+   * @return String or null
+   */
+  public String getMajorDeals() {
+    return majorDeals;
+  }
   /**
    * Gets the speechtype by current offer
    * @return SpeechType
@@ -2576,6 +2589,7 @@ public class DiplomaticTrade {
     int totalValue = 0;
     boolean countAsDiplomaticTrade = false;
     boolean countAsWar = false;
+    StringBuilder sb = new StringBuilder();
     for (int i = 0; i < offerList.getSize(); i++) {
       NegotiationOffer offer = offerList.getByIndex(i);
       totalValue = totalValue + offer.getOfferValue(info.getRace());
@@ -2583,6 +2597,28 @@ public class DiplomaticTrade {
       case CREDIT: {
         info.setTotalCredits(info.getTotalCredits() + offer.getCreditValue());
         giver.setTotalCredits(giver.getTotalCredits() - offer.getCreditValue());
+        if (offer.getCreditValue() > 9) {
+          sb.append(info.getEmpireName());
+          switch (DiceGenerator.getRandom(2)) {
+            case 0:
+            default: {
+              sb.append(" receives ");
+              break;
+            }
+            case 1: {
+              sb.append(" gains ");
+              break;
+            }
+            case 2: {
+              sb.append(" takes ");
+              break;
+            }
+          }
+          sb.append(offer.getCreditValue());
+          sb.append(" from ");
+          sb.append(giver.getEmpireName());
+          sb.append(". ");
+        }
         countAsDiplomaticTrade = true;
         break;
       }
@@ -2628,6 +2664,29 @@ public class DiplomaticTrade {
             .getName());
         giver.getFleets().remove(index);
         giver.getMissions().deleteMissionForFleet(offer.getFleet().getName());
+        if (offer.getFleet().getMilitaryValue() > 25) {
+          sb.append(info.getEmpireName());
+          switch (DiceGenerator.getRandom(2)) {
+            case 0:
+            default: {
+              sb.append(" receives ");
+              break;
+            }
+            case 1: {
+              sb.append(" gains ");
+              break;
+            }
+            case 2: {
+              sb.append(" takes ");
+              break;
+            }
+          }
+          sb.append("military fleet with ");
+          sb.append(offer.getFleet().getNumberOfShip());
+          sb.append(" ships from ");
+          sb.append(giver.getEmpireName());
+          sb.append(". ");
+        }
         countAsDiplomaticTrade = true;
         break;
       }
@@ -2642,6 +2701,26 @@ public class DiplomaticTrade {
         if (info.getRace() == SpaceRace.ALTEIRIANS) {
           planet.colonizeWithOrbital();
         }
+        sb.append(info.getEmpireName());
+        switch (DiceGenerator.getRandom(2)) {
+          case 0:
+          default: {
+            sb.append(" receives ");
+            break;
+          }
+          case 1: {
+            sb.append(" gains ");
+            break;
+          }
+          case 2: {
+            sb.append(" takes ");
+            break;
+          }
+        }
+        sb.append(offer.getPlanet().getName());
+        sb.append(" from ");
+        sb.append(giver.getEmpireName());
+        sb.append(". ");
         countAsDiplomaticTrade = true;
         break;
       }
@@ -2756,6 +2835,11 @@ public class DiplomaticTrade {
       if (info.getRuler() != null) {
         info.getRuler().getStats().addOne(StatType.DIPLOMATIC_TRADE);
       }
+    }
+    if (majorDeals != null) {
+      majorDeals = majorDeals + sb.toString();
+    } else {
+      majorDeals = sb.toString();
     }
     return totalValue;
   }

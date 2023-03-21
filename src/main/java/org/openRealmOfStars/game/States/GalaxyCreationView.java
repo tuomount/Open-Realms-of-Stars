@@ -307,10 +307,10 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     String[] events = new String[5];
     events[0] = "No events (0%)";
-    events[1] = "Very rare (5%)";
-    events[2] = "Rare (10%)";
-    events[3] = "Common (20%)";
-    events[4] = "Very common (40%)";
+    events[1] = "Very rare (10%)";
+    events[2] = "Rare (20%)";
+    events[3] = "Common (40%)";
+    events[4] = "Very common (60%)";
     comboPlanetaryEvent = new SpaceCombo<>(events);
     switch (this.config.getChanceForPlanetaryEvent()) {
       case 0: comboPlanetaryEvent.setSelectedIndex(0); break;
@@ -891,22 +891,22 @@ public class GalaxyCreationView extends BlackPanel {
       }
       case 1: {
         // Very rare
-        config.setChanceForPlanetaryEvent(5);
+        config.setChanceForPlanetaryEvent(10);
         break;
       }
       case 2: {
         // Rare
-        config.setChanceForPlanetaryEvent(10);
+        config.setChanceForPlanetaryEvent(20);
         break;
       }
       case 3: {
         // Common
-        config.setChanceForPlanetaryEvent(20);
+        config.setChanceForPlanetaryEvent(40);
         break;
       }
       case 4: {
         // Very Common
-        config.setChanceForPlanetaryEvent(40);
+        config.setChanceForPlanetaryEvent(60);
         break;
       }
       default: {

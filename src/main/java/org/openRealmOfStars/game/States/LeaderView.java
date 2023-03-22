@@ -45,7 +45,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020-2022 Tuomo Untinen
+* Copyright (C) 2020-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -228,6 +228,7 @@ public class LeaderView extends BlackPanel
     this.add(bottomPanel, BorderLayout.SOUTH);
     this.add(base, BorderLayout.WEST);
     this.add(center, BorderLayout.CENTER);
+    updatePanel();
   }
 
 
@@ -427,6 +428,7 @@ public class LeaderView extends BlackPanel
         }
         if (!planetFound) {
           map.setDrawPos(map.getMaxX() / 2, map.getMaxY() / 2);
+          planetPopulation.setText("No home planet selected");
         }
       }
     }
@@ -474,6 +476,10 @@ public class LeaderView extends BlackPanel
       sb.append("\n");
       sb.append(LeaderUtility.createBioForLeader(leader, player));
       infoText.setText(sb.toString());
+    }
+    if (leader == null) {
+      planetPopulation.setText("No leader selected.");
+
     }
     updateButtonToolTips();
     this.repaint();

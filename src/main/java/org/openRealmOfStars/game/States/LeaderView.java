@@ -290,6 +290,7 @@ public class LeaderView extends BlackPanel
    */
   public void setPlanet(final Planet planet) {
     activePlanet = planet;
+    updatePanel();
   }
   /**
    * Set active fleet.
@@ -297,6 +298,7 @@ public class LeaderView extends BlackPanel
    */
   public void setFleet(final Fleet fleet) {
     activeFleet = fleet;
+    updatePanel();
   }
   /**
    * Set selected by index
@@ -476,6 +478,22 @@ public class LeaderView extends BlackPanel
       sb.append("\n");
       sb.append(LeaderUtility.createBioForLeader(leader, player));
       infoText.setText(sb.toString());
+      String target = null;
+      String job = null;
+      if (activePlanet != null) {
+        target = activePlanet.getName();
+        job = "governor";
+      }
+      if (activeFleet != null) {
+        target = activeFleet.getName();
+        job = "commander";
+      }
+      if (target != null) {
+        setLeaderBtn.setText("Assign " + job + " to " + target);
+      } else {
+        setLeaderBtn.setText("Assign leader");
+      }
+
     }
     if (leader == null) {
       planetPopulation.setText("No leader selected.");

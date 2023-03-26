@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -14,7 +17,7 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2018  Tuomo Untinen
+ * Copyright (C) 2018,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,6 +43,10 @@ public class PlanetInfoLabelTest {
   public void testBasic() {
     ActionListener listener = Mockito.mock(ActionListener.class);
     Planet target = Mockito.mock(Planet.class);
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(target.getPlanetPlayerInfo()).thenReturn(realm);
     Mockito.when(target.getPlanetType()).thenReturn(PlanetTypes.ICEWORLD1);
     Construction[] list = new Construction[1];
     list[0] = Mockito.mock(Construction.class);

@@ -95,9 +95,11 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
     }
     IconLabel icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_PEOPLE),
         String.valueOf(planet.getTotalPopulation()));
+    icon.setToolTipText("Planet's current population number.");
     addIcon(icon);
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_FARM),
         String.valueOf(planet.getTotalProduction(Planet.PRODUCTION_FOOD)));
+    icon.setToolTipText("Planet's total food per star year.");
     int metalProd = planet.getTotalProduction(Planet.PRODUCTION_METAL);
     if (planet.getPlanetPlayerInfo() != null
         && planet.getPlanetPlayerInfo().getRace().isLithovorian()) {
@@ -105,23 +107,49 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
     }
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_MINE),
         String.valueOf(metalProd));
+    icon.setToolTipText("Planet's total metal per star year.");
     addIcon(icon);
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_FACTORY),
         String.valueOf(planet.getTotalProduction(
         Planet.PRODUCTION_PRODUCTION)));
+    icon.setToolTipText("Planet's total production per star year.");
     addIcon(icon);
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_RESEARCH),
         String.valueOf(planet.getTotalProduction(Planet.PRODUCTION_RESEARCH)));
+    icon.setToolTipText("Planet's research points per star year.");
     addIcon(icon);
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_CULTURE),
         String.valueOf(planet.getTotalProduction(Planet.PRODUCTION_CULTURE)));
+    icon.setToolTipText("Planet's total culture production per star year.");
     addIcon(icon);
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_CREDIT),
         String.valueOf(planet.getTotalProduction(Planet.PRODUCTION_CREDITS)));
+    icon.setToolTipText("<html>Planet's total credits production per star"
+        + " year.<br> Negative value means that planet upkeep cost credits."
+        + "<br>Positive value means that that planet produces credits."
+        + "</html>");
     addIcon(icon);
     int happyValue = planet.calculateHappiness();
     icon = new IconLabel(null, Icons.getHappyFace(happyValue),
         String.valueOf(happyValue));
+    if (planet.getPlanetPlayerInfo().getGovernment().isImmuneToHappiness()) {
+      icon.setToolTipText("Population is so heavily united that they do "
+          + "not feel unhappy or happy.");
+    } else {
+      icon.setToolTipText("<html>Planet happiness value. Positive value means"
+          + " that population is happy.<br> Negative value means that"
+          + " population is unhappy.</html>");
+    }
+    addIcon(icon);
+    if (planet.getGovernor() != null) {
+      icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_LEADERS), "");
+      icon.setToolTipText("Planet has governor "
+          + planet.getGovernor().getName() + ".");
+    } else {
+      icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_GREYED_LEADERS),
+          "");
+      icon.setToolTipText("Planet does not have governor.");
+    }
     addIcon(icon);
     constructionSelect = new JComboBox<>(this.planet.getProductionList());
     constructionSelect.setActionCommand(planet.getName() + "|"
@@ -131,6 +159,8 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
     constructionSelect.setBorder(new SimpleBorder());
     constructionSelect.setFont(GuiStatics.getFontCubellan());
     constructionSelect.setRenderer(new ProductionListRenderer());
+    constructionSelect.setToolTipText("Current project to be build on the"
+        + " planet.");
     constructionSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     if (planet.getUnderConstruction() != null) {

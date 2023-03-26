@@ -22,7 +22,7 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018,2021,2022 Tuomo Untinen
+* Copyright (C) 2018,2021-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -54,6 +54,7 @@ public class PlanetListViewTest {
     listOfPlanets.add(planet2);
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
     Mockito.when(realm.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.AI);
     Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(realm);
     Mockito.when(planet1.getPlanetType()).thenReturn(PlanetTypes.ICEWORLD1);
     Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(realm);
@@ -80,6 +81,7 @@ public class PlanetListViewTest {
     listOfPlanets.add(planet2);
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
     Mockito.when(realm.getRace()).thenReturn(SpaceRace.LITHORIANS);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(realm);
     Mockito.when(planet1.getPlanetType()).thenReturn(PlanetTypes.ICEWORLD1);
     Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(realm);

@@ -474,6 +474,10 @@ public final class Icons {
    * Gravity ripper
    */
   public static final String ICON_GRAVITY_RIPPER = "IconGravityRipper";
+  /**
+   * Greyed leaders
+   */
+  public static final String ICON_GREYED_LEADERS = "IconGreyedLeaders";
 
   /**
    * List of Icon
@@ -806,6 +810,8 @@ public final class Icons {
     icon = new Icon16x16(image, 1, 5, ICON_MULTIDIMENSION_SHIELD);
     addIcon(icon);
     icon = new Icon16x16(image, 2, 5, ICON_GRAVITY_RIPPER);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 5, ICON_GREYED_LEADERS);
     addIcon(icon);
   }
 

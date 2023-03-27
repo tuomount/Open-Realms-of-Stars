@@ -2885,6 +2885,18 @@ public final class MissionHandling {
       planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
       NewsData news = NewsFactory.makeBuildingDestroyedNews(planet, building,
           "");
+      if (planet.getUnderConstruction() instanceof Ship
+          && building.getName().equals("Space port")) {
+        planet.setUnderConstruction(null);
+        Message msgPort = new Message(MessageType.PLANETARY,
+            "Space port from "
+              + planet.getName() + " was destroyed and ships cannot be"
+                  + " built any more. ",
+              Icons.getIconByName(Icons.ICON_HULL_TECH));
+        msgPort.setCoordinate(planet.getCoordinate());
+        msgPort.setMatchByString(planet.getName());
+        info.getMsgList().addUpcomingMessage(msgPort);
+      }
       if (game.getStarMap().hasHumanMet(planet.getPlanetPlayerInfo())
           || game.getStarMap().hasHumanMet(info)) {
         game.getStarMap().getNewsCorpData().addNews(news);
@@ -2899,6 +2911,18 @@ public final class MissionHandling {
           planet.getBuildingList().length - 1);
       Building building = planet.getBuildingList()[index];
       planet.removeBuilding(building);
+      if (planet.getUnderConstruction() instanceof Ship
+          && building.getName().equals("Space port")) {
+        planet.setUnderConstruction(null);
+        Message msgPort = new Message(MessageType.PLANETARY,
+            "Space port from "
+              + planet.getName() + " was destroyed and ships cannot be"
+                  + " built any more. ",
+              Icons.getIconByName(Icons.ICON_HULL_TECH));
+        msgPort.setCoordinate(planet.getCoordinate());
+        msgPort.setMatchByString(planet.getName());
+        info.getMsgList().addUpcomingMessage(msgPort);
+      }
       String killedTxt = "";
       if (planet.getTotalPopulation() > 1) {
         planet.killOneWorker();

@@ -11,7 +11,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019,2022 Tuomo Untinen
+* Copyright (C) 2019,2022,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -267,7 +267,8 @@ public class Votes {
     int index = getFirstCandidate();
     for (Vote vote : listOfVotes) {
       if (vote.getType() == type) {
-        if (vote.getResult(index) == VotingChoice.VOTED_YES) {
+        if (vote.getTurnsToVote() == 0
+            && vote.getResult(index) == VotingChoice.VOTED_YES) {
           return true;
         }
         return false;

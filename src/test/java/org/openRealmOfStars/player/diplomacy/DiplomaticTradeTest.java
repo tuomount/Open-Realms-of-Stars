@@ -371,8 +371,8 @@ return map;
     Mockito.when(espionage.getByIndex(Mockito.anyInt())).thenReturn(espionageList);
     PlayerInfo player1 = Mockito.mock(PlayerInfo.class);
     Mockito.when(player1.getEspionage()).thenReturn(espionage);
-    Mockito.when(player1.getSectorVisibility(
-        (Coordinate)Mockito.anyObject())).thenReturn((byte) 2);
+    Mockito.when(player1.getSectorVisibility(Mockito.isA(Coordinate.class)))
+        .thenReturn((byte) 2);
     TechList tech1 = new TechList(SpaceRace.HUMAN);
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -394,8 +394,8 @@ return map;
     tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     Mockito.when(player2.getTechList()).thenReturn(tech2);
-    Mockito.when(player2.getSectorVisibility(
-        (Coordinate)Mockito.anyObject())).thenReturn((byte) 2);
+    Mockito.when(player2.getSectorVisibility(Mockito.isA(Coordinate.class)))
+        .thenReturn((byte) 2);
     FleetList fleetList = new FleetList();
     Fleet fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.getCoordinate()).thenReturn(coord);

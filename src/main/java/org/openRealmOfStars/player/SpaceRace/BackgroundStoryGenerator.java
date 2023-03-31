@@ -1,6 +1,7 @@
 package org.openRealmOfStars.player.SpaceRace;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.NameGenerator;
@@ -53,6 +54,12 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.HUMAN) {
       sb.append(generateHumanStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.MECHIONS) {
+      sb.append(generateMechionStory(info, startPlanet, startingYear));
+    }
+    if (info.getRace() == SpaceRace.SPORKS) {
+      sb.append(generateSporkStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -78,18 +85,21 @@ public final class BackgroundStoryGenerator {
           + "average in most physical and mental abilities. ");
     } else {
       sb.append(name);
-      sb.append(" are an extraterrestrial beings that "
-          + "are similar to humans on Earth. Like their Earthly counterparts,");
+      sb.append(" are an extraterrestrial beings that are similar to humans"
+          + " on Earth. Like their Earthly counterparts, ");
       sb.append(name);
       sb.append(" are often portrayed as being average in most"
           + " physical and mental abilities. ");
     }
+    sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
     sb.append("Group of scientiest were able to discover faster than light"
         + " travel and thus first prototype of space craft was created at"
         + " star year ");
-    sb.append(startingYear - 10);
+    sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
     sb.append(". First flights were magnificent success and then first armed "
         + "scout and colony ship was create at star year ");
     sb.append(startingYear);
@@ -97,6 +107,113 @@ public final class BackgroundStoryGenerator {
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for mechion.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateMechionStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Mechions";
+    sb.append(name);
+    sb.append(" are a type of mechanical robot that are designed to function"
+        + " without the need for food or other organic sustenance. Instead,"
+        + " they are powered by advanced technology, such as batteries or "
+        + "fuel cells, which allow them to operate for long periods of time"
+        + " without needing to be refueled.");
+    sb.append(" One of the key features of Mechions is their ability to work"
+        + " together in large groups, known as populations. Each Mechion is"
+        + " equipped with advanced sensors and communication systems, which "
+        + "allow them to coordinate their movements and work in harmony "
+        + "with their fellow robots. This allows Mechion populations to "
+        + "tackle complex tasks that would be beyond the capabilities of "
+        + "a single robot.");
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append("Group of research mechions were able to discover faster"
+        + " than light travel and thus first prototype of space craft "
+        + "was created at star year ");
+    sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+    sb.append(". First flights were magnificent success and then first armed "
+        + "scout and colony ship was create at star year ");
+    sb.append(startingYear);
+    sb.append(". ");
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for spork.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateSporkStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Sporks";
+    if (info.getEmpireName().contains("Taurus")) {
+      name = "Taurians";
+    }
+
+    sb.append(name);
+    sb.append(" are a fictional species of aggressive and warmongering"
+        + " creatures that are known for their ferocity and their love of"
+        + " battle. ");
+    sb.append(name);
+    sb.append(" are typically tall and muscular, with thick, armored skin and"
+        + " powerful muscles.");
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append("Group of scientist were able to discover faster"
+        + " than light travel and thus first prototype of space craft "
+        + "was created at star year ");
+    sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+    sb.append(". First flights were magnificent success and then first armed "
+        + "scout and colony ship was create at star year ");
+    sb.append(startingYear);
+    sb.append(". ");
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
     sb.append(".");
     return sb.toString();
   }
@@ -117,6 +234,10 @@ public final class BackgroundStoryGenerator {
     boolean xenophopic = false;
     boolean traders = false;
     String joinedVerb = "joined";
+    String lowcaseGovernmentName = info.getGovernment().getName().toLowerCase();
+    if (info.getGovernment() == GovernmentType.AI) {
+      lowcaseGovernmentName = "AI";
+    }
     if (info.getGovernment().isImmuneToHappiness()) {
       unity = true;
     }
@@ -147,7 +268,7 @@ public final class BackgroundStoryGenerator {
           sb.append(name);
           sb.append(" had numerous wars between each others, but then they"
               + " realised that they are much stronger as ");
-          sb.append(info.getGovernment().getName().toLowerCase());
+          sb.append(lowcaseGovernmentName);
           sb.append(", which functions like single minded organism. ");
           break;
         }
@@ -155,7 +276,7 @@ public final class BackgroundStoryGenerator {
           sb.append(name);
           sb.append(" has been always as long as their written history goes"
               + " working as ");
-          sb.append(info.getGovernment().getName().toLowerCase());
+          sb.append(lowcaseGovernmentName);
           sb.append(". This has helped them to get past their challenges. ");
           break;
         }
@@ -183,7 +304,7 @@ public final class BackgroundStoryGenerator {
           sb.append(" united all ");
           sb.append(name);
           sb.append(" into ");
-          sb.append(info.getGovernment().getName().toLowerCase());
+          sb.append(lowcaseGovernmentName);
           sb.append(" and ");
           sb.append(gender.getHeShe());
           sb.append(" was their first ");
@@ -216,7 +337,7 @@ public final class BackgroundStoryGenerator {
           sb.append(" united all ");
           sb.append(name);
           sb.append(" into ");
-          sb.append(info.getGovernment().getName().toLowerCase());
+          sb.append(lowcaseGovernmentName);
           sb.append(" and ");
           sb.append(gender.getHeShe());
           sb.append(" was their first ");
@@ -300,7 +421,7 @@ public final class BackgroundStoryGenerator {
       sb.append(" all ");
       sb.append(name);
       sb.append(" into ");
-      sb.append(info.getGovernment().getName().toLowerCase());
+      sb.append(lowcaseGovernmentName);
       sb.append(" and ");
       sb.append(gender.getHeShe());
       sb.append(" was their first ");

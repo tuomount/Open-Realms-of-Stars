@@ -1,6 +1,9 @@
 package org.openRealmOfStars.player.SpaceRace;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.leader.Gender;
+import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.NameGenerator;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.WorldType;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -82,10 +85,7 @@ public final class BackgroundStoryGenerator {
           + " physical and mental abilities. ");
     }
     sb.append(generateWorldType(info, startPlanet, name));
-    sb.append(name);
-    sb.append(" government form is ");
-    sb.append(info.getGovernment().getName());
-    sb.append(".");
+    sb.append(generateGovernmentType(info, name));
     sb.append("Group of scientiest were able to discover faster than light"
         + " travel and thus first prototype of space craft was created at"
         + " star year ");
@@ -102,6 +102,239 @@ public final class BackgroundStoryGenerator {
   }
 
   /**
+   * Generate government history for realm.
+   * @param info Realm
+   * @param name Realm space race name.
+   * @return generated history.
+   */
+  private static String generateGovernmentType(final PlayerInfo info,
+      final String name) {
+    StringBuilder sb = new StringBuilder();
+    boolean unity = false;
+    boolean aggressive = false;
+    boolean diplomatic = false;
+    boolean heirs = false;
+    boolean xenophopic = false;
+    boolean traders = false;
+    String joinedVerb = "joined";
+    if (info.getGovernment().isImmuneToHappiness()) {
+      unity = true;
+    }
+    if (info.getGovernment().hasWarHappiness()
+        || info.getGovernment().getWarResistance() > 0) {
+      aggressive = true;
+      joinedVerb = "controlled";
+    }
+    if (info.getGovernment().getDiplomaticBonus() > 0) {
+      diplomatic = true;
+      joinedVerb = "allied";
+    }
+    if (info.getGovernment().hasHeirs()) {
+      heirs = true;
+    }
+    if (info.getGovernment().isXenophopic()) {
+      xenophopic = true;
+      joinedVerb = "conquered";
+    }
+    if (info.getGovernment().hasCreditRush()) {
+      traders = true;
+    }
+    if (unity) {
+      switch (DiceGenerator.getRandom(3)) {
+        default:
+        case 0: {
+          sb.append("At first ");
+          sb.append(name);
+          sb.append(" had numerous wars between each others, but then they"
+              + " realised that they are much stronger as ");
+          sb.append(info.getGovernment().getName().toLowerCase());
+          sb.append(", which functions like single minded organism. ");
+          break;
+        }
+        case 1: {
+          sb.append(name);
+          sb.append(" has been always as long as their written history goes"
+              + " working as ");
+          sb.append(info.getGovernment().getName().toLowerCase());
+          sb.append(". This has helped them to get past their challenges. ");
+          break;
+        }
+        case 2: {
+          sb.append(name);
+          sb.append(" has been violent history, until ");
+          Gender gender = Gender.getRandom();
+          if (info.getRace().getSocialSystem() == SocialSystem.PATRIARCHY) {
+            gender = Gender.MALE;
+          }
+          if (info.getRace().getSocialSystem() == SocialSystem.MATRIARCHY) {
+            gender = Gender.FEMALE;
+          }
+          if (info.getRace() == SpaceRace.MECHIONS
+              || info.getRace() == SpaceRace.REBORGIANS) {
+            gender = Gender.NONE;
+          }
+          String greatLeader = NameGenerator.generateName(info.getRace(),
+              gender);
+          if (heirs) {
+            greatLeader = LeaderUtility.getParentSurname(greatLeader,
+                info.getRuler().getName());
+          }
+          sb.append(greatLeader);
+          sb.append(" united all ");
+          sb.append(name);
+          sb.append(" into ");
+          sb.append(info.getGovernment().getName().toLowerCase());
+          sb.append(" and ");
+          sb.append(gender.getHeShe());
+          sb.append(" was their first ");
+          sb.append(LeaderUtility.getRulerTitle(gender, info.getGovernment()));
+          sb.append(". ");
+          break;
+        }
+        case 3: {
+          sb.append(name);
+          sb.append(" history is unknown since there is no written text"
+              + " available, until ");
+          Gender gender = Gender.getRandom();
+          if (info.getRace().getSocialSystem() == SocialSystem.PATRIARCHY) {
+            gender = Gender.MALE;
+          }
+          if (info.getRace().getSocialSystem() == SocialSystem.MATRIARCHY) {
+            gender = Gender.FEMALE;
+          }
+          if (info.getRace() == SpaceRace.MECHIONS
+              || info.getRace() == SpaceRace.REBORGIANS) {
+            gender = Gender.NONE;
+          }
+          String greatLeader = NameGenerator.generateName(info.getRace(),
+              gender);
+          if (heirs) {
+            greatLeader = LeaderUtility.getParentSurname(greatLeader,
+                info.getRuler().getName());
+          }
+          sb.append(greatLeader);
+          sb.append(" united all ");
+          sb.append(name);
+          sb.append(" into ");
+          sb.append(info.getGovernment().getName().toLowerCase());
+          sb.append(" and ");
+          sb.append(gender.getHeShe());
+          sb.append(" was their first ");
+          sb.append(LeaderUtility.getRulerTitle(gender, info.getGovernment()));
+          sb.append(" and ");
+          sb.append(gender.getHisHer());
+          sb.append(" reign begins ");
+          sb.append(name);
+          sb.append(" written history. ");
+          break;
+        }
+      }
+    } else {
+      boolean writtenHistory = true;
+      if (aggressive) {
+        switch (DiceGenerator.getRandom(2)) {
+          default:
+          case 0: {
+            sb.append(name);
+            sb.append(" has been violent history, until ");
+            break;
+          }
+          case 1: {
+            sb.append("At first ");
+            sb.append(name);
+            sb.append(" had numerous wars between each others, until ");
+            break;
+          }
+          case 2: {
+            sb.append(name);
+            sb.append(" history hasn't been written for long, but stories told"
+                + " it was brutal and ruthless, until ");
+            writtenHistory = false;
+            break;
+          }
+        }
+      } else {
+        switch (DiceGenerator.getRandom(3)) {
+        default:
+        case 0: {
+          sb.append(name);
+          sb.append(" were small tribes first scattered around the planet,"
+              + " until ");
+          break;
+        }
+        case 1: {
+          sb.append("At first ");
+          sb.append(name);
+          sb.append(" had numerous rivalling realms, until ");
+          break;
+        }
+        case 2: {
+          sb.append(name);
+          sb.append(" history hasn't been written for long and it was"
+              + " long unknown, until ");
+          writtenHistory = false;
+          break;
+        }
+        }
+      }
+      Gender gender = Gender.getRandom();
+      if (info.getRace().getSocialSystem() == SocialSystem.PATRIARCHY) {
+        gender = Gender.MALE;
+      }
+      if (info.getRace().getSocialSystem() == SocialSystem.MATRIARCHY) {
+        gender = Gender.FEMALE;
+      }
+      if (info.getRace() == SpaceRace.MECHIONS
+          || info.getRace() == SpaceRace.REBORGIANS) {
+        gender = Gender.NONE;
+      }
+      String greatLeader = NameGenerator.generateName(info.getRace(),
+          gender);
+      if (heirs) {
+        greatLeader = LeaderUtility.getParentSurname(greatLeader,
+            info.getRuler().getName());
+      }
+      sb.append(greatLeader);
+      sb.append(" ");
+      sb.append(joinedVerb);
+      sb.append(" all ");
+      sb.append(name);
+      sb.append(" into ");
+      sb.append(info.getGovernment().getName().toLowerCase());
+      sb.append(" and ");
+      sb.append(gender.getHeShe());
+      sb.append(" was their first ");
+      sb.append(LeaderUtility.getRulerTitle(gender, info.getGovernment()));
+      if (writtenHistory) {
+        sb.append(". ");
+      } else {
+        sb.append(" and ");
+        sb.append(gender.getHisHer());
+        sb.append(" reign begins ");
+        sb.append(name);
+        sb.append(" written history. ");
+      }
+    }
+    if (diplomatic) {
+      sb.append(name);
+      sb.append(" have always shown great interest towards others");
+      if (traders) {
+        sb.append(" and have reputation to be good traders");
+      }
+      sb.append(". ");
+    }
+    if (!diplomatic && traders) {
+      sb.append(name);
+     sb.append(" have reputation to be good traders. ");
+    }
+    if (xenophopic) {
+      sb.append(name);
+      sb.append(" have very strong attitudes towards others which they see"
+          + " as an outsiders. ");
+    }
+    return sb.toString();
+  }
+  /**
    * Generate world type prehistory for realm.
    * @param info Realm
    * @param startPlanet Starting planet
@@ -114,12 +347,12 @@ public final class BackgroundStoryGenerator {
     sb.append(name);
     if (info.getRace().isLithovorian()) {
       sb.append(" were developed from silicate material"
-          + " trillions of star years ago on ");
+          + " trillions of star years ago on");
     } else if (info.getRace().isRoboticRace()) {
       sb.append(" were created by ancient civilization"
-          + " thousands of star years ago on ");
+          + " thousands of star years ago on");
     } else {
-      sb.append(" were born billions of star years ago on ");
+      sb.append(" were born billions of star years ago on");
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.CARBONWORLD) {
       sb.append(" carbon rich planet with full of life.");

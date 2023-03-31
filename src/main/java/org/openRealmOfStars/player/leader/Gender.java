@@ -5,7 +5,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019, 2020 Tuomo Untinen
+* Copyright (C) 2019, 2020, 2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -103,6 +103,19 @@ public enum Gender {
       case NONE: return "it's";
       case MALE: return "his";
       case FEMALE: return "her";
+    }
+  }
+
+  /**
+   * Get pronomin for gender.
+   * @return pronomin
+   */
+  public String getHeShe() {
+    switch (this) {
+      default:
+      case NONE: return "it";
+      case MALE: return "he";
+      case FEMALE: return "she";
     }
   }
 }

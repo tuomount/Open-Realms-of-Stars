@@ -3193,12 +3193,8 @@ public class AITurnView extends BlackPanel {
             heir = LeaderUtility.createLeader(realm, firstPlanet, 1);
             heir.setAge(0);
             heir.setParent(leader);
-            String[] heirNames = heir.getName().split(" ");
-            String[] parentNames = leader.getName().split(" ");
-            if (parentNames.length >= 2 && heirNames.length >= 2) {
-              heir.setName(heirNames[0] + " "
-                  + parentNames[parentNames.length - 1]);
-            }
+            heir.setName(LeaderUtility.getParentSurname(heir.getName(),
+                leader.getName()));
             heir.setJob(Job.TOO_YOUNG);
             heir.setTitle(LeaderUtility.createTitleForLeader(heir, realm));
             NewsData news = NewsFactory.makeHeirNews(heir, realm);

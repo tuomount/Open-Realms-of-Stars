@@ -91,6 +91,22 @@ public final class LeaderUtility {
   }
 
   /**
+   * Get heir name with parent's surname
+   * @param heirName Heir name
+   * @param parentName Parent name
+   * @return heirname with parent's surname
+   */
+  public static String getParentSurname(final String heirName,
+      final String parentName) {
+    String[] heirNames = heirName.split(" ");
+    String[] parentNames = parentName.split(" ");
+    if (parentNames.length >= 2 && heirNames.length >= 2) {
+      return heirNames[0] + " "
+          + parentNames[parentNames.length - 1];
+    }
+    return heirName;
+  }
+  /**
    * Create new leader based on 3 parameters.
    * @param info Realm who is creating new leader.
    * @param planet Home planet for leader. This can be null.
@@ -446,11 +462,11 @@ public final class LeaderUtility {
 
   /**
    * Get Ruler title for leader and government type.
-   * @param leader Leader for getting the title
+   * @param gender Ruler gender
    * @param government Government type
    * @return Ruler title
    */
-  private static String getRulerTitle(final Leader leader,
+  public static String getRulerTitle(final Gender gender,
       final GovernmentType government) {
     switch (government) {
     default:
@@ -461,7 +477,7 @@ public final class LeaderUtility {
       return "President";
     }
     case EMPIRE: {
-      if (leader.getGender() == Gender.FEMALE) {
+      if (gender == Gender.FEMALE) {
         return "Empiress";
       }
       return "Emperor";
@@ -469,7 +485,7 @@ public final class LeaderUtility {
     case FEUDALISM:
     case NEST:
     case KINGDOM: {
-      if (leader.getGender() == Gender.FEMALE) {
+      if (gender == Gender.FEMALE) {
         return "Queen";
       }
       return "King";
@@ -507,7 +523,7 @@ public final class LeaderUtility {
       return "Master";
     }
     case HIERARCHY: {
-      if (leader.getGender() == Gender.FEMALE) {
+      if (gender == Gender.FEMALE) {
         return "Lady";
       }
       return "Lord";
@@ -524,7 +540,7 @@ public final class LeaderUtility {
       final PlayerInfo realm) {
     StringBuilder sb = new StringBuilder();
     if (leader.getJob() == Job.RULER) {
-      sb.append(getRulerTitle(leader, realm.getGovernment()));
+      sb.append(getRulerTitle(leader.getGender(), realm.getGovernment()));
     }
     if (leader.getJob() == Job.COMMANDER) {
       if (leader.getMilitaryRank() == MilitaryRank.CIVILIAN) {
@@ -2057,7 +2073,7 @@ public final class LeaderUtility {
     int commander = leader.getStats().getStat(StatType.COMMANDER_LENGTH);
     int avg = (ruler + governor + commander) / 3;
     if (ruler > avg) {
-      return getRulerTitle(leader, government);
+      return getRulerTitle(leader.getGender(), government);
     }
     if (avg == 0) {
       return "jobless";
@@ -2231,7 +2247,7 @@ public final class LeaderUtility {
       sb.append(leader.getName());
       sb.append(" is ");
       if (leader.getJob() == Job.RULER) {
-        sb.append(getRulerTitle(leader, info.getGovernment()));
+        sb.append(getRulerTitle(leader.getGender(), info.getGovernment()));
       } else if (leader.getJob() == Job.COMMANDER) {
         sb.append(leader.getMilitaryRank().toString());
       } else {

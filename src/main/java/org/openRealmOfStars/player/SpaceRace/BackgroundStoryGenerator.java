@@ -1,6 +1,6 @@
-package org.openRealmOfStars.player;
+package org.openRealmOfStars.player.SpaceRace;
 
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.WorldType;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -69,7 +69,7 @@ public final class BackgroundStoryGenerator {
     }
     if (startPlanet.getName().startsWith("Earth")) {
       sb.append(name);
-      sb.append(" are the humans from the Earth.");
+      sb.append(" are the humans from the Earth. ");
       sb.append(name);
       sb.append(" are seen as "
           + "average in most physical and mental abilities. ");
@@ -81,21 +81,19 @@ public final class BackgroundStoryGenerator {
       sb.append(" are often portrayed as being average in most"
           + " physical and mental abilities. ");
     }
-    sb.append(" ");
     sb.append(generateWorldType(info, startPlanet, name));
-    sb.append(" ");
     sb.append(name);
     sb.append(" government form is ");
     sb.append(info.getGovernment().getName());
     sb.append(".");
     sb.append("Group of scientiest were able to discover faster than light"
         + " travel and thus first prototype of space craft was created at"
-        + " star year");
+        + " star year ");
     sb.append(startingYear - 10);
     sb.append(". First flights were magnificent success and then first armed "
-        + "scout and colony ship was create at star year");
+        + "scout and colony ship was create at star year ");
     sb.append(startingYear);
-    sb.append(".");
+    sb.append(". ");
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());

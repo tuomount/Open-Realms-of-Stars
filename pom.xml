@@ -133,6 +133,8 @@
                         <version>2.22.2</version>
                         <configuration>
                             <groups>org.openRealmOfStars.UnitTest</groups>
+                            <parallel>methods</parallel>
+                            <threadCountMethods>8</threadCountMethods>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -146,6 +148,10 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.22.2</version>
+                        <configuration>
+                          <parallel>methods</parallel>
+                          <threadCountMethods>8</threadCountMethods>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -201,8 +207,10 @@
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>5.2.0</version>
+<!--             <artifactId>mockito-core</artifactId> -->
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+<!--              <version>5.2.0</version> -->
             <scope>test</scope>
         </dependency>
         <dependency>

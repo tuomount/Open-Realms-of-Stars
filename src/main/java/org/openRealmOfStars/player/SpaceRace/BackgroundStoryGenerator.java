@@ -180,8 +180,8 @@ public final class BackgroundStoryGenerator {
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
     String name = "Sporks";
-    if (info.getEmpireName().contains("Taurus")) {
-      name = "Taurians";
+    if (info.getEmpireName().contains("Sagittarian")) {
+      name = "Sagittarians";
     }
 
     sb.append(name);

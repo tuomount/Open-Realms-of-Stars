@@ -6,7 +6,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016-2018,2020-2022  Tuomo Untinen
+* Copyright (C) 2016-2018,2020-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -177,21 +177,21 @@ public final class SpaceRaceUtility {
       } else if (race == SpaceRace.MECHIONS) {
           sb.append(buildSecondaryName(race, "Steel"));
       } else if (race == SpaceRace.SPORKS) {
-          sb.append(buildSecondaryName(race, "Taurus"));
+        sb.append(buildSecondaryName(race, "Sagittarian"));
       } else if (race == SpaceRace.GREYANS) {
-          sb.append(buildSecondaryName(race, "Aesir"));
+        sb.append(buildSecondaryName(race, "Aesir"));
       } else if (race == SpaceRace.CENTAURS) {
-          sb.append(buildSecondaryName(race, "Sagittarian"));
+        sb.append(buildSecondaryName(race, "Taurus"));
       } else if (race == SpaceRace.TEUTHIDAES) {
-          sb.append(buildSecondaryName(race, "Squiddan"));
+        sb.append(buildSecondaryName(race, "Squiddan"));
       } else if (race == SpaceRace.MOTHOIDS) {
-          sb.append(buildSecondaryName(race, "Scorpio"));
+        sb.append(buildSecondaryName(race, "Scorpio"));
       } else if (race == SpaceRace.SCAURIANS) {
-          sb.append(buildSecondaryName(race, "Nemean"));
+        sb.append(buildSecondaryName(race, "Nemean"));
       } else if (race == SpaceRace.HOMARIANS) {
-          sb.append(buildSecondaryName(race, "Cancerian"));
+        sb.append(buildSecondaryName(race, "Cancerian"));
       } else if (race == SpaceRace.CHIRALOIDS) {
-          sb.append(buildSecondaryName(race, "Capricorn"));
+        sb.append(buildSecondaryName(race, "Capricorn"));
       } else if (race == SpaceRace.REBORGIANS) {
         sb.append(buildSecondaryName(race, "Bionian"));
       } else if (race == SpaceRace.LITHORIANS) {
@@ -220,11 +220,10 @@ public final class SpaceRaceUtility {
    */
   private static String buildSecondaryName(final SpaceRace race,
           final String secondaryName) {
-      if (DiceGenerator.getRandom(1) == 0) {
-          return secondaryName;
-      } else {
-          return race.getNameSingle();
-      }
+    if (DiceGenerator.getRandom(1) == 0) {
+        return secondaryName;
+    }
+    return race.getNameSingle();
   }
 
 }

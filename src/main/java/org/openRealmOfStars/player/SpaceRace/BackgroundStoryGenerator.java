@@ -60,6 +60,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.SPORKS) {
       sb.append(generateSporkStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.GREYANS) {
+      sb.append(generateGreyanStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -199,6 +202,64 @@ public final class BackgroundStoryGenerator {
     sb.append("Group of scientist were able to discover faster"
         + " than light travel and thus first prototype of space craft "
         + "was created at star year ");
+    sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+    sb.append(". First flights were magnificent success and then first armed "
+        + "scout and colony ship was create at star year ");
+    sb.append(startingYear);
+    sb.append(". ");
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for Greyan.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateGreyanStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Greyans";
+    if (info.getEmpireName().contains("Aesir")) {
+      name = "Aesirians";
+    }
+    sb.append(name);
+    sb.append(" are typically tall and slender, with long, graceful limbs"
+        + " and delicate features. Their grey skin is smooth and sleek,"
+        + " and it is said to shimmer in the light. They have large,"
+        + " almond-shaped eyes that are capable of seeing in a wide"
+        + " range of light levels, and they are highly perceptive"
+        + " and intuitive. ");
+    sb.append(name);
+    sb.append(" are highly intelligent and curious, and they are always "
+        + "seeking out new knowledge and experiences. They are natural "
+        + "researchers and problem-solvers, and they are known for their "
+        + "ability to quickly and accurately analyze complex data and "
+        + "situations. ");
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    Gender gender = Gender.getRandom();
+    String greatLeader = NameGenerator.generateName(info.getRace(),
+        gender);
+    sb.append(greatLeader);
+    sb.append(" were able to discover faster than light"
+        + " travel and thus first prototype of space craft was created at"
+        + " star year ");
     sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
     sb.append(". First flights were magnificent success and then first armed "
         + "scout and colony ship was create at star year ");

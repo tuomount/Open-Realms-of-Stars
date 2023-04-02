@@ -150,5 +150,28 @@ public class BackgroundStoryGeneratorTest {
     assertEquals(true, result.contains("AI"));
     assertEquals(true, result.contains("Mechions"));
   }
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGenerateBackgroundStoryForGreyans() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Greyan Technocracy");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.TECHNOCRACY);
+    Leader leader = Mockito.mock(Leader.class);
+    Mockito.when(leader.getName()).thenReturn("Max Power");
+    Mockito.when(leader.getCallName()).thenReturn("Master engineer Max Power");
+    Mockito.when(info.getRuler()).thenReturn(leader);
+
+    Planet startingPlanet = Mockito.mock(Planet.class);
+    Mockito.when(startingPlanet.getName()).thenReturn("Mars");
+    Mockito.when(startingPlanet.getPlanetType())
+        .thenReturn(PlanetTypes.CARBONWORLD1);
+    int starYear = 2400;
+    String result = BackgroundStoryGenerator.generateBackgroundStory(
+        info, startingPlanet, starYear);
+    assertEquals(true, result.contains("Max Power"));
+    assertEquals(true, result.contains("technocracy"));
+    assertEquals(true, result.contains("Greyans"));
+  }
 
 }

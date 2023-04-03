@@ -63,6 +63,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.GREYANS) {
       sb.append(generateGreyanStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.HOMARIANS) {
+      sb.append(generateHomarianStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -248,6 +251,56 @@ public final class BackgroundStoryGenerator {
         + "researchers and problem-solvers, and they are known for their "
         + "ability to quickly and accurately analyze complex data and "
         + "situations. ");
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    Gender gender = Gender.getRandom();
+    String greatLeader = NameGenerator.generateName(info.getRace(),
+        gender);
+    sb.append(greatLeader);
+    sb.append(" were able to discover faster than light"
+        + " travel and thus first prototype of space craft was created at"
+        + " star year ");
+    sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+    sb.append(". First flights were magnificent success and then first armed "
+        + "scout and colony ship was create at star year ");
+    sb.append(startingYear);
+    sb.append(". ");
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for Homarian.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateHomarianStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Homarians";
+    if (info.getEmpireName().contains("Cancerian")) {
+      name = "Cancerian";
+    }
+    sb.append(name);
+    sb.append(" are a race of humanoid crabs that are known for their "
+        + "immense strength and hard exoskeletons. This exoskeleton also gives"
+        + " them incredible strength, allowing them to easily perform physical"
+        + " tasks that would be difficult for other species.");
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));
     sb.append("\n\n");

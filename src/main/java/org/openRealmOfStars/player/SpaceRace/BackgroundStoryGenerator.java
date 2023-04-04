@@ -102,14 +102,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append("Group of scientiest were able to discover faster than light"
-        + " travel and thus first prototype of space craft was created at"
-        + " star year ");
-    sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-    sb.append(". First flights were magnificent success and then first armed "
-        + "scout and colony ship was create at star year ");
-    sb.append(startingYear);
-    sb.append(". ");
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -153,14 +146,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append("Group of research mechions were able to discover faster"
-        + " than light travel and thus first prototype of space craft "
-        + "was created at star year ");
-    sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-    sb.append(". First flights were magnificent success and then first armed "
-        + "scout and colony ship was create at star year ");
-    sb.append(startingYear);
-    sb.append(". ");
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -202,14 +188,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append("Group of scientist were able to discover faster"
-        + " than light travel and thus first prototype of space craft "
-        + "was created at star year ");
-    sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-    sb.append(". First flights were magnificent success and then first armed "
-        + "scout and colony ship was create at star year ");
-    sb.append(startingYear);
-    sb.append(". ");
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -256,18 +235,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    Gender gender = Gender.getRandom();
-    String greatLeader = NameGenerator.generateName(info.getRace(),
-        gender);
-    sb.append(greatLeader);
-    sb.append(" were able to discover faster than light"
-        + " travel and thus first prototype of space craft was created at"
-        + " star year ");
-    sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-    sb.append(". First flights were magnificent success and then first armed "
-        + "scout and colony ship was create at star year ");
-    sb.append(startingYear);
-    sb.append(". ");
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -306,18 +274,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    Gender gender = Gender.getRandom();
-    String greatLeader = NameGenerator.generateName(info.getRace(),
-        gender);
-    sb.append(greatLeader);
-    sb.append(" were able to discover faster than light"
-        + " travel and thus first prototype of space craft was created at"
-        + " star year ");
-    sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-    sb.append(". First flights were magnificent success and then first armed "
-        + "scout and colony ship was create at star year ");
-    sb.append(startingYear);
-    sb.append(". ");
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -332,6 +289,151 @@ public final class BackgroundStoryGenerator {
     return sb.toString();
   }
 
+  /**
+   * Generate FTL background story.
+   * @param info Realm
+   * @param startingYear Starting year of the game
+   * @return FTL background story
+   */
+  private static String generateFtlStory(final PlayerInfo info,
+      final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    boolean scientific = false;
+    if (info.getGovernment() == GovernmentType.TECHNOCRACY
+        || info.getGovernment() == GovernmentType.HEGEMONY) {
+      scientific = true;
+    }
+    if (info.getRace().getResearchSpeed() > 100) {
+      scientific = true;
+    }
+    if (scientific) {
+      Gender gender = Gender.getRandom();
+      String greatLeader = NameGenerator.generateName(info.getRace(),
+          gender);
+      switch (DiceGenerator.getRandom(3)) {
+        default:
+        case 0: {
+          sb.append(greatLeader);
+          sb.append(" were able to discover faster than light"
+              + " travel and thus first prototype of space craft was created at"
+              + " star year ");
+          sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
+          break;
+        }
+        case 1: {
+          sb.append(greatLeader);
+          sb.append(" were able to make faster than light engine"
+              + " at ");
+          int ago = 100 + DiceGenerator.getRandom(80);
+          sb.append(startingYear - ago);
+          sb.append(" but ");
+          sb.append(gender.getHisHer());
+          sb.append(" engine was considered as a nonsense and it was found "
+              + " again much later ");
+          sb.append(" and thus first prototype of space craft was created at"
+              + " star year ");
+          int protoType = 10 + DiceGenerator.getRandom(15);
+          ago = ago - protoType;
+          sb.append(startingYear - protoType);
+          if (info.getRace().getLifeSpan() > ago + 30) {
+            sb.append(" way beyond ");
+            sb.append(greatLeader);
+            sb.append(" life time");
+          } else {
+            sb.append(" however ");
+            sb.append(greatLeader);
+            sb.append(" was able to see his research on action");
+          }
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
+          break;
+        }
+        case 2: {
+          sb.append("Group of scientist, lead by ");
+          sb.append(greatLeader);
+          sb.append(", were able to discover faster"
+              + " than light travel and thus first prototype of space craft "
+              + "was created at star year ");
+          sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
+          break;
+        }
+        case 3: {
+          sb.append("Vision of scientist ");
+          sb.append(greatLeader);
+          sb.append("caused research to move toward faster than light engine"
+              + " and breakthrough was made and soon after it first prototype"
+              + " of space craft was created at star year ");
+          sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
+          break;
+        }
+      }
+    } else {
+      switch (DiceGenerator.getRandom(3)) {
+        default:
+        case 0: {
+          sb.append("Group of scientist were able to discover faster"
+              + " than light travel and thus first prototype of space craft "
+              + "was created at star year ");
+          sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
+          break;
+        }
+        case 1: {
+          sb.append("Group of scientist were able to make faster"
+              + " than light engine but no one else understood it and it took"
+              + "years before actual prototype was done. First prototype of"
+              + " space craft was created at star year ");
+          sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
+          break;
+        }
+        case 2: {
+          sb.append("Group of archeologists were able to discover strange"
+              + " object from the planet and after years of study it turn out"
+              + "to be faster than light engine. First prototype of"
+              + " space craft was created at star year ");
+          sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
+          break;
+        }
+        case 3: {
+          sb.append("Group of researchers were able to discover faster"
+              + " than light travel and first prototype of space ship "
+              + "was created at star year ");
+          sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
+          break;
+        }
+      }
+    }
+    return sb.toString();
+  }
   /**
    * Generate government history for realm.
    * @param info Realm

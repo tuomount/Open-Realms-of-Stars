@@ -66,6 +66,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.HOMARIANS) {
       sb.append(generateHomarianStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.CENTAURS) {
+      sb.append(generateCentaurStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -269,6 +272,47 @@ public final class BackgroundStoryGenerator {
         + "immense strength and hard exoskeletons. This exoskeleton also gives"
         + " them incredible strength, allowing them to easily perform physical"
         + " tasks that would be difficult for other species.");
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for Centaurs.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateCentaurStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Centaurs";
+    if (info.getEmpireName().contains("Taurus")) {
+      name = "Taurians";
+    }
+    sb.append(name);
+    sb.append(" are similar to the mythical centaurs of ancient Greek and"
+        + " Roman mythology. Like their mythical counterparts, ");
+    sb.append(name);
+    sb.append(" are quadrupeds with the upper body of humanoid like and"
+        + " lower body resembles ant like. They also have very though"
+        + " skin and they are huge in size.");
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));
     sb.append("\n\n");

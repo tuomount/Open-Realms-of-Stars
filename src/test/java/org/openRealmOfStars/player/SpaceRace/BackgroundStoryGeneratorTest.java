@@ -288,5 +288,51 @@ public class BackgroundStoryGeneratorTest {
     assertEquals(true, result.contains("empire"));
     assertEquals(true, result.contains("Taurians"));
   }
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGenerateBackgroundStoryForMothoids() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Mothoid Hivemind");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.MOTHOIDS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
+    Leader leader = Mockito.mock(Leader.class);
+    Mockito.when(leader.getName()).thenReturn("Max Power");
+    Mockito.when(leader.getCallName()).thenReturn("Leader Max Power");
+    Mockito.when(info.getRuler()).thenReturn(leader);
+
+    Planet startingPlanet = Mockito.mock(Planet.class);
+    Mockito.when(startingPlanet.getName()).thenReturn("Mars");
+    Mockito.when(startingPlanet.getPlanetType())
+        .thenReturn(PlanetTypes.CARBONWORLD1);
+    int starYear = 2400;
+    String result = BackgroundStoryGenerator.generateBackgroundStory(
+        info, startingPlanet, starYear);
+    assertEquals(true, result.contains("Max Power"));
+    assertEquals(true, result.contains("hivemind"));
+    assertEquals(true, result.contains("Mothoids"));
+  }
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGenerateBackgroundStoryForScorpions() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Scorpion Utopia");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.MOTHOIDS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.UTOPIA);
+    Leader leader = Mockito.mock(Leader.class);
+    Mockito.when(leader.getName()).thenReturn("Max Power");
+    Mockito.when(leader.getCallName()).thenReturn("Wise Max Power");
+    Mockito.when(info.getRuler()).thenReturn(leader);
+
+    Planet startingPlanet = Mockito.mock(Planet.class);
+    Mockito.when(startingPlanet.getName()).thenReturn("Mars");
+    Mockito.when(startingPlanet.getPlanetType())
+        .thenReturn(PlanetTypes.CARBONWORLD1);
+    int starYear = 2400;
+    String result = BackgroundStoryGenerator.generateBackgroundStory(
+        info, startingPlanet, starYear);
+    assertEquals(true, result.contains("Max Power"));
+    assertEquals(true, result.contains("utopia"));
+    assertEquals(true, result.contains("Scorpions"));
+  }
 
 }

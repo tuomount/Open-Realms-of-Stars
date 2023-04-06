@@ -69,6 +69,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.CENTAURS) {
       sb.append(generateCentaurStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.MOTHOIDS) {
+      sb.append(generateMothoidStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -313,6 +316,61 @@ public final class BackgroundStoryGenerator {
     sb.append(" are quadrupeds with the upper body of humanoid like and"
         + " lower body resembles ant like. They also have very though"
         + " skin and they are huge in size.");
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for Mothoid.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateMothoidStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Mothoids";
+    if (info.getEmpireName().contains("Scorpio")) {
+      name = "Scorpions";
+    }
+    sb.append(name);
+    if (info.getGovernment().isImmuneToHappiness()) {
+      sb.append(" are race of sentient insects that are capable of forming"
+          + " a hivemind. This allows them to coordinate their actions and"
+          + " work together as a highly efficient collective. ");
+    }
+    sb.append(name);
+    sb.append(" are known for their fast breeding, which allows them to "
+        + "quickly increase their numbers and expand their territory. ");
+    if (info.getGovernment().getDiplomaticBonus() > 0) {
+      sb.append(name);
+      sb.append("are also known for their hypnotic song, which is used for"
+          + " communication and ritual purposes. This ability grants them"
+          + " a cultural bonus in their interactions with other races .");
+    }
+    sb.append("However, their exoskeletons are relatively weak, which gives"
+        + " them a negative bonus when it comes to mining and troop power."
+        + " Despite this weakness, ");
+    sb.append(name);
+    sb.append(" are able to compensate for their lack of physical strength "
+        + "with their intelligence and cooperation.");
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));
     sb.append("\n\n");

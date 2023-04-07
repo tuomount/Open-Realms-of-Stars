@@ -140,13 +140,19 @@ public final class BackgroundStoryGenerator {
         + " they are powered by advanced technology, such as batteries or "
         + "fuel cells, which allow them to operate for long periods of time"
         + " without needing to be refueled.");
-    sb.append(" One of the key features of Mechions is their ability to work"
-        + " together in large groups, known as populations. Each Mechion is"
-        + " equipped with advanced sensors and communication systems, which "
-        + "allow them to coordinate their movements and work in harmony "
-        + "with their fellow robots. This allows Mechion populations to "
-        + "tackle complex tasks that would be beyond the capabilities of "
-        + "a single robot.");
+    if (info.getGovernment().isImmuneToHappiness()) {
+      sb.append(" Each Mechion is equipped with advanced sensors and"
+          + " communication systems, which allow them to coordinate their"
+          + " movements and work in harmony with their fellow robots."
+          + " This allows Mechion populations to tackle complex tasks "
+          + "that would be beyond the capabilities of a single robot.");
+    } else {
+      sb.append(" Each Mechion is equipped with advanced sensors and"
+          + " powerful neuronetwork, which allows them to individually"
+          + " perform complex and demanding tasks. This means that each"
+          + " Mechion is highly advanced AI system that can learn and"
+          + " adapt into new things.");
+    }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));
     sb.append("\n\n");
@@ -274,7 +280,21 @@ public final class BackgroundStoryGenerator {
     sb.append(" are a race of humanoid crabs that are known for their "
         + "immense strength and hard exoskeletons. This exoskeleton also gives"
         + " them incredible strength, allowing them to easily perform physical"
-        + " tasks that would be difficult for other species.");
+        + " tasks that would be difficult for other species. ");
+    if (info.getGovernment().isImmuneToHappiness()) {
+      sb.append(name);
+      sb.append(" are always working for their nest. They are will to do what "
+          + "nest demands.");
+      sb.append(name);
+      sb.append(" ");
+      sb.append(info.getGovernment().getName().toLowerCase());
+      sb.append(" resembles a bit like hive-mind, but it is not true"
+          + " hive-mind. ");
+      sb.append(name);
+      sb.append(" are deeply devoted for the ");
+      sb.append(info.getGovernment().getName().toLowerCase());
+      sb.append(" that they act like it is functions like hive-mind.");
+    }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));
     sb.append("\n\n");

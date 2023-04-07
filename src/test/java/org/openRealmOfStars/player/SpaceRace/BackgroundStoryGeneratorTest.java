@@ -152,6 +152,29 @@ public class BackgroundStoryGeneratorTest {
   }
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGenerateBackgroundStoryForMechions2() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Steel Empire");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader leader = Mockito.mock(Leader.class);
+    Mockito.when(leader.getName()).thenReturn("Droid D-9");
+    Mockito.when(leader.getCallName()).thenReturn("Empire Droid D-9");
+    Mockito.when(info.getRuler()).thenReturn(leader);
+
+    Planet startingPlanet = Mockito.mock(Planet.class);
+    Mockito.when(startingPlanet.getName()).thenReturn("Alpha Muert");
+    Mockito.when(startingPlanet.getPlanetType())
+        .thenReturn(PlanetTypes.IRONWORLD1);
+    int starYear = 2400;
+    String result = BackgroundStoryGenerator.generateBackgroundStory(
+        info, startingPlanet, starYear);
+    assertEquals(true, result.contains("D-9"));
+    assertEquals(true, result.contains("empire"));
+    assertEquals(true, result.contains("Mechions"));
+  }
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testGenerateBackgroundStoryForGreyans() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Greyan Technocracy");

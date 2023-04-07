@@ -287,6 +287,7 @@ public class BackgroundStoryGeneratorTest {
     assertEquals(true, result.contains("Max Power"));
     assertEquals(true, result.contains("democracy"));
     assertEquals(true, result.contains("Centaurs"));
+    System.out.println(result);
   }
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
@@ -402,6 +403,75 @@ public class BackgroundStoryGeneratorTest {
     assertEquals(true, result.contains("Max Power"));
     assertEquals(true, result.contains("federation"));
     assertEquals(true, result.contains("Squiddans"));
+  }
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGenerateBackgroundStoryForScaurians() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Scaurian Enterprise");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.ENTERPRISE);
+    Leader leader = Mockito.mock(Leader.class);
+    Mockito.when(leader.getName()).thenReturn("Max Power");
+    Mockito.when(leader.getCallName()).thenReturn("Boss Max Power");
+    Mockito.when(info.getRuler()).thenReturn(leader);
+
+    Planet startingPlanet = Mockito.mock(Planet.class);
+    Mockito.when(startingPlanet.getName()).thenReturn("Mars");
+    Mockito.when(startingPlanet.getPlanetType())
+        .thenReturn(PlanetTypes.DESERTWORLD1);
+    int starYear = 2400;
+    String result = BackgroundStoryGenerator.generateBackgroundStory(
+        info, startingPlanet, starYear);
+    assertEquals(true, result.contains("Max Power"));
+    assertEquals(true, result.contains("enterprise"));
+    assertEquals(true, result.contains("Scaurians"));
+  }
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGenerateBackgroundStoryForNemeans() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Nemean Guild");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.GUILD);
+    Leader leader = Mockito.mock(Leader.class);
+    Mockito.when(leader.getName()).thenReturn("Max Power");
+    Mockito.when(leader.getCallName()).thenReturn("Boss Max Power");
+    Mockito.when(info.getRuler()).thenReturn(leader);
+
+    Planet startingPlanet = Mockito.mock(Planet.class);
+    Mockito.when(startingPlanet.getName()).thenReturn("Mars");
+    Mockito.when(startingPlanet.getPlanetType())
+        .thenReturn(PlanetTypes.DESERTWORLD1);
+    int starYear = 2400;
+    String result = BackgroundStoryGenerator.generateBackgroundStory(
+        info, startingPlanet, starYear);
+    assertEquals(true, result.contains("Max Power"));
+    assertEquals(true, result.contains("guild"));
+    assertEquals(true, result.contains("Nemeans"));
+  }
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGenerateBackgroundStoryForNemeans2() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Nemean Utopia");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.UTOPIA);
+    Leader leader = Mockito.mock(Leader.class);
+    Mockito.when(leader.getName()).thenReturn("Max Power");
+    Mockito.when(leader.getCallName()).thenReturn("Boss Max Power");
+    Mockito.when(info.getRuler()).thenReturn(leader);
+
+    Planet startingPlanet = Mockito.mock(Planet.class);
+    Mockito.when(startingPlanet.getName()).thenReturn("Mars");
+    Mockito.when(startingPlanet.getPlanetType())
+        .thenReturn(PlanetTypes.DESERTWORLD1);
+    int starYear = 2400;
+    String result = BackgroundStoryGenerator.generateBackgroundStory(
+        info, startingPlanet, starYear);
+    assertEquals(true, result.contains("Max Power"));
+    assertEquals(true, result.contains("utopia"));
+    assertEquals(true, result.contains("Nemeans"));
   }
 
 }

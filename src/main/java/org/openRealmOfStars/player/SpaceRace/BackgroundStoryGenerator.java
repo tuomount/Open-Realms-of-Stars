@@ -75,6 +75,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.TEUTHIDAES) {
       sb.append(generateTeuthidaeStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.SCAURIANS) {
+      sb.append(generateScaurianStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -252,6 +255,60 @@ public final class BackgroundStoryGenerator {
         + " that are able to traverse the depths of space. These ships "
         + "are equipped with built-in cloaking devices, which allow "
         + "them to remain hidden and surprise their enemies in combat.");
+    sb.append("\n\n");
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for Scaurian.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateScaurianStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Scaurians";
+    if (info.getEmpireName().contains("Nemean")) {
+      name = "Nemeans";
+    }
+
+    sb.append(name);
+    sb.append(" are a race of small but wide humanoids that are known for"
+        + " their merchantile abilities. They are highly skilled at making"
+        + " profitable trades and deals, and are always on the lookout for"
+        + " new opportunities to gain more credits. ");
+    if (info.getGovernment().getDiplomaticBonus() > 0) {
+      sb.append(name);
+      sb.append(" are a peaceful race, and prefer to use their cunning and "
+          + "charm to outmaneuver their competitors rather than resorting to "
+          + "violence.");
+    } else {
+      sb.append("Despite their small stature, ");
+      sb.append(name);
+      sb.append(" are not to be underestimated, as their intelligence and"
+          + " resourcefulness make them formidable opponents in the "
+          + "cut-throat world of trade and commerce.");
+    }
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append("\n\n");
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -399,6 +456,7 @@ public final class BackgroundStoryGenerator {
     sb.append("would need sturdy and rigid spaceships in order to support "
         + "their weight and allow them to travel through the vacuum of "
         + "space. ");
+    sb.append("\n\n");
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -589,7 +647,7 @@ public final class BackgroundStoryGenerator {
         case 2: {
           sb.append("Group of archeologists were able to discover strange"
               + " object from the planet and after years of study it turn out"
-              + "to be faster than light engine. First prototype of"
+              + " to be faster than light engine. First prototype of"
               + " space craft was created at star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
           sb.append(". First flights were magnificent success and then first"
@@ -977,7 +1035,7 @@ public final class BackgroundStoryGenerator {
       case 0: {
         sb.append(name);
         sb.append(" evolution was fast process and "
-            + " they quickly became dominant spiecies on ");
+            + "they quickly became dominant species on ");
         sb.append(startPlanet.getName());
         sb.append(". ");
         break;

@@ -72,6 +72,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.MOTHOIDS) {
       sb.append(generateMothoidStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.TEUTHIDAES) {
+      sb.append(generateTeuthidaeStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -216,6 +219,54 @@ public final class BackgroundStoryGenerator {
   }
 
   /**
+   * Generate background story for Teuthidae.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateTeuthidaeStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Teuthidaes";
+    if (info.getEmpireName().contains("Squiddan")) {
+      name = "Squiddans";
+    }
+
+    sb.append(name);
+    sb.append(" are a race of octopus-like creatures that are highly "
+        + "advanced in the fields of science and military technology. ");
+    sb.append(name);
+    sb.append(" are known for their scientific curiosity and their focus "
+        + "on exploration and conquest.");
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append("\n\n");
+    sb.append("Because of their aquatic origins, ");
+    sb.append(name);
+    sb.append(" are expert navigators and have developed advanced ships"
+        + " that are able to traverse the depths of space. These ships "
+        + "are equipped with built-in cloaking devices, which allow "
+        + "them to remain hidden and surprise their enemies in combat.");
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
    * Generate background story for Greyan.
    * @param info Realm from which to generate
    * @param startPlanet Starting planet
@@ -342,6 +393,12 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear));
+    sb.append("\n\n");
+    sb.append("Because of their large size, ");
+    sb.append(name);
+    sb.append("would need sturdy and rigid spaceships in order to support "
+        + "their weight and allow them to travel through the vacuum of "
+        + "space. ");
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());

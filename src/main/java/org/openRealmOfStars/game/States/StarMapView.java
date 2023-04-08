@@ -37,7 +37,7 @@ import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -341,6 +341,7 @@ public class StarMapView extends BlackPanel {
         "\t\n\t\nEnd\nstar year\n" + this.map.getStarYear() + "\t\n\t\n\t\n",
         GameCommands.COMMAND_END_TURN);
     endTurnButton.addActionListener(game);
+    endTurnButton.setToolTipText("End turn number " + this.map.getTurn());
     bottomPanel.add(endTurnButton);
 
     base.setLayout(new BorderLayout());

@@ -78,6 +78,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.SCAURIANS) {
       sb.append(generateScaurianStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.CHIRALOIDS) {
+      sb.append(generateChiraloidStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -402,6 +405,58 @@ public final class BackgroundStoryGenerator {
       sb.append(" are deeply devoted for the ");
       sb.append(info.getGovernment().getName().toLowerCase());
       sb.append(" that they act like it is functions like hive-mind.");
+    }
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for Chiraloid.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateChiraloidStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Chiraloids";
+    if (info.getEmpireName().contains("Capricorn")) {
+      name = "Capricornians";
+    }
+    sb.append(name);
+    sb.append(" are creatures that are distinguished by their four arms "
+        + "and two legs. They have a hard exoskeleton that provides them "
+        + "with protection and allows them to withstand harsh "
+        + "environments. ");
+    sb.append(name);
+    sb.append(" are also known for their unique ability to perform "
+        + "radiosynthesis, which involves using a special gland to convert "
+        + "radioactivity into a nutrient that they can use for sustenance. "
+        + "This ability allows ");
+    sb.append(name);
+    sb.append(" to thrive in environments that would be inhospitable to most"
+        + " other life forms. ");
+    if (info.getGovernment().isImmuneToHappiness()) {
+      sb.append(name);
+      sb.append(" are creatures which are able form hivemind. This allows them"
+          + " to work united and single organization. ");
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));

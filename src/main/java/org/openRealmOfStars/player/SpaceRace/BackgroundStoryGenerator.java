@@ -81,6 +81,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.CHIRALOIDS) {
       sb.append(generateChiraloidStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.REBORGIANS) {
+      sb.append(generateReborgianStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -457,6 +460,66 @@ public final class BackgroundStoryGenerator {
       sb.append(name);
       sb.append(" are creatures which are able form hivemind. This allows them"
           + " to work united and single organization. ");
+    }
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for Reborgian.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateReborgianStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Reborgians";
+    if (info.getEmpireName().contains("Bionian")) {
+      name = "Bionians";
+    }
+    sb.append(name);
+    sb.append(" are a race of cyborgs that are created by combining organic "
+        + "organisms with bionic and robotic parts. This gives them "
+        + "enhanced physical abilities and allows them to operate in a "
+        + "wide variety of environments.");
+    sb.append(name);
+    sb.append(" are known for their ability to synthesize other living "
+        + "space races into their own, creating a fearsome and powerful ");
+    if (info.getGovernment() == GovernmentType.AI) {
+      sb.append("AI");
+    } else {
+      sb.append(info.getGovernment().getName().toLowerCase());
+    }
+    sb.append(". However, this ability is feared and disliked by many "
+        + "other races, who see it as a threat to their own individuality "
+        + "and autonomy. Despite their aggressive expansionist tendencies, "
+        + "reborgians have a slow reproduction rate and require very little "
+        + "food to survive.");
+    if (info.getGovernment().isImmuneToHappiness()) {
+      sb.append(name);
+      sb.append(" are equipped with powerful communication systems, which "
+          + " they use to coordinate their moves and tasks in harmomy. This "
+          + "allows ");
+      sb.append(name);
+      sb.append(" work as a hiveminded population.");
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));

@@ -84,6 +84,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.REBORGIANS) {
       sb.append(generateReborgianStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.LITHORIANS) {
+      sb.append(generateLithorianStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -520,6 +523,58 @@ public final class BackgroundStoryGenerator {
           + "allows ");
       sb.append(name);
       sb.append(" work as a hiveminded population.");
+    }
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for Lithorian.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateLithorianStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Lithorians";
+    if (info.getEmpireName().contains("Metavore")) {
+      name = "Metavorians";
+    }
+    sb.append(name);
+    sb.append(" are a race of creatures that subsist on metal instead of"
+        + " traditional food sources. This unique dietary requirement"
+        + " gives them a slow growth rate. However, their ability to digest"
+        + " metal allows them to extract valuable nutrients from metal"
+        + " ores and other metallic substances, making them excellent miners.");
+    sb.append(" In addition to ");
+    sb.append(name);
+    sb.append(" metal-eating abilities, they are also known for their"
+        + " strong and durable bodies, which allow them to withstand harsh "
+        + "environments and perform physically demanding tasks.");
+    if (info.getGovernment().isImmuneToHappiness()) {
+      sb.append(name);
+      sb.append(" are able to communicate which each others on same planet "
+          + "mentally. This allows them to coordinate their moves and tasks"
+          + " in harmomy. This mental communicating is probably due special"
+          + " metal ore they have eaten.");
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));

@@ -564,5 +564,49 @@ public class BackgroundStoryGeneratorTest {
     assertEquals(true, result.contains("collective"));
     assertEquals(true, result.contains("Bionians"));
   }
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGenerateBackgroundStoryForLithorian() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Lithorian AI");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.LITHORIANS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
+    Leader leader = Mockito.mock(Leader.class);
+    Mockito.when(leader.getName()).thenReturn("Max Power");
+    Mockito.when(leader.getCallName()).thenReturn("Leader Max Power");
+    Mockito.when(info.getRuler()).thenReturn(leader);
+
+    Planet startingPlanet = Mockito.mock(Planet.class);
+    Mockito.when(startingPlanet.getName()).thenReturn("Mars");
+    Mockito.when(startingPlanet.getPlanetType())
+        .thenReturn(PlanetTypes.IRONWORLD1);
+    int starYear = 2400;
+    String result = BackgroundStoryGenerator.generateBackgroundStory(
+        info, startingPlanet, starYear);
+    assertEquals(true, result.contains("Max Power"));
+    assertEquals(true, result.contains("hivemind"));
+    assertEquals(true, result.contains("Lithorians"));
+  }
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGenerateBackgroundStoryForMetavore() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Metavore Regime");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.LITHORIANS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.REGIME);
+    Leader leader = Mockito.mock(Leader.class);
+    Mockito.when(leader.getName()).thenReturn("Max Power");
+    Mockito.when(leader.getCallName()).thenReturn("Leader Max Power");
+    Mockito.when(info.getRuler()).thenReturn(leader);
+
+    Planet startingPlanet = Mockito.mock(Planet.class);
+    Mockito.when(startingPlanet.getName()).thenReturn("Mars");
+    Mockito.when(startingPlanet.getPlanetType())
+        .thenReturn(PlanetTypes.IRONWORLD1);
+    int starYear = 2400;
+    String result = BackgroundStoryGenerator.generateBackgroundStory(
+        info, startingPlanet, starYear);
+    assertEquals(true, result.contains("Max Power"));
+    assertEquals(true, result.contains("regime"));
+    assertEquals(true, result.contains("Metavorians"));
+  }
 
 }

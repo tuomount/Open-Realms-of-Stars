@@ -87,6 +87,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.LITHORIANS) {
       sb.append(generateLithorianStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.ALTEIRIANS) {
+      sb.append(generateAlteirianStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -568,13 +571,63 @@ public final class BackgroundStoryGenerator {
     sb.append(name);
     sb.append(" metal-eating abilities, they are also known for their"
         + " strong and durable bodies, which allow them to withstand harsh "
-        + "environments and perform physically demanding tasks.");
+        + "environments and perform physically demanding tasks. ");
     if (info.getGovernment().isImmuneToHappiness()) {
       sb.append(name);
       sb.append(" are able to communicate which each others on same planet "
           + "mentally. This allows them to coordinate their moves and tasks"
           + " in harmomy. This mental communicating is probably due special"
           + " metal ore they have eaten.");
+    }
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for Alteirian.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateAlteirianStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Alteirians";
+    sb.append(name);
+    sb.append(" are a race of creatures that are adapted to life in"
+        + " zero gravity. Because of this, they require special suits"
+        + " to move on the surfaces of planets, and they spend most of"
+        + " their time living and working in orbit. Their bodies are "
+        + "mostly just mouth and big bulpy eyes with multiple long limbs"
+        + " and a slender tail that help them move gracefully in zero"
+        + " gravity. ");
+    sb.append(name);
+    sb.append(" are known for their advanced orbital technology,"
+        + " which allows them to build and maintain large,"
+        + " complex structures in space. ");
+    if (info.getGovernment().isImmuneToHappiness()) {
+      sb.append(name);
+      sb.append(" are able to mentally communicate which each others on same"
+          + " planet. This allows them to organize their moves and tasks"
+          + " in effectively. This mental communicating is probably due"
+          + " spending so much time in zero gravity. ");
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));

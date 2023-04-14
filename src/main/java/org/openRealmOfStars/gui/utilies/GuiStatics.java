@@ -1758,7 +1758,7 @@ public final class GuiStatics {
    * Get star field image and generate if not available.
    * @return BufferedImage
    */
-  public static BufferedImage getStarField() {
+  public static synchronized BufferedImage getStarField() {
     if (starField == null) {
       if (!Game.isMainMethodCalled()) {
         return STAR_FIELD_IMAGE;

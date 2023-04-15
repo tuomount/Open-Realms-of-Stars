@@ -415,6 +415,11 @@ public class Game implements ActionListener {
    * Ambient light bridge
    */
   private Bridge bridge;
+
+  /**
+   * Mouse listener for show current music.
+   */
+  private SongMouseListener musicMouseListener;
   /**
    * Get Star map
    * @return StarMap
@@ -553,6 +558,7 @@ public class Game implements ActionListener {
       animationTimer.start();
       musicTimer = new Timer(MUSIC_TIMER_DELAY, this);
       musicTimer.setActionCommand(GameCommands.COMMAND_MUSIC_TIMER);
+      musicMouseListener = new SongMouseListener();
       gameFrame.setUndecorated(configFile.getBorderless());
       GuiStatics.setLargerFonts(configFile.getLargerFonts());
       GraphicsDevice graphicsDevice = GraphicsEnvironment
@@ -1013,6 +1019,8 @@ public class Game implements ActionListener {
       songText.setBounds(getWidth() - 374, y, 350, 150);
       songText.setFont(GuiStatics.getFontSquarionBold());
       songText.setForeground(Color.white);
+      songText.addMouseListener(musicMouseListener);
+      musicMouseListener.setOpacityCount(0);
       MusicFileInfo info = MusicPlayer.getNowPlaying();
       String text = "<html>Now playing: " + info.getName() + " by "
           + info.getAuthor() + "</html>";
@@ -3616,11 +3624,26 @@ public class Game implements ActionListener {
         if (MusicPlayer.isTextDisplayedEnough()) {
           songText.setVisible(false);
         } else {
+          if (musicMouseListener.isMouseInArea()) {
+            musicMouseListener.setOpacityCount(
+                musicMouseListener.getOpacityCount() - 64);
+            if (musicMouseListener.getOpacityCount() < 25) {
+              musicMouseListener.setOpacityCount(25);
+            }
+          } else {
+            musicMouseListener.setOpacityCount(255);
+          }
           MusicFileInfo info = MusicPlayer.getNowPlaying();
           String text = "<html>Now playing:<br>" + info.getName() + "<br> by "
               + info.getAuthor() + "</html>";
+          int value = musicMouseListener.getOpacityCount();
+          songText.setForeground(new Color(value, value, value, 255));
           songText.setText(text);
-          songText.setVisible(true);
+          if (musicMouseListener.getOpacityCount() > 25) {
+            songText.setVisible(true);
+          } else {
+            songText.setVisible(false);
+          }
         }
       }
       MusicPlayer.handleMusic(gameState);

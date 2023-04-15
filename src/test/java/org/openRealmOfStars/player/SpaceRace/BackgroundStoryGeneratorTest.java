@@ -564,10 +564,12 @@ public class BackgroundStoryGeneratorTest {
     assertEquals(true, result.contains("collective"));
     assertEquals(true, result.contains("Bionians"));
   }
+
+  @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGenerateBackgroundStoryForLithorian() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getEmpireName()).thenReturn("Lithorian Hivemind");
+    Mockito.when(info.getEmpireName()).thenReturn("Lithorian Hive-mind");
     Mockito.when(info.getRace()).thenReturn(SpaceRace.LITHORIANS);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
     Leader leader = Mockito.mock(Leader.class);
@@ -583,9 +585,11 @@ public class BackgroundStoryGeneratorTest {
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
     assertEquals(true, result.contains("Max Power"));
-    assertEquals(true, result.contains("hivemind"));
+    assertEquals(true, result.contains("hive-mind"));
     assertEquals(true, result.contains("Lithorians"));
   }
+
+  @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGenerateBackgroundStoryForMetavore() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
@@ -608,10 +612,12 @@ public class BackgroundStoryGeneratorTest {
     assertEquals(true, result.contains("regime"));
     assertEquals(true, result.contains("Metavorians"));
   }
+
+  @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGenerateBackgroundStoryForAlteirian() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getEmpireName()).thenReturn("Alteirian Hivemind");
+    Mockito.when(info.getEmpireName()).thenReturn("Alteirian Hive-mind");
     Mockito.when(info.getRace()).thenReturn(SpaceRace.ALTEIRIANS);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
     Leader leader = Mockito.mock(Leader.class);
@@ -627,8 +633,32 @@ public class BackgroundStoryGeneratorTest {
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
     assertEquals(true, result.contains("Max Power"));
-    assertEquals(true, result.contains("hivemind"));
+    assertEquals(true, result.contains("hive-mind"));
     assertEquals(true, result.contains("Alteirian"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGenerateBackgroundStoryForSmaugirians() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Smaugirian Pirates");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.SMAUGIRIANS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.SPACE_PIRATES);
+    Leader leader = Mockito.mock(Leader.class);
+    Mockito.when(leader.getName()).thenReturn("Max Power");
+    Mockito.when(leader.getCallName()).thenReturn("Leader Max Power");
+    Mockito.when(info.getRuler()).thenReturn(leader);
+
+    Planet startingPlanet = Mockito.mock(Planet.class);
+    Mockito.when(startingPlanet.getName()).thenReturn("Mars");
+    Mockito.when(startingPlanet.getPlanetType())
+        .thenReturn(PlanetTypes.IRONWORLD1);
+    int starYear = 2400;
+    String result = BackgroundStoryGenerator.generateBackgroundStory(
+        info, startingPlanet, starYear);
+    assertEquals(true, result.contains("Max Power"));
+    assertEquals(true, result.contains("space pirates"));
+    assertEquals(true, result.contains("Smaugirian"));
   }
 
 }

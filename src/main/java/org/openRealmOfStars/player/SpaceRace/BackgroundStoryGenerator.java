@@ -90,6 +90,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.ALTEIRIANS) {
       sb.append(generateAlteirianStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.SMAUGIRIANS) {
+      sb.append(generateSmaugirianStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -732,6 +735,56 @@ public final class BackgroundStoryGenerator {
     sb.append(name);
     sb.append(" are able to compensate for their lack of physical strength "
         + "with their intelligence and cooperation.");
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for Smaugirian.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateSmaugirianStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Smaugirians";
+    if (info.getEmpireName().contains("Harean")) {
+      name = "Hareans";
+    }
+    sb.append(name);
+    sb.append(" are known for their versatile cargo ships, which can be "
+        + "outfitted with a variety of modules to accommodate different types "
+        + "of cargo. Some of these ships even have weapons or privateering"
+        + " modules, allowing them to defend themselves against hostile "
+        + "forces or engage in piracy. Despite their illicit activities, ");
+    sb.append(name);
+    sb.append(" are often depicted as being honorable and loyal to their"
+        + " friends and allies. They are also known for their resourcefulness "
+        + "and ingenuity, which allows them to overcome obstacles and succeed "
+        + "in their dangerous line of work. ");
+    if (info.getGovernment().isImmuneToHappiness()) {
+      sb.append(name);
+      sb.append(" are acting as space pirates. They will keep looting and"
+          + " pillaging ships and do not care about consequences. ");
+    }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));
     sb.append("\n\n");

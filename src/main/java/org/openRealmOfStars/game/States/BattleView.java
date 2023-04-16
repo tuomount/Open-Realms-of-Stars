@@ -149,6 +149,10 @@ public class BattleView extends BlackPanel {
    * Checkbox for auto combat enabled.
    */
   private SpaceCheckBox autoCombatEnabled;
+  /**
+   * Checkbox for faster auto-combat
+   */
+  private SpaceCheckBox fastAutoCombat;
 
   /**
    * Battle view for space combat
@@ -247,6 +251,12 @@ public class BattleView extends BlackPanel {
     autoCombatEnabled.setSelected(false);
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
     panel.add(autoCombatEnabled);
+    fastAutoCombat = new SpaceCheckBox("Faster animation");
+    fastAutoCombat.addActionListener(listener);
+    fastAutoCombat.setActionCommand(GameCommands.COMMAND_FAST_AUTO_COMBAT);
+    fastAutoCombat.setSelected(false);
+    panel.add(Box.createRigidArea(new Dimension(10, 10)));
+    panel.add(fastAutoCombat);
 
     bottom.add(panel);
     bottom.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -399,7 +409,11 @@ public class BattleView extends BlackPanel {
       }
       if (combat.getAnimation() == null) {
         delayCount++;
-        if (delayCount >= MAX_DELAY_COUNT) {
+        int delayLimit = MAX_DELAY_COUNT;
+        if (fastAutoCombat.isSelected()) {
+          delayLimit = delayLimit / 3;
+        }
+        if (delayCount >= delayLimit) {
           delayCount = 0;
         }
         boolean aiMove = !combat.getCurrentShip().getPlayer().isHuman()
@@ -423,6 +437,11 @@ public class BattleView extends BlackPanel {
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_AUTO_COMBAT)) {
+      SoundPlayer.playMenuSound();
+      updatePanels();
+    }
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_FAST_AUTO_COMBAT)) {
       SoundPlayer.playMenuSound();
       updatePanels();
     }

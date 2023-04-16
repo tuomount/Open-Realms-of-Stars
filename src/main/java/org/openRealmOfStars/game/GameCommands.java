@@ -148,6 +148,10 @@ public final class GameCommands {
    * Auto combat command
    */
   public static final String COMMAND_AUTO_COMBAT = "AutoCombat";
+  /**
+   * fast auto combat command
+   */
+  public static final String COMMAND_FAST_AUTO_COMBAT = "FastAutoCombat";
 
   /**
    * Auto use all weapons

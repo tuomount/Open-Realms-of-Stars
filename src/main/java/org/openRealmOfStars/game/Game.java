@@ -992,6 +992,17 @@ public class Game implements ActionListener {
           starMapView.setReadyToMove(false);
         }
       }
+    } else if (isSamePlayer && isValidCoordinate && isMovesLeft
+        && !isNotBlocked) {
+      fleet.decMovesLeft();
+      getStarMap().doFleetScanBlocked(info, fleet, nx, ny);
+      if (starMapView != null) {
+        starMapView.updatePanels();
+        if (info.isHuman()) {
+          getStarMap().setDrawPos(fleet.getX(), fleet.getY());
+        }
+        starMapView.setReadyToMove(false);
+      }
     }
   }
 

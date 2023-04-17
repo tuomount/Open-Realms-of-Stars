@@ -3832,6 +3832,21 @@ public class StarMap {
   }
 
   /**
+   * Do fleet scan for blocked sector.
+   *
+   * @param info PlayerInfo making the scan
+   * @param fleet Fleet scanning
+   * @param nx New coordinate X axel.
+   * @param ny New coordinate Y axel.
+   */
+  public void doFleetScanBlocked(final PlayerInfo info, final Fleet fleet,
+      final int nx, final int ny) {
+    int cx = fleet.getX();
+    int cy = fleet.getY();
+    int cloakDetection = fleet.getFleetCloakDetection();
+    drawVisibilityLine(info, cx, cy, nx, ny, cloakDetection, 2, fleet);
+  }
+  /**
    * Update star map when game starts
    */
   public void updateStarMapOnStartGame() {

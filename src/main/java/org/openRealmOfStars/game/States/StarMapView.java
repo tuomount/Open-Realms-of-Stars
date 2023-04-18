@@ -522,6 +522,21 @@ public class StarMapView extends BlackPanel {
         getStarMapMouseListener().showRoutePlanning();
       }
     }
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_ROUTE_MOVE)
+        && getStarMapMouseListener().getLastClickedFleet() != null
+        && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
+      if (getStarMapMouseListener().getLastClickedFleet().getRoute() != null
+          && getStarMapMouseListener().getLastClickedFleet().getRoute()
+          .isBombing()) {
+        SoundPlayer.playMenuDisabled();
+      } else {
+        SoundPlayer.playMenuSound();
+        getStarMapMouseListener().setRoutePlanning(true);
+        getStarMapMouseListener().setRegularRoute(true);
+        getStarMapMouseListener().showRoutePlanning();
+      }
+    }
 
   }
 

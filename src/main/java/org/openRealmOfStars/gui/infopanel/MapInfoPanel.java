@@ -32,7 +32,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -115,6 +115,11 @@ public class MapInfoPanel extends InfoPanel {
   private SpaceButton routeBtn;
 
   /**
+   * Move button for fleet
+   */
+  private SpaceButton moveBtn;
+
+  /**
    * Width of rigid box
    */
   private static final int RIGID_BOX_WIDTH = 130;
@@ -129,9 +134,13 @@ public class MapInfoPanel extends InfoPanel {
    */
   public MapInfoPanel(final ActionListener listener) {
     int panelWidth = RIGID_BOX_WIDTH;
+    int space = 5;
+    int topSpace = RIGID_BOX_HEIGHT / 2;
     if (listener instanceof Game) {
       Game game = (Game) listener;
-      if (!game.getCurrentResolution().equals("1024x768")) {
+      if (game.getHeight() > 768) {
+        space = 10;
+        topSpace = RIGID_BOX_HEIGHT;
         int width = game.getWidth() - RIGID_BOX_WIDTH;
         int viewPointX = (width / Tile.MAX_WIDTH - 1) / 2;
         panelWidth = game.getWidth() - (viewPointX * 2 * Tile.MAX_WIDTH
@@ -142,8 +151,7 @@ public class MapInfoPanel extends InfoPanel {
         }
       }
     }
-    this.add(Box.createRigidArea(new Dimension(panelWidth,
-        RIGID_BOX_HEIGHT)));
+    this.add(Box.createRigidArea(new Dimension(panelWidth, topSpace)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
         Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
     SpaceGreyPanel panel = new SpaceGreyPanel();
@@ -168,7 +176,7 @@ public class MapInfoPanel extends InfoPanel {
     iBtn.addActionListener(listener);
     panel.add(iBtn);
     this.add(panel);
-    this.add(Box.createRigidArea(new Dimension(10, 10)));
+    this.add(Box.createRigidArea(new Dimension(10, space)));
     textArea = new InfoTextArea();
     textArea.setFont(GuiStatics.getFontCubellanSmaller());
     textArea.setEditable(false);
@@ -180,6 +188,11 @@ public class MapInfoPanel extends InfoPanel {
     routeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
     routeBtn.setToolTipText("R - Route fleet with FTL. Route is direct line"
         + " from A to B using FTL speed.");
+    moveBtn = new SpaceButton("Route Moves", GameCommands.COMMAND_ROUTE_MOVE);
+    moveBtn.addActionListener(listener);
+    moveBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    moveBtn.setToolTipText("Mouse right - Route fleet with Move."
+        + " Route is direct line from A to B using regular moves.");
     defendBtn = new SpaceButton("Defend", GameCommands.COMMAND_DEFEND_SECTOR);
     defendBtn.addActionListener(listener);
     defendBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -194,13 +207,15 @@ public class MapInfoPanel extends InfoPanel {
     viewBtn = new SpaceButton("View planet", GameCommands.COMMAND_VIEW_PLANET);
     viewBtn.addActionListener(listener);
     viewBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    this.add(Box.createRigidArea(new Dimension(10, 10)));
+    this.add(Box.createRigidArea(new Dimension(10, space)));
     this.add(routeBtn);
-    this.add(Box.createRigidArea(new Dimension(10, 10)));
+    this.add(Box.createRigidArea(new Dimension(10, space)));
+    this.add(moveBtn);
+    this.add(Box.createRigidArea(new Dimension(10, space)));
     this.add(fixTradeFleetBtn);
-    this.add(Box.createRigidArea(new Dimension(10, 10)));
+    this.add(Box.createRigidArea(new Dimension(10, space)));
     this.add(defendBtn);
-    this.add(Box.createRigidArea(new Dimension(10, 10)));
+    this.add(Box.createRigidArea(new Dimension(10, space)));
     this.add(viewBtn);
   }
 
@@ -221,6 +236,7 @@ public class MapInfoPanel extends InfoPanel {
     this.defendBtn.setEnabled(false);
     this.fixTradeFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
+    this.moveBtn.setEnabled(false);
     updatePanel(false, viewerInfo);
   }
 
@@ -240,6 +256,7 @@ public class MapInfoPanel extends InfoPanel {
     this.defendBtn.setEnabled(false);
     this.fixTradeFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
+    this.moveBtn.setEnabled(false);
     updatePanel(false);
   }
 
@@ -260,6 +277,7 @@ public class MapInfoPanel extends InfoPanel {
     this.defendBtn.setEnabled(true);
     this.fixTradeFleetBtn.setEnabled(true);
     this.routeBtn.setEnabled(true);
+    this.moveBtn.setEnabled(true);
     updatePanel(debug);
   }
 
@@ -289,6 +307,7 @@ public class MapInfoPanel extends InfoPanel {
     this.defendBtn.setEnabled(false);
     this.fixTradeFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
+    this.moveBtn.setEnabled(false);
     updatePanel(false);
   }
 

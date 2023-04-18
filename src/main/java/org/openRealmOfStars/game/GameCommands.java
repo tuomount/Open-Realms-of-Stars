@@ -184,6 +184,10 @@ public final class GameCommands {
    */
   public static final String COMMAND_ROUTE_FLEET = "RouteFleetCommand";
   /**
+   * Route move command
+   */
+  public static final String COMMAND_ROUTE_MOVE = "RouteMoveCommand";
+  /**
    * Deploy starbase command
    */
   public static final String COMMAND_DEPLOY_STARBASE = "DeployStarbaseCommand";

@@ -273,13 +273,15 @@ public class StarMapMouseListener extends MouseAdapter
    */
   public void showRoutePlanning() {
     if (routePlanning && lastClickedFleet != null) {
-      Route route = new Route(lastClickedFleet.getX(),
-          lastClickedFleet.getY(), coord.getMapX(), coord.getMapY(),
-          lastClickedFleet.getFleetFtlSpeed());
-      if (isRegularRoute()) {
-        route.setRegularSpeed(lastClickedFleet.getFleetSpeed());
+      if (coord != null) {
+        Route route = new Route(lastClickedFleet.getX(),
+            lastClickedFleet.getY(), coord.getMapX(), coord.getMapY(),
+            lastClickedFleet.getFleetFtlSpeed());
+        if (isRegularRoute()) {
+          route.setRegularSpeed(lastClickedFleet.getFleetSpeed());
+        }
+        mapPanel.setRoute(route);
       }
-      mapPanel.setRoute(route);
     } else {
       routePlanning = false;
       mapPanel.setRoute(null);

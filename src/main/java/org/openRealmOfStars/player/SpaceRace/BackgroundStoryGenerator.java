@@ -93,6 +93,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.SMAUGIRIANS) {
       sb.append(generateSmaugirianStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.SYNTHDROIDS) {
+      sb.append(generateSynthdroidStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -173,6 +176,77 @@ public final class BackgroundStoryGenerator {
           + " perform complex and demanding tasks. This means that each"
           + " Mechion is highly advanced AI system that can learn and"
           + " adapt into new things.");
+    }
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for Synthdroid.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateSynthdroidStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Synthdroids";
+    if (info.getEmpireName().contains("Huskdroid")) {
+      name = "Huskdroids";
+    }
+
+    sb.append(name);
+    sb.append(" are a race of artificial beings that are designed to "
+        + "resemble human females. They are often portrayed as being "
+        + "sleek and elegant, with graceful movements and a polished "
+        + "appearance. Despite their robotic nature, ");
+    sb.append(name);
+    sb.append(" are able to perform many of the same functions as organic "
+        + "beings, including eating, drinking, and speaking. However, they "
+        + "require only a small amount of food to sustain themselves, "
+        + "making them highly efficient and self-sufficient. Unlike most "
+        + "other races, ");
+    sb.append(name);
+    sb.append(" must be built rather than born, and each population must "
+        + "be created from scratch. This makes them a relatively rare and "
+        + "mysterious race in the galaxy.");
+    if (info.getGovernment().isImmuneToHappiness()) {
+      sb.append(" Each ");
+      sb.append(name);
+      sb.append(" is equipped with positronic computer and"
+          + " capable communication systems, which allow them to coordinate"
+          + " their movements and work in harmony with their fellow ");
+      sb.append(name);
+      sb.append(". These features allow ");
+      sb.append(name);
+      sb.append(" to handle complex tasks "
+          + "that would be beyond the capabilities of a single being.");
+    } else {
+      sb.append(" Each ");
+      sb.append(name);
+      sb.append(" is equipped with positronic computer and"
+          + " positronic neuronetwork, which allows them to individually"
+          + " like a living creature. This means that each ");
+      sb.append(name);
+      sb.append(" is highly advanced AI system that can learn and"
+          + " adapt into new things fast.");
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));

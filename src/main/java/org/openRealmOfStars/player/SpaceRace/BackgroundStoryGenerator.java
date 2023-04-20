@@ -96,6 +96,9 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.SYNTHDROIDS) {
       sb.append(generateSynthdroidStory(info, startPlanet, startingYear));
     }
+    if (info.getRace() == SpaceRace.ALONIANS) {
+      sb.append(generateAlonianStory(info, startPlanet, startingYear));
+    }
     return sb.toString();
   }
 
@@ -858,6 +861,106 @@ public final class BackgroundStoryGenerator {
       sb.append(name);
       sb.append(" are acting as space pirates. They will keep looting and"
           + " pillaging ships and do not care about consequences. ");
+    }
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, name));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append(info.getEmpireName());
+    sb.append(" starts space exploration from ");
+    sb.append(startPlanet.getName());
+    if (info.getRuler() != null) {
+      sb.append(" with ");
+      sb.append(info.getRuler().getCallName());
+      sb.append(" leading ");
+      sb.append(name);
+      sb.append(" to realm of stars");
+    }
+    sb.append(".");
+    return sb.toString();
+  }
+
+  /**
+   * Generate background story for Alonian.
+   * @param info Realm from which to generate
+   * @param startPlanet Starting planet
+   * @param startingYear Star year when realm is starting to explore galaxy.
+   * @return Background story as a string.
+   */
+  private static String generateAlonianStory(final PlayerInfo info,
+      final Planet startPlanet, final int startingYear) {
+    StringBuilder sb = new StringBuilder();
+    String name = "Alonians";
+    if (info.getEmpireName().contains("Warfling")) {
+      name = "Warflings";
+    }
+    String shortDescription = "extraterrestrial beings";
+    sb.append(name);
+    switch (DiceGenerator.getRandom(3)) {
+    default:
+    case 0: {
+      shortDescription = "extraterrestrial beings";
+      break;
+    }
+    case 1: {
+      shortDescription = "humanoids";
+      break;
+    }
+    case 2: {
+      shortDescription = "nomading humanoids";
+      break;
+    }
+    }
+    switch (DiceGenerator.getRandom(3)) {
+    default:
+    case 0: {
+      sb.append(" are a race of ");
+      sb.append(shortDescription);
+      sb.append(" that do not have"
+          + " a traditional home planet. Instead, they are a nomadic race "
+          + "that travels from place to place. Their home planet has"
+          + " been destroyed when local star exploded as a super nova."
+          + " Despite their lack of a fixed home, ");
+      break;
+    }
+    case 1: {
+      sb.append(" are a race of ");
+      sb.append(shortDescription);
+      sb.append(" that do not have"
+          + " a traditional home planet. Instead, they are a nomadic race "
+          + "that travels from place to place. Their home planet has"
+          + " been destroyed when it's magnetic core shutdown and atmosphere"
+          + " was blown away. The planet became lifeless rock."
+          + " Despite their lack of a fixed home, ");
+      break;
+    }
+    case 2: {
+      sb.append(" are a race of ");
+      sb.append(shortDescription);
+      sb.append(" that do not have"
+          + " a traditional home planet. Instead, they are a nomadic race "
+          + "that travels from place to place. Their home planet has"
+          + " been destroyed when huge meteor storm hit the planet. Whole"
+          + " planet shattered into pieces."
+          + " Despite their lack of a fixed home, ");
+      break;
+    }
+    }
+    sb.append(name);
+    sb.append(" are highly advanced in the fields of science and technology. ");
+    sb.append(name);
+    sb.append(" also have a special ability where a single colony ship"
+        + " produces one research point, allowing them to quickly advance"
+        + " their technology and gain an edge over their competitors."
+        + " In addition, their starbase laboratories are also more "
+        + "efficient at producing research points, further enhancing"
+        + " their technological advantage. ");
+    if (info.getGovernment().isImmuneToHappiness()) {
+      sb.append(name);
+      sb.append(" are nomading space pirates. They will keep pillaging and"
+          + " looting fleets and do not care about consequences. ");
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));

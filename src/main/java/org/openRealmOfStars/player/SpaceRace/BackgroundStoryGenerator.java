@@ -135,7 +135,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -185,7 +185,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -256,7 +256,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -298,7 +298,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -339,7 +339,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append("\n\n");
     sb.append("Because of their aquatic origins, ");
     sb.append(name);
@@ -399,7 +399,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append("\n\n");
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
@@ -447,7 +447,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -500,7 +500,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -552,7 +552,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -612,7 +612,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -664,7 +664,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -714,7 +714,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -755,7 +755,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append("\n\n");
     sb.append("Because of their large size, ");
     sb.append(name);
@@ -817,7 +817,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -867,7 +867,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -967,7 +967,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
     sb.append(" starts space exploration from ");
     sb.append(startPlanet.getName());
@@ -986,10 +986,11 @@ public final class BackgroundStoryGenerator {
    * Generate FTL background story.
    * @param info Realm
    * @param startingYear Starting year of the game
+   * @param name Race name
    * @return FTL background story
    */
   private static String generateFtlStory(final PlayerInfo info,
-      final int startingYear) {
+      final int startingYear, final String name) {
     StringBuilder sb = new StringBuilder();
     boolean scientific = false;
     if (info.getGovernment() == GovernmentType.TECHNOCRACY
@@ -998,6 +999,13 @@ public final class BackgroundStoryGenerator {
     }
     if (info.getRace().getResearchSpeed() > 100) {
       scientific = true;
+    }
+    if (info.getRace() == SpaceRace.ALONIANS) {
+      sb.append(name);
+      sb.append(" needed space flight very early since their home planet "
+          + "was about to encounter catastrophy. They made fleet large enough"
+          + " to hold their entire population. Fleet started without faster"
+          + " than light travel. ");
     }
     if (scientific) {
       Gender gender = Gender.getRandom();

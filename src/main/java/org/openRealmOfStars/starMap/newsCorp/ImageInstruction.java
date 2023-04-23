@@ -478,6 +478,10 @@ public class ImageInstruction {
    */
   private static final String IMAGE = "image";
   /**
+   * Instruction to draw space ship bridge
+   */
+  private static final String BRIDGE = "bridge";
+  /**
    * Instruction to draw siluete
    */
   private static final String SILUETE = "siluete";
@@ -536,7 +540,7 @@ public class ImageInstruction {
    * @param parameter As a String
    * @return Sanitized parameter
    */
-  private String sanitizeParameters(final String parameter) {
+  private static String sanitizeParameters(final String parameter) {
     StringBuilder paramBuilder = new StringBuilder();
     for (int i = 0; i < parameter.length(); i++) {
       if (parameter.charAt(i) != PARAM_END
@@ -682,8 +686,43 @@ public class ImageInstruction {
   }
 
   /**
-   * Add another image siluete to image instructions.
+   * Add space ship bridge to image instructions.
+   * Use space race single names.
    * Image is added into center of image
+   * @param image image name to place into image
+   * @return ImageInstruction with text
+   */
+  public ImageInstruction addBridge(final String image) {
+    checkDelim();
+    if (!SpaceRace.CENTAURS.getNameSingle().equals(image)
+        && !SpaceRace.HUMAN.getNameSingle().equals(image)
+        && !SpaceRace.SPORKS.getNameSingle().equals(image)
+        && !SpaceRace.GREYANS.getNameSingle().equals(image)
+        && !SpaceRace.MOTHOIDS.getNameSingle().equals(image)
+        && !SpaceRace.TEUTHIDAES.getNameSingle().equals(image)
+        && !SpaceRace.MECHIONS.getNameSingle().equals(image)
+        && !SpaceRace.SCAURIANS.getNameSingle().equals(image)
+        && !SpaceRace.HOMARIANS.getNameSingle().equals(image)
+        && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)
+        && !SpaceRace.CHIRALOIDS.getNameSingle().equals(image)
+        && !SpaceRace.REBORGIANS.getNameSingle().equals(image)
+        && !SpaceRace.LITHORIANS.getNameSingle().equals(image)
+        && !SpaceRace.ALTEIRIANS.getNameSingle().equals(image)
+        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(image)
+        && !SpaceRace.SYNTHDROIDS.getNameSingle().equals(image)
+        && !SpaceRace.ALONIANS.getNameSingle().equals(image)) {
+      throw new IllegalArgumentException("Illegal image: "
+        + image);
+    }
+    sb.append(BRIDGE);
+    sb.append(PARAM_START);
+    sb.append(sanitizeParameters(image));
+    sb.append(PARAM_END);
+    return this;
+  }
+
+  /**
+   * Add another image siluete to image instructions.
    * @param image image name to place into image
    * @param position Where siluete is going go be drawn.
    *        POSITION_CENTER, POSITION_LEFT, POSITION_RIGHT
@@ -1179,7 +1218,8 @@ public class ImageInstruction {
           workImage.getHeight() / 2 - silueteImg.getHeight() / 2, null);
     }
   }
-/**
+
+  /**
    * Draw image on image
    * @param workImage Image where to draw
    * @param image image type to draw
@@ -1336,6 +1376,79 @@ public class ImageInstruction {
         img.getHeight() / 2 - drawImg.getHeight() / 2, null);
     return img;
   }
+
+  /**
+   * Draw space ship bridge on image
+   * @param workImage Image where to draw
+   * @param image space ship image to draw.
+   * @return Drawn image
+   */
+  private static BufferedImage paintBridge(final BufferedImage workImage,
+      final String image) {
+    BufferedImage drawImg = GuiStatics.BIG_PLANET_ROCK1;
+    SpaceRace race = SpaceRaceUtility.getRaceByName(image);
+    if (race != null) {
+      if (race == SpaceRace.CENTAURS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_CENTAUR;
+      }
+      if (race == SpaceRace.SCAURIANS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_SCAURIAN;
+      }
+      if (race == SpaceRace.MECHIONS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_MECHION;
+      }
+      if (race == SpaceRace.HUMAN) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_HUMAN;
+      }
+      if (race == SpaceRace.MOTHOIDS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_MOTHOID;
+      }
+      if (race == SpaceRace.GREYANS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_GREYAN;
+      }
+      if (race == SpaceRace.HOMARIANS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_HOMARIAN;
+      }
+      if (race == SpaceRace.TEUTHIDAES) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_TEUTHIDAE;
+      }
+      if (race == SpaceRace.SPORKS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_SPORK;
+      }
+      if (race == SpaceRace.CHIRALOIDS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_CHIRALOID;
+      }
+      if (race == SpaceRace.SPACE_PIRATE) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_PIRATE;
+      }
+      if (race == SpaceRace.LITHORIANS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_LITHORIAN;
+      }
+      if (race == SpaceRace.REBORGIANS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_REBORGIAN;
+      }
+      if (race == SpaceRace.SMAUGIRIANS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_SMAUGIRIAN;
+      }
+      if (race == SpaceRace.ALTEIRIANS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_ALTEIRIAN;
+      }
+      if (race == SpaceRace.ALONIANS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR_ALONIAN;
+      }
+    }
+    BufferedImage img = workImage;
+    if (img == null) {
+      img = new BufferedImage(drawImg.getWidth(), drawImg.getHeight(),
+          BufferedImage.TYPE_INT_ARGB);
+    }
+    Graphics2D g = (Graphics2D) img.getGraphics();
+    g.drawImage(drawImg,
+        img.getWidth() / 2 - drawImg.getWidth() / 2,
+        img.getHeight() / 2 - drawImg.getHeight() / 2, null);
+    return img;
+  }
+
   /**
    * Parse Image instruction string and draw image
    * to given image.
@@ -1380,6 +1493,9 @@ public class ImageInstruction {
       }
       if (IMAGE.equals(command)) {
         workImage = paintImage(workImage, parameters[0]);
+      }
+      if (BRIDGE.equals(command)) {
+        workImage = paintBridge(workImage, parameters[0]);
       }
       if (SILUETE.equals(command)) {
         paintSiluete(workImage, parameters[0], parameters[1]);

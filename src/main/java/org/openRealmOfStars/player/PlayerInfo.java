@@ -49,7 +49,7 @@ import org.openRealmOfStars.utilities.repository.DiplomacyRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -233,6 +233,7 @@ public class PlayerInfo {
    * Artifact lists realm has found and discovered.
    */
   private ArtifactLists artifactLists;
+
   /**
    * Flag if realm has been lost from the game.
    * No more planets or colony ships with colonists left.

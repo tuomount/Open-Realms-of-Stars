@@ -103,6 +103,56 @@ public final class BackgroundStoryGenerator {
   }
 
   /**
+   * This method tries to guess space race name and give it back in plural.
+   * This is making best guess for English names.
+   * @param empireName EmpireName
+   * @param government Government type
+   * @return Race name in plural
+   */
+  public static String getRaceNameInPlural(final String empireName,
+      final GovernmentType government) {
+    String[] params = empireName.split(" ");
+    String result = params[0];
+    if (params.length == 2) {
+      if (params[0].equalsIgnoreCase(government.getName())) {
+        result = params[1];
+      } else {
+       result = params[0];
+      }
+    }
+    if (params.length == 3) {
+      if (params[1].equalsIgnoreCase("of")) {
+        if (params[0].equalsIgnoreCase(government.getName())) {
+          result = params[2];
+        } else {
+          result = params[0];
+        }
+      }
+      if (params[0].equalsIgnoreCase("the")) {
+        if (params[1].equalsIgnoreCase(government.getName())) {
+          result = params[2];
+        } else {
+          result = params[1];
+        }
+      }
+    }
+    if (!result.endsWith("s")) {
+      result = result + "s";
+    }
+    if (params.length == 4 && params[0].equalsIgnoreCase("the")
+       && params[2].equalsIgnoreCase("of")) {
+      if (params[1].equalsIgnoreCase(government.getName())) {
+        result = params[3];
+      } else {
+        result = params[1];
+      }
+    }
+    if (!result.endsWith("s")) {
+      result = result + "s";
+    }
+    return result;
+  }
+  /**
    * Generate background story for humans.
    * @param info Realm from which to generate
    * @param startPlanet Starting planet
@@ -112,10 +162,8 @@ public final class BackgroundStoryGenerator {
   private static String generateHumanStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Humans";
-    if (info.getEmpireName().contains("Terran")) {
-      name = "Terrans";
-    }
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
     if (startPlanet.getName().startsWith("Earth")) {
       sb.append(name);
       sb.append(" are the humans from the Earth. ");
@@ -160,7 +208,11 @@ public final class BackgroundStoryGenerator {
   private static String generateMechionStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Mechions";
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
+    if (info.getEmpireName().contains("Steel")) {
+      name = "Mechions";
+    }
     sb.append(name);
     sb.append(" are a type of mechanical robot that are designed to function"
         + " without the need for food or other organic sustenance. Instead,"
@@ -210,11 +262,8 @@ public final class BackgroundStoryGenerator {
   private static String generateSynthdroidStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Synthdroids";
-    if (info.getEmpireName().contains("Huskdroid")) {
-      name = "Huskdroids";
-    }
-
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
     sb.append(name);
     sb.append(" are a race of artificial beings that are designed to "
         + "resemble human females. They are often portrayed as being "
@@ -281,10 +330,8 @@ public final class BackgroundStoryGenerator {
   private static String generateSporkStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Sporks";
-    if (info.getEmpireName().contains("Sagittarian")) {
-      name = "Sagittarians";
-    }
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
 
     sb.append(name);
     sb.append(" are a fictional species of aggressive and warmongering"
@@ -323,10 +370,8 @@ public final class BackgroundStoryGenerator {
   private static String generateTeuthidaeStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Teuthidaes";
-    if (info.getEmpireName().contains("Squiddan")) {
-      name = "Squiddans";
-    }
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
 
     sb.append(name);
     sb.append(" are a race of octopus-like creatures that are highly "
@@ -372,10 +417,8 @@ public final class BackgroundStoryGenerator {
   private static String generateScaurianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Scaurians";
-    if (info.getEmpireName().contains("Nemean")) {
-      name = "Nemeans";
-    }
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
 
     sb.append(name);
     sb.append(" are a race of small but wide humanoids that are known for"
@@ -428,7 +471,11 @@ public final class BackgroundStoryGenerator {
     String name = "Greyans";
     if (info.getEmpireName().contains("Aesir")) {
       name = "Aesirians";
+    } else {
+      name = getRaceNameInPlural(info.getEmpireName(),
+          info.getGovernment());
     }
+
     sb.append(name);
     sb.append(" are typically tall and slender, with long, graceful limbs"
         + " and delicate features. Their grey skin is smooth and sleek,"
@@ -472,10 +519,8 @@ public final class BackgroundStoryGenerator {
   private static String generateHomarianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Homarians";
-    if (info.getEmpireName().contains("Cancerian")) {
-      name = "Cancerian";
-    }
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
     sb.append(name);
     sb.append(" are a race of humanoid crabs that are known for their "
         + "immense strength and hard exoskeletons. This exoskeleton also gives"
@@ -525,7 +570,8 @@ public final class BackgroundStoryGenerator {
   private static String generateChiraloidStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Chiraloids";
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
     if (info.getEmpireName().contains("Capricorn")) {
       name = "Capricornians";
     }
@@ -577,10 +623,8 @@ public final class BackgroundStoryGenerator {
   private static String generateReborgianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Reborgians";
-    if (info.getEmpireName().contains("Bionian")) {
-      name = "Bionians";
-    }
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
     sb.append(name);
     sb.append(" are a race of cyborgs that are created by combining organic "
         + "organisms with bionic and robotic parts. This gives them "
@@ -637,7 +681,8 @@ public final class BackgroundStoryGenerator {
   private static String generateLithorianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Lithorians";
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
     if (info.getEmpireName().contains("Metavore")) {
       name = "Metavorians";
     }
@@ -689,7 +734,8 @@ public final class BackgroundStoryGenerator {
   private static String generateAlteirianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Alteirians";
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
     sb.append(name);
     sb.append(" are a race of creatures that are adapted to life in"
         + " zero gravity. Because of this, they require special suits"
@@ -739,7 +785,8 @@ public final class BackgroundStoryGenerator {
   private static String generateCentaurStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Centaurs";
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
     if (info.getEmpireName().contains("Taurus")) {
       name = "Taurians";
     }
@@ -787,10 +834,8 @@ public final class BackgroundStoryGenerator {
   private static String generateMothoidStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Mothoids";
-    if (info.getEmpireName().contains("Scorpio")) {
-      name = "Scorpions";
-    }
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
     sb.append(name);
     if (info.getGovernment().isImmuneToHappiness()) {
       sb.append(" are race of sentient insects that are capable of forming"
@@ -842,10 +887,8 @@ public final class BackgroundStoryGenerator {
   private static String generateSmaugirianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Smaugirians";
-    if (info.getEmpireName().contains("Harean")) {
-      name = "Hareans";
-    }
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
     sb.append(name);
     sb.append(" are known for their versatile cargo ships, which can be "
         + "outfitted with a variety of modules to accommodate different types "
@@ -892,10 +935,8 @@ public final class BackgroundStoryGenerator {
   private static String generateAlonianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String name = "Alonians";
-    if (info.getEmpireName().contains("Warfling")) {
-      name = "Warflings";
-    }
+    String name = getRaceNameInPlural(info.getEmpireName(),
+        info.getGovernment());
     String shortDescription = "extraterrestrial beings";
     sb.append(name);
     switch (DiceGenerator.getRandom(3)) {

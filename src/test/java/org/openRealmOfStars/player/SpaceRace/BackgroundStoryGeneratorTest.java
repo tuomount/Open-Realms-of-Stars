@@ -263,7 +263,7 @@ public class BackgroundStoryGeneratorTest {
         info, startingPlanet, starYear);
     assertEquals(true, result.contains("Max Power"));
     assertEquals(true, result.contains("clan"));
-    assertEquals(true, result.contains("Cancerian"));
+    assertEquals(true, result.contains("Cancerians"));
   }
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
@@ -755,6 +755,34 @@ public class BackgroundStoryGeneratorTest {
     assertEquals(true, result.contains("Max Power"));
     assertEquals(true, result.contains("utopia"));
     assertEquals(true, result.contains("Warflings"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPluralNameSeparator() {
+    String name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Empire of Rexian", GovernmentType.EMPIRE);
+    assertEquals("Rexians", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "The Rexian Empire", GovernmentType.EMPIRE);
+    assertEquals("Rexians", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Rexian Empire", GovernmentType.EMPIRE);
+    assertEquals("Rexians", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Hordian Hegemony", GovernmentType.HEGEMONY);
+    assertEquals("Hordians", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Hordian Hegemony", GovernmentType.HEGEMONY);
+    assertEquals("Hordians", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Terran Syndicate", GovernmentType.SYNDICATE);
+    assertEquals("Terrans", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Syndicate of Terrans", GovernmentType.SYNDICATE);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "The Syndicate of Terran", GovernmentType.SYNDICATE);
+    assertEquals("Terrans", name);
   }
 
 }

@@ -20,6 +20,7 @@ import org.openRealmOfStars.player.espionage.EspionageBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -38,7 +39,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2021,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -164,6 +165,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -207,6 +211,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -251,6 +258,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -323,6 +333,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -397,6 +410,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -477,6 +493,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -513,6 +532,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -546,6 +568,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -561,6 +586,9 @@ public class StarMapTest {
     Mockito.when(info2.getRace()).thenReturn(SpaceRace.SPORKS);
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Sporks");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler2 = Mockito.mock(Leader.class);
+    Mockito.when(info2.getRuler()).thenReturn(ruler2);
+    Mockito.when(ruler2.getName()).thenReturn("Low Power");
     msgList = Mockito.mock(MessageList.class);
     Mockito.when(info2.getMsgList()).thenReturn(msgList);
     stats = new ShipStat[0];
@@ -641,6 +669,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -656,6 +687,9 @@ public class StarMapTest {
     Mockito.when(info2.getRace()).thenReturn(SpaceRace.SPORKS);
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Sporks");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler2 = Mockito.mock(Leader.class);
+    Mockito.when(info2.getRuler()).thenReturn(ruler2);
+    Mockito.when(ruler2.getName()).thenReturn("Low Power");
     msgList = Mockito.mock(MessageList.class);
     Mockito.when(info2.getMsgList()).thenReturn(msgList);
     stats = new ShipStat[0];
@@ -730,6 +764,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -745,6 +782,9 @@ public class StarMapTest {
     Mockito.when(info2.getRace()).thenReturn(SpaceRace.SPORKS);
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Sporks");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler2 = Mockito.mock(Leader.class);
+    Mockito.when(info2.getRuler()).thenReturn(ruler2);
+    Mockito.when(ruler2.getName()).thenReturn("Low Power");
     msgList = Mockito.mock(MessageList.class);
     Mockito.when(info2.getMsgList()).thenReturn(msgList);
     stats = new ShipStat[0];
@@ -808,6 +848,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -857,6 +900,9 @@ public class StarMapTest {
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     MessageList msgList = Mockito.mock(MessageList.class);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
@@ -896,6 +942,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -937,6 +986,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -1086,6 +1138,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -1203,6 +1258,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -1225,6 +1283,9 @@ public class StarMapTest {
     Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Centaurs");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler2 = Mockito.mock(Leader.class);
+    Mockito.when(info2.getRuler()).thenReturn(ruler2);
+    Mockito.when(ruler2.getName()).thenReturn("Low Power");
     Mockito.when(info2.getMsgList()).thenReturn(msgList);
     Mockito.when(info2.getShipStatList()).thenReturn(stats);
     FleetList fleetList2 = Mockito.mock(FleetList.class);
@@ -1279,6 +1340,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -1301,6 +1365,9 @@ public class StarMapTest {
     Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Centaurs");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler2 = Mockito.mock(Leader.class);
+    Mockito.when(info2.getRuler()).thenReturn(ruler2);
+    Mockito.when(ruler2.getName()).thenReturn("Low Power");
     Mockito.when(info2.getMsgList()).thenReturn(msgList);
     Mockito.when(info2.getShipStatList()).thenReturn(stats);
     FleetList fleetList2 = Mockito.mock(FleetList.class);
@@ -1346,6 +1413,9 @@ public class StarMapTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler = Mockito.mock(Leader.class);
+    Mockito.when(info.getRuler()).thenReturn(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
@@ -1376,6 +1446,9 @@ public class StarMapTest {
     Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Centaurs");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Leader ruler2 = Mockito.mock(Leader.class);
+    Mockito.when(info2.getRuler()).thenReturn(ruler2);
+    Mockito.when(ruler2.getName()).thenReturn("Low Power");
     Mockito.when(info2.getMsgList()).thenReturn(msgList);
     Mockito.when(info2.getShipStatList()).thenReturn(stats);
     FleetList fleetList2 = Mockito.mock(FleetList.class);

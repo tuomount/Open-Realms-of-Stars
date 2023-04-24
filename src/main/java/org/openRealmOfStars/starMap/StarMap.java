@@ -22,6 +22,7 @@ import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.WinningStrategy;
+import org.openRealmOfStars.player.SpaceRace.BackgroundStoryGenerator;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.diplomacy.Attitude;
@@ -1471,6 +1472,7 @@ public class StarMap {
    */
   public void createRealmToPlanet(final Planet planet,
       final PlayerInfo playerInfo, final int playerIndex) {
+
     if (planet.getPlanetPlayerInfo() != null && planet.getGovernor() != null) {
       planet.getGovernor().setJob(Job.UNASSIGNED);
       planet.setGovernor(null);
@@ -1656,6 +1658,13 @@ public class StarMap {
         count++;
       }
     }
+    String backgroundStory = BackgroundStoryGenerator.generateBackgroundStory(
+        playerInfo, planet, getStarYear());
+    Message msgStart = new Message(MessageType.INFORMATION, backgroundStory,
+        Icons.getIconByName(Icons.ICON_CULTURE));
+    msgStart.setCoordinate(planet.getCoordinate());
+    msgStart.setMatchByString(planet.getName());
+    playerInfo.getMsgList().addNewMessage(msgStart);
   }
 
   /**
@@ -1669,6 +1678,7 @@ public class StarMap {
   public void createRealmToGalaxy(final int x, final int y,
       final PlayerInfo playerInfo, final int playerIndex) {
     Coordinate startCoord = new Coordinate(x, y);
+
     if (Game.getTutorial() != null && playerInfo.isHuman()
         && isTutorialEnabled()) {
       String tutorialText = Game.getTutorial().showTutorialText(0);
@@ -1770,6 +1780,17 @@ public class StarMap {
         count++;
       }
     }
+    Planet planet = new Planet(startCoord, "Alpha Aurora II", 2, false);
+    PlanetTypes planetType = PlanetTypes.getRandomStartPlanetType(
+        playerInfo.getRace());
+    planet.setPlanetType(planetType);
+    String backgroundStory = BackgroundStoryGenerator.generateBackgroundStory(
+        playerInfo, planet, getStarYear());
+    Message msgStart = new Message(MessageType.INFORMATION, backgroundStory,
+        Icons.getIconByName(Icons.ICON_CULTURE));
+    msgStart.setCoordinate(startCoord);
+    msgStart.setMatchByString("Colony #0");
+    playerInfo.getMsgList().addNewMessage(msgStart);
   }
 
   /**

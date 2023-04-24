@@ -1010,8 +1010,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
     sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
+    sb.append(" starts space exploration from deep space");
     if (info.getRuler() != null) {
       sb.append(" with ");
       sb.append(info.getRuler().getCallName());

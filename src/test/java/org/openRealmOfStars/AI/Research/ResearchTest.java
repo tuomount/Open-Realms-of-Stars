@@ -10,6 +10,8 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -142,9 +144,20 @@ public class ResearchTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRemoveObsoleteDesigns() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    info.setGovernment(GovernmentType.COLLECTIVE);
+    info.setEmpireName("Human Collective");
     info.setAttitude(Attitude.BACKSTABBING);
+    Leader ruler = Mockito.mock(Leader.class);
+    info.setRuler(ruler);
+    Mockito.when(ruler.getName()).thenReturn("Max Power");
+
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS, 2, 1);
-    info.setAttitude(Attitude.BACKSTABBING);
+    info2.setGovernment(GovernmentType.EMPIRE);
+    info2.setEmpireName("Spork Empire");
+    info2.setAttitude(Attitude.BACKSTABBING);
+    Leader ruler2 = Mockito.mock(Leader.class);
+    info2.setRuler(ruler2);
+    Mockito.when(ruler2.getName()).thenReturn("Low Power");
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(2);
     PlayerList list = new PlayerList();

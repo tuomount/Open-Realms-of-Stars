@@ -706,6 +706,10 @@ public class MapPanel extends JPanel {
           boolean drawShip = visibility.isFleetVisible();
           boolean recognized = visibility.isRecognized();
           boolean espionageDetected = visibility.isEspionageDetected();
+          boolean moved = false;
+          if (fleet.getMovesLeft() == 0 && fleet.getRoute() == null) {
+            moved = true;
+          }
           if (recognized && fleetOwnerIndex != -1 && drawShip) {
             PlayerInfo shipInfo = starMap.getPlayerByIndex(fleetOwnerIndex);
             Tile fleetColor = Tiles.getTileByName(
@@ -738,6 +742,11 @@ public class MapPanel extends JPanel {
             gr.drawImage(img, pixelX, pixelY, null);
             if (espionageDetected) {
               Icon16x16 icon = Icons.getIconByName(Icons.ICON_SPY_GOGGLES);
+              icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+                  pixelY + Icon16x16.MAX_HEIGHT);
+            }
+            if (moved) {
+              Icon16x16 icon = Icons.getIconByName(Icons.ICON_ARROWUP);
               icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
                   pixelY + Icon16x16.MAX_HEIGHT);
             }

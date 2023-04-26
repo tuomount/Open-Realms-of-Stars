@@ -10,7 +10,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -478,6 +478,22 @@ public final class Icons {
    * Greyed leaders
    */
   public static final String ICON_GREYED_LEADERS = "IconGreyedLeaders";
+  /**
+   * Moves left icon 1
+   */
+  public static final String ICON_MOVES_LEFT_1 = "IconMovesLeft1";
+  /**
+   * Moves left icon 2
+   */
+  public static final String ICON_MOVES_LEFT_2 = "IconMovesLeft2";
+  /**
+   * Enrouted move icon
+   */
+  public static final String ICON_ENROUTED_MOVES = "IconEnroutedMoves";
+  /**
+   * Moves done icon
+   */
+  public static final String ICON_MOVES_DONE = "IconMovesDone";
 
   /**
    * List of Icon
@@ -812,6 +828,14 @@ public final class Icons {
     icon = new Icon16x16(image, 2, 5, ICON_GRAVITY_RIPPER);
     addIcon(icon);
     icon = new Icon16x16(image, 3, 5, ICON_GREYED_LEADERS);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 5, ICON_MOVES_LEFT_1);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 5, ICON_MOVES_LEFT_2);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 5, ICON_ENROUTED_MOVES);
+    addIcon(icon);
+    icon = new Icon16x16(image, 7, 5, ICON_MOVES_DONE);
     addIcon(icon);
   }
 

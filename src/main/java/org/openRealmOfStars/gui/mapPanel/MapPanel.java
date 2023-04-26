@@ -745,8 +745,22 @@ public class MapPanel extends JPanel {
               icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
                   pixelY + Icon16x16.MAX_HEIGHT);
             }
-            if (moved) {
-              Icon16x16 icon = Icons.getIconByName(Icons.ICON_ARROWUP);
+            if (fleet.getRoute() != null) {
+              if (fleet.getRoute().getFtlSpeed() > 0
+                || fleet.getRoute().getRegularSpeed() > 0) {
+                Icon16x16 icon = Icons.getIconByName(Icons.ICON_ENROUTED_MOVES);
+                icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+                    pixelY + Icon16x16.MAX_HEIGHT);
+              }
+            } else if (moved) {
+              Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_DONE);
+              icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+                  pixelY + Icon16x16.MAX_HEIGHT);
+            } else {
+              Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_1);
+              if (flickerGoUp) {
+                icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_2);
+              }
               icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
                   pixelY + Icon16x16.MAX_HEIGHT);
             }

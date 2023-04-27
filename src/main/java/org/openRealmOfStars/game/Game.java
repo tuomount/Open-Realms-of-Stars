@@ -881,6 +881,8 @@ public class Game implements ActionListener {
     final boolean isValidCoordinate = getStarMap().isValidCoordinate(nx, ny);
     final boolean isMovesLeft = fleet.getMovesLeft() > 0;
     final boolean isNotBlocked = !getStarMap().isBlocked(nx, ny);
+    final boolean notVisible = info.getSectorVisibility(
+        new Coordinate(nx, ny)) == PlayerInfo.UNCHARTED;
 
     if (isSamePlayer && isValidCoordinate && isMovesLeft && isNotBlocked) {
       Combat combat = getStarMap().fightWithFleet(nx, ny, fleet, info);
@@ -993,7 +995,7 @@ public class Game implements ActionListener {
         }
       }
     } else if (isSamePlayer && isValidCoordinate && isMovesLeft
-        && !isNotBlocked) {
+        && !isNotBlocked && notVisible) {
       fleet.decMovesLeft();
       getStarMap().doFleetScanBlocked(info, fleet, nx, ny);
       if (starMapView != null) {

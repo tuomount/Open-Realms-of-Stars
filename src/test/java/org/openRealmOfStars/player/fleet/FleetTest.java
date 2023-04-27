@@ -21,7 +21,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019,2021,2023  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -385,7 +385,7 @@ public class FleetTest {
     Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
     assertEquals(0, fleet.getCulturalValue());
     assertEquals("Test-Fleet\nTerran alliance\nCapacity: 0.1\nSpeed: 1 FTL: 2\nMoves: 1\nScout - 15"
-        + "\n\nEnroute", fleet.getInfoAsText(info));
+        + "\n\n\nEnroute", fleet.getInfoAsText(info));
   }
 
   @Test
@@ -472,7 +472,7 @@ public class FleetTest {
     assertEquals(false, fleet.isPrivateerFleet());
     assertEquals(1, fleet.getCulturalValue());
     assertEquals("Fleet #0\nCapacity: 0.1\nSpeed: 1 FTL: 1\nMoves: 0\nPopulation: 2\nScout - 15\nColony - 0"
-        + "\n", fleet.getInfoAsText(null));
+        + "\n\n\nMoved", fleet.getInfoAsText(null));
   }
 
   @Test
@@ -541,7 +541,7 @@ public class FleetTest {
     Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
     assertEquals(0, fleet.getCulturalValue());
     assertEquals("Fleet #0\nPrivateer fleet\nCapacity: 1.0\nSpeed: 1 FTL: 2\nMoves: 0"
-        + "\nPrivateer - 20\nPrivateer - 20\n", fleet.getInfoAsText(info));
+        + "\nPrivateer - 20\nPrivateer - 20\n\n\nMoved", fleet.getInfoAsText(info));
   }
 
   @Test

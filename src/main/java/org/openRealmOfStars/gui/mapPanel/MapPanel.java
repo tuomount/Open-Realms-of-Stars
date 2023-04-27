@@ -745,7 +745,7 @@ public class MapPanel extends JPanel {
               icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
                   pixelY + Icon16x16.MAX_HEIGHT);
             }
-            if (fleet.getRoute() != null) {
+            if (fleet.getRoute() != null && fleetOwner == info) {
               if (fleet.getRoute().getFtlSpeed() > 0
                 || fleet.getRoute().getRegularSpeed() > 0) {
                 Icon16x16 icon = Icons.getIconByName(Icons.ICON_ENROUTED_MOVES);

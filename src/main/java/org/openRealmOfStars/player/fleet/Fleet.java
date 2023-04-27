@@ -27,7 +27,7 @@ import org.openRealmOfStars.utilities.repository.RouteRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -582,13 +582,17 @@ public class Fleet {
     }
     if (route != null) {
       if (route.isDefending()) {
-        sb.append("\nDefending");
+        sb.append("\n\nDefending");
       } else if (route.isFixing()) {
-        sb.append("\nFixing");
+        sb.append("\n\nFixing");
       } else if (route.isBombing()) {
-        sb.append("\nBombing");
+        sb.append("\n\nBombing");
       } else {
-        sb.append("\nEnroute");
+        sb.append("\n\nEnroute");
+      }
+    } else {
+      if (movesLeft == 0) {
+        sb.append("\n\nMoved");
       }
     }
     if (owner != null && !owner.isHuman() && debug) {

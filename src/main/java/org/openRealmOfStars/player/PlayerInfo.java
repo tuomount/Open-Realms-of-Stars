@@ -239,6 +239,12 @@ public class PlayerInfo {
    * No more planets or colony ships with colonists left.
    */
   private boolean realmLost;
+
+  /**
+   * Realm background story.
+   */
+  private String backgroundStory;
+
   /**
    * Uncharted map sector, only suns are visible
    */
@@ -287,6 +293,7 @@ public class PlayerInfo {
    */
   public PlayerInfo(final SpaceRace race, final int maxPlayers,
       final int index, final int boardPlayerIndex) {
+    setBackgroundStory("");
     setTechList(new TechList(race));
     strategy = WinningStrategy.GENERIC;
     this.msgList = new MessageList();
@@ -1072,6 +1079,8 @@ public class PlayerInfo {
     warFatigue = dis.readInt();
     totalCredits = dis.readInt();
     attitude = Attitude.getTypeByIndex(dis.read());
+    // Read background story
+    backgroundStory = IOUtilities.readString(dis);
     leaderPool = new ArrayList<>();
     leaderRecruitPool = new ArrayList<>();
     // Reads leader recruit pool
@@ -1194,6 +1203,7 @@ public class PlayerInfo {
     dos.writeInt(warFatigue);
     dos.writeInt(totalCredits);
     dos.writeByte(attitude.getIndex());
+    IOUtilities.writeString(dos, backgroundStory);
     dos.writeInt(leaderRecruitPool.size());
     for (int i = 0; i < leaderRecruitPool.size(); i++) {
       Leader leader = leaderRecruitPool.get(i);
@@ -2786,6 +2796,28 @@ public class PlayerInfo {
    */
   public void setRealmLost(final boolean realmLost) {
     this.realmLost = realmLost;
+  }
+  /**
+   * Get Realm's background story
+   * @return the backgroundStory
+   */
+  public String getBackgroundStory() {
+    return backgroundStory;
+  }
+  /**
+   * Set realm's background story
+   * @param backgroundStory the backgroundStory to set
+   */
+  public void setBackgroundStory(final String backgroundStory) {
+    this.backgroundStory = backgroundStory;
+  }
+
+  /**
+   * Add new story part for background story.
+   * @param newStory New story part.
+   */
+  public void appendStory(final String newStory) {
+    this.backgroundStory = this.backgroundStory + newStory;
   }
 
 }

@@ -334,7 +334,7 @@ public final class BackgroundStoryGenerator {
         info.getGovernment());
 
     sb.append(name);
-    sb.append(" are a fictional species of aggressive and warmongering"
+    sb.append(" are a species of aggressive and warmongering"
         + " creatures that are known for their ferocity and their love of"
         + " battle. ");
     sb.append(name);
@@ -1138,7 +1138,7 @@ public final class BackgroundStoryGenerator {
         case 3: {
           sb.append("Vision of scientist ");
           sb.append(greatLeader);
-          sb.append("caused research to move toward faster than light engine"
+          sb.append(" caused research to move toward faster than light engine"
               + " and breakthrough was made and soon after it first prototype"
               + " of space craft was created at star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));

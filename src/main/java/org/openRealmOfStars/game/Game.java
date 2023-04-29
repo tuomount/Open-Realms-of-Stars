@@ -1912,6 +1912,8 @@ public class Game implements ActionListener {
       break;
     }
     case STORY_VIEW: {
+      setBridgeCommand(starMap.getCurrentPlayerInfo()
+          .getRace().getBridgeEffect());
       showStoryView();
       break;
     }

@@ -9,6 +9,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 
+import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -74,6 +75,9 @@ public class StoryView extends BlackPanel {
    */
   public StoryView(final StarMap map, final PlayerInfo realm,
       final ActionListener listener) {
+    if (MusicPlayer.getNowPlaying() != realm.getRace().getDiplomacyMusic()) {
+      MusicPlayer.play(realm.getRace().getDiplomacyMusic());
+    }
     this.setLayout(new BorderLayout());
     this.map = map;
     this.realm = realm;

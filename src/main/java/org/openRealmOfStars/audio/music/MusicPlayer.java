@@ -490,7 +490,8 @@ public final class MusicPlayer {
       } else if (state == GameState.PLANETBOMBINGVIEW) {
         // Combat music also for bombing
         playCombatMusic();
-      } else if (state == GameState.DIPLOMACY_VIEW) {
+      } else if (state == GameState.DIPLOMACY_VIEW
+          || state == GameState.STORY_VIEW) {
         // Keep playing the same song
         play(nowPlaying);
       } else if (state == GameState.MAIN_MENU

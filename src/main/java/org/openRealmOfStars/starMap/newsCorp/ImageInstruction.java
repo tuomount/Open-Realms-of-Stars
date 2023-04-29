@@ -478,6 +478,10 @@ public class ImageInstruction {
    */
   private static final String IMAGE = "image";
   /**
+   * Instruction to draw captain image
+   */
+  private static final String CAPTAIN = "captain";
+  /**
    * Instruction to draw space ship bridge
    */
   private static final String BRIDGE = "bridge";
@@ -609,6 +613,45 @@ public class ImageInstruction {
     sb.append(sanitizeParameters(symbol));
     sb.append(PARAM_END);
     return this;
+  }
+
+  /**
+   * Add another captain image to image instructions.
+   * Image is added into center of image, but Y-axel is adjustable.
+   * @param image image name to place into image
+   * @param adjust Y-pixel adjustment
+   * @return ImageInstruction with text
+   */
+  public ImageInstruction addCaptain(final String image, final int adjust) {
+    checkDelim();
+    if (!SpaceRace.CENTAURS.getNameSingle().equals(image)
+        && !SpaceRace.HUMAN.getNameSingle().equals(image)
+        && !SpaceRace.SPORKS.getNameSingle().equals(image)
+        && !SpaceRace.GREYANS.getNameSingle().equals(image)
+        && !SpaceRace.MOTHOIDS.getNameSingle().equals(image)
+        && !SpaceRace.TEUTHIDAES.getNameSingle().equals(image)
+        && !SpaceRace.MECHIONS.getNameSingle().equals(image)
+        && !SpaceRace.SCAURIANS.getNameSingle().equals(image)
+        && !SpaceRace.HOMARIANS.getNameSingle().equals(image)
+        && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)
+        && !SpaceRace.CHIRALOIDS.getNameSingle().equals(image)
+        && !SpaceRace.REBORGIANS.getNameSingle().equals(image)
+        && !SpaceRace.LITHORIANS.getNameSingle().equals(image)
+        && !SpaceRace.ALTEIRIANS.getNameSingle().equals(image)
+        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(image)
+        && !SpaceRace.SYNTHDROIDS.getNameSingle().equals(image)
+        && !SpaceRace.ALONIANS.getNameSingle().equals(image)) {
+      throw new IllegalArgumentException("Illegal captain image: "
+          + image);
+    }
+    sb.append(CAPTAIN);
+    sb.append(PARAM_START);
+    sb.append(sanitizeParameters(image));
+    sb.append(PARAMETER_DELIM);
+    sb.append(sanitizeParameters(Integer.toString(adjust)));
+    sb.append(PARAM_END);
+    return this;
+
   }
 
   /**
@@ -1378,6 +1421,33 @@ public class ImageInstruction {
   }
 
   /**
+   * Draw captain image on image
+   * @param workImage Image where to draw
+   * @param image image type to draw
+   * @param adjust Y-axel adjustment
+   * @return Drawn image
+   */
+  private static BufferedImage paintCaptainImage(final BufferedImage workImage,
+      final String image, final String adjust) {
+    BufferedImage drawImg = GuiStatics.IMAGE_HUMAN_RACE;
+    SpaceRace race = SpaceRaceUtility.getRaceByName(image);
+    if (race != null) {
+      drawImg = race.getRaceImage();
+    }
+    BufferedImage img = workImage;
+    if (img == null) {
+      img = new BufferedImage(drawImg.getWidth(), drawImg.getHeight(),
+          BufferedImage.TYPE_INT_ARGB);
+    }
+    int adjustment = Integer.parseInt(adjust);
+    Graphics2D g = (Graphics2D) img.getGraphics();
+    g.drawImage(drawImg,
+        img.getWidth() / 2 - drawImg.getWidth() / 2,
+        img.getHeight() - drawImg.getHeight() - adjustment, null);
+    return img;
+  }
+
+  /**
    * Draw space ship bridge on image
    * @param workImage Image where to draw
    * @param image space ship image to draw.
@@ -1429,6 +1499,9 @@ public class ImageInstruction {
       }
       if (race == SpaceRace.SMAUGIRIANS) {
         drawImg = GuiStatics.IMAGE_INTERIOR_SMAUGIRIAN;
+      }
+      if (race == SpaceRace.SYNTHDROIDS) {
+        drawImg = GuiStatics.IMAGE_INTERIOR1;
       }
       if (race == SpaceRace.ALTEIRIANS) {
         drawImg = GuiStatics.IMAGE_INTERIOR_ALTEIRIAN;
@@ -1490,6 +1563,12 @@ public class ImageInstruction {
       }
       if (TRADER.equals(command)) {
         paintTrader(workImage, parameters[1], parameters[0], parameters[2]);
+      }
+      if (IMAGE.equals(command)) {
+        workImage = paintImage(workImage, parameters[0]);
+      }
+      if (CAPTAIN.equals(command)) {
+        workImage = paintCaptainImage(workImage, parameters[0], parameters[1]);
       }
       if (IMAGE.equals(command)) {
         workImage = paintImage(workImage, parameters[0]);

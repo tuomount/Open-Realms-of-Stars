@@ -3,7 +3,7 @@ package org.openRealmOfStars.game;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -176,5 +176,9 @@ public enum GameState {
   /**
    * View Change Log.
    */
-  CHANGE_LOG
+  CHANGE_LOG,
+  /**
+   * Story view for viewing background story of the realm.
+   */
+  STORY_VIEW;
 }

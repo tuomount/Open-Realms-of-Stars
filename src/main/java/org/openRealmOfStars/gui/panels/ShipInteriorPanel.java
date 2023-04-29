@@ -121,6 +121,63 @@ public class ShipInteriorPanel extends JPanel {
     return planetImage;
   }
 
+  /**
+   * Get captain adjustment for bridge image
+   * @param spaceRace Captain's space race
+   * @return Adjustment
+   */
+  public static int getAdjustment(final SpaceRace spaceRace) {
+    int yOffset = 57;
+    if (spaceRace == SpaceRace.CENTAURS) {
+      yOffset = 20;
+    }
+    if (spaceRace == SpaceRace.SCAURIANS) {
+      yOffset = 20;
+    }
+    if (spaceRace == SpaceRace.MECHIONS) {
+      yOffset = 20;
+    }
+    if (spaceRace == SpaceRace.HUMAN) {
+      yOffset = 20;
+    }
+    if (spaceRace == SpaceRace.MOTHOIDS) {
+      yOffset = 35;
+    }
+    if (spaceRace == SpaceRace.GREYANS) {
+      yOffset = 30;
+    }
+    if (spaceRace == SpaceRace.HOMARIANS) {
+      yOffset = 20;
+    }
+    if (spaceRace == SpaceRace.TEUTHIDAES) {
+      yOffset = 20;
+    }
+    if (spaceRace == SpaceRace.SPORKS) {
+      yOffset = 20;
+    }
+    if (spaceRace == SpaceRace.CHIRALOIDS) {
+      yOffset = 15;
+    }
+    if (spaceRace == SpaceRace.SPACE_PIRATE) {
+      yOffset = 15;
+    }
+    if (spaceRace == SpaceRace.LITHORIANS) {
+      yOffset = 15;
+    }
+    if (spaceRace == SpaceRace.REBORGIANS) {
+      yOffset = 25;
+    }
+    if (spaceRace == SpaceRace.SMAUGIRIANS) {
+      yOffset = 20;
+    }
+    if (spaceRace == SpaceRace.ALTEIRIANS) {
+      yOffset = 25;
+    }
+    if (spaceRace == SpaceRace.ALONIANS) {
+      yOffset = 25;
+    }
+    return yOffset;
+  }
   @Override
   protected void paintComponent(final Graphics g) {
     GradientPaint gradient = new GradientPaint(this.getWidth() / 2, 0,
@@ -150,70 +207,54 @@ public class ShipInteriorPanel extends JPanel {
           offsetY, null);
     }
     BufferedImage interior = GuiStatics.IMAGE_INTERIOR1;
-    int yOffset = 57;
+    int yOffset = getAdjustment(race);
     if (race == SpaceRace.CENTAURS) {
       interior = GuiStatics.IMAGE_INTERIOR_CENTAUR;
-      yOffset = 20;
     }
     if (race == SpaceRace.SCAURIANS) {
       interior = GuiStatics.IMAGE_INTERIOR_SCAURIAN;
-      yOffset = 20;
     }
     if (race == SpaceRace.MECHIONS) {
       interior = GuiStatics.IMAGE_INTERIOR_MECHION;
-      yOffset = 20;
     }
     if (race == SpaceRace.HUMAN) {
       interior = GuiStatics.IMAGE_INTERIOR_HUMAN;
-      yOffset = 20;
     }
     if (race == SpaceRace.MOTHOIDS) {
       interior = GuiStatics.IMAGE_INTERIOR_MOTHOID;
-      yOffset = 35;
     }
     if (race == SpaceRace.GREYANS) {
       interior = GuiStatics.IMAGE_INTERIOR_GREYAN;
-      yOffset = 30;
     }
     if (race == SpaceRace.HOMARIANS) {
       interior = GuiStatics.IMAGE_INTERIOR_HOMARIAN;
-      yOffset = 20;
     }
     if (race == SpaceRace.TEUTHIDAES) {
       interior = GuiStatics.IMAGE_INTERIOR_TEUTHIDAE;
-      yOffset = 20;
     }
     if (race == SpaceRace.SPORKS) {
       interior = GuiStatics.IMAGE_INTERIOR_SPORK;
-      yOffset = 20;
     }
     if (race == SpaceRace.CHIRALOIDS) {
       interior = GuiStatics.IMAGE_INTERIOR_CHIRALOID;
-      yOffset = 15;
     }
     if (race == SpaceRace.SPACE_PIRATE) {
       interior = GuiStatics.IMAGE_INTERIOR_PIRATE;
-      yOffset = 15;
     }
     if (race == SpaceRace.LITHORIANS) {
       interior = GuiStatics.IMAGE_INTERIOR_LITHORIAN;
-      yOffset = 15;
     }
     if (race == SpaceRace.REBORGIANS) {
       interior = GuiStatics.IMAGE_INTERIOR_REBORGIAN;
-      yOffset = 25;
     }
     if (race == SpaceRace.SMAUGIRIANS) {
       interior = GuiStatics.IMAGE_INTERIOR_SMAUGIRIAN;
-      yOffset = 20;
     }
     if (race == SpaceRace.ALTEIRIANS) {
       interior = GuiStatics.IMAGE_INTERIOR_ALTEIRIAN;
-      yOffset = 25;
     }
     if (race == SpaceRace.ALONIANS) {
       interior = GuiStatics.IMAGE_INTERIOR_ALONIAN;
-      yOffset = 25;
     }
     g.drawImage(interior,
         this.getWidth() / 2 - interior.getWidth() / 2,

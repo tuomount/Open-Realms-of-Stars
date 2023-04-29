@@ -65,6 +65,7 @@ import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.Sphere3dView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.game.States.StatView;
+import org.openRealmOfStars.game.States.StoryView;
 import org.openRealmOfStars.game.States.VoteView;
 import org.openRealmOfStars.game.States.VotingSelectionView;
 import org.openRealmOfStars.game.config.ConfigFile;
@@ -367,6 +368,11 @@ public class Game implements ActionListener {
    * Voting selection view.
    */
   private VotingSelectionView votingSelectionView;
+
+  /**
+   * Story view.
+   */
+  private StoryView storyView;
   /**
    * Change Message Fleet or Planet
    */
@@ -1373,6 +1379,13 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show story view.
+   */
+  public void showStoryView() {
+    storyView = new StoryView(starMap, starMap.getCurrentPlayerInfo(), this);
+    this.updateDisplay(storyView);
+  }
+  /**
    * Show Combat
    * @param combat Combat to show
    */
@@ -1898,6 +1911,10 @@ public class Game implements ActionListener {
       showPlanetListView();
       break;
     }
+    case STORY_VIEW: {
+      showStoryView();
+      break;
+    }
     default: {
         showMainMenu();
     }
@@ -2097,7 +2114,7 @@ public class Game implements ActionListener {
     }
     players.setCurrentPlayer(0);
     setNullView();
-    changeGameState(GameState.STARMAP);
+    changeGameState(GameState.STORY_VIEW);
 
   }
 
@@ -2963,6 +2980,12 @@ public class Game implements ActionListener {
         SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);
       }
+      return;
+    }
+    if (gameState == GameState.STORY_VIEW && arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+      SoundPlayer.playMenuSound();
+      changeGameState(GameState.STARMAP);
       return;
     }
     if (gameState == GameState.GAME_END_VIEW) {
@@ -3974,7 +3997,8 @@ public class Game implements ActionListener {
         || gameState == GameState.SPHERE_3D_VIEW
         || gameState == GameState.CREDITS
         || gameState == GameState.CHANGE_LOG
-        || gameState == GameState.GAME_END_VIEW) {
+        || gameState == GameState.GAME_END_VIEW
+        || gameState == GameState.STORY_VIEW) {
       actionPerformedMenus(arg0);
     }
   }

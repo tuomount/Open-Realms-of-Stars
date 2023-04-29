@@ -841,15 +841,15 @@ public final class BackgroundStoryGenerator {
       sb.append(" are race of sentient insects that are capable of forming"
           + " a hivemind. This allows them to coordinate their actions and"
           + " work together as a highly efficient collective. ");
+      sb.append(name);
     }
-    sb.append(name);
     sb.append(" are known for their fast breeding, which allows them to "
         + "quickly increase their numbers and expand their territory. ");
     if (info.getGovernment().getDiplomaticBonus() > 0) {
       sb.append(name);
-      sb.append("are also known for their hypnotic song, which is used for"
+      sb.append(" are also known for their hypnotic song, which is used for"
           + " communication and ritual purposes. This ability grants them"
-          + " a cultural bonus in their interactions with other races .");
+          + " a cultural bonus in their interactions with other races. ");
     }
     sb.append("However, their exoskeletons are relatively weak, which gives"
         + " them a negative bonus when it comes to mining and troop power."

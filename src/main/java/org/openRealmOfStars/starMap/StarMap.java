@@ -1660,6 +1660,7 @@ public class StarMap {
     }
     String backgroundStory = BackgroundStoryGenerator.generateBackgroundStory(
         playerInfo, planet, getStarYear());
+    playerInfo.setBackgroundStory(backgroundStory);
     Message msgStart = new Message(MessageType.INFORMATION, backgroundStory,
         Icons.getIconByName(Icons.ICON_CULTURE));
     msgStart.setCoordinate(planet.getCoordinate());
@@ -1786,6 +1787,7 @@ public class StarMap {
     planet.setPlanetType(planetType);
     String backgroundStory = BackgroundStoryGenerator.generateBackgroundStory(
         playerInfo, planet, getStarYear());
+    playerInfo.setBackgroundStory(backgroundStory);
     Message msgStart = new Message(MessageType.INFORMATION, backgroundStory,
         Icons.getIconByName(Icons.ICON_CULTURE));
     msgStart.setCoordinate(startCoord);

@@ -142,9 +142,10 @@ public class StoryView extends BlackPanel {
     centerPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     textArea = new InfoTextArea();
     textArea.setEditable(false);
-    textArea.setFont(GuiStatics.getFontCubellan());
+    textArea.setFont(GuiStatics.getFontSquarion());
     textArea.setWrapStyleWord(true);
     textArea.setLineWrap(true);
+    textArea.setTextShadow(false);
     textArea.setCharacterWidth(9);
     JScrollPane scroll = new JScrollPane(textArea);
     textArea.setText(realm.getBackgroundStory());

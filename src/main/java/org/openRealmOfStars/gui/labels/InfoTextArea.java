@@ -77,6 +77,10 @@ public class InfoTextArea extends JTextArea {
   private boolean smoothScrollNextRow = false;
 
   /**
+   * Text has shadow.
+   */
+  private boolean textShadow = true;
+  /**
    * Is smooth scrolling enabled
    * @return True if smooth scrolling enabled
    */
@@ -289,22 +293,30 @@ public class InfoTextArea extends JTextArea {
         sb.append(text.charAt(i));
         if (highlightLocation[i]) {
           g.setColor(highlightShadowColor);
-          g.drawString(sb.toString(), x + 3 + offset, y);
-          if (getFont() == GuiStatics.getFontCubellanSC()) {
+          if (isTextShadow()) {
+            g.drawString(sb.toString(), x + 3 + offset, y);
+          }
+          if (getFont() == GuiStatics.getFontCubellanSC() && isTextShadow()) {
             g.drawString(sb.toString(), x + 1 + offset, y);
             g.drawString(sb.toString(), x + 2 + offset, y - 1);
           }
-          g.drawString(sb.toString(), x + 2 + offset, y + 1);
+          if (isTextShadow()) {
+            g.drawString(sb.toString(), x + 2 + offset, y + 1);
+          }
           g.setColor(highlightColor);
           g.drawString(sb.toString(), x + 2 + offset, y);
         } else {
           g.setColor(shadowColor);
-          g.drawString(sb.toString(), x + 3 + offset, y);
-          if (getFont() == GuiStatics.getFontCubellanSC()) {
+          if (isTextShadow()) {
+            g.drawString(sb.toString(), x + 3 + offset, y);
+          }
+          if (getFont() == GuiStatics.getFontCubellanSC() && isTextShadow()) {
             g.drawString(sb.toString(), x + 1 + offset, y);
             g.drawString(sb.toString(), x + 2 + offset, y - 1);
           }
-          g.drawString(sb.toString(), x + 2 + offset, y + 1);
+          if (isTextShadow()) {
+            g.drawString(sb.toString(), x + 2 + offset, y + 1);
+          }
           g.setColor(getForeground());
           g.drawString(sb.toString(), x + 2 + offset, y);
         }
@@ -312,12 +324,16 @@ public class InfoTextArea extends JTextArea {
       }
     } else {
       g.setColor(shadowColor);
-      g.drawString(text, x + 3, y);
-      if (getFont() == GuiStatics.getFontCubellanSC()) {
+      if (isTextShadow()) {
+        g.drawString(text, x + 3, y);
+      }
+      if (getFont() == GuiStatics.getFontCubellanSC() && isTextShadow()) {
         g.drawString(text, x + 1, y);
         g.drawString(text, x + 2, y - 1);
       }
-      g.drawString(text, x + 2, y + 1);
+      if (isTextShadow()) {
+        g.drawString(text, x + 2, y + 1);
+      }
       g.setColor(getForeground());
       g.drawString(text, x + 2, y);
     }
@@ -433,6 +449,22 @@ public class InfoTextArea extends JTextArea {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Has Text shadow
+   * @return the textShadow
+   */
+  public boolean isTextShadow() {
+    return textShadow;
+  }
+
+  /**
+   * Set text shadow.
+   * @param textShadow the textShadow to set
+   */
+  public void setTextShadow(final boolean textShadow) {
+    this.textShadow = textShadow;
   }
 
 }

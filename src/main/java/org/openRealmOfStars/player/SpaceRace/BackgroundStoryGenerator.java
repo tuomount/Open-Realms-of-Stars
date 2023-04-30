@@ -136,8 +136,21 @@ public final class BackgroundStoryGenerator {
         }
       }
     }
-    if (!result.endsWith("s")) {
+    if (endRe(result)) {
+      result = result.substring(0, result.length() - 1);
+      result = result + "ians";
+    } else if (endVowel(result)) {
+      if (result.endsWith("o")) {
+        result = result + "id";
+      }
+      if (result.endsWith("i")) {
+        result = result + "an";
+      }
       result = result + "s";
+    } else if (endPeople(result)) {
+      result = result + "s";
+    } else {
+      result = result + "ians";
     }
     if (params.length == 4 && params[0].equalsIgnoreCase("the")
        && params[2].equalsIgnoreCase("of")) {
@@ -151,6 +164,45 @@ public final class BackgroundStoryGenerator {
       result = result + "s";
     }
     return result;
+  }
+
+  /**
+   * Check if string has end vowel or not.
+   * @param input String to check
+   * @return True if ends with vowel.
+   */
+  private static boolean endVowel(final String input) {
+    String temp = input.toLowerCase();
+    if (temp.endsWith("a") || temp.endsWith("e")  || temp.endsWith("i")
+        || temp.endsWith("o")  || temp.endsWith("u")  || temp.endsWith("y")) {
+      return true;
+    }
+    return false;
+  }
+  /**
+   * Check if string has end people/population meaning.
+   * @param input String to check
+   * @return True if ends with special ending.
+   */
+  private static boolean endPeople(final String input) {
+    String temp = input.toLowerCase();
+    if (temp.endsWith("an") || temp.endsWith("oid") || temp.endsWith("on")
+        || temp.endsWith("ing") || temp.endsWith("aur")) {
+      return true;
+    }
+    return false;
+  }
+  /**
+   * Check if string has end re.
+   * @param input String to check
+   * @return True if ends with special ending.
+   */
+  private static boolean endRe(final String input) {
+    String temp = input.toLowerCase();
+    if (temp.endsWith("re")) {
+      return true;
+    }
+    return false;
   }
   /**
    * Generate background story for humans.

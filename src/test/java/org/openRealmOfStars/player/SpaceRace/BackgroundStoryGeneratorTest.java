@@ -783,6 +783,27 @@ public class BackgroundStoryGeneratorTest {
     name = BackgroundStoryGenerator.getRaceNameInPlural(
         "The Syndicate of Terran", GovernmentType.SYNDICATE);
     assertEquals("Terrans", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Empire of Silicoid", GovernmentType.EMPIRE);
+    assertEquals("Silicoids", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Clan of Homar", GovernmentType.CLAN);
+    assertEquals("Homarians", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Clan of Homare", GovernmentType.CLAN);
+    assertEquals("Homarians", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Clan of Spork", GovernmentType.CLAN);
+    assertEquals("Sporkians", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Clan of Silico", GovernmentType.CLAN);
+    assertEquals("Silicoids", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Clan of Rexi", GovernmentType.CLAN);
+    assertEquals("Rexians", name);
+    name = BackgroundStoryGenerator.getRaceNameInPlural(
+        "Clan of Homari", GovernmentType.CLAN);
+    assertEquals("Homarians", name);
   }
 
 }

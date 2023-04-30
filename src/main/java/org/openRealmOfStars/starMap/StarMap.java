@@ -1788,7 +1788,7 @@ public class StarMap {
     String backgroundStory = BackgroundStoryGenerator.generateBackgroundStory(
         playerInfo, planet, getStarYear());
     playerInfo.setBackgroundStory(backgroundStory);
-    Message msgStart = new Message(MessageType.INFORMATION, backgroundStory,
+    Message msgStart = new Message(MessageType.STORY, backgroundStory,
         Icons.getIconByName(Icons.ICON_CULTURE));
     msgStart.setCoordinate(startCoord);
     msgStart.setMatchByString("Colony #0");

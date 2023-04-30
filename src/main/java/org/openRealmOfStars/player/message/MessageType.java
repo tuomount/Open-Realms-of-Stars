@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.message;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2020 Tuomo Untinen
+ * Copyright (C) 2016,2020,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -55,7 +55,11 @@ public enum MessageType {
   /**
    * Leader information, focus to leader
    */
-  LEADER;
+  LEADER,
+  /**
+   * Story event
+   */
+  STORY;
 
   /**
    * Get Message type index
@@ -79,6 +83,8 @@ public enum MessageType {
       return 6;
     case LEADER:
       return 7;
+    case STORY:
+      return 8;
     default:
       return 0;
     }
@@ -107,6 +113,8 @@ public enum MessageType {
       return MessageType.NEWS;
     case 7:
       return MessageType.LEADER;
+    case 8:
+      return MessageType.STORY;
     default:
       return MessageType.RESEARCH;
     }
@@ -131,6 +139,8 @@ public enum MessageType {
       return "News";
     case LEADER:
       return "Leader";
+    case STORY:
+      return "Story";
     default:
       return "Error - Unknown";
     }

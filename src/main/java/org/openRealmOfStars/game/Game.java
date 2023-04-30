@@ -2592,6 +2592,9 @@ public class Game implements ActionListener {
     if (msg.getType() == MessageType.NEWS && !mapOnly) {
       changeGameState(GameState.NEWS_CORP_VIEW);
     }
+    if (msg.getType() == MessageType.STORY && !mapOnly) {
+      changeGameState(GameState.STORY_VIEW);
+    }
     if (msg.getType() == MessageType.PLANETARY) {
       starMap.setCursorPos(msg.getX(), msg.getY());
       starMap.setDrawPos(msg.getX(), msg.getY());

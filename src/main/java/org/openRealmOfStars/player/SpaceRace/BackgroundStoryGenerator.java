@@ -1546,49 +1546,107 @@ public final class BackgroundStoryGenerator {
   private static String generateWorldType(final PlayerInfo info,
       final Planet startPlanet, final String name) {
     StringBuilder sb = new StringBuilder();
-    sb.append(name);
+    boolean fullOfLife = false;
+    boolean harsh = false;
+    boolean cold = false;
+    boolean hot = false;
     if (info.getRace().isLithovorian()) {
-      sb.append(" were developed from silicate material"
-          + " trillions of star years ago on");
+      sb.append("Life were developed from silicate material");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(" three billions");
+          break;
+        }
+        case 1: {
+          sb.append(" four billions");
+          break;
+        }
+        case 2: {
+          sb.append(" five billions");
+          break;
+        }
+      }
+      sb.append(" of star years ago on");
     } else if (info.getRace().isRoboticRace()) {
-      sb.append(" were created by ancient civilization"
-          + " thousands of star years ago on");
+      sb.append(name);
+      sb.append(" were created by ancient civilization");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append("");
+          break;
+        }
+        case 1: {
+          sb.append(" few");
+          break;
+        }
+        case 2: {
+          sb.append(" several");
+          break;
+        }
+      }
+      sb.append(" thousands of star years ago on");
     } else {
-      sb.append(" were born billions of star years ago on");
+      sb.append("Life were born ");
+      switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(" one billions");
+        break;
+      }
+      case 1: {
+        sb.append(" two billions");
+        break;
+      }
+      case 2: {
+        sb.append(" three billions");
+        break;
+      }
+    }
+      sb.append(" of star years ago on");
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.CARBONWORLD) {
       sb.append(" carbon rich planet with full of life.");
       sb.append(" This was excellent planet for live on.");
+      fullOfLife = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.DESERTWORLD) {
       sb.append(" dry desert world. This harsh envinronment was");
       sb.append(" challenging but ");
       sb.append(name);
       sb.append(" became stronger and more sustainable there.");
+      hot = true;
+      harsh = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.ICEWORLD) {
       sb.append(" ice world. This cold and dark envinronment was");
       sb.append(" challenging but ");
       sb.append(name);
       sb.append(" became extreme survalists there.");
+      cold = true;
+      harsh = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.IRONWORLD) {
       sb.append(" iron world. This planet was full of molten lava");
       sb.append(" and hot envinronments ");
       sb.append(name);
       sb.append(" were able to survive there and learn how fluorish there.");
+      hot = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.SILICONWORLD) {
       sb.append(" silicon world. This almost barren planet is one the");
       sb.append(" harshest envinronments in the galaxy. ");
       sb.append(name);
       sb.append(" still call this place as home.");
+      harsh = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.WATERWORLD) {
       sb.append(" water world. This planet is moist and has huge oceans");
       sb.append(" on surface. ");
       sb.append(name);
       sb.append(" conquered the planet fully for themselves.");
+      fullOfLife = true;
     }
     if (info.getRace().isLithovorian()) {
       sb.append(" ");
@@ -1602,18 +1660,31 @@ public final class BackgroundStoryGenerator {
       }
       case 1: {
         sb.append(startPlanet.getName());
-        sb.append(" was full of different life but ");
+        if (fullOfLife) {
+          sb.append(" was full of different life but ");
+        } else if (hot) {
+          sb.append(" had warmth for silicon based life and ");
+        } else {
+          sb.append(" was challenging place for life but ");
+        }
         sb.append(name);
-        sb.append(" was the most evolved and their thick rock skin "
+        sb.append(" ancestors were the most evolved and their thick rock skin "
             + "helped in that process. ");
         break;
       }
       case 2: {
         sb.append(startPlanet.getName());
-        sb.append(" was scarce on life but ");
+        if (fullOfLife) {
+          sb.append(" was full of life but silicon based life is in different"
+              + " ecological system than carbon based and ");
+        } else if (harsh) {
+          sb.append(" had limited amount of life but ");
+        } else {
+          sb.append(" was scarce on life but ");
+        }
         sb.append(name);
-        sb.append(" were able to survive since they diet consist of minerals"
-            + " and rocks. ");
+        sb.append(" ancestors were able to survive since they diet consist"
+            + " of minerals and rocks. ");
         break;
       }
       case 3: {
@@ -1661,37 +1732,102 @@ public final class BackgroundStoryGenerator {
       switch (DiceGenerator.getRandom(3)) {
       default:
       case 0: {
+        sb.append("Evolution on ");
+        sb.append(startPlanet.getName());
+        sb.append(" was fast process and ");
+        sb.append(DiceGenerator.getRandom(1, 6));
+        sb.append("00 000 star years ago first ");
         sb.append(name);
-        sb.append(" evolution was fast process and "
-            + "they quickly became dominant species on ");
+        sb.append(" appeared on surface of ");
         sb.append(startPlanet.getName());
         sb.append(". ");
         break;
       }
       case 1: {
         sb.append(startPlanet.getName());
-        sb.append(" was full of different life but ");
+        if (fullOfLife) {
+          sb.append(" was full of different life but ");
+        } else if (cold) {
+          sb.append(" was cold but it contained life and ");
+        } else if (harsh) {
+          sb.append(" was harsh but it contained some life and ");
+        } else if (harsh) {
+          sb.append(" was hot but it contained some primitive life and ");
+        } else {
+          sb.append(" was average life bearing planet and ");
+        }
         sb.append(name);
-        sb.append(" was the most evolved and they become only"
-            + " sentient creatures on ");
+        sb.append(" ancestors were the most evolved and ");
+        sb.append(DiceGenerator.getRandom(1, 6));
+        sb.append("00 000 star years ago first ");
+        sb.append(name);
+        sb.append(" appeared on surface of ");
         sb.append(startPlanet.getName());
-        sb.append(". ");
+        sb.append(" and they become only"
+            + " sentient creatures on it. ");
         break;
       }
       case 2: {
         sb.append(startPlanet.getName());
-        sb.append(" was scarce on life but ");
+        if (fullOfLife) {
+          sb.append(" was plenty of life but ");
+        } else {
+          sb.append(" was scarce on life but ");
+        }
         sb.append(name);
-        sb.append(" were able to survive since their high tolerance. ");
+        sb.append(" ancestors were able to survive since their high"
+            + " tolerance. ");
+        sb.append(DiceGenerator.getRandom(1, 6));
+        sb.append("00 000 star years ago first ");
+        sb.append(name);
+        sb.append(" appeared on surface of ");
+        sb.append(startPlanet.getName());
+        sb.append(" and they had learn to be survalist on this ");
+        boolean and = false;
+        if (cold) {
+          sb.append("cold ");
+          and = true;
+        }
+        if (harsh) {
+          if (and) {
+            sb.append("and ");
+          }
+          sb.append("harsh ");
+          and = true;
+        }
+        if (hot) {
+          if (and) {
+            sb.append("and ");
+          }
+          sb.append("warm ");
+          and = true;
+        }
+        sb.append("planet. ");
         break;
       }
       case 3: {
-        sb.append(name);
-        sb.append(" were not the only sentient creatures on ");
+        sb.append("Life on ");
         sb.append(startPlanet.getName());
-        sb.append(" but ");
+        sb.append(" was able to evolve. ");
+
+        sb.append(DiceGenerator.getRandom(1, 6));
+        sb.append("00 000 star years ago first ");
         sb.append(name);
-        sb.append(" extinct all the other rivals and thus became dominant. ");
+        sb.append(" appeared on surface of ");
+        sb.append(startPlanet.getName());
+        if (fullOfLife) {
+          sb.append("They were not the only sentient creatures on ");
+          sb.append(startPlanet.getName());
+          sb.append(" but ");
+          sb.append(name);
+          sb.append(" extinct all the other rivals and thus became dominant. ");
+        } else {
+          sb.append("They were the only sentient creatures on ");
+          sb.append(startPlanet.getName());
+          sb.append(" and ");
+          sb.append(name);
+          sb.append(" survived there eating the plant life. ");
+        }
         break;
       }
       }

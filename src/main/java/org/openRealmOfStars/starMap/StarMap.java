@@ -378,7 +378,9 @@ public class StarMap {
     }
     if (elderRealmStart) {
       history.addTurn(-config.getElderHeadStart());
+      turn = -config.getElderHeadStart();
     } else {
+      turn = 0;
       history.addTurn(0);
     }
     maxX = config.getSizeX();
@@ -434,7 +436,6 @@ public class StarMap {
       }
     }
     newsCorpData = new NewsCorpData(players.getCurrentMaxRealms());
-    turn = 0;
     aiTurnNumber = 0;
     aiFleet = null;
     int loop = 0;

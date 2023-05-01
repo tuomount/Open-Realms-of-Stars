@@ -2096,6 +2096,18 @@ public class Game implements ActionListener {
       }
       for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
         PlayerInfo info = players.getPlayerInfoByIndex(i);
+        if (info != null && info.isElderRealm()) {
+          StringBuilder sb = new StringBuilder();
+          sb.append(galaxyConfig.getElderHeadStart());
+          sb.append(" star years has passed ");
+          if (info.getDiplomacy().getNumberOfWar() == 0) {
+            sb.append("peacefully but ");
+          } else {
+            sb.append("during war times but ");
+          }
+          sb.append("will it change?");
+          info.appendStory(sb.toString());
+        }
         if (info != null && info.getRace() == SpaceRace.ALONIANS) {
           for (int x = 0; x < starMap.getMaxX(); x++) {
             for (int y = 0; y < starMap.getMaxY(); y++) {

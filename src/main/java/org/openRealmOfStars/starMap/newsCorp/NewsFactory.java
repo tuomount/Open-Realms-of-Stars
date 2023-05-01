@@ -213,6 +213,8 @@ public final class NewsFactory {
       sb.append(aggressor.getDiplomacy().getCasusBelliReason(defenderIndex));
       sb.append(". ");
     }
+    aggressor.appendStory(sb.toString());
+    defender.appendStory(sb.toString());
     news.setNewsText(sb.toString());
     return news;
   }
@@ -383,6 +385,7 @@ public final class NewsFactory {
     sb.append("Heir is called ");
     sb.append(heir.getCallName());
     sb.append(". ");
+    realm.appendStory(sb.toString());
     news.setNewsText(sb.toString());
     return news;
   }
@@ -1419,6 +1422,8 @@ public final class NewsFactory {
       sb.append(peaceMaker.getEmpireName());
       sb.append(" is known about their peace loving. So this was expected! ");
     }
+    peaceMaker.appendStory(sb.toString());
+    acceptor.appendStory(sb.toString());
     news.setNewsText(sb.toString());
     return news;
   }
@@ -1510,6 +1515,8 @@ public final class NewsFactory {
         sb.append(" peace loving. So this was expected! ");
       }
     }
+    offerer.appendStory(sb.toString());
+    acceptor.appendStory(sb.toString());
     news.setNewsText(sb.toString());
     return news;
   }
@@ -1674,6 +1681,8 @@ public final class NewsFactory {
       sb.append(offerer.getEmpireName());
       sb.append(" is known about their peace loving. So this was expected! ");
     }
+    offerer.appendStory(sb.toString());
+    acceptor.appendStory(sb.toString());
     news.setNewsText(sb.toString());
     return news;
   }
@@ -1752,6 +1761,9 @@ public final class NewsFactory {
       sb.append(acceptor.getEmpireName());
       sb.append(" to accept this trade embargo! ");
     }
+    offerer.appendStory(sb.toString());
+    acceptor.appendStory(sb.toString());
+    embargoed.appendStory(sb.toString());
     news.setNewsText(sb.toString());
     return news;
 
@@ -1832,6 +1844,8 @@ public final class NewsFactory {
         sb.append(" peace loving. So this was expected! ");
       }
     }
+    offerer.appendStory(sb.toString());
+    acceptor.appendStory(sb.toString());
     news.setNewsText(sb.toString());
     return news;
   }
@@ -2029,6 +2043,10 @@ public final class NewsFactory {
         }
       }
     }
+    attacker.appendStory(sb.toString());
+    if (defender != null) {
+      defender.appendStory(sb.toString());
+    }
     news.setNewsText(sb.toString());
     return news;
   }
@@ -2091,6 +2109,10 @@ public final class NewsFactory {
       sb.append(" all ");
       sb.append(defender.getRace().getNameSingle());
       sb.append(" population were killed during the bombing. ");
+    }
+    attacker.appendStory(sb.toString());
+    if (defender != null) {
+      defender.appendStory(sb.toString());
     }
     news.setNewsText(sb.toString());
     return news;
@@ -3038,6 +3060,10 @@ public final class NewsFactory {
         sb.append(". ");
         sb.append("This could be accident or spread on purpose. ");
       }
+    }
+    planet.getPlanetPlayerInfo().appendStory(sb.toString());
+    if (spreader != null) {
+      spreader.appendStory(sb.toString());
     }
     news.setNewsText(sb.toString());
     return news;

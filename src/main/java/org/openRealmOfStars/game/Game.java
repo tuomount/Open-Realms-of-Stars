@@ -4045,6 +4045,22 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Get the fleetview.
+   * @return Fleetview
+   */
+  public FleetView getFleetView() {
+    return fleetView;
+  }
+
+  /**
+   * Get the diplomacy view.
+   * @return DiplomacyView
+   */
+  public DiplomacyView getDiplomacyView() {
+    return diplomacyView;
+  }
+
+  /**
    * Set the StarMap view for the game.
    * @param view StarMapView to set
    */
@@ -4153,4 +4169,14 @@ public class Game implements ActionListener {
   public void changeResolution() {
     this.resolutionChanged = true;
   }
+
+  /**
+   * Get Previous state.
+   * @return previous state
+   */
+  public GameState getPreviousState() {
+    return previousState;
+  }
+
+
 }

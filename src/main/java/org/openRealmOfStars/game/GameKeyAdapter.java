@@ -17,7 +17,7 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2021,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -229,9 +229,98 @@ public class GameKeyAdapter implements KeyEventDispatcher {
         return true;
       }
     }
+    if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE
+        && arg0.getID() == KeyEvent.KEY_PRESSED) {
+      handleEscapeKey();
+    }
     return false;
   }
 
+  /**
+   * Method for handling escape key.
+   */
+  private void handleEscapeKey() {
+    if (game.getGameState() == GameState.FLEETVIEW) {
+      game.changeGameState(GameState.STARMAP);
+    }
+    if (game.getGameState() == GameState.FLEET_TRADE_VIEW) {
+      game.changeGameState(GameState.STARMAP);
+    }
+    if (game.getGameState() == GameState.GALAXY_CREATION) {
+      game.changeGameState(GameState.MAIN_MENU);
+    }
+    if (game.getGameState() == GameState.PLAYER_SETUP) {
+      game.changeGameState(GameState.GALAXY_CREATION);
+    }
+    if (game.getGameState() == GameState.LOAD_GAME) {
+      game.changeGameState(GameState.MAIN_MENU);
+    }
+    if (game.getGameState() == GameState.OPTIONS_VIEW) {
+      game.changeGameState(GameState.MAIN_MENU);
+    }
+    if (game.getGameState() == GameState.SETUP_AMBIENT_LIGHTS) {
+      game.changeGameState(GameState.OPTIONS_VIEW);
+    }
+    if (game.getGameState() == GameState.CREDITS) {
+      game.changeGameState(GameState.MAIN_MENU);
+    }
+    if (game.getGameState() == GameState.CHANGE_LOG) {
+      game.changeGameState(GameState.MAIN_MENU);
+    }
+    if (game.getGameState() == GameState.PLANETBOMBINGVIEW) {
+      if (game.getPreviousState() == GameState.AITURN) {
+        game.changeGameState(game.getPreviousState());
+        return;
+      }
+      game.changeGameState(GameState.STARMAP);
+    }
+    if (game.getGameState() == GameState.DIPLOMACY_VIEW
+        && game.getDiplomacyView() != null
+        && game.getDiplomacyView().isExitAllowed()) {
+      if (game.getPreviousState() == GameState.AITURN) {
+        game.changeGameState(game.getPreviousState());
+        return;
+      }
+      game.changeGameState(GameState.STARMAP);
+    }
+    if (game.getGameState() == GameState.ESPIONAGE_VIEW) {
+      game.changeGameState(GameState.STARMAP);
+    }
+    if (game.getGameState() == GameState.HELP_VIEW) {
+      game.changeGameState(GameState.STARMAP);
+    }
+    if (game.getGameState() == GameState.VIEWSTATS) {
+      game.changeGameState(GameState.STARMAP);
+    }
+    if (game.getGameState() == GameState.VOTE_VIEW) {
+      game.changeGameState(GameState.STARMAP);
+    }
+    if (game.getGameState() == GameState.RESEARCHVIEW) {
+      game.changeGameState(GameState.STARMAP);
+    }
+    if (game.getGameState() == GameState.PLANET_LIST_VIEW) {
+      game.changeGameState(GameState.STARMAP);
+    }
+    if (game.getGameState() == GameState.VIEWSHIPS) {
+      game.changeGameState(GameState.STARMAP);
+    }
+    if (game.getGameState() == GameState.LEADER_VIEW) {
+      game.changeGameState(GameState.STARMAP);
+    }
+    if (game.getGameState() == GameState.PLANETVIEW) {
+      game.changeGameState(game.getPreviousState());
+    }
+    if (game.getGameState() == GameState.REALM_VIEW) {
+      game.changeGameState(game.getPreviousState());
+    }
+    if (game.getGameState() == GameState.PLANETVIEW) {
+      if (game.getPreviousState() == GameState.PLANET_LIST_VIEW) {
+        game.changeGameState(game.getPreviousState());
+      } else {
+        game.changeGameState(GameState.STARMAP);
+      }
+    }
+  }
   /**
    * Reference to the game
    */

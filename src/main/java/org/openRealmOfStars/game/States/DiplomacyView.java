@@ -2173,4 +2173,12 @@ public class DiplomacyView extends BlackPanel {
   public SpeechLine getEmbargoLine() {
     return embargoLine;
   }
+
+  /**
+   * Is exit button enabled or not.
+   * @return True if exit button is enabled.
+   */
+  public boolean isExitAllowed() {
+    return endBtn.isEnabled();
+  }
 }

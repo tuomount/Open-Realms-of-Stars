@@ -3314,6 +3314,42 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Handle command in starmap view to go to next target.
+   */
+  public void handleCommandStarmapNextTarget() {
+    if (starMapView.getStarMapMouseListener()
+        .getLastClickedFleet() != null) {
+      Fleet fleet = players.getCurrentPlayerInfo().getFleets().getNext();
+      SoundPlayer.playMenuSound();
+      changeMessageForFleets(fleet);
+    } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet()
+        != null) {
+      Planet planet = starMap.getNextPlanetForPlayer(starMap
+          .getCurrentPlayerInfo(), starMapView.getStarMapMouseListener()
+          .getLastClickedPlanet(), true);
+      SoundPlayer.playMenuSound();
+      changeMessageForPlanet(planet);
+    }
+  }
+  /**
+   * Handle command in starmap view to go to previous target.
+   */
+  public void handleCommandStarmapPrevTarget() {
+    if (starMapView.getStarMapMouseListener()
+        .getLastClickedFleet() != null) {
+      Fleet fleet = players.getCurrentPlayerInfo().getFleets().getPrev();
+      SoundPlayer.playMenuSound();
+      changeMessageForFleets(fleet);
+    } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet()
+        != null) {
+      Planet planet = starMap.getNextPlanetForPlayer(starMap
+          .getCurrentPlayerInfo(), starMapView.getStarMapMouseListener()
+          .getLastClickedPlanet(), false);
+      SoundPlayer.playMenuSound();
+      changeMessageForPlanet(planet);
+    }
+  }
+  /**
    * Actions performed when state is star map
    * @param arg0 ActionEvent which has occured
    */
@@ -3354,19 +3390,7 @@ public class Game implements ActionListener {
         focusOnMessage(false);
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_PREV_TARGET)) {
-        if (starMapView.getStarMapMouseListener()
-            .getLastClickedFleet() != null) {
-          Fleet fleet = players.getCurrentPlayerInfo().getFleets().getPrev();
-          SoundPlayer.playMenuSound();
-          changeMessageForFleets(fleet);
-        } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet()
-            != null) {
-          Planet planet = starMap.getNextPlanetForPlayer(starMap
-              .getCurrentPlayerInfo(), starMapView.getStarMapMouseListener()
-              .getLastClickedPlanet(), false);
-          SoundPlayer.playMenuSound();
-          changeMessageForPlanet(planet);
-        }
+        handleCommandStarmapPrevTarget();
       } else if (arg0.getActionCommand().equalsIgnoreCase(
           GameCommands.COMMAND_TRADE_FLEET)
           && starMapView.getStarMapMouseListener().getLastClickedFleet() != null
@@ -3381,19 +3405,7 @@ public class Game implements ActionListener {
         changeGameState(GameState.ESPIONAGE_VIEW);
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_NEXT_TARGET)) {
-        if (starMapView.getStarMapMouseListener()
-            .getLastClickedFleet() != null) {
-          Fleet fleet = players.getCurrentPlayerInfo().getFleets().getNext();
-          SoundPlayer.playMenuSound();
-          changeMessageForFleets(fleet);
-        } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet()
-            != null) {
-          Planet planet = starMap.getNextPlanetForPlayer(starMap
-              .getCurrentPlayerInfo(), starMapView.getStarMapMouseListener()
-              .getLastClickedPlanet(), true);
-          SoundPlayer.playMenuSound();
-          changeMessageForPlanet(planet);
-        }
+        handleCommandStarmapNextTarget();
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_SHOW_PLANET_LIST)) {
         SoundPlayer.playMenuSound();

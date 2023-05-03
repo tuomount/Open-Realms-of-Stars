@@ -165,6 +165,7 @@ public class StarMapView extends BlackPanel {
     this.map = map;
     this.players = players;
     this.game = game;
+    this.setFocusTraversalKeysEnabled(false);
     setAutoFocus(false);
 
     map.getFleetTiles();

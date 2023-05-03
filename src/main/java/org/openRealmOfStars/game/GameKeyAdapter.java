@@ -120,6 +120,14 @@ public class GameKeyAdapter implements KeyEventDispatcher {
             ActionEvent.ACTION_PERFORMED, GameCommands.COMMAND_ROUTE_FLEET));
         return true;
       }
+      if (arg0.getKeyCode() == KeyEvent.VK_TAB
+          && arg0.getID() == KeyEvent.KEY_PRESSED) {
+        if (arg0.isShiftDown()) {
+          game.handleCommandStarmapPrevTarget();
+        } else {
+          game.handleCommandStarmapNextTarget();
+        }
+      }
       if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
         String saveFilename = "current.save";

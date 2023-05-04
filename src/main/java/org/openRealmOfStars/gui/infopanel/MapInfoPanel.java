@@ -160,6 +160,7 @@ public class MapInfoPanel extends InfoPanel {
     IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
         GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_TARGET,
         this);
+    iBtn.setToolTipText("Shift + Tab: Previous fleet or planet");
     iBtn.addActionListener(listener);
     panel.add(iBtn);
     imageLabel = new ImageLabel(img, true);
@@ -174,6 +175,7 @@ public class MapInfoPanel extends InfoPanel {
         GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_TARGET,
         this);
     iBtn.addActionListener(listener);
+    iBtn.setToolTipText("Tab: Next fleet or planet");
     panel.add(iBtn);
     this.add(panel);
     this.add(Box.createRigidArea(new Dimension(10, space)));

@@ -111,6 +111,7 @@ public class MessagePanel extends JPanel {
     pane.add(titleLabel);
     btnNext = new IconButton(GuiStatics.RIGHT_ARROW,
         GuiStatics.RIGHT_ARROW_PRESSED, false, nextCommand, pane);
+    btnNext.setToolTipText("Space: Move next message if cursor at current one");
     btnFocus = new SpaceButton("Focus", focusCommand);
     btnFocus.addActionListener(listener);
     btnFocus.setToolTipText("<html>This will focus on selected message event."

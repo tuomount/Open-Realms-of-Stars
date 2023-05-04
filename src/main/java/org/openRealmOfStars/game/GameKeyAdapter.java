@@ -312,6 +312,12 @@ public class GameKeyAdapter implements KeyEventDispatcher {
     if (game.getGameState() == GameState.VIEWSHIPS) {
       game.changeGameState(GameState.STARMAP);
     }
+    if (game.getGameState() == GameState.SHIPDESIGN) {
+      game.changeGameState(GameState.VIEWSHIPS);
+    }
+    if (game.getGameState() == GameState.SHIP_UPGRADE_VIEW) {
+      game.changeGameState(GameState.FLEETVIEW);
+    }
     if (game.getGameState() == GameState.LEADER_VIEW) {
       game.changeGameState(GameState.STARMAP);
     }

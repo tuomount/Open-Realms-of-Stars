@@ -75,6 +75,10 @@ public class DiplomacyBonusTypeTest {
     assertEquals(0, DiplomacyBonusType.PROMISE_KEPT.getCasusBelliScore());
     assertEquals(4, DiplomacyBonusType.PROMISE_BROKEN.getCasusBelliScore());
     assertEquals(8, DiplomacyBonusType.WAR_DECLARATION_AGAINST_US.getCasusBelliScore());
+    assertEquals(0, DiplomacyBonusType.SIMILAR_GOVERNMENT.getCasusBelliScore());
+    assertEquals(0, DiplomacyBonusType.SIMILAR_GOVERNMENT_DIFFERENT_GROUP.getCasusBelliScore());
+    assertEquals(0, DiplomacyBonusType.SAME_GOVERNMENT.getCasusBelliScore());
+    assertEquals(0, DiplomacyBonusType.DIFFERENT_GOVERNMENT.getCasusBelliScore());
   }
 
 }

@@ -189,6 +189,30 @@ public class DiplomacyBonus {
        }
        break;
      }
+     case SIMILAR_GOVERNMENT: {
+       onlyOne = true;
+       bonusValue = 2;
+       bonusLasting = 255;
+       break;
+     }
+     case SAME_GOVERNMENT: {
+       onlyOne = true;
+       bonusValue = 3;
+       bonusLasting = 255;
+       break;
+     }
+     case SIMILAR_GOVERNMENT_DIFFERENT_GROUP: {
+       onlyOne = true;
+       bonusValue = 1;
+       bonusLasting = 255;
+       break;
+     }
+     case DIFFERENT_GOVERNMENT: {
+       onlyOne = true;
+       bonusValue = -2;
+       bonusLasting = 255;
+       break;
+     }
      case NUKED: {
        if (race == SpaceRace.CENTAURS || race == SpaceRace.HOMARIANS) {
          bonusValue = -8;

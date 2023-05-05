@@ -10,6 +10,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonus;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentUtility;
 
 /**
  *
@@ -307,6 +308,26 @@ public class PlayerList {
           }
           if (info.getRace() == info2.getRace()) {
             bonus.addBonus(DiplomacyBonusType.SAME_RACE, info2.getRace());
+          }
+          if (info.getGovernment() == info2.getGovernment()) {
+            bonus.addBonus(DiplomacyBonusType.SAME_GOVERNMENT, info2.getRace());
+          } else {
+            int group1 = GovernmentUtility.getGovernmentGroup(
+                info.getGovernment());
+            int group2 = GovernmentUtility.getGovernmentGroup(
+                info2.getGovernment());
+            if (group1 == group2) {
+              bonus.addBonus(DiplomacyBonusType.SIMILAR_GOVERNMENT,
+                  info2.getRace());
+            } else if (group1 <= 2 && group2 <= 2) {
+                bonus.addBonus(
+                    DiplomacyBonusType.SIMILAR_GOVERNMENT_DIFFERENT_GROUP,
+                    info2.getRace());
+            } else {
+              bonus.addBonus(
+                  DiplomacyBonusType.DIFFERENT_GOVERNMENT,
+                  info2.getRace());
+            }
           }
         }
       }

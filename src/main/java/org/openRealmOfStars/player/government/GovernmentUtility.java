@@ -247,4 +247,43 @@ public final class GovernmentUtility {
     }
     return null;
   }
+
+  /**
+   * Get Government Group
+   * @param government Government which to get group id
+   * @return Government group id.
+   */
+  public static int getGovernmentGroup(final GovernmentType government) {
+    switch (government) {
+      default:
+      case DEMOCRACY:
+      case UNION:
+      case FEDERATION:
+      case REPUBLIC:
+        return 0;
+      case GUILD:
+      case ENTERPRISE:
+      case SYNDICATE:
+        return 1;
+      case COLLECTIVE:
+      case UTOPIA:
+      case TECHNOCRACY:
+        return 2;
+      case HEGEMONY:
+      case EMPIRE:
+      case KINGDOM:
+      case HIERARCHY:
+      case HORDE:
+      case CLAN:
+      case REGIME:
+      case FEUDALISM:
+      case MECHANICAL_HORDE:
+        return 3;
+      case NEST:
+      case AI:
+      case HIVEMIND:
+      case SPACE_PIRATES:
+        return 4;
+    }
+  }
 }

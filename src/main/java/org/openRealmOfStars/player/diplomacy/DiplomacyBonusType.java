@@ -173,13 +173,31 @@ public enum DiplomacyBonusType {
   /**
    * Space pirates have promised protection.
    */
-  PROMISED_PROTECTION;
+  PROMISED_PROTECTION,
+  /**
+   * Players share the similar government.
+   */
+  SIMILAR_GOVERNMENT,
+  /**
+   * Players share the same government.
+   */
+  SAME_GOVERNMENT,
+  /**
+   * Players have different government.
+   */
+  DIFFERENT_GOVERNMENT,
+  /**
+   * Players share the similar government but in different group.
+   */
+  SIMILAR_GOVERNMENT_DIFFERENT_GROUP;
+
+
 
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 35;
+  public static final int MAX_BONUS_TYPE = 39;
 
   /**
    * Get DiplomacyBonus index
@@ -222,6 +240,10 @@ public enum DiplomacyBonusType {
       case FALSE_FLAG: return 32;
       case FREED_CONVICT: return 33;
       case PROMISED_PROTECTION: return 34;
+      case SIMILAR_GOVERNMENT: return 35;
+      case SAME_GOVERNMENT: return 36;
+      case DIFFERENT_GOVERNMENT: return 37;
+      case SIMILAR_GOVERNMENT_DIFFERENT_GROUP: return 38;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -269,6 +291,11 @@ public enum DiplomacyBonusType {
       case FALSE_FLAG: return "False flag";
       case FREED_CONVICT: return "You have freed convict just because";
       case PROMISED_PROTECTION: return "Space pirate have promised protection";
+      case SIMILAR_GOVERNMENT: return "You have similar governments";
+      case SAME_GOVERNMENT: return "You have same governments";
+      case DIFFERENT_GOVERNMENT: return "You have different governments";
+      case SIMILAR_GOVERNMENT_DIFFERENT_GROUP:
+        return "You have similar governments";
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -315,6 +342,10 @@ public enum DiplomacyBonusType {
       case FALSE_FLAG: return 8;
       case FREED_CONVICT: return 1;
       case PROMISED_PROTECTION: return 0;
+      case SIMILAR_GOVERNMENT: return 0;
+      case SAME_GOVERNMENT: return 0;
+      case DIFFERENT_GOVERNMENT: return 1;
+      case SIMILAR_GOVERNMENT_DIFFERENT_GROUP: return 0;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -360,6 +391,10 @@ public enum DiplomacyBonusType {
       case FALSE_FLAG: return "blown up ships";
       case FREED_CONVICT: return "freed convicted prisoners";
       case PROMISED_PROTECTION: return "Promised protection";
+      case SAME_GOVERNMENT: return "same government";
+      case SIMILAR_GOVERNMENT: return "similar government";
+      case DIFFERENT_GOVERNMENT: return "different government";
+      case SIMILAR_GOVERNMENT_DIFFERENT_GROUP: return "similar government";
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -441,6 +476,14 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.FREED_CONVICT;
     case 34:
       return DiplomacyBonusType.PROMISED_PROTECTION;
+    case 35:
+      return DiplomacyBonusType.SIMILAR_GOVERNMENT;
+    case 36:
+      return DiplomacyBonusType.SAME_GOVERNMENT;
+    case 37:
+      return DiplomacyBonusType.DIFFERENT_GOVERNMENT;
+    case 38:
+      return DiplomacyBonusType.SIMILAR_GOVERNMENT_DIFFERENT_GROUP;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

@@ -7,7 +7,7 @@ import org.junit.experimental.categories.Category;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2017,2018,2020 Tuomo Untinen
+ * Copyright (C) 2017,2018,2020,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -78,7 +78,7 @@ public class DiplomacyBonusTypeTest {
     assertEquals(0, DiplomacyBonusType.SIMILAR_GOVERNMENT.getCasusBelliScore());
     assertEquals(0, DiplomacyBonusType.SIMILAR_GOVERNMENT_DIFFERENT_GROUP.getCasusBelliScore());
     assertEquals(0, DiplomacyBonusType.SAME_GOVERNMENT.getCasusBelliScore());
-    assertEquals(0, DiplomacyBonusType.DIFFERENT_GOVERNMENT.getCasusBelliScore());
+    assertEquals(1, DiplomacyBonusType.DIFFERENT_GOVERNMENT.getCasusBelliScore());
   }
 
 }

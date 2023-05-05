@@ -12,7 +12,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -123,21 +123,56 @@ public class PlayerListTest {
     list.addPlayer(info);
     list.calculateInitialDiplomacyBonuses();
     info = list.getPlayerInfoByIndex(0);
-    assertEquals(-3, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
-    assertEquals(-2, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
-    assertEquals(1, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
+    assertEquals(-5, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
+    assertEquals(-4, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
+    assertEquals(3, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
     info = list.getPlayerInfoByIndex(1);
-    assertEquals(3, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
-    assertEquals(-2, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
-    assertEquals(1, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
+    assertEquals(1, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(-4, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
+    assertEquals(-1, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
     info = list.getPlayerInfoByIndex(2);
-    assertEquals(3, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
-    assertEquals(-3, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
-    assertEquals(1, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
+    assertEquals(1, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(-5, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
+    assertEquals(-1, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
     info = list.getPlayerInfoByIndex(3);
-    assertEquals(3, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
-    assertEquals(-3, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
-    assertEquals(-2, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
+    assertEquals(5, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(-5, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
+    assertEquals(-4, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStartDiplomacyBonuses2() {
+    PlayerList list = new PlayerList();
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 4, 0);
+    info.setGovernment(GovernmentType.DEMOCRACY);
+    list.addPlayer(info);
+    info = new PlayerInfo(SpaceRace.SPORKS, 4, 1);
+    info.setGovernment(GovernmentType.DEMOCRACY);
+    list.addPlayer(info);
+    info = new PlayerInfo(SpaceRace.MECHIONS, 4, 2);
+    info.setGovernment(GovernmentType.MECHANICAL_HORDE);
+    list.addPlayer(info);
+    info = new PlayerInfo(SpaceRace.GREYANS, 4, 3);
+    info.setGovernment(GovernmentType.TECHNOCRACY);
+    list.addPlayer(info);
+    list.calculateInitialDiplomacyBonuses();
+    info = list.getPlayerInfoByIndex(0);
+    assertEquals(1, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
+    assertEquals(-4, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
+    assertEquals(2, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
+    info = list.getPlayerInfoByIndex(1);
+    assertEquals(6, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(-4, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
+    assertEquals(2, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
+    info = list.getPlayerInfoByIndex(2);
+    assertEquals(1, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(-4, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
+    assertEquals(-1, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
+    info = list.getPlayerInfoByIndex(3);
+    assertEquals(4, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(-1, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
+    assertEquals(-4, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
   }
 
 }

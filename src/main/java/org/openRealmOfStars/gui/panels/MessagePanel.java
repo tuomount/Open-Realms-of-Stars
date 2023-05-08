@@ -94,9 +94,9 @@ public class MessagePanel extends JPanel {
       final int maxIndex, final ActionListener listener) {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.setBorder(new SimpleBorder());
-    this.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    this.setBackground(GuiStatics.getPanelBackground());
     JPanel pane = new JPanel();
-    pane.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    pane.setBackground(GuiStatics.getPanelBackground());
     pane.setBorder(new SimpleBorder());
     pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
     btnPrev = new IconButton(GuiStatics.LEFT_ARROW,

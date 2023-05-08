@@ -14,6 +14,8 @@ import java.io.InputStream;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.scheme.BaseScheme;
+import org.openRealmOfStars.gui.scheme.ClassicScheme;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -49,6 +51,10 @@ public final class GuiStatics {
     // Nothing to do
   }
 
+  /**
+   * Scheme selection for UI.
+   */
+  private static BaseScheme schemeType = new ClassicScheme();
   /**
    *  Monospace font size 10
    */
@@ -1791,5 +1797,29 @@ public final class GuiStatics {
       graphics.drawImage(NEBULAE_IMAGE, 0, 0, null);
     }
     return starNebulae;
+  }
+
+  /**
+   * Get UI Scheme type.
+   * @return the BaseScheme type
+   */
+  public static BaseScheme getSchemeType() {
+    return schemeType;
+  }
+
+  /**
+   * Set Scheme type.
+   * @param schemeType the BaseScheme to set
+   */
+  public static void setSchemeType(final BaseScheme schemeType) {
+    GuiStatics.schemeType = schemeType;
+  }
+
+  /**
+   * Get Panel background color from scheme.
+   * @return Color
+   */
+  public static Color getPanelBackground() {
+    return schemeType.getPanelBackground();
   }
 }

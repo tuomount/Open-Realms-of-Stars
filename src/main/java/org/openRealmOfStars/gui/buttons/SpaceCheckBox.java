@@ -67,7 +67,7 @@ public class SpaceCheckBox extends JCheckBox {
     super(text);
     type = CHECKBOX_TYPE_NORMAL;
     setSpaceIcon(Icons.getIconByName(Icons.ICON_CHECKBOX));
-    setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    setBackground(GuiStatics.getPanelBackground());
     setForeground(GuiStatics.COLOR_GREY_40);
     setBorderPainted(true);
   }

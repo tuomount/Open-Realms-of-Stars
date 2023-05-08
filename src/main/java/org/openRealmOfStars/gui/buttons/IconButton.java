@@ -89,7 +89,7 @@ public class IconButton extends JButton {
     this.setActionCommand(actionCommand);
     this.setBorder(border);
     this.parent = parent;
-    this.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    this.setBackground(GuiStatics.getPanelBackground());
     if (border) {
       this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     } else {
@@ -118,7 +118,7 @@ public class IconButton extends JButton {
     this.setActionCommand(actionCommand);
     this.setBorder(border);
     this.parent = parent;
-    this.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    this.setBackground(GuiStatics.getPanelBackground());
     if (border) {
       this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     } else {

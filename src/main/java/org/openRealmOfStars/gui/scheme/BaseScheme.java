@@ -1,13 +1,11 @@
-package org.openRealmOfStars.gui.panels;
+package org.openRealmOfStars.gui.scheme;
 
-import javax.swing.JPanel;
-
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import java.awt.Color;
 
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017 Tuomo Untinen
+* Copyright (C) 2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -23,20 +21,20 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* JPanel with new default background color, space grey
+* Base scheme which all scheme extend.
 *
 */
-public class SpaceGreyPanel extends JPanel {
+public abstract class BaseScheme {
 
   /**
-   *
+   * Get Panel background color. This is used almost every panel.
+   * @return Color
    */
-  private static final long serialVersionUID = 1L;
+  public abstract Color getPanelBackground();
 
   /**
-   * Constructor for SpaceGreyPanel
+   * Get Scheme type
+   * @return Scheme Type
    */
-  public SpaceGreyPanel() {
-    setBackground(GuiStatics.getPanelBackground());
-  }
+  public abstract SchemeType getType();
 }

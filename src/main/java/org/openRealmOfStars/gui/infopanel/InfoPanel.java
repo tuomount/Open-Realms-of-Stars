@@ -63,7 +63,7 @@ public class InfoPanel extends JPanel {
   @Override
   protected void paintComponent(final Graphics arg0) {
     Graphics2D g2d = (Graphics2D) arg0;
-    g2d.setColor(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    g2d.setColor(GuiStatics.getPanelBackground());
     g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
   }
 

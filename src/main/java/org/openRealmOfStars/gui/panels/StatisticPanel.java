@@ -336,7 +336,7 @@ public class StatisticPanel extends JPanel {
       g2d.setStroke(full);
     }
     //Draw the axis
-    g2d.setColor(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    g2d.setColor(GuiStatics.getPanelBackground());
     g2d.drawLine(offsetX, this.getHeight() - offsetY, offsetX + drawWidth,
         this.getHeight() - offsetY);
     g2d.drawLine(offsetX, this.getHeight() - offsetY, offsetX, topOffsetY);

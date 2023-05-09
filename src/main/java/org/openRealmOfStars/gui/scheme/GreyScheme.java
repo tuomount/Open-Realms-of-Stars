@@ -1,4 +1,7 @@
 package org.openRealmOfStars.gui.scheme;
+
+import java.awt.Color;
+
 /**
 *
 * Open Realm of Stars game project
@@ -18,16 +21,24 @@ package org.openRealmOfStars.gui.scheme;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Scheme types.
+* Grey Scheme for UI.
 *
 */
-public enum SchemeType {
+public class GreyScheme extends BaseScheme {
+
   /**
-   * Classic scheme
+   * Panel background
    */
-  CLASSIC_SPACE_GREY_BLUE,
-  /**
-   * Grey scheme
-   */
-  SPACE_GREY;
+  private static final Color COLOR_SPACE_GREY = new Color(81, 87, 109,
+      255);
+
+  @Override
+  public Color getPanelBackground() {
+    return COLOR_SPACE_GREY;
+  }
+
+  @Override
+  public SchemeType getType() {
+    return SchemeType.SPACE_GREY;
+  }
 }

@@ -16,6 +16,7 @@ import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.scheme.BaseScheme;
 import org.openRealmOfStars.gui.scheme.ClassicScheme;
+import org.openRealmOfStars.gui.scheme.GreyScheme;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -52,9 +53,17 @@ public final class GuiStatics {
   }
 
   /**
+   * Classic scheme
+   */
+  public static final BaseScheme CLASSIC_SCHEME = new ClassicScheme();
+  /**
+   * Classic scheme
+   */
+  public static final BaseScheme GREY_SCHEME = new GreyScheme();
+  /**
    * Scheme selection for UI.
    */
-  private static BaseScheme schemeType = new ClassicScheme();
+  private static BaseScheme schemeType = GREY_SCHEME;
   /**
    *  Monospace font size 10
    */

@@ -541,7 +541,7 @@ public class Game implements ActionListener {
       UIManager.put("ToolTip.background",
           GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
       UIManager.put("ToolTip.foreground",
-          GuiStatics.COLOR_COOL_SPACE_BLUE);
+          GuiStatics.getCoolSpaceColor());
       UIManager.put("ToolTip.border", BorderFactory
           .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
       gameFrame.setTitle(GAME_TITLE + " " + GAME_VERSION);

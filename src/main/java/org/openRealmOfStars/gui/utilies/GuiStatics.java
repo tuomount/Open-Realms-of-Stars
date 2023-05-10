@@ -63,7 +63,7 @@ public final class GuiStatics {
   /**
    * Scheme selection for UI.
    */
-  private static BaseScheme schemeType = GREY_SCHEME;
+  private static BaseScheme schemeType = CLASSIC_SCHEME;
   /**
    *  Monospace font size 10
    */
@@ -433,11 +433,6 @@ public final class GuiStatics {
    * Planet Line type for text background, opacity 65.
    */
   public static final Color COLOR_GREYBLUE = new Color(180, 180, 200, 65);
-
-  /**
-   * Panel background
-   */
-  public static final Color COLOR_SPACE_GREY_BLUE = new Color(81, 87, 133, 255);
 
   /**
    * Green text dark one
@@ -1831,4 +1826,12 @@ public final class GuiStatics {
   public static Color getPanelBackground() {
     return schemeType.getPanelBackground();
   }
+  /**
+   * Get cool space color
+   * @return Color
+   */
+  public static Color getCoolSpaceColor() {
+    return schemeType.getCoolSpaceColor();
+  }
+
 }

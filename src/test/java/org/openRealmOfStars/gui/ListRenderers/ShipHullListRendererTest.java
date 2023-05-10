@@ -60,7 +60,7 @@ public class ShipHullListRendererTest {
     label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
     assertEquals("Hull 1 - Small",label.getText());
-    assertEquals(GuiStatics.COLOR_COOL_SPACE_BLUE, label.getForeground());
+    assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
     assertEquals(GuiStatics.COLOR_DEEP_SPACE_PURPLE, label.getBackground());
   }
 

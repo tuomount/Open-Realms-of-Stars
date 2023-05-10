@@ -188,7 +188,7 @@ public class ShipUpgradeView extends BlackPanel
     String[] emptyList = {"None"};
     upgradeList = new SpaceComboBox<>(emptyList);
     upgradeList.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    upgradeList.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    upgradeList.setForeground(GuiStatics.getCoolSpaceColor());
     upgradeList.setBorder(new SimpleBorder());
     upgradeList.setFont(GuiStatics.getFontCubellan());
     upgradeList.getModel().setSelectedItem("None");
@@ -242,111 +242,111 @@ public class ShipUpgradeView extends BlackPanel
   private void showDifference(final ShipDesign design, final Ship ship) {
     infoText.setText("");
     infoText.addText(ship.getName(), GuiStatics.COLOR_RED_TEXT);
-    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("->", GuiStatics.getCoolSpaceColor());
     infoText.addText(design.getName(), GuiStatics.COLOR_GREEN_TEXT);
-    infoText.addText(" - ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(" - ", GuiStatics.getCoolSpaceColor());
     infoText.addText(ship.getHull().getHullType().toString(),
-        GuiStatics.COLOR_COOL_SPACE_BLUE);
-    infoText.addText("\nCapacity: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        GuiStatics.getCoolSpaceColor());
+    infoText.addText("\nCapacity: ", GuiStatics.getCoolSpaceColor());
     infoText.addText(String.format("%.1f", ship.getFleetCapacity()),
-        GuiStatics.COLOR_COOL_SPACE_BLUE);
-    infoText.addText(" Energy: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        GuiStatics.getCoolSpaceColor());
+    infoText.addText(" Energy: ", GuiStatics.getCoolSpaceColor());
     int oldValue = ship.getTotalEnergy() - ship.getEnergyConsumption();
     int newValue = design.getFreeEnergy();
     infoText.addText(oldValue, getValueColor(oldValue, newValue));
-    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("->", GuiStatics.getCoolSpaceColor());
     infoText.addText(newValue, getValueColor(newValue, oldValue));
-    infoText.addText(" Init.: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(" Init.: ", GuiStatics.getCoolSpaceColor());
     oldValue = ship.getInitiative();
     newValue = design.getInitiative();
     infoText.addText(oldValue, getValueColor(oldValue, newValue));
-    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("->", GuiStatics.getCoolSpaceColor());
     infoText.addText(newValue, getValueColor(newValue, oldValue));
-    infoText.addText("\nSpeed: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("\nSpeed: ", GuiStatics.getCoolSpaceColor());
     oldValue = ship.getSpeed();
     newValue = design.getSpeed();
     infoText.addText(oldValue, getValueColor(oldValue, newValue));
-    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("->", GuiStatics.getCoolSpaceColor());
     infoText.addText(newValue, getValueColor(newValue, oldValue));
-    infoText.addText(" FTL: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(" FTL: ", GuiStatics.getCoolSpaceColor());
     oldValue = ship.getFtlSpeed();
     newValue = design.getFtlSpeed();
     infoText.addText(oldValue, getValueColor(oldValue, newValue));
-    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("->", GuiStatics.getCoolSpaceColor());
     infoText.addText(newValue, getValueColor(newValue, oldValue));
-    infoText.addText(" Tactic: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(" Tactic: ", GuiStatics.getCoolSpaceColor());
     oldValue = ship.getTacticSpeed();
     newValue = design.getTacticSpeed();
     infoText.addText(oldValue, getValueColor(oldValue, newValue));
-    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("->", GuiStatics.getCoolSpaceColor());
     infoText.addText(newValue, getValueColor(newValue, oldValue));
-    infoText.addText("\nShield: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("\nShield: ", GuiStatics.getCoolSpaceColor());
     oldValue = ship.getTotalShield();
     newValue = design.getTotalShield();
     infoText.addText(oldValue, getValueColor(oldValue, newValue));
-    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("->", GuiStatics.getCoolSpaceColor());
     infoText.addText(newValue, getValueColor(newValue, oldValue));
-    infoText.addText(" Armor: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(" Armor: ", GuiStatics.getCoolSpaceColor());
     oldValue = ship.getTotalArmor();
     newValue = design.getTotalArmor();
     infoText.addText(oldValue, getValueColor(oldValue, newValue));
-    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("->", GuiStatics.getCoolSpaceColor());
     infoText.addText(newValue, getValueColor(newValue, oldValue));
-    infoText.addText(" Hull Points: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText(" Hull Points: ", GuiStatics.getCoolSpaceColor());
     oldValue = ship.getHull().getSlotHull() * ship.getNumberOfComponents();
     newValue = design.getHull().getSlotHull() * design.getNumberOfComponents();
     infoText.addText(oldValue, getValueColor(oldValue, newValue));
-    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("->", GuiStatics.getCoolSpaceColor());
     infoText.addText(newValue, getValueColor(newValue, oldValue));
-    infoText.addText("\nMilitary power: ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("\nMilitary power: ", GuiStatics.getCoolSpaceColor());
     oldValue = ship.getTheoreticalMilitaryPower();
     newValue = design.getTotalMilitaryPower();
     infoText.addText(oldValue, getValueColor(oldValue, newValue));
-    infoText.addText("->", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("->", GuiStatics.getCoolSpaceColor());
     infoText.addText(newValue, getValueColor(newValue, oldValue));
-    infoText.addText("\n\nComponents:\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+    infoText.addText("\n\nComponents:\n", GuiStatics.getCoolSpaceColor());
     for (int i = 0; i < ship.getNumberOfComponents(); i++) {
       ShipComponent origComp = ship.getComponent(i);
       ShipComponent newComp = design.getComponent(i);
       if (origComp == null && newComp == null) {
-        infoText.addText(i + 1, GuiStatics.COLOR_COOL_SPACE_BLUE);
-        infoText.addText(": Empty\n\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(i + 1, GuiStatics.getCoolSpaceColor());
+        infoText.addText(": Empty\n\n", GuiStatics.getCoolSpaceColor());
         continue;
       }
       if (origComp == null && newComp != null) {
-        infoText.addText(i + 1, GuiStatics.COLOR_COOL_SPACE_BLUE);
-        infoText.addText(": Empty -> ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(i + 1, GuiStatics.getCoolSpaceColor());
+        infoText.addText(": Empty -> ", GuiStatics.getCoolSpaceColor());
         infoText.addText(newComp.getName(), GuiStatics.COLOR_GREEN_TEXT);
-        infoText.addText("\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText("\n", GuiStatics.getCoolSpaceColor());
         infoText.addText(newComp.toString(), GuiStatics.COLOR_GREEN_TEXT);
-        infoText.addText("\n\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText("\n\n", GuiStatics.getCoolSpaceColor());
         continue;
       }
       if (origComp != null && newComp == null) {
-        infoText.addText(i + 1, GuiStatics.COLOR_COOL_SPACE_BLUE);
-        infoText.addText(":", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(i + 1, GuiStatics.getCoolSpaceColor());
+        infoText.addText(":", GuiStatics.getCoolSpaceColor());
         infoText.addText(origComp.getName(), GuiStatics.COLOR_GREEN_TEXT);
-        infoText.addText(" -> ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(" -> ", GuiStatics.getCoolSpaceColor());
         infoText.addText("Empty", GuiStatics.COLOR_RED_TEXT);
-        infoText.addText("\n\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText("\n\n", GuiStatics.getCoolSpaceColor());
         continue;
       }
       if (origComp.getName().equals(newComp.getName())) {
-        infoText.addText(i + 1, GuiStatics.COLOR_COOL_SPACE_BLUE);
-        infoText.addText(":", GuiStatics.COLOR_COOL_SPACE_BLUE);
-        infoText.addText(origComp.getName(), GuiStatics.COLOR_COOL_SPACE_BLUE);
-        infoText.addText("\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
-        infoText.addText(origComp.toString(), GuiStatics.COLOR_COOL_SPACE_BLUE);
-        infoText.addText("\n\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(i + 1, GuiStatics.getCoolSpaceColor());
+        infoText.addText(":", GuiStatics.getCoolSpaceColor());
+        infoText.addText(origComp.getName(), GuiStatics.getCoolSpaceColor());
+        infoText.addText("\n", GuiStatics.getCoolSpaceColor());
+        infoText.addText(origComp.toString(), GuiStatics.getCoolSpaceColor());
+        infoText.addText("\n\n", GuiStatics.getCoolSpaceColor());
       } else {
-        infoText.addText(i + 1, GuiStatics.COLOR_COOL_SPACE_BLUE);
-        infoText.addText(":", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(i + 1, GuiStatics.getCoolSpaceColor());
+        infoText.addText(":", GuiStatics.getCoolSpaceColor());
         infoText.addText(origComp.getName(), GuiStatics.COLOR_RED_TEXT);
-        infoText.addText(" -> ", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText(" -> ", GuiStatics.getCoolSpaceColor());
         infoText.addText(newComp.getName(), GuiStatics.COLOR_GREEN_TEXT);
-        infoText.addText("\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText("\n", GuiStatics.getCoolSpaceColor());
         infoText.addText(newComp.toString(), GuiStatics.COLOR_GREEN_TEXT);
-        infoText.addText("\n\n", GuiStatics.COLOR_COOL_SPACE_BLUE);
+        infoText.addText("\n\n", GuiStatics.getCoolSpaceColor());
       }
     }
   }

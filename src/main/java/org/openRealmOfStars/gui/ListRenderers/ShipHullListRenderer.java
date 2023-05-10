@@ -53,7 +53,7 @@ public class ShipHullListRenderer implements ListCellRenderer<ShipHull> {
       renderer.setText("No hull");
     }
     if (isSelected) {
-      renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+      renderer.setForeground(GuiStatics.getCoolSpaceColor());
       renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
     } else {
       renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);

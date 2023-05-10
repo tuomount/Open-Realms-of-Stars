@@ -105,7 +105,7 @@ public class VotingSelectionView extends BlackPanel {
     votingSelect.addActionListener(listener);
     votingSelect.setActionCommand(GameCommands.COMMAND_VOTING_SELECTED);
     votingSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
-    votingSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    votingSelect.setForeground(GuiStatics.getCoolSpaceColor());
     VotingListRenderer renderer = new VotingListRenderer();
     renderer.setStarMap(map);
     votingSelect.setRenderer(renderer);

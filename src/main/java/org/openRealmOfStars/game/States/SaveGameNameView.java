@@ -107,7 +107,7 @@ public class SaveGameNameView extends BlackPanel {
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     saveGameField = new JTextField(fileName + ".save");
     saveGameField.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    saveGameField.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    saveGameField.setForeground(GuiStatics.getCoolSpaceColor());
     saveGameField.setFont(GuiStatics.getFontCubellanSmaller());
     saveGameField.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));

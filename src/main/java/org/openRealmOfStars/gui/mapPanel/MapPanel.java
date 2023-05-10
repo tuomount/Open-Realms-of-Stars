@@ -844,7 +844,7 @@ public class MapPanel extends JPanel {
               gr.setColor(GuiStatics.COLOR_SPACE_YELLOW);
             }
             if (tile.getName().equals(TileNames.BLUE_STAR_E)) {
-              gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
+              gr.setColor(GuiStatics.getCoolSpaceColor());
             }
             gr.drawLine(pixelX - offset, pixelY + Tile.MAX_HEIGHT / 2 - 3,
                 pixelX - Tile.MAX_WIDTH + offset,
@@ -1520,7 +1520,7 @@ public class MapPanel extends JPanel {
               gr.drawString(accuracyStr,
                   pixelX + ShipImage.MAX_WIDTH / 2 - textWidth / 2 + offsetX,
                   pixelY + ShipImage.MAX_HEIGHT / 2 + offsetY - 1);
-              gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
+              gr.setColor(GuiStatics.getCoolSpaceColor());
               gr.drawString(accuracyStr,
                   pixelX + ShipImage.MAX_WIDTH / 2 - textWidth / 2 + offsetX,
                   pixelY + ShipImage.MAX_HEIGHT / 2 + offsetY);

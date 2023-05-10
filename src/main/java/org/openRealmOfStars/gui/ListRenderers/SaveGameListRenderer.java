@@ -57,7 +57,7 @@ public class SaveGameListRenderer implements ListCellRenderer<SavedGame> {
       renderer.setText(text);
     }
     if (isSelected) {
-      renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+      renderer.setForeground(GuiStatics.getCoolSpaceColor());
       renderer.setBackground(Color.BLACK);
     } else {
       renderer.setForeground(GuiStatics.COLOR_GREY_TEXT);

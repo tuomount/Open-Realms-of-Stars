@@ -363,7 +363,7 @@ public class BigSpherePanel extends JPanel {
       }
     }
     drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK,
-        GuiStatics.COLOR_COOL_SPACE_BLUE, offsetX, offsetY, title);
+        GuiStatics.getCoolSpaceColor(), offsetX, offsetY, title);
 
     if (textInformation != null) {
       String[] texts = textInformation.split("\n");

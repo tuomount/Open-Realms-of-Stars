@@ -33,6 +33,18 @@ public abstract class BaseScheme {
   public abstract Color getPanelBackground();
 
   /**
+   * Get cool space color.
+   * @return Color
+   */
+  public abstract Color getCoolSpaceColor();
+
+  /**
+   * Get cool space color transparent.
+   * @return Color
+   */
+  public abstract Color getCoolSpaceColorTransparent();
+
+  /**
    * Get Scheme type
    * @return Scheme Type
    */

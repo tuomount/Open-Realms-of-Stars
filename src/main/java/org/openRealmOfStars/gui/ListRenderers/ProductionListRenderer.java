@@ -49,7 +49,7 @@ public class ProductionListRenderer implements ListCellRenderer<Construction> {
     renderer.setFont(GuiStatics.getFontCubellan());
     renderer.setIcon(value.getIcon().getAsIcon());
     if (isSelected) {
-      renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+      renderer.setForeground(GuiStatics.getCoolSpaceColor());
       renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
     } else {
       renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);

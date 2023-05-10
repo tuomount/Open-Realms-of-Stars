@@ -155,7 +155,7 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
     constructionSelect.setActionCommand(planet.getName() + "|"
         + GameCommands.COMMAND_PRODUCTION_LIST);
     constructionSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
-    constructionSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    constructionSelect.setForeground(GuiStatics.getCoolSpaceColor());
     constructionSelect.setBorder(new SimpleBorder());
     constructionSelect.setFont(GuiStatics.getFontCubellan());
     constructionSelect.setRenderer(new ProductionListRenderer());

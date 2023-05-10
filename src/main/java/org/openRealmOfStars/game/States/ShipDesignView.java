@@ -250,7 +250,7 @@ public class ShipDesignView extends BlackPanel {
     hullSelect.addActionListener(listener);
     hullSelect.setActionCommand(GameCommands.COMMAND_SHIPDESIGN_HULLSELECTED);
     hullSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
-    hullSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    hullSelect.setForeground(GuiStatics.getCoolSpaceColor());
     hullSelect.setBorder(new SimpleBorder());
     hullSelect.setFont(GuiStatics.getFontCubellan());
     hullSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,

@@ -56,7 +56,7 @@ public class SaveGameListRendererTest {
     JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
     assertEquals("autosave.sav - 11-01-2017 Star year: 2410 - Empire of Saves Realms: 6 - 75 x 75",label.getText());
-    assertEquals(GuiStatics.COLOR_COOL_SPACE_BLUE, label.getForeground());
+    assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
 
     selected = false;
     assertEquals(Color.BLACK, label.getBackground());

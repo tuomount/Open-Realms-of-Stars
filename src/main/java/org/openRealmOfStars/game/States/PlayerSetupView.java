@@ -324,7 +324,7 @@ public class PlayerSetupView extends BlackPanel {
         SpaceRaceUtility.RACE_SELECTION);
     comboRaceSelect[index]
         .setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    comboRaceSelect[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    comboRaceSelect[index].setForeground(GuiStatics.getCoolSpaceColor());
     comboRaceSelect[index].setBorder(new SimpleBorder());
     comboRaceSelect[index].setFont(GuiStatics.getFontCubellan());
     comboRaceSelect[index].getModel()

@@ -191,7 +191,7 @@ public class OptionsView extends BlackPanel {
         "Custom (" + game.getCurrentResolution() + ")"};
     resolutionSelection = new JComboBox<>(resolutions);
     resolutionSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    resolutionSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    resolutionSelection.setForeground(GuiStatics.getCoolSpaceColor());
     resolutionSelection.setBorder(new SimpleBorder());
     resolutionSelection.setFont(GuiStatics.getFontCubellan());
     resolutionSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,

@@ -32,6 +32,17 @@ public class GreyScheme extends BaseScheme {
   private static final Color COLOR_SPACE_GREY = new Color(81, 87, 109,
       255);
 
+  /**
+   * Cool space color
+   */
+  public static final Color COLOR_COOL_SPACE_BLUE = new Color(210, 210, 255);
+  /**
+   * Cool space color, opacity 128
+   */
+  public static final Color COLOR_COOL_SPACE_BLUE_TRANS = new Color(210, 210,
+      255, 128);
+
+
   @Override
   public Color getPanelBackground() {
     return COLOR_SPACE_GREY;
@@ -40,5 +51,15 @@ public class GreyScheme extends BaseScheme {
   @Override
   public SchemeType getType() {
     return SchemeType.SPACE_GREY;
+  }
+
+  @Override
+  public Color getCoolSpaceColor() {
+    return COLOR_COOL_SPACE_BLUE;
+  }
+
+  @Override
+  public Color getCoolSpaceColorTransparent() {
+    return COLOR_COOL_SPACE_BLUE_TRANS;
   }
 }

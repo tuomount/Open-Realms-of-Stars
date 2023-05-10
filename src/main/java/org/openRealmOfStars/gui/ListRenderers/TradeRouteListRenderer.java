@@ -49,7 +49,7 @@ public class TradeRouteListRenderer implements ListCellRenderer<TradeRoute> {
     renderer.setFont(GuiStatics.getFontCubellan());
     renderer.setText(value.toString());
     if (isSelected) {
-      renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+      renderer.setForeground(GuiStatics.getCoolSpaceColor());
       renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
     } else {
       renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);

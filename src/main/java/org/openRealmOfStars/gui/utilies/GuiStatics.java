@@ -17,6 +17,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.scheme.BaseScheme;
 import org.openRealmOfStars.gui.scheme.ClassicScheme;
 import org.openRealmOfStars.gui.scheme.GreyScheme;
+import org.openRealmOfStars.gui.scheme.SchemeType;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -1804,14 +1805,6 @@ public final class GuiStatics {
   }
 
   /**
-   * Get UI Scheme type.
-   * @return the BaseScheme type
-   */
-  public static BaseScheme getSchemeType() {
-    return schemeType;
-  }
-
-  /**
    * Set Scheme type.
    * @param schemeType the BaseScheme to set
    */
@@ -1819,6 +1812,26 @@ public final class GuiStatics {
     GuiStatics.schemeType = schemeType;
   }
 
+  /**
+   * Set Scheme type.
+   * @param schemeType the BaseScheme to set
+   */
+  public static void setSchemeType(final SchemeType schemeType) {
+    if (schemeType == SchemeType.CLASSIC_SPACE_GREY_BLUE) {
+      setSchemeType(CLASSIC_SCHEME);
+    }
+    if (schemeType == SchemeType.SPACE_GREY) {
+      setSchemeType(GREY_SCHEME);
+    }
+  }
+
+  /**
+   * Get UI Scheme type
+   * @return SchemeType
+   */
+  public static SchemeType getSchemeType() {
+    return schemeType.getType();
+  }
   /**
    * Get Panel background color from scheme.
    * @return Color

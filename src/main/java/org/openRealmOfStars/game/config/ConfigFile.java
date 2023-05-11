@@ -7,7 +7,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018, 2020-2022 Tuomo Untinen
+* Copyright (C) 2018, 2020-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -107,6 +107,10 @@ public class ConfigFile {
    * Config option for show minimap.
    */
   public static final String CONFIG_SHOW_MINIMAP = "ShowMinimap";
+  /**
+   * Config option for UI Scheme
+   */
+  public static final String CONFIG_UI_SCHEME = "UIScheme";
   /**
    * String true
    */
@@ -663,6 +667,34 @@ public class ConfigFile {
       }
     }
     return result;
+  }
+
+  /**
+   * Set UI Scheme name
+   * @param scheme Scheme name to set
+   */
+  public void setUiScheme(final String scheme) {
+    ConfigLine line = getLineByKey(CONFIG_UI_SCHEME);
+    if (scheme != null) {
+      if (line == null) {
+        line = new ConfigLine(CONFIG_UI_SCHEME + "=" + scheme);
+        add(line);
+      } else {
+        line.setValue(scheme);
+      }
+    }
+  }
+
+  /**
+   * Get UI Scheme name
+   * @return UI Scheme name or null
+   */
+  public String getUiScheme() {
+    ConfigLine line = getLineByKey(CONFIG_UI_SCHEME);
+    if (line != null) {
+      return line.getValue();
+    }
+    return null;
   }
 
 }

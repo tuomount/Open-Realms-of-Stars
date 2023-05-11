@@ -30,4 +30,29 @@ public enum SchemeType {
    * Grey scheme
    */
   SPACE_GREY;
+
+  @Override
+  public String toString() {
+    switch (this) {
+      default:
+      case CLASSIC_SPACE_GREY_BLUE: return "ClassicSpaceGreyBlue";
+      case SPACE_GREY: return "SpaceGrey";
+    }
+  }
+
+  /**
+   * Get UI Scheme type by name.
+   * @param name Scheme name
+   * @return UI Scheme type
+   */
+  public static SchemeType getByName(final String name) {
+    if (name.equals(CLASSIC_SPACE_GREY_BLUE.toString())) {
+      return CLASSIC_SPACE_GREY_BLUE;
+    }
+    if (name.equals(SPACE_GREY.toString())) {
+      return SPACE_GREY;
+    }
+    return CLASSIC_SPACE_GREY_BLUE;
+  }
+
 }

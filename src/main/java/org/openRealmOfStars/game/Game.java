@@ -75,6 +75,7 @@ import org.openRealmOfStars.game.tutorial.TutorialList;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.scheme.SchemeType;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
@@ -499,6 +500,7 @@ public class Game implements ActionListener {
     int soundVolume = configFile.getSoundVolume();
     int resolutionWidth = configFile.getResolutionWidth();
     int resolutionHeight = configFile.getResolutionHeight();
+    GuiStatics.setSchemeType(SchemeType.getByName(configFile.getUiScheme()));
     if (visible) {
       if (configFile.isHardwareAcceleration()) {
         System.setProperty("sun.java2d.opengl", "true");
@@ -3137,6 +3139,9 @@ public class Game implements ActionListener {
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
         configFile.setShowMinimap(optionsView.isShowMinimap());
+        configFile.setUiScheme(optionsView.getUiScheme());
+        GuiStatics.setSchemeType(SchemeType.getByName(
+            configFile.getUiScheme()));
         setShowMiniMapFlag(configFile.isShowMinimap());
         setBridgeCommand(BridgeCommandType.EXIT);
         writeConfigFile();
@@ -3172,6 +3177,7 @@ public class Game implements ActionListener {
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
         configFile.setShowMinimap(optionsView.isShowMinimap());
+        configFile.setUiScheme(optionsView.getUiScheme());
         writeConfigFile();
         changeGameState(GameState.SETUP_AMBIENT_LIGHTS);
         return;
@@ -3197,6 +3203,10 @@ public class Game implements ActionListener {
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
         configFile.setShowMinimap(optionsView.isShowMinimap());
+        configFile.setUiScheme(optionsView.getUiScheme());
+        GuiStatics.setSchemeType(SchemeType.getByName(
+            configFile.getUiScheme()));
+        optionsView.repaint();
         return;
       }
       if (arg0.getActionCommand()

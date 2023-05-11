@@ -78,7 +78,7 @@ public class ComponentButton extends JButton {
       this.setText("");
     }
     this.setFont(GuiStatics.getFontCubellanSmaller());
-    this.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    this.setForeground(GuiStatics.getCoolSpaceColor());
     this.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
     this.setFocusPainted(false);
     updateButton();

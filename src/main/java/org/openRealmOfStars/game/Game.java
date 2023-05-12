@@ -500,8 +500,8 @@ public class Game implements ActionListener {
     int soundVolume = configFile.getSoundVolume();
     int resolutionWidth = configFile.getResolutionWidth();
     int resolutionHeight = configFile.getResolutionHeight();
-    GuiStatics.setSchemeType(SchemeType.getByName(configFile.getUiScheme()));
     if (visible) {
+      GuiStatics.setSchemeType(SchemeType.getByName(configFile.getUiScheme()));
       if (configFile.isHardwareAcceleration()) {
         System.setProperty("sun.java2d.opengl", "true");
       }

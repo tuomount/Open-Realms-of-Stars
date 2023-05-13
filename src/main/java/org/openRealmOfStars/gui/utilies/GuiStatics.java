@@ -436,11 +436,6 @@ public final class GuiStatics {
   public static final Color COLOR_GREYBLUE = new Color(180, 180, 200, 65);
 
   /**
-   * Green text dark one
-   */
-  public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
-
-  /**
    * Green text
    */
   public static final Color COLOR_GREEN_TEXT = new Color(4, 186, 0, 255);
@@ -1845,6 +1840,14 @@ public final class GuiStatics {
    */
   public static Color getCoolSpaceColor() {
     return schemeType.getCoolSpaceColor();
+  }
+
+  /**
+   * Get Info text color.
+   * @return Color
+   */
+  public static Color getInfoTextColor() {
+    return schemeType.getInfoTextColor();
   }
 
 }

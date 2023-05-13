@@ -520,7 +520,7 @@ public class Game implements ActionListener {
       }
       UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
       UIManager.put("Tree.paintLines", false);
-      UIManager.put("Tree.line", GuiStatics.COLOR_GREEN_TEXT_DARK);
+      UIManager.put("Tree.line", GuiStatics.getInfoTextColor());
       UIManager.put("Tree.closedIcon", Icons.getIconByName(
           Icons.ICON_CLOSED).getAsIcon());
       UIManager.put("Tree.openIcon", Icons.getIconByName(

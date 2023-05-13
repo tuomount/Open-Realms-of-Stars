@@ -129,7 +129,7 @@ public class InfoTextArea extends JTextArea {
     this.setFont(GuiStatics.getFontCubellanSC());
     this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
     this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
-        GuiStatics.COLOR_GREEN_TEXT_DARK);
+        GuiStatics.getInfoTextColor());
     this.setTextHighlightColor(GuiStatics.getCoolSpaceColor(),
         GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
     this.setBackground(Color.BLACK);
@@ -145,7 +145,7 @@ public class InfoTextArea extends JTextArea {
     this.setFont(GuiStatics.getFontCubellanSC());
     this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
     this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
-        GuiStatics.COLOR_GREEN_TEXT_DARK);
+        GuiStatics.getInfoTextColor());
     this.setTextHighlightColor(GuiStatics.getCoolSpaceColor(),
         GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
     this.setBackground(Color.BLACK);
@@ -163,7 +163,7 @@ public class InfoTextArea extends JTextArea {
     textToShow = text;
     this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
     this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
-        GuiStatics.COLOR_GREEN_TEXT_DARK);
+        GuiStatics.getInfoTextColor());
     this.setTextHighlightColor(GuiStatics.getCoolSpaceColor(),
         GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
     this.setBackground(Color.BLACK);

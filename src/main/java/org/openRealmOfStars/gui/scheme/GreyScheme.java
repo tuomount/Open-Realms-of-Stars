@@ -41,7 +41,10 @@ public class GreyScheme extends BaseScheme {
    */
   public static final Color COLOR_COOL_SPACE_BLUE_TRANS = new Color(210, 210,
       255, 128);
-
+  /**
+   * Green text dark one
+   */
+  public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
 
   @Override
   public Color getPanelBackground() {
@@ -61,5 +64,10 @@ public class GreyScheme extends BaseScheme {
   @Override
   public Color getCoolSpaceColorTransparent() {
     return COLOR_COOL_SPACE_BLUE_TRANS;
+  }
+
+  @Override
+  public Color getInfoTextColor() {
+    return COLOR_GREEN_TEXT_DARK;
   }
 }

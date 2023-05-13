@@ -53,7 +53,7 @@ public class BridgeDeviceRenderer implements ListCellRenderer<BridgeDevice> {
       renderer.setForeground(GuiStatics.COLOR_GREEN_TEXT);
       renderer.setBackground(Color.BLACK);
     } else {
-      renderer.setForeground(GuiStatics.COLOR_GREEN_TEXT_DARK);
+      renderer.setForeground(GuiStatics.getInfoTextColor());
       renderer.setBackground(Color.BLACK);
     }
     return renderer;

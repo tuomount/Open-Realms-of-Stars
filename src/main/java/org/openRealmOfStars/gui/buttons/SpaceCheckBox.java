@@ -84,7 +84,7 @@ public class SpaceCheckBox extends JCheckBox {
   public JToolTip createToolTip() {
     JToolTip toolTip = super.createToolTip();
     toolTip.setForeground(GuiStatics.getCoolSpaceColor());
-    toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    toolTip.setBackground(GuiStatics.getCoolSpaceColorDark());
     toolTip.setBorder(BorderFactory
         .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
     return toolTip;

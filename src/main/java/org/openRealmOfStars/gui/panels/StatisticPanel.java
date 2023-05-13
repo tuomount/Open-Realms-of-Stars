@@ -282,7 +282,7 @@ public class StatisticPanel extends JPanel {
     }
     for (int i = 0; i <= amount; i++) {
       if (i > 0) {
-        g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+        g2d.setColor(GuiStatics.getCoolSpaceColorDark());
         g2d.drawLine(Math.round(offsetX + i * scaleX * mult),
             this.getHeight() - offsetY,
             Math.round(offsetX + i * scaleX * mult), topOffsetY);
@@ -309,7 +309,7 @@ public class StatisticPanel extends JPanel {
     }
     for (int i = 0; i <= amount; i++) {
       if (i > 0) {
-        g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+        g2d.setColor(GuiStatics.getCoolSpaceColorDark());
         g2d.drawLine(offsetX,
             Math.round(this.getHeight() - offsetY - i * scaleY * mult),
             offsetX + drawWidth,

@@ -49,7 +49,7 @@ public class BaseInfoTextArea extends JTextArea {
     this.setBackground(Color.BLACK);
     this.setBorder(new SimpleBorder());
     this.setSelectedTextColor(GuiStatics.getCoolSpaceColor());
-    this.setSelectionColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    this.setSelectionColor(GuiStatics.getCoolSpaceColorDark());
   }
 
   /**
@@ -62,7 +62,7 @@ public class BaseInfoTextArea extends JTextArea {
     this.setBackground(Color.BLACK);
     this.setBorder(new SimpleBorder());
     this.setSelectedTextColor(GuiStatics.getCoolSpaceColor());
-    this.setSelectionColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    this.setSelectionColor(GuiStatics.getCoolSpaceColorDark());
   }
 
   /**
@@ -76,7 +76,7 @@ public class BaseInfoTextArea extends JTextArea {
     this.setBackground(Color.BLACK);
     this.setBorder(new SimpleBorder());
     this.setSelectedTextColor(GuiStatics.getCoolSpaceColor());
-    this.setSelectionColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    this.setSelectionColor(GuiStatics.getCoolSpaceColorDark());
   }
 
 }

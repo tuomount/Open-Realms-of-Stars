@@ -50,7 +50,7 @@ public class PlanetListRendererTest {
     JLabel label = (JLabel) renderer.getListCellRendererComponent(list, planet, index,
         selected, cellHasFocus);
     assertEquals("Planet 1",label.getText());
-    assertEquals(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK, label.getForeground());
+    assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
     assertEquals(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK, label.getBackground());
     
     selected = true;

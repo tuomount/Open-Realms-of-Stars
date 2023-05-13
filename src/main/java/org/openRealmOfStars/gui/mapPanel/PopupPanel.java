@@ -417,7 +417,7 @@ public class PopupPanel {
     gr.setPaint(GuiStatics.COLOR_VERY_DARK_GREY_TRANS);
     gr.fillRect(textX + borderSize, textY + borderSize,
         textWidth - borderSize * 2, textHeight - borderSize * 2);
-    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    gr.setColor(GuiStatics.getCoolSpaceColorDark());
     gr.setFont(GuiStatics.getFontCubellanBoldBig());
     int h = GuiStatics.getTextHeight(gr.getFont(), title);
     int w = GuiStatics.getTextWidth(gr.getFont(), title);
@@ -439,7 +439,7 @@ public class PopupPanel {
       w = textWidth / 2  - w / 2;
       gr.drawString(rows[i], textX + w, textY + h * 2 + h * i);
     }
-    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    gr.setColor(GuiStatics.getCoolSpaceColorDark());
     gr.setFont(GuiStatics.getFontCubellanSC());
     String hint = "Press enter/space bar or click to continue";
     h = GuiStatics.getTextHeight(gr.getFont(), hint);

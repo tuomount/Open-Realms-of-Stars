@@ -347,7 +347,7 @@ public class BigImagePanel extends JPanel {
                   title) / 2;
         }
       }
-      drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK,
+      drawBoldText(g, GuiStatics.getCoolSpaceColorDark(),
           GuiStatics.getCoolSpaceColor(), offsetX, offsetY, title);
     }
 

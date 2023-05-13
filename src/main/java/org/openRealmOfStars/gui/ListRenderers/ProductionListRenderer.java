@@ -52,7 +52,7 @@ public class ProductionListRenderer implements ListCellRenderer<Construction> {
       renderer.setForeground(GuiStatics.getCoolSpaceColor());
       renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
     } else {
-      renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+      renderer.setForeground(GuiStatics.getCoolSpaceColorDark());
       renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     }
     return renderer;

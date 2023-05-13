@@ -47,6 +47,12 @@ public class ClassicScheme extends BaseScheme {
    */
   public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
 
+  /**
+   * Cool space blue dark
+   */
+  public static final Color COLOR_COOL_SPACE_BLUE_DARK = new Color(25, 120,
+      193);
+
   @Override
   public Color getPanelBackground() {
     return COLOR_SPACE_GREY_BLUE;
@@ -70,6 +76,11 @@ public class ClassicScheme extends BaseScheme {
   @Override
   public Color getInfoTextColor() {
     return COLOR_GREEN_TEXT_DARK;
+  }
+
+  @Override
+  public Color getCoolSpaceColorDark() {
+    return COLOR_COOL_SPACE_BLUE_DARK;
   }
 
 }

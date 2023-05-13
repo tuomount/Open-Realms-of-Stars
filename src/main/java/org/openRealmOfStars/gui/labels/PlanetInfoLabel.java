@@ -154,7 +154,7 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
     constructionSelect = new JComboBox<>(this.planet.getProductionList());
     constructionSelect.setActionCommand(planet.getName() + "|"
         + GameCommands.COMMAND_PRODUCTION_LIST);
-    constructionSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    constructionSelect.setBackground(GuiStatics.getCoolSpaceColorDark());
     constructionSelect.setForeground(GuiStatics.getCoolSpaceColor());
     constructionSelect.setBorder(new SimpleBorder());
     constructionSelect.setFont(GuiStatics.getFontCubellan());

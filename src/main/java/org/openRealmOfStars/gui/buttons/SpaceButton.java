@@ -83,7 +83,7 @@ public class SpaceButton extends JButton {
   public JToolTip createToolTip() {
     JToolTip toolTip = super.createToolTip();
     toolTip.setForeground(GuiStatics.getCoolSpaceColor());
-    toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    toolTip.setBackground(GuiStatics.getCoolSpaceColorDark());
     toolTip.setBorder(BorderFactory
         .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
     return toolTip;
@@ -124,10 +124,10 @@ public class SpaceButton extends JButton {
   protected void paintComponent(final Graphics g) {
     GradientPaint gradient = new GradientPaint(0, 0,
         GuiStatics.getCoolSpaceColor(), this.getWidth(), this.getHeight(),
-        GuiStatics.COLOR_COOL_SPACE_BLUE_DARK, true);
+        GuiStatics.getCoolSpaceColorDark(), true);
 
     if (this.getModel().isPressed()) {
-      gradient = new GradientPaint(0, 0, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK,
+      gradient = new GradientPaint(0, 0, GuiStatics.getCoolSpaceColorDark(),
           this.getWidth(), this.getHeight(), GuiStatics.COLOR_DEEP_SPACE_BLUE,
           true);
       this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));

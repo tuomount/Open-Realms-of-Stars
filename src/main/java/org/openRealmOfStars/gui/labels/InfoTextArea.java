@@ -131,7 +131,7 @@ public class InfoTextArea extends JTextArea {
     this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
         GuiStatics.getInfoTextColor());
     this.setTextHighlightColor(GuiStatics.getCoolSpaceColor(),
-        GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+        GuiStatics.getCoolSpaceColorDark());
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
@@ -147,7 +147,7 @@ public class InfoTextArea extends JTextArea {
     this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
         GuiStatics.getInfoTextColor());
     this.setTextHighlightColor(GuiStatics.getCoolSpaceColor(),
-        GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+        GuiStatics.getCoolSpaceColorDark());
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
@@ -165,7 +165,7 @@ public class InfoTextArea extends JTextArea {
     this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
         GuiStatics.getInfoTextColor());
     this.setTextHighlightColor(GuiStatics.getCoolSpaceColor(),
-        GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+        GuiStatics.getCoolSpaceColorDark());
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());

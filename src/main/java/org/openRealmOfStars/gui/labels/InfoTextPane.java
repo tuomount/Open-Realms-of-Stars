@@ -52,7 +52,7 @@ public class InfoTextPane extends JTextPane {
     this.setBackground(Color.BLACK);
     this.setBorder(new SimpleBorder());
     this.setSelectedTextColor(GuiStatics.getCoolSpaceColor());
-    this.setSelectionColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    this.setSelectionColor(GuiStatics.getCoolSpaceColorDark());
     this.setEditable(false);
   }
 

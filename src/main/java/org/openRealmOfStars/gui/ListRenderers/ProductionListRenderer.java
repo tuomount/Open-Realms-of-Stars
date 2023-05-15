@@ -50,7 +50,7 @@ public class ProductionListRenderer implements ListCellRenderer<Construction> {
     renderer.setIcon(value.getIcon().getAsIcon());
     if (isSelected) {
       renderer.setForeground(GuiStatics.getCoolSpaceColor());
-      renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
+      renderer.setBackground(GuiStatics.getDeepSpaceColor());
     } else {
       renderer.setForeground(GuiStatics.getCoolSpaceColorDark());
       renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);

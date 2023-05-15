@@ -61,7 +61,7 @@ public class ShipHullListRendererTest {
         selected, cellHasFocus);
     assertEquals("Hull 1 - Small",label.getText());
     assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
-    assertEquals(GuiStatics.COLOR_DEEP_SPACE_PURPLE, label.getBackground());
+    assertEquals(GuiStatics.getDeepSpaceColor(), label.getBackground());
   }
 
 }

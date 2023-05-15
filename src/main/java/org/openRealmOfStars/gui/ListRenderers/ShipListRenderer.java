@@ -52,7 +52,7 @@ public class ShipListRenderer implements ListCellRenderer<Ship> {
         + " - " + value.getTotalMilitaryPower());
     if (isSelected) {
       renderer.setForeground(value.getDamageColor());
-      renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
+      renderer.setBackground(GuiStatics.getDeepSpaceColor());
     } else {
       renderer.setForeground(value.getDamageColor());
       renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);

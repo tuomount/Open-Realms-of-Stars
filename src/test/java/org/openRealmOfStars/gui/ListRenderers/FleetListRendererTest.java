@@ -63,7 +63,7 @@ public class FleetListRendererTest {
         selected, cellHasFocus);
     assertEquals("Fleet 1 - 5 ships",label.getText());
     assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
-    assertEquals(GuiStatics.COLOR_DEEP_SPACE_PURPLE, label.getBackground());
+    assertEquals(GuiStatics.getDeepSpaceColor(), label.getBackground());
   }
 
 }

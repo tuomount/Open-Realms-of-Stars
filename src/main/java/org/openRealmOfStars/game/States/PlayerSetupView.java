@@ -349,7 +349,7 @@ public class PlayerSetupView extends BlackPanel {
     comboGovernmentSelect[index].setBackground(
         GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     comboGovernmentSelect[index].setForeground(
-        GuiStatics.COLOR_COOL_SPACE_BLUE);
+        GuiStatics.getCoolSpaceColor());
     comboGovernmentSelect[index].setBorder(new SimpleBorder());
     comboGovernmentSelect[index].setFont(GuiStatics.getFontCubellan());
     comboGovernmentSelect[index].getModel()
@@ -384,7 +384,7 @@ public class PlayerSetupView extends BlackPanel {
     playerName[index] = new JTextField(
         "Empire of " + config.getRace(index).getName());
     playerName[index].setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    playerName[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    playerName[index].setForeground(GuiStatics.getCoolSpaceColor());
     playerName[index].setFont(GuiStatics.getFontCubellanSmaller());
     playerName[index].setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
@@ -404,7 +404,7 @@ public class PlayerSetupView extends BlackPanel {
     comboDifficult[index].setBackground(
         GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     comboDifficult[index].setForeground(
-        GuiStatics.COLOR_COOL_SPACE_BLUE);
+        GuiStatics.getCoolSpaceColor());
     comboDifficult[index].setFont(GuiStatics.getFontCubellanSmaller());
     comboDifficult[index].setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
@@ -421,7 +421,7 @@ public class PlayerSetupView extends BlackPanel {
         PlayerColor.values());
     comboRealmColor[index]
         .setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    comboRealmColor[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    comboRealmColor[index].setForeground(GuiStatics.getCoolSpaceColor());
     comboRealmColor[index].setBorder(new SimpleBorder());
     comboRealmColor[index].setFont(GuiStatics.getFontCubellan());
     PlayerColor color = config.getRace(index).getPrimaryColor();

@@ -51,6 +51,12 @@ public abstract class BaseScheme {
   public abstract Color getCoolSpaceColorTransparent();
 
   /**
+   * Get deep space color.
+   * @return Color
+   */
+  public abstract Color getDeepSpaceColor();
+
+  /**
    * Get Info text color.
    * @return Color
    */

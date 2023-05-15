@@ -533,7 +533,7 @@ public class Game implements ActionListener {
           Icons.ICON_ARROW_RIGHT).getAsIcon());
       UIManager.put("Tree.background", Color.BLACK);
       UIManager.put("Tree.selectionBackground",
-          GuiStatics.COLOR_DEEP_SPACE_PURPLE);
+          GuiStatics.getDeepSpaceColor());
       UIManager.put("Tree.selectionForeground",
           GuiStatics.COLOR_GREEN_TEXT);
       UIManager.put("Tree.selectionBorderColor",

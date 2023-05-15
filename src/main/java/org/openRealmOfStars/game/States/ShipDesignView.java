@@ -350,7 +350,7 @@ public class ShipDesignView extends BlackPanel {
     variantSelection
         .setActionCommand(GameCommands.COMMAND_SHIPDESIGN_VARIANT_SELECTED);
     variantSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    variantSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    variantSelection.setForeground(GuiStatics.getCoolSpaceColor());
     variantSelection.setBorder(new SimpleBorder());
     variantSelection.setFont(GuiStatics.getFontCubellan());
     variantSelection.setMaximumSize(new Dimension(200,
@@ -395,7 +395,7 @@ public class ShipDesignView extends BlackPanel {
     componentFilter
         .setActionCommand(GameCommands.COMMAND_SHIPDESIGN_COMPONENTFILTERED);
     componentFilter.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    componentFilter.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    componentFilter.setForeground(GuiStatics.getCoolSpaceColor());
     componentFilter.setBorder(new SimpleBorder());
     componentFilter.setFont(GuiStatics.getFontCubellan());
     componentFilter.setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -408,7 +408,7 @@ public class ShipDesignView extends BlackPanel {
     componentSelect
         .setActionCommand(GameCommands.COMMAND_SHIPDESIGN_COMPONENTSELECTED);
     componentSelect.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    componentSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    componentSelect.setForeground(GuiStatics.getCoolSpaceColor());
     componentSelect.setBorder(new SimpleBorder());
     componentSelect.setFont(GuiStatics.getFontCubellan());
     componentSelect.setRenderer(new ShipComponentListRenderer());

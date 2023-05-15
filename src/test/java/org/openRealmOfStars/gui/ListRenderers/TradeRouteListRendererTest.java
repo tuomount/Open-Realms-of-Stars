@@ -55,7 +55,7 @@ public class TradeRouteListRendererTest {
         selected, cellHasFocus);
     assertEquals("ToString", label.getText());
     assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
-    assertEquals(GuiStatics.COLOR_DEEP_SPACE_PURPLE, label.getBackground());
+    assertEquals(GuiStatics.getDeepSpaceColor(), label.getBackground());
 
   }
 

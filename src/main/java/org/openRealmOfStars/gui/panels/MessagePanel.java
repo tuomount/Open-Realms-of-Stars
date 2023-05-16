@@ -127,7 +127,7 @@ public class MessagePanel extends JPanel {
     msgText.setLineWrap(true);
     msgText.setWrapStyleWord(true);
     JScrollPane scroll = new JScrollPane(msgText);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     this.add(scroll);
 

@@ -360,7 +360,7 @@ public class DiplomacyView extends BlackPanel {
     humanOffer.add(label);
     humanTechListOffer = createTechList(trade.getTradeableTechListForSecond());
     JScrollPane scroll = new JScrollPane(humanTechListOffer);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(scroll);
     humanMapPlanetsOffer = new SpaceCheckBox("Trade map of planets");
@@ -467,7 +467,7 @@ public class DiplomacyView extends BlackPanel {
     humanFleetListOffer = createFleetList(
         trade.getTradeableFleetListForFirst());
     scroll = new JScrollPane(humanFleetListOffer);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(scroll);
     label = new SpaceLabel("Planets to trade");
@@ -476,7 +476,7 @@ public class DiplomacyView extends BlackPanel {
     humanPlanetListOffer = createPlanetList(
         trade.getTradeablePlanetListForFirst());
     scroll = new JScrollPane(humanPlanetListOffer);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(scroll);
     humanOffer.add(Box.createRigidArea(new Dimension(3, 3)));
@@ -526,7 +526,7 @@ public class DiplomacyView extends BlackPanel {
     humanLines.setBackground(Color.BLACK);
     humanLines.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     scroll = new JScrollPane(humanLines);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(scroll);
     SpaceButton acceptButton = new SpaceButton("Make an offer",
@@ -543,7 +543,7 @@ public class DiplomacyView extends BlackPanel {
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(label);
     scroll = new JScrollPane(aiTechListOffer);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     aiOffer.add(scroll);
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiMapPlanetsOffer = new SpaceCheckBox("Trade map of planets");
@@ -615,7 +615,7 @@ public class DiplomacyView extends BlackPanel {
     aiOffer.add(label);
     aiFleetListOffer = createFleetList(trade.getTradeableFleetListForSecond());
     scroll = new JScrollPane(aiFleetListOffer);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(scroll);
     label = new SpaceLabel("Planets to trade");
@@ -624,7 +624,7 @@ public class DiplomacyView extends BlackPanel {
     aiPlanetListOffer = createPlanetList(
         trade.getTradeablePlanetListForSecond());
     scroll = new JScrollPane(aiPlanetListOffer);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(scroll);
     aiOffer.add(Box.createRigidArea(new Dimension(3, 3)));

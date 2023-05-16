@@ -323,7 +323,7 @@ public class PlayerSetupView extends BlackPanel {
     comboRaceSelect[index] = new SpaceComboBox<>(
         SpaceRaceUtility.RACE_SELECTION);
     comboRaceSelect[index]
-        .setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+        .setBackground(GuiStatics.getDeepSpaceDarkerColor());
     comboRaceSelect[index].setForeground(GuiStatics.getCoolSpaceColor());
     comboRaceSelect[index].setBorder(new SimpleBorder());
     comboRaceSelect[index].setFont(GuiStatics.getFontCubellan());
@@ -347,7 +347,7 @@ public class PlayerSetupView extends BlackPanel {
     comboGovernmentSelect[index] = new SpaceComboBox<>(
         GovernmentUtility.getGovernmentsForRace(config.getRace(index)));
     comboGovernmentSelect[index].setBackground(
-        GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+        GuiStatics.getDeepSpaceDarkerColor());
     comboGovernmentSelect[index].setForeground(
         GuiStatics.getCoolSpaceColor());
     comboGovernmentSelect[index].setBorder(new SimpleBorder());
@@ -383,7 +383,7 @@ public class PlayerSetupView extends BlackPanel {
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     playerName[index] = new JTextField(
         "Empire of " + config.getRace(index).getName());
-    playerName[index].setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    playerName[index].setBackground(GuiStatics.getDeepSpaceDarkerColor());
     playerName[index].setForeground(GuiStatics.getCoolSpaceColor());
     playerName[index].setFont(GuiStatics.getFontCubellanSmaller());
     playerName[index].setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -402,7 +402,7 @@ public class PlayerSetupView extends BlackPanel {
     comboDifficult[index].setSelectedIndex(
         config.getDifficultyLevel().getIndex());
     comboDifficult[index].setBackground(
-        GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+        GuiStatics.getDeepSpaceDarkerColor());
     comboDifficult[index].setForeground(
         GuiStatics.getCoolSpaceColor());
     comboDifficult[index].setFont(GuiStatics.getFontCubellanSmaller());
@@ -420,7 +420,7 @@ public class PlayerSetupView extends BlackPanel {
     comboRealmColor[index] = new SpaceComboBox<>(
         PlayerColor.values());
     comboRealmColor[index]
-        .setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+        .setBackground(GuiStatics.getDeepSpaceDarkerColor());
     comboRealmColor[index].setForeground(GuiStatics.getCoolSpaceColor());
     comboRealmColor[index].setBorder(new SimpleBorder());
     comboRealmColor[index].setFont(GuiStatics.getFontCubellan());

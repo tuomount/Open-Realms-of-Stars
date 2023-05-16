@@ -117,7 +117,7 @@ public class LoadGameView extends BlackPanel {
 
     saveGamesList.setCellRenderer(new SaveGameListRenderer());
     JScrollPane scroll = new JScrollPane(saveGamesList);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     saveGamesList.setBackground(Color.BLACK);
     saveGamesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     info.add(scroll);

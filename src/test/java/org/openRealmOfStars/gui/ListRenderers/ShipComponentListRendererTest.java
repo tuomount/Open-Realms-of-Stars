@@ -51,7 +51,7 @@ public class ShipComponentListRendererTest {
         selected, cellHasFocus);
     assertEquals("Component - Engine",label.getText());
     assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
-    assertEquals(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK, label.getBackground());
+    assertEquals(GuiStatics.getDeepSpaceDarkerColor(), label.getBackground());
     
     value = null;
     selected = true;

@@ -89,7 +89,7 @@ public class EspionagePanel extends InfoPanel {
     infoText.setCharacterWidth(8);
     infoText.setLineWrap(true);
     JScrollPane scroll = new JScrollPane(infoText);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     infoText.setText(description);
     this.add(scroll);
     this.add(Box.createRigidArea(new Dimension(5, 5)));

@@ -47,7 +47,7 @@ public class SpaceCombo<E> extends JComboBox<E> {
    */
   public SpaceCombo(final E[] data) {
     super(data);
-    setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    setBackground(GuiStatics.getDeepSpaceDarkerColor());
     setForeground(GuiStatics.getCoolSpaceColor());
     setBorder(new SimpleBorder());
     setFont(GuiStatics.getFontCubellan());

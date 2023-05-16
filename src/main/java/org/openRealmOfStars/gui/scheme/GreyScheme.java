@@ -56,6 +56,11 @@ public class GreyScheme extends BaseScheme {
    */
   public static final Color COLOR_DEEP_SPACE_GRAY = new Color(36, 36, 64);
 
+  /**
+   * Deep space gray dark
+   */
+  public static final Color COLOR_DEEP_SPACE_GRAY_DARK = new Color(15, 15, 41);
+
   @Override
   public Color getPanelBackground() {
     return COLOR_SPACE_GREY;
@@ -89,5 +94,9 @@ public class GreyScheme extends BaseScheme {
   @Override
   public Color getDeepSpaceColor() {
     return COLOR_DEEP_SPACE_GRAY;
+  }
+  @Override
+  public Color getDeepSpaceDarkerColor() {
+    return COLOR_DEEP_SPACE_GRAY_DARK;
   }
 }

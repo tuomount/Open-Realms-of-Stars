@@ -537,7 +537,7 @@ public class Game implements ActionListener {
       UIManager.put("Tree.selectionForeground",
           GuiStatics.COLOR_GREEN_TEXT);
       UIManager.put("Tree.selectionBorderColor",
-          GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+          GuiStatics.getDeepSpaceDarkerColor());
       UIManager.put("Tree.textBackground", Color.BLACK);
       UIManager.put("Tree.textForeground", GuiStatics.COLOR_GREEN_TEXT);
       UIManager.put("ToolTip.background",

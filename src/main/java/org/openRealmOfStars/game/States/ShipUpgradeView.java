@@ -154,7 +154,7 @@ public class ShipUpgradeView extends BlackPanel
     shipListInFleet.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     shipListInFleet.addListSelectionListener(this);
     JScrollPane scroll = new JScrollPane(shipListInFleet);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.add(scroll);
@@ -179,7 +179,7 @@ public class ShipUpgradeView extends BlackPanel
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
     infoText = new InfoTextPane();
     scroll = new JScrollPane(infoText);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     panel.add(scroll);
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceLabel label = new SpaceLabel("Upgrade ship to:");
@@ -187,7 +187,7 @@ public class ShipUpgradeView extends BlackPanel
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
     String[] emptyList = {"None"};
     upgradeList = new SpaceComboBox<>(emptyList);
-    upgradeList.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    upgradeList.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     upgradeList.setForeground(GuiStatics.getCoolSpaceColor());
     upgradeList.setBorder(new SimpleBorder());
     upgradeList.setFont(GuiStatics.getFontCubellan());

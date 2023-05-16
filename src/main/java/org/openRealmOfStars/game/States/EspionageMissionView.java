@@ -372,7 +372,7 @@ public class EspionageMissionView extends BlackPanel {
     buildingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     buildingList.setBackground(Color.BLACK);
     JScrollPane scroll = new JScrollPane(buildingList);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     scroll.setBackground(Color.BLACK);
     scroll.setPreferredSize(new Dimension(100, 100));
     panel.add(scroll);

@@ -86,7 +86,7 @@ public class SpaceCheckBox extends JCheckBox {
     toolTip.setForeground(GuiStatics.getCoolSpaceColor());
     toolTip.setBackground(GuiStatics.getCoolSpaceColorDark());
     toolTip.setBorder(BorderFactory
-        .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+        .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
     return toolTip;
   }
 
@@ -137,7 +137,7 @@ public class SpaceCheckBox extends JCheckBox {
         g2d.setColor(getForeground());
       }
     } else {
-      g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER);
+      g2d.setColor(GuiStatics.getCoolSpaceColorDarker());
     }
     String[] texts = getText().split("\n");
     g.setFont(GuiStatics.getFontCubellan());

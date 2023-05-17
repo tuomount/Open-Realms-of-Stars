@@ -54,6 +54,12 @@ public class ClassicScheme extends BaseScheme {
       193);
 
   /**
+   * Cool space blue darker
+   */
+  public static final Color COLOR_COOL_SPACE_BLUE_DARKER = new Color(20, 110,
+      180);
+
+  /**
    * Deep space purple
    */
   public static final Color COLOR_DEEP_SPACE_PURPLE = new Color(47, 27, 92);
@@ -91,6 +97,11 @@ public class ClassicScheme extends BaseScheme {
   @Override
   public Color getCoolSpaceColorDark() {
     return COLOR_COOL_SPACE_BLUE_DARK;
+  }
+
+  @Override
+  public Color getCoolSpaceColorDarker() {
+    return COLOR_COOL_SPACE_BLUE_DARKER;
   }
 
   @Override

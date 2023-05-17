@@ -365,7 +365,7 @@ public class PopupPanel {
   protected void drawGradientBorder(final Graphics2D gr, final int x,
       final int y, final int width, final int height) {
     GradientPaint gradient = new GradientPaint(x, y,
-        GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER, x + width, y + width,
+        GuiStatics.getCoolSpaceColorDarker(), x + width, y + width,
         GuiStatics.getCoolSpaceColor(), false);
     gr.setPaint(gradient);
     int borderSize = 3;

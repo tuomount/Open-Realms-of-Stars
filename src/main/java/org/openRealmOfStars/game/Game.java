@@ -545,7 +545,7 @@ public class Game implements ActionListener {
       UIManager.put("ToolTip.foreground",
           GuiStatics.getCoolSpaceColor());
       UIManager.put("ToolTip.border", BorderFactory
-          .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+          .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
       gameFrame.setTitle(GAME_TITLE + " " + GAME_VERSION);
       ArrayList<BufferedImage> icons = new ArrayList<>();
       icons.add(GuiStatics.LOGO32);

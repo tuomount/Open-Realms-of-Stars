@@ -1505,7 +1505,7 @@ public class MapPanel extends JPanel {
               int textWidth = (int) GuiStatics.getFontCubellan()
                   .getStringBounds(accuracyStr, gr.getFontRenderContext())
                   .getWidth();
-              gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER);
+              gr.setColor(GuiStatics.getCoolSpaceColorDarker());
               int offsetY = 3;
               int offsetX = 2;
               gr.drawString(accuracyStr,

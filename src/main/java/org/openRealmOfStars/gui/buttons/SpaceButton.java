@@ -85,7 +85,7 @@ public class SpaceButton extends JButton {
     toolTip.setForeground(GuiStatics.getCoolSpaceColor());
     toolTip.setBackground(GuiStatics.getCoolSpaceColorDark());
     toolTip.setBorder(BorderFactory
-        .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+        .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
     return toolTip;
   }
 
@@ -156,7 +156,7 @@ public class SpaceButton extends JButton {
         g2d.setColor(Color.black);
       }
     } else {
-      g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER);
+      g2d.setColor(GuiStatics.getCoolSpaceColorDarker());
     }
     String[] texts = getText().split("\n");
     g.setFont(GuiStatics.getFontCubellan());

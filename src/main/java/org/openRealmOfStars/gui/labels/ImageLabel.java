@@ -182,7 +182,7 @@ public class ImageLabel extends JLabel {
     toolTip.setForeground(GuiStatics.getCoolSpaceColor());
     toolTip.setBackground(GuiStatics.getCoolSpaceColorDark());
     toolTip.setBorder(BorderFactory
-        .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+        .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
     return toolTip;
   }
 

@@ -172,7 +172,7 @@ public class OptionsView extends BlackPanel {
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
     JTabbedPane tabs = new JTabbedPane();
     tabs.setFont(GuiStatics.getFontCubellanSmaller());
-    tabs.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER);
+    tabs.setForeground(GuiStatics.getCoolSpaceColorDarker());
     tabs.setBackground(GuiStatics.getDeepSpaceDarkerColor());
     // Screen panel starts here
     InfoPanel screenPanel = new InfoPanel();

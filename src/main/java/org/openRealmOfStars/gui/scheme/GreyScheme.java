@@ -35,22 +35,22 @@ public class GreyScheme extends BaseScheme {
   /**
    * Cool space color
    */
-  public static final Color COLOR_COOL_SPACE_BLUE = new Color(210, 210, 255);
-  /**
-   * Cool space color dark
-   */
-  public static final Color COLOR_COOL_SPACE_BLUE_DARK = new Color(160, 160,
-      190);
-  /**
-   * Cool space color darker
-   */
-  public static final Color COLOR_COOL_SPACE_BLUE_DARKER = new Color(120, 120,
-      150);
+  public static final Color COLOR_COOL_SPACE_BLUE = new Color(160, 160, 185);
   /**
    * Cool space color, opacity 128
    */
-  public static final Color COLOR_COOL_SPACE_BLUE_TRANS = new Color(210, 210,
-      255, 128);
+  public static final Color COLOR_COOL_SPACE_BLUE_TRANS = new Color(90, 210,
+      215, 128);
+  /**
+   * Cool space color dark
+   */
+  public static final Color COLOR_COOL_SPACE_BLUE_DARK = new Color(120, 120,
+      145);
+  /**
+   * Cool space color darker
+   */
+  public static final Color COLOR_COOL_SPACE_BLUE_DARKER = new Color(80, 80,
+      115);
   /**
    * Green text dark one
    */
@@ -59,12 +59,12 @@ public class GreyScheme extends BaseScheme {
   /**
    * Deep space gray
    */
-  public static final Color COLOR_DEEP_SPACE_GRAY = new Color(36, 36, 64);
+  public static final Color COLOR_DEEP_SPACE_GRAY = new Color(46, 36, 44);
 
   /**
    * Deep space gray dark
    */
-  public static final Color COLOR_DEEP_SPACE_GRAY_DARK = new Color(15, 15, 41);
+  public static final Color COLOR_DEEP_SPACE_GRAY_DARK = new Color(38, 38, 65);
 
   @Override
   public Color getPanelBackground() {

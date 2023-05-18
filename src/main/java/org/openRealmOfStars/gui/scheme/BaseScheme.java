@@ -52,6 +52,11 @@ public abstract class BaseScheme {
    * @return Color
    */
   public abstract Color getCoolSpaceColorDarker();
+  /**
+   * Get cool space color darker transparent.
+   * @return Color
+   */
+  public abstract Color getCoolSpaceColorDarkerTransparent();
 
   /**
    * Get cool space color transparent.

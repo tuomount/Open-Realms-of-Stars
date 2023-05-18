@@ -509,12 +509,6 @@ public final class GuiStatics {
   public static final Color COLOR_DESTROYED = new Color(255, 28, 11, 255);
 
   /**
-   * Cool space blue, opacity 128
-   */
-  public static final Color COLOR_COOL_SPACE_BLUE_TRANS = new Color(88, 210,
-      255, 128);
-
-  /**
    * Dark grey, opacity 128
    */
   public static final Color COLOR_VERY_DARK_GREY_TRANS = new Color(20, 20,
@@ -1793,6 +1787,13 @@ public final class GuiStatics {
   public static Color getCoolSpaceColor() {
     return schemeType.getCoolSpaceColor();
   }
+  /**
+   * Get cool space color transparent.
+   * @return Color
+   */
+  public static Color getCoolSpaceColorTransparent() {
+    return schemeType.getCoolSpaceColorTransparent();
+  }
 
   /**
    * Get Info text color.
@@ -1816,6 +1817,13 @@ public final class GuiStatics {
    */
   public static Color getCoolSpaceColorDarker() {
     return schemeType.getCoolSpaceColorDarker();
+  }
+  /**
+   * Get Cool Space Color Darker transparent
+   * @return Color
+   */
+  public static Color getCoolSpaceColorDarkerTransparent() {
+    return schemeType.getCoolSpaceColorDarkerTransparent();
   }
 
   /**

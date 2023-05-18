@@ -277,7 +277,7 @@ public class StarFieldTextArea extends JTextArea {
       }
       String[] texts = sb.toString().split("\n");
       for (int i = 0; i < texts.length; i++) {
-        g.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS);
+        g.setColor(GuiStatics.getCoolSpaceColorDarkerTransparent());
         boolean bigFont = false;
 
         if (!smoothScroll) {
@@ -312,7 +312,7 @@ public class StarFieldTextArea extends JTextArea {
           if (bigFont) {
             g.setColor(GuiStatics.COLOR_SPACE_YELLOW);
           } else {
-            g.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS);
+            g.setColor(GuiStatics.getCoolSpaceColorTransparent());
           }
           g.drawString(line, w + 2,
               sy + i * Y_OFFSET + Y_OFFSET - smoothScrollY);

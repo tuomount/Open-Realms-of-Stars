@@ -52,7 +52,11 @@ public class ClassicScheme extends BaseScheme {
    */
   public static final Color COLOR_COOL_SPACE_BLUE_DARK = new Color(25, 120,
       193);
-
+  /**
+   * Cool space blue dark, opacity 128
+   */
+  public static final Color COLOR_COOL_SPACE_BLUE_DARK_TRANS = new Color(25,
+      120, 193, 128);
   /**
    * Cool space blue darker
    */
@@ -247,6 +251,11 @@ public class ClassicScheme extends BaseScheme {
   @Override
   public BufferedImage getArrowRightPressed() {
     return scrollRightPressed;
+  }
+
+  @Override
+  public Color getCoolSpaceColorDarkerTransparent() {
+    return COLOR_COOL_SPACE_BLUE_DARK_TRANS;
   }
 
 }

@@ -386,7 +386,7 @@ public class PopupPanel {
     int y = screen.getHeight() / 10;
     int width = screen.getWidth() - (screen.getWidth() / 5);
     int height = screen.getHeight() - (screen.getHeight() / 5);
-    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS);
+    gr.setColor(GuiStatics.getCoolSpaceColorDarkerTransparent());
     gr.fillRect(x, y, width, height);
     int borderSize = 3;
     drawGradientBorder(gr, x, y, width, height);

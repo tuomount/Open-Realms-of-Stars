@@ -58,6 +58,11 @@ public class GreyScheme extends BaseScheme {
   public static final Color COLOR_COOL_SPACE_BLUE_DARKER = new Color(80, 80,
       115);
   /**
+   * Cool space color darker transparent
+   */
+  public static final Color COLOR_COOL_SPACE_BLUE_DARKER_TRANSPARENT
+      = new Color(80, 80, 115, 128);
+  /**
    * Green text dark one
    */
   public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
@@ -242,5 +247,9 @@ public class GreyScheme extends BaseScheme {
   @Override
   public BufferedImage getArrowRightPressed() {
     return scrollRightPressed;
+  }
+  @Override
+  public Color getCoolSpaceColorDarkerTransparent() {
+    return COLOR_COOL_SPACE_BLUE_DARKER_TRANSPARENT;
   }
 }

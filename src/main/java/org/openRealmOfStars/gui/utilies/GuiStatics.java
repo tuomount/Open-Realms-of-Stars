@@ -515,17 +515,6 @@ public final class GuiStatics {
       20, 128);
 
   /**
-   * Cool space blue dark, opacity 128
-   */
-  public static final Color COLOR_COOL_SPACE_BLUE_DARK_TRANS = new Color(25,
-      120, 193, 128);
-
-  /**
-   * Deep Space Blue
-   */
-  public static final Color COLOR_DEEP_SPACE_BLUE = new Color(33, 33, 208);
-
-  /**
    * Grey 160
    */
   public static final Color COLOR_GREY_160 = new Color(160, 160, 160);
@@ -1840,6 +1829,13 @@ public final class GuiStatics {
    */
   public static Color getDeepSpaceDarkerColor() {
     return schemeType.getDeepSpaceDarkerColor();
+  }
+  /**
+   * Get Deep Space Activity Color
+   * @return Color
+   */
+  public static Color getDeepSpaceActivityColor() {
+    return schemeType.getDeepSpaceActivityColor();
   }
 
   /**

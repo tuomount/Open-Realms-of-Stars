@@ -78,6 +78,10 @@ public class ClassicScheme extends BaseScheme {
    * Deep space purple dark
    */
   public static final Color COLOR_DEEP_SPACE_PURPLE_DARK = new Color(25, 9, 61);
+  /**
+   * Deep Space Blue
+   */
+  public static final Color COLOR_DEEP_SPACE_BLUE = new Color(33, 33, 208);
 
   /**
    * Icon for small scroll up.
@@ -256,6 +260,11 @@ public class ClassicScheme extends BaseScheme {
   @Override
   public Color getCoolSpaceColorDarkerTransparent() {
     return COLOR_COOL_SPACE_BLUE_DARK_TRANS;
+  }
+
+  @Override
+  public Color getDeepSpaceActivityColor() {
+    return COLOR_DEEP_SPACE_BLUE;
   }
 
 }

@@ -128,8 +128,8 @@ public class SpaceButton extends JButton {
 
     if (this.getModel().isPressed()) {
       gradient = new GradientPaint(0, 0, GuiStatics.getCoolSpaceColorDark(),
-          this.getWidth(), this.getHeight(), GuiStatics.COLOR_DEEP_SPACE_BLUE,
-          true);
+          this.getWidth(), this.getHeight(),
+          GuiStatics.getDeepSpaceActivityColor(), true);
       this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
     } else {
@@ -151,7 +151,7 @@ public class SpaceButton extends JButton {
 
     if (this.isEnabled()) {
       if (this.getModel().isRollover()) {
-        g2d.setColor(GuiStatics.COLOR_DEEP_SPACE_BLUE);
+        g2d.setColor(GuiStatics.getDeepSpaceActivityColor());
       } else {
         g2d.setColor(Color.black);
       }

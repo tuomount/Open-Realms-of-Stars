@@ -132,7 +132,7 @@ public class SpaceCheckBox extends JCheckBox {
 
     if (this.isEnabled()) {
       if (this.getModel().isRollover()) {
-        g2d.setColor(GuiStatics.COLOR_DEEP_SPACE_BLUE);
+        g2d.setColor(GuiStatics.getDeepSpaceActivityColor());
       } else {
         g2d.setColor(getForeground());
       }

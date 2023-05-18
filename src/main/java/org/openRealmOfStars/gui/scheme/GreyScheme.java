@@ -78,6 +78,11 @@ public class GreyScheme extends BaseScheme {
   public static final Color COLOR_DEEP_SPACE_GRAY_DARK = new Color(38, 38, 65);
 
   /**
+   * Deep Space Blue
+   */
+  public static final Color COLOR_DEEP_SPACE_ACT = new Color(43, 43, 60);
+
+  /**
    * Icon for small scroll up.
    */
   private Icon16x16 smallScrollUp;
@@ -251,5 +256,9 @@ public class GreyScheme extends BaseScheme {
   @Override
   public Color getCoolSpaceColorDarkerTransparent() {
     return COLOR_COOL_SPACE_BLUE_DARKER_TRANSPARENT;
+  }
+  @Override
+  public Color getDeepSpaceActivityColor() {
+    return COLOR_DEEP_SPACE_ACT;
   }
 }

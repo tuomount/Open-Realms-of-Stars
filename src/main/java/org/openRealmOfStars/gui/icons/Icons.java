@@ -603,6 +603,23 @@ public final class Icons {
     }
     throw new RasterFormatException("Icon is outside of image.");
   }
+
+  /**
+   * Load small icon 16x16 from image file which contain multiple icons.
+   * @param imageFile Image file to load.
+   * @param x X position in image
+   * @param y Y position in image
+   * @param name Icon name
+   * @return Icon16x16
+   */
+  public static Icon16x16 loadSmallIcon(final String imageFile,
+      final int x, final int y, final String name) {
+    BufferedImage image = IOUtilities
+        .loadImage(Icons.class.getResource(imageFile));
+    Icon16x16 icon = new Icon16x16(image, x, y, name);
+    return icon;
+  }
+
   /**
    * Init Icons
    */
@@ -663,7 +680,7 @@ public final class Icons {
     addIcon(icon);
     icon = new Icon16x16(image, 1, 3, ICON_EMPTY);
     addIcon(icon);
-    icon = new Icon16x16(image, 2, 3, ICON_SCROLL_UP);
+/*    icon = new Icon16x16(image, 2, 3, ICON_SCROLL_UP);
     addIcon(icon);
     icon = new Icon16x16(image, 3, 3, ICON_SCROLL_DOWN);
     addIcon(icon);
@@ -677,7 +694,7 @@ public final class Icons {
     addIcon(icon);
     icon = new Icon16x16(image, 4, 4, ICON_SCROLL_LEFT_PRESSED);
     addIcon(icon);
-    icon = new Icon16x16(image, 5, 4, ICON_SCROLL_RIGHT_PRESSED);
+    icon = new Icon16x16(image, 5, 4, ICON_SCROLL_RIGHT_PRESSED);*/
     addIcon(icon);
     icon = new Icon16x16(image, 6, 3, ICON_MISSILE);
     addIcon(icon);

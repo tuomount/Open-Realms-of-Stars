@@ -1,6 +1,9 @@
 package org.openRealmOfStars.gui.scheme;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+
+import org.openRealmOfStars.gui.icons.Icon16x16;
 
 /**
 *
@@ -78,4 +81,32 @@ public abstract class BaseScheme {
    * @return Scheme Type
    */
   public abstract SchemeType getType();
+
+  /**
+   * Get small arrow icon based on icon name.
+   * @param name Icon name
+   * @return Icon16x16
+   */
+  public abstract Icon16x16 getSmallArrowIcon(final String name);
+
+  /**
+   * Get Arrow left as buffered image.
+   * @return BufferedImage
+   */
+  public abstract BufferedImage getArrowLeft();
+  /**
+   * Get Arrow left pressed as buffered image.
+   * @return BufferedImage
+   */
+  public abstract BufferedImage getArrowLeftPressed();
+  /**
+   * Get Arrow right as buffered image.
+   * @return BufferedImage
+   */
+  public abstract BufferedImage getArrowRight();
+  /**
+   * Get Arrow right pressed as buffered image.
+   * @return BufferedImage
+   */
+  public abstract BufferedImage getArrowRightPressed();
 }

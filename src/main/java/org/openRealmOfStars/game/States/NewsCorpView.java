@@ -154,18 +154,18 @@ public class NewsCorpView extends BlackPanel {
     this.add(base, BorderLayout.CENTER);
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-    IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
-        GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_TARGET,
-        this);
+    IconButton iBtn = new IconButton(GuiStatics.getArrowLeft(),
+        GuiStatics.getArrowLeftPressed(), false,
+        GameCommands.COMMAND_PREV_TARGET, this);
     iBtn.addActionListener(listener);
     panel.add(iBtn);
     panel.add(Box.createRigidArea(new Dimension(10, 5)));
     newsLabel = new SpaceLabel("100/100");
     newsLabel.setText("1/" + newsList.length);
     panel.add(newsLabel);
-    iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
-        GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_TARGET,
-        this);
+    iBtn = new IconButton(GuiStatics.getArrowRight(),
+        GuiStatics.getArrowRightPressed(), false,
+        GameCommands.COMMAND_NEXT_TARGET, this);
     iBtn.addActionListener(listener);
     panel.add(iBtn);
     newsPanel.add(Box.createRigidArea(new Dimension(5, 5)));

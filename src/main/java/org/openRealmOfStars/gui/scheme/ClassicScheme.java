@@ -1,6 +1,12 @@
 package org.openRealmOfStars.gui.scheme;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+
+import org.openRealmOfStars.gui.icons.Icon16x16;
+import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -69,6 +75,90 @@ public class ClassicScheme extends BaseScheme {
    */
   public static final Color COLOR_DEEP_SPACE_PURPLE_DARK = new Color(25, 9, 61);
 
+  /**
+   * Icon for small scroll up.
+   */
+  private Icon16x16 smallScrollUp;
+  /**
+   * Image for small scroll up pressed.
+   */
+  private Icon16x16 smallScrollUpPressed;
+  /**
+   * Image for small scroll down.
+   */
+  private Icon16x16 smallScrollDown;
+  /**
+   * Image for small scroll down pressed.
+   */
+  private Icon16x16 smallScrollDownPressed;
+  /**
+   * Image for small scroll left.
+   */
+  private Icon16x16 smallScrollLeft;
+  /**
+   * Image for small scroll left pressed.
+   */
+  private Icon16x16 smallScrollLeftPressed;
+  /**
+   * Image for small scroll right.
+   */
+  private Icon16x16 smallScrollRight;
+  /**
+   * Image for small scroll right pressed.
+   */
+  private Icon16x16 smallScrollRightPressed;
+  /**
+   * Image for small scroll left.
+   */
+  private BufferedImage scrollLeft;
+  /**
+   * Image for small scroll left pressed.
+   */
+  private BufferedImage scrollLeftPressed;
+  /**
+   * Image for small scroll right.
+   */
+  private BufferedImage scrollRight;
+  /**
+   * Image for small scroll right pressed.
+   */
+  private BufferedImage scrollRightPressed;
+
+  /**
+   * Initialize Grey Scheme.
+   */
+  public ClassicScheme() {
+    smallScrollUp = Icons.loadSmallIcon("/resources/images/classic_arrows.png",
+        0, 0, Icons.ICON_SCROLL_UP);
+    smallScrollUpPressed = Icons.loadSmallIcon(
+        "/resources/images/classic_arrows.png", 0, 1,
+        Icons.ICON_SCROLL_UP_PRESSED);
+    smallScrollDown = Icons.loadSmallIcon(
+        "/resources/images/classic_arrows.png", 1, 0, Icons.ICON_SCROLL_DOWN);
+    smallScrollDownPressed = Icons.loadSmallIcon(
+        "/resources/images/classic_arrows.png", 1, 1,
+        Icons.ICON_SCROLL_DOWN_PRESSED);
+    smallScrollLeft = Icons.loadSmallIcon(
+        "/resources/images/classic_arrows.png", 1, 0, Icons.ICON_SCROLL_LEFT);
+    smallScrollLeftPressed = Icons.loadSmallIcon(
+        "/resources/images/classic_arrows.png", 1, 1,
+        Icons.ICON_SCROLL_LEFT_PRESSED);
+    smallScrollRight = Icons.loadSmallIcon(
+        "/resources/images/classic_arrows.png", 1, 0, Icons.ICON_SCROLL_RIGHT);
+    smallScrollRightPressed = Icons.loadSmallIcon(
+        "/resources/images/classic_arrows.png", 1, 1,
+        Icons.ICON_SCROLL_RIGHT_PRESSED);
+    scrollLeft = IOUtilities
+        .loadImage(Tiles.class.getResource("/resources/images/left_arrow.png"));
+    scrollLeftPressed = IOUtilities.loadImage(Tiles.class.getResource(
+        "/resources/images/left_arrow_pressed.png"));
+    scrollRight = IOUtilities
+        .loadImage(Tiles.class.getResource(
+            "/resources/images/right_arrow.png"));
+    scrollRightPressed = IOUtilities.loadImage(Tiles.class.getResource(
+        "/resources/images/right_arrow_pressed.png"));
+  }
+
   @Override
   public Color getPanelBackground() {
     return COLOR_SPACE_GREY_BLUE;
@@ -112,6 +202,51 @@ public class ClassicScheme extends BaseScheme {
   @Override
   public Color getDeepSpaceDarkerColor() {
     return COLOR_DEEP_SPACE_PURPLE_DARK;
+  }
+
+  @Override
+  public Icon16x16 getSmallArrowIcon(final String name) {
+    if (name.equals(Icons.ICON_SCROLL_UP)) {
+      return smallScrollUp;
+    }
+    if (name.equals(Icons.ICON_SCROLL_UP_PRESSED)) {
+      return smallScrollUpPressed;
+    }
+    if (name.equals(Icons.ICON_SCROLL_DOWN)) {
+      return smallScrollDown;
+    }
+    if (name.equals(Icons.ICON_SCROLL_DOWN_PRESSED)) {
+      return smallScrollDownPressed;
+    }
+    if (name.equals(Icons.ICON_SCROLL_LEFT)) {
+      return smallScrollLeft;
+    }
+    if (name.equals(Icons.ICON_SCROLL_LEFT_PRESSED)) {
+      return smallScrollLeftPressed;
+    }
+    if (name.equals(Icons.ICON_SCROLL_RIGHT)) {
+      return smallScrollRight;
+    }
+    if (name.equals(Icons.ICON_SCROLL_RIGHT_PRESSED)) {
+      return smallScrollRightPressed;
+    }
+    return smallScrollUp;
+  }
+  @Override
+  public BufferedImage getArrowLeft() {
+    return scrollLeft;
+  }
+  @Override
+  public BufferedImage getArrowLeftPressed() {
+    return scrollLeftPressed;
+  }
+  @Override
+  public BufferedImage getArrowRight() {
+    return scrollRight;
+  }
+  @Override
+  public BufferedImage getArrowRightPressed() {
+    return scrollRightPressed;
   }
 
 }

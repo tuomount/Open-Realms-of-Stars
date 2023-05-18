@@ -10,10 +10,11 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016-2018  Tuomo Untinen
+* Copyright (C) 2016-2018,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -42,25 +43,25 @@ public class SpaceScrollBarUiTest {
     JButton btn = ui.createDecreaseButton(SwingConstants.NORTH);
     if (btn instanceof IconButton) {
       IconButton iBtn = (IconButton) btn;
-      assertEquals(Icons.getIconByName(Icons.ICON_SCROLL_UP_PRESSED).getIcon(),
-          iBtn.getPressedImage());
+      assertEquals(GuiStatics.getSmallArrow(
+          Icons.ICON_SCROLL_UP_PRESSED).getIcon(), iBtn.getPressedImage());
     }
     btn = ui.createDecreaseButton(SwingConstants.WEST);
     if (btn instanceof IconButton) {
       IconButton iBtn = (IconButton) btn;
-      assertEquals(Icons.getIconByName(Icons.ICON_SCROLL_LEFT).getIcon(),
+      assertEquals(GuiStatics.getSmallArrow(Icons.ICON_SCROLL_LEFT).getIcon(),
           iBtn.getNotPressedImage());
     }
     btn = ui.createIncreaseButton(SwingConstants.EAST);
     if (btn instanceof IconButton) {
       IconButton iBtn = (IconButton) btn;
-      assertEquals(Icons.getIconByName(Icons.ICON_SCROLL_RIGHT).getIcon(),
+      assertEquals(GuiStatics.getSmallArrow(Icons.ICON_SCROLL_RIGHT).getIcon(),
           iBtn.getNotPressedImage());
     }
     btn = ui.createIncreaseButton(SwingConstants.SOUTH);
     if (btn instanceof IconButton) {
       IconButton iBtn = (IconButton) btn;
-      assertEquals(Icons.getIconByName(Icons.ICON_SCROLL_DOWN_PRESSED).getIcon(),
+      assertEquals(GuiStatics.getSmallArrow(Icons.ICON_SCROLL_DOWN_PRESSED).getIcon(),
           iBtn.getPressedImage());
     }
   }

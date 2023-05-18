@@ -13,6 +13,7 @@ import java.io.InputStream;
 
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.AnimatedImage;
+import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.scheme.BaseScheme;
 import org.openRealmOfStars.gui.scheme.ClassicScheme;
@@ -822,29 +823,6 @@ public final class GuiStatics {
    */
   public static final AnimatedImage WORMHOLE = new AnimatedImage(64, 64,
       "/resources/images/wormhole.png");
-  /**
-   * Left arrow
-   */
-  public static final BufferedImage LEFT_ARROW = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/left_arrow.png"));
-
-  /**
-   * Left arrow pressed
-   */
-  public static final BufferedImage LEFT_ARROW_PRESSED = IOUtilities.loadImage(
-      Tiles.class.getResource("/resources/images/left_arrow_pressed.png"));
-
-  /**
-   * Right arrow
-   */
-  public static final BufferedImage RIGHT_ARROW = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/right_arrow.png"));
-
-  /**
-   * Right arrow pressed
-   */
-  public static final BufferedImage RIGHT_ARROW_PRESSED = IOUtilities.loadImage(
-      Tiles.class.getResource("/resources/images/right_arrow_pressed.png"));
 
   /**
    * Crosshair for combat
@@ -1800,6 +1778,7 @@ public final class GuiStatics {
   public static SchemeType getSchemeType() {
     return schemeType.getType();
   }
+
   /**
    * Get Panel background color from scheme.
    * @return Color
@@ -1853,6 +1832,47 @@ public final class GuiStatics {
    */
   public static Color getDeepSpaceDarkerColor() {
     return schemeType.getDeepSpaceDarkerColor();
+  }
+
+  /**
+   * Get Small arrow icon based on scheme.
+   * @param name Arrow type name
+   * @return Icon16x16
+   */
+  public static Icon16x16 getSmallArrow(final String name) {
+    return schemeType.getSmallArrowIcon(name);
+  }
+
+  /**
+   * Get arrow left based on scheme.
+   * @return BufferedImage
+   */
+  public static BufferedImage getArrowLeft() {
+    return schemeType.getArrowLeft();
+  }
+
+  /**
+   * Get arrow left pressed based on scheme.
+   * @return BufferedImage
+   */
+  public static BufferedImage getArrowLeftPressed() {
+    return schemeType.getArrowLeftPressed();
+  }
+
+  /**
+   * Get arrow right based on scheme.
+   * @return BufferedImage
+   */
+  public static BufferedImage getArrowRight() {
+    return schemeType.getArrowRight();
+  }
+
+  /**
+   * Get arrow right pressed based on scheme.
+   * @return BufferedImage
+   */
+  public static BufferedImage getArrowRightPressed() {
+    return schemeType.getArrowRightPressed();
   }
 
 }

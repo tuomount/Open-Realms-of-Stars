@@ -201,9 +201,9 @@ public class VoteView extends BlackPanel {
     base.setTitle("Voting list");
     EmptyInfoPanel panel = new EmptyInfoPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-    IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
-        GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_VOTE,
-        this);
+    IconButton iBtn = new IconButton(GuiStatics.getArrowLeft(),
+        GuiStatics.getArrowLeftPressed(), false,
+        GameCommands.COMMAND_PREV_VOTE, this);
     iBtn.setToolTipText("Previous vote");
     iBtn.addActionListener(listener);
     panel.add(iBtn);
@@ -219,9 +219,9 @@ public class VoteView extends BlackPanel {
     voteLabel = new SpaceLabel("Vote " + votes.size() + "/" + votes.size());
     panel.add(voteLabel);
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
-    iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
-        GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_VOTE,
-        this);
+    iBtn = new IconButton(GuiStatics.getArrowRight(),
+        GuiStatics.getArrowRightPressed(), false,
+        GameCommands.COMMAND_NEXT_VOTE, this);
     iBtn.setToolTipText("Next vote");
     iBtn.addActionListener(listener);
     panel.add(iBtn);

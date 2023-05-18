@@ -125,35 +125,36 @@ public class GreyScheme extends BaseScheme {
    * Initialize Grey Scheme.
    */
   public GreyScheme() {
-    smallScrollUp = Icons.loadSmallIcon("/resources/images/classic_arrows.png",
+    smallScrollUp = Icons.loadSmallIcon("/resources/images/grey_arrows.png",
         0, 0, Icons.ICON_SCROLL_UP);
     smallScrollUpPressed = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 0, 1,
+        "/resources/images/grey_arrows.png", 0, 1,
         Icons.ICON_SCROLL_UP_PRESSED);
     smallScrollDown = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 1, 0, Icons.ICON_SCROLL_DOWN);
+        "/resources/images/grey_arrows.png", 1, 0, Icons.ICON_SCROLL_DOWN);
     smallScrollDownPressed = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 1, 1,
+        "/resources/images/grey_arrows.png", 1, 1,
         Icons.ICON_SCROLL_DOWN_PRESSED);
     smallScrollLeft = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 1, 0, Icons.ICON_SCROLL_LEFT);
+        "/resources/images/grey_arrows.png", 1, 0, Icons.ICON_SCROLL_LEFT);
     smallScrollLeftPressed = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 1, 1,
+        "/resources/images/grey_arrows.png", 1, 1,
         Icons.ICON_SCROLL_LEFT_PRESSED);
     smallScrollRight = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 1, 0, Icons.ICON_SCROLL_RIGHT);
+        "/resources/images/grey_arrows.png", 1, 0, Icons.ICON_SCROLL_RIGHT);
     smallScrollRightPressed = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 1, 1,
+        "/resources/images/grey_arrows.png", 1, 1,
         Icons.ICON_SCROLL_RIGHT_PRESSED);
     scrollLeft = IOUtilities
-        .loadImage(Tiles.class.getResource("/resources/images/left_arrow.png"));
+        .loadImage(Tiles.class.getResource(
+            "/resources/images/grey_left_arrow.png"));
     scrollLeftPressed = IOUtilities.loadImage(Tiles.class.getResource(
-        "/resources/images/left_arrow_pressed.png"));
+        "/resources/images/grey_left_arrow_pressed.png"));
     scrollRight = IOUtilities
         .loadImage(Tiles.class.getResource(
-            "/resources/images/right_arrow.png"));
+            "/resources/images/grey_right_arrow.png"));
     scrollRightPressed = IOUtilities.loadImage(Tiles.class.getResource(
-        "/resources/images/right_arrow_pressed.png"));
+        "/resources/images/grey_right_arrow_pressed.png"));
   }
   @Override
   public Color getPanelBackground() {

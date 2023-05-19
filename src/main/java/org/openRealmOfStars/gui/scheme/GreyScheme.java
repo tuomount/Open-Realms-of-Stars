@@ -41,12 +41,12 @@ public class GreyScheme extends BaseScheme {
   /**
    * Cool space color
    */
-  public static final Color COLOR_COOL_SPACE_BLUE = new Color(160, 160, 185);
+  public static final Color COLOR_COOL_SPACE_BLUE = new Color(180, 180, 225);
   /**
    * Cool space color, opacity 128
    */
-  public static final Color COLOR_COOL_SPACE_BLUE_TRANS = new Color(90, 210,
-      215, 128);
+  public static final Color COLOR_COOL_SPACE_BLUE_TRANS = new Color(210, 210,
+      255, 128);
   /**
    * Cool space color dark
    */

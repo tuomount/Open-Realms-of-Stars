@@ -45,7 +45,7 @@ public class BaseInfoTextArea extends JTextArea {
   public BaseInfoTextArea(final int rows, final int columns) {
     super(rows, columns);
     this.setFont(GuiStatics.getFontCubellanSmaller());
-    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    this.setForeground(GuiStatics.getInfoTextColor());
     this.setBackground(Color.BLACK);
     this.setBorder(new SimpleBorder());
     this.setSelectedTextColor(GuiStatics.getCoolSpaceColor());
@@ -58,7 +58,7 @@ public class BaseInfoTextArea extends JTextArea {
   public BaseInfoTextArea() {
     super(17, 10);
     this.setFont(GuiStatics.getFontCubellanSmaller());
-    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    this.setForeground(GuiStatics.getInfoTextColor());
     this.setBackground(Color.BLACK);
     this.setBorder(new SimpleBorder());
     this.setSelectedTextColor(GuiStatics.getCoolSpaceColor());
@@ -72,7 +72,7 @@ public class BaseInfoTextArea extends JTextArea {
   public BaseInfoTextArea(final String text) {
     super(text);
     this.setFont(GuiStatics.getFontCubellanSmaller());
-    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    this.setForeground(GuiStatics.getInfoTextColor());
     this.setBackground(Color.BLACK);
     this.setBorder(new SimpleBorder());
     this.setSelectedTextColor(GuiStatics.getCoolSpaceColor());

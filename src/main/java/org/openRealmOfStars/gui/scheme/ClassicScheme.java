@@ -64,6 +64,10 @@ public class ClassicScheme extends BaseScheme {
       180);
 
   /**
+   * Green text
+   */
+  public static final Color COLOR_GREEN_TEXT = new Color(4, 186, 0, 255);
+  /**
    * Green text dark one
    */
   public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
@@ -189,6 +193,11 @@ public class ClassicScheme extends BaseScheme {
 
   @Override
   public Color getInfoTextColor() {
+    return COLOR_GREEN_TEXT;
+  }
+
+  @Override
+  public Color getInfoTextColorDark() {
     return COLOR_GREEN_TEXT_DARK;
   }
 
@@ -266,5 +275,6 @@ public class ClassicScheme extends BaseScheme {
   public Color getDeepSpaceActivityColor() {
     return COLOR_DEEP_SPACE_BLUE;
   }
+
 
 }

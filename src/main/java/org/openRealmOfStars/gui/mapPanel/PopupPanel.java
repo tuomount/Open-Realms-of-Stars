@@ -433,7 +433,7 @@ public class PopupPanel {
     w = w / 11;
     h = GuiStatics.getTextHeight(gr.getFont(), "AveragemiuM");
     String[] rows = splitText(textWidth, w);
-    gr.setColor(GuiStatics.COLOR_GREEN_TEXT);
+    gr.setColor(GuiStatics.getInfoTextColor());
     for (int i = 0; i < rows.length; i++) {
       w = GuiStatics.getTextWidth(gr.getFont(), rows[i]);
       w = textWidth / 2  - w / 2;

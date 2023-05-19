@@ -63,16 +63,16 @@ public class ShipStatRenderer implements ListCellRenderer<ShipStat> {
     renderer.setText(sb.toString());
     if (isSelected) {
       if (value.isObsolete()) {
-        renderer.setForeground(GuiStatics.COLOR_GREY_TEXT);
+        renderer.setForeground(GuiStatics.getInfoTextColor());
       } else {
-        renderer.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+        renderer.setForeground(GuiStatics.getInfoTextColor());
       }
       renderer.setBackground(Color.BLACK);
     } else {
       if (value.isObsolete()) {
-        renderer.setForeground(GuiStatics.COLOR_GREY_TEXT_DARK);
+        renderer.setForeground(GuiStatics.getInfoTextColorDark());
       } else {
-        renderer.setForeground(GuiStatics.getInfoTextColor());
+        renderer.setForeground(GuiStatics.getInfoTextColorDark());
       }
       renderer.setBackground(Color.BLACK);
     }

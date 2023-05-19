@@ -56,10 +56,10 @@ public class LeaderListRenderer implements ListCellRenderer<Leader> {
           LeaderUtility.getIconBasedOnLeaderJob(value).getAsIcon());
     }
     if (isSelected) {
-      renderer.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+      renderer.setForeground(GuiStatics.getInfoTextColor());
       renderer.setBackground(Color.BLACK);
     } else {
-      renderer.setForeground(GuiStatics.getInfoTextColor());
+      renderer.setForeground(GuiStatics.getInfoTextColorDark());
       renderer.setBackground(Color.BLACK);
     }
     return renderer;

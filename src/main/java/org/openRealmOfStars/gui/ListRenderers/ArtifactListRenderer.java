@@ -51,10 +51,10 @@ public class ArtifactListRenderer implements ListCellRenderer<Artifact> {
     renderer.setIcon(value.getIcon().getAsIcon());
     renderer.setText(value.getName());
     if (isSelected) {
-      renderer.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+      renderer.setForeground(GuiStatics.getInfoTextColor());
       renderer.setBackground(Color.BLACK);
     } else {
-      renderer.setForeground(GuiStatics.getInfoTextColor());
+      renderer.setForeground(GuiStatics.getInfoTextColorDark());
       renderer.setBackground(Color.BLACK);
     }
     return renderer;

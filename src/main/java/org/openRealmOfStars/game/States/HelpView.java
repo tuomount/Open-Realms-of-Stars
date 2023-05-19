@@ -157,7 +157,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     greyPanel.add(checkBox);
     searchText = new JTextField();
     searchText.setFont(GuiStatics.getFontCubellan());
-    searchText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    searchText.setForeground(GuiStatics.getInfoTextColor());
     searchText.setBackground(Color.BLACK);
     searchText.setMaximumSize(new Dimension(300,
         GuiStatics.TEXT_FIELD_HEIGHT));

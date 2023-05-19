@@ -127,8 +127,8 @@ public class InfoTextArea extends JTextArea {
   public InfoTextArea(final int rows, final int columns) {
     super(rows, columns);
     this.setFont(GuiStatics.getFontCubellanSC());
-    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
-    this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
+    this.setForeground(GuiStatics.getInfoTextColor());
+    this.setTextColor(GuiStatics.getInfoTextColor(),
         GuiStatics.getInfoTextColor());
     this.setTextHighlightColor(GuiStatics.getCoolSpaceColor(),
         GuiStatics.getCoolSpaceColorDark());
@@ -143,8 +143,8 @@ public class InfoTextArea extends JTextArea {
   public InfoTextArea() {
     super(17, 10);
     this.setFont(GuiStatics.getFontCubellanSC());
-    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
-    this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
+    this.setForeground(GuiStatics.getInfoTextColor());
+    this.setTextColor(GuiStatics.getInfoTextColor(),
         GuiStatics.getInfoTextColor());
     this.setTextHighlightColor(GuiStatics.getCoolSpaceColor(),
         GuiStatics.getCoolSpaceColorDark());
@@ -161,8 +161,8 @@ public class InfoTextArea extends JTextArea {
     super(text);
     this.setFont(GuiStatics.getFontCubellanSC());
     textToShow = text;
-    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
-    this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
+    this.setForeground(GuiStatics.getInfoTextColor());
+    this.setTextColor(GuiStatics.getInfoTextColor(),
         GuiStatics.getInfoTextColor());
     this.setTextHighlightColor(GuiStatics.getCoolSpaceColor(),
         GuiStatics.getCoolSpaceColorDark());

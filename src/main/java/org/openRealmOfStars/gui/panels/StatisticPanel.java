@@ -288,7 +288,7 @@ public class StatisticPanel extends JPanel {
             Math.round(offsetX + i * scaleX * mult), topOffsetY);
       }
       if (i < amount) {
-        g2d.setColor(GuiStatics.COLOR_GREEN_TEXT);
+        g2d.setColor(GuiStatics.getInfoTextColor());
         g2d.drawString(String.valueOf(i * turnDistance),
             Math.round(offsetX + i * scaleX * mult),
             this.getHeight() - offsetY + textHeight);
@@ -315,7 +315,7 @@ public class StatisticPanel extends JPanel {
             offsetX + drawWidth,
             Math.round(this.getHeight() - offsetY - i * scaleY * mult));
       }
-      g2d.setColor(GuiStatics.COLOR_GREEN_TEXT);
+      g2d.setColor(GuiStatics.getInfoTextColor());
       g2d.drawString(String.valueOf(i * mult), offsetX - textWidth,
           Math.round(this.getHeight() - offsetY - i * scaleY
               * mult));

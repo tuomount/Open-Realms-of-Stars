@@ -145,7 +145,7 @@ public class EspionageView extends BlackPanel {
               humanIndex);
         } else {
           text = "Own Realm";
-          relationColor = GuiStatics.COLOR_GREEN_TEXT;
+          relationColor = GuiStatics.getInfoTextColor();
         }
         EspionagePanel panel = new EspionagePanel(realmInfo.getEmpireName(),
             desc, bonus, text, relationColor, listener);

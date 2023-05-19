@@ -86,6 +86,11 @@ public abstract class BaseScheme {
    * Get Info text color.
    * @return Color
    */
+  public abstract Color getInfoTextColorDark();
+  /**
+   * Get Info text color.
+   * @return Color
+   */
   public abstract Color getInfoTextColor();
   /**
    * Get Scheme type
@@ -98,7 +103,7 @@ public abstract class BaseScheme {
    * @param name Icon name
    * @return Icon16x16
    */
-  public abstract Icon16x16 getSmallArrowIcon(final String name);
+  public abstract Icon16x16 getSmallArrowIcon(String name);
 
   /**
    * Get Arrow left as buffered image.

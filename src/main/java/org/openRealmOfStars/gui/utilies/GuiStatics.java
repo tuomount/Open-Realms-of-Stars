@@ -1785,6 +1785,14 @@ public final class GuiStatics {
   }
 
   /**
+   * Get Info text color dark.
+   * @return Color
+   */
+  public static Color getInfoTextColorDark() {
+    return schemeType.getInfoTextColorDark();
+  }
+
+  /**
    * Get Info text color.
    * @return Color
    */

@@ -264,7 +264,7 @@ public class ShipDesignView extends BlackPanel {
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     designNameText = new JTextField();
     designNameText.setFont(GuiStatics.getFontCubellan());
-    designNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    designNameText.setForeground(GuiStatics.getInfoTextColor());
     designNameText.setBackground(Color.BLACK);
     designNameText.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));

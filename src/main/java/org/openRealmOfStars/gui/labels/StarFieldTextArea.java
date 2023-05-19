@@ -285,7 +285,7 @@ public class StarFieldTextArea extends JTextArea {
           g.drawString(texts[i], sx + 1, sy + i * Y_OFFSET + Y_OFFSET);
           g.drawString(texts[i], sx + 2, sy + i * Y_OFFSET - 1 + Y_OFFSET);
           g.drawString(texts[i], sx + 2, sy + i * Y_OFFSET + 1 + Y_OFFSET);
-          g.setColor(GuiStatics.COLOR_GREEN_TEXT);
+          g.setColor(GuiStatics.getInfoTextColor());
           g.drawString(texts[i], sx + 2, sy + i * Y_OFFSET + Y_OFFSET);
         } else {
           String line = texts[i];

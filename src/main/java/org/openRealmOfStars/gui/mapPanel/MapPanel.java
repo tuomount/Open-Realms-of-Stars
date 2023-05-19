@@ -1398,7 +1398,7 @@ public class MapPanel extends JPanel {
             && i == combat.getCurrentShip().getX()
             && j == combat.getCurrentShip().getY()) {
           gr.setStroke(full);
-          gr.setColor(GuiStatics.COLOR_GREEN_TEXT);
+          gr.setColor(GuiStatics.getInfoTextColor());
           // Top line
           gr.drawLine(pixelX, pixelY, pixelX + ShipImage.MAX_WIDTH - 1, pixelY);
           // Left line

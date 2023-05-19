@@ -267,31 +267,31 @@ public class StatView extends BlackPanel {
     TransparentLabel label = new TransparentLabel(null, "", false, true);
     panel.add(label);
     label = new TransparentLabel(null, "Most built one", true, true);
-    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setForeground(GuiStatics.getInfoTextColor());
     label.setToolTipText("<html>How many of these designs were built."
         + "</html>");
     panel.add(label);
     label = new TransparentLabel(null, "Most powerful", true, true);
-    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setForeground(GuiStatics.getInfoTextColor());
     label.setToolTipText("<html>Which design has highest military power."
         + "</html>");
     panel.add(label);
     label = new TransparentLabel(null, "Most combats", true, true);
-    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setForeground(GuiStatics.getInfoTextColor());
     label.setToolTipText("<html>Which design had most of combats.</html>");
     panel.add(label);
     label = new TransparentLabel(null, "Most victorious", true, true);
-    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setForeground(GuiStatics.getInfoTextColor());
     label.setToolTipText("<html>Which design had survived most time of"
         + " combats or bombings.</html>");
     panel.add(label);
     label = new TransparentLabel(null, "Most lost", true, true);
-    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setForeground(GuiStatics.getInfoTextColor());
     label.setToolTipText("<html>Which design had most of destructions by enemy"
         + " in combats or bombings.</html>");
     panel.add(label);
     label = new TransparentLabel(null, "Most kills", true, true);
-    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setForeground(GuiStatics.getInfoTextColor());
     label.setToolTipText("<html>Which design has most kills in"
         + " combats.</html>");
     panel.add(label);
@@ -453,14 +453,14 @@ public class StatView extends BlackPanel {
     }
     label = new TransparentLabel(null, "Highest score at star year "
         + maxTurns, true, true);
-    label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    label.setForeground(GuiStatics.getInfoTextColor());
     label.setToolTipText("<html>Winner is the one with"
         + " highest score<br> when last star year of the game has"
         + " played.</html>");
     panel.add(label);
     if (cultureLabels) {
       label = new TransparentLabel(null, "Culture", true, true);
-      label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+      label.setForeground(GuiStatics.getInfoTextColor());
       label.setToolTipText("<html>Cultural victory requreis to"
           + " have highest culture and over certain limit.<br>"
           + " Realm also has to be broadcasting culture and<br>"
@@ -469,14 +469,14 @@ public class StatView extends BlackPanel {
     }
     if (dominationLabels) {
       label = new TransparentLabel(null, "Domination", true, true);
-      label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+      label.setForeground(GuiStatics.getInfoTextColor());
       label.setToolTipText("<html>Domination victory is achieved when"
           + " enough home worlds have been conquered.</html>");
       panel.add(label);
     }
     if (scienceLabels) {
       label = new TransparentLabel(null, "Science Achievements", true, true);
-      label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+      label.setForeground(GuiStatics.getInfoTextColor());
       label.setToolTipText("<html>Scientific achievements must be built on"
           + " same planet.</html>");
       panel.add(label);
@@ -484,7 +484,7 @@ public class StatView extends BlackPanel {
     if (diplomacyLabels) {
       label = new TransparentLabel(null, "Diplomatic ("
           + votesLeft + " votes left)", true, true);
-      label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+      label.setForeground(GuiStatics.getInfoTextColor());
       label.setToolTipText("<html>One realm must first built enough"
           + " United Galaxy Towers.<br> Then voting starts and final"
           + " voting is for which realm is going to be"
@@ -493,7 +493,7 @@ public class StatView extends BlackPanel {
     }
     if (populationLabels) {
       label = new TransparentLabel(null, "Population", true, true);
-      label.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+      label.setForeground(GuiStatics.getInfoTextColor());
       int limit = 0;
       switch (map.getScorePopulation()) {
         case 1: limit = 40; break;

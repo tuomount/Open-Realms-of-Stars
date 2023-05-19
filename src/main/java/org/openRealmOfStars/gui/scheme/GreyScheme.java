@@ -63,6 +63,10 @@ public class GreyScheme extends BaseScheme {
   public static final Color COLOR_COOL_SPACE_BLUE_DARKER_TRANSPARENT
       = new Color(80, 80, 115, 128);
   /**
+   * Green text
+   */
+  public static final Color COLOR_GREEN_TEXT = new Color(4, 186, 0, 255);
+  /**
    * Green text dark one
    */
   public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
@@ -188,6 +192,11 @@ public class GreyScheme extends BaseScheme {
 
   @Override
   public Color getInfoTextColor() {
+    return COLOR_GREEN_TEXT;
+  }
+
+  @Override
+  public Color getInfoTextColorDark() {
     return COLOR_GREEN_TEXT_DARK;
   }
 

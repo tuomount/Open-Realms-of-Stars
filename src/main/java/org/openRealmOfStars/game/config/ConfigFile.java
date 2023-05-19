@@ -694,7 +694,7 @@ public class ConfigFile {
     if (line != null) {
       return line.getValue();
     }
-    return null;
+    return "SpaceGrey";
   }
 
 }

@@ -52,7 +52,7 @@ public class SpeechLineRendererTest {
     JLabel label = (JLabel) renderer.getListCellRendererComponent(list, line, index,
         selected, cellHasFocus);
     assertEquals("My line",label.getText());
-    assertEquals(GuiStatics.getInfoTextColor(), label.getForeground());
+    assertEquals(GuiStatics.getInfoTextColorDark(), label.getForeground());
     assertEquals(Color.black, label.getBackground());
     
     selected = true;
@@ -60,7 +60,7 @@ public class SpeechLineRendererTest {
     label = (JLabel) renderer.getListCellRendererComponent(list, line, index,
         selected, cellHasFocus);
     assertEquals("My line",label.getText());
-    assertEquals(GuiStatics.COLOR_GREEN_TEXT, label.getForeground());
+    assertEquals(GuiStatics.getInfoTextColor(), label.getForeground());
     assertEquals(Color.black, label.getBackground());
   }
 

@@ -65,11 +65,11 @@ public class GreyScheme extends BaseScheme {
   /**
    * Green text
    */
-  public static final Color COLOR_GREEN_TEXT = new Color(4, 186, 0, 255);
+  public static final Color COLOR_GREEN_TEXT = new Color(4, 186, 120, 255);
   /**
    * Green text dark one
    */
-  public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
+  public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 40, 255);
 
   /**
    * Deep space gray

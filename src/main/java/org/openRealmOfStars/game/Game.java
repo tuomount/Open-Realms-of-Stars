@@ -18,7 +18,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -76,7 +75,6 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scheme.SchemeType;
-import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -501,7 +499,6 @@ public class Game implements ActionListener {
     int resolutionWidth = configFile.getResolutionWidth();
     int resolutionHeight = configFile.getResolutionHeight();
     if (visible) {
-      GuiStatics.setSchemeType(SchemeType.getByName(configFile.getUiScheme()));
       if (configFile.isHardwareAcceleration()) {
         System.setProperty("sun.java2d.opengl", "true");
       }
@@ -518,34 +515,8 @@ public class Game implements ActionListener {
       } catch (Exception e) {
         e.printStackTrace();
       }
-      UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
-      UIManager.put("Tree.paintLines", false);
-      UIManager.put("Tree.line", GuiStatics.getInfoTextColor());
-      UIManager.put("Tree.closedIcon", Icons.getIconByName(
-          Icons.ICON_CLOSED).getAsIcon());
-      UIManager.put("Tree.openIcon", Icons.getIconByName(
-          Icons.ICON_AIRLOCK_OPEN).getAsIcon());
-      UIManager.put("Tree.expandedIcon", Icons.getIconByName(
-          Icons.ICON_EXPANDED).getAsIcon());
-      UIManager.put("Tree.collapsedIcon", Icons.getIconByName(
-          Icons.ICON_COLLAPSED).getAsIcon());
-      UIManager.put("Tree.leafIcon", Icons.getIconByName(
-          Icons.ICON_ARROW_RIGHT).getAsIcon());
-      UIManager.put("Tree.background", Color.BLACK);
-      UIManager.put("Tree.selectionBackground",
-          GuiStatics.getDeepSpaceColor());
-      UIManager.put("Tree.selectionForeground",
-          GuiStatics.getInfoTextColor());
-      UIManager.put("Tree.selectionBorderColor",
-          GuiStatics.getDeepSpaceDarkerColor());
-      UIManager.put("Tree.textBackground", Color.BLACK);
-      UIManager.put("Tree.textForeground", GuiStatics.getInfoTextColor());
-      UIManager.put("ToolTip.background",
-          GuiStatics.getCoolSpaceColorDark());
-      UIManager.put("ToolTip.foreground",
-          GuiStatics.getCoolSpaceColor());
-      UIManager.put("ToolTip.border", BorderFactory
-          .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
+      // Initialize also UI Manager
+      GuiStatics.setSchemeType(SchemeType.getByName(configFile.getUiScheme()));
       gameFrame.setTitle(GAME_TITLE + " " + GAME_VERSION);
       ArrayList<BufferedImage> icons = new ArrayList<>();
       icons.add(GuiStatics.LOGO32);

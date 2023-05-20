@@ -135,6 +135,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     tutorialTree.getSelectionModel().setSelectionMode(
         TreeSelectionModel.SINGLE_TREE_SELECTION);
     tutorialTree.setBackground(Color.BLACK);
+    tutorialTree.setForeground(GuiStatics.getInfoTextColor());
     tutorialTree.setCellRenderer(new TutorialTreeCellRenderer());
     tutorialTree.setFont(GuiStatics.getFontCubellanSmaller());
     tutorialTree.addTreeSelectionListener(this);

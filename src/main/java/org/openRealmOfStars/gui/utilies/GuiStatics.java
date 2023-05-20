@@ -11,6 +11,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.swing.BorderFactory;
+import javax.swing.UIManager;
+
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.gui.icons.Icon16x16;
@@ -19,6 +22,7 @@ import org.openRealmOfStars.gui.scheme.BaseScheme;
 import org.openRealmOfStars.gui.scheme.ClassicScheme;
 import org.openRealmOfStars.gui.scheme.GreyScheme;
 import org.openRealmOfStars.gui.scheme.SchemeType;
+import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -1734,13 +1738,47 @@ public final class GuiStatics {
   }
 
   /**
-   * Set Scheme type.
+   * Set Scheme type and initialize UI Manager.
    * @param schemeType the BaseScheme to set
    */
   public static void setSchemeType(final BaseScheme schemeType) {
     GuiStatics.schemeType = schemeType;
+    initializeUiDefaults();
   }
 
+  /**
+   * Initialize UI manager.
+   */
+  public static void initializeUiDefaults() {
+    UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
+    UIManager.put("Tree.paintLines", false);
+    UIManager.put("Tree.line", GuiStatics.getInfoTextColor());
+    UIManager.put("Tree.closedIcon", Icons.getIconByName(
+        Icons.ICON_CLOSED).getAsIcon());
+    UIManager.put("Tree.openIcon", Icons.getIconByName(
+        Icons.ICON_AIRLOCK_OPEN).getAsIcon());
+    UIManager.put("Tree.expandedIcon", Icons.getIconByName(
+        Icons.ICON_EXPANDED).getAsIcon());
+    UIManager.put("Tree.collapsedIcon", Icons.getIconByName(
+        Icons.ICON_COLLAPSED).getAsIcon());
+    UIManager.put("Tree.leafIcon", Icons.getIconByName(
+        Icons.ICON_ARROW_RIGHT).getAsIcon());
+    UIManager.put("Tree.background", Color.BLACK);
+    UIManager.put("Tree.selectionBackground",
+        GuiStatics.getDeepSpaceColor());
+    UIManager.put("Tree.selectionForeground",
+        GuiStatics.getInfoTextColor());
+    UIManager.put("Tree.selectionBorderColor",
+        GuiStatics.getDeepSpaceDarkerColor());
+    UIManager.put("Tree.textBackground", Color.BLACK);
+    UIManager.put("Tree.textForeground", GuiStatics.getInfoTextColor());
+    UIManager.put("ToolTip.background",
+        GuiStatics.getCoolSpaceColorDark());
+    UIManager.put("ToolTip.foreground",
+        GuiStatics.getCoolSpaceColor());
+    UIManager.put("ToolTip.border", BorderFactory
+        .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
+  }
   /**
    * Set Scheme type.
    * @param schemeType the BaseScheme to set

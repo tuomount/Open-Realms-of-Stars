@@ -58,7 +58,7 @@ public class ShipComponentListRenderer
       renderer.setBackground(GuiStatics.getDeepSpaceColor());
     } else {
       renderer.setForeground(GuiStatics.getCoolSpaceColorDark());
-      renderer.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+      renderer.setBackground(GuiStatics.getDeepSpaceDarkColor());
     }
     return renderer;
   }

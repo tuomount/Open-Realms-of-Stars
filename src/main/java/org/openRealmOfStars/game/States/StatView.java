@@ -82,7 +82,7 @@ public class StatView extends BlackPanel {
     JTabbedPane tabs = new JTabbedPane();
     tabs.setFont(GuiStatics.getFontCubellanSmaller());
     tabs.setForeground(GuiStatics.getCoolSpaceColorDarker());
-    tabs.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    tabs.setBackground(GuiStatics.getDeepSpaceDarkColor());
 
     Color[] playerColors = new Color[map.getPlayerList().getCurrentMaxRealms()];
     for (int i = 0; i < playerColors.length; i++) {

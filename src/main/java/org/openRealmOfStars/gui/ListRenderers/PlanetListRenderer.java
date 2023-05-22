@@ -53,7 +53,7 @@ public class PlanetListRenderer implements ListCellRenderer<Planet> {
       renderer.setBackground(GuiStatics.getDeepSpaceColor());
     } else {
       renderer.setForeground(GuiStatics.getCoolSpaceColorDark());
-      renderer.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+      renderer.setBackground(GuiStatics.getDeepSpaceDarkColor());
     }
     return renderer;
   }

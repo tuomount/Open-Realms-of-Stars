@@ -169,7 +169,7 @@ public class LeaderView extends BlackPanel
     leaderList.setCellRenderer(new LeaderListRenderer());
     leaderList.addListSelectionListener(this);
     JScrollPane scroll = new JScrollPane(leaderList);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     leaderList.getSelectionModel().setSelectionMode(
         TreeSelectionModel.SINGLE_TREE_SELECTION);
     leaderList.setBackground(Color.BLACK);
@@ -186,7 +186,7 @@ public class LeaderView extends BlackPanel
     leaderTree.setCellRenderer(new LeaderTreeCellRenderer());
     leaderTree.addTreeSelectionListener(this);
     scroll = new JScrollPane(leaderTree);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     leaderTree.getSelectionModel().setSelectionMode(
         TreeSelectionModel.SINGLE_TREE_SELECTION);
     leaderTree.setBackground(Color.BLACK);
@@ -207,7 +207,7 @@ public class LeaderView extends BlackPanel
     infoText.setLineWrap(true);
     infoText.setCharacterWidth(7);
     scroll = new JScrollPane(infoText);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     center.add(scroll, BorderLayout.WEST);
     setLeaderBtn = new SpaceButton("Assign leader",
         GameCommands.COMMAND_ASSIGN_LEADER);

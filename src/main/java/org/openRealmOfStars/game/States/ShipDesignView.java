@@ -312,7 +312,7 @@ public class ShipDesignView extends BlackPanel {
     hullInfoText.setEditable(false);
     hullInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     JScrollPane scroll = new JScrollPane(hullInfoText);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     hullPanel.add(Box.createRigidArea(new Dimension(25, 25)));
     hullPanel.add(scroll);
     hullPanel.add(Box.createRigidArea(new Dimension(25, 25)));
@@ -349,7 +349,7 @@ public class ShipDesignView extends BlackPanel {
     variantSelection = new JComboBox<>(MILITARY_VARIANTS);
     variantSelection
         .setActionCommand(GameCommands.COMMAND_SHIPDESIGN_VARIANT_SELECTED);
-    variantSelection.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    variantSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
     variantSelection.setForeground(GuiStatics.getCoolSpaceColor());
     variantSelection.setBorder(new SimpleBorder());
     variantSelection.setFont(GuiStatics.getFontCubellan());
@@ -394,7 +394,7 @@ public class ShipDesignView extends BlackPanel {
         componentTypes.toArray(new String[componentTypes.size()]));
     componentFilter
         .setActionCommand(GameCommands.COMMAND_SHIPDESIGN_COMPONENTFILTERED);
-    componentFilter.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    componentFilter.setBackground(GuiStatics.getDeepSpaceDarkColor());
     componentFilter.setForeground(GuiStatics.getCoolSpaceColor());
     componentFilter.setBorder(new SimpleBorder());
     componentFilter.setFont(GuiStatics.getFontCubellan());
@@ -407,7 +407,7 @@ public class ShipDesignView extends BlackPanel {
     componentSelect = new JComboBox<>(filterComponents("All"));
     componentSelect
         .setActionCommand(GameCommands.COMMAND_SHIPDESIGN_COMPONENTSELECTED);
-    componentSelect.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    componentSelect.setBackground(GuiStatics.getDeepSpaceDarkColor());
     componentSelect.setForeground(GuiStatics.getCoolSpaceColor());
     componentSelect.setBorder(new SimpleBorder());
     componentSelect.setFont(GuiStatics.getFontCubellan());
@@ -421,7 +421,7 @@ public class ShipDesignView extends BlackPanel {
     componentInfoText.setEditable(false);
     componentInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(componentInfoText);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     greyPanel.add(scroll);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Add component",
@@ -443,7 +443,7 @@ public class ShipDesignView extends BlackPanel {
     componentList.setBackground(Color.BLACK);
     componentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     scroll = new JScrollPane(componentList);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     greyPanel.add(scroll);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Higher priority",
@@ -476,7 +476,7 @@ public class ShipDesignView extends BlackPanel {
     designInfoText.setEditable(false);
     designInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designInfoText);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     label = new SpaceLabel("Design info");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);
@@ -491,7 +491,7 @@ public class ShipDesignView extends BlackPanel {
     designFlawsText.setEditable(false);
     designFlawsText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designFlawsText);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     label = new SpaceLabel("Design flaws");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);

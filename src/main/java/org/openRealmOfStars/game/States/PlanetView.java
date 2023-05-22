@@ -417,7 +417,7 @@ public class PlanetView extends BlackPanel {
     productionInfo.setFont(GuiStatics.getFontCubellanSmaller());
     productionInfo.setEditable(false);
     JScrollPane scroll = new JScrollPane(productionInfo);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     scroll.setBackground(Color.BLACK);
     topPanel.add(scroll);
     topPanel.add(Box.createRigidArea(new Dimension(15, 25)));
@@ -494,7 +494,7 @@ public class PlanetView extends BlackPanel {
     buildingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     buildingList.setBackground(Color.BLACK);
     scroll = new JScrollPane(buildingList);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     scroll.setBackground(Color.BLACK);
     scroll.setPreferredSize(new Dimension(200, 200));
     eastPanel.add(scroll);

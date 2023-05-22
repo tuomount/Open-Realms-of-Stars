@@ -240,7 +240,7 @@ public class FleetTradeView extends BlackPanel
         .setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
     tradeRoutes.addListSelectionListener(this);
     JScrollPane scroll = new JScrollPane(tradeRoutes);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     eastPanel.add(scroll);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceButton acceptBtn = new SpaceButton("Accept trade",

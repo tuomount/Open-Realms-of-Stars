@@ -108,7 +108,7 @@ public class EspionageView extends BlackPanel {
     fakeMilitaryText.setCharacterWidth(8);
     fakeMilitaryText.setLineWrap(true);
     JScrollPane scroll = new JScrollPane(fakeMilitaryText);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     topPanel.add(scroll);
     int humanIndex = playerList.getIndex(info);
     humanNewsMilitarySize = militaryNews.getLatest(humanIndex);

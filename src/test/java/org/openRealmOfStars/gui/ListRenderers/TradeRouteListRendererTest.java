@@ -49,7 +49,7 @@ public class TradeRouteListRendererTest {
         selected, cellHasFocus);
     assertEquals("ToString", label.getText());
     assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
-    assertEquals(GuiStatics.getDeepSpaceDarkerColor(), label.getBackground());
+    assertEquals(GuiStatics.getDeepSpaceDarkColor(), label.getBackground());
     selected = true;
     label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);

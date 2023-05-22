@@ -35,7 +35,7 @@ public class SpaceComboTest {
     tmpStr[2] = "Test C";
     SpaceCombo<String> combo = new SpaceCombo<>(tmpStr);
     assertEquals(GuiStatics.getFontCubellan(), combo.getFont());
-    assertEquals(GuiStatics.getDeepSpaceDarkerColor(), combo.getBackground());
+    assertEquals(GuiStatics.getDeepSpaceDarkColor(), combo.getBackground());
     assertEquals(GuiStatics.getCoolSpaceColor(), combo.getForeground());
   }
 

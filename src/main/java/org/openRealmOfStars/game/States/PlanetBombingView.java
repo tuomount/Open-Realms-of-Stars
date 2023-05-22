@@ -338,7 +338,7 @@ public class PlanetBombingView extends BlackPanel {
     shipsInFleet.setBackground(Color.BLACK);
     shipsInFleet.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scroll = new JScrollPane(shipsInFleet);
-    scroll.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     eastPanel.add(scroll);
 
     infoPanel = new BattleInfoPanel(fleet.getFirstShip(), null, null, false,

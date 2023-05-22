@@ -173,7 +173,7 @@ public class OptionsView extends BlackPanel {
     JTabbedPane tabs = new JTabbedPane();
     tabs.setFont(GuiStatics.getFontCubellanSmaller());
     tabs.setForeground(GuiStatics.getCoolSpaceColorDarker());
-    tabs.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    tabs.setBackground(GuiStatics.getDeepSpaceDarkColor());
     // Screen panel starts here
     InfoPanel screenPanel = new InfoPanel();
     screenPanel.setLayout(new BoxLayout(screenPanel, BoxLayout.Y_AXIS));
@@ -195,7 +195,7 @@ public class OptionsView extends BlackPanel {
         "1440x960", "1680x1050", "1920x1080",
         "Custom (" + game.getCurrentResolution() + ")"};
     resolutionSelection = new JComboBox<>(resolutions);
-    resolutionSelection.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    resolutionSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
     resolutionSelection.setForeground(GuiStatics.getCoolSpaceColor());
     resolutionSelection.setBorder(new SimpleBorder());
     resolutionSelection.setFont(GuiStatics.getFontCubellan());
@@ -320,7 +320,7 @@ public class OptionsView extends BlackPanel {
         SchemeType.SPACE_GREY.toString()};
 
     uiSchemeSelection = new JComboBox<>(uiScheme);
-    uiSchemeSelection.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+    uiSchemeSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
     uiSchemeSelection.setForeground(GuiStatics.getCoolSpaceColor());
     uiSchemeSelection.setBorder(new SimpleBorder());
     uiSchemeSelection.setFont(GuiStatics.getFontCubellan());

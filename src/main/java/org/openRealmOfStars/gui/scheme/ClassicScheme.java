@@ -217,7 +217,7 @@ public class ClassicScheme extends BaseScheme {
   }
 
   @Override
-  public Color getDeepSpaceDarkerColor() {
+  public Color getDeepSpaceDarkColor() {
     return COLOR_DEEP_SPACE_PURPLE_DARK;
   }
 

@@ -52,7 +52,7 @@ public class ShipHullListRendererTest {
         selected, cellHasFocus);
     assertEquals("Hull 1 - Medium",label.getText());
     assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
-    assertEquals(GuiStatics.getDeepSpaceDarkerColor(), label.getBackground());
+    assertEquals(GuiStatics.getDeepSpaceDarkColor(), label.getBackground());
 
     Mockito.when(hull.getSize()).thenReturn(ShipSize.SMALL);
     selected = true;

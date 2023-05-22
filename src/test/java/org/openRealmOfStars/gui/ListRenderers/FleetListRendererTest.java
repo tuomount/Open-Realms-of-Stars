@@ -54,7 +54,7 @@ public class FleetListRendererTest {
         selected, cellHasFocus);
     assertEquals("Fleet 1 - Ship 1",label.getText());
     assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
-    assertEquals(GuiStatics.getDeepSpaceDarkerColor(), label.getBackground());
+    assertEquals(GuiStatics.getDeepSpaceDarkColor(), label.getBackground());
     
     Mockito.when(value.getNumberOfShip()).thenReturn(5);
     selected = true;

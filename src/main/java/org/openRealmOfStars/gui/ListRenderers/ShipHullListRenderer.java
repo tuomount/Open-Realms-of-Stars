@@ -57,7 +57,7 @@ public class ShipHullListRenderer implements ListCellRenderer<ShipHull> {
       renderer.setBackground(GuiStatics.getDeepSpaceColor());
     } else {
       renderer.setForeground(GuiStatics.getCoolSpaceColorDark());
-      renderer.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+      renderer.setBackground(GuiStatics.getDeepSpaceDarkColor());
     }
     return renderer;
   }

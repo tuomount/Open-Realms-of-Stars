@@ -215,7 +215,7 @@ public class GreyScheme extends BaseScheme {
     return COLOR_DEEP_SPACE_GRAY;
   }
   @Override
-  public Color getDeepSpaceDarkerColor() {
+  public Color getDeepSpaceDarkColor() {
     return COLOR_DEEP_SPACE_GRAY_DARK;
   }
   @Override

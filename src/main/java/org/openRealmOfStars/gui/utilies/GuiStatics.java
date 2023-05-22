@@ -1769,7 +1769,7 @@ public final class GuiStatics {
     UIManager.put("Tree.selectionForeground",
         GuiStatics.getInfoTextColor());
     UIManager.put("Tree.selectionBorderColor",
-        GuiStatics.getDeepSpaceDarkerColor());
+        GuiStatics.getDeepSpaceDarkColor());
     UIManager.put("Tree.textBackground", Color.BLACK);
     UIManager.put("Tree.textForeground", GuiStatics.getInfoTextColor());
     UIManager.put("ToolTip.background",
@@ -1870,11 +1870,11 @@ public final class GuiStatics {
   }
 
   /**
-   * Get Deep Space Darker Color
+   * Get Deep Space Dark Color
    * @return Color
    */
-  public static Color getDeepSpaceDarkerColor() {
-    return schemeType.getDeepSpaceDarkerColor();
+  public static Color getDeepSpaceDarkColor() {
+    return schemeType.getDeepSpaceDarkColor();
   }
   /**
    * Get Deep Space Activity Color

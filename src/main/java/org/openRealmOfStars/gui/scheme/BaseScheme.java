@@ -71,10 +71,10 @@ public abstract class BaseScheme {
   public abstract Color getDeepSpaceColor();
 
   /**
-   * Get deep space darker color.
+   * Get deep space dark color.
    * @return Color
    */
-  public abstract Color getDeepSpaceDarkerColor();
+  public abstract Color getDeepSpaceDarkColor();
 
   /**
    * Get deep space activity color.

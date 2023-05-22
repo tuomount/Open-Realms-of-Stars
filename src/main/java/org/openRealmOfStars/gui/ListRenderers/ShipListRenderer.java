@@ -55,7 +55,7 @@ public class ShipListRenderer implements ListCellRenderer<Ship> {
       renderer.setBackground(GuiStatics.getDeepSpaceColor());
     } else {
       renderer.setForeground(value.getDamageColor());
-      renderer.setBackground(GuiStatics.getDeepSpaceDarkerColor());
+      renderer.setBackground(GuiStatics.getDeepSpaceDarkColor());
     }
     return renderer;
   }

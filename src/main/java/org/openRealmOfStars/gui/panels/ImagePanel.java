@@ -123,7 +123,7 @@ public class ImagePanel extends JPanel {
     g.fillRect(0, 0, this.getWidth(), this.getHeight());
     if (text != null) {
       g2d.setFont(GuiStatics.getFontCubellan());
-      g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
+      g2d.setColor(GuiStatics.getCoolSpaceColor());
       int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
           text);
       int offsetX = this.getWidth() / 2 - textWidth / 2;

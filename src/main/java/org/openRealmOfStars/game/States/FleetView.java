@@ -321,7 +321,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     fleetNameText = new JTextField();
     fleetNameText.setFont(GuiStatics.getFontCubellan());
-    fleetNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    fleetNameText.setForeground(GuiStatics.getInfoTextColor());
     fleetNameText.setBackground(Color.BLACK);
     fleetNameText.setText(getFleet().getName());
     fleetNameText.setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -407,7 +407,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
         .setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     shipsInFleet.addListSelectionListener(this);
     JScrollPane scroll = new JScrollPane(shipsInFleet);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     eastPanel.add(scroll);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceGreyPanel fleetBtns = new SpaceGreyPanel();
@@ -462,7 +462,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     fleetsInSpace
         .setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     scroll = new JScrollPane(fleetsInSpace);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     eastPanel.add(scroll);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     fleetBtns = new SpaceGreyPanel();

@@ -96,7 +96,7 @@ public class PlanetListView extends BlackPanel {
     }
     JScrollPane scroll = new JScrollPane(base);
     scroll.setBorder(null);
-    scroll.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    scroll.setBackground(GuiStatics.getPanelBackground());
     InfoPanel centerPanel = new InfoPanel();
     centerPanel.setLayout(new BorderLayout());
     centerPanel.setTitle(realm.getEmpireName());

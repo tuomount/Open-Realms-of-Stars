@@ -129,16 +129,16 @@ public class HistoryView extends BlackPanel {
     infoPanel.add(textArea, BorderLayout.CENTER);
     EmptyInfoPanel panel = new EmptyInfoPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-    IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
-        GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_YEAR,
+    IconButton iBtn = new IconButton(GuiStatics.getArrowLeft(),
+        GuiStatics.getArrowLeftPressed(), false, GameCommands.COMMAND_PREV_YEAR,
         this);
     iBtn.setToolTipText("Previous turn");
     iBtn.addActionListener(listener);
     panel.add(iBtn);
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
-    iBtn = new IconButton(GuiStatics.LEFT_ARROW,
-        GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_EVENT,
-        this);
+    iBtn = new IconButton(GuiStatics.getArrowLeft(),
+        GuiStatics.getArrowLeftPressed(), false,
+        GameCommands.COMMAND_PREV_EVENT, this);
     iBtn.setToolTipText("Jump to first event on current turn.");
     iBtn.addActionListener(listener);
     panel.add(iBtn);
@@ -146,17 +146,17 @@ public class HistoryView extends BlackPanel {
     turnLabel = new SpaceLabel("Turn 1000/1000 Event 1000/1000");
     panel.add(turnLabel);
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
-    iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
-        GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_EVENT,
-        this);
+    iBtn = new IconButton(GuiStatics.getArrowRight(),
+        GuiStatics.getArrowRightPressed(), false,
+        GameCommands.COMMAND_NEXT_EVENT, this);
     iBtn.setToolTipText("Move to next event or"
         + " next turn if event is last event on this turn.");
     iBtn.addActionListener(listener);
     panel.add(iBtn);
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
-    iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
-        GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_YEAR,
-        this);
+    iBtn = new IconButton(GuiStatics.getArrowRight(),
+        GuiStatics.getArrowRightPressed(), false,
+        GameCommands.COMMAND_NEXT_YEAR, this);
     iBtn.setToolTipText("Next turn");
     iBtn.addActionListener(listener);
     panel.add(iBtn);

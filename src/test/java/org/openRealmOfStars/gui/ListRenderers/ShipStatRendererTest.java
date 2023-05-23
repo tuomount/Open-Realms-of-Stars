@@ -65,7 +65,7 @@ public class ShipStatRendererTest {
     JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
     assertEquals("Ship 1 - Medium Cost/Metal: 10/15",label.getText());
-    assertEquals(GuiStatics.COLOR_GREEN_TEXT_DARK, label.getForeground());
+    assertEquals(GuiStatics.getInfoTextColorDark(), label.getForeground());
     assertEquals(Color.BLACK, label.getBackground());
 
     selected = true;
@@ -73,7 +73,7 @@ public class ShipStatRendererTest {
     label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
     assertEquals("Ship 1 - Medium Cost/Metal: 10/15",label.getText());
-    assertEquals(GuiStatics.COLOR_GREEN_TEXT, label.getForeground());
+    assertEquals(GuiStatics.getInfoTextColor(), label.getForeground());
 
     selected = false;
     Mockito.when(stat.isObsolete()).thenReturn(true);

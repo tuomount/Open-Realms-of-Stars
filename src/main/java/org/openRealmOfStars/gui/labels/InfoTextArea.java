@@ -127,11 +127,11 @@ public class InfoTextArea extends JTextArea {
   public InfoTextArea(final int rows, final int columns) {
     super(rows, columns);
     this.setFont(GuiStatics.getFontCubellanSC());
-    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
-    this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
-        GuiStatics.COLOR_GREEN_TEXT_DARK);
-    this.setTextHighlightColor(GuiStatics.COLOR_COOL_SPACE_BLUE,
-        GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    this.setForeground(GuiStatics.getInfoTextColor());
+    this.setTextColor(GuiStatics.getInfoTextColor(),
+        GuiStatics.getInfoTextColorDark());
+    this.setTextHighlightColor(GuiStatics.getCoolSpaceColor(),
+        GuiStatics.getCoolSpaceColorDark());
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
@@ -143,11 +143,11 @@ public class InfoTextArea extends JTextArea {
   public InfoTextArea() {
     super(17, 10);
     this.setFont(GuiStatics.getFontCubellanSC());
-    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
-    this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
-        GuiStatics.COLOR_GREEN_TEXT_DARK);
-    this.setTextHighlightColor(GuiStatics.COLOR_COOL_SPACE_BLUE,
-        GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    this.setForeground(GuiStatics.getInfoTextColor());
+    this.setTextColor(GuiStatics.getInfoTextColor(),
+        GuiStatics.getInfoTextColorDark());
+    this.setTextHighlightColor(GuiStatics.getCoolSpaceColor(),
+        GuiStatics.getCoolSpaceColorDark());
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
@@ -161,11 +161,11 @@ public class InfoTextArea extends JTextArea {
     super(text);
     this.setFont(GuiStatics.getFontCubellanSC());
     textToShow = text;
-    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
-    this.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
-        GuiStatics.COLOR_GREEN_TEXT_DARK);
-    this.setTextHighlightColor(GuiStatics.COLOR_COOL_SPACE_BLUE,
-        GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    this.setForeground(GuiStatics.getInfoTextColor());
+    this.setTextColor(GuiStatics.getInfoTextColor(),
+        GuiStatics.getInfoTextColorDark());
+    this.setTextHighlightColor(GuiStatics.getCoolSpaceColor(),
+        GuiStatics.getCoolSpaceColorDark());
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());

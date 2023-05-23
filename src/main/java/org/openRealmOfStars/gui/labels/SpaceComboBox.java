@@ -51,10 +51,10 @@ public class SpaceComboBox<E> extends JComboBox<E> {
   @Override
   public JToolTip createToolTip() {
     JToolTip toolTip = super.createToolTip();
-    toolTip.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    toolTip.setForeground(GuiStatics.getCoolSpaceColor());
+    toolTip.setBackground(GuiStatics.getCoolSpaceColorDark());
     toolTip.setBorder(BorderFactory
-        .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+        .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
     return toolTip;
   }
 }

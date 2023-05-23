@@ -37,6 +37,6 @@ public class SpaceGreyPanel extends JPanel {
    * Constructor for SpaceGreyPanel
    */
   public SpaceGreyPanel() {
-    setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    setBackground(GuiStatics.getPanelBackground());
   }
 }

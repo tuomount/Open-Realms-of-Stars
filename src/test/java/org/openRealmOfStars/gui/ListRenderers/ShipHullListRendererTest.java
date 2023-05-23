@@ -51,8 +51,8 @@ public class ShipHullListRendererTest {
     JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
     assertEquals("Hull 1 - Medium",label.getText());
-    assertEquals(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK, label.getForeground());
-    assertEquals(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK, label.getBackground());
+    assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
+    assertEquals(GuiStatics.getDeepSpaceDarkColor(), label.getBackground());
 
     Mockito.when(hull.getSize()).thenReturn(ShipSize.SMALL);
     selected = true;
@@ -60,8 +60,8 @@ public class ShipHullListRendererTest {
     label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
     assertEquals("Hull 1 - Small",label.getText());
-    assertEquals(GuiStatics.COLOR_COOL_SPACE_BLUE, label.getForeground());
-    assertEquals(GuiStatics.COLOR_DEEP_SPACE_PURPLE, label.getBackground());
+    assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
+    assertEquals(GuiStatics.getDeepSpaceColor(), label.getBackground());
   }
 
 }

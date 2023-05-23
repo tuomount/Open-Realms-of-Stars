@@ -362,8 +362,8 @@ public class BigSpherePanel extends JPanel {
                 title) / 2;
       }
     }
-    drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK,
-        GuiStatics.COLOR_COOL_SPACE_BLUE, offsetX, offsetY, title);
+    drawBoldText(g, GuiStatics.getCoolSpaceColorDark(),
+        GuiStatics.getCoolSpaceColor(), offsetX, offsetY, title);
 
     if (textInformation != null) {
       String[] texts = textInformation.split("\n");
@@ -377,10 +377,10 @@ public class BigSpherePanel extends JPanel {
         }
       }
       for (int i = 0; i < texts.length; i++) {
-        drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS,
-            GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS, this.getWidth() - offsetX
-            - 20, this.getHeight() - (texts.length + 2) * 15 + i * 15,
-            texts[i]);
+        drawBoldText(g, GuiStatics.getCoolSpaceColorDarkerTransparent(),
+            GuiStatics.getCoolSpaceColorTransparent(),
+            this.getWidth() - offsetX - 20,
+            this.getHeight() - (texts.length + 2) * 15 + i * 15, texts[i]);
       }
     }
   }

@@ -53,8 +53,8 @@ public class FleetListRendererTest {
     JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
     assertEquals("Fleet 1 - Ship 1",label.getText());
-    assertEquals(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK, label.getForeground());
-    assertEquals(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK, label.getBackground());
+    assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
+    assertEquals(GuiStatics.getDeepSpaceDarkColor(), label.getBackground());
     
     Mockito.when(value.getNumberOfShip()).thenReturn(5);
     selected = true;
@@ -62,8 +62,8 @@ public class FleetListRendererTest {
     label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
     assertEquals("Fleet 1 - 5 ships",label.getText());
-    assertEquals(GuiStatics.COLOR_COOL_SPACE_BLUE, label.getForeground());
-    assertEquals(GuiStatics.COLOR_DEEP_SPACE_PURPLE, label.getBackground());
+    assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
+    assertEquals(GuiStatics.getDeepSpaceColor(), label.getBackground());
   }
 
 }

@@ -177,11 +177,11 @@ public final class SpaceRaceUtility {
       } else if (race == SpaceRace.MECHIONS) {
           sb.append(buildSecondaryName(race, "Steel"));
       } else if (race == SpaceRace.SPORKS) {
-        sb.append(buildSecondaryName(race, "Sagittarian"));
+        sb.append(buildSecondaryName(race, "Taurus"));
       } else if (race == SpaceRace.GREYANS) {
         sb.append(buildSecondaryName(race, "Aesir"));
       } else if (race == SpaceRace.CENTAURS) {
-        sb.append(buildSecondaryName(race, "Taurus"));
+        sb.append(buildSecondaryName(race, "Sagittarian"));
       } else if (race == SpaceRace.TEUTHIDAES) {
         sb.append(buildSecondaryName(race, "Squiddan"));
       } else if (race == SpaceRace.MOTHOIDS) {

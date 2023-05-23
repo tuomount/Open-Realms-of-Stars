@@ -135,6 +135,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     tutorialTree.getSelectionModel().setSelectionMode(
         TreeSelectionModel.SINGLE_TREE_SELECTION);
     tutorialTree.setBackground(Color.BLACK);
+    tutorialTree.setForeground(GuiStatics.getInfoTextColor());
     tutorialTree.setCellRenderer(new TutorialTreeCellRenderer());
     tutorialTree.setFont(GuiStatics.getFontCubellanSmaller());
     tutorialTree.addTreeSelectionListener(this);
@@ -157,7 +158,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     greyPanel.add(checkBox);
     searchText = new JTextField();
     searchText.setFont(GuiStatics.getFontCubellan());
-    searchText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    searchText.setForeground(GuiStatics.getInfoTextColor());
     searchText.setBackground(Color.BLACK);
     searchText.setMaximumSize(new Dimension(300,
         GuiStatics.TEXT_FIELD_HEIGHT));
@@ -189,15 +190,15 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     searchPanel.add(searchText);
     searchPanel.add(Box.createRigidArea(new Dimension(2, 2)));
     IconButton button = new IconButton(
-        Icons.getIconByName(Icons.ICON_SCROLL_UP).getIcon(),
-        Icons.getIconByName(Icons.ICON_SCROLL_UP_PRESSED).getIcon(), false,
-        GameCommands.COMMAND_SEARCH_BACKWARDS, searchPanel);
+        GuiStatics.getSmallArrow(Icons.ICON_SCROLL_UP).getIcon(),
+        GuiStatics.getSmallArrow(Icons.ICON_SCROLL_UP_PRESSED).getIcon(),
+        false, GameCommands.COMMAND_SEARCH_BACKWARDS, searchPanel);
     button.addActionListener(listener);
     searchPanel.add(button);
     button = new IconButton(
-        Icons.getIconByName(Icons.ICON_SCROLL_DOWN).getIcon(),
-        Icons.getIconByName(Icons.ICON_SCROLL_DOWN_PRESSED).getIcon(), false,
-        GameCommands.COMMAND_SEARCH_FORWARDS, searchPanel);
+        GuiStatics.getSmallArrow(Icons.ICON_SCROLL_DOWN).getIcon(),
+        GuiStatics.getSmallArrow(Icons.ICON_SCROLL_DOWN_PRESSED).getIcon(),
+        false, GameCommands.COMMAND_SEARCH_FORWARDS, searchPanel);
     button.addActionListener(listener);
     searchPanel.add(button);
     searchPanel.setAlignmentX(LEFT_ALIGNMENT);

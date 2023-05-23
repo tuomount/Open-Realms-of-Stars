@@ -18,7 +18,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -75,7 +74,7 @@ import org.openRealmOfStars.game.tutorial.TutorialList;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
+import org.openRealmOfStars.gui.scheme.SchemeType;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -516,34 +515,8 @@ public class Game implements ActionListener {
       } catch (Exception e) {
         e.printStackTrace();
       }
-      UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
-      UIManager.put("Tree.paintLines", false);
-      UIManager.put("Tree.line", GuiStatics.COLOR_GREEN_TEXT_DARK);
-      UIManager.put("Tree.closedIcon", Icons.getIconByName(
-          Icons.ICON_CLOSED).getAsIcon());
-      UIManager.put("Tree.openIcon", Icons.getIconByName(
-          Icons.ICON_AIRLOCK_OPEN).getAsIcon());
-      UIManager.put("Tree.expandedIcon", Icons.getIconByName(
-          Icons.ICON_EXPANDED).getAsIcon());
-      UIManager.put("Tree.collapsedIcon", Icons.getIconByName(
-          Icons.ICON_COLLAPSED).getAsIcon());
-      UIManager.put("Tree.leafIcon", Icons.getIconByName(
-          Icons.ICON_ARROW_RIGHT).getAsIcon());
-      UIManager.put("Tree.background", Color.BLACK);
-      UIManager.put("Tree.selectionBackground",
-          GuiStatics.COLOR_DEEP_SPACE_PURPLE);
-      UIManager.put("Tree.selectionForeground",
-          GuiStatics.COLOR_GREEN_TEXT);
-      UIManager.put("Tree.selectionBorderColor",
-          GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-      UIManager.put("Tree.textBackground", Color.BLACK);
-      UIManager.put("Tree.textForeground", GuiStatics.COLOR_GREEN_TEXT);
-      UIManager.put("ToolTip.background",
-          GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
-      UIManager.put("ToolTip.foreground",
-          GuiStatics.COLOR_COOL_SPACE_BLUE);
-      UIManager.put("ToolTip.border", BorderFactory
-          .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+      // Initialize also UI Manager
+      GuiStatics.setSchemeType(SchemeType.getByName(configFile.getUiScheme()));
       gameFrame.setTitle(GAME_TITLE + " " + GAME_VERSION);
       ArrayList<BufferedImage> icons = new ArrayList<>();
       icons.add(GuiStatics.LOGO32);
@@ -3137,6 +3110,9 @@ public class Game implements ActionListener {
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
         configFile.setShowMinimap(optionsView.isShowMinimap());
+        configFile.setUiScheme(optionsView.getUiScheme());
+        GuiStatics.setSchemeType(SchemeType.getByName(
+            configFile.getUiScheme()));
         setShowMiniMapFlag(configFile.isShowMinimap());
         setBridgeCommand(BridgeCommandType.EXIT);
         writeConfigFile();
@@ -3172,6 +3148,7 @@ public class Game implements ActionListener {
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
         configFile.setShowMinimap(optionsView.isShowMinimap());
+        configFile.setUiScheme(optionsView.getUiScheme());
         writeConfigFile();
         changeGameState(GameState.SETUP_AMBIENT_LIGHTS);
         return;
@@ -3197,6 +3174,10 @@ public class Game implements ActionListener {
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
         configFile.setShowMinimap(optionsView.isShowMinimap());
+        configFile.setUiScheme(optionsView.getUiScheme());
+        GuiStatics.setSchemeType(SchemeType.getByName(
+            configFile.getUiScheme()));
+        optionsView.repaint();
         return;
       }
       if (arg0.getActionCommand()

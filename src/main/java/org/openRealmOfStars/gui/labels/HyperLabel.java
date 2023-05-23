@@ -65,7 +65,7 @@ public class HyperLabel extends SpaceLabel {
 
   @Override
   protected void paintComponent(final Graphics g) {
-    g.setColor(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    g.setColor(GuiStatics.getPanelBackground());
     int sx = 0;
     int sy = 0;
     int width = getWidth();

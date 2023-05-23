@@ -111,7 +111,7 @@ public class ResearchTechPanel extends SpaceGreyPanel {
     slider.setPaintTicks(true);
     slider.setSnapToTicks(true);
     slider.setBackground(GuiStatics.COLOR_GREYBLUE);
-    slider.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    slider.setForeground(GuiStatics.getCoolSpaceColor());
     slider.addKeyListener(null);
     slider.addChangeListener(new ChangeListener() {
 

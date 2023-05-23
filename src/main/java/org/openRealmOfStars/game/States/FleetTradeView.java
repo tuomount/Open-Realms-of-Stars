@@ -197,7 +197,7 @@ public class FleetTradeView extends BlackPanel
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     fleetNameText = new JTextField();
     fleetNameText.setFont(GuiStatics.getFontCubellan());
-    fleetNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    fleetNameText.setForeground(GuiStatics.getInfoTextColor());
     fleetNameText.setBackground(Color.BLACK);
     fleetNameText.setText(getFleet().getName());
     fleetNameText.setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -240,7 +240,7 @@ public class FleetTradeView extends BlackPanel
         .setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
     tradeRoutes.addListSelectionListener(this);
     JScrollPane scroll = new JScrollPane(tradeRoutes);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     eastPanel.add(scroll);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceButton acceptBtn = new SpaceButton("Accept trade",

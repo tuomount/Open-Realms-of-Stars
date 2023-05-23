@@ -34,7 +34,7 @@ public class SpaceGreyPanelTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     SpaceGreyPanel panel = new SpaceGreyPanel();
-    assertEquals(GuiStatics.COLOR_SPACE_GREY_BLUE, panel.getBackground());
+    assertEquals(GuiStatics.getPanelBackground(), panel.getBackground());
   }
 
 }

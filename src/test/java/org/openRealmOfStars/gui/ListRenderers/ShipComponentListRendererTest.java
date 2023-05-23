@@ -50,8 +50,8 @@ public class ShipComponentListRendererTest {
     JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
     assertEquals("Component - Engine",label.getText());
-    assertEquals(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK, label.getForeground());
-    assertEquals(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK, label.getBackground());
+    assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
+    assertEquals(GuiStatics.getDeepSpaceDarkColor(), label.getBackground());
     
     value = null;
     selected = true;
@@ -59,8 +59,8 @@ public class ShipComponentListRendererTest {
     label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
     assertEquals("None",label.getText());
-    assertEquals(GuiStatics.COLOR_COOL_SPACE_BLUE, label.getForeground());
-    assertEquals(GuiStatics.COLOR_DEEP_SPACE_PURPLE, label.getBackground());
+    assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
+    assertEquals(GuiStatics.getDeepSpaceColor(), label.getBackground());
   }
 
 }

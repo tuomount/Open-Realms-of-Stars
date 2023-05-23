@@ -157,9 +157,9 @@ public class MapInfoPanel extends InfoPanel {
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
-        GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_TARGET,
-        this);
+    IconButton iBtn = new IconButton(GuiStatics.getArrowLeft(),
+        GuiStatics.getArrowLeftPressed(), false,
+        GameCommands.COMMAND_PREV_TARGET, this);
     iBtn.setToolTipText("Shift + Tab: Previous fleet or planet");
     iBtn.addActionListener(listener);
     panel.add(iBtn);
@@ -171,9 +171,9 @@ public class MapInfoPanel extends InfoPanel {
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
     g2d.dispose();
     panel.add(imageLabel);
-    iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
-        GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_TARGET,
-        this);
+    iBtn = new IconButton(GuiStatics.getArrowRight(),
+        GuiStatics.getArrowRightPressed(), false,
+        GameCommands.COMMAND_NEXT_TARGET, this);
     iBtn.addActionListener(listener);
     iBtn.setToolTipText("Tab: Next fleet or planet");
     panel.add(iBtn);

@@ -24,11 +24,12 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceSliderPanel;
+import org.openRealmOfStars.gui.scheme.SchemeType;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018,2020-2022  Tuomo Untinen
+* Copyright (C) 2018,2020-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -78,6 +79,10 @@ public class OptionsView extends BlackPanel {
    * Resolution selector
    */
   private JComboBox<String> resolutionSelection;
+  /**
+   * UI Scheme selector
+   */
+  private JComboBox<String> uiSchemeSelection;
 
   /**
    * Music volume slider
@@ -167,8 +172,8 @@ public class OptionsView extends BlackPanel {
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
     JTabbedPane tabs = new JTabbedPane();
     tabs.setFont(GuiStatics.getFontCubellanSmaller());
-    tabs.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER);
-    tabs.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    tabs.setForeground(GuiStatics.getCoolSpaceColorDarker());
+    tabs.setBackground(GuiStatics.getDeepSpaceDarkColor());
     // Screen panel starts here
     InfoPanel screenPanel = new InfoPanel();
     screenPanel.setLayout(new BoxLayout(screenPanel, BoxLayout.Y_AXIS));
@@ -190,8 +195,8 @@ public class OptionsView extends BlackPanel {
         "1440x960", "1680x1050", "1920x1080",
         "Custom (" + game.getCurrentResolution() + ")"};
     resolutionSelection = new JComboBox<>(resolutions);
-    resolutionSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    resolutionSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    resolutionSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    resolutionSelection.setForeground(GuiStatics.getCoolSpaceColor());
     resolutionSelection.setBorder(new SimpleBorder());
     resolutionSelection.setFont(GuiStatics.getFontCubellan());
     resolutionSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -308,6 +313,34 @@ public class OptionsView extends BlackPanel {
     xPanel.add(showMinimapBox);
     gameplayPanel.add(xPanel);
     gameplayPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    String[] uiScheme = {SchemeType.CLASSIC_SPACE_GREY_BLUE.toString(),
+        SchemeType.SPACE_GREY.toString()};
+
+    uiSchemeSelection = new JComboBox<>(uiScheme);
+    uiSchemeSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    uiSchemeSelection.setForeground(GuiStatics.getCoolSpaceColor());
+    uiSchemeSelection.setBorder(new SimpleBorder());
+    uiSchemeSelection.setFont(GuiStatics.getFontCubellan());
+    uiSchemeSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    for (int i = 0; i < uiScheme.length; i++) {
+      if (GuiStatics.getSchemeType().toString().equals(uiScheme[i])) {
+        uiSchemeSelection.setSelectedIndex(i);
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      uiSchemeSelection.setSelectedIndex(0);
+    }
+    label = new SpaceLabel("UI Scheme: ");
+    xPanel.add(label);
+    xPanel.add(uiSchemeSelection);
+    gameplayPanel.add(xPanel);
+
     tabs.add("Gameplay", gameplayPanel);
 
     // Sound & Music panel starts here
@@ -483,6 +516,15 @@ public class OptionsView extends BlackPanel {
     if (result.startsWith("Custom ") || resized) {
       result = game.getCurrentResolution();
     }
+    return result;
+  }
+
+  /**
+   * Get selected UI Scheme.
+   * @return UIScheme as a String
+   */
+  public String getUiScheme() {
+    String result = (String) uiSchemeSelection.getSelectedItem();
     return result;
   }
 

@@ -249,8 +249,8 @@ public class ShipDesignView extends BlackPanel {
     hullSelect.setSelectedIndex(hullIndex);
     hullSelect.addActionListener(listener);
     hullSelect.setActionCommand(GameCommands.COMMAND_SHIPDESIGN_HULLSELECTED);
-    hullSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
-    hullSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    hullSelect.setBackground(GuiStatics.getCoolSpaceColorDark());
+    hullSelect.setForeground(GuiStatics.getCoolSpaceColor());
     hullSelect.setBorder(new SimpleBorder());
     hullSelect.setFont(GuiStatics.getFontCubellan());
     hullSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -264,7 +264,7 @@ public class ShipDesignView extends BlackPanel {
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     designNameText = new JTextField();
     designNameText.setFont(GuiStatics.getFontCubellan());
-    designNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    designNameText.setForeground(GuiStatics.getInfoTextColor());
     designNameText.setBackground(Color.BLACK);
     designNameText.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
@@ -312,7 +312,7 @@ public class ShipDesignView extends BlackPanel {
     hullInfoText.setEditable(false);
     hullInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     JScrollPane scroll = new JScrollPane(hullInfoText);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     hullPanel.add(Box.createRigidArea(new Dimension(25, 25)));
     hullPanel.add(scroll);
     hullPanel.add(Box.createRigidArea(new Dimension(25, 25)));
@@ -349,8 +349,8 @@ public class ShipDesignView extends BlackPanel {
     variantSelection = new JComboBox<>(MILITARY_VARIANTS);
     variantSelection
         .setActionCommand(GameCommands.COMMAND_SHIPDESIGN_VARIANT_SELECTED);
-    variantSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    variantSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    variantSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    variantSelection.setForeground(GuiStatics.getCoolSpaceColor());
     variantSelection.setBorder(new SimpleBorder());
     variantSelection.setFont(GuiStatics.getFontCubellan());
     variantSelection.setMaximumSize(new Dimension(200,
@@ -394,8 +394,8 @@ public class ShipDesignView extends BlackPanel {
         componentTypes.toArray(new String[componentTypes.size()]));
     componentFilter
         .setActionCommand(GameCommands.COMMAND_SHIPDESIGN_COMPONENTFILTERED);
-    componentFilter.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    componentFilter.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    componentFilter.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    componentFilter.setForeground(GuiStatics.getCoolSpaceColor());
     componentFilter.setBorder(new SimpleBorder());
     componentFilter.setFont(GuiStatics.getFontCubellan());
     componentFilter.setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -407,8 +407,8 @@ public class ShipDesignView extends BlackPanel {
     componentSelect = new JComboBox<>(filterComponents("All"));
     componentSelect
         .setActionCommand(GameCommands.COMMAND_SHIPDESIGN_COMPONENTSELECTED);
-    componentSelect.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    componentSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    componentSelect.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    componentSelect.setForeground(GuiStatics.getCoolSpaceColor());
     componentSelect.setBorder(new SimpleBorder());
     componentSelect.setFont(GuiStatics.getFontCubellan());
     componentSelect.setRenderer(new ShipComponentListRenderer());
@@ -421,7 +421,7 @@ public class ShipDesignView extends BlackPanel {
     componentInfoText.setEditable(false);
     componentInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(componentInfoText);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     greyPanel.add(scroll);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Add component",
@@ -443,7 +443,7 @@ public class ShipDesignView extends BlackPanel {
     componentList.setBackground(Color.BLACK);
     componentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     scroll = new JScrollPane(componentList);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     greyPanel.add(scroll);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Higher priority",
@@ -476,7 +476,7 @@ public class ShipDesignView extends BlackPanel {
     designInfoText.setEditable(false);
     designInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designInfoText);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     label = new SpaceLabel("Design info");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);
@@ -491,7 +491,7 @@ public class ShipDesignView extends BlackPanel {
     designFlawsText.setEditable(false);
     designFlawsText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designFlawsText);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     label = new SpaceLabel("Design flaws");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);

@@ -11,9 +11,18 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.swing.BorderFactory;
+import javax.swing.UIManager;
+
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.AnimatedImage;
+import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.scheme.BaseScheme;
+import org.openRealmOfStars.gui.scheme.ClassicScheme;
+import org.openRealmOfStars.gui.scheme.GreyScheme;
+import org.openRealmOfStars.gui.scheme.SchemeType;
+import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -49,6 +58,18 @@ public final class GuiStatics {
     // Nothing to do
   }
 
+  /**
+   * Classic scheme
+   */
+  public static final BaseScheme CLASSIC_SCHEME = new ClassicScheme();
+  /**
+   * Classic scheme
+   */
+  public static final BaseScheme GREY_SCHEME = new GreyScheme();
+  /**
+   * Scheme selection for UI.
+   */
+  private static BaseScheme schemeType = CLASSIC_SCHEME;
   /**
    *  Monospace font size 10
    */
@@ -420,16 +441,6 @@ public final class GuiStatics {
   public static final Color COLOR_GREYBLUE = new Color(180, 180, 200, 65);
 
   /**
-   * Panel background
-   */
-  public static final Color COLOR_SPACE_GREY_BLUE = new Color(81, 87, 133, 255);
-
-  /**
-   * Green text dark one
-   */
-  public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
-
-  /**
    * Green text
    */
   public static final Color COLOR_GREEN_TEXT = new Color(4, 186, 0, 255);
@@ -502,54 +513,10 @@ public final class GuiStatics {
   public static final Color COLOR_DESTROYED = new Color(255, 28, 11, 255);
 
   /**
-   * Cool space blue
-   */
-  public static final Color COLOR_COOL_SPACE_BLUE = new Color(88, 210, 255);
-
-  /**
-   * Cool space blue dark
-   */
-  public static final Color COLOR_COOL_SPACE_BLUE_DARK = new Color(25, 120,
-      193);
-
-  /**
-   * Deep space purple dark
-   */
-  public static final Color COLOR_DEEP_SPACE_PURPLE_DARK = new Color(25, 9, 61);
-
-  /**
-   * Deep space purple
-   */
-  public static final Color COLOR_DEEP_SPACE_PURPLE = new Color(47, 27, 92);
-
-  /**
-   * Cool space blue darker
-   */
-  public static final Color COLOR_COOL_SPACE_BLUE_DARKER = new Color(20, 110,
-      180);
-
-  /**
-   * Cool space blue, opacity 128
-   */
-  public static final Color COLOR_COOL_SPACE_BLUE_TRANS = new Color(88, 210,
-      255, 128);
-
-  /**
    * Dark grey, opacity 128
    */
   public static final Color COLOR_VERY_DARK_GREY_TRANS = new Color(20, 20,
       20, 128);
-
-  /**
-   * Cool space blue dark, opacity 128
-   */
-  public static final Color COLOR_COOL_SPACE_BLUE_DARK_TRANS = new Color(25,
-      120, 193, 128);
-
-  /**
-   * Deep Space Blue
-   */
-  public static final Color COLOR_DEEP_SPACE_BLUE = new Color(33, 33, 208);
 
   /**
    * Grey 160
@@ -843,29 +810,6 @@ public final class GuiStatics {
    */
   public static final AnimatedImage WORMHOLE = new AnimatedImage(64, 64,
       "/resources/images/wormhole.png");
-  /**
-   * Left arrow
-   */
-  public static final BufferedImage LEFT_ARROW = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/left_arrow.png"));
-
-  /**
-   * Left arrow pressed
-   */
-  public static final BufferedImage LEFT_ARROW_PRESSED = IOUtilities.loadImage(
-      Tiles.class.getResource("/resources/images/left_arrow_pressed.png"));
-
-  /**
-   * Right arrow
-   */
-  public static final BufferedImage RIGHT_ARROW = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/right_arrow.png"));
-
-  /**
-   * Right arrow pressed
-   */
-  public static final BufferedImage RIGHT_ARROW_PRESSED = IOUtilities.loadImage(
-      Tiles.class.getResource("/resources/images/right_arrow_pressed.png"));
 
   /**
    * Crosshair for combat
@@ -1792,4 +1736,193 @@ public final class GuiStatics {
     }
     return starNebulae;
   }
+
+  /**
+   * Set Scheme type and initialize UI Manager.
+   * @param schemeType the BaseScheme to set
+   */
+  public static void setSchemeType(final BaseScheme schemeType) {
+    GuiStatics.schemeType = schemeType;
+    initializeUiDefaults();
+  }
+
+  /**
+   * Initialize UI manager.
+   */
+  public static void initializeUiDefaults() {
+    UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
+    UIManager.put("Tree.paintLines", false);
+    UIManager.put("Tree.line", GuiStatics.getInfoTextColor());
+    UIManager.put("Tree.closedIcon", Icons.getIconByName(
+        Icons.ICON_CLOSED).getAsIcon());
+    UIManager.put("Tree.openIcon", Icons.getIconByName(
+        Icons.ICON_AIRLOCK_OPEN).getAsIcon());
+    UIManager.put("Tree.expandedIcon", Icons.getIconByName(
+        Icons.ICON_EXPANDED).getAsIcon());
+    UIManager.put("Tree.collapsedIcon", Icons.getIconByName(
+        Icons.ICON_COLLAPSED).getAsIcon());
+    UIManager.put("Tree.leafIcon", Icons.getIconByName(
+        Icons.ICON_ARROW_RIGHT).getAsIcon());
+    UIManager.put("Tree.background", Color.BLACK);
+    UIManager.put("Tree.selectionBackground",
+        GuiStatics.getDeepSpaceColor());
+    UIManager.put("Tree.selectionForeground",
+        GuiStatics.getInfoTextColor());
+    UIManager.put("Tree.selectionBorderColor",
+        GuiStatics.getDeepSpaceDarkColor());
+    UIManager.put("Tree.textBackground", Color.BLACK);
+    UIManager.put("Tree.textForeground", GuiStatics.getInfoTextColor());
+    UIManager.put("ToolTip.background",
+        GuiStatics.getCoolSpaceColorDark());
+    UIManager.put("ToolTip.foreground",
+        GuiStatics.getCoolSpaceColor());
+    UIManager.put("ToolTip.border", BorderFactory
+        .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
+  }
+  /**
+   * Set Scheme type.
+   * @param schemeType the BaseScheme to set
+   */
+  public static void setSchemeType(final SchemeType schemeType) {
+    if (schemeType == SchemeType.CLASSIC_SPACE_GREY_BLUE) {
+      setSchemeType(CLASSIC_SCHEME);
+    }
+    if (schemeType == SchemeType.SPACE_GREY) {
+      setSchemeType(GREY_SCHEME);
+    }
+  }
+
+  /**
+   * Get UI Scheme type
+   * @return SchemeType
+   */
+  public static SchemeType getSchemeType() {
+    return schemeType.getType();
+  }
+
+  /**
+   * Get Panel background color from scheme.
+   * @return Color
+   */
+  public static Color getPanelBackground() {
+    return schemeType.getPanelBackground();
+  }
+  /**
+   * Get cool space color
+   * @return Color
+   */
+  public static Color getCoolSpaceColor() {
+    return schemeType.getCoolSpaceColor();
+  }
+  /**
+   * Get cool space color transparent.
+   * @return Color
+   */
+  public static Color getCoolSpaceColorTransparent() {
+    return schemeType.getCoolSpaceColorTransparent();
+  }
+
+  /**
+   * Get Info text color dark.
+   * @return Color
+   */
+  public static Color getInfoTextColorDark() {
+    return schemeType.getInfoTextColorDark();
+  }
+
+  /**
+   * Get Info text color.
+   * @return Color
+   */
+  public static Color getInfoTextColor() {
+    return schemeType.getInfoTextColor();
+  }
+
+  /**
+   * Get Cool Space Color Dark
+   * @return Color
+   */
+  public static Color getCoolSpaceColorDark() {
+    return schemeType.getCoolSpaceColorDark();
+  }
+
+  /**
+   * Get Cool Space Color Darker
+   * @return Color
+   */
+  public static Color getCoolSpaceColorDarker() {
+    return schemeType.getCoolSpaceColorDarker();
+  }
+  /**
+   * Get Cool Space Color Darker transparent
+   * @return Color
+   */
+  public static Color getCoolSpaceColorDarkerTransparent() {
+    return schemeType.getCoolSpaceColorDarkerTransparent();
+  }
+
+  /**
+   * Get Deep Space Color
+   * @return Color
+   */
+  public static Color getDeepSpaceColor() {
+    return schemeType.getDeepSpaceColor();
+  }
+
+  /**
+   * Get Deep Space Dark Color
+   * @return Color
+   */
+  public static Color getDeepSpaceDarkColor() {
+    return schemeType.getDeepSpaceDarkColor();
+  }
+  /**
+   * Get Deep Space Activity Color
+   * @return Color
+   */
+  public static Color getDeepSpaceActivityColor() {
+    return schemeType.getDeepSpaceActivityColor();
+  }
+
+  /**
+   * Get Small arrow icon based on scheme.
+   * @param name Arrow type name
+   * @return Icon16x16
+   */
+  public static Icon16x16 getSmallArrow(final String name) {
+    return schemeType.getSmallArrowIcon(name);
+  }
+
+  /**
+   * Get arrow left based on scheme.
+   * @return BufferedImage
+   */
+  public static BufferedImage getArrowLeft() {
+    return schemeType.getArrowLeft();
+  }
+
+  /**
+   * Get arrow left pressed based on scheme.
+   * @return BufferedImage
+   */
+  public static BufferedImage getArrowLeftPressed() {
+    return schemeType.getArrowLeftPressed();
+  }
+
+  /**
+   * Get arrow right based on scheme.
+   * @return BufferedImage
+   */
+  public static BufferedImage getArrowRight() {
+    return schemeType.getArrowRight();
+  }
+
+  /**
+   * Get arrow right pressed based on scheme.
+   * @return BufferedImage
+   */
+  public static BufferedImage getArrowRightPressed() {
+    return schemeType.getArrowRightPressed();
+  }
+
 }

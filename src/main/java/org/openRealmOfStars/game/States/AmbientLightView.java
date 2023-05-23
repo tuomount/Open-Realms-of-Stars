@@ -193,8 +193,8 @@ public class AmbientLightView extends BlackPanel
       hostnameField.setText(config.getBridgeHost() + ":"
           + config.getBridgeId());
     }
-    hostnameField.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    hostnameField.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    hostnameField.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    hostnameField.setForeground(GuiStatics.getCoolSpaceColor());
     hostnameField.setFont(GuiStatics.getFontCubellanSmaller());
     hostnameField.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
@@ -240,7 +240,7 @@ public class AmbientLightView extends BlackPanel
     listOfDevices.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     listOfDevices.setBackground(Color.BLACK);
     JScrollPane scroll = new JScrollPane(listOfDevices);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     scroll.setAlignmentX(LEFT_ALIGNMENT);
     scroll.setBackground(Color.BLACK);
     scroll.setPreferredSize(new Dimension(Integer.MAX_VALUE, 50));
@@ -256,8 +256,8 @@ public class AmbientLightView extends BlackPanel
     xPanel.add(usernameLabel);
     usernameField = new JTextField();
     usernameField.setText(config.getBridgeHost());
-    usernameField.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    usernameField.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    usernameField.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    usernameField.setForeground(GuiStatics.getCoolSpaceColor());
     usernameField.setFont(GuiStatics.getFontCubellanSmaller());
     usernameField.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
@@ -327,8 +327,8 @@ public class AmbientLightView extends BlackPanel
     xPanel.add(label);
     String[] lightNames = {"none"};
     leftLightSelection = new JComboBox<>(lightNames);
-    leftLightSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    leftLightSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    leftLightSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    leftLightSelection.setForeground(GuiStatics.getCoolSpaceColor());
     leftLightSelection.setBorder(new SimpleBorder());
     leftLightSelection.setFont(GuiStatics.getFontCubellan());
     leftLightSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -345,8 +345,8 @@ public class AmbientLightView extends BlackPanel
     label = new SpaceLabel("Center light");
     xPanel.add(label);
     centerLightSelection = new JComboBox<>(lightNames);
-    centerLightSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    centerLightSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    centerLightSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    centerLightSelection.setForeground(GuiStatics.getCoolSpaceColor());
     centerLightSelection.setBorder(new SimpleBorder());
     centerLightSelection.setFont(GuiStatics.getFontCubellan());
     centerLightSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -363,8 +363,8 @@ public class AmbientLightView extends BlackPanel
     label = new SpaceLabel("Right light");
     xPanel.add(label);
     rightLightSelection = new JComboBox<>(lightNames);
-    rightLightSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    rightLightSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    rightLightSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    rightLightSelection.setForeground(GuiStatics.getCoolSpaceColor());
     rightLightSelection.setBorder(new SimpleBorder());
     rightLightSelection.setFont(GuiStatics.getFontCubellan());
     rightLightSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -390,8 +390,8 @@ public class AmbientLightView extends BlackPanel
         Bridge.EFFECT_ORANGE_BLINK, Bridge.EFFECT_ORANGE_BLUE,
         Bridge.EFFECT_GREY_BLUE};
     effectSelection = new JComboBox<>(effectList);
-    effectSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    effectSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    effectSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    effectSelection.setForeground(GuiStatics.getCoolSpaceColor());
     effectSelection.setBorder(new SimpleBorder());
     effectSelection.setFont(GuiStatics.getFontCubellan());
     effectSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,

@@ -47,8 +47,8 @@ public class SpaceCombo<E> extends JComboBox<E> {
    */
   public SpaceCombo(final E[] data) {
     super(data);
-    setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    setBackground(GuiStatics.getDeepSpaceDarkColor());
+    setForeground(GuiStatics.getCoolSpaceColor());
     setBorder(new SimpleBorder());
     setFont(GuiStatics.getFontCubellan());
     setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -61,10 +61,10 @@ public class SpaceCombo<E> extends JComboBox<E> {
   @Override
   public JToolTip createToolTip() {
     JToolTip toolTip = super.createToolTip();
-    toolTip.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    toolTip.setForeground(GuiStatics.getCoolSpaceColor());
+    toolTip.setBackground(GuiStatics.getCoolSpaceColorDark());
     toolTip.setBorder(BorderFactory
-        .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+        .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
     return toolTip;
   }
 }

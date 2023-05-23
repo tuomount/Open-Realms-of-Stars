@@ -282,13 +282,13 @@ public class StatisticPanel extends JPanel {
     }
     for (int i = 0; i <= amount; i++) {
       if (i > 0) {
-        g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+        g2d.setColor(GuiStatics.getCoolSpaceColorDark());
         g2d.drawLine(Math.round(offsetX + i * scaleX * mult),
             this.getHeight() - offsetY,
             Math.round(offsetX + i * scaleX * mult), topOffsetY);
       }
       if (i < amount) {
-        g2d.setColor(GuiStatics.COLOR_GREEN_TEXT);
+        g2d.setColor(GuiStatics.getInfoTextColor());
         g2d.drawString(String.valueOf(i * turnDistance),
             Math.round(offsetX + i * scaleX * mult),
             this.getHeight() - offsetY + textHeight);
@@ -309,13 +309,13 @@ public class StatisticPanel extends JPanel {
     }
     for (int i = 0; i <= amount; i++) {
       if (i > 0) {
-        g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+        g2d.setColor(GuiStatics.getCoolSpaceColorDark());
         g2d.drawLine(offsetX,
             Math.round(this.getHeight() - offsetY - i * scaleY * mult),
             offsetX + drawWidth,
             Math.round(this.getHeight() - offsetY - i * scaleY * mult));
       }
-      g2d.setColor(GuiStatics.COLOR_GREEN_TEXT);
+      g2d.setColor(GuiStatics.getInfoTextColor());
       g2d.drawString(String.valueOf(i * mult), offsetX - textWidth,
           Math.round(this.getHeight() - offsetY - i * scaleY
               * mult));
@@ -336,7 +336,7 @@ public class StatisticPanel extends JPanel {
       g2d.setStroke(full);
     }
     //Draw the axis
-    g2d.setColor(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    g2d.setColor(GuiStatics.getPanelBackground());
     g2d.drawLine(offsetX, this.getHeight() - offsetY, offsetX + drawWidth,
         this.getHeight() - offsetY);
     g2d.drawLine(offsetX, this.getHeight() - offsetY, offsetX, topOffsetY);

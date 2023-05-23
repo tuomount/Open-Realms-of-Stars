@@ -67,7 +67,7 @@ public class SpaceCheckBox extends JCheckBox {
     super(text);
     type = CHECKBOX_TYPE_NORMAL;
     setSpaceIcon(Icons.getIconByName(Icons.ICON_CHECKBOX));
-    setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    setBackground(GuiStatics.getPanelBackground());
     setForeground(GuiStatics.COLOR_GREY_40);
     setBorderPainted(true);
   }
@@ -83,10 +83,10 @@ public class SpaceCheckBox extends JCheckBox {
   @Override
   public JToolTip createToolTip() {
     JToolTip toolTip = super.createToolTip();
-    toolTip.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    toolTip.setForeground(GuiStatics.getCoolSpaceColor());
+    toolTip.setBackground(GuiStatics.getCoolSpaceColorDark());
     toolTip.setBorder(BorderFactory
-        .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+        .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
     return toolTip;
   }
 
@@ -132,12 +132,12 @@ public class SpaceCheckBox extends JCheckBox {
 
     if (this.isEnabled()) {
       if (this.getModel().isRollover()) {
-        g2d.setColor(GuiStatics.COLOR_DEEP_SPACE_BLUE);
+        g2d.setColor(GuiStatics.getDeepSpaceActivityColor());
       } else {
         g2d.setColor(getForeground());
       }
     } else {
-      g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER);
+      g2d.setColor(GuiStatics.getCoolSpaceColorDarker());
     }
     String[] texts = getText().split("\n");
     g.setFont(GuiStatics.getFontCubellan());

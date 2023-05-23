@@ -88,9 +88,9 @@ public class RealmView extends BlackPanel {
     this.add(base, BorderLayout.CENTER);
     EmptyInfoPanel panelX = new EmptyInfoPanel();
     panelX.setLayout(new BoxLayout(panelX, BoxLayout.X_AXIS));
-    IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
-        GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_TARGET,
-        this);
+    IconButton iBtn = new IconButton(GuiStatics.getArrowLeft(),
+        GuiStatics.getArrowLeftPressed(), false,
+        GameCommands.COMMAND_PREV_TARGET, this);
     iBtn.addActionListener(listener);
     panelX.add(iBtn);
     raceImage = new RaceImagePanel();
@@ -98,9 +98,9 @@ public class RealmView extends BlackPanel {
     raceImage.setSize(220, 220);
     raceImage.setMaximumSize(new Dimension(220, 220));
     panelX.add(raceImage);
-    iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
-        GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_TARGET,
-        this);
+    iBtn = new IconButton(GuiStatics.getArrowRight(),
+        GuiStatics.getArrowRightPressed(), false,
+        GameCommands.COMMAND_NEXT_TARGET, this);
     iBtn.addActionListener(listener);
     panelX.add(iBtn);
     base.add(panelX);

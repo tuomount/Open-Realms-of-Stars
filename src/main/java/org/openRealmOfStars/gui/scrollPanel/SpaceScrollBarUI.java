@@ -61,12 +61,16 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
   @Override
   protected JButton createDecreaseButton(final int orientation) {
     if (orientation == SwingConstants.NORTH) {
-      JButton result = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_UP),
-          Icons.getIconByName(Icons.ICON_SCROLL_UP_PRESSED), false, "", null);
+      JButton result = new IconButton(GuiStatics.getSmallArrow(
+          Icons.ICON_SCROLL_UP),
+          GuiStatics.getSmallArrow(Icons.ICON_SCROLL_UP_PRESSED),
+          false, "", null);
       return result;
     }
-    JButton result = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_LEFT),
-        Icons.getIconByName(Icons.ICON_SCROLL_LEFT_PRESSED), false, "", null);
+    JButton result = new IconButton(GuiStatics.getSmallArrow(
+        Icons.ICON_SCROLL_LEFT),
+        GuiStatics.getSmallArrow(Icons.ICON_SCROLL_LEFT_PRESSED),
+        false, "", null);
     return result;
   }
 
@@ -74,13 +78,15 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
   protected JButton createIncreaseButton(final int orientation) {
     if (orientation == SwingConstants.SOUTH) {
       JButton result = new IconButton(
-          Icons.getIconByName(Icons.ICON_SCROLL_DOWN),
-          Icons.getIconByName(Icons.ICON_SCROLL_DOWN_PRESSED), false, "", null);
+          GuiStatics.getSmallArrow(Icons.ICON_SCROLL_DOWN),
+          GuiStatics.getSmallArrow(Icons.ICON_SCROLL_DOWN_PRESSED), false,
+          "", null);
       return result;
     }
     JButton result = new IconButton(
-        Icons.getIconByName(Icons.ICON_SCROLL_RIGHT),
-        Icons.getIconByName(Icons.ICON_SCROLL_RIGHT_PRESSED), false, "", null);
+        GuiStatics.getSmallArrow(Icons.ICON_SCROLL_RIGHT),
+        GuiStatics.getSmallArrow(Icons.ICON_SCROLL_RIGHT_PRESSED), false,
+        "", null);
     return result;
   }
 

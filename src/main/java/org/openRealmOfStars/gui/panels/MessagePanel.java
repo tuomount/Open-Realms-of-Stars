@@ -94,13 +94,13 @@ public class MessagePanel extends JPanel {
       final int maxIndex, final ActionListener listener) {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.setBorder(new SimpleBorder());
-    this.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    this.setBackground(GuiStatics.getPanelBackground());
     JPanel pane = new JPanel();
-    pane.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    pane.setBackground(GuiStatics.getPanelBackground());
     pane.setBorder(new SimpleBorder());
     pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
-    btnPrev = new IconButton(GuiStatics.LEFT_ARROW,
-        GuiStatics.LEFT_ARROW_PRESSED, false, prevCommand, pane);
+    btnPrev = new IconButton(GuiStatics.getArrowLeft(),
+        GuiStatics.getArrowLeftPressed(), false, prevCommand, pane);
     btnPrev.addActionListener(listener);
     pane.add(Box.createRigidArea(new Dimension(5, 30)));
     pane.add(btnPrev);
@@ -109,8 +109,8 @@ public class MessagePanel extends JPanel {
     titleLabel = new IconLabel(null, Icons.getIconByName(Icons.ICON_PEOPLE),
         MessageType.CONSTRUCTION.toString());
     pane.add(titleLabel);
-    btnNext = new IconButton(GuiStatics.RIGHT_ARROW,
-        GuiStatics.RIGHT_ARROW_PRESSED, false, nextCommand, pane);
+    btnNext = new IconButton(GuiStatics.getArrowRight(),
+        GuiStatics.getArrowRightPressed(), false, nextCommand, pane);
     btnNext.setToolTipText("Space: Move next message if cursor at current one");
     btnFocus = new SpaceButton("Focus", focusCommand);
     btnFocus.addActionListener(listener);
@@ -127,7 +127,7 @@ public class MessagePanel extends JPanel {
     msgText.setLineWrap(true);
     msgText.setWrapStyleWord(true);
     JScrollPane scroll = new JScrollPane(msgText);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     this.add(scroll);
 

@@ -116,7 +116,7 @@ public class ShipView extends BlackPanel {
     shipList.setBackground(Color.BLACK);
     shipList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scroll = new JScrollPane(shipList);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.add(scroll);
@@ -149,7 +149,7 @@ public class ShipView extends BlackPanel {
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(infoText);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     panel.add(scroll);
     base.add(panel, BorderLayout.CENTER);
 

@@ -365,8 +365,8 @@ public class PopupPanel {
   protected void drawGradientBorder(final Graphics2D gr, final int x,
       final int y, final int width, final int height) {
     GradientPaint gradient = new GradientPaint(x, y,
-        GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER, x + width, y + width,
-        GuiStatics.COLOR_COOL_SPACE_BLUE, false);
+        GuiStatics.getCoolSpaceColorDarker(), x + width, y + width,
+        GuiStatics.getCoolSpaceColor(), false);
     gr.setPaint(gradient);
     int borderSize = 3;
     gr.fillRect(x, y, width, borderSize);
@@ -386,7 +386,7 @@ public class PopupPanel {
     int y = screen.getHeight() / 10;
     int width = screen.getWidth() - (screen.getWidth() / 5);
     int height = screen.getHeight() - (screen.getHeight() / 5);
-    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS);
+    gr.setColor(GuiStatics.getCoolSpaceColorDarkerTransparent());
     gr.fillRect(x, y, width, height);
     int borderSize = 3;
     drawGradientBorder(gr, x, y, width, height);
@@ -417,7 +417,7 @@ public class PopupPanel {
     gr.setPaint(GuiStatics.COLOR_VERY_DARK_GREY_TRANS);
     gr.fillRect(textX + borderSize, textY + borderSize,
         textWidth - borderSize * 2, textHeight - borderSize * 2);
-    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    gr.setColor(GuiStatics.getCoolSpaceColorDark());
     gr.setFont(GuiStatics.getFontCubellanBoldBig());
     int h = GuiStatics.getTextHeight(gr.getFont(), title);
     int w = GuiStatics.getTextWidth(gr.getFont(), title);
@@ -426,20 +426,20 @@ public class PopupPanel {
     gr.drawString(title, x + w + 1, y + h + borderSize);
     gr.drawString(title, x + w, y + h + borderSize - 1);
     gr.drawString(title, x + w, y + h + borderSize + 1);
-    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    gr.setColor(GuiStatics.getCoolSpaceColor());
     gr.drawString(title, x + w, y + h + borderSize);
     gr.setFont(GuiStatics.getFontCubellanSmaller());
     w = GuiStatics.getTextWidth(gr.getFont(), "AveragemiuM");
     w = w / 11;
     h = GuiStatics.getTextHeight(gr.getFont(), "AveragemiuM");
     String[] rows = splitText(textWidth, w);
-    gr.setColor(GuiStatics.COLOR_GREEN_TEXT);
+    gr.setColor(GuiStatics.getInfoTextColor());
     for (int i = 0; i < rows.length; i++) {
       w = GuiStatics.getTextWidth(gr.getFont(), rows[i]);
       w = textWidth / 2  - w / 2;
       gr.drawString(rows[i], textX + w, textY + h * 2 + h * i);
     }
-    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    gr.setColor(GuiStatics.getCoolSpaceColorDark());
     gr.setFont(GuiStatics.getFontCubellanSC());
     String hint = "Press enter/space bar or click to continue";
     h = GuiStatics.getTextHeight(gr.getFont(), hint);
@@ -449,7 +449,7 @@ public class PopupPanel {
     gr.drawString(hint, x + w + 1, y + height - h - borderSize * 2);
     gr.drawString(hint, x + w, y + 1 + height - h - borderSize * 2);
     gr.drawString(hint, x + w, y - 1 + height - h - borderSize * 2);
-    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    gr.setColor(GuiStatics.getCoolSpaceColor());
     gr.drawString(hint, x + w,  y + height - h - borderSize * 2);
     gr.dispose();
   }

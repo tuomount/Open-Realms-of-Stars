@@ -1,5 +1,6 @@
 package org.openRealmOfStars.gui.ListRenderers;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JLabel;
@@ -9,6 +10,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 
 import org.openRealmOfStars.game.tutorial.HelpLine;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 /**
 *
@@ -45,6 +47,13 @@ public class TutorialTreeCellRenderer implements TreeCellRenderer {
       final boolean leaf, final int row, final boolean hasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getTreeCellRendererComponent(
         tree, value, selected, expanded, leaf, row, hasFocus);
+    if (selected) {
+      renderer.setBackground(GuiStatics.getCoolSpaceColorDarker());
+      renderer.setForeground(GuiStatics.getInfoTextColor());
+    } else {
+      renderer.setBackground(Color.BLACK);
+      renderer.setForeground(GuiStatics.getInfoTextColorDark());
+    }
     if (value != null && value instanceof DefaultMutableTreeNode) {
       Object object = ((DefaultMutableTreeNode) value)
           .getUserObject();

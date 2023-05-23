@@ -48,11 +48,11 @@ public class InfoTextPane extends JTextPane {
   public InfoTextPane() {
     super();
     this.setFont(GuiStatics.getFontCubellanSmaller());
-    this.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    this.setForeground(GuiStatics.getInfoTextColor());
     this.setBackground(Color.BLACK);
     this.setBorder(new SimpleBorder());
-    this.setSelectedTextColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    this.setSelectionColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    this.setSelectedTextColor(GuiStatics.getCoolSpaceColor());
+    this.setSelectionColor(GuiStatics.getCoolSpaceColorDark());
     this.setEditable(false);
   }
 

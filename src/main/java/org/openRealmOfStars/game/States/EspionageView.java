@@ -108,7 +108,7 @@ public class EspionageView extends BlackPanel {
     fakeMilitaryText.setCharacterWidth(8);
     fakeMilitaryText.setLineWrap(true);
     JScrollPane scroll = new JScrollPane(fakeMilitaryText);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     topPanel.add(scroll);
     int humanIndex = playerList.getIndex(info);
     humanNewsMilitarySize = militaryNews.getLatest(humanIndex);
@@ -145,7 +145,7 @@ public class EspionageView extends BlackPanel {
               humanIndex);
         } else {
           text = "Own Realm";
-          relationColor = GuiStatics.COLOR_GREEN_TEXT;
+          relationColor = GuiStatics.getInfoTextColor();
         }
         EspionagePanel panel = new EspionagePanel(realmInfo.getEmpireName(),
             desc, bonus, text, relationColor, listener);

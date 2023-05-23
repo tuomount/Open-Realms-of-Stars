@@ -55,11 +55,11 @@ public class FleetListRenderer implements ListCellRenderer<Fleet> {
           value.getName() + " - " + value.getNumberOfShip() + " ships");
     }
     if (isSelected) {
-      renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-      renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
+      renderer.setForeground(GuiStatics.getCoolSpaceColor());
+      renderer.setBackground(GuiStatics.getDeepSpaceColor());
     } else {
-      renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
-      renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+      renderer.setForeground(GuiStatics.getCoolSpaceColorDark());
+      renderer.setBackground(GuiStatics.getDeepSpaceDarkColor());
     }
     return renderer;
   }

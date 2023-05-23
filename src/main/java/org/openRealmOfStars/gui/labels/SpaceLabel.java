@@ -43,7 +43,7 @@ public class SpaceLabel extends JLabel {
   */
  public SpaceLabel(final String text) {
    super(text);
-   this.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+   this.setForeground(GuiStatics.getCoolSpaceColor());
    this.setFont(GuiStatics.getFontCubellan());
    Dimension size = this.getPreferredSize();
    size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)
@@ -58,10 +58,10 @@ public class SpaceLabel extends JLabel {
  @Override
  public JToolTip createToolTip() {
    JToolTip toolTip = super.createToolTip();
-   toolTip.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-   toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+   toolTip.setForeground(GuiStatics.getCoolSpaceColor());
+   toolTip.setBackground(GuiStatics.getCoolSpaceColorDark());
    toolTip.setBorder(BorderFactory
-       .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+       .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
    return toolTip;
  }
 

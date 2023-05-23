@@ -1550,7 +1550,7 @@ public class ImageInstruction {
       }
       if (TEXT.equals(command)) {
         Graphics2D g = (Graphics2D) workImage.getGraphics();
-        g.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
+        g.setColor(GuiStatics.getCoolSpaceColor());
         g.setFont(GuiStatics.getFontCubellanBoldBig());
         int textWidth = GuiStatics.getTextWidth(g.getFont(), parameters[0]);
         int height = GuiStatics.getTextHeight(g.getFont(), parameters[0]);

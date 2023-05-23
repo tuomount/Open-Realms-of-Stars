@@ -89,7 +89,7 @@ public class IconButton extends JButton {
     this.setActionCommand(actionCommand);
     this.setBorder(border);
     this.parent = parent;
-    this.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    this.setBackground(GuiStatics.getPanelBackground());
     if (border) {
       this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     } else {
@@ -118,7 +118,7 @@ public class IconButton extends JButton {
     this.setActionCommand(actionCommand);
     this.setBorder(border);
     this.parent = parent;
-    this.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    this.setBackground(GuiStatics.getPanelBackground());
     if (border) {
       this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     } else {
@@ -179,10 +179,10 @@ public class IconButton extends JButton {
   @Override
   public JToolTip createToolTip() {
     JToolTip toolTip = super.createToolTip();
-    toolTip.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    toolTip.setForeground(GuiStatics.getCoolSpaceColor());
+    toolTip.setBackground(GuiStatics.getCoolSpaceColorDark());
     toolTip.setBorder(BorderFactory
-        .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+        .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
     return toolTip;
   }
 

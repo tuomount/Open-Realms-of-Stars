@@ -366,8 +366,8 @@ public class PlanetView extends BlackPanel {
     constructionSelect = new JComboBox<>(this.planet.getProductionList());
     constructionSelect.addActionListener(listener);
     constructionSelect.setActionCommand(GameCommands.COMMAND_PRODUCTION_LIST);
-    constructionSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
-    constructionSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    constructionSelect.setBackground(GuiStatics.getCoolSpaceColorDark());
+    constructionSelect.setForeground(GuiStatics.getCoolSpaceColor());
     constructionSelect.setBorder(new SimpleBorder());
     constructionSelect.setFont(GuiStatics.getFontCubellan());
     constructionSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -417,7 +417,7 @@ public class PlanetView extends BlackPanel {
     productionInfo.setFont(GuiStatics.getFontCubellanSmaller());
     productionInfo.setEditable(false);
     JScrollPane scroll = new JScrollPane(productionInfo);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     scroll.setBackground(Color.BLACK);
     topPanel.add(scroll);
     topPanel.add(Box.createRigidArea(new Dimension(15, 25)));
@@ -494,7 +494,7 @@ public class PlanetView extends BlackPanel {
     buildingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     buildingList.setBackground(Color.BLACK);
     scroll = new JScrollPane(buildingList);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     scroll.setBackground(Color.BLACK);
     scroll.setPreferredSize(new Dimension(200, 200));
     eastPanel.add(scroll);

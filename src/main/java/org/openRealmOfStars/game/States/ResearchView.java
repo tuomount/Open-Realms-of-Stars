@@ -297,7 +297,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     artifactList.setCellRenderer(new ArtifactListRenderer());
     artifactList.addListSelectionListener(this);
     JScrollPane scroll = new JScrollPane(artifactList);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     artifactList.setBackground(Color.BLACK);
     artifactList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     artifactPanel.add(scroll);
@@ -311,7 +311,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     techList.setCellRenderer(new TechListRenderer());
     techList.addListSelectionListener(this);
     scroll = new JScrollPane(techList);
-    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     techList.setBackground(Color.BLACK);
     techList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     greyPanel.add(scroll);

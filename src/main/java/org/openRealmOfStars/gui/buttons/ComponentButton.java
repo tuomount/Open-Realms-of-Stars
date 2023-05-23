@@ -78,8 +78,8 @@ public class ComponentButton extends JButton {
       this.setText("");
     }
     this.setFont(GuiStatics.getFontCubellanSmaller());
-    this.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    this.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
+    this.setForeground(GuiStatics.getCoolSpaceColor());
+    this.setBackground(GuiStatics.getDeepSpaceColor());
     this.setFocusPainted(false);
     updateButton();
   }
@@ -100,7 +100,7 @@ public class ComponentButton extends JButton {
    */
   public void updateButton() {
     if (ship == null) {
-      this.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
+      this.setBackground(GuiStatics.getDeepSpaceColor());
       this.setEnabled(false);
       this.setText("");
       return;
@@ -129,7 +129,7 @@ public class ComponentButton extends JButton {
       } else {
         int ratio = hp * 100 / maxHP;
         if (ratio == 100) {
-          this.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
+          this.setBackground(GuiStatics.getDeepSpaceColor());
         } else if (ratio >= 75) {
           this.setBackground(GuiStatics.COLOR_DAMAGE_LITTLE);
         } else if (ratio >= 50) {
@@ -142,7 +142,7 @@ public class ComponentButton extends JButton {
       }
 
     } else {
-      this.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
+      this.setBackground(GuiStatics.getDeepSpaceColor());
       this.setEnabled(false);
       this.setText("");
     }

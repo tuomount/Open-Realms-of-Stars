@@ -1,5 +1,20 @@
 - New features and updates -
 
+* Hide current song when mouse cursor moves over the text.
+* Adds icons if fleet has moved, or has moves left or is routed.
+* Moving diagonally with no scanner now reveals that sector if sector is blocked.
+* Turns are now called star years.
+* Switched alternative names for Sporks and Centaurs. Centaurs are now alled Taurus. Sporks are called Sagittarian.
+
+- Bugfixes -
+
+* Fixed type casting error when voting.
+* Fixed possible race condition with SpotBugs.
+
+# Open Realm of Stars 0.22.0Beta 
+
+- New features and updates -
+
 * Alonian Space Ship Bridge image.
 * In diplomatic trade view it is possible to see relation detail in mouse tool tip.
 * Tutorial has search option for free text search.

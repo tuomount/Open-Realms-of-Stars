@@ -1136,7 +1136,7 @@ public final class BackgroundStoryGenerator {
           sb.append(gender.getHisHer());
           sb.append(" engine was considered as a nonsense and it was found "
               + " again much later ");
-          sb.append(" and thus first prototype of space craft was created at"
+          sb.append("and thus first prototype of space craft was created at"
               + " star year ");
           int protoType = 10 + DiceGenerator.getRandom(15);
           ago = ago - protoType;
@@ -1606,46 +1606,45 @@ public final class BackgroundStoryGenerator {
     }
       sb.append(" of star years ago on");
     }
+    String endOfworldDescription = null;
     if (startPlanet.getPlanetType().getWorldType() == WorldType.CARBONWORLD) {
       sb.append(" carbon rich planet with full of life.");
-      sb.append(" This was excellent planet for live on.");
+      endOfworldDescription = " This was excellent planet for live on.";
       fullOfLife = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.DESERTWORLD) {
-      sb.append(" dry desert world. This harsh envinronment was");
-      sb.append(" challenging but ");
-      sb.append(name);
-      sb.append(" became stronger and more sustainable there.");
+      sb.append(" dry desert world.");
+      endOfworldDescription = " This harsh envinronment was challenging but "
+          + name + " became stronger and more sustainable there.";
       hot = true;
       harsh = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.ICEWORLD) {
-      sb.append(" ice world. This cold and dark envinronment was");
-      sb.append(" challenging but ");
-      sb.append(name);
-      sb.append(" became extreme survalists there.");
+      sb.append(" ice world.");
+      endOfworldDescription = "This cold and dark envinronment was"
+          + " challenging but " + name + " became extreme survalists there.";
       cold = true;
       harsh = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.IRONWORLD) {
-      sb.append(" iron world. This planet was full of molten lava");
-      sb.append(" and hot envinronments ");
-      sb.append(name);
-      sb.append(" were able to survive there and learn how fluorish there.");
+      sb.append(" iron world.");
+      endOfworldDescription = "This planet was full of molten lava and"
+          + " hot envinronments " + name + " were able to survive there"
+          + " and learn how fluorish there.";
       hot = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.SILICONWORLD) {
-      sb.append(" silicon world. This almost barren planet is one the");
-      sb.append(" harshest envinronments in the galaxy. ");
-      sb.append(name);
-      sb.append(" still call this place as home.");
+      sb.append(" silicon world.");
+      endOfworldDescription = "This almost barren planet is one the"
+          + " harshest envinronments in the galaxy. " + name
+          + " still call this place as home.";
       harsh = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.WATERWORLD) {
-      sb.append(" water world. This planet is moist and has huge oceans");
-      sb.append(" on surface. ");
-      sb.append(name);
-      sb.append(" conquered the planet fully for themselves.");
+      sb.append(" water world.");
+      endOfworldDescription = "This planet is moist and has huge oceans"
+          + " on surface. " + name + " conquered the planet fully"
+              + " for themselves.";
       fullOfLife = true;
     }
     if (info.getRace().isLithovorian()) {
@@ -1816,13 +1815,13 @@ public final class BackgroundStoryGenerator {
         sb.append(" appeared on surface of ");
         sb.append(startPlanet.getName());
         if (fullOfLife) {
-          sb.append("They were not the only sentient creatures on ");
+          sb.append(" They were not the only sentient creatures on ");
           sb.append(startPlanet.getName());
           sb.append(" but ");
           sb.append(name);
           sb.append(" extinct all the other rivals and thus became dominant. ");
         } else {
-          sb.append("They were the only sentient creatures on ");
+          sb.append(" They were the only sentient creatures on ");
           sb.append(startPlanet.getName());
           sb.append(" and ");
           sb.append(name);
@@ -1833,6 +1832,7 @@ public final class BackgroundStoryGenerator {
       }
 
     }
+    sb.append(endOfworldDescription);
     return sb.toString();
   }
 

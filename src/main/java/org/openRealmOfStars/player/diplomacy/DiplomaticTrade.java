@@ -2838,7 +2838,7 @@ public class DiplomaticTrade {
     }
     if (majorDeals != null) {
       majorDeals = majorDeals + sb.toString();
-    } else {
+    } else if (sb.toString().length() > 0) {
       majorDeals = sb.toString();
     }
     return totalValue;

@@ -356,7 +356,7 @@ public class BattleView extends BlackPanel {
   public void updateOverloadInfo() {
     if (combat.getCurrentShip().getEnergyReserve() > 0) {
       overloadInfo.setTextColor(GuiStatics.COLOR_GREEN_TEXT,
-          GuiStatics.getInfoTextColor());
+          GuiStatics.COLOR_GREEN_TEXT_DARK);
     } else if (combat.getCurrentShip().getEnergyReserve() < 0) {
       overloadInfo.setTextColor(GuiStatics.COLOR_RED_TEXT,
           GuiStatics.COLOR_RED_TEXT_DARK);

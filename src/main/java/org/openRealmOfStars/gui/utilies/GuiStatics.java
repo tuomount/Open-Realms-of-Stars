@@ -446,6 +446,11 @@ public final class GuiStatics {
   public static final Color COLOR_GREEN_TEXT = new Color(4, 186, 0, 255);
 
   /**
+   * Green text
+   */
+  public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
+
+  /**
    * Grey text dark one
    */
   public static final Color COLOR_GREY_TEXT_DARK = new Color(90, 95, 90);

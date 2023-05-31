@@ -180,5 +180,9 @@ public enum GameState {
   /**
    * Story view for viewing background story of the realm.
    */
-  STORY_VIEW;
+  STORY_VIEW,
+  /**
+   * Story view for viewing full story of the realm when game ends.
+   */
+  END_STORY_VIEW;
 }

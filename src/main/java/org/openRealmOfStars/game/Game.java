@@ -39,6 +39,7 @@ import org.openRealmOfStars.game.States.BattleView;
 import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.DiplomacyView;
 import org.openRealmOfStars.game.States.EndGameView;
+import org.openRealmOfStars.game.States.EndStoryView;
 import org.openRealmOfStars.game.States.EspionageMissionView;
 import org.openRealmOfStars.game.States.EspionageView;
 import org.openRealmOfStars.game.States.FleetTradeView;
@@ -372,6 +373,10 @@ public class Game implements ActionListener {
    * Story view.
    */
   private StoryView storyView;
+  /**
+   * End Story view.
+   */
+  private EndStoryView endStoryView;
   /**
    * Change Message Fleet or Planet
    */
@@ -1359,6 +1364,13 @@ public class Game implements ActionListener {
     this.updateDisplay(storyView);
   }
   /**
+   * Show End story view.
+   */
+  public void showEndStoryView() {
+    endStoryView = new EndStoryView(starMap, this);
+    this.updateDisplay(endStoryView);
+  }
+  /**
    * Show Combat
    * @param combat Combat to show
    */
@@ -1888,6 +1900,12 @@ public class Game implements ActionListener {
       setBridgeCommand(starMap.getCurrentPlayerInfo()
           .getRace().getBridgeEffect());
       showStoryView();
+      break;
+    }
+    case END_STORY_VIEW: {
+      setBridgeCommand(starMap.getPlayerList().getPlayerInfoByIndex(0)
+          .getRace().getBridgeEffect());
+      showEndStoryView();
       break;
     }
     default: {
@@ -2978,6 +2996,18 @@ public class Game implements ActionListener {
       changeGameState(GameState.STARMAP);
       return;
     }
+    if (gameState == GameState.END_STORY_VIEW && endStoryView != null) {
+      if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.HISTORY_VIEW);
+      } else {
+        endStoryView.handleAction(arg0);
+        setBridgeCommand(endStoryView.getCurrentRealm().getRace()
+            .getBridgeEffect());
+      }
+      return;
+    }
     if (gameState == GameState.GAME_END_VIEW) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
@@ -2989,7 +3019,7 @@ public class Game implements ActionListener {
         getStarMap().setHumanLost(true);
         getStarMap().setGameEnded(true);
         SoundPlayer.playMenuSound();
-        changeGameState(GameState.HISTORY_VIEW);
+        changeGameState(GameState.END_STORY_VIEW);
       }
       if (arg0.getActionCommand().equalsIgnoreCase(
           GameCommands.COMMAND_AI_FINISH)) {
@@ -3928,7 +3958,7 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         if (starMap.isGameEnded()) {
           SoundPlayer.playMenuSound();
-          changeGameState(GameState.HISTORY_VIEW);
+          changeGameState(GameState.END_STORY_VIEW);
           return;
         }
         SoundPlayer.playMenuSound();
@@ -4008,7 +4038,8 @@ public class Game implements ActionListener {
         || gameState == GameState.CREDITS
         || gameState == GameState.CHANGE_LOG
         || gameState == GameState.GAME_END_VIEW
-        || gameState == GameState.STORY_VIEW) {
+        || gameState == GameState.STORY_VIEW
+        || gameState == GameState.END_STORY_VIEW) {
       actionPerformedMenus(arg0);
     }
   }

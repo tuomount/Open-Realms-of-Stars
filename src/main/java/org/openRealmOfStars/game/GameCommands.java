@@ -867,6 +867,15 @@ public final class GameCommands {
   public static final String COMMAND_NEXT_EVENT = "NextEvent";
 
   /**
+   * Command for next realm
+   */
+  public static final String COMMAND_NEXT_REALM = "NextRealm";
+  /**
+   * Command for previous realm
+   */
+  public static final String COMMAND_PREV_REALM = "PrevRealm";
+
+  /**
    * Command for realm view
    */
   public static final String COMMAND_REALM_VIEW = "RealmView";

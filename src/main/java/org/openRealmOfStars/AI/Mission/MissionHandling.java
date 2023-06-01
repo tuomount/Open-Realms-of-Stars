@@ -1172,7 +1172,8 @@ public final class MissionHandling {
         DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(
             playerIndex);
         StarMapUtilities.doTradeWithShips(diplomacy, fleet, previousTarget,
-            info, game.getStarMap().getNewsCorpData());
+            info, game.getStarMap().getNewsCorpData(),
+            game.getStarMap().getStarYear());
         if (mission.getTargetPlanet().equals(previousTarget.getName())) {
           Planet homePlanet = game.getStarMap().getPlanetByName(
               mission.getPlanetBuilding());
@@ -3073,7 +3074,8 @@ public final class MissionHandling {
       info.getMsgList().addUpcomingMessage(msg);
       StarMapUtilities.spreadDeadlyVirus(info, planet);
       game.getStarMap().getNewsCorpData().addNews(
-          NewsFactory.makeDeadlyVirusNews(planet, info));
+          NewsFactory.makeDeadlyVirusNews(planet, info,
+              game.getStarMap().getStarYear()));
       fleet.getCommander().setExperience(
           fleet.getCommander().getExperience() + type.getExperienceReward());
       game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
@@ -3323,7 +3325,7 @@ public final class MissionHandling {
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.ALLIANCE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         NewsData newsData = NewsFactory.makeAllianceNews(info, defender,
-            fleet);
+            fleet, game.getStarMap().getStarYear());
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);

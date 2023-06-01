@@ -58,10 +58,10 @@ public class StarMapUtilitiesTest {
     DiplomacyBonusList diplomacy = Mockito.mock(DiplomacyBonusList.class);
     Mockito.when(diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE))
         .thenReturn(true);
-    StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info, null);
+    StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info, null,2565);
     assertEquals(5, info.getTotalCredits());
     assertEquals(5, info2.getTotalCredits());
-    StarMapUtilities.doTradeWithShips(null, fleet, planet, info, null);
+    StarMapUtilities.doTradeWithShips(null, fleet, planet, info, null, 2533);
     assertEquals(15, info.getTotalCredits());
     assertEquals(5, info2.getTotalCredits());
   }
@@ -79,10 +79,11 @@ public class StarMapUtilitiesTest {
     DiplomacyBonusList diplomacy = Mockito.mock(DiplomacyBonusList.class);
     Mockito.when(diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE))
         .thenReturn(true);
-    StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info, null);
+    StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info, null,
+        2453);
     assertEquals(7, info.getTotalCredits());
     assertEquals(7, info2.getTotalCredits());
-    StarMapUtilities.doTradeWithShips(null, fleet, planet, info, null);
+    StarMapUtilities.doTradeWithShips(null, fleet, planet, info, null, 2554);
     assertEquals(22, info.getTotalCredits());
     assertEquals(7, info2.getTotalCredits());
   }
@@ -105,7 +106,8 @@ public class StarMapUtilitiesTest {
         .thenReturn(true);
     NewsCorpData newsData = new NewsCorpData(2);
     assertEquals(0, newsData.getUpcomingNews().length);
-    StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info, newsData);
+    StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info, newsData,
+        2534);
     assertEquals(7, info.getTotalCredits());
     assertEquals(7, info2.getTotalCredits());
     assertEquals(1, newsData.getUpcomingNews().length);

@@ -88,19 +88,19 @@ public class NewsFactoryTest {
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(owner);
     Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(1);
     Mockito.when(planet.getName()).thenReturn("Alpha Test I");
-    NewsData news = NewsFactory.makeDeadlyVirusNews(planet, null);
+    NewsData news = NewsFactory.makeDeadlyVirusNews(planet, null, 2642);
     assertEquals(true, news.getNewsText().contains("deadly virus"));
     assertEquals(true, news.getNewsText().contains("Alpha Test I"));
     assertEquals(false, news.getNewsText().contains(spreader.getEmpireName()));
     assertEquals(true, news.getNewsText().contains(owner.getEmpireName()));
-    news = NewsFactory.makeDeadlyVirusNews(planet, spreader);
+    news = NewsFactory.makeDeadlyVirusNews(planet, spreader, -1);
     assertEquals(true, news.getNewsText().contains("deadly virus"));
     assertEquals(true, news.getNewsText().contains("Alpha Test I"));
     assertEquals(true, news.getNewsText().contains(spreader.getEmpireName()));
     assertEquals(true, news.getNewsText().contains(owner.getEmpireName()));
     Mockito.when(diplomacy.isWar(1)).thenReturn(true);
     Mockito.when(diplomacy.isTradeAlliance(1)).thenReturn(false);
-    news = NewsFactory.makeDeadlyVirusNews(planet, spreader);
+    news = NewsFactory.makeDeadlyVirusNews(planet, spreader, 2323);
     assertEquals(true, news.getNewsText().contains("deadly virus"));
     assertEquals(true, news.getNewsText().contains("Alpha Test I"));
     assertEquals(true, news.getNewsText().contains(spreader.getEmpireName()));
@@ -108,7 +108,7 @@ public class NewsFactoryTest {
     Mockito.when(owner.getRace()).thenReturn(SpaceRace.MECHIONS);
     Mockito.when(diplomacy.isWar(1)).thenReturn(false);
     Mockito.when(diplomacy.isTradeAlliance(1)).thenReturn(false);
-    news = NewsFactory.makeDeadlyVirusNews(planet, spreader);
+    news = NewsFactory.makeDeadlyVirusNews(planet, spreader, 2553);
     assertEquals(true, news.getNewsText().contains("deadly virus"));
     assertEquals(true, news.getNewsText().contains("Alpha Test I"));
     assertEquals(true, news.getNewsText().contains(spreader.getEmpireName()));
@@ -123,7 +123,7 @@ public class NewsFactoryTest {
     Mockito.when(event.getBadType()).thenReturn(BadRandomType.SOLAR_ACTIVITY_INCREASE);
     Mockito.when(event.getGoodType()).thenReturn(GoodRandomType.SOLAR_ACTIVITY_DIMISHED);
     Mockito.when(event.getText()).thenReturn("Test event text");
-    NewsData news = NewsFactory.makeRandomEventNews(event);
+    NewsData news = NewsFactory.makeRandomEventNews(event, 2553);
     assertEquals("Test event text", news.getNewsText());
     assertNotEquals(null, news.getImageInstructions());
   }
@@ -654,7 +654,8 @@ public class NewsFactoryTest {
     Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
     Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeAllianceNews(peaceMaker, acceptor, null);
+    NewsData news = NewsFactory.makeAllianceNews(peaceMaker, acceptor, null,
+        -1);
     assertEquals(true, news.getImageInstructions().contains(
         peaceMaker.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -718,7 +719,8 @@ public class NewsFactoryTest {
     Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.DIPLOMATIC);
     PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
     Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeAllianceNews(peaceMaker, acceptor, planet);
+    NewsData news = NewsFactory.makeAllianceNews(peaceMaker, acceptor, planet,
+        -1);
     assertEquals(true, news.getImageInstructions().contains(
         peaceMaker.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -744,7 +746,8 @@ public class NewsFactoryTest {
     Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.PEACEFUL);
     PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
     Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeAllianceNews(peaceMaker, acceptor, planet);
+    NewsData news = NewsFactory.makeAllianceNews(peaceMaker, acceptor, planet,
+        2455);
     assertEquals(true, news.getImageInstructions().contains(
         peaceMaker.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(

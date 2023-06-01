@@ -315,9 +315,11 @@ public final class NewsFactory {
   /**
    * Make Random event news
    * @param event Random event
+   * @param starYear when Event happens
    * @return NewsData
    */
-  public static NewsData makeRandomEventNews(final RandomEvent event) {
+  public static NewsData makeRandomEventNews(final RandomEvent event,
+      final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addInstruction(event.getImageInstructions());
@@ -343,10 +345,11 @@ public final class NewsFactory {
     }
     if (event.getBadType() != null
         && event.getBadType() == BadRandomType.DEADLY_VIRUS_OUTBREAK) {
-      return makeDeadlyVirusNews(event.getPlanet(), null);
+      return makeDeadlyVirusNews(event.getPlanet(), null, starYear);
     }
     news.setImageInstructions(instructions.build());
     news.setNewsText(event.getText());
+    // TODO add these as story background.
     return news;
   }
   /**
@@ -1620,10 +1623,12 @@ public final class NewsFactory {
    * @param offerer Player who is make trade alliance
    * @param acceptor Player who is accepting
    * @param meetingPlace Where meeting happened, fleet or planet
+   * @param starYear Start year when news happens.
    * @return NewsData
    */
   public static NewsData makeAllianceNews(final PlayerInfo offerer,
-      final PlayerInfo acceptor, final Object meetingPlace) {
+      final PlayerInfo acceptor, final Object meetingPlace,
+      final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
@@ -1681,7 +1686,7 @@ public final class NewsFactory {
       sb.append(offerer.getEmpireName());
       sb.append(" is known about their peace loving. So this was expected! ");
     }
-    offerer.appendStory(sb.toString());
+    offerer.appendStory(sb.toString(), starYear);
     acceptor.appendStory(sb.toString());
     news.setNewsText(sb.toString());
     return news;
@@ -3004,10 +3009,11 @@ public final class NewsFactory {
    * Make news about deadly virus on planet.
    * @param planet Planet where virus is found.
    * @param spreader Possible realm who is spreading it. Can be null.
+   * @param starYear Star year when event happens.
    * @return NewsData
    */
   public static NewsData makeDeadlyVirusNews(final Planet planet,
-      final PlayerInfo spreader) {
+      final PlayerInfo spreader, final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
@@ -3063,7 +3069,7 @@ public final class NewsFactory {
     }
     planet.getPlanetPlayerInfo().appendStory(sb.toString());
     if (spreader != null) {
-      spreader.appendStory(sb.toString());
+      spreader.appendStory(sb.toString(), starYear);
     }
     news.setNewsText(sb.toString());
     return news;

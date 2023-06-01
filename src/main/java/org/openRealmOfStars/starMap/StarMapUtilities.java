@@ -740,11 +740,12 @@ public final class StarMapUtilities {
    * @param fleet Fleet involved in trade
    * @param planet Planet where trade happens
    * @param info Player who is doing the trade.
+   * @param starYear when this happens.
    * @param newsData NewsCorpData
    */
   public static void doTradeWithShips(final DiplomacyBonusList diplomacy,
       final Fleet fleet, final Planet planet, final PlayerInfo info,
-      final NewsCorpData newsData) {
+      final NewsCorpData newsData, final int starYear) {
     if (diplomacy != null
         && (diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
         || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
@@ -792,7 +793,8 @@ public final class StarMapUtilities {
           int chance = DiceGenerator.getRandom(99);
           if (chance < 10) {
             spreadDeadlyVirus(info, planet);
-            newsData.addNews(NewsFactory.makeDeadlyVirusNews(planet, info));
+            newsData.addNews(NewsFactory.makeDeadlyVirusNews(planet, info,
+                starYear));
           }
         }
       }

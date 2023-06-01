@@ -3854,7 +3854,8 @@ public class AITurnView extends BlackPanel {
           if (RandomEventUtility.handleRandomEvent(event, map)) {
             map.setBadKarmaCount(map.getBadKarmaCount() / 2);
             if (event.isNewsWorthy()) {
-              NewsData news = NewsFactory.makeRandomEventNews(event);
+              NewsData news = NewsFactory.makeRandomEventNews(event,
+                  map.getStarYear());
               map.getNewsCorpData().addNews(news);
             }
             info.setRandomEventOccured(event);
@@ -3869,7 +3870,8 @@ public class AITurnView extends BlackPanel {
           if (RandomEventUtility.handleRandomEvent(event, map)) {
             map.setGoodKarmaCount(map.getGoodKarmaCount() / 2);
             if (event.isNewsWorthy()) {
-              NewsData news = NewsFactory.makeRandomEventNews(event);
+              NewsData news = NewsFactory.makeRandomEventNews(event,
+                  map.getStarYear());
               map.getNewsCorpData().addNews(news);
             }
             info.setRandomEventOccured(event);

@@ -2821,4 +2821,17 @@ public class PlayerInfo {
     this.backgroundStory = this.backgroundStory + newStory;
   }
 
+  /**
+   * Add new story part for background story.
+   * @param newStory New story part.
+   * @param starYear Star year when story happens
+   */
+  public void appendStory(final String newStory, final int starYear) {
+    this.backgroundStory = this.backgroundStory + "\n\n";
+    if (starYear > 0) {
+      this.backgroundStory = this.backgroundStory + "At " + starYear + ": ";
+    }
+    this.backgroundStory = this.backgroundStory + newStory;
+  }
+
 }

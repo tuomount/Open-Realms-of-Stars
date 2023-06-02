@@ -3334,7 +3334,7 @@ public final class MissionHandling {
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.DEFENSIVE_PACT)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         NewsData newsData = NewsFactory.makeDefensivePactNews(info, defender,
-            fleet);
+            fleet, game.getStarMap().getStarYear());
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
@@ -3343,7 +3343,7 @@ public final class MissionHandling {
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_ALLIANCE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         NewsData newsData = NewsFactory.makeTradeAllianceNews(info, defender,
-            fleet);
+            fleet, game.getStarMap().getStarYear());
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
@@ -3352,7 +3352,7 @@ public final class MissionHandling {
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.PEACE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         NewsData newsData = NewsFactory.makePeaceNews(info, defender,
-            fleet, trade.getMajorDeals());
+            fleet, trade.getMajorDeals(), game.getStarMap().getStarYear());
         game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
@@ -3369,7 +3369,7 @@ public final class MissionHandling {
         StarMapUtilities.addEmbargoReputation(game.getStarMap(), info,
             defender, realm);
         NewsData newsData = NewsFactory.makeTradeEmbargoNews(info, defender,
-            realm, meetingPlace);
+            realm, meetingPlace, game.getStarMap().getStarYear());
         game.getStarMap().getNewsCorpData().addNews(newsData);
         game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));

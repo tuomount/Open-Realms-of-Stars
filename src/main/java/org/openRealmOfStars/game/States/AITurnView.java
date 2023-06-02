@@ -1991,7 +1991,7 @@ public class AITurnView extends BlackPanel {
               trade.doTrades();
               PlayerInfo defender = game.getStarMap().getPlayerByIndex(j);
               NewsData newsData = NewsFactory.makePeaceNews(info, defender,
-                  null, null);
+                  null, null, game.getStarMap().getStarYear());
               game.getStarMap().getHistory().addEvent(
                   NewsFactory.makeDiplomaticEvent(null, newsData));
               game.getStarMap().getNewsCorpData().addNews(newsData);
@@ -3197,7 +3197,8 @@ public class AITurnView extends BlackPanel {
                 leader.getName()));
             heir.setJob(Job.TOO_YOUNG);
             heir.setTitle(LeaderUtility.createTitleForLeader(heir, realm));
-            NewsData news = NewsFactory.makeHeirNews(heir, realm);
+            NewsData news = NewsFactory.makeHeirNews(heir, realm,
+                game.getStarMap().getStarYear());
             if (game.getStarMap().hasHumanMet(realm)) {
               game.getStarMap().getNewsCorpData().addNews(news);
             }

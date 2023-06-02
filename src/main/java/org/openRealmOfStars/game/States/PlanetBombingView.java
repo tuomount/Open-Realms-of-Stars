@@ -1023,12 +1023,12 @@ public class PlanetBombingView extends BlackPanel {
               exitLoop = true;
               if (starMap != null) {
                 newsData = NewsFactory.makePlanetConqueredNews(attacker,
-                    defender, planet, nuked.getText());
+                    defender, planet, nuked.getText(), starMap.getStarYear());
               }
             }
             if (result == ONLY_BOMBED && starMap != null) {
               newsData = NewsFactory.makePlanetBombedNews(attacker,
-                  defender, planet, nuked.getText());
+                  defender, planet, nuked.getText(), starMap.getStarYear());
             }
             removeDestroyedShip();
             skipAnimation();
@@ -1072,11 +1072,11 @@ public class PlanetBombingView extends BlackPanel {
           int result = attackBombOrTroops();
           if (result == CONQUERED && starMap != null) {
             newsData = NewsFactory.makePlanetConqueredNews(attacker,
-                defender, planet, nuked.getText());
+                defender, planet, nuked.getText(), starMap.getStarYear());
           }
           if (result == ONLY_BOMBED && starMap != null) {
             newsData = NewsFactory.makePlanetBombedNews(attacker,
-                defender, planet, nuked.getText());
+                defender, planet, nuked.getText(), starMap.getStarYear());
           }
         }
         updatePanel();
@@ -1116,12 +1116,12 @@ public class PlanetBombingView extends BlackPanel {
               aiExitLoop = true;
               if (starMap != null) {
                 newsData = NewsFactory.makePlanetConqueredNews(attacker,
-                    defender, planet, nuked.getText());
+                    defender, planet, nuked.getText(), starMap.getStarYear());
               }
             }
             if (result == ONLY_BOMBED && starMap != null) {
               newsData = NewsFactory.makePlanetBombedNews(attacker,
-                  defender, planet, nuked.getText());
+                  defender, planet, nuked.getText(), starMap.getStarYear());
             }
           }
           if (aiComponentIndex < ship.getNumberOfComponents() - 1) {

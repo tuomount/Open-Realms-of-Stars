@@ -2817,8 +2817,7 @@ public class PlayerInfo {
    * @param newStory New story part.
    */
   public void appendStory(final String newStory) {
-    this.backgroundStory = this.backgroundStory + "\n\n";
-    this.backgroundStory = this.backgroundStory + newStory;
+    appendStory(newStory, -1);
   }
 
   /**

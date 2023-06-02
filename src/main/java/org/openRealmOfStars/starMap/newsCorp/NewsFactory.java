@@ -125,6 +125,11 @@ public final class NewsFactory {
     instructions.addText(defender.getEmpireName());
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);
+    if (map != null) {
+      sb.append("At star year ");
+      sb.append(map.getStarYear());
+      sb.append(" ");
+    }
     sb.append(aggressor.getEmpireName());
     sb.append(" declares war against ");
     sb.append(defender.getEmpireName());
@@ -349,17 +354,21 @@ public final class NewsFactory {
     }
     news.setImageInstructions(instructions.build());
     news.setNewsText(event.getText());
-    // TODO add these as story background.
+    if (event.getBadType() != null
+        && event.getBadType() == BadRandomType.TERRORIST_ATTACK) {
+      event.getRealm().appendStory(event.getText(), starYear);
+    }
     return news;
   }
   /**
    * Make news about new heir
    * @param heir New heir
    * @param realm PlayerInfo
+   * @param starYear current star year.
    * @return NewsData
    */
   public static NewsData makeHeirNews(final Leader heir,
-      final PlayerInfo realm) {
+      final PlayerInfo realm, final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
@@ -384,7 +393,9 @@ public final class NewsFactory {
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);
     sb.append(heir.getParent().getCallName());
-    sb.append(" has born new heir. ");
+    sb.append(" has born new heir at star year ");
+    sb.append(starYear);
+    sb.append(". ");
     sb.append("Heir is called ");
     sb.append(heir.getCallName());
     sb.append(". ");
@@ -1338,11 +1349,12 @@ public final class NewsFactory {
    * @param acceptor Player who is accepting
    * @param meetingPlace Where meeting happened, fleet or planet
    * @param majorDeals Textual description of major deals that cause peace.
+   * @param starYear Current star year.
    * @return NewsData
    */
   public static NewsData makePeaceNews(final PlayerInfo peaceMaker,
       final PlayerInfo acceptor, final Object meetingPlace,
-      final String majorDeals) {
+      final String majorDeals, final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
@@ -1425,8 +1437,8 @@ public final class NewsFactory {
       sb.append(peaceMaker.getEmpireName());
       sb.append(" is known about their peace loving. So this was expected! ");
     }
-    peaceMaker.appendStory(sb.toString());
-    acceptor.appendStory(sb.toString());
+    peaceMaker.appendStory(sb.toString(), starYear);
+    acceptor.appendStory(sb.toString(), starYear);
     news.setNewsText(sb.toString());
     return news;
   }
@@ -1438,10 +1450,12 @@ public final class NewsFactory {
    * @param offerer Player who is make trade alliance
    * @param acceptor Player who is accepting
    * @param meetingPlace Where meeting happened, fleet or planet
+   * @param starYear current star year.
    * @return NewsData
    */
   public static NewsData makeTradeAllianceNews(final PlayerInfo offerer,
-      final PlayerInfo acceptor, final Object meetingPlace) {
+      final PlayerInfo acceptor, final Object meetingPlace,
+      final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
@@ -1518,8 +1532,8 @@ public final class NewsFactory {
         sb.append(" peace loving. So this was expected! ");
       }
     }
-    offerer.appendStory(sb.toString());
-    acceptor.appendStory(sb.toString());
+    offerer.appendStory(sb.toString(), starYear);
+    acceptor.appendStory(sb.toString(), starYear);
     news.setNewsText(sb.toString());
     return news;
   }
@@ -1687,7 +1701,7 @@ public final class NewsFactory {
       sb.append(" is known about their peace loving. So this was expected! ");
     }
     offerer.appendStory(sb.toString(), starYear);
-    acceptor.appendStory(sb.toString());
+    acceptor.appendStory(sb.toString(), starYear);
     news.setNewsText(sb.toString());
     return news;
   }
@@ -1698,11 +1712,12 @@ public final class NewsFactory {
    * @param acceptor Realm which agreed to the trade embargo
    * @param embargoed Realm which was embargoed
    * @param meetingPlace Where meeting happened
+   * @param starYear current Star year.
    * @return NewsData with embargo news
    */
   public static NewsData makeTradeEmbargoNews(final PlayerInfo offerer,
       final PlayerInfo acceptor, final PlayerInfo embargoed,
-      final Object meetingPlace) {
+      final Object meetingPlace, final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -1732,6 +1747,9 @@ public final class NewsFactory {
     instructions.addText(offerer.getEmpireName());
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);
+    sb.append("At star year ");
+    sb.append(starYear);
+    sb.append(" ");
     sb.append(embargoed.getEmpireName());
     sb.append(" was placed on trade embargo by ");
     sb.append(offerer.getEmpireName());
@@ -1781,10 +1799,12 @@ public final class NewsFactory {
    * @param offerer Player who is make trade alliance
    * @param acceptor Player who is accepting
    * @param meetingPlace Where meeting happened, fleet or planet
+   * @param starYear current starYear
    * @return NewsData
    */
   public static NewsData makeDefensivePactNews(final PlayerInfo offerer,
-      final PlayerInfo acceptor, final Object meetingPlace) {
+      final PlayerInfo acceptor, final Object meetingPlace,
+      final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
@@ -1849,8 +1869,8 @@ public final class NewsFactory {
         sb.append(" peace loving. So this was expected! ");
       }
     }
-    offerer.appendStory(sb.toString());
-    acceptor.appendStory(sb.toString());
+    offerer.appendStory(sb.toString(), starYear);
+    acceptor.appendStory(sb.toString(), starYear);
     news.setNewsText(sb.toString());
     return news;
   }
@@ -1986,10 +2006,12 @@ public final class NewsFactory {
    * @param planet Which planet was conquered
    * @param nukeText Null if planet was not nuked.
    *        Otherwise description about nuke.
+   * @param starYear current star year.
    * @return NewsData
    */
   public static NewsData makePlanetConqueredNews(final PlayerInfo attacker,
-      final PlayerInfo defender, final Planet planet, final String nukeText) {
+      final PlayerInfo defender, final Planet planet, final String nukeText,
+      final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -2048,9 +2070,9 @@ public final class NewsFactory {
         }
       }
     }
-    attacker.appendStory(sb.toString());
+    attacker.appendStory(sb.toString(), starYear);
     if (defender != null) {
-      defender.appendStory(sb.toString());
+      defender.appendStory(sb.toString(), starYear);
     }
     news.setNewsText(sb.toString());
     return news;
@@ -2063,10 +2085,12 @@ public final class NewsFactory {
    * @param planet Which planet was conquered
    * @param nukeText Null if planet was not nuked.
    *        Otherwise description about nuke.
+   * @param starYear current star year.
    * @return NewsData
    */
   public static NewsData makePlanetBombedNews(final PlayerInfo attacker,
-      final PlayerInfo defender, final Planet planet, final String nukeText) {
+      final PlayerInfo defender, final Planet planet, final String nukeText,
+      final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -2115,9 +2139,9 @@ public final class NewsFactory {
       sb.append(defender.getRace().getNameSingle());
       sb.append(" population were killed during the bombing. ");
     }
-    attacker.appendStory(sb.toString());
+    attacker.appendStory(sb.toString(), starYear);
     if (defender != null) {
-      defender.appendStory(sb.toString());
+      defender.appendStory(sb.toString(), starYear);
     }
     news.setNewsText(sb.toString());
     return news;
@@ -3067,7 +3091,7 @@ public final class NewsFactory {
         sb.append("This could be accident or spread on purpose. ");
       }
     }
-    planet.getPlanetPlayerInfo().appendStory(sb.toString());
+    planet.getPlanetPlayerInfo().appendStory(sb.toString(), starYear);
     if (spreader != null) {
       spreader.appendStory(sb.toString(), starYear);
     }

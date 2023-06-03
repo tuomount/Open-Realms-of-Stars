@@ -13,7 +13,7 @@ import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.labels.InfoTextPane;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
 import org.openRealmOfStars.gui.panels.ShipInteriorPanel;
@@ -55,7 +55,7 @@ public class StoryView extends BlackPanel {
   /**
    * Text are where story is being shown.
    */
-  private InfoTextArea textArea;
+  private InfoTextPane textArea;
 
   /**
    * StarMap
@@ -140,15 +140,12 @@ public class StoryView extends BlackPanel {
     centerPanel.setTitle(this.realm.getEmpireName());
     centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
     centerPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    textArea = new InfoTextArea();
+    textArea = new InfoTextPane();
     textArea.setEditable(false);
     textArea.setFont(GuiStatics.getFontSquarion());
-    textArea.setWrapStyleWord(true);
-    textArea.setLineWrap(true);
-    textArea.setTextShadow(false);
-    textArea.setCharacterWidth(9);
     JScrollPane scroll = new JScrollPane(textArea);
     textArea.setText(realm.getBackgroundStory());
+    textArea.setCaretPosition(0);
     centerPanel.add(scroll);
     this.add(centerPanel, BorderLayout.CENTER);
 

@@ -5,6 +5,12 @@
 * Moving diagonally with no scanner now reveals that sector if sector is blocked.
 * Turns are now called star years.
 * Switched alternative names for Sporks and Centaurs. Centaurs are now alled Taurus. Sporks are called Sagittarian.
+* There is option to make combat faster if wanted. This will affect on animation.
+* Button for regular moves in starmap view.
+* Tab and Shift+Tab change planet/fleet in starmap view.
+* Esc key goes back from active view.
+* Diplomacy and combat start sound effects were too loud.
+* Different star types affect on what kind of radiation surround planets have.
 
 - Bugfixes -
 

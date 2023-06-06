@@ -54,7 +54,8 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
    * @param target Planet which information is shown
    * @param listener ActionListener
    */
-  public UncolonizedPlanetInfoLabel(final Planet target, final ActionListener listener) {
+  public UncolonizedPlanetInfoLabel(final Planet target,
+      final ActionListener listener) {
     planet = target;
     this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     if (planet == null) {
@@ -81,13 +82,18 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
     if (textWidth > 0) {
       this.add(Box.createRigidArea(new Dimension(textWidth, 25)));
     }
-    IconLabel icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_RADIATION),
-        String.valueOf(planet.getRadiationLevel()));
-    icon.setToolTipText("Planet's current radiation level.");
+    IconLabel icon = new IconLabel(null, Icons.getIconByName(
+        Icons.ICON_RADIATION), String.valueOf(planet.getRadiationLevel()));
+    icon.setToolTipText("Planet's current radiation level");
+    addIcon(icon);
+    icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
+        planet.getSizeAsString());
+    icon.setToolTipText("Planet's total ground size");
     addIcon(icon);
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_PLANET),
-        String.valueOf(planet.getGroundSize()));
-    icon.setToolTipText("Planet's total ground size.");
+        planet.getPlanetType().getTypeAsString());
+    icon.setToolTipText("Planet's type");
+    addIcon(icon);
     SpaceButton btn = new SpaceButton("View", planet.getName() + "|"
         + GameCommands.COMMAND_VIEW_PLANET);
     btn.addActionListener(listener);

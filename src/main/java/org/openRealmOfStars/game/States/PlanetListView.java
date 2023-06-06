@@ -150,7 +150,7 @@ public class PlanetListView extends BlackPanel {
     for (Planet planet : map.getPlanetList()) {
       if (planet.getPlanetPlayerInfo() == null
           && info.getSectorVisibility(planet.getCoordinate())
-          > PlayerInfo.UNCHARTED) {
+          > PlayerInfo.UNCHARTED && !planet.isGasGiant()) {
         tempList.add(planet);
       }
     }

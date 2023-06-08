@@ -167,7 +167,7 @@ public class PlanetListView extends BlackPanel {
     for (int i = 0; i < planets.length; i++) {
       Planet planet = planets[i];
       UncolonizedPlanetInfoLabel label = new UncolonizedPlanetInfoLabel(planet,
-          listener);
+          info, listener);
       planetInfoNotColonized[i] = label;
       base.add(label);
     }

@@ -14,6 +14,7 @@ import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
@@ -52,9 +53,10 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
   /**
    * Constructor for planet info label.
    * @param target Planet which information is shown
+   * @param info PlayerInfo
    * @param listener ActionListener
    */
-  public UncolonizedPlanetInfoLabel(final Planet target,
+  public UncolonizedPlanetInfoLabel(final Planet target, final PlayerInfo info,
       final ActionListener listener) {
     planet = target;
     this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -82,13 +84,19 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
     if (textWidth > 0) {
       this.add(Box.createRigidArea(new Dimension(textWidth, 25)));
     }
-    IconLabel icon = new IconLabel(null, Icons.getIconByName(
+    IconLabel icon = new IconLabel(null,
+        Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
+        planet.getSizeAsString());
+    icon.setToolTipText("Planet's total ground size");
+    addIcon(icon);
+    icon = new IconLabel(null, Icons.getIconByName(
         Icons.ICON_RADIATION), String.valueOf(planet.getRadiationLevel()));
     icon.setToolTipText("Planet's current radiation level");
     addIcon(icon);
-    icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
-        planet.getSizeAsString());
-    icon.setToolTipText("Planet's total ground size");
+    icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_PLANET),
+        "Suitable:" + info.getWorldTypeValue(
+            planet.getPlanetType().getWorldType()) + "% ");
+    icon.setToolTipText("Planet's type");
     addIcon(icon);
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_PLANET),
         planet.getPlanetType().getTypeAsString());

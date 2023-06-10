@@ -195,6 +195,11 @@ public final class GameCommands {
    * View planet command
    */
   public static final String COMMAND_VIEW_PLANET = "ViewPlanetCommand";
+  /**
+   * View planet on map command
+   */
+  public static final String COMMAND_VIEW_PLANET_ON_MAP =
+      "ViewPlanetOnMapCommand";
 
   /**
    * Change espionage mission.

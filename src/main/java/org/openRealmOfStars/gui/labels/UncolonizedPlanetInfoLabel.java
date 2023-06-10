@@ -103,7 +103,7 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
     icon.setToolTipText("Planet's type");
     addIcon(icon);
     SpaceButton btn = new SpaceButton("View", planet.getName() + "|"
-        + GameCommands.COMMAND_VIEW_PLANET);
+        + GameCommands.COMMAND_VIEW_PLANET_ON_MAP);
     btn.addActionListener(listener);
     this.add(btn);
   }

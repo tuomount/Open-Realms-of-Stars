@@ -1956,6 +1956,37 @@ public class Planet {
   }
 
   /**
+   * Planet size as int. Size varies from small to huge.
+   * @return String
+   */
+  public int getSizeAsInt() {
+    switch (getGroundSize()) {
+    case 7:
+      return 1;
+    case 8:
+      return 1;
+    case 9:
+      return 2;
+    case 10:
+      return 2;
+    case 11:
+      return 3;
+    case 12:
+      return 3;
+    case 13:
+      return 4;
+    case 14:
+      return 4;
+    case 15:
+      return 5;
+    case 16:
+      return 5;
+    default:
+      return 2;
+    }
+  }
+
+  /**
    * Generate info text
    * @param activeScanned If planet is scanned in one turn
    * @param viewerInfo Realm who is view the planet

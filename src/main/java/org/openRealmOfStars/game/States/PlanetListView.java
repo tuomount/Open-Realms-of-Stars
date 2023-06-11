@@ -19,6 +19,7 @@ import org.openRealmOfStars.gui.labels.UncolonizedPlanetInfoLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -147,6 +148,7 @@ public class PlanetListView extends BlackPanel {
    */
   private JScrollPane createUncolonizedPlanets(final ActionListener listener) {
     ArrayList<Planet> tempList = new ArrayList<>();
+    ArrayList<Planet> bestList = new ArrayList<>();
     for (Planet planet : map.getPlanetList()) {
       if (planet.getPlanetPlayerInfo() == null
           && info.getSectorVisibility(planet.getCoordinate())
@@ -154,12 +156,40 @@ public class PlanetListView extends BlackPanel {
         tempList.add(planet);
       }
     }
-    if (tempList.size() < 30) {
-      for (int i = 0; i < 30 - tempList.size(); i++) {
-        tempList.add(null);
+    while (tempList.size() > 0) {
+      Planet bestPlanet = null;
+      int bestValue = -999;
+      for (Planet planet : tempList) {
+        int value = planet.getSizeAsInt() * 10;
+        int suitability = info.getWorldTypeValue(planet.getPlanetType()
+            .getWorldType());
+        value = value * suitability / 100;
+        if (info.getRace() != SpaceRace.CHIRALOIDS) {
+          if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
+            value = value - (planet.getRadiationLevel()
+                - info.getRace().getMaxRad()) * 10;
+          } else {
+            value = value
+                + (info.getRace().getMaxRad() - planet.getRadiationLevel());
+            
+          }
+        } else {
+          value = value + planet.getRadiationLevel();
+        }
+        if (value > bestValue) {
+          bestPlanet = planet;
+          bestValue = value;
+        }
+      }
+      tempList.remove(bestPlanet);
+      bestList.add(bestPlanet);
+    }
+    if (bestList.size() < 30) {
+      for (int i = 0; i < 30 - bestList.size(); i++) {
+        bestList.add(null);
       }
     }
-    freePlanets = tempList.toArray(new Planet[tempList.size()]);
+    freePlanets = bestList.toArray(new Planet[bestList.size()]);
     this.setLayout(new BorderLayout());
     EmptyInfoPanel base = new EmptyInfoPanel();
     base.setLayout(new GridLayout(0, 1));

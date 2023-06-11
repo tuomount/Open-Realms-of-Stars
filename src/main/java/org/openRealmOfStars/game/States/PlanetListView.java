@@ -58,13 +58,13 @@ public class PlanetListView extends BlackPanel {
    */
   private Planet[] planets;
   /**
-   * List of planet info label matching to planets list.
+   * free planets in array
    */
-  private PlanetInfoLabel[] planetInfo;
+  private Planet[] freePlanets;
   /**
    * List of planet info label matching to planets list.
    */
-  private UncolonizedPlanetInfoLabel[] planetInfoNotColonized;
+  private PlanetInfoLabel[] planetInfo;
   /**
    * Realm whos planets are shown
    */
@@ -159,16 +159,14 @@ public class PlanetListView extends BlackPanel {
         tempList.add(null);
       }
     }
-    planets = tempList.toArray(new Planet[tempList.size()]);
-    planetInfoNotColonized = new UncolonizedPlanetInfoLabel[planets.length];
+    freePlanets = tempList.toArray(new Planet[tempList.size()]);
     this.setLayout(new BorderLayout());
     EmptyInfoPanel base = new EmptyInfoPanel();
     base.setLayout(new GridLayout(0, 1));
-    for (int i = 0; i < planets.length; i++) {
-      Planet planet = planets[i];
+    for (int i = 0; i < freePlanets.length; i++) {
+      Planet planet = freePlanets[i];
       UncolonizedPlanetInfoLabel label = new UncolonizedPlanetInfoLabel(planet,
           info, listener);
-      planetInfoNotColonized[i] = label;
       base.add(label);
     }
     JScrollPane scroll = new JScrollPane(base);

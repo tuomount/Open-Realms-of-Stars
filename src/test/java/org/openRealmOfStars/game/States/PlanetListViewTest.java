@@ -105,7 +105,13 @@ public class PlanetListViewTest {
     Planet planet1 = new Planet(new Coordinate(5, 5), "Test", 1, false);
     planet1.setRadiationLevel(1);
     listOfPlanets.add(planet1);
+    Planet planet2 = new Planet(new Coordinate(8, 8), "Test", 2, false);
+    planet2.setRadiationLevel(1);
+    listOfPlanets.add(planet2);
     PlayerInfo realm = new PlayerInfo(SpaceRace.GREYANS, 2, 0);
+    realm.initMapData(50, 50);
+    realm.setSectorVisibility(5, 5, PlayerInfo.VISIBLE);
+    realm.setSectorVisibility(8, 8, PlayerInfo.FOG_OF_WAR);
     realm.setGovernment(GovernmentType.UNION);
     planet1.setPlanetOwner(0, realm);
     Mockito.when(map.getPlanetList()).thenReturn(listOfPlanets);

@@ -1283,6 +1283,7 @@ public class Game implements ActionListener {
       starMapView.setShowFleet(fleet);
       starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
       starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
+      starMapView.setCursorFocus(50);
     } else if (object instanceof Planet) {
       Planet planet = (Planet) object;
       starMapView.setShowPlanet(planet);
@@ -1290,6 +1291,7 @@ public class Game implements ActionListener {
       getStarMap().setDrawPos(planet.getX(), planet.getY());
       starMapView.getStarMapMouseListener().setLastClickedFleet(null);
       starMapView.getStarMapMouseListener().setLastClickedPlanet(planet);
+      starMapView.setCursorFocus(50);
     }
   }
 

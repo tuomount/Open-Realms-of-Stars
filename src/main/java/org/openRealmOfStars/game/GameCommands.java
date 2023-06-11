@@ -180,6 +180,10 @@ public final class GameCommands {
    */
   public static final String COMMAND_TRADE_FLEET = "TradeFleetCommand";
   /**
+   * Focus target command
+   */
+  public static final String COMMAND_FOCUS_TARGET = "FocusTargetCommand";
+  /**
    * Route fleet command
    */
   public static final String COMMAND_ROUTE_FLEET = "RouteFleetCommand";

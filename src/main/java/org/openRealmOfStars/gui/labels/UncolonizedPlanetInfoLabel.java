@@ -85,7 +85,7 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
       this.add(Box.createRigidArea(new Dimension(textWidth, 25)));
     }
     IconLabel icon = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
+        Icons.getIconByName(Icons.ICON_LEADERS),
         planet.getSizeAsString());
     icon.setToolTipText("Planet's total ground size");
     addIcon(icon);
@@ -93,9 +93,22 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
         Icons.ICON_RADIATION), String.valueOf(planet.getRadiationLevel()));
     icon.setToolTipText("Planet's current radiation level");
     addIcon(icon);
-    icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_PLANET),
-        "Suitable:" + info.getWorldTypeValue(
-            planet.getPlanetType().getWorldType()) + "% ");
+    int suitable = info.getWorldTypeValue(
+        planet.getPlanetType().getWorldType());
+    String iconName = Icons.ICON_OKAY;
+    if (suitable >= 150) {
+      iconName = Icons.ICON_VERY_HAPPY;
+    } else if (suitable >= 125) {
+      iconName = Icons.ICON_HAPPY;
+    } else if (suitable >= 100) {
+      iconName = Icons.ICON_OKAY;
+    } else if (suitable >= 75) {
+      iconName = Icons.ICON_SAD;
+    } else if (suitable >= 50) {
+      iconName = Icons.ICON_VERY_SAD;
+    }
+    icon = new IconLabel(null, Icons.getIconByName(iconName),
+        "Suitable:" + suitable + "% ");
     icon.setToolTipText("Planet's type");
     addIcon(icon);
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_PLANET),

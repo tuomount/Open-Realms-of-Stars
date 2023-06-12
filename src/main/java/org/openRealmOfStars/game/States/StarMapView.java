@@ -375,6 +375,14 @@ public class StarMapView extends BlackPanel {
   public void setShowPlanet(final Planet planet) {
     infoPanel.showPlanet(planet, true, map.getCurrentPlayerInfo());
   }
+  /**
+   * Show planet info on map info panel
+   * @param planet to show
+   * @param scan True if active scan has done.
+   */
+  public void setShowPlanet(final Planet planet, final boolean scan) {
+    infoPanel.showPlanet(planet, scan, map.getCurrentPlayerInfo());
+  }
 
   /**
    * Show fleet info on map info panel

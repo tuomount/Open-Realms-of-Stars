@@ -1286,7 +1286,12 @@ public class Game implements ActionListener {
       starMapView.setCursorFocus(50);
     } else if (object instanceof Planet) {
       Planet planet = (Planet) object;
-      starMapView.setShowPlanet(planet);
+      if (getStarMap().getCurrentPlayerInfo().getSectorVisibility(
+          planet.getCoordinate()) == PlayerInfo.VISIBLE) {
+        starMapView.setShowPlanet(planet, true);
+      } else {
+        starMapView.setShowPlanet(planet, false);
+      }
       getStarMap().setCursorPos(planet.getX(), planet.getY());
       getStarMap().setDrawPos(planet.getX(), planet.getY());
       starMapView.getStarMapMouseListener().setLastClickedFleet(null);

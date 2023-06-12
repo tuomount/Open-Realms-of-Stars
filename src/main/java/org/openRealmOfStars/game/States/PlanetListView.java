@@ -171,7 +171,6 @@ public class PlanetListView extends BlackPanel {
           } else {
             value = value
                 + (info.getRace().getMaxRad() - planet.getRadiationLevel());
-            
           }
         } else {
           value = value + planet.getRadiationLevel();

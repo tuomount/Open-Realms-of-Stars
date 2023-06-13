@@ -1283,6 +1283,20 @@ public class Game implements ActionListener {
       starMapView.setShowFleet(fleet);
       starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
       starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
+      starMapView.setCursorFocus(50);
+    } else if (object instanceof Planet) {
+      Planet planet = (Planet) object;
+      if (getStarMap().getCurrentPlayerInfo().getSectorVisibility(
+          planet.getCoordinate()) == PlayerInfo.VISIBLE) {
+        starMapView.setShowPlanet(planet, true);
+      } else {
+        starMapView.setShowPlanet(planet, false);
+      }
+      getStarMap().setCursorPos(planet.getX(), planet.getY());
+      getStarMap().setDrawPos(planet.getX(), planet.getY());
+      starMapView.getStarMapMouseListener().setLastClickedFleet(null);
+      starMapView.getStarMapMouseListener().setLastClickedPlanet(planet);
+      starMapView.setCursorFocus(50);
     }
   }
 
@@ -3863,6 +3877,16 @@ public class Game implements ActionListener {
         if (planet != null) {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.PLANETVIEW, planet);
+          return;
+        }
+      }
+      if (arg0.getActionCommand()
+          .contains(GameCommands.COMMAND_VIEW_PLANET_ON_MAP)) {
+        String[] temp = arg0.getActionCommand().split("\\|");
+        Planet planet = starMap.getPlanetByName(temp[0]);
+        if (planet != null) {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.STARMAP, planet);
           return;
         }
       }

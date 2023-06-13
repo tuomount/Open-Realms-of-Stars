@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
@@ -14,9 +15,11 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.PlanetInfoLabel;
+import org.openRealmOfStars.gui.labels.UncolonizedPlanetInfoLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -56,6 +59,10 @@ public class PlanetListView extends BlackPanel {
    */
   private Planet[] planets;
   /**
+   * free planets in array
+   */
+  private Planet[] freePlanets;
+  /**
    * List of planet info label matching to planets list.
    */
   private PlanetInfoLabel[] planetInfo;
@@ -64,6 +71,11 @@ public class PlanetListView extends BlackPanel {
    */
   private PlayerInfo info;
   /**
+   * Starmap
+   */
+  private StarMap map;
+
+  /**
    * Constructor for PlanetListView.
    * @param realm Realm information whose planets are in list
    * @param map StarMap for getting the planets
@@ -71,9 +83,40 @@ public class PlanetListView extends BlackPanel {
    */
   public PlanetListView(final PlayerInfo realm, final StarMap map,
       final ActionListener listener) {
+    info = realm;
+    this.map = map;
+    JTabbedPane tabs = new JTabbedPane();
+    tabs.setFont(GuiStatics.getFontCubellanSmaller());
+    tabs.setForeground(GuiStatics.getCoolSpaceColorDarker());
+    tabs.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    tabs.add("Colonized planets", createColonizedPlanets(listener));
+    tabs.add("Uncolonized planets", createUncolonizedPlanets(listener));
+    InfoPanel centerPanel = new InfoPanel();
+    centerPanel.setLayout(new BorderLayout());
+    centerPanel.setTitle(realm.getEmpireName());
+    centerPanel.add(tabs, BorderLayout.CENTER);
+    this.add(centerPanel, BorderLayout.CENTER);
+    // Bottom panel
+    InfoPanel bottomPanel = new InfoPanel();
+    bottomPanel.setLayout(new BorderLayout());
+    bottomPanel.setTitle(null);
+    SpaceButton btn = new SpaceButton("Back to star map",
+        GameCommands.COMMAND_VIEW_STARMAP);
+    btn.addActionListener(listener);
+    bottomPanel.add(btn, BorderLayout.CENTER);
+    // Add panels to base
+    this.add(bottomPanel, BorderLayout.SOUTH);
+  }
+
+  /**
+   * Create list for colonized planets.
+   * @param listener Action listener
+   * @return Scroll
+   */
+  private JScrollPane createColonizedPlanets(final ActionListener listener) {
     ArrayList<Planet> tempList = new ArrayList<>();
     for (Planet planet : map.getPlanetList()) {
-      if (planet.getPlanetPlayerInfo() == realm) {
+      if (planet.getPlanetPlayerInfo() == info) {
         tempList.add(planet);
       }
     }
@@ -82,7 +125,6 @@ public class PlanetListView extends BlackPanel {
         tempList.add(null);
       }
     }
-    info = realm;
     planets = tempList.toArray(new Planet[tempList.size()]);
     planetInfo = new PlanetInfoLabel[planets.length];
     this.setLayout(new BorderLayout());
@@ -97,21 +139,69 @@ public class PlanetListView extends BlackPanel {
     JScrollPane scroll = new JScrollPane(base);
     scroll.setBorder(null);
     scroll.setBackground(GuiStatics.getPanelBackground());
-    InfoPanel centerPanel = new InfoPanel();
-    centerPanel.setLayout(new BorderLayout());
-    centerPanel.setTitle(realm.getEmpireName());
-    centerPanel.add(scroll, BorderLayout.CENTER);
-    this.add(centerPanel, BorderLayout.CENTER);
-    // Bottom panel
-    InfoPanel bottomPanel = new InfoPanel();
-    bottomPanel.setLayout(new BorderLayout());
-    bottomPanel.setTitle(null);
-    SpaceButton btn = new SpaceButton("Back to star map",
-        GameCommands.COMMAND_VIEW_STARMAP);
-    btn.addActionListener(listener);
-    bottomPanel.add(btn, BorderLayout.CENTER);
-    // Add panels to base
-    this.add(bottomPanel, BorderLayout.SOUTH);
+    return scroll;
+  }
+  /**
+   * Create list for uncolonized planets.
+   * @param listener Action listener
+   * @return Scroll
+   */
+  private JScrollPane createUncolonizedPlanets(final ActionListener listener) {
+    ArrayList<Planet> tempList = new ArrayList<>();
+    ArrayList<Planet> bestList = new ArrayList<>();
+    for (Planet planet : map.getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() == null
+          && info.getSectorVisibility(planet.getCoordinate())
+          > PlayerInfo.UNCHARTED && !planet.isGasGiant()) {
+        tempList.add(planet);
+      }
+    }
+    while (tempList.size() > 0) {
+      Planet bestPlanet = null;
+      int bestValue = -999;
+      for (Planet planet : tempList) {
+        int value = planet.getSizeAsInt() * 10;
+        int suitability = info.getWorldTypeValue(planet.getPlanetType()
+            .getWorldType());
+        value = value * suitability / 100;
+        if (info.getRace() != SpaceRace.CHIRALOIDS) {
+          if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
+            value = value - (planet.getRadiationLevel()
+                - info.getRace().getMaxRad()) * 10;
+          } else {
+            value = value
+                + (info.getRace().getMaxRad() - planet.getRadiationLevel());
+          }
+        } else {
+          value = value + planet.getRadiationLevel();
+        }
+        if (value > bestValue) {
+          bestPlanet = planet;
+          bestValue = value;
+        }
+      }
+      tempList.remove(bestPlanet);
+      bestList.add(bestPlanet);
+    }
+    if (bestList.size() < 30) {
+      for (int i = 0; i < 30 - bestList.size(); i++) {
+        bestList.add(null);
+      }
+    }
+    freePlanets = bestList.toArray(new Planet[bestList.size()]);
+    this.setLayout(new BorderLayout());
+    EmptyInfoPanel base = new EmptyInfoPanel();
+    base.setLayout(new GridLayout(0, 1));
+    for (int i = 0; i < freePlanets.length; i++) {
+      Planet planet = freePlanets[i];
+      UncolonizedPlanetInfoLabel label = new UncolonizedPlanetInfoLabel(planet,
+          info, listener);
+      base.add(label);
+    }
+    JScrollPane scroll = new JScrollPane(base);
+    scroll.setBorder(null);
+    scroll.setBackground(GuiStatics.getPanelBackground());
+    return scroll;
   }
 
   /**

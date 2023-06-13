@@ -118,6 +118,10 @@ public class MapInfoPanel extends InfoPanel {
    * Move button for fleet
    */
   private SpaceButton moveBtn;
+  /**
+   * Focus button for target
+   */
+  private SpaceButton focusBtn;
 
   /**
    * Width of rigid box
@@ -185,6 +189,10 @@ public class MapInfoPanel extends InfoPanel {
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
     textArea.setCharacterWidth(7);
+    focusBtn = new SpaceButton("Focus", GameCommands.COMMAND_FOCUS_TARGET);
+    focusBtn.addActionListener(listener);
+    focusBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    focusBtn.setToolTipText("F - Focus on target, show where it is on map.");
     routeBtn = new SpaceButton("Route FTL", GameCommands.COMMAND_ROUTE_FLEET);
     routeBtn.addActionListener(listener);
     routeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -209,6 +217,8 @@ public class MapInfoPanel extends InfoPanel {
     viewBtn = new SpaceButton("View planet", GameCommands.COMMAND_VIEW_PLANET);
     viewBtn.addActionListener(listener);
     viewBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    this.add(Box.createRigidArea(new Dimension(10, space)));
+    this.add(focusBtn);
     this.add(Box.createRigidArea(new Dimension(10, space)));
     this.add(routeBtn);
     this.add(Box.createRigidArea(new Dimension(10, space)));
@@ -239,6 +249,7 @@ public class MapInfoPanel extends InfoPanel {
     this.fixTradeFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
     this.moveBtn.setEnabled(false);
+    this.focusBtn.setEnabled(true);
     updatePanel(false, viewerInfo);
   }
 
@@ -280,6 +291,7 @@ public class MapInfoPanel extends InfoPanel {
     this.fixTradeFleetBtn.setEnabled(true);
     this.routeBtn.setEnabled(true);
     this.moveBtn.setEnabled(true);
+    this.focusBtn.setEnabled(true);
     updatePanel(debug);
   }
 

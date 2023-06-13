@@ -180,6 +180,10 @@ public final class GameCommands {
    */
   public static final String COMMAND_TRADE_FLEET = "TradeFleetCommand";
   /**
+   * Focus target command
+   */
+  public static final String COMMAND_FOCUS_TARGET = "FocusTargetCommand";
+  /**
    * Route fleet command
    */
   public static final String COMMAND_ROUTE_FLEET = "RouteFleetCommand";
@@ -195,6 +199,11 @@ public final class GameCommands {
    * View planet command
    */
   public static final String COMMAND_VIEW_PLANET = "ViewPlanetCommand";
+  /**
+   * View planet on map command
+   */
+  public static final String COMMAND_VIEW_PLANET_ON_MAP =
+      "ViewPlanetOnMapCommand";
 
   /**
    * Change espionage mission.

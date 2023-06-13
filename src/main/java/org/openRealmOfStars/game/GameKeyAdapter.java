@@ -8,9 +8,12 @@ import java.awt.image.BufferedImage;
 import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.music.MusicPlayer;
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.starMap.StarMapMouseListener;
+import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
@@ -160,7 +163,23 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       }
       if (arg0.getKeyCode() == KeyEvent.VK_F
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
-        game.getStarMapView().setCursorFocus(50);
+        StarMapMouseListener mouseListener = game.getStarMapView()
+            .getStarMapMouseListener();
+        if (mouseListener.getLastClickedFleet() != null) {
+          SoundPlayer.playMenuSound();
+          Fleet fleet = mouseListener.getLastClickedFleet();
+          game.getStarMap().setCursorPos(fleet.getX(), fleet.getY());
+          game.getStarMap().setDrawPos(fleet.getX(), fleet.getY());
+          game.getStarMapView().setCursorFocus(50);
+        } else if (mouseListener.getLastClickedPlanet() != null) {
+          SoundPlayer.playMenuSound();
+          Planet planet = mouseListener.getLastClickedPlanet();
+          game.getStarMap().setCursorPos(planet.getX(), planet.getY());
+          game.getStarMap().setDrawPos(planet.getX(), planet.getY());
+          game.getStarMapView().setCursorFocus(50);
+        } else {
+          game.getStarMapView().setCursorFocus(50);
+        }
         return true;
       }
       if (arg0.getKeyCode() == KeyEvent.VK_P

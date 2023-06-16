@@ -285,6 +285,49 @@ public final class LeaderUtility {
         new Leader[player.getLeaderRecruitPool().size()]);
   }
   /**
+   * Build Leader pool for recruit
+   * @param map StarMap
+   * @param player PlayerInfo which realm to add leader pool.
+   * @return Leader pool for recruitable leaders
+   */
+  public static RecruitableLeader[] buildRecuitableLeaderPool(final StarMap map,
+      final PlayerInfo player) {
+    ArrayList<RecruitableLeader> leaders = new ArrayList<>();
+    Leader[] leaderArray = buildLeaderPool(map, player);
+    int leaderCost = LeaderUtility.leaderRecruitCost(player);
+    for (Leader leader : leaderArray) {
+      RecruitableLeader recruit = new RecruitableLeader(leader, leaderCost,
+          true);
+      leaders.add(recruit);
+    }
+    if (!player.getGovernment().isXenophopic()) {
+      for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
+        PlayerInfo info = map.getPlayerByIndex(i);
+        if (info != player) {
+          if (player.getDiplomacy().isAlliance(i)
+              || player.getDiplomacy().isDefensivePact(i)) {
+            leaderArray = buildLeaderPool(map, info);
+            for (Leader leader : leaderArray) {
+              RecruitableLeader recruit = new RecruitableLeader(leader,
+                  leaderCost * 2, false);
+              leaders.add(recruit);
+            }
+          } else if (player.getDiplomacy().isTradeAlliance(i)) {
+            leaderArray = buildLeaderPool(map, info);
+            for (Leader leader : leaderArray) {
+              RecruitableLeader recruit = new RecruitableLeader(leader,
+                  leaderCost * 3, false);
+              leaders.add(recruit);
+            }
+          }
+        }
+      }
+    }
+    return leaders.toArray(
+        new RecruitableLeader[leaders.size()]);
+  }
+
+  /**
    * Assign leader for target job.
    * @param leader Leader to assign
    * @param player Realm aka PlayerInfo

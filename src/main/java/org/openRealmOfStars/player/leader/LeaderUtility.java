@@ -295,9 +295,10 @@ public final class LeaderUtility {
     ArrayList<RecruitableLeader> leaders = new ArrayList<>();
     Leader[] leaderArray = buildLeaderPool(map, player);
     int leaderCost = LeaderUtility.leaderRecruitCost(player);
+    int index = map.getPlayerList().getIndex(player);
     for (Leader leader : leaderArray) {
       RecruitableLeader recruit = new RecruitableLeader(leader, leaderCost,
-          true);
+          true, index);
       leaders.add(recruit);
     }
     if (!player.getGovernment().isXenophopic()) {
@@ -309,14 +310,14 @@ public final class LeaderUtility {
             leaderArray = buildLeaderPool(map, info);
             for (Leader leader : leaderArray) {
               RecruitableLeader recruit = new RecruitableLeader(leader,
-                  leaderCost * 2, false);
+                  leaderCost * 2, false, i);
               leaders.add(recruit);
             }
           } else if (player.getDiplomacy().isTradeAlliance(i)) {
             leaderArray = buildLeaderPool(map, info);
             for (Leader leader : leaderArray) {
               RecruitableLeader recruit = new RecruitableLeader(leader,
-                  leaderCost * 3, false);
+                  leaderCost * 3, false, i);
               leaders.add(recruit);
             }
           }

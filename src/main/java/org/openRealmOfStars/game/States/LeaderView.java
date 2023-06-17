@@ -27,6 +27,7 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.LeaderListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.LeaderTreeCellRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
@@ -39,6 +40,9 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
+import org.openRealmOfStars.player.leader.RecruitableLeader;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -87,7 +91,7 @@ public class LeaderView extends BlackPanel
   /**
    * JList of recruitable leaders.
    */
-  private JList<Leader> leaderList;
+  private JList<RecruitableLeader> leaderList;
   /**
    * SpaceLabel for realm credits.
    */
@@ -106,11 +110,6 @@ public class LeaderView extends BlackPanel
    * Map Panel for drawing small starmap where leader is assigned.
    */
   private MapPanel mapPanel;
-
-  /**
-   * Leader Cost for recruit
-   */
-  private int leaderCost;
 
   /**
    * Planet where training happens
@@ -136,7 +135,7 @@ public class LeaderView extends BlackPanel
   /**
    * Local version of realm's leader pool for recruits.
    */
-  private Leader[] leadersInPool;
+  private RecruitableLeader[] leadersInPool;
   /**
    * Was regular/standard leader selected.
    */
@@ -154,13 +153,11 @@ public class LeaderView extends BlackPanel
     activeFleet = null;
     activePlanet = null;
     standardLeaderSelected = true;
-    leadersInPool = LeaderUtility.buildLeaderPool(map, player);
+    leadersInPool = LeaderUtility.buildRecuitableLeaderPool(map, player);
     InfoPanel recruitPanel = new InfoPanel();
     recruitPanel.setTitle("Leader recruiment");
     recruitPanel.setLayout(new BoxLayout(recruitPanel, BoxLayout.Y_AXIS));
-    leaderCost = LeaderUtility.leaderRecruitCost(info);
-    credits = new SpaceLabel("Realm credits: " + player.getTotalCredits()
-        + " Recruit costs: " + leaderCost);
+    credits = new SpaceLabel("Realm credits: " + player.getTotalCredits());
     recruitPanel.add(credits, BorderLayout.CENTER);
     recruitPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     planetPopulation = new SpaceLabel("Alpha Centauri II - Population: 12");
@@ -192,7 +189,7 @@ public class LeaderView extends BlackPanel
     leaderTree.setBackground(Color.BLACK);
     base.add(scroll);
     scroll.setAlignmentX(CENTER_ALIGNMENT);
-    recruitBtn = new SpaceButton("Recruit leader " + leaderCost + " credits",
+    recruitBtn = new SpaceButton("Recruit leader ",
         GameCommands.COMMAND_RECRUIT_LEADER);
     trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
         map.getPlanetList(), player);
@@ -333,11 +330,24 @@ public class LeaderView extends BlackPanel
    * Update button tool tips.
    */
   private void updateButtonToolTips() {
-    if (trainingPlanet != null && leaderCost <= player.getTotalCredits()) {
-      recruitBtn.setToolTipText("<html>Recruit new leader with " + leaderCost
-          + " credits.<br> This will also use one population from that "
-          + " planet where leader is from."
-          + "</html>");
+    int leaderCost = LeaderUtility.leaderRecruitCost(player);
+    if (leaderList.getModel().getSize() > 0) {
+      if (!player.getGovernment().isXenophopic()) {
+        recruitBtn.setToolTipText("<html>Leaders can be recruit from your own "
+            + "realm which least amount of credits,<br> but this will also use"
+            + " one population from that planet where leader is.<br>"
+            + "Trade alliance or defensive pact with another realm allows"
+            + "hiring from their leader pool. This will cost more credits, but"
+            + " does not consume population."
+            + "</html>");
+      } else {
+        recruitBtn.setToolTipText("<html>Leaders can be recruit from your own "
+            + "realm which least amount of credits,<br> but this will also use"
+            + " one population from that planet where leader is.<br>"
+            + "Hiring from another realm is not allowed due government's"
+            + " xenophobia."
+            + "</html>");
+      }
     } else if (trainingPlanet == null) {
       recruitBtn.setToolTipText("<html>Your realm does not have more than"
           + "<br>" + player.getRace().getMinimumPopulationForLeader()
@@ -375,7 +385,7 @@ public class LeaderView extends BlackPanel
   private Leader getSelectedLeaderFromList() {
     Leader leader = null;
     if (leaderList.getSelectedValue() != null) {
-      leader = leaderList.getSelectedValue();
+      leader = leaderList.getSelectedValue().getLeader();
     }
     return leader;
   }
@@ -402,8 +412,7 @@ public class LeaderView extends BlackPanel
    */
   public void updatePanel() {
     Leader leader = null;
-    credits.setText("Realm credits: " + player.getTotalCredits()
-        + " Recruit costs: " + leaderCost);
+    credits.setText("Realm credits: " + player.getTotalCredits());
     if (standardLeaderSelected) {
       if (leaderTree.getSelectionPath() != null
           && leaderTree.getSelectionPath().getLastPathComponent()
@@ -592,25 +601,41 @@ public class LeaderView extends BlackPanel
         SoundPlayer.playMenuDisabled();
       }
     }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_RECRUIT_LEADER)
-        && player.getTotalCredits() >= leaderCost
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_RECRUIT_LEADER)) {
+      if (player.getTotalCredits() >= leaderList.getSelectedValue().getCost()
         && leaderList.getSelectedValue() != null) {
-      Leader leader = leaderList.getSelectedValue();
-      leader.assignJob(Job.UNASSIGNED, player);
-      player.getLeaderPool().add(leader);
-      player.removeRecruitLeader(leader);
-      player.setTotalCredits(player.getTotalCredits() - leaderCost);
-      leaderCost = LeaderUtility.leaderRecruitCost(player);
-      Planet planet = map.getPlanetByName(leader.getHomeworld());
-      if (planet != null) {
-        planet.takeColonist();
+        Leader leader = leaderList.getSelectedValue().getLeader();
+        leader.assignJob(Job.UNASSIGNED, player);
+        player.getLeaderPool().add(leader);
+        int realmIndex = leaderList.getSelectedValue().getRealmIndex();
+        PlayerInfo realm = map.getPlayerByIndex(realmIndex);
+        realm.removeRecruitLeader(leader);
+        int leaderCost = leaderList.getSelectedValue().getCost();
+        if (realm == player) {
+          player.setTotalCredits(player.getTotalCredits() - leaderCost);
+          Planet planet = map.getPlanetByName(leader.getHomeworld());
+          if (planet != null) {
+            planet.takeColonist();
+          }
+        } else {
+          player.setTotalCredits(player.getTotalCredits() - leaderCost);
+          realm.setTotalCredits(realm.getTotalCredits() + leaderCost);
+          Message msg = new Message(MessageType.LEADER, player.getEmpireName()
+              + " hire leader called " + leader.getCallName() + " from "
+              + realm.getEmpireName() + " with " + leaderCost + " credits."
+              + " This leader is from " + leader.getHomeworld() + ".",
+              Icons.getIconByName(Icons.ICON_GOVERNOR));
+          realm.getMsgList().addUpcomingMessage(msg);
+        }
+        leadersInPool = LeaderUtility.buildRecuitableLeaderPool(map, player);
+        leaderList.setListData(leadersInPool);
+        TreeModel model = new DefaultTreeModel(buildTreeOfLeaders());
+        leaderTree.setModel(model);
+        SoundPlayer.playMenuSound();
+        updatePanel();
+      } else {
+        SoundPlayer.playMenuDisabled();
       }
-      leadersInPool = LeaderUtility.buildLeaderPool(map, player);
-      leaderList.setListData(leadersInPool);
-      TreeModel model = new DefaultTreeModel(buildTreeOfLeaders());
-      leaderTree.setModel(model);
-      SoundPlayer.playMenuSound();
-      updatePanel();
     }
   }
 

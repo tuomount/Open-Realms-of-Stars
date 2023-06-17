@@ -9,14 +9,14 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.utilies.GuiStatics;
-import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.RecruitableLeader;
 
 
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -35,7 +35,7 @@ import org.openRealmOfStars.player.leader.LeaderUtility;
 * Tech list renderer
 *
 */
-public class LeaderListRenderer implements ListCellRenderer<Leader> {
+public class LeaderListRenderer implements ListCellRenderer<RecruitableLeader> {
 
   /**
    * Default list cell renderer
@@ -45,15 +45,17 @@ public class LeaderListRenderer implements ListCellRenderer<Leader> {
 
   @Override
   public Component getListCellRendererComponent(
-      final JList<? extends Leader> list, final Leader value, final int index,
+      final JList<? extends RecruitableLeader> list,
+      final RecruitableLeader value, final int index,
       final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
     if (value != null) {
-      renderer.setText(value.getCallName());
+      renderer.setText(value.getLeader().getCallName() + " - "
+          + value.getCost() + " credits");
       renderer.setFont(GuiStatics.getFontCubellan());
       renderer.setIcon(
-          LeaderUtility.getIconBasedOnLeaderJob(value).getAsIcon());
+          LeaderUtility.getIconBasedOnLeaderJob(value.getLeader()).getAsIcon());
     }
     if (isSelected) {
       renderer.setForeground(GuiStatics.getInfoTextColor());

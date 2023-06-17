@@ -39,16 +39,23 @@ public class RecruitableLeader {
   private boolean requirePopulation;
 
   /**
+   * Realm index for leader.
+   */
+  private int realmIndex;
+
+  /**
    * Recruit leader constructor
    * @param leader Original leader
    * @param cost Recruit cost
    * @param usePopulation Boolean for if population is used at recruit.
+   * @param realmIndex which realm has this leader.
    */
   public RecruitableLeader(final Leader leader, final int cost,
-      final boolean usePopulation) {
+      final boolean usePopulation, final int realmIndex) {
     this.leader = leader;
     recruitCost = cost;
     requirePopulation = usePopulation;
+    this.realmIndex = realmIndex;
   }
 
   /**
@@ -73,5 +80,13 @@ public class RecruitableLeader {
    */
   public Leader getLeader() {
     return leader;
+  }
+
+  /**
+   * Get realm index for leader.
+   * @return Realm index.
+   */
+  public int getRealmIndex() {
+    return realmIndex;
   }
 }

@@ -3682,7 +3682,6 @@ public class StarMap {
       // Handle Leaders
       if (info.getRuler() == null && info.areLeadersDead()) {
         // No ruler and no leaders in pool
-        LeaderUtility.buildLeaderPool(this, info);
         Leader ruler = LeaderUtility.recruiteLeader(this, info, Job.RULER);
         if (ruler != null) {
           LeaderUtility.assignLeaderAsRuler(ruler, info, this);
@@ -3704,7 +3703,6 @@ public class StarMap {
       int openLeaderPositions = calculateMaxLeaders(info);
       if (openLeaderPositions > 0
           && DiceGenerator.getRandom(99) < openLeaderPositions * 5) {
-        LeaderUtility.buildLeaderPool(this, info);
         LeaderUtility.recruiteLeader(this, info, null);
       }
       for (Leader leader : info.getLeaderPool()) {

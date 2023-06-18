@@ -195,14 +195,38 @@ public final class LeaderUtility {
    */
   public static Leader recruiteLeader(final StarMap map,
       final PlayerInfo info, final Job leaderJob) {
-    Leader bestLeader = null;
+    RecruitableLeader[] leaders = LeaderUtility.buildRecuitableLeaderPool(map,
+        info);
+    int leaderCost = LeaderUtility.leaderRecruitCost(info);
+    RecruitableLeader bestLeader = null;
     int bestScore = -999;
-    for (Leader leader : info.getLeaderRecruitPool()) {
+    for (RecruitableLeader leader : leaders) {
       int score = -999;
       if (leaderJob == null) {
-        score = leader.calculateLeaderGenericScore();
+        score = leader.getLeader().calculateLeaderGenericScore();
       } else {
-        score = leader.calculateLeaderScore(leaderJob);
+        score = leader.getLeader().calculateLeaderScore(leaderJob);
+      }
+      if (leader.usePopulation()) {
+        Planet planet = map.getPlanetByName(leader.getLeader().getHomeworld());
+        if (planet != null) {
+          if (planet.getTotalPopulation() - 1
+              >= info.getRace().getMinimumPopulationForLeader()) {
+            score = score + 1;
+          }
+          if (planet.getTotalPopulation() - 2
+              >= info.getRace().getMinimumPopulationForLeader()) {
+            score = score + 1;
+          }
+        }
+      } else {
+        score = score + 1;
+      }
+      if (leader.getCost() <= leaderCost) {
+        score = score + 1;
+      }
+      if (leader.getCost() > leaderCost * 2) {
+        score = score - 1;
       }
       if (score > bestScore) {
         bestScore = score;
@@ -210,21 +234,34 @@ public final class LeaderUtility {
       }
     }
     if (bestLeader != null) {
-      int leaderCost = LeaderUtility.leaderRecruitCost(info);
+      leaderCost = bestLeader.getCost();
       if (info.getTotalCredits() >= leaderCost) {
-        bestLeader.assignJob(Job.UNASSIGNED, info);
-        info.getLeaderPool().add(bestLeader);
-        info.removeRecruitLeader(bestLeader);
-        info.setTotalCredits(info.getTotalCredits() - leaderCost);
-        Planet planet = map.getPlanetByName(bestLeader.getHomeworld());
-        if (planet != null) {
-          planet.takeColonist();
+        Leader leader = bestLeader.getLeader();
+        leader.assignJob(Job.UNASSIGNED, info);
+        info.getLeaderPool().add(leader);
+        int realmIndex = bestLeader.getRealmIndex();
+        PlayerInfo realm = map.getPlayerByIndex(realmIndex);
+        realm.removeRecruitLeader(leader);
+        if (realm == info) {
+          info.setTotalCredits(info.getTotalCredits() - leaderCost);
+          Planet planet = map.getPlanetByName(leader.getHomeworld());
+          if (planet != null) {
+            planet.takeColonist();
+          }
+        } else {
+          info.setTotalCredits(info.getTotalCredits() - leaderCost);
+          realm.setTotalCredits(realm.getTotalCredits() + leaderCost);
+          Message msg = new Message(MessageType.LEADER, info.getEmpireName()
+              + " hire leader called " + leader.getCallName() + " from "
+              + realm.getEmpireName() + " with " + leaderCost + " credits."
+              + " This leader is from " + leader.getHomeworld() + ".",
+              Icons.getIconByName(Icons.ICON_GOVERNOR));
+          realm.getMsgList().addUpcomingMessage(msg);
         }
-      } else {
-        bestLeader = null;
       }
+      return bestLeader.getLeader();
     }
-    return bestLeader;
+    return null;
   }
 
   /**

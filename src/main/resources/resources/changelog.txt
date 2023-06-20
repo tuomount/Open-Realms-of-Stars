@@ -8,14 +8,14 @@
 * There is option to make combat faster if wanted. This will affect on animation.
 * Button for regular moves in starmap view.
 * Tab and Shift+Tab change planet/fleet in starmap view.
-* Esc key goes back from active view.
+* ESC key goes back from active view.
 * Diplomacy and combat start sound effects were too loud.
 * Different star types affect on what kind of radiation surround planets have.
 * UI Scheme is selectable and new grey scheme.
 * Realm background story generator and full story is shown when game ends.
 * Planet view can now show uncolonized planets. Sorting order is show best planet at top.
 * Possibility to hire leader from another realm if in trade alliance.
-* Two realms with same type of goverment get diplomacy bonus.
+* Two realms with same type of government get diplomacy bonus.
 
 
 - Bugfixes -

@@ -278,6 +278,7 @@ public class CreditsView extends BlackPanel {
       + "Ancient Laboratory by Tuomo Untinen with Stable Fusion\n\n"
       + "Ancient Temple by Tuomo Untinen with Stable Fusion\n\n"
       + "Ancient Palace by Tuomo Untinen with Stable Fusion\n\n"
+      + "Gems by Tuomo Untinen with Stable Fusion\n\n"
       + "Black Monolith by Tuomo Untinen with Stable Fusion\n\n"
       + "Molten Lava by Tuomo Untinen with Stable Fusion\n\n"
       + "Arid by Tuomo Untinen with Stable Fusion\n\n"

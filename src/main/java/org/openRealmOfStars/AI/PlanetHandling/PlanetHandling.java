@@ -807,7 +807,11 @@ public final class PlanetHandling {
         over400 = true;
       }
     }
-    if (highest != -1 && DiceGenerator.getRandom(100) < chanceForHighest) {
+    if (info.getAiDifficulty() == AiDifficulty.CHALLENGING && highest != -1) {
+      planet.setUnderConstruction(constructions[highest]);
+      constructionSelected = true;
+    } else if (highest != -1
+        && DiceGenerator.getRandom(100) < chanceForHighest) {
         planet.setUnderConstruction(constructions[highest]);
         constructionSelected = true;
     } else if (over400) {

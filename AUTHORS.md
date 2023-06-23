@@ -307,29 +307,31 @@ Lamp base by mvdwoude from courthammer base. Rest of the lamp by Tuomo Untinen.
 Licensed under CC BY SA 4.0
 https://creativecommons.org/licenses/by-sa/4.0/
 
-Alien ship by Tuomo Untinen with Stable Fusion
+Alien ship by Tuomo Untinen with Stable Diffusion
 
-Metal rich surface by Tuomo Untinen with Stable Fusion
+Metal rich surface by Tuomo Untinen with Stable Diffusion
 
-Ancient Factory by Tuomo Untinen with Stable Fusion
+Ancient Factory by Tuomo Untinen with Stable Diffusion
 
-Ancient Laboratory by Tuomo Untinen with Stable Fusion
+Ancient Laboratory by Tuomo Untinen with Stable Diffusion
 
-Ancient Temple by Tuomo Untinen with Stable Fusion
+Ancient Temple by Tuomo Untinen with Stable Diffusion
 
-Ancient Palace by Tuomo Untinen with Stable Fusion
+Ancient Palace by Tuomo Untinen with Stable Diffusion
 
-Gems by Tuomo Untinen with Stable Fusion
+Gems by Tuomo Untinen with Stable Diffusion
 
-Black Monolith by Tuomo Untinen with Stable Fusion
+Destroyed Planet by Tuomo Untinen with Stable Diffusion
 
-Molten Lava by Tuomo Untinen with Stable Fusion
+Black Monolith by Tuomo Untinen with Stable Diffusion
 
-Arid by Tuomo Untinen with Stable Fusion
+Molten Lava by Tuomo Untinen with Stable Diffusion
 
-Lush Vegetation by Tuomo Untinen with Stable Fusion
+Arid by Tuomo Untinen with Stable Diffusion
 
-Artifact on Planet by Tuomo Untinen with Stable Fusion
+Lush Vegetation by Tuomo Untinen with Stable Diffusion
+
+Artifact on Planet by Tuomo Untinen with Stable Diffusion
 
 
 

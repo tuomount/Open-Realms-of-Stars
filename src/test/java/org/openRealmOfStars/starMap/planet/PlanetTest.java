@@ -533,6 +533,24 @@ public class PlanetTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testPlanetEventActivationPreciousGems() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    planet.setPlanetOwner(0, info);
+    planet.setEventActivation(false);
+    planet.setPlanetaryEvent(PlanetaryEvent.PRECIOUS_GEMS);
+    assertEquals(PlanetaryEvent.PRECIOUS_GEMS, planet.getPlanetaryEvent());
+    assertEquals(false, planet.isEventActivated());
+    planet.eventActivation(false);
+    assertEquals(true, planet.isEventActivated());
+    info.getMsgList().clearMessages();
+    assertEquals(Icons.getIconByName(Icons.ICON_CREDIT),
+        info.getMsgList().getMsg().getIcon());
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPlanetEventActivationLushVegetation() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);

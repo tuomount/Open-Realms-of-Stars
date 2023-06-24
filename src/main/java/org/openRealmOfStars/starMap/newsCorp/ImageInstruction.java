@@ -15,7 +15,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2022 Tuomo Untinen
+* Copyright (C) 2017-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -437,6 +437,10 @@ public class ImageInstruction {
    */
   public static final String METAL_RICH_SURFACE = "metalRichSurface";
   /**
+   * Instructions for precious gems
+   */
+  public static final String PRECIOUS_GEMS = "PreciousGems";
+  /**
    * Instructions for ancient laboratory
    */
   public static final String ANCIENT_LABORATORY = "AncientLaboratory";
@@ -708,6 +712,7 @@ public class ImageInstruction {
         && !TERROR.equals(image)
         && !OLD_DESK.equals(image)
         && !METAL_RICH_SURFACE.equals(image)
+        && !PRECIOUS_GEMS.equals(image)
         && !ANCIENT_LABORATORY.equals(image)
         && !ANCIENT_FACTORY.equals(image)
         && !ANCIENT_TEMPLE.equals(image)
@@ -1368,6 +1373,9 @@ public class ImageInstruction {
     }
     if (METAL_RICH_SURFACE.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_METAL_RICH_SURFACE);
+    }
+    if (PRECIOUS_GEMS.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_PRECIOUS_GEMS);
     }
     if (ANCIENT_FACTORY.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ANCIENT_FACTORY);

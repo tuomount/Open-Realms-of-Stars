@@ -948,6 +948,24 @@ public class Planet {
       sb.append(getTax());
       sb.append("<br>");
     }
+    if (eventFound && event.getExtraCredit() != 0) {
+      value = event.getExtraCredit();
+      result = result + value;
+      if (value > 0) {
+        sb.append("<li> ");
+        sb.append(event.getName());
+        sb.append(" +");
+        sb.append(value);
+        sb.append("<br>");
+      }
+      if (value < 0) {
+        sb.append("<li> ");
+        sb.append(event.getName());
+        sb.append(" ");
+        sb.append(value);
+        sb.append("<br>");
+      }
+    }
     value = getMaintenanceCost();
     if (value > 0) {
       sb.append("<li> maintenance -");
@@ -3750,6 +3768,17 @@ public class Planet {
           imageInst.addImage(ImageInstruction.METAL_RICH_SURFACE);
           msg.setImageInstructions(imageInst.build());
           planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+        } else if (event == PlanetaryEvent.PRECIOUS_GEMS) {
+          msgText.append(" that planet's surface is full of precious gems. ");
+          msgText.append("This gives one extra credit per turn.");
+          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+              Icons.getIconByName(Icons.ICON_CREDIT));
+          msg.setCoordinate(getCoordinate());
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          imageInst.addImage(ImageInstruction.PRECIOUS_GEMS);
+          msg.setImageInstructions(imageInst.build());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
         } else  if (event == PlanetaryEvent.MOLTEN_LAVA) {
           msgText.append(" that there is massive amount of molten lava ");
           msgText.append("on planet surface. This gives one extra metal and"
@@ -4322,6 +4351,9 @@ public class Planet {
       score = score + 1;
     }
     if (getGroundSize() > 8) {
+      score = score + 1;
+    }
+    if (getPlanetaryEvent() == PlanetaryEvent.PRECIOUS_GEMS) {
       score = score + 1;
     }
     if (getTotalCreditProduction() > 1) {

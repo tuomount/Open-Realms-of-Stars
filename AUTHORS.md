@@ -333,6 +333,8 @@ Lush Vegetation by Tuomo Untinen with Stable Diffusion
 
 Artifact on Planet by Tuomo Untinen with Stable Diffusion
 
+Destroyed planet map tile by Tuomo Untinen with Stable Diffusion
+
 
 
 Fonts are under SIL Open Font License, Version 1.1.

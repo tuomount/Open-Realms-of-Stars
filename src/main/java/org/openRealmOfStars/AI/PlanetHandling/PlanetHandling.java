@@ -762,8 +762,14 @@ public final class PlanetHandling {
     if (fleetSize + 1 > fleetCap) {
       nearFleetLimit = true;
     }
-    int[] scores = scoreConstructions(constructions, planet, info, map,
+    int[] scores = null;
+    if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+      scores = highScoreConstructions(constructions, planet, info, map,
+          attitude, nearFleetLimit);
+    } else {
+      scores = scoreConstructions(constructions, planet, info, map,
         attitude, nearFleetLimit);
+    }
     int highest = -1;
     int value = -1;
     boolean over400 = false;
@@ -1243,6 +1249,304 @@ public final class PlanetHandling {
     return score;
   }
   /**
+   * Calculate scores for each construction. Each score is between -1 and 1000.
+   * This will try to give one the constructions the highest score.
+   * @param constructions The constructions
+   * @param planet The planet
+   * @param info The planet info
+   * @param map The star map
+   * @param attitude AI's attitude
+   * @param nearFleetLimit Is fleet capacity near the limit or even over it.
+   * @return The calculate scores
+   */
+  private static int[] highScoreConstructions(
+      final Construction[] constructions, final Planet planet,
+      final PlayerInfo info, final StarMap map, final Attitude attitude,
+      final boolean nearFleetLimit) {
+    int[] scores = new int[constructions.length];
+    int metalProd = planet.getTotalProduction(Planet.PRODUCTION_METAL);
+    int prod = planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION);
+    int research = planet.getTotalProduction(Planet.PRODUCTION_RESEARCH);
+    int food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
+    int credit = planet.getTotalProduction(Planet.PRODUCTION_CREDITS);
+    int culture = planet.getTotalProduction(Planet.PRODUCTION_CULTURE);
+    for (int i = 0; i < constructions.length; i++) {
+      scores[i] = -1;
+      if (constructions[i].getName()
+          .equals(ConstructionFactory.MECHION_CITIZEN)) {
+        scores[i] = planet.getPopulationLimit() * 4
+            - 2 * planet.getTotalPopulation();
+        if (planet.getTotalPopulation() < 4) {
+          scores[i] = scores[i] + 20;
+        }
+        if (planet.getBuildingList().length < 4) {
+          scores[i] = scores[i] + 5;
+        } else {
+          // Does not take a planet space
+          scores[i] = scores[i] + 20;
+        }
+        int index = map.getPlayerList().getIndex(info);
+        if (map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
+            index) == 0 && !info.getTechList().hasTech("Basic lab")) {
+          // No research so focusing on building more population
+          scores[i] = scores[i] + 50;
+        }
+        if (planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION) < 4) {
+          scores[i] = scores[i] / 3;
+        }
+        if (planet.getTotalProduction(Planet.PRODUCTION_METAL) < 4) {
+          scores[i] = scores[i] / 3;
+        }
+        if (planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
+          scores[i] = scores[i] + 40;
+        }
+      }
+      if (constructions[i].getName()
+          .equals(ConstructionFactory.SYNTHDROID_CITIZEN)) {
+        scores[i] = planet.getPopulationLimit() * 4
+            - 2 * planet.getTotalPopulation();
+        if (planet.getTotalPopulation() < 4) {
+          scores[i] = scores[i] + 20;
+        }
+        if (planet.getBuildingList().length < 4) {
+          scores[i] = scores[i] + 5;
+        } else {
+          // Does not take a planet space
+          scores[i] = scores[i] + 20;
+        }
+        int index = map.getPlayerList().getIndex(info);
+        if (map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
+            index) == 0 && !info.getTechList().hasTech("Basic lab")) {
+          // No research so focusing on building more population
+          scores[i] = scores[i] + 50;
+        }
+        if (planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION) < 4) {
+          scores[i] = scores[i] / 3;
+        }
+        if (planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
+          scores[i] = scores[i] + 40;
+        }
+      }
+      if (constructions[i] instanceof Building) {
+        Building building = (Building) constructions[i];
+        scores[i] = scoreBuilding(building, planet, info, attitude,
+            nearFleetLimit);
+        if (building.getName().equals("Basic factory") && prod < 5) {
+          scores[i] = scores[i] + (50 - prod * 10);
+        }
+        if (building.getName().equals("Basic mine") && metalProd < 5) {
+          scores[i] = scores[i] + (50 - metalProd * 10);
+        }
+        if (building.getName().equals("Basic lab")
+            && prod > 2 && metalProd > 2 && research < 2) {
+          scores[i] = scores[i] + (20 - research * 10);
+        }
+        if (info.getRace().getFoodRequire() == 100
+            && planet.getTotalPopulation() < 4
+            && building.getName().equals("Basic farm")
+            && prod > 2 && metalProd > 2 && food < 4) {
+          scores[i] = scores[i] + (40 - planet.getTotalPopulation() * 10);
+        }
+        if (credit < 0 && building.getCredBonus() > 0
+            && prod > 4 && metalProd > 4) {
+          scores[i] = scores[i] + building.getCredBonus() * 5;
+        }
+        if (culture < 1 && info.getStrategy() == WinningStrategy.CULTURAL
+            && prod > 4 && metalProd > 4) {
+          scores[i] = scores[i] + building.getCultBonus() * 5;
+        }
+      }
+      if (constructions[i] instanceof Ship) {
+        Ship ship = (Ship) constructions[i];
+        int score = scoreShip(ship, map.getGameLengthState(), planet);
+        if (ship.getTotalMilitaryPower() > 0) {
+          Mission mission = info.getMissions()
+              .getMissionForPlanet(planet.getName(), MissionType.DEFEND);
+          if (mission != null) {
+            if (mission.getPhase() == MissionPhase.PLANNING) {
+              score = score + ship.getTotalMilitaryPower() * 2;
+              if (attitude == Attitude.AGGRESSIVE
+                  || attitude == Attitude.MILITARISTIC) {
+                score = score + 20;
+              } else if (attitude == Attitude.PEACEFUL) {
+                score = score - 10;
+              }
+            } else if (mission.getPhase() == MissionPhase.BUILDING) {
+              score = score + ship.getTotalMilitaryPower();
+              if (attitude == Attitude.AGGRESSIVE
+                  || attitude == Attitude.MILITARISTIC) {
+                score = score + 20;
+              } else if (attitude == Attitude.PEACEFUL) {
+                score = score - 10;
+              }
+            }
+          } else {
+            mission = info.getMissions().getMission(MissionType.GATHER,
+                MissionPhase.PLANNING);
+            if (mission != null) {
+              score = score + ship.getTotalMilitaryPower() * 3;
+              if (attitude == Attitude.AGGRESSIVE
+                  || attitude == Attitude.MILITARISTIC) {
+                score = score + 30;
+              } else if (attitude == Attitude.BACKSTABBING) {
+                score = score + 20;
+              } else if (attitude == Attitude.LOGICAL) {
+                score = score + 10;
+              } else if (attitude == Attitude.PEACEFUL) {
+                score = score - 10;
+              }
+              if (ship.getTotalMilitaryPower() > 0
+                  && info.getMissions().getGatherMission(
+                      Mission.ASSAULT_TYPE) != null) {
+                score = score + 30;
+              }
+              if (ship.getTotalMilitaryPower() > 0
+                  && info.getMissions().getGatherMission(
+                      Mission.ASSAULT_SB_TYPE) != null) {
+                score = score + 30;
+              }
+            }
+          }
+
+        }
+        if (ship.isScoutShip()) {
+          if (info.getMissions().getMission(MissionType.EXPLORE,
+              MissionPhase.PLANNING) != null) {
+            score = score + 30;
+          }
+          if (info.getMissions().getMission(MissionType.DIPLOMATIC_DELEGACY,
+              MissionPhase.PLANNING) != null) {
+            score = score + 50;
+          }
+          if (attitude == Attitude.EXPANSIONIST) {
+            score = score + 10;
+          }
+        }
+        if (ship.isColonyModule()) {
+          // Colony ship should be built only on request
+          if (planet.getTotalPopulation() > 4) {
+            score = score + 30;
+          }
+          if (planet.getTotalPopulation() > 8) {
+            score = score + 30;
+          }
+          if (planet.getTotalPopulation() > 12) {
+            score = score + 30;
+          }
+          score = scoreColonyShip(score, ship, info, map, attitude, planet);
+          if (planet.getTotalPopulation() == 1) {
+            score = -1;
+          }
+        }
+        if (ship.hasBombs() && info.getMissions().getGatherMission(
+            Mission.BOMBER_TYPE) != null) {
+          score = score + 50;
+          if (attitude == Attitude.AGGRESSIVE
+              || attitude == Attitude.MILITARISTIC) {
+            score = score + 30;
+          } else if (attitude == Attitude.BACKSTABBING) {
+            score = score + 20;
+          } else if (attitude == Attitude.LOGICAL) {
+            score = score + 10;
+          } else if (attitude == Attitude.PEACEFUL) {
+            score = score - 10;
+          }
+        }
+        if (ship.isTrooperModule()) {
+          // Trooper ship should be built only on request
+          Mission mission = info.getMissions().getGatherMission(
+              Mission.TROOPER_TYPE);
+          if (mission == null) {
+            score = -1;
+          } else {
+            score = score + 50;
+            if (attitude == Attitude.AGGRESSIVE
+                || attitude == Attitude.MILITARISTIC) {
+              score = score + 30;
+            } else if (attitude == Attitude.BACKSTABBING) {
+              score = score + 20;
+            } else if (attitude == Attitude.LOGICAL) {
+              score = score + 10;
+            } else if (attitude == Attitude.PEACEFUL) {
+              score = score - 10;
+            }
+          }
+        }
+        if (ship.isStarBase()) {
+          Mission mission = info.getMissions().getMission(
+              MissionType.DEPLOY_STARBASE, MissionPhase.PLANNING);
+          if (mission != null) {
+            if (attitude == Attitude.SCIENTIFIC) {
+              score = score + ship.getTotalResearchBonus() * 5;
+            } else {
+              score = score + ship.getTotalResearchBonus() * 3;
+            }
+            if (ship.getTotalResearchBonus() > 0
+                && planet.getEffectiveGovernorGuide()
+                == Planet.RESEARCH_PLANET) {
+              score = score + 10;
+            }
+            if (attitude == Attitude.DIPLOMATIC
+                || attitude == Attitude.PEACEFUL) {
+              score = score + ship.getTotalCultureBonus() * 5;
+            } else {
+              score = score + ship.getTotalCultureBonus() * 3;
+            }
+            if (ship.getTotalCultureBonus() > 0
+                && planet.getEffectiveGovernorGuide()
+                == Planet.CULTURE_PLANET) {
+              score = score + 10;
+            }
+            if (attitude == Attitude.MERCHANTICAL) {
+              score = score + ship.getTotalCreditBonus() * 5;
+            } else {
+              score = score + ship.getTotalCreditBonus() * 3;
+            }
+            if (ship.getTotalCreditBonus() > 0
+                && planet.getEffectiveGovernorGuide()
+                == Planet.CREDIT_PLANET) {
+              score = score + 10;
+            }
+          } else {
+            score = -1;
+          }
+        }
+        if (ship.isTradeShip()) {
+          // Trade ship should be built only on request
+          score = scoreTradeShip(score, ship, planet, info, map, attitude);
+        }
+        if (ship.isSpyShip()) {
+          score = scoreSpyShip(score, ship, info, map, attitude);
+        }
+        scores[i] = score;
+      }
+      int time = planet.getProductionTime(constructions[i]);
+      if (time == -1) {
+        scores[i] = -1;
+      }
+      if (time > 15 && scores[i] > 0) {
+        scores[i] = scores[i] / 2;
+        if (constructions[i].getName()
+            .equals(ConstructionFactory.MECHION_CITIZEN)) {
+          scores[i] = scores[i] / 2;
+        }
+      }
+      if (time > 25) {
+        scores[i] = -1;
+      }
+
+      // Sanitize score
+      if (scores[i] > MAX_SLOT_SCORE) {
+        scores[i] = MAX_SLOT_SCORE;
+      }
+      if (scores[i] < -1) {
+        scores[i] = -1;
+      }
+
+    }
+    return scores;
+  }
+  /**
    * Calculate scores for each construction. Each score is between -1 and 1000
    * @param constructions The constructions
    * @param planet The planet
@@ -1474,21 +1778,21 @@ public final class PlanetHandling {
         if (ship.isSpyShip()) {
           score = scoreSpyShip(score, ship, info, map, attitude);
         }
-        int time = planet.getProductionTime(ship);
-        if (time == -1) {
-          score = -1;
-        }
-        if (time > 15 && score > 0) {
-          score = score / 2;
-          if (constructions[i].getName()
-              .equals(ConstructionFactory.MECHION_CITIZEN)) {
-            score = score / 2;
-          }
-        }
-        if (time > 25) {
-          score = -1;
-        }
         scores[i] = score;
+      }
+      int time = planet.getProductionTime(constructions[i]);
+      if (time == -1) {
+        scores[i] = -1;
+      }
+      if (time > 15 && scores[i] > 0) {
+        scores[i] = scores[i] / 2;
+        if (constructions[i].getName()
+            .equals(ConstructionFactory.MECHION_CITIZEN)) {
+          scores[i] = scores[i] / 2;
+        }
+      }
+      if (time > 25) {
+        scores[i] = -1;
       }
 
       // Sanitize score

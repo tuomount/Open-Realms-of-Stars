@@ -1355,6 +1355,11 @@ public final class PlanetHandling {
             && prod > 4 && metalProd > 4) {
           scores[i] = scores[i] + building.getCultBonus() * 5;
         }
+        if (info.getStrategy() == WinningStrategy.DIPLOMATIC
+            && prod > 4 && metalProd > 4
+            && building.getName().equals("United Galaxy Tower")) {
+          scores[i] = scores[i] + 20;
+        }
       }
       if (constructions[i] instanceof Ship) {
         Ship ship = (Ship) constructions[i];

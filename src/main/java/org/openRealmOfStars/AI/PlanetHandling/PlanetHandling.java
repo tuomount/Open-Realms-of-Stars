@@ -1365,6 +1365,9 @@ public final class PlanetHandling {
         Ship ship = (Ship) constructions[i];
         int score = scoreShip(ship, map.getGameLengthState(), planet);
         if (ship.getTotalMilitaryPower() > 0) {
+          if (info.getDiplomacy().getNumberOfWar() > 0) {
+            score = score + info.getDiplomacy().getNumberOfWar() * 3;
+          }
           Mission mission = info.getMissions()
               .getMissionForPlanet(planet.getName(), MissionType.DEFEND);
           if (mission != null) {

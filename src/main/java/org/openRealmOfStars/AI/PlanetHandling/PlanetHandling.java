@@ -1259,7 +1259,7 @@ public final class PlanetHandling {
    * @param nearFleetLimit Is fleet capacity near the limit or even over it.
    * @return The calculate scores
    */
-  private static int[] highScoreConstructions(
+  public static int[] highScoreConstructions(
       final Construction[] constructions, final Planet planet,
       final PlayerInfo info, final StarMap map, final Attitude attitude,
       final boolean nearFleetLimit) {
@@ -1564,7 +1564,7 @@ public final class PlanetHandling {
    * @param nearFleetLimit Is fleet capacity near the limit or even over it.
    * @return The calculate scores
    */
-  private static int[] scoreConstructions(final Construction[] constructions,
+  public static int[] scoreConstructions(final Construction[] constructions,
       final Planet planet, final PlayerInfo info, final StarMap map,
       final Attitude attitude, final boolean nearFleetLimit) {
     int[] scores = new int[constructions.length];

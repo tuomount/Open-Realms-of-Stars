@@ -29,6 +29,7 @@ import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
@@ -36,6 +37,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
+import org.openRealmOfStars.starMap.planet.construction.Construction;
 
 /**
  * 
@@ -325,6 +327,92 @@ public class PlanetHandlingTest {
         Attitude.LOGICAL, false);
     assertEquals(-1,score);
 
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBasicScoring() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    info.setEmpireName("Human Kingdom");
+    info.setGovernment(GovernmentType.KINGDOM);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.HUMAN, 2, 1);
+    info2.setEmpireName("Terran Federation");
+    info2.setGovernment(GovernmentType.FEDERATION);
+
+    GalaxyConfig config = new GalaxyConfig();
+    config.setPlayerName(0, info.getEmpireName());
+    config.setPlayerName(1, info2.getEmpireName());
+    config.setMaxPlayers(2);
+    PlayerList playerList = new PlayerList();
+    playerList.addPlayer(info);
+    playerList.addPlayer(info2);
+    playerList.setCurrentPlayer(0);
+    playerList.calculateInitialDiplomacyBonuses();
+    StarMap map = new StarMap(config, playerList);
+    Planet planet  =map.getPlanetList().get(0);
+    for (int i = 0; i < map.getPlanetList().size(); i++) {
+      Planet iterator = map.getPlanetList().get(i);
+      if (iterator.getPlanetPlayerInfo() == info) {
+        planet = iterator;
+      }
+    }
+
+    Construction[] constructions = planet.getProductionList();
+    int[] scores = PlanetHandling.scoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+/*    for (int i = 0; i < constructions.length; i++) {
+      System.out.println(constructions[i].getName() + " - " + scores[i]);
+    }*/
+    assertEquals(7, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(99, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(99, scores[4]);
+    assertEquals(-1, scores[6]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBasicHighScoring() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    info.setEmpireName("Human Kingdom");
+    info.setGovernment(GovernmentType.KINGDOM);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.HUMAN, 2, 1);
+    info2.setEmpireName("Terran Federation");
+    info2.setGovernment(GovernmentType.FEDERATION);
+
+    GalaxyConfig config = new GalaxyConfig();
+    config.setPlayerName(0, info.getEmpireName());
+    config.setPlayerName(1, info2.getEmpireName());
+    config.setMaxPlayers(2);
+    PlayerList playerList = new PlayerList();
+    playerList.addPlayer(info);
+    playerList.addPlayer(info2);
+    playerList.setCurrentPlayer(0);
+    playerList.calculateInitialDiplomacyBonuses();
+    StarMap map = new StarMap(config, playerList);
+    Planet planet  =map.getPlanetList().get(0);
+    for (int i = 0; i < map.getPlanetList().size(); i++) {
+      Planet iterator = map.getPlanetList().get(i);
+      if (iterator.getPlanetPlayerInfo() == info) {
+        planet = iterator;
+      }
+    }
+
+    Construction[] constructions = planet.getProductionList();
+    int[] scores = PlanetHandling.scoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+/*    for (int i = 0; i < constructions.length; i++) {
+      System.out.println(constructions[i].getName() + " - " + scores[i]);
+    }*/
+    assertEquals(7, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(99, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(99, scores[4]);
+    assertEquals(-1, scores[6]);
   }
 
   @Test

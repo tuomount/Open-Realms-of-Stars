@@ -1333,13 +1333,32 @@ public final class PlanetHandling {
             nearFleetLimit);
         if (building.getName().equals("Basic factory") && prod < 5) {
           scores[i] = scores[i] + (50 - prod * 10);
+          if (!planet.hasCertainBuilding("Basic factory")) {
+            scores[i] = scores[i] + 10;
+          }
         }
         if (building.getName().equals("Basic mine") && metalProd < 5) {
-          scores[i] = scores[i] + (50 - metalProd * 10);
+          scores[i] = scores[i] + (40 - metalProd * 10);
+          if (!planet.hasCertainBuilding("Basic factory")) {
+            scores[i] = scores[i] - 15;
+          }
+          if (!planet.hasCertainBuilding("Basic mine")) {
+            scores[i] = scores[i] + 5;
+          }
         }
-        if (building.getName().equals("Basic lab")
-            && prod > 2 && metalProd > 2 && research < 2) {
-          scores[i] = scores[i] + (20 - research * 10);
+        if (building.getName().equals("Basic lab")) {
+          if (prod > 2 && metalProd > 2 && research < 2) {
+            scores[i] = scores[i] + (20 - research * 10);
+          }
+          int index = map.getPlayerList().getIndex(info);
+          int totalResearch = map.getTotalProductionByPlayerPerTurn(
+              Planet.PRODUCTION_RESEARCH, index);
+          if (totalResearch == 0) {
+            scores[i] = scores[i] + 40;
+          }
+          if (totalResearch == 1 && prod >= 3 && metalProd >= 2) {
+            scores[i] = scores[i] + 40;
+          }
         }
         if (info.getRace().getFoodRequire() == 100
             && planet.getTotalPopulation() < 4

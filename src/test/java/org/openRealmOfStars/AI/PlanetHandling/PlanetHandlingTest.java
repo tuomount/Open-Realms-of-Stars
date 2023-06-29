@@ -27,6 +27,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
@@ -401,7 +402,7 @@ public class PlanetHandlingTest {
     }
 
     Construction[] constructions = planet.getProductionList();
-    int[] scores = PlanetHandling.scoreConstructions(constructions,
+    int[] scores = PlanetHandling.highScoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
 /*    for (int i = 0; i < constructions.length; i++) {
       System.out.println(constructions[i].getName() + " - " + scores[i]);
@@ -409,10 +410,75 @@ public class PlanetHandlingTest {
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(99, scores[2]);
+    assertEquals(119, scores[2]);
     assertEquals(39, scores[3]);
-    assertEquals(99, scores[4]);
+    assertEquals(139, scores[4]);
     assertEquals(-1, scores[6]);
+    planet.addBuilding(createBasicFactory());
+    info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab",
+        1));
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+/*    for (int i = 0; i < constructions.length; i++) {
+      System.out.println(constructions[i].getName() + " - " + scores[i]);
+    }*/
+    assertEquals(8, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(134, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(19, scores[4]);
+    assertEquals(59, scores[5]);
+    assertEquals(-1, scores[7]);
+    planet.addBuilding(createBasicMine());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(8, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(119, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(119, scores[4]);
+    assertEquals(99, scores[5]);
+    assertEquals(-1, scores[7]);
+    planet.addBuilding(createBasicMine());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(8, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(89, scores[2]);
+    assertEquals(49, scores[3]);
+    assertEquals(119, scores[4]);
+    assertEquals(109, scores[5]);
+    assertEquals(-1, scores[7]);
+    planet.addBuilding(createBasicLab());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(8, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(89, scores[2]);
+    assertEquals(49, scores[3]);
+    assertEquals(119, scores[4]);
+    assertEquals(59, scores[5]);
+    assertEquals(-1, scores[7]);
+    planet.addBuilding(createBasicFactory());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(8, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(109, scores[2]);
+    assertEquals(49, scores[3]);
+    assertEquals(69, scores[4]);
+    assertEquals(59, scores[5]);
+    assertEquals(-1, scores[7]);
   }
 
   @Test

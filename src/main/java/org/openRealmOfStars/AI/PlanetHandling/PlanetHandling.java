@@ -496,27 +496,40 @@ public final class PlanetHandling {
     if (metalProd < prodProd) {
       score = score + building.getMineBonus() * 20;
     }
+    if (building.getName().equals("United Galaxy Tower")
+      && metalProd > 5 && prodProd > 5
+      && info.getStrategy() == WinningStrategy.DIPLOMATIC) {
+      score = score + 400;
+    }
     if (building.getMineBonus() > 0
         && planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET
         && info.getRace() == SpaceRace.LITHORIANS) {
       score = score + 20;
     }
     score = score + building.getMaterialBonus() * 60;
+    boolean extraFarmBonus = false;
     if (info.getRace() == SpaceRace.CENTAURS
         || info.getRace() == SpaceRace.TEUTHIDAES) {
       score = score + building.getFarmBonus() * 50;
+      extraFarmBonus = true;
     } else if (info.getRace() == SpaceRace.REBORGIANS) {
       score = score + building.getFarmBonus() * 20;
+      extraFarmBonus = true;
     } else if (info.getRace() == SpaceRace.LITHORIANS) {
       score = score - building.getFarmBonus() * 40;
     } else if (info.getRace() != SpaceRace.MECHIONS) {
       score = score + building.getFarmBonus() * 40;
-      if (building.getFarmBonus() > 0
-          && planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
-        score = score + 40;
-      }
+      extraFarmBonus = true;
     } else {
       score = score - building.getFarmBonus() * 40;
+    }
+    if (extraFarmBonus && building.getFarmBonus() > 0) {
+      if (planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
+        score = score + 40;
+      }
+      if (info.getStrategy() == WinningStrategy.POPULATION) {
+        score = score + building.getFarmBonus() * 10;
+      }
     }
     if (info.getRace() != SpaceRace.MECHIONS
         && info.getRace() != SpaceRace.LITHORIANS
@@ -541,6 +554,10 @@ public final class PlanetHandling {
     if (building.getCultBonus() > 0
         && planet.getEffectiveGovernorGuide() == Planet.CULTURE_PLANET) {
       score = score + 50;
+    }
+    if (building.getCultBonus() > 0
+        && info.getStrategy() == WinningStrategy.CULTURAL) {
+      score = score + building.getCultBonus() * 20;
     }
     if (planet.getMaintenanceCost() >= planet
         .getTotalProduction(Planet.PRODUCTION_CREDITS)) {
@@ -1356,15 +1373,29 @@ public final class PlanetHandling {
           if (totalResearch == 0) {
             scores[i] = scores[i] + 40;
           }
-          if (totalResearch == 1 && prod >= 3 && metalProd >= 2) {
+          if (totalResearch <= 1 && prod >= 3 && metalProd >= 2) {
             scores[i] = scores[i] + 40;
           }
         }
-        if (info.getRace().getFoodRequire() == 100
-            && planet.getTotalPopulation() < 4
-            && building.getName().equals("Basic farm")
-            && prod > 2 && metalProd > 2 && food < 4) {
-          scores[i] = scores[i] + (40 - planet.getTotalPopulation() * 10);
+        if (building.getName().equals("Basic farm")) {
+          if (info.getRace().getFoodRequire() == 100
+              && planet.getTotalPopulation() < 4
+              && prod > 2 && metalProd > 2 && food < 4) {
+            scores[i] = scores[i] + (40 - planet.getTotalPopulation() * 10);
+          }
+          if (planet.getTotalPopulation() < 4
+              && (info.getRace() == SpaceRace.GREYANS
+              || info.getRace() == SpaceRace.MOTHOIDS
+              || info.getRace() == SpaceRace.TEUTHIDAES
+              || info.getRace() == SpaceRace.HOMARIANS
+              || info.getRace() == SpaceRace.ALTEIRIANS)) {
+            scores[i] = scores[i] + 5;
+          }
+          if (info.getRace().getFoodRequire() == 100
+              && planet.getTotalPopulation() < 5
+              && info.areLeadersDead()) {
+            scores[i] = scores[i] + 10;
+          }
         }
         if (credit < 0 && building.getCredBonus() > 0
             && prod > 4 && metalProd > 4) {
@@ -1437,6 +1468,9 @@ public final class PlanetHandling {
 
         }
         if (ship.isScoutShip()) {
+          if (info.getFleets().getNumberOfFleets() == 0) {
+            score = score + 30;
+          }
           if (info.getMissions().getMission(MissionType.EXPLORE,
               MissionPhase.PLANNING) != null) {
             score = score + 30;

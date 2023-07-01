@@ -470,6 +470,7 @@ public class PlanetHandlingTest {
         planet = iterator;
       }
     }
+    planet.setPlanetaryEvent(PlanetaryEvent.NONE);
 
     Construction[] constructions = planet.getProductionList();
     int[] scores = PlanetHandling.highScoreConstructions(constructions,
@@ -505,6 +506,9 @@ public class PlanetHandlingTest {
     constructions = planet.getProductionList();
     scores = PlanetHandling.highScoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
+/*    for (int i = 0; i < constructions.length; i++) {
+      System.out.println(constructions[i].getName() + " - " + scores[i]);
+    }*/
     assertEquals(8, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);

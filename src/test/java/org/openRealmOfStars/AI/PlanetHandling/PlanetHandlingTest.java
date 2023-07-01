@@ -243,6 +243,31 @@ public class PlanetHandlingTest {
   }
 
   /**
+   * Create tax center with mockito
+   * @return tax center building
+   */
+  private static Building createTaxCenter() {
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getBattleBonus()).thenReturn(0);
+    Mockito.when(building.getDefenseDamage()).thenReturn(0);
+    Mockito.when(building.getScanRange()).thenReturn(0);
+    Mockito.when(building.getScanCloakingDetection()).thenReturn(0);
+    Mockito.when(building.getType()).thenReturn(BuildingType.CREDIT);
+    Mockito.when(building.getFactBonus()).thenReturn(0);
+    Mockito.when(building.getMineBonus()).thenReturn(0);
+    Mockito.when(building.getFarmBonus()).thenReturn(0);
+    Mockito.when(building.getReseBonus()).thenReturn(0);
+    Mockito.when(building.getCultBonus()).thenReturn(0);
+    Mockito.when(building.getCredBonus()).thenReturn(1);
+    Mockito.when(building.getRecycleBonus()).thenReturn(0);
+    Mockito.when(building.getMaintenanceCost()).thenReturn(0.0);
+    Mockito.when(building.getMetalCost()).thenReturn(5);
+    Mockito.when(building.getProdCost()).thenReturn(15);
+    Mockito.when(building.getName()).thenReturn("Tax center");
+    return building;
+  }
+
+  /**
    * Create culture building with mockito
    * @return basic culture building
    */
@@ -361,9 +386,6 @@ public class PlanetHandlingTest {
     Construction[] constructions = planet.getProductionList();
     int[] scores = PlanetHandling.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
-/*    for (int i = 0; i < constructions.length; i++) {
-      System.out.println(constructions[i].getName() + " - " + scores[i]);
-    }*/
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
@@ -371,6 +393,54 @@ public class PlanetHandlingTest {
     assertEquals(39, scores[3]);
     assertEquals(99, scores[4]);
     assertEquals(-1, scores[6]);
+    planet.addBuilding(createBasicMine());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.scoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(7, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(79, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(99, scores[4]);
+    assertEquals(-1, scores[6]);
+    planet.addBuilding(createBasicFactory());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.scoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(7, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(99, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(99, scores[4]);
+    assertEquals(-1, scores[6]);
+    planet.addBuilding(createBasicMine());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.scoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(7, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(79, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(99, scores[4]);
+    assertEquals(-1, scores[6]);
+    planet.addBuilding(createBasicFactory());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.scoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(7, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(99, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(59, scores[4]);
+    assertEquals(-1, scores[6]);
+/*    for (int i = 0; i < constructions.length; i++) {
+      System.out.println(constructions[i].getName() + " - " + scores[i]);
+    }*/
+
   }
 
   @Test
@@ -479,6 +549,41 @@ public class PlanetHandlingTest {
     assertEquals(69, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
+    planet.addBuilding(createBasicMine());
+    info.getTechList().addTech(TechFactory.createImprovementTech("Tax center",
+        1));
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(9, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(39, scores[2]);
+    assertEquals(49, scores[3]);
+    assertEquals(69, scores[4]);
+    assertEquals(59, scores[5]);
+    assertEquals(79, scores[6]);
+    assertEquals(-1, scores[8]);
+    planet.addBuilding(createTaxCenter());
+    info.getTechList().addTech(TechFactory.createImprovementTech(
+        "Advanced factory", 2));
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+/*    System.out.println(planet.getBuildingList().length + "/"
+        + planet.getGroundSize());
+    for (int i = 0; i < constructions.length; i++) {
+      System.out.println(constructions[i].getName() + " - " + scores[i]);
+    }*/
+    assertEquals(9, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(39, scores[2]);
+    assertEquals(49, scores[3]);
+    assertEquals(9, scores[4]);
+    assertEquals(59, scores[5]);
+    assertEquals(113, scores[6]);
+    assertEquals(-1, scores[8]);
   }
 
   @Test

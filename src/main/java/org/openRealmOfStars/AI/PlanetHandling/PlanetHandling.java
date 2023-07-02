@@ -893,38 +893,21 @@ public final class PlanetHandling {
               }
               break;
             }
-            Mission mission = info.getMissions().getMissionForPlanet(
-                planet.getName(), MissionType.DEFEND);
-            if (mission != null && ship.getTotalMilitaryPower() > 0
-                && mission.getPhase() == MissionPhase.PLANNING) {
-              mission.setPhase(MissionPhase.BUILDING);
-              break;
-            }
-            mission = info.getMissions().getMission(MissionType.COLONIZE,
-                MissionPhase.PLANNING);
+            Mission mission = info.getMissions().getMission(
+                MissionType.COLONIZE, MissionPhase.PLANNING);
             if (mission != null && ship.isColonyModule()) {
               mission.setPhase(MissionPhase.BUILDING);
               mission.setPlanetBuilding(planet.getName());
               break;
             }
-            mission = info.getMissions().getMission(
-                MissionType.DIPLOMATIC_DELEGACY, MissionPhase.PLANNING);
-            if (mission != null && ship.isScoutShip()) {
-              Planet targetPlanet = map.getClosetPlanetFromCoordinate(
-                  planet.getCoordinate(), mission.getTargetRealmName(), info);
-              if (targetPlanet != null) {
+            if (info.getRace() == SpaceRace.ALTEIRIANS) {
+              mission = info.getMissions().getMissionForPlanet(
+                  planet.getName(), MissionType.DEFEND);
+              if (mission != null && ship.getTotalMilitaryPower() > 0
+                  && mission.getPhase() == MissionPhase.PLANNING) {
                 mission.setPhase(MissionPhase.BUILDING);
-                mission.setPlanetBuilding(planet.getName());
-                mission.setTarget(targetPlanet.getCoordinate());
                 break;
               }
-            }
-            mission = info.getMissions().getMission(MissionType.TRADE_FLEET,
-                MissionPhase.PLANNING);
-            if (mission != null && ship.isTradeShip()) {
-              mission.setPhase(MissionPhase.BUILDING);
-              mission.setPlanetBuilding(planet.getName());
-              break;
             }
             mission = info.getMissions().getGatherMission(Mission.TROOPER_TYPE);
             if (ship.isTrooperModule() && mission != null) {
@@ -986,6 +969,25 @@ public final class PlanetHandling {
               mission.setPhase(MissionPhase.BUILDING);
               break;
             }
+            mission = info.getMissions().getMission(MissionType.TRADE_FLEET,
+                MissionPhase.PLANNING);
+            if (mission != null && ship.isTradeShip()) {
+              mission.setPhase(MissionPhase.BUILDING);
+              mission.setPlanetBuilding(planet.getName());
+              break;
+            }
+            mission = info.getMissions().getMission(
+                MissionType.DIPLOMATIC_DELEGACY, MissionPhase.PLANNING);
+            if (mission != null && ship.isScoutShip()) {
+              Planet targetPlanet = map.getClosetPlanetFromCoordinate(
+                  planet.getCoordinate(), mission.getTargetRealmName(), info);
+              if (targetPlanet != null) {
+                mission.setPhase(MissionPhase.BUILDING);
+                mission.setPlanetBuilding(planet.getName());
+                mission.setTarget(targetPlanet.getCoordinate());
+                break;
+              }
+            }
             mission = info.getMissions().getMission(MissionType.DEPLOY_STARBASE,
                 MissionPhase.PLANNING);
             if (mission != null
@@ -994,12 +996,38 @@ public final class PlanetHandling {
               mission.setPlanetBuilding(planet.getName());
               break;
             }
-            mission = info.getMissions().getMission(MissionType.EXPLORE,
-                MissionPhase.PLANNING);
-            if (mission != null && ship.isScoutShip()) {
-              mission.setPhase(MissionPhase.BUILDING);
-              mission.setPlanetBuilding(planet.getName());
-              break;
+            if (info.getAiAttitude() == Attitude.EXPANSIONIST
+                || info.getAiAttitude() == Attitude.MERCHANTICAL
+                || info.getAiAttitude() == Attitude.SCIENTIFIC) {
+              mission = info.getMissions().getMission(MissionType.EXPLORE,
+                  MissionPhase.PLANNING);
+              if (mission != null && ship.isScoutShip()) {
+                mission.setPhase(MissionPhase.BUILDING);
+                mission.setPlanetBuilding(planet.getName());
+                break;
+              }
+              mission = info.getMissions().getMissionForPlanet(
+                  planet.getName(), MissionType.DEFEND);
+              if (mission != null && ship.getTotalMilitaryPower() > 0
+                  && mission.getPhase() == MissionPhase.PLANNING) {
+                mission.setPhase(MissionPhase.BUILDING);
+                break;
+              }
+            } else {
+              mission = info.getMissions().getMissionForPlanet(
+                  planet.getName(), MissionType.DEFEND);
+              if (mission != null && ship.getTotalMilitaryPower() > 0
+                  && mission.getPhase() == MissionPhase.PLANNING) {
+                mission.setPhase(MissionPhase.BUILDING);
+                break;
+              }
+              mission = info.getMissions().getMission(MissionType.EXPLORE,
+                  MissionPhase.PLANNING);
+              if (mission != null && ship.isScoutShip()) {
+                mission.setPhase(MissionPhase.BUILDING);
+                mission.setPlanetBuilding(planet.getName());
+                break;
+              }
             }
           }
           break;
@@ -1414,22 +1442,28 @@ public final class PlanetHandling {
       if (constructions[i] instanceof Ship) {
         Ship ship = (Ship) constructions[i];
         int score = scoreShip(ship, map.getGameLengthState(), planet);
+        int time = planet.getProductionTime(constructions[i]);
         if (ship.getTotalMilitaryPower() > 0) {
           if (info.getDiplomacy().getNumberOfWar() > 0) {
             score = score + info.getDiplomacy().getNumberOfWar() * 3;
           }
-          Mission mission = info.getMissions()
+          Mission defendMission = info.getMissions()
               .getMissionForPlanet(planet.getName(), MissionType.DEFEND);
-          if (mission != null) {
-            if (mission.getPhase() == MissionPhase.PLANNING) {
+          Mission attackMission = info.getMissions().getMission(
+              MissionType.GATHER, MissionPhase.PLANNING);
+          if (defendMission != null) {
+            if (defendMission.getPhase() == MissionPhase.PLANNING) {
               score = score + ship.getTotalMilitaryPower() * 2;
+              if (time < 10) {
+                score = score + ship.getTotalMilitaryPower();
+              }
               if (attitude == Attitude.AGGRESSIVE
                   || attitude == Attitude.MILITARISTIC) {
                 score = score + 20;
               } else if (attitude == Attitude.PEACEFUL) {
                 score = score - 10;
               }
-            } else if (mission.getPhase() == MissionPhase.BUILDING) {
+            } else if (defendMission.getPhase() == MissionPhase.BUILDING) {
               score = score + ship.getTotalMilitaryPower();
               if (attitude == Attitude.AGGRESSIVE
                   || attitude == Attitude.MILITARISTIC) {
@@ -1438,31 +1472,31 @@ public final class PlanetHandling {
                 score = score - 10;
               }
             }
-          } else {
-            mission = info.getMissions().getMission(MissionType.GATHER,
-                MissionPhase.PLANNING);
-            if (mission != null) {
-              score = score + ship.getTotalMilitaryPower() * 3;
-              if (attitude == Attitude.AGGRESSIVE
-                  || attitude == Attitude.MILITARISTIC) {
-                score = score + 30;
-              } else if (attitude == Attitude.BACKSTABBING) {
-                score = score + 20;
-              } else if (attitude == Attitude.LOGICAL) {
-                score = score + 10;
-              } else if (attitude == Attitude.PEACEFUL) {
-                score = score - 10;
-              }
-              if (ship.getTotalMilitaryPower() > 0
-                  && info.getMissions().getGatherMission(
-                      Mission.ASSAULT_TYPE) != null) {
-                score = score + 30;
-              }
-              if (ship.getTotalMilitaryPower() > 0
-                  && info.getMissions().getGatherMission(
-                      Mission.ASSAULT_SB_TYPE) != null) {
-                score = score + 30;
-              }
+          }
+          if (attackMission != null) {
+            score = score + ship.getTotalMilitaryPower() * 3;
+            if (time < 10) {
+              score = score + ship.getTotalMilitaryPower();
+            }
+            if (attitude == Attitude.AGGRESSIVE
+                || attitude == Attitude.MILITARISTIC) {
+              score = score + 30;
+            } else if (attitude == Attitude.BACKSTABBING) {
+              score = score + 20;
+            } else if (attitude == Attitude.LOGICAL) {
+              score = score + 10;
+            } else if (attitude == Attitude.PEACEFUL) {
+              score = score - 10;
+            }
+            if (ship.getTotalMilitaryPower() > 0
+                && info.getMissions().getGatherMission(
+                    Mission.ASSAULT_TYPE) != null) {
+              score = score + 30;
+            }
+            if (ship.getTotalMilitaryPower() > 0
+                && info.getMissions().getGatherMission(
+                    Mission.ASSAULT_SB_TYPE) != null) {
+              score = score + 30;
             }
           }
 
@@ -1502,6 +1536,9 @@ public final class PlanetHandling {
         if (ship.hasBombs() && info.getMissions().getGatherMission(
             Mission.BOMBER_TYPE) != null) {
           score = score + 50;
+          if (time < 10) {
+            score = score + 200;
+          }
           if (attitude == Attitude.AGGRESSIVE
               || attitude == Attitude.MILITARISTIC) {
             score = score + 30;
@@ -1521,6 +1558,9 @@ public final class PlanetHandling {
             score = -1;
           } else {
             score = score + 50;
+            if (time < 10) {
+              score = score + 200;
+            }
             if (attitude == Attitude.AGGRESSIVE
                 || attitude == Attitude.MILITARISTIC) {
               score = score + 30;
@@ -1537,6 +1577,10 @@ public final class PlanetHandling {
           Mission mission = info.getMissions().getMission(
               MissionType.DEPLOY_STARBASE, MissionPhase.PLANNING);
           if (mission != null) {
+            if (info.getDiplomacy().getNumberOfWar() == 0) {
+              // During peace time build more starbases.
+              score = score + 20;
+            }
             if (attitude == Attitude.SCIENTIFIC) {
               score = score + ship.getTotalResearchBonus() * 5;
             } else {
@@ -1575,9 +1619,25 @@ public final class PlanetHandling {
         if (ship.isTradeShip()) {
           // Trade ship should be built only on request
           score = scoreTradeShip(score, ship, planet, info, map, attitude);
+          if (time < 10) {
+            score = score + 10;
+          }
+          if (info.getDiplomacy().getNumberOfWar() == 0) {
+            score = score + 20;
+          }
+          if (info.getStrategy() == WinningStrategy.DIPLOMATIC
+              || info.getStrategy() == WinningStrategy.CULTURAL) {
+            score = score + 20;
+          }
         }
         if (ship.isSpyShip()) {
           score = scoreSpyShip(score, ship, info, map, attitude);
+          if (time < 10) {
+            score = score + 10;
+          }
+          if (info.getDiplomacy().getNumberOfWar() == 0) {
+            score = score + 20;
+          }
         }
         scores[i] = score;
       }

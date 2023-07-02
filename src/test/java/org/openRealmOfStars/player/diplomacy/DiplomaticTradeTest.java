@@ -168,6 +168,7 @@ return map;
     Mockito.when(map.getMilitaryDifference(0, 1)).thenReturn(powerDifference);
     Mockito.when(map.getMaxX()).thenReturn(5);
     Mockito.when(map.getMaxY()).thenReturn(5);
+    Mockito.when(map.getPlanetByName(Mockito.anyString())).thenReturn(planet);
     Votes votes = Mockito.mock(Votes.class);
     Mockito.when(map.getVotes()).thenReturn(votes);
     return map;
@@ -1135,16 +1136,22 @@ return map;
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGivingOutValuable() {
     StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(5, 5));
+    Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(0);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(1);
+    Mockito.when(planet.getGovernor()).thenReturn(null);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     NegotiationList offerList1 = new NegotiationList();
     offerList1.add(new NegotiationOffer(NegotiationType.CREDIT,
         Integer.valueOf(30)));
+    offerList1.add(new NegotiationOffer(NegotiationType.PLANET, planet));
     NegotiationList offerList2 = new NegotiationList();
     trade.setFirstOffer(offerList1);
     trade.setSecondOffer(offerList2);
     trade.doTrades();
     assertEquals(true, trade.getMajorDeals().contains("Terran"));
-    assertEquals(true, trade.getMajorDeals().contains("30 from"));
+    assertEquals(true, trade.getMajorDeals().contains("30 credits from"));
     assertEquals(true, trade.getMajorDeals().contains("Martian."));
     int bonus = map.getPlayerByIndex(0).getDiplomacy().getDiplomacyList(1)
       .getDiplomacyBonus();

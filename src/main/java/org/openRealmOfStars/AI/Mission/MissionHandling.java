@@ -3304,6 +3304,25 @@ public final class MissionHandling {
         || trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
       // Another party accepts it or it is war
       trade.doTrades();
+      if (trade.getMajorDeals() != null && trade.isPlanetTraded()) {
+        PlayerInfo giver = game.getStarMap().getPlayerByIndex(secondIndex);
+        NewsData news = NewsFactory.makeMajorDemandNews(info, giver,
+            meetingPlace, trade.getMajorDeals(),
+            game.getStarMap().getStarYear());
+        game.getStarMap().getNewsCorpData().addNews(news);
+        Planet[] planets = trade.getPlanetsTraded();
+        if (planets.length > 0) {
+          int realmIndex = game.getStarMap().getPlayerList().getIndex(info);
+          for (Planet planet : planets) {
+            EventOnPlanet event = new EventOnPlanet(EventType.PLANET_CONQUERED,
+                planet.getCoordinate(), planet.getName(), realmIndex);
+            event.setText(news.getNewsText());
+            game.getStarMap().getHistory().addEvent(event);
+          }
+        }
+
+      }
+
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         boolean casusBelli = info.getDiplomacy().hasCasusBelli(secondIndex);

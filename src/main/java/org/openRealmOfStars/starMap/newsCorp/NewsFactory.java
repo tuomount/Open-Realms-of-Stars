@@ -1444,6 +1444,96 @@ public final class NewsFactory {
   }
 
   /**
+   * Make major demand news. Demander makes peace offer to acceptor.
+   * This diplomatic meeting happened in meeting place which
+   * can be planet or fleet.
+   * @param demander Player who is make the demand
+   * @param acceptor Player who is accepting
+   * @param meetingPlace Where meeting happened, fleet or planet
+   * @param majorDeals Textual description of major deals that cause peace.
+   * @param starYear Current star year.
+   * @return NewsData
+   */
+  public static NewsData makeMajorDemandNews(final PlayerInfo demander,
+      final PlayerInfo acceptor, final Object meetingPlace,
+      final String majorDeals, final int starYear) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    if (meetingPlace instanceof Planet) {
+      Planet planet = (Planet) meetingPlace;
+      instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+          planet.getImageInstructions(),
+          ImageInstruction.SIZE_FULL);
+    }
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("MAJOR DEMAND ACCEPTED!");
+        break;
+      }
+      case 1: {
+        instructions.addText("CRITICAL NEGOTIATIONS!");
+        break;
+      }
+      case 2: {
+        instructions.addText("MASSIVE DEMANDS!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(demander.getEmpireName());
+    sb.append(" made ");
+    switch (DiceGenerator.getRandom(2)) {
+    case 0:
+    default: {
+      sb.append("massive demands ");
+      break;
+    }
+    case 1: {
+      sb.append("huge demands ");
+      break;
+    }
+    case 2: {
+      sb.append("great demands ");
+      break;
+    }
+  }
+    sb.append(acceptor.getEmpireName());
+    sb.append("! ");
+    sb.append(majorDeals);
+    if (meetingPlace instanceof Planet) {
+      Planet planet = (Planet) meetingPlace;
+      sb.append("This meeting happened in ");
+      sb.append(planet.getName());
+      if (planet.getPlanetPlayerInfo() != null) {
+        sb.append(", which is owned by ");
+        sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+        sb.append(". ");
+      }
+    }
+    Attitude attitude = demander.getAiAttitude();
+    if (attitude == Attitude.AGGRESSIVE) {
+      sb.append(demander.getEmpireName());
+      sb.append(" is known about their aggressive behaviour, so ");
+      sb.append("this request was expected! ");
+    }
+    if (attitude == Attitude.MILITARISTIC) {
+      sb.append(demander.getEmpireName());
+      sb.append(" militaristic pressure was surely affecting on this demand! ");
+    }
+    if (attitude == Attitude.EXPANSIONIST) {
+      sb.append(demander.getEmpireName());
+      sb.append(" is known expanding their territory! ");
+    }
+    demander.appendStory(sb.toString(), starYear);
+    acceptor.appendStory(sb.toString(), starYear);
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
    * Make Trade alliance news. Offerer makes trade alliance offer to acceptor.
    * This diplomatic meeting happened in meeting place which
    * can be planet or fleet.

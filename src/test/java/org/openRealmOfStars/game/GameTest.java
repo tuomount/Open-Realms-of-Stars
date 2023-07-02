@@ -72,7 +72,13 @@ public class GameTest {
     assertEquals("Test Text", list.get(1).getText());
   }
 
-  private void printEndGameResults(final String testGameName, final Game game) {
+  /**
+   * Print end game results for containing debug information.
+   * @param testGameName Test game name
+   * @param game Actually played game
+   */
+  private static void printEndGameResults(final String testGameName,
+      final Game game) {
     System.out.println("---- " + testGameName + " ----");
     int planets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     int maxPlanets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
@@ -117,8 +123,8 @@ public class GameTest {
         }
         if (event.getType() == EventType.PLANET_CONQUERED) {
           EventOnPlanet eventOnPlanet = (EventOnPlanet) event;
-          System.out.println("Index: " + eventOnPlanet.getPlayerIndex());
-          System.out.println("Text: " + eventOnPlanet.getText());
+          //System.out.println("Index: " + eventOnPlanet.getPlayerIndex());
+          //System.out.println("Text: " + eventOnPlanet.getText());
           if (eventOnPlanet.getPlayerIndex() != -1) {
             conquest[eventOnPlanet.getPlayerIndex()]++;
           }

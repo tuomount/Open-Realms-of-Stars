@@ -57,6 +57,8 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -1441,6 +1443,22 @@ public class DiplomacyView extends BlackPanel {
    */
   private void handleActionCommandOkAgree() {
     trade.doTrades();
+    if (trade.getMajorDeals() != null && trade.isPlanetTraded()) {
+      NewsData news = NewsFactory.makeMajorDemandNews(ai, human,
+          meetingPlace, trade.getMajorDeals(),
+          game.getStarMap().getStarYear());
+      game.getStarMap().getNewsCorpData().addNews(news);
+      Planet[] planets = trade.getPlanetsTraded();
+      if (planets.length > 0) {
+        int realmIndex = game.getStarMap().getPlayerList().getIndex(ai);
+        for (Planet planet : planets) {
+          EventOnPlanet event = new EventOnPlanet(EventType.PLANET_CONQUERED,
+              planet.getCoordinate(), planet.getName(), realmIndex);
+          event.setText(news.getNewsText());
+          game.getStarMap().getHistory().addEvent(event);
+        }
+      }
+    }
     tradeHappened = true;
     int aiIndex = starMap.getPlayerList().getIndex(ai);
     if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)
@@ -1892,6 +1910,23 @@ public class DiplomacyView extends BlackPanel {
       trade.setSecondOffer(list1);
       if (trade.isOfferGoodForBoth()) {
         trade.doTrades();
+        if (trade.getMajorDeals() != null && trade.isPlanetTraded()) {
+          NewsData news = NewsFactory.makeMajorDemandNews(human, ai,
+              meetingPlace, trade.getMajorDeals(),
+              game.getStarMap().getStarYear());
+          game.getStarMap().getNewsCorpData().addNews(news);
+          Planet[] planets = trade.getPlanetsTraded();
+          if (planets.length > 0) {
+            int realmIndex = game.getStarMap().getPlayerList().getIndex(human);
+            for (Planet planet : planets) {
+              EventOnPlanet event = new EventOnPlanet(
+                  EventType.PLANET_CONQUERED, planet.getCoordinate(),
+                  planet.getName(), realmIndex);
+              event.setText(news.getNewsText());
+              game.getStarMap().getHistory().addEvent(event);
+            }
+          }
+        }
         tradeHappened = true;
         updatePanel(SpeechType.AGREE);
         resetChoices();

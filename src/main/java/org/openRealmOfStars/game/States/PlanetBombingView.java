@@ -948,6 +948,7 @@ public class PlanetBombingView extends BlackPanel {
               left = left + origPop;
             }
             ship.setColonist(0);
+
             planet.setPlanetOwner(attackPlayerIndex, attacker);
             if (attacker.getRace() == SpaceRace.ALTEIRIANS) {
               planet.colonizeWithOrbital();

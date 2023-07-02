@@ -124,6 +124,11 @@ public class DiplomaticTrade {
    * doTrades method will update this one. There is only getter for this.
    */
   private String majorDeals;
+
+  /**
+   * Flag for planet traded.
+   */
+  private boolean planetTraded;
   /**
    * Difference between two parties which is considered as
    * insult;
@@ -159,6 +164,7 @@ public class DiplomaticTrade {
     first = index1;
     second = index2;
     majorDeals = null;
+    planetTraded = false;
     diplomacyWithPirates = false;
     PlayerInfo pirate = starMap.getPlayerList().getSpacePiratePlayer();
     int pirateIndex = starMap.getPlayerList().getIndex(pirate);
@@ -2361,6 +2367,26 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Get trader planets as in array.
+   * @return Array of planets
+   */
+  public Planet[] getPlanetsTraded() {
+    ArrayList<Planet> planets = new ArrayList<>();
+    for (int i = 0; i < firstOffer.getSize(); i++) {
+      NegotiationOffer offer = firstOffer.getByIndex(i);
+      if (offer.getPlanet() != null) {
+        planets.add(offer.getPlanet());
+      }
+    }
+    for (int i = 0; i < secondOffer.getSize(); i++) {
+      NegotiationOffer offer = secondOffer.getByIndex(i);
+      if (offer.getPlanet() != null) {
+        planets.add(offer.getPlanet());
+      }
+    }
+    return planets.toArray(new Planet[planets.size()]);
+  }
+  /**
    * Get war chance for getting decline for offer
    * @param type What was the original SpeechType
    * @param attitude AI's attitude who's offer was declined
@@ -2615,7 +2641,7 @@ public class DiplomaticTrade {
             }
           }
           sb.append(offer.getCreditValue());
-          sb.append(" from ");
+          sb.append(" credits from ");
           sb.append(giver.getEmpireName());
           sb.append(". ");
         }
@@ -2722,6 +2748,7 @@ public class DiplomaticTrade {
         sb.append(giver.getEmpireName());
         sb.append(". ");
         countAsDiplomaticTrade = true;
+        planetTraded = true;
         break;
       }
       case MAP: {
@@ -2836,10 +2863,12 @@ public class DiplomaticTrade {
         info.getRuler().getStats().addOne(StatType.DIPLOMATIC_TRADE);
       }
     }
-    if (majorDeals != null) {
-      majorDeals = majorDeals + sb.toString();
-    } else if (sb.toString().length() > 0) {
-      majorDeals = sb.toString();
+    if (planetTraded) {
+      if (majorDeals != null) {
+        majorDeals = majorDeals + sb.toString();
+      } else if (sb.toString().length() > 0) {
+        majorDeals = sb.toString();
+      }
     }
     return totalValue;
   }
@@ -2871,6 +2900,13 @@ public class DiplomaticTrade {
       info.getDiplomacy().getDiplomacyList(second).addBonus(
           DiplomacyBonusType.GIVEN_VALUABLE_FREE, info.getRace());
     }
+  }
+  /**
+   * Has planet traded?
+   * @return True if planet has traded.
+   */
+  public boolean isPlanetTraded() {
+    return planetTraded;
   }
   /**
    * Generate Fleet list containing all fleets from both players.

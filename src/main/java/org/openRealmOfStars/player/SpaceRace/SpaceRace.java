@@ -139,12 +139,13 @@ public enum SpaceRace {
       + " slow grow rate and they have -2 population limit."
       + " They have excellent ability to mine metal."),
   /**
-   * Lithorians are creatures that eat metal instead of food. They have slow
-   * grow rate and they have -2 population limit. They have
-   * excellent ability to mine metal.
+   * Alteirians are creatures that live in zero gravity. Because of this they
+   * need special suites to move planet surface. Most of their time they
+   * live on planet's orbit. Their orbitals are more improved than other
+   * space race.
    */
   ALTEIRIANS(13, "Alteirians", "Alteirian",
-      "Alteirian are creatures that live in zero gravity. Because of this they"
+      "Alteirians are creatures that live in zero gravity. Because of this they"
       + " need special suites to move planet surface. Most of their time they"
       + " live on planet's orbit. Their orbitals are more improved than other"
       + " space race."),

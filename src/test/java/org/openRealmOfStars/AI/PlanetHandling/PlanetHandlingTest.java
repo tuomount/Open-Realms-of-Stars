@@ -21,6 +21,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.espionage.Espionage;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.Ship;
@@ -463,6 +464,9 @@ public class PlanetHandlingTest {
     playerList.setCurrentPlayer(0);
     playerList.calculateInitialDiplomacyBonuses();
     StarMap map = new StarMap(config, playerList);
+    // Let's remove possibility to have scientific ruler
+    info.getRuler().setJob(Job.DEAD);
+    info.setRuler(null);
     Planet planet  =map.getPlanetList().get(0);
     for (int i = 0; i < map.getPlanetList().size(); i++) {
       Planet iterator = map.getPlanetList().get(i);
@@ -482,7 +486,7 @@ public class PlanetHandlingTest {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(119, scores[2]);
-    assertEquals(39, scores[3]);
+    assertEquals(49, scores[3]);
     assertEquals(139, scores[4]);
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicFactory());
@@ -498,7 +502,7 @@ public class PlanetHandlingTest {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(134, scores[2]);
-    assertEquals(39, scores[3]);
+    assertEquals(49, scores[3]);
     assertEquals(19, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
@@ -513,7 +517,7 @@ public class PlanetHandlingTest {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(119, scores[2]);
-    assertEquals(39, scores[3]);
+    assertEquals(49, scores[3]);
     assertEquals(119, scores[4]);
     assertEquals(99, scores[5]);
     assertEquals(-1, scores[7]);
@@ -525,7 +529,7 @@ public class PlanetHandlingTest {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(89, scores[2]);
-    assertEquals(49, scores[3]);
+    assertEquals(59, scores[3]);
     assertEquals(119, scores[4]);
     assertEquals(109, scores[5]);
     assertEquals(-1, scores[7]);
@@ -537,7 +541,7 @@ public class PlanetHandlingTest {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(89, scores[2]);
-    assertEquals(49, scores[3]);
+    assertEquals(59, scores[3]);
     assertEquals(119, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
@@ -549,7 +553,7 @@ public class PlanetHandlingTest {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(109, scores[2]);
-    assertEquals(49, scores[3]);
+    assertEquals(59, scores[3]);
     assertEquals(69, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
@@ -563,7 +567,7 @@ public class PlanetHandlingTest {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(39, scores[2]);
-    assertEquals(49, scores[3]);
+    assertEquals(59, scores[3]);
     assertEquals(69, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(79, scores[6]);
@@ -583,7 +587,7 @@ public class PlanetHandlingTest {
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
     assertEquals(39, scores[2]);
-    assertEquals(49, scores[3]);
+    assertEquals(59, scores[3]);
     assertEquals(9, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(113, scores[6]);

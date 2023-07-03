@@ -21,14 +21,17 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.espionage.Espionage;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
@@ -36,6 +39,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
+import org.openRealmOfStars.starMap.planet.construction.Construction;
 
 /**
  * 
@@ -240,6 +244,31 @@ public class PlanetHandlingTest {
   }
 
   /**
+   * Create tax center with mockito
+   * @return tax center building
+   */
+  private static Building createTaxCenter() {
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getBattleBonus()).thenReturn(0);
+    Mockito.when(building.getDefenseDamage()).thenReturn(0);
+    Mockito.when(building.getScanRange()).thenReturn(0);
+    Mockito.when(building.getScanCloakingDetection()).thenReturn(0);
+    Mockito.when(building.getType()).thenReturn(BuildingType.CREDIT);
+    Mockito.when(building.getFactBonus()).thenReturn(0);
+    Mockito.when(building.getMineBonus()).thenReturn(0);
+    Mockito.when(building.getFarmBonus()).thenReturn(0);
+    Mockito.when(building.getReseBonus()).thenReturn(0);
+    Mockito.when(building.getCultBonus()).thenReturn(0);
+    Mockito.when(building.getCredBonus()).thenReturn(1);
+    Mockito.when(building.getRecycleBonus()).thenReturn(0);
+    Mockito.when(building.getMaintenanceCost()).thenReturn(0.0);
+    Mockito.when(building.getMetalCost()).thenReturn(5);
+    Mockito.when(building.getProdCost()).thenReturn(15);
+    Mockito.when(building.getName()).thenReturn("Tax center");
+    return building;
+  }
+
+  /**
    * Create culture building with mockito
    * @return basic culture building
    */
@@ -325,6 +354,244 @@ public class PlanetHandlingTest {
         Attitude.LOGICAL, false);
     assertEquals(-1,score);
 
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBasicScoring() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    info.setEmpireName("Human Kingdom");
+    info.setGovernment(GovernmentType.KINGDOM);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.HUMAN, 2, 1);
+    info2.setEmpireName("Terran Federation");
+    info2.setGovernment(GovernmentType.FEDERATION);
+
+    GalaxyConfig config = new GalaxyConfig();
+    config.setPlayerName(0, info.getEmpireName());
+    config.setPlayerName(1, info2.getEmpireName());
+    config.setMaxPlayers(2);
+    PlayerList playerList = new PlayerList();
+    playerList.addPlayer(info);
+    playerList.addPlayer(info2);
+    playerList.setCurrentPlayer(0);
+    playerList.calculateInitialDiplomacyBonuses();
+    StarMap map = new StarMap(config, playerList);
+    Planet planet  =map.getPlanetList().get(0);
+    for (int i = 0; i < map.getPlanetList().size(); i++) {
+      Planet iterator = map.getPlanetList().get(i);
+      if (iterator.getPlanetPlayerInfo() == info) {
+        planet = iterator;
+      }
+    }
+
+    Construction[] constructions = planet.getProductionList();
+    int[] scores = PlanetHandling.scoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(7, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(99, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(99, scores[4]);
+    assertEquals(-1, scores[6]);
+    planet.addBuilding(createBasicMine());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.scoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(7, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(79, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(99, scores[4]);
+    assertEquals(-1, scores[6]);
+    planet.addBuilding(createBasicFactory());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.scoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(7, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(99, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(99, scores[4]);
+    assertEquals(-1, scores[6]);
+    planet.addBuilding(createBasicMine());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.scoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(7, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(79, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(99, scores[4]);
+    assertEquals(-1, scores[6]);
+    planet.addBuilding(createBasicFactory());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.scoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(7, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(99, scores[2]);
+    assertEquals(39, scores[3]);
+    assertEquals(59, scores[4]);
+    assertEquals(-1, scores[6]);
+/*    for (int i = 0; i < constructions.length; i++) {
+      System.out.println(constructions[i].getName() + " - " + scores[i]);
+    }*/
+
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBasicHighScoring() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    info.setEmpireName("Human Kingdom");
+    info.setGovernment(GovernmentType.KINGDOM);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.HUMAN, 2, 1);
+    info2.setEmpireName("Terran Federation");
+    info2.setGovernment(GovernmentType.FEDERATION);
+
+    GalaxyConfig config = new GalaxyConfig();
+    config.setPlayerName(0, info.getEmpireName());
+    config.setPlayerName(1, info2.getEmpireName());
+    config.setMaxPlayers(2);
+    PlayerList playerList = new PlayerList();
+    playerList.addPlayer(info);
+    playerList.addPlayer(info2);
+    playerList.setCurrentPlayer(0);
+    playerList.calculateInitialDiplomacyBonuses();
+    StarMap map = new StarMap(config, playerList);
+    // Let's remove possibility to have scientific ruler
+    info.getRuler().setJob(Job.DEAD);
+    info.setRuler(null);
+    Planet planet  =map.getPlanetList().get(0);
+    for (int i = 0; i < map.getPlanetList().size(); i++) {
+      Planet iterator = map.getPlanetList().get(i);
+      if (iterator.getPlanetPlayerInfo() == info) {
+        planet = iterator;
+      }
+    }
+    planet.setPlanetaryEvent(PlanetaryEvent.NONE);
+
+    Construction[] constructions = planet.getProductionList();
+    int[] scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+/*    for (int i = 0; i < constructions.length; i++) {
+      System.out.println(constructions[i].getName() + " - " + scores[i]);
+    }*/
+    assertEquals(7, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(119, scores[2]);
+    assertEquals(49, scores[3]);
+    assertEquals(139, scores[4]);
+    assertEquals(-1, scores[6]);
+    planet.addBuilding(createBasicFactory());
+    info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab",
+        1));
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+/*    for (int i = 0; i < constructions.length; i++) {
+      System.out.println(constructions[i].getName() + " - " + scores[i]);
+    }*/
+    assertEquals(8, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(134, scores[2]);
+    assertEquals(49, scores[3]);
+    assertEquals(19, scores[4]);
+    assertEquals(59, scores[5]);
+    assertEquals(-1, scores[7]);
+    planet.addBuilding(createBasicMine());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+/*    for (int i = 0; i < constructions.length; i++) {
+      System.out.println(constructions[i].getName() + " - " + scores[i]);
+    }*/
+    assertEquals(8, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(119, scores[2]);
+    assertEquals(49, scores[3]);
+    assertEquals(119, scores[4]);
+    assertEquals(99, scores[5]);
+    assertEquals(-1, scores[7]);
+    planet.addBuilding(createBasicMine());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(8, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(89, scores[2]);
+    assertEquals(59, scores[3]);
+    assertEquals(119, scores[4]);
+    assertEquals(109, scores[5]);
+    assertEquals(-1, scores[7]);
+    planet.addBuilding(createBasicLab());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(8, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(89, scores[2]);
+    assertEquals(59, scores[3]);
+    assertEquals(119, scores[4]);
+    assertEquals(59, scores[5]);
+    assertEquals(-1, scores[7]);
+    planet.addBuilding(createBasicFactory());
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(8, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(109, scores[2]);
+    assertEquals(59, scores[3]);
+    assertEquals(69, scores[4]);
+    assertEquals(59, scores[5]);
+    assertEquals(-1, scores[7]);
+    planet.addBuilding(createBasicMine());
+    info.getTechList().addTech(TechFactory.createImprovementTech("Tax center",
+        1));
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+    assertEquals(9, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(39, scores[2]);
+    assertEquals(59, scores[3]);
+    assertEquals(69, scores[4]);
+    assertEquals(59, scores[5]);
+    assertEquals(79, scores[6]);
+    assertEquals(-1, scores[8]);
+    planet.addBuilding(createTaxCenter());
+    info.getTechList().addTech(TechFactory.createImprovementTech(
+        "Advanced factory", 2));
+    constructions = planet.getProductionList();
+    scores = PlanetHandling.highScoreConstructions(constructions,
+        planet, info, map, Attitude.LOGICAL, false);
+/*    System.out.println(planet.getBuildingList().length + "/"
+        + planet.getGroundSize());
+    for (int i = 0; i < constructions.length; i++) {
+      System.out.println(constructions[i].getName() + " - " + scores[i]);
+    }*/
+    assertEquals(9, scores.length);
+    assertEquals(-1, scores[0]);
+    assertEquals(-1, scores[1]);
+    assertEquals(39, scores[2]);
+    assertEquals(59, scores[3]);
+    assertEquals(9, scores[4]);
+    assertEquals(59, scores[5]);
+    assertEquals(113, scores[6]);
+    assertEquals(-1, scores[8]);
   }
 
   @Test

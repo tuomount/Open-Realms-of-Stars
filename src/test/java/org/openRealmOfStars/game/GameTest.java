@@ -17,6 +17,11 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.KarmaType;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
+import org.openRealmOfStars.starMap.history.HistoryTurn;
+import org.openRealmOfStars.starMap.history.event.CombatEvent;
+import org.openRealmOfStars.starMap.history.event.Event;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -67,137 +72,19 @@ public class GameTest {
     assertEquals("Test Text", list.get(1).getText());
   }
 
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunFullGameVeryShort() {
-    System.gc();
-    Game game = new Game(false);
-    GalaxyConfig config = new GalaxyConfig();
-    config.setMaxPlayers(8);
-    config.setScoringVictoryTurns(100);
-    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
-    config.setPlayerDifficult(0, AiDifficulty.WEAK);
-    config.setPlayerDifficult(1, AiDifficulty.WEAK);
-    config.setPlayerDifficult(2, AiDifficulty.WEAK);
-    config.setPlayerDifficult(3, AiDifficulty.WEAK);
-    config.setPlayerDifficult(4, AiDifficulty.WEAK);
-    config.setPlayerDifficult(5, AiDifficulty.WEAK);
-    config.setPlayerDifficult(6, AiDifficulty.WEAK);
-    config.setPlayerDifficult(7, AiDifficulty.WEAK);
-    game.setGalaxyConfig(config);
-    game.setPlayerInfo();
-    game.makeNewGame(false);
-    game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
-    do {
-      game.setAITurnView(new AITurnView(game));
-      boolean singleTurnEnd = false;
-      do {
-        singleTurnEnd = game.getAITurnView().handleAiTurn();
-      } while (!singleTurnEnd);
-      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
-    } while (!game.getStarMap().isGameEnded());
-    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-    System.out.print("Weak AI Done, turn " + game.getStarMap().getTurn()+ ": ");
-    System.out.println(newsData[newsData.length - 1].getNewsText());
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunFullGameShort() {
-    System.gc();
-    Game game = new Game(false);
-    GalaxyConfig config = new GalaxyConfig();
-    config.setMaxPlayers(8);
-    config.setScoringVictoryTurns(200);
-    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
-    config.setPlayerDifficult(0, AiDifficulty.NORMAL);
-    config.setPlayerDifficult(1, AiDifficulty.NORMAL);
-    config.setPlayerDifficult(2, AiDifficulty.NORMAL);
-    config.setPlayerDifficult(3, AiDifficulty.NORMAL);
-    config.setPlayerDifficult(4, AiDifficulty.NORMAL);
-    config.setPlayerDifficult(5, AiDifficulty.NORMAL);
-    config.setPlayerDifficult(6, AiDifficulty.NORMAL);
-    config.setPlayerDifficult(7, AiDifficulty.NORMAL);
-    game.setGalaxyConfig(config);
-    game.setPlayerInfo();
-    game.makeNewGame(false);
-    game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
-    do {
-      game.setAITurnView(new AITurnView(game));
-      boolean singleTurnEnd = false;
-      do {
-        singleTurnEnd = game.getAITurnView().handleAiTurn();
-      } while (!singleTurnEnd);
-      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
-    } while (!game.getStarMap().isGameEnded());
-    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-    System.out.print("Normal AI Done, turn " + game.getStarMap().getTurn()+ ": ");
-    System.out.println(newsData[newsData.length - 1].getNewsText());
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunFullGameMedium() {
-    System.gc();
-    Game game = new Game(false);
-    GalaxyConfig config = new GalaxyConfig();
-    config.setMaxPlayers(4);
-    config.setScoringVictoryTurns(400);
-    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
-    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(3, AiDifficulty.CHALLENGING);
-    game.setGalaxyConfig(config);
-    game.setPlayerInfo();
-    game.makeNewGame(false);
-    game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
-    do {
-      game.setAITurnView(new AITurnView(game));
-      boolean singleTurnEnd = false;
-      do {
-       singleTurnEnd = game.getAITurnView().handleAiTurn();
-      } while (!singleTurnEnd);
-      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
-    } while (!game.getStarMap().isGameEnded());
-    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-    System.out.print("Challenging Done, turn " + game.getStarMap().getTurn()+ ": ");
-    System.out.println(newsData[newsData.length - 1].getNewsText());
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunFullGameMediumWith8Realms() {
-    System.gc();
-    Game game = new Game(false);
-    GalaxyConfig config = new GalaxyConfig();
-    config.setMaxPlayers(8);
-    config.setSize(128, 2);
-    config.setScoringVictoryTurns(400);
-    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
-    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(3, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(4, AiDifficulty.NORMAL);
-    config.setPlayerDifficult(5, AiDifficulty.NORMAL);
-    config.setPlayerDifficult(6, AiDifficulty.WEAK);
-    config.setPlayerDifficult(7, AiDifficulty.WEAK);
-    game.setGalaxyConfig(config);
-    game.setPlayerInfo();
-    game.makeNewGame(false);
-    game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
-    do {
-      game.setAITurnView(new AITurnView(game));
-      boolean singleTurnEnd = false;
-      do {
-       singleTurnEnd = game.getAITurnView().handleAiTurn();
-      } while (!singleTurnEnd);
-      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
-    } while (!game.getStarMap().isGameEnded());
+  /**
+   * Print end game results for containing debug information.
+   * @param testGameName Test game name
+   * @param game Actually played game
+   */
+  private static void printEndGameResults(final String testGameName,
+      final Game game) {
+    System.out.println("---- " + testGameName + " ----");
     int planets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     int maxPlanets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     int charted[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int combats[] = new int[game.getPlayers().getCurrentMaxPlayers()];
+    int conquest[] = new int[game.getPlayers().getCurrentMaxPlayers()];
     for (Planet planet : game.getStarMap().getPlanetList()) {
       if (planet.getPlanetOwnerIndex() != -1) {
         planets[planet.getPlanetOwnerIndex()]++;
@@ -221,17 +108,171 @@ public class GameTest {
         charted[j] = charting * 100 / maxSectors;
       }
     }
+    for (int i = 0; i < game.getStarMap().getHistory().numberOfTurns(); i++) {
+      HistoryTurn turn = game.getStarMap().getHistory().getByIndex(i);
+      for (int j = 0; j < turn.getNumberOfEvents(); j++) {
+        Event event = turn.getEvent(j);
+        if (event.getType() == EventType.SPACE_COMBAT) {
+          for (int k = 0; k < game.getPlayers().getCurrentMaxPlayers(); k++) {
+            CombatEvent combatEvent = (CombatEvent) event;
+            if (combatEvent.getText().contains(
+                game.getPlayers().getPlayerInfoByIndex(k).getEmpireName())) {
+              combats[k]++;
+            }
+          }
+        }
+        if (event.getType() == EventType.PLANET_CONQUERED) {
+          EventOnPlanet eventOnPlanet = (EventOnPlanet) event;
+          //System.out.println("Index: " + eventOnPlanet.getPlayerIndex());
+          //System.out.println("Text: " + eventOnPlanet.getText());
+          if (eventOnPlanet.getPlayerIndex() != -1) {
+            conquest[eventOnPlanet.getPlayerIndex()]++;
+          }
+        }
+      }
+    }
     for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
-      System.out.println(i + ": "
+      String resultText = i + ": "
           + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
           + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
           .toString() + ")"
           + " - planets " + planets[i] + "/" + maxPlanets[i] + " - Charted: "
-          + charted[i] + "%");
+          + charted[i] + "% Combats: " + combats[i] + " Conquest: "
+          + conquest[i];
+      if (game.getPlayers().getPlayerInfoByIndex(i).isElderRealm()) {
+        resultText = resultText + " - Elder";
+      }
+      System.out.println(resultText);
     }
     NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
     System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
     System.out.println(newsData[newsData.length - 1].getNewsText());
+    System.out.println("---- End of " + testGameName + " ----");
+
+  }
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRunFullGameVeryShort() {
+    System.gc();
+    Game game = new Game(false);
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(8);
+    config.setScoringVictoryTurns(100);
+    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setAiOnly(true);
+    config.setPlayerDifficult(0, AiDifficulty.WEAK);
+    config.setPlayerDifficult(1, AiDifficulty.WEAK);
+    config.setPlayerDifficult(2, AiDifficulty.WEAK);
+    config.setPlayerDifficult(3, AiDifficulty.WEAK);
+    config.setPlayerDifficult(4, AiDifficulty.WEAK);
+    config.setPlayerDifficult(5, AiDifficulty.WEAK);
+    config.setPlayerDifficult(6, AiDifficulty.WEAK);
+    config.setPlayerDifficult(7, AiDifficulty.WEAK);
+    game.setGalaxyConfig(config);
+    game.setPlayerInfo();
+    game.makeNewGame(false);
+    do {
+      game.setAITurnView(new AITurnView(game));
+      boolean singleTurnEnd = false;
+      do {
+        singleTurnEnd = game.getAITurnView().handleAiTurn();
+      } while (!singleTurnEnd);
+      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
+    } while (!game.getStarMap().isGameEnded());
+    printEndGameResults("All weak AI, very short", game);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRunFullGameShort() {
+    System.gc();
+    Game game = new Game(false);
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(8);
+    config.setScoringVictoryTurns(200);
+    config.setAiOnly(true);
+    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setPlayerDifficult(0, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(1, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(2, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(3, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(4, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(5, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(6, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(7, AiDifficulty.NORMAL);
+    game.setGalaxyConfig(config);
+    game.setPlayerInfo();
+    game.makeNewGame(false);
+    do {
+      game.setAITurnView(new AITurnView(game));
+      boolean singleTurnEnd = false;
+      do {
+        singleTurnEnd = game.getAITurnView().handleAiTurn();
+      } while (!singleTurnEnd);
+      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
+    } while (!game.getStarMap().isGameEnded());
+    printEndGameResults("All normal AI, short", game);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRunFullGameMedium() {
+    System.gc();
+    Game game = new Game(false);
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(4);
+    config.setScoringVictoryTurns(400);
+    config.setAiOnly(true);
+    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(3, AiDifficulty.CHALLENGING);
+    game.setGalaxyConfig(config);
+    game.setPlayerInfo();
+    game.makeNewGame(false);
+    do {
+      game.setAITurnView(new AITurnView(game));
+      boolean singleTurnEnd = false;
+      do {
+       singleTurnEnd = game.getAITurnView().handleAiTurn();
+      } while (!singleTurnEnd);
+      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
+    } while (!game.getStarMap().isGameEnded());
+    printEndGameResults("All challening AI, medium", game);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRunFullGameMediumWith8Realms() {
+    System.gc();
+    Game game = new Game(false);
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(8);
+    config.setSize(128, 2);
+    config.setScoringVictoryTurns(400);
+    config.setAiOnly(true);
+    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(3, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(4, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(5, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(6, AiDifficulty.WEAK);
+    config.setPlayerDifficult(7, AiDifficulty.WEAK);
+    game.setGalaxyConfig(config);
+    game.setPlayerInfo();
+    game.makeNewGame(false);
+    do {
+      game.setAITurnView(new AITurnView(game));
+      boolean singleTurnEnd = false;
+      do {
+       singleTurnEnd = game.getAITurnView().handleAiTurn();
+      } while (!singleTurnEnd);
+      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
+    } while (!game.getStarMap().isGameEnded());
+    printEndGameResults("Full game with 8 realms, medium", game);
   }
 
   @Test
@@ -243,12 +284,12 @@ public class GameTest {
     config.setMaxPlayers(8);
     config.setSize(128, 2);
     config.setScoringVictoryTurns(400);
+    config.setAiOnly(true);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     config.setSpacePiratesDifficulty(PirateDifficultLevel.HARD);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
-    game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
     game.getPlayers().getPlayerInfoByIndex(0).setAiDifficulty(
         AiDifficulty.CHALLENGING);
     game.getPlayers().getPlayerInfoByIndex(1).setAiDifficulty(
@@ -273,30 +314,7 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    int planets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
-    int maxPlanets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
-    for (Planet planet : game.getStarMap().getPlanetList()) {
-      if (planet.getPlanetOwnerIndex() != -1) {
-        planets[planet.getPlanetOwnerIndex()]++;
-      }
-      for (int j = 0; j < game.getPlayers().getCurrentMaxPlayers(); j++) {
-        if (planet.getRadiationLevel() <= game.getPlayers()
-            .getPlayerInfoByIndex(j).getRace().getMaxRad()
-            && planet.getPlanetOwnerIndex() == -1) {
-          maxPlanets[j]++;
-        }
-      }
-    }
-    for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
-      System.out.println(i + ": "
-          + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
-          + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
-          .toString() + ")"
-          + " - planets " + planets[i] + "/" + maxPlanets[i]);
-    }
-    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-    System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
-    System.out.println(newsData[newsData.length - 1].getNewsText());
+    printEndGameResults("Full game with 8 realms + pirate, medium", game);
   }
 
   @Test
@@ -308,6 +326,7 @@ public class GameTest {
     config.setMaxPlayers(3);
     config.setSize(128, 2);
     config.setScoringVictoryTurns(400);
+    config.setAiOnly(true);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     config.setRace(0, SpaceRace.HUMAN);
     config.setPlayerName(0, "Challenging Terran");
@@ -321,7 +340,6 @@ public class GameTest {
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
-    game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
     game.getPlayers().getPlayerInfoByIndex(0).setAiDifficulty(
         AiDifficulty.CHALLENGING);
     game.getPlayers().getPlayerInfoByIndex(1).setAiDifficulty(
@@ -336,30 +354,7 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    int planets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
-    int maxPlanets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
-    for (Planet planet : game.getStarMap().getPlanetList()) {
-      if (planet.getPlanetOwnerIndex() != -1) {
-        planets[planet.getPlanetOwnerIndex()]++;
-      }
-      for (int j = 0; j < game.getPlayers().getCurrentMaxPlayers(); j++) {
-        if (planet.getRadiationLevel() <= game.getPlayers()
-            .getPlayerInfoByIndex(j).getRace().getMaxRad()
-            && planet.getPlanetOwnerIndex() == -1) {
-          maxPlanets[j]++;
-        }
-      }
-    }
-    for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
-      System.out.println(i + ": "
-          + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
-          + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
-          .toString() + ")"
-          + " - planets " + planets[i] + "/" + maxPlanets[i]);
-    }
-    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-    System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
-    System.out.println(newsData[newsData.length - 1].getNewsText());
+    printEndGameResults("Three terrans, medium", game);
   }
 
   @Test
@@ -371,6 +366,7 @@ public class GameTest {
     config.setMaxPlayers(12);
     config.setSize(128, 2);
     config.setScoringVictoryTurns(400);
+    config.setAiOnly(true);
     config.setSolarSystemDistance(7, 2);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     config.setSpacePiratesDifficulty(PirateDifficultLevel.EASY);
@@ -390,7 +386,6 @@ public class GameTest {
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
-    game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
     do {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
@@ -399,30 +394,7 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    int planets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
-    int maxPlanets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
-    for (Planet planet : game.getStarMap().getPlanetList()) {
-      if (planet.getPlanetOwnerIndex() != -1) {
-        planets[planet.getPlanetOwnerIndex()]++;
-      }
-      for (int j = 0; j < game.getPlayers().getCurrentMaxPlayers(); j++) {
-        if (planet.getRadiationLevel() <= game.getPlayers()
-            .getPlayerInfoByIndex(j).getRace().getMaxRad()
-            && planet.getPlanetOwnerIndex() == -1) {
-          maxPlanets[j]++;
-        }
-      }
-    }
-    for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
-      System.out.println(i + ": "
-          + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
-          + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
-          .toString() + ")"
-          + " - planets " + planets[i] + "/" + maxPlanets[i]);
-    }
-    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-    System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
-    System.out.println(newsData[newsData.length - 1].getNewsText());
+    printEndGameResults("12 Realms, medium", game);
   }
 
   @Test
@@ -434,6 +406,7 @@ public class GameTest {
     config.setMaxPlayers(8);
     config.setSize(128, 2);
     config.setScoringVictoryTurns(400);
+    config.setAiOnly(true);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     config.setRace(0, SpaceRace.LITHORIANS);
     config.setPlayerGovernment(0, GovernmentType.EMPIRE);
@@ -449,7 +422,6 @@ public class GameTest {
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);
-    game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
     do {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
@@ -458,55 +430,29 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    int planets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
-    int maxPlanets[] = new int[game.getPlayers().getCurrentMaxPlayers()];
-    for (Planet planet : game.getStarMap().getPlanetList()) {
-      if (planet.getPlanetOwnerIndex() != -1) {
-        planets[planet.getPlanetOwnerIndex()]++;
-      }
-      for (int j = 0; j < game.getPlayers().getCurrentMaxPlayers(); j++) {
-        if (planet.getRadiationLevel() <= game.getPlayers()
-            .getPlayerInfoByIndex(j).getRace().getMaxRad()
-            && planet.getPlanetOwnerIndex() == -1) {
-          maxPlanets[j]++;
-        }
-      }
-    }
-    for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
-      System.out.println(i + ": "
-          + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
-          + "(" + game.getPlayers().getPlayerInfoByIndex(i)
-          .getAiDifficulty().toString() + ")"
-          + " - planets " + planets[i] + "/" + maxPlanets[i]);
-    }
-    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-    System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
-    System.out.println(newsData[newsData.length - 1].getNewsText());
+    printEndGameResults("8 Realms, one lithorian, medium", game);
   }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRunFullGames() {
     Game game;
-    int[] raceWins = new int[SpaceRace.values().length];
-    int[] govWins = new int[GovernmentType.values().length];
     for (int i = 0; i < 2; i++) {
       GalaxyConfig config = new GalaxyConfig();
       config.setMaxPlayers(8);
       config.setScoringVictoryTurns(400);
+      config.setAiOnly(true);
       config.setSpacePiratesLevel(2);
       config.setChanceForPlanetaryEvent(40);
       config.setKarmaType(KarmaType.SECOND_FIRST_AND_LAST);
       config.setKarmaSpeed(2);
       config.setSize(75, 1);
       config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
-//      System.out.println("Game number " + i);
       game = null;
       System.gc();
       game = new Game(false);
       game.setGalaxyConfig(config);
       game.makeNewGame(false);
-      game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
       do {
         game.setAITurnView(new AITurnView(game));
         boolean singleTurnEnd = false;
@@ -515,31 +461,9 @@ public class GameTest {
         } while (!singleTurnEnd);
         assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
       } while (!game.getStarMap().isGameEnded());
-      NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-      System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
-      if (newsData.length > 0) {
-        String victoryText = newsData[newsData.length - 1].getNewsText();
-        for (int j = 0; j < 8; j++) {
-          PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(j);
-          if (victoryText.contains(info.getEmpireName())) {
-            raceWins[info.getRace().getIndex()] = raceWins[info.getRace().getIndex()] + 1;
-            govWins[info.getGovernment().getIndex()] = govWins[info.getGovernment().getIndex()] +1;
-          }
-        }
-        System.out.println(newsData[newsData.length - 1].getNewsText());
-      } else {
-//        System.out.println("not sure who win!");
-      }
+      String name = "Full game(" + i + "), 8 realms";
+      printEndGameResults(name, game);
     }
-/*    System.out.println("Wins for races:");
-    for (int i = 0; i < raceWins.length; i++) {
-      System.out.println(SpaceRace.values()[i].getName() + ": " +raceWins[i]);
-    }
-    System.out.println("---");
-    System.out.println("Wins for governments:");
-    for (int i = 0; i < govWins.length; i++) {
-      System.out.println(GovernmentType.values()[i].getName() + ": " +govWins[i]);
-    }*/
   }
 
   @Test
@@ -549,6 +473,7 @@ public class GameTest {
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(8);
     config.setScoringVictoryTurns(400);
+    config.setAiOnly(true);
     config.setSpacePiratesLevel(1);
     config.setChanceForPlanetaryEvent(40);
     config.setKarmaType(KarmaType.SECOND_FIRST_AND_LAST);
@@ -574,7 +499,6 @@ public class GameTest {
     
     game.setGalaxyConfig(config);
     game.makeNewGame(false);
-    game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
     do {
       game.setAITurnView(new AITurnView(game));
       boolean singleTurnEnd = false;
@@ -583,37 +507,7 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    // Uncomment below if game is wanted to be saved.
-    /*new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
-        "testgame.save", game.getStarMap());*/
-    System.out.println("Game ended at turn: " + game.getStarMap().getTurn());
-    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-    if (newsData.length > 0) {
-      System.out.println(newsData[newsData.length - 1].getNewsText());
-      for (int i = 0; i < game.getStarMap().getPlayerList().getCurrentMaxRealms(); i++) {
-        PlayerInfo info = game.getStarMap().getPlayerByIndex(i);
-        System.out.println(i + ": " + info.getEmpireName()
-        + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
-        .toString() + ")"
-        + " - " + info.isElderRealm());
-      }
-    } else {
-      System.out.println("not sure who win!");
-    }
-/*    for (int i = 0; i < game.getPlayers().getCurrentMaxRealms(); i++) {
-      StringBuilder sb = new StringBuilder();
-      PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
-      sb.append(info.getEmpireName());
-      sb.append(": ");
-      for (int j = 0; j < game.getPlayers().getCurrentMaxRealms(); j++) {
-        if (i != j) {
-          sb.append(j +": ");
-          sb.append(info.getDiplomacy().getDiplomaticRelation(j));
-          sb.append(", ");
-        }
-      }
-      System.out.println(sb.toString());
-    }*/
+    printEndGameResults("8 Realms, two elders, medium", game);
   }
 
 }

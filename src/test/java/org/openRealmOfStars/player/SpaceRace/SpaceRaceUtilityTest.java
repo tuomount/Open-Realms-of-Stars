@@ -428,7 +428,7 @@ public class SpaceRaceUtilityTest {
         + "* Start planet value: 125\n"
         + "* Special: Population eats metal instead of food.";
     expectedResult[12] = "### Alteirians\n"
-        + "Alteirian are creatures that live in zero gravity. Because of this"
+        + "Alteirians are creatures that live in zero gravity. Because of this"
         + " they need special suites to move planet surface."
         + " Most of their time they live on planet's orbit. Their orbitals are"
         + " more improved than other space race.\n"

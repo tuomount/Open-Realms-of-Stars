@@ -1499,7 +1499,18 @@ public final class PlanetHandling {
               score = score + 30;
             }
           }
-
+          if (ship.isPrivateeringShip()
+              && (info.getGovernment() == GovernmentType.SPACE_PIRATES
+              || info.getGovernment() == GovernmentType.SYNDICATE)) {
+            score = score + ship.getTotalMilitaryPower() * 2;
+          }
+          if (ship.isPrivateeringShip()
+              && (info.getGovernment() == GovernmentType.FEUDALISM
+              || info.getGovernment() == GovernmentType.KINGDOM
+              || info.getGovernment() == GovernmentType.EMPIRE
+              || info.getGovernment() == GovernmentType.REGIME)) {
+            score = score + ship.getTotalMilitaryPower();
+          }
         }
         if (ship.isScoutShip()) {
           if (info.getFleets().getNumberOfFleets() == 0) {
@@ -1809,7 +1820,6 @@ public final class PlanetHandling {
               || info.getGovernment() == GovernmentType.REGIME)) {
             score = score + ship.getTotalMilitaryPower();
           }
-
         }
         if (ship.isScoutShip()) {
           if (info.getFleets().getNumberOfFleets() == 0) {

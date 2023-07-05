@@ -109,7 +109,8 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
     }
     icon = new IconLabel(null, Icons.getIconByName(iconName),
         "Suitable:" + suitable + "% ");
-    icon.setToolTipText("Planet's type");
+    icon.setToolTipText("<html>How suitable planet is for the realm.<br>"
+        + "How many percent of maximum population can live there.</html>");
     addIcon(icon);
     icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_PLANET),
         planet.getPlanetType().getTypeAsString());

@@ -1,5 +1,6 @@
 - New features and updates -
 
+* Improved AI, Challenging AI selects best choice for next building project.
 * Hide current song when mouse cursor moves over the text.
 * Adds icons if fleet has moved, or has moves left or is routed.
 * Moving diagonally with no scanner now reveals that sector if sector is blocked.
@@ -15,13 +16,18 @@
 * Realm background story generator and full story is shown when game ends.
 * Planet view can now show uncolonized planets. Sorting order is show best planet at top.
 * Possibility to hire leader from another realm if in trade alliance.
+* Improved leader view.
 * Two realms with same type of government get diplomacy bonus.
-
+* News if planets are traded or conquered by another realm.
+* Planetary events have now higher chance to happen.
+* Precious gems planetary event.
 
 - Bugfixes -
 
 * Fixed type casting error when voting.
 * Fixed possible race condition with SpotBugs.
+* Banned nukes were banned one star year too early.
+* Fixed issue where ship could be finished even space port was destroyed in espionage mission.
 
 # Open Realm of Stars 0.22.0Beta 
 

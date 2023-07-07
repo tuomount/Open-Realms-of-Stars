@@ -588,7 +588,7 @@ public class PlanetHandlingTest {
     assertEquals(-1, scores[1]);
     assertEquals(39, scores[2]);
     assertEquals(59, scores[3]);
-    assertEquals(9, scores[4]);
+    assertEquals(69, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(113, scores[6]);
     assertEquals(-1, scores[8]);

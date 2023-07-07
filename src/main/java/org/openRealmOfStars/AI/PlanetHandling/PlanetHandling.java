@@ -680,12 +680,12 @@ public final class PlanetHandling {
     }
     if (building.getName().equals("Basic factory")
         && info.getTechList().hasTech(TechType.Improvements,
-            "Advanced factory") && production > 3) {
+            "Advanced factory") && production > 4) {
       score = -1;
     }
     if (building.getName().equals("Basic mine")
         && info.getTechList().hasTech(TechType.Improvements,
-            "Advanced mine") && metal > 3) {
+            "Advanced mine") && metal > 4) {
       score = -1;
     }
     if (building.getName().equals("Basic farm")

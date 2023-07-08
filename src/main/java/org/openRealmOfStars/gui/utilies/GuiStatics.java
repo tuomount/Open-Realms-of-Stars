@@ -1258,6 +1258,12 @@ public final class GuiStatics {
       "/resources/images/newstation.png";
 
   /**
+   * Destroyed PLanet
+   */
+  public static final String IMAGE_DESTROYED_PLANET =
+      "/resources/images/destroyedPlanet.png";
+
+  /**
    * Shuttle
    */
   public static final String IMAGE_SHUTTLE = "/resources/images/shuttle.png";

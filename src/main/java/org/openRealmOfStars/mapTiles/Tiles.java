@@ -621,6 +621,14 @@ public final class Tiles {
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_DESTROYED_PLANET);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 9, 6, TileNames.DESTROYED_PLANET);
+    // Read space anomaly
+    tile.setDescription(TileNames.DESTROYED_PLANET_DESCRIPTION);
+    addTile(tile);
 
   }
 

@@ -38,7 +38,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018,2020-2022 Tuomo Untinen
+* Copyright (C) 2018,2020-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -103,6 +103,27 @@ public class SpaceAnomaly {
   private static final String NEWS_STATION_VISITED_TEXT =
       NEWS_STATION_TEXT_BEGIN + " Your fleet crew does not find anything"
           + " unseen electronic.";
+  /**
+   * Destroyed planet text.
+   */
+  private static final String DESTROYED_PLANET_TEXT_BEGIN =
+      "This planet has been destroyed star years ago. "
+      + "There is no obvious reason what caused the destruction but"
+      + " it must be terrible event. There is lot of different kind"
+      + " of debris floating around like parts of the planet."
+      + " How evere there is some pieces from the culture who lived here.";
+  /**
+   * Destroyed planet text.
+   */
+  private static final String DESTROYED_PLANET_TEXT =
+      DESTROYED_PLANET_TEXT_BEGIN + " Your fleet crew gathers some ancient"
+          + " technology for later research.";
+  /**
+   * Destroyed planet text already visited.
+   */
+  private static final String DESTROYED_VISITED_TEXT =
+      DESTROYED_PLANET_TEXT_BEGIN + " Your fleet crew does not find anything"
+          + " unseen pieces.";
 
   /**
    * Constructor for Space anomaly
@@ -179,6 +200,70 @@ public class SpaceAnomaly {
    */
   public Combat getCombat() {
     return combat;
+  }
+
+  /**
+   * Create News Station Space anomaly and handle space anomaly tile
+   * @param map StarMap
+   * @param info Player who found the anomaly
+   * @param fleet Fleet which found anomaly
+   * @return SpaceAnomaly or null if coordinates are illegal.
+   */
+  private static SpaceAnomaly createNewsStation(final StarMap map,
+      final PlayerInfo info, final Fleet fleet) {
+    SpaceAnomaly result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
+    result.setText(NEWS_STATION_TEXT);
+    result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_NEWSTATION));
+    info.getArtifactLists().addDiscoveredArtifact(
+        ArtifactFactory.createArtifact(
+            ArtifactFactory.BROADCASTING_ELETRONIC));
+    if (Game.getTutorial() != null  && info.isHuman()
+        && map.isTutorialEnabled()) {
+      String tutorialText = Game.getTutorial().showTutorialText(15);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        info.getMsgList().addNewMessage(msg);
+      }
+      tutorialText = Game.getTutorial().showTutorialText(35);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        info.getMsgList().addNewMessage(msg);
+      }
+    }
+    Tile station = Tiles.getTileByName(TileNames.NEWSTATION1);
+    map.setTile(fleet.getX(), fleet.getY(), station);
+    return result;
+  }
+  /**
+   * Create Destroyed Planet Space anomaly and handle space anomaly tile
+   * @param map StarMap
+   * @param info Player who found the anomaly
+   * @param fleet Fleet which found anomaly
+   * @return SpaceAnomaly or null if coordinates are illegal.
+   */
+  private static SpaceAnomaly createDestroyedPlanet(final StarMap map,
+      final PlayerInfo info, final Fleet fleet) {
+    SpaceAnomaly result = new SpaceAnomaly(AnomalyType.DESTROYED_PLANET, 0);
+    result.setText(DESTROYED_PLANET_TEXT);
+    result.setImage(IOUtilities.loadImage(
+        GuiStatics.IMAGE_DESTROYED_PLANET));
+    info.getArtifactLists().addDiscoveredArtifact(
+        ArtifactFactory.createArtifact(
+            ArtifactFactory.DESTROYED_PLANET_ARTIFACT));
+    if (Game.getTutorial() != null  && info.isHuman()
+        && map.isTutorialEnabled()) {
+      String tutorialText = Game.getTutorial().showTutorialText(15);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        info.getMsgList().addNewMessage(msg);
+      }
+    }
+    Tile station = Tiles.getTileByName(TileNames.DESTROYED_PLANET);
+    map.setTile(fleet.getX(), fleet.getY(), station);
+    return result;
   }
   /**
    * Create Space anomaly and handle space anomaly tile
@@ -550,55 +635,13 @@ public class SpaceAnomaly {
           break;
         }
         case TileNames.SPACE_ANOMALY_NEWS_STATION: {
-          result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
-          result.setText(NEWS_STATION_TEXT);
-          result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_NEWSTATION));
-          info.getArtifactLists().addDiscoveredArtifact(
-              ArtifactFactory.createArtifact(
-                  ArtifactFactory.BROADCASTING_ELETRONIC));
-          if (Game.getTutorial() != null  && info.isHuman()
-              && map.isTutorialEnabled()) {
-            String tutorialText = Game.getTutorial().showTutorialText(15);
-            if (tutorialText != null) {
-              Message msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              info.getMsgList().addNewMessage(msg);
-            }
-            tutorialText = Game.getTutorial().showTutorialText(45);
-            if (tutorialText != null) {
-              Message msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              info.getMsgList().addNewMessage(msg);
-            }
-          }
-          Tile station = Tiles.getTileByName(TileNames.NEWSTATION1);
-          map.setTile(fleet.getX(), fleet.getY(), station);
+          result = createNewsStation(map, info, fleet);
           break;
         }
         case TileNames.NEWSTATION1:
         case TileNames.NEWSTATION2: {
           if (!info.getArtifactLists().hasBroadcastingArtifact()) {
-            result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
-            result.setText(NEWS_STATION_TEXT);
-            result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_NEWSTATION));
-            info.getArtifactLists().addDiscoveredArtifact(
-                ArtifactFactory.createArtifact(
-                    ArtifactFactory.BROADCASTING_ELETRONIC));
-            if (Game.getTutorial() != null  && info.isHuman()
-                && map.isTutorialEnabled()) {
-              String tutorialText = Game.getTutorial().showTutorialText(15);
-              if (tutorialText != null) {
-                Message msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-              tutorialText = Game.getTutorial().showTutorialText(45);
-              if (tutorialText != null) {
-                Message msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
+            result = createNewsStation(map, info, fleet);
           } else {
             addExp = false;
             result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
@@ -645,6 +688,23 @@ public class SpaceAnomaly {
           info.getLeaderPool().add(leader);
           break;
         }
+        case TileNames.SPACE_ANOMALY_DESTROYED_PLANET: {
+          result = createDestroyedPlanet(map, info, fleet);
+          break;
+        }
+        case TileNames.DESTROYED_PLANET: {
+          if (!info.getArtifactLists().hasDestroyedPlanetArtifact()) {
+            result = createDestroyedPlanet(map, info, fleet);
+          } else {
+            addExp = false;
+            result = new SpaceAnomaly(AnomalyType.DESTROYED_PLANET, 0);
+            result.setText(DESTROYED_VISITED_TEXT);
+            result.setImage(IOUtilities.loadImage(
+                GuiStatics.IMAGE_DESTROYED_PLANET));
+          }
+          break;
+        }
+
         default: {
           break;
         }

@@ -197,6 +197,27 @@ public class ArtifactLists {
   }
 
   /**
+   * If list has destroyed planet artifact..
+   * @return True if above statement is true.
+   */
+  public boolean hasDestroyedPlanetArtifact() {
+    boolean result = false;
+    for (Artifact artifact : discoveredArtifacts) {
+      if (artifact.getIndex() == ArtifactFactory.DESTROYED_PLANET_ARTIFACT) {
+        result = true;
+      }
+    }
+    if (!result) {
+      for (Artifact artifact : researchedArtifacts) {
+        if (artifact.getIndex() == ArtifactFactory.DESTROYED_PLANET_ARTIFACT) {
+          result = true;
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
    * Take random discovered artifact away from the list and return it.
    * @return Artifact or null
    */

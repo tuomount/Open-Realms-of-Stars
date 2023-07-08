@@ -331,6 +331,7 @@ public class Tile {
         || name.equals(TileNames.SPACE_ANOMALY_ANCIENT_ARTIFACT)
         || name.equals(TileNames.SPACE_ANOMALY_NEWS_STATION)
         || name.equals(TileNames.SPACE_ANOMALY_LEADER_IN_STASIS)
+        || name.equals(TileNames.SPACE_ANOMALY_DESTROYED_PLANET)
         || name.equals(TileNames.WORM_HOLE1)
         || name.equals(TileNames.WORM_HOLE2)) {
       return true;
@@ -357,7 +358,8 @@ public class Tile {
         || name.equals(TileNames.SPACE_ANOMALY_MONSTER)
         || name.equals(TileNames.SPACE_ANOMALY_ANCIENT_ARTIFACT)
         || name.equals(TileNames.SPACE_ANOMALY_NEWS_STATION)
-        || name.equals(TileNames.SPACE_ANOMALY_LEADER_IN_STASIS)) {
+        || name.equals(TileNames.SPACE_ANOMALY_LEADER_IN_STASIS)
+        || name.equals(TileNames.SPACE_ANOMALY_DESTROYED_PLANET)) {
       return true;
     }
     return false;

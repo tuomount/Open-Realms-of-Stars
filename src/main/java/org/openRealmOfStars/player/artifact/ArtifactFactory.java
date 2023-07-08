@@ -96,6 +96,10 @@ public final class ArtifactFactory {
    * Artifact broadcasting electronic
    */
   public static final int BROADCASTING_ELETRONIC = 12;
+  /**
+   * Destroyed planet artifact
+   */
+  public static final int DESTROYED_PLANET_ARTIFACT = 13;
 
   /**
    * Create artifact with index
@@ -210,6 +214,16 @@ public final class ArtifactFactory {
           + " technology. This is taken from working ancient news station."
           + " This is really advanced technology considering how old it is.");
       tmp.setIcon(Icons.getIconByName(Icons.ICON_ANTENNA));
+    }
+    if (index == DESTROYED_PLANET_ARTIFACT) {
+      tmp = new Artifact(index, "Ancient civilization remnants",
+          ArtifactType.FACILITY); // TODO Change later
+      tmp.setOneTimeTechBonus(30);
+      tmp.setUnique(true);
+      tmp.setDescription("This piece of long lost civilization."
+          + " This is very interested and makes you thing what kind of"
+          + " culture was there once and now it is gone.");
+      tmp.setIcon(Icons.getIconByName(Icons.ICON_ANCIENT_FACILITY));
     }
     return tmp;
   }

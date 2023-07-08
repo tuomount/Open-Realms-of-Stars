@@ -622,6 +622,11 @@ public final class TileNames {
   public static final String SPACE_ANOMALY_LEADER_IN_STASIS =
       "SpaceAnomalyLeaderInStasis";
   /**
+   * Space anomaly tile: Destroyed planet
+   */
+  public static final String SPACE_ANOMALY_DESTROYED_PLANET =
+      "SpaceAnomalyDestroyedPlanet";
+  /**
    * Worm hole tile 1
    */
   public static final String WORM_HOLE1 = "WormHole1";
@@ -637,6 +642,10 @@ public final class TileNames {
    * Newstation 2
    */
   public static final String NEWSTATION2 = "Newstation2";
+  /**
+   * Destroyed Planet
+   */
+  public static final String DESTROYED_PLANET = "DestroyedPlanet";
 
   /**
    * Black North West
@@ -816,5 +825,12 @@ public final class TileNames {
       + " news station that still keeps broadcasting whole galaxy wide news."
       + " It is mystery how it can still operate and who built it."
       + " It must have been built some of ancient realms.";
+  /**
+   * Description about destroyed planet
+   */
+  public static final String DESTROYED_PLANET_DESCRIPTION = "This is an old"
+      + " destroyed planet or what is being left from it."
+      + " It is mystery what caused it's destruction but there could"
+      + " be something worth while to study.";
 
 }

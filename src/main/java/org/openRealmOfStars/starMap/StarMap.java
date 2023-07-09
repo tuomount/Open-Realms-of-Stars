@@ -657,8 +657,12 @@ public class StarMap {
       numberOfAnomalies = numberOfAnomalies
           + 10 * (config.getGalaxySizeIndex() - 1);
     }
-    if (numberOfAnomalies < 20) {
+    if (numberOfAnomalies < 20 && config.getSpaceAnomaliesLevel() > 0) {
       numberOfAnomalies = 20;
+    }
+    if (config.getSpaceAnomaliesLevel() > 0) {
+      // Destroyed planet
+      numberOfAnomalies++;
     }
     int numberOfArtifacts = config.getMaxPlayers() * 3
         + 3 * config.getGalaxySizeIndex();
@@ -669,7 +673,9 @@ public class StarMap {
         if (Tiles.getTileByIndex(tiles[sx][sy]) == empty
             && getPlanetByCoordinate(sx, sy) == null) {
           String tileName = TileNames.SPACE_ANOMALY_CREDITS;
-          if (i < numberOfAnomalies) {
+          if (i == 0) {
+            tileName = TileNames.SPACE_ANOMALY_DESTROYED_PLANET;
+          } else if (i < numberOfAnomalies) {
             tileName = TileNames.getRandomSpaceAnomaly(harmful, pirate,
                 monsters);
           } else {
@@ -1519,13 +1525,15 @@ public class StarMap {
     history.addEvent(event);
     msg.setCoordinate(planet.getCoordinate());
     msg.setMatchByString(planet.getName());
-    Leader ruler = LeaderUtility.createLeader(playerInfo, planet,
-        LeaderUtility.LEVEL_START_RULER);
-    ruler.setJob(Job.RULER);
-    ruler.setTitle(LeaderUtility.createTitleForLeader(ruler, playerInfo));
-    playerInfo.getLeaderPool().add(ruler);
-    playerInfo.getMsgList().addNewMessage(msg);
-    playerInfo.setRuler(ruler);
+    if (playerInfo.getRuler() == null) {
+      Leader ruler = LeaderUtility.createLeader(playerInfo, planet,
+          LeaderUtility.LEVEL_START_RULER);
+      ruler.setJob(Job.RULER);
+      ruler.setTitle(LeaderUtility.createTitleForLeader(ruler, playerInfo));
+      playerInfo.getLeaderPool().add(ruler);
+      playerInfo.getMsgList().addNewMessage(msg);
+      playerInfo.setRuler(ruler);
+    }
 
     if (playerInfo.getRace() != SpaceRace.ALTEIRIANS
         && !planet.hasSpacePort()) {
@@ -1707,13 +1715,15 @@ public class StarMap {
     history.addEvent(event);
     msg.setCoordinate(startCoord);
     msg.setMatchByString("Colony #0");
-    Leader ruler = LeaderUtility.createLeader(playerInfo, null,
-        LeaderUtility.LEVEL_START_RULER);
-    ruler.setJob(Job.RULER);
-    ruler.setTitle(LeaderUtility.createTitleForLeader(ruler, playerInfo));
-    playerInfo.getLeaderPool().add(ruler);
-    playerInfo.getMsgList().addNewMessage(msg);
-    playerInfo.setRuler(ruler);
+    if (playerInfo.getRuler() == null) {
+      Leader ruler = LeaderUtility.createLeader(playerInfo, null,
+          LeaderUtility.LEVEL_START_RULER);
+      ruler.setJob(Job.RULER);
+      ruler.setTitle(LeaderUtility.createTitleForLeader(ruler, playerInfo));
+      playerInfo.getLeaderPool().add(ruler);
+      playerInfo.getMsgList().addNewMessage(msg);
+      playerInfo.setRuler(ruler);
+    }
 
     ShipStat[] stats = playerInfo.getShipStatList();
     int count = 0;

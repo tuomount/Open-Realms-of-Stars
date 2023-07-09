@@ -16,7 +16,7 @@ import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018-2019,2021-2022 Tuomo Untinen
+* Copyright (C) 2018-2019,2021-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -245,6 +245,14 @@ public class PopupPanel {
       }
       case WORMHOLE: {
         title = "Space anomaly!";
+        break;
+      }
+      case NEWS_STATION: {
+        title = "Galactic news station!";
+        break;
+      }
+      case DESTROYED_PLANET: {
+        title = "Destroyed planet!";
         break;
       }
       default: {

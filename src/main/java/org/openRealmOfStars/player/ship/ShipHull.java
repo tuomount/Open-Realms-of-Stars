@@ -269,6 +269,12 @@ public class ShipHull {
   public String toString() {
     String hullDescription = IOUtilities.stringWrapper(
         getHullType().getDescription(), LINE_LENGTH);
+    if (getHullType() == ShipHullType.PROBE
+        && getName().startsWith("Probe Mk")) {
+      hullDescription = IOUtilities.stringWrapper(
+          "Probe, no weapons allowed. Faster regular and FTL speed.",
+          LINE_LENGTH);
+    }
     if (originalBuilder == SpaceRace.SMAUGIRIANS
         && getHullType() == ShipHullType.FREIGHTER) {
       hullDescription = IOUtilities.stringWrapper(

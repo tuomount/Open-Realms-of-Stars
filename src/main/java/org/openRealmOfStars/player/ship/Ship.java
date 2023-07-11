@@ -22,7 +22,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017,2019-2022  Tuomo Untinen
+ * Copyright (C) 2016,2017,2019-2023  Tuomo Untinen
  * Copyright (C) 2017 Lucas
  *
  * This program is free software; you can redistribute it and/or
@@ -687,6 +687,13 @@ private int getRemainingEnergy(final int index) {
         speed = comp.getSpeed();
       }
     }
+    if (hull.getHullType() == ShipHullType.PROBE) {
+      String str = hull.getName();
+      if (str.equals("Probe Mk2") || str.equals("Probe Mk3")) {
+        // Probes Mk2 and Mk3 have faster regular speed
+          speed = speed + 1;
+      }
+    }
     return speed;
   }
 
@@ -777,8 +784,8 @@ private int getRemainingEnergy(final int index) {
       }
     }
     if (hull.getHullType() == ShipHullType.PROBE) {
-      // Probes have faster FTL
-        ftlSpeed = ftlSpeed + 1;
+      // Probes have faster exploring speed
+      ftlSpeed = ftlSpeed + 1;
     }
     return ftlSpeed;
   }

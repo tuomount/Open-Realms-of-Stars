@@ -13,7 +13,7 @@ import org.openRealmOfStars.player.message.MessageType;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017, 2019-2022 Tuomo Untinen
+* Copyright (C) 2017, 2019-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -183,10 +183,11 @@ public class TechListTest {
     TechList list = new TechList(SpaceRace.HUMAN);
     list.addTech(TechFactory.createHullTech("Large freighter", 6));
     Tech[] missing = list.getListMissingTech(TechType.Hulls, 6);
-    assertEquals(3, missing.length);
+    assertEquals(4, missing.length);
     assertEquals("Large starbase", missing[0].getName());
     assertEquals("Corvette Mk2", missing[1].getName());
     assertEquals("Artificial planet", missing[2].getName());
+    assertEquals("Probe Mk3", missing[3].getName());
   }
 
   @Test

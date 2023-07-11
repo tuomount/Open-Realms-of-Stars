@@ -248,7 +248,8 @@ public final class TechFactory {
    * Hull tech names for level 4
    */
   public static final String[] HULL_TECH_LEVEL4_NAMES = {"Medium freighter",
-      "Medium starbase", "Scout Mk2", "Fighter bay Mk1", "Medium orbital" };
+      "Medium starbase", "Scout Mk2", "Fighter bay Mk1", "Medium orbital",
+      "Probe Mk2"};
   /**
    * Hull tech names for level 5
    */
@@ -264,7 +265,7 @@ public final class TechFactory {
    */
   public static final String[] HULL_TECH_LEVEL6_NAMES = {"Large freighter",
       "Large starbase", "Corvette Mk2", "Artificial planet",
-      "Massive orbital"};
+      "Massive orbital", "Probe Mk3"};
   /**
    * Hull tech names for level 7
    */

@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018, 2019, 2021 Tuomo Untinen
+ * Copyright (C) 2016, 2018, 2019, 2021, 2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +37,7 @@ public final class ShipHullFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPHULL = 41;
+  private static final int MAX_SHIPHULL = 43;
 
   /**
    * Create ShipHull with matching name
@@ -254,6 +254,14 @@ public final class ShipHullFactory {
    * Hull for Large kraken
    */
   public static final int HULL_LARGE_KRAKEN = 40;
+  /**
+   * Hull for Probe Mk2
+   */
+  public static final int HULL_PROBE_MK2 = 41;
+  /**
+   * Hull for Probe Mk3
+   */
+  public static final int HULL_PROBE_MK3 = 42;
 
   /**
    * Create ship hull with index
@@ -548,6 +556,20 @@ public final class ShipHullFactory {
           ShipSize.LARGE, 0, 0, race);
       tmp.setFleetCapacity(0.4);
       tmp.setImageIndex(ShipImage.LARGE_SPACE_KRAKEN);
+      return tmp;
+    }
+    if (index == HULL_PROBE_MK2) {
+      tmp = new ShipHull(index, "Probe Mk2", 4, 1, ShipHullType.PROBE,
+          ShipSize.SMALL, 3, 2, race);
+      tmp.setFleetCapacity(0);
+      tmp.setImageIndex(ShipImage.PROBE);
+      return tmp;
+    }
+    if (index == HULL_PROBE_MK3) {
+      tmp = new ShipHull(index, "Probe Mk3", 5, 1, ShipHullType.PROBE,
+          ShipSize.SMALL, 4, 4, race);
+      tmp.setFleetCapacity(0);
+      tmp.setImageIndex(ShipImage.PROBE);
       return tmp;
     }
 

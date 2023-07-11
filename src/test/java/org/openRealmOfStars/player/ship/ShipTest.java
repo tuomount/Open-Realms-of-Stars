@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2017, 2019, 2020 Tuomo Untinen
+ * Copyright (C) 2017, 2019, 2020, 2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -625,6 +625,40 @@ public class ShipTest {
     assertEquals(false, ship.isSpyShip());
 
   }
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testProbe2FTLSpeedp() {
+    ShipHull hull = ShipHullFactory.createByName("Probe Mk2", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+    ShipComponent scanner = ShipComponentFactory.createByName("Scanner Mk1");
+    design.addComponent(engine);
+    design.addComponent(scanner);
+    Ship ship = new Ship(design);
+    assertEquals(true, ship.isScoutShip());
+    assertEquals(3,ship.getFtlSpeed());
+    assertEquals(3,ship.getSpeed());
+    assertEquals(1,ship.getTacticSpeed());
+    assertEquals(false, ship.isSpyShip());
+
+  }
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testProbe3FTLSpeedp() {
+    ShipHull hull = ShipHullFactory.createByName("Probe Mk3", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+    ShipComponent scanner = ShipComponentFactory.createByName("Scanner Mk1");
+    design.addComponent(engine);
+    design.addComponent(scanner);
+    Ship ship = new Ship(design);
+    assertEquals(true, ship.isScoutShip());
+    assertEquals(3,ship.getFtlSpeed());
+    assertEquals(3,ship.getSpeed());
+    assertEquals(1,ship.getTacticSpeed());
+    assertEquals(false, ship.isSpyShip());
+
+  }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
@@ -642,6 +676,38 @@ public class ShipTest {
     assertEquals(3,ship.getFtlSpeed());
     assertEquals(2,ship.getSpeed());
     assertEquals(2,ship.getTacticSpeed());
+    assertEquals(true, ship.isSpyShip());
+    assertEquals("Probe\n"
+        + "Cost: 2 Metal: 2\n"
+        + "Slots:4 Hull:4\n"
+        + "Size:Small Fleet capacity: 0.0\n"
+        + "Probe, no weapons allowed. FTL speed\n"
+        + "faster.", ship.getHull().toString());
+    
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testSpyShip2() {
+    ShipHull hull = ShipHullFactory.createByName("Probe Mk2", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk2");
+    ShipComponent scanner = ShipComponentFactory.createByName("Scanner Mk1");
+    ShipComponent spy = ShipComponentFactory.createByName("Espionage Module Mk1");
+    design.addComponent(engine);
+    design.addComponent(scanner);
+    design.addComponent(spy);
+    Ship ship = new Ship(design);
+    assertEquals(true, ship.isScoutShip());
+    assertEquals(3,ship.getFtlSpeed());
+    assertEquals(3,ship.getSpeed());
+    assertEquals(2,ship.getTacticSpeed());
+    assertEquals("Probe Mk2\n"
+        + "Cost: 3 Metal: 2\n"
+        + "Slots:4 Hull:4\n"
+        + "Size:Small Fleet capacity: 0.0\n"
+        + "Probe, no weapons allowed. Faster\n"
+        + "regular and FTL speed.", ship.getHull().toString());
     assertEquals(true, ship.isSpyShip());
   }
 

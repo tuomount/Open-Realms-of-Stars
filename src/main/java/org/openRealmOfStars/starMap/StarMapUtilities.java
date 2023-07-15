@@ -938,9 +938,11 @@ public final class StarMapUtilities {
    * @param stat Which ship stat to upgrade
    * @param info Realm which is doing the upgrade
    * @param planet Planet where upgrade is going to be done.
+   * @return True if upgrade was done.
    */
-  public static void upgradeShip(final Ship ship, final ShipStat stat,
+  public static boolean upgradeShip(final Ship ship, final ShipStat stat,
       final PlayerInfo info, final Planet planet) {
+    boolean result = false;
     if (ship != null && stat != null
         && ship.getHull().getName().equals(
             stat.getDesign().getHull().getName())
@@ -968,9 +970,11 @@ public final class StarMapUtilities {
           ship.setName(stat.getDesign().getName());
           ship.upgradeComponents(stat.getDesign().getComponentList());
           ship.fixShip(true);
+          result = true;
         }
       }
     }
+    return result;
   }
   /**
    * Search string from a list. Returns true if list contains searched

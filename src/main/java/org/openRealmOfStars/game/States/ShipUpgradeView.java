@@ -44,7 +44,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2021 Tuomo Untinen
+* Copyright (C) 2021,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -403,12 +403,17 @@ public class ShipUpgradeView extends BlackPanel
       ShipStat stat = player.getShipStatByName(
           (String) upgradeList.getSelectedItem());
       if (prodUpgradeCost > 0 && stat != null) {
-        StarMapUtilities.upgradeShip(getSelectedShip(), stat, player, planet);
-        shipListInFleet.setListData(fleet.getShips());
-        updatePanels();
-        SoundPlayer.playSound(SoundPlayer.REPAIR);
-        fleet.setMovesLeft(0);
-        SoundPlayer.playMenuSound();
+        boolean upgraded = StarMapUtilities.upgradeShip(getSelectedShip(),
+            stat, player, planet);
+        if (upgraded) {
+          shipListInFleet.setListData(fleet.getShips());
+          updatePanels();
+          SoundPlayer.playSound(SoundPlayer.REPAIR);
+          fleet.setMovesLeft(0);
+          SoundPlayer.playMenuSound();
+        } else {
+          SoundPlayer.playMenuDisabled();
+        }
       } else {
         SoundPlayer.playMenuDisabled();
       }

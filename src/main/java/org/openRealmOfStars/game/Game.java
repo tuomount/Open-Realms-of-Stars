@@ -173,7 +173,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.23.48Beta";
+  public static final String GAME_VERSION = "0.23.49Beta";
 
   /**
    * Animation timer used for animation
@@ -477,7 +477,7 @@ public class Game implements ActionListener {
   /**
    * Animation timer delay in milli seconds for credits
    */
-  private static final int ANIMATION_DELAY_STARMAP = 42;
+  private static final int ANIMATION_DELAY_STARMAP = 16;
 
   /**
    * Animation timer delay in milli seconds for combat

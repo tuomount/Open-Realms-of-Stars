@@ -20,6 +20,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -156,14 +157,29 @@ public class PlanetListView extends BlackPanel {
         tempList.add(planet);
       }
     }
+    int index = map.getPlayerList().getIndex(info);
+    Coordinate coord = map.calculateCenterOfRealm(index);
+    info.setCenterRealm(coord);
     while (tempList.size() > 0) {
       Planet bestPlanet = null;
       int bestValue = -999;
+      int divider = 1;
+      if (map.getMaxX() < 75) {
+        divider = 1;
+      } else if (map.getMaxX() < 130) {
+        divider = 2;
+      } else if (map.getMaxX() < 180) {
+        divider = 3;
+      } else {
+        divider = 4;
+      }
       for (Planet planet : tempList) {
         int value = planet.getSizeAsInt() * 10;
+        int dist = (int) coord.calculateDistance(planet.getCoordinate());
         int suitability = info.getWorldTypeValue(planet.getPlanetType()
             .getWorldType());
         value = value * suitability / 100;
+        value = value + 10 - dist / divider;
         if (info.getRace() != SpaceRace.CHIRALOIDS) {
           if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
             value = value - (planet.getRadiationLevel()

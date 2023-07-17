@@ -116,6 +116,12 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
         planet.getPlanetType().getTypeAsString());
     icon.setToolTipText("Planet's type");
     addIcon(icon);
+    int dist = (int) info.getCenterRealm().calculateDistance(
+        planet.getCoordinate());
+    icon = new IconLabel(null, Icons.getIconByName(Icons.ICON_PROPULSION_TECH),
+        "Distance: " + dist);
+    icon.setToolTipText("Distance from realm's center in sectors.");
+    addIcon(icon);
     SpaceButton btn = new SpaceButton("View", planet.getName() + "|"
         + GameCommands.COMMAND_VIEW_PLANET_ON_MAP);
     btn.addActionListener(listener);

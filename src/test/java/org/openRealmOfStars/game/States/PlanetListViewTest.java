@@ -11,6 +11,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -66,6 +67,11 @@ public class PlanetListViewTest {
     Mockito.when(planet2.getProductionList()).thenReturn(list);
     Mockito.when(map.getPlanetList()).thenReturn(listOfPlanets);
     ActionListener listener = Mockito.mock(ActionListener.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getIndex(realm)).thenReturn(0);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Coordinate coord = new Coordinate(5, 5);
+    Mockito.when(map.calculateCenterOfRealm(0)).thenReturn(coord);
     PlanetListView view = new PlanetListView(realm, map, listener);
     assertEquals(realm, view.getRealm());
   }
@@ -93,6 +99,11 @@ public class PlanetListViewTest {
     Mockito.when(planet2.getProductionList()).thenReturn(list);
     Mockito.when(map.getPlanetList()).thenReturn(listOfPlanets);
     ActionListener listener = Mockito.mock(ActionListener.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getIndex(realm)).thenReturn(0);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Coordinate coord = new Coordinate(5, 5);
+    Mockito.when(map.calculateCenterOfRealm(0)).thenReturn(coord);
     PlanetListView view = new PlanetListView(realm, map, listener);
     assertEquals(realm, view.getRealm());
   }
@@ -114,6 +125,11 @@ public class PlanetListViewTest {
     realm.setSectorVisibility(8, 8, PlayerInfo.FOG_OF_WAR);
     realm.setGovernment(GovernmentType.UNION);
     planet1.setPlanetOwner(0, realm);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getIndex(realm)).thenReturn(0);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Coordinate coord = new Coordinate(5, 5);
+    Mockito.when(map.calculateCenterOfRealm(0)).thenReturn(coord);
     Mockito.when(map.getPlanetList()).thenReturn(listOfPlanets);
     ActionListener listener = Mockito.mock(ActionListener.class);
     PlanetListView view = new PlanetListView(realm, map, listener);

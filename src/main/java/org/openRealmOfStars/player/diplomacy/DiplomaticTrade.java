@@ -2747,6 +2747,16 @@ public class DiplomaticTrade {
         sb.append(" from ");
         sb.append(giver.getEmpireName());
         sb.append(". ");
+        if (starMap != null && planet.getHomeWorldIndex() != -1) {
+          PlayerInfo realm = starMap.getPlayerList().getPlayerInfoByIndex(
+              planet.getHomeWorldIndex());
+          if (realm != null) {
+            sb.append(planet.getName());
+            sb.append(" is home world for ");
+            sb.append(realm.getEmpireName());
+            sb.append(". ");
+          }
+        }
         countAsDiplomaticTrade = true;
         planetTraded = true;
         break;

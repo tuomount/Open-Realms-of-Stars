@@ -321,6 +321,8 @@ return map;
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(player2);
     Mockito.when(map.getNewsCorpData()).thenReturn(newsCorp);
     Mockito.when(map.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt())).thenReturn(-100);
+    Mockito.when(map.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt(),
+        Mockito.anyBoolean())).thenReturn(100);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     NegotiationList offer = new NegotiationList();
     offer.add(new NegotiationOffer(NegotiationType.CREDIT, 80));
@@ -343,7 +345,9 @@ return map;
     assertEquals(false, trade.isOfferGoodForBoth());
     
     Mockito.when(newsCorp.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt())).thenReturn(50);
-    Mockito.when(map.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt())).thenReturn(50);
+    Mockito.when(map.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt())).thenReturn(-50);
+    Mockito.when(map.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt(),
+        Mockito.anyBoolean())).thenReturn(-50);
     trade = new DiplomaticTrade(map, 0, 1);
     offer = new NegotiationList();
     offer.add(new NegotiationOffer(NegotiationType.CREDIT, 15));

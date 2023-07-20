@@ -2145,7 +2145,8 @@ public final class MissionHandling {
             break;
           }
         }
-        int difference = starMap.getMilitaryDifference(infoIndex, target);
+        int difference = starMap.getMilitaryDifference(infoIndex, target,
+            info.getDiplomacy().isWar(target));
         if (difference > 100) {
           scores[i] = scores[i] + 30;
         } else if (difference > 80) {

@@ -4049,29 +4049,51 @@ public class StarMap {
    * @param first Player index who is estimating
    * @param second Second player who is being estimated
    *        and who belong to defensive pact
+   * @param isWar between first and second.
    * @return Military value
    */
   protected int getMilitaryEstimationForDefensivePact(final int first,
-      final int second) {
+      final int second, final boolean isWar) {
     int result = getMilitaryEstimation(first, second);
     PlayerInfo secondInfo = players.getPlayerInfoByIndex(second);
+    PlayerInfo firstInfo = players.getPlayerInfoByIndex(first);
     int maxPlayer = players.getCurrentMaxRealms();
     for (int i = 0; i < maxPlayer; i++) {
-      if (i != first && i != second
-          && secondInfo.getDiplomacy().isDefensivePact(i)) {
-        result = result + getMilitaryEstimation(first, i);
+      if (!isWar) {
+        if (i != first && i != second
+            && secondInfo.getDiplomacy().isDefensivePact(i)) {
+          result = result + getMilitaryEstimation(first, i);
+        }
+      } else {
+        if (i != first && i != second
+            && secondInfo.getDiplomacy().isDefensivePact(i)
+            && firstInfo.getDiplomacy().isWar(i)) {
+          result = result + getMilitaryEstimation(first, i);
+        }
       }
     }
     return result;
   }
   /**
    * Get latest military difference between two players, using espionage
-   * information and news corp.
+   * information and news corp. First one is making the comparison.
    * @param first First player index. This is where second one is compared.
    * @param second Second player index.
    * @return Positive number if first player has bigger military
    */
   public int getMilitaryDifference(final int first, final int second) {
+    return getMilitaryDifference(first, second, false);
+  }
+  /**
+   * Get latest military difference between two players, using espionage
+   * information and news corp. First one is making the comparison.
+   * @param first First player index. This is where second one is compared.
+   * @param second Second player index.
+   * @param isWar There is war between first and second realm.
+   * @return Positive number if first player has bigger military
+   */
+  public int getMilitaryDifference(final int first, final int second,
+      final boolean isWar) {
     int result = 0;
     PlayerInfo firstInfo = players.getPlayerInfoByIndex(first);
     PlayerInfo secondInfo = players.getPlayerInfoByIndex(second);
@@ -4102,7 +4124,8 @@ public class StarMap {
       }
     } else {
       int actualMilitaryFirst = NewsCorpData.calculateMilitaryValue(firstInfo);
-      int estimate = getMilitaryEstimationForDefensivePact(first, second);
+      int estimate = getMilitaryEstimationForDefensivePact(first, second,
+          isWar);
       result = actualMilitaryFirst - estimate;
     }
     return result;

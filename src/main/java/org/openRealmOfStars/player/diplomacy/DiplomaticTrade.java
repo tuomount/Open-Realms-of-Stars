@@ -2305,17 +2305,18 @@ public class DiplomaticTrade {
           break;
         }
       }
-      int militaryDifference = starMap.getMilitaryDifference(first, second);
-      if (militaryDifference > 0) {
+      int militaryDifference = starMap.getMilitaryDifference(second, first,
+          isWar);
+      if (militaryDifference < 0) {
         if (isWar) {
           if (firstOffer.isPeaceInOffer()) {
-            difference = difference - militaryDifference / divider;
+            difference = difference + militaryDifference / divider;
           }
         } else {
-          difference = difference - militaryDifference / divider;
+          difference = difference + militaryDifference / divider;
         }
       } else {
-        difference = difference - militaryDifference / ownDivider;
+        difference = difference + militaryDifference / ownDivider;
       }
     }
     if (!militaryThreat && secondValueZero && difference <= 0) {

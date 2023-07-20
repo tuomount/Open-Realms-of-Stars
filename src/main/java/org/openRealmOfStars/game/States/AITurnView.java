@@ -1489,8 +1489,9 @@ public class AITurnView extends BlackPanel {
                 break;
               }
             }
-            if (game.getStarMap().getMilitaryDifference(
-                index1, index2) > neededDifference && attacks < LIMIT_ATTACKS) {
+            boolean isWar = info.getDiplomacy().isWar(index2);
+            if (game.getStarMap().getMilitaryDifference(index1, index2,
+                isWar) > neededDifference && attacks < LIMIT_ATTACKS) {
               addAttackMission(planet, info);
             }
           }

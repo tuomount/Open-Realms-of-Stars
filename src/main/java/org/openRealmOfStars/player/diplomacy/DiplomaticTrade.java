@@ -2224,6 +2224,10 @@ public class DiplomaticTrade {
       secondValueZero = true;
     }
     int difference = firstValue - secondValue;
+    if (isWar && info2.getTotalWarFatigue() < 0
+        && firstOffer.isPeaceInOffer()) {
+      difference = difference + info2.getTotalWarFatigue() * 5;
+    }
     // Maybe good diplomatic relations help to get trade through
     int bonus = info2.getDiplomacy().getDiplomacyList(first)
         .getDiplomacyBonus() / 2;

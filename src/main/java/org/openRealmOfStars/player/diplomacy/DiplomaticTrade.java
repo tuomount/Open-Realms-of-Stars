@@ -130,6 +130,10 @@ public class DiplomaticTrade {
    */
   private boolean planetTraded;
   /**
+   * Gift trade.
+   */
+  private boolean giftTrade;
+  /**
    * Difference between two parties which is considered as
    * insult;
    */
@@ -165,6 +169,7 @@ public class DiplomaticTrade {
     second = index2;
     majorDeals = null;
     planetTraded = false;
+    giftTrade = false;
     diplomacyWithPirates = false;
     PlayerInfo pirate = starMap.getPlayerList().getSpacePiratePlayer();
     int pirateIndex = starMap.getPlayerList().getIndex(pirate);
@@ -2910,6 +2915,7 @@ public class DiplomaticTrade {
       info = starMap.getPlayerByIndex(second);
       info.getDiplomacy().getDiplomacyList(first).addBonus(
           DiplomacyBonusType.GIVEN_VALUABLE_FREE, info.getRace());
+      giftTrade = true;
     } else if (value1 > 0 && value2 == 0) {
       info = starMap.getPlayerByIndex(first);
       info.getDiplomacy().getDiplomacyList(second).addBonus(
@@ -2922,6 +2928,13 @@ public class DiplomaticTrade {
    */
   public boolean isPlanetTraded() {
     return planetTraded;
+  }
+  /**
+   * Trade has been gift?
+   * @return True if trade has been gift.
+   */
+  public boolean isGiftTraded() {
+    return giftTrade;
   }
   /**
    * Generate Fleet list containing all fleets from both players.

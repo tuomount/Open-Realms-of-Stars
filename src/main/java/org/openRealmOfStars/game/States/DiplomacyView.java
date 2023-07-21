@@ -1444,9 +1444,16 @@ public class DiplomacyView extends BlackPanel {
   private void handleActionCommandOkAgree() {
     trade.doTrades();
     if (trade.getMajorDeals() != null && trade.isPlanetTraded()) {
-      NewsData news = NewsFactory.makeMajorDemandNews(ai, human,
-          meetingPlace, trade.getMajorDeals(),
-          game.getStarMap().getStarYear());
+      NewsData news = null;
+      if (!trade.isGiftTraded()) {
+        news = NewsFactory.makeMajorDemandNews(human, ai,
+            meetingPlace, trade.getMajorDeals(),
+            game.getStarMap().getStarYear());
+      } else {
+        news = NewsFactory.makeMajorGiftNews(human, ai,
+            meetingPlace, trade.getMajorDeals(),
+            game.getStarMap().getStarYear());
+      }
       game.getStarMap().getNewsCorpData().addNews(news);
       Planet[] planets = trade.getPlanetsTraded();
       if (planets.length > 0) {
@@ -1911,9 +1918,16 @@ public class DiplomacyView extends BlackPanel {
       if (trade.isOfferGoodForBoth()) {
         trade.doTrades();
         if (trade.getMajorDeals() != null && trade.isPlanetTraded()) {
-          NewsData news = NewsFactory.makeMajorDemandNews(human, ai,
-              meetingPlace, trade.getMajorDeals(),
-              game.getStarMap().getStarYear());
+          NewsData news = null;
+          if (!trade.isGiftTraded()) {
+            news = NewsFactory.makeMajorDemandNews(human, ai,
+                meetingPlace, trade.getMajorDeals(),
+                game.getStarMap().getStarYear());
+          } else {
+            news = NewsFactory.makeMajorGiftNews(human, ai,
+                meetingPlace, trade.getMajorDeals(),
+                game.getStarMap().getStarYear());
+          }
           game.getStarMap().getNewsCorpData().addNews(news);
           Planet[] planets = trade.getPlanetsTraded();
           if (planets.length > 0) {

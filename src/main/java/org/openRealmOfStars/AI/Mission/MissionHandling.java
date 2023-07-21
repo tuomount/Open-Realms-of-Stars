@@ -3307,9 +3307,17 @@ public final class MissionHandling {
       trade.doTrades();
       if (trade.getMajorDeals() != null && trade.isPlanetTraded()) {
         PlayerInfo giver = game.getStarMap().getPlayerByIndex(secondIndex);
-        NewsData news = NewsFactory.makeMajorDemandNews(info, giver,
-            meetingPlace, trade.getMajorDeals(),
-            game.getStarMap().getStarYear());
+        NewsData news = null;
+        if (!trade.isGiftTraded()) {
+          news = NewsFactory.makeMajorDemandNews(info, giver,
+              meetingPlace, trade.getMajorDeals(),
+              game.getStarMap().getStarYear());
+        } else {
+          news = NewsFactory.makeMajorGiftNews(info, giver,
+              meetingPlace, trade.getMajorDeals(),
+              game.getStarMap().getStarYear());
+        }
+
         game.getStarMap().getNewsCorpData().addNews(news);
         Planet[] planets = trade.getPlanetsTraded();
         if (planets.length > 0) {

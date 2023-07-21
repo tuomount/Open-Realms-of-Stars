@@ -3984,7 +3984,8 @@ public class AITurnView extends BlackPanel {
             }
             fatigue = fatigue - dec;
             info.setWarFatigue(fatigue);
-            if (info.getWarFatigue() == 0) {
+            if (info.getWarFatigue() >= 0) {
+              info.setWarFatigue(0);
               Message msg = new Message(MessageType.INFORMATION,
                   "War fatigue has ended!",
                   Icons.getIconByName(Icons.ICON_HAPPY));

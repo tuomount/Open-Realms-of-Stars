@@ -3475,7 +3475,7 @@ public class StarMap {
     PlayerInfo info = players.getPlayerInfoByIndex(aiTurnNumber);
     if (info != null && !info.isHuman() && !info.isBoard()) {
       // War fatigue has exhausted realm so better try to make peace
-      if (info.getWarFatigue() < 1) {
+      if (info.getTotalWarFatigue() < 0) {
         for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
           if (info.getDiplomacy().isWar(i)) {
             PlayerInfo target = players.getPlayerInfoByIndex(i);

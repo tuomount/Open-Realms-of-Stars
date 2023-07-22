@@ -8,6 +8,7 @@ import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.artifact.Artifact;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
@@ -2758,12 +2759,12 @@ public class DiplomaticTrade {
         sb.append(giver.getEmpireName());
         sb.append(". ");
         if (starMap != null && planet.getHomeWorldIndex() != -1) {
-          PlayerInfo realm = starMap.getPlayerList().getPlayerInfoByIndex(
+          SpaceRace race = SpaceRaceUtility.getRaceByIndex(
               planet.getHomeWorldIndex());
-          if (realm != null) {
+          if (race != null) {
             sb.append(planet.getName());
             sb.append(" is home world for ");
-            sb.append(realm.getEmpireName());
+            sb.append(race.getName());
             sb.append(". ");
           }
         }

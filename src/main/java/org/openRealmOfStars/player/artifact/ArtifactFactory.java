@@ -217,12 +217,13 @@ public final class ArtifactFactory {
     }
     if (index == DESTROYED_PLANET_ARTIFACT) {
       tmp = new Artifact(index, "Ancient civilization remnants",
-          ArtifactType.FACILITY); // TODO Change later
-      tmp.setOneTimeTechBonus(30);
+          ArtifactType.FACILITY);
+      tmp.setOneTimeTechBonus(8);
       tmp.setUnique(true);
       tmp.setDescription("This piece of long lost civilization."
           + " This is very interested and makes you thing what kind of"
-          + " culture was there once and now it is gone.");
+          + " culture was there once and now it is gone. This will give"
+          + " inspiration for all different technologies.");
       tmp.setIcon(Icons.getIconByName(Icons.ICON_ANCIENT_FACILITY));
     }
     return tmp;

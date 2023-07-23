@@ -502,11 +502,20 @@ public class ArtifactLists {
         info.getTechList().addTech(TechFactory.createImprovementTech(
             "College of history", 3));
       }
-      Double value = info.getTechList().getTechResearchPoints(
-          TechType.getTypeByIndex(artifact.getArtifactType().getIndex()));
-      info.getTechList().setTechResearchPoints(
-          TechType.getTypeByIndex(artifact.getArtifactType().getIndex()),
-          value + artifact.getOneTimeTechBonus());
+      if (artifact.getName().equals("Ancient civilization remnants")) {
+        for (int i = 0; i < 5; i++) {
+          Double value = info.getTechList().getTechResearchPoints(
+              TechType.getTypeByIndex(i));
+          info.getTechList().setTechResearchPoints(TechType.getTypeByIndex(i),
+              value + artifact.getOneTimeTechBonus());
+        }
+      } else {
+        Double value = info.getTechList().getTechResearchPoints(
+            TechType.getTypeByIndex(artifact.getArtifactType().getIndex()));
+        info.getTechList().setTechResearchPoints(
+            TechType.getTypeByIndex(artifact.getArtifactType().getIndex()),
+            value + artifact.getOneTimeTechBonus());
+      }
       Message msg = new Message(MessageType.RESEARCH, sb.toString(),
           Icons.getIconByName(Icons.ICON_RESEARCH));
       msg.setMatchByString(artifact.getName());

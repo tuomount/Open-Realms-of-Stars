@@ -10,7 +10,9 @@ import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.artifact.Artifact;
 import org.openRealmOfStars.player.artifact.ArtifactLists;
+import org.openRealmOfStars.player.artifact.ArtifactType;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -2261,6 +2263,23 @@ public class PlayerInfo {
       fatigue = -6;
     }
     return fatigue;
+  }
+
+  /**
+   * Has Alonians found their heritage or not.
+   * @return True if found and space race is alonians.
+   */
+  public boolean hasAloniaHeritage() {
+    if (race == SpaceRace.ALONIANS) {
+      Artifact[] artifacts = getArtifactLists().getResearchedArtifacts();
+      for (Artifact artifact : artifacts) {
+        if (artifact.getArtifactType() == ArtifactType.FACILITY
+            && artifact.getName().equals("Ancient civilization remnants")) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
   /**
    * Get empire name for player

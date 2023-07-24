@@ -1,6 +1,7 @@
 - New features and updates -
 
 * Improved AI, Challenging AI selects best choice for next building project.
+* Fixed issue where AI estimated wrongly defensive pacts.
 * Hide current song when mouse cursor moves over the text.
 * Adds icons if fleet has moved, or has moves left or is routed.
 * Moving diagonally with no scanner now reveals that sector if sector is blocked.
@@ -21,6 +22,8 @@
 * News if planets are traded or conquered by another realm.
 * Planetary events have now higher chance to happen.
 * Precious gems planetary event.
+* Added two new probe ship hulls.
+* Destroyed planet as a new space anomaly.
 
 - Bugfixes -
 
@@ -28,6 +31,9 @@
 * Fixed possible race condition with SpotBugs.
 * Banned nukes were banned one star year too early.
 * Fixed issue where ship could be finished even space port was destroyed in espionage mission.
+* Fixed AI war fatigue check when making a peace offer.
+* Fixed check when war ends and checking the war fatigue.
+* Upgrade ship sound effect is not played if there is not enough credit to upgrade the ship.
 
 # Open Realm of Stars 0.22.0Beta 
 

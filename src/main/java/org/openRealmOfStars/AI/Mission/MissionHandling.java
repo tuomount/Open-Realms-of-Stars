@@ -3533,6 +3533,7 @@ public final class MissionHandling {
               "Fleet encounter another fleet while moving in FTL!",
               Icons.getIconByName(Icons.ICON_HULL_TECH));
           msg.setCoordinate(fleet.getCoordinate());
+          msg.setMatchByString(fleet.getName());
           info.getMsgList().addNewMessage(msg);
         }
       }
@@ -3587,6 +3588,7 @@ public final class MissionHandling {
                   + " fleet " + fleet.getName() + "!",
               Icons.getIconByName(Icons.ICON_HULL_TECH));
           msg.setCoordinate(fleetAtTarget.getCoordinate());
+          msg.setMatchByString(fleet.getName());
           infoAtTarget.getMsgList().addNewMessage(msg);
         } else if (!info.isHuman() && !infoAtTarget.isBoard()
             && !info.isBoard()) {
@@ -3602,6 +3604,7 @@ public final class MissionHandling {
               "Fleet encounter another fleet while moving in FTL!",
               Icons.getIconByName(Icons.ICON_HULL_TECH));
           msg.setCoordinate(fleet.getCoordinate());
+          msg.setMatchByString(fleet.getName());
           info.getMsgList().addNewMessage(msg);
         }
       }

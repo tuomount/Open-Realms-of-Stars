@@ -2417,7 +2417,7 @@ public class Planet {
         Building building = (Building) underConstruction;
         if (building.getScientificAchievement() && map != null) {
           NewsData news = NewsFactory.makeScientificAchivementNews(
-              planetOwnerInfo, this, building);
+              planetOwnerInfo, this, building, map.getStarYear());
           map.getNewsCorpData().addNews(news);
           EventOnPlanet eventOnPlanet = new EventOnPlanet(
               EventType.PLANET_BUILDING, getCoordinate(),
@@ -2427,7 +2427,7 @@ public class Planet {
         }
         if (building.getName().equals("United Galaxy Tower") && map != null) {
           NewsData news = NewsFactory.makeUnitedGalaxyTowerNews(
-              planetOwnerInfo, this);
+              planetOwnerInfo, this, map.getStarYear());
           map.getNewsCorpData().addNews(news);
           EventOnPlanet eventOnPlanet = new EventOnPlanet(
               EventType.PLANET_BUILDING, getCoordinate(),
@@ -2448,7 +2448,7 @@ public class Planet {
         }
         if (building.isBroadcaster() && map != null) {
           NewsData news = NewsFactory.makeBroadcasterBuildingNews(
-              planetOwnerInfo, this, building);
+              planetOwnerInfo, this, building, map.getStarYear());
           map.getNewsCorpData().addNews(news);
           EventOnPlanet eventOnPlanet = new EventOnPlanet(
               EventType.PLANET_BUILDING, getCoordinate(),

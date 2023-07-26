@@ -1778,9 +1778,11 @@ public final class NewsFactory {
   /**
    * Make secretary of galaxy news.
    * @param realm Realm which became secretary
+   * @param starYear Star Year
    * @return NewsData
    */
-  public static NewsData makeSecretaryOfGalaxyNews(final PlayerInfo realm) {
+  public static NewsData makeSecretaryOfGalaxyNews(final PlayerInfo realm,
+      final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
@@ -1824,6 +1826,7 @@ public final class NewsFactory {
       }
     }
     news.setNewsText(sb.toString());
+    realm.appendStory(news.getNewsText(), starYear);
     return news;
   }
   /**
@@ -2626,6 +2629,8 @@ public final class NewsFactory {
     if (limit == -1) {
       return null;
     }
+    PlayerInfo winner1 = null;
+    PlayerInfo winner2 = null;
     NewsCorpData tmpData = new NewsCorpData(
         map.getPlayerList().getCurrentMaxRealms());
     NewsData news = null;
@@ -2656,6 +2661,7 @@ public final class NewsFactory {
       StringBuilder sb = new StringBuilder();
       if (!winner.isAlliance()) {
         PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
+        winner1 = info;
         instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
         instructions.addText("THE CULTURAL DOMINATION!");
         instructions.addText(info.getEmpireName());
@@ -2690,6 +2696,8 @@ public final class NewsFactory {
       } else {
         PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
         PlayerInfo info2 = map.getPlayerByIndex(winner.getAllianceRealm());
+        winner1 = info;
+        winner2 = info2;
         instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
         instructions.addText("THE GREATEST CULTURAL ALLIANCE!");
         instructions.addText(info.getEmpireName());
@@ -2726,6 +2734,12 @@ public final class NewsFactory {
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
+      if (winner1 != null) {
+        winner1.appendStory(news.getNewsText(), map.getStarYear());
+      }
+      if (winner2 != null) {
+        winner2.appendStory(news.getNewsText(), map.getStarYear());
+      }
     }
     return news;
   }
@@ -2745,6 +2759,8 @@ public final class NewsFactory {
     if (limit < 3) {
       limit = 3;
     }
+    PlayerInfo winner1 = null;
+    PlayerInfo winner2 = null;
     NewsCorpData tmpData = new NewsCorpData(
         map.getPlayerList().getCurrentMaxRealms());
     NewsData news = null;
@@ -2760,6 +2776,7 @@ public final class NewsFactory {
       StringBuilder sb = new StringBuilder();
       if (!winner.isAlliance()) {
         PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
+        winner1 = info;
         instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
         instructions.addText("THE DOMINATION VICTORY!");
         instructions.addText(info.getEmpireName());
@@ -2772,6 +2789,8 @@ public final class NewsFactory {
       } else {
         PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
         PlayerInfo info2 = map.getPlayerByIndex(winner.getAllianceRealm());
+        winner1 = info;
+        winner2 = info2;
         instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
         instructions.addText("THE DOMINATING ALLIANCE!");
         instructions.addText(info.getEmpireName());
@@ -2785,6 +2804,12 @@ public final class NewsFactory {
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
+      if (winner1 != null) {
+        winner1.appendStory(news.getNewsText(), map.getStarYear());
+      }
+      if (winner2 != null) {
+        winner2.appendStory(news.getNewsText(), map.getStarYear());
+      }
     }
     return news;
   }
@@ -2801,6 +2826,7 @@ public final class NewsFactory {
       return null;
     }
     PlayerInfo winner = null;
+    PlayerInfo winner2 = null;
     for (Planet planet : map.getPlanetList()) {
       int count = 0;
       if (planet.getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
@@ -2835,6 +2861,7 @@ public final class NewsFactory {
         PlayerInfo info = winner;
         PlayerInfo info2 = map.getPlayerByIndex(
             winner.getDiplomacy().getAllianceIndex());
+        winner2 = info2;
         instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
         instructions.addText("THE SCIENTIFIC ALLIANCE!");
         instructions.addText(info.getEmpireName());
@@ -2848,6 +2875,10 @@ public final class NewsFactory {
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
+      winner.appendStory(news.getNewsText(), map.getStarYear());
+      if (winner2 != null) {
+        winner2.appendStory(news.getNewsText(), map.getStarYear());
+      }
     }
     return news;
   }
@@ -2864,6 +2895,7 @@ public final class NewsFactory {
       return null;
     }
     PlayerInfo winner = null;
+    PlayerInfo winner2 = null;
     PlayerInfo second = null;
     int votedWinner = 0;
     int votedSecond = 0;
@@ -2989,6 +3021,7 @@ public final class NewsFactory {
         PlayerInfo info = winner;
         PlayerInfo info2 = map.getPlayerByIndex(
             winner.getDiplomacy().getAllianceIndex());
+        winner2 = info2;
         instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
         instructions.addText("THE DIPLOMATIC ALLIANCE!");
         instructions.addText(info.getEmpireName());
@@ -3017,6 +3050,10 @@ public final class NewsFactory {
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
+      winner.appendStory(news.getNewsText(), map.getStarYear());
+      if (winner2 != null) {
+        winner2.appendStory(news.getNewsText(), map.getStarYear());
+      }
     }
     if (removeRulerVote) {
       map.getVotes().removeRulerVote();
@@ -3035,6 +3072,7 @@ public final class NewsFactory {
     if (limit == 0 || map.getTurn() < 100) {
       return null;
     }
+    PlayerInfo winner2 = null;
     switch (map.getScorePopulation()) {
       case 1: limit = 40; break;
       case 2: limit = 50; break;
@@ -3096,6 +3134,7 @@ public final class NewsFactory {
         PlayerInfo info = winner;
         PlayerInfo info2 = map.getPlayerByIndex(
             winner.getDiplomacy().getAllianceIndex());
+        winner2 = info2;
         instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
         instructions.addText("THE POPULATION ALLIANCE!");
         instructions.addText(info.getEmpireName());
@@ -3112,6 +3151,10 @@ public final class NewsFactory {
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
+      winner.appendStory(news.getNewsText(), map.getStarYear());
+      if (winner2 != null) {
+        winner2.appendStory(news.getNewsText(), map.getStarYear());
+      }
     }
     return news;
   }
@@ -3169,10 +3212,13 @@ public final class NewsFactory {
     ScoreBoard board = createScoreBoard(data.generateScores(),
         map.getPlayerList());
     board.sort();
+    PlayerInfo winner1 = null;
+    PlayerInfo winner2 = null;
     Row winner = board.getRow(0);
     Row second = board.getRow(1);
     if (!winner.isAlliance()) {
       PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
+      winner1 = info;
       instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
       instructions.addText("THE GREATEST REALM ALL TIME!");
       instructions.addText(info.getEmpireName());
@@ -3196,6 +3242,8 @@ public final class NewsFactory {
     } else {
       PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
       PlayerInfo info2 = map.getPlayerByIndex(winner.getAllianceRealm());
+      winner1 = info;
+      winner2 = info2;
       instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
       instructions.addText("THE GREATEST ALLIANCE ALL TIME!");
       instructions.addText(info.getEmpireName());
@@ -3222,6 +3270,12 @@ public final class NewsFactory {
     }
     news.setImageInstructions(instructions.build());
     news.setNewsText(sb.toString());
+    if (winner1 != null) {
+      winner1.appendStory(news.getNewsText(), map.getStarYear());
+    }
+    if (winner2 != null) {
+      winner2.appendStory(news.getNewsText(), map.getStarYear());
+    }
     return news;
   }
 
@@ -3301,10 +3355,11 @@ public final class NewsFactory {
    * @param planet Where to building
    * @param building Building itself. Can be null. It means that planetis
    * artificial planet then.
+   * @param starYear Star year
    * @return NewsData
    */
   public static NewsData makeScientificAchivementNews(final PlayerInfo realm,
-      final Planet planet, final Building building) {
+      final Planet planet, final Building building, final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -3385,6 +3440,7 @@ public final class NewsFactory {
       sb.append(" is known to have excellent research team. ");
     }
     news.setNewsText(sb.toString());
+    realm.appendStory(news.getNewsText(), starYear);
     return news;
   }
 
@@ -3755,10 +3811,11 @@ public final class NewsFactory {
    * to start path to diplomatic victory.
    * @param realm PlayerInfo who is building
    * @param planet Where to building
+   * @param starYear Star Year
    * @return NewsData
    */
   public static NewsData makeUnitedGalaxyTowerNews(final PlayerInfo realm,
-      final Planet planet) {
+      final Planet planet, final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
@@ -3817,6 +3874,7 @@ public final class NewsFactory {
       sb.append(" is known to have diplomatic leaders. ");
     }
     news.setNewsText(sb.toString());
+    realm.appendStory(news.getNewsText(), starYear);
     return news;
   }
 
@@ -3826,10 +3884,11 @@ public final class NewsFactory {
    * @param realm PlayerInfo who is building
    * @param planet Where to building
    * @param building Building which was built
+   * @param starYear Star Year
    * @return NewsData
    */
   public static NewsData makeBroadcasterBuildingNews(final PlayerInfo realm,
-      final Planet planet, final Building building) {
+      final Planet planet, final Building building, final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
@@ -3865,6 +3924,7 @@ public final class NewsFactory {
     sb.append(realm.getEmpireName());
     sb.append(" is able to spread cultural information to other realms! ");
     news.setNewsText(sb.toString());
+    realm.appendStory(news.getNewsText(), starYear);
     return news;
   }
 

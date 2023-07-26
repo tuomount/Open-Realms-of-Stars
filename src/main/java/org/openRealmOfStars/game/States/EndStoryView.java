@@ -1,6 +1,7 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,8 +16,10 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextPane;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
 import org.openRealmOfStars.gui.panels.ShipInteriorPanel;
@@ -163,6 +166,24 @@ public class EndStoryView extends BlackPanel {
     textArea.setText(realm.getBackgroundStory());
     textArea.setCaretPosition(0);
     centerPanel.add(scroll);
+    EmptyInfoPanel panel = new EmptyInfoPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+    panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    IconButton iBtn = new IconButton(GuiStatics.getArrowLeft(),
+        GuiStatics.getArrowLeft(), false,
+        GameCommands.COMMAND_PREV_REALM, this);
+    iBtn.setToolTipText("Previous realm");
+    iBtn.addActionListener(listener);
+    panel.add(iBtn);
+    SpaceLabel label = new SpaceLabel("Change realm");
+    panel.add(label);
+    iBtn = new IconButton(GuiStatics.getArrowRight(),
+        GuiStatics.getArrowRightPressed(), false,
+        GameCommands.COMMAND_NEXT_REALM, this);
+    iBtn.setToolTipText("Next realm");
+    iBtn.addActionListener(listener);
+    panel.add(iBtn);
+    centerPanel.add(panel);
     this.add(centerPanel, BorderLayout.CENTER);
 
     InfoPanel bottomPanel = new InfoPanel();
@@ -172,18 +193,6 @@ public class EndStoryView extends BlackPanel {
         GameCommands.COMMAND_VIEW_STARMAP);
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.CENTER);
-    IconButton iBtn = new IconButton(GuiStatics.getArrowRight(),
-        GuiStatics.getArrowRightPressed(), false,
-        GameCommands.COMMAND_NEXT_REALM, this);
-    iBtn.setToolTipText("Next realm");
-    iBtn.addActionListener(listener);
-    bottomPanel.add(iBtn, BorderLayout.EAST);
-    iBtn = new IconButton(GuiStatics.getArrowLeft(),
-        GuiStatics.getArrowLeft(), false,
-        GameCommands.COMMAND_PREV_REALM, this);
-    iBtn.setToolTipText("Previous realm");
-    iBtn.addActionListener(listener);
-    bottomPanel.add(iBtn, BorderLayout.WEST);
 
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
@@ -296,7 +305,7 @@ public class EndStoryView extends BlackPanel {
       }
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_REALM)) {
-      if (index < map.getPlayerList().getCurrentMaxRealms()) {
+      if (index < map.getPlayerList().getCurrentMaxRealms() - 1) {
         SoundPlayer.playMenuSound();
         index = index + 1;
         realm = map.getPlayerByIndex(index);

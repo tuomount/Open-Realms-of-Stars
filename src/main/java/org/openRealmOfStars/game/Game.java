@@ -2808,7 +2808,8 @@ public class Game implements ActionListener {
         vote.setOrganizerIndex(mostTowers);
         PlayerInfo secretary = getPlayers().getPlayerInfoByIndex(
             mostTowers);
-        NewsData news = NewsFactory.makeSecretaryOfGalaxyNews(secretary);
+        NewsData news = NewsFactory.makeSecretaryOfGalaxyNews(secretary,
+            starMap.getStarYear());
         getStarMap().getNewsCorpData().addNews(news);
         getStarMap().getVotes().getVotes().add(vote);
         if (secretary.isHuman()) {

@@ -2086,7 +2086,8 @@ public class AITurnView extends BlackPanel {
         vote.setOrganizerIndex(mostTowers);
         PlayerInfo secretary = game.getPlayers().getPlayerInfoByIndex(
             mostTowers);
-        NewsData news = NewsFactory.makeSecretaryOfGalaxyNews(secretary);
+        NewsData news = NewsFactory.makeSecretaryOfGalaxyNews(secretary,
+            game.getStarMap().getStarYear());
         game.getStarMap().getNewsCorpData().addNews(news);
         game.getStarMap().getVotes().getVotes().add(vote);
         int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;

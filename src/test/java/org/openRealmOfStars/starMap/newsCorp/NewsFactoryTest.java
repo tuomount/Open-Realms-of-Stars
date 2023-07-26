@@ -368,7 +368,8 @@ public class NewsFactoryTest {
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.WATERWORLD3.getImageInstructions());
     Mockito.when(planet.getName()).thenReturn("Planet I");
-    NewsData news = NewsFactory.makeUnitedGalaxyTowerNews(builder, planet);
+    NewsData news = NewsFactory.makeUnitedGalaxyTowerNews(builder, planet,
+        2550);
     assertEquals(true, news.getImageInstructions().contains("UNITED GALAXY TOWER"));
     assertEquals(true, news.getNewsText().contains("Empire of Test"));
     assertEquals(true, news.getNewsText().contains("United Galaxy Tower"));
@@ -502,7 +503,7 @@ public class NewsFactoryTest {
     Building building = Mockito.mock(Building.class);
     Mockito.when(building.getName()).thenReturn("Broadcasting tower");
     NewsData news = NewsFactory.makeBroadcasterBuildingNews(builder, planet,
-        building);
+        building, 2450);
     assertEquals(true, news.getNewsText().contains(
         builder.getEmpireName()));
   }
@@ -1712,7 +1713,8 @@ public class NewsFactoryTest {
     Mockito.when(planet.getName()).thenReturn("Planet I");
     Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.IRONWORLD6);
     Mockito.when(planet.getImageInstructions()).thenReturn(PlanetTypes.IRONWORLD6.getImageInstructions());
-    NewsData news = NewsFactory.makeScientificAchivementNews(maker, planet, building);
+    NewsData news = NewsFactory.makeScientificAchivementNews(maker, planet,
+        building, 2500);
     assertEquals(true, news.getNewsText().contains(
         planet.getName()));
     assertEquals(true, news.getNewsText().contains(
@@ -1732,7 +1734,8 @@ public class NewsFactoryTest {
     Mockito.when(planet.getName()).thenReturn("Planet I");
     Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.IRONWORLD6);
     Mockito.when(planet.getImageInstructions()).thenReturn(PlanetTypes.IRONWORLD6.getImageInstructions());
-    NewsData news = NewsFactory.makeScientificAchivementNews(maker, planet, building);
+    NewsData news = NewsFactory.makeScientificAchivementNews(maker, planet,
+        building, 2550);
     assertEquals(true, news.getNewsText().contains(
         planet.getName()));
     assertEquals(true, news.getNewsText().contains(
@@ -2200,7 +2203,7 @@ public class NewsFactoryTest {
   public void testGalacticSecretaryNews() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
     Mockito.when(realm.getEmpireName()).thenReturn("Empire of Test");
-    NewsData news = NewsFactory.makeSecretaryOfGalaxyNews(realm);
+    NewsData news = NewsFactory.makeSecretaryOfGalaxyNews(realm, 2550);
     assertEquals(true, news.getNewsText().contains("Empire of Test"));
   }
 

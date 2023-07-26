@@ -5471,7 +5471,7 @@ public class StarMap {
         planet.getGovernor().assignJob(Job.GOVERNOR, realm);
       }
       NewsData newsData = NewsFactory.makeScientificAchivementNews(realm,
-          planet, null);
+          planet, null, getStarYear());
       getNewsCorpData().addNews(newsData);
       EventOnPlanet event = new EventOnPlanet(
           EventType.ARTIFICAL_PLANET_CREATED, planet.getCoordinate(),

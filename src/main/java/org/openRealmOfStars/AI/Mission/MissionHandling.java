@@ -106,18 +106,22 @@ public final class MissionHandling {
         }
         Fleet tmpFleet = starMap.getFleetByCoordinate(center.getX() + x,
             center.getY() + y);
-        if (tmpFleet != null
-            && info != starMap.getPlayerInfoByFleet(tmpFleet)
-            && tmpFleet.getMilitaryValue() < fleet.getMilitaryValue()) {
-          if (targetFleet == null) {
-            targetFleet = tmpFleet;
-          } else {
-            double tmpDist = center.calculateDistance(
-                tmpFleet.getCoordinate());
-            double targetDist = center.calculateDistance(
-                targetFleet.getCoordinate());
-            if (tmpDist < targetDist) {
+        if (tmpFleet != null) {
+          PlayerInfo targetOwner = starMap.getPlayerInfoByFleet(tmpFleet);
+          int targetIndex = starMap.getPlayerList().getIndex(targetOwner);
+          if (info != targetOwner
+              && tmpFleet.getMilitaryValue() < fleet.getMilitaryValue()
+              && !info.getDiplomacy().isAlliance(targetIndex)) {
+            if (targetFleet == null) {
               targetFleet = tmpFleet;
+            } else {
+              double tmpDist = center.calculateDistance(
+                  tmpFleet.getCoordinate());
+              double targetDist = center.calculateDistance(
+                  targetFleet.getCoordinate());
+              if (tmpDist < targetDist) {
+                targetFleet = tmpFleet;
+              }
             }
           }
         }
@@ -3588,7 +3592,7 @@ public final class MissionHandling {
                   + " fleet " + fleet.getName() + "!",
               Icons.getIconByName(Icons.ICON_HULL_TECH));
           msg.setCoordinate(fleetAtTarget.getCoordinate());
-          msg.setMatchByString(fleet.getName());
+          msg.setMatchByString(fleetAtTarget.getName());
           infoAtTarget.getMsgList().addNewMessage(msg);
         } else if (!info.isHuman() && !infoAtTarget.isBoard()
             && !info.isBoard()) {

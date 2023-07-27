@@ -12,6 +12,7 @@ import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -308,8 +309,14 @@ public class MissionHandlingTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNearByFleet() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Game game = Mockito.mock(Game.class);
     StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(playerList.getIndex((PlayerInfo) Mockito.anyObject()))
+        .thenReturn(1);
     Fleet fleet2 = Mockito.mock(Fleet.class);
     Mockito.when(fleet2.getMilitaryValue()).thenReturn(6);
     Mockito.when(fleet2.getCoordinate()).thenReturn(new Coordinate(6, 7));
@@ -333,6 +340,8 @@ public class MissionHandlingTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testPrivateering() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
     FleetList fleetList = Mockito.mock(FleetList.class);
     Mockito.when(fleetList.getTotalFleetCapacity()).thenReturn(0d);
@@ -341,6 +350,10 @@ public class MissionHandlingTest {
         new Coordinate(2, 2));
     Game game = Mockito.mock(Game.class);
     StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(playerList.getIndex((PlayerInfo) Mockito.anyObject()))
+        .thenReturn(1);
     Mockito.when(map.getMaxX()).thenReturn(50);
     Mockito.when(map.getMaxY()).thenReturn(50);
     Fleet fleet2 = Mockito.mock(Fleet.class);

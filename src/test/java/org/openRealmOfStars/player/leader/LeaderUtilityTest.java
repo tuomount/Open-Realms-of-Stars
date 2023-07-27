@@ -7,16 +7,22 @@ import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonus;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.stats.StatType;
+import org.openRealmOfStars.starMap.GalaxyConfig;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2020, 2021 Tuomo Untinen
+ * Copyright (C) 2020-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -608,6 +614,65 @@ public class LeaderUtilityTest {
         + " Process. King is known for war declarations and trades."
         + " King Robo Test is known to be aggressive. ", str);
 
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHiringLeaderFromAnotherRealm() {
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(4);
+    config.setScoringVictoryTurns(200);
+    config.setAiOnly(true);
+    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setPlayerDifficult(0, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(1, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(2, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(3, AiDifficulty.NORMAL);
+    config.setPlayerName(0, "Realm of Pop");
+    config.setPlayerGovernment(0, GovernmentType.DEMOCRACY);
+    config.setRace(0, SpaceRace.HUMAN);
+    config.setPlayerName(1, "Realm of Credit");
+    config.setPlayerGovernment(1, GovernmentType.DEMOCRACY);
+    config.setRace(1, SpaceRace.HUMAN);
+    PlayerList playerList = PlayerList.createPlayerList(config);
+    StarMap map = new StarMap(config, playerList);
+    PlayerInfo info = map.getPlayerByIndex(0);
+    info.getDiplomacy().getDiplomacyList(1).addBonus(
+        new DiplomacyBonus(DiplomacyBonusType.IN_DEFENSIVE_PACT,
+            info.getRace()));
+    info.getDiplomacy().getDiplomacyList(1).addBonus(
+        new DiplomacyBonus(DiplomacyBonusType.LONG_PEACE,
+            info.getRace()));
+    info.getDiplomacy().getDiplomacyList(1).addBonus(
+        new DiplomacyBonus(DiplomacyBonusType.IN_TRADE_ALLIANCE,
+            info.getRace()));
+    info = map.getPlayerByIndex(1);
+    info.getDiplomacy().getDiplomacyList(0).addBonus(
+        new DiplomacyBonus(DiplomacyBonusType.IN_DEFENSIVE_PACT,
+            info.getRace()));
+    info.getDiplomacy().getDiplomacyList(0).addBonus(
+        new DiplomacyBonus(DiplomacyBonusType.IN_TRADE_ALLIANCE,
+            info.getRace()));
+    info.getDiplomacy().getDiplomacyList(0).addBonus(
+        new DiplomacyBonus(DiplomacyBonusType.LONG_PEACE,
+            info.getRace()));
+    info.setTotalCredits(120);
+    for (Planet planet : map.getPlanetList()) {
+      if (planet.getPlanetOwnerIndex() == 0) {
+        planet.setWorkers(Planet.FOOD_FARMERS, 6);
+      }
+    }
+    info = map.getPlayerByIndex(0);
+    Leader[] leaders = LeaderUtility.buildLeaderPool(map, info);
+    info = map.getPlayerByIndex(1);
+    Leader leader = LeaderUtility.recruiteLeader(map, info, null);
+    assertNotNull(leader);
+    assertEquals(SpaceRace.HUMAN, leader.getRace());
+    assertEquals(leaders[0], leader);
+    info = map.getPlayerByIndex(0);
+    LeaderUtility.buildLeaderPool(map, info);
+    ArrayList<Leader> leaderList = info.getLeaderRecruitPool();
+    assertNotEquals(leaderList.get(0), leader);
   }
 
 }

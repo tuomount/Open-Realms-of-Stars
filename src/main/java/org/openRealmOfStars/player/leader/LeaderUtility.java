@@ -228,6 +228,10 @@ public final class LeaderUtility {
       if (leader.getCost() > leaderCost * 2) {
         score = score - 1;
       }
+      if (leader.getCost() > info.getTotalCredits()) {
+        // No credits for hiring.
+        score = -1;
+      }
       if (score > bestScore) {
         bestScore = score;
         bestLeader = leader;
@@ -258,8 +262,8 @@ public final class LeaderUtility {
               Icons.getIconByName(Icons.ICON_GOVERNOR));
           realm.getMsgList().addUpcomingMessage(msg);
         }
+        return bestLeader.getLeader();
       }
-      return bestLeader.getLeader();
     }
     return null;
   }

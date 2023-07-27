@@ -11,6 +11,9 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
+import org.openRealmOfStars.starMap.GalaxyConfig;
+import org.openRealmOfStars.starMap.PirateDifficultLevel;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
@@ -77,6 +80,88 @@ public class PlayerList {
     }
   }
 
+  /**
+   * Creates PlayerList based on galaxy config
+   * @param galaxyConfig Galaxy Config
+   * @return PlayerList
+   */
+  public static PlayerList createPlayerList(final GalaxyConfig galaxyConfig) {
+    PlayerList players = new PlayerList();
+    int boardIndex = -1;
+    int maxPlayers = galaxyConfig.getMaxPlayers();
+    if (galaxyConfig.getSpacePiratesLevel() > 0) {
+      maxPlayers++;
+      boardIndex = galaxyConfig.getMaxPlayers();
+    }
+    if (galaxyConfig.getSpaceAnomaliesLevel() == 2) {
+      maxPlayers++;
+      if (boardIndex == -1) {
+        boardIndex = galaxyConfig.getMaxPlayers();
+      }
+    }
+    ArrayList<PlayerColor> randomListOfColors = new ArrayList<>();
+    for (PlayerColor color : PlayerColor.values()) {
+      randomListOfColors.add(color);
+    }
+    for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
+      PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i),
+          maxPlayers, i, boardIndex);
+      info.setGovernment(galaxyConfig.getPlayerGovernment(i));
+      info.setEmpireName(galaxyConfig.getPlayerName(i));
+      info.setElderRealm(galaxyConfig.getPlayerElderRealm(i));
+      info.setAiDifficulty(galaxyConfig.getDifficulty(i));
+      info.setColor(galaxyConfig.getPlayerColor(i));
+      randomListOfColors.remove(galaxyConfig.getPlayerColor(i));
+      if (i == 0 && !galaxyConfig.isAiOnly()) {
+        info.setHuman(true);
+      }
+      if (info.isHuman()) {
+        info.setAiDifficulty(AiDifficulty.CHALLENGING);
+      }
+      players.addPlayer(info);
+    }
+    if (galaxyConfig.getSpacePiratesLevel() > 0) {
+      int index = galaxyConfig.getMaxPlayers();
+      PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_PIRATE, maxPlayers,
+          index, boardIndex);
+      info.setBoard(true);
+      info.setGovernment(GovernmentType.SPACE_PIRATES);
+      info.setEmpireName("Space pirates");
+      PirateDifficultLevel difficultyLevel = galaxyConfig
+          .getSpacePiratesDifficulty();
+      if (difficultyLevel == PirateDifficultLevel.EASY
+          || difficultyLevel == PirateDifficultLevel.VERY_EASY) {
+        info.setAiDifficulty(AiDifficulty.WEAK);
+      }
+      if (difficultyLevel == PirateDifficultLevel.NORMAL) {
+        info.setAiDifficulty(AiDifficulty.NORMAL);
+      }
+      if (difficultyLevel == PirateDifficultLevel.HARD
+          || difficultyLevel == PirateDifficultLevel.VERY_HARD) {
+        info.setAiDifficulty(AiDifficulty.CHALLENGING);
+      }
+      int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
+      info.setColor(randomListOfColors.get(colorIndex));
+      players.addPlayer(info);
+    }
+    if (galaxyConfig.getSpaceAnomaliesLevel() == 2) {
+      int index = galaxyConfig.getMaxPlayers();
+      if (galaxyConfig.getSpacePiratesLevel() > 0) {
+        index++;
+      }
+      PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_MONSTERS, maxPlayers,
+          index, boardIndex);
+      info.setBoard(true);
+      info.setGovernment(GovernmentType.SPACE_PIRATES);
+      info.setEmpireName("Space monsters");
+      info.setAiDifficulty(AiDifficulty.WEAK);
+      int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
+      info.setColor(randomListOfColors.get(colorIndex));
+      players.addPlayer(info);
+    }
+    players.calculateInitialDiplomacyBonuses();
+    return players;
+  }
   /**
    * Save Player List to DataOutputStream
    * @param dos The data output stream

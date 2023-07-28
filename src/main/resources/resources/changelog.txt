@@ -34,6 +34,8 @@
 * Fixed AI war fatigue check when making a peace offer.
 * Fixed check when war ends and checking the war fatigue.
 * Upgrade ship sound effect is not played if there is not enough credit to upgrade the ship.
+* Fixed issue where focus do not change when fleet encounters enemy fleet.
+* Fixes issue where allied privateer attacked against ally.
 
 # Open Realm of Stars 0.22.0Beta 
 

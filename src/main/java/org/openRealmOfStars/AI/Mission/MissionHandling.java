@@ -186,7 +186,8 @@ public final class MissionHandling {
     for (Planet planet : starMap.getPlanetList()) {
       if (planet.getPlanetPlayerInfo() != null
           && planet.getPlanetPlayerInfo() != info
-          && planet.getOrbital() != null) {
+          && planet.getOrbital() != null
+          && !info.getDiplomacy().isAlliance(planet.getPlanetOwnerIndex())) {
         double dist = center.calculateDistance(planet.getCoordinate());
         if (dist < maxDist) {
           maxDist = dist;

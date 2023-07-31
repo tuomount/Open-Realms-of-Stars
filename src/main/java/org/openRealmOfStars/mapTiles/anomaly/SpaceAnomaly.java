@@ -270,6 +270,12 @@ public class SpaceAnomaly {
             Icons.getIconByName(Icons.ICON_TUTORIAL));
         info.getMsgList().addNewMessage(msg);
       }
+      tutorialText = Game.getTutorial().showTutorialText(37);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        info.getMsgList().addNewMessage(msg);
+      }
     }
     Tile station = Tiles.getTileByName(TileNames.DESTROYED_PLANET);
     map.setTile(fleet.getX(), fleet.getY(), station);

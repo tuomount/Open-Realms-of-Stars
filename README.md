@@ -43,6 +43,12 @@ Each realm can have unique characters called leaders. These leaders can act as g
 
 After a game players are given a quick overview of major galactic events and how other realms did during the game. There will be also history events of all major events that leaders did during their time in the game.
 
+#### The Story
+![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/story.png)
+
+When you start the game, background story will be generated for your realm. At the end of the game you can
+see your realm's full story. There is also possible to see other realms' stories.
+
 See more [screenshots](https://github.com/tuomount/Open-Realms-of-Stars/tree/master/ArtModification/screenshots)
 
 ### Features

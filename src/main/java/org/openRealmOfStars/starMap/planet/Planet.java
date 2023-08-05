@@ -2579,6 +2579,7 @@ public class Planet {
             if (governor != null) {
               int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
               Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+              orbital = ship;
               PlanetHandling.chooseNextConstruction(map, this, index, attitude);
               sb.append(" " + governor.getCallName() + " selected new "
                   + "construction process where "
@@ -2586,7 +2587,6 @@ public class Planet {
                   + " will be built. Estimated building time is "
                   + getProductionTimeAsString(underConstruction) + ".");
             }
-            orbital = ship;
             msg = new Message(MessageType.CONSTRUCTION, sb.toString(),
                 Icons.getIconByName(Icons.ICON_STARBASE));
             msg.setCoordinate(getCoordinate());

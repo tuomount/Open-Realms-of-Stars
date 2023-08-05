@@ -2328,7 +2328,7 @@ private int increaseHitChanceByComponent() {
     }
     if (getHull().getSize() == ShipSize.SMALL
         && getHull().getHullType() != ShipHullType.FREIGHTER
-        && !isColonyModule() && !isStarBase()) {
+        && !isColonyModule() && !isStarBaseOrOrbital()) {
       return true;
     }
     return false;

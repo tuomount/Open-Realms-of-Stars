@@ -1627,7 +1627,7 @@ public class Game implements ActionListener {
     if (dataObject instanceof PlayerInfo) {
       info = (PlayerInfo) dataObject;
     }
-    endGameView = new EndGameView(this, info);
+    endGameView = new EndGameView(this, info, starMap.getStarYear());
     this.updateDisplay(endGameView);
   }
 

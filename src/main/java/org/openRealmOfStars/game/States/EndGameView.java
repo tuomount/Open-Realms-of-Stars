@@ -57,8 +57,10 @@ public class EndGameView extends BlackPanel {
    * Constructor for End Game view.
    * @param listener ActionListener
    * @param info Realm that lost.
+   * @param starYear when this lost happens.
    */
-  public EndGameView(final ActionListener listener, final PlayerInfo info) {
+  public EndGameView(final ActionListener listener, final PlayerInfo info,
+      final int starYear) {
     String scrollText = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
         + "\n\n\n\n\n\n\n\n\n\n\n" + "# Error unknown realm lost!\n\n";
     String title = null;
@@ -78,7 +80,7 @@ public class EndGameView extends BlackPanel {
       }
     }
     if (info != null) {
-      NewsData newsData = NewsFactory.makeLostNews(info);
+      NewsData newsData = NewsFactory.makeLostNews(info, starYear);
       scrollText = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
           + "\n\n\n\n\n\n\n\n\n\n\n" + "# " + info.getEmpireName()
           + " has lost !\n\n"

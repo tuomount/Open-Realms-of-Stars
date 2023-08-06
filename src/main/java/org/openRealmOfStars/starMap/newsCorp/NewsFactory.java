@@ -919,9 +919,11 @@ public final class NewsFactory {
   /**
    * Make realm lost news. Realm lost it's final planet
    * @param realm PlayerInfo who lost
+   * @param starYear When this lost happens
    * @return NewsData
    */
-  public static NewsData makeLostNews(final PlayerInfo realm) {
+  public static NewsData makeLostNews(final PlayerInfo realm,
+      final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
@@ -947,6 +949,7 @@ public final class NewsFactory {
     sb.append(" has lost its last planet from the known galaxy! ");
     sb.append("Galaxy now has one realm less... ");
     news.setNewsText(sb.toString());
+    realm.appendStory(news.getNewsText(), starYear);
     return news;
   }
   /**

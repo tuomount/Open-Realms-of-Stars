@@ -791,7 +791,7 @@ public class NewsFactoryTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
-    NewsData news = NewsFactory.makeLostNews(info);
+    NewsData news = NewsFactory.makeLostNews(info, 2500);
     assertEquals(true, news.getImageInstructions().contains(
         "Human"));
     assertEquals(true, news.getNewsText().contains(info.getEmpireName()));

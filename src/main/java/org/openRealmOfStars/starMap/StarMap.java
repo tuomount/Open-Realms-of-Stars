@@ -3701,7 +3701,8 @@ public class StarMap {
                     + " has selected as ruler for " + info.getEmpireName(),
                 Icons.getIconByName(Icons.ICON_RULER));
             msg.setMatchByString("Index:" + info.getLeaderIndex(ruler));
-            NewsData news = NewsFactory.makeNewRulerNews(ruler, info);
+            NewsData news = NewsFactory.makeNewRulerNews(ruler, info,
+                getStarYear());
             if (hasHumanMet(info)) {
               getNewsCorpData().addNews(news);
             }

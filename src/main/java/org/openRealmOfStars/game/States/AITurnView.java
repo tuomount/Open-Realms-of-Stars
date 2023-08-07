@@ -2856,7 +2856,8 @@ public class AITurnView extends BlackPanel {
               Icons.getIconByName(Icons.ICON_RULER));
           msg.setMatchByString("Index:" + realm.getLeaderIndex(ruler));
           realm.getMsgList().addUpcomingMessage(msg);
-          NewsData news = NewsFactory.makeNewRulerNews(ruler, realm);
+          NewsData news = NewsFactory.makeNewRulerNews(ruler, realm,
+              game.getStarMap().getStarYear());
           if (game.getStarMap().hasHumanMet(realm)) {
             game.getStarMap().getNewsCorpData().addNews(news);
           }

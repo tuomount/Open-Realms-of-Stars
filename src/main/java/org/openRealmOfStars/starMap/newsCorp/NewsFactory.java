@@ -407,10 +407,11 @@ public final class NewsFactory {
        * Make news about new ruler
        * @param ruler New ruler
        * @param realm PlayerInfo
+       * @param starYear Star Year when this happens
        * @return NewsData
        */
   public static NewsData makeNewRulerNews(final Leader ruler,
-      final PlayerInfo realm) {
+      final PlayerInfo realm, final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
@@ -438,6 +439,7 @@ public final class NewsFactory {
     sb.append(" is new for ruler of ");
     sb.append(realm.getEmpireName());
     sb.append(". ");
+    realm.appendStory(news.getNewsText(), starYear);
     news.setNewsText(sb.toString());
     return news;
   }

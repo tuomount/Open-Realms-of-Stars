@@ -235,6 +235,40 @@ public class MapPanel extends JPanel {
    * Draw weapon range for combat.
    */
   private boolean drawWeaponRange;
+
+  /**
+   * Time now in milliseconds.
+   */
+  private long now;
+  /**
+   * Last time in milliseconds.
+   */
+  private long lastTime;
+  /**
+   * Frame Count
+   */
+  private int frameCount;
+  /**
+   * Delta time between frames.
+   */
+  private long deltaBetweenFrames;
+  /**
+   * FPS timer.
+   */
+  private long fpsTimer;
+  /**
+   * Panel type based on last drawing.
+   */
+  private MapPanelType panelType;
+  /**
+   * Flag for stop draw thread.
+   */
+  private boolean stopDrawThread;
+
+  /**
+   * Map Panel thread
+   */
+  private MapPanelThread thread;
   /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
@@ -243,6 +277,7 @@ public class MapPanel extends JPanel {
    */
   public MapPanel(final Game game, final boolean battle) {
     initMapPanel(game, battle);
+    thread = new MapPanelThread(this, game.getStarMap());
   }
 
   /**
@@ -263,6 +298,12 @@ public class MapPanel extends JPanel {
   }
 
   /**
+   * Start drawing.
+   */
+  public void startDrawing() {
+    thread.start();
+  }
+  /**
    * Initialize actual map panel.
    * @param game GameFrame for fetching frame size in battle mode
    * @param battleMode True if drawing battle map.
@@ -277,6 +318,7 @@ public class MapPanel extends JPanel {
     setShowMiniMap(false);
     tileOverride = null;
     improvedParallax = false;
+    lastTime = System.currentTimeMillis();
     if (game != null) {
       improvedParallax = game.isImprovedParallax();
     }
@@ -293,7 +335,9 @@ public class MapPanel extends JPanel {
         height = BATTLE_VIEW_SIZE;
       }
     }
+    panelType = MapPanelType.STARMAP;
     if (battle) {
+      panelType = MapPanelType.BATTLE;
       screen = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
       Dimension size = new Dimension(width, height);
       this.setSize(size);
@@ -361,12 +405,25 @@ public class MapPanel extends JPanel {
 
   @Override
   public void paint(final Graphics arg0) {
-    super.paint(arg0);
-    if (screen != null) {
-      if (popup != null) {
-        popup.drawPopup(screen);
+    now = System.currentTimeMillis();
+    deltaBetweenFrames = deltaBetweenFrames + (now - lastTime);
+    fpsTimer = fpsTimer + (now - lastTime);
+    lastTime = now;
+    if (deltaBetweenFrames > 16) {
+      super.paint(arg0);
+      if (screen != null) {
+        if (popup != null) {
+          popup.drawPopup(screen);
+        }
+        arg0.drawImage(screen, 0, 0, null);
       }
-      arg0.drawImage(screen, 0, 0, null);
+      deltaBetweenFrames = deltaBetweenFrames - 16;
+      frameCount++;
+    }
+    if (fpsTimer > 1000) {
+      fpsTimer = fpsTimer - 1000;
+      System.out.println("FPS:" + frameCount);
+      frameCount = 0;
     }
   }
 
@@ -1810,6 +1867,7 @@ public class MapPanel extends JPanel {
    */
   public void setHistoryCultures(final int[][] culture) {
     historyCultures = culture;
+    panelType = MapPanelType.HISTORY;
   }
 
   /**
@@ -1966,5 +2024,28 @@ public class MapPanel extends JPanel {
    */
   public Minimap getMinimap() {
     return minimap;
+  }
+
+  /**
+   * Get Panel type.
+   * @return MapPanelType
+   */
+  public MapPanelType getPanelType() {
+    return panelType;
+  }
+
+  /**
+   * Stop drawing thread.
+   */
+  public void stopDrawingThread() {
+    stopDrawThread = true;
+  }
+
+  /**
+   * Is stop drawing flag set?
+   * @return True if drawing should be stopped.
+   */
+  public boolean isStopDrawing() {
+    return stopDrawThread;
   }
 }

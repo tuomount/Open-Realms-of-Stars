@@ -1687,6 +1687,14 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Stop drawing threads.
+   */
+  public void stopDrawingThreads() {
+    if (starMapView != null) {
+      starMapView.stopDrawing();
+    }
+  }
+  /**
    * Change game state so that focus is also changed to target message.
    * There is also possibility to give data object which depends on new game
    * state.
@@ -1696,6 +1704,7 @@ public class Game implements ActionListener {
    */
   private void changeGameState(final GameState newState,
       final Message focusMessage, final Object dataObject) {
+    stopDrawingThreads();
     if (aiTurnView != null && aiTurnView.isThreaded()) {
       if (starMap.isHumanLost() && !starMap.isGameEnded()) {
         return;

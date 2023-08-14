@@ -357,7 +357,7 @@ public class StarMapView extends BlackPanel {
         players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
         players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
     setAutoFocus(true);
-
+    mapPanel.startDrawing();
   }
 
   /**
@@ -441,8 +441,8 @@ public class StarMapView extends BlackPanel {
           && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
         mapPanel.setRoute(infoPanel.getFleetShowing().getRoute());
       }
-      mapPanel.drawMap(this.map);
-      mapPanel.repaint();
+//      mapPanel.drawMap(this.map);
+//      mapPanel.repaint();
       readyToMove = true;
     }
     if (getPopup() != null) {
@@ -696,5 +696,12 @@ public class StarMapView extends BlackPanel {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Stop drawing thread.
+   */
+  public void stopDrawing() {
+    mapPanel.stopDrawingThread();
   }
 }

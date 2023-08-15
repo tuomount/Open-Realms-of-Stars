@@ -357,7 +357,9 @@ public class StarMapView extends BlackPanel {
         players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
         players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
     setAutoFocus(true);
-    mapPanel.startDrawing();
+    if (!Game.isSingleThread()) {
+      mapPanel.startDrawing();
+    }
   }
 
   /**
@@ -441,8 +443,10 @@ public class StarMapView extends BlackPanel {
           && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
         mapPanel.setRoute(infoPanel.getFleetShowing().getRoute());
       }
-//      mapPanel.drawMap(this.map);
-//      mapPanel.repaint();
+      if (Game.isSingleThread()) {
+        mapPanel.drawMap(this.map);
+        mapPanel.repaint();
+      }
       readyToMove = true;
     }
     if (getPopup() != null) {

@@ -540,6 +540,118 @@ public class MapPanel extends JPanel {
       Tile.updateBlackHoleEffect(tmp);
     }
   }
+
+  /**
+   * Draw Fleet into map panel screen.
+   * @param gr Graphics2D for screen
+   * @param fleetMap Precalculated fleet map from starmap.
+   * @param cx Center of screen
+   * @param cy Center of screen
+   * @param i  X coordinate modifier of center of screen
+   * @param j  Y coordinate modifier of center of screen
+   * @param starMap StarMap
+   * @param info Realm which is viewing the starmap
+   * @param pixelX Pixel X Coordinate in screen
+   * @param pixelY Pixel Y Coordinate in screen
+   */
+  private void drawFleet(final Graphics2D gr, final FleetTileInfo[][] fleetMap,
+      final int cx, final int cy, final int i, final int j,
+      final StarMap starMap, final PlayerInfo info,
+      final int pixelX, final int pixelY) {
+    Fleet fleet = null;
+    PlayerInfo fleetOwner = null;
+    int fleetOwnerIndex = -1;
+    if (fleetMap[i + cx][j + cy] != null) {
+      fleet = starMap.getFleetByFleetTileInfo(fleetMap[i + cx]
+          [j + cy]);
+      if (fleet != null) {
+        fleetOwner = starMap.getPlayerInfoByFleet(fleet);
+        fleetOwnerIndex = starMap.getPlayerList().getIndex(fleetOwner);
+      }
+    }
+    if (info != null && fleet != null) {
+      FleetVisibility visibility = new FleetVisibility(info, fleet,
+          fleetOwnerIndex);
+      boolean drawShip = visibility.isFleetVisible();
+      boolean recognized = visibility.isRecognized();
+      boolean espionageDetected = visibility.isEspionageDetected();
+      boolean moved = false;
+      if (fleet.getMovesLeft() == 0 && fleet.getRoute() == null) {
+        moved = true;
+      }
+      if (recognized && fleetOwnerIndex != -1 && drawShip) {
+        redrawTile[i + viewPointX][j + viewPointY] = true;
+        PlayerInfo shipInfo = starMap.getPlayerByIndex(fleetOwnerIndex);
+        Tile fleetColor = Tiles.getTileByName(
+            shipInfo.getColor().getShipTile());
+        if (fleetColor != null) {
+          fleetColor.draw(gr, pixelX, pixelY);
+        }
+        if (fleetOwner != info && Game.getTutorial() != null
+            && starMap.isTutorialEnabled() && info.isHuman()) {
+          String tutorialText = Game.getTutorial().showTutorialText(50);
+          if (tutorialText != null) {
+            Message msg = new Message(MessageType.INFORMATION,
+                tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+            msg.setCoordinate(new Coordinate(i + cx, j + cy));
+            info.getMsgList().addNewMessage(msg);
+          }
+          tutorialText = Game.getTutorial().showTutorialText(90);
+          if (tutorialText != null) {
+            Message msg = new Message(MessageType.INFORMATION,
+                tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+            msg.setCoordinate(new Coordinate(i + cx, j + cy));
+            info.getMsgList().addNewMessage(msg);
+          }
+        }
+      }
+      if (drawShip) {
+        BufferedImage img = ShipImages
+            .getByRace(fleetMap[i + cx][j + cy].getRace())
+            .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
+        gr.drawImage(img, pixelX, pixelY, null);
+        if (espionageDetected) {
+          Icon16x16 icon = Icons.getIconByName(Icons.ICON_SPY_GOGGLES);
+          icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+              pixelY + Icon16x16.MAX_HEIGHT);
+        }
+        if (fleet.getRoute() != null && fleetOwner == info) {
+          if (fleet.getRoute().getFtlSpeed() > 0
+            || fleet.getRoute().getRegularSpeed() > 0) {
+            Icon16x16 icon = Icons.getIconByName(
+                Icons.ICON_ENROUTED_MOVES);
+            icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+                pixelY + Icon16x16.MAX_HEIGHT);
+          }
+        } else if (moved) {
+          Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_DONE);
+          icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+              pixelY + Icon16x16.MAX_HEIGHT);
+        } else {
+          Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_1);
+          if (flickerGoUp) {
+            icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_2);
+          }
+          icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+              pixelY + Icon16x16.MAX_HEIGHT);
+        }
+      }
+    }
+    if (fleet == null && fleetMap[i + cx][j + cy] != null) {
+      Planet planetOrbital = starMap.getPlanetByFleetTileInfo(
+          fleetMap[i + cx][j + cy]);
+      if (planetOrbital != null && planetOrbital.getOrbital() != null
+          && info != null
+          && info.getSectorVisibility(planetOrbital.getCoordinate())
+          == PlayerInfo.VISIBLE) {
+        // Draw orbital
+        BufferedImage img = ShipImages
+            .getByRace(fleetMap[i + cx][j + cy].getRace())
+            .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
+        gr.drawImage(img, pixelX, pixelY, null);
+      }
+    }
+  }
   /**
    * Draw star map to Map panel
    * @param starMap Star map to draw
@@ -792,99 +904,8 @@ public class MapPanel extends JPanel {
             redrawTile[i + viewPointX][j + viewPointY] = true;
           }
           // Draw fleet
-          Fleet fleet = null;
-          PlayerInfo fleetOwner = null;
-          int fleetOwnerIndex = -1;
-          if (fleetMap[i + cx][j + cy] != null) {
-            fleet = starMap.getFleetByFleetTileInfo(fleetMap[i + cx]
-                [j + cy]);
-            if (fleet != null) {
-              fleetOwner = starMap.getPlayerInfoByFleet(fleet);
-              fleetOwnerIndex = starMap.getPlayerList().getIndex(fleetOwner);
-            }
-          }
-          if (info != null && fleet != null) {
-            FleetVisibility visibility = new FleetVisibility(info, fleet,
-                fleetOwnerIndex);
-            boolean drawShip = visibility.isFleetVisible();
-            boolean recognized = visibility.isRecognized();
-            boolean espionageDetected = visibility.isEspionageDetected();
-            boolean moved = false;
-            if (fleet.getMovesLeft() == 0 && fleet.getRoute() == null) {
-              moved = true;
-            }
-            if (recognized && fleetOwnerIndex != -1 && drawShip) {
-              redrawTile[i + viewPointX][j + viewPointY] = true;
-              PlayerInfo shipInfo = starMap.getPlayerByIndex(fleetOwnerIndex);
-              Tile fleetColor = Tiles.getTileByName(
-                  shipInfo.getColor().getShipTile());
-              if (fleetColor != null) {
-                fleetColor.draw(gr, pixelX, pixelY);
-              }
-              if (fleetOwner != info && Game.getTutorial() != null
-                  && starMap.isTutorialEnabled() && info.isHuman()) {
-                String tutorialText = Game.getTutorial().showTutorialText(50);
-                if (tutorialText != null) {
-                  Message msg = new Message(MessageType.INFORMATION,
-                      tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
-                  msg.setCoordinate(new Coordinate(i + cx, j + cy));
-                  info.getMsgList().addNewMessage(msg);
-                }
-                tutorialText = Game.getTutorial().showTutorialText(90);
-                if (tutorialText != null) {
-                  Message msg = new Message(MessageType.INFORMATION,
-                      tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
-                  msg.setCoordinate(new Coordinate(i + cx, j + cy));
-                  info.getMsgList().addNewMessage(msg);
-                }
-              }
-            }
-            if (drawShip) {
-              BufferedImage img = ShipImages
-                  .getByRace(fleetMap[i + cx][j + cy].getRace())
-                  .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
-              gr.drawImage(img, pixelX, pixelY, null);
-              if (espionageDetected) {
-                Icon16x16 icon = Icons.getIconByName(Icons.ICON_SPY_GOGGLES);
-                icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-                    pixelY + Icon16x16.MAX_HEIGHT);
-              }
-              if (fleet.getRoute() != null && fleetOwner == info) {
-                if (fleet.getRoute().getFtlSpeed() > 0
-                  || fleet.getRoute().getRegularSpeed() > 0) {
-                  Icon16x16 icon = Icons.getIconByName(
-                      Icons.ICON_ENROUTED_MOVES);
-                  icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-                      pixelY + Icon16x16.MAX_HEIGHT);
-                }
-              } else if (moved) {
-                Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_DONE);
-                icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-                    pixelY + Icon16x16.MAX_HEIGHT);
-              } else {
-                Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_1);
-                if (flickerGoUp) {
-                  icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_2);
-                }
-                icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-                    pixelY + Icon16x16.MAX_HEIGHT);
-              }
-            }
-          }
-          if (fleet == null && fleetMap[i + cx][j + cy] != null) {
-            Planet planetOrbital = starMap.getPlanetByFleetTileInfo(
-                fleetMap[i + cx][j + cy]);
-            if (planetOrbital != null && planetOrbital.getOrbital() != null
-                && info != null
-                && info.getSectorVisibility(planetOrbital.getCoordinate())
-                == PlayerInfo.VISIBLE) {
-              // Draw orbital
-              BufferedImage img = ShipImages
-                  .getByRace(fleetMap[i + cx][j + cy].getRace())
-                  .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
-              gr.drawImage(img, pixelX, pixelY, null);
-            }
-          }
+          drawFleet(gr, fleetMap, cx, cy, i, j, starMap, info, pixelX, pixelY);
+
           // Draw fog of war and uncharted tiles
           if (info != null) {
             switch (info.getSectorVisibility(new Coordinate(i + cx,

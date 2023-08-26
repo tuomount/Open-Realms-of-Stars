@@ -418,10 +418,6 @@ public class Game implements ActionListener {
    */
   private static boolean mainMethodCalled;
   /**
-   * Flag for single thread grahics.
-   */
-  private static boolean singleThread;
-  /**
    * Ambient light bridge
    */
   private Bridge bridge;
@@ -438,13 +434,6 @@ public class Game implements ActionListener {
     return starMap;
   }
 
-  /**
-   * Is game single thread for graphics or not.
-   * @return True if single thread.
-   */
-  public static boolean isSingleThread() {
-    return singleThread;
-  }
   /**
    * Game window X size aka width
    */
@@ -1698,14 +1687,6 @@ public class Game implements ActionListener {
   }
 
   /**
-   * Stop drawing threads.
-   */
-  public void stopDrawingThreads() {
-    if (starMapView != null) {
-      starMapView.stopDrawing();
-    }
-  }
-  /**
    * Change game state so that focus is also changed to target message.
    * There is also possibility to give data object which depends on new game
    * state.
@@ -1715,7 +1696,6 @@ public class Game implements ActionListener {
    */
   private void changeGameState(final GameState newState,
       final Message focusMessage, final Object dataObject) {
-    stopDrawingThreads();
     if (aiTurnView != null && aiTurnView.isThreaded()) {
       if (starMap.isHumanLost() && !starMap.isGameEnded()) {
         return;
@@ -2497,7 +2477,6 @@ public class Game implements ActionListener {
    * @param args from Command line
    */
   public static void main(final String[] args) {
-    singleThread = false;
     MusicPlayer.setMusicEnabled(true);
     SoundPlayer.setSoundEnabled(true);
     if (args.length > 0 && args[0].equals("--credits")) {
@@ -2527,10 +2506,6 @@ public class Game implements ActionListener {
       if (args.length > 0 && args[0].equals("--debug")) {
         System.out.println("Debugging enabled.");
         ErrorLogger.enabledDebugging();
-      }
-      if (args.length > 0 && args[0].equals("--single")) {
-        System.out.println("Single threaded");
-        singleThread = true;
       }
       mainMethodCalled = true;
       new Game(true);

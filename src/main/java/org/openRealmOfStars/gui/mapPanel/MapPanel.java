@@ -114,18 +114,14 @@ public class MapPanel extends JPanel {
   private int viewPointOffsetY;
 
   /**
-   * Where the map is actually drawn. Double buffering for multithreading.
+   * Where the map is actually drawn.
    */
-  private BufferedImage[] screen;
+  private BufferedImage screen;
 
   /**
-   * Last shown screen index,
+   * Background image for drawing partial screen.
    */
-  private int lastShown;
-  /**
-   * Last drew screen index,
-   */
-  private int lastDrew;
+  private BufferedImage backgroundScreen;
   /**
    * Start value for flicker blue
    */
@@ -195,6 +191,14 @@ public class MapPanel extends JPanel {
    */
   private int[][] tileOverride;
 
+  /**
+   * Array which tiles needs to be redrawn.
+   */
+  private boolean[][] redrawTile;
+  /**
+   * Flag for full draw.
+   */
+  private boolean fullDraw;
   /**
    * Cursor focus. Over 0 it means to draw focus lines.
    */
@@ -268,15 +272,15 @@ public class MapPanel extends JPanel {
    * Panel type based on last drawing.
    */
   private MapPanelType panelType;
-  /**
-   * Flag for stop draw thread.
-   */
-  private boolean stopDrawThread;
 
   /**
-   * Map Panel thread
+   * Last Cursor position x coordinate
    */
-  private MapPanelThread thread;
+  private int lastCursorPosX;
+  /**
+   * Last cursor position y coordinate.
+   */
+  private int lastCursorPosY;
   /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
@@ -285,7 +289,6 @@ public class MapPanel extends JPanel {
    */
   public MapPanel(final Game game, final boolean battle) {
     initMapPanel(game, battle);
-    thread = new MapPanelThread(this, game.getStarMap());
   }
 
   /**
@@ -306,12 +309,6 @@ public class MapPanel extends JPanel {
   }
 
   /**
-   * Start drawing.
-   */
-  public void startDrawing() {
-    thread.start();
-  }
-  /**
    * Initialize actual map panel.
    * @param game GameFrame for fetching frame size in battle mode
    * @param battleMode True if drawing battle map.
@@ -327,6 +324,8 @@ public class MapPanel extends JPanel {
     tileOverride = null;
     improvedParallax = false;
     lastTime = System.currentTimeMillis();
+    lastCursorPosX = -1;
+    lastCursorPosY = -1;
     if (game != null) {
       improvedParallax = game.isImprovedParallax();
     }
@@ -346,9 +345,7 @@ public class MapPanel extends JPanel {
     panelType = MapPanelType.STARMAP;
     if (battle) {
       panelType = MapPanelType.BATTLE;
-      screen = new BufferedImage[2];
-      screen[0] = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-      screen[1] = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+      screen = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
       Dimension size = new Dimension(width, height);
       this.setSize(size);
       this.setPreferredSize(size);
@@ -396,11 +393,12 @@ public class MapPanel extends JPanel {
     if (viewPointY < 1) {
       viewPointY = 1;
     }
+    redrawTile = new boolean[viewPointX * 2 + 1][viewPointY * 2 + 1];
     if (battle) {
-      viewPointOffsetX = screen[0].getWidth()
+      viewPointOffsetX = screen.getWidth()
           - (2 * viewPointX * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH);
       viewPointOffsetX = viewPointOffsetX / 2;
-      viewPointOffsetY = screen[0].getHeight()
+      viewPointOffsetY = screen.getHeight()
           - (2 * viewPointY * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT);
       viewPointOffsetY = viewPointOffsetY / 2;
     } else {
@@ -413,19 +411,6 @@ public class MapPanel extends JPanel {
     }
   }
 
-  /**
-   * Get next show index;
-   * @return Next show index.
-   */
-  private int getNextShowIndex() {
-    if (lastShown == 0 && lastDrew == 1) {
-      return 1;
-    }
-    if (lastShown == 1 && lastDrew == 0) {
-      return 0;
-    }
-    return -1;
-  }
   @Override
   public void paint(final Graphics arg0) {
     now = System.currentTimeMillis();
@@ -434,13 +419,11 @@ public class MapPanel extends JPanel {
     lastTime = now;
     if (deltaBetweenFrames > 16) {
       super.paint(arg0);
-      int index = getNextShowIndex();
-      if (screen != null && index != -1) {
+      if (screen != null) {
         if (popup != null) {
-          popup.drawPopup(screen[index]);
+          popup.drawPopup(screen);
         }
-        arg0.drawImage(screen[index], 0, 0, null);
-        lastShown = index;
+        arg0.drawImage(screen, 0, 0, null);
       }
       deltaBetweenFrames = deltaBetweenFrames - 16;
       frameCount++;
@@ -488,16 +471,6 @@ public class MapPanel extends JPanel {
   private static final int FLICKER_UPPER_LIMIT = 384;
 
   /**
-   * Get next draw index.
-   * @return Next draw index.
-   */
-  private int getNextDrawIndex() {
-    if (lastDrew == 0) {
-      return 1;
-    }
-    return 0;
-  }
-  /**
    * Update black hole effect while drawing the map
    * @param pixelX Pixel coordinate for X
    * @param pixelY Pixel coordinate for Y
@@ -507,63 +480,62 @@ public class MapPanel extends JPanel {
    */
   public void updateBlackHoleEffect(final int pixelX, final int pixelY,
       final int i, final int j, final Tile tile) {
-    int index = getNextDrawIndex();
     int safePixelX = pixelX;
     int safePixelY = pixelY;
     if (safePixelX - Tile.MAX_WIDTH < 0) {
       safePixelX = Tile.MAX_WIDTH;
     }
-    if (safePixelX + Tile.MAX_WIDTH > screen[index].getWidth()) {
-      safePixelX = screen[index].getWidth() - Tile.MAX_WIDTH;
+    if (safePixelX + Tile.MAX_WIDTH > screen.getWidth()) {
+      safePixelX = screen.getWidth() - Tile.MAX_WIDTH;
     }
     if (safePixelY - Tile.MAX_HEIGHT < 0) {
       safePixelY = Tile.MAX_HEIGHT;
     }
-    if (safePixelY + Tile.MAX_HEIGHT > screen[index].getHeight()) {
-      safePixelY = screen[index].getHeight() - Tile.MAX_HEIGHT;
+    if (safePixelY + Tile.MAX_HEIGHT > screen.getHeight()) {
+      safePixelY = screen.getHeight() - Tile.MAX_HEIGHT;
     }
     if (tile.getName() == TileNames.BLACKHOLE_NW
         && j + 1 < viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = screen[index].getSubimage(safePixelX + Tile.MAX_WIDTH,
+      BufferedImage tmp = screen.getSubimage(safePixelX + Tile.MAX_WIDTH,
           safePixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_N
         && j + 1 < viewPointY && i < viewPointX) {
-      BufferedImage tmp = screen[index].getSubimage(safePixelX,
+      BufferedImage tmp = screen.getSubimage(safePixelX,
           safePixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_NE
         && j + 1 < viewPointY && i - 1 >= -viewPointX) {
-      BufferedImage tmp = screen[index].getSubimage(safePixelX - Tile.MAX_WIDTH,
+      BufferedImage tmp = screen.getSubimage(safePixelX - Tile.MAX_WIDTH,
           safePixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_W
         && j < viewPointY && i < viewPointX) {
-      BufferedImage tmp = screen[index].getSubimage(safePixelX + Tile.MAX_WIDTH,
+      BufferedImage tmp = screen.getSubimage(safePixelX + Tile.MAX_WIDTH,
           safePixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_E
         && j < viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = screen[index].getSubimage(safePixelX - Tile.MAX_WIDTH,
+      BufferedImage tmp = screen.getSubimage(safePixelX - Tile.MAX_WIDTH,
           safePixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_SW
         && j - 1  >= -viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = screen[index].getSubimage(safePixelX + Tile.MAX_WIDTH,
+      BufferedImage tmp = screen.getSubimage(safePixelX + Tile.MAX_WIDTH,
           safePixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_SW
         && j - 1  >= -viewPointY && i < viewPointX) {
-      BufferedImage tmp = screen[index].getSubimage(safePixelX,
+      BufferedImage tmp = screen.getSubimage(safePixelX,
           safePixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_SE
         && j - 1  >= -viewPointY && i - 1 >= -viewPointX) {
-      BufferedImage tmp = screen[index].getSubimage(safePixelX - Tile.MAX_WIDTH,
+      BufferedImage tmp = screen.getSubimage(safePixelX - Tile.MAX_WIDTH,
           safePixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else {
-      BufferedImage tmp = screen[index].getSubimage(safePixelX,
+      BufferedImage tmp = screen.getSubimage(safePixelX,
           safePixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     }
@@ -604,12 +576,10 @@ public class MapPanel extends JPanel {
     if (screen == null) {
       calculateViewPoints(starMap.getMaxX(), starMap.getMaxY());
       if (this.getWidth() > 0 && this.getHeight() > 0) {
-        screen = new BufferedImage[2];
-        screen[0] = new BufferedImage(this.getWidth(), this.getHeight(),
+        screen = new BufferedImage(this.getWidth(), this.getHeight(),
             BufferedImage.TYPE_INT_ARGB);
-        screen[1] = new BufferedImage(this.getWidth(), this.getHeight(),
+        backgroundScreen = new BufferedImage(this.getWidth(), this.getHeight(),
             BufferedImage.TYPE_INT_ARGB);
-        lastDrew = -1;
       } else {
         return;
       }
@@ -619,8 +589,8 @@ public class MapPanel extends JPanel {
     if (route != null) {
       routeData = route.getRouteOnMap(starMap.getMaxX(), starMap.getMaxY());
     }
-    int screenIndex = getNextDrawIndex();
-    Graphics2D gr = screen[screenIndex].createGraphics();
+    Graphics2D gr = screen.createGraphics();
+    Graphics2D bgGr = backgroundScreen.createGraphics();
     int cursorPixelX = 0;
     int cursorPixelY = 0;
     // Center coordinates
@@ -639,6 +609,11 @@ public class MapPanel extends JPanel {
       cy = starMap.getMaxY() - viewPointY - 1;
     }
     starMap.setDrawPos(cx, cy);
+    if (lastDrawnCenterX != cx || lastDrawnCenterY != cy) {
+      fullDraw = true;
+    } else {
+      fullDraw = false;
+    }
     // -20 for safety
     int speedX = (GuiStatics.NEBULAE_IMAGE.getWidth() - this.getWidth()
         - SAFETY_OFFSET) / starMap.getMaxX();
@@ -660,21 +635,40 @@ public class MapPanel extends JPanel {
     if (speedStarY < 3) {
       speedStarY = 3;
     }
-    if (!improvedParallax) {
-      GraphRoutines.drawTiling(gr, GuiStatics.getStarNebulae(),
-          -PARALLAX_OFFSET - cx * speedStarX,
-          -PARALLAX_OFFSET - cy * speedStarY,
-          this.getWidth(), this.getHeight());
-    } else {
-      // Parallax Scrolling with just two lines!!!
-      GraphRoutines.drawTiling(gr, GuiStatics.getStarField(),
-          -PARALLAX_OFFSET - cx * speedStarX,
-          -PARALLAX_OFFSET - cy * speedStarY,
-          this.getWidth(), this.getHeight());
-      GraphRoutines.drawTiling(gr, GuiStatics.NEBULAE_IMAGE,
-          -PARALLAX_OFFSET - cx * speedX,
-          -PARALLAX_OFFSET - cy * speedY,
-          this.getWidth(), this.getHeight());
+    if (fullDraw) {
+      if (!improvedParallax) {
+        GraphRoutines.drawTiling(gr, GuiStatics.getStarNebulae(),
+            -PARALLAX_OFFSET - cx * speedStarX,
+            -PARALLAX_OFFSET - cy * speedStarY,
+            this.getWidth(), this.getHeight());
+        GraphRoutines.drawTiling(bgGr, GuiStatics.getStarNebulae(),
+            -PARALLAX_OFFSET - cx * speedStarX,
+            -PARALLAX_OFFSET - cy * speedStarY,
+            this.getWidth(), this.getHeight());
+      } else {
+        // Parallax Scrolling with just two lines!!!
+        GraphRoutines.drawTiling(gr, GuiStatics.getStarField(),
+            -PARALLAX_OFFSET - cx * speedStarX,
+            -PARALLAX_OFFSET - cy * speedStarY,
+            this.getWidth(), this.getHeight());
+        GraphRoutines.drawTiling(gr, GuiStatics.NEBULAE_IMAGE,
+            -PARALLAX_OFFSET - cx * speedX,
+            -PARALLAX_OFFSET - cy * speedY,
+            this.getWidth(), this.getHeight());
+        GraphRoutines.drawTiling(bgGr, GuiStatics.getStarField(),
+            -PARALLAX_OFFSET - cx * speedStarX,
+            -PARALLAX_OFFSET - cy * speedStarY,
+            this.getWidth(), this.getHeight());
+        GraphRoutines.drawTiling(bgGr, GuiStatics.NEBULAE_IMAGE,
+            -PARALLAX_OFFSET - cx * speedX,
+            -PARALLAX_OFFSET - cy * speedY,
+            this.getWidth(), this.getHeight());
+      }
+      for (int i = 0; i < viewPointX * 2 + 1; i++) {
+        for (int j = 0; j < viewPointY * 2 + 1; j++) {
+          redrawTile[i][j] = false;
+        }
+      }
     }
 
     lastDrawnCenterX = cx;
@@ -720,191 +714,315 @@ public class MapPanel extends JPanel {
           updateBlackHoleEffect(pixelX, pixelY, i, j, blackholeTile);
           blackholeUpdated = true;
         }
-        if (i != viewPointX) {
-          // Right line
-          gr.drawLine(pixelX + Tile.MAX_WIDTH - 1, pixelY,
-              pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
+        boolean drawMapPos = false;
+        if (fullDraw || redrawTile[i + viewPointX][j + viewPointY]) {
+          drawMapPos = true;
         }
-        if (j != viewPointY) {
-          // Bottom line
-          gr.drawLine(pixelX, pixelY + Tile.MAX_HEIGHT - 1,
-              pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
-        }
-        if (info != null && info.getSectorVisibility(new Coordinate(i + cx,
-            j + cy)) != PlayerInfo.UNCHARTED) {
-          CulturePower culture = starMap.getSectorCulture(i + cx, j + cy);
-          if (culture != null) {
-            int index = culture.getHighestCulture();
-            if (index != -1) {
-              PlayerInfo cultureInfo = starMap.getPlayerByIndex(index);
-              Tile tile = Tiles.getTileByName(
-                  cultureInfo.getColor().getCultureTile());
-              if (tile != null) {
-                tile.draw(gr, pixelX, pixelY);
+        if (drawMapPos) {
+          if (!fullDraw) {
+            if (pixelX + Tile.MAX_WIDTH < backgroundScreen.getWidth()
+                && pixelY + Tile.MAX_HEIGHT < backgroundScreen.getHeight()) {
+              gr.drawImage(backgroundScreen.getSubimage(pixelX, pixelY,
+                  Tile.MAX_WIDTH, Tile.MAX_HEIGHT), null, pixelX, pixelY);
+            }
+          }
+          if (i != viewPointX) {
+            // Right line
+            gr.drawLine(pixelX + Tile.MAX_WIDTH - 1, pixelY,
+                pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
+          }
+          if (j != viewPointY) {
+            // Bottom line
+            gr.drawLine(pixelX, pixelY + Tile.MAX_HEIGHT - 1,
+                pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
+          }
+          if (info != null && info.getSectorVisibility(new Coordinate(i + cx,
+              j + cy)) != PlayerInfo.UNCHARTED) {
+            CulturePower culture = starMap.getSectorCulture(i + cx, j + cy);
+            if (culture != null) {
+              int index = culture.getHighestCulture();
+              if (index != -1) {
+                PlayerInfo cultureInfo = starMap.getPlayerByIndex(index);
+                Tile tile = Tiles.getTileByName(
+                    cultureInfo.getColor().getCultureTile());
+                if (tile != null) {
+                  tile.draw(gr, pixelX, pixelY);
+                }
               }
             }
           }
-        }
-        Tile tile = starMap.getTile(i + cx, j + cy);
-        if (tile == null) {
-          continue;
-        }
-        if (tile.getAnimationIndex() != tile.getIndex() && updateAnimation) {
-          // Change map tile for next drawing
-          starMap.setTile(i + cx, j + cy,
-              Tiles.getTileByIndex(tile.getAnimationIndex()));
-        }
-        // Draw only non empty tiles
-        if (info != null && !tile.getName().equals(TileNames.EMPTY)
-            && info.getSectorVisibility(new Coordinate(i + cx,
-                j + cy)) != PlayerInfo.UNCHARTED
-            || starMap.getTileInfo(i + cx, j + cy)
-                .getType() == SquareInfo.TYPE_SUN
-            || starMap.getTileInfo(i + cx, j + cy)
-                .getType() == SquareInfo.TYPE_BLACKHOLE_CENTER) {
-          tile.draw(gr, pixelX, pixelY);
-        }
-
-        // Draw home world marker
-        Planet planet = starMap.getPlanetByCoordinate(i + cx, j + cy);
-        if (planet != null && !planet.isGasGiant() && info != null
-            && info.getSectorVisibility(new Coordinate(i + cx,
-                j + cy)) != PlayerInfo.UNCHARTED
-            && planet.getHomeWorldIndex() != -1) {
-          Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
-          icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-              pixelY + Icon16x16.MAX_HEIGHT);
-        }
-
-        // Draw deep space anchor marker
-        if ((tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
-            || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2))
-            && info != null && info.getSectorVisibility(new Coordinate(i + cx,
-                j + cy)) != PlayerInfo.UNCHARTED) {
-          Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
-          icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-              pixelY + Icon16x16.MAX_HEIGHT);
-        }
-
-        // Draw fleet
-        Fleet fleet = null;
-        PlayerInfo fleetOwner = null;
-        int fleetOwnerIndex = -1;
-        if (fleetMap[i + cx][j + cy] != null) {
-          fleet = starMap.getFleetByFleetTileInfo(fleetMap[i + cx]
-              [j + cy]);
-          if (fleet != null) {
-            fleetOwner = starMap.getPlayerInfoByFleet(fleet);
-            fleetOwnerIndex = starMap.getPlayerList().getIndex(fleetOwner);
+          Tile tile = starMap.getTile(i + cx, j + cy);
+          if (tile == null) {
+            continue;
           }
-        }
-        if (info != null && fleet != null) {
-          FleetVisibility visibility = new FleetVisibility(info, fleet,
-              fleetOwnerIndex);
-          boolean drawShip = visibility.isFleetVisible();
-          boolean recognized = visibility.isRecognized();
-          boolean espionageDetected = visibility.isEspionageDetected();
-          boolean moved = false;
-          if (fleet.getMovesLeft() == 0 && fleet.getRoute() == null) {
-            moved = true;
+          if (tile.getAnimationIndex() != tile.getIndex() && updateAnimation) {
+            // Change map tile for next drawing
+            starMap.setTile(i + cx, j + cy,
+                Tiles.getTileByIndex(tile.getAnimationIndex()));
+            redrawTile[i + viewPointX][j + viewPointY] = true;
           }
-          if (recognized && fleetOwnerIndex != -1 && drawShip) {
-            PlayerInfo shipInfo = starMap.getPlayerByIndex(fleetOwnerIndex);
-            Tile fleetColor = Tiles.getTileByName(
-                shipInfo.getColor().getShipTile());
-            if (fleetColor != null) {
-              fleetColor.draw(gr, pixelX, pixelY);
+          // Draw only non empty tiles
+          if (info != null && !tile.getName().equals(TileNames.EMPTY)
+              && info.getSectorVisibility(new Coordinate(i + cx,
+                  j + cy)) != PlayerInfo.UNCHARTED
+              || starMap.getTileInfo(i + cx, j + cy)
+                  .getType() == SquareInfo.TYPE_SUN
+              || starMap.getTileInfo(i + cx, j + cy)
+                  .getType() == SquareInfo.TYPE_BLACKHOLE_CENTER) {
+            tile.draw(gr, pixelX, pixelY);
+          }
+          // Draw home world marker
+          Planet planet = starMap.getPlanetByCoordinate(i + cx, j + cy);
+          if (planet != null && !planet.isGasGiant() && info != null
+              && info.getSectorVisibility(new Coordinate(i + cx,
+                  j + cy)) != PlayerInfo.UNCHARTED
+              && planet.getHomeWorldIndex() != -1) {
+            Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
+            icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+                pixelY + Icon16x16.MAX_HEIGHT);
+          }
+          // Draw deep space anchor marker
+          if ((tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
+              || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2))
+              && info != null && info.getSectorVisibility(new Coordinate(i + cx,
+                  j + cy)) != PlayerInfo.UNCHARTED) {
+            Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
+            icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+                pixelY + Icon16x16.MAX_HEIGHT);
+            redrawTile[i + viewPointX][j + viewPointY] = true;
+          }
+          // Draw fleet
+          Fleet fleet = null;
+          PlayerInfo fleetOwner = null;
+          int fleetOwnerIndex = -1;
+          if (fleetMap[i + cx][j + cy] != null) {
+            fleet = starMap.getFleetByFleetTileInfo(fleetMap[i + cx]
+                [j + cy]);
+            if (fleet != null) {
+              fleetOwner = starMap.getPlayerInfoByFleet(fleet);
+              fleetOwnerIndex = starMap.getPlayerList().getIndex(fleetOwner);
             }
-            if (fleetOwner != info && Game.getTutorial() != null
-                && starMap.isTutorialEnabled() && info.isHuman()) {
-              String tutorialText = Game.getTutorial().showTutorialText(50);
-              if (tutorialText != null) {
-                Message msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                msg.setCoordinate(new Coordinate(i + cx, j + cy));
-                info.getMsgList().addNewMessage(msg);
+          }
+          if (info != null && fleet != null) {
+            FleetVisibility visibility = new FleetVisibility(info, fleet,
+                fleetOwnerIndex);
+            boolean drawShip = visibility.isFleetVisible();
+            boolean recognized = visibility.isRecognized();
+            boolean espionageDetected = visibility.isEspionageDetected();
+            boolean moved = false;
+            if (fleet.getMovesLeft() == 0 && fleet.getRoute() == null) {
+              moved = true;
+            }
+            if (recognized && fleetOwnerIndex != -1 && drawShip) {
+              redrawTile[i + viewPointX][j + viewPointY] = true;
+              PlayerInfo shipInfo = starMap.getPlayerByIndex(fleetOwnerIndex);
+              Tile fleetColor = Tiles.getTileByName(
+                  shipInfo.getColor().getShipTile());
+              if (fleetColor != null) {
+                fleetColor.draw(gr, pixelX, pixelY);
               }
-              tutorialText = Game.getTutorial().showTutorialText(90);
-              if (tutorialText != null) {
-                Message msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                msg.setCoordinate(new Coordinate(i + cx, j + cy));
-                info.getMsgList().addNewMessage(msg);
+              if (fleetOwner != info && Game.getTutorial() != null
+                  && starMap.isTutorialEnabled() && info.isHuman()) {
+                String tutorialText = Game.getTutorial().showTutorialText(50);
+                if (tutorialText != null) {
+                  Message msg = new Message(MessageType.INFORMATION,
+                      tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+                  msg.setCoordinate(new Coordinate(i + cx, j + cy));
+                  info.getMsgList().addNewMessage(msg);
+                }
+                tutorialText = Game.getTutorial().showTutorialText(90);
+                if (tutorialText != null) {
+                  Message msg = new Message(MessageType.INFORMATION,
+                      tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+                  msg.setCoordinate(new Coordinate(i + cx, j + cy));
+                  info.getMsgList().addNewMessage(msg);
+                }
               }
             }
-          }
-          if (drawShip) {
-            BufferedImage img = ShipImages
-                .getByRace(fleetMap[i + cx][j + cy].getRace())
-                .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
-            gr.drawImage(img, pixelX, pixelY, null);
-            if (espionageDetected) {
-              Icon16x16 icon = Icons.getIconByName(Icons.ICON_SPY_GOGGLES);
-              icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-                  pixelY + Icon16x16.MAX_HEIGHT);
-            }
-            if (fleet.getRoute() != null && fleetOwner == info) {
-              if (fleet.getRoute().getFtlSpeed() > 0
-                || fleet.getRoute().getRegularSpeed() > 0) {
-                Icon16x16 icon = Icons.getIconByName(Icons.ICON_ENROUTED_MOVES);
+            if (drawShip) {
+              BufferedImage img = ShipImages
+                  .getByRace(fleetMap[i + cx][j + cy].getRace())
+                  .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
+              gr.drawImage(img, pixelX, pixelY, null);
+              if (espionageDetected) {
+                Icon16x16 icon = Icons.getIconByName(Icons.ICON_SPY_GOGGLES);
                 icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
                     pixelY + Icon16x16.MAX_HEIGHT);
               }
-            } else if (moved) {
-              Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_DONE);
-              icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-                  pixelY + Icon16x16.MAX_HEIGHT);
-            } else {
-              Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_1);
-              if (flickerGoUp) {
-                icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_2);
+              if (fleet.getRoute() != null && fleetOwner == info) {
+                if (fleet.getRoute().getFtlSpeed() > 0
+                  || fleet.getRoute().getRegularSpeed() > 0) {
+                  Icon16x16 icon = Icons.getIconByName(
+                      Icons.ICON_ENROUTED_MOVES);
+                  icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+                      pixelY + Icon16x16.MAX_HEIGHT);
+                }
+              } else if (moved) {
+                Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_DONE);
+                icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+                    pixelY + Icon16x16.MAX_HEIGHT);
+              } else {
+                Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_1);
+                if (flickerGoUp) {
+                  icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_2);
+                }
+                icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+                    pixelY + Icon16x16.MAX_HEIGHT);
               }
-              icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-                  pixelY + Icon16x16.MAX_HEIGHT);
             }
           }
-        }
-        if (fleet == null && fleetMap[i + cx][j + cy] != null) {
-          Planet planetOrbital = starMap.getPlanetByFleetTileInfo(
-              fleetMap[i + cx][j + cy]);
-          if (planetOrbital != null && planetOrbital.getOrbital() != null
-              && info != null
-              && info.getSectorVisibility(planetOrbital.getCoordinate())
-              == PlayerInfo.VISIBLE) {
-            // Draw orbital
-            BufferedImage img = ShipImages
-                .getByRace(fleetMap[i + cx][j + cy].getRace())
-                .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
-            gr.drawImage(img, pixelX, pixelY, null);
-          }
-        }
-        // Draw fog of war and uncharted tiles
-        if (info != null) {
-          switch (info.getSectorVisibility(new Coordinate(i + cx,
-              j + cy))) {
-          case PlayerInfo.UNCHARTED: {
-            if (starMap.getTileInfo(i + cx, j + cy)
-                .getType() != SquareInfo.TYPE_SUN) {
-              Tiles.getTileByName(TileNames.UNCHARTED).draw(gr, pixelX, pixelY);
+          if (fleet == null && fleetMap[i + cx][j + cy] != null) {
+            Planet planetOrbital = starMap.getPlanetByFleetTileInfo(
+                fleetMap[i + cx][j + cy]);
+            if (planetOrbital != null && planetOrbital.getOrbital() != null
+                && info != null
+                && info.getSectorVisibility(planetOrbital.getCoordinate())
+                == PlayerInfo.VISIBLE) {
+              // Draw orbital
+              BufferedImage img = ShipImages
+                  .getByRace(fleetMap[i + cx][j + cy].getRace())
+                  .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
+              gr.drawImage(img, pixelX, pixelY, null);
             }
-            break;
           }
-          case PlayerInfo.FOG_OF_WAR: {
-            if (starMap.getTileInfo(i + cx, j + cy)
-                .getType() != SquareInfo.TYPE_SUN) {
-              Tiles.getTileByName(TileNames.FOG_OF_WAR).draw(gr, pixelX,
-                  pixelY);
+          // Draw fog of war and uncharted tiles
+          if (info != null) {
+            switch (info.getSectorVisibility(new Coordinate(i + cx,
+                j + cy))) {
+            case PlayerInfo.UNCHARTED: {
+              if (starMap.getTileInfo(i + cx, j + cy)
+                  .getType() != SquareInfo.TYPE_SUN) {
+                Tiles.getTileByName(TileNames.UNCHARTED).draw(gr, pixelX,
+                    pixelY);
+              }
+              break;
             }
-            break;
+            case PlayerInfo.FOG_OF_WAR: {
+              if (starMap.getTileInfo(i + cx, j + cy)
+                  .getType() != SquareInfo.TYPE_SUN) {
+                Tiles.getTileByName(TileNames.FOG_OF_WAR).draw(gr, pixelX,
+                    pixelY);
+              }
+              break;
+            }
+            default:
+              // Do nothing
+              break;
+            }
           }
-          default:
-            // Do nothing
-            break;
-          }
-        }
 
+
+          // Draw sun's text
+          if ((tile.getName().equals(TileNames.SUN_E)
+              || tile.getName().equals(TileNames.BLUE_STAR_E)
+              || tile.getName().equals(TileNames.STAR_E))
+              && i > -viewPointX + 1) {
+            Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
+            if (sun != null) {
+              int textWidth = (int) GuiStatics.getFontCubellanSC()
+                  .getStringBounds(sun.getName(), gr.getFontRenderContext())
+                  .getWidth();
+              int offset = Tile.MAX_WIDTH / 2 + textWidth / 2 - 2;
+              gr.setStroke(GuiStatics.TEXT_LINE);
+              if (tile.getName().equals(TileNames.SUN_E)) {
+                gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
+              }
+              if (tile.getName().equals(TileNames.STAR_E)) {
+                gr.setColor(GuiStatics.COLOR_SPACE_YELLOW);
+              }
+              if (tile.getName().equals(TileNames.BLUE_STAR_E)) {
+                gr.setColor(GuiStatics.getCoolSpaceColor());
+              }
+              gr.drawLine(pixelX - offset, pixelY + Tile.MAX_HEIGHT / 2 - 3,
+                  pixelX - Tile.MAX_WIDTH + offset,
+                  pixelY + Tile.MAX_HEIGHT / 2 - 3);
+              gr.setColor(Color.BLACK);
+              gr.setFont(GuiStatics.getFontCubellanSC());
+              gr.drawString(sun.getName(),
+                  pixelX - Tile.MAX_WIDTH / 2 - textWidth / 2,
+                  pixelY + Tile.MAX_HEIGHT / 2);
+            }
+          }
+
+          // Draw Gas giant text
+          if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE)
+              && i > -viewPointX
+              || tile.getName().equals(TileNames.GAS_GIANT_2_SE)
+                  && i > -viewPointX
+              || tile.getName().equals(TileNames.GAS_GIANT_3_SE)
+                  && i > -viewPointX
+              || tile.getName().equals(TileNames.JUPITER_SE)
+                  && i > -viewPointX
+              || tile.getName().equals(TileNames.SATURN_SE)
+                  && i > -viewPointX
+              || tile.getName().equals(TileNames.ICEGIANT1_SE)
+                  && i > -viewPointX
+              || tile.getName().equals(TileNames.ICEGIANT2_SE)
+                  && i > -viewPointX)
+              && planet != null && info != null && info
+                  .getSectorVisibility(new Coordinate(i + cx,
+                      j + cy)) != PlayerInfo.UNCHARTED) {
+            int textWidth = (int) GuiStatics.getFontCubellanSC()
+                .getStringBounds(RandomSystemNameGenerator.numberToRoman(
+                    planet.getOrderNumber()), gr.getFontRenderContext())
+                .getWidth();
+            int offset = textWidth / 2 - 2;
+            gr.setStroke(GuiStatics.TEXT_LINE);
+            gr.setColor(GuiStatics.COLOR_GREYBLUE);
+            gr.drawLine(pixelX - offset, pixelY - 3, pixelX + offset,
+                pixelY - 3);
+            gr.setColor(Color.BLACK);
+            gr.setFont(GuiStatics.getFontCubellanSC());
+            gr.drawString(
+                RandomSystemNameGenerator.numberToRoman(
+                    planet.getOrderNumber()), pixelX - textWidth / 2, pixelY);
+          }
+
+          // Draw planet text
+          if (planet != null && !planet.isGasGiant()
+              && planet.getOrderNumber() != 0 && info != null && info
+              .getSectorVisibility(new Coordinate(i + cx,
+                  j + cy)) != PlayerInfo.UNCHARTED) {
+            int textWidth = (int) GuiStatics.getFontCubellanSC()
+                .getStringBounds(RandomSystemNameGenerator.numberToRoman(
+                    planet.getOrderNumber()), gr.getFontRenderContext())
+                .getWidth();
+            int offset = Tile.MAX_WIDTH / 2 - textWidth / 2 - 2;
+            gr.setStroke(GuiStatics.TEXT_LINE);
+            gr.setColor(GuiStatics.COLOR_GREYBLUE);
+            gr.drawLine(pixelX + offset, pixelY + Tile.MAX_HEIGHT / 2 - 3,
+                pixelX + Tile.MAX_WIDTH - offset,
+                pixelY + Tile.MAX_HEIGHT / 2 - 3);
+            gr.setColor(Color.BLACK);
+            gr.setFont(GuiStatics.getFontCubellanSC());
+            gr.drawString(
+                RandomSystemNameGenerator.numberToRoman(
+                    planet.getOrderNumber()),
+                pixelX + Tile.MAX_WIDTH / 2 - textWidth / 2,
+                pixelY + Tile.MAX_HEIGHT / 2);
+          }
+          if (routeData != null && routeData[i + cx][j + cy] == 1) {
+            if (route.isDefending()) {
+              gr.drawImage(Route.getDefenseDot(), pixelX, pixelY, null);
+            } else if (route.isFixing()) {
+              gr.drawImage(Route.getRepairDot(), pixelX, pixelY, null);
+            } else if (route.isBombing()) {
+              gr.drawImage(Route.getBombedDot(), pixelX, pixelY, null);
+            } else {
+              gr.drawImage(Route.getRouteDot(), pixelX, pixelY, null);
+            }
+          }
+          if (routeData != null && routeData[i + cx][j + cy] == 2) {
+            gr.drawImage(Route.getGreenRouteDot(), pixelX, pixelY, null);
+          }
+          if (routeData != null && routeData[i + cx][j + cy] == 3) {
+            gr.drawImage(Route.getYellowRouteDot(), pixelX, pixelY, null);
+          }
+        }
         // Draw the map cursor
-        if (i + cx == starMap.getCursorX() && j + cy == starMap.getCursorY()) {
+        if (i + cx == starMap.getCursorX()
+            && j + cy == starMap.getCursorY()) {
+          redrawTile[i + viewPointX][j + viewPointY] = true;
           cursorPixelX = pixelX;
           cursorPixelY = pixelY;
           gr.setStroke(full);
@@ -922,121 +1040,24 @@ public class MapPanel extends JPanel {
           gr.setStroke(dashed);
           gr.setColor(colorDarkBlue);
         }
-
-        // Draw sun's text
-        if ((tile.getName().equals(TileNames.SUN_E)
-            || tile.getName().equals(TileNames.BLUE_STAR_E)
-            || tile.getName().equals(TileNames.STAR_E))
-            && i > -viewPointX + 1) {
-          Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
-          if (sun != null) {
-            int textWidth = (int) GuiStatics.getFontCubellanSC()
-                .getStringBounds(sun.getName(), gr.getFontRenderContext())
-                .getWidth();
-            int offset = Tile.MAX_WIDTH / 2 + textWidth / 2 - 2;
-            gr.setStroke(GuiStatics.TEXT_LINE);
-            if (tile.getName().equals(TileNames.SUN_E)) {
-              gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
-            }
-            if (tile.getName().equals(TileNames.STAR_E)) {
-              gr.setColor(GuiStatics.COLOR_SPACE_YELLOW);
-            }
-            if (tile.getName().equals(TileNames.BLUE_STAR_E)) {
-              gr.setColor(GuiStatics.getCoolSpaceColor());
-            }
-            gr.drawLine(pixelX - offset, pixelY + Tile.MAX_HEIGHT / 2 - 3,
-                pixelX - Tile.MAX_WIDTH + offset,
-                pixelY + Tile.MAX_HEIGHT / 2 - 3);
-            gr.setColor(Color.BLACK);
-            gr.setFont(GuiStatics.getFontCubellanSC());
-            gr.drawString(sun.getName(),
-                pixelX - Tile.MAX_WIDTH / 2 - textWidth / 2,
-                pixelY + Tile.MAX_HEIGHT / 2);
-          }
-        }
-
-        // Draw Gas giant text
-        if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE) && i > -viewPointX
-            || tile.getName().equals(TileNames.GAS_GIANT_2_SE)
-                && i > -viewPointX
-            || tile.getName().equals(TileNames.GAS_GIANT_3_SE)
-                && i > -viewPointX
-            || tile.getName().equals(TileNames.JUPITER_SE)
-                && i > -viewPointX
-            || tile.getName().equals(TileNames.SATURN_SE)
-                && i > -viewPointX
-            || tile.getName().equals(TileNames.ICEGIANT1_SE)
-                && i > -viewPointX
-            || tile.getName().equals(TileNames.ICEGIANT2_SE)
-                && i > -viewPointX)
-            && planet != null && info != null && info
-                .getSectorVisibility(new Coordinate(i + cx,
-                    j + cy)) != PlayerInfo.UNCHARTED) {
-          int textWidth = (int) GuiStatics.getFontCubellanSC()
-              .getStringBounds(RandomSystemNameGenerator.numberToRoman(
-                  planet.getOrderNumber()), gr.getFontRenderContext())
-              .getWidth();
-          int offset = textWidth / 2 - 2;
-          gr.setStroke(GuiStatics.TEXT_LINE);
-          gr.setColor(GuiStatics.COLOR_GREYBLUE);
-          gr.drawLine(pixelX - offset, pixelY - 3, pixelX + offset, pixelY - 3);
-          gr.setColor(Color.BLACK);
-          gr.setFont(GuiStatics.getFontCubellanSC());
-          gr.drawString(
-              RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
-              pixelX - textWidth / 2, pixelY);
-        }
-
-        // Draw planet text
-        if (planet != null && !planet.isGasGiant()
-            && planet.getOrderNumber() != 0 && info != null && info
-            .getSectorVisibility(new Coordinate(i + cx,
-                j + cy)) != PlayerInfo.UNCHARTED) {
-          int textWidth = (int) GuiStatics.getFontCubellanSC()
-              .getStringBounds(RandomSystemNameGenerator.numberToRoman(
-                  planet.getOrderNumber()), gr.getFontRenderContext())
-              .getWidth();
-          int offset = Tile.MAX_WIDTH / 2 - textWidth / 2 - 2;
-          gr.setStroke(GuiStatics.TEXT_LINE);
-          gr.setColor(GuiStatics.COLOR_GREYBLUE);
-          gr.drawLine(pixelX + offset, pixelY + Tile.MAX_HEIGHT / 2 - 3,
-              pixelX + Tile.MAX_WIDTH - offset,
-              pixelY + Tile.MAX_HEIGHT / 2 - 3);
-          gr.setColor(Color.BLACK);
-          gr.setFont(GuiStatics.getFontCubellanSC());
-          gr.drawString(
-              RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
-              pixelX + Tile.MAX_WIDTH / 2 - textWidth / 2,
-              pixelY + Tile.MAX_HEIGHT / 2);
-        }
-        if (routeData != null && routeData[i + cx][j + cy] == 1) {
-          if (route.isDefending()) {
-            gr.drawImage(Route.getDefenseDot(), pixelX, pixelY, null);
-          } else if (route.isFixing()) {
-            gr.drawImage(Route.getRepairDot(), pixelX, pixelY, null);
-          } else if (route.isBombing()) {
-            gr.drawImage(Route.getBombedDot(), pixelX, pixelY, null);
-          } else {
-            gr.drawImage(Route.getRouteDot(), pixelX, pixelY, null);
-          }
-        }
-        if (routeData != null && routeData[i + cx][j + cy] == 2) {
-          gr.drawImage(Route.getGreenRouteDot(), pixelX, pixelY, null);
-        }
-        if (routeData != null && routeData[i + cx][j + cy] == 3) {
-          gr.drawImage(Route.getYellowRouteDot(), pixelX, pixelY, null);
+        // Old position
+        if (i + cx == lastCursorPosX
+            && j + cy == lastCursorPosY) {
+          redrawTile[i + viewPointX][j + viewPointY] = true;
         }
         pixelX = pixelX + Tile.MAX_WIDTH;
       }
       pixelX = viewPointOffsetX;
       pixelY = pixelY + Tile.MAX_HEIGHT;
     }
+    lastCursorPosX = starMap.getCursorX();
+    lastCursorPosY = starMap.getCursorY();
     if (isShowMiniMap() && minimap != null) {
       // Draw minimap itself
       BufferedImage miniMapImg = minimap.getDrawnImage();
       // Calculate viewport rectangle
-      int topX = screen[screenIndex].getWidth() - 10 - miniMapImg.getWidth();
-      int topY = screen[screenIndex].getHeight() - 10 - miniMapImg.getHeight();
+      int topX = screen.getWidth() - 10 - miniMapImg.getWidth();
+      int topY = screen.getHeight() - 10 - miniMapImg.getHeight();
       int botX = topX + miniMapImg.getWidth();
       int botY = topY + miniMapImg.getHeight();
       miniMapTopX = topX;
@@ -1091,16 +1112,15 @@ public class MapPanel extends JPanel {
       gr.drawLine(0, cursorPixelY + Tile.MAX_HEIGHT / 2, cursorPixelX,
           cursorPixelY + Tile.MAX_HEIGHT / 2);
       gr.drawLine(cursorPixelX + Tile.MAX_WIDTH, cursorPixelY
-          + Tile.MAX_HEIGHT / 2, screen[screenIndex].getWidth(), cursorPixelY
+          + Tile.MAX_HEIGHT / 2, screen.getWidth(), cursorPixelY
           + Tile.MAX_HEIGHT / 2);
       gr.drawLine(cursorPixelX + Tile.MAX_WIDTH / 2, 0, cursorPixelX
           + Tile.MAX_WIDTH / 2, cursorPixelY);
       gr.drawLine(cursorPixelX + Tile.MAX_WIDTH / 2, cursorPixelY
           + Tile.MAX_HEIGHT, cursorPixelX + Tile.MAX_WIDTH / 2,
-          screen[screenIndex].getHeight());
+          screen.getHeight());
     }
     gr.dispose();
-    lastDrew = screenIndex;
   }
 
   /**
@@ -1111,12 +1131,8 @@ public class MapPanel extends JPanel {
     if (screen == null) {
       calculateViewPoints();
       if (this.getWidth() > 0 && this.getHeight() > 0) {
-        screen = new BufferedImage[2];
-        screen[0] = new BufferedImage(this.getWidth(), this.getHeight(),
+        screen = new BufferedImage(this.getWidth(), this.getHeight(),
             BufferedImage.TYPE_INT_ARGB);
-        screen[1] = new BufferedImage(this.getWidth(), this.getHeight(),
-            BufferedImage.TYPE_INT_ARGB);
-        lastDrew = -1;
       } else {
         return;
       }
@@ -1127,8 +1143,7 @@ public class MapPanel extends JPanel {
     boolean blackholeUpdated = false;
     int tileWidth = Tile.MAX_WIDTH;
     int tileHeight = Tile.MAX_HEIGHT;
-    int screenIndex = getNextDrawIndex();
-    Graphics2D gr = screen[screenIndex].createGraphics();
+    Graphics2D gr = screen.createGraphics();
     // Center coordinates
     if (historyCoordinates == null) {
       historyCoordinates = new Coordinate(starMap.getDrawX(),
@@ -1382,24 +1397,23 @@ public class MapPanel extends JPanel {
     gr.drawLine(0, cursorPixelY + tileHeight / 2, cursorPixelX,
         cursorPixelY + tileHeight / 2);
     gr.drawLine(cursorPixelX + tileWidth, cursorPixelY + tileHeight / 2,
-        screen[screenIndex].getWidth(), cursorPixelY + tileHeight / 2);
+        screen.getWidth(), cursorPixelY + tileHeight / 2);
     gr.drawLine(cursorPixelX + tileWidth / 2, 0, cursorPixelX + tileWidth / 2,
         cursorPixelY);
     gr.drawLine(cursorPixelX + tileWidth / 2, cursorPixelY + tileHeight,
-        cursorPixelX + tileWidth / 2, screen[screenIndex].getHeight());
+        cursorPixelX + tileWidth / 2, screen.getHeight());
     if (getLeftSpaceImage() != null) {
       gr.drawImage(leftSpaceImage, 10,
-          screen[screenIndex].getHeight() - leftSpaceImage.getHeight() - 10,
+          screen.getHeight() - leftSpaceImage.getHeight() - 10,
           null);
     }
     if (getRightSpaceImage() != null) {
       gr.drawImage(rightSpaceImage,
-          screen[screenIndex].getWidth() - rightSpaceImage.getWidth() - 10,
-          screen[screenIndex].getHeight() - leftSpaceImage.getHeight() - 10,
+          screen.getWidth() - rightSpaceImage.getWidth() - 10,
+          screen.getHeight() - leftSpaceImage.getHeight() - 10,
           null);
     }
     gr.dispose();
-    lastDrew = screenIndex;
   }
 
   /**
@@ -1421,18 +1435,13 @@ public class MapPanel extends JPanel {
     if (screen == null) {
       calculateViewPoints();
       if (this.getWidth() > 0 && this.getHeight() > 0) {
-        screen = new BufferedImage[2];
-        screen[0] = new BufferedImage(this.getWidth(), this.getHeight(),
+        screen = new BufferedImage(this.getWidth(), this.getHeight(),
             BufferedImage.TYPE_INT_ARGB);
-        screen[1] = new BufferedImage(this.getWidth(), this.getHeight(),
-            BufferedImage.TYPE_INT_ARGB);
-        lastDrew = -1;
       } else {
         return;
       }
     }
-    int screenIndex = getNextDrawIndex();
-    Graphics2D gr = screen[screenIndex].createGraphics();
+    Graphics2D gr = screen.createGraphics();
     // Center coordinates, to match star map background
     int cx = starMap.getDrawX();
     int cy = starMap.getDrawY();
@@ -1829,9 +1838,9 @@ public class MapPanel extends JPanel {
       for (ParticleEffect part : particles) {
         int px = part.getX() + viewPointOffsetX;
         int py = part.getY() + viewPointOffsetY;
-        if (px >= 0 && py >= 0 && px < screen[screenIndex].getWidth()
-            && py < screen[screenIndex].getHeight()) {
-          screen[screenIndex].setRGB(part.getX() + viewPointOffsetX,
+        if (px >= 0 && py >= 0 && px < screen.getWidth()
+            && py < screen.getHeight()) {
+          screen.setRGB(part.getX() + viewPointOffsetX,
               part.getY() + viewPointOffsetY, part.getColor().getRGB());
         }
       }
@@ -1848,7 +1857,6 @@ public class MapPanel extends JPanel {
       }
     }
     gr.dispose();
-    lastDrew = screenIndex;
   }
 
   /**
@@ -2090,18 +2098,4 @@ public class MapPanel extends JPanel {
     return panelType;
   }
 
-  /**
-   * Stop drawing thread.
-   */
-  public void stopDrawingThread() {
-    stopDrawThread = true;
-  }
-
-  /**
-   * Is stop drawing flag set?
-   * @return True if drawing should be stopped.
-   */
-  public boolean isStopDrawing() {
-    return stopDrawThread;
-  }
 }

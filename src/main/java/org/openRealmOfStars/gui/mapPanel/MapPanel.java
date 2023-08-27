@@ -785,6 +785,8 @@ public class MapPanel extends JPanel {
 
     lastDrawnCenterX = cx;
     lastDrawnCenterY = cy;
+    int lastCursorIndexX = -1;
+    int lastCursorIndexY = -1;
     int scaled = 16 * (flickerBlue - COLOR_COMPONENT_HALF)
         / COLOR_COMPONENT_DIVIDER;
     Color colorDarkBlue = new Color(0, FLICKER_GREEN + scaled,
@@ -831,12 +833,11 @@ public class MapPanel extends JPanel {
           drawMapPos = true;
         }
         if (drawMapPos) {
-          if (!fullDraw) {
-            if (pixelX + Tile.MAX_WIDTH < backgroundScreen.getWidth()
-                && pixelY + Tile.MAX_HEIGHT < backgroundScreen.getHeight()) {
-              gr.drawImage(backgroundScreen.getSubimage(pixelX, pixelY,
-                  Tile.MAX_WIDTH, Tile.MAX_HEIGHT), null, pixelX, pixelY);
-            }
+          if (!fullDraw
+              && pixelX + Tile.MAX_WIDTH <= backgroundScreen.getWidth()
+              && pixelY + Tile.MAX_HEIGHT <= backgroundScreen.getHeight()) {
+            gr.drawImage(backgroundScreen.getSubimage(pixelX, pixelY,
+                Tile.MAX_WIDTH, Tile.MAX_HEIGHT), null, pixelX, pixelY);
           }
           if (i != viewPointX) {
             // Right line
@@ -940,6 +941,10 @@ public class MapPanel extends JPanel {
               && i > -viewPointX + 1) {
             Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
             if (sun != null) {
+              redrawTile[i + viewPointX][j + viewPointY] = true;
+/*              if (i + 1 + viewPointX < redrawTile.length) {
+                redrawTile[i + viewPointX + 1][j + viewPointY] = true;
+              }*/
               int textWidth = (int) GuiStatics.getFontCubellanSC()
                   .getStringBounds(sun.getName(), gr.getFontRenderContext())
                   .getWidth();
@@ -983,13 +988,14 @@ public class MapPanel extends JPanel {
               && planet != null && info != null && info
                   .getSectorVisibility(new Coordinate(i + cx,
                       j + cy)) != PlayerInfo.UNCHARTED) {
+            redrawTile[i + viewPointX][j + viewPointY] = true;
             int textWidth = (int) GuiStatics.getFontCubellanSC()
                 .getStringBounds(RandomSystemNameGenerator.numberToRoman(
                     planet.getOrderNumber()), gr.getFontRenderContext())
                 .getWidth();
             int offset = textWidth / 2 - 2;
             gr.setStroke(GuiStatics.TEXT_LINE);
-            gr.setColor(GuiStatics.COLOR_GREYBLUE);
+            gr.setColor(GuiStatics.COLOR_GREYBLUE_NO_OPAGUE);
             gr.drawLine(pixelX - offset, pixelY - 3, pixelX + offset,
                 pixelY - 3);
             gr.setColor(Color.BLACK);
@@ -1046,6 +1052,8 @@ public class MapPanel extends JPanel {
           redrawTile[i + viewPointX][j + viewPointY] = true;
           cursorPixelX = pixelX;
           cursorPixelY = pixelY;
+          lastCursorIndexX = i + viewPointX;
+          lastCursorIndexY = j + viewPointY;
           gr.setStroke(full);
           gr.setColor(colorFlickerBlue);
           // Top line
@@ -1076,6 +1084,15 @@ public class MapPanel extends JPanel {
     if (isShowMiniMap() && minimap != null) {
       // Draw minimap itself
       BufferedImage miniMapImg = minimap.getDrawnImage();
+      int redrawTilesX = miniMapImg.getWidth() / Tile.MAX_WIDTH + 1;
+      int redrawTilesY = miniMapImg.getHeight() / Tile.MAX_HEIGHT + 1;
+      for (int i = redrawTile.length - redrawTilesX; i < redrawTile.length;
+          i++) {
+        for (int j = redrawTile[i].length - redrawTilesY;
+            j < redrawTile[i].length; j++) {
+          redrawTile[i][j] = true;
+        }
+      }
       // Calculate viewport rectangle
       int topX = screen.getWidth() - 10 - miniMapImg.getWidth();
       int topY = screen.getHeight() - 10 - miniMapImg.getHeight();
@@ -1126,20 +1143,26 @@ public class MapPanel extends JPanel {
     }
     if (cursorFocus > 0) {
       cursorFocus--;
+      for (int i = 0; i < redrawTile.length; i++) {
+        redrawTile[i][lastCursorIndexY] = true;
+      }
+      for (int i = 0; i < redrawTile[lastCursorIndexX].length; i++) {
+        redrawTile[lastCursorIndexX][i] = true;
+      }
       Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
           BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
       gr.setStroke(full);
       gr.setColor(new Color(255, 50, 50, cursorFocus * 5));
-      gr.drawLine(0, cursorPixelY + Tile.MAX_HEIGHT / 2, cursorPixelX,
-          cursorPixelY + Tile.MAX_HEIGHT / 2);
+      gr.drawLine(viewPointOffsetX, cursorPixelY + Tile.MAX_HEIGHT / 2,
+          cursorPixelX, cursorPixelY + Tile.MAX_HEIGHT / 2);
       gr.drawLine(cursorPixelX + Tile.MAX_WIDTH, cursorPixelY
-          + Tile.MAX_HEIGHT / 2, screen.getWidth(), cursorPixelY
-          + Tile.MAX_HEIGHT / 2);
-      gr.drawLine(cursorPixelX + Tile.MAX_WIDTH / 2, 0, cursorPixelX
-          + Tile.MAX_WIDTH / 2, cursorPixelY);
+          + Tile.MAX_HEIGHT / 2, screen.getWidth() - viewPointOffsetX,
+          cursorPixelY + Tile.MAX_HEIGHT / 2);
+      gr.drawLine(cursorPixelX + Tile.MAX_WIDTH / 2, viewPointOffsetY,
+          cursorPixelX + Tile.MAX_WIDTH / 2, cursorPixelY);
       gr.drawLine(cursorPixelX + Tile.MAX_WIDTH / 2, cursorPixelY
           + Tile.MAX_HEIGHT, cursorPixelX + Tile.MAX_WIDTH / 2,
-          screen.getHeight());
+          screen.getHeight() - viewPointOffsetY);
     }
     gr.dispose();
   }
@@ -1377,7 +1400,7 @@ public class MapPanel extends JPanel {
               .getWidth();
           int offset = textWidth / 2 - 2;
           gr.setStroke(GuiStatics.TEXT_LINE);
-          gr.setColor(GuiStatics.COLOR_GREYBLUE);
+          gr.setColor(GuiStatics.COLOR_GREYBLUE_NO_OPAGUE);
           gr.drawLine(pixelX - offset, pixelY - 3, pixelX + offset, pixelY - 3);
           gr.setColor(Color.BLACK);
           gr.setFont(GuiStatics.getFontCubellanSC());

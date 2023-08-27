@@ -439,6 +439,11 @@ public final class GuiStatics {
    * Planet Line type for text background, opacity 65.
    */
   public static final Color COLOR_GREYBLUE = new Color(180, 180, 200, 65);
+  /**
+   * Planet Line type for text background.
+   */
+  public static final Color COLOR_GREYBLUE_NO_OPAGUE =
+      new Color(180, 180, 200);
 
   /**
    * Green text

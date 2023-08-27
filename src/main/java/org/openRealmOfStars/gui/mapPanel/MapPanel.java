@@ -725,7 +725,22 @@ public class MapPanel extends JPanel {
       cy = starMap.getMaxY() - viewPointY - 1;
     }
     starMap.setDrawPos(cx, cy);
-    if (lastDrawnCenterX != cx || lastDrawnCenterY != cy) {
+    int countRedraw = 0;
+    int maxTiles = 0;
+    for (int i = 0; i < viewPointX * 2 + 1; i++) {
+      for (int j = 0; j < viewPointY * 2 + 1; j++) {
+        maxTiles++;
+        if (redrawTile[i][j]) {
+          countRedraw++;
+        }
+      }
+    }
+    int drawingPercetange = countRedraw * 100 / maxTiles;
+    if (drawingPercetange > 65) {
+      System.out.println("Forcing full redraw! " + countRedraw + "/" + maxTiles);
+    }
+    if (lastDrawnCenterX != cx || lastDrawnCenterY != cy
+        || drawingPercetange > 65) {
       fullDraw = true;
     } else {
       fullDraw = false;
@@ -786,7 +801,6 @@ public class MapPanel extends JPanel {
         }
       }
     }
-
     lastDrawnCenterX = cx;
     lastDrawnCenterY = cy;
     int lastCursorIndexX = -1;
@@ -833,6 +847,9 @@ public class MapPanel extends JPanel {
           blackholeUpdated = true;
         }
         boolean drawMapPos = false;
+        if (routeData != null && routeData[i + cx][j + cy] > 0) {
+          drawMapPos = true;
+        }
         if (fullDraw || redrawTile[i + viewPointX][j + viewPointY]) {
           drawMapPos = true;
         }
@@ -1033,6 +1050,7 @@ public class MapPanel extends JPanel {
                 pixelY + Tile.MAX_HEIGHT / 2);
           }
           if (routeData != null && routeData[i + cx][j + cy] == 1) {
+            redrawTile[i + viewPointX][j + viewPointY] = true;
             if (route.isDefending()) {
               gr.drawImage(Route.getDefenseDot(), pixelX, pixelY, null);
             } else if (route.isFixing()) {
@@ -1149,11 +1167,13 @@ public class MapPanel extends JPanel {
     }
     if (cursorFocus > 0) {
       cursorFocus--;
-      for (int i = 0; i < redrawTile.length; i++) {
-        redrawTile[i][lastCursorIndexY] = true;
-      }
-      for (int i = 0; i < redrawTile[lastCursorIndexX].length; i++) {
-        redrawTile[lastCursorIndexX][i] = true;
+      if (lastCursorIndexY != -1 && lastCursorIndexX != -1) {
+        for (int i = 0; i < redrawTile.length; i++) {
+          redrawTile[i][lastCursorIndexY] = true;
+        }
+        for (int i = 0; i < redrawTile[lastCursorIndexX].length; i++) {
+          redrawTile[lastCursorIndexX][i] = true;
+        }
       }
       Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
           BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);

@@ -249,26 +249,6 @@ public class MapPanel extends JPanel {
   private boolean drawWeaponRange;
 
   /**
-   * Time now in milliseconds.
-   */
-  private long now;
-  /**
-   * Last time in milliseconds.
-   */
-  private long lastTime;
-  /**
-   * Frame Count
-   */
-  private int frameCount;
-  /**
-   * Delta time between frames.
-   */
-  private long deltaBetweenFrames;
-  /**
-   * FPS timer.
-   */
-  private long fpsTimer;
-  /**
    * Panel type based on last drawing.
    */
   private MapPanelType panelType;
@@ -323,7 +303,6 @@ public class MapPanel extends JPanel {
     setShowMiniMap(false);
     tileOverride = null;
     improvedParallax = false;
-    lastTime = System.currentTimeMillis();
     lastCursorPosX = -1;
     lastCursorPosY = -1;
     if (game != null) {
@@ -413,25 +392,12 @@ public class MapPanel extends JPanel {
 
   @Override
   public void paint(final Graphics arg0) {
-    now = System.currentTimeMillis();
-    deltaBetweenFrames = deltaBetweenFrames + (now - lastTime);
-    fpsTimer = fpsTimer + (now - lastTime);
-    lastTime = now;
-    if (deltaBetweenFrames > 16) {
-      super.paint(arg0);
-      if (screen != null) {
-        if (popup != null) {
-          popup.drawPopup(screen);
-        }
-        arg0.drawImage(screen, 0, 0, null);
+    super.paint(arg0);
+    if (screen != null) {
+      if (popup != null) {
+        popup.drawPopup(screen);
       }
-      deltaBetweenFrames = deltaBetweenFrames - 16;
-      frameCount++;
-    }
-    if (fpsTimer > 1000) {
-      fpsTimer = fpsTimer - 1000;
-      System.out.println("FPS:" + frameCount);
-      frameCount = 0;
+      arg0.drawImage(screen, 0, 0, null);
     }
   }
 
@@ -662,11 +628,6 @@ public class MapPanel extends JPanel {
    */
   public void drawMap(final StarMap starMap) {
     PlayerInfo info = starMap.getCurrentPlayerInfo();
-    if (updateAnimation) {
-      updateAnimation = false;
-    } else {
-      updateAnimation = true;
-    }
     if (minimap == null) {
       minimap = new Minimap(starMap);
       minimap.setDrawPoint(0, 0);
@@ -736,15 +697,13 @@ public class MapPanel extends JPanel {
       }
     }
     int drawingPercetange = countRedraw * 100 / maxTiles;
-    if (drawingPercetange > 65) {
-      System.out.println("Forcing full redraw! " + countRedraw + "/" + maxTiles);
-    }
     if (lastDrawnCenterX != cx || lastDrawnCenterY != cy
-        || drawingPercetange > 65) {
+        || drawingPercetange > 65 || starMap.isForceRedraw()) {
       fullDraw = true;
     } else {
       fullDraw = false;
     }
+    starMap.setForceRedraw(false);
     // -20 for safety
     int speedX = (GuiStatics.NEBULAE_IMAGE.getWidth() - this.getWidth()
         - SAFETY_OFFSET) / starMap.getMaxX();

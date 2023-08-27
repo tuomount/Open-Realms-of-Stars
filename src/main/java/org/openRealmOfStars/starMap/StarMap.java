@@ -335,6 +335,10 @@ public class StarMap {
    */
   private boolean solHasAdded = false;
   /**
+   * Flag to force redraw for map.
+   */
+  private boolean forceRedraw = false;
+  /**
    * Magic string to save game files
    */
   public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.25";
@@ -3808,6 +3812,7 @@ public class StarMap {
    */
   public void doFleetScanUpdate(final PlayerInfo info, final Fleet fleet,
       final Planet planet) {
+    forceRedraw = true;
     int scanRad = -1;
     int cloakDetection = 0;
     int cx = 0;
@@ -6029,4 +6034,21 @@ public class StarMap {
       leader.setJob(Job.DEAD);
     }
   }
+
+  /**
+   * Is redrawn force or not?
+   * @return boolean
+   */
+  public boolean isForceRedraw() {
+    return forceRedraw;
+  }
+
+  /**
+   * Set force redraw flag.
+   * @param forceRedraw boolean
+   */
+  public void setForceRedraw(final boolean forceRedraw) {
+    this.forceRedraw = forceRedraw;
+  }
+
 }

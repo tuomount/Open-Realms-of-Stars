@@ -343,6 +343,7 @@ public class StarMapMouseListener extends MouseAdapter
     if (!coord.isOutOfPanel()) {
       if (mapPanel.getPopup() != null) {
         mapPanel.getPopup().dismiss();
+        starMap.setForceRedraw(true);
         SoundPlayer.playMenuSound();
         return;
       }

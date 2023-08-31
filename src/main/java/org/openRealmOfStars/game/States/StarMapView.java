@@ -357,7 +357,6 @@ public class StarMapView extends BlackPanel {
         players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
         players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
     setAutoFocus(true);
-
   }
 
   /**
@@ -697,4 +696,5 @@ public class StarMapView extends BlackPanel {
     }
     return false;
   }
+
 }

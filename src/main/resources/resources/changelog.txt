@@ -1,5 +1,10 @@
 - New features and updates -
 
+* Starmap view is drawn only for tiles which are changing. This improves performance on starmap.
+# Open Realm of Stars 0.23.0Beta 
+
+- New features and updates -
+
 * Improved AI, Challenging AI selects best choice for next building project.
 * Fixed issue where AI estimated wrongly defensive pacts.
 * Hide current song when mouse cursor moves over the text.

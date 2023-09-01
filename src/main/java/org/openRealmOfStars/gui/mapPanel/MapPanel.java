@@ -622,6 +622,222 @@ public class MapPanel extends JPanel {
       }
     }
   }
+
+  /**
+   * Draw Tile
+   * @param gr Graphics2D
+   * @param cx Center of screen
+   * @param cy Center of screen
+   * @param i  X coordinate modifier of center of screen
+   * @param j  Y coordinate modifier of center of screen
+   * @param starMap StarMap
+   * @param info Realm which is viewing the starmap
+   * @param pixelX Pixel X Coordinate in screen
+   * @param pixelY Pixel Y Coordinate in screen
+   * @param planet Planet info at target tile
+   * @return Tile
+   */
+  private Tile drawTile(final Graphics2D gr,
+      final int cx, final int cy, final int i, final int j,
+      final StarMap starMap, final PlayerInfo info,
+      final int pixelX, final int pixelY, final Planet planet) {
+    Tile tile = starMap.getTile(i + cx, j + cy);
+    if (tile == null) {
+      return null;
+    }
+    if (tile.getAnimationIndex() != tile.getIndex() && updateAnimation) {
+      // Change map tile for next drawing
+      starMap.setTile(i + cx, j + cy,
+          Tiles.getTileByIndex(tile.getAnimationIndex()));
+      redrawTile[i + viewPointX][j + viewPointY] = true;
+    }
+    // Draw only non empty tiles
+    if (info != null && !tile.getName().equals(TileNames.EMPTY)
+        && info.getSectorVisibility(new Coordinate(i + cx,
+            j + cy)) != PlayerInfo.UNCHARTED
+        || starMap.getTileInfo(i + cx, j + cy)
+            .getType() == SquareInfo.TYPE_SUN
+        || starMap.getTileInfo(i + cx, j + cy)
+            .getType() == SquareInfo.TYPE_BLACKHOLE_CENTER) {
+      tile.draw(gr, pixelX, pixelY);
+    }
+    // Draw home world marker
+    if (planet != null && !planet.isGasGiant() && info != null
+        && info.getSectorVisibility(new Coordinate(i + cx,
+            j + cy)) != PlayerInfo.UNCHARTED
+        && planet.getHomeWorldIndex() != -1) {
+      Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
+      icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+          pixelY + Icon16x16.MAX_HEIGHT);
+    }
+    // Draw deep space anchor marker
+    if ((tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
+        || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2))
+        && info != null && info.getSectorVisibility(new Coordinate(i + cx,
+            j + cy)) != PlayerInfo.UNCHARTED) {
+      Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
+      icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+          pixelY + Icon16x16.MAX_HEIGHT);
+      redrawTile[i + viewPointX][j + viewPointY] = true;
+    }
+    return tile;
+  }
+
+  /**
+   * Draw Fog of War
+   * @param gr Graphics2D
+   * @param cx Center of screen
+   * @param cy Center of screen
+   * @param i  X coordinate modifier of center of screen
+   * @param j  Y coordinate modifier of center of screen
+   * @param starMap StarMap
+   * @param info Realm which is viewing the starmap
+   * @param pixelX Pixel X Coordinate in screen
+   * @param pixelY Pixel Y Coordinate in screen
+   */
+  private static void drawFogOfWar(final Graphics2D gr,
+      final int cx, final int cy, final int i, final int j,
+      final StarMap starMap, final PlayerInfo info,
+      final int pixelX, final int pixelY) {
+    if (info != null) {
+      switch (info.getSectorVisibility(new Coordinate(i + cx,
+          j + cy))) {
+      case PlayerInfo.UNCHARTED: {
+        if (starMap.getTileInfo(i + cx, j + cy)
+            .getType() != SquareInfo.TYPE_SUN) {
+          Tiles.getTileByName(TileNames.UNCHARTED).draw(gr, pixelX,
+              pixelY);
+        }
+        break;
+      }
+      case PlayerInfo.FOG_OF_WAR: {
+        if (starMap.getTileInfo(i + cx, j + cy)
+            .getType() != SquareInfo.TYPE_SUN) {
+          Tiles.getTileByName(TileNames.FOG_OF_WAR).draw(gr, pixelX,
+              pixelY);
+        }
+        break;
+      }
+      default:
+        // Do nothing
+        break;
+      }
+    }
+  }
+
+  /**
+   * Draw Tile text.
+   * @param gr Graphics2D
+   * @param cx Center of screen
+   * @param cy Center of screen
+   * @param i  X coordinate modifier of center of screen
+   * @param j  Y coordinate modifier of center of screen
+   * @param starMap StarMap
+   * @param info Realm which is viewing the starmap
+   * @param pixelX Pixel X Coordinate in screen
+   * @param pixelY Pixel Y Coordinate in screen
+   * @param planet Planet info at target tile
+   */
+  private void drawTileText(final Graphics2D gr,
+      final int cx, final int cy, final int i, final int j,
+      final StarMap starMap, final PlayerInfo info,
+      final int pixelX, final int pixelY, final Planet planet) {
+    Tile tile = starMap.getTile(i + cx, j + cy);
+    // Draw sun's text
+    if ((tile.getName().equals(TileNames.SUN_E)
+        || tile.getName().equals(TileNames.BLUE_STAR_E)
+        || tile.getName().equals(TileNames.STAR_E))
+        && i > -viewPointX + 1) {
+      Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
+      if (sun != null) {
+        redrawTile[i + viewPointX][j + viewPointY] = true;
+/*              if (i + 1 + viewPointX < redrawTile.length) {
+          redrawTile[i + viewPointX + 1][j + viewPointY] = true;
+        }*/
+        int textWidth = (int) GuiStatics.getFontCubellanSC()
+            .getStringBounds(sun.getName(), gr.getFontRenderContext())
+            .getWidth();
+        int offset = Tile.MAX_WIDTH / 2 + textWidth / 2 - 2;
+        gr.setStroke(GuiStatics.TEXT_LINE);
+        if (tile.getName().equals(TileNames.SUN_E)) {
+          gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
+        }
+        if (tile.getName().equals(TileNames.STAR_E)) {
+          gr.setColor(GuiStatics.COLOR_SPACE_YELLOW);
+        }
+        if (tile.getName().equals(TileNames.BLUE_STAR_E)) {
+          gr.setColor(GuiStatics.getCoolSpaceColor());
+        }
+        gr.drawLine(pixelX - offset, pixelY + Tile.MAX_HEIGHT / 2 - 3,
+            pixelX - Tile.MAX_WIDTH + offset,
+            pixelY + Tile.MAX_HEIGHT / 2 - 3);
+        gr.setColor(Color.BLACK);
+        gr.setFont(GuiStatics.getFontCubellanSC());
+        gr.drawString(sun.getName(),
+            pixelX - Tile.MAX_WIDTH / 2 - textWidth / 2,
+            pixelY + Tile.MAX_HEIGHT / 2);
+      }
+    }
+
+    // Draw Gas giant text
+    if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE)
+        && i > -viewPointX
+        || tile.getName().equals(TileNames.GAS_GIANT_2_SE)
+            && i > -viewPointX
+        || tile.getName().equals(TileNames.GAS_GIANT_3_SE)
+            && i > -viewPointX
+        || tile.getName().equals(TileNames.JUPITER_SE)
+            && i > -viewPointX
+        || tile.getName().equals(TileNames.SATURN_SE)
+            && i > -viewPointX
+        || tile.getName().equals(TileNames.ICEGIANT1_SE)
+            && i > -viewPointX
+        || tile.getName().equals(TileNames.ICEGIANT2_SE)
+            && i > -viewPointX)
+        && planet != null && info != null && info
+            .getSectorVisibility(new Coordinate(i + cx,
+                j + cy)) != PlayerInfo.UNCHARTED) {
+      redrawTile[i + viewPointX][j + viewPointY] = true;
+      int textWidth = (int) GuiStatics.getFontCubellanSC()
+          .getStringBounds(RandomSystemNameGenerator.numberToRoman(
+              planet.getOrderNumber()), gr.getFontRenderContext())
+          .getWidth();
+      int offset = textWidth / 2 - 2;
+      gr.setStroke(GuiStatics.TEXT_LINE);
+      gr.setColor(GuiStatics.COLOR_GREYBLUE_NO_OPAGUE);
+      gr.drawLine(pixelX - offset, pixelY - 3, pixelX + offset,
+          pixelY - 3);
+      gr.setColor(Color.BLACK);
+      gr.setFont(GuiStatics.getFontCubellanSC());
+      gr.drawString(
+          RandomSystemNameGenerator.numberToRoman(
+              planet.getOrderNumber()), pixelX - textWidth / 2, pixelY);
+    }
+
+    // Draw planet text
+    if (planet != null && !planet.isGasGiant()
+        && planet.getOrderNumber() != 0 && info != null && info
+        .getSectorVisibility(new Coordinate(i + cx,
+            j + cy)) != PlayerInfo.UNCHARTED) {
+      int textWidth = (int) GuiStatics.getFontCubellanSC()
+          .getStringBounds(RandomSystemNameGenerator.numberToRoman(
+              planet.getOrderNumber()), gr.getFontRenderContext())
+          .getWidth();
+      int offset = Tile.MAX_WIDTH / 2 - textWidth / 2 - 2;
+      gr.setStroke(GuiStatics.TEXT_LINE);
+      gr.setColor(GuiStatics.COLOR_GREYBLUE);
+      gr.drawLine(pixelX + offset, pixelY + Tile.MAX_HEIGHT / 2 - 3,
+          pixelX + Tile.MAX_WIDTH - offset,
+          pixelY + Tile.MAX_HEIGHT / 2 - 3);
+      gr.setColor(Color.BLACK);
+      gr.setFont(GuiStatics.getFontCubellanSC());
+      gr.drawString(
+          RandomSystemNameGenerator.numberToRoman(
+              planet.getOrderNumber()),
+          pixelX + Tile.MAX_WIDTH / 2 - textWidth / 2,
+          pixelY + Tile.MAX_HEIGHT / 2);
+    }
+  }
   /**
    * Draw star map to Map panel
    * @param starMap Star map to draw
@@ -844,170 +1060,23 @@ public class MapPanel extends JPanel {
               }
             }
           }
-          Tile tile = starMap.getTile(i + cx, j + cy);
+          Planet planet = starMap.getPlanetByCoordinate(i + cx, j + cy);
+          // Draw tile
+          Tile tile = drawTile(gr, cx, cy, i, j, starMap, info, pixelX,
+              pixelY, planet);
           if (tile == null) {
             continue;
-          }
-          if (tile.getAnimationIndex() != tile.getIndex() && updateAnimation) {
-            // Change map tile for next drawing
-            starMap.setTile(i + cx, j + cy,
-                Tiles.getTileByIndex(tile.getAnimationIndex()));
-            redrawTile[i + viewPointX][j + viewPointY] = true;
-          }
-          // Draw only non empty tiles
-          if (info != null && !tile.getName().equals(TileNames.EMPTY)
-              && info.getSectorVisibility(new Coordinate(i + cx,
-                  j + cy)) != PlayerInfo.UNCHARTED
-              || starMap.getTileInfo(i + cx, j + cy)
-                  .getType() == SquareInfo.TYPE_SUN
-              || starMap.getTileInfo(i + cx, j + cy)
-                  .getType() == SquareInfo.TYPE_BLACKHOLE_CENTER) {
-            tile.draw(gr, pixelX, pixelY);
-          }
-          // Draw home world marker
-          Planet planet = starMap.getPlanetByCoordinate(i + cx, j + cy);
-          if (planet != null && !planet.isGasGiant() && info != null
-              && info.getSectorVisibility(new Coordinate(i + cx,
-                  j + cy)) != PlayerInfo.UNCHARTED
-              && planet.getHomeWorldIndex() != -1) {
-            Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
-            icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-                pixelY + Icon16x16.MAX_HEIGHT);
-          }
-          // Draw deep space anchor marker
-          if ((tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
-              || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2))
-              && info != null && info.getSectorVisibility(new Coordinate(i + cx,
-                  j + cy)) != PlayerInfo.UNCHARTED) {
-            Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
-            icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-                pixelY + Icon16x16.MAX_HEIGHT);
-            redrawTile[i + viewPointX][j + viewPointY] = true;
           }
           // Draw fleet
           drawFleet(gr, fleetMap, cx, cy, i, j, starMap, info, pixelX, pixelY);
 
           // Draw fog of war and uncharted tiles
-          if (info != null) {
-            switch (info.getSectorVisibility(new Coordinate(i + cx,
-                j + cy))) {
-            case PlayerInfo.UNCHARTED: {
-              if (starMap.getTileInfo(i + cx, j + cy)
-                  .getType() != SquareInfo.TYPE_SUN) {
-                Tiles.getTileByName(TileNames.UNCHARTED).draw(gr, pixelX,
-                    pixelY);
-              }
-              break;
-            }
-            case PlayerInfo.FOG_OF_WAR: {
-              if (starMap.getTileInfo(i + cx, j + cy)
-                  .getType() != SquareInfo.TYPE_SUN) {
-                Tiles.getTileByName(TileNames.FOG_OF_WAR).draw(gr, pixelX,
-                    pixelY);
-              }
-              break;
-            }
-            default:
-              // Do nothing
-              break;
-            }
-          }
+          drawFogOfWar(gr, cx, cy, i, j, starMap, info, pixelX, pixelY);
 
+          // Draw Tile text
+          drawTileText(gr, cx, cy, i, j, starMap, info, pixelX,
+              pixelY, planet);
 
-          // Draw sun's text
-          if ((tile.getName().equals(TileNames.SUN_E)
-              || tile.getName().equals(TileNames.BLUE_STAR_E)
-              || tile.getName().equals(TileNames.STAR_E))
-              && i > -viewPointX + 1) {
-            Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
-            if (sun != null) {
-              redrawTile[i + viewPointX][j + viewPointY] = true;
-/*              if (i + 1 + viewPointX < redrawTile.length) {
-                redrawTile[i + viewPointX + 1][j + viewPointY] = true;
-              }*/
-              int textWidth = (int) GuiStatics.getFontCubellanSC()
-                  .getStringBounds(sun.getName(), gr.getFontRenderContext())
-                  .getWidth();
-              int offset = Tile.MAX_WIDTH / 2 + textWidth / 2 - 2;
-              gr.setStroke(GuiStatics.TEXT_LINE);
-              if (tile.getName().equals(TileNames.SUN_E)) {
-                gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
-              }
-              if (tile.getName().equals(TileNames.STAR_E)) {
-                gr.setColor(GuiStatics.COLOR_SPACE_YELLOW);
-              }
-              if (tile.getName().equals(TileNames.BLUE_STAR_E)) {
-                gr.setColor(GuiStatics.getCoolSpaceColor());
-              }
-              gr.drawLine(pixelX - offset, pixelY + Tile.MAX_HEIGHT / 2 - 3,
-                  pixelX - Tile.MAX_WIDTH + offset,
-                  pixelY + Tile.MAX_HEIGHT / 2 - 3);
-              gr.setColor(Color.BLACK);
-              gr.setFont(GuiStatics.getFontCubellanSC());
-              gr.drawString(sun.getName(),
-                  pixelX - Tile.MAX_WIDTH / 2 - textWidth / 2,
-                  pixelY + Tile.MAX_HEIGHT / 2);
-            }
-          }
-
-          // Draw Gas giant text
-          if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE)
-              && i > -viewPointX
-              || tile.getName().equals(TileNames.GAS_GIANT_2_SE)
-                  && i > -viewPointX
-              || tile.getName().equals(TileNames.GAS_GIANT_3_SE)
-                  && i > -viewPointX
-              || tile.getName().equals(TileNames.JUPITER_SE)
-                  && i > -viewPointX
-              || tile.getName().equals(TileNames.SATURN_SE)
-                  && i > -viewPointX
-              || tile.getName().equals(TileNames.ICEGIANT1_SE)
-                  && i > -viewPointX
-              || tile.getName().equals(TileNames.ICEGIANT2_SE)
-                  && i > -viewPointX)
-              && planet != null && info != null && info
-                  .getSectorVisibility(new Coordinate(i + cx,
-                      j + cy)) != PlayerInfo.UNCHARTED) {
-            redrawTile[i + viewPointX][j + viewPointY] = true;
-            int textWidth = (int) GuiStatics.getFontCubellanSC()
-                .getStringBounds(RandomSystemNameGenerator.numberToRoman(
-                    planet.getOrderNumber()), gr.getFontRenderContext())
-                .getWidth();
-            int offset = textWidth / 2 - 2;
-            gr.setStroke(GuiStatics.TEXT_LINE);
-            gr.setColor(GuiStatics.COLOR_GREYBLUE_NO_OPAGUE);
-            gr.drawLine(pixelX - offset, pixelY - 3, pixelX + offset,
-                pixelY - 3);
-            gr.setColor(Color.BLACK);
-            gr.setFont(GuiStatics.getFontCubellanSC());
-            gr.drawString(
-                RandomSystemNameGenerator.numberToRoman(
-                    planet.getOrderNumber()), pixelX - textWidth / 2, pixelY);
-          }
-
-          // Draw planet text
-          if (planet != null && !planet.isGasGiant()
-              && planet.getOrderNumber() != 0 && info != null && info
-              .getSectorVisibility(new Coordinate(i + cx,
-                  j + cy)) != PlayerInfo.UNCHARTED) {
-            int textWidth = (int) GuiStatics.getFontCubellanSC()
-                .getStringBounds(RandomSystemNameGenerator.numberToRoman(
-                    planet.getOrderNumber()), gr.getFontRenderContext())
-                .getWidth();
-            int offset = Tile.MAX_WIDTH / 2 - textWidth / 2 - 2;
-            gr.setStroke(GuiStatics.TEXT_LINE);
-            gr.setColor(GuiStatics.COLOR_GREYBLUE);
-            gr.drawLine(pixelX + offset, pixelY + Tile.MAX_HEIGHT / 2 - 3,
-                pixelX + Tile.MAX_WIDTH - offset,
-                pixelY + Tile.MAX_HEIGHT / 2 - 3);
-            gr.setColor(Color.BLACK);
-            gr.setFont(GuiStatics.getFontCubellanSC());
-            gr.drawString(
-                RandomSystemNameGenerator.numberToRoman(
-                    planet.getOrderNumber()),
-                pixelX + Tile.MAX_WIDTH / 2 - textWidth / 2,
-                pixelY + Tile.MAX_HEIGHT / 2);
-          }
           if (routeData != null && routeData[i + cx][j + cy] == 1) {
             redrawTile[i + viewPointX][j + viewPointY] = true;
             if (route.isDefending()) {

@@ -267,11 +267,11 @@ public final class BackgroundStoryGenerator {
     switch (DiceGenerator.getRandom(2)) {
       default:
       case 0: {
-        sb.append(" are a type of mechanical robot that are designed to function"
-            + " without the need for food or other organic sustenance. Instead,"
-            + " they are powered by advanced technology, such as batteries or "
-            + "fuel cells, which allow them to operate for long periods of time"
-            + " without needing to be refueled.");
+        sb.append(" are a type of mechanical robot that are designed to"
+            + " function without the need for food or other organic"
+            + " sustenance. Instead, they are powered by advanced technology,"
+            + " such as batteries or fuel cells, which allow them to operate"
+            + " for long periods of time without needing to be refueled.");
         break;
       }
       case 1: {
@@ -1818,17 +1818,9 @@ public final class BackgroundStoryGenerator {
       }
       sb.append(" of star years ago on");
     } else if (info.getRace().isRoboticRace()) {
-      /*
-       * The genesis of Mechions traces back to an ancient civilization that 
-       * flourished several thousand star years ago on an iron-rich world. 
-       * Mechions hold the belief that they were subjects of experimentation, 
-       * with their creators studying their ability to survive in the 
-       * unforgiving expanse of the galaxy. Their home planet was a hostile 
-       * realm, characterized by molten lava and scorching environments, 
-       * yet Mechions thrived and evolved amidst these challenging conditions.
-       */
+      sb.append("The genesis of ");
       sb.append(name);
-      sb.append(" were created by ancient civilization");
+      sb.append(" traces back to an ancient civilization that flourished ");
       switch (DiceGenerator.getRandom(2)) {
         default:
         case 0: {
@@ -1846,16 +1838,27 @@ public final class BackgroundStoryGenerator {
       }
       sb.append(" thousands of star years ago on");
     } else {
-      /*
-       * Life on this water-covered planet sprouted eons ago, stretching back 
-       * billions of star years. Earth III teemed with diverse forms of life,
-       * yet it was the ancestors of humanity that emerged as the most advanced.
-       * Approximately 500,000 star years in the past, the first humans made 
-       * their appearance on the surface of Earth III, becoming the sole 
-       * sentient beings to inhabit this moist world, replete with vast oceans.
-       * They eventually laid claim to the entire planet.
-       */
-      sb.append("Life were born ");
+      switch (DiceGenerator.getRandom(3)) {
+        default:
+        case 0: {
+          sb.append("Life were born ");
+          break;
+        }
+        case 1: {
+          sb.append("Life on this water-covered planet sprouted eons ago,"
+              + " stretching back ");
+          break;
+        }
+        case 2: {
+          sb.append("Their history traces back an astonishing ");
+          break;
+        }
+        case 3: {
+          sb.append("Their story unfolds ");
+          break;
+        }
+      }
+      
       switch (DiceGenerator.getRandom(2)) {
       default:
       case 0: {
@@ -1911,8 +1914,14 @@ public final class BackgroundStoryGenerator {
        * their demanding habitat.
        */
       sb.append(" dry desert world.");
-      endOfworldDescription = " This harsh envinronment was challenging but "
-          + name + " became stronger and more sustainable there.";
+      if (DiceGenerator.getRandom(1) == 0) {
+        endOfworldDescription = "This harsh envinronment was challenging but "
+            + name + " became stronger and more sustainable there.";
+      } else {
+        endOfworldDescription = "Despite the challenging conditions, the "
+            + name + " grew resilient and adapted, thriving in their "
+            + "demanding habitat.";
+      }
       hot = true;
       harsh = true;
     }
@@ -1924,19 +1933,16 @@ public final class BackgroundStoryGenerator {
       harsh = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.IRONWORLD) {
-      /*
-       * The genesis of Mechions dates back to an ancient civilization that 
-       * thrived several thousand star years ago on an iron-rich world. 
-       * The true purpose behind the creation of Mechions remains an enigma. 
-       * Their home planet was a hostile terrain, characterized by molten 
-       * lava and scorching environments. Remarkably, Mechions not only 
-       * survived but thrived, acquiring invaluable insights into thriving 
-       * in such harsh conditions.
-       */
       sb.append(" iron world.");
-      endOfworldDescription = "This planet was full of molten lava and"
-          + " hot envinronments " + name + " were able to survive there"
-          + " and learn how fluorish there.";
+      if (DiceGenerator.getRandom(1) == 0) {
+        endOfworldDescription = "This planet was full of molten lava and"
+            + " hot envinronments " + name + " were able to survive there"
+            + " and learn how fluorish there.";
+      } else {
+        endOfworldDescription = "Remarkably, " + name + " not only survived"
+            + " but thrived, acquiring invaluable insights into thriving "
+            + "in such harsh conditions.";
+      }
       hot = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.SILICONWORLD) {
@@ -2030,6 +2036,11 @@ public final class BackgroundStoryGenerator {
         sb.append(startPlanet.getName());
         sb.append(". ");
         break;
+      }
+      case 4: {
+        sb.append("The true purpose behind the creation of ");
+        sb.append(name);
+        sb.append("remains an enigma. ");
       }
       }
     } else {

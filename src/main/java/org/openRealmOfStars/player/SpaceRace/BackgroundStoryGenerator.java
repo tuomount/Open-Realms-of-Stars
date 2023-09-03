@@ -218,17 +218,15 @@ public final class BackgroundStoryGenerator {
         info.getGovernment());
     if (startPlanet.getName().startsWith("Earth")) {
       sb.append(name);
-      sb.append(" are the humans from the Earth. ");
-      sb.append(name);
-      sb.append(" are seen as "
-          + "average in most physical and mental abilities. ");
+      sb.append(", the inhabitants of Earth,");
+      sb.append(" are commonly regarded as possessing average physical and "
+          + "mental attributes.");
     } else {
       sb.append(name);
-      sb.append(" are an extraterrestrial beings that are similar to humans"
-          + " on Earth. Like their Earthly counterparts, ");
-      sb.append(name);
-      sb.append(" are often portrayed as being average in most"
-          + " physical and mental abilities. ");
+      sb.append("a race of extraterrestrial beings, bear a striking resemblance"
+          + " to their Earthly counterparts, humans. Much like humans,"
+          + " Terrans are often depicted as possessing average physical"
+          + " and mental capabilities.");
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));
@@ -266,23 +264,61 @@ public final class BackgroundStoryGenerator {
       name = "Mechions";
     }
     sb.append(name);
-    sb.append(" are a type of mechanical robot that are designed to function"
-        + " without the need for food or other organic sustenance. Instead,"
-        + " they are powered by advanced technology, such as batteries or "
-        + "fuel cells, which allow them to operate for long periods of time"
-        + " without needing to be refueled.");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(" are a type of mechanical robot that are designed to function"
+            + " without the need for food or other organic sustenance. Instead,"
+            + " they are powered by advanced technology, such as batteries or "
+            + "fuel cells, which allow them to operate for long periods of time"
+            + " without needing to be refueled.");
+        break;
+      }
+      case 1: {
+        sb.append(" are a remarkable breed of mechanical robots meticulously"
+            + " designed to operate autonomously, free from the need for food"
+            + " or organic sustenance. Instead, they draw their power from"
+            + " cutting-edge technology, relying on batteries or fuel cells"
+            + " that afford them extended operational periods without the"
+            + " requirement for refueling.");
+        break;
+      }
+      case 2: {
+        sb.append(" represent a distinct class of mechanical robots engineered"
+            + " to function autonomously, eliminating the need for sustenance "
+            + "or nourishment. Their power source hinges on cutting-edge "
+            + "technology, including batteries or fuel cells, enabling them "
+            + "to operate tirelessly over extended periods without "
+            + "necessitating refueling.");
+        break;
+      }
+    }
     if (info.getGovernment().isImmuneToHappiness()) {
       sb.append(" Each Mechion is equipped with advanced sensors and"
           + " communication systems, which allow them to coordinate their"
-          + " movements and work in harmony with their fellow robots."
-          + " This allows Mechion populations to tackle complex tasks "
-          + "that would be beyond the capabilities of a single robot.");
+          + " movements and work in harmony with their fellow robots.");
+      if (DiceGenerator.getRandom(1) == 0) {
+        sb.append(" This allows Mechion populations to tackle complex tasks "
+            + "that would be beyond the capabilities of a single robot.");
+      } else {
+        sb.append(" This collective synergy empowers Mechion populations to "
+            + "collaborate on intricate tasks that would otherwise surpass "
+            + "the capabilities of a solitary robot.");
+      }
     } else {
-      sb.append(" Each Mechion is equipped with advanced sensors and"
-          + " powerful neuronetwork, which allows them to individually"
-          + " perform complex and demanding tasks. This means that each"
-          + " Mechion is highly advanced AI system that can learn and"
-          + " adapt into new things.");
+      if (DiceGenerator.getRandom(1) == 0) {
+        sb.append(" Each Mechion is equipped with advanced sensors and"
+            + " powerful neuronetwork, which allows them to individually"
+            + " perform complex and demanding tasks. This means that each"
+            + " Mechion is highly advanced AI system that can learn and"
+            + " adapt into new things.");
+      } else {
+        sb.append(" Each Mechion is equipped with advanced sensors and a "
+            + "formidable neuronetwork, granting them the capacity to "
+            + "undertake intricate and demanding tasks independently. "
+            + "This renders every Mechion an advanced AI system capable of "
+            + "learning and adapting to new challenges.");
+      }
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, name));
@@ -386,9 +422,26 @@ public final class BackgroundStoryGenerator {
         info.getGovernment());
 
     sb.append(name);
-    sb.append(" are a species of aggressive and warmongering"
-        + " creatures that are known for their ferocity and their love of"
-        + " battle. ");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(" are a species of aggressive and warmongering"
+            + " creatures that are known for their ferocity and their love of"
+            + " battle. ");
+        break;
+      }
+      case 1: {
+        sb.append(" are a formidable species known for their aggressive and "
+            + "warlike nature, renowned for their unyielding love of battle. ");
+        break;
+      }
+      case 2: {
+        sb.append(" are a formidable species, renowned for their aggressive "
+            + "and martial disposition, and celebrated for their unwavering "
+            + "passion for combat. ");
+        break;
+      }
+    }
     sb.append(name);
     sb.append(" are typically tall and muscular, with thick, armored skin and"
         + " powerful muscles.");
@@ -1255,6 +1308,43 @@ public final class BackgroundStoryGenerator {
           break;
         }
         case 2: {
+          /*
+           * In a remarkable turn of events, a group of archaeologists 
+           * uncovered a mysterious object from their planet, which, after 
+           * years of study, revealed itself to be a faster-than-light engine. 
+           * In the year 2389, the first prototype spacecraft was brought to 
+           * fruition. Inaugural spaceflights proved to be magnificent 
+           * successes, culminating in the creation of the first armed scout 
+           * and colony ships by star year 2400. Sagittarian Feudalism embarked 
+           * on its momentous journey of space exploration, departing from Mars 
+           * with King Max Power at the helm, guiding the Sagittarians into the 
+           * uncharted realms of the stars.
+           */
+          /*
+           * In an intriguing twist, a group of archaeologists unearthed an 
+           * enigmatic object from their home planet, eventually revealing 
+           * it to be a faster-than-light engine. By the year 2377, the 
+           * first prototype spacecraft had been crafted, heralding magnificent 
+           * success during its maiden voyages. This achievement culminated 
+           * in the creation of the inaugural armed scout and colony ships by 
+           * star year 2400. The Mechion AI embarked on an ambitious journey 
+           * of space exploration, setting forth from Alpha Muert with the 
+           * Main Loop Droid D-9 steering the Mechions toward the boundless 
+           * reaches of the stars.
+           */
+          /*
+           * In a fascinating turn of events, a group of archaeologists 
+           * unearthed a mysterious object from their home planet, which, 
+           * after years of scrutiny, was revealed to be a faster-than-light 
+           * engine. By the year 2377, the first prototype spacecraft had 
+           * been constructed, achieving resounding success during its 
+           * inaugural flights. This monumental feat culminated in the 
+           * creation of the first armed scout and colony ships by 
+           * star year 2400. The Steel Empire embarked on a grand 
+           * odyssey of space exploration, commencing from Alpha Muert, with 
+           * Empire Droid D-9 leading Mechions into the uncharted realms of 
+           * the stars.
+           */
           sb.append("Group of archeologists were able to discover strange"
               + " object from the planet and after years of study it turn out"
               + " to be faster than light engine. First prototype of"
@@ -1276,6 +1366,39 @@ public final class BackgroundStoryGenerator {
           break;
         }
         case 3: {
+          /*
+           * A dedicated team of researchers achieved the remarkable feat of 
+           * unlocking faster-than-light travel, leading to the creation of 
+           * the first prototype spaceship in the year 2390. The inaugural 
+           * spaceflights were resounding successes, culminating in the 
+           * development of the first armed scout and colony ships by 
+           * star year 2400. The Human Federation embarked on its grand 
+           * voyage of space exploration, spearheaded by
+           * President Rodolf Rednose, venturing beyond the boundaries of 
+           * Earth III and into the vast expanse of the cosmos.
+           */
+          /*
+           * A dedicated team of researchers achieved the groundbreaking
+           * feat of uncovering faster-than-light travel, culminating in the 
+           * creation of the first prototype spacecraft in the year 2380. 
+           * Inaugural spaceflights heralded magnificent successes, 
+           * culminating in the development of the first armed scout and 
+           * colony ships by star year 2400. Terran Utopia embarked on its 
+           * grand voyage of space exploration from Mars, with 
+           * President Rodolf Rednose at the helm, guiding the Terrans into 
+           * the boundless realm of the stars.
+           */
+          /*
+           * A group of pioneering researchers succeeded in unraveling the 
+           * secrets of faster-than-light travel, culminating in the creation 
+           * of the first prototype spacecraft in the year 2375. 
+           * Inaugural spaceflights witnessed resounding success, leading to 
+           * the development of the first armed scout and colony ships by 
+           * star year 2400. The Sporksian kingdom embarked on its grand 
+           * odyssey of space exploration, launching from Mars with 
+           * King Max Power at the helm, guiding his fierce people into the 
+           * uncharted realms of the stars.
+           */
           sb.append("Group of researchers were able to discover faster"
               + " than light travel and first prototype of space ship "
               + "was created at star year ");
@@ -1395,8 +1518,13 @@ public final class BackgroundStoryGenerator {
         }
         case 3: {
           sb.append(name);
-          sb.append(" history is unknown since there is no written text"
-              + " available, until ");
+          if (DiceGenerator.getRandom(1) == 0) {
+            sb.append(" history is unknown since there is no written text"
+                + " available, until ");
+          } else {
+            sb.append(" history remained shrouded in obscurity, devoid of"
+                + " written records, until ");
+          }
           Gender gender = Gender.getRandom();
           if (info.getRace().getSocialSystem() == SocialSystem.PATRIARCHY) {
             gender = Gender.MALE;
@@ -1421,13 +1549,21 @@ public final class BackgroundStoryGenerator {
           sb.append(lowcaseGovernmentName);
           sb.append(" and ");
           sb.append(gender.getHeShe());
-          sb.append(" was their first ");
+          sb.append(" was their ");
+          sb.append(StoryGeneratorUtility.randomInaugural());
+          sb.append(" ");
           sb.append(LeaderUtility.getRulerTitle(gender, info.getGovernment()));
-          sb.append(" and ");
-          sb.append(gender.getHisHer());
-          sb.append(" reign begins ");
-          sb.append(name);
-          sb.append(" written history. ");
+          if (DiceGenerator.getRandom(1) == 0) {
+            sb.append(" and ");
+            sb.append(gender.getHisHer());
+            sb.append(" reign begins ");
+            sb.append(name);
+            sb.append(" written history. ");
+          } else {
+            sb.append("This momentous event marked the commencement of ");
+            sb.append(name);
+            sb.append("' documented history.");
+          }
           break;
         }
       }
@@ -1454,14 +1590,33 @@ public final class BackgroundStoryGenerator {
             writtenHistory = false;
             break;
           }
+          case 3: {
+            sb.append("Throughout their tumultuous history, the ");
+            sb.append(name);
+            sb.append(" were marked by violence, until ");
+            break;
+          }
+          case 4: {
+            sb.append(name);
+            sb.append(" have a tumultuous history, marked by conflict, until ");
+            break;
+          }
+
         }
       } else {
         switch (DiceGenerator.getRandom(3)) {
         default:
         case 0: {
-          sb.append(name);
-          sb.append(" were small tribes first scattered around the planet,"
-              + " until ");
+          if (DiceGenerator.getRandom(1) == 0) {
+            sb.append(name);
+            sb.append(" were small tribes first scattered around the planet,"
+                + " until ");
+          } else {
+            sb.append("Initially, ");
+            sb.append(name);
+            sb.append(" existed as small, scattered tribes across the globe."
+                + " It wasn't until ");
+          }
           break;
         }
         case 1: {
@@ -1471,9 +1626,28 @@ public final class BackgroundStoryGenerator {
           break;
         }
         case 2: {
-          sb.append(name);
-          sb.append(" history hasn't been written for long and it was"
-              + " long unknown, until ");
+          switch (DiceGenerator.getRandom(2)) {
+            default:
+            case 0: {
+              sb.append(name);
+              sb.append(" history is unknown since there is no written text"
+                  + " available, until ");
+              break;
+            }
+            case 1: {
+              sb.append(name);
+              sb.append(" history remained shrouded in obscurity, devoid of"
+                  + " written records, until ");
+              break;
+            }
+            case 2: {
+              sb.append("The annals of ");
+              sb.append(name);
+              sb.append(" history remained unwritten for an extended period,"
+                  + " shrouded in mystery until ");
+              break;
+            }
+          }
           writtenHistory = false;
           break;
         }
@@ -1505,34 +1679,109 @@ public final class BackgroundStoryGenerator {
       sb.append(lowcaseGovernmentName);
       sb.append(" and ");
       sb.append(gender.getHeShe());
-      sb.append(" was their first ");
+      sb.append(" was their ");
+      sb.append(StoryGeneratorUtility.randomInaugural());
+      sb.append(" ");
       sb.append(LeaderUtility.getRulerTitle(gender, info.getGovernment()));
       if (writtenHistory) {
         sb.append(". ");
       } else {
-        sb.append(" and ");
-        sb.append(gender.getHisHer());
-        sb.append(" reign begins ");
-        sb.append(name);
-        sb.append(" written history. ");
+        switch (DiceGenerator.getRandom(2)) {
+          default:
+          case 0: {
+            sb.append(" and ");
+            sb.append(gender.getHisHer());
+            sb.append(" reign begins ");
+            sb.append(name);
+            sb.append(" written history. ");
+            break;
+          }
+          case 1: {
+            sb.append(" and under ");
+            sb.append(gender.getHisHer());
+            sb.append(" leadership, the recorded history of ");
+            sb.append(name);
+            sb.append(" commenced, marking a significant era in their"
+                + " evolution.");
+            break;
+          }
+          case 2: {
+            sb.append(" and this momentous event marked the commencement of ");
+            sb.append(name);
+            sb.append("' ' documented history.");
+            break;
+          }
+        }
       }
     }
     if (diplomatic) {
       sb.append(name);
-      sb.append(" have always shown great interest towards others");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(" have always shown great interest towards others");
+          break;
+        }
+        case 1: {
+          sb.append(" have consistently displayed a profound interest in "
+              + "fostering connections with other species");
+          break;
+        }
+        case 2: {
+          sb.append(" have exhibited a keen interest in engaging with other"
+              + " cultures");
+          break;
+        }
+      }
       if (traders) {
-        sb.append(" and have reputation to be good traders");
+        if (DiceGenerator.getRandom(1) == 0) {
+          sb.append(" and have reputation to be good traders");
+        } else {
+          sb.append(" and have cultivated a reputation as skilled traders");
+        }
       }
       sb.append(". ");
     }
-    if (!diplomatic && traders) {
+    if (!diplomatic && aggressive && traders) {
       sb.append(name);
-     sb.append(" have reputation to be good traders. ");
+     sb.append(", despite their warlike tendencies, also held a "
+         + "reputation for adept trading, showcasing their "
+         + "multifaceted nature. ");
+    } else if (!diplomatic && traders) {
+      sb.append(name);
+      if (DiceGenerator.getRandom(1) == 0) {
+        sb.append(" have reputation to be good traders. ");
+      } else {
+        sb.append(" have cultivated a reputation as skilled traders. ");
+      }
     }
     if (xenophopic) {
-      sb.append(name);
-      sb.append(" have very strong attitudes towards others which they see"
-          + " as an outsiders. ");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(name);
+          sb.append(" have very strong attitudes towards others which they see"
+              + " as an outsiders. ");
+          break;
+        }
+        case 1: {
+          sb.append(name);
+          sb.append(" hold strong, often exclusionary beliefs when it "
+              + "comes to outsiders. ");
+          break;
+        }
+        case 2: {
+          sb.append(" Their strong attitudes towards outsiders were a "
+              + "defining trait. ");
+          break;
+        }
+        case 3: {
+          sb.append(name);
+          sb.append(" hold strong attitudes toward outsiders,"
+              + " accentuating their fiercely independent nature.");
+          break;
+        }
+      }
     }
     return sb.toString();
   }
@@ -1569,6 +1818,15 @@ public final class BackgroundStoryGenerator {
       }
       sb.append(" of star years ago on");
     } else if (info.getRace().isRoboticRace()) {
+      /*
+       * The genesis of Mechions traces back to an ancient civilization that 
+       * flourished several thousand star years ago on an iron-rich world. 
+       * Mechions hold the belief that they were subjects of experimentation, 
+       * with their creators studying their ability to survive in the 
+       * unforgiving expanse of the galaxy. Their home planet was a hostile 
+       * realm, characterized by molten lava and scorching environments, 
+       * yet Mechions thrived and evolved amidst these challenging conditions.
+       */
       sb.append(name);
       sb.append(" were created by ancient civilization");
       switch (DiceGenerator.getRandom(2)) {
@@ -1588,6 +1846,15 @@ public final class BackgroundStoryGenerator {
       }
       sb.append(" thousands of star years ago on");
     } else {
+      /*
+       * Life on this water-covered planet sprouted eons ago, stretching back 
+       * billions of star years. Earth III teemed with diverse forms of life,
+       * yet it was the ancestors of humanity that emerged as the most advanced.
+       * Approximately 500,000 star years in the past, the first humans made 
+       * their appearance on the surface of Earth III, becoming the sole 
+       * sentient beings to inhabit this moist world, replete with vast oceans.
+       * They eventually laid claim to the entire planet.
+       */
       sb.append("Life were born ");
       switch (DiceGenerator.getRandom(2)) {
       default:
@@ -1608,11 +1875,41 @@ public final class BackgroundStoryGenerator {
     }
     String endOfworldDescription = null;
     if (startPlanet.getPlanetType().getWorldType() == WorldType.CARBONWORLD) {
+      /*
+       * Their story unfolds two billion star years ago on a carbon-rich planet 
+       * teeming with life. Among the thriving ecosystem, Mars held the 
+       * potential for life to evolve. It was approximately 600,000 star years 
+       * ago when the first Sporksians emerged on the Martian surface. While 
+       * they shared their newfound home with other sentient beings initially, 
+       * the Sporksians vanquished all rivals, asserting their dominance over 
+       * the planet. Mars proved to be an ideal habitat for their kind.
+       */
+      /*
+       * Their history traces back an astonishing two billion star years ago on 
+       * a carbon-rich planet teeming with life. The evolution of life on Mars 
+       * commenced, leading to the emergence of the first Sagittarians 
+       * approximately 500,000 star years ago. While Mars initially played host 
+       * to various sentient species, the Sagittarians asserted their 
+       * dominance, eliminating all rivals and establishing themselves as the 
+       * paramount species. Mars proved to be an ideal habitat, conducive to 
+       * their thriving existence.
+       */
       sb.append(" carbon rich planet with full of life.");
       endOfworldDescription = " This was excellent planet for live on.";
       fullOfLife = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.DESERTWORLD) {
+      /*
+       * Life on their home planet, a dry desert world, came into existence
+       * a staggering two billion star years ago. Mars, although a harsh
+       * and unforgiving environment, hosted some forms of life, and it
+       * was the ancestors of the Terrans who emerged as the most advanced
+       * among them. Approximately 100,000 star years ago, the first
+       * Terrans made their appearance on the surface of Mars, becoming 
+       * the planet's sole sentient inhabitants. Despite the challenging 
+       * conditions, the Terrans grew resilient and adapted, thriving in 
+       * their demanding habitat.
+       */
       sb.append(" dry desert world.");
       endOfworldDescription = " This harsh envinronment was challenging but "
           + name + " became stronger and more sustainable there.";
@@ -1627,6 +1924,15 @@ public final class BackgroundStoryGenerator {
       harsh = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.IRONWORLD) {
+      /*
+       * The genesis of Mechions dates back to an ancient civilization that 
+       * thrived several thousand star years ago on an iron-rich world. 
+       * The true purpose behind the creation of Mechions remains an enigma. 
+       * Their home planet was a hostile terrain, characterized by molten 
+       * lava and scorching environments. Remarkably, Mechions not only 
+       * survived but thrived, acquiring invaluable insights into thriving 
+       * in such harsh conditions.
+       */
       sb.append(" iron world.");
       endOfworldDescription = "This planet was full of molten lava and"
           + " hot envinronments " + name + " were able to survive there"

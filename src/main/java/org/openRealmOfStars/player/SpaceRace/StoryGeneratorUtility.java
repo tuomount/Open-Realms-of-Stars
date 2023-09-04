@@ -23,7 +23,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  * Utility for story generator.
  *
  */
-public class StoryGeneratorUtility {
+public final class StoryGeneratorUtility {
 
   /**
    * Hide constructor.
@@ -42,4 +42,52 @@ public class StoryGeneratorUtility {
     }
     return "inaugural";
   }
+
+  /**
+   * Get random explanation for space exploration.
+   * @return explanation.
+   */
+  public static String startSpaceExploration() {
+    switch (DiceGenerator.getRandom(3)) {
+      default:
+      case 0: {
+        return " embarked on its momentous journey of space exploration, "
+            + "departing from";
+      }
+      case 1: {
+        return " embarked on an ambitious journey of space exploration, "
+            + "setting forth from";
+      }
+      case 2: {
+        return " embarked on its grand odyssey of space exploration,"
+            + " launching from";
+      }
+      case 3: {
+        return " embarked on its grand voyage of space exploration from";
+      }
+    }
+  }
+
+  /**
+   * Get random explanation for space exploration.
+   * @return explanation.
+   */
+  public static String intoStars() {
+    switch (DiceGenerator.getRandom(3)) {
+      default:
+      case 0: {
+        return " into the uncharted realms of the stars";
+      }
+      case 1: {
+        return " toward the boundless reaches of the stars";
+      }
+      case 2: {
+        return " into the boundless realm of the stars";
+      }
+      case 3: {
+        return " into the vast expanse of the cosmos";
+      }
+    }
+  }
+
 }

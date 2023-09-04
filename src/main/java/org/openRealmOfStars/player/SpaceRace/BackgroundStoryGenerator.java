@@ -234,17 +234,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -326,17 +316,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -394,17 +374,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -451,17 +421,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -498,17 +458,7 @@ public final class BackgroundStoryGenerator {
         + "are equipped with built-in cloaking devices, which allow "
         + "them to remain hidden and surprise their enemies in combat.");
     sb.append("\n\n");
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -549,17 +499,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
     sb.append("\n\n");
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -600,17 +540,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -651,17 +581,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -704,17 +624,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -762,17 +672,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -815,17 +715,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -866,17 +756,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -915,17 +795,7 @@ public final class BackgroundStoryGenerator {
         + "their weight and allow them to travel through the vacuum of "
         + "space. ");
     sb.append("\n\n");
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -968,17 +838,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -1016,17 +876,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from ");
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
-      sb.append(" with ");
-      sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
-      sb.append(name);
-      sb.append(" to realm of stars");
-    }
-    sb.append(".");
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
     return sb.toString();
   }
 
@@ -1114,19 +964,53 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
+    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    return sb.toString();
+  }
+
+  /**
+   * Generate exploration part.
+   * @param info Realm
+   * @param startingYear Starting year
+   * @param name Race name
+   * @param startPlanet Starting planet
+   * @return Exploration part for background story.
+   */
+  private static String generateExploration(final PlayerInfo info,
+      final int startingYear, final String name, final Planet startPlanet) {
+    StringBuilder sb = new StringBuilder();
     sb.append(info.getEmpireName());
-    sb.append(" starts space exploration from deep space");
+    sb.append(StoryGeneratorUtility.startSpaceExploration());
+    sb.append(startPlanet.getName());
     if (info.getRuler() != null) {
       sb.append(" with ");
       sb.append(info.getRuler().getCallName());
-      sb.append(" leading ");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(" leading the ");
+          break;
+        }
+        case 1: {
+          sb.append(" at the helm, guiding the ");
+          break;
+        }
+        case 2: {
+          sb.append(" steering the ");
+          break;
+        }
+        case 3: {
+          sb.append(" at the helm, guiding ");
+          sb.append(info.getRuler().getGender().getHisHer());
+          sb.append(" fierce people ");
+        }
+      }
       sb.append(name);
-      sb.append(" to realm of stars");
+      sb.append(StoryGeneratorUtility.intoStars());
     }
     sb.append(".");
     return sb.toString();
   }
-
   /**
    * Generate FTL background story.
    * @param info Realm
@@ -1289,7 +1173,7 @@ public final class BackgroundStoryGenerator {
         case 1: {
           sb.append("Group of scientist were able to make faster"
               + " than light engine but no one else understood it and it took"
-              + "years before actual prototype was done. First prototype of"
+              + " years before actual prototype was done. First prototype of"
               + " space craft was created at star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
           if (info.getRace() == SpaceRace.ALONIANS) {
@@ -1308,18 +1192,7 @@ public final class BackgroundStoryGenerator {
           break;
         }
         case 2: {
-          /*
-           * In a remarkable turn of events, a group of archaeologists 
-           * uncovered a mysterious object from their planet, which, after 
-           * years of study, revealed itself to be a faster-than-light engine. 
-           * In the year 2389, the first prototype spacecraft was brought to 
-           * fruition. Inaugural spaceflights proved to be magnificent 
-           * successes, culminating in the creation of the first armed scout 
-           * and colony ships by star year 2400. Sagittarian Feudalism embarked 
-           * on its momentous journey of space exploration, departing from Mars 
-           * with King Max Power at the helm, guiding the Sagittarians into the 
-           * uncharted realms of the stars.
-           */
+          
           /*
            * In an intriguing twist, a group of archaeologists unearthed an 
            * enigmatic object from their home planet, eventually revealing 
@@ -1345,11 +1218,83 @@ public final class BackgroundStoryGenerator {
            * Empire Droid D-9 leading Mechions into the uncharted realms of 
            * the stars.
            */
-          sb.append("Group of archeologists were able to discover strange"
+          switch (DiceGenerator.getRandom(2)) {
+            default:
+            case 0: {
+              sb.append("In a remarkable turn of events, ");
+              break;
+            }
+            case 1: {
+              sb.append("In an intriguing twist, ");
+              break;
+            }
+            case 2: {
+              sb.append("In a fascinating turn of events, ");
+              break;
+            }
+          }
+          sb.append("a group of archeologists ");
+          switch (DiceGenerator.getRandom(2)) {
+            default:
+            case 0: {
+              sb.append("unearthed ");
+              break;
+            }
+            case 1: {
+              sb.append("uncovered ");
+              break;
+            }
+            case 2: {
+              sb.append("discovered ");
+              break;
+            }
+          }
+          switch (DiceGenerator.getRandom(2)) {
+            default:
+            case 0: {
+              sb.append("a strange object ");
+              break;
+            }
+            case 1: {
+              sb.append("a mysterious object ");
+              break;
+            }
+            case 2: {
+              sb.append("an enigmatic object ");
+              break;
+            }
+          }
+          sb.append("from their planet");
+          switch (DiceGenerator.getRandom(2)) {
+            default:
+            case 0: {
+              sb.append(", which, after years of scrutiny, was revealed to be"
+                  + " a faster-than-light engine.");
+              break;
+            }
+            case 1: {
+              sb.append(", eventually revealing it to be a faster-than-light"
+                  + " engine.");
+              break;
+            }
+            case 2: {
+              sb.append(", which, after years of study, revealed itself to be"
+                  + " a faster-than-light engine.");
+              break;
+            }
+          }
+          sb.append("a group of archeologists were able to discover strange"
               + " object from the planet and after years of study it turn out"
               + " to be faster than light engine. First prototype of"
               + " space craft was created at star year ");
+          if (DiceGenerator.getRandom(1) == 0) {
+            sb.append(" By the year ");
+          } else {
+            sb.append(" In the year ");
+          }
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+          sb.append(", the first prototype spacecraft had been crafted,"
+              + " heralding magnificent success during its maiden voyages. ");
           if (info.getRace() == SpaceRace.ALONIANS) {
             sb.append(". First flights were magnificent success and then ");
             sb.append(name);
@@ -1358,8 +1303,9 @@ public final class BackgroundStoryGenerator {
             sb.append(startingYear);
             sb.append(". ");
           } else {
-            sb.append(". First flights were magnificent success and then first"
-                + " armed scout and colony ship was create at star year ");
+            sb.append("This achievement culminated in the creation of the ");
+            sb.append(StoryGeneratorUtility.randomInaugural());
+            sb.append(" armed scout and colony ships by star year ");
             sb.append(startingYear);
             sb.append(". ");
           }
@@ -2131,6 +2077,7 @@ public final class BackgroundStoryGenerator {
         sb.append(name);
         sb.append(" appeared on surface of ");
         sb.append(startPlanet.getName());
+        sb.append(".");
         if (fullOfLife) {
           sb.append(" They were not the only sentient creatures on ");
           sb.append(startPlanet.getName());

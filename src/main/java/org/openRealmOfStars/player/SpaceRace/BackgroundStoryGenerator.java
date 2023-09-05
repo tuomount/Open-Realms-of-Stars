@@ -234,7 +234,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -316,7 +316,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -374,7 +374,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -421,7 +421,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -458,7 +458,7 @@ public final class BackgroundStoryGenerator {
         + "are equipped with built-in cloaking devices, which allow "
         + "them to remain hidden and surprise their enemies in combat.");
     sb.append("\n\n");
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -499,7 +499,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
     sb.append("\n\n");
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -540,7 +540,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -581,7 +581,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -624,7 +624,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -672,7 +672,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -715,7 +715,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -756,7 +756,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -795,7 +795,7 @@ public final class BackgroundStoryGenerator {
         + "their weight and allow them to travel through the vacuum of "
         + "space. ");
     sb.append("\n\n");
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -838,7 +838,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -876,7 +876,7 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
@@ -964,20 +964,19 @@ public final class BackgroundStoryGenerator {
     sb.append(generateGovernmentType(info, name));
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, name));
-    sb.append(generateExploration(info, startingYear, name, startPlanet));
+    sb.append(generateExploration(info, name, startPlanet));
     return sb.toString();
   }
 
   /**
    * Generate exploration part.
    * @param info Realm
-   * @param startingYear Starting year
    * @param name Race name
    * @param startPlanet Starting planet
    * @return Exploration part for background story.
    */
   private static String generateExploration(final PlayerInfo info,
-      final int startingYear, final String name, final Planet startPlanet) {
+      final String name, final Planet startPlanet) {
     StringBuilder sb = new StringBuilder();
     sb.append(info.getEmpireName());
     sb.append(StoryGeneratorUtility.startSpaceExploration());
@@ -1192,32 +1191,6 @@ public final class BackgroundStoryGenerator {
           break;
         }
         case 2: {
-          
-          /*
-           * In an intriguing twist, a group of archaeologists unearthed an 
-           * enigmatic object from their home planet, eventually revealing 
-           * it to be a faster-than-light engine. By the year 2377, the 
-           * first prototype spacecraft had been crafted, heralding magnificent 
-           * success during its maiden voyages. This achievement culminated 
-           * in the creation of the inaugural armed scout and colony ships by 
-           * star year 2400. The Mechion AI embarked on an ambitious journey 
-           * of space exploration, setting forth from Alpha Muert with the 
-           * Main Loop Droid D-9 steering the Mechions toward the boundless 
-           * reaches of the stars.
-           */
-          /*
-           * In a fascinating turn of events, a group of archaeologists 
-           * unearthed a mysterious object from their home planet, which, 
-           * after years of scrutiny, was revealed to be a faster-than-light 
-           * engine. By the year 2377, the first prototype spacecraft had 
-           * been constructed, achieving resounding success during its 
-           * inaugural flights. This monumental feat culminated in the 
-           * creation of the first armed scout and colony ships by 
-           * star year 2400. The Steel Empire embarked on a grand 
-           * odyssey of space exploration, commencing from Alpha Muert, with 
-           * Empire Droid D-9 leading Mechions into the uncharted realms of 
-           * the stars.
-           */
           switch (DiceGenerator.getRandom(2)) {
             default:
             case 0: {
@@ -1283,10 +1256,6 @@ public final class BackgroundStoryGenerator {
               break;
             }
           }
-          sb.append("a group of archeologists were able to discover strange"
-              + " object from the planet and after years of study it turn out"
-              + " to be faster than light engine. First prototype of"
-              + " space craft was created at star year ");
           if (DiceGenerator.getRandom(1) == 0) {
             sb.append(" By the year ");
           } else {
@@ -1312,42 +1281,55 @@ public final class BackgroundStoryGenerator {
           break;
         }
         case 3: {
-          /*
-           * A dedicated team of researchers achieved the remarkable feat of 
-           * unlocking faster-than-light travel, leading to the creation of 
-           * the first prototype spaceship in the year 2390. The inaugural 
-           * spaceflights were resounding successes, culminating in the 
-           * development of the first armed scout and colony ships by 
-           * star year 2400. The Human Federation embarked on its grand 
-           * voyage of space exploration, spearheaded by
-           * President Rodolf Rednose, venturing beyond the boundaries of 
-           * Earth III and into the vast expanse of the cosmos.
-           */
-          /*
-           * A dedicated team of researchers achieved the groundbreaking
-           * feat of uncovering faster-than-light travel, culminating in the 
-           * creation of the first prototype spacecraft in the year 2380. 
-           * Inaugural spaceflights heralded magnificent successes, 
-           * culminating in the development of the first armed scout and 
-           * colony ships by star year 2400. Terran Utopia embarked on its 
-           * grand voyage of space exploration from Mars, with 
-           * President Rodolf Rednose at the helm, guiding the Terrans into 
-           * the boundless realm of the stars.
-           */
-          /*
-           * A group of pioneering researchers succeeded in unraveling the 
-           * secrets of faster-than-light travel, culminating in the creation 
-           * of the first prototype spacecraft in the year 2375. 
-           * Inaugural spaceflights witnessed resounding success, leading to 
-           * the development of the first armed scout and colony ships by 
-           * star year 2400. The Sporksian kingdom embarked on its grand 
-           * odyssey of space exploration, launching from Mars with 
-           * King Max Power at the helm, guiding his fierce people into the 
-           * uncharted realms of the stars.
-           */
-          sb.append("Group of researchers were able to discover faster"
-              + " than light travel and first prototype of space ship "
-              + "was created at star year ");
+          switch (DiceGenerator.getRandom(2)) {
+            default:
+            case 0: {
+              sb.append("A group of researchers ");
+              break;
+            }
+            case 1: {
+              sb.append("A group of pioneering researchers ");
+              break;
+            }
+            case 2: {
+              sb.append("A dedicated team of researchers ");
+              break;
+            }
+          }
+          switch (DiceGenerator.getRandom(2)) {
+            default:
+            case 0: {
+              sb.append("were able to discover ");
+              break;
+            }
+            case 1: {
+              sb.append("succeeded in unraveling the secrets of ");
+              break;
+            }
+            case 2: {
+              sb.append("achieved the remarkable feat of unlocking ");
+              break;
+            }
+          }
+          sb.append("faster-than-light travel, ");
+          switch (DiceGenerator.getRandom(2)) {
+          default:
+          case 0: {
+            sb.append("culminating in the creation of the first prototype"
+                + " spacecraft in the star year ");
+            break;
+          }
+          case 1: {
+            sb.append("leading to the creation of the first prototype "
+                + "spaceship in the star year ");
+            break;
+          }
+          case 2: {
+            sb.append("which later used to create the first prototype"
+                + " spacevessel in the star year ");
+            break;
+          }
+        }
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
           if (info.getRace() == SpaceRace.ALONIANS) {
             sb.append(". First flights were magnificent success and then ");
@@ -1804,7 +1786,6 @@ public final class BackgroundStoryGenerator {
           break;
         }
       }
-      
       switch (DiceGenerator.getRandom(2)) {
       default:
       case 0: {
@@ -1824,42 +1805,26 @@ public final class BackgroundStoryGenerator {
     }
     String endOfworldDescription = null;
     if (startPlanet.getPlanetType().getWorldType() == WorldType.CARBONWORLD) {
-      /*
-       * Their story unfolds two billion star years ago on a carbon-rich planet 
-       * teeming with life. Among the thriving ecosystem, Mars held the 
-       * potential for life to evolve. It was approximately 600,000 star years 
-       * ago when the first Sporksians emerged on the Martian surface. While 
-       * they shared their newfound home with other sentient beings initially, 
-       * the Sporksians vanquished all rivals, asserting their dominance over 
-       * the planet. Mars proved to be an ideal habitat for their kind.
-       */
-      /*
-       * Their history traces back an astonishing two billion star years ago on 
-       * a carbon-rich planet teeming with life. The evolution of life on Mars 
-       * commenced, leading to the emergence of the first Sagittarians 
-       * approximately 500,000 star years ago. While Mars initially played host 
-       * to various sentient species, the Sagittarians asserted their 
-       * dominance, eliminating all rivals and establishing themselves as the 
-       * paramount species. Mars proved to be an ideal habitat, conducive to 
-       * their thriving existence.
-       */
-      sb.append(" carbon rich planet with full of life.");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(" a carbon-rich planet with full of life.");
+          break;
+        }
+        case 1: {
+          sb.append(" a carbon-rich planet teeming with life.");
+          break;
+        }
+        case 2: {
+          sb.append(" a carbon-rich planet where life was flourishing.");
+          break;
+        }
+      }
       endOfworldDescription = " This was excellent planet for live on.";
       fullOfLife = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.DESERTWORLD) {
-      /*
-       * Life on their home planet, a dry desert world, came into existence
-       * a staggering two billion star years ago. Mars, although a harsh
-       * and unforgiving environment, hosted some forms of life, and it
-       * was the ancestors of the Terrans who emerged as the most advanced
-       * among them. Approximately 100,000 star years ago, the first
-       * Terrans made their appearance on the surface of Mars, becoming 
-       * the planet's sole sentient inhabitants. Despite the challenging 
-       * conditions, the Terrans grew resilient and adapted, thriving in 
-       * their demanding habitat.
-       */
-      sb.append(" dry desert world.");
+      sb.append(" a dry desert world.");
       if (DiceGenerator.getRandom(1) == 0) {
         endOfworldDescription = "This harsh envinronment was challenging but "
             + name + " became stronger and more sustainable there.";

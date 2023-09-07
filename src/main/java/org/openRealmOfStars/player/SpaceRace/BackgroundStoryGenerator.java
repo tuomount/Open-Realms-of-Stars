@@ -540,11 +540,32 @@ public final class BackgroundStoryGenerator {
         info.getGovernment());
 
     sb.append(namePlural);
-    sb.append(" are a race of octopus-like creatures that are highly "
-        + "advanced in the fields of science and military technology. ");
-    sb.append(namePlural);
-    sb.append(" are known for their scientific curiosity and their focus "
-        + "on exploration and conquest.");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(" are a race of octopus-like creatures that are highly "
+            + "advanced in the fields of science and military technology. ");
+        sb.append(namePlural);
+        sb.append(" are known for their scientific curiosity and their focus "
+            + "on exploration and conquest.");
+        break;
+      }
+      case 1: {
+        sb.append(" an octopus-like species, possess unparalleled advancements"
+            + " in both scientific and military domains. Renowned for their"
+            + " insatiable scientific curiosity, they are driven by a"
+            + " relentless pursuit of exploration and conquest.");
+        break;
+      }
+      case 2: {
+        sb.append(" an octopus-like species, stand as a testament to their "
+            + "high-level mastery of both scientific and military domains. "
+            + "Renowned for their insatiable scientific curiosity, they "
+            + "are driven by an unyielding pursuit of exploration and"
+            + " conquest.");
+        break;
+      }
+    }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));
     sb.append("\n\n");
@@ -552,12 +573,40 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, namePlural));
     sb.append("\n\n");
-    sb.append("Because of their aquatic origins, ");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append("Because of their aquatic origins, the ");
+        break;
+      }
+      case 1: {
+        sb.append("Leveraging their aquatic origins, the ");
+        break;
+      }
+      case 2: {
+        sb.append("Drawing on their aquatic origins, the ");
+        break;
+      }
+    }
     sb.append(namePlural);
-    sb.append(" are expert navigators and have developed advanced ships"
-        + " that are able to traverse the depths of space. These ships "
-        + "are equipped with built-in cloaking devices, which allow "
-        + "them to remain hidden and surprise their enemies in combat.");
+    switch (DiceGenerator.getRandom(1)) {
+      default:
+      case 0: {
+        sb.append(" are expert navigators and have developed advanced ships"
+          + " that are able to traverse the depths of space. These ships "
+          + "are equipped with built-in cloaking devices, which allow "
+          + "them to remain hidden and surprise their enemies in combat.");
+        break;
+      }
+      case 1: {
+        sb.append(" have honed their expertise in navigation, crafting"
+            + " advanced ships capable of delving into the vastness of "
+            + "space. These vessels are outfitted with integrated cloaking"
+            + " technology, enabling stealth maneuvers and surprise attacks"
+            + " in combat.");
+        break;
+      }
+    }
     sb.append("\n\n");
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
@@ -1168,7 +1217,7 @@ public final class BackgroundStoryGenerator {
       Gender gender = Gender.getRandom();
       String greatLeader = NameGenerator.generateName(info.getRace(),
           gender);
-      switch (DiceGenerator.getRandom(3)) {
+      switch (DiceGenerator.getRandom(4)) {
         default:
         case 0: {
           sb.append(greatLeader);
@@ -1269,6 +1318,30 @@ public final class BackgroundStoryGenerator {
           } else {
             sb.append(". First flights were magnificent success and then first"
                 + " armed scout and colony ship was create at star year ");
+            sb.append(startingYear);
+            sb.append(". ");
+          }
+          break;
+        }
+        case 4: {
+          sb.append("In ");
+          sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
+          sb.append(", ");
+          sb.append(greatLeader);
+          sb.append(" pioneered the discovery of faster-than-light travel,"
+              + " leading to the creation of the first prototype of a "
+              + "spacecraft.");
+          if (info.getRace() == SpaceRace.ALONIANS) {
+            sb.append(" These initial flights marked resounding successes, ");
+            sb.append(name);
+            sb.append(" culminating in the upgrade of the scouts and colony"
+                + " ships with FTL at star year ");
+            sb.append(startingYear);
+            sb.append(". ");
+          } else {
+            sb.append(". These initial flights marked resounding successes, "
+                + "culminating in the development of the first armed scout "
+                + "and colony ship in the star year ");
             sb.append(startingYear);
             sb.append(". ");
           }
@@ -1996,9 +2069,15 @@ public final class BackgroundStoryGenerator {
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.WATERWORLD) {
       sb.append(" water world.");
-      endOfworldDescription = "This planet is moist and has huge oceans"
-          + " on surface. " + namePlural + " conquered the planet fully"
-              + " for themselves.";
+      if (DiceGenerator.getRandom(1) == 0) {
+        endOfworldDescription = "This planet is moist and has huge oceans"
+            + " on surface. " + namePlural + " conquered the planet fully"
+                + " for themselves.";
+      } else {
+        endOfworldDescription = "This lush world is characterized by vast "
+            + "oceans covering its surface, which the " + namePlural
+            + " came to conquer as their own. ";
+      }
       fullOfLife = true;
     }
     if (info.getRace().isLithovorian()) {

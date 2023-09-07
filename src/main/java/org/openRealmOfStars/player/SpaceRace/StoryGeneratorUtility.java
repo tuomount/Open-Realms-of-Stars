@@ -52,18 +52,18 @@ public final class StoryGeneratorUtility {
       default:
       case 0: {
         return " embarked on its momentous journey of space exploration, "
-            + "departing from";
+            + "departing from ";
       }
       case 1: {
         return " embarked on an ambitious journey of space exploration, "
-            + "setting forth from";
+            + "setting forth from ";
       }
       case 2: {
         return " embarked on its grand odyssey of space exploration,"
-            + " launching from";
+            + " launching from ";
       }
       case 3: {
-        return " embarked on its grand voyage of space exploration from";
+        return " embarked on its grand voyage of space exploration from ";
       }
     }
   }

@@ -475,7 +475,7 @@ public final class BackgroundStoryGenerator {
     String name = getRaceNameInSingle(info.getEmpireName(),
         info.getGovernment());
     sb.append(namePlural);
-    switch (DiceGenerator.getRandom(2)) {
+    switch (DiceGenerator.getRandom(3)) {
       default:
       case 0: {
         sb.append(" are a species of aggressive and warmongering"
@@ -501,7 +501,7 @@ public final class BackgroundStoryGenerator {
       }
     }
     sb.append(namePlural);
-    switch (DiceGenerator.getRandom(2)) {
+    switch (DiceGenerator.getRandom(1)) {
       default:
       case 0: {
       sb.append(" are typically tall and muscular, with thick, armored skin and"
@@ -628,21 +628,73 @@ public final class BackgroundStoryGenerator {
         info.getGovernment());
 
     sb.append(namePlural);
-    sb.append(" are a race of small but wide humanoids that are known for"
-        + " their merchantile abilities. They are highly skilled at making"
-        + " profitable trades and deals, and are always on the lookout for"
-        + " new opportunities to gain more credits. ");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(" are a race of small but wide humanoids that are known for"
+            + " their merchantile abilities. They are highly skilled at making"
+            + " profitable trades and deals, and are always on the lookout for"
+            + " new opportunities to gain more credits. ");
+        break;
+      }
+      case 1: {
+        sb.append(", a diminutive yet robust humanoid race, have carved"
+            + " their niche in the galaxy through their unparalleled "
+            + "mercantile prowess. Renowned for their astute trading skills,"
+            + " they perpetually seek fresh avenues to amass wealth and"
+            + " resources. ");
+        break;
+      }
+      case 2: {
+        sb.append(", a diminutive yet sturdy humanoid race, have etched "
+            + "their legacy in the galaxy with unmatched mercantile "
+            + "expertise. Renowned for their keen trading acumen, they "
+            + "tirelessly seek out new avenues to accumulate wealth "
+            + "and resources. ");
+        break;
+      }
+    }
     if (info.getGovernment().getDiplomaticBonus() > 0) {
-      sb.append(namePlural);
-      sb.append(" are a peaceful race, and prefer to use their cunning and "
-          + "charm to outmaneuver their competitors rather than resorting to "
-          + "violence.");
+      if (DiceGenerator.getRandom(1) == 0) {
+        sb.append(namePlural);
+        sb.append(" are a peaceful race, and prefer to use their cunning and "
+            + "charm to outmaneuver their competitors rather than resorting"
+            + " to violence.");
+      } else {
+        sb.append("Inclined towards peace, ");
+        sb.append(namePlural);
+        sb.append(" prefer to employ their wit and charm to outmaneuver "
+            + "competitors rather than resorting to violence.");
+      }
     } else {
-      sb.append("Despite their small stature, ");
-      sb.append(namePlural);
-      sb.append(" are not to be underestimated, as their intelligence and"
-          + " resourcefulness make them formidable opponents in the "
-          + "cut-throat world of trade and commerce.");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append("Despite their small stature, ");
+          sb.append(namePlural);
+          sb.append(" are not to be underestimated, as their intelligence and"
+              + " resourcefulness make them formidable opponents in the "
+              + "cut-throat world of trade and commerce.");
+          break;
+        }
+        case 1: {
+          sb.append("Despite their modest stature, underestimating a ");
+          sb.append(name);
+          sb.append(" would be a grave error, for their sharp intellect"
+              + " and resourcefulness render them formidable adversaries "
+              + "in the unforgiving arena of commerce and trade.");
+        break;
+        }
+        case 2: {
+          sb.append("Underestimating ");
+          sb.append(namePlural);
+          sb.append(" due to their small stature would be a grievous error,"
+              + " as their intelligence and resourcefulness render them "
+              + "formidable competitors in the ruthless realm of trade "
+              + "and commerce.");
+          break;
+        }
+      }
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));
@@ -2188,16 +2240,16 @@ public final class BackgroundStoryGenerator {
           sb.append(" was cold but it contained life and ");
         } else if (harsh) {
           sb.append(" was harsh but it contained some life and ");
-        } else if (harsh) {
+        } else if (hot) {
           sb.append(" was hot but it contained some primitive life and ");
         } else {
           sb.append(" was average life bearing planet and ");
         }
-        sb.append(name);
+        sb.append(namePlural);
         sb.append(" ancestors were the most evolved and ");
         sb.append(DiceGenerator.getRandom(1, 6));
         sb.append("00 000 star years ago first ");
-        sb.append(namePlural);
+        sb.append(name);
         sb.append(" appeared on surface of ");
         sb.append(startPlanet.getName());
         sb.append(" and they become only"

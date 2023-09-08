@@ -731,18 +731,67 @@ public final class BackgroundStoryGenerator {
     }
 
     sb.append(namePlural);
-    sb.append(" are typically tall and slender, with long, graceful limbs"
-        + " and delicate features. Their grey skin is smooth and sleek,"
-        + " and it is said to shimmer in the light. They have large,"
-        + " almond-shaped eyes that are capable of seeing in a wide"
-        + " range of light levels, and they are highly perceptive"
-        + " and intuitive. ");
-    sb.append(namePlural);
-    sb.append(" are highly intelligent and curious, and they are always "
-        + "seeking out new knowledge and experiences. They are natural "
-        + "researchers and problem-solvers, and they are known for their "
-        + "ability to quickly and accurately analyze complex data and "
-        + "situations. ");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(" are typically tall and slender, with long, graceful limbs"
+            + " and delicate features. Their grey skin is smooth and sleek,"
+            + " and it is said to shimmer in the light. They have large,"
+            + " almond-shaped eyes that are capable of seeing in a wide"
+            + " range of light levels, and they are highly perceptive"
+            + " and intuitive. ");
+        break;
+      }
+      case 1: {
+        sb.append(" are distinguished by their statuesque frames, "
+            + "possessing long, graceful limbs and delicate features. "
+            + "Their sleek, grey skin has a subtle luminescence, "
+            + "shimmering in the light. Their almond-shaped eyes, "
+            + "capable of discerning a wide spectrum of light levels, "
+            + "endow them with keen perception and intuition. ");
+        break;
+      }
+      case 2: {
+        sb.append(" stand tall and slender, adorned with long, graceful"
+            + " limbs and delicate features. Their smooth, sleek grey "
+            + "skin possesses an ethereal quality, shimmering in the "
+            + "play of light. Their large, almond-shaped eyes possess "
+            + "an extraordinary range of vision, endowing them with "
+            + "acute perception and intuition. ");
+        break;
+      }
+    }
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(namePlural);
+        sb.append(" are highly intelligent and curious, and they are always "
+          + "seeking out new knowledge and experiences. They are natural "
+          + "researchers and problem-solvers, and they are known for their "
+          + "ability to quickly and accurately analyze complex data and "
+          + "situations. ");
+        break;
+      }
+      case 1: {
+        sb.append("Intelligent and inquisitive by nature, ");
+        sb.append(namePlural);
+        sb.append(" are perpetually driven to seek out fresh knowledge "
+            + "and experiences. They excel as natural researchers and "
+            + "adept problem-solvers, renowned for their swift and "
+            + "accurate analysis of intricate data and situations. ");
+        break;
+      }
+      case 2: {
+        sb.append("Driven by an insatiable curiosity and marked"
+            + " intelligence, ");
+        sb.append(namePlural);
+        sb.append(" are perpetual seekers of fresh knowledge and"
+            + " experiences. They excel as innate researchers and adept"
+            + " problem-solvers, renowned for their swift and precise"
+            + " analysis of complex data and situations. ");
+        break;
+      }
+    }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));
     sb.append("\n\n");
@@ -768,23 +817,58 @@ public final class BackgroundStoryGenerator {
     String name = getRaceNameInSingle(info.getEmpireName(),
         info.getGovernment());
     sb.append(namePlural);
-    sb.append(" are a race of humanoid crabs that are known for their "
-        + "immense strength and hard exoskeletons. This exoskeleton also gives"
-        + " them incredible strength, allowing them to easily perform physical"
-        + " tasks that would be difficult for other species. ");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0:  {
+        sb.append(" are a race of humanoid crabs that are known for their "
+            + "immense strength and hard exoskeletons. This exoskeleton also"
+            + " gives them incredible strength, allowing them to easily"
+            + " perform physical tasks that would be difficult for other"
+            + " species. ");
+        break;
+      }
+      case 1:  {
+        sb.append(" humanoid crabs of remarkable strength and hardened"
+            + " exoskeletons, are renowned for their unparalleled physical"
+            + " prowess. This exoskeleton, a testament to their formidable"
+            + " power, enables them to effortlessly undertake tasks that"
+            + " would challenge other species. ");
+        break;
+      }
+      case 2:  {
+        sb.append(", humanoid crabs boasting remarkable strength and "
+            + "impenetrable exoskeletons, are celebrated for their unmatched"
+            + " physical prowess. This hardened carapace stands as a testament"
+            + " to their power, enabling them to effortlessly tackle tasks "
+            + "that would daunt other species.");
+        break;
+      }
+    }
     if (info.getGovernment().isImmuneToHappiness()) {
-      sb.append(namePlural);
-      sb.append(" are always working for their nest. They are will to do what "
-          + "nest demands.");
-      sb.append(namePlural);
-      sb.append(" ");
-      sb.append(info.getGovernment().getName().toLowerCase());
-      sb.append(" resembles a bit like hive-mind, but it is not true"
-          + " hive-mind. ");
-      sb.append(namePlural);
-      sb.append(" are deeply devoted for the ");
-      sb.append(info.getGovernment().getName().toLowerCase());
-      sb.append(" that they act like it is functions like hive-mind.");
+      switch (DiceGenerator.getRandom(1)) {
+        default:
+        case 0: {
+          sb.append(namePlural);
+          sb.append(" are always working for their nest. They are will to do"
+              + " what nest demands.");
+          sb.append(namePlural);
+          sb.append(" ");
+          sb.append(info.getGovernment().getName().toLowerCase());
+          sb.append(" resembles a bit like hive-mind, but it is not true"
+              + " hive-mind. ");
+          sb.append(namePlural);
+          sb.append(" are deeply devoted for the ");
+          sb.append(info.getGovernment().getName().toLowerCase());
+          sb.append(" that they act like it is functions like hive-mind.");
+        break;
+        }
+        case 1: {
+          sb.append("Devoted to their nest, they willingly fulfill the"
+              + " nest's demands, embodying a collective purpose akin to"
+              + " a hive-mind, albeit not a true one.");
+          break;
+        }
+      }
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));
@@ -2079,7 +2163,21 @@ public final class BackgroundStoryGenerator {
       fullOfLife = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.DESERTWORLD) {
-      sb.append(" a dry desert world.");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(" a dry desert world.");
+          break;
+        }
+        case 1: {
+          sb.append(" a desiccated desert world.");
+          break;
+        }
+        case 2: {
+          sb.append(" an arid desert world.");
+          break;
+        }
+      }
       if (DiceGenerator.getRandom(1) == 0) {
         endOfworldDescription = "This harsh envinronment was challenging but "
             + namePlural + " became stronger and more sustainable there.";
@@ -2092,7 +2190,21 @@ public final class BackgroundStoryGenerator {
       harsh = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.ICEWORLD) {
-      sb.append(" ice world.");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(" an ice world.");
+          break;
+        }
+        case 1: {
+          sb.append(" a frozen world.");
+          break;
+        }
+        case 2: {
+          sb.append(" a harsh ice world.");
+          break;
+        }
+      }
       endOfworldDescription = "This cold and dark envinronment was"
           + " challenging but " + namePlural + " became extreme survalists"
               + " there.";
@@ -2100,6 +2212,21 @@ public final class BackgroundStoryGenerator {
       harsh = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.IRONWORLD) {
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(" an iron world.");
+          break;
+        }
+        case 1: {
+          sb.append(" a lava flowing iron world.");
+          break;
+        }
+        case 2: {
+          sb.append(" a hot iron world.");
+          break;
+        }
+      }
       sb.append(" iron world.");
       if (DiceGenerator.getRandom(1) == 0) {
         endOfworldDescription = "This planet was full of molten lava and"
@@ -2113,14 +2240,43 @@ public final class BackgroundStoryGenerator {
       hot = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.SILICONWORLD) {
-      sb.append(" silicon world.");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(" a silicon world.");
+          break;
+        }
+        case 1: {
+          sb.append(" a deadly looking silicon world.");
+          break;
+        }
+        case 2: {
+          sb.append(" an empty silicon world.");
+          break;
+        }
+      }
+      sb.append(" a silicon world.");
       endOfworldDescription = "This almost barren planet is one the"
           + " harshest envinronments in the galaxy. " + namePlural
           + " still call this place as home.";
       harsh = true;
     }
     if (startPlanet.getPlanetType().getWorldType() == WorldType.WATERWORLD) {
-      sb.append(" water world.");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(" a water world.");
+          break;
+        }
+        case 1: {
+          sb.append(" a ocean world.");
+          break;
+        }
+        case 2: {
+          sb.append(" a water world with massive amount of biodiversity.");
+          break;
+        }
+      }
       if (DiceGenerator.getRandom(1) == 0) {
         endOfworldDescription = "This planet is moist and has huge oceans"
             + " on surface. " + namePlural + " conquered the planet fully"

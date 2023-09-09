@@ -563,7 +563,6 @@ public class BackgroundStoryGeneratorTest {
     assertEquals(true, result.contains("Max Power"));
     assertEquals(true, result.contains("collective"));
     assertEquals(true, result.contains("Bionians"));
-    System.out.println(result);
   }
 
   @Test

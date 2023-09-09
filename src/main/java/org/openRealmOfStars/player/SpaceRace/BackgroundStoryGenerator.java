@@ -1159,22 +1159,82 @@ public final class BackgroundStoryGenerator {
       name = "Metavorian";
     }
     sb.append(namePlural);
-    sb.append(" are a race of creatures that subsist on metal instead of"
-        + " traditional food sources. This unique dietary requirement"
-        + " gives them a slow growth rate. However, their ability to digest"
-        + " metal allows them to extract valuable nutrients from metal"
-        + " ores and other metallic substances, making them excellent miners.");
-    sb.append(" In addition to ");
-    sb.append(namePlural);
-    sb.append(" metal-eating abilities, they are also known for their"
-        + " strong and durable bodies, which allow them to withstand harsh "
-        + "environments and perform physically demanding tasks. ");
+    switch (DiceGenerator.getRandom(1)) {
+      default:
+      case 0: {
+        sb.append(" are a race of creatures that subsist on metal instead of"
+            + " traditional food sources. This unique dietary requirement"
+            + " gives them a slow growth rate. However, their ability to digest"
+            + " metal allows them to extract valuable nutrients from metal"
+            + " ores and other metallic substances, making them excellent"
+            + " miners.");
+        break;
+      }
+      case 1: {
+        sb.append(" are a unique species subsisting on metal, in contrast "
+            + "to conventional food sources. This distinctive dietary "
+            + "preference results in a slow growth rate. However, their "
+            + "exceptional ability to metabolize metal enables them to "
+            + "extract vital nutrients from ores and metallic substances,"
+            + " rendering them exceptional miners. ");
+        break;
+      }
+      case 2: {
+        sb.append(", a remarkable species, subsist on metal instead of"
+            + " conventional food sources. This unique dietary preference"
+            + " leads to a slower growth rate. However, their remarkable"
+            + " ability to metabolize metal empowers them to extract "
+            + "essential nutrients from ores and metallic substances,"
+            + " establishing them as exceptional miners. ");
+        break;
+      }
+    }
+    switch (DiceGenerator.getRandom(1)) {
+      default:
+      case 0: {
+        sb.append(" In addition to ");
+        sb.append(namePlural);
+        sb.append(" metal-eating abilities, they are also known for their"
+            + " strong and durable bodies, which allow them to withstand"
+            + " harsh environments and perform physically demanding tasks. ");
+        break;
+      }
+      case 1: {
+        sb.append(" Alongside their metal-eating prowess, ");
+        sb.append(namePlural);
+        sb.append(" are renowned for their robust and resilient bodies,"
+            + " granting them the capacity to endure hostile environments"
+            + " and undertake physically demanding tasks. ");
+        break;
+      }
+      case 2: {
+        sb.append(" Coupled with their metal-eating prowess, ");
+        sb.append(namePlural);
+        sb.append(" are distinguished by their robust and resilient bodies,"
+            + " enabling them to endure hostile environments and undertake "
+            + "physically demanding tasks. ");
+        break;
+      }
+    }
     if (info.getGovernment().isImmuneToHappiness()) {
-      sb.append(namePlural);
-      sb.append(" are able to communicate which each others on same planet "
-          + "mentally. This allows them to coordinate their moves and tasks"
-          + " in harmomy. This mental communicating is probably due special"
-          + " metal ore they have eaten.");
+      switch (DiceGenerator.getRandom(1)) {
+        default:
+        case 0: {
+          sb.append(namePlural);
+          sb.append(" are able to communicate which each others on same"
+              + " planet mentally. This allows them to coordinate their "
+              + "moves and tasks in harmomy. This mental communicating is "
+              + "probably due special metal ore they have eaten.");
+          break;
+        }
+        case 1: {
+          sb.append("Their mental communication, a product perhaps of "
+              + "a special metal ore they have ingested, fosters seamless"
+              + " coordination and harmonious task execution among those "
+              + "sharing the same planet.");
+          break;
+        }
+      }
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));
@@ -1945,7 +2005,8 @@ public final class BackgroundStoryGenerator {
           sb.append(lowcaseGovernmentName);
           sb.append(" and ");
           sb.append(gender.getHeShe());
-          sb.append(" was their first ");
+          sb.append(" was their ");
+          sb.append(StoryGeneratorUtility.randomInaugural());
           sb.append(LeaderUtility.getRulerTitle(gender, info.getGovernment()));
           sb.append(". ");
           break;

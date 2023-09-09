@@ -899,22 +899,73 @@ public final class BackgroundStoryGenerator {
       name = "Capricornian";
     }
     sb.append(namePlural);
-    sb.append(" are creatures that are distinguished by their four arms "
-        + "and two legs. They have a hard exoskeleton that provides them "
-        + "with protection and allows them to withstand harsh "
-        + "environments. ");
-    sb.append(namePlural);
-    sb.append(" are also known for their unique ability to perform "
-        + "radiosynthesis, which involves using a special gland to convert "
-        + "radioactivity into a nutrient that they can use for sustenance. "
-        + "This ability allows ");
-    sb.append(namePlural);
-    sb.append(" to thrive in environments that would be inhospitable to most"
-        + " other life forms. ");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(" are creatures that are distinguished by their four arms "
+            + "and two legs. They have a hard exoskeleton that provides them "
+            + "with protection and allows them to withstand harsh "
+            + "environments. ");
+        break;
+      }
+      case 1: {
+        sb.append(" are remarkable creatures, distinguished by their four "
+            + "arms and two legs, encased in a robust exoskeleton that "
+            + "shields them from harsh environments. ");
+        break;
+      }
+      case 2: {
+        sb.append(" are extraordinary beings, characterized by their"
+            + " four arms and two legs, encased in a formidable exoskeleton"
+            + " that fortifies them against harsh environments. ");
+        break;
+      }
+    }
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(namePlural);
+        sb.append(" are also known for their unique ability to perform "
+            + "radiosynthesis, which involves using a special gland to"
+            + " convert radioactivity into a nutrient that they can use"
+            + " for sustenance. This ability allows ");
+        sb.append(namePlural);
+        sb.append(" to thrive in environments that would be inhospitable"
+            + " to most other life forms. ");
+        break;
+      }
+      case 1: {
+        sb.append("What truly sets them apart is their unique ability to"
+            + " perform radiosynthesis, a process wherein a specialized"
+            + " gland converts radioactivity into a vital nutrient,"
+            + " enabling them to thrive in otherwise inhospitable "
+            + "conditions. ");
+        break;
+      }
+      case 2: {
+        sb.append("Their unique gift of radiosynthesis, accomplished through"
+            + " a specialized gland, allows them to convert radioactivity"
+            + " into sustenance, enabling them to thrive in places where"
+            + " most other life forms would falter. ");
+        break;
+      }
+    }
     if (info.getGovernment().isImmuneToHappiness()) {
-      sb.append(namePlural);
-      sb.append(" are creatures which are able form hivemind. This allows them"
-          + " to work united and single organization. ");
+      switch (DiceGenerator.getRandom(1)) {
+        default:
+        case 0: {
+          sb.append(namePlural);
+          sb.append(" are creatures which are able form hivemind. This"
+              + " allows them to work united and single organization. ");
+          break;
+        }
+        case 1: {
+          sb.append("These beings also possess the extraordinary capacity to"
+              + " form a hivemind, allowing them to operate as a unified and"
+              + " highly organized entity. ");
+          break;
+        }
+      }
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));
@@ -941,30 +992,143 @@ public final class BackgroundStoryGenerator {
     String name = getRaceNameInSingle(info.getEmpireName(),
         info.getGovernment());
     sb.append(namePlural);
-    sb.append(" are a race of cyborgs that are created by combining organic "
-        + "organisms with bionic and robotic parts. This gives them "
-        + "enhanced physical abilities and allows them to operate in a "
-        + "wide variety of environments.");
-    sb.append(namePlural);
-    sb.append(" are known for their ability to synthesize other living "
-        + "space races into their own, creating a fearsome and powerful ");
-    if (info.getGovernment() == GovernmentType.AI) {
-      sb.append("AI");
-    } else {
-      sb.append(info.getGovernment().getName().toLowerCase());
+    switch (DiceGenerator.getRandom(3)) {
+      default:
+      case 0: {
+        sb.append(" are a race of cyborgs that are created by combining"
+            + " organic organisms with bionic and robotic parts. This gives"
+            + " them enhanced physical abilities and allows them to"
+            + " operate in a wide variety of environments.");
+        break;
+      }
+      case 1: {
+        sb.append(" a race of cyborgs, seamlessly meld organic organisms"
+            + " with bionic and robotic components, endowing them with"
+            + " extraordinary physical prowess and adaptability across"
+            + " diverse environments. ");
+        break;
+      }
+      case 2: {
+        sb.append(" are a remarkable race of cyborgs, created through the "
+            + "fusion of organic organisms with bionic and robotic"
+            + " components. This synthesis bestows upon them enhanced "
+            + "physical capabilities, enabling them to operate effectively "
+            + "in a wide array of environments. ");
+        break;
+      }
+      case 3: {
+        sb.append(" stand as a remarkable race of cyborgs, a fusion of"
+            + " organic beings with bionic and robotic components. This"
+            + " amalgamation bequeaths them with augmented physical "
+            + "prowess, allowing them to operate seamlessly across"
+            + " a diverse range of environments. ");
+        break;
+      }
     }
-    sb.append(". However, this ability is feared and disliked by many "
-        + "other races, who see it as a threat to their own individuality "
-        + "and autonomy. Despite their aggressive expansionist tendencies, "
-        + "reborgians have a slow reproduction rate and require very little "
-        + "food to survive.");
+    switch (DiceGenerator.getRandom(3)) {
+      default:
+      case 0: {
+        sb.append(namePlural);
+        sb.append(" are known for their ability to synthesize other living "
+            + "space races into their own, creating a fearsome and powerful ");
+        if (info.getGovernment() == GovernmentType.AI) {
+          sb.append("AI");
+        } else {
+          sb.append(info.getGovernment().getName().toLowerCase());
+        }
+        sb.append(". However, this ability is feared and disliked by many "
+            + "other races, who see it as a threat to their own"
+            + " individuality and autonomy. Despite their aggressive"
+            + " expansionist tendencies, ");
+        sb.append(namePlural);
+        sb.append(" have a slow reproduction rate and require very little "
+            + "food to survive. ");
+        break;
+      }
+      case 1: {
+        sb.append("Their unique capacity to assimilate other spacefaring "
+            + "races into their collective gives rise to a formidable and"
+            + " potent ");
+        if (info.getGovernment() == GovernmentType.AI) {
+          sb.append("AI");
+        } else {
+          sb.append(info.getGovernment().getName().toLowerCase());
+        }
+        sb.append(". However, this power is met with apprehension and "
+            + "aversion from many other civilizations, who perceive it as "
+            + "a threat to their own autonomy and individuality. "
+            + "Despite their expansionist tendencies, ");
+        sb.append(namePlural);
+        sb.append(" contend with a slow reproductive rate and require"
+            + " minimal sustenance for survival. ");
+        break;
+      }
+      case 2: {
+        sb.append("Among their distinguishing traits is the ability to"
+            + " assimilate other living space races into their own,"
+            + " resulting in the development of a formidable ");
+        if (info.getGovernment() == GovernmentType.AI) {
+          sb.append("AI");
+        } else {
+          sb.append(info.getGovernment().getName().toLowerCase());
+        }
+        sb.append(". However, this unique capacity has garnered fear and"
+            + " antipathy from many other races, who perceive it as"
+            + " a threat to their individuality and autonomy. Despite "
+            + "their expansionist tendencies, ");
+        sb.append(namePlural);
+        sb.append(" exhibit a slow reproductive rate and require minimal "
+            + "sustenance for survival. ");
+        break;
+      }
+      case 3: {
+        sb.append("One of their most distinctive attributes is their"
+            + " capacity to integrate other living spacefaring races,"
+            + " resulting in the formation of a formidable ");
+        if (info.getGovernment() == GovernmentType.AI) {
+          sb.append("AI");
+        } else {
+          sb.append(info.getGovernment().getName().toLowerCase());
+        }
+        sb.append(". However, this unique capability has evoked apprehension"
+            + " and mistrust from various other civilizations, who perceive"
+            + " it as a potential threat to their individuality and"
+            + " autonomy. In spite of their expansionist inclinations, ");
+        sb.append(namePlural);
+        sb.append(" exhibit a slow reproductive rate and require minimal "
+            + "sustenance for their survival. ");
+        break;
+      }
+    }
     if (info.getGovernment().isImmuneToHappiness()) {
-      sb.append(namePlural);
-      sb.append(" are equipped with powerful communication systems, which "
-          + " they use to coordinate their moves and tasks in harmomy. This "
-          + "allows ");
-      sb.append(namePlural);
-      sb.append(" work as a hiveminded population.");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(namePlural);
+          sb.append(" are equipped with powerful communication systems, which "
+              + " they use to coordinate their moves and tasks in harmomy."
+              + " This allows ");
+          sb.append(namePlural);
+          sb.append(" work as a hiveminded population.");
+          break;
+        }
+        case 1: {
+          sb.append("Equipped with powerful communication systems, ");
+          sb.append(namePlural);
+          sb.append(" harmoniously coordinate their actions and tasks,"
+              + " functioning as a unified hive mind. This collective "
+              + "approach has proven instrumental in overcoming numerous"
+              + " challenges. ");
+          break;
+        }
+        case 2: {
+          sb.append("They are equipped with formidable communication "
+              + "systems, enabling seamless coordination and harmonious"
+              + " task execution, functioning as a united hive-minded"
+              + " population. ");
+          break;
+        }
+      }
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));
@@ -1529,7 +1693,7 @@ public final class BackgroundStoryGenerator {
           break;
         }
         case 2: {
-          switch (DiceGenerator.getRandom(2)) {
+          switch (DiceGenerator.getRandom(3)) {
             default:
             case 0: {
               sb.append("In a remarkable turn of events, ");
@@ -1541,6 +1705,10 @@ public final class BackgroundStoryGenerator {
             }
             case 2: {
               sb.append("In a fascinating turn of events, ");
+              break;
+            }
+            case 3: {
+              sb.append("In a stunning twist of fate, ");
               break;
             }
           }

@@ -2128,7 +2128,7 @@ public final class BackgroundStoryGenerator {
       switch (DiceGenerator.getRandom(2)) {
       default:
       case 0: {
-        sb.append(" one billions");
+        sb.append(" one billion");
         break;
       }
       case 1: {

@@ -1796,7 +1796,7 @@ public class StarMap {
         count++;
       }
     }
-    Planet planet = new Planet(startCoord, "Alpha Aurora II", 2, false);
+    Planet planet = new Planet(startCoord, "Alpha Aurora", 2, false);
     PlanetTypes planetType = PlanetTypes.getRandomStartPlanetType(
         playerInfo.getRace());
     planet.setPlanetType(planetType);

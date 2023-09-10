@@ -919,6 +919,9 @@ public class MapPanel extends JPanel {
     } else {
       fullDraw = false;
     }
+    if (popup != null) {
+      fullDraw = true;
+    }
     starMap.setForceRedraw(false);
     // -20 for safety
     int speedX = (GuiStatics.NEBULAE_IMAGE.getWidth() - this.getWidth()

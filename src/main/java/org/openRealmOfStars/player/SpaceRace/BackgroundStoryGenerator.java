@@ -1261,23 +1261,94 @@ public final class BackgroundStoryGenerator {
     String name = getRaceNameInSingle(info.getEmpireName(),
         info.getGovernment());
     sb.append(namePlural);
-    sb.append(" are a race of creatures that are adapted to life in"
-        + " zero gravity. Because of this, they require special suits"
-        + " to move on the surfaces of planets, and they spend most of"
-        + " their time living and working in orbit. Their bodies are "
-        + "mostly just mouth and big bulpy eyes with multiple long limbs"
-        + " and a slender tail that help them move gracefully in zero"
-        + " gravity. ");
-    sb.append(namePlural);
-    sb.append(" are known for their advanced orbital technology,"
-        + " which allows them to build and maintain large,"
-        + " complex structures in space. ");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(" are a race of creatures that are adapted to life in"
+            + " zero gravity. Because of this, they require special suits"
+            + " to move on the surfaces of planets, and they spend most of"
+            + " their time living and working in orbit. Their bodies are "
+            + "mostly just mouth and big bulpy eyes with multiple long limbs"
+            + " and a slender tail that help them move gracefully in zero"
+            + " gravity. ");
+        break;
+      }
+      case 1: {
+        sb.append(" are an extraordinary species uniquely adapted to the"
+            + " challenges of zero gravity environments. To navigate "
+            + "planetary surfaces, they rely on specialized suits, "
+            + "spending the majority of their lives in the weightlessness"
+            + " of orbit. With oversized, bulbous eyes and a slender "
+            + "tail complemented by multiple graceful limbs, ");
+        sb.append(namePlural);
+        sb.append(" move with unparalleled agility in zero gravity. ");
+        break;
+      }
+      case 2: {
+        sb.append(" are a unique species adapted to thrive in the"
+            + " weightlessness of zero gravity environments. As a result,"
+            + " they rely on specialized suits to navigate planetary "
+            + "surfaces, spending the majority of their lives working and "
+            + "residing in orbit. These beings possess distinct physical"
+            + " features, characterized by oversized mouths, bulging eyes,"
+            + " elongated limbs, and slender tails that enable them to move"
+            + " with grace in zero gravity. ");
+        break;
+      }
+    }
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(namePlural);
+        sb.append(" are known for their advanced orbital technology,"
+          + " which allows them to build and maintain large,"
+          + " complex structures in space. ");
+        break;
+      }
+      case 1: {
+        sb.append("Their expertise lies in advanced orbital technology,"
+            + " enabling the construction and maintenance of expansive,"
+            + " intricate structures in the vast expanse of space. ");
+        break;
+      }
+      case 2: {
+        sb.append("Renowned for their advanced orbital technology, ");
+        sb.append(namePlural);
+        sb.append(" excel in constructing and maintaining intricate "
+            + "structures in the vast expanse of space. ");
+        break;
+      }
+    }
     if (info.getGovernment().isImmuneToHappiness()) {
-      sb.append(namePlural);
-      sb.append(" are able to mentally communicate which each others on same"
-          + " planet. This allows them to organize their moves and tasks"
-          + " in effectively. This mental communicating is probably due"
-          + " spending so much time in zero gravity. ");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(namePlural);
+          sb.append(" are able to mentally communicate which each others on"
+              + " same planet. This allows them to organize their moves"
+              + " and tasks in effectively. This mental communicating is"
+              + " probably due spending so much time in zero gravity. ");
+          break;
+        }
+        case 1: {
+          sb.append("Through a remarkable mental connection, ");
+          sb.append(namePlural);
+          sb.append(" on the same planet synchronize their actions and"
+              + " tasks seamlessly, a skill honed from extensive "
+              + "exposure to zero gravity environments. ");
+          break;
+        }
+        case 2: {
+          sb.append("Additionally, ");
+          sb.append(namePlural);
+          sb.append(" possess a remarkable ability to engage in mental"
+              + " communication with one another when on the same planet,"
+              + " allowing for efficient organization and coordination of"
+              + " tasks—a skill likely honed through their extensive "
+              + "exposure to zero gravity. ");
+          break;
+        }
+      }
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));
@@ -2357,15 +2428,15 @@ public final class BackgroundStoryGenerator {
       switch (DiceGenerator.getRandom(2)) {
       default:
       case 0: {
-        sb.append(" one billion");
+        sb.append("one billion");
         break;
       }
       case 1: {
-        sb.append(" two billions");
+        sb.append("two billions");
         break;
       }
       case 2: {
-        sb.append(" three billions");
+        sb.append("three billions");
         break;
       }
     }

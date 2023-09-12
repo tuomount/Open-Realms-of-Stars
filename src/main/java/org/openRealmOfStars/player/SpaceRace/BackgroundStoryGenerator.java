@@ -1379,12 +1379,43 @@ public final class BackgroundStoryGenerator {
       name = "Taurian";
     }
     sb.append(namePlural);
-    sb.append(" are similar to the mythical centaurs of ancient Greek and"
-        + " Roman mythology. Like their mythical counterparts, ");
-    sb.append(namePlural);
-    sb.append(" are quadrupeds with the upper body of humanoid like and"
-        + " lower body resembles ant like. They also have very though"
-        + " skin and they are huge in size.");
+    switch (DiceGenerator.getRandom(3)) {
+      default:
+      case 0: {
+        sb.append(" are similar to the mythical centaurs of ancient Greek and"
+            + " Roman mythology. Like their mythical counterparts, ");
+        sb.append(namePlural);
+        sb.append(" are quadrupeds with the upper body of humanoid like and"
+            + " lower body resembles ant like. They also have very though"
+            + " skin and they are huge in size.");
+        break;
+      }
+      case 1: {
+        sb.append(", reminiscent of the mythical beings from ancient"
+            + " Greek and Roman lore, bear a striking resemblance to "
+            + "their legendary counterparts. They possess the upper "
+            + "body of a humanoid, juxtaposed with a lower body "
+            + "reminiscent of an ant. Their formidable, resilient skin"
+            + " and towering stature further distinguish them.");
+        break;
+      }
+      case 2: {
+        sb.append("mirror the mythical centaurs of ancient Greek and"
+            + " Roman lore, boasting a quadrupedal form with a "
+            + "humanoid upper body and an ant-like lower half. Their"
+            + " impressive stature and tough, resilient skin set them apart.");
+        break;
+      }
+      case 3: {
+        sb.append(", akin to the legendary centaurs of ancient Greek"
+            + " and Roman mythology, strikingly resemble their "
+            + "mythical counterparts. They possess the upper body of"
+            + " a humanoid, coupled with a lower body reminiscent "
+            + "of an ant, boasting imposing physicality and remarkably"
+            + " tough skin.");
+        break;
+      }
+    }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));
     sb.append("\n\n");
@@ -1392,11 +1423,49 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateFtlStory(info, startingYear, namePlural));
     sb.append("\n\n");
-    sb.append("Because of their large size, ");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append("Because of their large size, ");
+        break;
+      }
+      case 1: {
+        sb.append("Given their prodigious size, ");
+        break;
+      }
+      case 2: {
+        sb.append("Given their substantial size, ");
+        break;
+      }
+    }
     sb.append(namePlural);
-    sb.append("would need sturdy and rigid spaceships in order to support "
-        + "their weight and allow them to travel through the vacuum of "
-        + "space. ");
+    switch (DiceGenerator.getRandom(3)) {
+    default:
+    case 0: {
+      sb.append(" would need sturdy and rigid spaceships in order to support "
+          + "their weight and allow them to travel through the vacuum of "
+          + "space. ");
+      break;
+    }
+    case 1: {
+      sb.append(" necessitated robust, unyielding spacecraft capable of"
+          + " supporting their weight, enabling them to traverse the"
+          + " cosmic void. ");
+      break;
+    }
+    case 2: {
+      sb.append(" required spaceships of robust and rigid design, "
+          + "capable of bearing their weight and traversing the "
+          + "vast void of space. ");
+      break;
+    }
+    case 3: {
+      sb.append(" necessitated spacecraft that were robust and unyielding,"
+          + " capable of bearing their weight as they traversed "
+          + "the cosmic void. ");
+      break;
+    }
+  }
     sb.append("\n\n");
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();

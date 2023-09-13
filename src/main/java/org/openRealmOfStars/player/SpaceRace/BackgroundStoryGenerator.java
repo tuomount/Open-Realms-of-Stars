@@ -1485,27 +1485,134 @@ public final class BackgroundStoryGenerator {
         info.getGovernment());
     String name = getRaceNameInSingle(info.getEmpireName(),
         info.getGovernment());
-    sb.append(namePlural);
     if (info.getGovernment().isImmuneToHappiness()) {
-      sb.append(" are race of sentient insects that are capable of forming"
-          + " a hivemind. This allows them to coordinate their actions and"
-          + " work together as a highly efficient collective. ");
       sb.append(namePlural);
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(" are race of sentient insects that are capable of forming"
+              + " a hivemind. This allows them to coordinate their actions and"
+              + " work together as a highly efficient collective. ");
+          break;
+        }
+        case 1: {
+          sb.append(" are a remarkable race of sentient insects, "
+              + "distinguished by their extraordinary ability to form"
+              + " a hivemind. This collective consciousness empowers them "
+              + "to synchronize their efforts, operating as a seamlessly "
+              + "efficient entity. ");
+          break;
+        }
+        case 2: {
+          sb.append(", a remarkable race of sentient insects,"
+              + " possess the extraordinary ability to form a seamless "
+              + "hivemind, enabling them to synchronize their efforts and"
+              + " function as a supremely efficient collective. ");
+          break;
+        }
+      }
     }
-    sb.append(" are known for their fast breeding, which allows them to "
-        + "quickly increase their numbers and expand their territory. ");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(namePlural);
+        sb.append(" are known for their fast breeding, which allows them to "
+          + "quickly increase their numbers and expand their territory. ");
+        break;
+      }
+      case 1: {
+        sb.append(namePlural);
+        sb.append(" are renowned for their rapid reproductive rates,"
+            + " enabling them to swiftly bolster their population and"
+            + " expand their dominion. ");
+        break;
+      }
+      case 2: {
+        if (info.getGovernment().isImmuneToHappiness()) {
+          sb.append("Their ");
+        } else {
+          sb.append(namePlural);
+        }
+        sb.append(" reputation for rapid reproduction allows them to "
+            + "swiftly bolster their population and extend their dominion. ");
+        break;
+      }
+    }
     if (info.getGovernment().getDiplomaticBonus() > 0) {
-      sb.append(namePlural);
-      sb.append(" are also known for their hypnotic song, which is used for"
-          + " communication and ritual purposes. This ability grants them"
-          + " a cultural bonus in their interactions with other races. ");
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          sb.append(namePlural);
+          sb.append(" are also known for their hypnotic song, which is used for"
+              + " communication and ritual purposes. This ability grants them"
+              + " a cultural bonus in their interactions with other races. ");
+          break;
+        }
+        case 1: {
+          sb.append(namePlural);
+          sb.append(" are also known for their hypnotic song, which is "
+              + "used for communication and ritual purposes. This "
+              + "ability grants them a cultural bonus in their "
+              + "interactions with other races. ");
+          break;
+        }
+        case 2: {
+          sb.append("Moreover, the ");
+          sb.append(namePlural);
+          sb.append(" possess a mesmerizing vocal talent, employed for"
+              + " both communication and sacred rituals. This unique "
+              + "ability bestows upon them a cultural advantage in "
+              + "their interactions with other races. ");
+          break;
+        }
+      }
     }
-    sb.append("However, their exoskeletons are relatively weak, which gives"
-        + " them a negative bonus when it comes to mining and troop power."
-        + " Despite this weakness, ");
-    sb.append(namePlural);
-    sb.append(" are able to compensate for their lack of physical strength "
-        + "with their intelligence and cooperation.");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append("However, their exoskeletons are relatively weak, which gives"
+          + " them a negative bonus when it comes to mining and troop power.");
+        break;
+      }
+      case 1: {
+        sb.append("However, their exoskeletal structures, while resilient "
+            + "enough for their natural environment, prove suboptimal for "
+            + "tasks such as mining and military endeavors,"
+            + " imposing a disadvantage. ");
+        break;
+      }
+      case 2: {
+        sb.append("However, their exoskeletons, while serving as a protective"
+            + " shell, are comparatively fragile, resulting in a drawback in "
+            + "tasks such as mining and military might. ");
+        break;
+      }
+    }
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(" Despite this weakness, ");
+        sb.append(namePlural);
+        sb.append(" are able to compensate for their lack of physical strength "
+            + "with their intelligence and cooperation.");
+        break;
+      }
+      case 1: {
+        sb.append(" Despite these physical limitations, ");
+        sb.append(namePlural);
+        sb.append(" adeptly compensate with their inherent intelligence "
+            + "and penchant for collaboration.");
+        break;
+      }
+      case 2: {
+        sb.append(" Nevertheless, the ");
+        sb.append(namePlural);
+        sb.append(" compensate for this physical limitation with"
+            + " their intellectual prowess and remarkable"
+            + " cooperative instincts.");
+        break;
+      }
+    }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));
     sb.append("\n\n");

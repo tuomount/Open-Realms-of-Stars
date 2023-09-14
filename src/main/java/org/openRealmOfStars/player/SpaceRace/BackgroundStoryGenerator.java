@@ -1642,10 +1642,10 @@ public final class BackgroundStoryGenerator {
       default:
       case 0: {
         sb.append(" are known for their versatile cargo ships, which can be "
-            + "outfitted with a variety of modules to accommodate different types "
-            + "of cargo. Some of these ships even have weapons or privateering"
-            + " modules, allowing them to defend themselves against hostile "
-            + "forces or engage in piracy."
+            + "outfitted with a variety of modules to accommodate different"
+            + " types of cargo. Some of these ships even have weapons or"
+            + " privateering modules, allowing them to defend themselves"
+            + " against hostile forces or engage in piracy."
             + " Despite their illicit activities, the");
         break;
       }

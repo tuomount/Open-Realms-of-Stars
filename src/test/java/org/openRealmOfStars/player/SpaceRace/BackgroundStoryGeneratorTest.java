@@ -657,7 +657,7 @@ public class BackgroundStoryGeneratorTest {
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
     assertEquals(true, result.contains("Max Power"));
-    assertEquals(true, result.contains("space pirates"));
+    assertEquals(true, result.contains("pirates"));
     assertEquals(true, result.contains("Smaugirian"));
   }
 

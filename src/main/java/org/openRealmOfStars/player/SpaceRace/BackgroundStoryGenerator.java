@@ -1638,20 +1638,106 @@ public final class BackgroundStoryGenerator {
     String name = getRaceNameInSingle(info.getEmpireName(),
         info.getGovernment());
     sb.append(namePlural);
-    sb.append(" are known for their versatile cargo ships, which can be "
-        + "outfitted with a variety of modules to accommodate different types "
-        + "of cargo. Some of these ships even have weapons or privateering"
-        + " modules, allowing them to defend themselves against hostile "
-        + "forces or engage in piracy. Despite their illicit activities, ");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(" are known for their versatile cargo ships, which can be "
+            + "outfitted with a variety of modules to accommodate different types "
+            + "of cargo. Some of these ships even have weapons or privateering"
+            + " modules, allowing them to defend themselves against hostile "
+            + "forces or engage in piracy."
+            + " Despite their illicit activities, the");
+        break;
+      }
+      case 1: {
+        sb.append(" are renowned for their ingenious cargo ships,"
+            + " highly adaptable to diverse types of cargo through"
+            + " modular customization. Some vessels even boast weaponry"
+            + " and privateering modules, equipping them to defend "
+            + "against hostilities or partake in piracy."
+            + " Despite these illicit pursuits, the ");
+        break;
+      }
+      case 2: {
+        sb.append(" renowned for their versatile cargo ships, are known to "
+            + "customize their vessels with an array of modules tailored "
+            + "to different types of cargo. Some of these ships are "
+            + "even equipped with weaponry and privateering modules, "
+            + "enabling them to fend off hostile forces or engage in "
+            + "acts of piracy. Despite their involvement in illicit "
+            + "activities, the");
+        break;
+      }
+    }
     sb.append(namePlural);
-    sb.append(" are often depicted as being honorable and loyal to their"
-        + " friends and allies. They are also known for their resourcefulness "
-        + "and ingenuity, which allows them to overcome obstacles and succeed "
-        + "in their dangerous line of work. ");
+    switch (DiceGenerator.getRandom(2)) {
+      default:
+      case 0: {
+        sb.append(" are often depicted as being honorable and loyal to their"
+          + " friends and allies. They are also known for their"
+          + " resourcefulness and ingenuity, which allows them to overcome"
+          + " obstacles and succeed in their dangerous line of work. ");
+        break;
+      }
+      case 1: {
+        sb.append(" are often portrayed as honorable and fiercely loyal to"
+            + " their comrades and allies. Their reputation also stems"
+            + " from their exceptional resourcefulness and ingenuity, "
+            + "which empower them to surmount obstacles and thrive in their"
+            + " perilous line of work. ");
+        break;
+      }
+      case 2: {
+        sb.append(" are often portrayed as possessing a code of honor and"
+            + " unwavering loyalty to their comrades and allies. Their"
+            + " reputation is further bolstered by their innate "
+            + "resourcefulness and ingenuity, which empowers them to "
+            + "surmount challenges and thrive within their"
+            + " perilous profession. ");
+        break;
+      }
+    }
     if (info.getGovernment().isImmuneToHappiness()) {
-      sb.append(namePlural);
-      sb.append(" are acting as space pirates. They will keep looting and"
-          + " pillaging ships and do not care about consequences. ");
+      sb.append("\n\n");
+      switch (DiceGenerator.getRandom(3)) {
+        default:
+        case 0: {
+          sb.append("The ");
+          sb.append(namePlural);
+          sb.append(" are acting as space pirates. They will keep looting and"
+             + " pillaging ships and do not care about consequences. ");
+          break;
+        }
+        case 1: {
+          sb.append("The ");
+          sb.append(namePlural);
+          sb.append(" have embraced the life of spacefaring pirates, "
+              + "showing an unwavering commitment to their relentless "
+              + "pursuit of looting and pillaging ships, heedless of "
+              + "the repercussions. Their audacity knows no bounds as "
+              + "they navigate the cosmic expanse, leaving a trail of"
+              + " plundered vessels in their wake, indifferent to the "
+              + "consequences that may follow. ");
+          break;
+        }
+        case 2: {
+          sb.append("The ");
+          sb.append(namePlural);
+          sb.append(" have embraced the role of spacefaring pirates,"
+              + " engaging in relentless looting and pillaging of ships "
+              + "without regard for the repercussions. ");
+          break;
+        }
+        case 3: {
+          sb.append("The ");
+          sb.append(namePlural);
+          sb.append(" have taken on the role of spacefaring pirates,"
+              + " relentless in their pursuit of looting and pillaging"
+              + " ships, seemingly indifferent to the repercussions of"
+              + " their actions. ");
+          break;
+        }
+      }
     }
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));

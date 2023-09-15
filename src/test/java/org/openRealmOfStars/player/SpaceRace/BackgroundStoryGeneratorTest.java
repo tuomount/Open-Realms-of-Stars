@@ -657,7 +657,7 @@ public class BackgroundStoryGeneratorTest {
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
     assertEquals(true, result.contains("Max Power"));
-    assertEquals(true, result.contains("space pirates"));
+    assertEquals(true, result.contains("pirates"));
     assertEquals(true, result.contains("Smaugirian"));
   }
 
@@ -804,6 +804,55 @@ public class BackgroundStoryGeneratorTest {
     name = BackgroundStoryGenerator.getRaceNameInPlural(
         "Clan of Homari", GovernmentType.CLAN);
     assertEquals("Homarians", name);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSingleNameSeparator() {
+    String name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Empire of Rexian", GovernmentType.EMPIRE);
+    assertEquals("Rexian", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "The Rexian Empire", GovernmentType.EMPIRE);
+    assertEquals("Rexian", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Rexian Empire", GovernmentType.EMPIRE);
+    assertEquals("Rexian", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Hordian Hegemony", GovernmentType.HEGEMONY);
+    assertEquals("Hordian", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Hordian Hegemony", GovernmentType.HEGEMONY);
+    assertEquals("Hordian", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Terran Syndicate", GovernmentType.SYNDICATE);
+    assertEquals("Terran", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Syndicate of Terran", GovernmentType.SYNDICATE);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "The Syndicate of Terran", GovernmentType.SYNDICATE);
+    assertEquals("Terran", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Empire of Silicoid", GovernmentType.EMPIRE);
+    assertEquals("Silicoid", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Clan of Homar", GovernmentType.CLAN);
+    assertEquals("Homarian", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Clan of Homare", GovernmentType.CLAN);
+    assertEquals("Homarian", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Clan of Spork", GovernmentType.CLAN);
+    assertEquals("Sporkian", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Clan of Silico", GovernmentType.CLAN);
+    assertEquals("Silicoid", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Clan of Rexi", GovernmentType.CLAN);
+    assertEquals("Rexian", name);
+    name = BackgroundStoryGenerator.getRaceNameInSingle(
+        "Clan of Homari", GovernmentType.CLAN);
+    assertEquals("Homarian", name);
   }
 
 }

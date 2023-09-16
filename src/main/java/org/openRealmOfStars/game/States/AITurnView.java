@@ -2644,6 +2644,13 @@ public class AITurnView extends BlackPanel {
         }
         if (tooYoung) {
           leader.addPerk(Perk.CRUEL);
+          Message msgTooYoung = new Message(MessageType.LEADER,
+              leader.getCallName()
+                  + " is being accused for killing " + target.getCallName()
+                  + ". Killing such a young heir is cruel task.",
+              Icons.getIconByName(Icons.ICON_DEATH));
+          msgTooYoung.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+          realm.getMsgList().addUpcomingMessage(msgTooYoung);
         }
       }
     }
@@ -2736,6 +2743,13 @@ public class AITurnView extends BlackPanel {
       prisoner.setJob(Job.UNASSIGNED);
       prisoner.setTimeInJob(0);
       prisoner.addPerk(Perk.CORRUPTED);
+      Message msg = new Message(MessageType.LEADER,
+          prisoner.getCallName() + " was freed from prison before "
+          + prisoner.getGender().getHisHer() + " sentence was over. "
+          + prisoner.getName() + " has turn into corrupted.",
+          Icons.getIconByName(Icons.ICON_PRISON));
+      msg.setMatchByString(prisoner.getCallName());
+      realm.getMsgList().addUpcomingMessage(msg);
       int realmIndex = game.getPlayers().getIndex(realm);
       for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
         if (realmIndex != i) {

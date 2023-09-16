@@ -2094,7 +2094,6 @@ public final class LeaderUtility {
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(fleet.getCommander().getName());
       info.getMsgList().addUpcomingMessage(msg);
-      msg.setMatchByString(planet.getName());
       planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
       game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
           fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));

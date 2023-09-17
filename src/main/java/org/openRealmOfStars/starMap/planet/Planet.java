@@ -2567,7 +2567,12 @@ public class Planet {
             StringBuilder sb = new StringBuilder();
             if (orbital != null) {
               sb.append(orbital.getName());
-              sb.append(" upgraded to ");
+              if (orbital.getTheoreticalMilitaryPower()
+                  > ship.getTheoreticalMilitaryPower()) {
+                sb.append(" downgraded to ");
+              } else {
+                sb.append(" upgraded to ");
+              }
               sb.append(ship.getName());
               sb.append(" at ");
             } else {
@@ -2576,10 +2581,10 @@ public class Planet {
             }
             sb.append(getName());
             sb.append(".");
+            orbital = ship;
             if (governor != null) {
               int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
               Attitude attitude = LeaderUtility.getRulerAttitude(governor);
-              orbital = ship;
               PlanetHandling.chooseNextConstruction(map, this, index, attitude);
               sb.append(" " + governor.getCallName() + " selected new "
                   + "construction process where "

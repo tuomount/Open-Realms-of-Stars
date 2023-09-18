@@ -1277,19 +1277,14 @@ public class PlayerInfo {
     return espionage;
   }
   /**
-   * Get AI Attitude which can be one from which is randomized
-   * and one which is from SpaceRace.
+   * Get AI Attitude which is get from the ruler or space race attitude.
    * @return Attitude
    */
   public Attitude getAiAttitude() {
-    int value = DiceGenerator.getRandom(1);
-    if (value == 0) {
-      return race.getAttitude();
-    }
     if (ruler != null) {
-      return LeaderUtility.getRulerAttitude(ruler, attitude);
+      return LeaderUtility.getRulerAttitude(ruler, race.getAttitude());
     }
-    return getAttitude();
+    return race.getAttitude();
   }
 
   /**

@@ -446,9 +446,11 @@ public final class LeaderUtility {
    * 40% any good perk is added.
    * After adding good perk there is 10% that also bad perk is added.
    * @param leader who will get new perk
+   * @return Array of added new perks.
    */
-  public static void addRandomPerks(final Leader leader) {
+  public static Perk[] addRandomPerks(final Leader leader) {
     boolean jobBasedPerkAdded = false;
+    ArrayList<Perk> addedPerks = new ArrayList<>();
     Perk[] goodPerks = getNewPerks(leader, PERK_TYPE_GOOD);
     if (DiceGenerator.getRandom(99) < 60 || goodPerks.length == 0) {
       // Add Perk based on job
@@ -465,14 +467,15 @@ public final class LeaderUtility {
       if (newPerks != null && newPerks.length > 0) {
         int index = DiceGenerator.getRandom(newPerks.length - 1);
         leader.getPerkList().add(newPerks[index]);
+        addedPerks.add(newPerks[index]);
         jobBasedPerkAdded = true;
       }
     }
     if (!jobBasedPerkAdded) {
-      Perk[] newPerks = getNewPerks(leader, PERK_TYPE_GOOD);
-      if (newPerks.length > 0) {
-        int index = DiceGenerator.getRandom(newPerks.length - 1);
-        leader.getPerkList().add(newPerks[index]);
+      if (goodPerks.length > 0) {
+        int index = DiceGenerator.getRandom(goodPerks.length - 1);
+        leader.getPerkList().add(goodPerks[index]);
+        addedPerks.add(goodPerks[index]);
       }
     }
     if (DiceGenerator.getRandom(99)  < 10) {
@@ -480,8 +483,10 @@ public final class LeaderUtility {
       if (newPerks.length > 0) {
         int index = DiceGenerator.getRandom(newPerks.length - 1);
         leader.getPerkList().add(newPerks[index]);
+        addedPerks.add(newPerks[index]);
       }
     }
+    return addedPerks.toArray(new Perk[0]);
   }
 
   /**
@@ -2452,6 +2457,206 @@ public final class LeaderUtility {
         sb.append("famous ancient artifact researcher. ");
       } else {
         sb.append("interested in ancient artifact research. ");
+      }
+    }
+    return sb.toString();
+  }
+
+  public static String getReasonForPerk(final Leader leader, final Perk perk) {
+    StringBuilder sb = new StringBuilder();
+    switch (perk) {
+      case ACADEMIC: {
+        sb.append(leader.getName());
+        sb.append(" has higher level of studies and learn how to be academic.");
+        break;
+      }
+      case ADDICTED: {
+        sb.append(leader.getName());
+        sb.append(" has hooked on substance and ");
+        sb.append(leader.getGender().getHeShe());
+        sb.append(" has to use it.");
+        break;
+      }
+      case AGGRESSIVE: {
+        sb.append(leader.getName());
+        sb.append(" has become aggressive due ");
+        sb.append(leader.getGender().getHisHer());
+        sb.append(" stress levels.");
+        break;
+      }
+      case AGRICULTURAL: {
+        sb.append(leader.getName());
+        sb.append(" has started to grown ");
+        sb.append(leader.getGender().getHisHer());
+        sb.append(" own farm and thus become more interested in agriculture.");
+        break;
+      }
+      case ARCHAEOLOGIST: {
+        sb.append(leader.getName());
+        sb.append(" has researched ancient artifacts and ");
+        sb.append(leader.getGender().getHeShe());
+        sb.append(" has done couple of new findings.");
+        break;
+      }
+      case ARTISTIC: {
+        sb.append(leader.getName());
+        sb.append(" has started to ");
+        switch (DiceGenerator.getRandom(3)) {
+          default:
+          case 0: {
+            sb.append("paint ");
+            break;
+          }
+          case 1: {
+            sb.append("sculture ");
+            break;
+          }
+          case 2: {
+            sb.append("composing music ");
+            break;
+          }
+          case 3: {
+            sb.append("writing novels ");
+            break;
+          }
+        }
+        sb.append(leader.getGender().getHisHer());
+        sb.append(" interest towards art has been increased.");
+        break;
+      }
+      case CHARISMATIC: {
+        sb.append(leader.getName());
+        sb.append(" has learn how to behave charismatically.");
+        break;
+      }
+      case CHATTERBOX: {
+        sb.append(leader.getName());
+        sb.append(" feels compulsary need to brag ");
+        sb.append(leader.getGender().getHisHer());
+        sb.append(" achievements and always speaks a too much.");
+        break;
+      }
+      case COMBAT_MASTER: {
+        sb.append(leader.getName());
+        sb.append(" has improved how to shoot accurately. ");
+        break;
+      }
+      case COMBAT_TACTICIAN: {
+        sb.append(leader.getName());
+        sb.append(" has learned how to react with ");
+        sb.append(leader.getGender().getHisHer());
+        sb.append(" fleet in space combat faster than before.");
+        break;
+      }
+      case CONVICT: {
+        sb.append(leader.getName());
+        sb.append(" has been in prison. ");
+        break;
+      }
+      case CORRUPTED: {
+        sb.append(leader.getName());
+        sb.append(" takes money realm credits ");
+        sb.append(leader.getGender().getHisHer());
+        sb.append(" pocket and ");
+        sb.append(leader.getGender().getHeShe());
+        sb.append(" thinks that is the right thing to do.");
+        break;
+      }
+      case COUNTER_AGENT: {
+        sb.append(leader.getName());
+        sb.append(" has learn how to spot cloaked fleets by noticing little"
+            + " things in scanner views.");
+        break;
+      }
+      case CRUEL: {
+        sb.append(leader.getName());
+        sb.append(" has killed too young heir. What cruel thing to do!");
+        break;
+      }
+      case DIPLOMATIC: {
+        sb.append(leader.getName());
+        sb.append(" has developped skill to be a diplomatic.");
+        break;
+      }
+      case DISCIPLINE: {
+        sb.append(leader.getName());
+        sb.append(" has learnt to be strict commander during wartime.");
+        break;
+      }
+      case EXPLORER: {
+        sb.append(leader.getName());
+        sb.append(" is very keen to explore and"
+            + " pushes the engines a bit over the limit.");
+        break;
+      }
+      case FTL_ENGINEER: {
+        sb.append(leader.getName());
+        sb.append(" wants to get moving fast and"
+            + " pushes the engines a bit over the limit.");
+        break;
+      }
+      case GOOD_LEADER: {
+        sb.append(leader.getName());
+        sb.append(" has learnd new people skill:"
+            + " how to treat every one equally and fair.");
+        break;
+      }
+      case HEALTHY: {
+        sb.append(leader.getName());
+        sb.append(" has started to live more healthier life than before.");
+        break;
+      }
+      case INCOMPETENT: {
+        sb.append(leader.getName());
+        sb.append(" has fallen down and hit ");
+        sb.append(leader.getGender().getHisHer());
+        sb.append(" head very badly. Things aren't the same anymore...");
+        break;
+      }
+      case INDUSTRIAL: {
+        sb.append(leader.getName());
+        sb.append(" has shown interest in factory automation ");
+        sb.append(" and seems like ");
+        sb.append(leader.getGender().getHeShe());
+        sb.append(" can get the factories running much more efficiently.");
+        break;
+      }
+      case LOGICAL: {
+        sb.append(leader.getName());
+        sb.append(" has starting to behave logically. This is ");
+        sb.append(leader.getGender().getHisHer());
+        sb.append(" new way to get things done.");
+        break;
+      }
+      case MAD: {
+        sb.append(leader.getName());
+        sb.append(" had very bad disease and ");
+        sb.append(leader.getGender().getHeShe());
+        sb.append(" became mad afterwards.");
+        break;
+      }
+      case MASTER_ENGINEER: {
+        sb.append(leader.getName());
+        sb.append(" has deeper knowledge how to overload ship's"
+            + " components with less danger.");
+        break;
+      }
+      case MERCHANT: {
+        sb.append(leader.getName());
+        sb.append(" has interest in trading and thus makes better deals.");
+        break;
+      }
+      case MICRO_MANAGER: {
+        sb.append(leader.getCallName());
+        sb.append(" has habit that everything thing needs to be done by ");
+        sb.append(leader.getName());
+        sb.append(" and this kind of managemnt does not end well.");
+        break;
+      }
+      case MILITARISTIC: {
+        sb.append(leader.getName());
+        sb.append(" has interest in trading and thus makes better deals.");
+        break;
       }
     }
     return sb.toString();

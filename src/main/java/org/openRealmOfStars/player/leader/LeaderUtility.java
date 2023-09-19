@@ -2655,7 +2655,63 @@ public final class LeaderUtility {
       }
       case MILITARISTIC: {
         sb.append(leader.getName());
-        sb.append(" has interest in trading and thus makes better deals.");
+        sb.append(" has been interesting in military tactics and can handle"
+            + " larger number of fleets.");
+        break;
+      }
+      case MINER: {
+        sb.append(leader.getName());
+        sb.append(" has been intrested in minerals and stone and therefore ");
+        sb.append(leader.getGender().getHeShe());
+        sb.append(" is good spotting great mining areas.");
+        break;
+      }
+      case PACIFIST: {
+        sb.append(leader.getCallName());
+        sb.append(" thinks that war is never a solution and there must be"
+            + " a peaceful way to solve things.");
+        break;
+      }
+      case PEACEFUL: {
+        sb.append(leader.getCallName());
+        sb.append(" has learned how to calm ");
+        sb.append(leader.getGender().getHisHer());
+        sb.append(" nerves. This give cool impression.");
+        break;
+      }
+      case POWER_HUNGRY: {
+        sb.append(leader.getCallName());
+        sb.append(" is graving to be a ruler and ");
+        sb.append(leader.getGender().getHeShe());
+        sb.append(" is willing to do lot for it, some those can be"
+            + " questionable.");
+        break;
+      }
+      case REPULSIVE: {
+        sb.append(leader.getName());
+        sb.append(" has turned into selfish and arrogant that ");
+        sb.append(" doesn't seem to care about others.");
+        break;
+      }
+      case SCANNER_EXPERT: {
+        sb.append(leader.getName());
+        sb.append(" has learned how scanners work and ");
+        sb.append(leader.getGender().getHeShe());
+        sb.append(" knows how to manually tweak in order get them"
+            + " perform better.");
+        break;
+      }
+      case SCIENTIST: {
+        sb.append(leader.getName());
+        sb.append(" has published scientific paper during ");
+        sb.append(leader.getGender().getHisHer());
+        sb.append(" spare time. Impressive.");
+        break;
+      }
+      case SECRET_AGENT: {
+        sb.append(leader.getName());
+        sb.append(" has learned how to tune cloaking ");
+        sb.append(" device to perform slightly better.");
         break;
       }
     }

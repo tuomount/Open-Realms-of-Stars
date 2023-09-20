@@ -471,12 +471,10 @@ public final class LeaderUtility {
         jobBasedPerkAdded = true;
       }
     }
-    if (!jobBasedPerkAdded) {
-      if (goodPerks.length > 0) {
-        int index = DiceGenerator.getRandom(goodPerks.length - 1);
-        leader.getPerkList().add(goodPerks[index]);
-        addedPerks.add(goodPerks[index]);
-      }
+    if (!jobBasedPerkAdded && goodPerks.length > 0) {
+      int index = DiceGenerator.getRandom(goodPerks.length - 1);
+      leader.getPerkList().add(goodPerks[index]);
+      addedPerks.add(goodPerks[index]);
     }
     if (DiceGenerator.getRandom(99)  < 10) {
       Perk[] newPerks = getNewPerks(leader, PERK_TYPE_BAD);
@@ -2462,9 +2460,19 @@ public final class LeaderUtility {
     return sb.toString();
   }
 
+  /**
+   * Get Reason for gaining perk for leader.
+   * @param leader Leader who is gain perk
+   * @param perk Perk which was gained.
+   * @return Explanation string
+   */
   public static String getReasonForPerk(final Leader leader, final Perk perk) {
     StringBuilder sb = new StringBuilder();
     switch (perk) {
+      default: {
+        sb.append("Unkown perk gained...");
+        break;
+      }
       case ACADEMIC: {
         sb.append(leader.getName());
         sb.append(" has higher level of studies and learn how to be academic.");
@@ -2712,6 +2720,56 @@ public final class LeaderUtility {
         sb.append(leader.getName());
         sb.append(" has learned how to tune cloaking ");
         sb.append(" device to perform slightly better.");
+        break;
+      }
+      case SKILLFUL: {
+        sb.append(leader.getName());
+        sb.append(" has become skillfull, ");
+        sb.append(leader.getGender().getHeShe());
+        sb.append(" is able to pick any task and perform well.");
+        break;
+      }
+      case SLOW_LEARNER: {
+        sb.append(leader.getName());
+        sb.append(" is feeling that learning new things is a burden and ");
+        sb.append(leader.getGender().getHeShe());
+        sb.append(" hasn't any motivation to improve situation.");
+        break;
+      }
+      case SPY_MASTER: {
+        sb.append(leader.getName());
+        sb.append(" has watched couple of old spy movies and ");
+        sb.append(" learnd new tricks for espionage.");
+        break;
+      }
+      case STUPID: {
+        sb.append(leader.getName());
+        sb.append(" has got too many hits to ");
+        sb.append(leader.getGender().getHisHer());
+        sb.append(" head and become simply put stupid.");
+        break;
+      }
+      case TRADER: {
+        sb.append(leader.getName());
+        sb.append(" has got interested in trading ");
+        sb.append(" and gains a bit of extra while doing it.");
+        break;
+      }
+      case WARLORD: {
+        sb.append(leader.getName());
+        sb.append(" has learned motivate population during war ");
+        sb.append(" so that they work more as team work.");
+        break;
+      }
+      case WEAK_LEADER: {
+        sb.append(leader.getName());
+        sb.append(" has started to be affraid of war and this is bad ");
+        sb.append(" since fear spreads specially during war times.");
+        break;
+      }
+      case WEALTHY: {
+        sb.append(leader.getName());
+        sb.append(" has got some personal extra credits. ");
         break;
       }
     }

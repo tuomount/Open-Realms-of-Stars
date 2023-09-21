@@ -2605,7 +2605,7 @@ public final class LeaderUtility {
       }
       case GOOD_LEADER: {
         sb.append(leader.getName());
-        sb.append(" has learnd new people skill:"
+        sb.append(" has learned new people skill:"
             + " how to treat every one equally and fair.");
         break;
       }
@@ -2669,7 +2669,7 @@ public final class LeaderUtility {
       }
       case MINER: {
         sb.append(leader.getName());
-        sb.append(" has been intrested in minerals and stone and therefore ");
+        sb.append(" has been interested in minerals and stone and therefore ");
         sb.append(leader.getGender().getHeShe());
         sb.append(" is good spotting great mining areas.");
         break;
@@ -2739,7 +2739,7 @@ public final class LeaderUtility {
       case SPY_MASTER: {
         sb.append(leader.getName());
         sb.append(" has watched couple of old spy movies and ");
-        sb.append(" learnd new tricks for espionage.");
+        sb.append(" learned new tricks for espionage.");
         break;
       }
       case STUPID: {

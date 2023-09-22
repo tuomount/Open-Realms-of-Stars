@@ -2528,6 +2528,7 @@ public final class LeaderUtility {
             break;
           }
         }
+        sb.append("and ");
         sb.append(leader.getGender().getHisHer());
         sb.append(" interest towards art has been increased.");
         break;
@@ -2563,9 +2564,9 @@ public final class LeaderUtility {
       }
       case CORRUPTED: {
         sb.append(leader.getName());
-        sb.append(" takes money realm credits ");
+        sb.append(" takes realm's credits into ");
         sb.append(leader.getGender().getHisHer());
-        sb.append(" pocket and ");
+        sb.append(" pockets and ");
         sb.append(leader.getGender().getHeShe());
         sb.append(" thinks that is the right thing to do.");
         break;
@@ -2588,7 +2589,7 @@ public final class LeaderUtility {
       }
       case DISCIPLINE: {
         sb.append(leader.getName());
-        sb.append(" has learnt to be strict commander during wartime.");
+        sb.append(" has learned to be strict commander during wartime.");
         break;
       }
       case EXPLORER: {
@@ -2606,7 +2607,7 @@ public final class LeaderUtility {
       case GOOD_LEADER: {
         sb.append(leader.getName());
         sb.append(" has learned new people skill:"
-            + " how to treat every one equally and fair.");
+            + " how to treat every one equally and fairly.");
         break;
       }
       case HEALTHY: {
@@ -2656,9 +2657,9 @@ public final class LeaderUtility {
       }
       case MICRO_MANAGER: {
         sb.append(leader.getCallName());
-        sb.append(" has habit that everything thing needs to be done by ");
-        sb.append(leader.getName());
-        sb.append(" and this kind of managemnt does not end well.");
+        sb.append(" has habit that everything needs to be done by ");
+        sb.append(leader.getGender().getHisHer());
+        sb.append(" way and this kind of management does not end well.");
         break;
       }
       case MILITARISTIC: {
@@ -2684,14 +2685,14 @@ public final class LeaderUtility {
         sb.append(leader.getCallName());
         sb.append(" has learned how to calm ");
         sb.append(leader.getGender().getHisHer());
-        sb.append(" nerves. This give cool impression.");
+        sb.append(" nerves. This gives a cool impression.");
         break;
       }
       case POWER_HUNGRY: {
         sb.append(leader.getCallName());
         sb.append(" is graving to be a ruler and ");
         sb.append(leader.getGender().getHeShe());
-        sb.append(" is willing to do lot for it, some those can be"
+        sb.append(" is willing to do lot for it, some of those can be"
             + " questionable.");
         break;
       }
@@ -2726,7 +2727,7 @@ public final class LeaderUtility {
         sb.append(leader.getName());
         sb.append(" has become skillfull, ");
         sb.append(leader.getGender().getHeShe());
-        sb.append(" is able to pick any task and perform well.");
+        sb.append(" is able to pick any task and perform it well.");
         break;
       }
       case SLOW_LEARNER: {
@@ -2746,7 +2747,7 @@ public final class LeaderUtility {
         sb.append(leader.getName());
         sb.append(" has got too many hits to ");
         sb.append(leader.getGender().getHisHer());
-        sb.append(" head and become simply put stupid.");
+        sb.append(" head and become simply stupid.");
         break;
       }
       case TRADER: {
@@ -2758,7 +2759,7 @@ public final class LeaderUtility {
       case WARLORD: {
         sb.append(leader.getName());
         sb.append(" has learned motivate population during war ");
-        sb.append(" so that they work more as team work.");
+        sb.append(" so that they work more like a team.");
         break;
       }
       case WEAK_LEADER: {

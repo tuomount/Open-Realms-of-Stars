@@ -3255,10 +3255,16 @@ public class AITurnView extends BlackPanel {
         }
         leader.setLevel(leader.getLevel() + 1);
         leader.setExperience(leader.getExperience() - required);
-        LeaderUtility.addRandomPerks(leader);
+        Perk[] gainedPerks = LeaderUtility.addRandomPerks(leader);
+        StringBuilder sb = new StringBuilder();
+        for (Perk perk : gainedPerks) {
+          sb.append(LeaderUtility.getReasonForPerk(leader, perk));
+          sb.append(" ");
+        }
         Message msg = new Message(MessageType.LEADER,
             leader.getCallName()
-                + " has reached to a new level. ",
+                + " has reached to a new level. "
+                + sb.toString(),
             LeaderUtility.getIconBasedOnLeaderJob(leader));
         msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
         realm.getMsgList().addUpcomingMessage(msg);

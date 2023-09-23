@@ -243,15 +243,21 @@ public final class RandomEventUtility {
         Leader leader = leaders.get(index);
         event.setLeader(leader);
         leader.setLevel(leader.getLevel() + 1);
-        LeaderUtility.addRandomPerks(leader);
+        Perk[] perksGained = LeaderUtility.addRandomPerks(leader);
         ImageInstruction instructions = new ImageInstruction();
         instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
         instructions.addSiluete(leader.getRace().getNameSingle(),
             ImageInstruction.POSITION_CENTER);
         event.setImageInstructions(instructions.build());
+        StringBuilder sb = new StringBuilder();
+        for (Perk perk : perksGained) {
+          sb.append(LeaderUtility.getReasonForPerk(leader, perk));
+          sb.append(" ");
+        }
         event.setText(leader.getCallName()
             + " has reached " + leader.getGender().getHisHer()
-            + " achievements earlier and gains extra level.");
+            + " achievements earlier and gains extra level. "
+            + sb.toString());
         Message msg = new Message(MessageType.LEADER, event.getText(),
             LeaderUtility.getIconBasedOnLeaderJob(leader));
         msg.setMatchByString("Index:" + info.getLeaderIndex(leader));

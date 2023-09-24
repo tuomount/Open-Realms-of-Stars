@@ -1186,32 +1186,6 @@ public class Game implements ActionListener {
    * @param fleet Fleet to show
    */
   public void showPlanetBombingView(final Planet planet, final Fleet fleet) {
-    if (!starMap.getCurrentPlayerInfo().getDiplomacy().isWar(
-        planet.getPlanetOwnerIndex())) {
-      // No war between these two players, trying to conquer another player's
-      // planet is act of war.
-      DiplomaticTrade trade = new DiplomaticTrade(starMap,
-          players.getCurrentPlayer(), planet.getPlanetOwnerIndex());
-      trade.generateEqualTrade(NegotiationType.WAR);
-      trade.doTrades();
-      PlayerInfo defender = planet.getPlanetPlayerInfo();
-      PlayerInfo attacker = starMap.getCurrentPlayerInfo();
-      int defenderIndex = starMap.getPlayerList().getIndex(defender);
-      boolean casusbelli = attacker.getDiplomacy().hasCasusBelli(
-          defenderIndex);
-      StarMapUtilities.addWarDeclatingReputation(starMap, attacker, defender);
-      NewsData newsData = NewsFactory.makeWarNews(attacker, defender, fleet,
-          starMap, casusbelli);
-      starMap.getNewsCorpData().addNews(newsData);
-      starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-          fleet, newsData));
-      String[] defenseList = defender.getDiplomacy().activateDefensivePact(
-          starMap, attacker);
-      if (defenseList != null) {
-        starMap.getNewsCorpData().addNews(
-            NewsFactory.makeDefensiveActivation(attacker, defenseList));
-      }
-    }
     planetBombingView = new PlanetBombingView(planet, fleet,
         starMap.getCurrentPlayerInfo(), players.getCurrentPlayer(), this);
     planetBombingView.setStarMap(starMap);

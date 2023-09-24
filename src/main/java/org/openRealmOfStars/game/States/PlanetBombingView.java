@@ -36,6 +36,8 @@ import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.espionage.EspionageUtility;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
@@ -63,7 +65,7 @@ import org.openRealmOfStars.utilities.Logger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -180,6 +182,16 @@ public class PlanetBombingView extends BlackPanel {
   private int attackPlayerIndex;
 
   /**
+   * Player who is defending
+   */
+  private PlayerInfo defender;
+
+  /**
+   * Defending player index
+   */
+  private int defendingPlayerIndex;
+
+  /**
    * Is screen controlled by AI
    */
   private boolean aiControlled;
@@ -261,8 +273,10 @@ public class PlanetBombingView extends BlackPanel {
     for (Ship ship : fleet.getShips()) {
       bombers.add(new BombingShip(ship.getTacticSpeed() * 4));
     }
+    whatHappened = NO_EFFECT;
     this.fleet = fleet;
     this.attacker = attacker;
+    this.defender = planet.getPlanetPlayerInfo();
     suppressionFire = 0;
     this.attackPlayerIndex = attackerPlayerIndex;
     this.newsData = null;
@@ -718,6 +732,11 @@ public class PlanetBombingView extends BlackPanel {
    * No effect.
    */
   private static final int NO_EFFECT = 0;
+
+  /**
+   * What happened for planet.
+   */
+  private int whatHappened;
   /**
    * Attack with bombs or troops. This handles killing/destroying
    * the buildings and animation.
@@ -1017,7 +1036,6 @@ public class PlanetBombingView extends BlackPanel {
           }
           if (usedComponentIndex != -1) {
             oneAttackFound = true;
-            PlayerInfo defender = planet.getPlanetPlayerInfo();
             int result = attackBombOrTroops();
             if (result == CONQUERED) {
               // Planet conquered
@@ -1069,7 +1087,6 @@ public class PlanetBombingView extends BlackPanel {
           removeDestroyedShip();
           nextShip();
         } else {
-          PlayerInfo defender = planet.getPlanetPlayerInfo();
           int result = attackBombOrTroops();
           if (result == CONQUERED && starMap != null) {
             newsData = NewsFactory.makePlanetConqueredNews(attacker,
@@ -1110,7 +1127,6 @@ public class PlanetBombingView extends BlackPanel {
           }
           if (usedComponentIndex != -1) {
             aiOneAttackFound = true;
-            PlayerInfo defender = planet.getPlanetPlayerInfo();
             int result = attackBombOrTroops();
             if (result == CONQUERED) {
               // Planet conquered
@@ -1195,6 +1211,37 @@ public class PlanetBombingView extends BlackPanel {
    */
   public void handleLastNewsAndReputation() {
     if (starMap != null && newsData != null) {
+      defendingPlayerIndex = starMap.getPlayerList().getIndex(defender);
+      if (defendingPlayerIndex != -1
+          && !attacker.getDiplomacy().isWar(defendingPlayerIndex)) {
+        boolean attackerHasReveal = false;
+        if (!fleet.isPrivateerFleet() || whatHappened == CONQUERED) {
+          attackerHasReveal = true;
+        }
+        if (attackerHasReveal) {
+          // No war between these two players, trying to conquer another
+          // player's planet is act of war.
+          DiplomaticTrade trade = new DiplomaticTrade(starMap,
+              attackPlayerIndex, defendingPlayerIndex);
+          trade.generateEqualTrade(NegotiationType.WAR);
+          trade.doTrades();
+          boolean casusbelli = attacker.getDiplomacy().hasCasusBelli(
+              defendingPlayerIndex);
+          StarMapUtilities.addWarDeclatingReputation(starMap, attacker,
+              defender);
+          NewsData warNews = NewsFactory.makeWarNews(attacker, defender, fleet,
+              starMap, casusbelli);
+          starMap.getNewsCorpData().addNews(warNews);
+          starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+              fleet, warNews));
+          String[] defenseList = defender.getDiplomacy().activateDefensivePact(
+              starMap, attacker);
+          if (defenseList != null) {
+            starMap.getNewsCorpData().addNews(
+                NewsFactory.makeDefensiveActivation(attacker, defenseList));
+          }
+        }
+      }
       if (nuked.isNuked()) {
         StarMapUtilities.addNukeReputation(starMap, attacker);
       }

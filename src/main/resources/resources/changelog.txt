@@ -1,6 +1,15 @@
 - New features and updates -
 
 * Starmap view is drawn only for tiles which are changing. This improves performance on starmap.
+* When leader gains level and perks, it got explanation what perk and how it was gained.
+* Improved background story generation for realms.
+
+- Bugfixes -
+
+* AI Attitude is now from SpaceRace or from ruler. No longer random one.
+* Bombing with privateer ship is no long war declaration, since privateers are considered unknown ships.
+* Governor is no longer required to build orbital.
+
 # Open Realm of Stars 0.23.0Beta 
 
 - New features and updates -

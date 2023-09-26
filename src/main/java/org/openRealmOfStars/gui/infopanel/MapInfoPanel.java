@@ -146,18 +146,19 @@ public class MapInfoPanel extends InfoPanel {
         space = 10;
         topSpace = RIGID_BOX_HEIGHT;
         int width = game.getWidth() - RIGID_BOX_WIDTH;
-        int viewPointX = (width / Tile.MAX_WIDTH - 1) / 2;
-        panelWidth = game.getWidth() - (viewPointX * 2 * Tile.MAX_WIDTH
-            + Tile.MAX_WIDTH);
-        panelWidth = panelWidth - Tile.MAX_WIDTH;
+        int viewPointX = (width / Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 1) / 2;
+        panelWidth = game.getWidth() - (viewPointX * 2
+            * Tile.getMaxWidth(Tile.ZOOM_NORMAL)
+            + Tile.getMaxWidth(Tile.ZOOM_NORMAL));
+        panelWidth = panelWidth - Tile.getMaxWidth(Tile.ZOOM_NORMAL);
         if (panelWidth < RIGID_BOX_WIDTH) {
           panelWidth = RIGID_BOX_WIDTH;
         }
       }
     }
     this.add(Box.createRigidArea(new Dimension(panelWidth, topSpace)));
-    BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
-        Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
+    BufferedImage img = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_IN),
+        Tile.getMaxWidth(Tile.ZOOM_IN), BufferedImage.TYPE_4BYTE_ABGR);
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -340,15 +341,16 @@ public class MapInfoPanel extends InfoPanel {
    */
   public void updatePanel(final boolean debug, final PlayerInfo viewerInfo) {
     if (planet != null) {
-      BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
-          Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
+      BufferedImage img = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_IN),
+          Tile.getMaxWidth(Tile.ZOOM_IN), BufferedImage.TYPE_4BYTE_ABGR);
       Tile tmpTile = Tiles.getTileByIndex(planet.getPlanetType()
           .getTileIndex());
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
       if (!planet.isGasGiant()) {
-        tmpTile.draw(g2d, Tile.MAX_WIDTH / 2, Tile.MAX_HEIGHT / 2);
+        tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2,
+            Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2);
       } else {
         switch (planet.getPlanetTypeIndex()) {
         default:
@@ -356,11 +358,12 @@ public class MapInfoPanel extends InfoPanel {
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW);
           tmpTile.draw(g2d, 0, 0);
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_NE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, 0);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL), 0);
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_SW);
-          tmpTile.draw(g2d, 0, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, 0, Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_SE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+              Tile.getMaxHeight(Tile.ZOOM_NORMAL));
 
           break;
         }
@@ -368,66 +371,72 @@ public class MapInfoPanel extends InfoPanel {
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_2_NW);
           tmpTile.draw(g2d, 0, 0);
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_2_NE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, 0);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL), 0);
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_2_SW);
-          tmpTile.draw(g2d, 0, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, 0, Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_2_SE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+              Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           break;
         }
         case 2: {
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_3_NW);
           tmpTile.draw(g2d, 0, 0);
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_3_NE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, 0);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL), 0);
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_3_SW);
-          tmpTile.draw(g2d, 0, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, 0, Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_3_SE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+              Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           break;
         }
         case 29: {
           tmpTile = Tiles.getTileByName(TileNames.JUPITER_NW);
           tmpTile.draw(g2d, 0, 0);
           tmpTile = Tiles.getTileByName(TileNames.JUPITER_NE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, 0);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL), 0);
           tmpTile = Tiles.getTileByName(TileNames.JUPITER_SW);
-          tmpTile.draw(g2d, 0, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, 0, Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           tmpTile = Tiles.getTileByName(TileNames.JUPITER_SE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+              Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           break;
         }
         case 30: {
           tmpTile = Tiles.getTileByName(TileNames.SATURN_NW);
           tmpTile.draw(g2d, 0, 0);
           tmpTile = Tiles.getTileByName(TileNames.SATURN_NE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, 0);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL), 0);
           tmpTile = Tiles.getTileByName(TileNames.SATURN_SW);
-          tmpTile.draw(g2d, 0, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, 0, Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           tmpTile = Tiles.getTileByName(TileNames.SATURN_SE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+              Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           break;
         }
         case 31: {
           tmpTile = Tiles.getTileByName(TileNames.ICEGIANT1_NW);
           tmpTile.draw(g2d, 0, 0);
           tmpTile = Tiles.getTileByName(TileNames.ICEGIANT1_NE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, 0);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL), 0);
           tmpTile = Tiles.getTileByName(TileNames.ICEGIANT1_SW);
-          tmpTile.draw(g2d, 0, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, 0, Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           tmpTile = Tiles.getTileByName(TileNames.ICEGIANT1_SE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+              Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           break;
         }
         case 32: {
           tmpTile = Tiles.getTileByName(TileNames.ICEGIANT2_NW);
           tmpTile.draw(g2d, 0, 0);
           tmpTile = Tiles.getTileByName(TileNames.ICEGIANT2_NE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, 0);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL), 0);
           tmpTile = Tiles.getTileByName(TileNames.ICEGIANT2_SW);
-          tmpTile.draw(g2d, 0, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, 0, Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           tmpTile = Tiles.getTileByName(TileNames.ICEGIANT2_SE);
-          tmpTile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          tmpTile.draw(g2d, Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+              Tile.getMaxHeight(Tile.ZOOM_NORMAL));
           break;
         }
         }

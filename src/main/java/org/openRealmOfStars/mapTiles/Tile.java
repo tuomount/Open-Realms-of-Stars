@@ -9,7 +9,7 @@ import org.openRealmOfStars.gui.mapPanel.BlackHoleEffect;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,14 +32,30 @@ import org.openRealmOfStars.gui.mapPanel.BlackHoleEffect;
 public class Tile {
 
   /**
-   * Tile Maximum width
+   * Zoom Level normal.
    */
-  public static final int MAX_WIDTH = 32;
+  public static final int ZOOM_NORMAL = 0;
   /**
-   * Tile Maximum height
+   * Zoom Level Zoom in.
    */
-  public static final int MAX_HEIGHT = 32;
+  public static final int ZOOM_IN = 1;
+  /**
+   * Zoom Level Zoom out 1.
+   */
+  public static final int ZOOM_OUT1 = -1;
 
+  /**
+   * Tile normal size;
+   */
+  private static final int TILE_NORMAL_SIZE = 32;
+  /**
+   * Tile normal zoom in;
+   */
+  private static final int TILE_ZOOM_IN_SIZE = 64;
+  /**
+   * Tile normal zoom out 1;
+   */
+  private static final int TILE_ZOOM_OUT1_SIZE = 16;
   /**
    * Graphical data for tile
    */
@@ -65,6 +81,11 @@ public class Tile {
   private String tileDescription;
 
   /**
+   * Zoom Level for single tile
+   */
+  private int zoomLevel;
+
+  /**
    * Static blackhole effect
    */
   private static BlackHoleEffect blackholeEffect;
@@ -80,10 +101,12 @@ public class Tile {
    */
   public Tile(final BufferedImage tilesetImage, final int x, final int y,
       final String name) throws RasterFormatException {
-    if (x >= 0 && y >= 0 && x * MAX_WIDTH < tilesetImage.getHeight()
-        && y * MAX_HEIGHT < tilesetImage.getHeight()) {
-      img = tilesetImage.getSubimage(x * MAX_WIDTH, y * MAX_HEIGHT, MAX_WIDTH,
-          MAX_HEIGHT);
+    if (x >= 0 && y >= 0
+        && x * getMaxWidth(TILE_NORMAL_SIZE) < tilesetImage.getHeight()
+        && y * getMaxHeight(TILE_NORMAL_SIZE) < tilesetImage.getHeight()) {
+      img = tilesetImage.getSubimage(x * getMaxWidth(TILE_NORMAL_SIZE),
+          y * getMaxHeight(TILE_NORMAL_SIZE), getMaxWidth(TILE_NORMAL_SIZE),
+          getMaxHeight(TILE_NORMAL_SIZE));
       this.name = name;
       this.tileDescription = "";
     } else {
@@ -93,6 +116,40 @@ public class Tile {
 
 
   /**
+   * Get Tile width on certain zoom level
+   * @param zoomLevel Zoomlevel
+   * @return width in pixels
+   */
+  public static int getMaxWidth(final int zoomLevel) {
+    if (zoomLevel == ZOOM_NORMAL) {
+      return TILE_NORMAL_SIZE;
+    }
+    if (zoomLevel == ZOOM_IN) {
+      return TILE_ZOOM_IN_SIZE;
+    }
+    if (zoomLevel == ZOOM_OUT1) {
+      return TILE_ZOOM_OUT1_SIZE;
+    }
+    return TILE_NORMAL_SIZE;
+  }
+  /**
+   * Get Tile height on certain zoom level
+   * @param zoomLevel Zoomlevel
+   * @return height in pixels
+   */
+  public static int getMaxHeight(final int zoomLevel) {
+    if (zoomLevel == ZOOM_NORMAL) {
+      return TILE_NORMAL_SIZE;
+    }
+    if (zoomLevel == ZOOM_IN) {
+      return TILE_ZOOM_IN_SIZE;
+    }
+    if (zoomLevel == ZOOM_OUT1) {
+      return TILE_ZOOM_OUT1_SIZE;
+    }
+    return TILE_NORMAL_SIZE;
+  }
+  /**
    * Draw tile to coordinates
    * @param g Graphics2D using for drawing
    * @param x Coordinates on x axel
@@ -101,8 +158,9 @@ public class Tile {
   public void draw(final Graphics2D g, final int x, final int y) {
     if (isBlackhole()) {
       if (blackholeEffect == null) {
-        blackholeEffect = new BlackHoleEffect(new BufferedImage(MAX_WIDTH,
-            MAX_HEIGHT, BufferedImage.TYPE_INT_ARGB));
+        blackholeEffect = new BlackHoleEffect(new BufferedImage(
+            getMaxWidth(TILE_NORMAL_SIZE),
+            getMaxHeight(TILE_NORMAL_SIZE), BufferedImage.TYPE_INT_ARGB));
       }
       blackholeEffect.drawBlackholeTile(g, x, y, this);
     } else {
@@ -176,6 +234,13 @@ public class Tile {
     return tileIndex;
   }
 
+  /**
+   * Get the tile ZoomLevel
+   * @return Zoomlevel
+   */
+  public int getZoomLevel() {
+    return zoomLevel;
+  }
   /**
    * Set the tile index, disables the animation when set.
    * @param index tile index

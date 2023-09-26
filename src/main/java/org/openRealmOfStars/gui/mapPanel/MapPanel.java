@@ -350,8 +350,8 @@ public class MapPanel extends JPanel {
    * @param mapY Map max y size
    */
   protected void calculateViewPoints(final int mapX, final int mapY) {
-    int tileWidth = Tile.MAX_WIDTH;
-    int tileHeight = Tile.MAX_HEIGHT;
+    int tileWidth = Tile.getMaxWidth(Tile.ZOOM_NORMAL);
+    int tileHeight = Tile.getMaxHeight(Tile.ZOOM_NORMAL);
     if (battle) {
       // Combat does not have scroll screen
       viewPointX = (Combat.MAX_X - 1) / 2;
@@ -452,61 +452,83 @@ public class MapPanel extends JPanel {
     if (panelType == MapPanelType.STARMAP) {
       effectScr = backgroundScreen;
     }
-    if (safePixelX - Tile.MAX_WIDTH < 0) {
-      safePixelX = Tile.MAX_WIDTH;
+    if (safePixelX - Tile.getMaxWidth(Tile.ZOOM_NORMAL) < 0) {
+      safePixelX = Tile.getMaxWidth(Tile.ZOOM_NORMAL);
     }
-    if (safePixelX + Tile.MAX_WIDTH > effectScr.getWidth()) {
-      safePixelX = effectScr.getWidth() - Tile.MAX_WIDTH;
+    if (safePixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL)
+      > effectScr.getWidth()) {
+      safePixelX = effectScr.getWidth() - Tile.getMaxWidth(Tile.ZOOM_NORMAL);
     }
-    if (safePixelY - Tile.MAX_HEIGHT < 0) {
-      safePixelY = Tile.MAX_HEIGHT;
+    if (safePixelY - Tile.getMaxHeight(Tile.ZOOM_NORMAL) < 0) {
+      safePixelY = Tile.getMaxHeight(Tile.ZOOM_NORMAL);
     }
-    if (safePixelY + Tile.MAX_HEIGHT > effectScr.getHeight()) {
-      safePixelY = effectScr.getHeight() - Tile.MAX_HEIGHT;
+    if (safePixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) > effectScr.getHeight()) {
+      safePixelY = effectScr.getHeight() - Tile.getMaxHeight(Tile.ZOOM_NORMAL);
     }
     if (tile.getName() == TileNames.BLACKHOLE_NW
         && j + 1 < viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(safePixelX + Tile.MAX_WIDTH,
-          safePixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = effectScr.getSubimage(
+          safePixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          safePixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL),
+          Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          Tile.getMaxHeight(Tile.ZOOM_NORMAL));
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_N
         && j + 1 < viewPointY && i < viewPointX) {
       BufferedImage tmp = effectScr.getSubimage(safePixelX,
-          safePixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          safePixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL),
+          Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          Tile.getMaxHeight(Tile.ZOOM_NORMAL));
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_NE
         && j + 1 < viewPointY && i - 1 >= -viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(safePixelX - Tile.MAX_WIDTH,
-          safePixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = effectScr.getSubimage(
+          safePixelX - Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          safePixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL),
+          Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          Tile.getMaxHeight(Tile.ZOOM_NORMAL));
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_W
         && j < viewPointY && i < viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(safePixelX + Tile.MAX_WIDTH,
-          safePixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = effectScr.getSubimage(
+          safePixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          safePixelY, Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          Tile.getMaxHeight(Tile.ZOOM_NORMAL));
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_E
         && j < viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(safePixelX - Tile.MAX_WIDTH,
-          safePixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = effectScr.getSubimage(
+          safePixelX - Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          safePixelY, Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          Tile.getMaxHeight(Tile.ZOOM_NORMAL));
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_SW
         && j - 1  >= -viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(safePixelX + Tile.MAX_WIDTH,
-          safePixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = effectScr.getSubimage(
+          safePixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          safePixelY - Tile.getMaxHeight(Tile.ZOOM_NORMAL),
+          Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          Tile.getMaxHeight(Tile.ZOOM_NORMAL));
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_SW
         && j - 1  >= -viewPointY && i < viewPointX) {
       BufferedImage tmp = effectScr.getSubimage(safePixelX,
-          safePixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          safePixelY - Tile.getMaxHeight(Tile.ZOOM_NORMAL),
+          Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          Tile.getMaxHeight(Tile.ZOOM_NORMAL));
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_SE
         && j - 1  >= -viewPointY && i - 1 >= -viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(safePixelX - Tile.MAX_WIDTH,
-          safePixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = effectScr.getSubimage(
+          safePixelX - Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          safePixelY - Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          Tile.getMaxHeight(Tile.ZOOM_NORMAL));
       Tile.updateBlackHoleEffect(tmp);
     } else {
       BufferedImage tmp = effectScr.getSubimage(safePixelX,
-          safePixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          safePixelY, Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+          Tile.getMaxHeight(Tile.ZOOM_NORMAL));
       Tile.updateBlackHoleEffect(tmp);
     }
   }
@@ -757,7 +779,7 @@ public class MapPanel extends JPanel {
         int textWidth = (int) GuiStatics.getFontCubellanSC()
             .getStringBounds(sun.getName(), gr.getFontRenderContext())
             .getWidth();
-        int offset = Tile.MAX_WIDTH / 2 + textWidth / 2 - 2;
+        int offset = Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2 + textWidth / 2 - 2;
         gr.setStroke(GuiStatics.TEXT_LINE);
         if (tile.getName().equals(TileNames.SUN_E)) {
           gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
@@ -768,14 +790,15 @@ public class MapPanel extends JPanel {
         if (tile.getName().equals(TileNames.BLUE_STAR_E)) {
           gr.setColor(GuiStatics.getCoolSpaceColor());
         }
-        gr.drawLine(pixelX - offset, pixelY + Tile.MAX_HEIGHT / 2 - 3,
-            pixelX - Tile.MAX_WIDTH + offset,
-            pixelY + Tile.MAX_HEIGHT / 2 - 3);
+        gr.drawLine(pixelX - offset,
+            pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 - 3,
+            pixelX - Tile.getMaxWidth(Tile.ZOOM_NORMAL) + offset,
+            pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 - 3);
         gr.setColor(Color.BLACK);
         gr.setFont(GuiStatics.getFontCubellanSC());
         gr.drawString(sun.getName(),
-            pixelX - Tile.MAX_WIDTH / 2 - textWidth / 2,
-            pixelY + Tile.MAX_HEIGHT / 2);
+            pixelX - Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2 - textWidth / 2,
+            pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2);
       }
     }
 
@@ -823,19 +846,20 @@ public class MapPanel extends JPanel {
           .getStringBounds(RandomSystemNameGenerator.numberToRoman(
               planet.getOrderNumber()), gr.getFontRenderContext())
           .getWidth();
-      int offset = Tile.MAX_WIDTH / 2 - textWidth / 2 - 2;
+      int offset = Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2 - textWidth / 2 - 2;
       gr.setStroke(GuiStatics.TEXT_LINE);
       gr.setColor(GuiStatics.COLOR_GREYBLUE);
-      gr.drawLine(pixelX + offset, pixelY + Tile.MAX_HEIGHT / 2 - 3,
-          pixelX + Tile.MAX_WIDTH - offset,
-          pixelY + Tile.MAX_HEIGHT / 2 - 3);
+      gr.drawLine(pixelX + offset,
+          pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 - 3,
+          pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) - offset,
+          pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 - 3);
       gr.setColor(Color.BLACK);
       gr.setFont(GuiStatics.getFontCubellanSC());
       gr.drawString(
           RandomSystemNameGenerator.numberToRoman(
               planet.getOrderNumber()),
-          pixelX + Tile.MAX_WIDTH / 2 - textWidth / 2,
-          pixelY + Tile.MAX_HEIGHT / 2);
+          pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2 - textWidth / 2,
+          pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2);
     }
   }
   /**
@@ -1033,20 +1057,26 @@ public class MapPanel extends JPanel {
         }
         if (drawMapPos) {
           if (!fullDraw
-              && pixelX + Tile.MAX_WIDTH <= backgroundScreen.getWidth()
-              && pixelY + Tile.MAX_HEIGHT <= backgroundScreen.getHeight()) {
+              && pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL)
+              <= backgroundScreen.getWidth()
+              && pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL)
+              <= backgroundScreen.getHeight()) {
             gr.drawImage(backgroundScreen.getSubimage(pixelX, pixelY,
-                Tile.MAX_WIDTH, Tile.MAX_HEIGHT), null, pixelX, pixelY);
+                Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+                Tile.getMaxHeight(Tile.ZOOM_NORMAL)), null, pixelX, pixelY);
           }
           if (i != viewPointX) {
             // Right line
-            gr.drawLine(pixelX + Tile.MAX_WIDTH - 1, pixelY,
-                pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
+            gr.drawLine(pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 1, pixelY,
+                pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 1,
+                pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1);
           }
           if (j != viewPointY) {
             // Bottom line
-            gr.drawLine(pixelX, pixelY + Tile.MAX_HEIGHT - 1,
-                pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
+            gr.drawLine(pixelX,
+                pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1,
+                pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 1,
+                pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1);
           }
           if (info != null && info.getSectorVisibility(new Coordinate(i + cx,
               j + cy)) != PlayerInfo.UNCHARTED) {
@@ -1112,15 +1142,19 @@ public class MapPanel extends JPanel {
           gr.setStroke(full);
           gr.setColor(colorFlickerBlue);
           // Top line
-          gr.drawLine(pixelX, pixelY, pixelX + Tile.MAX_WIDTH - 1, pixelY);
+          gr.drawLine(pixelX, pixelY,
+              pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 1, pixelY);
           // Left line
-          gr.drawLine(pixelX, pixelY, pixelX, pixelY + Tile.MAX_HEIGHT - 1);
+          gr.drawLine(pixelX, pixelY, pixelX,
+              pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1);
           // Right line
-          gr.drawLine(pixelX + Tile.MAX_WIDTH - 1, pixelY,
-              pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
+          gr.drawLine(pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 1, pixelY,
+              pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 1,
+              pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1);
           // Bottom line
-          gr.drawLine(pixelX, pixelY + Tile.MAX_HEIGHT - 1,
-              pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
+          gr.drawLine(pixelX, pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1,
+              pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 1,
+              pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1);
           gr.setStroke(dashed);
           gr.setColor(colorDarkBlue);
         }
@@ -1129,18 +1163,20 @@ public class MapPanel extends JPanel {
             && j + cy == lastCursorPosY) {
           redrawTile[i + viewPointX][j + viewPointY] = true;
         }
-        pixelX = pixelX + Tile.MAX_WIDTH;
+        pixelX = pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL);
       }
       pixelX = viewPointOffsetX;
-      pixelY = pixelY + Tile.MAX_HEIGHT;
+      pixelY = pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL);
     }
     lastCursorPosX = starMap.getCursorX();
     lastCursorPosY = starMap.getCursorY();
     if (isShowMiniMap() && minimap != null) {
       // Draw minimap itself
       BufferedImage miniMapImg = minimap.getDrawnImage();
-      int redrawTilesX = miniMapImg.getWidth() / Tile.MAX_WIDTH + 1;
-      int redrawTilesY = miniMapImg.getHeight() / Tile.MAX_HEIGHT + 1;
+      int redrawTilesX = miniMapImg.getWidth()
+          / Tile.getMaxWidth(Tile.ZOOM_NORMAL) + 1;
+      int redrawTilesY = miniMapImg.getHeight()
+          / Tile.getMaxHeight(Tile.ZOOM_NORMAL) + 1;
       for (int i = redrawTile.length - redrawTilesX; i < redrawTile.length;
           i++) {
         for (int j = redrawTile[i].length - redrawTilesY;
@@ -1210,15 +1246,20 @@ public class MapPanel extends JPanel {
           BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
       gr.setStroke(full);
       gr.setColor(new Color(255, 50, 50, cursorFocus * 5));
-      gr.drawLine(viewPointOffsetX, cursorPixelY + Tile.MAX_HEIGHT / 2,
-          cursorPixelX, cursorPixelY + Tile.MAX_HEIGHT / 2);
-      gr.drawLine(cursorPixelX + Tile.MAX_WIDTH, cursorPixelY
-          + Tile.MAX_HEIGHT / 2, screen.getWidth() - viewPointOffsetX,
-          cursorPixelY + Tile.MAX_HEIGHT / 2);
-      gr.drawLine(cursorPixelX + Tile.MAX_WIDTH / 2, viewPointOffsetY,
-          cursorPixelX + Tile.MAX_WIDTH / 2, cursorPixelY);
-      gr.drawLine(cursorPixelX + Tile.MAX_WIDTH / 2, cursorPixelY
-          + Tile.MAX_HEIGHT, cursorPixelX + Tile.MAX_WIDTH / 2,
+      gr.drawLine(viewPointOffsetX,
+          cursorPixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2,
+          cursorPixelX, cursorPixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2);
+      gr.drawLine(
+          cursorPixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL), cursorPixelY
+          + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2,
+          screen.getWidth() - viewPointOffsetX,
+          cursorPixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2);
+      gr.drawLine(cursorPixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2,
+          viewPointOffsetY,
+          cursorPixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2, cursorPixelY);
+      gr.drawLine(cursorPixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2,
+          cursorPixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL),
+          cursorPixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2,
           screen.getHeight() - viewPointOffsetY);
     }
     gr.dispose();
@@ -1242,8 +1283,8 @@ public class MapPanel extends JPanel {
     int cursorPixelY = 0;
     Color colorRed = null;
     boolean blackholeUpdated = false;
-    int tileWidth = Tile.MAX_WIDTH;
-    int tileHeight = Tile.MAX_HEIGHT;
+    int tileWidth = Tile.getMaxWidth(Tile.ZOOM_NORMAL);
+    int tileHeight = Tile.getMaxHeight(Tile.ZOOM_NORMAL);
     Graphics2D gr = screen.createGraphics();
     // Center coordinates
     if (historyCoordinates == null) {

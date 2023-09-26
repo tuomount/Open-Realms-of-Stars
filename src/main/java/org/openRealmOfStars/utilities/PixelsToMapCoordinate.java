@@ -7,7 +7,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -108,8 +108,8 @@ public class PixelsToMapCoordinate {
       endX = startX + numXTiles * ShipImage.MAX_WIDTH;
       endY = startY + numYTiles * ShipImage.MAX_HEIGHT;
     } else {
-      endX = startX + numXTiles * Tile.MAX_WIDTH;
-      endY = startY + numYTiles * Tile.MAX_HEIGHT;
+      endX = startX + numXTiles * Tile.getMaxWidth(Tile.ZOOM_NORMAL);
+      endY = startY + numYTiles * Tile.getMaxHeight(Tile.ZOOM_NORMAL);
     }
     centerMapX = centerOfMap.getX();
     centerMapY = centerOfMap.getY();
@@ -123,8 +123,8 @@ public class PixelsToMapCoordinate {
         relativeMapX = pixelX / ShipImage.MAX_WIDTH - radX;
         relativeMapY = pixelY / ShipImage.MAX_HEIGHT - radY;
       } else {
-        relativeMapX = pixelX / Tile.MAX_WIDTH - radX;
-        relativeMapY = pixelY / Tile.MAX_HEIGHT - radY;
+        relativeMapX = pixelX / Tile.getMaxWidth(Tile.ZOOM_NORMAL) - radX;
+        relativeMapY = pixelY / Tile.getMaxHeight(Tile.ZOOM_NORMAL) - radY;
       }
     } else {
       outOfPanel = true;

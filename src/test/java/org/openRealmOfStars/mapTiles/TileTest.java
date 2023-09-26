@@ -42,8 +42,10 @@ public class TileTest {
     BufferedImage img2 = Mockito.mock(BufferedImage.class);
     Mockito.when(img.getWidth()).thenReturn(512);
     Mockito.when(img.getHeight()).thenReturn(512);
-    Mockito.when(img.getSubimage(0 * Tile.MAX_WIDTH, 0 * Tile.MAX_HEIGHT,
-        Tile.MAX_WIDTH, Tile.MAX_HEIGHT)).thenReturn(img2);
+    Mockito.when(img.getSubimage(0 * Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+        0 * Tile.getMaxHeight(Tile.ZOOM_NORMAL),
+        Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+        Tile.getMaxHeight(Tile.ZOOM_NORMAL))).thenReturn(img2);
     Mockito.when(img.getType()).thenReturn(BufferedImage.TYPE_4BYTE_ABGR);
     Mockito.when(img2.getType()).thenReturn(BufferedImage.TYPE_4BYTE_ABGR);
     
@@ -74,8 +76,10 @@ public class TileTest {
     BufferedImage img2 = Mockito.mock(BufferedImage.class);
     Mockito.when(img.getWidth()).thenReturn(16);
     Mockito.when(img.getHeight()).thenReturn(16);
-    Mockito.when(img.getSubimage(2 * Tile.MAX_WIDTH, 2 * Tile.MAX_HEIGHT,
-        Tile.MAX_WIDTH, Tile.MAX_HEIGHT)).thenReturn(img2);
+    Mockito.when(img.getSubimage(2 * Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+        2 * Tile.getMaxHeight(Tile.ZOOM_NORMAL),
+        Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+        Tile.getMaxHeight(Tile.ZOOM_NORMAL))).thenReturn(img2);
     
     Tile tile = new Tile(img, 2, 2, "Test");
     tile.getName();

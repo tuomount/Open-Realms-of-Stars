@@ -40,13 +40,30 @@ public final class Tiles {
   }
 
   /**
-   * List of tiles
+   * List of tiles size 32x32
    */
-  private static ArrayList<Tile> listOfTiles;
+  private static ArrayList<Tile> listOfTiles32;
   /**
-   * Hash map for tile
+   * Hash map for tile size 32x32
    */
-  private static HashMap<String, Tile> hashOfTiles;
+  private static HashMap<String, Tile> hashOfTiles32;
+
+  /**
+   * List of tiles size 64x64
+   */
+  private static ArrayList<Tile> listOfTiles64;
+  /**
+   * Hash map for tile size 64x64
+   */
+  private static HashMap<String, Tile> hashOfTiles64;
+  /**
+   * List of tiles size 16x16
+   */
+  private static ArrayList<Tile> listOfTiles16;
+  /**
+   * Hash map for tile size 16x16
+   */
+  private static HashMap<String, Tile> hashOfTiles16;
 
   /**
    * Get tile with index. Initializes tiles if they are uninitialized
@@ -55,13 +72,13 @@ public final class Tiles {
    * returned.
    */
   public static Tile getTileByIndex(final int index) {
-    if (listOfTiles == null) {
+    if (listOfTiles32 == null) {
       initTiles();
     }
-    if (index > 0 && index < listOfTiles.size()) {
-      return listOfTiles.get(index);
+    if (index > 0 && index < listOfTiles32.size()) {
+      return listOfTiles32.get(index);
     }
-    return listOfTiles.get(0);
+    return listOfTiles32.get(0);
   }
 
   /**
@@ -71,10 +88,10 @@ public final class Tiles {
    * returned.
    */
   public static Tile getTileByName(final String name) {
-    if (hashOfTiles == null) {
+    if (hashOfTiles32 == null) {
       initTiles();
     }
-    Tile tile = hashOfTiles.get(name);
+    Tile tile = hashOfTiles32.get(name);
     if (tile == null) {
       return getTileByIndex(0);
     }
@@ -89,7 +106,7 @@ public final class Tiles {
    * returned.
    */
   public static Tile getSunTile(final String name, final SunType type) {
-    if (hashOfTiles == null) {
+    if (hashOfTiles32 == null) {
       initTiles();
     }
     Tile tile = null;
@@ -162,10 +179,10 @@ public final class Tiles {
    * @return Maximum count of tiles
    */
   public static int getMaxTiles() {
-    if (listOfTiles == null) {
+    if (listOfTiles32 == null) {
       initTiles();
     }
-    return listOfTiles.size();
+    return listOfTiles32.size();
   }
 
   /**
@@ -173,9 +190,9 @@ public final class Tiles {
    * @param tile Tile to add
    */
   public static void addTile(final Tile tile) {
-    listOfTiles.add(tile);
-    tile.setIndex(listOfTiles.size() - 1);
-    hashOfTiles.put(tile.getName(), tile);
+    listOfTiles32.add(tile);
+    tile.setIndex(listOfTiles32.size() - 1);
+    hashOfTiles32.put(tile.getName(), tile);
   }
 
   /**
@@ -200,8 +217,8 @@ public final class Tiles {
   private static void initTiles() {
     BufferedImage tilesImage = IOUtilities
         .loadImage(Tiles.class.getResource("/resources/images/maptiles.png"));
-    listOfTiles = new ArrayList<>();
-    hashOfTiles = new HashMap<>();
+    listOfTiles32 = new ArrayList<>();
+    hashOfTiles32 = new HashMap<>();
     Tile tile = new Tile(tilesImage, 0, 0, TileNames.EMPTY);
     addTile(tile);
     // Reading the sun 3x3
@@ -291,7 +308,7 @@ public final class Tiles {
     addTile(tile);
     tile.setDescription(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION);
     // next index
-    tile.setAnimationIndex(listOfTiles.size());
+    tile.setAnimationIndex(listOfTiles32.size());
     tile = new Tile(tilesImage, 8, 1, TileNames.DEEP_SPACE_ANCHOR2);
     addTile(tile);
     tile.setDescription(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION);
@@ -367,7 +384,7 @@ public final class Tiles {
     tile = new Tile(tilesImage, 10, 1, TileNames.WORM_HOLE1);
     addTile(tile);
     tile.setDescription(TileNames.WORM_HOLE_DESCRIPTION);
-    tile.setAnimationIndex(listOfTiles.size());
+    tile.setAnimationIndex(listOfTiles32.size());
     tile = new Tile(tilesImage, 11, 1, TileNames.WORM_HOLE2);
     addTile(tile);
     tile.setDescription(TileNames.WORM_HOLE_DESCRIPTION);

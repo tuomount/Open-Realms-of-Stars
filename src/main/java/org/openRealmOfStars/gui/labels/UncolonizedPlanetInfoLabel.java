@@ -66,7 +66,8 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
     }
     int tileIndex = planet.getPlanetType().getTileIndex();
     Tile planetTile = Tiles.getTileByIndex(tileIndex);
-    BufferedImage image = new BufferedImage(Tile.MAX_WIDTH, Tile.MAX_HEIGHT,
+    BufferedImage image = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+        Tile.getMaxHeight(Tile.ZOOM_NORMAL),
         BufferedImage.TYPE_4BYTE_ABGR);
     planetTile.draw(image.createGraphics(), 0, 0);
     ImageLabel planetImage = new ImageLabel(image, false);

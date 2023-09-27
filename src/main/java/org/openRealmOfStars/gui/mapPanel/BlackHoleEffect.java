@@ -108,8 +108,8 @@ public class BlackHoleEffect {
             Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 + 1);
         color2 = backgroundTile.getRGB(Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 2,
             i);
-        backgroundTile.setRGB(Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1, i, mixColors(color1,
-            color2));
+        backgroundTile.setRGB(Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1, i,
+            mixColors(color1, color2));
       }
     } else {
       backgroundTile = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_NORMAL),

@@ -94,19 +94,22 @@ public class Tile {
    * Get tile from tileset image, where x is number of tiles in X axel and
    * y is number of tiles in y axel.
    * @param tilesetImage BufferedImage
+   * @param zoomLevel Zoom Level for tile
    * @param x X-axel coordinate
    * @param y Y-axel coordinate
    * @param name Name for the tile
    * @throws RasterFormatException if tile is outside of tileset image.
    */
-  public Tile(final BufferedImage tilesetImage, final int x, final int y,
+  public Tile(final BufferedImage tilesetImage, final int zoomLevel,
+      final int x, final int y,
       final String name) throws RasterFormatException {
+    this.zoomLevel = zoomLevel;
     if (x >= 0 && y >= 0
-        && x * getMaxWidth(TILE_NORMAL_SIZE) < tilesetImage.getHeight()
-        && y * getMaxHeight(TILE_NORMAL_SIZE) < tilesetImage.getHeight()) {
-      img = tilesetImage.getSubimage(x * getMaxWidth(TILE_NORMAL_SIZE),
-          y * getMaxHeight(TILE_NORMAL_SIZE), getMaxWidth(TILE_NORMAL_SIZE),
-          getMaxHeight(TILE_NORMAL_SIZE));
+        && x * getMaxWidth(zoomLevel) < tilesetImage.getHeight()
+        && y * getMaxHeight(zoomLevel) < tilesetImage.getHeight()) {
+      img = tilesetImage.getSubimage(x * getMaxWidth(zoomLevel),
+          y * getMaxHeight(zoomLevel), getMaxWidth(zoomLevel),
+          getMaxHeight(zoomLevel));
       this.name = name;
       this.tileDescription = "";
     } else {

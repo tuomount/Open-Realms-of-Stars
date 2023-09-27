@@ -49,7 +49,7 @@ public class TileTest {
     Mockito.when(img.getType()).thenReturn(BufferedImage.TYPE_4BYTE_ABGR);
     Mockito.when(img2.getType()).thenReturn(BufferedImage.TYPE_4BYTE_ABGR);
     
-    Tile tile = new Tile(img, 0, 0, "Test");
+    Tile tile = new Tile(img, Tile.ZOOM_NORMAL, 0, 0, "Test");
     assertEquals("", tile.getDescription());
     assertEquals("Test",tile.getName());
     assertEquals("Test (-1)",tile.toString());
@@ -81,7 +81,7 @@ public class TileTest {
         Tile.getMaxWidth(Tile.ZOOM_NORMAL),
         Tile.getMaxHeight(Tile.ZOOM_NORMAL))).thenReturn(img2);
     
-    Tile tile = new Tile(img, 2, 2, "Test");
+    Tile tile = new Tile(img, Tile.ZOOM_NORMAL, 2, 2, "Test");
     tile.getName();
   }
 

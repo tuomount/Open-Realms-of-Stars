@@ -462,7 +462,8 @@ public class MapPanel extends JPanel {
     if (safePixelY - Tile.getMaxHeight(Tile.ZOOM_NORMAL) < 0) {
       safePixelY = Tile.getMaxHeight(Tile.ZOOM_NORMAL);
     }
-    if (safePixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) > effectScr.getHeight()) {
+    if (safePixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL)
+        > effectScr.getHeight()) {
       safePixelY = effectScr.getHeight() - Tile.getMaxHeight(Tile.ZOOM_NORMAL);
     }
     if (tile.getName() == TileNames.BLACKHOLE_NW

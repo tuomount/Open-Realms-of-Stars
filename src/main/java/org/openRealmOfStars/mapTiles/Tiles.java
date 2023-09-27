@@ -211,438 +211,583 @@ public final class Tiles {
    * Black hole indexing 2nd part END
    */
   private static int bhSecondEnd;
+
   /**
    * Initialize tiles
    */
   private static void initTiles() {
-    BufferedImage tilesImage = IOUtilities
+    BufferedImage tilesImage32 = IOUtilities
         .loadImage(Tiles.class.getResource("/resources/images/maptiles.png"));
+    BufferedImage tilesImage16 = IOUtilities
+        .loadImage(Tiles.class.getResource("/resources/images/maptiles16.png"));
+    BufferedImage tilesImage64 = IOUtilities
+        .loadImage(Tiles.class.getResource("/resources/images/maptiles64.png"));
     listOfTiles32 = new ArrayList<>();
     hashOfTiles32 = new HashMap<>();
-    Tile tile = new Tile(tilesImage, 0, 0, TileNames.EMPTY);
+    listOfTiles16 = new ArrayList<>();
+    hashOfTiles16 = new HashMap<>();
+    listOfTiles64 = new ArrayList<>();
+    hashOfTiles64 = new HashMap<>();
+    Tile tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 0, TileNames.EMPTY);
     addTile(tile);
     // Reading the sun 3x3
-    tile = new Tile(tilesImage, 0, 0, TileNames.SUN_NW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 0, TileNames.SUN_NW);
     tile.setDescription(TileNames.RED_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 1, 0, TileNames.SUN_N);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 1, 0, TileNames.SUN_N);
     tile.setDescription(TileNames.RED_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 2, 0, TileNames.SUN_NE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 2, 0, TileNames.SUN_NE);
     tile.setDescription(TileNames.RED_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 0, 1, TileNames.SUN_W);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 1, TileNames.SUN_W);
     tile.setDescription(TileNames.RED_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 1, 1, TileNames.SUN_C);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 1, 1, TileNames.SUN_C);
     tile.setDescription(TileNames.RED_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 2, 1, TileNames.SUN_E);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 2, 1, TileNames.SUN_E);
     tile.setDescription(TileNames.RED_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 0, 2, TileNames.SUN_SW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 2, TileNames.SUN_SW);
     tile.setDescription(TileNames.RED_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 1, 2, TileNames.SUN_S);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 1, 2, TileNames.SUN_S);
     tile.setDescription(TileNames.RED_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 2, 2, TileNames.SUN_SE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 2, 2, TileNames.SUN_SE);
     tile.setDescription(TileNames.RED_STAR_DESCRIPTION);
     addTile(tile);
     // Reading the gas planet 2x2
-    tile = new Tile(tilesImage, 3, 0, TileNames.GAS_GIANT_1_NW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 0,
+        TileNames.GAS_GIANT_1_NW);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 0, TileNames.GAS_GIANT_1_NE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 4, 0,
+        TileNames.GAS_GIANT_1_NE);
     addTile(tile);
-    tile = new Tile(tilesImage, 3, 1, TileNames.GAS_GIANT_1_SW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 1,
+        TileNames.GAS_GIANT_1_SW);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 1, TileNames.GAS_GIANT_1_SE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 4, 1,
+        TileNames.GAS_GIANT_1_SE);
     addTile(tile);
     // Reading the gas planet 2x2
-    tile = new Tile(tilesImage, 5, 0, TileNames.GAS_GIANT_2_NW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 5, 0,
+        TileNames.GAS_GIANT_2_NW);
     addTile(tile);
-    tile = new Tile(tilesImage, 6, 0, TileNames.GAS_GIANT_2_NE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 6, 0,
+        TileNames.GAS_GIANT_2_NE);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 1, TileNames.GAS_GIANT_2_SW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 5, 1,
+        TileNames.GAS_GIANT_2_SW);
     addTile(tile);
-    tile = new Tile(tilesImage, 6, 1, TileNames.GAS_GIANT_2_SE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 6, 1,
+        TileNames.GAS_GIANT_2_SE);
     addTile(tile);
     // Reading the rock planet
-    tile = new Tile(tilesImage, 7, 0, TileNames.ROCK1);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 7, 0, TileNames.ROCK1);
     addTile(tile);
     // Reading the water planet
-    tile = new Tile(tilesImage, 8, 0, TileNames.WATERWORLD1);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 8, 0,
+        TileNames.WATERWORLD1);
     addTile(tile);
-    tile = new Tile(tilesImage, 11, 0, TileNames.WATERWORLD2);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 11, 0,
+        TileNames.WATERWORLD2);
     addTile(tile);
     // Reading the fog of war
-    tile = new Tile(tilesImage, 9, 0, TileNames.FOG_OF_WAR);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 0, TileNames.FOG_OF_WAR);
     addTile(tile);
     // Reading the uncharted
-    tile = new Tile(tilesImage, 10, 0, TileNames.UNCHARTED);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 10, 0, TileNames.UNCHARTED);
     addTile(tile);
     // Reading the culture tiles
-    tile = new Tile(tilesImage, 3, 2, TileNames.PLAYER_BLUE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 2,
+        TileNames.PLAYER_BLUE);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 2, TileNames.PLAYER_GREEN);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 4, 2,
+        TileNames.PLAYER_GREEN);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 2, TileNames.PLAYER_WHITE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 5, 2,
+        TileNames.PLAYER_WHITE);
     addTile(tile);
-    tile = new Tile(tilesImage, 6, 2, TileNames.PLAYER_ORANGE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 6, 2,
+        TileNames.PLAYER_ORANGE);
     addTile(tile);
-    tile = new Tile(tilesImage, 3, 3, TileNames.PLAYER_CYAN);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 3,
+        TileNames.PLAYER_CYAN);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 3, TileNames.PLAYER_PINK);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 4, 3,
+        TileNames.PLAYER_PINK);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 3, TileNames.PLAYER_RED);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 5, 3, TileNames.PLAYER_RED);
     addTile(tile);
-    tile = new Tile(tilesImage, 6, 3, TileNames.PLAYER_YELLOW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 6, 3,
+        TileNames.PLAYER_YELLOW);
     addTile(tile);
     // Reading the iron planet
-    tile = new Tile(tilesImage, 12, 0, TileNames.IRONPLANET1);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 0,
+        TileNames.IRONPLANET1);
     addTile(tile);
-    tile = new Tile(tilesImage, 13, 0, TileNames.IRONPLANET2);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 0,
+        TileNames.IRONPLANET2);
     addTile(tile);
     // Reading the deep space anchors
-    tile = new Tile(tilesImage, 7, 1, TileNames.DEEP_SPACE_ANCHOR1);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 7, 1,
+        TileNames.DEEP_SPACE_ANCHOR1);
     addTile(tile);
     tile.setDescription(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION);
     // next index
     tile.setAnimationIndex(listOfTiles32.size());
-    tile = new Tile(tilesImage, 8, 1, TileNames.DEEP_SPACE_ANCHOR2);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 8, 1,
+        TileNames.DEEP_SPACE_ANCHOR2);
     addTile(tile);
     tile.setDescription(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION);
     // Previous tile index as animation index
     tile.setAnimationIndex(getTileByName(
         TileNames.DEEP_SPACE_ANCHOR1).getIndex());
     // Readon more planets
-    tile = new Tile(tilesImage, 14, 0, TileNames.WATERWORLD3);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 14, 0,
+        TileNames.WATERWORLD3);
     addTile(tile);
-    tile = new Tile(tilesImage, 15, 0, TileNames.WATERWORLD4);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 15, 0,
+        TileNames.WATERWORLD4);
     addTile(tile);
-    tile = new Tile(tilesImage, 16, 0, TileNames.ICEWORLD1);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 16, 0,
+        TileNames.ICEWORLD1);
     addTile(tile);
-    tile = new Tile(tilesImage, 17, 0, TileNames.ICEWORLD2);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 17, 0,
+        TileNames.ICEWORLD2);
     addTile(tile);
-    tile = new Tile(tilesImage, 18, 0, TileNames.IRONPLANET3);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 18, 0,
+        TileNames.IRONPLANET3);
     addTile(tile);
-    tile = new Tile(tilesImage, 19, 0, TileNames.CARBONWORLD1);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 19, 0,
+        TileNames.CARBONWORLD1);
     addTile(tile);
     // Reading the ship color tiles
-    tile = new Tile(tilesImage, 7, 2, TileNames.PLAYER_SHIP_BLUE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 7, 2,
+        TileNames.PLAYER_SHIP_BLUE);
     addTile(tile);
-    tile = new Tile(tilesImage, 8, 2, TileNames.PLAYER_SHIP_GREEN);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 8, 2,
+        TileNames.PLAYER_SHIP_GREEN);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 2, TileNames.PLAYER_SHIP_WHITE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 2,
+        TileNames.PLAYER_SHIP_WHITE);
     addTile(tile);
-    tile = new Tile(tilesImage, 10, 2, TileNames.PLAYER_SHIP_ORANGE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 10, 2,
+        TileNames.PLAYER_SHIP_ORANGE);
     addTile(tile);
-    tile = new Tile(tilesImage, 7, 3, TileNames.PLAYER_SHIP_CYAN);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 7, 3,
+        TileNames.PLAYER_SHIP_CYAN);
     addTile(tile);
-    tile = new Tile(tilesImage, 8, 3, TileNames.PLAYER_SHIP_PINK);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 8, 3,
+        TileNames.PLAYER_SHIP_PINK);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 3, TileNames.PLAYER_SHIP_RED);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 3,
+        TileNames.PLAYER_SHIP_RED);
     addTile(tile);
-    tile = new Tile(tilesImage, 10, 3, TileNames.PLAYER_SHIP_YELLOW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 10, 3,
+        TileNames.PLAYER_SHIP_YELLOW);
     addTile(tile);
-    tile = new Tile(tilesImage, 11, 3, TileNames.PLAYER_SHIP_BLACK);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 11, 3,
+        TileNames.PLAYER_SHIP_BLACK);
     addTile(tile);
-    tile = new Tile(tilesImage, 11, 2, TileNames.PLAYER_BLACK);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 11, 2,
+        TileNames.PLAYER_BLACK);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY);
-    addTile(tile);
-    // Read space anomaly
-    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_CREDITS);
-    addTile(tile);
-    // Read space anomaly
-    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_TECH);
-    addTile(tile);
-    // Read space anomaly
-    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_DSA);
-    addTile(tile);
-    // Read space anomaly
-    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_MAP);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY);
     addTile(tile);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_MONSTER);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_CREDITS);
     addTile(tile);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_PIRATE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_TECH);
     addTile(tile);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_LAIR);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_DSA);
     addTile(tile);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    tile = new Tile(tilesImage, 10, 1, TileNames.WORM_HOLE1);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_MAP);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_MONSTER);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_PIRATE);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_LAIR);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 10, 1,
+        TileNames.WORM_HOLE1);
     addTile(tile);
     tile.setDescription(TileNames.WORM_HOLE_DESCRIPTION);
     tile.setAnimationIndex(listOfTiles32.size());
-    tile = new Tile(tilesImage, 11, 1, TileNames.WORM_HOLE2);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 11, 1,
+        TileNames.WORM_HOLE2);
     addTile(tile);
     tile.setDescription(TileNames.WORM_HOLE_DESCRIPTION);
     tile.setAnimationIndex(getTileByName(
         TileNames.WORM_HOLE1).getIndex());
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_SHIP);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_SHIP);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
     // Reading the gas planet 2x2
-    tile = new Tile(tilesImage, 12, 1, TileNames.GAS_GIANT_3_NW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 1,
+        TileNames.GAS_GIANT_3_NW);
     addTile(tile);
-    tile = new Tile(tilesImage, 13, 1, TileNames.GAS_GIANT_3_NE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 1,
+        TileNames.GAS_GIANT_3_NE);
     addTile(tile);
-    tile = new Tile(tilesImage, 12, 2, TileNames.GAS_GIANT_3_SW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 2,
+        TileNames.GAS_GIANT_3_SW);
     addTile(tile);
-    tile = new Tile(tilesImage, 13, 2, TileNames.GAS_GIANT_3_SE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 2,
+        TileNames.GAS_GIANT_3_SE);
     addTile(tile);
-    tile = new Tile(tilesImage, 14, 1, TileNames.ICEWORLD3);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 14, 1,
+        TileNames.ICEWORLD3);
     addTile(tile);
-    tile = new Tile(tilesImage, 15, 1, TileNames.IRONPLANET4);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 15, 1,
+        TileNames.IRONPLANET4);
     addTile(tile);
-    tile = new Tile(tilesImage, 16, 1, TileNames.CARBONWORLD2);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 16, 1,
+        TileNames.CARBONWORLD2);
     addTile(tile);
-    tile = new Tile(tilesImage, 17, 1, TileNames.DESERTWORLD1);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 17, 1,
+        TileNames.DESERTWORLD1);
     addTile(tile);
-    tile = new Tile(tilesImage, 18, 1, TileNames.WATERWORLD5);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 18, 1,
+        TileNames.WATERWORLD5);
     addTile(tile);
-    tile = new Tile(tilesImage, 19, 1, TileNames.WATERWORLD6);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 19, 1,
+        TileNames.WATERWORLD6);
     addTile(tile);
-    tile = new Tile(tilesImage, 14, 2, TileNames.WATERWORLD7);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 14, 2,
+        TileNames.WATERWORLD7);
     addTile(tile);
-    tile = new Tile(tilesImage, 15, 2, TileNames.ICEWORLD4);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 15, 2,
+        TileNames.ICEWORLD4);
     addTile(tile);
-    tile = new Tile(tilesImage, 16, 2, TileNames.WATERWORLD8);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 16, 2,
+        TileNames.WATERWORLD8);
     addTile(tile);
-    tile = new Tile(tilesImage, 17, 2, TileNames.DESERTWORLD2);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 17, 2,
+        TileNames.DESERTWORLD2);
     addTile(tile);
-    tile = new Tile(tilesImage, 18, 2, TileNames.WATERWORLD9);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 18, 2,
+        TileNames.WATERWORLD9);
     addTile(tile);
-    tile = new Tile(tilesImage, 19, 2, TileNames.IRONPLANET5);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 19, 2,
+        TileNames.IRONPLANET5);
     addTile(tile);
-    tile = new Tile(tilesImage, 14, 3, TileNames.IRONPLANET6);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 14, 3,
+        TileNames.IRONPLANET6);
     addTile(tile);
-    tile = new Tile(tilesImage, 15, 3, TileNames.DESERTWORLD3);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 15, 3,
+        TileNames.DESERTWORLD3);
     addTile(tile);
-    tile = new Tile(tilesImage, 16, 3, TileNames.CARBONWORLD3);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 16, 3,
+        TileNames.CARBONWORLD3);
     addTile(tile);
-    tile = new Tile(tilesImage, 17, 3, TileNames.ARTIFICIALWORLD1);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 17, 3,
+        TileNames.ARTIFICIALWORLD1);
     addTile(tile);
     // Reading the blackhole 3x3
-    tile = new Tile(tilesImage, 0, 3, TileNames.BLACKHOLE_NW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 3,
+        TileNames.BLACKHOLE_NW);
     tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tile);
     bhFirstStart = tile.getIndex();
-    tile = new Tile(tilesImage, 1, 3, TileNames.BLACKHOLE_N);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 1, 3,
+        TileNames.BLACKHOLE_N);
     tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 2, 3, TileNames.BLACKHOLE_NE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 2, 3,
+        TileNames.BLACKHOLE_NE);
     tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 0, 4, TileNames.BLACKHOLE_W);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 4,
+        TileNames.BLACKHOLE_W);
     tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tile);
     bhFirstEnd = tile.getIndex();
-    tile = new Tile(tilesImage, 1, 4, TileNames.BLACKHOLE_C);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 1, 4,
+        TileNames.BLACKHOLE_C);
     tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 2, 4, TileNames.BLACKHOLE_E);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 2, 4,
+        TileNames.BLACKHOLE_E);
     tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tile);
     bhSecondStart = tile.getIndex();
-    tile = new Tile(tilesImage, 0, 5, TileNames.BLACKHOLE_SW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 5,
+        TileNames.BLACKHOLE_SW);
     tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 1, 5, TileNames.BLACKHOLE_S);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 1, 5,
+        TileNames.BLACKHOLE_S);
     tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 2, 5, TileNames.BLACKHOLE_SE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 2, 5,
+        TileNames.BLACKHOLE_SE);
     tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tile);
     bhSecondEnd = tile.getIndex();
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_MECHION);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_MECHION);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_TIME_WARP);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_TIME_WARP);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_RARE_TECH);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_RARE_TECH);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
     // New Player tiles
-    tile = new Tile(tilesImage, 3, 4, TileNames.PLAYER_PURPLE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 4,
+        TileNames.PLAYER_PURPLE);
     addTile(tile);
-    tile = new Tile(tilesImage, 3, 5, TileNames.PLAYER_SHIP_PURPLE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 5,
+        TileNames.PLAYER_SHIP_PURPLE);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 4, TileNames.PLAYER_BROWN);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 4, 4,
+        TileNames.PLAYER_BROWN);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 5, TileNames.PLAYER_SHIP_BROWN);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 4, 5,
+        TileNames.PLAYER_SHIP_BROWN);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 4, TileNames.PLAYER_LIME);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 5, 4,
+        TileNames.PLAYER_LIME);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 5, TileNames.PLAYER_SHIP_LIME);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 5, 5,
+        TileNames.PLAYER_SHIP_LIME);
     addTile(tile);
-    tile = new Tile(tilesImage, 6, 4, TileNames.PLAYER_CHESTNUT);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 6, 4,
+        TileNames.PLAYER_CHESTNUT);
     addTile(tile);
-    tile = new Tile(tilesImage, 6, 5, TileNames.PLAYER_SHIP_CHESTNUT);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 6, 5,
+        TileNames.PLAYER_SHIP_CHESTNUT);
     addTile(tile);
-    tile = new Tile(tilesImage, 7, 4, TileNames.PLAYER_ROSE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 7, 4,
+        TileNames.PLAYER_ROSE);
     addTile(tile);
-    tile = new Tile(tilesImage, 7, 5, TileNames.PLAYER_SHIP_ROSE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 7, 5,
+        TileNames.PLAYER_SHIP_ROSE);
     addTile(tile);
-    tile = new Tile(tilesImage, 8, 4, TileNames.PLAYER_BANANA);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 8, 4,
+        TileNames.PLAYER_BANANA);
     addTile(tile);
-    tile = new Tile(tilesImage, 8, 5, TileNames.PLAYER_SHIP_BANANA);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 8, 5,
+        TileNames.PLAYER_SHIP_BANANA);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 4, TileNames.PLAYER_GRAY);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 4,
+        TileNames.PLAYER_GRAY);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 5, TileNames.PLAYER_SHIP_GRAY);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 5,
+        TileNames.PLAYER_SHIP_GRAY);
     addTile(tile);
-    tile = new Tile(tilesImage, 10, 4, TileNames.PLAYER_TAN);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 10, 4,
+        TileNames.PLAYER_TAN);
     addTile(tile);
-    tile = new Tile(tilesImage, 10, 5, TileNames.PLAYER_SHIP_TAN);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 10, 5,
+        TileNames.PLAYER_SHIP_TAN);
     addTile(tile);
-    tile = new Tile(tilesImage, 11, 4, TileNames.PLAYER_CORAL);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 11, 4,
+        TileNames.PLAYER_CORAL);
     addTile(tile);
-    tile = new Tile(tilesImage, 11, 5, TileNames.PLAYER_SHIP_CORAL);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 11, 5,
+        TileNames.PLAYER_SHIP_CORAL);
     addTile(tile);
-    tile = new Tile(tilesImage, 3, 6, TileNames.PLAYER_OLIVE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 6,
+        TileNames.PLAYER_OLIVE);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 6, TileNames.PLAYER_SHIP_OLIVE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 4, 6,
+        TileNames.PLAYER_SHIP_OLIVE);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 6, TileNames.PLAYER_SKY);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 5, 6,
+        TileNames.PLAYER_SKY);
     addTile(tile);
-    tile = new Tile(tilesImage, 6, 6, TileNames.PLAYER_SHIP_SKY);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 6, 6,
+        TileNames.PLAYER_SHIP_SKY);
     addTile(tile);
     // Reading the Blue star 3x3
-    tile = new Tile(tilesImage, 0, 7, TileNames.BLUE_STAR_NW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 7,
+        TileNames.BLUE_STAR_NW);
     tile.setDescription(TileNames.BLUE_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 1, 7, TileNames.BLUE_STAR_N);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 1, 7,
+        TileNames.BLUE_STAR_N);
     tile.setDescription(TileNames.BLUE_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 2, 7, TileNames.BLUE_STAR_NE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 2, 7,
+        TileNames.BLUE_STAR_NE);
     tile.setDescription(TileNames.BLUE_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 0, 8, TileNames.BLUE_STAR_W);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 8,
+        TileNames.BLUE_STAR_W);
     tile.setDescription(TileNames.BLUE_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 1, 8, TileNames.BLUE_STAR_C);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 1, 8,
+        TileNames.BLUE_STAR_C);
     tile.setDescription(TileNames.BLUE_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 2, 8, TileNames.BLUE_STAR_E);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 2, 8,
+        TileNames.BLUE_STAR_E);
     tile.setDescription(TileNames.BLUE_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 0, 9, TileNames.BLUE_STAR_SW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 9,
+        TileNames.BLUE_STAR_SW);
     tile.setDescription(TileNames.BLUE_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 1, 9, TileNames.BLUE_STAR_S);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 1, 9,
+        TileNames.BLUE_STAR_S);
     tile.setDescription(TileNames.BLUE_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 2, 9, TileNames.BLUE_STAR_SE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 2, 9,
+        TileNames.BLUE_STAR_SE);
     tile.setDescription(TileNames.BLUE_STAR_DESCRIPTION);
     addTile(tile);
     // Reading the Star 3x3
-    tile = new Tile(tilesImage, 3, 7, TileNames.STAR_NW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 7, TileNames.STAR_NW);
     tile.setDescription(TileNames.YELLOW_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 7, TileNames.STAR_N);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 4, 7, TileNames.STAR_N);
     tile.setDescription(TileNames.YELLOW_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 7, TileNames.STAR_NE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 5, 7, TileNames.STAR_NE);
     tile.setDescription(TileNames.YELLOW_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 3, 8, TileNames.STAR_W);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 8, TileNames.STAR_W);
     tile.setDescription(TileNames.YELLOW_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 8, TileNames.STAR_C);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 4, 8, TileNames.STAR_C);
     tile.setDescription(TileNames.YELLOW_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 8, TileNames.STAR_E);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 5, 8, TileNames.STAR_E);
     tile.setDescription(TileNames.YELLOW_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 3, 9, TileNames.STAR_SW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 9, TileNames.STAR_SW);
     tile.setDescription(TileNames.YELLOW_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 9, TileNames.STAR_S);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 4, 9, TileNames.STAR_S);
     tile.setDescription(TileNames.YELLOW_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 9, TileNames.STAR_SE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 5, 9, TileNames.STAR_SE);
     tile.setDescription(TileNames.YELLOW_STAR_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 18, 3, TileNames.PLANET_EARTH);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 18, 3,
+        TileNames.PLANET_EARTH);
     addTile(tile);
-    tile = new Tile(tilesImage, 19, 3, TileNames.PLANET_MARS);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 19, 3,
+        TileNames.PLANET_MARS);
     addTile(tile);
     // Reading the gas planet 2x2
-    tile = new Tile(tilesImage, 12, 3, TileNames.JUPITER_NW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 3,
+        TileNames.JUPITER_NW);
     addTile(tile);
-    tile = new Tile(tilesImage, 13, 3, TileNames.JUPITER_NE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 3,
+        TileNames.JUPITER_NE);
     addTile(tile);
-    tile = new Tile(tilesImage, 12, 4, TileNames.JUPITER_SW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 4,
+        TileNames.JUPITER_SW);
     addTile(tile);
-    tile = new Tile(tilesImage, 13, 4, TileNames.JUPITER_SE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 4,
+        TileNames.JUPITER_SE);
     addTile(tile);
     // Reading the gas planet 2x2
-    tile = new Tile(tilesImage, 12, 5, TileNames.SATURN_NW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 5,
+        TileNames.SATURN_NW);
     addTile(tile);
-    tile = new Tile(tilesImage, 13, 5, TileNames.SATURN_NE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 5,
+        TileNames.SATURN_NE);
     addTile(tile);
-    tile = new Tile(tilesImage, 12, 6, TileNames.SATURN_SW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 6,
+        TileNames.SATURN_SW);
     addTile(tile);
-    tile = new Tile(tilesImage, 13, 6, TileNames.SATURN_SE);
-    addTile(tile);
-    // Reading the ice giant 2x2
-    tile = new Tile(tilesImage, 12, 7, TileNames.ICEGIANT1_NW);
-    addTile(tile);
-    tile = new Tile(tilesImage, 13, 7, TileNames.ICEGIANT1_NE);
-    addTile(tile);
-    tile = new Tile(tilesImage, 12, 8, TileNames.ICEGIANT1_SW);
-    addTile(tile);
-    tile = new Tile(tilesImage, 13, 8, TileNames.ICEGIANT1_SE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 6,
+        TileNames.SATURN_SE);
     addTile(tile);
     // Reading the ice giant 2x2
-    tile = new Tile(tilesImage, 12, 9, TileNames.ICEGIANT2_NW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 7,
+        TileNames.ICEGIANT1_NW);
     addTile(tile);
-    tile = new Tile(tilesImage, 13, 9, TileNames.ICEGIANT2_NE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 7,
+        TileNames.ICEGIANT1_NE);
     addTile(tile);
-    tile = new Tile(tilesImage, 12, 10, TileNames.ICEGIANT2_SW);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 8,
+        TileNames.ICEGIANT1_SW);
     addTile(tile);
-    tile = new Tile(tilesImage, 13, 10, TileNames.ICEGIANT2_SE);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 8,
+        TileNames.ICEGIANT1_SE);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_ANCIENT_ARTIFACT);
+    // Reading the ice giant 2x2
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 9,
+        TileNames.ICEGIANT2_NW);
+    addTile(tile);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 9,
+        TileNames.ICEGIANT2_NE);
+    addTile(tile);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 10,
+        TileNames.ICEGIANT2_SW);
+    addTile(tile);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 10,
+        TileNames.ICEGIANT2_SE);
+    addTile(tile);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_ANCIENT_ARTIFACT);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_NEWS_STATION);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_NEWS_STATION);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 7, 6, TileNames.NEWSTATION1);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 7, 6,
+        TileNames.NEWSTATION1);
     tile.setDescription(TileNames.NEWS_STATION_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 8, 6, TileNames.NEWSTATION2);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 8, 6,
+        TileNames.NEWSTATION2);
     tile.setDescription(TileNames.NEWS_STATION_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_LEADER_IN_STASIS);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_LEADER_IN_STASIS);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_DESTROYED_PLANET);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_DESTROYED_PLANET);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
-    tile = new Tile(tilesImage, 9, 6, TileNames.DESTROYED_PLANET);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 6,
+        TileNames.DESTROYED_PLANET);
     // Read space anomaly
     tile.setDescription(TileNames.DESTROYED_PLANET_DESCRIPTION);
     addTile(tile);

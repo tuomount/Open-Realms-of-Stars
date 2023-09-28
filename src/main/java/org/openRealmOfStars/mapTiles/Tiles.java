@@ -219,9 +219,11 @@ public final class Tiles {
     BufferedImage tilesImage32 = IOUtilities
         .loadImage(Tiles.class.getResource("/resources/images/maptiles.png"));
     BufferedImage tilesImage16 = IOUtilities
-        .loadImage(Tiles.class.getResource("/resources/images/maptiles16.png"));
+        .loadImage(Tiles.class.getResource(
+            "/resources/images/maptiles_16.png"));
     BufferedImage tilesImage64 = IOUtilities
-        .loadImage(Tiles.class.getResource("/resources/images/maptiles64.png"));
+        .loadImage(Tiles.class.getResource(
+            "/resources/images/maptiles_64.png"));
     listOfTiles32 = new ArrayList<>();
     hashOfTiles32 = new HashMap<>();
     listOfTiles16 = new ArrayList<>();
@@ -230,8 +232,59 @@ public final class Tiles {
     hashOfTiles64 = new HashMap<>();
     Tile tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 0, TileNames.EMPTY);
     addTile(tile);
+    readSunGasPlanets(tilesImage32, tilesImage64, tilesImage16);
+    readWaterPlanetAndCulture(tilesImage32, tilesImage64, tilesImage16);
+    readMorePlanets(tilesImage32, tilesImage64, tilesImage16);
+    readMorePlanetsAndAnomalies(tilesImage32, tilesImage64, tilesImage16);
+    readPlayerMarkings(tilesImage32, tilesImage64, tilesImage16);
+    readNewStarsAndPlanets(tilesImage32, tilesImage64, tilesImage16);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_ANCIENT_ARTIFACT);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_NEWS_STATION);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 7, 6,
+        TileNames.NEWSTATION1);
+    tile.setDescription(TileNames.NEWS_STATION_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 8, 6,
+        TileNames.NEWSTATION2);
+    tile.setDescription(TileNames.NEWS_STATION_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_LEADER_IN_STASIS);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+        TileNames.SPACE_ANOMALY_DESTROYED_PLANET);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 6,
+        TileNames.DESTROYED_PLANET);
+    // Read space anomaly
+    tile.setDescription(TileNames.DESTROYED_PLANET_DESCRIPTION);
+    addTile(tile);
+  }
+
+  /**
+   * Read Sun and Gas Planets images.
+   *
+   * @param tilesImage32 Image for 32x32 tiles
+   * @param tilesImage64 Image for 64x64 tiles
+   * @param tilesImage16 Image for 16x16 tiles
+   */
+  private static void readSunGasPlanets(final BufferedImage tilesImage32,
+      final BufferedImage tilesImage64, final BufferedImage tilesImage16) {
     // Reading the sun 3x3
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 0, TileNames.SUN_NW);
+    Tile tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 0,
+        TileNames.SUN_NW);
     tile.setDescription(TileNames.RED_STAR_DESCRIPTION);
     addTile(tile);
     tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 1, 0, TileNames.SUN_N);
@@ -287,8 +340,20 @@ public final class Tiles {
     // Reading the rock planet
     tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 7, 0, TileNames.ROCK1);
     addTile(tile);
+  }
+
+  /**
+   * Read Water planets and culture tiles.
+   *
+   * @param tilesImage32 Image for 32x32 tiles
+   * @param tilesImage64 Image for 64x64 tiles
+   * @param tilesImage16 Image for 16x16 tiles
+   */
+  private static void readWaterPlanetAndCulture(
+      final BufferedImage tilesImage32,
+      final BufferedImage tilesImage64, final BufferedImage tilesImage16) {
     // Reading the water planet
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 8, 0,
+    Tile tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 8, 0,
         TileNames.WATERWORLD1);
     addTile(tile);
     tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 11, 0,
@@ -324,8 +389,21 @@ public final class Tiles {
     tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 6, 3,
         TileNames.PLAYER_YELLOW);
     addTile(tile);
+
+  }
+
+  /**
+   * Read more planets and ship markers.
+   *
+   * @param tilesImage32 Image for 32x32 tiles
+   * @param tilesImage64 Image for 64x64 tiles
+   * @param tilesImage16 Image for 16x16 tiles
+   */
+  private static void readMorePlanets(
+      final BufferedImage tilesImage32,
+      final BufferedImage tilesImage64, final BufferedImage tilesImage16) {
     // Reading the iron planet
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 0,
+    Tile tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 12, 0,
         TileNames.IRONPLANET1);
     addTile(tile);
     tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 0,
@@ -400,7 +478,19 @@ public final class Tiles {
     addTile(tile);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
+  }
+
+  /**
+   * Read more planets and anomalies.
+   *
+   * @param tilesImage32 Image for 32x32 tiles
+   * @param tilesImage64 Image for 64x64 tiles
+   * @param tilesImage16 Image for 16x16 tiles
+   */
+  private static void readMorePlanetsAndAnomalies(
+      final BufferedImage tilesImage32,
+      final BufferedImage tilesImage64, final BufferedImage tilesImage16) {
+    Tile tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
         TileNames.SPACE_ANOMALY_CREDITS);
     addTile(tile);
     // Read space anomaly
@@ -568,8 +658,21 @@ public final class Tiles {
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     addTile(tile);
+
+  }
+
+  /**
+   * Read player markings
+   *
+   * @param tilesImage32 Image for 32x32 tiles
+   * @param tilesImage64 Image for 64x64 tiles
+   * @param tilesImage16 Image for 16x16 tiles
+   */
+  private static void readPlayerMarkings(
+      final BufferedImage tilesImage32,
+      final BufferedImage tilesImage64, final BufferedImage tilesImage16) {
     // New Player tiles
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 4,
+    Tile tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 4,
         TileNames.PLAYER_PURPLE);
     addTile(tile);
     tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 3, 5,
@@ -635,8 +738,19 @@ public final class Tiles {
     tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 6, 6,
         TileNames.PLAYER_SHIP_SKY);
     addTile(tile);
+  }
+  /**
+   * Read new stars and planets
+   *
+   * @param tilesImage32 Image for 32x32 tiles
+   * @param tilesImage64 Image for 64x64 tiles
+   * @param tilesImage16 Image for 16x16 tiles
+   */
+  private static void readNewStarsAndPlanets(
+      final BufferedImage tilesImage32,
+      final BufferedImage tilesImage64, final BufferedImage tilesImage16) {
     // Reading the Blue star 3x3
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 7,
+    Tile tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 0, 7,
         TileNames.BLUE_STAR_NW);
     tile.setDescription(TileNames.BLUE_STAR_DESCRIPTION);
     addTile(tile);
@@ -758,42 +872,8 @@ public final class Tiles {
     tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 13, 10,
         TileNames.ICEGIANT2_SE);
     addTile(tile);
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
-        TileNames.SPACE_ANOMALY_ANCIENT_ARTIFACT);
-    // Read space anomaly
-    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    addTile(tile);
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
-        TileNames.SPACE_ANOMALY_NEWS_STATION);
-    // Read space anomaly
-    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    addTile(tile);
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 7, 6,
-        TileNames.NEWSTATION1);
-    tile.setDescription(TileNames.NEWS_STATION_DESCRIPTION);
-    addTile(tile);
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 8, 6,
-        TileNames.NEWSTATION2);
-    tile.setDescription(TileNames.NEWS_STATION_DESCRIPTION);
-    addTile(tile);
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
-        TileNames.SPACE_ANOMALY_LEADER_IN_STASIS);
-    // Read space anomaly
-    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    addTile(tile);
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 1,
-        TileNames.SPACE_ANOMALY_DESTROYED_PLANET);
-    // Read space anomaly
-    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
-    addTile(tile);
-    tile = new Tile(tilesImage32, Tile.ZOOM_NORMAL, 9, 6,
-        TileNames.DESTROYED_PLANET);
-    // Read space anomaly
-    tile.setDescription(TileNames.DESTROYED_PLANET_DESCRIPTION);
-    addTile(tile);
 
   }
-
   /**
    * Get Blackhole first index start
    * @return Index

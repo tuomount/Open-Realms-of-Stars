@@ -162,8 +162,8 @@ public class Tile {
     if (isBlackhole()) {
       if (blackholeEffect == null) {
         blackholeEffect = new BlackHoleEffect(new BufferedImage(
-            getMaxWidth(TILE_NORMAL_SIZE),
-            getMaxHeight(TILE_NORMAL_SIZE), BufferedImage.TYPE_INT_ARGB));
+            getMaxWidth(zoomLevel),
+            getMaxHeight(zoomLevel), BufferedImage.TYPE_INT_ARGB), zoomLevel);
       }
       blackholeEffect.drawBlackholeTile(g, x, y, this);
     } else {
@@ -174,10 +174,12 @@ public class Tile {
   /**
    * Update black hole effect for all tiles.
    * @param img New background for blackhole.
+   * @param zoomLevel Zoom level
    */
-  public static void updateBlackHoleEffect(final BufferedImage img) {
+  public static void updateBlackHoleEffect(final BufferedImage img,
+      final int zoomLevel) {
     if (blackholeEffect == null) {
-      blackholeEffect = new BlackHoleEffect(img);
+      blackholeEffect = new BlackHoleEffect(img, zoomLevel);
     } else {
       blackholeEffect.updateBackground(img);
     }

@@ -38,7 +38,7 @@ public class BlackHoleEffectTest {
     BufferedImage img = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_NORMAL),
         Tile.getMaxHeight(Tile.ZOOM_NORMAL),
         BufferedImage.TYPE_4BYTE_ABGR);
-    BlackHoleEffect effect = new BlackHoleEffect(img);
+    BlackHoleEffect effect = new BlackHoleEffect(img, Tile.ZOOM_NORMAL);
     BufferedImage img2 = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_NORMAL),
         Tile.getMaxHeight(Tile.ZOOM_NORMAL),
         BufferedImage.TYPE_4BYTE_ABGR);

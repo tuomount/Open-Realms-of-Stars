@@ -19,7 +19,7 @@ import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019,2021 Tuomo Untinen
+ * Copyright (C) 2016-2019,2021-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -198,7 +198,7 @@ public class StarMapMouseListener extends MouseAdapter
         mapPanel.getLastDrawnY());
     coord = new PixelsToMapCoordinate(center, e.getX(), e.getY(),
         mapPanel.getOffsetX(), mapPanel.getOffsetY(), mapPanel.getViewPointX(),
-        mapPanel.getViewPointY(), false);
+        mapPanel.getViewPointY(), false, mapPanel.getLastZoomLevel());
     if (!coord.isOutOfPanel()) {
       starMap.setCursorPos(coord.getMapX(), coord.getMapY());
       if (routePlanning && lastClickedFleet != null) {
@@ -339,7 +339,7 @@ public class StarMapMouseListener extends MouseAdapter
         mapPanel.getLastDrawnY());
     coord = new PixelsToMapCoordinate(center, e.getX(), e.getY(),
         mapPanel.getOffsetX(), mapPanel.getOffsetY(), mapPanel.getViewPointX(),
-        mapPanel.getViewPointY(), false);
+        mapPanel.getViewPointY(), false, mapPanel.getLastZoomLevel());
     if (!coord.isOutOfPanel()) {
       if (mapPanel.getPopup() != null) {
         mapPanel.getPopup().dismiss();

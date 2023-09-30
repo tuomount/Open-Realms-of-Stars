@@ -339,6 +339,10 @@ public class StarMap {
    */
   private boolean forceRedraw = false;
   /**
+   * Starmap zoom level. This will not be saved on file.
+   */
+  private int zoomLevel;
+  /**
    * Magic string to save game files
    */
   public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.25";
@@ -354,6 +358,7 @@ public class StarMap {
    * @param players Players
    */
   public StarMap(final GalaxyConfig config, final PlayerList players) {
+    zoomLevel = Tile.ZOOM_NORMAL;
     setDebug(false);
     setHumanLost(false);
     nameGenerator = new RandomSystemNameGenerator();
@@ -1226,6 +1231,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataInputStream
    */
   public StarMap(final DataInputStream dis) throws IOException {
+    zoomLevel = Tile.ZOOM_NORMAL;
     setDebug(false);
     setHumanLost(false);
     history = new History();
@@ -6051,4 +6057,18 @@ public class StarMap {
     this.forceRedraw = forceRedraw;
   }
 
+  /**
+   * Set starmap zoom level.
+   * @param zoomLevel Zoom level
+   */
+  public void setZoomLevel(final int zoomLevel) {
+    this.zoomLevel = zoomLevel;
+  }
+  /**
+   * Get Starmap zoom level
+   * @return Zoom level.
+   */
+  public int getZoomLevel() {
+    return zoomLevel;
+  }
 }

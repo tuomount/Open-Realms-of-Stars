@@ -35,10 +35,17 @@ public class BlackHoleEffect {
   private BufferedImage backgroundTile;
 
   /**
+   * Zoom level
+   */
+  private int zoomLevel;
+
+  /**
    * Constructor for blackhole effect.
    * @param img Background image for blackhole
+   * @param zoomLevel Zoom level
    */
-  public BlackHoleEffect(final BufferedImage img) {
+  public BlackHoleEffect(final BufferedImage img, final int zoomLevel) {
+    this.zoomLevel = zoomLevel;
     updateBackground(img);
   }
 
@@ -68,52 +75,52 @@ public class BlackHoleEffect {
    * @param img Background image to update.
    */
   public void updateBackground(final BufferedImage img) {
-    if (img.getWidth() == Tile.getMaxWidth(Tile.ZOOM_NORMAL)
-        && img.getHeight() == Tile.getMaxHeight(Tile.ZOOM_NORMAL)) {
-      backgroundTile = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_NORMAL),
-          Tile.getMaxHeight(Tile.ZOOM_NORMAL),
+    if (img.getWidth() == Tile.getMaxWidth(zoomLevel)
+        && img.getHeight() == Tile.getMaxHeight(zoomLevel)) {
+      backgroundTile = new BufferedImage(Tile.getMaxWidth(zoomLevel),
+          Tile.getMaxHeight(zoomLevel),
           BufferedImage.TYPE_INT_ARGB);
       backgroundTile.getGraphics().drawImage(img, 0, 0, null);
       backgroundTile.setRGB(0, 0,
-          backgroundTile.getRGB(Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2,
-              Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2));
-      backgroundTile.setRGB(Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 1, 0,
-          backgroundTile.getRGB(Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2 + 1,
-              Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2));
-      backgroundTile.setRGB(0, Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1,
-          backgroundTile.getRGB(Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2,
-              Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 + 1));
-      backgroundTile.setRGB(Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 1,
-          Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1,
-          backgroundTile.getRGB(Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2 + 1,
-              Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 + 1));
-      for (int i = 0; i < Tile.getMaxWidth(Tile.ZOOM_NORMAL); i++) {
-        int color1 = img.getRGB(Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2,
-            Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2);
+          backgroundTile.getRGB(Tile.getMaxWidth(zoomLevel) / 2,
+              Tile.getMaxHeight(zoomLevel) / 2));
+      backgroundTile.setRGB(Tile.getMaxWidth(zoomLevel) - 1, 0,
+          backgroundTile.getRGB(Tile.getMaxWidth(zoomLevel) / 2 + 1,
+              Tile.getMaxHeight(zoomLevel) / 2));
+      backgroundTile.setRGB(0, Tile.getMaxHeight(zoomLevel) - 1,
+          backgroundTile.getRGB(Tile.getMaxWidth(zoomLevel) / 2,
+              Tile.getMaxHeight(zoomLevel) / 2 + 1));
+      backgroundTile.setRGB(Tile.getMaxWidth(zoomLevel) - 1,
+          Tile.getMaxHeight(zoomLevel) - 1,
+          backgroundTile.getRGB(Tile.getMaxWidth(zoomLevel) / 2 + 1,
+              Tile.getMaxHeight(zoomLevel) / 2 + 1));
+      for (int i = 0; i < Tile.getMaxWidth(zoomLevel); i++) {
+        int color1 = img.getRGB(Tile.getMaxWidth(zoomLevel) / 2,
+            Tile.getMaxHeight(zoomLevel) / 2);
         int color2 = backgroundTile.getRGB(i, 1);
         backgroundTile.setRGB(i, 0, mixColors(color1, color2));
-        color1 = img.getRGB(Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2,
-            Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 + 1);
+        color1 = img.getRGB(Tile.getMaxWidth(zoomLevel) / 2,
+            Tile.getMaxHeight(zoomLevel) / 2 + 1);
         color2 = backgroundTile.getRGB(i,
-            Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 2);
-        backgroundTile.setRGB(i, Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1,
+            Tile.getMaxWidth(zoomLevel) - 2);
+        backgroundTile.setRGB(i, Tile.getMaxHeight(zoomLevel) - 1,
             mixColors(color1, color2));
       }
-      for (int i = 0; i < Tile.getMaxHeight(Tile.ZOOM_NORMAL); i++) {
-        int color1 = img.getRGB(Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2 + 1,
-            Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2);
+      for (int i = 0; i < Tile.getMaxHeight(zoomLevel); i++) {
+        int color1 = img.getRGB(Tile.getMaxWidth(zoomLevel) / 2 + 1,
+            Tile.getMaxHeight(zoomLevel) / 2);
         int color2 = backgroundTile.getRGB(1, i);
         backgroundTile.setRGB(0, i, mixColors(color1, color2));
-        color1 = img.getRGB(Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2 + 1,
-            Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 + 1);
-        color2 = backgroundTile.getRGB(Tile.getMaxWidth(Tile.ZOOM_NORMAL) - 2,
+        color1 = img.getRGB(Tile.getMaxWidth(zoomLevel) / 2 + 1,
+            Tile.getMaxHeight(zoomLevel) / 2 + 1);
+        color2 = backgroundTile.getRGB(Tile.getMaxWidth(zoomLevel) - 2,
             i);
-        backgroundTile.setRGB(Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1, i,
+        backgroundTile.setRGB(Tile.getMaxHeight(zoomLevel) - 1, i,
             mixColors(color1, color2));
       }
     } else {
-      backgroundTile = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_NORMAL),
-          Tile.getMaxHeight(Tile.ZOOM_NORMAL), BufferedImage.TYPE_INT_ARGB);
+      backgroundTile = new BufferedImage(Tile.getMaxWidth(zoomLevel),
+          Tile.getMaxHeight(zoomLevel), BufferedImage.TYPE_INT_ARGB);
     }
   }
 
@@ -139,11 +146,12 @@ public class BlackHoleEffect {
    */
   public void drawBlackholeTile(final Graphics2D g, final int x, final int y,
       final Tile tile) {
-    BufferedImage temp = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_NORMAL),
-        Tile.getMaxHeight(Tile.ZOOM_NORMAL),
+    BufferedImage temp = new BufferedImage(Tile.getMaxWidth(
+        tile.getZoomLevel()),
+        Tile.getMaxHeight(tile.getZoomLevel()),
         BufferedImage.TYPE_INT_ARGB);
-    for (int i = 0; i < Tile.getMaxHeight(Tile.ZOOM_NORMAL); i++) {
-      for (int j = 0; j < Tile.getMaxWidth(Tile.ZOOM_NORMAL); j++) {
+    for (int i = 0; i < Tile.getMaxHeight(tile.getZoomLevel()); i++) {
+      for (int j = 0; j < Tile.getMaxWidth(tile.getZoomLevel()); j++) {
         int color = tile.getRawTile().getRGB(j, i);
         if (color == DISTROTION) {
           temp.setRGB(j, i, backgroundTile.getRGB(j, i));

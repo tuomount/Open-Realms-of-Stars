@@ -96,10 +96,11 @@ public class PixelsToMapCoordinate {
    * @param radX View Port Radius X axel in star map
    * @param radY View port radius Y axel in star map
    * @param combat Is combat map or star map
+   * @param zoomLevel Zoom level
    */
   public PixelsToMapCoordinate(final Coordinate centerOfMap, final int px,
       final int py, final int sx, final int sy, final int radX, final int radY,
-      final boolean combat) {
+      final boolean combat, final int zoomLevel) {
     startX = sx;
     startY = sy;
     numXTiles = radX * 2 + 1;
@@ -108,8 +109,8 @@ public class PixelsToMapCoordinate {
       endX = startX + numXTiles * ShipImage.MAX_WIDTH;
       endY = startY + numYTiles * ShipImage.MAX_HEIGHT;
     } else {
-      endX = startX + numXTiles * Tile.getMaxWidth(Tile.ZOOM_NORMAL);
-      endY = startY + numYTiles * Tile.getMaxHeight(Tile.ZOOM_NORMAL);
+      endX = startX + numXTiles * Tile.getMaxWidth(zoomLevel);
+      endY = startY + numYTiles * Tile.getMaxHeight(zoomLevel);
     }
     centerMapX = centerOfMap.getX();
     centerMapY = centerOfMap.getY();
@@ -123,8 +124,8 @@ public class PixelsToMapCoordinate {
         relativeMapX = pixelX / ShipImage.MAX_WIDTH - radX;
         relativeMapY = pixelY / ShipImage.MAX_HEIGHT - radY;
       } else {
-        relativeMapX = pixelX / Tile.getMaxWidth(Tile.ZOOM_NORMAL) - radX;
-        relativeMapY = pixelY / Tile.getMaxHeight(Tile.ZOOM_NORMAL) - radY;
+        relativeMapX = pixelX / Tile.getMaxWidth(zoomLevel) - radX;
+        relativeMapY = pixelY / Tile.getMaxHeight(zoomLevel) - radY;
       }
     } else {
       outOfPanel = true;

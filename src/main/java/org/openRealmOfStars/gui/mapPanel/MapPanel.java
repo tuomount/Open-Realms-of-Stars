@@ -367,9 +367,15 @@ public class MapPanel extends JPanel {
       viewPointY = (this.getHeight() / tileHeight - 1) / 2;
       if (viewPointX * 2 + 1 > mapX && mapX != -1) {
         viewPointX = (mapX - 1) / 2;
+        if (viewPointX * 2 + 1 == mapX - 1) {
+          viewPointX++;
+        }
       }
       if (viewPointY * 2 + 1 > mapY && mapY != -1) {
         viewPointY = (mapY - 1) / 2;
+        if (viewPointY * 2 + 1 == mapY - 1) {
+          viewPointY++;
+        }
       }
     }
     if (viewPointX < 1) {
@@ -1046,6 +1052,9 @@ public class MapPanel extends JPanel {
     int pixelY = viewPointOffsetY;
     for (int j = -viewPointY; j < viewPointY + 1; j++) {
       for (int i = -viewPointX; i < viewPointX + 1; i++) {
+        if (!starMap.isValidCoordinate(i + cx, j + cy)) {
+          continue;
+        }
         Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {0.1f, 4.5f }, 0);
         Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
@@ -1385,6 +1394,9 @@ public class MapPanel extends JPanel {
     int pixelY = viewPointOffsetY;
     for (int j = -viewPointY; j < viewPointY + 1; j++) {
       for (int i = -viewPointX; i < viewPointX + 1; i++) {
+        if (!starMap.isValidCoordinate(i + cx, j + cy)) {
+          continue;
+        }
         Tile blackholeTile = starMap.getTile(i + cx, j + cy);
         if (blackholeTile.isBlackhole() && !blackholeUpdated) {
           updateBlackHoleEffect(pixelX, pixelY, i, j, blackholeTile);

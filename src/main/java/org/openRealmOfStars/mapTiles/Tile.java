@@ -197,20 +197,56 @@ public class Tile {
     int sx = 2;
     int sy = 2;
     int step = 6;
-    if (sectorSize == 2) {
-      sx = 8;
-      sy = 8;
-      step = 16;
+    if (zoomLevel == Tile.ZOOM_NORMAL) {
+      if (sectorSize == 2) {
+        sx = 8;
+        sy = 8;
+        step = 16;
+      }
+      if (sectorSize == 3) {
+        sx = 5;
+        sy = 5;
+        step = 10;
+      }
+      if (sectorSize == 4) {
+        sx = 4;
+        sy = 4;
+        step = 8;
+      }
     }
-    if (sectorSize == 3) {
-      sx = 5;
-      sy = 5;
-      step = 10;
+    if (zoomLevel == Tile.ZOOM_IN) {
+      if (sectorSize == 2) {
+        sx = 1;
+        sy = 16;
+        step = 32;
+      }
+      if (sectorSize == 3) {
+        sx = 10;
+        sy = 10;
+        step = 20;
+      }
+      if (sectorSize == 4) {
+        sx = 8;
+        sy = 8;
+        step = 16;
+      }
     }
-    if (sectorSize == 4) {
-      sx = 4;
-      sy = 4;
-      step = 8;
+    if (zoomLevel == Tile.ZOOM_OUT1) {
+      if (sectorSize == 2) {
+        sx = 4;
+        sy = 4;
+        step = 8;
+      }
+      if (sectorSize == 3) {
+        sx = 2;
+        sy = 2;
+        step = 5;
+      }
+      if (sectorSize == 4) {
+        sx = 2;
+        sy = 2;
+        step = 4;
+      }
     }
     for (int my = 0; my < sectorSize; my++) {
       for (int mx = 0; mx < sectorSize; mx++) {

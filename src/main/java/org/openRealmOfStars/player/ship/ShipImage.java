@@ -5,6 +5,7 @@ import java.awt.image.RasterFormatException;
 
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -45,6 +46,10 @@ public class ShipImage {
    * MAX size ship images
    */
   private BufferedImage[] shipImages;
+  /**
+   * Normal size ship images
+   */
+  private BufferedImage[] normalShipImages;
   /**
    * Min size ship images
    */
@@ -183,62 +188,95 @@ public class ShipImage {
       number = number + NUMBER_OF_MONSTER_IMAGES;
     }
     shipImages = new BufferedImage[number];
+    normalShipImages = new BufferedImage[number];
     smallShipImages = new BufferedImage[number];
     shipImages[SCOUT] = image64x64(image, 0, 0);
-    smallShipImages[SCOUT] = scaleTo32x32(shipImages[SCOUT]);
+    normalShipImages[SCOUT] = scaleTo32x32(shipImages[SCOUT]);
+    smallShipImages[SCOUT] = scaleTo16x16(shipImages[SCOUT]);
     shipImages[COLONY] = image64x64(image, 1, 0);
-    smallShipImages[COLONY] = scaleTo32x32(shipImages[COLONY]);
+    normalShipImages[COLONY] = scaleTo32x32(shipImages[COLONY]);
+    smallShipImages[COLONY] = scaleTo16x16(shipImages[COLONY]);
     shipImages[DESTROYER] = image64x64(image, 2, 0);
-    smallShipImages[DESTROYER] = scaleTo32x32(shipImages[DESTROYER]);
+    normalShipImages[DESTROYER] = scaleTo32x32(shipImages[DESTROYER]);
+    smallShipImages[DESTROYER] = scaleTo16x16(shipImages[DESTROYER]);
     shipImages[PROBE] = image64x64(image, 3, 0);
-    smallShipImages[PROBE] = scaleTo32x32(shipImages[PROBE]);
+    normalShipImages[PROBE] = scaleTo32x32(shipImages[PROBE]);
+    smallShipImages[PROBE] = scaleTo16x16(shipImages[PROBE]);
     shipImages[SMALL_FREIGHTER] = image64x64(image, 4, 0);
-    smallShipImages[SMALL_FREIGHTER] = scaleTo32x32(
+    normalShipImages[SMALL_FREIGHTER] = scaleTo32x32(
+        shipImages[SMALL_FREIGHTER]);
+    smallShipImages[SMALL_FREIGHTER] = scaleTo16x16(
         shipImages[SMALL_FREIGHTER]);
     shipImages[SMALL_STARBASE] = image64x64(image, 0, 1);
-    smallShipImages[SMALL_STARBASE] = scaleTo32x32(shipImages[SMALL_STARBASE]);
+    normalShipImages[SMALL_STARBASE] = scaleTo32x32(shipImages[SMALL_STARBASE]);
+    smallShipImages[SMALL_STARBASE] = scaleTo16x16(shipImages[SMALL_STARBASE]);
     shipImages[CORVETTE] = image64x64(image, 1, 1);
-    smallShipImages[CORVETTE] = scaleTo32x32(shipImages[CORVETTE]);
+    normalShipImages[CORVETTE] = scaleTo32x32(shipImages[CORVETTE]);
+    smallShipImages[CORVETTE] = scaleTo16x16(shipImages[CORVETTE]);
     shipImages[MEDIUM_STARBASE] = image64x64(image, 2, 1);
-    smallShipImages[MEDIUM_STARBASE] = scaleTo32x32(
+    normalShipImages[MEDIUM_STARBASE] = scaleTo32x32(
+        shipImages[MEDIUM_STARBASE]);
+    smallShipImages[MEDIUM_STARBASE] = scaleTo16x16(
         shipImages[MEDIUM_STARBASE]);
     shipImages[MEDIUM_FREIGHTER] = image64x64(image, 3, 1);
-    smallShipImages[MEDIUM_FREIGHTER] = scaleTo32x32(
+    normalShipImages[MEDIUM_FREIGHTER] = scaleTo32x32(
+        shipImages[MEDIUM_FREIGHTER]);
+    smallShipImages[MEDIUM_FREIGHTER] = scaleTo16x16(
         shipImages[MEDIUM_FREIGHTER]);
     shipImages[CRUISER] = image64x64(image, 4, 1);
-    smallShipImages[CRUISER] = scaleTo32x32(shipImages[CRUISER]);
+    normalShipImages[CRUISER] = scaleTo32x32(shipImages[CRUISER]);
+    smallShipImages[CRUISER] = scaleTo16x16(shipImages[CRUISER]);
     shipImages[BATTLESHIP] = image64x64(image, 0, 2);
-    smallShipImages[BATTLESHIP] = scaleTo32x32(shipImages[BATTLESHIP]);
+    normalShipImages[BATTLESHIP] = scaleTo32x32(shipImages[BATTLESHIP]);
+    smallShipImages[BATTLESHIP] = scaleTo16x16(shipImages[BATTLESHIP]);
     shipImages[PRIVATEER] = image64x64(image, 1, 2);
-    smallShipImages[PRIVATEER] = scaleTo32x32(shipImages[PRIVATEER]);
+    normalShipImages[PRIVATEER] = scaleTo32x32(shipImages[PRIVATEER]);
+    smallShipImages[PRIVATEER] = scaleTo16x16(shipImages[PRIVATEER]);
     shipImages[PRIVATEER_LARGE] = image64x64(image, 2, 2);
-    smallShipImages[PRIVATEER_LARGE] = scaleTo32x32(
+    normalShipImages[PRIVATEER_LARGE] = scaleTo32x32(
+        shipImages[PRIVATEER_LARGE]);
+    smallShipImages[PRIVATEER_LARGE] = scaleTo16x16(
         shipImages[PRIVATEER_LARGE]);
     shipImages[LARGE_FREIGHTER] = image64x64(image, 3, 2);
-    smallShipImages[LARGE_FREIGHTER] = scaleTo32x32(
+    normalShipImages[LARGE_FREIGHTER] = scaleTo32x32(
+        shipImages[LARGE_FREIGHTER]);
+    smallShipImages[LARGE_FREIGHTER] = scaleTo16x16(
         shipImages[LARGE_FREIGHTER]);
     shipImages[LARGE_STARBASE] = image64x64(image, 4, 2);
-    smallShipImages[LARGE_STARBASE] = scaleTo32x32(shipImages[LARGE_STARBASE]);
+    normalShipImages[LARGE_STARBASE] = scaleTo32x32(shipImages[LARGE_STARBASE]);
+    smallShipImages[LARGE_STARBASE] = scaleTo16x16(shipImages[LARGE_STARBASE]);
     shipImages[BATTLECRUISER] = image64x64(image, 0, 3);
-    smallShipImages[BATTLECRUISER] = scaleTo32x32(shipImages[BATTLECRUISER]);
+    normalShipImages[BATTLECRUISER] = scaleTo32x32(shipImages[BATTLECRUISER]);
+    smallShipImages[BATTLECRUISER] = scaleTo16x16(shipImages[BATTLECRUISER]);
     shipImages[MASSIVE_FREIGHTER] = image64x64(image, 1, 3);
-    smallShipImages[MASSIVE_FREIGHTER] = scaleTo32x32(
+    normalShipImages[MASSIVE_FREIGHTER] = scaleTo32x32(
+        shipImages[MASSIVE_FREIGHTER]);
+    smallShipImages[MASSIVE_FREIGHTER] = scaleTo16x16(
         shipImages[MASSIVE_FREIGHTER]);
     shipImages[MASSIVE_STARBASE] = image64x64(image, 2, 3);
-    smallShipImages[MASSIVE_STARBASE] = scaleTo32x32(
+    normalShipImages[MASSIVE_STARBASE] = scaleTo32x32(
+        shipImages[MASSIVE_STARBASE]);
+    smallShipImages[MASSIVE_STARBASE] = scaleTo16x16(
         shipImages[MASSIVE_STARBASE]);
     shipImages[CAPITAL_SHIP] = image64x64(image, 3, 3);
-    smallShipImages[CAPITAL_SHIP] = scaleTo32x32(shipImages[CAPITAL_SHIP]);
+    normalShipImages[CAPITAL_SHIP] = scaleTo32x32(shipImages[CAPITAL_SHIP]);
+    smallShipImages[CAPITAL_SHIP] = scaleTo16x16(shipImages[CAPITAL_SHIP]);
     shipImages[ARTIFICIAL_PLANET] = image64x64(image, 4, 3);
-    smallShipImages[ARTIFICIAL_PLANET] = scaleTo32x32(
+    normalShipImages[ARTIFICIAL_PLANET] = scaleTo32x32(
+        shipImages[ARTIFICIAL_PLANET]);
+    smallShipImages[ARTIFICIAL_PLANET] = scaleTo16x16(
         shipImages[ARTIFICIAL_PLANET]);
     if (monsters) {
       shipImages[SPACE_WORM] = image64x64(image, 0, 4);
-      smallShipImages[SPACE_WORM] = scaleTo32x32(shipImages[SPACE_WORM]);
+      normalShipImages[SPACE_WORM] = scaleTo32x32(shipImages[SPACE_WORM]);
+      smallShipImages[SPACE_WORM] = scaleTo16x16(shipImages[SPACE_WORM]);
       shipImages[SPACE_KRAKEN] = image64x64(image, 1, 4);
-      smallShipImages[SPACE_KRAKEN] = scaleTo32x32(shipImages[SPACE_KRAKEN]);
+      normalShipImages[SPACE_KRAKEN] = scaleTo32x32(shipImages[SPACE_KRAKEN]);
+      smallShipImages[SPACE_KRAKEN] = scaleTo16x16(shipImages[SPACE_KRAKEN]);
       shipImages[LARGE_SPACE_KRAKEN] = image64x64(image, 2, 4);
-      smallShipImages[LARGE_SPACE_KRAKEN] = scaleTo32x32(
+      normalShipImages[LARGE_SPACE_KRAKEN] = scaleTo32x32(
+          shipImages[LARGE_SPACE_KRAKEN]);
+      smallShipImages[LARGE_SPACE_KRAKEN] = scaleTo16x16(
           shipImages[LARGE_SPACE_KRAKEN]);
     }
   }
@@ -263,6 +301,27 @@ public class ShipImage {
 
   /**
    * Get ship image by index. If index is out of bounds scout image is returned.
+   * This will return zoomed level
+   * @param index The ship image index
+   * @param zoomLevel Zoomlevel for fetching image
+   * @return BufferedImage
+   */
+  public BufferedImage getShipZoomedImage(final int index,
+      final int zoomLevel) {
+    if (zoomLevel == Tile.ZOOM_IN) {
+      return getShipImage(index);
+    }
+    if (zoomLevel == Tile.ZOOM_NORMAL) {
+      return getNormalShipImage(index);
+    }
+    if (zoomLevel == Tile.ZOOM_OUT1) {
+      return getSmallShipImage(index);
+    }
+    return shipImages[0];
+  }
+
+  /**
+   * Get ship image by index. If index is out of bounds scout image is returned.
    * @param index The ship image index
    * @return BufferedImage
    */
@@ -271,6 +330,19 @@ public class ShipImage {
       return shipImages[index];
     }
     return shipImages[0];
+  }
+
+  /**
+   * Get normal ship image by index. If index is out of bounds scout image is
+   * returned.
+   * @param index The ship image index
+   * @return BufferedImage
+   */
+  public BufferedImage getNormalShipImage(final int index) {
+    if (index >= 0 && index < normalShipImages.length) {
+      return normalShipImages[index];
+    }
+    return normalShipImages[0];
   }
 
   /**
@@ -293,6 +365,15 @@ public class ShipImage {
    */
   public static BufferedImage scaleTo32x32(final BufferedImage source) {
     return GuiStatics.scaleToHalf(source);
+  }
+
+  /**
+   * Scale 64x64 image to 16x16 image
+   * @param source Buffered image to scale
+   * @return Scaled buffered image
+   */
+  public static BufferedImage scaleTo16x16(final BufferedImage source) {
+    return GuiStatics.scaleToHalf(GuiStatics.scaleToHalf(source));
   }
 
 }

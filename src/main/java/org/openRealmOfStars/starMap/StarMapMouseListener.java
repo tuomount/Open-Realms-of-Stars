@@ -2,7 +2,7 @@ package org.openRealmOfStars.starMap;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
@@ -39,8 +39,7 @@ import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
  *
  */
 
-public class StarMapMouseListener extends MouseAdapter
-    implements MouseMotionListener {
+public class StarMapMouseListener extends MouseAdapter {
 
   /**
    * How many pixel is requred to move on sector
@@ -316,6 +315,32 @@ public class StarMapMouseListener extends MouseAdapter
   public void mouseReleased(final MouseEvent e) {
     super.mouseReleased(e);
     dragging = false;
+  }
+
+  @Override
+  public void mouseWheelMoved(final MouseWheelEvent e) {
+    int rotation = e.getWheelRotation();
+    if (rotation < 0) {
+      int zoomLevel = starMap.getZoomLevel();
+      zoomLevel++;
+      if (zoomLevel > Tile.ZOOM_IN) {
+        zoomLevel = Tile.ZOOM_IN;
+      }
+      starMap.setZoomLevel(zoomLevel);
+      mapPanel.redoViewPoints();
+      starMap.setForceRedraw(true);
+    }
+    if (rotation > 0) {
+      int zoomLevel = starMap.getZoomLevel();
+      zoomLevel--;
+      if (zoomLevel < Tile.ZOOM_OUT1) {
+        zoomLevel = Tile.ZOOM_OUT1;
+      }
+      starMap.setZoomLevel(zoomLevel);
+      mapPanel.redoViewPoints();
+      starMap.setForceRedraw(true);
+    }
+    super.mouseWheelMoved(e);
   }
 
   @Override

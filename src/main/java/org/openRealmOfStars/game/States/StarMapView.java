@@ -185,6 +185,7 @@ public class StarMapView extends BlackPanel {
     }
     mapPanel.addMouseListener(starMapMouseListener);
     mapPanel.addMouseMotionListener(starMapMouseListener);
+    mapPanel.addMouseWheelListener(starMapMouseListener);
 
     // Bottom panel is created here
     InfoPanel bottomPanel = new InfoPanel();

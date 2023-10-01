@@ -80,6 +80,31 @@ public final class Tiles {
     }
     return listOfTiles32.get(0);
   }
+  /**
+   * Get tile with index. Initializes tiles if they are uninitialized
+   * @param index for tile
+   * @param zoomLevel Zoomlevel for getting tile
+   * @return Tile Always returns a tile, If not found tile then first index is
+   * returned.
+   */
+  public static Tile getTileByIndex(final int index, final int zoomLevel) {
+    if (listOfTiles32 == null) {
+      initTiles();
+    }
+    if (index > 0 && index < listOfTiles32.size()
+        && zoomLevel == Tile.ZOOM_NORMAL) {
+      return listOfTiles32.get(index);
+    }
+    if (index > 0 && index < listOfTiles64.size()
+        && zoomLevel == Tile.ZOOM_IN) {
+      return listOfTiles64.get(index);
+    }
+    if (index > 0 && index < listOfTiles16.size()
+        && zoomLevel == Tile.ZOOM_OUT1) {
+      return listOfTiles16.get(index);
+    }
+    return listOfTiles32.get(0);
+  }
 
   /**
    * Get tile by name. Initializes tiles if they are uninitialized.
@@ -92,6 +117,33 @@ public final class Tiles {
       initTiles();
     }
     Tile tile = hashOfTiles32.get(name);
+    if (tile == null) {
+      return getTileByIndex(0);
+    }
+    return tile;
+  }
+
+  /**
+   * Get tile by name. Initializes tiles if they are uninitialized.
+   * @param name For search the tile
+   * @param zoomLevel Zoom level
+   * @return Always returns a tile if not found tile then first index is
+   * returned.
+   */
+  public static Tile getTileByName(final String name, final int zoomLevel) {
+    if (hashOfTiles32 == null) {
+      initTiles();
+    }
+    Tile tile = null;
+    if (zoomLevel == Tile.ZOOM_NORMAL) {
+      tile = hashOfTiles32.get(name);
+    }
+    if (zoomLevel == Tile.ZOOM_IN) {
+      tile = hashOfTiles64.get(name);
+    }
+    if (zoomLevel == Tile.ZOOM_OUT1) {
+      tile = hashOfTiles16.get(name);
+    }
     if (tile == null) {
       return getTileByIndex(0);
     }

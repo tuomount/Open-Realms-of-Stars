@@ -2849,7 +2849,7 @@ public class StarMap {
    */
   public Tile getTile(final int x, final int y) {
     if (isValidCoordinate(x, y)) {
-      return Tiles.getTileByIndex(tiles[x][y]);
+      return Tiles.getTileByIndex(tiles[x][y], zoomLevel);
     }
     return null;
   }

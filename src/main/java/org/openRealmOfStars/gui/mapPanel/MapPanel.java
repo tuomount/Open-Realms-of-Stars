@@ -266,6 +266,10 @@ public class MapPanel extends JPanel {
    */
   private int lastZoomLevel;
   /**
+   * Flag for redoing viewpoints.
+   */
+  private boolean redoViewPoints;
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param game GameFrame containing frame size
@@ -589,7 +593,7 @@ public class MapPanel extends JPanel {
         redrawTile[i + viewPointX][j + viewPointY] = true;
         PlayerInfo shipInfo = starMap.getPlayerByIndex(fleetOwnerIndex);
         Tile fleetColor = Tiles.getTileByName(
-            shipInfo.getColor().getShipTile());
+            shipInfo.getColor().getShipTile(), starMap.getZoomLevel());
         if (fleetColor != null) {
           fleetColor.draw(gr, pixelX, pixelY);
         }
@@ -614,32 +618,41 @@ public class MapPanel extends JPanel {
       if (drawShip) {
         BufferedImage img = ShipImages
             .getByRace(fleetMap[i + cx][j + cy].getRace())
-            .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
+            .getShipZoomedImage(fleetMap[i + cx][j + cy].getImageIndex(),
+                starMap.getZoomLevel());
         gr.drawImage(img, pixelX, pixelY, null);
-        if (espionageDetected) {
-          Icon16x16 icon = Icons.getIconByName(Icons.ICON_SPY_GOGGLES);
-          icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-              pixelY + Icon16x16.MAX_HEIGHT);
+        int offsetx = Icon16x16.MAX_WIDTH;
+        int offsety = Icon16x16.MAX_HEIGHT;
+        if (starMap.getZoomLevel() == Tile.ZOOM_IN) {
+          offsetx = 48;
+          offsety = 48;
         }
-        if (fleet.getRoute() != null && fleetOwner == info) {
-          if (fleet.getRoute().getFtlSpeed() > 0
-            || fleet.getRoute().getRegularSpeed() > 0) {
-            Icon16x16 icon = Icons.getIconByName(
-                Icons.ICON_ENROUTED_MOVES);
-            icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-                pixelY + Icon16x16.MAX_HEIGHT);
+        if (starMap.getZoomLevel() > Tile.ZOOM_OUT1) {
+          if (espionageDetected) {
+            Icon16x16 icon = Icons.getIconByName(Icons.ICON_SPY_GOGGLES);
+            icon.draw(gr, pixelX + offsetx,
+                pixelY + offsety);
           }
-        } else if (moved) {
-          Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_DONE);
-          icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-              pixelY + Icon16x16.MAX_HEIGHT);
-        } else {
-          Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_1);
-          if (flickerGoUp) {
-            icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_2);
+          if (fleet.getRoute() != null && fleetOwner == info) {
+            if (fleet.getRoute().getFtlSpeed() > 0
+              || fleet.getRoute().getRegularSpeed() > 0) {
+              Icon16x16 icon = Icons.getIconByName(
+                  Icons.ICON_ENROUTED_MOVES);
+              icon.draw(gr, pixelX + offsetx,
+                  pixelY + offsety);
+            }
+          } else if (moved) {
+            Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_DONE);
+            icon.draw(gr, pixelX + offsetx,
+                pixelY + offsety);
+          } else {
+            Icon16x16 icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_1);
+            if (flickerGoUp) {
+              icon = Icons.getIconByName(Icons.ICON_MOVES_LEFT_2);
+            }
+            icon.draw(gr, pixelX + offsetx,
+                pixelY + offsety);
           }
-          icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-              pixelY + Icon16x16.MAX_HEIGHT);
         }
       }
     }
@@ -653,7 +666,7 @@ public class MapPanel extends JPanel {
         // Draw orbital
         BufferedImage img = ShipImages
             .getByRace(fleetMap[i + cx][j + cy].getRace())
-            .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
+            .getNormalShipImage(fleetMap[i + cx][j + cy].getImageIndex());
         gr.drawImage(img, pixelX, pixelY, null);
       }
     }
@@ -741,16 +754,16 @@ public class MapPanel extends JPanel {
       case PlayerInfo.UNCHARTED: {
         if (starMap.getTileInfo(i + cx, j + cy)
             .getType() != SquareInfo.TYPE_SUN) {
-          Tiles.getTileByName(TileNames.UNCHARTED).draw(gr, pixelX,
-              pixelY);
+          Tiles.getTileByName(TileNames.UNCHARTED, starMap.getZoomLevel())
+              .draw(gr, pixelX, pixelY);
         }
         break;
       }
       case PlayerInfo.FOG_OF_WAR: {
         if (starMap.getTileInfo(i + cx, j + cy)
             .getType() != SquareInfo.TYPE_SUN) {
-          Tiles.getTileByName(TileNames.FOG_OF_WAR).draw(gr, pixelX,
-              pixelY);
+          Tiles.getTileByName(TileNames.FOG_OF_WAR, starMap.getZoomLevel())
+              .draw(gr, pixelX, pixelY);
         }
         break;
       }
@@ -904,6 +917,11 @@ public class MapPanel extends JPanel {
       if (isShowMiniMap()) {
         minimap.drawMinimap();
       }
+    }
+    if (redoViewPoints) {
+      calculateViewPoints(starMap.getMaxX(), starMap.getMaxY(),
+          starMap.getZoomLevel());
+      redoViewPoints = false;
     }
     if (screen == null) {
       calculateViewPoints(starMap.getMaxX(), starMap.getMaxY(),
@@ -1107,7 +1125,8 @@ public class MapPanel extends JPanel {
               if (index != -1) {
                 PlayerInfo cultureInfo = starMap.getPlayerByIndex(index);
                 Tile tile = Tiles.getTileByName(
-                    cultureInfo.getColor().getCultureTile());
+                    cultureInfo.getColor().getCultureTile(),
+                    starMap.getZoomLevel());
                 if (tile != null) {
                   tile.draw(gr, pixelX, pixelY);
                 }
@@ -1131,24 +1150,49 @@ public class MapPanel extends JPanel {
           drawTileText(gr, cx, cy, i, j, starMap, info, pixelX,
               pixelY, planet);
 
-          if (routeData != null && routeData[i + cx][j + cy] == 1) {
+          if (routeData != null && routeData[i + cx][j + cy] == 1
+              && starMap.getZoomLevel() > Tile.ZOOM_OUT1) {
+            int offsetX = 0;
+            int offsetY = 0;
+            if (starMap.getZoomLevel() == Tile.ZOOM_IN) {
+              offsetX = 16;
+              offsetY = 16;
+            }
             redrawTile[i + viewPointX][j + viewPointY] = true;
             if (route.isDefending()) {
-              gr.drawImage(Route.getDefenseDot(), pixelX, pixelY, null);
+              gr.drawImage(Route.getDefenseDot(), pixelX + offsetX,
+                  pixelY + offsetY, null);
             } else if (route.isFixing()) {
-              gr.drawImage(Route.getRepairDot(), pixelX, pixelY, null);
+              gr.drawImage(Route.getRepairDot(), pixelX + offsetX,
+                  pixelY + offsetY, null);
             } else if (route.isBombing()) {
-              gr.drawImage(Route.getBombedDot(), pixelX, pixelY, null);
+              gr.drawImage(Route.getBombedDot(), pixelX + offsetX,
+                  pixelY + offsetY, null);
             } else {
-              gr.drawImage(Route.getRouteDot(), pixelX, pixelY, null);
+              gr.drawImage(Route.getRouteDot(), pixelX + offsetX,
+                  pixelY + offsetY, null);
             }
           }
           if (routeData != null && routeData[i + cx][j + cy] == 2) {
-            gr.drawImage(Route.getGreenRouteDot(), pixelX, pixelY, null);
+            int offsetX = 0;
+            int offsetY = 0;
+            if (starMap.getZoomLevel() == Tile.ZOOM_IN) {
+              offsetX = 16;
+              offsetY = 16;
+            }
+            gr.drawImage(Route.getGreenRouteDot(), pixelX + offsetX,
+                pixelY + offsetY, null);
             redrawTile[i + viewPointX][j + viewPointY] = true;
           }
           if (routeData != null && routeData[i + cx][j + cy] == 3) {
-            gr.drawImage(Route.getYellowRouteDot(), pixelX, pixelY, null);
+            int offsetX = 0;
+            int offsetY = 0;
+            if (starMap.getZoomLevel() == Tile.ZOOM_IN) {
+              offsetX = 16;
+              offsetY = 16;
+            }
+            gr.drawImage(Route.getYellowRouteDot(), pixelX + offsetX,
+                pixelY + offsetY, null);
             redrawTile[i + viewPointX][j + viewPointY] = true;
           }
         }
@@ -1296,6 +1340,7 @@ public class MapPanel extends JPanel {
    */
   public void drawHistoryMap(final StarMap starMap) {
     lastZoomLevel = Tile.ZOOM_NORMAL;
+    starMap.setZoomLevel(Tile.ZOOM_NORMAL);
     if (screen == null) {
       calculateViewPoints();
       if (this.getWidth() > 0 && this.getHeight() > 0) {
@@ -2276,5 +2321,12 @@ public class MapPanel extends JPanel {
    */
   public int getLastZoomLevel() {
     return lastZoomLevel;
+  }
+
+  /**
+   * Set redo viewpoints.
+   */
+  public void redoViewPoints() {
+    redoViewPoints = true;
   }
 }

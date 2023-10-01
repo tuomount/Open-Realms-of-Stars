@@ -1150,8 +1150,7 @@ public class MapPanel extends JPanel {
           drawTileText(gr, cx, cy, i, j, starMap, info, pixelX,
               pixelY, planet);
 
-          if (routeData != null && routeData[i + cx][j + cy] == 1
-              && starMap.getZoomLevel() > Tile.ZOOM_OUT1) {
+          if (routeData != null && routeData[i + cx][j + cy] == 1) {
             int offsetX = 0;
             int offsetY = 0;
             if (starMap.getZoomLevel() == Tile.ZOOM_IN) {
@@ -1160,16 +1159,20 @@ public class MapPanel extends JPanel {
             }
             redrawTile[i + viewPointX][j + viewPointY] = true;
             if (route.isDefending()) {
-              gr.drawImage(Route.getDefenseDot(), pixelX + offsetX,
+              gr.drawImage(Route.getDefenseDot(starMap.getZoomLevel()),
+                  pixelX + offsetX,
                   pixelY + offsetY, null);
             } else if (route.isFixing()) {
-              gr.drawImage(Route.getRepairDot(), pixelX + offsetX,
+              gr.drawImage(Route.getRepairDot(starMap.getZoomLevel()),
+                  pixelX + offsetX,
                   pixelY + offsetY, null);
             } else if (route.isBombing()) {
-              gr.drawImage(Route.getBombedDot(), pixelX + offsetX,
+              gr.drawImage(Route.getBombedDot(starMap.getZoomLevel()),
+                  pixelX + offsetX,
                   pixelY + offsetY, null);
             } else {
-              gr.drawImage(Route.getRouteDot(), pixelX + offsetX,
+              gr.drawImage(Route.getRouteDot(starMap.getZoomLevel()),
+                  pixelX + offsetX,
                   pixelY + offsetY, null);
             }
           }
@@ -1180,7 +1183,8 @@ public class MapPanel extends JPanel {
               offsetX = 16;
               offsetY = 16;
             }
-            gr.drawImage(Route.getGreenRouteDot(), pixelX + offsetX,
+            gr.drawImage(Route.getGreenRouteDot(starMap.getZoomLevel()),
+                pixelX + offsetX,
                 pixelY + offsetY, null);
             redrawTile[i + viewPointX][j + viewPointY] = true;
           }
@@ -1191,7 +1195,8 @@ public class MapPanel extends JPanel {
               offsetX = 16;
               offsetY = 16;
             }
-            gr.drawImage(Route.getYellowRouteDot(), pixelX + offsetX,
+            gr.drawImage(Route.getYellowRouteDot(starMap.getZoomLevel()),
+                pixelX + offsetX,
                 pixelY + offsetY, null);
             redrawTile[i + viewPointX][j + viewPointY] = true;
           }

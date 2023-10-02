@@ -3,6 +3,7 @@ package org.openRealmOfStars.gui.mapPanel;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
@@ -803,10 +804,14 @@ public class MapPanel extends JPanel {
 /*              if (i + 1 + viewPointX < redrawTile.length) {
           redrawTile[i + viewPointX + 1][j + viewPointY] = true;
         }*/
-        int textWidth = (int) GuiStatics.getFontCubellanSC()
-            .getStringBounds(sun.getName(), gr.getFontRenderContext())
-            .getWidth();
-        int offset = Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2 + textWidth / 2 - 2;
+        Font font = GuiStatics.getFontCubellanSC();
+        if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
+          font = GuiStatics.getFontCubellanVerySmall();
+        }
+        int textWidth = (int) font.getStringBounds(sun.getName(),
+            gr.getFontRenderContext()).getWidth();
+        int offset = Tile.getMaxWidth(starMap.getZoomLevel()) / 2
+            + textWidth / 2 - 2;
         gr.setStroke(GuiStatics.TEXT_LINE);
         if (tile.getName().equals(TileNames.SUN_E)) {
           gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
@@ -818,14 +823,15 @@ public class MapPanel extends JPanel {
           gr.setColor(GuiStatics.getCoolSpaceColor());
         }
         gr.drawLine(pixelX - offset,
-            pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 - 3,
-            pixelX - Tile.getMaxWidth(Tile.ZOOM_NORMAL) + offset,
-            pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 - 3);
+            pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2 - 3,
+            pixelX - Tile.getMaxWidth(starMap.getZoomLevel()) + offset,
+            pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2 - 3);
         gr.setColor(Color.BLACK);
-        gr.setFont(GuiStatics.getFontCubellanSC());
+        gr.setFont(font);
         gr.drawString(sun.getName(),
-            pixelX - Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2 - textWidth / 2,
-            pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2);
+            pixelX - Tile.getMaxWidth(starMap.getZoomLevel()) / 2
+            - textWidth / 2,
+            pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2);
       }
     }
 
@@ -848,8 +854,12 @@ public class MapPanel extends JPanel {
             .getSectorVisibility(new Coordinate(i + cx,
                 j + cy)) != PlayerInfo.UNCHARTED) {
       redrawTile[i + viewPointX][j + viewPointY] = true;
-      int textWidth = (int) GuiStatics.getFontCubellanSC()
-          .getStringBounds(RandomSystemNameGenerator.numberToRoman(
+      Font font = GuiStatics.getFontCubellanSC();
+      if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
+        font = GuiStatics.getFontCubellanVerySmall();
+      }
+      int textWidth = (int) font.getStringBounds(
+          RandomSystemNameGenerator.numberToRoman(
               planet.getOrderNumber()), gr.getFontRenderContext())
           .getWidth();
       int offset = textWidth / 2 - 2;
@@ -858,7 +868,7 @@ public class MapPanel extends JPanel {
       gr.drawLine(pixelX - offset, pixelY - 3, pixelX + offset,
           pixelY - 3);
       gr.setColor(Color.BLACK);
-      gr.setFont(GuiStatics.getFontCubellanSC());
+      gr.setFont(font);
       gr.drawString(
           RandomSystemNameGenerator.numberToRoman(
               planet.getOrderNumber()), pixelX - textWidth / 2, pixelY);
@@ -869,24 +879,28 @@ public class MapPanel extends JPanel {
         && planet.getOrderNumber() != 0 && info != null && info
         .getSectorVisibility(new Coordinate(i + cx,
             j + cy)) != PlayerInfo.UNCHARTED) {
-      int textWidth = (int) GuiStatics.getFontCubellanSC()
-          .getStringBounds(RandomSystemNameGenerator.numberToRoman(
-              planet.getOrderNumber()), gr.getFontRenderContext())
-          .getWidth();
-      int offset = Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2 - textWidth / 2 - 2;
+      Font font = GuiStatics.getFontCubellanSC();
+      if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
+        font = GuiStatics.getFontCubellanVerySmall();
+      }
+      int textWidth = (int) font.getStringBounds(
+          RandomSystemNameGenerator.numberToRoman(
+              planet.getOrderNumber()), gr.getFontRenderContext()).getWidth();
+      int offset = Tile.getMaxWidth(starMap.getZoomLevel()) / 2
+          - textWidth / 2 - 2;
       gr.setStroke(GuiStatics.TEXT_LINE);
       gr.setColor(GuiStatics.COLOR_GREYBLUE);
       gr.drawLine(pixelX + offset,
-          pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 - 3,
-          pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) - offset,
-          pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2 - 3);
+          pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2 - 3,
+          pixelX + Tile.getMaxWidth(starMap.getZoomLevel()) - offset,
+          pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2 - 3);
       gr.setColor(Color.BLACK);
-      gr.setFont(GuiStatics.getFontCubellanSC());
+      gr.setFont(font);
       gr.drawString(
           RandomSystemNameGenerator.numberToRoman(
               planet.getOrderNumber()),
-          pixelX + Tile.getMaxWidth(Tile.ZOOM_NORMAL) / 2 - textWidth / 2,
-          pixelY + Tile.getMaxHeight(Tile.ZOOM_NORMAL) / 2);
+          pixelX + Tile.getMaxWidth(starMap.getZoomLevel()) / 2 - textWidth / 2,
+          pixelY + Tile.getMaxHeight(starMap.getZoomLevel()) / 2);
     }
   }
   /**

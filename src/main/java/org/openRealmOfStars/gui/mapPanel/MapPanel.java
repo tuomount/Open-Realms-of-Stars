@@ -801,9 +801,6 @@ public class MapPanel extends JPanel {
       Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
       if (sun != null) {
         redrawTile[i + viewPointX][j + viewPointY] = true;
-/*              if (i + 1 + viewPointX < redrawTile.length) {
-          redrawTile[i + viewPointX + 1][j + viewPointY] = true;
-        }*/
         Font font = GuiStatics.getFontCubellanSC();
         if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
           font = GuiStatics.getFontCubellanVerySmall();
@@ -1089,6 +1086,14 @@ public class MapPanel extends JPanel {
         }
         Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {0.1f, 4.5f }, 0);
+        if (starMap.getZoomLevel() == Tile.ZOOM_IN) {
+          dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE,
+              BasicStroke.JOIN_BEVEL, 1, new float[] {2.0f, 2.0f }, 0);
+        }
+        if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
+          dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE,
+              BasicStroke.JOIN_MITER, 1, new float[] {0.5f, 4.0f }, 0);
+        }
         Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
         gr.setStroke(dashed);
@@ -1151,6 +1156,16 @@ public class MapPanel extends JPanel {
           // Draw tile
           Tile tile = drawTile(gr, cx, cy, i, j, starMap, info, pixelX,
               pixelY, planet);
+          //FIXME
+          Tile tile2 = starMap.getTile(i + cx - 1, j + cy);
+          if (tile2 != null && (tile2.getName().equals(TileNames.SUN_E)
+              || tile2.getName().equals(TileNames.BLUE_STAR_E)
+              || tile2.getName().equals(TileNames.STAR_E))) {
+            redrawTile[i + viewPointX][j + viewPointY] = false;
+            if (i > -viewPointX) {
+              redrawTile[i + viewPointX - 1][j + viewPointY] = true;
+            }
+          }
           if (tile == null) {
             continue;
           }

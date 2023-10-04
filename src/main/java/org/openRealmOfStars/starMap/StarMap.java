@@ -2855,6 +2855,18 @@ public class StarMap {
   }
 
   /**
+   * Get tile index for coordinate
+   * @param x Coordinate X
+   * @param y Coordinate Y
+   * @return Tile index from coordinate or 0.
+   */
+  public int getTileIndex(final int x, final int y) {
+    if (isValidCoordinate(x, y)) {
+      return tiles[x][y];
+    }
+    return 0;
+  }
+  /**
    * Set tile for coordinate
    * @param x Coordinate X
    * @param y Coordinate Y

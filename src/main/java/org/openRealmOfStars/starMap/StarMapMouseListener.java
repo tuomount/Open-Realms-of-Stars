@@ -9,6 +9,7 @@ import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
@@ -384,7 +385,8 @@ public class StarMapMouseListener extends MouseAdapter {
             coord.getMapY());
         Fleet fleet = starMap.getFleetByCoordinate(coord.getMapX(),
             coord.getMapY());
-        Tile tile = starMap.getTile(coord.getMapX(), coord.getMapY());
+        int index = starMap.getTileIndex(coord.getMapX(), coord.getMapY());
+        Tile tile = Tiles.getTileByIndex(index, Tile.ZOOM_NORMAL);
         if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
           // Double click Button1
           setDoubleClicked(true);
@@ -515,7 +517,8 @@ public class StarMapMouseListener extends MouseAdapter {
           mapInfoPanel.showPlanet(planet, false,
               starMap.getCurrentPlayerInfo());
         } else {
-          Tile tile = starMap.getTile(coord.getMapX(), coord.getMapY());
+          int index = starMap.getTileIndex(coord.getMapX(), coord.getMapY());
+          Tile tile = Tiles.getTileByIndex(index, Tile.ZOOM_NORMAL);
           if (!tile.getDescription().isEmpty()) {
             mapInfoPanel.showTile(tile);
           } else {

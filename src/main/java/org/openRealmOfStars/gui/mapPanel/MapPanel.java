@@ -698,7 +698,8 @@ public class MapPanel extends JPanel {
     if (tile.getAnimationIndex() != tile.getIndex() && updateAnimation) {
       // Change map tile for next drawing
       starMap.setTile(i + cx, j + cy,
-          Tiles.getTileByIndex(tile.getAnimationIndex()));
+          Tiles.getTileByIndex(tile.getAnimationIndex(),
+              starMap.getZoomLevel()));
       redrawTile[i + viewPointX][j + viewPointY] = true;
     }
     // Draw only non empty tiles
@@ -715,7 +716,8 @@ public class MapPanel extends JPanel {
     if (planet != null && !planet.isGasGiant() && info != null
         && info.getSectorVisibility(new Coordinate(i + cx,
             j + cy)) != PlayerInfo.UNCHARTED
-        && planet.getHomeWorldIndex() != -1) {
+        && planet.getHomeWorldIndex() != -1
+        && starMap.getZoomLevel() > Tile.ZOOM_OUT1) {
       Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
       icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
           pixelY + Icon16x16.MAX_HEIGHT);
@@ -725,9 +727,11 @@ public class MapPanel extends JPanel {
         || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2))
         && info != null && info.getSectorVisibility(new Coordinate(i + cx,
             j + cy)) != PlayerInfo.UNCHARTED) {
-      Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
-      icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-          pixelY + Icon16x16.MAX_HEIGHT);
+      if (starMap.getZoomLevel() > Tile.ZOOM_OUT1) {
+        Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
+        icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+            pixelY + Icon16x16.MAX_HEIGHT);
+      }
       redrawTile[i + viewPointX][j + viewPointY] = true;
     }
     return tile;
@@ -906,6 +910,11 @@ public class MapPanel extends JPanel {
    */
   public void drawMap(final StarMap starMap) {
     PlayerInfo info = starMap.getCurrentPlayerInfo();
+    if (updateAnimation) {
+      updateAnimation = false;
+    } else {
+      updateAnimation = true;
+    }
     lastZoomLevel = starMap.getZoomLevel();
     if (minimap == null) {
       minimap = new Minimap(starMap);
@@ -1156,7 +1165,6 @@ public class MapPanel extends JPanel {
           // Draw tile
           Tile tile = drawTile(gr, cx, cy, i, j, starMap, info, pixelX,
               pixelY, planet);
-          //FIXME
           Tile tile2 = starMap.getTile(i + cx - 1, j + cy);
           if (tile2 != null && (tile2.getName().equals(TileNames.SUN_E)
               || tile2.getName().equals(TileNames.BLUE_STAR_E)

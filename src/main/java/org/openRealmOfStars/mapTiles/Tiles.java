@@ -307,6 +307,8 @@ public final class Tiles {
       hashOfTiles32.put(tile.getName(), tile);
       if (animationIndex == -2) {
         tile.setAnimationIndex(listOfTiles32.size());
+      } else if (animationIndex != -1) {
+        tile.setAnimationIndex(animationIndex);
       }
     }
     if (zoomLevel == Tile.ZOOM_IN) {
@@ -314,7 +316,9 @@ public final class Tiles {
       tile.setIndex(listOfTiles64.size() - 1);
       hashOfTiles64.put(tile.getName(), tile);
       if (animationIndex == -2) {
-        tile.setAnimationIndex(listOfTiles32.size());
+        tile.setAnimationIndex(listOfTiles64.size());
+      } else if (animationIndex != -1) {
+        tile.setAnimationIndex(animationIndex);
       }
     }
     if (zoomLevel == Tile.ZOOM_OUT1) {
@@ -322,7 +326,9 @@ public final class Tiles {
       tile.setIndex(listOfTiles16.size() - 1);
       hashOfTiles16.put(tile.getName(), tile);
       if (animationIndex == -2) {
-        tile.setAnimationIndex(listOfTiles32.size());
+        tile.setAnimationIndex(listOfTiles16.size());
+      } else if (animationIndex != -1) {
+        tile.setAnimationIndex(animationIndex);
       }
     }
   }
@@ -629,7 +635,7 @@ public final class Tiles {
     addTile(tilesImage32, tilesImage64, tilesImage16, 10, 1,
         TileNames.WORM_HOLE1,
         TileNames.WORM_HOLE_DESCRIPTION, -2);
-    addTile(tilesImage32, tilesImage64, tilesImage16, 10, 1,
+    addTile(tilesImage32, tilesImage64, tilesImage16, 11, 1,
         TileNames.WORM_HOLE2,
         TileNames.WORM_HOLE_DESCRIPTION, getTileByName(
             TileNames.WORM_HOLE1).getIndex());

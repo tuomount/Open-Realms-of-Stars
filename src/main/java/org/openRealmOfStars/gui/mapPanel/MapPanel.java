@@ -695,11 +695,13 @@ public class MapPanel extends JPanel {
     if (tile == null) {
       return null;
     }
-    if (tile.getAnimationIndex() != tile.getIndex() && updateAnimation) {
-      // Change map tile for next drawing
-      starMap.setTile(i + cx, j + cy,
-          Tiles.getTileByIndex(tile.getAnimationIndex(),
-              starMap.getZoomLevel()));
+    if (tile.getAnimationIndex() != tile.getIndex()) {
+      if (updateAnimation) {
+        // Change map tile for next drawing
+        starMap.setTile(i + cx, j + cy,
+            Tiles.getTileByIndex(tile.getAnimationIndex(),
+                starMap.getZoomLevel()));
+      }
       redrawTile[i + viewPointX][j + viewPointY] = true;
     }
     // Draw only non empty tiles

@@ -94,6 +94,11 @@ public class MapPanel extends JPanel {
   private static final int BATTLE_VIEW_SIZE = 576;
 
   /**
+   * Delay for animation update.
+   */
+  private static final int ANIMATION_COUNT_MAX = 16;
+
+  /**
    * How many tiles can be fitted on half of the panel
    * This is for X axel.
    */
@@ -244,6 +249,10 @@ public class MapPanel extends JPanel {
    * Flag for update animation.
    */
   private boolean updateAnimation;
+  /**
+   * Update animation count
+   */
+  private int updateAnimationCount;
   /**
    * Draw weapon range for combat.
    */
@@ -912,10 +921,14 @@ public class MapPanel extends JPanel {
    */
   public void drawMap(final StarMap starMap) {
     PlayerInfo info = starMap.getCurrentPlayerInfo();
-    if (updateAnimation) {
-      updateAnimation = false;
-    } else {
-      updateAnimation = true;
+    updateAnimationCount++;
+    if (updateAnimationCount >= ANIMATION_COUNT_MAX) {
+      if (updateAnimation) {
+        updateAnimation = false;
+      } else {
+        updateAnimation = true;
+      }
+      updateAnimationCount = 0;
     }
     lastZoomLevel = starMap.getZoomLevel();
     if (minimap == null) {

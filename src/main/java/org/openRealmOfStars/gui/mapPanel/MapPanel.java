@@ -1101,6 +1101,7 @@ public class MapPanel extends JPanel {
 
     FleetTileInfo[][] fleetMap = starMap.getFleetTiles(false);
 
+    boolean cursorDrawn = false;
     int pixelX = viewPointOffsetX;
     int pixelY = viewPointOffsetY;
     for (int j = -viewPointY; j < viewPointY + 1; j++) {
@@ -1257,6 +1258,7 @@ public class MapPanel extends JPanel {
         if (i + cx == starMap.getCursorX()
             && j + cy == starMap.getCursorY()) {
           redrawTile[i + viewPointX][j + viewPointY] = true;
+          cursorDrawn = true;
           cursorPixelX = pixelX;
           cursorPixelY = pixelY;
           lastCursorIndexX = i + viewPointX;
@@ -1356,7 +1358,7 @@ public class MapPanel extends JPanel {
       gr.drawLine(rbotX, rtopY, rbotX, rbotY);
       gr.drawLine(rtopX, rbotY, rbotX, rbotY);
     }
-    if (cursorFocus > 0) {
+    if (cursorFocus > 0 && cursorDrawn) {
       cursorFocus--;
       if (lastCursorIndexY != -1 && lastCursorIndexX != -1) {
         for (int i = 0; i < redrawTile.length; i++) {

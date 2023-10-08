@@ -185,6 +185,7 @@ public class StarMapView extends BlackPanel {
     }
     mapPanel.addMouseListener(starMapMouseListener);
     mapPanel.addMouseMotionListener(starMapMouseListener);
+    mapPanel.addMouseWheelListener(starMapMouseListener);
 
     // Bottom panel is created here
     InfoPanel bottomPanel = new InfoPanel();
@@ -232,9 +233,10 @@ public class StarMapView extends BlackPanel {
     int panelHeight = SPACE_AFTER_RESEARCH_LABEL;
     if (!game.getCurrentResolution().equals("1024x768")) {
       int height = game.getHeight() - SPACE_AFTER_RESEARCH_LABEL;
-      int viewPointY = (height / Tile.MAX_HEIGHT - 1) / 2;
-      panelHeight = game.getHeight() - (viewPointY * 2 * Tile.MAX_HEIGHT
-          + Tile.MAX_HEIGHT);
+      int viewPointY = (height / Tile.getMaxHeight(Tile.ZOOM_NORMAL) - 1) / 2;
+      panelHeight = game.getHeight() - (viewPointY * 2
+          * Tile.getMaxHeight(Tile.ZOOM_NORMAL)
+          + Tile.getMaxHeight(Tile.ZOOM_NORMAL));
     }
     bottomPanel.add(Box.createRigidArea(new Dimension(10,
         panelHeight)));

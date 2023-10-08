@@ -109,8 +109,8 @@ public class BattleInfoPanel extends InfoPanel {
       final ActionListener listener) {
     this.add(Box.createRigidArea(new Dimension(RIGID_BOX_WIDTH,
         RIGID_BOX_HEIGHT)));
-    BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
-        Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
+    BufferedImage img = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_IN),
+        Tile.getMaxHeight(Tile.ZOOM_IN), BufferedImage.TYPE_4BYTE_ABGR);
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.setTitle("Battle info");
     imageLabel = new ImageLabel(img, true);

@@ -7,7 +7,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -96,10 +96,11 @@ public class PixelsToMapCoordinate {
    * @param radX View Port Radius X axel in star map
    * @param radY View port radius Y axel in star map
    * @param combat Is combat map or star map
+   * @param zoomLevel Zoom level
    */
   public PixelsToMapCoordinate(final Coordinate centerOfMap, final int px,
       final int py, final int sx, final int sy, final int radX, final int radY,
-      final boolean combat) {
+      final boolean combat, final int zoomLevel) {
     startX = sx;
     startY = sy;
     numXTiles = radX * 2 + 1;
@@ -108,8 +109,8 @@ public class PixelsToMapCoordinate {
       endX = startX + numXTiles * ShipImage.MAX_WIDTH;
       endY = startY + numYTiles * ShipImage.MAX_HEIGHT;
     } else {
-      endX = startX + numXTiles * Tile.MAX_WIDTH;
-      endY = startY + numYTiles * Tile.MAX_HEIGHT;
+      endX = startX + numXTiles * Tile.getMaxWidth(zoomLevel);
+      endY = startY + numYTiles * Tile.getMaxHeight(zoomLevel);
     }
     centerMapX = centerOfMap.getX();
     centerMapY = centerOfMap.getY();
@@ -123,8 +124,8 @@ public class PixelsToMapCoordinate {
         relativeMapX = pixelX / ShipImage.MAX_WIDTH - radX;
         relativeMapY = pixelY / ShipImage.MAX_HEIGHT - radY;
       } else {
-        relativeMapX = pixelX / Tile.MAX_WIDTH - radX;
-        relativeMapY = pixelY / Tile.MAX_HEIGHT - radY;
+        relativeMapX = pixelX / Tile.getMaxWidth(zoomLevel) - radX;
+        relativeMapY = pixelY / Tile.getMaxHeight(zoomLevel) - radY;
       }
     } else {
       outOfPanel = true;

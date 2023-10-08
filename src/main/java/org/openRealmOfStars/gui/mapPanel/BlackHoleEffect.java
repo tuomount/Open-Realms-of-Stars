@@ -8,7 +8,7 @@ import org.openRealmOfStars.mapTiles.Tile;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019 Tuomo Untinen
+* Copyright (C) 2019,2021,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -35,10 +35,17 @@ public class BlackHoleEffect {
   private BufferedImage backgroundTile;
 
   /**
+   * Zoom level
+   */
+  private int zoomLevel;
+
+  /**
    * Constructor for blackhole effect.
    * @param img Background image for blackhole
+   * @param zoomLevel Zoom level
    */
-  public BlackHoleEffect(final BufferedImage img) {
+  public BlackHoleEffect(final BufferedImage img, final int zoomLevel) {
+    this.zoomLevel = zoomLevel;
     updateBackground(img);
   }
 
@@ -49,7 +56,7 @@ public class BlackHoleEffect {
    * @param color2 Color value 2
    * @return Average color
    */
-  private int mixColors(final int color1, final int color2) {
+  private static int mixColors(final int color1, final int color2) {
     int red1 = color1 & 0xff;
     int green1 = (color1 & 0xff00) >> 8;
     int blue1 = (color1 & 0xff0000) >> 16;
@@ -68,41 +75,52 @@ public class BlackHoleEffect {
    * @param img Background image to update.
    */
   public void updateBackground(final BufferedImage img) {
-    if (img.getWidth() == Tile.MAX_WIDTH
-        && img.getHeight() == Tile.MAX_HEIGHT) {
-      backgroundTile = new BufferedImage(Tile.MAX_WIDTH, Tile.MAX_HEIGHT,
+    if (img.getWidth() == Tile.getMaxWidth(zoomLevel)
+        && img.getHeight() == Tile.getMaxHeight(zoomLevel)) {
+      backgroundTile = new BufferedImage(Tile.getMaxWidth(zoomLevel),
+          Tile.getMaxHeight(zoomLevel),
           BufferedImage.TYPE_INT_ARGB);
       backgroundTile.getGraphics().drawImage(img, 0, 0, null);
       backgroundTile.setRGB(0, 0,
-          backgroundTile.getRGB(Tile.MAX_WIDTH / 2, Tile.MAX_HEIGHT / 2));
-      backgroundTile.setRGB(Tile.MAX_WIDTH - 1, 0,
-          backgroundTile.getRGB(Tile.MAX_WIDTH / 2 + 1, Tile.MAX_HEIGHT / 2));
-      backgroundTile.setRGB(0, Tile.MAX_HEIGHT - 1,
-          backgroundTile.getRGB(Tile.MAX_WIDTH / 2, Tile.MAX_HEIGHT / 2 + 1));
-      backgroundTile.setRGB(Tile.MAX_WIDTH - 1, Tile.MAX_HEIGHT - 1,
-          backgroundTile.getRGB(Tile.MAX_WIDTH / 2 + 1,
-              Tile.MAX_HEIGHT / 2 + 1));
-      for (int i = 0; i < Tile.MAX_WIDTH; i++) {
-        int color1 = img.getRGB(Tile.MAX_WIDTH / 2, Tile.MAX_HEIGHT / 2);
+          backgroundTile.getRGB(Tile.getMaxWidth(zoomLevel) / 2,
+              Tile.getMaxHeight(zoomLevel) / 2));
+      backgroundTile.setRGB(Tile.getMaxWidth(zoomLevel) - 1, 0,
+          backgroundTile.getRGB(Tile.getMaxWidth(zoomLevel) / 2 + 1,
+              Tile.getMaxHeight(zoomLevel) / 2));
+      backgroundTile.setRGB(0, Tile.getMaxHeight(zoomLevel) - 1,
+          backgroundTile.getRGB(Tile.getMaxWidth(zoomLevel) / 2,
+              Tile.getMaxHeight(zoomLevel) / 2 + 1));
+      backgroundTile.setRGB(Tile.getMaxWidth(zoomLevel) - 1,
+          Tile.getMaxHeight(zoomLevel) - 1,
+          backgroundTile.getRGB(Tile.getMaxWidth(zoomLevel) / 2 + 1,
+              Tile.getMaxHeight(zoomLevel) / 2 + 1));
+      for (int i = 0; i < Tile.getMaxWidth(zoomLevel); i++) {
+        int color1 = img.getRGB(Tile.getMaxWidth(zoomLevel) / 2,
+            Tile.getMaxHeight(zoomLevel) / 2);
         int color2 = backgroundTile.getRGB(i, 1);
         backgroundTile.setRGB(i, 0, mixColors(color1, color2));
-        color1 = img.getRGB(Tile.MAX_WIDTH / 2, Tile.MAX_HEIGHT / 2 + 1);
-        color2 = backgroundTile.getRGB(i, Tile.MAX_HEIGHT - 2);
-        backgroundTile.setRGB(i, Tile.MAX_HEIGHT - 1, mixColors(color1,
-            color2));
+        color1 = img.getRGB(Tile.getMaxWidth(zoomLevel) / 2,
+            Tile.getMaxHeight(zoomLevel) / 2 + 1);
+        color2 = backgroundTile.getRGB(i,
+            Tile.getMaxWidth(zoomLevel) - 2);
+        backgroundTile.setRGB(i, Tile.getMaxHeight(zoomLevel) - 1,
+            mixColors(color1, color2));
       }
-      for (int i = 0; i < Tile.MAX_HEIGHT; i++) {
-        int color1 = img.getRGB(Tile.MAX_WIDTH / 2 + 1, Tile.MAX_HEIGHT / 2);
+      for (int i = 0; i < Tile.getMaxHeight(zoomLevel); i++) {
+        int color1 = img.getRGB(Tile.getMaxWidth(zoomLevel) / 2 + 1,
+            Tile.getMaxHeight(zoomLevel) / 2);
         int color2 = backgroundTile.getRGB(1, i);
         backgroundTile.setRGB(0, i, mixColors(color1, color2));
-        color1 = img.getRGB(Tile.MAX_WIDTH / 2 + 1, Tile.MAX_HEIGHT / 2 + 1);
-        color2 = backgroundTile.getRGB(Tile.MAX_WIDTH - 2, i);
-        backgroundTile.setRGB(Tile.MAX_HEIGHT - 1, i, mixColors(color1,
-            color2));
+        color1 = img.getRGB(Tile.getMaxWidth(zoomLevel) / 2 + 1,
+            Tile.getMaxHeight(zoomLevel) / 2 + 1);
+        color2 = backgroundTile.getRGB(Tile.getMaxWidth(zoomLevel) - 2,
+            i);
+        backgroundTile.setRGB(Tile.getMaxHeight(zoomLevel) - 1, i,
+            mixColors(color1, color2));
       }
     } else {
-      backgroundTile = new BufferedImage(Tile.MAX_WIDTH, Tile.MAX_HEIGHT,
-          BufferedImage.TYPE_INT_ARGB);
+      backgroundTile = new BufferedImage(Tile.getMaxWidth(zoomLevel),
+          Tile.getMaxHeight(zoomLevel), BufferedImage.TYPE_INT_ARGB);
     }
   }
 
@@ -128,10 +146,12 @@ public class BlackHoleEffect {
    */
   public void drawBlackholeTile(final Graphics2D g, final int x, final int y,
       final Tile tile) {
-    BufferedImage temp = new BufferedImage(Tile.MAX_WIDTH, Tile.MAX_HEIGHT,
+    BufferedImage temp = new BufferedImage(Tile.getMaxWidth(
+        tile.getZoomLevel()),
+        Tile.getMaxHeight(tile.getZoomLevel()),
         BufferedImage.TYPE_INT_ARGB);
-    for (int i = 0; i < Tile.MAX_HEIGHT; i++) {
-      for (int j = 0; j < Tile.MAX_WIDTH; j++) {
+    for (int i = 0; i < Tile.getMaxHeight(tile.getZoomLevel()); i++) {
+      for (int j = 0; j < Tile.getMaxWidth(tile.getZoomLevel()); j++) {
         int color = tile.getRawTile().getRGB(j, i);
         if (color == DISTROTION) {
           temp.setRGB(j, i, backgroundTile.getRGB(j, i));

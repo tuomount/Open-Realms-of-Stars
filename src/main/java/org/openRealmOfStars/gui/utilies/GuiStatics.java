@@ -96,12 +96,36 @@ public final class GuiStatics {
   /**
    * Regular cubellan font but smaller
    */
+  private static Font fontVerySmallCubellan;
+
+  /**
+   * Regular cubellan font but smaller
+   */
   private static Font fontCubellanSmall;
 
   /**
    * Regular cubellan font but smaller and larger
    */
   private static Font fontCubellanSmallLarger;
+
+  /**
+   * Get Regular Cubellan font very small
+   * @return Cubellan font
+   */
+  public static Font getFontCubellanVerySmall() {
+    if (fontVerySmallCubellan == null) {
+      try (InputStream is = Tiles.class
+          .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
+          .openStream()) {
+        fontVerySmallCubellan = Font.createFont(Font.TRUETYPE_FONT, is);
+        fontVerySmallCubellan = fontVerySmallCubellan.deriveFont(9F);
+      } catch (IOException | FontFormatException e) {
+        ErrorLogger.log("Error:" + e.getMessage());
+        return FONT_SMALL;
+      }
+    }
+    return fontVerySmallCubellan;
+  }
 
   /**
    * Get Regular Cubellan font

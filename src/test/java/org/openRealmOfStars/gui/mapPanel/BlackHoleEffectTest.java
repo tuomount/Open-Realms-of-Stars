@@ -10,7 +10,7 @@ import org.openRealmOfStars.mapTiles.Tiles;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2020 Tuomo Untinen
+* Copyright (C) 2020,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -35,12 +35,15 @@ public class BlackHoleEffectTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBasic() {
-    BufferedImage img = new BufferedImage(Tile.MAX_WIDTH, Tile.MAX_HEIGHT,
+    BufferedImage img = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+        Tile.getMaxHeight(Tile.ZOOM_NORMAL),
         BufferedImage.TYPE_4BYTE_ABGR);
-    BlackHoleEffect effect = new BlackHoleEffect(img);
-    BufferedImage img2 = new BufferedImage(Tile.MAX_WIDTH, Tile.MAX_HEIGHT,
+    BlackHoleEffect effect = new BlackHoleEffect(img, Tile.ZOOM_NORMAL);
+    BufferedImage img2 = new BufferedImage(Tile.getMaxWidth(Tile.ZOOM_NORMAL),
+        Tile.getMaxHeight(Tile.ZOOM_NORMAL),
         BufferedImage.TYPE_4BYTE_ABGR);
-    effect.drawBlackholeTile(img2.createGraphics(), 0, 0, Tiles.getTileByIndex(5));
+    effect.drawBlackholeTile(img2.createGraphics(), 0, 0,
+        Tiles.getTileByIndex(5));
     effect.updateBackground(img2);
   }
 

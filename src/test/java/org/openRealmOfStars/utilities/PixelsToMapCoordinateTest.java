@@ -3,13 +3,14 @@ package org.openRealmOfStars.utilities;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.starMap.Coordinate;
 
 import static org.junit.Assert.*;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017 Tuomo Untinen
+ * Copyright (C) 2016,2017,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,7 +39,7 @@ public class PixelsToMapCoordinateTest {
       Mockito.when(coordinate.getX()).thenReturn(8);
       Mockito.when(coordinate.getY()).thenReturn(9);
       PixelsToMapCoordinate ptmCoordinate = new PixelsToMapCoordinate(
-          coordinate, 120, 170, 10, 10, 8, 8, false);
+          coordinate, 120, 170, 10, 10, 8, 8, false, Tile.ZOOM_NORMAL);
       Coordinate coord = ptmCoordinate.getMapCoordinate();
       assertEquals(3,coord.getX());
       assertEquals(6,coord.getY());
@@ -55,7 +56,7 @@ public class PixelsToMapCoordinateTest {
       Mockito.when(coordinate.getX()).thenReturn(4);
       Mockito.when(coordinate.getY()).thenReturn(4);
       PixelsToMapCoordinate ptmCoordinate = new PixelsToMapCoordinate(
-          coordinate, 120, 170, 10, 10, 4, 4, true);
+          coordinate, 120, 170, 10, 10, 4, 4, true, Tile.ZOOM_NORMAL);
       Coordinate coord = ptmCoordinate.getMapCoordinate();
       assertEquals(1,coord.getX());
       assertEquals(2,coord.getY());
@@ -72,7 +73,7 @@ public class PixelsToMapCoordinateTest {
       Mockito.when(coordinate.getX()).thenReturn(4);
       Mockito.when(coordinate.getY()).thenReturn(4);
       PixelsToMapCoordinate ptmCoordinate = new PixelsToMapCoordinate(
-          coordinate, 1200, 1700, 10, 10, 4, 4, true);
+          coordinate, 1200, 1700, 10, 10, 4, 4, true, Tile.ZOOM_NORMAL);
       Coordinate coord = ptmCoordinate.getMapCoordinate();
       assertTrue(ptmCoordinate.isOutOfPanel());
       assertEquals(-1,coord.getX());

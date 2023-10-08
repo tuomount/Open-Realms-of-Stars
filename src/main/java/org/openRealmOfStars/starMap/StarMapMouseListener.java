@@ -2,13 +2,14 @@ package org.openRealmOfStars.starMap;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
@@ -19,7 +20,7 @@ import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019,2021 Tuomo Untinen
+ * Copyright (C) 2016-2019,2021-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,8 +40,7 @@ import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
  *
  */
 
-public class StarMapMouseListener extends MouseAdapter
-    implements MouseMotionListener {
+public class StarMapMouseListener extends MouseAdapter {
 
   /**
    * How many pixel is requred to move on sector
@@ -198,7 +198,7 @@ public class StarMapMouseListener extends MouseAdapter
         mapPanel.getLastDrawnY());
     coord = new PixelsToMapCoordinate(center, e.getX(), e.getY(),
         mapPanel.getOffsetX(), mapPanel.getOffsetY(), mapPanel.getViewPointX(),
-        mapPanel.getViewPointY(), false);
+        mapPanel.getViewPointY(), false, mapPanel.getLastZoomLevel());
     if (!coord.isOutOfPanel()) {
       starMap.setCursorPos(coord.getMapX(), coord.getMapY());
       if (routePlanning && lastClickedFleet != null) {
@@ -319,6 +319,32 @@ public class StarMapMouseListener extends MouseAdapter
   }
 
   @Override
+  public void mouseWheelMoved(final MouseWheelEvent e) {
+    int rotation = e.getWheelRotation();
+    if (rotation < 0) {
+      int zoomLevel = starMap.getZoomLevel();
+      zoomLevel++;
+      if (zoomLevel > Tile.ZOOM_IN) {
+        zoomLevel = Tile.ZOOM_IN;
+      }
+      starMap.setZoomLevel(zoomLevel);
+      mapPanel.redoViewPoints();
+      starMap.setForceRedraw(true);
+    }
+    if (rotation > 0) {
+      int zoomLevel = starMap.getZoomLevel();
+      zoomLevel--;
+      if (zoomLevel < Tile.ZOOM_OUT1) {
+        zoomLevel = Tile.ZOOM_OUT1;
+      }
+      starMap.setZoomLevel(zoomLevel);
+      mapPanel.redoViewPoints();
+      starMap.setForceRedraw(true);
+    }
+    super.mouseWheelMoved(e);
+  }
+
+  @Override
   public void mouseClicked(final MouseEvent e) {
     setDoubleClicked(false);
     setMoveClicked(false);
@@ -339,7 +365,7 @@ public class StarMapMouseListener extends MouseAdapter
         mapPanel.getLastDrawnY());
     coord = new PixelsToMapCoordinate(center, e.getX(), e.getY(),
         mapPanel.getOffsetX(), mapPanel.getOffsetY(), mapPanel.getViewPointX(),
-        mapPanel.getViewPointY(), false);
+        mapPanel.getViewPointY(), false, mapPanel.getLastZoomLevel());
     if (!coord.isOutOfPanel()) {
       if (mapPanel.getPopup() != null) {
         mapPanel.getPopup().dismiss();
@@ -359,7 +385,8 @@ public class StarMapMouseListener extends MouseAdapter
             coord.getMapY());
         Fleet fleet = starMap.getFleetByCoordinate(coord.getMapX(),
             coord.getMapY());
-        Tile tile = starMap.getTile(coord.getMapX(), coord.getMapY());
+        int index = starMap.getTileIndex(coord.getMapX(), coord.getMapY());
+        Tile tile = Tiles.getTileByIndex(index, Tile.ZOOM_NORMAL);
         if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
           // Double click Button1
           setDoubleClicked(true);
@@ -490,7 +517,8 @@ public class StarMapMouseListener extends MouseAdapter
           mapInfoPanel.showPlanet(planet, false,
               starMap.getCurrentPlayerInfo());
         } else {
-          Tile tile = starMap.getTile(coord.getMapX(), coord.getMapY());
+          int index = starMap.getTileIndex(coord.getMapX(), coord.getMapY());
+          Tile tile = Tiles.getTileByIndex(index, Tile.ZOOM_NORMAL);
           if (!tile.getDescription().isEmpty()) {
             mapInfoPanel.showTile(tile);
           } else {

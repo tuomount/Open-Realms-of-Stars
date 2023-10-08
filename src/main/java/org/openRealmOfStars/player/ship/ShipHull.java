@@ -170,7 +170,7 @@ public class ShipHull {
    * @return BufferedImage
    */
   public BufferedImage getSmallImage() {
-    return ShipImages.getByRace(originalBuilder).getSmallShipImage(imageIndex);
+    return ShipImages.getByRace(originalBuilder).getNormalShipImage(imageIndex);
   }
 
   /**

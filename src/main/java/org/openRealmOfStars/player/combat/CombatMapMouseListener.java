@@ -111,7 +111,7 @@ public class CombatMapMouseListener extends MouseAdapter {
         mapPanel.getLastDrawnY());
     coord = new PixelsToMapCoordinate(center, e.getX(), e.getY(),
         mapPanel.getOffsetX(), mapPanel.getOffsetY(), mapPanel.getViewPointX(),
-        mapPanel.getViewPointY(), true);
+        mapPanel.getViewPointY(), true, mapPanel.getLastZoomLevel());
     if (!coord.isOutOfPanel()) {
       combat.setCursorPos(coord.getMapX(), coord.getMapY());
       // battleInfoPanel.showShip(combat.getCurrentShip().getShip());
@@ -143,7 +143,7 @@ public class CombatMapMouseListener extends MouseAdapter {
         mapPanel.getLastDrawnY());
     coord = new PixelsToMapCoordinate(center, e.getX(), e.getY(),
         mapPanel.getOffsetX(), mapPanel.getOffsetY(), mapPanel.getViewPointX(),
-        mapPanel.getViewPointY(), true);
+        mapPanel.getViewPointY(), true, mapPanel.getLastZoomLevel());
     if (!coord.isOutOfPanel() && combat.getAnimation() == null) {
       if (combat.getCurrentShip() == null) {
         return;

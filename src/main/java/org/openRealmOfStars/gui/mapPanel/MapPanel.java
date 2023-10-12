@@ -730,8 +730,11 @@ public class MapPanel extends JPanel {
         && planet.getHomeWorldIndex() != -1
         && starMap.getZoomLevel() > Tile.ZOOM_OUT1) {
       Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
-      icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-          pixelY + Icon16x16.MAX_HEIGHT);
+      int offset = Icon16x16.MAX_WIDTH;
+      if (starMap.getZoomLevel() == Tile.ZOOM_IN) {
+        offset = 40;
+      }
+      icon.draw(gr, pixelX + offset, pixelY + offset);
     }
     // Draw deep space anchor marker
     if ((tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
@@ -740,8 +743,11 @@ public class MapPanel extends JPanel {
             j + cy)) != PlayerInfo.UNCHARTED) {
       if (starMap.getZoomLevel() > Tile.ZOOM_OUT1) {
         Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
-        icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
-            pixelY + Icon16x16.MAX_HEIGHT);
+        int offset = Icon16x16.MAX_WIDTH;
+        if (starMap.getZoomLevel() == Tile.ZOOM_IN) {
+          offset = 40;
+        }
+        icon.draw(gr, pixelX + offset, pixelY + offset);
       }
       redrawTile[i + viewPointX][j + viewPointY] = true;
     }

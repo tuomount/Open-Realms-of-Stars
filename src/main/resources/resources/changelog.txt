@@ -3,6 +3,8 @@
 * Starmap view is drawn only for tiles which are changing. This improves performance on starmap.
 * When leader gains level and perks, it got explanation what perk and how it was gained.
 * Improved background story generation for realms.
+* Allow starmap zooming in and out.
+* Redraw 64x64 map tiles, this also include Deep Space Anchor on all sizes.
 
 - Bugfixes -
 

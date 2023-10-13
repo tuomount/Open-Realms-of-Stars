@@ -725,12 +725,13 @@ public final class NewsFactory {
    * @param killerRealm Which realm killed the commander
    * @param killedPrivateer If killed commander was privateer
    * @param killerPrivateer if killer commander was privateer
+   * @param starYear when kill even happens.
    * @return NewsData
    */
   public static NewsData makeCommanderKilledInAction(final Leader killed,
       final Leader killer, final PlayerInfo killedRealm,
       final PlayerInfo killerRealm, final boolean killedPrivateer,
-      final boolean killerPrivateer) {
+      final boolean killerPrivateer, final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
@@ -806,6 +807,8 @@ public final class NewsFactory {
       sb.append(" origins are unknown. ");
     }
     news.setNewsText(sb.toString());
+    killedRealm.appendStory(sb.toString(), starYear);
+    killerRealm.appendStory(sb.toString(), starYear);
     return news;
   }
   /**

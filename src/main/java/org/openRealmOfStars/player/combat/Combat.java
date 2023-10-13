@@ -219,16 +219,24 @@ public class Combat {
    * Is orbital in combat?
    */
   private boolean orbitalInCombat;
+
+  /**
+   * Star year.
+   */
+  private int starYear;
   /**
    * Build shipList in initiative order
    * @param attackerFleet Attacking Player1 fleet
    * @param defenderFleet Defending Player2 fleet
    * @param attackerInfo Attacking Player1 info
    * @param defenderInfo Defending Player2 Info
+   * @param starYear StarYear when combat happens.
    */
   public Combat(final Fleet attackerFleet, final Fleet defenderFleet,
-          final PlayerInfo attackerInfo, final PlayerInfo defenderInfo) {
-    this(attackerFleet, defenderFleet, attackerInfo, defenderInfo, null);
+          final PlayerInfo attackerInfo, final PlayerInfo defenderInfo,
+          final int starYear) {
+    this(attackerFleet, defenderFleet, attackerInfo, defenderInfo, null,
+        starYear);
   }
 
   /**
@@ -238,10 +246,12 @@ public class Combat {
    * @param attackerInfo Attacking Player1 info
    * @param defenderInfo Defending Player2 Info
    * @param escapePos Escape position for defender
+   * @param starYear Star year when combat happens
    */
   public Combat(final Fleet attackerFleet, final Fleet defenderFleet,
           final PlayerInfo attackerInfo, final PlayerInfo defenderInfo,
-          final Coordinate escapePos) {
+          final Coordinate escapePos,  final int starYear) {
+    this.starYear = starYear;
     this.attackerFleet = attackerFleet;
     this.defenderFleet = defenderFleet;
     attackerPrivateer = this.attackerFleet.isPrivateerFleet();
@@ -265,10 +275,12 @@ public class Combat {
    * @param defenderInfo Defending Player2 Info
    * @param escapePos Escape position for defender
    * @param planet Planet with orbital
+   * @param starYear StarYear when combat happens.
    */
   public Combat(final Fleet attackerFleet, final Fleet defenderFleet,
           final PlayerInfo attackerInfo, final PlayerInfo defenderInfo,
-          final Coordinate escapePos, final Planet planet) {
+          final Coordinate escapePos, final Planet planet, final int starYear) {
+    this.starYear = starYear;
     this.planet = planet;
     if (planet.getOrbital() != null) {
       orbitalInCombat = true;
@@ -799,7 +811,7 @@ public boolean launchIntercept(final int distance,
           leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
               attackerFleet.getCommander(), defenderFleet.getCommander(),
               attackerInfo, defenderInfo, attackerPrivateer,
-              defenderPrivateer);
+              defenderPrivateer, starYear);
           if (defenderFleet.getCommander() != null) {
             defenderFleet.getCommander().getStats().addOne(
                 StatType.KILLED_ANOTHER_LEADER);
@@ -837,7 +849,7 @@ public boolean launchIntercept(final int distance,
           leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
               defenderFleet.getCommander(), attackerFleet.getCommander(),
               defenderInfo, attackerInfo, defenderPrivateer,
-              attackerPrivateer);
+              attackerPrivateer, starYear);
           if (attackerFleet.getCommander() != null) {
             attackerFleet.getCommander().getStats().addOne(
                 StatType.KILLED_ANOTHER_LEADER);
@@ -871,7 +883,7 @@ public boolean launchIntercept(final int distance,
           leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
               starbaseFleet.getCommander(), attackerFleet.getCommander(),
               defenderInfo, attackerInfo, defenderPrivateer,
-              attackerPrivateer);
+              attackerPrivateer, starYear);
           starbaseFleet.getCommander().setJob(Job.DEAD);
           starbaseFleet.setCommander(null);
         }

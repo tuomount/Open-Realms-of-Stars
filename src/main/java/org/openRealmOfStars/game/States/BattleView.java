@@ -194,7 +194,8 @@ public class BattleView extends BlackPanel {
     } else {
       escapePosition = null;
     }
-    combat = new Combat(fleet1, fleet2, player1, player2, escapePosition);
+    combat = new Combat(fleet1, fleet2, player1, player2, escapePosition,
+        map.getStarYear());
     Coordinate combatCoord = combat.getCombatCoordinates();
     Planet planet = map.getPlanetByCoordinate(combatCoord.getX(),
         combatCoord.getY());

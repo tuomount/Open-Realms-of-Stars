@@ -3390,9 +3390,10 @@ public class StarMap {
           Planet planet = getPlanetByCoordinate(x, y);
           if (planet != null && planet.getOrbital() != null) {
             return new Combat(fleet1, fleet2, info1, info2, escapePosition,
-                planet);
+                planet, getStarYear());
           }
-          return new Combat(fleet1, fleet2, info1, info2, escapePosition);
+          return new Combat(fleet1, fleet2, info1, info2, escapePosition,
+              getStarYear());
         }
       }
       if (info2 == null) {
@@ -3402,7 +3403,7 @@ public class StarMap {
             && info1 != planet.getPlanetPlayerInfo()
             && planet.getPlanetPlayerInfo() != null) {
           return new Combat(fleet1, null, info1, info2, null,
-              planet);
+              planet, getStarYear());
         }
       }
     }

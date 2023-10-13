@@ -29,7 +29,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2021  Tuomo Untinen
+* Copyright (C) 2017-2021,2023  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -65,7 +65,7 @@ public class CombatTest {
     Fleet fleet2 = new Fleet(scout2, 6, 5);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     CombatShip ship = combat.getCurrentShip();
     combat.escapeShip(ship);
     ship = combat.getCurrentShip();
@@ -88,7 +88,7 @@ public class CombatTest {
     Fleet fleet2 = new Fleet(scout2, 6, 5);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     assertEquals(false, combat.isHumanPlayer());
     CombatShip shooter = combat.getCurrentShip();
     assertEquals(0, shooter.getShip().getExperience());
@@ -132,7 +132,7 @@ public class CombatTest {
     Fleet fleet2 = new Fleet(scout2, 6, 5);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     assertEquals(null, combat.getWormHoleCoordinate());
     combat.createWormHole();
     assertNotEquals(null, combat.getWormHoleCoordinate());
@@ -153,7 +153,7 @@ public class CombatTest {
     Fleet fleet2 = new Fleet(scout2, 6, 5);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     assertEquals(null, combat.getWormHoleCoordinate());
     int rounds = combat.getTimerForWormHole() + 1;
     for (int i = 0; i < rounds; i++) {
@@ -180,7 +180,7 @@ public class CombatTest {
     Fleet fleet2 = new Fleet(colony, 6, 5);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     assertEquals(fleet2, combat.getDefendingFleet());
     combat.doFastCombat();
     assertEquals("Terran alliance attacked against Spork empire "
@@ -211,7 +211,7 @@ public class CombatTest {
     Fleet fleet2 = new Fleet(scout2, 6, 5);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test I");
     Coordinate coord = Mockito.mock(Coordinate.class);
@@ -243,7 +243,7 @@ public class CombatTest {
     Fleet fleet2 = new Fleet(colony, 6, 5);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     combat.createWormHole();
     combat.doFastCombat();
     assertEquals(info1, combat.getWinner());
@@ -289,7 +289,7 @@ public class CombatTest {
     Fleet fleet2 = new Fleet(colony2, 6, 5);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     combat.doFastCombat();
     assertEquals(null, combat.getWinner());
   }
@@ -308,7 +308,7 @@ public class CombatTest {
     Fleet fleet2 = new Fleet(colony, 6, 5);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     Planet planet = new Planet(new Coordinate(6, 5), "Test", 1, false);
     planet.setPlanetOwner(1, info2);
     combat.setPlanet(planet);
@@ -324,7 +324,7 @@ public class CombatTest {
         MissionPhase.PLANNING));
     fleet2 = new Fleet(colony, 6, 5);
     info2.getFleets().add(fleet2);
-    combat = new Combat(fleet1, fleet2, info1, info2);
+    combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     combat.setPlanet(planet);
     combat.doFastCombat();
     assertEquals(info1, combat.getWinner());
@@ -356,7 +356,7 @@ public class CombatTest {
     Fleet fleet2 = new Fleet(colony, 6, 5);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     combat.setTimerForWormHole(7);
     assertEquals(0, info1.getTotalCredits());
     combat.doFastCombat(false);
@@ -396,7 +396,7 @@ public class CombatTest {
     fleet2.addShip(scout);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     // Setting long time for wormhole appear
     // Making sure that colony cannot escape
     combat.setTimerForWormHole(20);
@@ -420,7 +420,7 @@ public class CombatTest {
     Fleet fleet2 = new Fleet(scout2, 6, 5);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     assertEquals(null, combat.getPlanet());
     Planet planet = new Planet(new Coordinate(6, 5), "Test", 1, false);
     combat.setPlanet(planet);
@@ -480,7 +480,7 @@ public class CombatTest {
     defender.getFleets().add(starbaseFleet);
     attacker.getFleets().add(attackerFleet);
     Combat combat = new Combat(attackerFleet, defenderFleet, attacker,
-        defender);
+        defender, 2450);
     CombatShip first = combat.getCurrentShip();
     int deployedBases = 0;
     for (int i = 0; i < 3; i++) {
@@ -526,7 +526,7 @@ public class CombatTest {
     defender.getFleets().add(starbaseFleet);
     attacker.getFleets().add(attackerFleet);
     Combat combat = new Combat(attackerFleet, defenderFleet, attacker,
-        defender);
+        defender, 2450);
     CombatShip first = combat.getCurrentShip();
     int deployedBases = 0;
     for (int i = 0; i < 3; i++) {
@@ -562,7 +562,7 @@ public class CombatTest {
     Fleet fleet2 = new Fleet(scout2, 6, 5);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
     assertEquals(true, combat.isHumanPlayer());
   }
 
@@ -585,7 +585,8 @@ public class CombatTest {
 
     Fleet attackerFleet = new Fleet(privateerShip, 5, 5);
     Fleet defenderFleet = new Fleet(targetShip, 6, 6);
-    Combat combat = new Combat(attackerFleet, defenderFleet, privateer, target);
+    Combat combat = new Combat(attackerFleet, defenderFleet, privateer,
+        target, 2450);
     ShipDamage damage = combat.doPrivateering(privateer, combatPirate, target,
         combatTarget);
     assertEquals("Ship has no cargo!", damage.getMessage());

@@ -365,7 +365,8 @@ public class SpaceAnomaly {
           PlayerInfo board = map.getPlayerList().getSpacePiratePlayer();
           Fleet lair = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
               board, StarMap.ENEMY_PIRATE_LAIR);
-          Combat fight = new Combat(fleet, lair, info, board);
+          Combat fight = new Combat(fleet, lair, info, board,
+              map.getStarYear());
           result.setCombat(fight);
           map.setTile(fleet.getX(), fleet.getY(), anchor);
           break;
@@ -379,7 +380,8 @@ public class SpaceAnomaly {
           PlayerInfo board = map.getPlayerList().getSpacePiratePlayer();
           Fleet pirate = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
               board, StarMap.ENEMY_PIRATE);
-          Combat fight = new Combat(fleet, pirate, info, board);
+          Combat fight = new Combat(fleet, pirate, info, board,
+              map.getStarYear());
           result.setCombat(fight);
           break;
         }
@@ -401,7 +403,8 @@ public class SpaceAnomaly {
               info.getMsgList().addNewMessage(msg);
             }
           }
-          Combat fight = new Combat(fleet, monster, info, board);
+          Combat fight = new Combat(fleet, monster, info, board,
+              map.getStarYear());
           result.setCombat(fight);
           break;
         }

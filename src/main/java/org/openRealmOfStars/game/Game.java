@@ -912,6 +912,11 @@ public class Game implements ActionListener {
             getStarMap().getNewsCorpData().addNews(
                 combat.getLeaderKilledNews());
           }
+          if (combat.getLeaderInCombatNews() != null
+              && getStarMap().isAllNewsEnabled()) {
+            getStarMap().getNewsCorpData().addNews(
+                combat.getLeaderInCombatNews());
+          }
           if (combat.getOrbitalDestoyedNews() != null) {
             getStarMap().getNewsCorpData().addNews(
                 combat.getOrbitalDestoyedNews());
@@ -940,6 +945,11 @@ public class Game implements ActionListener {
               && getStarMap().isAllNewsEnabled()) {
             getStarMap().getNewsCorpData().addNews(
                 anomaly.getCombat().getLeaderKilledNews());
+          }
+          if (anomaly.getCombat().getLeaderInCombatNews() != null
+              && getStarMap().isAllNewsEnabled()) {
+            getStarMap().getNewsCorpData().addNews(
+                anomaly.getCombat().getLeaderInCombatNews());
           }
           if (anomaly.getCombat().getOrbitalDestoyedNews() != null) {
             getStarMap().getNewsCorpData().addNews(
@@ -3651,6 +3661,10 @@ public class Game implements ActionListener {
         getStarMap().getHistory().addEvent(combat.getCombatEvent());
         if (combat.getLeaderKilledNews() != null) {
           getStarMap().getNewsCorpData().addNews(combat.getLeaderKilledNews());
+        }
+        if (combat.getLeaderInCombatNews() != null) {
+          getStarMap().getNewsCorpData().addNews(
+              combat.getLeaderInCombatNews());
         }
         if (combat.getOrbitalDestoyedNews() != null) {
           getStarMap().getNewsCorpData().addNews(

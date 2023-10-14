@@ -866,6 +866,168 @@ public final class NewsFactory {
     return news;
   }
   /**
+   * Make fleet commander in combat news.
+   * @param commander Commander which was in combat
+   * @param realm Realm where commander belongs
+   * @param otherRealm Opponent Realm
+   * @param combatAgainstPrivateer Boolean
+   * @param planet Null or planet where combat happened
+   * @param starYear StarYear when combat happened
+   * @return NewsData
+   */
+  public static NewsData makeCommanderInCombat(final Leader commander,
+      final PlayerInfo realm,
+      final PlayerInfo otherRealm, final boolean combatAgainstPrivateer,
+      final Planet planet, final int starYear) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    if (planet != null) {
+      instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+          planet.getPlanetType().getImageInstructions(),
+          ImageInstruction.SIZE_FULL);
+    } else {
+      //FIXME Change image for something better
+      instructions.addImage(ImageInstruction.PIRATE_RAIDERS);
+    }
+    if (planet != null) {
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          instructions.addText("BATTLE");
+          break;
+        }
+        case 1: {
+          instructions.addText("COMBAT");
+          break;
+        }
+        case 2: {
+          instructions.addText("FIGHT");
+          break;
+        }
+      }
+      instructions.addText(" OF ");
+      instructions.addText(planet.getName().toUpperCase());
+    } else {
+      instructions.addText(commander.getCallName().toUpperCase());
+      switch (DiceGenerator.getRandom(3)) {
+        case 0:
+        default: {
+          instructions.addText("IN FIGHT!");
+          break;
+        }
+        case 1: {
+          instructions.addText("IN COMBAT!");
+          break;
+        }
+        case 2: {
+          instructions.addText("IN BATTLE!");
+          break;
+        }
+        case 3: {
+          instructions.addText("IN ACTION!");
+          break;
+        }
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    if (combatAgainstPrivateer) {
+      sb.append(commander.getCallName());
+      switch (DiceGenerator.getRandom(2)) {
+        case 0:
+        default: {
+          sb.append(" fight against ");
+          break;
+        }
+        case 1: {
+          sb.append(" had battle against ");
+          break;
+        }
+        case 2: {
+          sb.append(" was in combat against ");
+          break;
+        }
+      }
+      sb.append("privateer fleet");
+    } else {
+      sb.append(commander.getCallName());
+      switch (DiceGenerator.getRandom(2)) {
+        case 0:
+        default: {
+          sb.append(" fight against ");
+          break;
+        }
+        case 1: {
+          sb.append(" had battle against ");
+          break;
+        }
+        case 2: {
+          sb.append(" was in combat against ");
+          break;
+        }
+      }
+      sb.append(otherRealm.getEmpireName());
+    }
+    if (planet != null) {
+      sb.append(" ");
+      switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        sb.append("while orbiting ");
+        break;
+      }
+      case 1: {
+        sb.append("next to ");
+        break;
+      }
+      case 2: {
+        sb.append("in near space of ");
+        break;
+      }
+    }
+      sb.append(planet.getName());
+    } else {
+      switch (DiceGenerator.getRandom(2)) {
+        case 0:
+        default: {
+          break;
+        }
+        case 1: {
+          sb.append(" in deep space");
+          break;
+        }
+        case 2: {
+          sb.append(" in cold cosmos");
+          break;
+        }
+      }
+    }
+    sb.append(". ");
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        sb.append("Combat");
+        break;
+      }
+      case 1: {
+        sb.append("Battle");
+        break;
+      }
+      case 2: {
+        sb.append("Fight");
+        break;
+      }
+    }
+    sb.append(" was victorious for ");
+    sb.append(commander.getGender().getHisHer());
+    sb.append(" side.");
+    news.setNewsText(sb.toString());
+    realm.appendStory(sb.toString(), starYear);
+    otherRealm.appendStory(sb.toString(), starYear);
+    return news;
+  }
+  /**
    * Make news about leader escaping from false flag mission.
    * @param leader Leader which is escaped
    * @param leaderRealm Which realm killed belong

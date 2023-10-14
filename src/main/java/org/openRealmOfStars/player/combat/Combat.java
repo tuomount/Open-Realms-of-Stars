@@ -207,6 +207,10 @@ public class Combat {
    */
   private NewsData orbitalDestroyedNews;
   /**
+   * News for leader in combat
+   */
+  private NewsData leaderInCombat;
+  /**
    * Is attacker privateer?
    */
   private boolean attackerPrivateer;
@@ -418,6 +422,13 @@ public class Combat {
    */
   public NewsData getOrbitalDestoyedNews() {
     return orbitalDestroyedNews;
+  }
+  /**
+   * Get Leader in Combat news.
+   * @return NewsData or null.
+   */
+  public NewsData getLeaderInCombatNews() {
+    return leaderInCombat;
   }
   /**
    * Add combatShip to combatShipList
@@ -1318,6 +1329,11 @@ public boolean launchIntercept(final int distance,
         if (attackerFleet.getCommander() != null) {
           Leader leader = attackerFleet.getCommander();
           leader.setExperience(leader.getExperience() + defenderMilitaryValue);
+          if (leaderKilledNews == null && orbitalDestroyedNews == null) {
+            leaderInCombat = NewsFactory.makeCommanderInCombat(leader,
+                winnerPlayer, looserPlayer, defenderPrivateer, planet,
+                starYear);
+          }
         }
       } else {
         winnerPlayer = defenderInfo;
@@ -1329,6 +1345,11 @@ public boolean launchIntercept(final int distance,
         if (defenderFleet.getCommander() != null) {
           Leader leader = defenderFleet.getCommander();
           leader.setExperience(leader.getExperience() + attackerMilitaryValue);
+          if (leaderKilledNews == null && orbitalDestroyedNews == null) {
+            leaderInCombat = NewsFactory.makeCommanderInCombat(leader,
+                winnerPlayer, looserPlayer, attackerPrivateer, planet,
+                starYear);
+          }
         }
       }
       endCombatHandled = true;

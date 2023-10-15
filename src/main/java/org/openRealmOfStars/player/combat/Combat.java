@@ -1332,7 +1332,8 @@ public boolean launchIntercept(final int distance,
           if (leaderKilledNews == null && orbitalDestroyedNews == null) {
             leaderInCombat = NewsFactory.makeCommanderInCombat(leader,
                 winnerPlayer, looserPlayer, defenderPrivateer, planet,
-                starYear);
+                starYear,
+                attackerFleet.getBiggestShip().getHull().getMaxSlot());
           }
         }
       } else {
@@ -1348,7 +1349,8 @@ public boolean launchIntercept(final int distance,
           if (leaderKilledNews == null && orbitalDestroyedNews == null) {
             leaderInCombat = NewsFactory.makeCommanderInCombat(leader,
                 winnerPlayer, looserPlayer, attackerPrivateer, planet,
-                starYear);
+                starYear,
+                defenderFleet.getBiggestShip().getHull().getMaxSlot());
           }
         }
       }

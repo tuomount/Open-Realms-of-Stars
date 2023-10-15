@@ -333,6 +333,14 @@ public class ImageInstruction {
    */
   public static final String PIRATE_RAIDERS = "pirate raiders";
   /**
+   * Big corvette image
+   */
+  public static final String CORVETTE = "corvette";
+  /**
+   * Big cruiser image
+   */
+  public static final String CRUISER = "cruiser";
+  /**
    * Mutiny
    */
   public static final String MUTINY = "mutiny";
@@ -698,6 +706,8 @@ public class ImageInstruction {
         && !PIRATE_PILOT.equals(image)
         && !KRAKEN.equals(image)
         && !PIRATE_RAIDERS.equals(image)
+        && !CORVETTE.equals(image)
+        && !CRUISER.equals(image)
         && !MUTINY.equals(image)
         && !DATALOSS.equals(image)
         && !NEWSTATION.equals(image)
@@ -1327,6 +1337,12 @@ public class ImageInstruction {
     }
     if (PIRATE_RAIDERS.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_PIRATE_RAIDERS);
+    }
+    if (CORVETTE.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_CORVETTE);
+    }
+    if (CRUISER.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_CRUISER);
     }
     if (MUTINY.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_MUTINY);

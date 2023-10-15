@@ -873,22 +873,27 @@ public final class NewsFactory {
    * @param combatAgainstPrivateer Boolean
    * @param planet Null or planet where combat happened
    * @param starYear StarYear when combat happened
+   * @param hullSlots number of Hull slots in biggest ship.
    * @return NewsData
    */
   public static NewsData makeCommanderInCombat(final Leader commander,
       final PlayerInfo realm,
       final PlayerInfo otherRealm, final boolean combatAgainstPrivateer,
-      final Planet planet, final int starYear) {
+      final Planet planet, final int starYear, final int hullSlots) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
-    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
     if (planet != null) {
       instructions.addPlanet(ImageInstruction.POSITION_CENTER,
           planet.getPlanetType().getImageInstructions(),
           ImageInstruction.SIZE_FULL);
     } else {
-      //FIXME Change image for something better
-      instructions.addImage(ImageInstruction.PIRATE_RAIDERS);
+      instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    }
+    if (hullSlots > 6) {
+      instructions.addImage(ImageInstruction.CRUISER);
+    } else {
+      instructions.addImage(ImageInstruction.CORVETTE);
     }
     if (planet != null) {
       switch (DiceGenerator.getRandom(2)) {

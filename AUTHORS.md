@@ -319,6 +319,8 @@ Ancient Temple by Tuomo Untinen with Stable Diffusion
 
 Ancient Palace by Tuomo Untinen with Stable Diffusion
 
+Ancient Research by Tuomo Untinen with Stable Diffusion
+
 Gems by Tuomo Untinen with Stable Diffusion
 
 Destroyed Planet by Tuomo Untinen with Stable Diffusion

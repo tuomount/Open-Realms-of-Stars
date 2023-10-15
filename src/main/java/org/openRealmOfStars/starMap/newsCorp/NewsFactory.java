@@ -3615,6 +3615,41 @@ public final class NewsFactory {
   }
 
   /**
+   * Make scientific achievement news. Realm builds scientific achievement
+   * building and thus is closer to win.
+   * @param realm PlayerInfo who is building
+   * @param text Actual text what was discovered.
+   * @param starYear Star year
+   * @return NewsData
+   */
+  public static NewsData makeAncientResearchNews(final PlayerInfo realm,
+      final String text, final int starYear) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addImage(ImageInstruction.ANCIENT_RESEARCH);
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("BREAKTHROUGH IN ARCHEOLOGY!");
+        break;
+      }
+      case 1: {
+        instructions.addText("ANCIENT ARTIFACT STUDIED!");
+        break;
+      }
+      case 2: {
+        instructions.addText("RESEARCH DONE FOR ANCIENT ARTIFACT!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    news.setNewsText(text);
+    realm.appendStory(news.getNewsText(), starYear);
+    return news;
+  }
+
+  /**
    * Make Voting news
    * @param vote New vote to be organized
    * @param firstCandidate for ruler of galaxy.

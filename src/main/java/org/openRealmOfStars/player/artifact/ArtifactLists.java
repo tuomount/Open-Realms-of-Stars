@@ -15,6 +15,8 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -315,10 +317,12 @@ public class ArtifactLists {
    * @param gameLength Game length
    * @param scientist which is make the research
    * @param tutorialEnabled is tutorial enabled or not.
+   * @param starYear StarYear
+   * @return NewsData about possible study.
    */
-  public void updateResearchPointByTurn(final int totalResearchPoints,
+  public NewsData updateResearchPointByTurn(final int totalResearchPoints,
       final PlayerInfo info, final int gameLength, final Leader scientist,
-      final boolean tutorialEnabled) {
+      final boolean tutorialEnabled, final int starYear) {
     artifactResearchPoints = artifactResearchPoints + totalResearchPoints;
     int lvl = researchedArtifacts.size();
     int limit = ArtifactFactory.getResearchCost(lvl, gameLength);
@@ -520,7 +524,10 @@ public class ArtifactLists {
           Icons.getIconByName(Icons.ICON_RESEARCH));
       msg.setMatchByString(artifact.getName());
       info.getMsgList().addNewMessage(msg);
-
+      NewsData news = NewsFactory.makeAncientResearchNews(info, sb.toString(),
+          starYear);
+      return news;
     }
+    return null;
   }
 }

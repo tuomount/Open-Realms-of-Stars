@@ -1507,6 +1507,11 @@ public final class GuiStatics {
   public static final String IMAGE_ANCIENT_LABORATORY =
       "/resources/images/ancientlaboratory.png";
   /**
+   * Image ancient research
+   */
+  public static final String IMAGE_ANCIENT_RESEARCH =
+      "/resources/images/ancientresearch.png";
+  /**
    * Image ancient factory
    */
   public static final String IMAGE_ANCIENT_FACTORY =

@@ -1272,6 +1272,17 @@ public final class GuiStatics {
       "/resources/images/pirate_raiders.png";
 
   /**
+   * Big corvette
+   */
+  public static final String IMAGE_CORVETTE =
+      "/resources/images/corvette.png";
+  /**
+   * Big cruiser
+   */
+  public static final String IMAGE_CRUISER =
+      "/resources/images/cruiser.png";
+
+  /**
    * Mutiny
    */
   public static final String IMAGE_MUTINY = "/resources/images/mutiny.png";
@@ -1506,6 +1517,11 @@ public final class GuiStatics {
    */
   public static final String IMAGE_ANCIENT_LABORATORY =
       "/resources/images/ancientlaboratory.png";
+  /**
+   * Image ancient research
+   */
+  public static final String IMAGE_ANCIENT_RESEARCH =
+      "/resources/images/ancientresearch.png";
   /**
    * Image ancient factory
    */

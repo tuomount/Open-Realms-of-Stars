@@ -725,12 +725,13 @@ public final class NewsFactory {
    * @param killerRealm Which realm killed the commander
    * @param killedPrivateer If killed commander was privateer
    * @param killerPrivateer if killer commander was privateer
+   * @param starYear when kill even happens.
    * @return NewsData
    */
   public static NewsData makeCommanderKilledInAction(final Leader killed,
       final Leader killer, final PlayerInfo killedRealm,
       final PlayerInfo killerRealm, final boolean killedPrivateer,
-      final boolean killerPrivateer) {
+      final boolean killerPrivateer, final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
@@ -806,6 +807,8 @@ public final class NewsFactory {
       sb.append(" origins are unknown. ");
     }
     news.setNewsText(sb.toString());
+    killedRealm.appendStory(sb.toString(), starYear);
+    killerRealm.appendStory(sb.toString(), starYear);
     return news;
   }
   /**
@@ -860,6 +863,173 @@ public final class NewsFactory {
     sb.append(leader.getCallName());
     sb.append(" to non hostile planet. ");
     news.setNewsText(sb.toString());
+    return news;
+  }
+  /**
+   * Make fleet commander in combat news.
+   * @param commander Commander which was in combat
+   * @param realm Realm where commander belongs
+   * @param otherRealm Opponent Realm
+   * @param combatAgainstPrivateer Boolean
+   * @param planet Null or planet where combat happened
+   * @param starYear StarYear when combat happened
+   * @param hullSlots number of Hull slots in biggest ship.
+   * @return NewsData
+   */
+  public static NewsData makeCommanderInCombat(final Leader commander,
+      final PlayerInfo realm,
+      final PlayerInfo otherRealm, final boolean combatAgainstPrivateer,
+      final Planet planet, final int starYear, final int hullSlots) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    if (planet != null) {
+      instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+          planet.getPlanetType().getImageInstructions(),
+          ImageInstruction.SIZE_FULL);
+    } else {
+      instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    }
+    if (hullSlots > 6) {
+      instructions.addImage(ImageInstruction.CRUISER);
+    } else {
+      instructions.addImage(ImageInstruction.CORVETTE);
+    }
+    if (planet != null) {
+      switch (DiceGenerator.getRandom(2)) {
+        default:
+        case 0: {
+          instructions.addText("BATTLE");
+          break;
+        }
+        case 1: {
+          instructions.addText("COMBAT");
+          break;
+        }
+        case 2: {
+          instructions.addText("FIGHT");
+          break;
+        }
+      }
+      instructions.addText(" OF ");
+      instructions.addText(planet.getName().toUpperCase());
+    } else {
+      instructions.addText(commander.getCallName().toUpperCase());
+      switch (DiceGenerator.getRandom(3)) {
+        case 0:
+        default: {
+          instructions.addText("IN FIGHT!");
+          break;
+        }
+        case 1: {
+          instructions.addText("IN COMBAT!");
+          break;
+        }
+        case 2: {
+          instructions.addText("IN BATTLE!");
+          break;
+        }
+        case 3: {
+          instructions.addText("IN ACTION!");
+          break;
+        }
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    if (combatAgainstPrivateer) {
+      sb.append(commander.getCallName());
+      switch (DiceGenerator.getRandom(2)) {
+        case 0:
+        default: {
+          sb.append(" fight against ");
+          break;
+        }
+        case 1: {
+          sb.append(" had battle against ");
+          break;
+        }
+        case 2: {
+          sb.append(" was in combat against ");
+          break;
+        }
+      }
+      sb.append("privateer fleet");
+    } else {
+      sb.append(commander.getCallName());
+      switch (DiceGenerator.getRandom(2)) {
+        case 0:
+        default: {
+          sb.append(" fight against ");
+          break;
+        }
+        case 1: {
+          sb.append(" had battle against ");
+          break;
+        }
+        case 2: {
+          sb.append(" was in combat against ");
+          break;
+        }
+      }
+      sb.append(otherRealm.getEmpireName());
+    }
+    if (planet != null) {
+      sb.append(" ");
+      switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        sb.append("while orbiting ");
+        break;
+      }
+      case 1: {
+        sb.append("next to ");
+        break;
+      }
+      case 2: {
+        sb.append("in near space of ");
+        break;
+      }
+    }
+      sb.append(planet.getName());
+    } else {
+      switch (DiceGenerator.getRandom(2)) {
+        case 0:
+        default: {
+          break;
+        }
+        case 1: {
+          sb.append(" in deep space");
+          break;
+        }
+        case 2: {
+          sb.append(" in cold cosmos");
+          break;
+        }
+      }
+    }
+    sb.append(". ");
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        sb.append("Combat");
+        break;
+      }
+      case 1: {
+        sb.append("Battle");
+        break;
+      }
+      case 2: {
+        sb.append("Fight");
+        break;
+      }
+    }
+    sb.append(" was victorious for ");
+    sb.append(commander.getGender().getHisHer());
+    sb.append(" side.");
+    news.setNewsText(sb.toString());
+    realm.appendStory(sb.toString(), starYear);
+    otherRealm.appendStory(sb.toString(), starYear);
     return news;
   }
   /**
@@ -3445,6 +3615,41 @@ public final class NewsFactory {
       sb.append(" is known to have excellent research team. ");
     }
     news.setNewsText(sb.toString());
+    realm.appendStory(news.getNewsText(), starYear);
+    return news;
+  }
+
+  /**
+   * Make scientific achievement news. Realm builds scientific achievement
+   * building and thus is closer to win.
+   * @param realm PlayerInfo who is building
+   * @param text Actual text what was discovered.
+   * @param starYear Star year
+   * @return NewsData
+   */
+  public static NewsData makeAncientResearchNews(final PlayerInfo realm,
+      final String text, final int starYear) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addImage(ImageInstruction.ANCIENT_RESEARCH);
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("BREAKTHROUGH IN ARCHEOLOGY!");
+        break;
+      }
+      case 1: {
+        instructions.addText("ANCIENT ARTIFACT STUDIED!");
+        break;
+      }
+      case 2: {
+        instructions.addText("RESEARCH DONE FOR ANCIENT ARTIFACT!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    news.setNewsText(text);
     realm.appendStory(news.getNewsText(), starYear);
     return news;
   }

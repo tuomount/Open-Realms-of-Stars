@@ -333,6 +333,14 @@ public class ImageInstruction {
    */
   public static final String PIRATE_RAIDERS = "pirate raiders";
   /**
+   * Big corvette image
+   */
+  public static final String CORVETTE = "corvette";
+  /**
+   * Big cruiser image
+   */
+  public static final String CRUISER = "cruiser";
+  /**
    * Mutiny
    */
   public static final String MUTINY = "mutiny";
@@ -444,6 +452,10 @@ public class ImageInstruction {
    * Instructions for ancient laboratory
    */
   public static final String ANCIENT_LABORATORY = "AncientLaboratory";
+  /**
+   * Instructions for ancient research
+   */
+  public static final String ANCIENT_RESEARCH = "AncientResearch";
   /**
    * Instructions for ancient factory
    */
@@ -694,6 +706,8 @@ public class ImageInstruction {
         && !PIRATE_PILOT.equals(image)
         && !KRAKEN.equals(image)
         && !PIRATE_RAIDERS.equals(image)
+        && !CORVETTE.equals(image)
+        && !CRUISER.equals(image)
         && !MUTINY.equals(image)
         && !DATALOSS.equals(image)
         && !NEWSTATION.equals(image)
@@ -714,6 +728,7 @@ public class ImageInstruction {
         && !METAL_RICH_SURFACE.equals(image)
         && !PRECIOUS_GEMS.equals(image)
         && !ANCIENT_LABORATORY.equals(image)
+        && !ANCIENT_RESEARCH.equals(image)
         && !ANCIENT_FACTORY.equals(image)
         && !ANCIENT_TEMPLE.equals(image)
         && !ANCIENT_PALACE.equals(image)
@@ -1323,6 +1338,12 @@ public class ImageInstruction {
     if (PIRATE_RAIDERS.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_PIRATE_RAIDERS);
     }
+    if (CORVETTE.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_CORVETTE);
+    }
+    if (CRUISER.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_CRUISER);
+    }
     if (MUTINY.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_MUTINY);
     }
@@ -1382,6 +1403,9 @@ public class ImageInstruction {
     }
     if (ANCIENT_LABORATORY.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ANCIENT_LABORATORY);
+    }
+    if (ANCIENT_RESEARCH.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ANCIENT_RESEARCH);
     }
     if (ANCIENT_TEMPLE.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_ANCIENT_TEMPLE);

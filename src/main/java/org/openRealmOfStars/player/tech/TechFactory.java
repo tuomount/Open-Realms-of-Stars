@@ -1545,46 +1545,53 @@ public final class TechFactory {
    * @return Amount of research points required
    */
   public static int getTechCost(final int level, final int gameLength) {
+    int veryveryLowBonus = 0;
     int veryLowBonus = 0;
     int lowBonus = 0;
     int mediumBonus = 0;
     int highBonus = 0;
     if (gameLength <= 200) {
+      veryveryLowBonus = 0;
       veryLowBonus = -2;
       lowBonus = -5;
       mediumBonus = -10;
       highBonus = -15;
     } else if (gameLength <= 300) {
+      veryveryLowBonus = 0;
       veryLowBonus = 0;
       lowBonus = 0;
       mediumBonus = 0;
       highBonus = 0;
     } else if (gameLength <= 400) {
+      veryveryLowBonus = 0;
       veryLowBonus = 0;
       lowBonus = 2;
       mediumBonus = 5;
       highBonus = 8;
     } else if (gameLength <= 600) {
-      veryLowBonus = 2;
-      lowBonus = 5;
-      mediumBonus = 10;
-      highBonus = 15;
-    } else if (gameLength <= 800) {
+      veryveryLowBonus = 2;
       veryLowBonus = 4;
       lowBonus = 8;
-      mediumBonus = 15;
-      highBonus = 20;
+      mediumBonus = 16;
+      highBonus = 32;
+    } else if (gameLength <= 800) {
+      veryveryLowBonus = 4;
+      veryLowBonus = 16;
+      lowBonus = 32;
+      mediumBonus = 64;
+      highBonus = 128;
     } else if (gameLength <= 1000) {
-      veryLowBonus = 6;
-      lowBonus = 15;
-      mediumBonus = 20;
-      highBonus = 30;
+      veryveryLowBonus = 8;
+      veryLowBonus = 32;
+      lowBonus = 64;
+      mediumBonus = 128;
+      highBonus = 256;
     }
     switch (level) {
     case 1:
-      return TECH_1_LEVEL_RP_COST;
+      return TECH_1_LEVEL_RP_COST + veryveryLowBonus;
     case 2:
-      return TECH_2_LEVEL_RP_COST;
+      return TECH_2_LEVEL_RP_COST + veryveryLowBonus;
     case 3:
       return TECH_3_LEVEL_RP_COST + veryLowBonus;
     case 4:

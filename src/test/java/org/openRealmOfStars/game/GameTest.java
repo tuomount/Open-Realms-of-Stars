@@ -13,6 +13,7 @@ import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.KarmaType;
@@ -132,13 +133,19 @@ public class GameTest {
       }
     }
     for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
+      int tech = 0;
+      for (TechType techtype : TechType.values()) {
+        tech = tech + game.getPlayers().getPlayerInfoByIndex(i)
+            .getTechList().getTechLevel(techtype);
+      }
+      tech = tech * 10 / 6;
       String resultText = i + ": "
           + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
           + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
           .toString() + ")"
           + " - planets " + planets[i] + "/" + maxPlanets[i] + " - Charted: "
           + charted[i] + "% Combats: " + combats[i] + " Conquest: "
-          + conquest[i];
+          + conquest[i] + " Tech:" + tech;
       if (game.getPlayers().getPlayerInfoByIndex(i).isElderRealm()) {
         resultText = resultText + " - Elder";
       }
@@ -152,20 +159,20 @@ public class GameTest {
   }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunFullGameVeryShort() {
+  public void testRunFullGameLong() {
     System.gc();
     Game game = new Game(false);
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(8);
-    config.setScoringVictoryTurns(100);
+    config.setScoringVictoryTurns(800);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     config.setAiOnly(true);
-    config.setPlayerDifficult(0, AiDifficulty.WEAK);
-    config.setPlayerDifficult(1, AiDifficulty.WEAK);
-    config.setPlayerDifficult(2, AiDifficulty.WEAK);
-    config.setPlayerDifficult(3, AiDifficulty.WEAK);
-    config.setPlayerDifficult(4, AiDifficulty.WEAK);
-    config.setPlayerDifficult(5, AiDifficulty.WEAK);
+    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(3, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(4, AiDifficulty.NORMAL);
+    config.setPlayerDifficult(5, AiDifficulty.NORMAL);
     config.setPlayerDifficult(6, AiDifficulty.WEAK);
     config.setPlayerDifficult(7, AiDifficulty.WEAK);
     game.setGalaxyConfig(config);
@@ -179,7 +186,7 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    printEndGameResults("All weak AI, very short", game);
+    printEndGameResults("Mixed AI, 800 turns", game);
   }
 
   @Test
@@ -211,7 +218,7 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    printEndGameResults("All normal AI, short", game);
+    printEndGameResults("All normal AI, short 200 turns", game);
   }
 
   @Test
@@ -239,7 +246,7 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    printEndGameResults("All challening AI, medium", game);
+    printEndGameResults("All challening AI, medium 400 turns", game);
   }
 
   @Test
@@ -272,7 +279,40 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    printEndGameResults("Full game with 8 realms, medium", game);
+    printEndGameResults("Full game with 8 realms, medium 400 turns", game);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRunFullGameVeryLongWith8Realms() {
+    System.gc();
+    Game game = new Game(false);
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(8);
+    config.setSize(128, 2);
+    config.setScoringVictoryTurns(1000);
+    config.setAiOnly(true);
+    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(3, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(4, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(5, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(6, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(7, AiDifficulty.CHALLENGING);
+    game.setGalaxyConfig(config);
+    game.setPlayerInfo();
+    game.makeNewGame(false);
+    do {
+      game.setAITurnView(new AITurnView(game));
+      boolean singleTurnEnd = false;
+      do {
+       singleTurnEnd = game.getAITurnView().handleAiTurn();
+      } while (!singleTurnEnd);
+      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
+    } while (!game.getStarMap().isGameEnded());
+    printEndGameResults("Full game with 8 realms, long 1000 turns", game);
   }
 
   @Test
@@ -314,7 +354,8 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    printEndGameResults("Full game with 8 realms + pirate, medium", game);
+    printEndGameResults("Full game with 8 realms + pirate, medium 400 turns",
+        game);
   }
 
   @Test
@@ -354,18 +395,18 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    printEndGameResults("Three terrans, medium", game);
+    printEndGameResults("Three terrans, medium 400 turns", game);
   }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunFullGameMediumWith12Realms() {
+  public void testRunFullGameLongWith12Realms() {
     System.gc();
     Game game = new Game(false);
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(12);
     config.setSize(128, 2);
-    config.setScoringVictoryTurns(400);
+    config.setScoringVictoryTurns(600);
     config.setAiOnly(true);
     config.setSolarSystemDistance(7, 2);
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
@@ -394,7 +435,7 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    printEndGameResults("12 Realms, medium", game);
+    printEndGameResults("12 Realms, 600 turns", game);
   }
 
   @Test
@@ -430,7 +471,7 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    printEndGameResults("8 Realms, one lithorian, medium", game);
+    printEndGameResults("8 Realms, one lithorian, medium 400 turns", game);
   }
 
   @Test
@@ -461,7 +502,7 @@ public class GameTest {
         } while (!singleTurnEnd);
         assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
       } while (!game.getStarMap().isGameEnded());
-      String name = "Full game(" + i + "), 8 realms";
+      String name = "Full game(" + i + "), 8 realms, 400 turns";
       printEndGameResults(name, game);
     }
   }
@@ -507,7 +548,7 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
-    printEndGameResults("8 Realms, two elders, medium", game);
+    printEndGameResults("8 Realms, two elders, medium 400 turns", game);
   }
 
 }

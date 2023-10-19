@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018, 2020 Tuomo Untinen
+* Copyright (C) 2018, 2020-2021,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -79,17 +79,17 @@ public class TechFactoryTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testTechCostLong() {
-    assertEquals(5, TechFactory.getTechCost(1, 600));
-    assertEquals(7, TechFactory.getTechCost(2, 600));
-    assertEquals(12, TechFactory.getTechCost(3, 600));
-    assertEquals(20, TechFactory.getTechCost(4, 600));
-    assertEquals(30, TechFactory.getTechCost(5, 600));
-    assertEquals(45, TechFactory.getTechCost(6, 600));
-    assertEquals(70, TechFactory.getTechCost(7, 600));
-    assertEquals(94, TechFactory.getTechCost(8, 600));
-    assertEquals(119, TechFactory.getTechCost(9, 600));
-    assertEquals(145, TechFactory.getTechCost(10, 600));
-    assertEquals(183, TechFactory.getTechCost(11, 600));
+    assertEquals(8, TechFactory.getTechCost(1, 600));
+    assertEquals(12, TechFactory.getTechCost(2, 600));
+    assertEquals(22, TechFactory.getTechCost(3, 600));
+    assertEquals(38, TechFactory.getTechCost(4, 600));
+    assertEquals(58, TechFactory.getTechCost(5, 600));
+    assertEquals(88, TechFactory.getTechCost(6, 600));
+    assertEquals(136, TechFactory.getTechCost(7, 600));
+    assertEquals(184, TechFactory.getTechCost(8, 600));
+    assertEquals(240, TechFactory.getTechCost(9, 600));
+    assertEquals(292, TechFactory.getTechCost(10, 600));
+    assertEquals(368, TechFactory.getTechCost(11, 600));
   }
 
   @Test
@@ -119,33 +119,33 @@ public class TechFactoryTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testTechCostVeryLong() {
-    assertEquals(5, TechFactory.getTechCost(1, 800));
-    assertEquals(7, TechFactory.getTechCost(2, 800));
-    assertEquals(14, TechFactory.getTechCost(3, 800));
-    assertEquals(22, TechFactory.getTechCost(4, 800));
-    assertEquals(33, TechFactory.getTechCost(5, 800));
-    assertEquals(48, TechFactory.getTechCost(6, 800));
-    assertEquals(75, TechFactory.getTechCost(7, 800));
-    assertEquals(99, TechFactory.getTechCost(8, 800));
-    assertEquals(124, TechFactory.getTechCost(9, 800));
-    assertEquals(150, TechFactory.getTechCost(10, 800));
-    assertEquals(188, TechFactory.getTechCost(11, 800));
+    assertEquals(12, TechFactory.getTechCost(1, 800));
+    assertEquals(16, TechFactory.getTechCost(2, 800));
+    assertEquals(24, TechFactory.getTechCost(3, 800));
+    assertEquals(40, TechFactory.getTechCost(4, 800));
+    assertEquals(66, TechFactory.getTechCost(5, 800));
+    assertEquals(96, TechFactory.getTechCost(6, 800));
+    assertEquals(152, TechFactory.getTechCost(7, 800));
+    assertEquals(200, TechFactory.getTechCost(8, 800));
+    assertEquals(272, TechFactory.getTechCost(9, 800));
+    assertEquals(324, TechFactory.getTechCost(10, 800));
+    assertEquals(400, TechFactory.getTechCost(11, 800));
   }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testTechCostMassive() {
-    assertEquals(5, TechFactory.getTechCost(1, 1000));
-    assertEquals(7, TechFactory.getTechCost(2, 1000));
-    assertEquals(16, TechFactory.getTechCost(3, 1000));
-    assertEquals(24, TechFactory.getTechCost(4, 1000));
-    assertEquals(40, TechFactory.getTechCost(5, 1000));
-    assertEquals(55, TechFactory.getTechCost(6, 1000));
-    assertEquals(80, TechFactory.getTechCost(7, 1000));
-    assertEquals(104, TechFactory.getTechCost(8, 1000));
-    assertEquals(134, TechFactory.getTechCost(9, 1000));
-    assertEquals(160, TechFactory.getTechCost(10, 1000));
-    assertEquals(198, TechFactory.getTechCost(11, 1000));
+    assertEquals(13, TechFactory.getTechCost(1, 1000));
+    assertEquals(19, TechFactory.getTechCost(2, 1000));
+    assertEquals(40, TechFactory.getTechCost(3, 1000));
+    assertEquals(64, TechFactory.getTechCost(4, 1000));
+    assertEquals(107, TechFactory.getTechCost(5, 1000));
+    assertEquals(152, TechFactory.getTechCost(6, 1000));
+    assertEquals(244, TechFactory.getTechCost(7, 1000));
+    assertEquals(316, TechFactory.getTechCost(8, 1000));
+    assertEquals(440, TechFactory.getTechCost(9, 1000));
+    assertEquals(518, TechFactory.getTechCost(10, 1000));
+    assertEquals(632, TechFactory.getTechCost(11, 1000));
   }
 
 }

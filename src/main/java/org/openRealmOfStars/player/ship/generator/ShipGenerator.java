@@ -182,6 +182,7 @@ public final class ShipGenerator {
       case CLOAKING_DEVICE: {
         if (!design.gotCertainType(ShipComponentType.CLOAKING_DEVICE)) {
           scores[i] = scores[i] + comp.getCloaking() / 10;
+          scores[i] = scores[i] + design.getFreeEnergy() * 5;
         } else {
           scores[i] = -1;
         }
@@ -189,7 +190,10 @@ public final class ShipGenerator {
       }
       case THRUSTERS: {
         if (!design.gotCertainType(ShipComponentType.THRUSTERS)) {
-          scores[i] = scores[i] + 15;
+          scores[i] = scores[i] + comp.getEnergyResource() * 5;
+          scores[i] = scores[i] + comp.getTacticSpeed() * 5;
+          scores[i] = scores[i] + comp.getInitiativeBoost() * 5;
+          scores[i] = scores[i] + comp.getSpeed() * 5;
         } else {
           scores[i] = -1;
         }
@@ -538,6 +542,10 @@ public final class ShipGenerator {
       ShipComponent thrusters = null;
       if (player.getTechList().isTech("Combat thrusters")) {
         thrusters = ShipComponentFactory.createByName("Combat thrusters");
+        components.add(thrusters);
+      }
+      if (player.getTechList().isTech("Combat thrusters Mk2")) {
+        thrusters = ShipComponentFactory.createByName("Combat thrusters Mk2");
         components.add(thrusters);
       }
       if (shield != null) {

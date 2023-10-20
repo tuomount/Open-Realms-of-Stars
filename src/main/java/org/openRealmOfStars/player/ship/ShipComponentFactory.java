@@ -5,7 +5,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020,2022 Tuomo Untinen
+ * Copyright (C) 2016-2020,2022,2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 208;
+  private static final int MAX_SHIPCOMPONENT = 209;
 
   /**
    * Component Ion drive Mk1
@@ -1026,6 +1026,11 @@ public final class ShipComponentFactory {
    * Component Ascension portal scanner Mk3
    */
   public static final int COMPONENT_ASCENSION_PORTAL_SCANNER_MK3 = 207;
+  /**
+   * Combat thrusters Mk2
+   */
+  public static final int COMPONENT_COMBAT_THRUSTERS_MK2 = 208;
+
 /**
    * Create ShipComponent with matching name
    * @param name Ship component name
@@ -1721,6 +1726,9 @@ public final class ShipComponentFactory {
     case COMPONENT_ASCENSION_PORTAL_SCANNER_MK3:
       tmp = createElectronics(index);
       break; // Ascension portal scanner Mk3
+    case COMPONENT_COMBAT_THRUSTERS_MK2:
+      tmp = createEngine(index);
+      break; // Combat thrusters
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -1975,7 +1983,8 @@ public final class ShipComponentFactory {
           ShipComponentType.THRUSTERS);
       tmp.setTacticSpeed(1);
       tmp.setInitiativeBoost(1);
-      tmp.setEnergyRequirement(1);
+      tmp.setSpeed(1);
+      tmp.setEnergyRequirement(0);
     }
     if (index == COMPONENT_SPACE_FIN) {
       tmp = new ShipComponent(index, "Space fin", 0, 0,
@@ -1984,6 +1993,14 @@ public final class ShipComponentFactory {
       tmp.setFtlSpeed(1);
       tmp.setTacticSpeed(1);
       tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_COMBAT_THRUSTERS_MK2) {
+      tmp = new ShipComponent(index, "Combat thrusters Mk2", 1, 2,
+          ShipComponentType.THRUSTERS);
+      tmp.setTacticSpeed(1);
+      tmp.setInitiativeBoost(2);
+      tmp.setSpeed(1);
+      tmp.setEnergyResource(1);
     }
     return tmp;
 

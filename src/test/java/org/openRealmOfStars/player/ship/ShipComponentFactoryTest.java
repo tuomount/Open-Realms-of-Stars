@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017,2019,2022 Tuomo Untinen
+* Copyright (C) 2017,2019,2022,2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -180,7 +180,17 @@ public class ShipComponentFactoryTest {
   public void testThrustersAndFighterBays() {
     ShipComponent component = ShipComponentFactory.createByName("Combat thrusters");
     assertEquals(1, component.getTacticSpeed());
-    assertEquals(1, component.getEnergyRequirement());
+    assertEquals(1, component.getSpeed());
+    assertEquals(1, component.getInitiativeBoost());
+    assertEquals(0, component.getEnergyRequirement());
+    assertEquals(1, component.getCost());
+    assertEquals(2, component.getMetalCost());
+    component = ShipComponentFactory.createByName("Combat thrusters Mk2");
+    assertEquals(1, component.getTacticSpeed());
+    assertEquals(1, component.getSpeed());
+    assertEquals(2, component.getInitiativeBoost());
+    assertEquals(0, component.getEnergyRequirement());
+    assertEquals(1, component.getEnergyResource());
     assertEquals(1, component.getCost());
     assertEquals(2, component.getMetalCost());
     component = ShipComponentFactory.createByName("Fighter bay Mk1");

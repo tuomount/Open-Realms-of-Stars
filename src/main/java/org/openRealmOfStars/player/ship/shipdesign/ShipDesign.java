@@ -241,6 +241,7 @@ public class ShipDesign {
    */
   public int getSpeed() {
     int speed = 0;
+    int thrusters = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (comp.getType() == ShipComponentType.ENGINE
@@ -251,7 +252,11 @@ public class ShipDesign {
           && comp.getSpeed() > speed) {
         speed = comp.getSpeed();
       }
+      if (comp.getType() == ShipComponentType.THRUSTERS) {
+        thrusters = comp.getSpeed();
+      }
     }
+    speed = speed + thrusters;
     return speed;
   }
 

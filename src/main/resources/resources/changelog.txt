@@ -5,6 +5,8 @@
 * Improved background story generation for realms.
 * Allow starmap zooming in and out.
 * Redraw 64x64 map tiles, this also include Deep Space Anchor on all sizes.
+* Technology progress is much slower when maximum turn amount is over 400 turns.
+* Improved combat thrusters and added Combat thrusters Mk2 which generate energy.
 
 - Bugfixes -
 

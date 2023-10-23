@@ -330,6 +330,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       game.changeGameState(GameState.STARMAP);
     }
     if (game.getGameState() == GameState.VIEWSHIPS) {
+      game.getStarMap().removeObsoleteShipDesign();
       game.changeGameState(GameState.STARMAP);
     }
     if (game.getGameState() == GameState.SHIPDESIGN) {

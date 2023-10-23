@@ -6084,4 +6084,26 @@ public class StarMap {
   public int getZoomLevel() {
     return zoomLevel;
   }
+
+  /**
+   * Remove Obsolete ship design from human player.
+   */
+  public void removeObsoleteShipDesign() {
+    for (Planet planet : planetList) {
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetPlayerInfo().isHuman()) {
+        PlayerInfo info = planet.getPlanetPlayerInfo();
+        if (planet.getUnderConstruction() instanceof Ship) {
+          Ship ship = (Ship) planet.getUnderConstruction();
+          for (ShipStat stat : info.getShipStatList()) {
+            if (stat.isObsolete()
+                && stat.getDesign().getName().equals(ship.getName())) {
+              planet.setUnderConstruction(planet.getProductionList()[0]);
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
 }

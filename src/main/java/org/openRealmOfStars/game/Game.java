@@ -3581,6 +3581,7 @@ public class Game implements ActionListener {
     if (gameState == GameState.VIEWSHIPS && shipView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        getStarMap().removeObsoleteShipDesign();
         SoundPlayer.playMenuSound();
         changeGameState(GameState.STARMAP);
         return;

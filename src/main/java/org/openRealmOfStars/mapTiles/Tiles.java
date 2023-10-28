@@ -396,6 +396,8 @@ public final class Tiles {
     addTile(tilesImage32, tilesImage64, tilesImage16, 9, 6,
         TileNames.DESTROYED_PLANET,
         TileNames.DESTROYED_PLANET_DESCRIPTION);
+    //readAscensionPortals(tilesImage32, tilesImage64, tilesImage16);
+
   }
 
   /**

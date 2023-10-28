@@ -710,6 +710,110 @@ public final class TileNames {
   public static final String ICEGIANT2 = "ICEGIANT2";
 
   /**
+   * Ascension portal 1
+   */
+  public static final String ASCENSION_PORTAL1 = "ASCENSION_PORTAL1";
+  /**
+   * Ascension portal 2
+   */
+  public static final String ASCENSION_PORTAL2 = "ASCENSION_PORTAL2";
+  /**
+   * Ascension portal 3
+   */
+  public static final String ASCENSION_PORTAL3 = "ASCENSION_PORTAL3";
+  /**
+   * Ascension portal 4
+   */
+  public static final String ASCENSION_PORTAL4 = "ASCENSION_PORTAL4";
+  /**
+   * Ascension veins NS1
+   */
+  public static final String ASCENSION_VEIN_NS1 = "ASCENSION_VEIN_NS1";
+  /**
+   * Ascension veins NS2
+   */
+  public static final String ASCENSION_VEIN_NS2 = "ASCENSION_VEIN_NS2";
+  /**
+   * Ascension veins WE1
+   */
+  public static final String ASCENSION_VEIN_WE1 = "ASCENSION_VEIN_WE1";
+  /**
+   * Ascension veins WE2
+   */
+  public static final String ASCENSION_VEIN_WE2 = "ASCENSION_VEIN_WE2";
+  /**
+   * Ascension veins SW1
+   */
+  public static final String ASCENSION_VEIN_SW1 = "ASCENSION_VEIN_SW1";
+  /**
+   * Ascension veins SW2
+   */
+  public static final String ASCENSION_VEIN_SW2 = "ASCENSION_VEIN_SW2";
+  /**
+   * Ascension veins NW1
+   */
+  public static final String ASCENSION_VEIN_NW1 = "ASCENSION_VEIN_NW1";
+  /**
+   * Ascension veins NW2
+   */
+  public static final String ASCENSION_VEIN_NW2 = "ASCENSION_VEIN_NW2";
+  /**
+   * Ascension veins SE1
+   */
+  public static final String ASCENSION_VEIN_SE1 = "ASCENSION_VEIN_SE1";
+  /**
+   * Ascension veins SE2
+   */
+  public static final String ASCENSION_VEIN_SE2 = "ASCENSION_VEIN_SE2";
+  /**
+   * Ascension veins NSWE1
+   */
+  public static final String ASCENSION_VEIN_NSWE1 = "ASCENSION_VEIN_NSWE1";
+  /**
+   * Ascension veins NSWE2
+   */
+  public static final String ASCENSION_VEIN_NSWE2 = "ASCENSION_VEIN_NSWE2";
+  /**
+   * Ascension veins NE1
+   */
+  public static final String ASCENSION_VEIN_NE1 = "ASCENSION_VEIN_NE1";
+  /**
+   * Ascension veins NE2
+   */
+  public static final String ASCENSION_VEIN_NE2 = "ASCENSION_VEIN_NE2";
+  /**
+   * Ascension veins SWE1
+   */
+  public static final String ASCENSION_VEIN_SWE1 = "ASCENSION_VEIN_SWE1";
+  /**
+   * Ascension veins SWE2
+   */
+  public static final String ASCENSION_VEIN_SWE2 = "ASCENSION_VEIN_SWE2";
+  /**
+   * Ascension veins NSW1
+   */
+  public static final String ASCENSION_VEIN_NSW1 = "ASCENSION_VEIN_NSW1";
+  /**
+   * Ascension veins NSW2
+   */
+  public static final String ASCENSION_VEIN_NSW2 = "ASCENSION_VEIN_NSW2";
+  /**
+   * Ascension veins NWE1
+   */
+  public static final String ASCENSION_VEIN_NWE1 = "ASCENSION_VEIN_NWE1";
+  /**
+   * Ascension veins NWE2
+   */
+  public static final String ASCENSION_VEIN_NWE2 = "ASCENSION_VEIN_NWE2";
+  /**
+   * Ascension veins NSE1
+   */
+  public static final String ASCENSION_VEIN_NSE1 = "ASCENSION_VEIN_NSE1";
+  /**
+   * Ascension veins NSE2
+   */
+  public static final String ASCENSION_VEIN_NSE2 = "ASCENSION_VEIN_NSE2";
+  /**
    * List of non harmful space anomalies. This is the list used
    * when generating random space anomalies which are harmless.
    */
@@ -772,9 +876,12 @@ public final class TileNames {
   /**
    * Description about deep space anchor
    */
-  public static final String DEEP_SPACE_ANCHOR_DESCRIPTION = "Deep space anchor"
-      + " is special place in space and time where big space constructions can"
-      + " be safely build. This ideal place for Deep Space Stations.";
+  public static final String DEEP_SPACE_ANCHOR_DESCRIPTION =
+      "A Deep Space Anchor is a unique point in the fabric of space and"
+      + " time where large-scale space constructions can be securely"
+      + " established. It serves as an optimal location for the"
+      + " construction of Deep Space Stations, providing stability"
+      + " and strategic positioning in the cosmic expanse.";
 
   /**
    * Description about red star
@@ -810,27 +917,42 @@ public final class TileNames {
    * Description about space anomaly
    */
   public static final String SPACE_ANOMALY_DESCRIPTION = "Space anomalies are"
-      + " unknown objects floating in space. Space anomaly can be explored to"
-      + " reveal it's secrets.";
+      + " unknown objects floating in space. Each anomaly presents "
+      + "an opportunity for exploration, promising to unveil its"
+      + " hidden secrets to those daring enough to investigate.";
   /**
    * Description about space anomaly
    */
-  public static final String WORM_HOLE_DESCRIPTION = "Worm hole is a tunnel"
-      + " between two locations in spacetime continuum. Since space is"
-      + " constantly moving also other end of tunnel is moving.";
+  public static final String WORM_HOLE_DESCRIPTION =
+      "A wormhole serves as a tunnel bridging two points in the spacetime"
+      + " continuum. Given the dynamic nature of space, it's important to "
+      + "note that the exit point of the tunnel is in a state of perpetual "
+      + "motion, mirroring the ever-changing cosmos.";
   /**
    * Description about news station
    */
-  public static final String NEWS_STATION_DESCRIPTION = "This is ancient"
-      + " news station that still keeps broadcasting whole galaxy wide news."
-      + " It is mystery how it can still operate and who built it."
-      + " It must have been built some of ancient realms.";
+  public static final String NEWS_STATION_DESCRIPTION =
+      "This ancient news station continues to transmit comprehensive news"
+      + " broadcasts across the entire galaxy. The enduring enigma surrounds"
+      + " its ongoing operation and the identity of its creators. It is"
+      + " believed to have been constructed star years ago,"
+      + " long-forgotten ancient realm";
   /**
    * Description about destroyed planet
    */
-  public static final String DESTROYED_PLANET_DESCRIPTION = "This is an old"
-      + " destroyed planet or what is being left from it."
-      + " It is mystery what caused it's destruction but there could"
-      + " be something worth while to study.";
+  public static final String DESTROYED_PLANET_DESCRIPTION =
+      "This desolate planet is a remnant of its former self,"
+      + " bearing the scars of an ancient cataclysm. The enigma of its "
+      + "demise begs investigation, for within its ruins, there may lie "
+      + "valuable insights waiting to be unearthed.";
+  /**
+   * Description about Ascension Portal
+   */
+  public static final String ASCENSION_PORTAL_DESCRIPTION =
+      "The enigmatic portal harnesses energy from a black hole at the heart "
+      + "of the galaxy. Those who venture through it are transformed into"
+      + " ascended beings, possessing near-boundless power. However, a "
+      + "consequence of this transcendence is their departure from our "
+      + "reality, moving onto a higher plane of existence.";
 
 }

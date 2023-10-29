@@ -396,6 +396,8 @@ public final class Tiles {
     addTile(tilesImage32, tilesImage64, tilesImage16, 9, 6,
         TileNames.DESTROYED_PLANET,
         TileNames.DESTROYED_PLANET_DESCRIPTION);
+    readAscensionTiles(tilesImage32, tilesImage64, tilesImage16);
+
   }
 
   /**
@@ -950,6 +952,85 @@ public final class Tiles {
         TileNames.ICEGIANT2_SE,
         null);
 
+  }
+
+  /**
+   * Read new stars and planets
+   *
+   * @param tilesImage32 Image for 32x32 tiles
+   * @param tilesImage64 Image for 64x64 tiles
+   * @param tilesImage16 Image for 16x16 tiles
+   */
+  private static void readAscensionTiles(
+      final BufferedImage tilesImage32,
+      final BufferedImage tilesImage64, final BufferedImage tilesImage16) {
+    addTile(tilesImage32, tilesImage64, tilesImage16, 6, 7,
+        TileNames.ASCENSION_VEIN_NS1, null, -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 7, 7,
+        TileNames.ASCENSION_VEIN_NS2, null,
+        Tiles.getTileByName(TileNames.ASCENSION_VEIN_NS1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 8, 7,
+        TileNames.ASCENSION_VEIN_WE1, null, -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 9, 7,
+        TileNames.ASCENSION_VEIN_WE2, null,
+        Tiles.getTileByName(TileNames.ASCENSION_VEIN_WE1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 10, 7,
+        TileNames.ASCENSION_VEIN_SW1, null, -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 11, 7,
+        TileNames.ASCENSION_VEIN_SW2, null,
+        Tiles.getTileByName(TileNames.ASCENSION_VEIN_SW1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 10, 8,
+        TileNames.ASCENSION_VEIN_NW1, null, -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 11, 8,
+        TileNames.ASCENSION_VEIN_NW2, null,
+        Tiles.getTileByName(TileNames.ASCENSION_VEIN_NW1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 8, 8,
+        TileNames.ASCENSION_VEIN_SE1, null, -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 9, 8,
+        TileNames.ASCENSION_VEIN_SE2, null,
+        Tiles.getTileByName(TileNames.ASCENSION_VEIN_SE1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 6, 8,
+        TileNames.ASCENSION_VEIN_NSWE1, null, -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 7, 8,
+        TileNames.ASCENSION_VEIN_NSWE2, null,
+        Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 6, 9,
+        TileNames.ASCENSION_VEIN_NE1, null, -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 7, 9,
+        TileNames.ASCENSION_VEIN_NE2, null,
+        Tiles.getTileByName(TileNames.ASCENSION_VEIN_NE1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 8, 9,
+        TileNames.ASCENSION_VEIN_SWE1, null, -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 9, 9,
+        TileNames.ASCENSION_VEIN_SWE2, null,
+        Tiles.getTileByName(TileNames.ASCENSION_VEIN_SWE1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 10, 9,
+        TileNames.ASCENSION_VEIN_NSW1, null, -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 11, 9,
+        TileNames.ASCENSION_VEIN_NSW2, null,
+        Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSW1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 6, 10,
+        TileNames.ASCENSION_VEIN_NWE1, null, -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 7, 10,
+        TileNames.ASCENSION_VEIN_NWE2, null,
+        Tiles.getTileByName(TileNames.ASCENSION_VEIN_NWE1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 8, 10,
+        TileNames.ASCENSION_VEIN_NSE1, null, -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 9, 10,
+        TileNames.ASCENSION_VEIN_NSE2, null,
+        Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSE1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 14, 4,
+        TileNames.ASCENSION_PORTAL1, TileNames.ASCENSION_PORTAL_DESCRIPTION,
+        -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 15, 4,
+        TileNames.ASCENSION_PORTAL2, TileNames.ASCENSION_PORTAL_DESCRIPTION,
+        -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 16, 4,
+        TileNames.ASCENSION_PORTAL3, TileNames.ASCENSION_PORTAL_DESCRIPTION,
+        -2);
+    addTile(tilesImage32, tilesImage64, tilesImage16, 17, 4,
+        TileNames.ASCENSION_PORTAL4, TileNames.ASCENSION_PORTAL_DESCRIPTION,
+        Tiles.getTileByName(TileNames.ASCENSION_PORTAL1).getIndex());
   }
   /**
    * Get Blackhole first index start

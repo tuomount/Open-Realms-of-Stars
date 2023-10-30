@@ -833,7 +833,8 @@ public final class MissionHandling {
               + " colonized planet " + planet.getName()
               + ". ");
           game.getStarMap().getHistory().addEvent(event);
-          planet.eventActivation(game.getStarMap().isTutorialEnabled());
+          planet.eventActivation(game.getStarMap().isTutorialEnabled(),
+              null, null);
         } else {
           setNewColonyTarget(mission, fleet, info, game);
         }

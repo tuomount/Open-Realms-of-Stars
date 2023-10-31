@@ -3673,6 +3673,7 @@ public class Planet {
   public void eventActivation(final boolean isTutorialEnabled,
       final Leader commander, final PlayerInfo info) {
     PlayerInfo realm = planetOwnerInfo;
+    int exp = 0;
     if (info != null) {
       realm = info;
     }
@@ -3690,6 +3691,7 @@ public class Planet {
       eventFound = true;
       if (event.oneTimeOnly()) {
         if (event == PlanetaryEvent.ANCIENT_ARTIFACT) {
+          exp = 15;
           event = PlanetaryEvent.NONE;
           msgText.append("that ");
           msgText.append(getName() + " has strange ancient artifact.");
@@ -3718,6 +3720,7 @@ public class Planet {
             }
           }
         } else {
+          exp = 8;
           Building building = event.getBuilding();
           addBuilding(building);
           ImageInstruction imageInst = null;
@@ -3764,6 +3767,7 @@ public class Planet {
         }
       } else {
         if (event == PlanetaryEvent.LUSH_VEGETATION) {
+          exp = 10;
           ImageInstruction imageInst = new ImageInstruction();
           imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
           imageInst.addImage(ImageInstruction.LUSH_VEGETATION);
@@ -3775,6 +3779,7 @@ public class Planet {
           msg.setImageInstructions(imageInst.build());
           realm.getMsgList().addUpcomingMessage(msg);
         } else if (event == PlanetaryEvent.PARADISE) {
+          exp = 10;
           ImageInstruction imageInst = new ImageInstruction();
           imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
           imageInst.addImage(ImageInstruction.PARADISE);
@@ -3786,6 +3791,7 @@ public class Planet {
           msg.setImageInstructions(imageInst.build());
           realm.getMsgList().addUpcomingMessage(msg);
         } else if (event == PlanetaryEvent.METAL_RICH_SURFACE) {
+          exp = 10;
           msgText.append(" that planet's surface is full of metal ore. ");
           msgText.append("This gives one extra metal per turn.");
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
@@ -3797,6 +3803,7 @@ public class Planet {
           msg.setImageInstructions(imageInst.build());
           realm.getMsgList().addUpcomingMessage(msg);
         } else if (event == PlanetaryEvent.PRECIOUS_GEMS) {
+          exp = 10;
           msgText.append(" that planet's surface is full of precious gems. ");
           msgText.append("This gives one extra credit per turn.");
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
@@ -3808,6 +3815,7 @@ public class Planet {
           msg.setImageInstructions(imageInst.build());
           realm.getMsgList().addUpcomingMessage(msg);
         } else  if (event == PlanetaryEvent.MOLTEN_LAVA) {
+          exp = 10;
           msgText.append(" that there is massive amount of molten lava ");
           msgText.append("on planet surface. This gives one extra metal and"
               + " production per turn but adds also unhappiness of people.");
@@ -3820,6 +3828,7 @@ public class Planet {
           msg.setImageInstructions(imageInst.build());
           realm.getMsgList().addUpcomingMessage(msg);
         } else if (event == PlanetaryEvent.ARID) {
+          exp = 6;
           msgText.append(" that planet is arid. Naturally growing food is");
           msgText.append(" is challenging to find. This planet produces only"
               + " one food without alterations.");
@@ -3832,6 +3841,7 @@ public class Planet {
           msg.setImageInstructions(imageInst.build());
           realm.getMsgList().addUpcomingMessage(msg);
         } else if (event == PlanetaryEvent.DESERT) {
+          exp = 6;
           msgText.append(" that planet is dry and full of desert. There is no"
               + " food growing on planet surface. This planet does not provide"
               + " any food without alterations.");
@@ -3844,6 +3854,12 @@ public class Planet {
           msg.setImageInstructions(imageInst.build());
           realm.getMsgList().addUpcomingMessage(msg);
         }
+      }
+      if (commander != null) {
+        if (commander.hasPerk(Perk.TREKKER)) {
+          exp = exp * 2;
+        }
+        commander.setExperience(commander.getExperience() + exp);
       }
     }
   }

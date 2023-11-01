@@ -69,6 +69,11 @@ public class Route {
   public static final int ROUTE_BOMBED = -2;
 
   /**
+   * Use this as FTL speed to set fleet when it has bombed planet.
+   */
+  public static final int ROUTE_EXPLORED = -3;
+
+  /**
    * Constructor for route
    * @param sx Start X coordinate
    * @param sy Start Y coordinate
@@ -128,6 +133,17 @@ public class Route {
    */
   public boolean isBombing() {
     if (ftlSpeed == ROUTE_BOMBED) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Route just for exploring the planet under fleet sector
+   * @return true if exploring the planet
+   */
+  public boolean isExploring() {
+    if (ftlSpeed == ROUTE_EXPLORED) {
       return true;
     }
     return false;
@@ -383,6 +399,32 @@ public class Route {
       return smallBombedDot;
     }
     return bombedDot;
+  }
+
+  /**
+   * Route explored image
+   */
+  private static BufferedImage exploredDot;
+  /**
+   * Small route explored image
+   */
+  private static BufferedImage smallExploredDot;
+
+  /**
+   * Get explored image
+   * @param zoomLevel Zoomlevel for getting correct size image.
+   * @return BufferedImage
+   */
+  public static BufferedImage getExploredDot(final int zoomLevel) {
+    if (exploredDot == null) {
+      exploredDot = IOUtilities
+          .loadImage(Icons.class.getResource("/resources/images/explored.png"));
+      smallExploredDot = GuiStatics.scaleToHalf(exploredDot);
+    }
+    if (zoomLevel == Tile.ZOOM_OUT1) {
+      return smallExploredDot;
+    }
+    return exploredDot;
   }
 
   /**

@@ -587,6 +587,8 @@ public class Fleet {
         sb.append("\n\nFixing");
       } else if (route.isBombing()) {
         sb.append("\n\nBombing");
+      } else if (route.isExploring()) {
+        sb.append("\n\nExploring the planet");
       } else {
         sb.append("\n\nEnroute");
       }

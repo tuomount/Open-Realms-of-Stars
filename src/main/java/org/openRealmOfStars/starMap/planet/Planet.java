@@ -3684,7 +3684,9 @@ public class Planet {
         msgText.append(getName());
         msgText.append(" colonist found ");
       } else {
-        msgText.append("Away team lead by ");
+        msgText.append("Away team on ");
+        msgText.append(getName());
+        msgText.append(" lead by ");
         msgText.append(commander.getCallName());
         msgText.append(" found ");
       }
@@ -3773,6 +3775,10 @@ public class Planet {
           imageInst.addImage(ImageInstruction.LUSH_VEGETATION);
           msgText.append(" that planet has lot's of edible vegetation. ");
           msgText.append("This gives one extra food per turn.");
+          if (commander != null) {
+            msgText.append(
+                " This can be only utilized by colonizating planet.");
+          }
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
               Icons.getIconByName(Icons.ICON_FARM));
           msg.setCoordinate(getCoordinate());
@@ -3785,6 +3791,10 @@ public class Planet {
           imageInst.addImage(ImageInstruction.PARADISE);
           msgText.append(" that planet is true paradise. ");
           msgText.append("This gives two extra food per turn.");
+          if (commander != null) {
+            msgText.append(
+                " This can be only utilized by colonizating planet.");
+          }
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
               Icons.getIconByName(Icons.ICON_FARM));
           msg.setCoordinate(getCoordinate());
@@ -3794,6 +3804,10 @@ public class Planet {
           exp = 10;
           msgText.append(" that planet's surface is full of metal ore. ");
           msgText.append("This gives one extra metal per turn.");
+          if (commander != null) {
+            msgText.append(
+                " This can be only utilized by colonizating planet.");
+          }
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
               Icons.getIconByName(Icons.ICON_METAL_ORE));
           msg.setCoordinate(getCoordinate());
@@ -3806,6 +3820,10 @@ public class Planet {
           exp = 10;
           msgText.append(" that planet's surface is full of precious gems. ");
           msgText.append("This gives one extra credit per turn.");
+          if (commander != null) {
+            msgText.append(
+                " This can be only utilized by colonizating planet.");
+          }
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
               Icons.getIconByName(Icons.ICON_CREDIT));
           msg.setCoordinate(getCoordinate());
@@ -3819,6 +3837,10 @@ public class Planet {
           msgText.append(" that there is massive amount of molten lava ");
           msgText.append("on planet surface. This gives one extra metal and"
               + " production per turn but adds also unhappiness of people.");
+          if (commander != null) {
+            msgText.append(
+                " This can be only utilized by colonizating planet.");
+          }
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
               Icons.getIconByName(Icons.ICON_METAL_ORE));
           msg.setCoordinate(getCoordinate());
@@ -3832,6 +3854,10 @@ public class Planet {
           msgText.append(" that planet is arid. Naturally growing food is");
           msgText.append(" is challenging to find. This planet produces only"
               + " one food without alterations.");
+          if (commander != null) {
+            msgText.append(
+                " Colonists on this planet would have tough time.");
+          }
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
               Icons.getIconByName(Icons.ICON_FARM));
           msg.setCoordinate(getCoordinate());
@@ -3845,6 +3871,10 @@ public class Planet {
           msgText.append(" that planet is dry and full of desert. There is no"
               + " food growing on planet surface. This planet does not provide"
               + " any food without alterations.");
+          if (commander != null) {
+            msgText.append(
+                " Colonists on this planet would have tough time.");
+          }
           Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
               Icons.getIconByName(Icons.ICON_FARM));
           msg.setCoordinate(getCoordinate());

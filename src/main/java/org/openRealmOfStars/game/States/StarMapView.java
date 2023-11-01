@@ -524,8 +524,12 @@ public class StarMapView extends BlackPanel {
           fleet.getCoordinate());
       if (nearByPlanet != null
           && nearByPlanet.getPlanetPlayerInfo() == null
-          && !nearByPlanet.isEventActivated()) {
-        // FIX ME change sound
+          && !nearByPlanet.isEventActivated()
+          && fleet.getMovesLeft() > 0) {
+        // FIXME change sound
+        fleet.setMovesLeft(0);
+        fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
+            fleet.getY(), Route.ROUTE_EXPLORED));
         SoundPlayer.playMenuSound();
         nearByPlanet.eventActivation(map.isTutorialEnabled(),
             fleet.getCommander(), infoPanel.getFleetOwner());

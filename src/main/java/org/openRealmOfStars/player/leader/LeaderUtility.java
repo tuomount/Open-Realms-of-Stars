@@ -2487,7 +2487,10 @@ public final class LeaderUtility {
     StringBuilder sb = new StringBuilder();
     switch (perk) {
       default: {
-        sb.append("Unkown perk gained...");
+        sb.append(leader.getName());
+        sb.append(" gained perk called ");
+        sb.append(perk.getName());
+        sb.append(".");
         break;
       }
       case ACADEMIC: {
@@ -2788,6 +2791,12 @@ public final class LeaderUtility {
       case WEALTHY: {
         sb.append(leader.getName());
         sb.append(" has got some personal extra credits. ");
+        break;
+      }
+      case TREKKER: {
+        sb.append(leader.getName());
+        sb.append(" has show great interest for exploring uncolonized"
+            + " planets. ");
         break;
       }
     }

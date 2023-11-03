@@ -3325,6 +3325,10 @@ public class AITurnView extends BlackPanel {
             // Clean bombing route.
             fleet.setRoute(null);
           }
+          if (fleet.getRoute() != null && fleet.getRoute().isExploring()) {
+            // Clean exploring route.
+            fleet.setRoute(null);
+          }
           fleet.resetShields();
           if (fleet.getCommander() != null) {
             if (fleet.getCommander().getJob() == Job.DEAD) {

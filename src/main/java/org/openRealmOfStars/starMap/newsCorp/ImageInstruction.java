@@ -56,9 +56,21 @@ public class ImageInstruction {
    */
   public static final String BACKGROUND_GREY_GRADIENT = "grey gradient";
   /**
+   * Text color bright
+   */
+  public static final String TEXT_COLOR_BRIGHT = "bright";
+  /**
+   * Text color dark
+   */
+  public static final String TEXT_COLOR_DARK = "dark";
+  /**
    * Instructions for texts
    */
   private static final String TEXT = "text";
+  /**
+   * Instructions for text color
+   */
+  private static final String TEXT_COLOR = "textColor";
   /**
    * Instructions for planet
    */
@@ -603,6 +615,25 @@ public class ImageInstruction {
     sb.append(TEXT);
     sb.append(PARAM_START);
     sb.append(sanitizeParameters(paramText));
+    sb.append(PARAM_END);
+    return this;
+  }
+
+  /**
+   * Add text color to image instructions.
+   * @param color Text color
+   * @return ImageInstruction with text color
+   */
+  public ImageInstruction addTextColor(final String color) {
+    checkDelim();
+    if (!TEXT_COLOR_BRIGHT.equals(color)
+        && !TEXT_COLOR_DARK.equals(color)) {
+      throw new IllegalArgumentException("Illegal text color: "
+        + color);
+    }
+    sb.append(TEXT_COLOR);
+    sb.append(PARAM_START);
+    sb.append(sanitizeParameters(color));
     sb.append(PARAM_END);
     return this;
   }
@@ -1564,6 +1595,7 @@ public class ImageInstruction {
   public static BufferedImage parseImageInstructions(final BufferedImage image,
       final String instructions) {
     int textY = 30;
+    Color textColor = GuiStatics.getCoolSpaceColor();
     BufferedImage workImage = image;
     String[] lines = instructions.split("\\+");
     for (String line : lines) {
@@ -1580,9 +1612,17 @@ public class ImageInstruction {
         // Background has only one parameter
         paintBackground(workImage, parameters[0]);
       }
+      if (TEXT_COLOR.equals(command)) {
+        if (parameters[0].equals(TEXT_COLOR_BRIGHT)) {
+          textColor = GuiStatics.getCoolSpaceColor();
+        }
+        if (parameters[0].equals(TEXT_COLOR_DARK)) {
+          textColor = GuiStatics.getCoolSpaceColorDarker();
+        }
+      }
       if (TEXT.equals(command)) {
         Graphics2D g = (Graphics2D) workImage.getGraphics();
-        g.setColor(GuiStatics.getCoolSpaceColor());
+        g.setColor(textColor);
         g.setFont(GuiStatics.getFontCubellanBoldBig());
         int textWidth = GuiStatics.getTextWidth(g.getFont(), parameters[0]);
         int height = GuiStatics.getTextHeight(g.getFont(), parameters[0]);

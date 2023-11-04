@@ -3633,6 +3633,7 @@ public final class NewsFactory {
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
     instructions.addImage(ImageInstruction.ANCIENT_RESEARCH);
+    instructions.addTextColor(ImageInstruction.TEXT_COLOR_DARK);
     switch (DiceGenerator.getRandom(2)) {
       case 0:
       default: {

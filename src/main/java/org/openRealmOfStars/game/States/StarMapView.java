@@ -526,7 +526,7 @@ public class StarMapView extends BlackPanel {
           && nearByPlanet.getPlanetPlayerInfo() == null
           && !nearByPlanet.isEventActivated()
           && fleet.getMovesLeft() > 0) {
-        // FIXME change sound
+        SoundPlayer.playSound(SoundPlayer.AWAYTEAM);
         fleet.setMovesLeft(0);
         fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
             fleet.getY(), Route.ROUTE_EXPLORED));

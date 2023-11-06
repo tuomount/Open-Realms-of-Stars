@@ -2075,6 +2075,12 @@ public class Planet {
         sb.append(getCulture());
         sb.append("\n");
       }
+      if (activeScanned && !isEventActivated()
+          && event != PlanetaryEvent.NONE) {
+        sb.append("\nAway team could be send down.");
+        sb.append("\n");
+      }
+
     }
     return sb.toString();
   }
@@ -3773,7 +3779,7 @@ public class Planet {
           ImageInstruction imageInst = new ImageInstruction();
           imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
           imageInst.addImage(ImageInstruction.LUSH_VEGETATION);
-          msgText.append(" that planet has lot's of edible vegetation. ");
+          msgText.append("that planet has lot's of edible vegetation. ");
           msgText.append("This gives one extra food per turn.");
           if (commander != null) {
             msgText.append(
@@ -3789,7 +3795,7 @@ public class Planet {
           ImageInstruction imageInst = new ImageInstruction();
           imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
           imageInst.addImage(ImageInstruction.PARADISE);
-          msgText.append(" that planet is true paradise. ");
+          msgText.append("that planet is true paradise. ");
           msgText.append("This gives two extra food per turn.");
           if (commander != null) {
             msgText.append(
@@ -3802,7 +3808,7 @@ public class Planet {
           realm.getMsgList().addUpcomingMessage(msg);
         } else if (event == PlanetaryEvent.METAL_RICH_SURFACE) {
           exp = 10;
-          msgText.append(" that planet's surface is full of metal ore. ");
+          msgText.append("that planet's surface is full of metal ore. ");
           msgText.append("This gives one extra metal per turn.");
           if (commander != null) {
             msgText.append(
@@ -3818,7 +3824,7 @@ public class Planet {
           realm.getMsgList().addUpcomingMessage(msg);
         } else if (event == PlanetaryEvent.PRECIOUS_GEMS) {
           exp = 10;
-          msgText.append(" that planet's surface is full of precious gems. ");
+          msgText.append("that planet's surface is full of precious gems. ");
           msgText.append("This gives one extra credit per turn.");
           if (commander != null) {
             msgText.append(
@@ -3834,7 +3840,7 @@ public class Planet {
           realm.getMsgList().addUpcomingMessage(msg);
         } else  if (event == PlanetaryEvent.MOLTEN_LAVA) {
           exp = 10;
-          msgText.append(" that there is massive amount of molten lava ");
+          msgText.append("that there is massive amount of molten lava ");
           msgText.append("on planet surface. This gives one extra metal and"
               + " production per turn but adds also unhappiness of people.");
           if (commander != null) {
@@ -3851,7 +3857,7 @@ public class Planet {
           realm.getMsgList().addUpcomingMessage(msg);
         } else if (event == PlanetaryEvent.ARID) {
           exp = 6;
-          msgText.append(" that planet is arid. Naturally growing food is");
+          msgText.append("that planet is arid. Naturally growing food is");
           msgText.append(" is challenging to find. This planet produces only"
               + " one food without alterations.");
           if (commander != null) {
@@ -3868,7 +3874,7 @@ public class Planet {
           realm.getMsgList().addUpcomingMessage(msg);
         } else if (event == PlanetaryEvent.DESERT) {
           exp = 6;
-          msgText.append(" that planet is dry and full of desert. There is no"
+          msgText.append("that planet is dry and full of desert. There is no"
               + " food growing on planet surface. This planet does not provide"
               + " any food without alterations.");
           if (commander != null) {

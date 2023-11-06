@@ -15,6 +15,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 
 /**
@@ -265,6 +266,7 @@ public class StarMapMouseListener extends MouseAdapter {
           fleet.getCoordinate());
       if (nearByPlanet != null
           && nearByPlanet.getPlanetPlayerInfo() == null
+          && nearByPlanet.getPlanetaryEvent() != PlanetaryEvent.NONE
           && !nearByPlanet.isEventActivated()) {
         mapInfoPanel.setExploreBtn();
       } else {

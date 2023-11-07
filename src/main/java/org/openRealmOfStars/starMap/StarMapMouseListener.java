@@ -5,6 +5,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
+import org.openRealmOfStars.game.Game;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
@@ -14,6 +16,8 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
@@ -408,6 +412,17 @@ public class StarMapMouseListener extends MouseAdapter {
             setWarningShown(false);
             mapInfoPanel.showPlanet(planet, true,
                 starMap.getCurrentPlayerInfo());
+            if (!planet.isEventActivated()
+                && planet.getPlanetaryEvent() != PlanetaryEvent.NONE
+                && Game.getTutorial() != null && starMap.isTutorialEnabled()) {
+                String tutorialText = Game.getTutorial().showTutorialText(8);
+              if (tutorialText != null) {
+                Message msg = new Message(MessageType.INFORMATION,
+                    tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+                starMap.getCurrentPlayerInfo().getMsgList()
+                   .addNewMessage(msg);
+              }
+            }
           } else if (fleet != null) {
             setLastClickedPlanet(null);
             setWarningShown(false);
@@ -483,6 +498,17 @@ public class StarMapMouseListener extends MouseAdapter {
           } else if (planet != null) {
             mapInfoPanel.showPlanet(planet, true,
                 starMap.getCurrentPlayerInfo());
+            if (!planet.isEventActivated()
+                && planet.getPlanetaryEvent() != PlanetaryEvent.NONE
+                && Game.getTutorial() != null && starMap.isTutorialEnabled()) {
+                String tutorialText = Game.getTutorial().showTutorialText(8);
+              if (tutorialText != null) {
+                Message msg = new Message(MessageType.INFORMATION,
+                    tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+                starMap.getCurrentPlayerInfo().getMsgList()
+                   .addNewMessage(msg);
+              }
+            }
             setLastClickedPlanet(planet);
             setLastClickedFleet(null);
             setWarningShown(false);

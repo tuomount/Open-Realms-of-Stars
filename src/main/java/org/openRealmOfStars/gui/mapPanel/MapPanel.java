@@ -1229,6 +1229,10 @@ public class MapPanel extends JPanel {
               gr.drawImage(Route.getBombedDot(starMap.getZoomLevel()),
                   pixelX + offsetX,
                   pixelY + offsetY, null);
+            } else if (route.isExploring()) {
+              gr.drawImage(Route.getExploredDot(starMap.getZoomLevel()),
+                  pixelX + offsetX,
+                  pixelY + offsetY, null);
             } else {
               gr.drawImage(Route.getRouteDot(starMap.getZoomLevel()),
                   pixelX + offsetX,

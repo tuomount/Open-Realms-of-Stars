@@ -2190,8 +2190,10 @@ public final class LeaderUtility {
         StatType.NUMBER_OF_TRADES);
     int privateering = leader.getStats().getStat(
         StatType.NUMBER_OF_PRIVATEERING);
+    int numberOfPlanets = leader.getStats().getStat(
+        StatType.NUMBER_OF_PLANETS_EXPLORED);
     int commanderAvg = (numberOfAnomalies + numberOfBattle + trades
-        + privateering) / 4;
+        + privateering + numberOfPlanets) / 5;
     int numberOfBuildings = leader.getStats().getStat(
         StatType.NUMBER_OF_BUILDINGS_BUILT);
     int numberOfShips = leader.getStats().getStat(
@@ -2244,7 +2246,8 @@ public final class LeaderUtility {
     if (commanderAvg >= governorAvg) {
       if (!noMore && numberOfBattle > numberOfAnomalies
           && numberOfBattle > privateering
-          && numberOfBattle > trades) {
+          && numberOfBattle > trades
+          && numberOfBattle > numberOfPlanets) {
         if (and) {
           noMore = true;
           sb.append(" and ");
@@ -2258,7 +2261,8 @@ public final class LeaderUtility {
       }
       if (!noMore && numberOfAnomalies > numberOfBattle
           && numberOfAnomalies > privateering
-          && numberOfAnomalies > trades) {
+          && numberOfAnomalies > trades
+          && numberOfAnomalies > numberOfPlanets) {
         if (and) {
           noMore = true;
           sb.append(" and ");
@@ -2268,7 +2272,8 @@ public final class LeaderUtility {
       }
       if (!noMore && trades > numberOfBattle
           && trades > privateering
-          && trades > numberOfAnomalies) {
+          && trades > numberOfAnomalies
+          && trades > numberOfPlanets) {
         if (and) {
           noMore = true;
           sb.append(" and ");
@@ -2276,9 +2281,21 @@ public final class LeaderUtility {
         sb.append("trades");
         and = true;
       }
+      if (!noMore && numberOfPlanets > numberOfBattle
+          && numberOfPlanets > trades
+          && numberOfPlanets > numberOfAnomalies
+          && numberOfPlanets > privateering) {
+        if (and) {
+          noMore = true;
+          sb.append(" and ");
+        }
+        sb.append("boldly exploring planets");
+        and = true;
+      }
       if (!noMore && privateering > numberOfBattle
           && privateering > trades
-          && privateering > numberOfAnomalies) {
+          && privateering > numberOfAnomalies
+          && privateering > numberOfPlanets) {
         if (and) {
           noMore = true;
           sb.append(" and ");
@@ -2470,7 +2487,10 @@ public final class LeaderUtility {
     StringBuilder sb = new StringBuilder();
     switch (perk) {
       default: {
-        sb.append("Unkown perk gained...");
+        sb.append(leader.getName());
+        sb.append(" gained perk called ");
+        sb.append(perk.getName());
+        sb.append(".");
         break;
       }
       case ACADEMIC: {
@@ -2771,6 +2791,12 @@ public final class LeaderUtility {
       case WEALTHY: {
         sb.append(leader.getName());
         sb.append(" has got some personal extra credits. ");
+        break;
+      }
+      case TREKKER: {
+        sb.append(leader.getName());
+        sb.append(" has show great interest for exploring uncolonized"
+            + " planets. ");
         break;
       }
     }

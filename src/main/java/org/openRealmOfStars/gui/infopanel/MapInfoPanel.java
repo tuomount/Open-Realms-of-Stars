@@ -544,6 +544,16 @@ public class MapInfoPanel extends InfoPanel {
     fixTradeFleetBtn.setToolTipText("Trade with nearby planet");
     fixTradeFleetBtn.setEnabled(true);
   }
+  /**
+   * Set Explore button. Button is always enabled after this.
+   */
+  public void setExploreBtn() {
+    fixTradeFleetBtn.setText("Explore");
+    fixTradeFleetBtn.setActionCommand(GameCommands.COMMAND_EXPLORE);
+    fixTradeFleetBtn.setToolTipText("Explore planet with away team"
+        + " leading by commander.");
+    fixTradeFleetBtn.setEnabled(true);
+  }
 
   /**
    * Disable Fix/Trade button.

@@ -27,10 +27,12 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
@@ -375,6 +377,17 @@ public class StarMapView extends BlackPanel {
    */
   public void setShowPlanet(final Planet planet) {
     infoPanel.showPlanet(planet, true, map.getCurrentPlayerInfo());
+    if (!planet.isEventActivated()
+        && planet.getPlanetaryEvent() != PlanetaryEvent.NONE
+        && Game.getTutorial() != null && map.isTutorialEnabled()) {
+        String tutorialText = Game.getTutorial().showTutorialText(8);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.INFORMATION,
+            tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+        map.getCurrentPlayerInfo().getMsgList()
+           .addNewMessage(msg);
+      }
+    }
   }
   /**
    * Show planet info on map info panel
@@ -383,6 +396,17 @@ public class StarMapView extends BlackPanel {
    */
   public void setShowPlanet(final Planet planet, final boolean scan) {
     infoPanel.showPlanet(planet, scan, map.getCurrentPlayerInfo());
+    if (scan && !planet.isEventActivated()
+        && planet.getPlanetaryEvent() != PlanetaryEvent.NONE
+        && Game.getTutorial() != null && map.isTutorialEnabled()) {
+        String tutorialText = Game.getTutorial().showTutorialText(8);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.INFORMATION,
+            tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+        map.getCurrentPlayerInfo().getMsgList()
+           .addNewMessage(msg);
+      }
+    }
   }
 
   /**
@@ -516,6 +540,28 @@ public class StarMapView extends BlackPanel {
       infoPanel.updatePanel(map.isDebug());
       getStarMapMouseListener().hideRoutePlanning();
     }
+    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_EXPLORE)
+        && getStarMapMouseListener().getLastClickedFleet() != null
+        && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
+      Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
+      Planet nearByPlanet = map.getPlanetNextToCoordinate(
+          fleet.getCoordinate());
+      if (nearByPlanet != null
+          && nearByPlanet.getPlanetPlayerInfo() == null
+          && !nearByPlanet.isEventActivated()
+          && fleet.getMovesLeft() > 0) {
+        SoundPlayer.playSound(SoundPlayer.AWAYTEAM);
+        fleet.setMovesLeft(0);
+        fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
+            fleet.getY(), Route.ROUTE_EXPLORED));
+        SoundPlayer.playMenuSound();
+        nearByPlanet.eventActivation(map.isTutorialEnabled(),
+            fleet.getCommander(), infoPanel.getFleetOwner());
+      } else {
+        SoundPlayer.playMenuDisabled();
+      }
+    }
+
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_FOCUS_TARGET)) {
       if (getStarMapMouseListener().getLastClickedFleet() != null) {

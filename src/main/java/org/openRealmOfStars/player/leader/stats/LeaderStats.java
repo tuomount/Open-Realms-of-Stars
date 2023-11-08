@@ -89,6 +89,10 @@ public class LeaderStats {
    */
   private int numberOfBuildingsBuilt;
   /**
+   * How many planet has been explored as commander.
+   */
+  private int numberOfPlanetsExplored;
+  /**
    * How much population has growth during governor.
    */
   private int populationGrowth;
@@ -127,6 +131,7 @@ public class LeaderStats {
     diplomaticTrades = 0;
     warDeclarations = 0;
     researchArtifacts = 0;
+    numberOfPlanetsExplored = 0;
   }
 
   /**
@@ -228,6 +233,7 @@ public class LeaderStats {
         case DIPLOMATIC_TRADE: diplomaticTrades = value; break;
         case WAR_DECLARATIONS: warDeclarations = value; break;
         case RESEARCH_ARTIFACTS: researchArtifacts = value; break;
+        case NUMBER_OF_PLANETS_EXPLORED: numberOfPlanetsExplored = value; break;
         default: throw new IllegalArgumentException("Unexpected stat type: "
             + type.toString());
       }
@@ -260,6 +266,7 @@ public class LeaderStats {
       case DIPLOMATIC_TRADE: return diplomaticTrades;
       case WAR_DECLARATIONS: return warDeclarations;
       case RESEARCH_ARTIFACTS: return researchArtifacts;
+      case NUMBER_OF_PLANETS_EXPLORED: return numberOfPlanetsExplored;
       default: throw new IllegalArgumentException("Unexpected stat type: "
           + type.toString());
     }

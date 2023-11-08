@@ -99,7 +99,11 @@ public enum StatType {
   /**
    * How many artifacts leader has been researched.
    */
-  RESEARCH_ARTIFACTS;
+  RESEARCH_ARTIFACTS,
+  /**
+   * Number of planets explored.
+   */
+  NUMBER_OF_PLANETS_EXPLORED;
 
   /**
    * Get Stat Type as byte.
@@ -126,6 +130,7 @@ public enum StatType {
       case DIPLOMATIC_TRADE: return 16;
       case WAR_DECLARATIONS: return 17;
       case RESEARCH_ARTIFACTS: return 18;
+      case NUMBER_OF_PLANETS_EXPLORED: return 19;
       default:
         throw new IllegalArgumentException("Unexpected StatType:"
             + this.toString());
@@ -158,6 +163,7 @@ public enum StatType {
       case 16: return DIPLOMATIC_TRADE;
       case 17: return WAR_DECLARATIONS;
       case 18: return RESEARCH_ARTIFACTS;
+      case 19: return NUMBER_OF_PLANETS_EXPLORED;
       default:
         throw new IllegalArgumentException("Unexpected StatType:"
             + index);

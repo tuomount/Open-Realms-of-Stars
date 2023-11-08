@@ -244,7 +244,12 @@ public enum Perk {
   /**
    * Increases ancient artifact study by 2.
    */
-  ARCHAEOLOGIST(43, "Archaeologist", "Increase ancient artifact study by 2.");
+  ARCHAEOLOGIST(43, "Archaeologist", "Increase ancient artifact study by 2."),
+  /**
+   * Gain more experince on away missions on unexplored planets.
+   */
+  TREKKER(44, "Trekker", "Gain more experince on away missions on"
+      + " unexplored planets.");
 
 
 
@@ -322,7 +327,8 @@ public enum Perk {
         || this == Perk.SECRET_AGENT
         || this == Perk.TRADER
         || this == Perk.SKILLFUL
-        || this == Perk.MASTER_ENGINEER) {
+        || this == Perk.MASTER_ENGINEER
+        || this == Perk.TREKKER) {
       return true;
     }
     return false;

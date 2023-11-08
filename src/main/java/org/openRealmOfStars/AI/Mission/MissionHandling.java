@@ -169,6 +169,46 @@ public final class MissionHandling {
   }
 
   /**
+   * Search for nearby uncolonized planet. Search is
+   * done inside the distance.
+   * @param info Player who is doing the search
+   * @param game Game
+   * @param fleet Fleet who is searching
+   * @param distance Maximum search distance
+   * @return Space anomaly coordinate or null
+   */
+  public static Coordinate getNearByPlanet(final PlayerInfo info,
+      final Game game, final Fleet fleet, final int distance) {
+    StarMap starMap = game.getStarMap();
+    Coordinate center = fleet.getCoordinate();
+    Coordinate targetCoord = null;
+    for (int y = -distance; y <= distance; y++) {
+      for (int x = -distance; x <= distance; x++) {
+        if (x == 0 && y == 0) {
+          continue;
+        }
+        Planet planet = starMap.getPlanetByCoordinate(center.getX() + x,
+            center.getY() + y);
+        if (planet != null && planet.getPlanetPlayerInfo() == null
+            && !planet.isEventActivated()) {
+          if (targetCoord == null) {
+            targetCoord = new Coordinate(center.getX() + x, center.getY() + y);
+          } else {
+            Coordinate tmpCoord = new Coordinate(center.getX() + x,
+                center.getY() + y);
+            double tmpDist = center.calculateDistance(tmpCoord);
+            double targetDist = center.calculateDistance(targetCoord);
+            if (tmpDist < targetDist) {
+              targetCoord = tmpCoord;
+            }
+          }
+        }
+      }
+    }
+    return targetCoord;
+  }
+
+  /**
    * Search for nearby orbital. Search is
    * done inside the distance.
    * @param info Player who is doing the search
@@ -487,6 +527,10 @@ public final class MissionHandling {
         }
         Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
             fleet.getMovesLeft() * mult);
+        if (targetAnomaly == null && fleet.getCommander() != null) {
+          targetAnomaly = getNearByPlanet(info, game, fleet,
+              fleet.getMovesLeft() * mult);
+        }
         if (info.isHuman()) {
           // Human player should explore anomalies by it's own.
           targetAnomaly = null;
@@ -502,6 +546,16 @@ public final class MissionHandling {
           fleet.setaStarSearch(search);
           makeRegularMoves(game, fleet, info);
           return;
+        }
+        Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
+            fleet.getY());
+        if (planet != null && !planet.isEventActivated()
+            && fleet.getCommander() != null && fleet.getMovesLeft() > 0) {
+          fleet.setMovesLeft(0);
+          fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
+              fleet.getY(), Route.ROUTE_EXPLORED));
+          planet.eventActivation(game.getStarMap().isTutorialEnabled(),
+              fleet.getCommander(), info);
         }
       }
       if (mission.getPhase() == MissionPhase.TREKKING
@@ -527,6 +581,10 @@ public final class MissionHandling {
         }
         Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
             fleet.getMovesLeft() * mult);
+        if (targetAnomaly == null && fleet.getCommander() != null) {
+          targetAnomaly = getNearByPlanet(info, game, fleet,
+              fleet.getMovesLeft() * mult);
+        }
         if (info.isHuman()) {
           // Human player should explore anomalies by it's own.
           targetAnomaly = null;
@@ -550,6 +608,16 @@ public final class MissionHandling {
           missionComplete = true;
         }
         if (fleet.getaStarSearch() == null) {
+          Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
+              fleet.getY());
+          if (planet != null && !planet.isEventActivated()
+              && fleet.getCommander() != null && fleet.getMovesLeft() > 0) {
+            fleet.setMovesLeft(0);
+            fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
+                fleet.getY(), Route.ROUTE_EXPLORED));
+            planet.eventActivation(game.getStarMap().isTutorialEnabled(),
+                fleet.getCommander(), info);
+          }
           if (missionComplete) {
             findSunToExplore(mission, fleet, info, game);
             return;
@@ -833,7 +901,8 @@ public final class MissionHandling {
               + " colonized planet " + planet.getName()
               + ". ");
           game.getStarMap().getHistory().addEvent(event);
-          planet.eventActivation(game.getStarMap().isTutorialEnabled());
+          planet.eventActivation(game.getStarMap().isTutorialEnabled(),
+              null, null);
         } else {
           setNewColonyTarget(mission, fleet, info, game);
         }

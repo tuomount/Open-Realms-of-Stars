@@ -301,7 +301,7 @@ public class LeaderUtilityTest {
         LeaderUtility.LEVEL_START_RULER);
     Perk[] perks = LeaderUtility.getNewPerks(leader,
         LeaderUtility.PERK_TYPE_GOOD);
-    assertEquals(27, perks.length);
+    assertEquals(28, perks.length);
   }
 
   @Test
@@ -613,6 +613,41 @@ public class LeaderUtilityTest {
     assertEquals("Robo Test is the Main Process. Currently Robo Test is Main"
         + " Process. King is known for war declarations and trades."
         + " King Robo Test is known to be aggressive. ", str);
+
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLeaderBio2() {
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.FEDERATION);
+    Leader leader = new Leader("T.J. Test");
+    leader.setJob(Job.COMMANDER);
+    leader.setTitle("Captain");
+    leader.setMilitaryRank(MilitaryRank.CAPTAIN);
+    leader.setAge(25);
+    leader.getPerkList().add(Perk.CHARISMATIC);
+    leader.getPerkList().add(Perk.TREKKER);
+    String str = LeaderUtility.createBioForLeader(leader, realm);
+    assertEquals("T.J. Test is jobless. Currently T.J. Test is Captain. "
+        + "Captain is still young and is able to achieve many things. "
+        + "Captain T.J. Test is known to be diplomatic. ",
+        str);
+    leader = new Leader("T.J. Kurk");
+    leader.setJob(Job.COMMANDER);
+    leader.setTitle("Captain");
+    leader.setMilitaryRank(MilitaryRank.CAPTAIN);
+    leader.setAge(30);
+    leader.getPerkList().add(Perk.CHARISMATIC);
+    leader.getPerkList().add(Perk.TREKKER);
+    leader.getStats().addOne(StatType.NUMBER_OF_PLANETS_EXPLORED);
+    leader.getStats().addOne(StatType.NUMBER_OF_PLANETS_EXPLORED);
+    leader.getStats().addOne(StatType.NUMBER_OF_ANOMALY);
+    leader.getStats().addOne(StatType.NUMBER_OF_TRADES);
+    str = LeaderUtility.createBioForLeader(leader, realm);
+    assertEquals("T.J. Kurk is jobless. Currently T.J. Kurk is Captain. "
+        + "Captain is known for boldly exploring planets. "
+        + "Captain T.J. Kurk is known to be diplomatic. ", str);
 
   }
 

@@ -52,6 +52,7 @@ import org.openRealmOfStars.player.diplomacy.speeches.SpeechFactory;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.tech.Tech;
@@ -724,6 +725,10 @@ public class DiplomacyView extends BlackPanel {
   private SpeechLine[] createOfferLines(final int startType) {
     int humanIndex = starMap.getPlayerList().getIndex(human);
     int aiIndex = starMap.getPlayerList().getIndex(ai);
+    boolean isHumanRulerPacifist = false;
+    if (human.getRuler() != null && human.getRuler().hasPerk(Perk.PACIFIST)) {
+      isHumanRulerPacifist = true;
+    }
     ArrayList<SpeechLine> speechLines = new ArrayList<>();
     String casusBelli = null;
     if (human.getDiplomacy().hasCasusBelli(aiIndex)) {
@@ -835,7 +840,7 @@ public class DiplomacyView extends BlackPanel {
           speechLines.add(embargoLine);
         }
       }
-      if (!ai.getDiplomacy().isWar(humanIndex)) {
+      if (!ai.getDiplomacy().isWar(humanIndex) && !isHumanRulerPacifist) {
         speechLines.add(SpeechFactory.createLine(SpeechType.MAKE_WAR,
             human.getRace(), casusBelli));
       }

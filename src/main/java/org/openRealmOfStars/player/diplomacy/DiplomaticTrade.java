@@ -1192,6 +1192,10 @@ public class DiplomaticTrade {
    */
   public void generateAggressiveAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
+    boolean isPacifist = false;
+    if (info.getRuler() != null && info.getRuler().hasPerk(Perk.PACIFIST)) {
+      isPacifist = true;
+    }
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
@@ -1203,16 +1207,16 @@ public class DiplomaticTrade {
       power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 40 && info.getDiplomacy().getDiplomaticRelation(second)
-        .isEmpty()) {
+        .isEmpty() && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
     if (power > 100 && info.getDiplomacy().getDiplomaticRelation(second)
-        .equals(Diplomacy.TRADE_ALLIANCE)) {
+        .equals(Diplomacy.TRADE_ALLIANCE) && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
-    if (power > 200) {
+    if (power > 200 && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -1281,6 +1285,10 @@ public class DiplomaticTrade {
    */
   public void generateBackstabbingAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
+    boolean isPacifist = false;
+    if (info.getRuler() != null && info.getRuler().hasPerk(Perk.PACIFIST)) {
+      isPacifist = true;
+    }
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
@@ -1292,16 +1300,16 @@ public class DiplomaticTrade {
       power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
-        .isEmpty()) {
+        .isEmpty() && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
     if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
-        .equals(Diplomacy.TRADE_ALLIANCE)) {
+        .equals(Diplomacy.TRADE_ALLIANCE) && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
-    if (power > 300) {
+    if (power > 300 && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -1348,7 +1356,7 @@ public class DiplomaticTrade {
         || info.getDiplomacy().getDiplomaticRelation(second)
         .equals(Diplomacy.ALLIANCE)) {
       int value = DiceGenerator.getRandom(100);
-      if (value < 5) {
+      if (value < 5 && !isPacifist) {
         generateEqualTrade(NegotiationType.WAR);
       } else if (value < 10) {
         generateTechDemand(agree, info);
@@ -1387,6 +1395,10 @@ public class DiplomaticTrade {
    */
   public void generateDiplomaticAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
+    boolean isPacifist = false;
+    if (info.getRuler() != null && info.getRuler().hasPerk(Perk.PACIFIST)) {
+      isPacifist = true;
+    }
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
@@ -1395,7 +1407,7 @@ public class DiplomaticTrade {
       power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
-        .isEmpty() && casusBelli) {
+        .isEmpty() && casusBelli && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -1464,6 +1476,10 @@ public class DiplomaticTrade {
    */
   public void generateExpansionistAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
+    boolean isPacifist = false;
+    if (info.getRuler() != null && info.getRuler().hasPerk(Perk.PACIFIST)) {
+      isPacifist = true;
+    }
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
@@ -1475,16 +1491,16 @@ public class DiplomaticTrade {
       power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 60 && info.getDiplomacy().getDiplomaticRelation(second)
-        .isEmpty()) {
+        .isEmpty() && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
     if (power > 150 && info.getDiplomacy().getDiplomaticRelation(second)
-        .equals(Diplomacy.TRADE_ALLIANCE)) {
+        .equals(Diplomacy.TRADE_ALLIANCE) && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
-    if (power > 300) {
+    if (power > 300 && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -1579,6 +1595,10 @@ public class DiplomaticTrade {
    */
   public void generateScientificAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
+    boolean isPacifist = false;
+    if (info.getRuler() != null && info.getRuler().hasPerk(Perk.PACIFIST)) {
+      isPacifist = true;
+    }
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
@@ -1590,16 +1610,16 @@ public class DiplomaticTrade {
       power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 100 && info.getDiplomacy().getDiplomaticRelation(second)
-        .isEmpty()) {
+        .isEmpty() && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
     if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
-        .equals(Diplomacy.TRADE_ALLIANCE)) {
+        .equals(Diplomacy.TRADE_ALLIANCE) && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
-    if (power > 400) {
+    if (power > 400 && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -1668,6 +1688,10 @@ public class DiplomaticTrade {
    */
   public void generateMerchanticalAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
+    boolean isPacifist = false;
+    if (info.getRuler() != null && info.getRuler().hasPerk(Perk.PACIFIST)) {
+      isPacifist = true;
+    }
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
@@ -1679,16 +1703,16 @@ public class DiplomaticTrade {
       power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 100 && info.getDiplomacy().getDiplomaticRelation(second)
-        .isEmpty()) {
+        .isEmpty() && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
     if (power > 220 && info.getDiplomacy().getDiplomaticRelation(second)
-        .equals(Diplomacy.TRADE_ALLIANCE) && casusBelli) {
+        .equals(Diplomacy.TRADE_ALLIANCE) && casusBelli && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
-    if (power > 440 && casusBelli) {
+    if (power > 440 && casusBelli && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -1782,6 +1806,10 @@ public class DiplomaticTrade {
    */
   public void generateMilitaristicAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
+    boolean isPacifist = false;
+    if (info.getRuler() != null && info.getRuler().hasPerk(Perk.PACIFIST)) {
+      isPacifist = true;
+    }
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
@@ -1793,16 +1821,16 @@ public class DiplomaticTrade {
       power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 50 && info.getDiplomacy().getDiplomaticRelation(second)
-        .isEmpty()) {
+        .isEmpty() && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
     if (power > 120 && info.getDiplomacy().getDiplomaticRelation(second)
-        .equals(Diplomacy.TRADE_ALLIANCE)) {
+        .equals(Diplomacy.TRADE_ALLIANCE) && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
-    if (power > 220) {
+    if (power > 220 && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -1875,12 +1903,16 @@ public class DiplomaticTrade {
    */
   public void generateLogicalAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
+    boolean isPacifist = false;
+    if (info.getRuler() != null && info.getRuler().hasPerk(Perk.PACIFIST)) {
+      isPacifist = true;
+    }
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
     boolean casusBelli = info.getDiplomacy().hasCasusBelli(second);
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
-        .isEmpty() && casusBelli) {
+        .isEmpty() && casusBelli && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -1888,11 +1920,11 @@ public class DiplomaticTrade {
       power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
-        .equals(Diplomacy.TRADE_ALLIANCE) && casusBelli) {
+        .equals(Diplomacy.TRADE_ALLIANCE) && casusBelli && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
-    if (power > 400 && casusBelli) {
+    if (power > 400 && casusBelli && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -1958,6 +1990,10 @@ public class DiplomaticTrade {
    */
   public void generatePeacefulAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
+    boolean isPacifist = false;
+    if (info.getRuler() != null && info.getRuler().hasPerk(Perk.PACIFIST)) {
+      isPacifist = true;
+    }
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getMilitaryDifference(first,
         second);
@@ -1969,16 +2005,16 @@ public class DiplomaticTrade {
       power = power + BORDER_CROSSING_POWER * info.getAiDifficulty().getIndex();
     }
     if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
-        .isEmpty() && casusBelli) {
+        .isEmpty() && casusBelli && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
     if (power > 400 && info.getDiplomacy().getDiplomaticRelation(second)
-        .equals(Diplomacy.TRADE_ALLIANCE) && casusBelli) {
+        .equals(Diplomacy.TRADE_ALLIANCE) && casusBelli && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
-    if (power > 600 && casusBelli) {
+    if (power > 600 && casusBelli && !isPacifist) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }

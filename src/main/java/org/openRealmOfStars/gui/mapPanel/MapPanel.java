@@ -676,7 +676,7 @@ public class MapPanel extends JPanel {
       if (planetOrbital != null && planetOrbital.getOrbital() != null
           && info != null
           && info.getSectorVisibility(planetOrbital.getCoordinate())
-          == PlayerInfo.VISIBLE) {
+          >= PlayerInfo.VISIBLE) {
         // Draw orbital
         BufferedImage img = ShipImages
             .getByRace(fleetMap[i + cx][j + cy].getRace())

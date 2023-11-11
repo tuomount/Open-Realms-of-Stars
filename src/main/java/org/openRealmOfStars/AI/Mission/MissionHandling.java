@@ -906,7 +906,7 @@ public final class MissionHandling {
           && fleet.getRoute() == null) {
         Coordinate coord = new Coordinate(mission.getX(), mission.getY());
         if (info.getAiDifficulty() == AiDifficulty.WEAK) {
-          if (info.getSectorVisibility(coord) == PlayerInfo.VISIBLE) {
+          if (info.getSectorVisibility(coord) >= PlayerInfo.VISIBLE) {
             Planet planet = game.getStarMap().getPlanetByCoordinate(
                 coord.getX(), coord.getY());
             if (planet.getPlanetOwnerIndex() != -1) {
@@ -1006,7 +1006,7 @@ public final class MissionHandling {
       } else if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getRoute() == null) {
         Coordinate coord = new Coordinate(mission.getX(), mission.getY());
-        if (info.getSectorVisibility(coord) == PlayerInfo.VISIBLE) {
+        if (info.getSectorVisibility(coord) >= PlayerInfo.VISIBLE) {
           Fleet anotherFleet = game.getStarMap().getFleetByCoordinate(
               mission.getX(), mission.getY());
           if (anotherFleet != null) {
@@ -2112,7 +2112,7 @@ public final class MissionHandling {
         if (meetingPlace instanceof Planet) {
           Planet planet = (Planet) meetingPlace;
           if (game.getStarMap().getPlayerByIndex(0).getSectorVisibility(
-              planet.getCoordinate()) == PlayerInfo.VISIBLE) {
+              planet.getCoordinate()) >= PlayerInfo.VISIBLE) {
             msg.setCoordinate(planet.getCoordinate());
           } else {
             Coordinate center = new Coordinate(game.getStarMap().getMaxX() / 2,
@@ -2123,7 +2123,7 @@ public final class MissionHandling {
         if (meetingPlace instanceof Fleet) {
           Fleet fleet = (Fleet) meetingPlace;
           if (game.getStarMap().getPlayerByIndex(0).getSectorVisibility(
-              fleet.getCoordinate()) == PlayerInfo.VISIBLE) {
+              fleet.getCoordinate()) >= PlayerInfo.VISIBLE) {
             msg.setCoordinate(fleet.getCoordinate());
           } else {
             Coordinate center = new Coordinate(game.getStarMap().getMaxX() / 2,

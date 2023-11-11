@@ -907,7 +907,7 @@ public class AITurnView extends BlackPanel {
                 fleetTiles[x][y].getFleetIndex());
             if (!fleet.isStarBaseDeployed()
                 && info.getSectorVisibility(new Coordinate(x, y))
-                == PlayerInfo.VISIBLE && infoAt != info) {
+                >= PlayerInfo.VISIBLE && infoAt != info) {
               if (info.getMissions().getDeployStarbaseMission(x, y) == null
                   && deployStarbases < LIMIT_DEPLOY_STARBASES) {
                 // No deploy starbase mission for this planet found,
@@ -917,7 +917,7 @@ public class AITurnView extends BlackPanel {
               }
             } else if (fleet.isStarBaseDeployed()
                   && info.getSectorVisibility(new Coordinate(x, y))
-                  == PlayerInfo.VISIBLE && infoAt != info) {
+                  >= PlayerInfo.VISIBLE && infoAt != info) {
                 int index = fleetTiles[x][y].getPlayerIndex();
                 DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
                     index);
@@ -1026,7 +1026,7 @@ public class AITurnView extends BlackPanel {
                 fleet.getY());
             byte visibility = info.getSectorVisibility(fleet.getCoordinate());
             if (detect >= fleet.getFleetCloackingValue()
-                && visibility == PlayerInfo.VISIBLE) {
+                && visibility >= PlayerInfo.VISIBLE) {
               CulturePower culture = game.getStarMap().getSectorCulture(
                   fleet.getX(), fleet.getY());
               if (culture.getHighestCulture() == game.getStarMap()
@@ -1110,7 +1110,7 @@ public class AITurnView extends BlackPanel {
                 fleet.getY());
             byte visibility = info.getSectorVisibility(fleet.getCoordinate());
             if (detect >= fleet.getFleetCloackingValue()
-                && visibility == PlayerInfo.VISIBLE) {
+                && visibility >= PlayerInfo.VISIBLE) {
               CulturePower culture = game.getStarMap().getSectorCulture(
                   fleet.getX(), fleet.getY());
               if (culture.getHighestCulture() == game.getStarMap()
@@ -1324,7 +1324,7 @@ public class AITurnView extends BlackPanel {
         if (planet.getTotalRadiationLevel() <= maxRad
             && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
             && info.getSectorVisibility(planet.getCoordinate())
-            == PlayerInfo.VISIBLE) {
+            >= PlayerInfo.VISIBLE) {
           // New planet to colonize, adding it to mission list
           Mission mission = new Mission(MissionType.COLONIZE,
               MissionPhase.PLANNING, planet.getCoordinate());
@@ -1380,7 +1380,7 @@ public class AITurnView extends BlackPanel {
         if (planet.getTotalRadiationLevel() <= maxRad
             && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
             && info.getSectorVisibility(planet.getCoordinate())
-            == PlayerInfo.VISIBLE) {
+            >= PlayerInfo.VISIBLE) {
           // New planet to colonize, adding it to mission list
           Mission mission = new Mission(MissionType.COLONIZE,
               MissionPhase.PLANNING, planet.getCoordinate());
@@ -1407,7 +1407,7 @@ public class AITurnView extends BlackPanel {
             && planet.getPlanetPlayerInfo() != null
             && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()) {
           if (info.getSectorVisibility(planet.getCoordinate())
-            == PlayerInfo.VISIBLE) {
+            >= PlayerInfo.VISIBLE) {
             PlayerInfo owner = planet.getPlanetPlayerInfo();
             int ownerIndex = game.getStarMap().getPlayerList().getIndex(owner);
             DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(

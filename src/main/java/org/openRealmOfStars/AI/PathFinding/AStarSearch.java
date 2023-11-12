@@ -264,6 +264,41 @@ public class AStarSearch {
   }
 
   /**
+   * Initialize A Star Search for star map to find a route to ascension portal
+   * @param map StarMap
+   * @param sx Starting point X coordinate
+   * @param sy Starting point Y coordinate
+   * @param tx Target X coordinate
+   * @param ty Target Y coordinate
+   */
+  public AStarSearch(final StarMap map, final int sx, final int sy,
+      final int tx, final int ty) {
+    maxX = map.getMaxX();
+    maxY = map.getMaxY();
+    blockMap = new int[maxX][maxY];
+    for (int y = 0; y < maxY; y++) {
+      for (int x = 0; x < maxX; x++) {
+        if (map.isGoodForAscension(x, y)) {
+          blockMap[x][y] = UNBLOCKED;
+        } else {
+          blockMap[x][y] = BLOCKED;
+        }
+      }
+    }
+    points = new ArrayList<>();
+    this.tx = tx;
+    this.ty = ty;
+    this.targetDistance = 0;
+    Coordinate startCoordinate = new Coordinate(sx, sy);
+    Coordinate targetCoordinate = new Coordinate(tx, ty);
+    PathPoint point1 = new PathPoint(sx, sy,
+        startCoordinate.calculateDistance(targetCoordinate));
+    points.add(point1);
+    blockMap[point1.getX()][point1.getY()] = 0;
+    targetPoint = null;
+    routeIndex = -1;
+  }
+  /**
    * Is coordinate valid position on map
    * @param x X Coordinate
    * @param y Y Coordinate

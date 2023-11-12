@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -59,9 +59,14 @@ public class SquareInfo {
   public static final byte TYPE_BLACKHOLE_CENTER = 5;
 
   /**
-   * Special alonian start info, value match on player inder.
+   * Special alonian start info, value match on player index.
    */
   public static final byte TYPE_ALONIAN_START = 6;
+  /**
+   * Asccension vein info, value match on player index.
+   * Higher value means it high further away from black hole.
+   */
+  public static final byte TYPE_ASCENSION_VEIN = 7;
   /**
    * Square info type
    */
@@ -170,6 +175,8 @@ public class SquareInfo {
       return true;
     case TYPE_ALONIAN_START:
       return true;
+    case TYPE_ASCENSION_VEIN:
+      return false;
     default:
       return false;
     }
@@ -195,6 +202,8 @@ public class SquareInfo {
       return true;
     case TYPE_ALONIAN_START:
       return true;
+    case TYPE_ASCENSION_VEIN:
+      return false;
     default:
       return false;
     }

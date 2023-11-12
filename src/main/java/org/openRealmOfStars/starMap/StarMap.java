@@ -5027,6 +5027,25 @@ public class StarMap {
   }
 
   /**
+   * Is tile good for ascension vein
+   * @param x X coordinate
+   * @param y Y Coordinate
+   * @return true if tile is good for ascension. Also if
+   * coordinate is out of map then false is returned.
+   */
+  public boolean isGoodForAscension(final int x, final int y) {
+    if (!isValidCoordinate(x, y)) {
+      return false;
+    }
+    SquareInfo info = getTileInfo(x, y);
+    if (info.getType() == SquareInfo.TYPE_ASCENSION_VEIN
+        || info.getType() == SquareInfo.TYPE_EMPTY) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Check if there is fleet in coordinates. Return fleet owner's
    * playerinfo
    * @param x X coordinate

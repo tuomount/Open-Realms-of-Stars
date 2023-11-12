@@ -814,6 +814,10 @@ public final class TileNames {
    */
   public static final String ASCENSION_VEIN_NSE2 = "ASCENSION_VEIN_NSE2";
   /**
+   * Ascension portal not open
+   */
+  public static final String ASCENSION_PORT_CLOSED = "ASCENSION_PORTAL_CLOSED";
+  /**
    * List of non harmful space anomalies. This is the list used
    * when generating random space anomalies which are harmless.
    */

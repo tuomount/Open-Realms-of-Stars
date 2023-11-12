@@ -580,6 +580,7 @@ public class StarMap {
         }
       }
     }
+    // Planetary Ascension portal
     // Create random deep space anchors
     loop = 0;
     int numberOfAnchors = config.getMaxPlayers() * 3;
@@ -734,6 +735,41 @@ public class StarMap {
     nameGenerator = null;
   }
 
+  /**
+   * Generate Ascension portal to map and ascension veins.
+   *
+   * @param x X coordinate for portal
+   * @param y Y Coordinate for portal
+   */
+  public void generateAscensionPortal(final int x, final int y) {
+    tiles[x][y] = Tiles.getTileByName(TileNames.ASCENSION_PORT_CLOSED)
+        .getIndex();
+    int cx = maxX / 2;
+    int cy = maxY / 2;
+    int[] sax = new int[4];
+    int[] say = new int[4];
+    sax[0] = cx;
+    sax[0] = cy - 2;
+    sax[1] = cx + 2;
+    sax[1] = cy;
+    sax[2] = cx;
+    sax[2] = cy + 2;
+    sax[3] = cx - 2;
+    sax[3] = cy;
+    int best = -1;
+    double bestDist = 999;
+    for (int i = 0; i < sax.length; i++) {
+      Coordinate target = new Coordinate(x, y);
+      Coordinate start = new Coordinate(sax[i], say[i]);
+      double dist = target.calculateDistance(start);
+      if (dist < bestDist) {
+        best = i;
+        bestDist = dist;
+      }
+    }
+    int sx = sax[best];
+    int sy = say[best];
+  }
   /**
    * Create random start systems
    * @param config GalaxyConfig

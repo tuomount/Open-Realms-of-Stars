@@ -1031,6 +1031,8 @@ public final class Tiles {
     addTile(tilesImage32, tilesImage64, tilesImage16, 17, 4,
         TileNames.ASCENSION_PORTAL4, TileNames.ASCENSION_PORTAL_DESCRIPTION,
         Tiles.getTileByName(TileNames.ASCENSION_PORTAL1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 0, 0,
+        TileNames.ASCENSION_PORT_CLOSED, null);
   }
   /**
    * Get Blackhole first index start

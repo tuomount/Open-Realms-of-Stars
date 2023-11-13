@@ -27,6 +27,8 @@ import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionHandling;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.AI.PathFinding.AStarSearch;
+import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
 import org.openRealmOfStars.AI.Research.Research;
 import org.openRealmOfStars.game.Game;
@@ -769,6 +771,18 @@ public class StarMap {
     }
     int sx = sax[best];
     int sy = say[best];
+    AStarSearch search = new AStarSearch(this, sx, sy, x, y);
+    if (search.doSearch()) {
+      int count = 0;
+      Tile tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
+      do {
+        PathPoint point = search.getMove();
+        tiles[point.getX()][point.getY()] = tile.getIndex();
+        tileInfo[point.getX()][point.getY()] = new SquareInfo(
+            SquareInfo.TYPE_ASCENSION_VEIN, count);
+        search.nextMove();
+      } while (!search.isLastMove());
+    }
   }
   /**
    * Create random start systems

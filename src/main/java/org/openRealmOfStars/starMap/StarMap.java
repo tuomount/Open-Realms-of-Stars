@@ -583,6 +583,7 @@ public class StarMap {
       }
     }
     // Planetary Ascension portal
+    int ascensionPlanetIndex = DiceGenerator.getRandom(planetList.size() - 1);
     // Create random deep space anchors
     loop = 0;
     int numberOfAnchors = config.getMaxPlayers() * 3;
@@ -735,8 +736,22 @@ public class StarMap {
     }
     // No need to have generator after creation
     nameGenerator = null;
+    generateAscensionPortal(planetList.get(ascensionPlanetIndex).getX(),
+        planetList.get(ascensionPlanetIndex).getY());
+    revealWholeMap(players.getPlayerInfoByIndex(0));
   }
 
+  /**
+   * Reveal whole map. This should be used only for debuggin.
+   * @param info PlayerInfo who sees everything.
+   */
+  public void revealWholeMap(final PlayerInfo info) {
+    for (int y = 0; y < maxY; y++) {
+      for (int x = 0; x < maxX; x++) {
+        info.setSectorVisibility(x, y, PlayerInfo.VISIBLE_VEINS);
+      }
+    }
+  }
   /**
    * Generate Ascension portal to map and ascension veins.
    *
@@ -751,13 +766,13 @@ public class StarMap {
     int[] sax = new int[4];
     int[] say = new int[4];
     sax[0] = cx;
-    sax[0] = cy - 2;
+    say[0] = cy - 2;
     sax[1] = cx + 2;
-    sax[1] = cy;
+    say[1] = cy;
     sax[2] = cx;
-    sax[2] = cy + 2;
+    say[2] = cy + 2;
     sax[3] = cx - 2;
-    sax[3] = cy;
+    say[3] = cy;
     int best = -1;
     double bestDist = 999;
     for (int i = 0; i < sax.length; i++) {
@@ -773,14 +788,19 @@ public class StarMap {
     int sy = say[best];
     AStarSearch search = new AStarSearch(this, sx, sy, x, y);
     if (search.doSearch()) {
+      search.doRoute();
       int count = 0;
       Tile tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
       do {
         PathPoint point = search.getMove();
-        tiles[point.getX()][point.getY()] = tile.getIndex();
-        tileInfo[point.getX()][point.getY()] = new SquareInfo(
-            SquareInfo.TYPE_ASCENSION_VEIN, count);
-        search.nextMove();
+        if (point != null) {
+          tiles[point.getX()][point.getY()] = tile.getIndex();
+          tileInfo[point.getX()][point.getY()] = new SquareInfo(
+              SquareInfo.TYPE_ASCENSION_VEIN, count);
+          search.nextMove();
+        } else {
+          break;
+        }
       } while (!search.isLastMove());
     }
   }

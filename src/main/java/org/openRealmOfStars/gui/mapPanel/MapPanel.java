@@ -719,6 +719,7 @@ public class MapPanel extends JPanel {
     }
     // Draw only non empty tiles
     if (info != null && !tile.getName().equals(TileNames.EMPTY)
+        && !tile.getName().equals(TileNames.ASCENSION_PORT_CLOSED)
         && info.getSectorVisibility(new Coordinate(i + cx,
             j + cy)) != PlayerInfo.UNCHARTED
         || starMap.getTileInfo(i + cx, j + cy)

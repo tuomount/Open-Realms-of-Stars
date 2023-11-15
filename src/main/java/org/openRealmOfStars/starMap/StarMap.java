@@ -759,8 +759,6 @@ public class StarMap {
    * @param y Y Coordinate for portal
    */
   public void generateAscensionPortal(final int x, final int y) {
-    tiles[x][y] = Tiles.getTileByName(TileNames.ASCENSION_PORT_CLOSED)
-        .getIndex();
     int cx = maxX / 2;
     int cy = maxY / 2;
     int[] sax = new int[4];
@@ -787,16 +785,21 @@ public class StarMap {
     int sx = sax[best];
     int sy = say[best];
     AStarSearch search = new AStarSearch(this, sx, sy, x, y);
-    if (search.doSearch()) {
-      search.doRoute();
+    if (search.doSquareSearch()) {
+      search.doSquareRoute();
       int count = 0;
       Tile tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
       do {
         PathPoint point = search.getMove();
         if (point != null) {
-          tiles[point.getX()][point.getY()] = tile.getIndex();
-          tileInfo[point.getX()][point.getY()] = new SquareInfo(
-              SquareInfo.TYPE_ASCENSION_VEIN, count);
+          if (search.isLastMove()) {
+            tiles[point.getX()][point.getY()] =
+                Tiles.getTileByName(TileNames.ASCENSION_PORT_CLOSED).getIndex();
+          } else {
+            tiles[point.getX()][point.getY()] = tile.getIndex();
+            tileInfo[point.getX()][point.getY()] = new SquareInfo(
+                SquareInfo.TYPE_ASCENSION_VEIN, count);
+          }
           search.nextMove();
         } else {
           break;

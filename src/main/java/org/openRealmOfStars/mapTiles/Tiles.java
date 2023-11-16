@@ -728,13 +728,13 @@ public final class Tiles {
         TileNames.BLACKHOLE_DESCRIPTION);
     bhSecondStart = getTileByName(TileNames.BLACKHOLE_E).getIndex();
     addTile(tilesImage32, tilesImage64, tilesImage16, 0, 5,
-        TileNames.BLACKHOLE_SE,
+        TileNames.BLACKHOLE_SW,
         TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tilesImage32, tilesImage64, tilesImage16, 1, 5,
         TileNames.BLACKHOLE_S,
         TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tilesImage32, tilesImage64, tilesImage16, 2, 5,
-        TileNames.BLACKHOLE_S,
+        TileNames.BLACKHOLE_SE,
         TileNames.BLACKHOLE_DESCRIPTION);
     bhSecondEnd = getTileByName(TileNames.BLACKHOLE_SE).getIndex();
     addTile(tilesImage32, tilesImage64, tilesImage16, 9, 1,

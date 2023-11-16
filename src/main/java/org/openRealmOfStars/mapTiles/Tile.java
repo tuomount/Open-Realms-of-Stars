@@ -86,9 +86,9 @@ public class Tile {
   private int zoomLevel;
 
   /**
-   * Static blackhole effect
+   * Blackhole effect
    */
-  private static BlackHoleEffect blackholeEffect;
+  private BlackHoleEffect blackholeEffect;
 
   /**
    * Get tile from tileset image, where x is number of tiles in X axel and
@@ -173,15 +173,13 @@ public class Tile {
 
   /**
    * Update black hole effect for all tiles.
-   * @param img New background for blackhole.
-   * @param zoomLevel Zoom level
+   * @param backgroundImg New background for blackhole.
    */
-  public static void updateBlackHoleEffect(final BufferedImage img,
-      final int zoomLevel) {
+  public void updateBlackHoleEffect(final BufferedImage backgroundImg) {
     if (blackholeEffect == null) {
-      blackholeEffect = new BlackHoleEffect(img, zoomLevel);
+      blackholeEffect = new BlackHoleEffect(backgroundImg, zoomLevel);
     } else {
-      blackholeEffect.updateBackground(img);
+      blackholeEffect.updateBackground(backgroundImg);
     }
   }
   /**

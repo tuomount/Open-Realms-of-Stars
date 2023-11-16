@@ -746,9 +746,11 @@ public class StarMap {
    * @param info PlayerInfo who sees everything.
    */
   public void revealWholeMap(final PlayerInfo info) {
-    for (int y = 0; y < maxY; y++) {
-      for (int x = 0; x < maxX; x++) {
-        info.setSectorVisibility(x, y, PlayerInfo.VISIBLE_VEINS);
+    if (info != null) {
+      for (int y = 0; y < maxY; y++) {
+        for (int x = 0; x < maxX; x++) {
+          info.setSectorVisibility(x, y, PlayerInfo.VISIBLE_VEINS);
+        }
       }
     }
   }

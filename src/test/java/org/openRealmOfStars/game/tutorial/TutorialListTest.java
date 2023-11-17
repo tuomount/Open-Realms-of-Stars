@@ -48,10 +48,10 @@ public class TutorialListTest {
     line = new HelpLine(4);
     list.add(line);
     assertEquals(5, list.getSize());
-    assertEquals("0:  - \n" + 
-        "1:  - \n" + 
-        "2:  - \n" + 
-        "3:  - \n" + 
+    assertEquals("0:  - \n" +
+        "1:  - \n" +
+        "2:  - \n" +
+        "3:  - \n" +
         "4:  - \n", list.toString());
   }
 
@@ -69,10 +69,10 @@ public class TutorialListTest {
     list.add(line);
     line = new HelpLine(0);
     list.add(line);
-    assertEquals("0:  - \n" + 
-        "1:  - \n" + 
-        "2:  - \n" + 
-        "3:  - \n" + 
+    assertEquals("0:  - \n" +
+        "1:  - \n" +
+        "2:  - \n" +
+        "3:  - \n" +
         "4:  - \n", list.toString());
   }
 
@@ -90,10 +90,10 @@ public class TutorialListTest {
     list.add(line);
     line = new HelpLine(0);
     list.add(line);
-    assertEquals("0:  - \n" + 
-        "2:  - \n" + 
-        "4:  - \n" + 
-        "6:  - \n" + 
+    assertEquals("0:  - \n" +
+        "2:  - \n" +
+        "4:  - \n" +
+        "6:  - \n" +
         "8:  - \n", list.toString());
   }
 
@@ -111,10 +111,10 @@ public class TutorialListTest {
     list.add(line);
     line = new HelpLine(8);
     list.add(line);
-    assertEquals("0:  - \n" + 
-        "2:  - \n" + 
-        "4:  - \n" + 
-        "6:  - \n" + 
+    assertEquals("0:  - \n" +
+        "2:  - \n" +
+        "4:  - \n" +
+        "6:  - \n" +
         "8:  - \n", list.toString());
   }
 
@@ -142,10 +142,10 @@ public class TutorialListTest {
     list.add(line);
     line = new HelpLine(0);
     list.add(line);
-    assertEquals("0:  - \n" + 
-        "2:  - \n" + 
-        "4:  - \n" + 
-        "6:  - \n" + 
+    assertEquals("0:  - \n" +
+        "2:  - \n" +
+        "4:  - \n" +
+        "6:  - \n" +
         "8:  - \n", list.toString());
     assertEquals(0, list.get(0).getIndex());
     assertEquals(2, list.get(1).getIndex());
@@ -170,9 +170,9 @@ public class TutorialListTest {
     list.add(line);
     line = new HelpLine(3);
     list.add(line);
-    assertEquals("3:  - \n" + 
-        "4:  - \n" + 
-        "6:  - \n" + 
+    assertEquals("3:  - \n" +
+        "4:  - \n" +
+        "6:  - \n" +
         "8:  - \n", list.toString());
   }
 
@@ -184,7 +184,7 @@ public class TutorialListTest {
     list.add(line);
     line = new HelpLine(8);
     list.add(line);
-    assertEquals("8:  - \n", list.toString()); 
+    assertEquals("8:  - \n", list.toString());
   }
 
   @Test
@@ -202,10 +202,10 @@ public class TutorialListTest {
     list.add(line);
     line = new HelpLine(12);
     list.add(line);
-    assertEquals("12:  - \n" + 
-        "16:  - \n" + 
-        "21:  - \n" + 
-        "25:  - \n" + 
+    assertEquals("12:  - \n" +
+        "16:  - \n" +
+        "21:  - \n" +
+        "25:  - \n" +
         "42:  - \n", list.toString());
     assertEquals(42, list.getByIndex(42).getIndex());
     assertEquals(25, list.getByIndex(25).getIndex());
@@ -254,13 +254,13 @@ public class TutorialListTest {
     line = new HelpLine(11);
     list.add(line);
     ArrayList<Integer> indexes = new ArrayList<>();
-    Integer value = new Integer(7);
+    Integer value = Integer.valueOf(7);
     indexes.add(value);
-    value = new Integer(13);
+    value = Integer.valueOf(13);
     indexes.add(value);
-    value = new Integer(12);
+    value = Integer.valueOf(12);
     indexes.add(value);
-    value = new Integer(11);
+    value = Integer.valueOf(11);
     indexes.add(value);
     list.updateShownTutorial(indexes);
     assertEquals(false, list.getByIndex(2).isShown());

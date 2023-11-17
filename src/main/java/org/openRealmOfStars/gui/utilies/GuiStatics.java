@@ -772,12 +772,12 @@ public final class GuiStatics {
    * Photon torpedo
    */
   public static final BufferedImage PHOTON_TORPEDO = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/photon_torp.png"));
+      .loadImage("/resources/images/photon_torp.png");
   /**
    * Plasma bullet
    */
   public static final BufferedImage PLASMA_BULLET = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/plasma.png"));
+      .loadImage("/resources/images/plasma.png");
 
   /**
    * Explosion animation
@@ -849,238 +849,228 @@ public final class GuiStatics {
    * Crosshair for combat
    */
   public static final BufferedImage CROSSHAIR = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/crosshair.png"));
+      .loadImage("/resources/images/crosshair.png");
 
   /**
    * ORoS icon 32x32
    */
   public static final BufferedImage LOGO32 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/oros-logo32.png"));
+      .loadImage("/resources/images/oros-logo32.png");
   /**
    * ORoS icon 48x48
    */
   public static final BufferedImage LOGO48 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/oros-logo48.png"));
+      .loadImage("/resources/images/oros-logo48.png");
   /**
    * ORoS icon 64x64
    */
   public static final BufferedImage LOGO64 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/oros-logo64.png"));
+      .loadImage("/resources/images/oros-logo64.png");
   /**
    * ORoS icon 128x128
    */
   public static final BufferedImage LOGO128 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/oros-logo128.png"));
+      .loadImage("/resources/images/oros-logo128.png");
 
   /**
    * Red Crosshair for combat
    */
-  public static final BufferedImage RED_CROSSHAIR = IOUtilities.loadImage(
-      Tiles.class.getResource("/resources/images/red_crosshair.png"));
+  public static final BufferedImage RED_CROSSHAIR = IOUtilities
+      .loadImage("/resources/images/red_crosshair.png");
 
   /**
    * Big planet screen Rock 1
    */
   public static final BufferedImage BIG_PLANET_ROCK1 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/rock1.png"));
+      .loadImage("/resources/images/rock1.png");
 
   /**
    * Big planet screen water world 1
    */
   public static final BufferedImage BIG_PLANET_WATERWORLD1 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/waterworld1.png"));
+      .loadImage("/resources/images/waterworld1.png");
 
   /**
    * Big planet screen water world 2
    */
   public static final BufferedImage BIG_PLANET_WATERWORLD2 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/waterworld2.png"));
+      .loadImage("/resources/images/waterworld2.png");
 
   /**
    * Big planet screen water world 3
    */
   public static final BufferedImage BIG_PLANET_WATERWORLD3 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/waterworld3.png"));
+      .loadImage("/resources/images/waterworld3.png");
 
   /**
    * Big planet screen water world 4
    */
   public static final BufferedImage BIG_PLANET_WATERWORLD4 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/waterworld4.png"));
+      .loadImage("/resources/images/waterworld4.png");
   /**
    * Big planet screen water world 5
    */
   public static final BufferedImage BIG_PLANET_WATERWORLD5 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/waterworld5.png"));
+      .loadImage("/resources/images/waterworld5.png");
   /**
    * Big planet screen water world 6
    */
   public static final BufferedImage BIG_PLANET_WATERWORLD6 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/waterworld6.png"));
+      .loadImage("/resources/images/waterworld6.png");
   /**
    * Big planet screen water world 7
    */
   public static final BufferedImage BIG_PLANET_WATERWORLD7 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/waterworld7.png"));
+      .loadImage("/resources/images/waterworld7.png");
   /**
    * Big planet screen water world 8
    */
   public static final BufferedImage BIG_PLANET_WATERWORLD8 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/waterworld8.png"));
+      .loadImage("/resources/images/waterworld8.png");
   /**
    * Big planet screen water world 9
    */
   public static final BufferedImage BIG_PLANET_WATERWORLD9 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/waterworld9.png"));
+      .loadImage("/resources/images/waterworld9.png");
 
   /**
    * Big planet screen ice world 1
    */
   public static final BufferedImage BIG_PLANET_ICEWORLD1 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/iceworld1.png"));
+      .loadImage("/resources/images/iceworld1.png");
 
   /**
    * Big planet screen ice world 2
    */
   public static final BufferedImage BIG_PLANET_ICEWORLD2 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/iceworld2.png"));
+      .loadImage("/resources/images/iceworld2.png");
   /**
    * Big planet screen ice world 3
    */
   public static final BufferedImage BIG_PLANET_ICEWORLD3 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/iceworld3.png"));
+      .loadImage("/resources/images/iceworld3.png");
   /**
    * Big planet screen ice world 4
    */
   public static final BufferedImage BIG_PLANET_ICEWORLD4 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/iceworld4.png"));
+      .loadImage("/resources/images/iceworld4.png");
 
   /**
    * Big planet screen carbon world 1
    */
   public static final BufferedImage BIG_PLANET_CARBONWORLD1 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/carbonworld1.png"));
+      .loadImage("/resources/images/carbonworld1.png");
   /**
    * Big planet screen carbon world 2
    */
   public static final BufferedImage BIG_PLANET_CARBONWORLD2 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/carbonworld2.png"));
+      .loadImage("/resources/images/carbonworld2.png");
   /**
    * Big planet screen carbon world 3
    */
   public static final BufferedImage BIG_PLANET_CARBONWORLD3 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/carbonworld3.png"));
+      .loadImage("/resources/images/carbonworld3.png");
 
   /**
    * Big planet screen iron planet 1
    */
   public static final BufferedImage BIG_PLANET_IRONPLANET1 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/ironplanet1.png"));
+      .loadImage("/resources/images/ironplanet1.png");
 
   /**
    * Big planet screen iron planet 2
    */
   public static final BufferedImage BIG_PLANET_IRONPLANET2 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/ironplanet2.png"));
+      .loadImage("/resources/images/ironplanet2.png");
 
   /**
    * Big planet screen iron planet 3
    */
   public static final BufferedImage BIG_PLANET_IRONPLANET3 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/ironplanet3.png"));
+      .loadImage("/resources/images/ironplanet3.png");
   /**
    * Big planet screen iron planet 4
    */
   public static final BufferedImage BIG_PLANET_IRONPLANET4 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/ironplanet4.png"));
+      .loadImage("/resources/images/ironplanet4.png");
   /**
    * Big planet screen iron planet 5
    */
   public static final BufferedImage BIG_PLANET_IRONPLANET5 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/ironplanet5.png"));
+      .loadImage("/resources/images/ironplanet5.png");
   /**
    * Big planet screen iron planet 6
    */
   public static final BufferedImage BIG_PLANET_IRONPLANET6 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/ironplanet6.png"));
+      .loadImage("/resources/images/ironplanet6.png");
 
   /**
    * Big planet gas world
    */
   public static final BufferedImage BIG_GASWORLD1 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/gasworld1.png"));
+      .loadImage("/resources/images/gasworld1.png");
 
   /**
    * Big planet screen gas world
    */
   public static final BufferedImage BIG_GASWORLD2 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/gasworld2.png"));
+      .loadImage("/resources/images/gasworld2.png");
   /**
    * Big planet screen gas world
    */
   public static final BufferedImage BIG_GASWORLD3 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/gasworld3.png"));
+      .loadImage("/resources/images/gasworld3.png");
   /**
    * Big planet screen desert planet 1
    */
   public static final BufferedImage BIG_PLANET_DESERTWORLD1 = IOUtilities
-      .loadImage(Tiles.class.getResource(
-          "/resources/images/desertplanet1.png"));
+      .loadImage("/resources/images/desertplanet1.png");
   /**
    * Big planet screen desert planet 2
    */
   public static final BufferedImage BIG_PLANET_DESERTWORLD2 = IOUtilities
-      .loadImage(Tiles.class.getResource(
-          "/resources/images/desertplanet2.png"));
+      .loadImage("/resources/images/desertplanet2.png");
   /**
    * Big planet screen desert planet 3
    */
   public static final BufferedImage BIG_PLANET_DESERTWORLD3 = IOUtilities
-      .loadImage(Tiles.class.getResource(
-          "/resources/images/desertplanet3.png"));
+      .loadImage("/resources/images/desertplanet3.png");
   /**
    * Big planet screen artificial planet 1
    */
   public static final BufferedImage BIG_PLANET_ARTIFICIALPLANET1 = IOUtilities
-      .loadImage(Tiles.class.getResource(
-          "/resources/images/artificialworld1.png"));
+      .loadImage("/resources/images/artificialworld1.png");
   /**
    * Big planet screen Earth
    */
   public static final BufferedImage BIG_PLANET_EARTH = IOUtilities
-      .loadImage(Tiles.class.getResource(
-          "/resources/images/earth.png"));
+      .loadImage("/resources/images/earth.png");
   /**
    * Big planet screen Mars
    */
   public static final BufferedImage BIG_PLANET_MARS = IOUtilities
-      .loadImage(Tiles.class.getResource(
-          "/resources/images/mars.png"));
+      .loadImage("/resources/images/mars.png");
 
   /**
    * Big planet screen Jupiter
    */
   public static final BufferedImage BIG_PLANET_JUPITER = IOUtilities
-      .loadImage(Tiles.class.getResource(
-          "/resources/images/jupiter.png"));
+      .loadImage("/resources/images/jupiter.png");
   /**
    * Big planet screen Saturn
    */
   public static final BufferedImage BIG_PLANET_SATURN = IOUtilities
-      .loadImage(Tiles.class.getResource(
-          "/resources/images/saturn.png"));
+      .loadImage("/resources/images/saturn.png");
   /**
    * Big planet screen IceGiant1
    */
   public static final BufferedImage BIG_PLANET_ICEGIANT1 = IOUtilities
-      .loadImage(Tiles.class.getResource(
-          "/resources/images/icegiant1.png"));
+      .loadImage("/resources/images/icegiant1.png");
   /**
    * Big planet screen IceGiant2
    */
   public static final BufferedImage BIG_PLANET_ICEGIANT2 = IOUtilities
-      .loadImage(Tiles.class.getResource(
-          "/resources/images/icegiant2.png"));
+      .loadImage("/resources/images/icegiant2.png");
 
   /**
    * Big sports logo
@@ -1091,7 +1081,7 @@ public final class GuiStatics {
    * Star field image for parallax scrolling
    */
   private static final BufferedImage STAR_FIELD_IMAGE = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/starfield.png"));
+      .loadImage("/resources/images/starfield.png");
 
   /**
    * Generated star field image.
@@ -1110,7 +1100,7 @@ public final class GuiStatics {
    * Nebula image for parallax scrolling
    */
   public static final BufferedImage NEBULAE_IMAGE = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/nebulae.png"));
+      .loadImage("/resources/images/nebulae.png");
 
   /**
    * Image used for calculation text width and heights.
@@ -1122,137 +1112,126 @@ public final class GuiStatics {
    * Horizontal thumb
    */
   public static final BufferedImage IMAGE_SCROLL_BAR_THUMB = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/thumb.png"));
+      .loadImage("/resources/images/thumb.png");
 
   /**
    * Vertical thumb
    */
   public static final BufferedImage IMAGE_SCROLL_BAR_THUMB2 = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/thumb2.png"));
+      .loadImage("/resources/images/thumb2.png");
 
   /**
    * Teuthidae race selection image
    */
   public static final BufferedImage IMAGE_TEUTHIDAE_RACE = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/teuthidae_race.png"));
+      .loadImage("/resources/images/teuthidae_race.png");
   /**
    * Scaurian race selection image
    */
   public static final BufferedImage IMAGE_SCAURIAN_RACE = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/scaurian_race.png"));
+      .loadImage("/resources/images/scaurian_race.png");
   /**
    * Homarian race selection image
    */
   public static final BufferedImage IMAGE_HOMARIAN_RACE = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/homarian_race.png"));
+      .loadImage("/resources/images/homarian_race.png");
   /**
    * Mothoid race selection image
    */
-  public static final BufferedImage IMAGE_MOTHOID_RACE = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/mothoid_race.png"));
+  public static final BufferedImage IMAGE_MOTHOID_RACE = IOUtilities
+      .loadImage("/resources/images/mothoid_race.png");
   /**
    * Centaur race selection image
    */
-  public static final BufferedImage IMAGE_CENTAUR_RACE = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/centaur_race.png"));
+  public static final BufferedImage IMAGE_CENTAUR_RACE = IOUtilities
+      .loadImage("/resources/images/centaur_race.png");
   /**
    * Greyan race selection image
    */
-  public static final BufferedImage IMAGE_GREYAN_RACE = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/greyan_race.png"));
+  public static final BufferedImage IMAGE_GREYAN_RACE = IOUtilities
+      .loadImage("/resources/images/greyan_race.png");
   /**
    * Mechion race selection image
    */
-  public static final BufferedImage IMAGE_MECHION_RACE = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/mechion_race.png"));
+  public static final BufferedImage IMAGE_MECHION_RACE = IOUtilities
+      .loadImage("/resources/images/mechion_race.png");
   /**
    * Spork race selection image
    */
-  public static final BufferedImage IMAGE_SPORK_RACE = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/spork_race.png"));
+  public static final BufferedImage IMAGE_SPORK_RACE = IOUtilities
+      .loadImage("/resources/images/spork_race.png");
 
   /**
    * Human race selection image
    */
-  public static final BufferedImage IMAGE_HUMAN_RACE = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/human_race.png"));
+  public static final BufferedImage IMAGE_HUMAN_RACE = IOUtilities
+      .loadImage("/resources/images/human_race.png");
 
   /**
    * Chiraloid race selection image
    */
-  public static final BufferedImage IMAGE_CHIRALOID_RACE =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/chiraloid_race.png"));
+  public static final BufferedImage IMAGE_CHIRALOID_RACE = IOUtilities
+      .loadImage("/resources/images/chiraloid_race.png");
 
   /**
    * Reborgian race selection image
    */
-  public static final BufferedImage IMAGE_REBORGIAN_RACE =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/reborgian_race.png"));
+  public static final BufferedImage IMAGE_REBORGIAN_RACE = IOUtilities
+      .loadImage("/resources/images/reborgian_race.png");
 
   /**
    * Lithorian race selection image
    */
-  public static final BufferedImage IMAGE_LITHORIAN_RACE =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/lithorian_race.png"));
+  public static final BufferedImage IMAGE_LITHORIAN_RACE = IOUtilities
+      .loadImage("/resources/images/lithorian_race.png");
 
   /**
    * Alteirian race selection image
    */
-  public static final BufferedImage IMAGE_ALTEIRIAN_RACE =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/alteirian_race.png"));
+  public static final BufferedImage IMAGE_ALTEIRIAN_RACE = IOUtilities
+      .loadImage("/resources/images/alteirian_race.png");
 
   /**
    * Smaugirian race selection image
    */
-  public static final BufferedImage IMAGE_SMAUGIRIAN_RACE =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/smaugirian_race.png"));
+  public static final BufferedImage IMAGE_SMAUGIRIAN_RACE = IOUtilities
+      .loadImage("/resources/images/smaugirian_race.png");
 
   /**
    * Synthdroid race selection image
    */
-  public static final BufferedImage IMAGE_SYNTHDROID_RACE =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/synthdroid_race.png"));
+  public static final BufferedImage IMAGE_SYNTHDROID_RACE = IOUtilities
+      .loadImage("/resources/images/synthdroid_race.png");
 
   /**
    * Alonian race selection image
    */
-  public static final BufferedImage IMAGE_ALONIAN_RACE =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/alonian_race.png"));
+  public static final BufferedImage IMAGE_ALONIAN_RACE = IOUtilities
+      .loadImage("/resources/images/alonian_race.png");
 
   /**
    * Privateer race selection image
    */
-  public static final BufferedImage IMAGE_PRIVATEER_RACE =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/privateer_race.png"));
+  public static final BufferedImage IMAGE_PRIVATEER_RACE = IOUtilities
+      .loadImage("/resources/images/privateer_race.png");
 
   /**
    * Newsreader image for GBNC
    */
-  public static final BufferedImage IMAGE_NEWSREADER = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/newsreader.png"));
+  public static final BufferedImage IMAGE_NEWSREADER = IOUtilities
+      .loadImage("/resources/images/newsreader.png");
 
   /**
    * GBNC logo
    */
-  public static final BufferedImage IMAGE_GBNC = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/gbnc-logo.png"));
+  public static final BufferedImage IMAGE_GBNC = IOUtilities
+      .loadImage("/resources/images/gbnc-logo.png");
 
   /**
    * ASTEROIDS
    */
-  public static final BufferedImage IMAGE_ASTEROIDS = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/asteroids.png"));
+  public static final BufferedImage IMAGE_ASTEROIDS = IOUtilities
+      .loadImage("/resources/images/asteroids.png");
 
   /**
    * Pirate pilot
@@ -1311,31 +1290,31 @@ public final class GuiStatics {
   /**
    * Blackhole pilot
    */
-  public static final BufferedImage IMAGE_BLACKHOLE = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/blackhole.png"));
+  public static final BufferedImage IMAGE_BLACKHOLE = IOUtilities
+      .loadImage("/resources/images/blackhole.png");
 
   /**
    * Old probe
    */
-  public static final BufferedImage IMAGE_OLD_PROBE = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/oldprobe.png"));
+  public static final BufferedImage IMAGE_OLD_PROBE = IOUtilities
+      .loadImage("/resources/images/oldprobe.png");
 
   /**
    * Rare tech
    */
-  public static final BufferedImage IMAGE_RARE_TECH = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/raretech.png"));
+  public static final BufferedImage IMAGE_RARE_TECH = IOUtilities
+      .loadImage("/resources/images/raretech.png");
 
   /**
    * Artifact 1
    */
-  public static final BufferedImage IMAGE_ARTIFACT1 = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/artifact1.png"));
+  public static final BufferedImage IMAGE_ARTIFACT1 = IOUtilities
+      .loadImage("/resources/images/artifact1.png");
   /**
    * Artifact 2
    */
-  public static final BufferedImage IMAGE_ARTIFACT2 = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/artifact2.png"));
+  public static final BufferedImage IMAGE_ARTIFACT2 = IOUtilities
+      .loadImage("/resources/images/artifact2.png");
 
   /**
    * Old Ship
@@ -1347,11 +1326,11 @@ public final class GuiStatics {
    */
   public static final String IMAGE_ALIEN_SHIP =
       "/resources/images/alienship.png";
-/**
+  /**
    * Time Warp
    */
-  public static final BufferedImage IMAGE_TIME_WARP = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/timewarp.png"));
+  public static final BufferedImage IMAGE_TIME_WARP = IOUtilities
+      .loadImage("/resources/images/timewarp.png");
   /**
    * Factory
    */
@@ -1359,18 +1338,18 @@ public final class GuiStatics {
   /**
    * Pirate lair
    */
-  public static final BufferedImage IMAGE_PIRATE_LAIR = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/piratelair.png"));
+  public static final BufferedImage IMAGE_PIRATE_LAIR = IOUtilities
+      .loadImage("/resources/images/piratelair.png");
   /**
    * Electron nebula
    */
-  public static final BufferedImage IMAGE_DSA = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/electron nebula.png"));
+  public static final BufferedImage IMAGE_DSA = IOUtilities
+      .loadImage("/resources/images/electron nebula.png");
   /**
    * Space ship
    */
-  public static final BufferedImage IMAGE_SPACE_SHIP = IOUtilities.loadImage(
-      GuiStatics.class.getResource("/resources/images/spaceship_final.png"));
+  public static final BufferedImage IMAGE_SPACE_SHIP = IOUtilities
+      .loadImage("/resources/images/spaceship_final.png");
   /**
    * Trade Space ship 1
    */
@@ -1448,8 +1427,7 @@ public final class GuiStatics {
    * Image old table with book, lamp and court hammer
    */
   public static final BufferedImage IMAGE_DESKTOP = IOUtilities
-      .loadImage(GuiStatics.class.getResource(
-          "/resources/images/olddesk.png"));
+      .loadImage("/resources/images/olddesk.png");
   /**
    * Image paradise planet
    */
@@ -1575,114 +1553,97 @@ public final class GuiStatics {
   /**
    * Ship bridge interior 1
    */
-  public static final BufferedImage IMAGE_INTERIOR1 = IOUtilities.loadImage(
-      GuiStatics.class.getResource(
-          "/resources/images/bridge1.png"));
+  public static final BufferedImage IMAGE_INTERIOR1 = IOUtilities
+      .loadImage("/resources/images/bridge1.png");
   /**
    * Ship centaur bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_CENTAUR =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/centaur_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_CENTAUR = IOUtilities
+      .loadImage("/resources/images/centaur_bridge.png");
   /**
    * Ship Scaurian bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_SCAURIAN =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/scaurian_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_SCAURIAN = IOUtilities
+      .loadImage("/resources/images/scaurian_bridge.png");
   /**
    * Ship Mechion bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_MECHION =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/mechion_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_MECHION = IOUtilities
+      .loadImage("/resources/images/mechion_bridge.png");
 
   /**
    * Ship Human bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_HUMAN =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/human_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_HUMAN = IOUtilities
+      .loadImage("/resources/images/human_bridge.png");
 
   /**
    * Ship Mothoid bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_MOTHOID =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/mothoid_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_MOTHOID = IOUtilities
+      .loadImage("/resources/images/mothoid_bridge.png");
 
   /**
    * Ship Greyan bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_GREYAN =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/greyan_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_GREYAN = IOUtilities
+      .loadImage("/resources/images/greyan_bridge.png");
 
   /**
    * Ship Homarian bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_HOMARIAN =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/homarian_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_HOMARIAN = IOUtilities
+      .loadImage("/resources/images/homarian_bridge.png");
 
   /**
    * Ship Teuthidae bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_TEUTHIDAE =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/teuthidae_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_TEUTHIDAE = IOUtilities
+      .loadImage("/resources/images/teuthidae_bridge.png");
 
   /**
    * Ship Spork bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_SPORK =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/spork_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_SPORK = IOUtilities
+      .loadImage("/resources/images/spork_bridge.png");
   /**
    * Ship Chiraloid bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_CHIRALOID =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/chiraloid_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_CHIRALOID = IOUtilities
+      .loadImage("/resources/images/chiraloid_bridge.png");
   /**
    * Ship Pirate bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_PIRATE =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/pirate_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_PIRATE = IOUtilities
+      .loadImage("/resources/images/pirate_bridge.png");
   /**
    * Ship Lithorian bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_LITHORIAN =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/lithorian_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_LITHORIAN = IOUtilities
+      .loadImage("/resources/images/lithorian_bridge.png");
 
   /**
    * Ship Reborgian bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_REBORGIAN =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/reborgian_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_REBORGIAN = IOUtilities
+      .loadImage("/resources/images/reborgian_bridge.png");
 
   /**
    * Ship Smaugirian bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_SMAUGIRIAN =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/smaugirian_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_SMAUGIRIAN = IOUtilities
+      .loadImage("/resources/images/smaugirian_bridge.png");
 
   /**
    * Ship Alteirian bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_ALTEIRIAN =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/alteirian_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_ALTEIRIAN = IOUtilities
+      .loadImage("/resources/images/alteirian_bridge.png");
   /**
    * Ship Alonian bridge interior
    */
-  public static final BufferedImage IMAGE_INTERIOR_ALONIAN =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/alonian_bridge.png"));
+  public static final BufferedImage IMAGE_INTERIOR_ALONIAN = IOUtilities
+      .loadImage("/resources/images/alonian_bridge.png");
 
   /**
    * Get text width for certain font

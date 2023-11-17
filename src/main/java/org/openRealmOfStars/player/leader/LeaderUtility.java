@@ -1857,6 +1857,9 @@ public final class LeaderUtility {
       if (perk == Perk.CHATTERBOX) {
         diplomatic.setValue(diplomatic.getValue() + 1);
       }
+      if (perk == Perk.NEGOTIATOR) {
+        diplomatic.setValue(diplomatic.getValue() + 1);
+      }
       if (perk == Perk.COMBAT_MASTER) {
         aggressive.setValue(aggressive.getValue() + 3);
         militaristic.setValue(militaristic.getValue() + 1);
@@ -2797,6 +2800,13 @@ public final class LeaderUtility {
         sb.append(leader.getName());
         sb.append(" has show great interest for exploring uncolonized"
             + " planets. ");
+        break;
+      }
+      case NEGOTIATOR: {
+        sb.append(leader.getName());
+        sb.append(" had many diplomatic meetings so, ");
+        sb.append(leader.getGender().getHeShe());
+        sb.append(" is able get bit of extra information.");
         break;
       }
     }

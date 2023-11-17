@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019-2022 Tuomo Untinen
+* Copyright (C) 2019-2023 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -249,7 +249,11 @@ public enum Perk {
    * Gain more experince on away missions on unexplored planets.
    */
   TREKKER(44, "Trekker", "Gain more experince on away missions on"
-      + " unexplored planets.");
+      + " unexplored planets."),
+  /**
+   * +1 espionage bonus against every realm.
+   */
+  NEGOTIATOR(45, "Negotiator", "+1 espionage bonus against every realm.");
 
 
 
@@ -288,7 +292,8 @@ public enum Perk {
         || this == Perk.MERCHANT
         || this == Perk.GOOD_LEADER
         || this == Perk.DIPLOMATIC
-        || this == Perk.SKILLFUL) {
+        || this == Perk.SKILLFUL
+        || this == Perk.NEGOTIATOR) {
       return true;
     }
     return false;
@@ -452,7 +457,8 @@ public enum Perk {
    */
   public boolean isGainedPerk() {
     if (this == Perk.CONVICT
-        || this == Perk.CRUEL) {
+        || this == Perk.CRUEL
+        || this == Perk.NEGOTIATOR) {
       return true;
     }
     return false;
@@ -570,6 +576,7 @@ public enum Perk {
       }
       case DISCIPLINE:
       case TRADER:
+      case NEGOTIATOR:
       case MERCHANT:
       case WEAK_LEADER:
       case HEALTHY:

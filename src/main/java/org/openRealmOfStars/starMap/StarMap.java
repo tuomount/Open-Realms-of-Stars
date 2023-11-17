@@ -4042,6 +4042,12 @@ public class StarMap {
                   "Ruler has chatterbox perk");
             }
           }
+          if (j != i && info.getRuler() != null
+                && info.getRuler().hasPerk(Perk.NEGOTIATOR)) {
+            info.getEspionage().getByIndex(j).addEspionageBonus(
+                EspionageBonusType.NEGOTIATOR, 1,
+                "Learned by negotiator perk");
+          }
         }
       }
     }

@@ -17,8 +17,12 @@ import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -2651,6 +2655,25 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Check negotiator perk, if it should be given to ruler.
+   * @param info PlayerInfo
+   */
+  private void checkNegotiatorPerk(final PlayerInfo info) {
+    if (info.getRuler() != null
+        && info.getRuler().getStats().getStat(
+        StatType.DIPLOMATIC_TRADE) >= 4
+        && !info.getRuler().hasPerk(Perk.NEGOTIATOR)) {
+      Perk perk = Perk.NEGOTIATOR;
+      Leader leader = info.getRuler();
+      leader.addPerk(perk);
+      Message msg = new Message(MessageType.LEADER,
+          LeaderUtility.getReasonForPerk(leader, perk),
+          LeaderUtility.getIconBasedOnLeaderJob(leader));
+      msg.setMatchByString("Index:" + info.getLeaderIndex(leader));
+      info.getMsgList().addUpcomingMessage(msg);
+    }
+  }
+  /**
    * Do trading for one player
    * @param offerList Trade goods aka offering list
    * @param info Player who is getting the stuff
@@ -2915,9 +2938,11 @@ public class DiplomaticTrade {
     } else if (countAsDiplomaticTrade) {
       if (giver.getRuler() != null) {
         giver.getRuler().getStats().addOne(StatType.DIPLOMATIC_TRADE);
+        checkNegotiatorPerk(giver);
       }
       if (info.getRuler() != null) {
         info.getRuler().getStats().addOne(StatType.DIPLOMATIC_TRADE);
+        checkNegotiatorPerk(info);
       }
     }
     if (planetTraded) {

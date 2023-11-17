@@ -24,6 +24,7 @@ import org.openRealmOfStars.gui.scheme.GreyScheme;
 import org.openRealmOfStars.gui.scheme.SchemeType;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -1644,6 +1645,42 @@ public final class GuiStatics {
    */
   public static final BufferedImage IMAGE_INTERIOR_ALONIAN = IOUtilities
       .loadImage("/resources/images/alonian_bridge.png");
+
+  /**
+   * Get bridge image for race, null or placeholder
+   * if race does not have custom bridge.
+   *
+   * @param race           race to get bridge image for
+   * @param usePlaceholder if true, this returns default bridge image,
+   *                       otherwise null
+   * @return bridge for requested race, null or placeholder if not found
+   */
+  public static BufferedImage getRaceBridgeImage(final SpaceRace race,
+      final boolean usePlaceholder) {
+    switch (race) {
+      case CENTAURS: return IMAGE_INTERIOR_CENTAUR;
+      case SCAURIANS: return IMAGE_INTERIOR_SCAURIAN;
+      case MECHIONS: return IMAGE_INTERIOR_MECHION;
+      case HUMAN: return IMAGE_INTERIOR_HUMAN;
+      case MOTHOIDS: return IMAGE_INTERIOR_MOTHOID;
+      case GREYANS: return IMAGE_INTERIOR_GREYAN;
+      case HOMARIANS: return IMAGE_INTERIOR_HOMARIAN;
+      case TEUTHIDAES: return IMAGE_INTERIOR_TEUTHIDAE;
+      case SPORKS: return IMAGE_INTERIOR_SPORK;
+      case CHIRALOIDS: return IMAGE_INTERIOR_CHIRALOID;
+      case SPACE_PIRATE: return IMAGE_INTERIOR_PIRATE;
+      case LITHORIANS: return IMAGE_INTERIOR_LITHORIAN;
+      case REBORGIANS: return IMAGE_INTERIOR_REBORGIAN;
+      case SMAUGIRIANS: return IMAGE_INTERIOR_SMAUGIRIAN;
+      case ALTEIRIANS: return IMAGE_INTERIOR_ALTEIRIAN;
+      case ALONIANS: return IMAGE_INTERIOR_ALONIAN;
+      default:
+      if (usePlaceholder) {
+        return IMAGE_INTERIOR1;
+      }
+      return null;
+    }
+  }
 
   /**
    * Get text width for certain font

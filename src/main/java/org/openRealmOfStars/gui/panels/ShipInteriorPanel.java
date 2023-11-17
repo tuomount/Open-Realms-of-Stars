@@ -208,54 +208,8 @@ public class ShipInteriorPanel extends JPanel {
     }
     BufferedImage interior = GuiStatics.IMAGE_INTERIOR1;
     int yOffset = getAdjustment(race);
-    if (race == SpaceRace.CENTAURS) {
-      interior = GuiStatics.IMAGE_INTERIOR_CENTAUR;
-    }
-    if (race == SpaceRace.SCAURIANS) {
-      interior = GuiStatics.IMAGE_INTERIOR_SCAURIAN;
-    }
-    if (race == SpaceRace.MECHIONS) {
-      interior = GuiStatics.IMAGE_INTERIOR_MECHION;
-    }
-    if (race == SpaceRace.HUMAN) {
-      interior = GuiStatics.IMAGE_INTERIOR_HUMAN;
-    }
-    if (race == SpaceRace.MOTHOIDS) {
-      interior = GuiStatics.IMAGE_INTERIOR_MOTHOID;
-    }
-    if (race == SpaceRace.GREYANS) {
-      interior = GuiStatics.IMAGE_INTERIOR_GREYAN;
-    }
-    if (race == SpaceRace.HOMARIANS) {
-      interior = GuiStatics.IMAGE_INTERIOR_HOMARIAN;
-    }
-    if (race == SpaceRace.TEUTHIDAES) {
-      interior = GuiStatics.IMAGE_INTERIOR_TEUTHIDAE;
-    }
-    if (race == SpaceRace.SPORKS) {
-      interior = GuiStatics.IMAGE_INTERIOR_SPORK;
-    }
-    if (race == SpaceRace.CHIRALOIDS) {
-      interior = GuiStatics.IMAGE_INTERIOR_CHIRALOID;
-    }
-    if (race == SpaceRace.SPACE_PIRATE) {
-      interior = GuiStatics.IMAGE_INTERIOR_PIRATE;
-    }
-    if (race == SpaceRace.LITHORIANS) {
-      interior = GuiStatics.IMAGE_INTERIOR_LITHORIAN;
-    }
-    if (race == SpaceRace.REBORGIANS) {
-      interior = GuiStatics.IMAGE_INTERIOR_REBORGIAN;
-    }
-    if (race == SpaceRace.SMAUGIRIANS) {
-      interior = GuiStatics.IMAGE_INTERIOR_SMAUGIRIAN;
-    }
-    if (race == SpaceRace.ALTEIRIANS) {
-      interior = GuiStatics.IMAGE_INTERIOR_ALTEIRIAN;
-    }
-    if (race == SpaceRace.ALONIANS) {
-      interior = GuiStatics.IMAGE_INTERIOR_ALONIAN;
-    }
+    interior = GuiStatics.getRaceBridgeImage(race, true);
+
     g.drawImage(interior,
         this.getWidth() / 2 - interior.getWidth() / 2,
         this.getHeight() / 2 - interior.getHeight() / 2,

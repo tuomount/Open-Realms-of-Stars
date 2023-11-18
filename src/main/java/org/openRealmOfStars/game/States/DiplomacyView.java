@@ -1548,35 +1548,28 @@ public class DiplomacyView extends BlackPanel {
   private void handleActionCommandOK() {
     SoundPlayer.playMenuSound();
     SpeechLine speechSelected = humanLines.getSelectedValue();
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.AGREE) {
+    if (speechSelected == null) {
+      return;
+    }
+    SpeechType speechType = speechSelected.getType();
+
+    if (speechType == SpeechType.AGREE) {
       handleActionCommandOkAgree();
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.ASK_PROTECTION) {
-      NegotiationList list1 = getOfferingList(humanTechListOffer,
-          humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
-          createHumanVoteOffer(),
-          humanFleetListOffer, humanPlanetListOffer, humanCredits,
-          humanArtifacts);
-      NegotiationList list2 = getOfferingList(aiTechListOffer,
-          aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
-          createAiVoteOffer(),
-          aiFleetListOffer, aiPlanetListOffer, aiCredits, aiArtifacts);
+    if (speechType == SpeechType.ASK_PROTECTION) {
+      NegotiationList list1 = getHumanNegotiationList();
+      NegotiationList list2 = getAiNegotiationList();
       list2.add(new NegotiationOffer(NegotiationType.ASK_PROTECTION, null));
       trade.setFirstOffer(list2);
       trade.setSecondOffer(list1);
+
       if (trade.isOfferGoodForBoth()) {
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.AGREE);
-        resetChoices();
+        finishTransaction(SpeechType.AGREE);
       } else {
         updatePanel(SpeechType.DECLINE);
       }
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.MOVE_FLEET) {
+    if (speechType == SpeechType.MOVE_FLEET) {
       updatePanel(SpeechType.OFFER_ACCEPTED);
       Message msg = new Message(MessageType.FLEET,
           "Your fleet has crossed the borders! You have promised to move"
@@ -1589,29 +1582,28 @@ public class DiplomacyView extends BlackPanel {
       human.getMsgList().addUpcomingMessage(msg);
       resetChoices();
     }
-    if (speechSelected != null
-        && (speechSelected.getType() == SpeechType.DECLINE
-        || speechSelected.getType() == SpeechType.DECLINE_ANGER
-        || speechSelected.getType() == SpeechType.DECLINE_WAR)) {
+    if (speechType == SpeechType.DECLINE
+        || speechType == SpeechType.DECLINE_ANGER
+        || speechType == SpeechType.DECLINE_WAR) {
       int humanIndex = starMap.getPlayerList().getIndex(human);
       DiplomacyBonusList list = ai.getDiplomacy().getDiplomacyList(
           humanIndex);
       Attitude attitude = ai.getAiAttitude();
       int liking = ai.getDiplomacy().getLiking(humanIndex);
       boolean casusBelli = ai.getDiplomacy().hasCasusBelli(humanIndex);
-      if (speechSelected.getType() == SpeechType.DECLINE_ANGER) {
+      if (speechType == SpeechType.DECLINE_ANGER) {
         list.addBonus(DiplomacyBonusType.INSULT, ai.getRace());
       }
       int warChance = DiplomaticTrade.getWarChanceForDecline(
           trade.getSpeechTypeByOffer(), attitude, liking, casusBelli);
-      if (speechSelected.getType() == SpeechType.DECLINE_WAR) {
+      if (speechType == SpeechType.DECLINE_WAR) {
         warChance = 100;
       }
       int value = DiceGenerator.getRandom(99);
       if (value < warChance) {
         int aiIndex = starMap.getPlayerList().getIndex(ai);
         if (!human.getDiplomacy().isWar(aiIndex)) {
-          if (speechSelected.getType() == SpeechType.DECLINE_WAR) {
+          if (speechType == SpeechType.DECLINE_WAR) {
             setAmbientEffect(BridgeCommandType.RED_ALERT);
             NewsData newsData = NewsFactory.makeWarNews(human, ai,
                 meetingPlace, starMap, casusBelli);
@@ -1643,12 +1635,9 @@ public class DiplomacyView extends BlackPanel {
           }
         }
         trade.generateEqualTrade(NegotiationType.WAR);
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.MAKE_WAR);
-        resetChoices();
+        finishTransaction(SpeechType.MAKE_WAR);
       } else {
-        if (speechSelected.getType() == SpeechType.DECLINE_ANGER) {
+        if (speechType == SpeechType.DECLINE_ANGER) {
           updatePanel(SpeechType.INSULT_RESPOND);
         } else {
           updatePanel(SpeechType.OFFER_REJECTED);
@@ -1656,26 +1645,16 @@ public class DiplomacyView extends BlackPanel {
         resetChoices();
       }
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.TRADE_ALLIANCE) {
-      NegotiationList list1 = getOfferingList(humanTechListOffer,
-          humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
-          createHumanVoteOffer(),
-          humanFleetListOffer, humanPlanetListOffer, humanCredits,
-          humanArtifacts);
+    if (speechType == SpeechType.TRADE_ALLIANCE) {
+      NegotiationList list1 = getHumanNegotiationList();
       list1.add(new NegotiationOffer(NegotiationType.TRADE_ALLIANCE, null));
-      NegotiationList list2 = getOfferingList(aiTechListOffer,
-          aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
-          createAiVoteOffer(),
-          aiFleetListOffer, aiPlanetListOffer, aiCredits, aiArtifacts);
+      NegotiationList list2 = getAiNegotiationList();
       list2.add(new NegotiationOffer(NegotiationType.TRADE_ALLIANCE, null));
       trade.setFirstOffer(list2);
       trade.setSecondOffer(list1);
+
       if (trade.isOfferGoodForBoth()) {
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.AGREE);
-        resetChoices();
+        finishTransaction(SpeechType.AGREE);
         NewsData newsData = NewsFactory.makeTradeAllianceNews(human, ai,
             meetingPlace, starMap.getStarYear());
         starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
@@ -1686,14 +1665,10 @@ public class DiplomacyView extends BlackPanel {
         updatePanel(SpeechType.DECLINE);
       }
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.ASK_MOVE_FLEET) {
+    if (speechType == SpeechType.ASK_MOVE_FLEET) {
       trade.generateRecallFleetOffer(borderCrossedFleet);
       if (trade.isOfferGoodForBoth()) {
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.MOVE_FLEET);
-        resetChoices();
+        finishTransaction(SpeechType.MOVE_FLEET);
       } else {
         int aiIndex = starMap.getPlayerList().getIndex(ai);
         if (!human.getDiplomacy().isWar(aiIndex)) {
@@ -1715,26 +1690,16 @@ public class DiplomacyView extends BlackPanel {
           addPossibleTutorial(105);
         }
         trade.generateEqualTrade(NegotiationType.WAR);
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.DECLINE_WAR);
-        resetChoices();
+        finishTransaction(SpeechType.DECLINE_WAR);
       }
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.ASK_MOVE_SPY) {
+    if (speechType == SpeechType.ASK_MOVE_SPY) {
       trade.generateRecallFleetOffer(borderCrossedFleet);
       if (trade.isOfferGoodForBoth()) {
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.MOVE_FLEET);
-        resetChoices();
+        finishTransaction(SpeechType.MOVE_FLEET);
       } else {
         trade.generateEqualTrade(NegotiationType.WAR);
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.DECLINE_WAR);
-        resetChoices();
+        finishTransaction(SpeechType.DECLINE_WAR);
         int aiIndex = starMap.getPlayerList().getIndex(ai);
         if (!human.getDiplomacy().isWar(aiIndex)) {
           setAmbientEffect(BridgeCommandType.RED_ALERT);
@@ -1756,26 +1721,16 @@ public class DiplomacyView extends BlackPanel {
         }
       }
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.ALLIANCE) {
-      NegotiationList list1 = getOfferingList(humanTechListOffer,
-          humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
-          createHumanVoteOffer(),
-          humanFleetListOffer, humanPlanetListOffer, humanCredits,
-          humanArtifacts);
+    if (speechType == SpeechType.ALLIANCE) {
+      NegotiationList list1 = getHumanNegotiationList();
       list1.add(new NegotiationOffer(NegotiationType.ALLIANCE, null));
-      NegotiationList list2 = getOfferingList(aiTechListOffer,
-          aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
-          createAiVoteOffer(),
-          aiFleetListOffer, aiPlanetListOffer, aiCredits, aiArtifacts);
+      NegotiationList list2 = getAiNegotiationList();
       list2.add(new NegotiationOffer(NegotiationType.ALLIANCE, null));
       trade.setFirstOffer(list2);
       trade.setSecondOffer(list1);
+
       if (trade.isOfferGoodForBoth()) {
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.AGREE);
-        resetChoices();
+        finishTransaction(SpeechType.AGREE);
         NewsData newsData = NewsFactory.makeAllianceNews(human, ai,
             meetingPlace, starMap.getStarYear());
         starMap.getNewsCorpData().addNews(newsData);
@@ -1786,31 +1741,20 @@ public class DiplomacyView extends BlackPanel {
         updatePanel(SpeechType.DECLINE);
       }
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.TRADE_EMBARGO
+    if (speechType == SpeechType.TRADE_EMBARGO
         && !speechSelected.getLine().equals(
             SpeechFactory.TRADE_EMBARGO_SUGGESTION)) {
       PlayerInfo realm = getRealmFromString(speechSelected.getLine());
       if (realm != null) {
-        NegotiationList list1 = getOfferingList(humanTechListOffer,
-            humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
-            createHumanVoteOffer(),
-            humanFleetListOffer, humanPlanetListOffer, humanCredits,
-            humanArtifacts);
+        NegotiationList list1 = getHumanNegotiationList();
         list1.add(new NegotiationOffer(NegotiationType.TRADE_EMBARGO,
             realm));
-        NegotiationList list2 = getOfferingList(aiTechListOffer,
-            aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
-            createAiVoteOffer(),
-            aiFleetListOffer, aiPlanetListOffer, aiCredits, aiArtifacts);
+        NegotiationList list2 = getAiNegotiationList();
         list2.add(new NegotiationOffer(NegotiationType.TRADE_EMBARGO, realm));
         trade.setFirstOffer(list2);
         trade.setSecondOffer(list1);
         if (trade.isOfferGoodForBoth()) {
-          trade.doTrades();
-          tradeHappened = true;
-          updatePanel(SpeechType.AGREE);
-          resetChoices();
+          finishTransaction(SpeechType.AGREE);
           NewsData newsData = NewsFactory.makeTradeEmbargoNews(human, ai,
               realm, meetingPlace, starMap.getStarYear());
           starMap.getNewsCorpData().addNews(newsData);
@@ -1824,26 +1768,16 @@ public class DiplomacyView extends BlackPanel {
         }
       }
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.DEFESIVE_PACT) {
-      NegotiationList list1 = getOfferingList(humanTechListOffer,
-          humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
-          createHumanVoteOffer(),
-          humanFleetListOffer, humanPlanetListOffer, humanCredits,
-          humanArtifacts);
+    if (speechType == SpeechType.DEFESIVE_PACT) {
+      NegotiationList list1 = getHumanNegotiationList();
       list1.add(new NegotiationOffer(NegotiationType.DEFENSIVE_PACT, null));
-      NegotiationList list2 = getOfferingList(aiTechListOffer,
-          aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
-          createAiVoteOffer(),
-          aiFleetListOffer, aiPlanetListOffer, aiCredits, aiArtifacts);
+      NegotiationList list2 = getAiNegotiationList();
       list2.add(new NegotiationOffer(NegotiationType.DEFENSIVE_PACT, null));
       trade.setFirstOffer(list2);
       trade.setSecondOffer(list1);
+
       if (trade.isOfferGoodForBoth()) {
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.AGREE);
-        resetChoices();
+        finishTransaction(SpeechType.AGREE);
         NewsData newsData = NewsFactory.makeDefensivePactNews(human, ai,
             meetingPlace, starMap.getStarYear());
         starMap.getNewsCorpData().addNews(newsData);
@@ -1854,23 +1788,17 @@ public class DiplomacyView extends BlackPanel {
         updatePanel(SpeechType.DECLINE);
       }
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.DEMAND) {
+    if (speechType == SpeechType.DEMAND) {
       NegotiationList list1 = new NegotiationList();
-      NegotiationList list2 = getOfferingList(aiTechListOffer,
-          aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
-          createAiVoteOffer(),
-          aiFleetListOffer, aiPlanetListOffer, aiCredits, aiArtifacts);
+      NegotiationList list2 = getAiNegotiationList();
       trade.setFirstOffer(list2);
       trade.setSecondOffer(list1);
+
       int humanIndex = starMap.getPlayerList().getIndex(human);
       ai.getDiplomacy().getDiplomacyList(humanIndex).addBonus(
           DiplomacyBonusType.MADE_DEMAND, ai.getRace());
       if (trade.isOfferGoodForBoth()) {
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.AGREE);
-        resetChoices();
+        finishTransaction(SpeechType.AGREE);
       } else {
         Attitude attitude = ai.getAiAttitude();
         int liking = ai.getDiplomacy().getLiking(humanIndex);
@@ -1907,21 +1835,14 @@ public class DiplomacyView extends BlackPanel {
         }
       }
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.TRADE) {
-      NegotiationList list1 = getOfferingList(humanTechListOffer,
-          humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
-          createHumanVoteOffer(),
-          humanFleetListOffer, humanPlanetListOffer, humanCredits,
-          humanArtifacts);
-      NegotiationList list2 = getOfferingList(aiTechListOffer,
-          aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
-          createAiVoteOffer(),
-          aiFleetListOffer, aiPlanetListOffer, aiCredits, aiArtifacts);
+    if (speechType == SpeechType.TRADE) {
+      NegotiationList list1 = getHumanNegotiationList();
+      NegotiationList list2 = getAiNegotiationList();
       trade.setFirstOffer(list2);
       trade.setSecondOffer(list1);
+
       if (trade.isOfferGoodForBoth()) {
-        trade.doTrades();
+        finishTransaction(SpeechType.AGREE);
         if (trade.getMajorDeals() != null && trade.isPlanetTraded()) {
           NewsData news = null;
           if (!trade.isGiftTraded()) {
@@ -1946,39 +1867,25 @@ public class DiplomacyView extends BlackPanel {
             }
           }
         }
-        tradeHappened = true;
-        updatePanel(SpeechType.AGREE);
-        resetChoices();
       } else {
         updatePanel(SpeechType.DECLINE);
       }
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.OFFER_SPY_TRADE) {
-      NegotiationList list1 = getOfferingList(humanTechListOffer,
-          humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
-          createHumanVoteOffer(),
-          humanFleetListOffer, humanPlanetListOffer, humanCredits,
-          humanArtifacts);
+    if (speechType == SpeechType.OFFER_SPY_TRADE) {
+      NegotiationList list1 = getHumanNegotiationList();
       list1.add(new NegotiationOffer(NegotiationType.SPY_TRADE, null));
-      NegotiationList list2 = getOfferingList(aiTechListOffer,
-          aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
-          createAiVoteOffer(),
-          aiFleetListOffer, aiPlanetListOffer, aiCredits, aiArtifacts);
+      NegotiationList list2 = getAiNegotiationList();
       list2.add(new NegotiationOffer(NegotiationType.SPY_TRADE, null));
       trade.setFirstOffer(list2);
       trade.setSecondOffer(list1);
+
       if (trade.isOfferGoodForBoth()) {
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.AGREE);
-        resetChoices();
+        finishTransaction(SpeechType.AGREE);
       } else {
         updatePanel(SpeechType.DECLINE);
       }
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.MAKE_WAR) {
+    if (speechType == SpeechType.MAKE_WAR) {
       setAmbientEffect(BridgeCommandType.RED_ALERT);
       int humanIndex = starMap.getPlayerList().getIndex(human);
       int aiIndex = starMap.getPlayerList().getIndex(ai);
@@ -2004,26 +1911,17 @@ public class DiplomacyView extends BlackPanel {
         addPossibleTutorial(105);
       }
     }
-    if (speechSelected != null
-        && speechSelected.getType() == SpeechType.PEACE_OFFER) {
-      NegotiationList list1 = getOfferingList(humanTechListOffer,
-          humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
-          createHumanVoteOffer(),
-          humanFleetListOffer, humanPlanetListOffer, humanCredits,
-          humanArtifacts);
+    if (speechType == SpeechType.PEACE_OFFER) {
+      NegotiationList offeringList = getHumanNegotiationList();
+      NegotiationList list1 = offeringList;
       list1.add(new NegotiationOffer(NegotiationType.PEACE, null));
-      NegotiationList list2 = getOfferingList(aiTechListOffer,
-          aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
-          createAiVoteOffer(),
-          aiFleetListOffer, aiPlanetListOffer, aiCredits, aiArtifacts);
+      NegotiationList list2 = getAiNegotiationList();
       list2.add(new NegotiationOffer(NegotiationType.PEACE, null));
       trade.setFirstOffer(list2);
       trade.setSecondOffer(list1);
+
       if (trade.isOfferGoodForBoth()) {
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.AGREE);
-        resetChoices();
+        finishTransaction(SpeechType.AGREE);
         NewsData newsData = NewsFactory.makePeaceNews(human, ai,
             meetingPlace, trade.getMajorDeals(), starMap.getStarYear());
         starMap.getNewsCorpData().addNews(newsData);
@@ -2035,6 +1933,39 @@ public class DiplomacyView extends BlackPanel {
       }
     }
   }
+
+  /**
+   * Completes a trade transaction and updates panel with specified reaction.
+   * @param speechReaction SpeechType reaction
+   */
+  private void finishTransaction(final SpeechType speechReaction) {
+    trade.doTrades();
+    tradeHappened = true;
+    updatePanel(SpeechType.AGREE);
+    resetChoices();
+  }
+
+  /**
+   * Get NegotiationList of AI
+   * @return NegotiationList
+   */
+  private NegotiationList getAiNegotiationList() {
+    return getOfferingList(aiTechListOffer, aiMapPlanetsOffer.isSelected(),
+        aiMapOffer.isSelected(), createAiVoteOffer(), aiFleetListOffer,
+        aiPlanetListOffer, aiCredits, aiArtifacts);
+  }
+
+  /**
+   * Get NegotiationList of human player
+   * @return NegotiationList
+   */
+  private NegotiationList getHumanNegotiationList() {
+    return getOfferingList(humanTechListOffer,
+        humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
+        createHumanVoteOffer(), humanFleetListOffer, humanPlanetListOffer,
+        humanCredits, humanArtifacts);
+  }
+
   /**
    * Handle events for DiplomacyView.
    * @param arg0 ActionEvent

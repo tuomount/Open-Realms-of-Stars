@@ -62,10 +62,8 @@ import org.openRealmOfStars.player.tech.TechType;
  */
 public class ResearchView extends BlackPanel implements ListSelectionListener {
 
-  /**
-   *
-   */
   private static final long serialVersionUID = 1L;
+
   /**
    * Player Info
    */
@@ -148,6 +146,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     focusPanel.setTitle("Research focus");
     focusPanel.setLayout(new BoxLayout(focusPanel, BoxLayout.Y_AXIS));
     // focusPanel.add(Box.createRigidArea(new Dimension(10,15)));
+
     combatRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_COMBAT_RESEARCH,
         GameCommands.COMMAND_PLUS_COMBAT_RESEARCH, Icons.ICON_COMBAT_TECH,
@@ -168,6 +167,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     techPane.add(combatRese);
     focusPanel.add(techPane);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
     defenseRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_DEFENSE_RESEARCH,
         GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH, Icons.ICON_DEFENSE_TECH,
@@ -188,6 +188,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     techPane.add(defenseRese);
     focusPanel.add(techPane);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
     hullRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_HULL_RESEARCH,
         GameCommands.COMMAND_PLUS_HULL_RESEARCH, Icons.ICON_HULL_TECH,
@@ -208,6 +209,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     techPane.add(hullRese);
     focusPanel.add(techPane);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
     improvementRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_IMPROVEMENT_RESEARCH,
         GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH,
@@ -231,6 +233,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     techPane.add(improvementRese);
     focusPanel.add(techPane);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
     propulsionRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_PROPULSION_RESEARCH,
         GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH,
@@ -253,6 +256,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     techPane.add(propulsionRese);
     focusPanel.add(techPane);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
     electronicsRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_ELECTRONICS_RESEARCH,
         GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH,
@@ -275,6 +279,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     techPane.add(electronicsRese);
     focusPanel.add(techPane);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
     InfoPanel artifactPanel = new InfoPanel();
     artifactPanel.setTitle("Ancient artifacts");
     artifactPanel.setLayout(new BoxLayout(artifactPanel, BoxLayout.Y_AXIS));
@@ -316,6 +321,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     techList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     greyPanel.add(scroll);
     greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
     infoText = new InfoTextArea(20, 35);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
@@ -357,128 +363,86 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(final ActionEvent arg0) {
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
+    String cmd = arg0.getActionCommand();
+
+    if (cmd.equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
       if (playSoundFromSliders == 0) {
         playSoundFromSliders = 1;
       }
       return;
     }
 
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH)) {
+    if (cmd.equals(GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH)) {
       handleCmdSlider(combatRese, TechType.Combat);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_PLUS_COMBAT_RESEARCH)) {
+    } else if (cmd.equals(GameCommands.COMMAND_PLUS_COMBAT_RESEARCH)) {
       handleCmdPlus(TechType.Combat);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_MINUS_COMBAT_RESEARCH)) {
+    } else if (cmd.equals(GameCommands.COMMAND_MINUS_COMBAT_RESEARCH)) {
       handleCmdMinus(TechType.Combat);
-    }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_COMBAT)) {
+    } else if (cmd.equals(GameCommands.COMMAND_UPGRADE_COMBAT)) {
       handleCmdUpdate(combatRese, TechType.Combat);
-    }
+    } else
 
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_SLIDER_DEFENSE_RESEARCH)) {
+    if (cmd.equals(GameCommands.COMMAND_SLIDER_DEFENSE_RESEARCH)) {
       handleCmdSlider(defenseRese, TechType.Defense);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH)) {
+    } else if (cmd.equals(GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH)) {
       handleCmdPlus(TechType.Defense);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_MINUS_DEFENSE_RESEARCH)) {
+    } else if (cmd.equals(GameCommands.COMMAND_MINUS_DEFENSE_RESEARCH)) {
       handleCmdMinus(TechType.Defense);
-    }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_DEFENSE)) {
+    } else if (cmd.equals(GameCommands.COMMAND_UPGRADE_DEFENSE)) {
       handleCmdUpdate(defenseRese, TechType.Defense);
-    }
+    } else
 
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_SLIDER_HULL_RESEARCH)) {
+    if (cmd.equals(GameCommands.COMMAND_SLIDER_HULL_RESEARCH)) {
       handleCmdSlider(hullRese, TechType.Hulls);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_PLUS_HULL_RESEARCH)) {
+    } else if (cmd.equals(GameCommands.COMMAND_PLUS_HULL_RESEARCH)) {
       handleCmdPlus(TechType.Hulls);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_MINUS_HULL_RESEARCH)) {
+    } else if (cmd.equals(GameCommands.COMMAND_MINUS_HULL_RESEARCH)) {
       handleCmdMinus(TechType.Hulls);
-    }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_HULL)) {
+    } else if (cmd.equals(GameCommands.COMMAND_UPGRADE_HULL)) {
       handleCmdUpdate(hullRese, TechType.Hulls);
-    }
+    } else
 
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_SLIDER_IMPROVEMENT_RESEARCH)) {
+    if (cmd.equals(GameCommands.COMMAND_SLIDER_IMPROVEMENT_RESEARCH)) {
       handleCmdSlider(improvementRese, TechType.Improvements);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH)) {
+    } else if (cmd.equals(GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH)) {
       handleCmdPlus(TechType.Improvements);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_MINUS_IMPROVEMENT_RESEARCH)) {
+    } else if (cmd.equals(GameCommands.COMMAND_MINUS_IMPROVEMENT_RESEARCH)) {
       handleCmdMinus(TechType.Improvements);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_UPGRADE_IMPROVEMENT)) {
+    } else if (cmd.equals(GameCommands.COMMAND_UPGRADE_IMPROVEMENT)) {
       handleCmdUpdate(improvementRese, TechType.Improvements);
-    }
+    } else
 
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_SLIDER_PROPULSION_RESEARCH)) {
+    if (cmd.equals(GameCommands.COMMAND_SLIDER_PROPULSION_RESEARCH)) {
       handleCmdSlider(propulsionRese, TechType.Propulsion);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH)) {
+    } else if (cmd.equals(GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH)) {
       handleCmdPlus(TechType.Propulsion);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_MINUS_PROPULSION_RESEARCH)) {
+    } else if (cmd.equals(GameCommands.COMMAND_MINUS_PROPULSION_RESEARCH)) {
       handleCmdMinus(TechType.Propulsion);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_UPGRADE_PROPULSION)) {
+    } else if (cmd.equals(GameCommands.COMMAND_UPGRADE_PROPULSION)) {
       handleCmdUpdate(propulsionRese, TechType.Propulsion);
-    }
+    } else
 
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_SLIDER_ELECTRONICS_RESEARCH)) {
+    if (cmd.equals(GameCommands.COMMAND_SLIDER_ELECTRONICS_RESEARCH)) {
       handleCmdSlider(electronicsRese, TechType.Electrics);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH)) {
+    } else if (cmd.equals(GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH)) {
       handleCmdPlus(TechType.Electrics);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_MINUS_ELECTRONICS_RESEARCH)) {
+    } else if (cmd.equals(GameCommands.COMMAND_MINUS_ELECTRONICS_RESEARCH)) {
       handleCmdMinus(TechType.Electrics);
-    }
-    if (arg0.getActionCommand()
-        .equals(GameCommands.COMMAND_UPGRADE_ELECTRONICS)) {
+    } else if (cmd.equals(GameCommands.COMMAND_UPGRADE_ELECTRONICS)) {
       handleCmdUpdate(electronicsRese, TechType.Electrics);
-    }
+    } else
 
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_COMBAT_INFO)) {
+    if (cmd.equals(GameCommands.COMMAND_COMBAT_INFO)) {
       updateTechInfo(TechType.Combat);
-    }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_DEFENSE_INFO)) {
+    } else if (cmd.equals(GameCommands.COMMAND_DEFENSE_INFO)) {
       updateTechInfo(TechType.Defense);
-    }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_HULL_INFO)) {
+    } else if (cmd.equals(GameCommands.COMMAND_HULL_INFO)) {
       updateTechInfo(TechType.Hulls);
-    }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_IMPROVEMENT_INFO)) {
+    } else if (cmd.equals(GameCommands.COMMAND_IMPROVEMENT_INFO)) {
       updateTechInfo(TechType.Improvements);
-    }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_PROPULSION_INFO)) {
+    } else if (cmd.equals(GameCommands.COMMAND_PROPULSION_INFO)) {
       updateTechInfo(TechType.Propulsion);
-    }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ELECTRONICS_INFO)) {
+    } else if (cmd.equals(GameCommands.COMMAND_ELECTRONICS_INFO)) {
       updateTechInfo(TechType.Electrics);
     }
   }
@@ -622,8 +586,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     Tech[] missingTechs = player.getTechList().getListMissingTech(type, level);
     Tech[] missingRareTech = player.getTechList().checkRareTechTree(type,
         level);
-    sb.append("\n\n");
-    sb.append("Missing techs for level ");
+    sb.append("\n\nMissing techs for level ");
     sb.append(level);
     sb.append(":\n");
     for (int i = 0; i < missingTechs.length; i++) {

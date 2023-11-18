@@ -1479,18 +1479,7 @@ public class DiplomacyView extends BlackPanel {
       int humanIndex = starMap.getPlayerList().getIndex(human);
       boolean casusBelli = ai.getDiplomacy().hasCasusBelli(humanIndex);
       StarMapUtilities.addWarDeclatingReputation(starMap, ai, human);
-      NewsData newsData = NewsFactory.makeWarNews(ai, human,
-          meetingPlace, starMap, casusBelli);
-      starMap.getNewsCorpData().addNews(newsData);
-      starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-          meetingPlace, newsData));
-      String[] list = human.getDiplomacy().activateDefensivePact(
-          starMap, ai);
-      if (list != null) {
-        starMap.getNewsCorpData().addNews(
-            NewsFactory.makeDefensiveActivation(ai, list));
-      }
-      addPossibleTutorial(105);
+      handleWarDeclaration(ai, human, casusBelli);
     }
     if (trade.getFirstOffer().isTypeInOffer(NegotiationType.ALLIANCE)) {
       NewsData newsData = NewsFactory.makeAllianceNews(ai, human,
@@ -1603,35 +1592,12 @@ public class DiplomacyView extends BlackPanel {
       if (value < warChance) {
         int aiIndex = starMap.getPlayerList().getIndex(ai);
         if (!human.getDiplomacy().isWar(aiIndex)) {
+          setAmbientEffect(BridgeCommandType.RED_ALERT);
           if (speechType == SpeechType.DECLINE_WAR) {
-            setAmbientEffect(BridgeCommandType.RED_ALERT);
-            NewsData newsData = NewsFactory.makeWarNews(human, ai,
-                meetingPlace, starMap, casusBelli);
-            starMap.getNewsCorpData().addNews(newsData);
-            starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-                meetingPlace, newsData));
-            String[] defenseList = ai.getDiplomacy().activateDefensivePact(
-                starMap, human);
-            if (defenseList != null) {
-              starMap.getNewsCorpData().addNews(
-                  NewsFactory.makeDefensiveActivation(human, defenseList));
-            }
-            addPossibleTutorial(105);
+            handleWarDeclaration(human, ai, casusBelli);
           } else {
-            setAmbientEffect(BridgeCommandType.RED_ALERT);
             StarMapUtilities.addWarDeclatingReputation(starMap, ai, human);
-            NewsData newsData = NewsFactory.makeWarNews(ai, human,
-                meetingPlace, starMap, casusBelli);
-            starMap.getNewsCorpData().addNews(newsData);
-            starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-                meetingPlace, newsData));
-            String[] defenseList = human.getDiplomacy().activateDefensivePact(
-                starMap, ai);
-            if (defenseList != null) {
-              starMap.getNewsCorpData().addNews(
-                  NewsFactory.makeDefensiveActivation(ai, defenseList));
-            }
-            addPossibleTutorial(105);
+            handleWarDeclaration(ai, human, casusBelli);
           }
         }
         trade.generateEqualTrade(NegotiationType.WAR);
@@ -1676,18 +1642,7 @@ public class DiplomacyView extends BlackPanel {
           int humanIndex = starMap.getPlayerList().getIndex(human);
           boolean casusBelli = ai.getDiplomacy().hasCasusBelli(humanIndex);
           StarMapUtilities.addWarDeclatingReputation(starMap, ai, human);
-          NewsData newsData = NewsFactory.makeWarNews(ai, human,
-              meetingPlace, starMap, casusBelli);
-          starMap.getNewsCorpData().addNews(newsData);
-          starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-              meetingPlace, newsData));
-          String[] defenseList = human.getDiplomacy().activateDefensivePact(
-              starMap, ai);
-          if (defenseList != null) {
-            starMap.getNewsCorpData().addNews(
-                NewsFactory.makeDefensiveActivation(ai, defenseList));
-          }
-          addPossibleTutorial(105);
+          handleWarDeclaration(ai, human, casusBelli);
         }
         trade.generateEqualTrade(NegotiationType.WAR);
         finishTransaction(SpeechType.DECLINE_WAR);
@@ -1706,18 +1661,7 @@ public class DiplomacyView extends BlackPanel {
           int humanIndex = starMap.getPlayerList().getIndex(human);
           boolean casusBelli = ai.getDiplomacy().hasCasusBelli(humanIndex);
           StarMapUtilities.addWarDeclatingReputation(starMap, ai, human);
-          NewsData newsData = NewsFactory.makeWarNews(ai, human,
-              meetingPlace, starMap, casusBelli);
-          starMap.getNewsCorpData().addNews(newsData);
-          starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-              meetingPlace, newsData));
-          String[] defenseList = human.getDiplomacy().activateDefensivePact(
-              starMap, ai);
-          if (defenseList != null) {
-            starMap.getNewsCorpData().addNews(
-                NewsFactory.makeDefensiveActivation(ai, defenseList));
-          }
-          addPossibleTutorial(105);
+          handleWarDeclaration(ai, human, casusBelli);
         }
       }
     }
@@ -1816,18 +1760,7 @@ public class DiplomacyView extends BlackPanel {
           int aiIndex = starMap.getPlayerList().getIndex(ai);
           if (!human.getDiplomacy().isWar(aiIndex)) {
             StarMapUtilities.addWarDeclatingReputation(starMap, ai, human);
-            NewsData newsData = NewsFactory.makeWarNews(ai, human,
-                meetingPlace, starMap, casusBelli);
-            starMap.getNewsCorpData().addNews(newsData);
-            starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-                meetingPlace, newsData));
-            String[] defenseList = human.getDiplomacy().activateDefensivePact(
-                starMap, ai);
-            if (defenseList != null) {
-              starMap.getNewsCorpData().addNews(
-                  NewsFactory.makeDefensiveActivation(ai, defenseList));
-            }
-            addPossibleTutorial(105);
+            handleWarDeclaration(ai, human, casusBelli);
           }
         } else {
           updatePanel(SpeechType.DECLINE_ANGER);
@@ -1897,18 +1830,7 @@ public class DiplomacyView extends BlackPanel {
       if (!human.getDiplomacy().isWar(aiIndex)) {
         boolean casusBelli = human.getDiplomacy().hasCasusBelli(aiIndex);
         StarMapUtilities.addWarDeclatingReputation(starMap, human, ai);
-        NewsData newsData = NewsFactory.makeWarNews(human, ai,
-            meetingPlace, starMap, casusBelli);
-        starMap.getNewsCorpData().addNews(newsData);
-        starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-            meetingPlace, newsData));
-        String[] defenseList = ai.getDiplomacy().activateDefensivePact(
-            starMap, human);
-        if (defenseList != null) {
-          starMap.getNewsCorpData().addNews(
-              NewsFactory.makeDefensiveActivation(human, defenseList));
-        }
-        addPossibleTutorial(105);
+        handleWarDeclaration(human, ai, casusBelli);
       }
     }
     if (speechType == SpeechType.PEACE_OFFER) {
@@ -1932,6 +1854,29 @@ public class DiplomacyView extends BlackPanel {
         updatePanel(SpeechType.DECLINE);
       }
     }
+  }
+
+  /**
+   * Handle news/history for War declaration and activate defense pact.
+   * TODO: Move all the news and diplomacy logic stuff from GUI code
+   * @param aggressor  Attacking player
+   * @param target     Defending player
+   * @param casusBelli Attacker has casus belli
+   */
+  private void handleWarDeclaration(final PlayerInfo aggressor,
+      final PlayerInfo target, final boolean casusBelli) {
+    NewsData newsData = NewsFactory.makeWarNews(aggressor, target,
+        meetingPlace, starMap, casusBelli);
+    starMap.getNewsCorpData().addNews(newsData);
+    starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+        meetingPlace, newsData));
+    String[] defenseList = target.getDiplomacy().activateDefensivePact(
+        starMap, aggressor);
+    if (defenseList != null) {
+      starMap.getNewsCorpData().addNews(
+          NewsFactory.makeDefensiveActivation(aggressor, defenseList));
+    }
+    addPossibleTutorial(105);
   }
 
   /**

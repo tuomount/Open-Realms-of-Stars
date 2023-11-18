@@ -667,170 +667,55 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
    * finished on estimate
    */
   private static final int TIME_LIMIT_NEVER = 10000;
+
   /**
-   * Update all component on research view panel.
+   * Update all components on research view panel.
    */
   public void updatePanel() {
-    int focus = player.getTechList().getTechFocus(TechType.Combat);
-    int level = player.getTechList().getTechLevel(TechType.Combat);
-    int subLevel = player.getTechList().getListForTypeAndLevel(TechType.Combat,
-        level).length;
-    int maxSubLevel = TechFactory.getListByTechLevel(TechType.Combat,
-        level, player.getRace()).length;
-    int required = TechFactory.getTechCost(level, maximumGameLength);
-    int turns = (int) Math.ceil(
-        (required - player.getTechList().getTechResearchPoints(TechType.Combat))
-            / (focus * totalResearch / 100.0));
-    String turnsInStr = turns + " star years";
-    if (turns > TIME_LIMIT_NEVER) {
-      turnsInStr = "never";
-    }
-    combatRese.setSliderValue(focus);
-    combatRese
-        .setText(TechType.Combat.toString() + " " + focus + "% " + turnsInStr);
-    combatRese.setUpgadeBtnText(
-        "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
-    if (player.getTechList().isUpgradeable(TechType.Combat)) {
-      combatRese.setEnableUpgradeButton(true);
-      combatRese.setUpgadeBtnToolTip("<html>Upgrade combat to " + (level + 1)
-          + " level.<br>"
-          + " By upgrading you skip rest of technologies on your current level."
-          + "</html>");
-    }
+    final ResearchTechPanel[] techResePanels = {
+        combatRese, defenseRese, hullRese, improvementRese, propulsionRese,
+        electronicsRese
+    };
+    final TechType[] techTypes = {
+        TechType.Combat, TechType.Defense, TechType.Hulls,
+        TechType.Improvements, TechType.Propulsion, TechType.Electrics,
+    };
 
-    focus = player.getTechList().getTechFocus(TechType.Defense);
-    level = player.getTechList().getTechLevel(TechType.Defense);
-    subLevel = player.getTechList().getListForTypeAndLevel(TechType.Defense,
-        level).length;
-    maxSubLevel = TechFactory.getListByTechLevel(TechType.Defense,
-        level, player.getRace()).length;
-    required = TechFactory.getTechCost(level, maximumGameLength);
-    turns = (int) Math.ceil((required
-        - player.getTechList().getTechResearchPoints(TechType.Defense))
-        / (focus * totalResearch / 100.0));
-    turnsInStr = turns + " star years";
-    if (turns > TIME_LIMIT_NEVER) {
-      turnsInStr = "never";
-    }
-    defenseRese.setSliderValue(focus);
-    defenseRese
-        .setText(TechType.Defense.toString() + " " + focus + "% " + turnsInStr);
-    defenseRese.setUpgadeBtnText(
-        "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
-    if (player.getTechList().isUpgradeable(TechType.Defense)) {
-      defenseRese.setEnableUpgradeButton(true);
-      defenseRese.setUpgadeBtnToolTip("<html>Upgrade defense to " + (level + 1)
-          + " level.<br>"
-          + " By upgrading you skip rest of technologies on your current level."
-          + "</html>");
-    }
+    for (int idx = 0; idx < techTypes.length; idx++) {
+      ResearchTechPanel panel = techResePanels[idx];
+      TechType techType = techTypes[idx];
+      String techTypeName = techType.toString();
+      TechList playerTechList = player.getTechList();
 
-    focus = player.getTechList().getTechFocus(TechType.Hulls);
-    level = player.getTechList().getTechLevel(TechType.Hulls);
-    subLevel = player.getTechList().getListForTypeAndLevel(TechType.Hulls,
-        level).length;
-    maxSubLevel = TechFactory.getListByTechLevel(TechType.Hulls, level,
-        player.getRace()).length;
-    required = TechFactory.getTechCost(level, maximumGameLength);
-    turns = (int) Math.ceil(
-        (required - player.getTechList().getTechResearchPoints(TechType.Hulls))
-            / (focus * totalResearch / 100.0));
-    turnsInStr = turns + " star years";
-    if (turns > TIME_LIMIT_NEVER) {
-      turnsInStr = "never";
-    }
-    hullRese.setSliderValue(focus);
-    hullRese
-        .setText(TechType.Hulls.toString() + " " + focus + "% " + turnsInStr);
-    hullRese.setUpgadeBtnText(
-        "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
-    if (player.getTechList().isUpgradeable(TechType.Hulls)) {
-      hullRese.setEnableUpgradeButton(true);
-      hullRese.setUpgadeBtnToolTip("<html>Upgrade hulls to " + (level + 1)
-          + " level.<br>"
-          + " By upgrading you skip rest of technologies on your current level."
-          + "</html>");
-    }
+      int focus = playerTechList.getTechFocus(techType);
+      int level = playerTechList.getTechLevel(techType);
+      int subLevel = playerTechList.getListForTypeAndLevel(
+          techType, level).length;
+      int maxSubLevel = TechFactory.getListByTechLevel(techType,
+          level, player.getRace()).length;
+      int required = TechFactory.getTechCost(level, maximumGameLength);
+      double researchPoints = playerTechList.getTechResearchPoints(techType);
 
-    focus = player.getTechList().getTechFocus(TechType.Improvements);
-    level = player.getTechList().getTechLevel(TechType.Improvements);
-    subLevel = player.getTechList()
-        .getListForTypeAndLevel(TechType.Improvements, level).length;
-    maxSubLevel = TechFactory.getListByTechLevel(TechType.Improvements,
-        level, player.getRace()).length;
-    required = TechFactory.getTechCost(level, maximumGameLength);
-    turns = (int) Math.ceil((required
-        - player.getTechList().getTechResearchPoints(TechType.Improvements))
-        / (focus * totalResearch / 100.0));
-    turnsInStr = turns + " star years";
-    if (turns > TIME_LIMIT_NEVER) {
-      turnsInStr = "never";
-    }
-    improvementRese.setSliderValue(focus);
-    improvementRese.setText(
-        TechType.Improvements.toString() + " " + focus + "% " + turnsInStr);
-    improvementRese.setUpgadeBtnText(
-        "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
-    if (player.getTechList().isUpgradeable(TechType.Improvements)) {
-      improvementRese.setEnableUpgradeButton(true);
-      improvementRese.setUpgadeBtnToolTip("<html>Upgrade improvements to "
-          + (level + 1) + " level.<br>"
-          + " By upgrading you skip rest of technologies on your current level."
-          + "</html>");
-    }
+      int turns = (int) Math.ceil(
+          (required - researchPoints) / (focus * totalResearch / 100.0));
+      String turnsInStr = turns + " star years";
+      if (turns > TIME_LIMIT_NEVER) {
+        turnsInStr = "never";
+      }
 
-    focus = player.getTechList().getTechFocus(TechType.Propulsion);
-    level = player.getTechList().getTechLevel(TechType.Propulsion);
-    subLevel = player.getTechList().getListForTypeAndLevel(TechType.Propulsion,
-        level).length;
-    maxSubLevel = TechFactory.getListByTechLevel(TechType.Propulsion,
-        level, player.getRace()).length;
-    required = TechFactory.getTechCost(level, maximumGameLength);
-    turns = (int) Math.ceil((required
-        - player.getTechList().getTechResearchPoints(TechType.Propulsion))
-        / (focus * totalResearch / 100.0));
-    turnsInStr = turns + " star years";
-    if (turns > TIME_LIMIT_NEVER) {
-      turnsInStr = "never";
-    }
-    propulsionRese.setSliderValue(focus);
-    propulsionRese.setText(
-        TechType.Propulsion.toString() + " " + focus + "% " + turnsInStr);
-    propulsionRese.setUpgadeBtnText(
-        "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
-    if (player.getTechList().isUpgradeable(TechType.Propulsion)) {
-      propulsionRese.setEnableUpgradeButton(true);
-      propulsionRese.setUpgadeBtnToolTip("<html>Upgrade propulsion to "
-          + (level + 1) + " level.<br>"
-          + " By upgrading you skip rest of technologies on your current level."
-          + "</html>");
-    }
+      panel.setSliderValue(focus);
+      panel.setText("" + techTypeName + " " + focus + "% " + turnsInStr);
+      panel.setUpgadeBtnText(
+          "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
 
-    focus = player.getTechList().getTechFocus(TechType.Electrics);
-    level = player.getTechList().getTechLevel(TechType.Electrics);
-    subLevel = player.getTechList().getListForTypeAndLevel(TechType.Electrics,
-        level).length;
-    maxSubLevel = TechFactory.getListByTechLevel(TechType.Electrics,
-        level, player.getRace()).length;
-    required = TechFactory.getTechCost(level, maximumGameLength);
-    turns = (int) Math.ceil((required
-        - player.getTechList().getTechResearchPoints(TechType.Electrics))
-        / (focus * totalResearch / 100.0));
-    turnsInStr = turns + " star years";
-    if (turns > TIME_LIMIT_NEVER) {
-      turnsInStr = "never";
-    }
-    electronicsRese.setSliderValue(focus);
-    electronicsRese.setText(
-        TechType.Electrics.toString() + " " + focus + "% " + turnsInStr);
-    electronicsRese.setUpgadeBtnText(
-        "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
-    if (player.getTechList().isUpgradeable(TechType.Electrics)) {
-      electronicsRese.setEnableUpgradeButton(true);
-      electronicsRese.setUpgadeBtnToolTip("<html>Upgrade electronics to "
-          + (level + 1) + " level.<br>"
-          + " By upgrading you skip rest of technologies on your current level."
-          + "</html>");
+      if (playerTechList.isUpgradeable(techType)) {
+        panel.setEnableUpgradeButton(true);
+        String tooltipText = "<html>Upgrade %s to level %s.<br>"
+            + "By upgrading you skip remaining unresearched technologies"
+            + "on your current level.</html>";
+        panel.setUpgadeBtnToolTip(
+            String.format(tooltipText, techTypeName, level + 1));
+      }
     }
   }
 

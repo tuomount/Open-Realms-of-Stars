@@ -56,7 +56,7 @@ public class ShipUpgradeViewTest {
     Planet planet = new Planet(new Coordinate(5,5), "Planet I", 1, false);
     planet.setPlanetOwner(0, info);
     planet.setWorkers(Planet.FOOD_FARMERS, 1);
-    ShipUpgradeView view = new ShipUpgradeView(info, fleet1, planet, listener);
+    new ShipUpgradeView(info, fleet1, planet, listener);
   }
 
 }

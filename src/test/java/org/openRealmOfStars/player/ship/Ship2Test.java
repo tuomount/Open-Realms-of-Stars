@@ -4,20 +4,12 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.mockito.Mockito;
-import org.openRealmOfStars.player.ship.Ship;
-import org.openRealmOfStars.player.ship.ShipComponent;
-import org.openRealmOfStars.player.ship.ShipComponentFactory;
-import org.openRealmOfStars.player.ship.ShipDamage;
-import org.openRealmOfStars.player.ship.ShipHull;
-import org.openRealmOfStars.player.ship.ShipHullType;
-import org.openRealmOfStars.player.ship.ShipImages;
-import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 
 import static org.junit.Assert.*;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2018, 2020 Tuomo Untinen
  * Copyright (C) 2017 Lucas
@@ -26,16 +18,16 @@ import static org.junit.Assert.*;
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Test for Ship class using mock
  */
 
@@ -306,7 +298,7 @@ public class Ship2Test {
     /**
      * Purpose: Confirm RegenerateShield Without ShieldComponent() Input: shield
      * = 0
-     * 
+     *
      * Expected: shield = 0
      */
     @Test
@@ -338,7 +330,7 @@ public class Ship2Test {
 
     /**
      * Purpose: Confirm getSpeed Input: ship with engine named Nuclear drive Mk1
-     * 
+     *
      * Expected: getspeed = 2 getFtlSpeed = 2 getTacticSpeed = 1
      */
     @Test
@@ -372,7 +364,7 @@ public class Ship2Test {
 
     /**
      * Purpose: Confirm getSpeed Input: ship without engine
-     * 
+     *
      * Expected: getspeed = 2 getFtlSpeed = 2 getTacticSpeed = 1
      */
     @Test
@@ -405,11 +397,11 @@ public class Ship2Test {
 
     /**
      * Purpose: Confirm hasWeapon Input: ship with weapon and energy
-     * 
+     *
      * Expected:
-     * 
+     *
      * hasWeapon() = true
-     * 
+     *
      */
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
@@ -465,11 +457,11 @@ public class Ship2Test {
 
     /**
      * Purpose: Confirm hasWeapon Input: ship without weapon
-     * 
+     *
      * Expected:
-     * 
+     *
      * hasWeapon() = false
-     * 
+     *
      */
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
@@ -498,11 +490,11 @@ public class Ship2Test {
 
     /**
      * Purpose: Confirm hasWeapon Input: ship without energy
-     * 
+     *
      * Expected:
-     * 
+     *
      * hasWeapon() = false
-     * 
+     *
      */
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
@@ -534,11 +526,11 @@ public class Ship2Test {
      * com.getEnergyRequirement() Fission source energy 4 Laser Mk1 requirement
      * energy 1 ECM torpedo Mk1 requirement energy 0 Photon torpedo Mk9
      * requirement energy 4
-     * 
+     *
      * Expected:
-     * 
+     *
      * if Input >= 0 return true else false
-     * 
+     *
      */
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
@@ -573,11 +565,11 @@ public class Ship2Test {
 
     /**
      * Purpose: Confirm hasComponentEnergy Input: components.size = 0
-     * 
+     *
      * Expected:
-     * 
+     *
      * return false
-     * 
+     *
      */
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
@@ -605,9 +597,9 @@ public class Ship2Test {
 
     /**
      * Purpose: Confirm hasBomb Input: ship with bomb
-     * 
+     *
      * Expected: if ship has bomb return true else return false
-     * 
+     *
      */
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
@@ -653,11 +645,11 @@ public class Ship2Test {
 
     /**
      * Purpose: Confirm getInitiative() Input: Various shipHull Size
-     * 
+     *
      * Expected:
-     * 
+     *
      * return appropriate various result
-     * 
+     *
      */
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
@@ -694,9 +686,9 @@ public class Ship2Test {
         Ship ship4 = new Ship(shipdesign);
         assertEquals(0, ship4.getInitiative());
     }
-    
+
     /**
-     * Purpose: Confirm getInitiative() 
+     * Purpose: Confirm getInitiative()
      * Input: Various Empty Space -> 0 2 4 5 6 11
      * Expected: return appropriate various result -> 0 1 2 3 4 0
      */
@@ -708,7 +700,7 @@ public class Ship2Test {
         ShipComponent orbitalBomb = ShipComponentFactory.createByName("Orbital bombs Mk1");
         ShipComponent orbitalNuke = ShipComponentFactory.createByName("Orbital nuke");
         ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
-        
+
         Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
         Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
         Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
@@ -735,7 +727,7 @@ public class Ship2Test {
         Mockito.when(shiphull.getMaxSlot()).thenReturn(7);
         Ship shipEmptySpaceIs4 = new Ship(shipdesign);
         assertEquals(2, shipEmptySpaceIs4.getInitiative());
- 
+
         Mockito.when(shiphull.getMaxSlot()).thenReturn(8);
         Ship shipEmptySpaceIs5 = new Ship(shipdesign);
         assertEquals(3, shipEmptySpaceIs5.getInitiative());
@@ -743,16 +735,16 @@ public class Ship2Test {
         Mockito.when(shiphull.getMaxSlot()).thenReturn(10);
         Ship shipEmptySpaceIs6 = new Ship(shipdesign);
         assertEquals(4, shipEmptySpaceIs6.getInitiative());
-        
+
         Mockito.when(shiphull.getMaxSlot()).thenReturn(20);
         Ship shipEmptySpaceIsDefault = new Ship(shipdesign);
         assertEquals(0, shipEmptySpaceIsDefault.getInitiative());
-      
+
     }
-    
+
     /**
-     * Purpose: Confirm getInitiative() 
-     * Input: Nuclear Engine speed = 2, tactic speed = 1 
+     * Purpose: Confirm getInitiative()
+     * Input: Nuclear Engine speed = 2, tactic speed = 1
      * Expected: 3
      */
     @Test
@@ -762,7 +754,7 @@ public class Ship2Test {
         ShipHull shiphull = Mockito.mock(ShipHull.class);
         ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
         ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
-        
+
         Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
         Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
         Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
@@ -782,9 +774,9 @@ public class Ship2Test {
         Ship shipHasNuclearEngine = new Ship(shipdesign);
         assertEquals(3, shipHasNuclearEngine.getInitiative());
     }
-    
+
     /**
-     * Purpose: Confirm getInitiative() 
+     * Purpose: Confirm getInitiative()
      * Input: targetingComputer Mk1 initiativeBoost = 1
      * Expected: 3
      */
@@ -795,7 +787,7 @@ public class Ship2Test {
         ShipHull shiphull = Mockito.mock(ShipHull.class);
         ShipComponent targetingComputer = ShipComponentFactory.createByName("Targeting computer Mk1");
         ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
-        
+
         Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
         Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
         Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
@@ -815,9 +807,9 @@ public class Ship2Test {
         Ship shipHasTargetingComputer = new Ship(shipdesign);
         assertEquals(1, shipHasTargetingComputer.getInitiative());
     }
-    
+
     /**
-     * Purpose: Confirm getDefenseValue() 
+     * Purpose: Confirm getDefenseValue()
      * Input: Various shipHull Size
      * Expected:
      * return appropriate various result
@@ -829,7 +821,7 @@ public class Ship2Test {
         ShipHull shiphull = Mockito.mock(ShipHull.class);
         ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
         ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
-        
+
         Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
         Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
         Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
@@ -842,7 +834,7 @@ public class Ship2Test {
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
         ShipComponent[] shipcomponents1 = new ShipComponent[] {engine, energy};
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
-        
+
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.SMALL);
         Ship ship1 = new Ship(shipdesign);
         assertEquals(10, ship1.getDefenseValue());
@@ -859,9 +851,9 @@ public class Ship2Test {
         Ship ship4 = new Ship(shipdesign);
         assertEquals(-5, ship4.getDefenseValue());
     }
-    
+
     /**
-     * Purpose: Confirm getDefenseValue() 
+     * Purpose: Confirm getDefenseValue()
      * Input: Various shipHull Size with jammer
      * Expected:
      * return appropriate various result
@@ -887,7 +879,7 @@ public class Ship2Test {
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
         ShipComponent[] shipcomponents1 = new ShipComponent[] {engine, energy, jammer};
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
-        
+
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.SMALL);
         Ship ship1 = new Ship(shipdesign);
         assertEquals(15, ship1.getDefenseValue());
@@ -905,7 +897,7 @@ public class Ship2Test {
         assertEquals(0, ship4.getDefenseValue());
     }
     /**
-     * Purpose: Confirm getDefenseValue() 
+     * Purpose: Confirm getDefenseValue()
      * Input: Various shipHull Size with empty engine
      * Expected:
      * return appropriate various result
@@ -916,7 +908,7 @@ public class Ship2Test {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
         ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
-        
+
         Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
         Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
         Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
@@ -929,7 +921,7 @@ public class Ship2Test {
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
         ShipComponent[] shipcomponents1 = new ShipComponent[] {energy};
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
-        
+
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.SMALL);
         Ship ship1 = new Ship(shipdesign);
         assertEquals(-5, ship1.getDefenseValue());
@@ -946,15 +938,15 @@ public class Ship2Test {
         Ship ship4 = new Ship(shipdesign);
         assertEquals(-20, ship4.getDefenseValue());
     }
-    
+
     /**
      * Purpose: Confirm getHitChance Method Input: ship with various weapon
-     * 
+     *
      * Expected:
-     * 
+     *
      * return getScannerLvl() = scanner.getScannerRange()
      * getScannerDetctionLvl() = scanner.getCloakDection()
-     * 
+     *
      */
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
@@ -984,9 +976,9 @@ public class Ship2Test {
 
     /**
      * Purpose: Confirm () Input: ship with scanner
-     * 
+     *
      * Expected:
-     * 
+     *
      * return appropriate various result weapon_beam = 100 weapon_railgun,
      * weapon_photon_torpedo = 75 weapon_ecm_torpedo, weapon_he_missile = 50
      * targeting_computer = +10
@@ -1049,7 +1041,7 @@ public class Ship2Test {
 
     /**
      * Purpose: Test ship Damage Input: damage Expected:
-     * 
+     *
      * result(0) = damage(5) - hullpoint(5) fixship => 25->30 (true) 25->26
      * (false) 30->30 (false) hullpoints = count of ShipComponent(6) *
      * hullpoint(5) = 30
@@ -1099,7 +1091,7 @@ public class Ship2Test {
     /**
      * Purpose: Confirm FLag Input: ship Expected: ship() -> all flag false
      * setFlag(true)->getFlag = true setFlag(false)->getFlag = false
-     * 
+     *
      */
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
@@ -1149,20 +1141,20 @@ public class Ship2Test {
 
     /**
      * Purpose: damageBy various weapon Input: ship Expected:
-     * 
+     *
      * shield = 1 armor = 1 hullpoints = 10 Laser Mk1 1 Railgun Mk1 1 Photo
      * torpedo Mk1 1 ECM torpedo Mk1 3 HE MIssile Mk1 3
-     * 
+     *
      * WEAPON_BEAM, WEAPON_PHOTON_TORPEDO getShield -damage getArmor -damage
      * when shield is null
      *
      * WEAPON_RAILGUN, WEAPON_HE_MISSILE getArmor -damage getShield -damage when
      * shield is null
-     * 
+     *
      * WEAPON_ECM_TORPEDO getShield -damage
-     * 
+     *
      * if (shield == 0 && armor == 0 && damage > 0) damageComponent
-     * 
+     *
      */
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
@@ -1306,7 +1298,7 @@ public class Ship2Test {
      * Purpose: Confirm power Input: ship has nulcear weapon that has 10 damage
      * -> 10 ship has targeting computer that has 20 damage -> 2 ship has jammer
      * that has 20 defensevalue -> 2 ship has energy
-     * 
+     *
      * Expected: power = 14
      */
     @Test
@@ -1343,7 +1335,7 @@ public class Ship2Test {
      * Purpose: Confirm TroopPower Input: ship has 5 colonists ship has shiphull
      * that has 10 trooperpower ship has Planetary invasion module that has 50
      * damage ship has energy module named Fission source Mk2
-     * 
+     *
      * Expected: result = 75
      */
     @Test
@@ -1485,8 +1477,8 @@ public class Ship2Test {
      * that is the Colonization module trooperShip = ship with ShipComponent
      * that is the Shock trooper module privateerShip = ship with ShipHull that
      * is the ShipHullType.PRIVATEER
-     * 
-     * 
+     *
+     *
      * Expected: colonyShip -> isColonyShip() return true trooperShip ->
      * isTrooperShip() return true privateerShip -> isPrivateeringShip() return
      * true

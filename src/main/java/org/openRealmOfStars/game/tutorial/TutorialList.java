@@ -172,7 +172,7 @@ public class TutorialList {
     ArrayList<Integer> listIndexes = new ArrayList<>();
     for (HelpLine line : list) {
       if (line.isShown()) {
-        Integer value = new Integer(line.getIndex());
+        Integer value = Integer.valueOf(line.getIndex());
         listIndexes.add(value);
       }
     }

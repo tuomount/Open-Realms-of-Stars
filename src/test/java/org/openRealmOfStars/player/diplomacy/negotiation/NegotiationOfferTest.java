@@ -12,7 +12,7 @@ import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2017,2019 Tuomo Untinen
  *
@@ -20,15 +20,15 @@ import org.openRealmOfStars.starMap.planet.Planet;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
+ *
  * Tests for NegotiationOffer
  */
 public class NegotiationOfferTest {
@@ -61,7 +61,7 @@ public class NegotiationOfferTest {
     assertEquals(NegotiationType.MAP, offer.getNegotiationType());
     assertEquals(null, offer.getOfferObject());
 
-    Integer credit = new Integer(5);
+    Integer credit = Integer.valueOf(5);
     offer = new NegotiationOffer(NegotiationType.CREDIT, credit);
     assertEquals(NegotiationType.CREDIT, offer.getNegotiationType());
     assertEquals(credit, offer.getOfferObject());
@@ -111,13 +111,13 @@ public class NegotiationOfferTest {
     assertEquals(info, offer.getOfferObject());
     assertEquals(info, offer.getRealm());
 
-    Integer value = new Integer(5);
+    Integer value = Integer.valueOf(5);
     offer = new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES, value);
     assertEquals(NegotiationType.PROMISE_VOTE_YES, offer.getNegotiationType());
     assertEquals(value, offer.getOfferObject());
     assertEquals(5, offer.getPromiseValue());
 
-    value = new Integer(5);
+    value = Integer.valueOf(5);
     offer = new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO, value);
     assertEquals(NegotiationType.PROMISE_VOTE_NO, offer.getNegotiationType());
     assertEquals(value, offer.getOfferObject());
@@ -132,7 +132,7 @@ public class NegotiationOfferTest {
     NegotiationOffer offer = new NegotiationOffer(NegotiationType.PLANET, fleet);
     assertEquals(null, offer.getOfferObject());
   }
-  
+
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testOfferValues() {
@@ -154,7 +154,7 @@ public class NegotiationOfferTest {
     offer = new NegotiationOffer(NegotiationType.MAP, null);
     assertEquals(12, offer.getOfferValue(SpaceRace.HUMAN));
 
-    Integer credit = new Integer(7);
+    Integer credit = Integer.valueOf(7);
     offer = new NegotiationOffer(NegotiationType.CREDIT, credit);
     assertEquals(7, offer.getOfferValue(SpaceRace.HUMAN));
 
@@ -199,13 +199,13 @@ public class NegotiationOfferTest {
     assertEquals(info, offer.getOfferObject());
     assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
 
-    Integer value = new Integer(5);
+    Integer value = Integer.valueOf(5);
     offer = new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES, value);
     assertEquals(NegotiationType.PROMISE_VOTE_YES, offer.getNegotiationType());
     assertEquals(value, offer.getOfferObject());
     assertEquals(5, offer.getOfferValue(SpaceRace.HUMAN));
 
-    value = new Integer(5);
+    value = Integer.valueOf(5);
     offer = new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO, value);
     assertEquals(NegotiationType.PROMISE_VOTE_NO, offer.getNegotiationType());
     assertEquals(value, offer.getOfferObject());

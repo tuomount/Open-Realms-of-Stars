@@ -1521,57 +1521,7 @@ public class ImageInstruction {
     BufferedImage drawImg = GuiStatics.BIG_PLANET_ROCK1;
     SpaceRace race = SpaceRaceUtility.getRaceByName(image);
     if (race != null) {
-      if (race == SpaceRace.CENTAURS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_CENTAUR;
-      }
-      if (race == SpaceRace.SCAURIANS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_SCAURIAN;
-      }
-      if (race == SpaceRace.MECHIONS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_MECHION;
-      }
-      if (race == SpaceRace.HUMAN) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_HUMAN;
-      }
-      if (race == SpaceRace.MOTHOIDS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_MOTHOID;
-      }
-      if (race == SpaceRace.GREYANS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_GREYAN;
-      }
-      if (race == SpaceRace.HOMARIANS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_HOMARIAN;
-      }
-      if (race == SpaceRace.TEUTHIDAES) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_TEUTHIDAE;
-      }
-      if (race == SpaceRace.SPORKS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_SPORK;
-      }
-      if (race == SpaceRace.CHIRALOIDS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_CHIRALOID;
-      }
-      if (race == SpaceRace.SPACE_PIRATE) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_PIRATE;
-      }
-      if (race == SpaceRace.LITHORIANS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_LITHORIAN;
-      }
-      if (race == SpaceRace.REBORGIANS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_REBORGIAN;
-      }
-      if (race == SpaceRace.SMAUGIRIANS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_SMAUGIRIAN;
-      }
-      if (race == SpaceRace.SYNTHDROIDS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR1;
-      }
-      if (race == SpaceRace.ALTEIRIANS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_ALTEIRIAN;
-      }
-      if (race == SpaceRace.ALONIANS) {
-        drawImg = GuiStatics.IMAGE_INTERIOR_ALONIAN;
-      }
+      drawImg = GuiStatics.getRaceBridgeImage(race, true);
     }
     BufferedImage img = workImage;
     if (img == null) {

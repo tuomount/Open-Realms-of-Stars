@@ -4,9 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.openRealmOfStars.player.ship.ShipComponent;
-import org.openRealmOfStars.player.ship.ShipComponentType;
-import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 
 /**
@@ -193,7 +190,7 @@ public class ShipDesign2Test {
      * ShipComponentType.WEAPON_HE_MISSILE ) ShipComponent weapon4 (
      * ShipComponentType.WEAPON_PHOTON_TORPEDO ) ShipComponent weapon5 (
      * ShipComponentType.WEAPON_RAILGUN )
-     * 
+     *
      * expected : ShipDesign.hasWeapons() == true
      */
     @Test

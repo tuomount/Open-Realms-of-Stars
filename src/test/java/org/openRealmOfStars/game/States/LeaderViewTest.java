@@ -1,7 +1,5 @@
 package org.openRealmOfStars.game.States;
 
-import static org.junit.Assert.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

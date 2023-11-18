@@ -363,284 +363,106 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
       }
       return;
     }
+
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH)) {
-      int value = combatRese.getSliderValue();
-      player.getTechList().setTechFocus(TechType.Combat, value);
-      if (playSoundFromSliders == 1) {
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-      }
-      updatePanel();
-      return;
+      handleCmdSlider(combatRese, TechType.Combat);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_PLUS_COMBAT_RESEARCH)) {
-      int value = player.getTechList().getTechFocus(TechType.Combat);
-      if (value <= 100 - TechList.FINE_TUNE_VALUE) {
-        value = value + TechList.FINE_TUNE_VALUE;
-        player.getTechList().setTechFocus(TechType.Combat, value);
-        updateTechInfo(TechType.Combat);
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-        updatePanel();
-      }
-      return;
+      handleCmdPlus(TechType.Combat);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_MINUS_COMBAT_RESEARCH)) {
-      int value = player.getTechList().getTechFocus(TechType.Combat);
-      if (value >= TechList.FINE_TUNE_VALUE) {
-        value = value - TechList.FINE_TUNE_VALUE;
-        player.getTechList().setTechFocus(TechType.Combat, value);
-        updateTechInfo(TechType.Combat);
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-        updatePanel();
-      }
-      return;
+      handleCmdMinus(TechType.Combat);
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_COMBAT)) {
-      // Assuming that upgrade button is disabled so no need to make check here
-      int lvl = player.getTechList().getTechLevel(TechType.Combat);
-      lvl = lvl + 1;
-      player.getTechList().setTechLevel(TechType.Combat, lvl);
-      combatRese.setEnableUpgradeButton(false);
-      updateTechInfo(TechType.Combat);
-      SoundPlayer.playMenuSound();
-      updatePanel();
-      return;
+      handleCmdUpdate(combatRese, TechType.Combat);
     }
 
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SLIDER_DEFENSE_RESEARCH)) {
-      int value = defenseRese.getSliderValue();
-      player.getTechList().setTechFocus(TechType.Defense, value);
-      if (playSoundFromSliders == 1) {
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-      }
-      updatePanel();
-      return;
+      handleCmdSlider(defenseRese, TechType.Defense);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH)) {
-      int value = player.getTechList().getTechFocus(TechType.Defense);
-      if (value <= 100 - TechList.FINE_TUNE_VALUE) {
-        value = value + TechList.FINE_TUNE_VALUE;
-        player.getTechList().setTechFocus(TechType.Defense, value);
-        updateTechInfo(TechType.Defense);
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-        updatePanel();
-      }
-      return;
+      handleCmdPlus(TechType.Defense);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_MINUS_DEFENSE_RESEARCH)) {
-      int value = player.getTechList().getTechFocus(TechType.Defense);
-      if (value >= TechList.FINE_TUNE_VALUE) {
-        value = value - TechList.FINE_TUNE_VALUE;
-        player.getTechList().setTechFocus(TechType.Defense, value);
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-        updatePanel();
-      }
-      return;
+      handleCmdMinus(TechType.Defense);
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_DEFENSE)) {
-      // Assuming that upgrade button is disabled so no need to make check here
-      int lvl = player.getTechList().getTechLevel(TechType.Defense);
-      lvl = lvl + 1;
-      player.getTechList().setTechLevel(TechType.Defense, lvl);
-      defenseRese.setEnableUpgradeButton(false);
-      updateTechInfo(TechType.Defense);
-      SoundPlayer.playMenuSound();
-      updatePanel();
+      handleCmdUpdate(defenseRese, TechType.Defense);
     }
 
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SLIDER_HULL_RESEARCH)) {
-      int value = hullRese.getSliderValue();
-      player.getTechList().setTechFocus(TechType.Hulls, value);
-      if (playSoundFromSliders == 1) {
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-      }
-      updatePanel();
+      handleCmdSlider(hullRese, TechType.Hulls);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_PLUS_HULL_RESEARCH)) {
-      int value = player.getTechList().getTechFocus(TechType.Hulls);
-      if (value <= 100 - TechList.FINE_TUNE_VALUE) {
-        value = value + TechList.FINE_TUNE_VALUE;
-        player.getTechList().setTechFocus(TechType.Hulls, value);
-        updateTechInfo(TechType.Hulls);
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-        updatePanel();
-      }
+      handleCmdPlus(TechType.Hulls);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_MINUS_HULL_RESEARCH)) {
-      int value = player.getTechList().getTechFocus(TechType.Hulls);
-      if (value >= TechList.FINE_TUNE_VALUE) {
-        value = value - TechList.FINE_TUNE_VALUE;
-        player.getTechList().setTechFocus(TechType.Hulls, value);
-        updateTechInfo(TechType.Hulls);
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-        updatePanel();
-      }
+      handleCmdMinus(TechType.Hulls);
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_HULL)) {
-      // Assuming that upgrade button is disabled so no need to make check here
-      int lvl = player.getTechList().getTechLevel(TechType.Hulls);
-      lvl = lvl + 1;
-      player.getTechList().setTechLevel(TechType.Hulls, lvl);
-      hullRese.setEnableUpgradeButton(false);
-      updateTechInfo(TechType.Hulls);
-      SoundPlayer.playMenuSound();
-      updatePanel();
+      handleCmdUpdate(hullRese, TechType.Hulls);
     }
 
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SLIDER_IMPROVEMENT_RESEARCH)) {
-      int value = improvementRese.getSliderValue();
-      player.getTechList().setTechFocus(TechType.Improvements, value);
-      if (playSoundFromSliders == 1) {
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-      }
-      updatePanel();
+      handleCmdSlider(improvementRese, TechType.Improvements);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH)) {
-      int value = player.getTechList().getTechFocus(TechType.Improvements);
-      if (value <= 100 - TechList.FINE_TUNE_VALUE) {
-        value = value + TechList.FINE_TUNE_VALUE;
-        player.getTechList().setTechFocus(TechType.Improvements, value);
-        updateTechInfo(TechType.Improvements);
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-        updatePanel();
-      }
+      handleCmdPlus(TechType.Improvements);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_MINUS_IMPROVEMENT_RESEARCH)) {
-      int value = player.getTechList().getTechFocus(TechType.Improvements);
-      if (value >= TechList.FINE_TUNE_VALUE) {
-        value = value - TechList.FINE_TUNE_VALUE;
-        player.getTechList().setTechFocus(TechType.Improvements, value);
-        updateTechInfo(TechType.Improvements);
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-        updatePanel();
-      }
+      handleCmdMinus(TechType.Improvements);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_UPGRADE_IMPROVEMENT)) {
-      // Assuming that upgrade button is disabled so no need to make check here
-      int lvl = player.getTechList().getTechLevel(TechType.Improvements);
-      lvl = lvl + 1;
-      player.getTechList().setTechLevel(TechType.Improvements, lvl);
-      improvementRese.setEnableUpgradeButton(false);
-      updateTechInfo(TechType.Improvements);
-      SoundPlayer.playMenuSound();
-      updatePanel();
+      handleCmdUpdate(improvementRese, TechType.Improvements);
     }
 
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SLIDER_PROPULSION_RESEARCH)) {
-      int value = propulsionRese.getSliderValue();
-      player.getTechList().setTechFocus(TechType.Propulsion, value);
-      if (playSoundFromSliders == 1) {
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-      }
-      updatePanel();
+      handleCmdSlider(propulsionRese, TechType.Propulsion);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH)) {
-      int value = player.getTechList().getTechFocus(TechType.Propulsion);
-      if (value <= 100 - TechList.FINE_TUNE_VALUE) {
-        value = value + TechList.FINE_TUNE_VALUE;
-        player.getTechList().setTechFocus(TechType.Propulsion, value);
-        updateTechInfo(TechType.Propulsion);
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-        updatePanel();
-      }
+      handleCmdPlus(TechType.Propulsion);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_MINUS_PROPULSION_RESEARCH)) {
-      int value = player.getTechList().getTechFocus(TechType.Propulsion);
-      if (value >= TechList.FINE_TUNE_VALUE) {
-        value = value - TechList.FINE_TUNE_VALUE;
-        player.getTechList().setTechFocus(TechType.Propulsion, value);
-        updateTechInfo(TechType.Propulsion);
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-        updatePanel();
-      }
+      handleCmdMinus(TechType.Propulsion);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_UPGRADE_PROPULSION)) {
-      // Assuming that upgrade button is disabled so no need to make check here
-      int lvl = player.getTechList().getTechLevel(TechType.Propulsion);
-      lvl = lvl + 1;
-      player.getTechList().setTechLevel(TechType.Propulsion, lvl);
-      propulsionRese.setEnableUpgradeButton(false);
-      updateTechInfo(TechType.Propulsion);
-      SoundPlayer.playMenuSound();
-      updatePanel();
+      handleCmdUpdate(propulsionRese, TechType.Propulsion);
     }
 
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SLIDER_ELECTRONICS_RESEARCH)) {
-      int value = electronicsRese.getSliderValue();
-      player.getTechList().setTechFocus(TechType.Electrics, value);
-      if (playSoundFromSliders == 1) {
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-      }
-      updatePanel();
+      handleCmdSlider(electronicsRese, TechType.Electrics);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH)) {
-      int value = player.getTechList().getTechFocus(TechType.Electrics);
-      if (value <= 100 - TechList.FINE_TUNE_VALUE) {
-        value = value + TechList.FINE_TUNE_VALUE;
-        player.getTechList().setTechFocus(TechType.Electrics, value);
-        updateTechInfo(TechType.Electrics);
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-        updatePanel();
-      }
+      handleCmdPlus(TechType.Electrics);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_MINUS_ELECTRONICS_RESEARCH)) {
-      int value = player.getTechList().getTechFocus(TechType.Electrics);
-      if (value >= TechList.FINE_TUNE_VALUE) {
-        value = value - TechList.FINE_TUNE_VALUE;
-        player.getTechList().setTechFocus(TechType.Electrics, value);
-        updateTechInfo(TechType.Electrics);
-        SoundPlayer.playMenuSound();
-        playSoundFromSliders = 0;
-        updatePanel();
-      }
+      handleCmdMinus(TechType.Electrics);
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_UPGRADE_ELECTRONICS)) {
-      // Assuming that upgrade button is disabled so no need to make check here
-      int lvl = player.getTechList().getTechLevel(TechType.Electrics);
-      lvl = lvl + 1;
-      player.getTechList().setTechLevel(TechType.Electrics, lvl);
-      electronicsRese.setEnableUpgradeButton(false);
-      updateTechInfo(TechType.Electrics);
-      SoundPlayer.playMenuSound();
-      updatePanel();
+      handleCmdUpdate(electronicsRese, TechType.Electrics);
     }
+
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_COMBAT_INFO)) {
       updateTechInfo(TechType.Combat);
     }
@@ -659,7 +481,77 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ELECTRONICS_INFO)) {
       updateTechInfo(TechType.Electrics);
     }
+  }
 
+  /**
+   * Handle COMMAND_SLIDER_* for specified panel and TechType
+   *
+   * @param panel    ResearchTechPanel affected
+   * @param techType TechType
+   */
+  private void handleCmdSlider(final ResearchTechPanel panel,
+      final TechType techType) {
+    int value = panel.getSliderValue();
+    player.getTechList().setTechFocus(techType, value);
+
+    if (playSoundFromSliders == 1) {
+      SoundPlayer.playMenuSound();
+      playSoundFromSliders = 0;
+    }
+
+    updatePanel();
+  }
+
+  /**
+   * Handle COMMAND_PLUS_* for specified TechType
+   *
+   * @param techType TechType
+   */
+  private void handleCmdPlus(final TechType techType) {
+    int value = player.getTechList().getTechFocus(techType);
+    if (value <= 100 - TechList.FINE_TUNE_VALUE) {
+      value = value + TechList.FINE_TUNE_VALUE;
+      player.getTechList().setTechFocus(techType, value);
+      updateTechInfo(techType);
+      SoundPlayer.playMenuSound();
+      playSoundFromSliders = 0;
+      updatePanel();
+    }
+  }
+
+  /**
+   * Handle COMMAND_MINUS_* for specified TechType
+   *
+   * @param techType TechType
+   */
+  private void handleCmdMinus(final TechType techType) {
+    int value = player.getTechList().getTechFocus(techType);
+    if (value >= TechList.FINE_TUNE_VALUE) {
+      value = value - TechList.FINE_TUNE_VALUE;
+      player.getTechList().setTechFocus(techType, value);
+      updateTechInfo(techType);
+      SoundPlayer.playMenuSound();
+      playSoundFromSliders = 0;
+      updatePanel();
+    }
+  }
+
+  /**
+   * Handle COMMAND_UPGRADE_* for specified panel and TechType
+   *
+   * @param panel    ResearchTechPanel affected
+   * @param techType TechType
+   */
+  private void handleCmdUpdate(final ResearchTechPanel panel,
+      final TechType techType) {
+    // Assuming that upgrade button is disabled so no need to make check here
+    int lvl = player.getTechList().getTechLevel(techType);
+    lvl = lvl + 1;
+    player.getTechList().setTechLevel(techType, lvl);
+    panel.setEnableUpgradeButton(false);
+    updateTechInfo(techType);
+    SoundPlayer.playMenuSound();
+    updatePanel();
   }
 
   /**

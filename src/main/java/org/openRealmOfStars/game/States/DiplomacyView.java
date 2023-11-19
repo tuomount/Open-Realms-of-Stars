@@ -1886,7 +1886,7 @@ public class DiplomacyView extends BlackPanel {
   private void finishTransaction(final SpeechType speechReaction) {
     trade.doTrades();
     tradeHappened = true;
-    updatePanel(SpeechType.AGREE);
+    updatePanel(speechReaction);
     resetChoices();
   }
 

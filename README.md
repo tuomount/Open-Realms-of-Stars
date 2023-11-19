@@ -113,7 +113,7 @@ If you're interested in contributing to the project you are welcome to fix it. C
 
 ## Running the game
 
-In order to run Open Realm of Stars Java(Java 7 or newer) is required to be installed.
+In order to run Open Realm of Stars Java(Java 11 or newer) is required to be installed.
 There are many different OpenJDK which are suitable for this, here is link for one:
 [Adoptium](https://adoptium.net/temurin/releases/)
 
@@ -123,7 +123,7 @@ Also if you are using linux, your distro's OpenJDK should work just fine. Instru
 Open Realm of Stars can be run from the Jar file or running compiled class.
 On Windows double clicking the Jar file should be enough if Java has been installed correctly.
 It can be also run from terminal or command line with following command:
-``java -jar Open-Realm-of-Stars-0.22.0Beta.jar``
+``java -jar Open-Realm-of-Stars-0.23.0Beta.jar``
 
 
 ## How to contribute

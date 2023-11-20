@@ -1,17 +1,7 @@
 package org.openRealmOfStars.utilities;
-
-import java.io.File;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Map;
-import java.util.Random;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018,2020,2022  Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,7 +15,17 @@ import java.util.Random;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import java.io.File;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Map;
+import java.util.Random;
+
+/**
  *
  * Class for getting random values. Contains actually three different
  * Pseudo random functions.

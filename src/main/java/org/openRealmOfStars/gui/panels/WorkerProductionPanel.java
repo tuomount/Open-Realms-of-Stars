@@ -1,18 +1,7 @@
 package org.openRealmOfStars.gui.panels;
-
-import java.awt.Component;
-import java.awt.event.ActionListener;
-
-import javax.swing.BoxLayout;
-
-import org.openRealmOfStars.gui.buttons.IconButton;
-import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.gui.labels.IconLabel;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,7 +15,18 @@ import org.openRealmOfStars.gui.labels.IconLabel;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import java.awt.Component;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+
+import org.openRealmOfStars.gui.buttons.IconButton;
+import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.labels.IconLabel;
+
+/**
  *
  * Class for handling worker production. Basically a label with two buttons:
  * plus and minus buttons.

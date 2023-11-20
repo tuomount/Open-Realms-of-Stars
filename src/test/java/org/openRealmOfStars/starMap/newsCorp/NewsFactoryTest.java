@@ -1,4 +1,21 @@
 package org.openRealmOfStars.starMap.newsCorp;
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2017-2023 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import static org.junit.Assert.*;
 
@@ -30,23 +47,6 @@ import org.openRealmOfStars.starMap.vote.sports.Sports;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
-*
-* Open Realm of Stars game project
-* Copyright (C) 2017-2023 Tuomo Untinen
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; either version 2
-* of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, see http://www.gnu.org/licenses/
-*
 *
 * News Factory Tests
 *
@@ -777,7 +777,7 @@ public class NewsFactoryTest {
     Mockito.when(data.isFirstStats()).thenReturn(true);
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getNewsCorpData()).thenReturn(data);
-    
+
     NewsData news = NewsFactory.makeStatNews(map);
     assertEquals(true, news.getImageInstructions().contains(
         "FIRST STATISTICAL RESEARCH DONE!"));
@@ -807,7 +807,7 @@ public class NewsFactoryTest {
     PlayerList list = Mockito.mock(PlayerList.class);
     Mockito.when(list.getSpacePiratePlayer()).thenReturn(info);
     Mockito.when(map.getPlayerList()).thenReturn(list);
-    
+
     NewsData news = NewsFactory.makeSpacePiratesNews(map);
     assertEquals(true, news.getImageInstructions().contains(
         "SPACE PIRATES"));
@@ -1842,7 +1842,7 @@ public class NewsFactoryTest {
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Mockito.when(map.getPlayerByIndex(0)).thenReturn(winner);
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(second);
-    
+
     Votes votes = Mockito.mock(Votes.class);
     Mockito.when(map.getVotes()).thenReturn(votes);
     ArrayList<Vote> listVotes = new ArrayList<>();
@@ -1898,8 +1898,8 @@ public class NewsFactoryTest {
     Mockito.when(map.getPlayerByIndex(0)).thenReturn(alliance);
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(winner);
     Mockito.when(map.getPlayerByIndex(2)).thenReturn(second);
-    
-    
+
+
     Votes votes = Mockito.mock(Votes.class);
     Mockito.when(map.getVotes()).thenReturn(votes);
     ArrayList<Vote> listVotes = new ArrayList<>();
@@ -1908,7 +1908,7 @@ public class NewsFactoryTest {
     Mockito.when(votes.getSecondCandidate()).thenReturn(2);
     Vote vote = Mockito.mock(Vote.class);
     listVotes.add(vote);
-    
+
     Mockito.when(vote.getResult(2)).thenReturn(VotingChoice.VOTED_YES);
     Mockito.when(vote.getType()).thenReturn(VotingType.RULER_OF_GALAXY);
     Mockito.when(vote.getChoice(0)).thenReturn(VotingChoice.VOTED_NO);

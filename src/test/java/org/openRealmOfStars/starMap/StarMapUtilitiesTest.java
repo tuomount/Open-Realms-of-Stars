@@ -1,4 +1,21 @@
 package org.openRealmOfStars.starMap;
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2016-18 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import static org.junit.Assert.*;
 
@@ -22,23 +39,6 @@ import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 
 /**
-*
-* Open Realm of Stars game project
-* Copyright (C) 2016-2018 Tuomo Untinen
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; either version 2
-* of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, see http://www.gnu.org/licenses/
-*
 *
 * Tests for StarMapUtilites calls
 *
@@ -668,7 +668,7 @@ public class StarMapUtilitiesTest {
     Mockito.when(map.getSecondCandidateForTower()).thenReturn(5);
     Mockito.when(diplomacy.isAlliance(0)).thenReturn(true);
     assertEquals(30, StarMapUtilities.getVotingSupport(info, vote, map));
-    
+
     Mockito.when(map.getMilitaryHighest()).thenReturn(0);
     Mockito.when(map.getSecondCandidateForTower()).thenReturn(5);
     Mockito.when(diplomacy.isDefensivePact(0)).thenReturn(true);
@@ -721,7 +721,7 @@ public class StarMapUtilitiesTest {
     Mockito.when(diplomacy.isTradeEmbargo(0)).thenReturn(false);
     Mockito.when(diplomacy.isTradeAlliance(1)).thenReturn(true);
     assertEquals(45, StarMapUtilities.getVotingSupport(info, vote, map));
-    
+
     Mockito.when(map.getMilitaryHighest()).thenReturn(0);
     Mockito.when(map.getSecondCandidateForTower()).thenReturn(5);
     Mockito.when(diplomacy.isDefensivePact(0)).thenReturn(true);
@@ -855,7 +855,7 @@ public class StarMapUtilitiesTest {
     Mockito.when(diplomacy.isTradeEmbargo(0)).thenReturn(true);
     Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.DISLIKE);
     assertEquals(-5, StarMapUtilities.getVotingSupport(info, vote, map));
-    
+
     Mockito.when(diplomacy.isTradeEmbargo(0)).thenReturn(false);
     Mockito.when(diplomacy.isWar(0)).thenReturn(true);
     Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.HATE);
@@ -897,7 +897,7 @@ public class StarMapUtilitiesTest {
     Mockito.when(diplomacy.isTradeEmbargo(5)).thenReturn(true);
     Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.DISLIKE);
     assertEquals(10, StarMapUtilities.getVotingSupport(info, vote, map));
-    
+
     Mockito.when(diplomacy.isTradeEmbargo(5)).thenReturn(false);
     Mockito.when(diplomacy.isWar(5)).thenReturn(true);
     Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.HATE);

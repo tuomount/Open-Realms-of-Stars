@@ -1,4 +1,21 @@
 package org.openRealmOfStars.starMap;
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2016-2023 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -37,24 +54,6 @@ import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
- *
- * Open Realm of Stars game project
- * Copyright (C) 2016-2021,2023 Tuomo Untinen
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
  * Tests for StarMap
  *
  */
@@ -172,7 +171,7 @@ public class StarMapTest {
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
-    
+
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
@@ -218,7 +217,7 @@ public class StarMapTest {
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
-    
+
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
@@ -500,7 +499,7 @@ public class StarMapTest {
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
-    
+
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
@@ -539,7 +538,7 @@ public class StarMapTest {
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
-    
+
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
@@ -855,7 +854,7 @@ public class StarMapTest {
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
-    
+
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
@@ -906,7 +905,7 @@ public class StarMapTest {
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
-    
+
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
@@ -949,7 +948,7 @@ public class StarMapTest {
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
-    
+
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
@@ -993,7 +992,7 @@ public class StarMapTest {
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
-    
+
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
@@ -1145,7 +1144,7 @@ public class StarMapTest {
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
-    
+
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
@@ -1191,55 +1190,55 @@ public class StarMapTest {
       }
       sb.append("\n");
     }
-    String expected = "..................................222.33333.......\n" + 
-        ".........................0...111.22223333333......\n" + 
-        "....................3...000.11112222233333333.....\n" + 
-        ".....0...111...2...333.00001111112223333333333....\n" + 
-        "....000.11111.222.33330000011111122333333333333...\n" + 
-        "..000001111111122333300000111111113333333333333...\n" + 
-        "..000000111111122.33330000011111111333333333333...\n" + 
-        "00000001111111111..333.00001111111223333333333....\n" + 
-        "00000001111111111...3...000.11111122233333333.....\n" + 
-        "000000111111111111.......0...111111223333333......\n" + 
-        "000001111111111111............1111122.33333.......\n" + 
-        "000000111111111111......222..0.11111...333........\n" + 
-        "00000001111111111......22222000.111...............\n" + 
-        "00000001111111111.....2222220000..................\n" + 
-        "..0000001111111......222222200000.................\n" + 
-        "..0000011111111......2222222200000................\n" + 
-        "....000.11111........222222200000.................\n" + 
-        ".....0...111..........2222220000..................\n" + 
-        ".......................22222000...................\n" + 
-        "........................222..0....................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
-        "..................................................\n" + 
+    String expected = "..................................222.33333.......\n" +
+        ".........................0...111.22223333333......\n" +
+        "....................3...000.11112222233333333.....\n" +
+        ".....0...111...2...333.00001111112223333333333....\n" +
+        "....000.11111.222.33330000011111122333333333333...\n" +
+        "..000001111111122333300000111111113333333333333...\n" +
+        "..000000111111122.33330000011111111333333333333...\n" +
+        "00000001111111111..333.00001111111223333333333....\n" +
+        "00000001111111111...3...000.11111122233333333.....\n" +
+        "000000111111111111.......0...111111223333333......\n" +
+        "000001111111111111............1111122.33333.......\n" +
+        "000000111111111111......222..0.11111...333........\n" +
+        "00000001111111111......22222000.111...............\n" +
+        "00000001111111111.....2222220000..................\n" +
+        "..0000001111111......222222200000.................\n" +
+        "..0000011111111......2222222200000................\n" +
+        "....000.11111........222222200000.................\n" +
+        ".....0...111..........2222220000..................\n" +
+        ".......................22222000...................\n" +
+        "........................222..0....................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
+        "..................................................\n" +
         "..................................................\n";
     assertEquals(expected, sb.toString());
   }

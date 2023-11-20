@@ -1,4 +1,21 @@
 package org.openRealmOfStars.player.diplomacy;
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2017-2023 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import static org.junit.Assert.*;
 
@@ -31,23 +48,6 @@ import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.starMap.vote.VotingType;
 
 /**
- *
- * Open Realm of Stars game project
- * Copyright (C) 2017-2023 Tuomo Untinen
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, see http://www.gnu.org/licenses/
- *
  * Diplomatic Trade tests
  *
  */
@@ -85,7 +85,7 @@ public class DiplomaticTradeTest {
     player1.initMapData(5, 5);
 
     PlayerInfo player2 = new PlayerInfo(SpaceRace.SPACE_PIRATE, maxPlayer,
-        maxPlayer); 
+        maxPlayer);
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -151,7 +151,7 @@ return map;
 
     NewsCorpData newsData = Mockito.mock(NewsCorpData.class);
     Mockito.when(newsData.getMilitaryDifference(0, 1)).thenReturn(
-        powerDifference);    
+        powerDifference);
     StarMap map = Mockito.mock(StarMap.class);
     ArrayList<Planet> planetList = new ArrayList<>();
     Planet planet = Mockito.mock(Planet.class);
@@ -198,7 +198,7 @@ return map;
     DiplomaticTrade trade = new DiplomaticTrade(map, 3, -1);
     assertEquals(0,trade.getFirstIndex());
   }
-  
+
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTechListGeneration() {
@@ -256,7 +256,7 @@ return map;
     tech1.addTech(new Tech("DefTech1", TechType.Defense, 1));
     tech1.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
-    
+
     PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS,2,1);
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
@@ -301,7 +301,7 @@ return map;
     tech1.addTech(new Tech("DefTech1", TechType.Defense, 1));
     tech1.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
-    
+
     PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS, 1, 2);
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
@@ -331,7 +331,7 @@ return map;
     // Just empty list
     trade.setSecondOffer(offer);
     assertEquals(false, trade.isOfferGoodForBoth());
-  
+
     trade = new DiplomaticTrade(map, 0, 1);
     player2.getDiplomacy().getDiplomacyList(0).addBonus(
         DiplomacyBonusType.IN_ALLIANCE, player2.getRace());
@@ -343,7 +343,7 @@ return map;
     trade.setSecondOffer(offer);
     // Second player has greatly bigger army so not agreeing
     assertEquals(false, trade.isOfferGoodForBoth());
-    
+
     Mockito.when(newsCorp.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt())).thenReturn(50);
     Mockito.when(map.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt())).thenReturn(-50);
     Mockito.when(map.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt(),
@@ -452,7 +452,7 @@ return map;
     tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     Mockito.when(player2.getTechList()).thenReturn(tech2);
-    StarMap map = Mockito.mock(StarMap.class);    
+    StarMap map = Mockito.mock(StarMap.class);
     ArrayList<Planet> planets = new ArrayList<>();
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getCoordinate()).thenReturn(coord);
@@ -640,7 +640,7 @@ return map;
     assertEquals(fleet, trade.getSecondOffer()
         .getByIndex(0).getFleet());
   }
-  
+
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testWarChance() {
@@ -1135,7 +1135,7 @@ return map;
     assertNotEquals(null, trade.getSecondOffer());
   }
 
-  
+
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGivingOutValuable() {
@@ -1253,7 +1253,7 @@ return map;
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     Mockito.when(player2.getTechList()).thenReturn(tech2);
     Mockito.when(player2.getRace()).thenReturn(SpaceRace.HUMAN);
-    StarMap map = Mockito.mock(StarMap.class);    
+    StarMap map = Mockito.mock(StarMap.class);
     ArrayList<Planet> planets = new ArrayList<>();
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getCoordinate()).thenReturn(coord);
@@ -1447,7 +1447,7 @@ return map;
         .getNegotiationType();
     NegotiationType type2 = trade.getSecondOffer().getByIndex(0)
         .getNegotiationType();
-    if (type1 == type2 
+    if (type1 == type2
         && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
         || type1 == NegotiationType.MAP_PLANETS)) {
       return;
@@ -1487,7 +1487,7 @@ return map;
         .getNegotiationType();
     NegotiationType type2 = trade.getSecondOffer().getByIndex(0)
         .getNegotiationType();
-    if (type1 == type2 
+    if (type1 == type2
         && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
         || type1 == NegotiationType.MAP_PLANETS)) {
       return;
@@ -1520,7 +1520,7 @@ return map;
         .getNegotiationType();
     if ((type2 == NegotiationType.CREDIT || type2 == NegotiationType.MAP
         || type2 == NegotiationType.TECH
-        || type2 == NegotiationType.MAP_PLANETS) 
+        || type2 == NegotiationType.MAP_PLANETS)
         && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
         || type1 == NegotiationType.MAP_PLANETS)) {
       return;
@@ -1553,7 +1553,7 @@ return map;
         .getNegotiationType();
     if ((type2 == NegotiationType.CREDIT || type2 == NegotiationType.MAP
         || type2 == NegotiationType.MAP_PLANETS
-        || type2 == NegotiationType.TECH) 
+        || type2 == NegotiationType.TECH)
         && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
         || type1 == NegotiationType.MAP_PLANETS)) {
       return;
@@ -1575,7 +1575,7 @@ return map;
     NegotiationType type2 = trade.getSecondOffer().getByIndex(0)
         .getNegotiationType();
     if ((type2 == NegotiationType.CREDIT || type2 == NegotiationType.MAP
-        || type2 == NegotiationType.TECH) 
+        || type2 == NegotiationType.TECH)
         && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH)) {
       return;
     }
@@ -1711,7 +1711,7 @@ return map;
         return;
       }
       assertFalse(true);
-    } 
+    }
   }
 
   @Test
@@ -1742,7 +1742,7 @@ return map;
         return;
       }
       assertFalse(true);
-    } 
+    }
   }
 
 }

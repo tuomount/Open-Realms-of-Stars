@@ -1,4 +1,22 @@
 package org.openRealmOfStars.player.combat;
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2017 Diocto
+ * Copyright (C) 2017-2023 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import static org.junit.Assert.*;
 
@@ -17,25 +35,6 @@ import org.openRealmOfStars.starMap.Route;
 import static org.mockito.Mockito.*;
 
 /**
- *
- * Open Realm of Stars game project 
- * Copyright (C) 2017 Diocto
- * Copyright (C) 2017, 2018, 2020, 2023 Tuomo Untinen
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, see http://www.gnu.org/licenses/
- *
- *
  * Test for Combat
  *
  */
@@ -119,7 +118,7 @@ public class Combat2Test {
 
   @Test
   /**
-   * 
+   *
    * Purpose: When Fleet class is attacking or depending, ensure that the
    * accuracyBonus of the CombatShip is set correctly Input: Combat()
    * construct Combat class. Expected: attackerCombatShip.getBonusAccuracy()
@@ -150,7 +149,7 @@ public class Combat2Test {
    * Input: isClearShot, shooterComponent is not weapon Expected:
    * shooterComponent.getWeaponRange() is never called targetCombatShip.getX()
    * and getY() is never called
-   * 
+   *
    */
   public void testComponentIsNotWeapon() {
     CombatShip shooterCombatShip = mock(CombatShip.class);
@@ -184,7 +183,7 @@ public class Combat2Test {
    * Input: isClearShot, shooterComponent is weapon Expected:
    * shooterComponent.getWeaponRange() is called targetCombatShip.getX() and
    * getY() is called
-   * 
+   *
    */
   public void testComponentIsWeapon() {
     attackerShips = new Ship[] { attackerShip };
@@ -217,7 +216,7 @@ public class Combat2Test {
    * Purpose: test isClearShot when weaponRange longer than distance between
    * the ships Input: isClearShot , shooter located (4,2) and target located
    * (4,4) Expected: isClearShot == true
-   * 
+   *
    */
   public void testValidShot() {
     attackerShips = new Ship[] { attackerShip };
@@ -514,7 +513,7 @@ public class Combat2Test {
    * handleEndCombat() are working. attackerFleet.setPos is called once.
    * dependerFleetList.getIndexByName is called once. dependerFleetList.remove
    * is called once.
-   * 
+   *
    */
   public void testAttackerWinEndCombat() {
     attackerShips = new Ship[] { attackerShip };

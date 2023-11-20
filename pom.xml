@@ -34,8 +34,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
-                    <source>1.11</source>
-                    <target>1.11</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -169,7 +169,7 @@
                     <linkXRef>true</linkXRef>
                     <sourceEncoding>utf-8</sourceEncoding>
                     <minimumTokens>100</minimumTokens>
-                    <targetJdk>1.11</targetJdk>
+                    <targetJdk>11</targetJdk>
                     <rulesets>
                         <ruleset>${basedir}/buildtools/pmd/ruleset.xml</ruleset>
                     </rulesets>
@@ -220,5 +220,5 @@
         </dependency>
     </dependencies>
     <name>Open Realm of Stars</name>
-    <description>Open Realm of Stars is Open source 4X strategy game in stars. It is developed with Java language and it is should run almost every where Swing and Java 7 are available.</description>
+    <description>Open Realm of Stars is Open source 4X strategy game in stars. It is developed with Java language and it is should run almost every where Swing and Java 11 are available.</description>
 </project>

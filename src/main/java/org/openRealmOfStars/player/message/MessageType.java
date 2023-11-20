@@ -1,9 +1,7 @@
 package org.openRealmOfStars.player.message;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016,2020,2023 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,12 +15,11 @@ package org.openRealmOfStars.player.message;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
- * Message type
- *
  */
 
+/**
+ * Message type
+ */
 public enum MessageType {
   /**
    * Player has researched new technology

@@ -1,10 +1,5 @@
 package org.openRealmOfStars.player.message;
-
-import org.openRealmOfStars.game.States.StarMapView;
-import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.starMap.planet.Planet;
-
-/**
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2017 God Beom
  *
@@ -20,12 +15,15 @@ import org.openRealmOfStars.starMap.planet.Planet;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
- * ChangeMessage class used to move focus to planet
- *
  */
 
+import org.openRealmOfStars.game.States.StarMapView;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.Planet;
+
+/**
+ * ChangeMessage class used to move focus to planet
+ */
 public class ChangeMessagePlanet extends ChangeMessage {
 
     /**

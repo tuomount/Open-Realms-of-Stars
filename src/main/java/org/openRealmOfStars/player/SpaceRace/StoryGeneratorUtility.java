@@ -1,8 +1,5 @@
 package org.openRealmOfStars.player.SpaceRace;
-
-import org.openRealmOfStars.utilities.DiceGenerator;
-
-/**
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2023 Tuomo Untinen
  *
@@ -18,10 +15,12 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
+ */
+
+import org.openRealmOfStars.utilities.DiceGenerator;
+
+/**
  * Utility for story generator.
- *
  */
 public final class StoryGeneratorUtility {
 

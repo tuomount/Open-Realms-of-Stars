@@ -1,11 +1,7 @@
 package org.openRealmOfStars.player.ship;
-
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018,2021-2022  Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,12 +15,13 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
- * Static ship images for different races
- *
  */
 
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+
+/**
+ * Static ship images for different races
+ */
 public final class ShipImages {
 
   /**

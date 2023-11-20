@@ -1,9 +1,7 @@
 package org.openRealmOfStars.player.ship;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,10 +15,10 @@ package org.openRealmOfStars.player.ship;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
+ */
+
+/**
  * Ship damage containing how bad damage was and textual information
- *
  */
 public class ShipDamage {
 

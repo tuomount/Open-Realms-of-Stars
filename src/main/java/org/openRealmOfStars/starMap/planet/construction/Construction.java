@@ -1,11 +1,7 @@
 package org.openRealmOfStars.starMap.planet.construction;
-
-import org.openRealmOfStars.gui.icons.Icon16x16;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,7 +15,11 @@ import org.openRealmOfStars.gui.icons.Icon16x16;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import org.openRealmOfStars.gui.icons.Icon16x16;
+
+/**
  *
  * Base class for planetary construction including buildings and spaceships.
  *

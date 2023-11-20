@@ -1,16 +1,7 @@
 package org.openRealmOfStars.starMap;
-
-import org.openRealmOfStars.player.AiDifficulty;
-import org.openRealmOfStars.player.PlayerColor;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
-import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
-import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.government.GovernmentUtility;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018-2023 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,7 +15,16 @@ import org.openRealmOfStars.player.government.GovernmentUtility;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import org.openRealmOfStars.player.AiDifficulty;
+import org.openRealmOfStars.player.PlayerColor;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentUtility;
+
+/**
  *
  * Galaxy config for creating new star map with player
  *

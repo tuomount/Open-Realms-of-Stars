@@ -1,20 +1,7 @@
 package org.openRealmOfStars.gui.mapPanel;
-
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-
-import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
-import org.openRealmOfStars.gui.icons.AnimatedImage;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
-import org.openRealmOfStars.utilities.DiceGenerator;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018  Tuomo Untinen
+ * Copyright (C) 2016-2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,7 +15,20 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
+import org.openRealmOfStars.gui.icons.AnimatedImage;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.utilities.DiceGenerator;
+
+/**
  *
  * Class for handling planet animation during the planet bombing view. Contains
  * pixel positions animation frames and so on.

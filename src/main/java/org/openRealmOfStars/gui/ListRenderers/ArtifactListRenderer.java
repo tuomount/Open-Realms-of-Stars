@@ -1,18 +1,5 @@
 package org.openRealmOfStars.gui.ListRenderers;
-
-import java.awt.Color;
-import java.awt.Component;
-
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
-
-import org.openRealmOfStars.gui.utilies.GuiStatics;
-import org.openRealmOfStars.player.artifact.Artifact;
-
-/**
- *
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2022 Tuomo Untinen
  *
@@ -28,7 +15,20 @@ import org.openRealmOfStars.player.artifact.Artifact;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import java.awt.Color;
+import java.awt.Component;
+
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+
+import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.player.artifact.Artifact;
+
+/**
  *
  * Artifact list renderer
  *

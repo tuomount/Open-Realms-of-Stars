@@ -1,4 +1,21 @@
 package org.openRealmOfStars.AI.Research;
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2017-2022 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import static org.junit.Assert.*;
 
@@ -22,24 +39,8 @@ import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
+
 /**
- * 
- * Open Realm of Stars game project
- * Copyright (C) 2017-2019, 2021,2022 Tuomo Untinen
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, see http://www.gnu.org/licenses/
- * 
  * Tests for AI Research
  */
 public class ResearchTest {
@@ -49,21 +50,21 @@ public class ResearchTest {
   public void testResearchHandlingHuman() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
     Research.handle(info);
-    assertEquals(Research.FOCUS_FOR_LAB, 
+    assertEquals(Research.FOCUS_FOR_LAB,
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Combat));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Defense));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Hulls));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Improvements));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Propulsion));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
   }
 
@@ -182,21 +183,21 @@ public class ResearchTest {
   public void testResearchHandlingCentaurs() {
     PlayerInfo info = new PlayerInfo(SpaceRace.CENTAURS);
     Research.handle(info);
-    assertEquals(Research.FOCUS_FOR_LAB, 
+    assertEquals(Research.FOCUS_FOR_LAB,
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Combat));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Defense));
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Hulls));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Improvements));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Propulsion));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
   }
 
@@ -205,21 +206,21 @@ public class ResearchTest {
   public void testResearchHandlingGreyans() {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
     Research.handle(info);
-    assertEquals(Research.FOCUS_FOR_LAB, 
+    assertEquals(Research.FOCUS_FOR_LAB,
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Combat));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Defense));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Hulls));
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Improvements));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Propulsion));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
   }
 
@@ -228,21 +229,21 @@ public class ResearchTest {
   public void testResearchHandlingSporks() {
     PlayerInfo info = new PlayerInfo(SpaceRace.SPORKS);
     Research.handle(info);
-    assertEquals(Research.FOCUS_FOR_LAB, 
+    assertEquals(Research.FOCUS_FOR_LAB,
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Combat));
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Defense));
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Hulls));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Improvements));
-    assertEquals(Research.LOW_FOCUS_LEVEL, 
+    assertEquals(Research.LOW_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Propulsion));
-    assertEquals(Research.LOW_FOCUS_LEVEL, 
+    assertEquals(Research.LOW_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
   }
 
@@ -251,21 +252,21 @@ public class ResearchTest {
   public void testResearchHandlingMechions() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
     Research.handle(info);
-    assertEquals(Research.FOCUS_FOR_LAB_HIGH, 
+    assertEquals(Research.FOCUS_FOR_LAB_HIGH,
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Combat));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Defense));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Hulls));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Improvements));
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Propulsion));
-    assertEquals(Research.LOW_FOCUS_LEVEL, 
+    assertEquals(Research.LOW_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
   }
 
@@ -277,17 +278,17 @@ public class ResearchTest {
     // get it at start
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Combat));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Defense));
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Hulls));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Improvements));
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Propulsion));
-    assertEquals(Research.LOW_FOCUS_LEVEL, 
+    assertEquals(Research.LOW_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
   }
 
@@ -297,21 +298,21 @@ public class ResearchTest {
     PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
     info.setAttitude(Attitude.BACKSTABBING);
     Research.handle(info);
-    assertEquals(Research.FOCUS_FOR_LAB, 
+    assertEquals(Research.FOCUS_FOR_LAB,
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Combat));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Defense));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Hulls));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Improvements));
-    assertEquals(Research.LOW_FOCUS_LEVEL, 
+    assertEquals(Research.LOW_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Propulsion));
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
     assertEquals(2, info.getShipStatList().length);
     info.getTechList().addTech(TechFactory.createHullTech("Probe", 2));
@@ -325,21 +326,21 @@ public class ResearchTest {
   public void testResearchHandlingScaurians() {
     PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
     Research.handle(info);
-    assertEquals(Research.FOCUS_FOR_LAB, 
+    assertEquals(Research.FOCUS_FOR_LAB,
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
-    assertEquals(Research.LOW_FOCUS_LEVEL, 
+    assertEquals(Research.LOW_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Combat));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Defense));
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Hulls));
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Improvements));
-    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Propulsion));
-    assertEquals(Research.LOW_FOCUS_LEVEL, 
+    assertEquals(Research.LOW_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
   }
 

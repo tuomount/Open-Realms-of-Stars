@@ -1,4 +1,21 @@
 package org.openRealmOfStars.AI.PathFinding;
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2016-2018 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import static org.junit.Assert.*;
 
@@ -11,24 +28,6 @@ import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.starMap.StarMap;
 
 /**
- * 
- * Open Realm of Stars game project
- * Copyright (C) 2016, 2018  Tuomo Untinen
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
  * Test for AStarTest class
  */
 
@@ -45,7 +44,7 @@ public class AStarTest {
         } else {
           Mockito.when(combat.isBlocked(x, y)).thenReturn(false);
         }
-        
+
       }
     }
     CombatShip target = Mockito.mock(CombatShip.class);
@@ -80,7 +79,7 @@ public class AStarTest {
         } else {
           Mockito.when(combat.isBlocked(x, y, true)).thenReturn(false);
         }
-        
+
       }
     }
     CombatShip target = Mockito.mock(CombatShip.class);
@@ -91,7 +90,7 @@ public class AStarTest {
     Mockito.when(source.getY()).thenReturn(7);
     AStarSearch test = new AStarSearch(combat, source, target, 1);
     assertEquals(false, test.doSearch());
-    
+
   }
 
   @Test

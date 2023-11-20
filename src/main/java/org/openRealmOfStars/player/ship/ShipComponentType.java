@@ -1,11 +1,7 @@
 package org.openRealmOfStars.player.ship;
-
-import org.openRealmOfStars.gui.icons.Icons;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018, 2020-2022 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,12 +15,13 @@ import org.openRealmOfStars.gui.icons.Icons;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
- * Ship component type
- *
  */
 
+import org.openRealmOfStars.gui.icons.Icons;
+
+/**
+ * Ship component type
+ */
 public enum ShipComponentType {
   /**
    * Beam weapon, causing beam damage first shields, armor and finally hull

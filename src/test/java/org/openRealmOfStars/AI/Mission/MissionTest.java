@@ -1,4 +1,21 @@
 package org.openRealmOfStars.AI.Mission;
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2016-2019 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,24 +25,6 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.starMap.Coordinate;
 
 /**
- * 
- * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
  * Test for Mission class
  */
 
@@ -38,7 +37,7 @@ public class MissionTest {
     Mockito.when(coordinate.getX()).thenReturn(3);
     Mockito.when(coordinate.getY()).thenReturn(5);
     Mission mission = new Mission(MissionType.ATTACK, MissionPhase.PLANNING,
-        coordinate); 
+        coordinate);
     assertEquals(MissionType.ATTACK, mission.getType());
     assertEquals(MissionPhase.PLANNING, mission.getPhase());
     assertEquals(0,mission.getMissionTime());
@@ -73,7 +72,7 @@ public class MissionTest {
     Mockito.when(coordinate.getX()).thenReturn(3);
     Mockito.when(coordinate.getY()).thenReturn(5);
     Mission mission = new Mission(MissionType.EXPLORE, MissionPhase.PLANNING,
-        coordinate); 
+        coordinate);
     assertEquals(MissionType.EXPLORE, mission.getType());
     assertEquals(MissionPhase.PLANNING, mission.getPhase());
     assertEquals(0,mission.getMissionTime());
@@ -123,7 +122,7 @@ public class MissionTest {
     Mockito.when(coordinate.getX()).thenReturn(3);
     Mockito.when(coordinate.getY()).thenReturn(5);
     Mission mission = new Mission(MissionType.TRADE_FLEET, MissionPhase.PLANNING,
-        coordinate); 
+        coordinate);
     assertEquals(MissionType.TRADE_FLEET, mission.getType());
     assertEquals(MissionPhase.PLANNING, mission.getPhase());
     assertEquals(0,mission.getMissionTime());

@@ -1,13 +1,5 @@
 package org.openRealmOfStars.mapTiles;
-
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.RasterFormatException;
-
-import org.openRealmOfStars.gui.mapPanel.BlackHoleEffect;
-
-/**
- *
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
  *
@@ -23,7 +15,15 @@ import org.openRealmOfStars.gui.mapPanel.BlackHoleEffect;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.RasterFormatException;
+
+import org.openRealmOfStars.gui.mapPanel.BlackHoleEffect;
+
+/**
  *
  * Class for handling star map tiles
  *

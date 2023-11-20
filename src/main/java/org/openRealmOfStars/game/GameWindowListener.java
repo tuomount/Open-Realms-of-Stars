@@ -1,14 +1,7 @@
 package org.openRealmOfStars.game;
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import org.openRealmOfStars.ambient.BridgeCommandType;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016,2020 Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,7 +15,14 @@ import org.openRealmOfStars.ambient.BridgeCommandType;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import org.openRealmOfStars.ambient.BridgeCommandType;
+
+/**
  *
  * Window adapter for handling window events
  *

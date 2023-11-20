@@ -1,20 +1,5 @@
 package org.openRealmOfStars.game.States;
-
-import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.gui.buttons.SpaceButton;
-import org.openRealmOfStars.gui.labels.StarFieldTextArea;
-import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.utilities.IOUtilities;
-
-/**
- *
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
  *
@@ -30,7 +15,22 @@ import org.openRealmOfStars.utilities.IOUtilities;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.labels.StarFieldTextArea;
+import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.utilities.IOUtilities;
+
+/**
  *
  * Credits view for Open Realm of Stars
  *

@@ -1,10 +1,5 @@
 package org.openRealmOfStars.player.message;
-
-import org.openRealmOfStars.game.States.StarMapView;
-import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.starMap.StarMap;
-
-/**
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2017 God Beom
  *
@@ -20,12 +15,15 @@ import org.openRealmOfStars.starMap.StarMap;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
- * ChangeMessage class used to move focus to fleet
- *
  */
 
+import org.openRealmOfStars.game.States.StarMapView;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.starMap.StarMap;
+
+/**
+ * ChangeMessage class used to move focus to fleet
+ */
 public class ChangeMessageFleet extends ChangeMessage {
 
     /**

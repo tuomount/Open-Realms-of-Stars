@@ -1,4 +1,21 @@
 package org.openRealmOfStars.player.ship;
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2016-2020 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -12,24 +29,6 @@ import org.openRealmOfStars.player.tech.TechFactory;
 import static org.junit.Assert.*;
 
 /**
- * 
- * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
  * Test for Ship Design class
  * @TODO: Mock dependencies
  */
@@ -44,8 +43,8 @@ public class ShipDesignTest {
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
     ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
-    
-    
+
+
     assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
@@ -104,8 +103,8 @@ public class ShipDesignTest {
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
     ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
     ShipComponent module = ShipComponentFactory.createByName("Colony Module");
-    
-    
+
+
     assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
@@ -186,8 +185,8 @@ public class ShipDesignTest {
     ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk2");
     ShipComponent spyKit = ShipComponentFactory.createByName("Espionage module Mk1");
-    
-    
+
+
     assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
@@ -300,7 +299,7 @@ public class ShipDesignTest {
     assertEquals(false, design.isTrooperShip());
   }
 
-  
+
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPrivateerDesign() {

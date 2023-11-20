@@ -1,18 +1,7 @@
 package org.openRealmOfStars.player.combat;
-
-import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.leader.Leader;
-import org.openRealmOfStars.player.leader.Perk;
-import org.openRealmOfStars.player.ship.Ship;
-import org.openRealmOfStars.player.ship.ShipComponent;
-import org.openRealmOfStars.player.ship.ShipComponentType;
-import org.openRealmOfStars.player.tech.TechType;
-import org.openRealmOfStars.utilities.DiceGenerator;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017,2020,2021 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,12 +15,20 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
- * Single ship in combat
- *
  */
 
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.Perk;
+import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentType;
+import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.utilities.DiceGenerator;
+
+/**
+ * Single ship in combat
+ */
 public class CombatShip implements Comparable<CombatShip> {
 
   /**

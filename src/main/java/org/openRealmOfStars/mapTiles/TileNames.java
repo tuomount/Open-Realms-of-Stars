@@ -1,11 +1,5 @@
 package org.openRealmOfStars.mapTiles;
-
-import java.util.ArrayList;
-
-import org.openRealmOfStars.utilities.DiceGenerator;
-
-/**
- *
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
  *
@@ -21,7 +15,13 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import java.util.ArrayList;
+
+import org.openRealmOfStars.utilities.DiceGenerator;
+
+/**
  *
  * Class for naming individual tiles
  *

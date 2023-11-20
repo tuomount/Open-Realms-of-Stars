@@ -1,4 +1,21 @@
 package org.openRealmOfStars.starMap.newsCorp;
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2017-2018 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -17,24 +34,6 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
-*
-* Open Realm of Stars game project
-* Copyright (C) 2017, 2018  Tuomo Untinen
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public License
-* as published by the Free Software Foundation; either version 2
-* of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, see http://www.gnu.org/licenses/
-*
-*
 * News Corporation Data Test
 *
 */
@@ -275,7 +274,7 @@ public class NewsCorpDataTest {
     Mockito.when(info2.getFleets()).thenReturn(fleetList2);
     Mockito.when(info2.getFakeMilitarySize()).thenReturn(100);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
-    
+
     // Actual game has one stats created at start.
     assertEquals(false, data.isFirstStats());
     assertEquals(-1, data.getStatNumbers());
@@ -322,7 +321,7 @@ public class NewsCorpDataTest {
     Mockito.when(info2.getFleets()).thenReturn(fleetList2);
     Mockito.when(info2.getFakeMilitarySize()).thenReturn(200);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
-    
+
     // Actual game has one stats created at start.
     assertEquals(false, data.isFirstStats());
     assertEquals(-1, data.getStatNumbers());
@@ -369,7 +368,7 @@ public class NewsCorpDataTest {
     Mockito.when(info2.getFleets()).thenReturn(fleetList2);
     Mockito.when(info2.getFakeMilitarySize()).thenReturn(200);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
-    
+
     // Actual game has one stats created at start.
     assertEquals(false, data.isFirstStats());
     assertEquals(-1, data.getStatNumbers());
@@ -414,7 +413,7 @@ public class NewsCorpDataTest {
     PlayerInfo info5 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info5.getTotalCredits()).thenReturn(67);
     Mockito.when(players.getPlayerInfoByIndex(4)).thenReturn(info5);
-    
+
     data.calculateCredit(players);
     int[][] value = data.getCredit().getGalaxyData();
     assertEquals(34,value[0][0]);
@@ -451,7 +450,7 @@ public class NewsCorpDataTest {
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info2.getTechList()).thenReturn(techs2);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
-    
+
     data.calculateResearch(players);
     int[][] value = data.getResearch().getGalaxyData();
     assertEquals(13,value[0][0]);
@@ -566,7 +565,7 @@ public class NewsCorpDataTest {
     Mockito.when(techs2.getTechLevel(TechType.Hulls)).thenReturn(1);
     Mockito.when(info2.getTechList()).thenReturn(techs2);
 
-    
+
     ArrayList<Planet> list = new ArrayList<>();
     list.add(unhabitated);
     list.add(unhabitated);

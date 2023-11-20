@@ -1,4 +1,21 @@
 package org.openRealmOfStars.player.ship;
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2017-2023 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -14,24 +31,6 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import static org.junit.Assert.*;
 
 /**
- * 
- * Open Realm of Stars game project
- * Copyright (C) 2017, 2019, 2020, 2023 Tuomo Untinen
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
  * Test for Ship class
  */
 public class ShipTest {
@@ -79,7 +78,7 @@ public class ShipTest {
     ship.setArmor(0);
     ship.initializeShieldAndArmor();
     assertEquals(1, ship.getArmor());
-    
+
     design = new ShipDesign(hull);
     design.addComponent(energy);
     design.addComponent(engine);
@@ -119,7 +118,7 @@ public class ShipTest {
     assertEquals(3, ship.getHullPoints());
     ship.fixShip(true);
     assertEquals(4, ship.getHullPoints());
-    
+
     assertEquals(0, ship.getExperience());
     String desc = "Design - Normal\n"
         + "Energy: 5 Init.: 15\n"
@@ -129,11 +128,11 @@ public class ShipTest {
         + "Military power: 6\n"
         + "Slots: 4/4";
     assertEquals(desc, ship.getDescription());
-    desc = "Design - Normal\n" + 
-        "Capacity: 0.1 Energy: 5 Init.: 15\n" + 
-        "Speed: 2 FTL: 2 Tactic: 1\n" + 
-        "Shield: 1/1 Armor: 0/0 Hull Points: 4\n" + 
-        "Military power: 6"; 
+    desc = "Design - Normal\n" +
+        "Capacity: 0.1 Energy: 5 Init.: 15\n" +
+        "Speed: 2 FTL: 2 Tactic: 1\n" +
+        "Shield: 1/1 Armor: 0/0 Hull Points: 4\n" +
+        "Military power: 6";
     assertEquals(desc, ship.getTacticalInfo());
     ship.setExperience(3);
     assertEquals(3, ship.getExperience());
@@ -218,7 +217,7 @@ public class ShipTest {
     design.addComponent(jammer);
     design.addComponent(targetingComp);
     Ship ship = new Ship(design);
-    
+
     assertEquals(59, ship.getTotalMilitaryPower());
   }
 
@@ -242,7 +241,7 @@ public class ShipTest {
     design.addComponent(jammer);
     design.addComponent(targetingComp);
     Ship ship = new Ship(design);
-    
+
     assertEquals(56, ship.getTotalMilitaryPower());
   }
 
@@ -316,7 +315,7 @@ public class ShipTest {
     design.addComponent(scanner);
     design.addComponent(armor);
     Ship ship = new Ship(design);
-    
+
     weapon = ShipComponentFactory.createByName("Phasors Mk1");
     ShipDamage shipDamage = ship.damageBy(weapon, 0);
     assertEquals(true, shipDamage.getValue() >= 0);
@@ -361,7 +360,7 @@ public class ShipTest {
     design.addComponent(scanner);
     design.addComponent(shield);
     Ship ship = new Ship(design);
-    
+
     weapon = ShipComponentFactory.createByName("Massdrive Mk1");
     ShipDamage shipDamage = ship.damageBy(weapon, 0);
     assertEquals(true, shipDamage.getValue() >= 0);
@@ -387,7 +386,7 @@ public class ShipTest {
     assertEquals(true, ship.getDescription().contains("Fighter bay"));
   }
 
-  
+
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTradeShip() {
@@ -683,7 +682,7 @@ public class ShipTest {
         + "Size:Small Fleet capacity: 0.0\n"
         + "Probe, no weapons allowed. FTL speed\n"
         + "faster.", ship.getHull().toString());
-    
+
   }
 
   @Test

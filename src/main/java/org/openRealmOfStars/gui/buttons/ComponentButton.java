@@ -1,17 +1,7 @@
 package org.openRealmOfStars.gui.buttons;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
-import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
-import org.openRealmOfStars.player.ship.Ship;
-import org.openRealmOfStars.player.ship.ShipComponent;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,7 +15,17 @@ import org.openRealmOfStars.player.ship.ShipComponent;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
+import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
+
+/**
  *
  * Class for creating ship's component button with current ship component status
  *

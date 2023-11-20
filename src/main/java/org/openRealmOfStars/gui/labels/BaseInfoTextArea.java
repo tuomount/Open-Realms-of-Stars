@@ -1,16 +1,7 @@
 package org.openRealmOfStars.gui.labels;
-
-import java.awt.Color;
-
-import javax.swing.JTextArea;
-
-import org.openRealmOfStars.gui.borders.SimpleBorder;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,7 +15,16 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import java.awt.Color;
+
+import javax.swing.JTextArea;
+
+import org.openRealmOfStars.gui.borders.SimpleBorder;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
+
+/**
  *
  * Class for handling text without repainting content
  *

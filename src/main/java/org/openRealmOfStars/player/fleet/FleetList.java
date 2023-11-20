@@ -1,15 +1,5 @@
 package org.openRealmOfStars.player.fleet;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.starMap.Coordinate;
-
-/**
- *
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2020 Tuomo Untinen
  *
@@ -25,8 +15,17 @@ import org.openRealmOfStars.starMap.Coordinate;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
+ */
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.starMap.Coordinate;
+
+/**
  * Fleet for handling list of ships
  *
  */

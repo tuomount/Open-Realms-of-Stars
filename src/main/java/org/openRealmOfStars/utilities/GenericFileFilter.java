@@ -1,12 +1,7 @@
 package org.openRealmOfStars.utilities;
-
-import java.io.File;
-import java.io.FileFilter;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,7 +15,12 @@ import java.io.FileFilter;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import java.io.File;
+import java.io.FileFilter;
+
+/**
  *
  * Generic file filter to filter out files by extension
  *

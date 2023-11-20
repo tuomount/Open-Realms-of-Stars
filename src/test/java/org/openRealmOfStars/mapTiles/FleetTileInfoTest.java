@@ -1,15 +1,7 @@
 package org.openRealmOfStars.mapTiles;
-
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
-
-import static org.junit.Assert.*;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016,2019,2021 Tuomo Untinen
+ * Copyright (C) 2016-2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,8 +15,15 @@ import static org.junit.Assert.*;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
+ */
+
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+
+import static org.junit.Assert.*;
+
+/**
  * Test for Fleet Tile Info
  *
  */

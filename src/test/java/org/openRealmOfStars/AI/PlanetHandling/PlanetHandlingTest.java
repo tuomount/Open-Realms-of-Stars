@@ -1,4 +1,21 @@
 package org.openRealmOfStars.AI.PlanetHandling;
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2016-2022 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import static org.junit.Assert.assertEquals;
 
@@ -42,24 +59,6 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 
 /**
- * 
- * Open Realm of Stars game project
- * Copyright (C) 2016-2019,2021,2022 Tuomo Untinen
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
  * Test for PlanetHandling class
  */
 
@@ -776,7 +775,7 @@ public class PlanetHandlingTest {
     score = PlanetHandling.scoreBuilding(building, planet, info,
         Attitude.SCIENTIFIC, false);
     assertEquals(74,score);
-    
+
     Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
     score = PlanetHandling.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
@@ -952,7 +951,7 @@ public class PlanetHandlingTest {
     assertEquals(factory, building);
   }
 
-  
+
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testShipScoring() {
@@ -1104,7 +1103,7 @@ public class PlanetHandlingTest {
         MissionPhase.PLANNING)).thenReturn(mission);
     Mockito.when(info.getMissions()).thenReturn(missionList);
     StarMap map = Mockito.mock(StarMap.class);
-    
+
     int score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
         Attitude.MERCHANTICAL);
     assertEquals(40, score);

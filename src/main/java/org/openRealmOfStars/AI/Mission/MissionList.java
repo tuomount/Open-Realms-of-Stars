@@ -1,20 +1,5 @@
 package org.openRealmOfStars.AI.Mission;
-
-import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
-import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.starMap.Coordinate;
-import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.utilities.repository.MissionRepository;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-
-/**
- *
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2021 Tuomo Untinen
  *
@@ -30,7 +15,22 @@ import java.util.ArrayList;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.repository.MissionRepository;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
  *
  * Mission  list for AI
  *

@@ -1,19 +1,5 @@
 package org.openRealmOfStars.player.SpaceRace;
-
-import java.awt.image.BufferedImage;
-
-import org.openRealmOfStars.ambient.BridgeCommandType;
-import org.openRealmOfStars.audio.music.MusicFileInfo;
-import org.openRealmOfStars.audio.music.MusicPlayer;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
-import org.openRealmOfStars.player.PlayerColor;
-import org.openRealmOfStars.player.diplomacy.Attitude;
-import org.openRealmOfStars.starMap.planet.PlanetTypes;
-import org.openRealmOfStars.starMap.planet.WorldType;
-import org.openRealmOfStars.utilities.DiceGenerator;
-
-/**
- *
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
  *
@@ -29,10 +15,22 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
+ */
+
+import java.awt.image.BufferedImage;
+
+import org.openRealmOfStars.ambient.BridgeCommandType;
+import org.openRealmOfStars.audio.music.MusicFileInfo;
+import org.openRealmOfStars.audio.music.MusicPlayer;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.player.PlayerColor;
+import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.WorldType;
+import org.openRealmOfStars.utilities.DiceGenerator;
+
+/**
  * Space races in enum
- *
  */
 public enum SpaceRace {
 

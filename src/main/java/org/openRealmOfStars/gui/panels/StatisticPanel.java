@@ -1,19 +1,7 @@
 package org.openRealmOfStars.gui.panels;
-
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-
-import javax.swing.JPanel;
-
-import org.openRealmOfStars.gui.utilies.GuiStatics;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019,2021,2022 Tuomo Untinen
+ * Copyright (C) 2016-2022 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,7 +15,19 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
+
+import javax.swing.JPanel;
+
+import org.openRealmOfStars.gui.utilies.GuiStatics;
+
+/**
  *
  * Statistic panel can show statistical information
  *

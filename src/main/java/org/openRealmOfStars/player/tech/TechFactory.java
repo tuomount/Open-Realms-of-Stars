@@ -1,14 +1,5 @@
 package org.openRealmOfStars.player.tech;
-
-import java.util.ArrayList;
-
-import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
-import org.openRealmOfStars.utilities.DiceGenerator;
-import org.openRealmOfStars.utilities.TextUtilities;
-
-/**
- *
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
  *
@@ -24,10 +15,17 @@ import org.openRealmOfStars.utilities.TextUtilities;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
- *
+ */
+
+import java.util.ArrayList;
+
+import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.TextUtilities;
+
+/**
  * Tech factory for generating new techs for players
- *
  */
 public final class TechFactory {
 

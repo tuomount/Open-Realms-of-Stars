@@ -1,7 +1,5 @@
 package org.openRealmOfStars.game;
-
-/**
- *
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2022 Tuomo Untinen
  *
@@ -17,7 +15,9 @@ package org.openRealmOfStars.game;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+/**
  *
  * Game commands
  *

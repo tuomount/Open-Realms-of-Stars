@@ -1,19 +1,7 @@
 package org.openRealmOfStars.game;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.text.SimpleDateFormat;
-
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
-import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.utilities.repository.GameRepository;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017,2019,2023 Tuomo Untinen
+ * Copyright (C) 2016-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,7 +15,19 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.text.SimpleDateFormat;
+
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.utilities.repository.GameRepository;
+
+/**
  *
  * Saved game information
  *

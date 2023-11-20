@@ -1,10 +1,5 @@
 package org.openRealmOfStars.AI.Mission;
-
-import org.openRealmOfStars.player.leader.EspionageMission;
-import org.openRealmOfStars.starMap.Coordinate;
-
-/**
- *
+/*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2021 Tuomo Untinen
  *
@@ -20,7 +15,12 @@ import org.openRealmOfStars.starMap.Coordinate;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import org.openRealmOfStars.player.leader.EspionageMission;
+import org.openRealmOfStars.starMap.Coordinate;
+
+/**
  *
  * Mission for AI
  *

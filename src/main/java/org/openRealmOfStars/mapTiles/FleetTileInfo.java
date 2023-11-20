@@ -1,11 +1,7 @@
 package org.openRealmOfStars.mapTiles;
-
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
-
-/**
- *
+/*
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2019  Tuomo Untinen
+ * Copyright (C) 2016-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,7 +15,11 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- *
+ */
+
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+
+/**
  *
  * All information to draw fleet as a tile
  *

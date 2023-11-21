@@ -341,6 +341,8 @@ Destroyed planet map tile by Tuomo Untinen with Stable Diffusion
 
 Gravity veins map tiles by Tuomo Untinen
 
+Black hole map tiles by Tuomo Untinen
+
 Animated Portal or Wormhole, several Variants by Hansjörg Malthaner
 http://opengameart.org/users/varkalandar
 Licensed under CC BY SA 4.0
@@ -618,3 +620,5 @@ Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
 Solar Sail by Vitalezzz
 Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
+
+

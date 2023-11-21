@@ -21,8 +21,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 
-import org.openRealmOfStars.gui.mapPanel.BlackHoleEffect;
-
 /**
  *
  * Class for handling star map tiles
@@ -85,10 +83,6 @@ public class Tile {
    */
   private int zoomLevel;
 
-  /**
-   * Blackhole effect
-   */
-  private BlackHoleEffect blackholeEffect;
 
   /**
    * Get tile from tileset image, where x is number of tiles in X axel and
@@ -159,29 +153,9 @@ public class Tile {
    * @param y Coordinates on y axel
    */
   public void draw(final Graphics2D g, final int x, final int y) {
-    if (isBlackhole()) {
-      if (blackholeEffect == null) {
-        blackholeEffect = new BlackHoleEffect(new BufferedImage(
-            getMaxWidth(zoomLevel),
-            getMaxHeight(zoomLevel), BufferedImage.TYPE_INT_ARGB), zoomLevel);
-      }
-      blackholeEffect.drawBlackholeTile(g, x, y, this);
-    } else {
-      g.drawImage(img, x, y, null);
-    }
+    g.drawImage(img, x, y, null);
   }
 
-  /**
-   * Update black hole effect for all tiles.
-   * @param backgroundImg New background for blackhole.
-   */
-  public void updateBlackHoleEffect(final BufferedImage backgroundImg) {
-    if (blackholeEffect == null) {
-      blackholeEffect = new BlackHoleEffect(backgroundImg, zoomLevel);
-    } else {
-      blackholeEffect.updateBackground(backgroundImg);
-    }
-  }
   /**
    * Draw mini sector to target image.
    * @param target Target image where to draw.

@@ -466,104 +466,6 @@ public class MapPanel extends JPanel {
    */
   private static final int FLICKER_UPPER_LIMIT = 384;
 
-  /**
-   * Update black hole effect while drawing the map
-   * @param pixelX Pixel coordinate for X
-   * @param pixelY Pixel coordinate for Y
-   * @param i Map position in X coordinate
-   * @param j Map position in Y coordinate
-   * @param tile Black hole tile
-   */
-  public void updateBlackHoleEffect(final int pixelX, final int pixelY,
-      final int i, final int j, final Tile tile) {
-    int safePixelX = pixelX;
-    int safePixelY = pixelY;
-    BufferedImage effectScr = screen;
-    if (panelType == MapPanelType.STARMAP) {
-      effectScr = backgroundScreen;
-    }
-    if (safePixelX - Tile.getMaxWidth(tile.getZoomLevel()) < 0) {
-      safePixelX = Tile.getMaxWidth(tile.getZoomLevel());
-    }
-    if (safePixelX + Tile.getMaxWidth(tile.getZoomLevel())
-      > effectScr.getWidth()) {
-      safePixelX = effectScr.getWidth() - Tile.getMaxWidth(tile.getZoomLevel());
-    }
-    if (safePixelY - Tile.getMaxHeight(tile.getZoomLevel()) < 0) {
-      safePixelY = Tile.getMaxHeight(tile.getZoomLevel());
-    }
-    if (safePixelY + Tile.getMaxHeight(tile.getZoomLevel())
-        > effectScr.getHeight()) {
-      safePixelY = effectScr.getHeight()
-          - Tile.getMaxHeight(tile.getZoomLevel());
-    }
-    if (tile.getName() == TileNames.BLACKHOLE_NW
-        && j + 1 < viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(
-          safePixelX + Tile.getMaxWidth(tile.getZoomLevel()),
-          safePixelY + Tile.getMaxHeight(tile.getZoomLevel()),
-          Tile.getMaxWidth(tile.getZoomLevel()),
-          Tile.getMaxHeight(tile.getZoomLevel()));
-      tile.updateBlackHoleEffect(tmp);
-    } else if (tile.getName() == TileNames.BLACKHOLE_N
-        && j + 1 < viewPointY && i < viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(safePixelX,
-          safePixelY + Tile.getMaxHeight(tile.getZoomLevel()),
-          Tile.getMaxWidth(tile.getZoomLevel()),
-          Tile.getMaxHeight(tile.getZoomLevel()));
-      tile.updateBlackHoleEffect(tmp);
-    } else if (tile.getName() == TileNames.BLACKHOLE_NE
-        && j + 1 < viewPointY && i - 1 >= -viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(
-          safePixelX - Tile.getMaxWidth(tile.getZoomLevel()),
-          safePixelY + Tile.getMaxHeight(tile.getZoomLevel()),
-          Tile.getMaxWidth(tile.getZoomLevel()),
-          Tile.getMaxHeight(tile.getZoomLevel()));
-      tile.updateBlackHoleEffect(tmp);
-    } else if (tile.getName() == TileNames.BLACKHOLE_W
-        && j < viewPointY && i < viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(
-          safePixelX + Tile.getMaxWidth(tile.getZoomLevel()),
-          safePixelY, Tile.getMaxWidth(tile.getZoomLevel()),
-          Tile.getMaxHeight(tile.getZoomLevel()));
-      tile.updateBlackHoleEffect(tmp);
-    } else if (tile.getName() == TileNames.BLACKHOLE_E
-        && j < viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(
-          safePixelX - Tile.getMaxWidth(tile.getZoomLevel()),
-          safePixelY, Tile.getMaxWidth(tile.getZoomLevel()),
-          Tile.getMaxHeight(tile.getZoomLevel()));
-      tile.updateBlackHoleEffect(tmp);
-    } else if (tile.getName() == TileNames.BLACKHOLE_SW
-        && j - 1  >= -viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(
-          safePixelX + Tile.getMaxWidth(tile.getZoomLevel()),
-          safePixelY - Tile.getMaxHeight(tile.getZoomLevel()),
-          Tile.getMaxWidth(tile.getZoomLevel()),
-          Tile.getMaxHeight(tile.getZoomLevel()));
-      tile.updateBlackHoleEffect(tmp);
-    } else if (tile.getName() == TileNames.BLACKHOLE_SW
-        && j - 1  >= -viewPointY && i < viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(safePixelX,
-          safePixelY - Tile.getMaxHeight(tile.getZoomLevel()),
-          Tile.getMaxWidth(tile.getZoomLevel()),
-          Tile.getMaxHeight(tile.getZoomLevel()));
-      tile.updateBlackHoleEffect(tmp);
-    } else if (tile.getName() == TileNames.BLACKHOLE_SE
-        && j - 1  >= -viewPointY && i - 1 >= -viewPointX) {
-      BufferedImage tmp = effectScr.getSubimage(
-          safePixelX - Tile.getMaxWidth(tile.getZoomLevel()),
-          safePixelY - Tile.getMaxWidth(tile.getZoomLevel()),
-          Tile.getMaxWidth(tile.getZoomLevel()),
-          Tile.getMaxHeight(tile.getZoomLevel()));
-      tile.updateBlackHoleEffect(tmp);
-    } else {
-      BufferedImage tmp = effectScr.getSubimage(safePixelX,
-          safePixelY, Tile.getMaxWidth(tile.getZoomLevel()),
-          Tile.getMaxHeight(tile.getZoomLevel()));
-      tile.updateBlackHoleEffect(tmp);
-    }
-  }
 
   /**
    * Draw Fleet into map panel screen.
@@ -981,7 +883,6 @@ public class MapPanel extends JPanel {
         return;
       }
     }
-    boolean blackholeUpdated = false;
     byte[][] routeData = null;
     if (route != null) {
       routeData = route.getRouteOnMap(starMap.getMaxX(), starMap.getMaxY());
@@ -1134,12 +1035,6 @@ public class MapPanel extends JPanel {
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
         gr.setStroke(dashed);
         gr.setColor(colorDarkBlue);
-        Tile blackholeTile = starMap.getTile(i + cx, j + cy);
-        if (blackholeTile != null && blackholeTile.isBlackhole()
-            && !blackholeUpdated) {
-          updateBlackHoleEffect(pixelX, pixelY, i, j, blackholeTile);
-          blackholeUpdated = true;
-        }
         boolean drawMapPos = false;
         if (routeData != null && routeData[i + cx][j + cy] > 0) {
           drawMapPos = true;
@@ -1427,7 +1322,6 @@ public class MapPanel extends JPanel {
     int cursorPixelX = 0;
     int cursorPixelY = 0;
     Color colorRed = null;
-    boolean blackholeUpdated = false;
     int tileWidth = Tile.getMaxWidth(Tile.ZOOM_NORMAL);
     int tileHeight = Tile.getMaxHeight(Tile.ZOOM_NORMAL);
     Graphics2D gr = screen.createGraphics();
@@ -1515,11 +1409,6 @@ public class MapPanel extends JPanel {
       for (int i = -viewPointX; i < viewPointX + 1; i++) {
         if (!starMap.isValidCoordinate(i + cx, j + cy)) {
           continue;
-        }
-        Tile blackholeTile = starMap.getTile(i + cx, j + cy);
-        if (blackholeTile.isBlackhole() && !blackholeUpdated) {
-          updateBlackHoleEffect(pixelX, pixelY, i, j, blackholeTile);
-          blackholeUpdated = true;
         }
         Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {0.1f, 4.5f }, 0);

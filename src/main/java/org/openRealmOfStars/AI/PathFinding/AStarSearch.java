@@ -199,7 +199,8 @@ public class AStarSearch {
         } else {
           blockMap[x][y] = UNBLOCKED;
         }
-        if (ownerIndex != -1) {
+        if (ownerIndex != -1 && fleetTiles != null
+            && fleetTiles[x][y] != null) {
           FleetTileInfo fleetTile = fleetTiles[x][y];
           if (fleetTile != null && fleetTile.getPlayerIndex() != ownerIndex) {
             blockMap[x][y] = BLOCKED;

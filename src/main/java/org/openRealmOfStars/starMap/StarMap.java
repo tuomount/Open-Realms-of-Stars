@@ -583,7 +583,40 @@ public class StarMap {
       }
     }
     // Planetary Ascension portal
-    int ascensionPlanetIndex = DiceGenerator.getRandom(planetList.size() - 1);
+    int ascensionPortalX = -1;
+    int ascensionPortalY = -1;
+    for (int i = 0; i < 100; i++) {
+      int ascensionPlanetIndex = DiceGenerator.getRandom(planetList.size() - 1);
+      Planet planet = planetList.get(ascensionPlanetIndex);
+      if (planet.isGasGiant()) {
+        continue;
+      }
+      for (int j = 0; j < 4; j++) {
+        int mx = 0;
+        int my = 0;
+        if (j == 0) {
+          my = -1;
+        }
+        if (j == 1) {
+          mx = 1;
+        }
+        if (j == 2) {
+          my = 1;
+        }
+        if (j == 3) {
+          mx = -1;
+        }
+        int x = planet.getX() + mx;
+        int y = planet.getY() + my;
+        if (isValidCoordinate(x, y) && tiles[x][y] == 0) {
+          ascensionPortalX = x;
+          ascensionPortalY = y;
+        }
+      }
+      if (ascensionPortalX != -1) {
+        break;
+      }
+    }
     // Create random deep space anchors
     loop = 0;
     int numberOfAnchors = config.getMaxPlayers() * 3;
@@ -736,8 +769,7 @@ public class StarMap {
     }
     // No need to have generator after creation
     nameGenerator = null;
-    generateAscensionPortal(planetList.get(ascensionPlanetIndex).getX(),
-        planetList.get(ascensionPlanetIndex).getY());
+    generateAscensionPortal(ascensionPortalX, ascensionPortalY);
     revealWholeMap(players.getPlayerInfoByIndex(0));
   }
 
@@ -786,27 +818,36 @@ public class StarMap {
     }
     int sx = sax[best];
     int sy = say[best];
+    Tile tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
+    tiles[sx][sy] = tile.getIndex();
+    tileInfo[sx][sy] = new SquareInfo(
+        SquareInfo.TYPE_ASCENSION_VEIN, 0);
     AStarSearch search = new AStarSearch(this, sx, sy, x, y);
     if (search.doSquareSearch()) {
       search.doSquareRoute();
       int count = 0;
-      Tile tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
       do {
+        count++;
         PathPoint point = search.getMove();
         if (point != null) {
-          if (search.isLastMove()) {
-            tiles[point.getX()][point.getY()] =
-                Tiles.getTileByName(TileNames.ASCENSION_PORT_CLOSED).getIndex();
-          } else {
-            tiles[point.getX()][point.getY()] = tile.getIndex();
-            tileInfo[point.getX()][point.getY()] = new SquareInfo(
-                SquareInfo.TYPE_ASCENSION_VEIN, count);
-          }
+          tiles[point.getX()][point.getY()] = tile.getIndex();
+          tileInfo[point.getX()][point.getY()] = new SquareInfo(
+              SquareInfo.TYPE_ASCENSION_VEIN, count);
           search.nextMove();
+          if (search.isLastMove()) {
+            point = search.getMove();
+            if (point != null) {
+              tiles[point.getX()][point.getY()] = tile.getIndex();
+              tileInfo[point.getX()][point.getY()] = new SquareInfo(
+                  SquareInfo.TYPE_ASCENSION_VEIN, count);
+            }
+          }
         } else {
           break;
         }
       } while (!search.isLastMove());
+      tiles[x][y] = Tiles.getTileByName(
+          TileNames.ASCENSION_PORTAL1).getIndex();
     }
   }
   /**

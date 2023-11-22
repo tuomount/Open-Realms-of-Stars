@@ -1300,6 +1300,7 @@ public class MapPanel extends JPanel {
           cursorPixelX + Tile.getMaxWidth(starMap.getZoomLevel()) / 2,
           screen.getHeight() - viewPointOffsetY);
     }
+    updateAnimation = false;
     gr.dispose();
   }
 

@@ -4,7 +4,7 @@
 
 ![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/src/main/resources/resources/images/oros-logo128.png)
 
-Open Realm of Stars is an open source 4X strategy game. Developed 
+Open Realm of Stars is an open source 4X strategy game. Developed
 using Java. The game requires at minimum Swing and Java 7 to run.
 
 ### Explore the galaxy
@@ -97,10 +97,6 @@ Unzip, navigate to the newly extracted path and run ``Open-Realm-of-Stars-?.?.?.
 with following command ``java -jar Open-Realm-of-Stars-?.?.?.jar``. Note that the question
 marks need to correspond to the correct build version.
 
-Git project also contains an Eclipse project which should automatically compile it.
-All java files under src folder needs to be compiled. Even when compiling Eclipse
-run first maven command (``mvn install``) to fetch all the dependencies.
-
 ## Warning about using non stable version
 Compiling non-stable releases is not recommended.
 Non-stable versions of Open Realm of Stars may contain game breaking bugs that make the game unplayable.
@@ -129,7 +125,7 @@ It can be also run from terminal or command line with following command:
 ## How to contribute
 
 Before contributing to the project you should play the game first. Understand the underlying game mechanics.
-The simplest way to contribute to the project is to test out the game and if you encounter any bug raise an issue on the Git page. 
+The simplest way to contribute to the project is to test out the game and if you encounter any bug raise an issue on the Git page.
 Please check to see if your issue has been posted before making new issue.
 
 If you want to contribute code, fork the project and make the change. Be sure to add any unit tests where needed.
@@ -137,14 +133,14 @@ Run the code through JUnits and checkstyle before making a pull request. This ca
 
 ### Guide lines for making pull requests
 
- * Pull request should contain single logical change. 
+ * Pull request should contain single logical change.
  * Coding styling change should be on separate pull requests.
  * Commit messages should be descriptive. If you are fixing an issue start commit line with #ISSUENUMBER.
  * Pull request should not contain merge commits from other branches.
  * Contributors retain their original copyrights. All code contributions must be under GPL2.0.
  * Please try to implement JUnit for your code.
- 
-I will try to take a look at pull requests as fast as I can. 
+
+I will try to take a look at pull requests as fast as I can.
 If you are adding any new assets take a look at the next section for instructions.
 
 ### Contributing assets
@@ -154,4 +150,3 @@ for music and sounds is okay, but the credits page will need to be updated.
 Fonts needs to be licensed with SIL Open Font License.
 
 See more information on [CONTRIBUTING.md](https://github.com/tuomount/Open-Realms-of-Stars/blob/master/CONTRIBUTING.md)
-

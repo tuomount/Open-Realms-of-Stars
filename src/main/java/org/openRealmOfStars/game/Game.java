@@ -1567,8 +1567,11 @@ public class Game implements ActionListener {
    */
   public void showCredits() {
     try {
+      var is = Game.class.getResourceAsStream("/AUTHORS.md");
+      var authorsText = new String(is.readAllBytes());
+
       creditsView = new CreditsView(this, GAME_TITLE, GAME_VERSION,
-          CreditsView.CREDITS_AND_LICENSE);
+          authorsText, CreditsView.CREDITS_AND_LICENSE);
     } catch (IOException e) {
       System.out.println("Could not show credits: " + e.getMessage());
       System.exit(0);
@@ -1582,7 +1585,7 @@ public class Game implements ActionListener {
   public void showChangeLog() {
     try {
       creditsView = new CreditsView(this, GAME_TITLE, GAME_VERSION,
-          CreditsView.CHANGE_LOG);
+          null, CreditsView.CHANGE_LOG);
     } catch (IOException e) {
       System.out.println("Could not show credits: " + e.getMessage());
       System.exit(0);
@@ -2445,10 +2448,7 @@ public class Game implements ActionListener {
   public static void main(final String[] args) {
     MusicPlayer.setMusicEnabled(true);
     SoundPlayer.setSoundEnabled(true);
-    if (args.length > 0 && args[0].equals("--credits")) {
-      System.out.println("# Authors of Open Realm Of Stars\n");
-      System.out.println(CreditsView.MAIN_CREDITS);
-    } else if (args.length > 0 && args[0].equals("--wiki-research")) {
+    if (args.length > 0 && args[0].equals("--wiki-research")) {
       System.out.println(printTechWiki());
     } else if (args.length > 0 && args[0].equals("--wiki-rare")) {
       System.out.println(printRareTechWiki());

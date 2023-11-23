@@ -38,7 +38,7 @@ public class CreditsViewTest {
   public void test() throws IOException {
     ActionListener listener = Mockito.mock(ActionListener.class);
     CreditsView credits = new CreditsView(listener, "Title", "0.0.1",
-        CreditsView.CREDITS_AND_LICENSE);
+        "Tuomo Untinen", CreditsView.CREDITS_AND_LICENSE);
     credits.updateTextArea();
     assertEquals(true, credits.getCreditsText().contains("Title"));
     assertEquals(true, credits.getCreditsText().contains("0.0.1"));

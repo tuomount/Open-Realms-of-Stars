@@ -3527,15 +3527,15 @@ public final class MissionHandling {
   }
 
   /**
-   * Make fleet to move. This checks if there is a fleet in point where moving
-   * and checks if there is a war between these players. If not then AI
-   * will start diplomacy.
+   * Move fleet, using "regular" engine. This checks if there is a foreign fleet
+   * at point where the fleet is moving and checks if there is a war between
+   * the two players. If not, then AI will start diplomacy.
    * @param game Game
    * @param point Point where to move
    * @param info PlayerInfo who is moving
    * @param fleet Fleet which is moving
    */
-  private static void makeFleetMove(final Game game, final PathPoint point,
+  private static void moveFleetRegular(final Game game, final PathPoint point,
       final PlayerInfo info, final Fleet fleet) {
     StarMap map = game.getStarMap();
     AStarSearch search = fleet.getaStarSearch();
@@ -3602,29 +3602,25 @@ public final class MissionHandling {
           } else {
             handleDiplomacyBetweenAis(game, info, index, null, fleet);
           }
-        } else {
-          Message msg = new Message(MessageType.FLEET,
-              "Fleet encounter another fleet while moving in FTL!",
-              Icons.getIconByName(Icons.ICON_HULL_TECH));
-          msg.setCoordinate(fleet.getCoordinate());
-          msg.setMatchByString(fleet.getName());
-          info.getMsgList().addNewMessage(msg);
         }
       }
     }
   }
 
   /**
-   * Make fleet to move. This checks if there is a fleet in point where moving
-   * and checks if there is a war between these players. If not then AI
-   * will start diplomacy.
+   * Moves fleet using FTL engines. This checks if there is a foreign fleet
+   * at point where the fleet is moving to. If it is, the move will stop.
+   * If the fleet it collided with is human-controlled, player gets a message
+   * about the collision. If the fleet it collided with is AI controlled,
+   * but not controlled by the game board, AI will start diplomacy with
+   * the other AI.
    * @param game Game
    * @param nx X-Coordinate where to move
    * @param ny Y-Coordinate where to move
-   * @param info Playerinfo who owns the fleet
+   * @param info PlayerInfo who owns the fleet
    * @param fleet Fleet which is moving
    */
-  public static void makeFleetMove(final Game game, final int nx, final int ny,
+  public static void moveFleetFTL(final Game game, final int nx, final int ny,
       final PlayerInfo info, final Fleet fleet) {
     StarMap map = game.getStarMap();
     Fleet fleetAtTarget = map.getFleetByCoordinate(nx, ny);
@@ -3699,7 +3695,7 @@ public final class MissionHandling {
         PathPoint point = search.getMove();
         if (point != null
             && !game.getStarMap().isBlocked(point.getX(), point.getY())) {
-          makeFleetMove(game, point, info, fleet);
+          moveFleetRegular(game, point, info, fleet);
         }
       }
     }
@@ -3749,7 +3745,7 @@ public final class MissionHandling {
       PathPoint point = search.getMove();
       if (point != null
           && !game.getStarMap().isBlocked(point.getX(), point.getY())) {
-        makeFleetMove(game, point, info, fleet);
+        moveFleetRegular(game, point, info, fleet);
       }
       if (fleet.getMovesLeft() == 0) {
         break;

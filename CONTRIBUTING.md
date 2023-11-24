@@ -5,20 +5,20 @@ how game mechanics works. Easiest way to contribute is simple play the game
 and if you find a bug just make a bug to Project's GitHub page. Before posting
 new bug check that there are no duplicates.
 
-If you want to add new code fork the project make the change. Run JUnits and 
+If you want to add new code fork the project make the change. Run JUnits and
 checkstyle before committing. These can be run with ``mvn verify``. After this make
 pull request back to me.
 
 ### Guide lines for making pull requests
 
- * Pull request should contain single logical change. 
+ * Pull request should contain single logical change.
  * Coding styling change should be on separate pull requests.
  * Commit messages should be descriptive. If you are fixing an issue start commit line with #ISSUENUMBER.
  * Pull request should not contain merge commits from other branches.
  * Contributors retain their original copyrights. All code contributions must be under GPL2.0.
- 
+
 I'll try to looking these as fast as I can. When
-added new assets see paragram one below more instructions. 
+added new assets see paragram one below more instructions.
 
 ### Contributing assets
 
@@ -31,4 +31,4 @@ Therefore original link needs mentioned in pull request.
 
 #### Adding the credits
 
-Add new credits information to CreditsView.java in ```MAIN_CREDITS``` String. ```AUTHORS.md``` will be generated when project is run with commandline argument --credits. This will be printed in STDOUT.
+Add new credits information to `AUTHORS.md`. They will be automatically incorporated into the game.

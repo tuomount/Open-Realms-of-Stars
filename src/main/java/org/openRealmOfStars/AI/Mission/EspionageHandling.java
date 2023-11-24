@@ -552,23 +552,26 @@ public final class EspionageHandling {
     final var txtExecuted = String.format(
         "%1$s was executed by %2$s.",
         spyCallName, planetEmpireName);
+    final var txtExecutionWar = "Execution was done because of war times.";
+    final var txtExecutionEmbargo = "Execution was done because of"
+        + "revenge of trade war";
+
     var txtExecReasonGeneric = "";
     if (war) {
-      txtExecReasonGeneric = " Execution was done because of "
-          + "war times.";
+      txtExecReasonGeneric = txtExecutionWar;
     } else if (tradeWar) {
-      txtExecReasonGeneric = " Execution was done because of "
-          + "revenge of trade war.";
+      txtExecReasonGeneric = txtExecutionEmbargo;
     }
 
     if (type == EspionageMission.GAIN_TRUST) {
       if (diplomacyWithSpy != null) {
         diplomacyWithSpy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
             planetPlayer.getRace());
+        var endText = " Since espionage mission was gaining trust,"
+            + " %1$s was released.";
+        endText = String.format(endText, spyCallName);
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
-            txtCaughtBase + " Since it espionage mission was gaining"
-                + " trust " + spyCallName
-                + " was released.",
+            txtCaughtBase + endText,
             starmap);
       }
     }
@@ -666,7 +669,7 @@ public final class EspionageHandling {
     if (type == EspionageMission.ASSASSIN_GOVERNOR) {
       tryAddDiplomacyBonus(diplomacyWithSpy,
           DiplomacyBonusType.ESPIONAGE_BORDER_CROSS, planetPlayer);
-      var reason = "governor assasination";
+      var reason = "governor assassination";
       Attitude attitude = planetPlayer.getAiAttitude();
       if (attitude == Attitude.PEACEFUL
           && !war && !tradeWar) {
@@ -717,7 +720,7 @@ public final class EspionageHandling {
         endText = " Execution was done because of spy operation"
             + " was considered as act of war.";
       } else if (tradeWar) {
-        endText = " Execution was done because of revenge of trade war.";
+        endText = txtExecutionEmbargo;
       } else {
         endText = " Execution was done because of acts of conspiracy.";
       }
@@ -748,9 +751,9 @@ public final class EspionageHandling {
           + " Main goal was spreading virus on planet. ";
       var endText = "";
       if (war) {
-        endText = " Execution was done because of war times.";
+        endText = txtExecutionWar;
       } else if (tradeWar) {
-        endText = " Execution was done because of revenge of trade war.";
+        endText = txtExecutionEmbargo;
       } else {
         endText = " Spreading deadly virus was considered as attack against "
             + planetEmpireName + ".";

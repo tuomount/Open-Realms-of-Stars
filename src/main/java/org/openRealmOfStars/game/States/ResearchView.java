@@ -48,8 +48,8 @@ import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.artifact.Artifact;
+import org.openRealmOfStars.player.leader.RulerUtility;
 import org.openRealmOfStars.player.leader.Leader;
-import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
@@ -283,7 +283,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     InfoPanel artifactPanel = new InfoPanel();
     artifactPanel.setTitle("Ancient artifacts");
     artifactPanel.setLayout(new BoxLayout(artifactPanel, BoxLayout.Y_AXIS));
-    Leader scientist = LeaderUtility.getBestScientist(player);
+    Leader scientist = RulerUtility.getBestScientist(player);
     String scientistName = "No scientist available";
     if (scientist != null) {
       scientistName = scientist.getCallName();

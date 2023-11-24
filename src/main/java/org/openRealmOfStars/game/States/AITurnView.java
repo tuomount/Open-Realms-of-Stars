@@ -61,6 +61,7 @@ import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetType;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.RulerUtility;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
@@ -2859,7 +2860,7 @@ public class AITurnView extends BlackPanel {
     handleRecruitableLeaders(realm);
     Leader heir = null;
     if (realm.getRuler() == null) {
-      Leader ruler = LeaderUtility.getNextRuler(realm);
+      Leader ruler = RulerUtility.getNextRuler(realm);
       if (ruler != null) {
         LeaderUtility.assignLeaderAsRuler(ruler, realm, game.getStarMap());
         if (realm.getRuler() != null) {
@@ -3095,7 +3096,7 @@ public class AITurnView extends BlackPanel {
           if (ruler != null) {
             handlePowerHungryKill(leader, realm, ruler);
           } else {
-            Leader nextheir = LeaderUtility.getNextPossbileHeir(realm);
+            Leader nextheir = RulerUtility.getNextPossbileHeir(realm);
             if (nextheir != null && nextheir.getJob() == Job.TOO_YOUNG) {
               handlePowerHungryKill(leader, realm, nextheir);
             }
@@ -3959,7 +3960,7 @@ public class AITurnView extends BlackPanel {
             info, game.getStarMap().getScoreVictoryTurn(),
             game.getStarMap().isTutorialEnabled());
         if (!info.areLeadersDead() && !info.isBoard()) {
-          Leader scientist = LeaderUtility.getBestScientist(info);
+          Leader scientist = RulerUtility.getBestScientist(info);
           if (scientist != null) {
             NewsData news = info.getArtifactLists().updateResearchPointByTurn(
                 game.getStarMap().getTotalProductionByPlayerPerTurn(

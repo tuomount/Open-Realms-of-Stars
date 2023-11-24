@@ -344,7 +344,7 @@ public class LeaderUtilityTest {
     leader.getPerkList().add(Perk.POWER_HUNGRY);
     leader.getPerkList().add(Perk.WARLORD);
     pool.add(leader);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader, ruler);
     Leader leader2 = new Leader("Test Leader2");
     leader2.setAge(50);
@@ -361,7 +361,7 @@ public class LeaderUtilityTest {
     leader2.getPerkList().add(Perk.WARLORD);
     pool.add(leader2);
     leader.setJob(Job.DEAD);
-    ruler = LeaderUtility.getNextRuler(realm);
+    ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader2, ruler);
   }
 
@@ -405,7 +405,7 @@ public class LeaderUtilityTest {
     leader2.getPerkList().add(Perk.POWER_HUNGRY);
     leader2.getPerkList().add(Perk.WARLORD);
     pool.add(leader2);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader, ruler);
   }
 
@@ -442,7 +442,7 @@ public class LeaderUtilityTest {
     leader2.getPerkList().add(Perk.POWER_HUNGRY);
     leader2.getPerkList().add(Perk.ACADEMIC);
     pool.add(leader2);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader2, ruler);
   }
 
@@ -478,7 +478,7 @@ public class LeaderUtilityTest {
     leader2.getPerkList().add(Perk.TRADER);
     leader2.getPerkList().add(Perk.ACADEMIC);
     pool.add(leader2);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader, ruler);
   }
 
@@ -516,7 +516,7 @@ public class LeaderUtilityTest {
     leader2.getPerkList().add(Perk.MILITARISTIC);
     leader2.getPerkList().add(Perk.WARLORD);
     pool.add(leader2);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader2, ruler);
   }
 
@@ -548,7 +548,7 @@ public class LeaderUtilityTest {
     leader2.getPerkList().add(Perk.MILITARISTIC);
     leader2.getPerkList().add(Perk.WARLORD);
     pool.add(leader2);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader2, ruler);
   }
 
@@ -579,7 +579,7 @@ public class LeaderUtilityTest {
     leader2.getPerkList().add(Perk.MILITARISTIC);
     leader2.getPerkList().add(Perk.WARLORD);
     pool.add(leader2);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader2, ruler);
   }
 

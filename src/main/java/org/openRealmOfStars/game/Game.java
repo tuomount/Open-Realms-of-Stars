@@ -1566,10 +1566,8 @@ public class Game implements ActionListener {
    * Show credits panel
    */
   public void showCredits() {
-    try {
-      var is = Game.class.getResourceAsStream("/AUTHORS.md");
-      var authorsText = new String(is.readAllBytes());
-
+    try(var inStream = Game.class.getResourceAsStream("/AUTHORS.md")) {
+      var authorsText = new String(inStream.readAllBytes());
       creditsView = new CreditsView(this, GAME_TITLE, GAME_VERSION,
           authorsText, CreditsView.CREDITS_AND_LICENSE);
     } catch (IOException e) {

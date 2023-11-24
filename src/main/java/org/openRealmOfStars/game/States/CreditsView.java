@@ -112,7 +112,7 @@ public class CreditsView extends BlackPanel {
     sb.append(title);
     sb.append(" ");
     sb.append(version);
-    sb.append("\n\n# Credits\n\n");
+    sb.append("\n\n");
     sb.append(authors);
 
     InputStream is = CreditsView.class

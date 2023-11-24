@@ -55,6 +55,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderBiography;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.RecruitableLeader;
@@ -485,7 +486,7 @@ public class LeaderView extends BlackPanel
         }
       }
       sb.append("\n");
-      sb.append(LeaderUtility.createBioForLeader(leader, player));
+      sb.append(LeaderBiography.createBioForLeader(leader, player));
       infoText.setText(sb.toString());
       String target = null;
       String job = null;

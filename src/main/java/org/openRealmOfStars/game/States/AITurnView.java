@@ -64,6 +64,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.RulerUtility;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderBiography;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.MilitaryRank;
 import org.openRealmOfStars.player.leader.Perk;
@@ -3259,7 +3260,7 @@ public class AITurnView extends BlackPanel {
         Perk[] gainedPerks = LeaderUtility.addRandomPerks(leader);
         StringBuilder sb = new StringBuilder();
         for (Perk perk : gainedPerks) {
-          sb.append(LeaderUtility.getReasonForPerk(leader, perk));
+          sb.append(LeaderBiography.getReasonForPerk(leader, perk));
           sb.append(" ");
         }
         Message msg = new Message(MessageType.LEADER,

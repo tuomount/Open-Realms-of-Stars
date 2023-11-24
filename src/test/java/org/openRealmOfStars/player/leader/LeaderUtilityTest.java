@@ -594,7 +594,7 @@ public class LeaderUtilityTest {
     leader.setAge(18);
     leader.getPerkList().add(Perk.SLOW_LEARNER);
     leader.getPerkList().add(Perk.STUPID);
-    String str = LeaderUtility.createBioForLeader(leader, realm);
+    String str = LeaderBiography.createBioForLeader(leader, realm);
     assertEquals("Robot X is jobless. Currently Robot X is governor."
         + " Governor is still young and is able to achieve many things. ",
         str);
@@ -608,7 +608,7 @@ public class LeaderUtilityTest {
     leader.getStats().addOne(StatType.WAR_DECLARATIONS);
     leader.getStats().addOne(StatType.NUMBER_OF_TRADES);
     leader.getPerkList().add(Perk.AGGRESSIVE);
-    str = LeaderUtility.createBioForLeader(leader, realm);
+    str = LeaderBiography.createBioForLeader(leader, realm);
     assertEquals("Robo Test is the Main Process. Currently Robo Test is Main"
         + " Process. King is known for war declarations and trades."
         + " King Robo Test is known to be aggressive. ", str);
@@ -627,7 +627,7 @@ public class LeaderUtilityTest {
     leader.setAge(25);
     leader.getPerkList().add(Perk.CHARISMATIC);
     leader.getPerkList().add(Perk.TREKKER);
-    String str = LeaderUtility.createBioForLeader(leader, realm);
+    String str = LeaderBiography.createBioForLeader(leader, realm);
     assertEquals("T.J. Test is jobless. Currently T.J. Test is Captain. "
         + "Captain is still young and is able to achieve many things. "
         + "Captain T.J. Test is known to be diplomatic. ",
@@ -643,7 +643,7 @@ public class LeaderUtilityTest {
     leader.getStats().addOne(StatType.NUMBER_OF_PLANETS_EXPLORED);
     leader.getStats().addOne(StatType.NUMBER_OF_ANOMALY);
     leader.getStats().addOne(StatType.NUMBER_OF_TRADES);
-    str = LeaderUtility.createBioForLeader(leader, realm);
+    str = LeaderBiography.createBioForLeader(leader, realm);
     assertEquals("T.J. Kurk is jobless. Currently T.J. Kurk is Captain. "
         + "Captain is known for boldly exploring planets. "
         + "Captain T.J. Kurk is known to be diplomatic. ", str);

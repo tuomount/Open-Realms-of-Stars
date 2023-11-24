@@ -35,6 +35,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderBiography;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
@@ -2666,7 +2667,7 @@ public class DiplomaticTrade {
       Leader leader = info.getRuler();
       leader.addPerk(perk);
       Message msg = new Message(MessageType.LEADER,
-          LeaderUtility.getReasonForPerk(leader, perk),
+          LeaderBiography.getReasonForPerk(leader, perk),
           LeaderUtility.getIconBasedOnLeaderJob(leader));
       msg.setMatchByString("Index:" + info.getLeaderIndex(leader));
       info.getMsgList().addUpcomingMessage(msg);

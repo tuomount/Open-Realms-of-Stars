@@ -166,10 +166,6 @@ public enum GameState {
    */
   GAME_END_VIEW,
   /**
-   * 3D Sphere, just for testing purposes
-   */
-  SPHERE_3D_VIEW,
-  /**
    * View where human player can select next galactic voting.
    */
   VOTING_SELECTION_VIEW,

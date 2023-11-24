@@ -27,3 +27,6 @@ hs_err_pid*
 *.iml
 .idea/
 .vscode/
+
+.classpath
+.project

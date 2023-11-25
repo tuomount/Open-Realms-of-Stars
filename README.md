@@ -5,7 +5,7 @@
 ![](src/main/resources/resources/images/oros-logo128.png)
 
 Open Realm of Stars is an open source 4X strategy game. Developed
-using Java. The game requires at minimum Swing and Java 7 to run.
+using Java.
 
 ### Explore the galaxy
 ![](ArtModification/screenshots/starmap.png)
@@ -125,6 +125,23 @@ On Windows double clicking the Jar file should be enough if Java has been instal
 It can be also run from terminal or command line with following command:
 ``java -jar Open-Realm-of-Stars-0.23.0Beta.jar``
 
+### System requirements
+
+Minimum requirements:
+
+* PC with Java JRE11
+* 4 GB of RAM
+* 200 MB space on disc
+* Display at least 1024x768 resolution
+
+Recommended system:
+
+* PC with Java JRE11
+* CPU with 2 cores
+* 4 GB of RAM
+* 200 MB space on disc
+* Display with 1920x1080 resolution
+* Philips HUE bridge with 1 - 3 color lights
 
 ## How to contribute
 

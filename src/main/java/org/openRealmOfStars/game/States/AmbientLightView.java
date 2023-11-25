@@ -149,7 +149,7 @@ public class AmbientLightView extends BlackPanel
       this.bridge.setId(config.getBridgeId());
     }
     InfoPanel base = new InfoPanel();
-    base.setTitle("Ambient Lights (EXPERIMENTAL)");
+    base.setTitle("Ambient Lights");
     this.setLayout(new BorderLayout());
     base.setLayout(new BorderLayout());
     // Accept panel starts here
@@ -642,6 +642,7 @@ public class AmbientLightView extends BlackPanel
       }
       if (bridge.getStatus() == BridgeStatusType.REGISTERED) {
         infoText.setText("Registered successfully.");
+        ambientLightsBox.setSelected(true);
       }
     } else if (bridge.getStatus() == BridgeStatusType.REGISTERING) {
       infoText.setText("Register bridge ...");

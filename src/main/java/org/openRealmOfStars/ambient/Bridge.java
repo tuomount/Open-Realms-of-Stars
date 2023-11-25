@@ -19,6 +19,7 @@ package org.openRealmOfStars.ambient;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
@@ -281,6 +282,63 @@ public class Bridge {
     }
     return false;
   }
+
+  /**
+   * Write output to bridge.
+   * @param str String content to write
+   * @param connection HTTPSURLConnection
+   */
+  private void writeOutput(final String str,
+      final HttpsURLConnection connection) {
+    try (OutputStream os = connection.getOutputStream()) {
+      os.write(str.getBytes(StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      ErrorLogger.debug("Exception:" + e.getMessage());
+      status = BridgeStatusType.ERROR;
+      lastErrorMsg = "Write failed.";
+    }
+  }
+  /**
+   * Read Input from HTTPSURL Connection
+   * @param connection HTTPS URL COnnection
+   * @return bytearray or null
+   */
+  private byte[] readInput(final HttpsURLConnection connection) {
+    byte[] buf = null;
+    try (InputStream is = connection.getInputStream()) {
+      buf = IOUtilities.readAll(is);
+    } catch (IOException e) {
+      try {
+        ErrorLogger.debug("Code:" + connection.getResponseCode());
+      } catch (IOException e1) {
+        // DO NOTHING
+        ErrorLogger.debug("Exception:" + e1.getMessage());
+      }
+      ErrorLogger.debug("Exception:" + e.getMessage());
+      status = BridgeStatusType.ERROR;
+      lastErrorMsg = "Read failed.";
+    }
+    return buf;
+  }
+
+  /**
+   * Get JSON Root from byte array.
+   * @param buf Byte Array
+   * @return JsonRoot or null
+   */
+  private JsonRoot parseJsonRoot(final byte[] buf) {
+    JsonRoot jsonRoot = null;
+    try (JsonStream stream = new JsonStream(buf)) {
+      JsonParser parser = new JsonParser();
+      jsonRoot = parser.parseJson(stream);
+    } catch (IOException e) {
+      ErrorLogger.debug("Exception:" + e.getMessage());
+      status = BridgeStatusType.ERROR;
+      lastErrorMsg = "Parsing failed.";
+    }
+    return jsonRoot;
+  }
+
   /**
    * Method for registering OROS to bridge.
    * @throws IOException If something goes wrong.
@@ -312,56 +370,56 @@ public class Bridge {
     connection.setRequestMethod("POST");
     ObjectValue root = new ObjectValue();
     root.addStringMember("devicetype", DEVICE_TYPE);
-    connection.getOutputStream().write(root.getValueAsString().getBytes(
-        StandardCharsets.UTF_8));
-    ErrorLogger.debug(root.getValueAsString());
-    InputStream is = connection.getInputStream();
-    byte[] buf = IOUtilities.readAll(is);
+    String temp = root.getValueAsString();
+    writeOutput(temp, connection);
+    ErrorLogger.debug(temp);
+    byte[] buf = readInput(connection);
     String str = new String(buf, StandardCharsets.UTF_8);
-    ErrorLogger.debug("Code:" + connection.getResponseCode());
-    ErrorLogger.debug(str);
-    JsonStream stream = new JsonStream(buf);
-    JsonParser parser = new JsonParser();
-    JsonRoot jsonRoot = parser.parseJson(stream);
-    Member member = jsonRoot.findFirst("error");
-    if (member == null) {
-      member = jsonRoot.findFirst("success");
-      if (member != null) {
-        member = jsonRoot.findFirst("username");
+    if (buf != null) {
+      ErrorLogger.debug(str);
+      JsonRoot jsonRoot = parseJsonRoot(buf);
+      Member member = jsonRoot.findFirst("error");
+      if (member == null) {
+        member = jsonRoot.findFirst("success");
+        if (member != null) {
+          member = jsonRoot.findFirst("username");
+          if (member != null) {
+            JsonValue value = member.getValue();
+            if (value.getType() == ValueType.STRING) {
+              StringValue strValue = (StringValue) value;
+              username = strValue.getValue();
+              status = BridgeStatusType.REGISTERED;
+              setLightsEnabled(true);
+            }
+          } else {
+            status = BridgeStatusType.NOT_CONNECTED;
+            lastErrorMsg = "No username received.";
+          }
+        } else {
+          status = BridgeStatusType.ERROR;
+          lastErrorMsg = "Unknown error happened.";
+        }
+      } else {
+        status = BridgeStatusType.ERROR;
+        member = jsonRoot.findFirst("description");
         if (member != null) {
           JsonValue value = member.getValue();
           if (value.getType() == ValueType.STRING) {
             StringValue strValue = (StringValue) value;
-            username = strValue.getValue();
-            status = BridgeStatusType.REGISTERED;
+            lastErrorMsg = "Remember press sync button"
+                + " before clicking register. "
+                + strValue.getValue();
+          } else {
+            lastErrorMsg = "Remember press sync button"
+                + " before clicking register. "
+                + member.getValue().getValueAsString();
           }
-        } else {
-          status = BridgeStatusType.NOT_CONNECTED;
-          lastErrorMsg = "No username received.";
         }
-      } else {
-        status = BridgeStatusType.ERROR;
-        lastErrorMsg = "Unknown error happened.";
       }
     } else {
       status = BridgeStatusType.ERROR;
-      member = jsonRoot.findFirst("description");
-      if (member != null) {
-        JsonValue value = member.getValue();
-        if (value.getType() == ValueType.STRING) {
-          StringValue strValue = (StringValue) value;
-          lastErrorMsg = "Remember press sync button"
-              + " before clicking register. "
-              + strValue.getValue();
-
-        } else {
-          lastErrorMsg = "Remember press sync button"
-              + " before clicking register. "
-              + member.getValue().getValueAsString();
-        }
-      }
+      lastErrorMsg = "No payload.";
     }
-    is.close();
   }
 
   /**
@@ -392,22 +450,24 @@ public class Bridge {
     connection.setSSLSocketFactory(sslContext.getSocketFactory());
     connection.setHostnameVerifier(new BridgeHostnameVerifier(hostname));
     connection.setRequestMethod("GET");
-    InputStream is = connection.getInputStream();
-    byte[] buf = IOUtilities.readAll(is);
-    String str = new String(buf, StandardCharsets.UTF_8);
-    ErrorLogger.debug("Code:" + connection.getResponseCode());
-    ErrorLogger.debug(str);
-    JsonStream stream = new JsonStream(buf);
-    JsonParser parser = new JsonParser();
-    JsonRoot jsonRoot = parser.parseJson(stream);
-    Member member = jsonRoot.findFirst("1");
-    if (member != null) {
-      status = BridgeStatusType.CONNECTED;
+    byte[] buf = readInput(connection);
+    if (buf != null) {
+      String str = new String(buf, StandardCharsets.UTF_8);
+      ErrorLogger.debug("Code:" + connection.getResponseCode());
+      ErrorLogger.debug(str);
+      JsonRoot jsonRoot = parseJsonRoot(buf);
+      Member member = jsonRoot.findFirst("1");
+      if (member != null) {
+        status = BridgeStatusType.CONNECTED;
+      } else {
+        status = BridgeStatusType.ERROR;
+        lastErrorMsg = "Could not connected.";
+      }
     } else {
+      ErrorLogger.debug("Code:" + connection.getResponseCode());
       status = BridgeStatusType.ERROR;
-      lastErrorMsg = "Could not connected.";
+      lastErrorMsg = "No payload received.";
     }
-    is.close();
   }
 
   /**
@@ -445,17 +505,26 @@ public class Bridge {
     connection.setHostnameVerifier(new BridgeHostnameVerifier(hostname));
     connection.setDoOutput(true);
     connection.setRequestMethod("PUT");
-    connection.getOutputStream().write(json.getValueAsString().getBytes(
-        StandardCharsets.UTF_8));
+    String temp = json.getValueAsString();
+    writeOutput(temp, connection);
     ErrorLogger.debug("URL: " + url.toString());
     ErrorLogger.debug(json.getValueAsString());
-    InputStream is = connection.getInputStream();
-    byte[] buf = IOUtilities.readAll(is);
-    String str = new String(buf, StandardCharsets.UTF_8);
-    ErrorLogger.debug("Code:" + connection.getResponseCode());
-    ErrorLogger.debug(str);
-    is.close();
-    status = BridgeStatusType.CONNECTED;
+    try (InputStream is = connection.getInputStream()) {
+      byte[] buf = IOUtilities.readAll(is);
+      if (buf != null) {
+        String str = new String(buf, StandardCharsets.UTF_8);
+        ErrorLogger.debug("Code:" + connection.getResponseCode());
+        ErrorLogger.debug(str);
+        status = BridgeStatusType.CONNECTED;
+      } else {
+        ErrorLogger.debug("Code:" + connection.getResponseCode());
+      }
+    } catch (IOException e) {
+      ErrorLogger.debug("Code:" + connection.getResponseCode());
+      ErrorLogger.debug("Exception:" + e.getMessage());
+      status = BridgeStatusType.ERROR;
+      lastErrorMsg = "Read failed.";
+    }
   }
 
   /**
@@ -939,15 +1008,11 @@ public class Bridge {
     connection.setSSLSocketFactory(sslContext.getSocketFactory());
     connection.setHostnameVerifier(new BridgeHostnameVerifier(hostname));
     connection.setRequestMethod("GET");
-    InputStream is = connection.getInputStream();
-    byte[] buf = IOUtilities.readAll(is);
+    byte[] buf = readInput(connection);
     String str = new String(buf, StandardCharsets.UTF_8);
     ErrorLogger.debug("Code:" + connection.getResponseCode());
     ErrorLogger.debug(str);
-    JsonStream stream = new JsonStream(buf);
-    JsonParser parser = new JsonParser();
-    JsonRoot jsonRoot = parser.parseJson(stream);
-    is.close();
+    JsonRoot jsonRoot = parseJsonRoot(buf);
     lights = new ArrayList<>();
     // Officially Hue bridge supports 50 lights, but let's be on safe side.
     for (int i = 0; i < 255; i++) {

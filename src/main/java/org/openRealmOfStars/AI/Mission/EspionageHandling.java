@@ -563,17 +563,15 @@ public final class EspionageHandling {
       txtExecReasonGeneric = txtExecutionEmbargo;
     }
 
-    if (type == EspionageMission.GAIN_TRUST) {
-      if (diplomacyWithSpy != null) {
-        diplomacyWithSpy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
-            planetPlayer.getRace());
-        var endText = " Since espionage mission was gaining trust,"
-            + " %1$s was released.";
-        endText = String.format(endText, spyCallName);
-        LeaderUtility.handleLeaderReleased(info, planet, fleet,
-            txtCaughtBase + endText,
-            starmap);
-      }
+    if (type == EspionageMission.GAIN_TRUST && diplomacyWithSpy != null) {
+      diplomacyWithSpy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+          planetPlayer.getRace());
+      var endText = " Since espionage mission was gaining trust,"
+          + " %1$s was released.";
+      endText = String.format(endText, spyCallName);
+      LeaderUtility.handleLeaderReleased(info, planet, fleet,
+          txtCaughtBase + endText,
+          starmap);
     }
 
     if (type == EspionageMission.STEAL_CREDIT) {

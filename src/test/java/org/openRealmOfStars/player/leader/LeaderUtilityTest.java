@@ -344,7 +344,7 @@ public class LeaderUtilityTest {
     leader.addPerk(Perk.POWER_HUNGRY);
     leader.addPerk(Perk.WARLORD);
     pool.add(leader);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader, ruler);
     Leader leader2 = new Leader("Test Leader2");
     leader2.setAge(50);
@@ -361,7 +361,7 @@ public class LeaderUtilityTest {
     leader2.addPerk(Perk.WARLORD);
     pool.add(leader2);
     leader.setJob(Job.DEAD);
-    ruler = LeaderUtility.getNextRuler(realm);
+    ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader2, ruler);
   }
 
@@ -405,7 +405,7 @@ public class LeaderUtilityTest {
     leader2.addPerk(Perk.POWER_HUNGRY);
     leader2.addPerk(Perk.WARLORD);
     pool.add(leader2);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader, ruler);
   }
 
@@ -442,7 +442,7 @@ public class LeaderUtilityTest {
     leader2.addPerk(Perk.POWER_HUNGRY);
     leader2.addPerk(Perk.ACADEMIC);
     pool.add(leader2);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader2, ruler);
   }
 
@@ -478,7 +478,7 @@ public class LeaderUtilityTest {
     leader2.addPerk(Perk.TRADER);
     leader2.addPerk(Perk.ACADEMIC);
     pool.add(leader2);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader, ruler);
   }
 
@@ -516,7 +516,7 @@ public class LeaderUtilityTest {
     leader2.addPerk(Perk.MILITARISTIC);
     leader2.addPerk(Perk.WARLORD);
     pool.add(leader2);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader2, ruler);
   }
 
@@ -548,7 +548,7 @@ public class LeaderUtilityTest {
     leader2.addPerk(Perk.MILITARISTIC);
     leader2.addPerk(Perk.WARLORD);
     pool.add(leader2);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader2, ruler);
   }
 
@@ -579,7 +579,7 @@ public class LeaderUtilityTest {
     leader2.addPerk(Perk.MILITARISTIC);
     leader2.addPerk(Perk.WARLORD);
     pool.add(leader2);
-    Leader ruler = LeaderUtility.getNextRuler(realm);
+    Leader ruler = RulerUtility.getNextRuler(realm);
     assertEquals(leader2, ruler);
   }
 
@@ -643,7 +643,7 @@ public class LeaderUtilityTest {
     leader.getStats().addOne(StatType.NUMBER_OF_PLANETS_EXPLORED);
     leader.getStats().addOne(StatType.NUMBER_OF_ANOMALY);
     leader.getStats().addOne(StatType.NUMBER_OF_TRADES);
-    str = LeaderUtility.createBioForLeader(leader, realm);
+    str = LeaderBiography.createBioForLeader(leader, realm);
     assertEquals("T.J. Kurk is jobless. Currently T.J. Kurk is Captain. "
         + "Captain is known for boldly exploring planets. "
         + "Captain T.J. Kurk is known to be diplomatic. ", str);

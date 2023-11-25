@@ -30,6 +30,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderBiography;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.MilitaryRank;
 import org.openRealmOfStars.player.leader.Perk;
@@ -251,7 +252,7 @@ public final class RandomEventUtility {
         event.setImageInstructions(instructions.build());
         StringBuilder sb = new StringBuilder();
         for (Perk perk : perksGained) {
-          sb.append(LeaderUtility.getReasonForPerk(leader, perk));
+          sb.append(LeaderBiography.getReasonForPerk(leader, perk));
           sb.append(" ");
         }
         event.setText(leader.getCallName()

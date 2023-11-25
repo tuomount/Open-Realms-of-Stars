@@ -24,7 +24,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
-import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.LeaderBiography;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
@@ -653,7 +653,7 @@ public final class NewsFactory {
         sb.append(". ");
       }
     }
-    sb.append(LeaderUtility.createBioForLeader(leader, realm));
+    sb.append(LeaderBiography.createBioForLeader(leader, realm));
     news.setNewsText(sb.toString());
     return news;
   }
@@ -798,7 +798,7 @@ public final class NewsFactory {
       sb.append(" and for ");
       sb.append(killed.getHomeworld());
       sb.append(". ");
-      sb.append(LeaderUtility.createBioForLeader(killed, killedRealm));
+      sb.append(LeaderBiography.createBioForLeader(killed, killedRealm));
     } else {
       sb.append("Since ");
       sb.append(killed.getCallName());

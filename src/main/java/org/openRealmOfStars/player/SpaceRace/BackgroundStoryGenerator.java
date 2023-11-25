@@ -20,6 +20,7 @@ package org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Gender;
+import org.openRealmOfStars.player.leader.RulerUtility;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.NameGenerator;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -2338,7 +2339,8 @@ public final class BackgroundStoryGenerator {
           sb.append(gender.getHeShe());
           sb.append(" was their ");
           sb.append(StoryGeneratorUtility.randomInaugural());
-          sb.append(LeaderUtility.getRulerTitle(gender, info.getGovernment()));
+          sb.append(RulerUtility.getRulerTitle(
+              gender, info.getGovernment()));
           sb.append(". ");
           break;
         }
@@ -2378,7 +2380,7 @@ public final class BackgroundStoryGenerator {
           sb.append(" was their ");
           sb.append(StoryGeneratorUtility.randomInaugural());
           sb.append(" ");
-          sb.append(LeaderUtility.getRulerTitle(gender, info.getGovernment()));
+          sb.append(RulerUtility.getRulerTitle(gender, info.getGovernment()));
           if (DiceGenerator.getRandom(1) == 0) {
             sb.append(" and ");
             sb.append(gender.getHisHer());
@@ -2508,7 +2510,7 @@ public final class BackgroundStoryGenerator {
       sb.append(" was their ");
       sb.append(StoryGeneratorUtility.randomInaugural());
       sb.append(" ");
-      sb.append(LeaderUtility.getRulerTitle(gender, info.getGovernment()));
+      sb.append(RulerUtility.getRulerTitle(gender, info.getGovernment()));
       if (writtenHistory) {
         sb.append(". ");
       } else {

@@ -181,12 +181,10 @@ public final class JsonParser {
         Member result = new Member(name);
         result.setValue(value);
         return result;
-      } else {
-        throw new JsonException("Name separator is missing.");
       }
-    } else {
-      return null;
+      throw new JsonException("Name separator is missing.");
     }
+    return null;
   }
   /**
    * Parse Json Object.
@@ -216,9 +214,8 @@ public final class JsonParser {
       } while (parsing);
       goSurface();
       return result;
-    } else {
-      throw new JsonException("Not object for parsing.");
     }
+    throw new JsonException("Not object for parsing.");
   }
 
   /**

@@ -2,54 +2,54 @@
 
 # Open Realm of Stars
 
-![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/src/main/resources/resources/images/oros-logo128.png)
+![](src/main/resources/resources/images/oros-logo128.png)
 
 Open Realm of Stars is an open source 4X strategy game. Developed
 using Java. The game requires at minimum Swing and Java 7 to run.
 
 ### Explore the galaxy
-![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/starmap.png)
+![](ArtModification/screenshots/starmap.png)
 
 Move your fleet in a randomly generated galaxy. Encounter other species, and find new planets to colonize. Explore mysterious space anomalies.
 
 ### Manage your own planets
-![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/planet.png)
+![](ArtModification/screenshots/planet.png)
 
 Manage your planets gain access to better buildings and ships. Population management is key to acquiring more culture, research, metal and production.
 
 ### Have diplomacy with other space faring races
-![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/diplomacy.png)
+![](ArtModification/screenshots/diplomacy.png)
 
 Make friends and enemies while traveling to outer realms. Form trade alliances, and defensive pacts to establish technology trade with other races. Make good diplomatic relations all other realms and win voting for ruler of the galaxy.
 
 ### Deep space combat
-![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/combat.png)
+![](ArtModification/screenshots/combat.png)
 
 Fight enemies with customizable ship designs. Ship components have their own hit points and energy requirements to use them. Components will be rendered useless if hitpoints are depleted or energy requirements are not met. This makes space battles dynamic. A lucky shot by allied ship to an enemies fusion reactor will make them immobile on the battlefield. Fleets with advanced technologies have significant advantages, however luck or number of ships can sway the battle in your favor.
 
 ### Conquering the planets
-![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/bombing.png)
+![](ArtModification/screenshots/bombing.png)
 
 Conquer enemy planets. Drop bombs to clear out enemy troops, then deploy your own ground troops to seize control.
 Regular space weapons can be used for causing suppression to defending troops.
 
 ### Leaders
-![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/leaders.png)
+![](ArtModification/screenshots/leaders.png)
 
 Each realm can have unique characters called leaders. These leaders can act as governors, fleet commanders and rulers. Each of the leader will gain perks which give bonus(negative or positive) on task they are performing. Leaders have limited life span and they will die for old age, but new ones can be replace the old one. Some rulers can have heirs which will eventually replace parents. These leaders can have also internal power struggles in certain government types.
 
 ### The history
-![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/history.png)
+![](ArtModification/screenshots/history.png)
 
 After a game players are given a quick overview of major galactic events and how other realms did during the game. There will be also history events of all major events that leaders did during their time in the game.
 
 #### The Story
-![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/story.png)
+![](ArtModification/screenshots/story.png)
 
 When you start the game, background story will be generated for your realm. At the end of the game you can
 see your realm's full story. There is also possible to see other realms' stories.
 
-See more [screenshots](https://github.com/tuomount/Open-Realms-of-Stars/tree/master/ArtModification/screenshots)
+See more [screenshots](ArtModification/screenshots)
 
 ### Features
 
@@ -90,22 +90,26 @@ be broken when adding new features.
 
 Open Realm of Stars can be compiled with Maven.
 Install maven and then run command:
-``mvn install``
+`mvn install`
 
 In the target directory a zip file contains all dependecies to run the Game.
-Unzip, navigate to the newly extracted path and run ``Open-Realm-of-Stars-?.?.?.jar``
-with following command ``java -jar Open-Realm-of-Stars-?.?.?.jar``. Note that the question
+Unzip, navigate to the newly extracted path and run `Open-Realm-of-Stars-?.?.?-SNAPSHOT.jar`
+with following command `java -jar Open-Realm-of-Stars-?.?.?-SNAPSHOT.jar`. Note that the question
 marks need to correspond to the correct build version.
 
+Release builds are done by adding `-Dchangelist= ` (blank intentional)
+option when running Maven. Those builds will not have the `-SNAPSHOT` suffix.
+If you wish to encode Git commit SHA of current commit to the build name,
+add option `-Dsha1="-$(git rev-parse --short HEAD)"`.
+
 ## Warning about using non stable version
+
 Compiling non-stable releases is not recommended.
 Non-stable versions of Open Realm of Stars may contain game breaking bugs that make the game unplayable.
 The game is constantly being developed for and new features may introduce bugs.
 
-
 If you encounter any critical bugs create a new issue for it. Use the stable release version, or wait for a new fix.
 If you're interested in contributing to the project you are welcome to fix it. Contribution guidelines are outlined below.
-
 
 ## Running the game
 
@@ -149,4 +153,4 @@ Graphics should be licensed with CC-BY-SA and Sounds/Music with CC-BY. Also CC-B
 for music and sounds is okay, but the credits page will need to be updated.
 Fonts needs to be licensed with SIL Open Font License.
 
-See more information on [CONTRIBUTING.md](https://github.com/tuomount/Open-Realms-of-Stars/blob/master/CONTRIBUTING.md)
+See more information on [CONTRIBUTING.md](CONTRIBUTING.md)

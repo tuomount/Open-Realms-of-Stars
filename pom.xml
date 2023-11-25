@@ -6,12 +6,15 @@
 
     <groupId>org.openRealmOfStars</groupId>
     <artifactId>Open-Realm-of-Stars</artifactId>
-    <version>0.24.21Beta</version>
+    <version>${revision}${changelist}${sha1}</version>
     <packaging>jar</packaging>
     <url>https://github.com/tuomount/Open-Realms-of-Stars</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <revision>0.25.0</revision>
+        <changelist>-SNAPSHOT</changelist>
+        <sha1/>
     </properties>
 
     <build>
@@ -36,6 +39,8 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <mainClass>org.openRealmOfStars.game.Game</mainClass>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
                     </archive>
                 </configuration>

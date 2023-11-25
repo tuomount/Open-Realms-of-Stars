@@ -2,6 +2,7 @@ package org.openRealmOfStars.ai.planet;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -86,7 +87,6 @@ public final class PlanetHandling {
    */
   private static final int THREE_SLOT_SCORE = 8;
 
-
   /**
    * High value score for construction
    */
@@ -130,13 +130,14 @@ public final class PlanetHandling {
     Building newBuild = (Building) planet.getUnderConstruction();
     Building worst = getWorstBuilding(planet, info, attitude, newBuild,
         nearFleetLimit);
-    if  (worst != null && planet.fightAgainstWildLife(worst)) {
+    if (worst != null && planet.fightAgainstWildLife(worst)) {
       // Removing the worst building
       planet.removeBuilding(worst);
       return true;
     }
     return false;
   }
+
   /**
    * Choose next construction for planet.
    * @param map StarMap
@@ -153,21 +154,24 @@ public final class PlanetHandling {
     Building[] buildings = planet.getBuildingList();
     Construction[] constructions = planet.getProductionList();
     boolean constructionSelected = false;
-    int gotFactory = gotBuildings(
-        new String[] {"Basic factory", "Advanced factory",
-            "Manufacturing center", "Nanobot manufacturing center",
-            "Ancient factory"}, buildings);
-    int gotLabs = gotBuildings(
-        new String[] {"Basic lab", "Advanced laboratory",
-            "Research center", "Neural research center",
-            "Ancient lab"}, buildings);
-    int gotFarms = gotBuildings(
-        new String[] {"Basic farm", "Advanced farm",
-            "Farming center", "Hydropodic farming center"}, buildings);
-    int gotMines = gotBuildings(
-        new String[] {"Basic mine", "Advanced mine",
-            "Mining center", "Nanobot mining center"}, buildings);
-    int gotSpacePort = gotBuildings(new String[] {"Space port"},
+    int gotFactory = gotBuildings(new String[] {
+        "Basic factory", "Advanced factory", "Manufacturing center",
+        "Nanobot manufacturing center", "Ancient factory" },
+        buildings);
+    int gotLabs = gotBuildings(new String[] {
+        "Basic lab", "Advanced laboratory", "Research center",
+        "Neural research center", "Ancient lab" },
+        buildings);
+    int gotFarms = gotBuildings(new String[] {
+        "Basic farm", "Advanced farm",
+        "Farming center", "Hydropodic farming center" },
+        buildings);
+    int gotMines = gotBuildings(new String[] {
+        "Basic mine", "Advanced mine",
+        "Mining center", "Nanobot mining center" },
+        buildings);
+    int gotSpacePort = gotBuildings(new String[] {
+        "Space port" },
         buildings);
     if (gotFactory == -1) {
       // No factories at all
@@ -312,6 +316,7 @@ public final class PlanetHandling {
       }
     }
   }
+
   /**
    * AI player handling for a single planet, what to build
    * and how to set population work
@@ -330,7 +335,7 @@ public final class PlanetHandling {
         for (Building building : planet.getBuildingList()) {
           if (building.getWildLifePower() > 0
               && planet.fightAgainstWildLife(building)) {
-              // Removing the wild life
+            // Removing the wild life
             planet.removeBuilding(building);
             break;
           }
@@ -350,7 +355,7 @@ public final class PlanetHandling {
       if (info.areLeadersDead() && credit == 0
           && info.getTotalCredits() < LeaderUtility.leaderRecruitCost(info)
           && planet.getTax() < planet.getTotalProduction(
-            Planet.PRODUCTION_PRODUCTION) + 2) {
+              Planet.PRODUCTION_PRODUCTION) + 2) {
         // Set Planet text higher just for get new ruler
         planet.setTax(planet.getTax() + 1, false);
       }
@@ -391,24 +396,24 @@ public final class PlanetHandling {
             // Planet on mission for building something
             rushChange = rushChange + 10;
           }
-          int rushPerCredit =  info.getTotalCredits() / rushCost;
+          int rushPerCredit = info.getTotalCredits() / rushCost;
           if (rushPerCredit == 2) {
             rushChange = rushChange + 5;
           } else if (rushPerCredit == 3) {
             rushChange = rushChange + 7;
           } else if (rushPerCredit == 4) {
             rushChange = rushChange + 10;
-          }  else if (rushPerCredit == 5) {
+          } else if (rushPerCredit == 5) {
             rushChange = rushChange + 12;
-          }  else if (rushPerCredit == 6) {
+          } else if (rushPerCredit == 6) {
             rushChange = rushChange + 14;
-          }  else if (rushPerCredit == 7) {
+          } else if (rushPerCredit == 7) {
             rushChange = rushChange + 15;
-          }  else if (rushPerCredit == 8) {
+          } else if (rushPerCredit == 8) {
             rushChange = rushChange + 17;
-          }  else if (rushPerCredit == 9) {
+          } else if (rushPerCredit == 9) {
             rushChange = rushChange + 18;
-          }  else if (rushPerCredit >= 10) {
+          } else if (rushPerCredit >= 10) {
             rushChange = rushChange + 20;
           }
           if (planet.getUnderConstruction() instanceof Ship) {
@@ -497,8 +502,8 @@ public final class PlanetHandling {
       score = score + building.getMineBonus() * 20;
     }
     if (building.getName().equals("United Galaxy Tower")
-      && metalProd > 5 && prodProd > 5
-      && info.getStrategy() == WinningStrategy.DIPLOMATIC) {
+        && metalProd > 5 && prodProd > 5
+        && info.getStrategy() == WinningStrategy.DIPLOMATIC) {
       score = score + 400;
     }
     if (building.getMineBonus() > 0
@@ -680,12 +685,14 @@ public final class PlanetHandling {
     }
     if (building.getName().equals("Basic factory")
         && info.getTechList().hasTech(TechType.Improvements,
-            "Advanced factory") && production > 4) {
+            "Advanced factory")
+        && production > 4) {
       score = -1;
     }
     if (building.getName().equals("Basic mine")
         && info.getTechList().hasTech(TechType.Improvements,
-            "Advanced mine") && metal > 4) {
+            "Advanced mine")
+        && metal > 4) {
       score = -1;
     }
     if (building.getName().equals("Basic farm")
@@ -741,15 +748,15 @@ public final class PlanetHandling {
       if (newBuild != null && building.getType() == newBuild.getType()) {
         // This should increase the chance for upgrading the building.
         int newBonus = newBuild.getBattleBonus() + newBuild.getCredBonus()
-        + newBuild.getCultBonus() + newBuild.getDefenseDamage()
-        + newBuild.getFactBonus() + newBuild.getFarmBonus()
-        + newBuild.getMineBonus() + newBuild.getRecycleBonus()
-        + newBuild.getReseBonus() + newBuild.getScanRange();
+            + newBuild.getCultBonus() + newBuild.getDefenseDamage()
+            + newBuild.getFactBonus() + newBuild.getFarmBonus()
+            + newBuild.getMineBonus() + newBuild.getRecycleBonus()
+            + newBuild.getReseBonus() + newBuild.getScanRange();
         int oldBonus = building.getBattleBonus() + building.getCredBonus()
-        + building.getCultBonus() + building.getDefenseDamage()
-        + building.getFactBonus() + building.getFarmBonus()
-        + building.getMineBonus() + building.getRecycleBonus()
-        + building.getReseBonus() + building.getScanRange();
+            + building.getCultBonus() + building.getDefenseDamage()
+            + building.getFactBonus() + building.getFarmBonus()
+            + building.getMineBonus() + building.getRecycleBonus()
+            + building.getReseBonus() + building.getScanRange();
         int bonus = newBonus - oldBonus;
         score = score - 80 * bonus;
       }
@@ -760,6 +767,7 @@ public final class PlanetHandling {
     }
     return lowBuilding;
   }
+
   /**
    * Handle construction by using scoring
    * @param constructions The constructions
@@ -785,7 +793,7 @@ public final class PlanetHandling {
           attitude, nearFleetLimit);
     } else {
       scores = scoreConstructions(constructions, planet, info, map,
-        attitude, nearFleetLimit);
+          attitude, nearFleetLimit);
     }
     int highest = -1;
     int value = -1;
@@ -801,25 +809,25 @@ public final class PlanetHandling {
       chanceForHighest = chanceForHighest + 20;
     }
     switch (freeSlot) {
-    case 0:
-      minimum = ZERO_SLOT_SCORE;
-      needToRemoveWorst = true;
-      chanceForHighest = chanceForHighest + 30;
-      break;
-    case 1:
-      minimum = ONE_SLOT_SCORE;
-      chanceForHighest = chanceForHighest + 20;
-      break;
-    case 2:
-      minimum = TWO_SLOT_SCORE;
-      chanceForHighest = chanceForHighest + 10;
-      break;
-    case 3:
-      minimum = THREE_SLOT_SCORE;
-      break;
-    default:
-      minimum = 0;
-      break;
+      case 0:
+        minimum = ZERO_SLOT_SCORE;
+        needToRemoveWorst = true;
+        chanceForHighest = chanceForHighest + 30;
+        break;
+      case 1:
+        minimum = ONE_SLOT_SCORE;
+        chanceForHighest = chanceForHighest + 20;
+        break;
+      case 2:
+        minimum = TWO_SLOT_SCORE;
+        chanceForHighest = chanceForHighest + 10;
+        break;
+      case 3:
+        minimum = THREE_SLOT_SCORE;
+        break;
+      default:
+        minimum = 0;
+        break;
     }
     for (int i = 0; i < scores.length; i++) {
       if (scores[i] > value) {
@@ -835,8 +843,8 @@ public final class PlanetHandling {
       constructionSelected = true;
     } else if (highest != -1
         && DiceGenerator.getRandom(100) < chanceForHighest) {
-        planet.setUnderConstruction(constructions[highest]);
-        constructionSelected = true;
+      planet.setUnderConstruction(constructions[highest]);
+      constructionSelected = true;
     } else if (over400) {
       ArrayList<Construction> list = new ArrayList<>();
       for (int i = 0; i < scores.length; i++) {
@@ -915,18 +923,18 @@ public final class PlanetHandling {
               mission.setPhase(MissionPhase.BUILDING);
               break;
             } else if (ship.hasBombs()
-                && info.getMissions().getGatherMission(Mission.BOMBER_TYPE)
-                != null) {
+                && info.getMissions()
+                    .getGatherMission(Mission.BOMBER_TYPE) != null) {
               mission = info.getMissions().getGatherMission(
                   Mission.BOMBER_TYPE);
               mission.setPlanetBuilding(planet.getName());
               mission.setPhase(MissionPhase.BUILDING);
               break;
             } else if (ship.getTotalMilitaryPower() > 0
-                && info.getMissions().getGatherMission(Mission.ASSAULT_TYPE)
-                != null
-                && info.getMissions().getGatherMission(Mission.ASSAULT_SB_TYPE)
-                != null) {
+                && info.getMissions()
+                    .getGatherMission(Mission.ASSAULT_TYPE) != null
+                && info.getMissions()
+                    .getGatherMission(Mission.ASSAULT_SB_TYPE) != null) {
               int chance = 50;
               if (attitude == Attitude.MERCHANTICAL
                   || attitude == Attitude.DIPLOMATIC) {
@@ -953,16 +961,16 @@ public final class PlanetHandling {
               }
               break;
             } else if (ship.getTotalMilitaryPower() > 0
-                && info.getMissions().getGatherMission(Mission.ASSAULT_TYPE)
-                != null) {
+                && info.getMissions()
+                    .getGatherMission(Mission.ASSAULT_TYPE) != null) {
               mission = info.getMissions().getGatherMission(
                   Mission.ASSAULT_TYPE);
               mission.setPlanetBuilding(planet.getName());
               mission.setPhase(MissionPhase.BUILDING);
               break;
-            }  else if (ship.getTotalMilitaryPower() > 0
-                && info.getMissions().getGatherMission(Mission.ASSAULT_SB_TYPE)
-                != null) {
+            } else if (ship.getTotalMilitaryPower() > 0
+                && info.getMissions()
+                    .getGatherMission(Mission.ASSAULT_SB_TYPE) != null) {
               mission = info.getMissions().getGatherMission(
                   Mission.ASSAULT_SB_TYPE);
               mission.setPlanetBuilding(planet.getName());
@@ -1092,6 +1100,7 @@ public final class PlanetHandling {
     }
     return result;
   }
+
   /**
    * Score ship, scoring also depends on missions under planning
    * @param ship Ship to score
@@ -1132,14 +1141,14 @@ public final class PlanetHandling {
         score = 0;
       }
       if (planet.getOrbital() != null
-          && planet.getOrbital().getHull().getSize().getMass()
-          > ship.getHull().getSize().getMass()) {
+          && planet.getOrbital().getHull().getSize().getMass() > ship.getHull()
+              .getSize().getMass()) {
         // Planet has orbital which is already bigger.
         score = 0;
       }
       if (planet.getOrbital() != null
-          && planet.getOrbital().getTotalMilitaryPower()
-          > ship.getTotalMilitaryPower()) {
+          && planet.getOrbital().getTotalMilitaryPower() > ship
+              .getTotalMilitaryPower()) {
         // Planet has orbital is better
         score = 0;
       }
@@ -1174,7 +1183,7 @@ public final class PlanetHandling {
         Planet tradePlanet = map.getPlanetByName(mission.getTargetPlanet());
         if (tradePlanet != null) {
           double distance = tradePlanet.getCoordinate().calculateDistance(
-            planet.getCoordinate());
+              planet.getCoordinate());
           score = score + (int) Math.round(distance / 25);
         }
         if (attitude == Attitude.MERCHANTICAL) {
@@ -1224,9 +1233,9 @@ public final class PlanetHandling {
         if (espionage != null && diplomacy != null
             && diplomacy.getNumberOfMeetings() > 0
             && espionage.getTotalBonus() < 8) {
-            moreIsRequired = true;
-            break;
-          }
+          moreIsRequired = true;
+          break;
+        }
       }
       if (moreIsRequired) {
         score = score + ship.getEspionageBonus() * 10;
@@ -1293,6 +1302,7 @@ public final class PlanetHandling {
     }
     return score;
   }
+
   /**
    * Calculate scores for each construction. Each score is between -1 and 1000.
    * This will try to give one the constructions the highest score.
@@ -1413,10 +1423,10 @@ public final class PlanetHandling {
           }
           if (planet.getTotalPopulation() < 4
               && (info.getRace() == SpaceRace.GREYANS
-              || info.getRace() == SpaceRace.MOTHOIDS
-              || info.getRace() == SpaceRace.TEUTHIDAES
-              || info.getRace() == SpaceRace.HOMARIANS
-              || info.getRace() == SpaceRace.ALTEIRIANS)) {
+                  || info.getRace() == SpaceRace.MOTHOIDS
+                  || info.getRace() == SpaceRace.TEUTHIDAES
+                  || info.getRace() == SpaceRace.HOMARIANS
+                  || info.getRace() == SpaceRace.ALTEIRIANS)) {
             scores[i] = scores[i] + 5;
           }
           if (info.getRace().getFoodRequire() == 100
@@ -1501,14 +1511,14 @@ public final class PlanetHandling {
           }
           if (ship.isPrivateeringShip()
               && (info.getGovernment() == GovernmentType.SPACE_PIRATES
-              || info.getGovernment() == GovernmentType.SYNDICATE)) {
+                  || info.getGovernment() == GovernmentType.SYNDICATE)) {
             score = score + ship.getTotalMilitaryPower() * 2;
           }
           if (ship.isPrivateeringShip()
               && (info.getGovernment() == GovernmentType.FEUDALISM
-              || info.getGovernment() == GovernmentType.KINGDOM
-              || info.getGovernment() == GovernmentType.EMPIRE
-              || info.getGovernment() == GovernmentType.REGIME)) {
+                  || info.getGovernment() == GovernmentType.KINGDOM
+                  || info.getGovernment() == GovernmentType.EMPIRE
+                  || info.getGovernment() == GovernmentType.REGIME)) {
             score = score + ship.getTotalMilitaryPower();
           }
         }
@@ -1598,8 +1608,8 @@ public final class PlanetHandling {
               score = score + ship.getTotalResearchBonus() * 3;
             }
             if (ship.getTotalResearchBonus() > 0
-                && planet.getEffectiveGovernorGuide()
-                == Planet.RESEARCH_PLANET) {
+                && planet
+                    .getEffectiveGovernorGuide() == Planet.RESEARCH_PLANET) {
               score = score + 10;
             }
             if (attitude == Attitude.DIPLOMATIC
@@ -1609,8 +1619,8 @@ public final class PlanetHandling {
               score = score + ship.getTotalCultureBonus() * 3;
             }
             if (ship.getTotalCultureBonus() > 0
-                && planet.getEffectiveGovernorGuide()
-                == Planet.CULTURE_PLANET) {
+                && planet
+                    .getEffectiveGovernorGuide() == Planet.CULTURE_PLANET) {
               score = score + 10;
             }
             if (attitude == Attitude.MERCHANTICAL) {
@@ -1619,8 +1629,7 @@ public final class PlanetHandling {
               score = score + ship.getTotalCreditBonus() * 3;
             }
             if (ship.getTotalCreditBonus() > 0
-                && planet.getEffectiveGovernorGuide()
-                == Planet.CREDIT_PLANET) {
+                && planet.getEffectiveGovernorGuide() == Planet.CREDIT_PLANET) {
               score = score + 10;
             }
           } else {
@@ -1678,6 +1687,7 @@ public final class PlanetHandling {
     }
     return scores;
   }
+
   /**
    * Calculate scores for each construction. Each score is between -1 and 1000
    * @param constructions The constructions
@@ -1810,14 +1820,14 @@ public final class PlanetHandling {
           }
           if (ship.isPrivateeringShip()
               && (info.getGovernment() == GovernmentType.SPACE_PIRATES
-              || info.getGovernment() == GovernmentType.SYNDICATE)) {
+                  || info.getGovernment() == GovernmentType.SYNDICATE)) {
             score = score + ship.getTotalMilitaryPower() * 2;
           }
           if (ship.isPrivateeringShip()
               && (info.getGovernment() == GovernmentType.FEUDALISM
-              || info.getGovernment() == GovernmentType.KINGDOM
-              || info.getGovernment() == GovernmentType.EMPIRE
-              || info.getGovernment() == GovernmentType.REGIME)) {
+                  || info.getGovernment() == GovernmentType.KINGDOM
+                  || info.getGovernment() == GovernmentType.EMPIRE
+                  || info.getGovernment() == GovernmentType.REGIME)) {
             score = score + ship.getTotalMilitaryPower();
           }
         }
@@ -1907,8 +1917,8 @@ public final class PlanetHandling {
               score = score + ship.getTotalResearchBonus() * 3;
             }
             if (ship.getTotalResearchBonus() > 0
-                && planet.getEffectiveGovernorGuide()
-                == Planet.RESEARCH_PLANET) {
+                && planet
+                    .getEffectiveGovernorGuide() == Planet.RESEARCH_PLANET) {
               score = score + 10;
             }
             if (attitude == Attitude.DIPLOMATIC
@@ -1918,8 +1928,8 @@ public final class PlanetHandling {
               score = score + ship.getTotalCultureBonus() * 3;
             }
             if (ship.getTotalCultureBonus() > 0
-                && planet.getEffectiveGovernorGuide()
-                == Planet.CULTURE_PLANET) {
+                && planet
+                    .getEffectiveGovernorGuide() == Planet.CULTURE_PLANET) {
               score = score + 10;
             }
             if (attitude == Attitude.MERCHANTICAL) {
@@ -1928,8 +1938,7 @@ public final class PlanetHandling {
               score = score + ship.getTotalCreditBonus() * 3;
             }
             if (ship.getTotalCreditBonus() > 0
-                && planet.getEffectiveGovernorGuide()
-                == Planet.CREDIT_PLANET) {
+                && planet.getEffectiveGovernorGuide() == Planet.CREDIT_PLANET) {
               score = score + 10;
             }
           } else {
@@ -1989,6 +1998,18 @@ public final class PlanetHandling {
   }
 
   /**
+   * Reset all planet's worker positions 0
+   * @param planet planet to reset workers on
+   */
+  private static void setPlanetNoWorkers(final Planet planet) {
+    planet.setWorkers(Planet.FOOD_FARMERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+  }
+
+  /**
    * Handle Mechion population on planet
    * @param planet Which to handle
    * @param info Planet owner
@@ -2041,74 +2062,55 @@ public final class PlanetHandling {
       planet.setWorkers(Planet.RESEARCH_SCIENTIST, reseAdd);
       planet.setWorkers(Planet.CULTURE_ARTIST, cultAdd);
     } else {
+
+      setPlanetNoWorkers(planet);
+
       switch (total) {
-      case 1: {
-        planet.setWorkers(Planet.FOOD_FARMERS, 0);
-        planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-        planet.setWorkers(Planet.METAL_MINERS, 0);
-        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-        break;
-      }
-      case 2: {
-        if (info.getAiDifficulty() == AiDifficulty.NORMAL
-            || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
-          if (otherWorldResearch > 3) {
-            planet.setWorkers(Planet.FOOD_FARMERS, 0);
+        case 1: {
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          break;
+        }
+        case 2: {
+          if (info.getAiDifficulty() == AiDifficulty.NORMAL
+              || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+            if (otherWorldResearch > 3) {
+              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+              planet.setWorkers(Planet.METAL_MINERS, 1);
+            } else {
+              planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+            }
+          } else {
             planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
             planet.setWorkers(Planet.METAL_MINERS, 1);
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-          } else {
-            planet.setWorkers(Planet.FOOD_FARMERS, 0);
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-            planet.setWorkers(Planet.METAL_MINERS, 0);
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
           }
-        } else {
-          planet.setWorkers(Planet.FOOD_FARMERS, 0);
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          planet.setWorkers(Planet.METAL_MINERS, 1);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+          break;
         }
-        break;
-      }
-      case 3: {
-        if (info.getAiDifficulty() == AiDifficulty.NORMAL
-            || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
-          if (otherWorldResearch > 3) {
-            planet.setWorkers(Planet.FOOD_FARMERS, 0);
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.METAL_MINERS, 2);
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        case 3: {
+          if (info.getAiDifficulty() == AiDifficulty.NORMAL
+              || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+            if (otherWorldResearch > 3) {
+              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+              planet.setWorkers(Planet.METAL_MINERS, 2);
+            } else {
+              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+              planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+            }
           } else {
-            planet.setWorkers(Planet.FOOD_FARMERS, 0);
             planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.METAL_MINERS, 0);
             planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
           }
-        } else {
-          planet.setWorkers(Planet.FOOD_FARMERS, 0);
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          planet.setWorkers(Planet.METAL_MINERS, 0);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+          break;
         }
-        break;
-      }
-      default: {
-        // This happens only if there are no population or it is negative.
-        // There no works can be set.
-        throw new IllegalArgumentException("Planet(" + planet.getName()
-            + ") has no population but is still colonized!");
-      }
+        default: {
+          // This happens only if there are no population or it is negative.
+          // There no works can be set.
+          throw new IllegalArgumentException("Planet(" + planet.getName()
+              + ") has no population but is still colonized!");
+        }
       }
     }
   }
+
   /**
    * Handle Lithorian population on planet
    * @param planet Which to handle
@@ -2220,8 +2222,8 @@ public final class PlanetHandling {
             Planet.RESEARCH_SCIENTIST);
         planet.moveWorker(Planet.METAL_MINERS, Planet.RESEARCH_SCIENTIST);
       }
-      if (planet.getTotalProduction(Planet.PRODUCTION_METAL)
-          < planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)) {
+      if (planet.getTotalProduction(Planet.PRODUCTION_METAL) < planet
+          .getTotalProduction(Planet.PRODUCTION_PRODUCTION)) {
         planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.METAL_MINERS);
       }
       if (planet.calculateHappiness() < -1) {
@@ -2229,84 +2231,83 @@ public final class PlanetHandling {
       }
     } else {
       // Fixed amount of population 5 or less
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+
+      setPlanetNoWorkers(planet);
+
       switch (total) {
-      case 1: {
-        planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-        break;
-      }
-      case 2: {
-        planet.setWorkers(Planet.FOOD_FARMERS, 1);
-        planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-        break;
-      }
-      case 3: {
-        if (planet.getTotalProductionFromBuildings(
-            Planet.PRODUCTION_RESEARCH) > 0 || otherWorldResearch > 0) {
+        case 1: {
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          break;
+        }
+        case 2: {
           planet.setWorkers(Planet.FOOD_FARMERS, 1);
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          planet.setWorkers(Planet.METAL_MINERS, 1);
-        } else {
-          planet.setWorkers(Planet.FOOD_FARMERS, 1);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+          break;
         }
-        break;
-      }
-      case 4: {
-        planet.setWorkers(Planet.FOOD_FARMERS, 2);
-        if (planet.getTotalProductionFromBuildings(
-            Planet.PRODUCTION_RESEARCH) > 0 || otherWorldResearch > 0) {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          planet.setWorkers(Planet.METAL_MINERS, 1);
-        } else {
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+        case 3: {
+          if (planet.getTotalProductionFromBuildings(
+              Planet.PRODUCTION_RESEARCH) > 0 || otherWorldResearch > 0) {
+            planet.setWorkers(Planet.FOOD_FARMERS, 1);
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+            planet.setWorkers(Planet.METAL_MINERS, 1);
+          } else {
+            planet.setWorkers(Planet.FOOD_FARMERS, 1);
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+          }
+          break;
         }
-        break;
-      }
-      case 5: {
-        planet.setWorkers(Planet.PRODUCTION_FOOD, 2);
-        if (planet.getTotalProductionFromBuildings(
-            Planet.PRODUCTION_RESEARCH) > 0 || otherWorldResearch > 0) {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
-          planet.setWorkers(Planet.METAL_MINERS, 1);
-        } else {
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+        case 4: {
+          planet.setWorkers(Planet.FOOD_FARMERS, 2);
+          if (planet.getTotalProductionFromBuildings(
+              Planet.PRODUCTION_RESEARCH) > 0 || otherWorldResearch > 0) {
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+            planet.setWorkers(Planet.METAL_MINERS, 1);
+          } else {
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+          }
+          break;
         }
-        if (planet.calculateHappiness() < -1) {
-          GovernmentType government = planet.getPlanetPlayerInfo()
-              .getGovernment();
-          if (government.getResearchBonus() > 0) {
-            if (planet.getTotalProductionFromBuildings(
-                Planet.PRODUCTION_RESEARCH) == 0) {
-              planet.moveWorker(Planet.RESEARCH_SCIENTIST,
-                  Planet.CULTURE_ARTIST);
-              planet.moveWorker(Planet.RESEARCH_SCIENTIST,
-                  Planet.PRODUCTION_PRODUCTION);
+        case 5: {
+          planet.setWorkers(Planet.PRODUCTION_FOOD, 2);
+          if (planet.getTotalProductionFromBuildings(
+              Planet.PRODUCTION_RESEARCH) > 0 || otherWorldResearch > 0) {
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
+            planet.setWorkers(Planet.METAL_MINERS, 1);
+          } else {
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          }
+          if (planet.calculateHappiness() < -1) {
+            GovernmentType government = planet.getPlanetPlayerInfo()
+                .getGovernment();
+            if (government.getResearchBonus() > 0) {
+              if (planet.getTotalProductionFromBuildings(
+                  Planet.PRODUCTION_RESEARCH) == 0) {
+                planet.moveWorker(Planet.RESEARCH_SCIENTIST,
+                    Planet.CULTURE_ARTIST);
+                planet.moveWorker(Planet.RESEARCH_SCIENTIST,
+                    Planet.PRODUCTION_PRODUCTION);
+              } else {
+                planet.moveWorker(Planet.PRODUCTION_PRODUCTION,
+                    Planet.CULTURE_ARTIST);
+              }
             } else {
               planet.moveWorker(Planet.PRODUCTION_PRODUCTION,
                   Planet.CULTURE_ARTIST);
             }
-          } else {
-            planet.moveWorker(Planet.PRODUCTION_PRODUCTION,
-                Planet.CULTURE_ARTIST);
           }
+          break;
         }
-        break;
-      }
-      default: {
-        // This happens only if there are no population or it is negative.
-        // There no works can be set.
-        throw new IllegalArgumentException("Planet(" + planet.getName()
-            + ") has no population but is still colonized!");
-      }
+        default: {
+          // This happens only if there are no population or it is negative.
+          // There no works can be set.
+          throw new IllegalArgumentException("Planet(" + planet.getName()
+              + ") has no population but is still colonized!");
+        }
       }
     }
   }
+
   /**
    * Handle Chiraloid population on planet
    * @param planet Planet to handle
@@ -2328,11 +2329,9 @@ public final class PlanetHandling {
           && requiredFarmers < total) {
         requiredFarmers++;
       }
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+
+      setPlanetNoWorkers(planet);
+
       if (requiredFarmers > 0) {
         planet.setWorkers(Planet.FOOD_FARMERS, requiredFarmers);
         total = total - requiredFarmers;
@@ -2351,8 +2350,7 @@ public final class PlanetHandling {
       if (artist > 1) {
         artist = artist - 1;
         if (planet.getTotalProductionFromBuildings(
-            Planet.PRODUCTION_METAL)
-            > planet.getTotalProductionFromBuildings(
+            Planet.PRODUCTION_METAL) > planet.getTotalProductionFromBuildings(
                 Planet.PRODUCTION_PRODUCTION)) {
           workers = workers + artist;
         } else {
@@ -2373,11 +2371,7 @@ public final class PlanetHandling {
       planet.setWorkers(Planet.PRODUCTION_WORKERS, workers);
       planet.setWorkers(Planet.CULTURE_ARTIST, artist);
     } else {
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+      setPlanetNoWorkers(planet);
       switch (total) {
         case 1: {
           planet.setWorkers(Planet.METAL_MINERS, 1);
@@ -2427,6 +2421,7 @@ public final class PlanetHandling {
       }
     }
   }
+
   /**
    * Handle Alteirian population
    * @param planet Planet to handle
@@ -2447,11 +2442,9 @@ public final class PlanetHandling {
         && farmersReq < total) {
       farmersReq++;
     }
-    planet.setWorkers(Planet.FOOD_FARMERS, 0);
-    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-    planet.setWorkers(Planet.METAL_MINERS, 0);
-    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-    planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+
+    setPlanetNoWorkers(planet);
+
     int workers = 0;
     int miners = 0;
     int artists = 0;
@@ -2461,7 +2454,7 @@ public final class PlanetHandling {
       total = total - farmersReq;
     }
     if (info.getAiDifficulty() == AiDifficulty.CHALLENGING
-      && buildingTime > 5 && otherWorldResearch > 1 && total > 1) {
+        && buildingTime > 5 && otherWorldResearch > 1 && total > 1) {
       workers = workers + 2;
       total = total - 2;
     }
@@ -2501,6 +2494,7 @@ public final class PlanetHandling {
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, scientist);
     planet.setWorkers(Planet.CULTURE_ARTIST, artists);
   }
+
   /**
    * Handle generic population
    * @param planet Planet to handle
@@ -2535,11 +2529,9 @@ public final class PlanetHandling {
       farmersReq = farmersReq / 2;
       farmersReq = farmersReq + extra;
     }
-    planet.setWorkers(Planet.FOOD_FARMERS, 0);
-    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-    planet.setWorkers(Planet.METAL_MINERS, 0);
-    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-    planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+
+    setPlanetNoWorkers(planet);
+
     int workers = 0;
     int miners = 0;
     int artists = 0;
@@ -2623,6 +2615,7 @@ public final class PlanetHandling {
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, scientist);
     planet.setWorkers(Planet.CULTURE_ARTIST, artists);
   }
+
   /**
    * Handle planet population positions
    * @param planet Planet to handle
@@ -2651,7 +2644,7 @@ public final class PlanetHandling {
       handleChiraloidPopulation(planet, info, totalResearch);
       branch = 2;
     } else if (info.getRace() == SpaceRace.LITHORIANS) {
-      handleLithorianPopulation(planet, info,  totalResearch);
+      handleLithorianPopulation(planet, info, totalResearch);
       branch = 3;
     } else if (info.getRace() == SpaceRace.ALTEIRIANS) {
       handleAlteirianPopulation(planet, info, totalResearch);
@@ -2668,11 +2661,11 @@ public final class PlanetHandling {
         sb.append(", ");
       }
       throw new IllegalArgumentException("Population changed original:"
-         + population + " current: " + planet.getTotalPopulation()
-         + " branch: " + branch + " Planet Owner: "
-         + planet.getPlanetPlayerInfo().getRace().getName() + " Event: "
-         + planet.getPlanetaryEvent().getName() + "Buildings: "
-         + sb.toString());
+          + population + " current: " + planet.getTotalPopulation()
+          + " branch: " + branch + " Planet Owner: "
+          + planet.getPlanetPlayerInfo().getRace().getName() + " Event: "
+          + planet.getPlanetaryEvent().getName() + "Buildings: "
+          + sb.toString());
     }
   }
 

@@ -163,7 +163,7 @@ public final class RandomEventUtility {
               ImageInstruction.POSITION_CENTER);
           event.setImageInstructions(instructions.build());
           Perk perk = perks[DiceGenerator.getRandom(perks.length - 1)];
-          info.getRuler().getPerkList().add(perk);
+          info.getRuler().addPerk(perk);
           event.setText(info.getRuler().getCallName() + " has been on massive"
               + " stress lately and got " + perk.getName().toLowerCase()
               + ". This is terrible news for whole " + info.getEmpireName()
@@ -957,7 +957,7 @@ public final class RandomEventUtility {
         instructions.addSiluete(mostValuablePlanet.getGovernor().getRace()
             .getNameSingle(), ImageInstruction.POSITION_RIGHT);
         if (!mostValuablePlanet.getGovernor().hasPerk(Perk.CORRUPTED)) {
-          mostValuablePlanet.getGovernor().getPerkList().add(Perk.CORRUPTED);
+          mostValuablePlanet.getGovernor().addPerk(Perk.CORRUPTED);
           governorCorrupted = " " + mostValuablePlanet.getGovernor()
               .getCallName() + " turns to be corrupted also in this scandal.";
         }
@@ -968,7 +968,7 @@ public final class RandomEventUtility {
         instructions.addSiluete(ruler.getRace().getNameSingle(),
             ImageInstruction.POSITION_CENTER);
         if (!ruler.hasPerk(Perk.CORRUPTED)) {
-          ruler.getPerkList().add(Perk.CORRUPTED);
+          ruler.addPerk(Perk.CORRUPTED);
           rulerCorrupted = " " + ruler.getCallName()
               + " turns to be corrupted also in this scandal.";
         }

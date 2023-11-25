@@ -514,12 +514,12 @@ public class SpaceAnomaly {
             Perk[] newPerks = LeaderUtility.getNewPerks(leader,
                 LeaderUtility.PERK_TYPE_GOOD);
             int index = DiceGenerator.getRandom(newPerks.length - 1);
-            leader.getPerkList().add(newPerks[index]);
+            leader.addPerk(newPerks[index]);
             if (DiceGenerator.getRandom(99) < 10) {
               newPerks = LeaderUtility.getNewPerks(leader,
                   LeaderUtility.PERK_TYPE_BAD);
               index = DiceGenerator.getRandom(newPerks.length - 1);
-              leader.getPerkList().add(newPerks[index]);
+              leader.addPerk(newPerks[index]);
             }
           }
           if (fleet.getCommander() != null) {
@@ -692,12 +692,12 @@ public class SpaceAnomaly {
             Perk[] newPerks = LeaderUtility.getNewPerks(leader,
                 LeaderUtility.PERK_TYPE_GOOD);
             int index = DiceGenerator.getRandom(newPerks.length - 1);
-            leader.getPerkList().add(newPerks[index]);
+            leader.addPerk(newPerks[index]);
             if (DiceGenerator.getRandom(99) < 10) {
               newPerks = LeaderUtility.getNewPerks(leader,
                   LeaderUtility.PERK_TYPE_BAD);
               index = DiceGenerator.getRandom(newPerks.length - 1);
-              leader.getPerkList().add(newPerks[index]);
+              leader.addPerk(newPerks[index]);
             }
           }
           if (fleet.getCommander() != null) {

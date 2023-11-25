@@ -21,6 +21,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -520,10 +522,10 @@ public class Leader {
 
   /**
    * Get Leader's perk list
-   * @return Perk list.
+   * @return Unmodifiable Perk list.
    */
-  public ArrayList<Perk> getPerkList() {
-    return perkList;
+  public List<Perk> getPerkList() {
+    return Collections.unmodifiableList(perkList);
   }
 
   /**
@@ -532,12 +534,7 @@ public class Leader {
    * @return True if found
    */
   public boolean hasPerk(final Perk perk) {
-    for (Perk iterator : perkList) {
-      if (iterator == perk) {
-        return true;
-      }
-    }
-    return false;
+    return perkList.contains(perk);
   }
   /**
    * Calculate leader score for certain job.
@@ -627,26 +624,14 @@ public class Leader {
    * Remove Wealth perk from the list.
    */
   public void useWealth() {
-    for (int i = 0; i < perkList.size(); i++) {
-      Perk perk = perkList.get(i);
-      if (perk == Perk.WEALTHY) {
-        perkList.remove(i);
-        break;
-      }
-    }
+    perkList.remove(Perk.WEALTHY);
   }
 
   /**
    * Remove corruption perk from the list.
    */
   public void removeCorruption() {
-    for (int i = 0; i < perkList.size(); i++) {
-      Perk perk = perkList.get(i);
-      if (perk == Perk.CORRUPTED) {
-        perkList.remove(i);
-        break;
-      }
-    }
+    perkList.remove(Perk.CORRUPTED);
   }
 
   /**

@@ -174,11 +174,11 @@ public final class LeaderUtility {
     for (int i = 0; i < leader.getLevel(); i++) {
       Perk[] newPerks = getNewPerks(leader, PERK_TYPE_GOOD);
       int index = DiceGenerator.getRandom(newPerks.length - 1);
-      leader.getPerkList().add(newPerks[index]);
+      leader.addPerk(newPerks[index]);
       if (DiceGenerator.getRandom(99)  < 10) {
         newPerks = getNewPerks(leader, PERK_TYPE_BAD);
         index = DiceGenerator.getRandom(newPerks.length - 1);
-        leader.getPerkList().add(newPerks[index]);
+        leader.addPerk(newPerks[index]);
       }
     }
     return leader;
@@ -466,21 +466,21 @@ public final class LeaderUtility {
       }
       if (newPerks != null && newPerks.length > 0) {
         int index = DiceGenerator.getRandom(newPerks.length - 1);
-        leader.getPerkList().add(newPerks[index]);
+        leader.addPerk(newPerks[index]);
         addedPerks.add(newPerks[index]);
         jobBasedPerkAdded = true;
       }
     }
     if (!jobBasedPerkAdded && goodPerks.length > 0) {
       int index = DiceGenerator.getRandom(goodPerks.length - 1);
-      leader.getPerkList().add(goodPerks[index]);
+      leader.addPerk(goodPerks[index]);
       addedPerks.add(goodPerks[index]);
     }
     if (DiceGenerator.getRandom(99)  < 10) {
       Perk[] newPerks = getNewPerks(leader, PERK_TYPE_BAD);
       if (newPerks.length > 0) {
         int index = DiceGenerator.getRandom(newPerks.length - 1);
-        leader.getPerkList().add(newPerks[index]);
+        leader.addPerk(newPerks[index]);
         addedPerks.add(newPerks[index]);
       }
     }
@@ -700,16 +700,12 @@ public final class LeaderUtility {
       if (perk.isGainedPerk()) {
         continue;
       }
-      boolean alreadyHas = false;
-      for (Perk leaderPerk : leader.getPerkList()) {
-        if (perk == leaderPerk) {
-          alreadyHas = true;
-          break;
-        }
-      }
+
+      boolean alreadyHas = leader.hasPerk(perk);
       if (!perk.isPerkAllowedForRace(leader.getRace())) {
         alreadyHas = true;
       }
+
       if (!alreadyHas) {
         list.add(perk);
       }

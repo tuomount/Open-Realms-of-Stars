@@ -6,6 +6,8 @@ Tuomo Untinen
 
 # Additional programming
 
+BottledByte
+
 Dávid Szigecsán "sigee"
 
 Diocto
@@ -72,7 +74,7 @@ Smaugirian race picture by Tuomo Untinen, original art by Surt - http://opengame
 
 Alonian race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
-Space Captain by Justin Nichol 
+Space Captain by Justin Nichol
 Tuomo Untinen added legs for the captain. -https://opengameart.org/content/space-captain-with-legs
 
 The Husk- Human Analog Android by Justin Nichol - https://opengameart.org/content/the-husk-human-analog-android
@@ -122,7 +124,7 @@ Repair symbol from 141 Military Icons Set by AngryMeteor.com
 http://opengameart.org/content/140-military-icons-set-fixed
 
 Defense symbol modified to look like shield by Tuomo Untinen
-Original from 141 Military Icons Set by AngryMeteor.com 
+Original from 141 Military Icons Set by AngryMeteor.com
 http://opengameart.org/content/140-military-icons-set-fixed
 
 Music note and Speaker icon by Tuomo Untinen
@@ -243,11 +245,11 @@ https://opengameart.org/content/sci-fi-effects
 Licensed under CC BY 4.0
 
 Tractor beam, organic armor and solar armor icons modified by Tuomo Untinen
-Originals from 141 Military Icons Set by AngryMeteor.com 
+Originals from 141 Military Icons Set by AngryMeteor.com
 
 Plasma, Ion cannon, distortion shield, gravity ripper
 and multidimension shield icons modified by Tuomo Untinen
-Originals from 141 Military Icons Set by AngryMeteor.com 
+Originals from 141 Military Icons Set by AngryMeteor.com
 
 Teuthidae Space Ship Bridge by Tuomo Untinen
 
@@ -455,7 +457,7 @@ sounds from 50 CC0 SFX #2 by Rubberduck (CC0)
 Tractor beam sound by BLACK LODGE GAMES, LLC (CC0)
 https://creativecommons.org/publicdomain/zero/1.0/
 
-Ion Cannon Sound by 
+Ion Cannon Sound by
 colmmullally
 https://freesound.org/people/colmmullally/sounds/462220/
 Licensed under CC BY 3.0 https://creativecommons.org/licenses/by/3.0/
@@ -574,23 +576,23 @@ Drifting Beyond the Stars by
 Hitctrl https://soundcloud.com/hitctrl
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
-Set Fire to Reality - dark/electronic by 
+Set Fire to Reality - dark/electronic by
 Justin Dalessandro(ColdOneK)
 Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
-Death Is Just Another Path by 
+Death Is Just Another Path by
 Otto Halmén
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
-Braindead by 
+Braindead by
 Kim Lightyear
 Licensed under  CC-BY-SA 3.0 http://creativecommons.org/licenses/by-sa/3.0/
 
-Techno DRIVE!!! by 
+Techno DRIVE!!! by
 Centurion_of_war
 Licensed under CC-BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
-Mysterious Anomaly by 
+Mysterious Anomaly by
 Eric Matyas Soundimage.org
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 

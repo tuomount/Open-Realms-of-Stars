@@ -6,7 +6,7 @@
 
     <groupId>org.openRealmOfStars</groupId>
     <artifactId>Open-Realm-of-Stars</artifactId>
-    <version>0.24.20Beta</version>
+    <version>0.24.21Beta</version>
     <packaging>jar</packaging>
     <url>https://github.com/tuomount/Open-Realms-of-Stars</url>
     <properties>
@@ -15,6 +15,17 @@
     </properties>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+            </resource>
+            <resource>
+                <directory>.</directory>
+                <includes>
+                    <include>AUTHORS.md</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

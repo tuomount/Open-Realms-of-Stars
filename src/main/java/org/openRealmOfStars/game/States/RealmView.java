@@ -21,7 +21,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 
@@ -147,7 +146,7 @@ public class RealmView extends BlackPanel {
     String leaderDesc = "<html>No leader as ruler.</html>";
     if (realm.getRuler() != null) {
       StringBuilder sb = new StringBuilder();
-      ArrayList<Perk> perkList = realm.getRuler().getPerkList();
+      var perkList = realm.getRuler().getPerkList();
       for (Perk perk : perkList) {
         if (perk.isKnownPerk(knowledgeBonus)) {
           sb.append("<li> ");

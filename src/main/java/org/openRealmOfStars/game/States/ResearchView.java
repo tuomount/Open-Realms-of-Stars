@@ -558,6 +558,9 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
       if (turns > TIME_LIMIT_NEVER) {
         turnsInStr = "never";
       }
+      if (turns < 2) {
+        turnsInStr = "1 star year";
+      }
 
       panel.setSliderValue(focus);
       panel.setText("" + techTypeName + " " + focus + "% " + turnsInStr);

@@ -25,7 +25,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.game.Game;
-import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 
 /**
@@ -50,9 +49,7 @@ public class MapPanelTest {
     Route route = Mockito.mock(Route.class);
     panel.setRoute(route);
     assertEquals(route, panel.getRoute());
-    Coordinate coord = panel.getHistoryCoordinates();
-    assertEquals(15, coord.getX());
-    assertEquals(15, coord.getY());
+
     BufferedImage left = Mockito.mock(BufferedImage.class);
     assertEquals(null, panel.getLeftSpaceImage());
     panel.setLeftSpaceImage(left);
@@ -112,9 +109,7 @@ public class MapPanelTest {
     assertEquals(-48, panel.getOffsetY());
     assertEquals(1, panel.getViewPointX());
     assertEquals(1, panel.getViewPointY());
-    Coordinate coordinate = panel.getHistoryCoordinates();
-    assertEquals(15, coordinate.getX());
-    assertEquals(15, coordinate.getY());
+
     BufferedImage image = Mockito.mock(BufferedImage.class);
     assertNull(panel.getLeftSpaceImage());
     panel.setLeftSpaceImage(image);

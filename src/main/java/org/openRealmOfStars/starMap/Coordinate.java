@@ -2,6 +2,7 @@ package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2018 Tuomo Untinen
+ * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,9 +19,8 @@ package org.openRealmOfStars.starMap;
  */
 
 /**
- *
- * Coordinate
- *
+ * Coordinate on a StarMap.
+ * Objects of this class are immutable.
  */
 public class Coordinate {
 
@@ -29,21 +29,13 @@ public class Coordinate {
     /** The Y value of the coordinate */
     private int y;
 
-    /**
-     * Direction up
-     */
+    /** Direction up */
     public static final int UP = 0;
-    /**
-     * Direction right
-     */
+    /** Direction right */
     public static final int RIGHT = 2;
-    /**
-     * Direction down
-     */
+    /** Direction down */
     public static final int DOWN = 4;
-    /**
-     * Direction left
-     */
+    /** Direction left */
     public static final int LEFT = 6;
 
     /**
@@ -87,27 +79,11 @@ public class Coordinate {
     }
 
     /**
-     * Set the X value of the coordinate
-     * @param x the X value of the coordinate
-     */
-    public void setX(final int x) {
-        this.x = x;
-    }
-
-    /**
      * Get the Y value ot the coordinate
      * @return the Y value ot the coordinate
      */
     public int getY() {
         return y;
-    }
-
-    /**
-     * Set the Y value of the coordinate
-     * @param y the Y value of the coordinate
-     */
-    public void setY(final int y) {
-        this.y = y;
     }
 
     /**
@@ -155,20 +131,26 @@ public class Coordinate {
       return false;
     }
 
-    /**
-     * Move coordinate towards target. Useful for map scrolling.
-     * @param target Coordinate
-     */
-    public void moveTowards(final Coordinate target) {
-      if (target.getX() > x) {
-        x++;
-      } else if (target.getX() < x) {
-        x--;
-      }
-      if (target.getY() > y) {
-        y++;
-      } else if (target.getY() < y) {
-        y--;
-      }
+    @Override
+    public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + x;
+      result = prime * result + y;
+      return result;
     }
+
+    @Override
+    public boolean equals(final Object obj) {
+      if (this == obj) {
+        return true;
+      }
+      if (!(obj instanceof Coordinate)) {
+        return false;
+      }
+
+      Coordinate other = (Coordinate) obj;
+      return sameAs(other);
+    }
+
 }

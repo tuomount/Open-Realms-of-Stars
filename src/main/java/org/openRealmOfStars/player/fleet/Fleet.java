@@ -305,7 +305,7 @@ public class Fleet {
    * @return fleet's coordinate
    */
   public Coordinate getCoordinate() {
-    return new Coordinate(coordinate);
+    return coordinate;
   }
 
   /**

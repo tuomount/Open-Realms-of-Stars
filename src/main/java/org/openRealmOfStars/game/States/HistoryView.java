@@ -366,7 +366,8 @@ public class HistoryView extends BlackPanel {
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
       if (targetCoordinate != null) {
-        mapPanel.getHistoryCoordinates().moveTowards(targetCoordinate);
+        mapPanel.moveHistoryTowards(targetCoordinate.getX(),
+            targetCoordinate.getY());
       }
       mapPanel.drawHistoryMap(this.map);
       mapPanel.repaint();

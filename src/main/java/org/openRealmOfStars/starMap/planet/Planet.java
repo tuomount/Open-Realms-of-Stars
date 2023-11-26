@@ -1716,27 +1716,11 @@ public class Planet {
   }
 
   /**
-   * Set planet's X coordinate
-   * @param x X coordinate
-   */
-  public void setX(final int x) {
-    coordinate.setX(x);
-  }
-
-  /**
    * Get planet's Y coordinate
    * @return Y coordinate
    */
   public int getY() {
     return coordinate.getY();
-  }
-
-  /**
-   * Set planet's Y coordinate
-   * @param y Y coordinate
-   */
-  public void setY(final int y) {
-    coordinate.setY(y);
   }
 
   /**

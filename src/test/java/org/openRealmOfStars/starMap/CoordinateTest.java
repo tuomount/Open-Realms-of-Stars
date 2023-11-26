@@ -104,18 +104,4 @@ public class CoordinateTest {
         assertEquals(false, coordinate.sameAs(originalCoordinate));
         assertEquals(false, originalCoordinate.sameAs(coordinate));
     }
-
-    @Test
-    @Category(org.openRealmOfStars.BehaviourTest.class)
-    public void testCreateCoordinateFromAnotherWithoutSideEffect() {
-        Coordinate originalCoordinate = new Coordinate(10, 15);
-        Coordinate coordinate = new Coordinate(originalCoordinate);
-
-        originalCoordinate.setX(5);
-        originalCoordinate.setY(10);
-
-        assertNotEquals(originalCoordinate.getX(), coordinate.getX());
-        assertNotEquals(originalCoordinate.getY(), coordinate.getY());
-    }
-
 }

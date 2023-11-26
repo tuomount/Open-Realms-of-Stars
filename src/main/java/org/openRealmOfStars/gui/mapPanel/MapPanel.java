@@ -172,10 +172,14 @@ public class MapPanel extends JPanel {
    */
   private int[][] historyCultures;
 
-  /**
-   * History map coordinate
-   */
-  private Coordinate historyCoordinates;
+  /** Whether were history map coordinates initialized */
+  private boolean historyCoordInitialized = false;
+
+  /** History map coordinate X component */
+  private int historyCoordX;
+
+  /** History map coordinate Y component */
+  private int historyCoordY;
 
   /**
    * Image to be drawn on lower left side of the map in history view
@@ -317,7 +321,7 @@ public class MapPanel extends JPanel {
     int width = DEFAULT_WIDTH;
     int height = DEFAULT_HEIGHT;
     historyCultures = null;
-    historyCoordinates = null;
+    historyCoordInitialized = false;
     setShowMiniMap(false);
     tileOverride = null;
     improvedParallax = false;
@@ -1427,12 +1431,12 @@ public class MapPanel extends JPanel {
     int tileHeight = Tile.getMaxHeight(Tile.ZOOM_NORMAL);
     Graphics2D gr = screen.createGraphics();
     // Center coordinates
-    if (historyCoordinates == null) {
-      historyCoordinates = new Coordinate(starMap.getDrawX(),
-          starMap.getDrawY());
+    if (!historyCoordInitialized) {
+      historyCoordX = starMap.getDrawX();
+      historyCoordY = starMap.getDrawY();
     }
-    int cx = historyCoordinates.getX();
-    int cy = historyCoordinates.getY();
+    int cx = historyCoordX;
+    int cy = historyCoordY;
     starMap.setCursorPos(cx, cy);
     if (cx < viewPointX) {
       cx = viewPointX;
@@ -2221,14 +2225,21 @@ public class MapPanel extends JPanel {
   }
 
   /**
-   * Get history coordinates.
-   * @return Coordinates
+   * Move history view towards targeted decomposed Coordinate.
+   * @param targetX Coordinate's X
+   * @param targetY Coordinate's Y
    */
-  public Coordinate getHistoryCoordinates() {
-    if (historyCoordinates == null) {
-      historyCoordinates = new Coordinate(15, 15);
+  public void moveHistoryTowards(final int targetX, final int targetY) {
+    if (targetX > historyCoordX) {
+      historyCoordX++;
+    } else if (targetX < historyCoordX) {
+      historyCoordX--;
     }
-    return historyCoordinates;
+    if (targetY > historyCoordY) {
+      historyCoordY++;
+    } else if (targetY < historyCoordY) {
+      historyCoordY--;
+    }
   }
 
   /**

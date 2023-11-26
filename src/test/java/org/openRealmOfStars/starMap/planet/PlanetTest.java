@@ -41,32 +41,6 @@ public class PlanetTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testPlanetCoordinateShouldChangeableWithSideEffect() {
-      Coordinate planetCoordinate = new Coordinate(10, 15);
-      Planet planet = new Planet(planetCoordinate, "Earth", 1, false);
-
-      assertEquals(-1, planet.getstartRealmIndex());
-      planet.setStartRealmIndex(2);
-      assertEquals(2, planet.getstartRealmIndex());
-      planetCoordinate.setX(5);
-      planetCoordinate.setY(10);
-
-      assertNotEquals(planet.getCoordinate(), planetCoordinate);
-
-      Coordinate getPlanetCoordinate = planet.getCoordinate();
-      getPlanetCoordinate.setX(5);
-      getPlanetCoordinate.setY(10);
-
-      assertNotEquals(planet.getCoordinate(), getPlanetCoordinate);
-      assertEquals(0, planet.getFleetCapacityBonus());
-      planet.addBuilding(BuildingFactory.createByName("Barracks"));
-      assertEquals(1, planet.getFleetCapacityBonus());
-      planet.addBuilding(BuildingFactory.createByName("Space port"));
-      assertEquals(2, planet.getFleetCapacityBonus());
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPlanetPopulationGrowthAndBuilding() {
     Coordinate planetCoordinate = new Coordinate(10, 15);
     Planet planet = new Planet(planetCoordinate, "Earth", 1, false);

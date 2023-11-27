@@ -49,50 +49,35 @@ import org.openRealmOfStars.utilities.repository.RouteRepository;
  *
  */
 public class Fleet {
-
-  /**
-   * Maximum fleet size 18 ships
-   */
+  /** Maximum fleet size 18 ships */
   public static final int MAX_FLEET_SIZE = 18;
-  /**
-   * Maximum fleet size 7 for starbase fleet
-   */
+
+  /** Maximum fleet size 7 for starbase fleet */
   public static final int MAX_STARBASE_SIZE = 7;
-  /**
-   * List of ships in fleet
-   */
+
+  /** List of ships in fleet */
   private ArrayList<Ship> ships;
 
-  /**
-   * Fleet's coordinate
-   */
+  /** Fleet's coordinate */
   private Coordinate coordinate;
 
-  /**
-   * Fleet name
-   */
+  /** Fleet name */
   private String name;
 
-  /**
-   * How many moves fleet has left
-   */
+  /** How many moves fleet has left */
   private int movesLeft;
 
-  /**
-   * Route for fleet to move with FLT speed
-   */
+  /** Route for fleet to move with FLT speed */
   private Route route;
+
+  /** Fleet commander. */
+  private Leader commander;
 
   /**
    * AStar search for path finding, this will not be saved in to save game.
    * This information must be something that can be recalculated.
    */
   private AStarSearch aStarSearch;
-
-  /**
-   * Fleet commander.
-   */
-  private Leader commander;
 
   /**
    * Constructor for fleet
@@ -250,8 +235,8 @@ public class Fleet {
         if (bestShip.getTotalMilitaryPower() > 0
             && ship.getTotalMilitaryPower() > 0) {
           if (bestShip.getInitiative() == ship.getInitiative()
-              && ship.getTotalMilitaryPower()
-              > bestShip.getTotalMilitaryPower()) {
+              && ship.getTotalMilitaryPower() > bestShip
+                  .getTotalMilitaryPower()) {
             bestShip = ship;
             continue;
           }
@@ -279,6 +264,7 @@ public class Fleet {
     } while (available.size() > 0);
     return combatOrder.toArray(new Ship[combatOrder.size()]);
   }
+
   /**
    * Get fleet's X coordinate in star map
    * @return X coordinate
@@ -444,6 +430,7 @@ public class Fleet {
     }
     return speed;
   }
+
   /**
    * Get Fleet speed
    * @return Speed
@@ -518,10 +505,9 @@ public class Fleet {
     if (totalMass == 0) {
       return 0;
     }
-   lvl = lvl / totalMass;
+    lvl = lvl / totalMass;
     return lvl;
   }
-
 
   /**
    * Get Fleet information as a text
@@ -728,7 +714,7 @@ public class Fleet {
   public Ship getTrooperShip() {
     for (Ship ship : ships) {
       if (ship.isTrooperModule()) {
-          return ship;
+        return ship;
       }
     }
     return null;
@@ -741,11 +727,12 @@ public class Fleet {
   public Ship getBomberShip() {
     for (Ship ship : ships) {
       if (ship.hasBombs()) {
-          return ship;
+        return ship;
       }
     }
     return null;
   }
+
   /**
    * Get first assault ship from the fleet.
    * @return Assault ship or null
@@ -754,11 +741,12 @@ public class Fleet {
     for (Ship ship : ships) {
       if (ship.getTotalMilitaryPower() > 0
           && !ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
-          return ship;
+        return ship;
       }
     }
     return null;
   }
+
   /**
    * Get first colony ship from the fleet
    * @param hasColonist True if colony ship must have colonists.
@@ -891,6 +879,7 @@ public class Fleet {
     }
     return false;
   }
+
   /**
    * Is Fleet colony fleet. Colony fleet contains only one ship,
    * where ship contains colony module
@@ -924,6 +913,7 @@ public class Fleet {
     }
     return false;
   }
+
   /**
    * Does fleet have trooper ship?
    * @return True if has trooper
@@ -936,6 +926,7 @@ public class Fleet {
     }
     return false;
   }
+
   /**
    * Get A Star search for fleet
    * @return A star search result
@@ -970,6 +961,7 @@ public class Fleet {
       ship.initializeShieldAndArmor();
     }
   }
+
   /**
    * Calculate fleet's total military value
    * @return Total military value for fleet
@@ -1006,6 +998,7 @@ public class Fleet {
     }
     return true;
   }
+
   /**
    * Calculate fleet's total cultural value
    * @return Total cultural value for fleet
@@ -1165,6 +1158,7 @@ public class Fleet {
     }
     return result;
   }
+
   /**
    * Do trade with planet if fleet has trade ship(s).
    * Not this does not check diplomatic relationships.
@@ -1269,6 +1263,7 @@ public class Fleet {
   public Leader getCommander() {
     return commander;
   }
+
   /**
    * Set the current commander of the fleet
    * @param commander the commander to set
@@ -1315,8 +1310,8 @@ public class Fleet {
           minUpgrade = ShipHull.MIN_UPGRADE_HUGE;
         }
         if (prodUpgradeCost > 0
-            && stat.getDesign().getTotalMilitaryPower()
-            >= ship.getTheoreticalMilitaryPower() + minUpgrade) {
+            && stat.getDesign().getTotalMilitaryPower() >= ship
+                .getTheoreticalMilitaryPower() + minUpgrade) {
           StarMapUtilities.upgradeShip(ship, stat, info, planet);
           setMovesLeft(0);
         }

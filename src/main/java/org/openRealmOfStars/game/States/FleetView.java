@@ -741,17 +741,13 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SPLIT_THE_FLEET)
         && shipsInFleet.getSelectedIndices().length > 0
         && fleet != starbaseFleet) {
-      Fleet newFleet = null;
-      for (int i = 0; i < shipsInFleet.getSelectedIndices().length; i++) {
-        Ship ship = shipsInFleet.getSelectedValuesList().get(i);
-        if (newFleet == null) {
-          newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-        } else {
-          newFleet.addShip(ship);
-        }
-        fleet.removeShip(ship);
+
+      Fleet newFleet = fleet.splitFromFleet(false,
+          shipsInFleet.getSelectedValuesList());
+      if (newFleet != null) {
+        fleetList.add(newFleet);
       }
-      fleetList.add(newFleet);
+
       SoundPlayer.playMenuSound();
       updatePanel();
     }

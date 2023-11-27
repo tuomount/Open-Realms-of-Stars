@@ -1965,39 +1965,43 @@ public final class MissionHandling {
       Fleet fleet = info.getFleets().getByIndex(j);
       Mission fleetMission = info.getMissions().getMissionForFleet(
           fleet.getName());
-      if (fleetMission == null
-          || mission.getType() == MissionType.DIPLOMATIC_DELEGACY
-             && fleetMission.getType() == MissionType.MOVE
-             && fleetMission.getMissionTime() > 4) {
-        for (Ship ship : fleet.getShips()) {
-          Fleet newFleet = null;
-          if (ship.isScoutShip()) {
-            if (fleet.getNumberOfShip() > 1) {
-              fleet.removeShip(ship);
-              newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-            } else {
-              newFleet = fleet;
-              if (fleetMission != null
-                  && mission.getType() == MissionType.DIPLOMATIC_DELEGACY
-                  && fleetMission.getType() == MissionType.MOVE) {
-                info.getMissions().remove(fleetMission);
-              }
+
+      if (fleetMission != null
+          && (mission.getType() != MissionType.DIPLOMATIC_DELEGACY
+              || fleetMission.getType() != MissionType.MOVE
+              || fleetMission.getMissionTime() <= 4)) {
+        return;
+      }
+
+      for (Ship ship : fleet.getShips()) {
+        Fleet newFleet = null;
+        if (ship.isScoutShip()) {
+          newFleet = fleet.splitFromFleet(false, ship);
+
+          if (newFleet == null) {
+            newFleet = fleet;
+            if (fleetMission != null
+                && mission.getType() == MissionType.DIPLOMATIC_DELEGACY
+                && fleetMission.getType() == MissionType.MOVE) {
+              info.getMissions().remove(fleetMission);
             }
           }
-          if (newFleet != null) {
-            if (mission.getType() == MissionType.EXPLORE) {
-              newFleet.setName(info.getFleets()
-                  .generateUniqueName("Scout"));
-              mission.setFleetName(newFleet.getName());
-              mission.setPhase(MissionPhase.LOADING);
-            }
-            if (mission.getType() == MissionType.DIPLOMATIC_DELEGACY) {
-              newFleet.setName(info.getFleets()
-                  .generateUniqueName(newFleet.getFirstShip().getName()));
-              mission.setFleetName(newFleet.getName());
-              mission.setPhase(MissionPhase.LOADING);
-            }
-          }
+        }
+
+        if (newFleet == null) {
+          continue;
+        }
+
+        if (mission.getType() == MissionType.EXPLORE) {
+          newFleet.setName(info.getFleets()
+              .generateUniqueName("Scout"));
+          mission.setFleetName(newFleet.getName());
+          mission.setPhase(MissionPhase.LOADING);
+        } else if (mission.getType() == MissionType.DIPLOMATIC_DELEGACY) {
+          newFleet.setName(info.getFleets()
+              .generateUniqueName(newFleet.getFirstShip().getName()));
+          mission.setFleetName(newFleet.getName());
+          mission.setPhase(MissionPhase.LOADING);
         }
       }
     }
@@ -2015,33 +2019,31 @@ public final class MissionHandling {
         if (info.getMissions().getMissionForFleet(fleet.getName()) == null) {
           for (Ship ship : fleet.getShips()) {
             Fleet newFleet = null;
+
             if (mission.getShipType().equals(Mission.ASSAULT_TYPE)
                 && ship.getTotalMilitaryPower() > 0 && !ship.isStarBase()) {
-              if (fleet.getNumberOfShip() > 1) {
-                fleet.removeShip(ship);
-                newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-              } else {
+              newFleet = fleet.splitFromFleet(false, ship);
+              if (newFleet == null) {
                 newFleet = fleet;
               }
             }
+
             if (mission.getShipType().equals(Mission.BOMBER_TYPE)
                 && ship.hasBombs()) {
-              if (fleet.getNumberOfShip() > 1) {
-                fleet.removeShip(ship);
-                newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-              } else {
+              newFleet = fleet.splitFromFleet(false, ship);
+              if (newFleet == null) {
                 newFleet = fleet;
               }
             }
+
             if (mission.getShipType().equals(Mission.TROOPER_TYPE)
                 && ship.isTrooperShip()) {
-              if (fleet.getNumberOfShip() > 1) {
-                fleet.removeShip(ship);
-                newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-              } else {
+              newFleet = fleet.splitFromFleet(false, ship);
+              if (newFleet == null) {
                 newFleet = fleet;
               }
             }
+
             if (newFleet != null) {
               String fleetName;
               for (int k = 0; k < info.getFleets().getNumberOfFleets(); k++) {

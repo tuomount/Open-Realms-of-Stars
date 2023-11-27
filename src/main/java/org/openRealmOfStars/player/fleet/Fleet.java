@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.fleet;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,6 +22,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
@@ -1313,5 +1315,65 @@ public class Fleet {
         }
       }
     }
+  }
+
+  /**
+   * Attempts to split specified ships from current fleet,
+   * creating new Fleet.
+   *
+   * Trying to split any ship from fleet that is not in it or is null is error.
+   * @param drain if true, splitting last ship from fleet is allowed.
+   * @param shipsForSplit Array of ships to split from this fleet
+   * @throws IllegalArgumentException
+   *         Trying to split ships that are not in this fleet.
+   * @return Fleet with splitted ships, null if splitting would
+   *         remove last ship from the fleet while drain is not allowed.
+   */
+  public Fleet splitFromFleet(final boolean drain,
+      final Ship... shipsForSplit) {
+    for (var ship : shipsForSplit) {
+      if (ship == null) {
+        throw new NullPointerException("Cannot split null Ship from fleet");
+      }
+      if (!ships.contains(ship)) {
+        throw new IllegalArgumentException(
+            "Ship " + ship + " is not member of Fleet " + this);
+      }
+    }
+
+    var shipsRemainingCount = ships.size() - shipsForSplit.length;
+    if (shipsRemainingCount < 1 && !drain) {
+      return null;
+    }
+
+    Fleet newFleet = null;
+    for (var ship : shipsForSplit) {
+      if (newFleet == null) {
+        newFleet = new Fleet(ship, this.getX(), this.getY());
+      } else {
+        newFleet.addShip(ship);
+      }
+      this.removeShip(ship);
+    }
+
+    return newFleet;
+  }
+
+  /**
+   * Attempts to split specified ships from current fleet.
+   * If the fleet is made exclusively from the ship being split away,
+   * this does nothing.
+   * Trying to split any ship from fleet that is not in it is error.
+   * @param drain if true, splitting last ship from fleet is allowed.
+   * @param shipsForSplit Collection of ships to split from this fleet
+   * @throws IllegalArgumentException
+   *         Trying to split ships that are not in this fleet.
+   * @return Fleet with splitted ships, null if splitting would
+   *         remove last ship from the fleet while drain is not allowed.
+   */
+  public Fleet splitFromFleet(final boolean drain,
+      final Collection<Ship> shipsForSplit) {
+    var array = shipsForSplit.toArray(new Ship[shipsForSplit.size()]);
+    return this.splitFromFleet(drain, array);
   }
 }

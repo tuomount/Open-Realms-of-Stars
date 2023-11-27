@@ -521,8 +521,7 @@ public class AITurnView extends BlackPanel {
       mission = info.getMissions().getGatherMission(Mission.BOMBER_TYPE);
       Ship ship = fleet.getBomberShip();
       if (mission != null && ship != null) {
-        fleet.removeShip(ship);
-        Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+        Fleet newFleet = fleet.splitFromFleet(true, ship);
         newFleet.setName(info.getFleets().generateUniqueName("Gather"));
         mission.setFleetName(newFleet.getName());
         mission.setPhase(MissionPhase.LOADING);
@@ -532,8 +531,7 @@ public class AITurnView extends BlackPanel {
       mission = info.getMissions().getGatherMission(Mission.TROOPER_TYPE);
       ship = fleet.getTrooperShip();
       if (mission != null && ship != null) {
-        fleet.removeShip(ship);
-        Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+        Fleet newFleet = fleet.splitFromFleet(true, ship);
         newFleet.setName(info.getFleets().generateUniqueName("Gather"));
         mission.setFleetName(newFleet.getName());
         mission.setPhase(MissionPhase.LOADING);
@@ -543,8 +541,7 @@ public class AITurnView extends BlackPanel {
       mission = info.getMissions().getGatherMission(Mission.ASSAULT_TYPE);
       ship = fleet.getAssaultShip();
       if (mission != null && ship != null) {
-        fleet.removeShip(ship);
-        Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+        Fleet newFleet = fleet.splitFromFleet(true, ship);
         newFleet.setName(info.getFleets().generateUniqueName("Gather"));
         mission.setFleetName(newFleet.getName());
         mission.setPhase(MissionPhase.TREKKING);
@@ -554,8 +551,7 @@ public class AITurnView extends BlackPanel {
       mission = info.getMissions().getGatherMission(Mission.ASSAULT_SB_TYPE);
       ship = fleet.getAssaultShip();
       if (mission != null && ship != null) {
-        fleet.removeShip(ship);
-        Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+        Fleet newFleet = fleet.splitFromFleet(true, ship);
         newFleet.setName(info.getFleets().generateUniqueName("Gather"));
         mission.setFleetName(newFleet.getName());
         mission.setPhase(MissionPhase.TREKKING);
@@ -1620,8 +1616,8 @@ public class AITurnView extends BlackPanel {
             fleet.getCommander().assignJob(Job.UNASSIGNED, info);
             fleet.setCommander(null);
           }
-          Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-          fleet.removeShip(ship);
+
+          Fleet newFleet = fleet.splitFromFleet(true, ship);
           info.getFleets().add(newFleet);
           fleet = newFleet;
           fleet.setName(info.getFleets().generateUniqueName("Colony"));
@@ -1639,8 +1635,8 @@ public class AITurnView extends BlackPanel {
             fleet.getCommander().assignJob(Job.UNASSIGNED, info);
             fleet.setCommander(null);
           }
-          Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-          fleet.removeShip(ship);
+
+          Fleet newFleet = fleet.splitFromFleet(true, ship);
           info.getFleets().add(newFleet);
           fleet = newFleet;
           fleet.setName(info.getFleets().generateUniqueName("Deep space"));

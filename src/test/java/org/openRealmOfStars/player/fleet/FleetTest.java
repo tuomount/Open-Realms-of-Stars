@@ -576,7 +576,7 @@ public class FleetTest {
     ShipDesign design = Mockito.mock(ShipDesign.class);
     Mockito.when(design.getName()).thenReturn("Privateer");
     Mockito.when(stats[0].getDesign()).thenReturn(design);
-    Ship ship2 = fleet.getScrableShip(stats);
+    Ship ship2 = fleet.getScrapableShip(stats);
     assertEquals(privateer, ship2);
   }
 

@@ -1686,7 +1686,7 @@ public final class MissionHandling {
           Planet.PRODUCTION_CREDITS, index);
       if (credPlus < shipCost && shipCost > 0
           && info.getTotalCredits() / shipCost < 5) {
-        Ship ship = fleet.getScrableShip(info.getObsoleteShips());
+        Ship ship = fleet.getScrapableShip(info.getObsoleteShips());
         if (ship != null) {
           fleet.removeShip(ship);
           ShipStat stat = info.getShipStatByName(ship.getName());

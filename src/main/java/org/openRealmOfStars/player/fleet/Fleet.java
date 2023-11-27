@@ -23,6 +23,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
@@ -1192,41 +1193,32 @@ public class Fleet {
   }
 
   /**
-   * Get scarable ship based on obsolete models or just bigger fleet capacity.
-   * @param obsoleteModels List of ship design which are obsolete.
+   * Get best ship to scrap.
+   * This is based on obsolete models a fleet capacity taken by ships.
+   * "Biggest" obsolete ship has priority over "biggest" non-obsolete ship.
+   * Ships that do not take fleet capacity (i.e. freighters)
+   * are never considered for scrapping.
+   * @param obsoleteModels List of ship designs which are obsolete.
    * @return Ship or null if nothing to scrap.
    */
-  public Ship getScrableShip(final ShipStat[] obsoleteModels) {
-    Ship shipObsolete = null;
-    Ship shipNotObsolete = null;
-    for (Ship ship : ships) {
-      boolean obsolete = false;
-      for (int i = 0; i < obsoleteModels.length; i++) {
-        if (obsoleteModels[i].getDesign().getName().equals(ship.getName())) {
-          obsolete = true;
-          break;
-        }
-      }
-      if (obsolete) {
-        if (shipObsolete == null && ship.getFleetCapacity() > 0) {
-          shipObsolete = ship;
-        } else if (shipObsolete != null
-            && ship.getFleetCapacity() > shipObsolete.getFleetCapacity()) {
-          shipObsolete = ship;
-        }
-      } else {
-        if (shipNotObsolete == null && ship.getFleetCapacity() > 0) {
-          shipNotObsolete = ship;
-        } else if (shipNotObsolete != null
-            && ship.getFleetCapacity() > shipNotObsolete.getFleetCapacity()) {
-          shipNotObsolete = ship;
-        }
-      }
+  public Ship getScrapableShip(final ShipStat[] obsoleteModels) {
+    final Comparator<Ship> cmprFleetCapDesc = (a, b) -> {
+      return Double.compare(b.getFleetCapacity(), a.getFleetCapacity());
+    };
+
+    var obsoleteShips = ships.stream()
+        .filter(ship -> ship.getFleetCapacity() > 0.0)
+        .filter(ship -> getShipObsolete(ship, obsoleteModels) == 1)
+        .sorted(cmprFleetCapDesc);
+    var notObsoleteShips = ships.stream()
+        .filter(ship -> ship.getFleetCapacity() > 0.0)
+        .filter(ship -> getShipObsolete(ship, obsoleteModels) < 1)
+        .sorted(cmprFleetCapDesc);
+
+    if (obsoleteShips.count() > 0) {
+      return obsoleteShips.findFirst().get();
     }
-    if (shipObsolete != null) {
-      return shipObsolete;
-    }
-    return shipNotObsolete;
+    return notObsoleteShips.findFirst().get();
   }
 
   /**
@@ -1238,21 +1230,36 @@ public class Fleet {
   public int calculateFleetObsoleteValue(final PlayerInfo info) {
     int result = 0;
     for (Ship ship : ships) {
-      if (ship.getHull().getRace() == info.getRace()) {
-        for (ShipStat stat : info.getShipStatList()) {
-          if (stat.getDesign().getName().equals(ship.getName())) {
-            if (stat.isObsolete()) {
-              result = result + 1;
-            } else {
-              result = result - 1;
-            }
-          }
-        }
-      } else {
+      if (ship.getHull().getRace() != info.getRace()) {
         result = result + 1;
+        continue;
       }
+
+      var obsolete = getShipObsolete(ship, info.getShipStatList());
+      result += obsolete;
     }
     return result;
+  }
+
+  /**
+   * Return 1 if ship is obsolete in specified context of ship models.
+   * If ship is NOT obsolete, return -1.
+   * Return 0 if it is not possible tell if ship is obsolete in given context.
+   * @param ship Ship to check
+   * @param models ShipStat array of models to check against
+   * @return 1 if ship is obsolete, -1 if not, 0 if cannot tell from context
+   */
+  private static int getShipObsolete(final Ship ship, final ShipStat[] models) {
+    for (var model : models) {
+      if (model.getDesign().getName().equals(ship.getName())) {
+        if (model.isObsolete()) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
+    }
+    return 0;
   }
 
   /**

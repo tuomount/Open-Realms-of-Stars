@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.fleet;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,6 +22,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
@@ -46,50 +49,35 @@ import org.openRealmOfStars.utilities.repository.RouteRepository;
  *
  */
 public class Fleet {
-
-  /**
-   * Maximum fleet size 18 ships
-   */
+  /** Maximum fleet size 18 ships */
   public static final int MAX_FLEET_SIZE = 18;
-  /**
-   * Maximum fleet size 7 for starbase fleet
-   */
+
+  /** Maximum fleet size 7 for starbase fleet */
   public static final int MAX_STARBASE_SIZE = 7;
-  /**
-   * List of ships in fleet
-   */
+
+  /** List of ships in fleet */
   private ArrayList<Ship> ships;
 
-  /**
-   * Fleet's coordinate
-   */
+  /** Fleet's coordinate */
   private Coordinate coordinate;
 
-  /**
-   * Fleet name
-   */
+  /** Fleet name */
   private String name;
 
-  /**
-   * How many moves fleet has left
-   */
+  /** How many moves fleet has left */
   private int movesLeft;
 
-  /**
-   * Route for fleet to move with FLT speed
-   */
+  /** Route for fleet to move with FLT speed */
   private Route route;
+
+  /** Fleet commander. */
+  private Leader commander;
 
   /**
    * AStar search for path finding, this will not be saved in to save game.
    * This information must be something that can be recalculated.
    */
   private AStarSearch aStarSearch;
-
-  /**
-   * Fleet commander.
-   */
-  private Leader commander;
 
   /**
    * Constructor for fleet
@@ -247,8 +235,8 @@ public class Fleet {
         if (bestShip.getTotalMilitaryPower() > 0
             && ship.getTotalMilitaryPower() > 0) {
           if (bestShip.getInitiative() == ship.getInitiative()
-              && ship.getTotalMilitaryPower()
-              > bestShip.getTotalMilitaryPower()) {
+              && ship.getTotalMilitaryPower() > bestShip
+                  .getTotalMilitaryPower()) {
             bestShip = ship;
             continue;
           }
@@ -276,6 +264,7 @@ public class Fleet {
     } while (available.size() > 0);
     return combatOrder.toArray(new Ship[combatOrder.size()]);
   }
+
   /**
    * Get fleet's X coordinate in star map
    * @return X coordinate
@@ -441,6 +430,7 @@ public class Fleet {
     }
     return speed;
   }
+
   /**
    * Get Fleet speed
    * @return Speed
@@ -515,10 +505,9 @@ public class Fleet {
     if (totalMass == 0) {
       return 0;
     }
-   lvl = lvl / totalMass;
+    lvl = lvl / totalMass;
     return lvl;
   }
-
 
   /**
    * Get Fleet information as a text
@@ -725,7 +714,7 @@ public class Fleet {
   public Ship getTrooperShip() {
     for (Ship ship : ships) {
       if (ship.isTrooperModule()) {
-          return ship;
+        return ship;
       }
     }
     return null;
@@ -738,11 +727,12 @@ public class Fleet {
   public Ship getBomberShip() {
     for (Ship ship : ships) {
       if (ship.hasBombs()) {
-          return ship;
+        return ship;
       }
     }
     return null;
   }
+
   /**
    * Get first assault ship from the fleet.
    * @return Assault ship or null
@@ -751,11 +741,12 @@ public class Fleet {
     for (Ship ship : ships) {
       if (ship.getTotalMilitaryPower() > 0
           && !ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
-          return ship;
+        return ship;
       }
     }
     return null;
   }
+
   /**
    * Get first colony ship from the fleet
    * @param hasColonist True if colony ship must have colonists.
@@ -888,6 +879,7 @@ public class Fleet {
     }
     return false;
   }
+
   /**
    * Is Fleet colony fleet. Colony fleet contains only one ship,
    * where ship contains colony module
@@ -921,6 +913,7 @@ public class Fleet {
     }
     return false;
   }
+
   /**
    * Does fleet have trooper ship?
    * @return True if has trooper
@@ -933,6 +926,7 @@ public class Fleet {
     }
     return false;
   }
+
   /**
    * Get A Star search for fleet
    * @return A star search result
@@ -967,6 +961,7 @@ public class Fleet {
       ship.initializeShieldAndArmor();
     }
   }
+
   /**
    * Calculate fleet's total military value
    * @return Total military value for fleet
@@ -1003,6 +998,7 @@ public class Fleet {
     }
     return true;
   }
+
   /**
    * Calculate fleet's total cultural value
    * @return Total cultural value for fleet
@@ -1162,6 +1158,7 @@ public class Fleet {
     }
     return result;
   }
+
   /**
    * Do trade with planet if fleet has trade ship(s).
    * Not this does not check diplomatic relationships.
@@ -1190,41 +1187,32 @@ public class Fleet {
   }
 
   /**
-   * Get scarable ship based on obsolete models or just bigger fleet capacity.
-   * @param obsoleteModels List of ship design which are obsolete.
+   * Get best ship to scrap.
+   * This is based on obsolete models a fleet capacity taken by ships.
+   * "Biggest" obsolete ship has priority over "biggest" non-obsolete ship.
+   * Ships that do not take fleet capacity (i.e. freighters)
+   * are never considered for scrapping.
+   * @param obsoleteModels List of ship designs which are obsolete.
    * @return Ship or null if nothing to scrap.
    */
-  public Ship getScrableShip(final ShipStat[] obsoleteModels) {
-    Ship shipObsolete = null;
-    Ship shipNotObsolete = null;
-    for (Ship ship : ships) {
-      boolean obsolete = false;
-      for (int i = 0; i < obsoleteModels.length; i++) {
-        if (obsoleteModels[i].getDesign().getName().equals(ship.getName())) {
-          obsolete = true;
-          break;
-        }
-      }
-      if (obsolete) {
-        if (shipObsolete == null && ship.getFleetCapacity() > 0) {
-          shipObsolete = ship;
-        } else if (shipObsolete != null
-            && ship.getFleetCapacity() > shipObsolete.getFleetCapacity()) {
-          shipObsolete = ship;
-        }
-      } else {
-        if (shipNotObsolete == null && ship.getFleetCapacity() > 0) {
-          shipNotObsolete = ship;
-        } else if (shipNotObsolete != null
-            && ship.getFleetCapacity() > shipNotObsolete.getFleetCapacity()) {
-          shipNotObsolete = ship;
-        }
-      }
+  public Ship getScrapableShip(final ShipStat[] obsoleteModels) {
+    final Comparator<Ship> cmprFleetCapDesc = (a, b) -> {
+      return Double.compare(b.getFleetCapacity(), a.getFleetCapacity());
+    };
+
+    var obsoleteShips = ships.stream()
+        .filter(ship -> ship.getFleetCapacity() > 0.0)
+        .filter(ship -> getShipObsolete(ship, obsoleteModels) == 1)
+        .sorted(cmprFleetCapDesc);
+    var notObsoleteShips = ships.stream()
+        .filter(ship -> ship.getFleetCapacity() > 0.0)
+        .filter(ship -> getShipObsolete(ship, obsoleteModels) < 1)
+        .sorted(cmprFleetCapDesc);
+
+    if (obsoleteShips.count() > 0) {
+      return obsoleteShips.findFirst().get();
     }
-    if (shipObsolete != null) {
-      return shipObsolete;
-    }
-    return shipNotObsolete;
+    return notObsoleteShips.findFirst().get();
   }
 
   /**
@@ -1236,21 +1224,36 @@ public class Fleet {
   public int calculateFleetObsoleteValue(final PlayerInfo info) {
     int result = 0;
     for (Ship ship : ships) {
-      if (ship.getHull().getRace() == info.getRace()) {
-        for (ShipStat stat : info.getShipStatList()) {
-          if (stat.getDesign().getName().equals(ship.getName())) {
-            if (stat.isObsolete()) {
-              result = result + 1;
-            } else {
-              result = result - 1;
-            }
-          }
-        }
-      } else {
+      if (ship.getHull().getRace() != info.getRace()) {
         result = result + 1;
+        continue;
       }
+
+      var obsolete = getShipObsolete(ship, info.getShipStatList());
+      result += obsolete;
     }
     return result;
+  }
+
+  /**
+   * Return 1 if ship is obsolete in specified context of ship models.
+   * If ship is NOT obsolete, return -1.
+   * Return 0 if it is not possible tell if ship is obsolete in given context.
+   * @param ship Ship to check
+   * @param models ShipStat array of models to check against
+   * @return 1 if ship is obsolete, -1 if not, 0 if cannot tell from context
+   */
+  private static int getShipObsolete(final Ship ship, final ShipStat[] models) {
+    for (var model : models) {
+      if (model.getDesign().getName().equals(ship.getName())) {
+        if (model.isObsolete()) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
+    }
+    return 0;
   }
 
   /**
@@ -1260,6 +1263,7 @@ public class Fleet {
   public Leader getCommander() {
     return commander;
   }
+
   /**
    * Set the current commander of the fleet
    * @param commander the commander to set
@@ -1306,12 +1310,72 @@ public class Fleet {
           minUpgrade = ShipHull.MIN_UPGRADE_HUGE;
         }
         if (prodUpgradeCost > 0
-            && stat.getDesign().getTotalMilitaryPower()
-            >= ship.getTheoreticalMilitaryPower() + minUpgrade) {
+            && stat.getDesign().getTotalMilitaryPower() >= ship
+                .getTheoreticalMilitaryPower() + minUpgrade) {
           StarMapUtilities.upgradeShip(ship, stat, info, planet);
           setMovesLeft(0);
         }
       }
     }
+  }
+
+  /**
+   * Attempts to split specified ships from current fleet,
+   * creating new Fleet.
+   *
+   * Trying to split any ship from fleet that is not in it or is null is error.
+   * @param drain if true, splitting last ship from fleet is allowed.
+   * @param shipsForSplit Array of ships to split from this fleet
+   * @throws IllegalArgumentException
+   *         Trying to split ships that are not in this fleet.
+   * @return Fleet with splitted ships, null if splitting would
+   *         remove last ship from the fleet while drain is not allowed.
+   */
+  public Fleet splitFromFleet(final boolean drain,
+      final Ship... shipsForSplit) {
+    for (var ship : shipsForSplit) {
+      if (ship == null) {
+        throw new NullPointerException("Cannot split null Ship from fleet");
+      }
+      if (!ships.contains(ship)) {
+        throw new IllegalArgumentException(
+            "Ship " + ship + " is not member of Fleet " + this);
+      }
+    }
+
+    var shipsRemainingCount = ships.size() - shipsForSplit.length;
+    if (shipsRemainingCount < 1 && !drain) {
+      return null;
+    }
+
+    Fleet newFleet = null;
+    for (var ship : shipsForSplit) {
+      if (newFleet == null) {
+        newFleet = new Fleet(ship, this.getX(), this.getY());
+      } else {
+        newFleet.addShip(ship);
+      }
+      this.removeShip(ship);
+    }
+
+    return newFleet;
+  }
+
+  /**
+   * Attempts to split specified ships from current fleet.
+   * If the fleet is made exclusively from the ship being split away,
+   * this does nothing.
+   * Trying to split any ship from fleet that is not in it is error.
+   * @param drain if true, splitting last ship from fleet is allowed.
+   * @param shipsForSplit Collection of ships to split from this fleet
+   * @throws IllegalArgumentException
+   *         Trying to split ships that are not in this fleet.
+   * @return Fleet with splitted ships, null if splitting would
+   *         remove last ship from the fleet while drain is not allowed.
+   */
+  public Fleet splitFromFleet(final boolean drain,
+      final Collection<Ship> shipsForSplit) {
+    var array = shipsForSplit.toArray(new Ship[shipsForSplit.size()]);
+    return this.splitFromFleet(drain, array);
   }
 }

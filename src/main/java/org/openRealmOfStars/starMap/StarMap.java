@@ -612,6 +612,9 @@ public class StarMap {
           ascensionPortalX = x;
           ascensionPortalY = y;
         }
+        if (ascensionPortalX != -1 && DiceGenerator.getRandom(1) == 0) {
+          break;
+        }
       }
       if (ascensionPortalX != -1) {
         break;
@@ -737,6 +740,7 @@ public class StarMap {
     int bx = -1;
     int by = -1;
     double bestValue = -1;
+    ArrayList<Coordinate> anchors = new ArrayList<>();
     for (int sy = 0; sy < maxY; sy++) {
       for (int sx = 0; sx < maxX; sx++) {
         if (Tiles.getTileByIndex(tiles[sx][sy]) == empty
@@ -761,6 +765,13 @@ public class StarMap {
             bestValue = shortestDistance;
           }
         }
+        Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
+        if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
+            || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)
+            || tile.getName().equals(TileNames.SPACE_ANOMALY_DSA)
+            || tile.getName().equals(TileNames.SPACE_ANOMALY_LAIR)) {
+          anchors.add(new Coordinate(sx, sy));
+        }
       }
     }
     if (bestValue > 0) {
@@ -769,6 +780,43 @@ public class StarMap {
     }
     // No need to have generator after creation
     nameGenerator = null;
+    generateAscensionPortal(ascensionPortalX, ascensionPortalY);
+    ascensionPortalX = -1;
+    ascensionPortalY = -1;
+    if (anchors.size() > 0) {
+      for (int i = 0; i < 100; i++) {
+        int index = DiceGenerator.getRandom(anchors.size() - 1);
+        Coordinate coordinate = anchors.get(index);
+        for (int j = 0; j < 4; j++) {
+          int mx = 0;
+          int my = 0;
+          if (j == 0) {
+            my = -1;
+          }
+          if (j == 1) {
+            mx = 1;
+          }
+          if (j == 2) {
+            my = 1;
+          }
+          if (j == 3) {
+            mx = -1;
+          }
+          int x = coordinate.getX() + mx;
+          int y = coordinate.getY() + my;
+          if (isValidCoordinate(x, y) && tiles[x][y] == 0) {
+            ascensionPortalX = x;
+            ascensionPortalY = y;
+          }
+          if (ascensionPortalX != -1 && DiceGenerator.getRandom(1) == 0) {
+            break;
+          }
+        }
+        if (ascensionPortalX != -1) {
+          break;
+        }
+      }
+    }
     generateAscensionPortal(ascensionPortalX, ascensionPortalY);
     revealWholeMap(players.getPlayerInfoByIndex(0));
   }

@@ -27,6 +27,8 @@ import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionHandling;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.AI.PathFinding.AStarSearch;
+import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
 import org.openRealmOfStars.AI.Research.Research;
 import org.openRealmOfStars.game.Game;
@@ -580,6 +582,44 @@ public class StarMap {
         }
       }
     }
+    // Planetary Ascension portal
+    int ascensionPortalX = -1;
+    int ascensionPortalY = -1;
+    for (int i = 0; i < 100; i++) {
+      int ascensionPlanetIndex = DiceGenerator.getRandom(planetList.size() - 1);
+      Planet planet = planetList.get(ascensionPlanetIndex);
+      if (planet.isGasGiant()) {
+        continue;
+      }
+      for (int j = 0; j < 4; j++) {
+        int mx = 0;
+        int my = 0;
+        if (j == 0) {
+          my = -1;
+        }
+        if (j == 1) {
+          mx = 1;
+        }
+        if (j == 2) {
+          my = 1;
+        }
+        if (j == 3) {
+          mx = -1;
+        }
+        int x = planet.getX() + mx;
+        int y = planet.getY() + my;
+        if (isValidCoordinate(x, y) && tiles[x][y] == 0) {
+          ascensionPortalX = x;
+          ascensionPortalY = y;
+        }
+        if (ascensionPortalX != -1 && DiceGenerator.getRandom(1) == 0) {
+          break;
+        }
+      }
+      if (ascensionPortalX != -1) {
+        break;
+      }
+    }
     // Create random deep space anchors
     loop = 0;
     int numberOfAnchors = config.getMaxPlayers() * 3;
@@ -700,6 +740,7 @@ public class StarMap {
     int bx = -1;
     int by = -1;
     double bestValue = -1;
+    ArrayList<Coordinate> anchors = new ArrayList<>();
     for (int sy = 0; sy < maxY; sy++) {
       for (int sx = 0; sx < maxX; sx++) {
         if (Tiles.getTileByIndex(tiles[sx][sy]) == empty
@@ -724,6 +765,13 @@ public class StarMap {
             bestValue = shortestDistance;
           }
         }
+        Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
+        if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
+            || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)
+            || tile.getName().equals(TileNames.SPACE_ANOMALY_DSA)
+            || tile.getName().equals(TileNames.SPACE_ANOMALY_LAIR)) {
+          anchors.add(new Coordinate(sx, sy));
+        }
       }
     }
     if (bestValue > 0) {
@@ -732,8 +780,205 @@ public class StarMap {
     }
     // No need to have generator after creation
     nameGenerator = null;
+    // TODO This is for ascension victory
+    //generateAscensionPortal(ascensionPortalX, ascensionPortalY);
+    ascensionPortalX = -1;
+    ascensionPortalY = -1;
+    if (anchors.size() > 0) {
+      for (int i = 0; i < 100; i++) {
+        int index = DiceGenerator.getRandom(anchors.size() - 1);
+        Coordinate coordinate = anchors.get(index);
+        for (int j = 0; j < 4; j++) {
+          int mx = 0;
+          int my = 0;
+          if (j == 0) {
+            my = -1;
+          }
+          if (j == 1) {
+            mx = 1;
+          }
+          if (j == 2) {
+            my = 1;
+          }
+          if (j == 3) {
+            mx = -1;
+          }
+          int x = coordinate.getX() + mx;
+          int y = coordinate.getY() + my;
+          if (isValidCoordinate(x, y) && tiles[x][y] == 0) {
+            ascensionPortalX = x;
+            ascensionPortalY = y;
+          }
+          if (ascensionPortalY != -1 && DiceGenerator.getRandom(1) == 0) {
+            break;
+          }
+        }
+        if (ascensionPortalY != -1) {
+          break;
+        }
+      }
+    }
+    // TODO This is for ascension victory
+    /*generateAscensionPortal(ascensionPortalX, ascensionPortalY);
+    smoothAscensionVeins();
+    revealWholeMap(getCurrentPlayerInfo());*/
   }
 
+  /**
+   * Reveal whole map. This should be used only for debugging.
+   * @param info PlayerInfo who sees everything.
+   */
+  public void revealWholeMap(final PlayerInfo info) {
+    if (info != null) {
+      for (int y = 0; y < maxY; y++) {
+        for (int x = 0; x < maxX; x++) {
+          info.setSectorVisibility(x, y, PlayerInfo.VISIBLE_VEINS);
+        }
+      }
+    }
+  }
+
+  /**
+   * Smooth ascension veins.
+   */
+  public void smoothAscensionVeins() {
+    for (int y = 0; y < maxY; y++) {
+      for (int x = 0; x < maxX; x++) {
+        boolean north = false;
+        boolean west = false;
+        boolean east = false;
+        boolean south = false;
+        Tile tile = Tiles.getTileByIndex(tiles[x][y]);
+        if (tile.isAscensionVein()) {
+          int mx = x;
+          int my = y - 1;
+          if (isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(tiles[mx][my]);
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal()) {
+              north = true;
+            }
+          }
+          mx = x;
+          my = y + 1;
+          if (isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(tiles[mx][my]);
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal()) {
+              south = true;
+            }
+          }
+          mx = x - 1;
+          my = y;
+          if (isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(tiles[mx][my]);
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal()) {
+              west = true;
+            }
+          }
+          mx = x + 1;
+          my = y;
+          if (isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(tiles[mx][my]);
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal()) {
+              east = true;
+            }
+          }
+          tile = Tiles.getTileByIndex(tiles[x][y]);
+          if (north && south && west && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
+          } else if (north && south && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSW1);
+          } else if (north && east && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NWE1);
+          } else if (north && south && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSE1);
+          } else if (south && east && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SWE1);
+          } else if (north && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NE1);
+          } else if (north && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NW1);
+          } else if (south && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SW1);
+          } else if (south && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SE1);
+          } else if (west && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_WE1);
+          } else if (north && south) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NS1);
+          }
+          tiles[x][y] = tile.getIndex();
+        }
+      }
+    }
+  }
+  /**
+   * Generate Ascension portal to map and ascension veins.
+   *
+   * @param x X coordinate for portal
+   * @param y Y Coordinate for portal
+   */
+  public void generateAscensionPortal(final int x, final int y) {
+    int cx = maxX / 2;
+    int cy = maxY / 2;
+    int[] sax = new int[4];
+    int[] say = new int[4];
+    sax[0] = cx;
+    say[0] = cy - 2;
+    sax[1] = cx + 2;
+    say[1] = cy;
+    sax[2] = cx;
+    say[2] = cy + 2;
+    sax[3] = cx - 2;
+    say[3] = cy;
+    int best = -1;
+    double bestDist = 999;
+    for (int i = 0; i < sax.length; i++) {
+      Coordinate target = new Coordinate(x, y);
+      Coordinate start = new Coordinate(sax[i], say[i]);
+      double dist = target.calculateDistance(start);
+      if (dist < bestDist) {
+        best = i;
+        bestDist = dist;
+      }
+    }
+    int sx = sax[best];
+    int sy = say[best];
+    Tile tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
+    tiles[sx][sy] = tile.getIndex();
+    tileInfo[sx][sy] = new SquareInfo(
+        SquareInfo.TYPE_ASCENSION_VEIN, 0);
+    AStarSearch search = new AStarSearch(this, sx, sy, x, y);
+    if (search.doSquareSearch()) {
+      search.doSquareRoute();
+      int count = 0;
+      do {
+        count++;
+        PathPoint point = search.getMove();
+        if (point != null) {
+          tiles[point.getX()][point.getY()] = tile.getIndex();
+          tileInfo[point.getX()][point.getY()] = new SquareInfo(
+              SquareInfo.TYPE_ASCENSION_VEIN, count);
+          search.nextMove();
+          if (search.isLastMove()) {
+            point = search.getMove();
+            if (point != null) {
+              tiles[point.getX()][point.getY()] = tile.getIndex();
+              tileInfo[point.getX()][point.getY()] = new SquareInfo(
+                  SquareInfo.TYPE_ASCENSION_VEIN, count);
+            }
+          }
+        } else {
+          break;
+        }
+      } while (!search.isLastMove());
+      tiles[x][y] = Tiles.getTileByName(
+          TileNames.ASCENSION_PORTAL1).getIndex();
+    }
+  }
   /**
    * Create random start systems
    * @param config GalaxyConfig
@@ -4988,6 +5233,26 @@ public class StarMap {
       return sector.isBlocked();
     }
     return true;
+  }
+
+  /**
+   * Is tile good for ascension vein
+   * @param x X coordinate
+   * @param y Y Coordinate
+   * @return true if tile is good for ascension. Also if
+   * coordinate is out of map then false is returned.
+   */
+  public boolean isGoodForAscension(final int x, final int y) {
+    if (!isValidCoordinate(x, y)) {
+      return false;
+    }
+    SquareInfo info = getTileInfo(x, y);
+    Tile tile = Tiles.getTileByIndex(tiles[x][y]);
+    if (info.getType() == SquareInfo.TYPE_ASCENSION_VEIN
+        || tile.getName().equals(TileNames.EMPTY)) {
+      return true;
+    }
+    return false;
   }
 
   /**

@@ -395,7 +395,7 @@ public class StarMapMouseListener extends MouseAdapter {
         routePlanning = false;
       }
       if (starMap.getCurrentPlayerInfo().getSectorVisibility(
-          coord.getMapCoordinate()) == PlayerInfo.VISIBLE
+          coord.getMapCoordinate()) >= PlayerInfo.VISIBLE
           || e.getButton() == MouseEvent.BUTTON3) {
         Planet planet = starMap.getPlanetByCoordinate(coord.getMapX(),
             coord.getMapY());
@@ -431,7 +431,7 @@ public class StarMapMouseListener extends MouseAdapter {
                 tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
             PlayerInfo info = starMap.getCurrentPlayerInfo();
             if (info.getSectorVisibility(coord.getMapCoordinate())
-                == PlayerInfo.VISIBLE
+                >= PlayerInfo.VISIBLE
                 && (info.getSectorCloakDetection(
                  coord.getMapX(), coord.getMapY()) >= fleet
                      .getFleetCloackingValue()

@@ -1263,7 +1263,7 @@ public class Game implements ActionListener {
     } else if (object instanceof Planet) {
       Planet planet = (Planet) object;
       if (getStarMap().getCurrentPlayerInfo().getSectorVisibility(
-          planet.getCoordinate()) == PlayerInfo.VISIBLE) {
+          planet.getCoordinate()) >= PlayerInfo.VISIBLE) {
         starMapView.setShowPlanet(planet, true);
       } else {
         starMapView.setShowPlanet(planet, false);

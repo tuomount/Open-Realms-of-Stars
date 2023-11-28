@@ -51,7 +51,7 @@ public class FleetVisibility {
     int x = fleet.getCoordinate().getX();
     int y = fleet.getCoordinate().getY();
     if (info.getSectorVisibility(fleet.getCoordinate())
-        == PlayerInfo.VISIBLE) {
+        >= PlayerInfo.VISIBLE) {
      if (info.getSectorCloakDetection(x, y)
         >= fleet.getFleetCloackingValue()
         || info.getFleets().isFleetOnList(fleet)) {

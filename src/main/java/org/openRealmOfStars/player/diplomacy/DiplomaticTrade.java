@@ -2578,7 +2578,7 @@ public class DiplomaticTrade {
           Coordinate coord = new Coordinate(x, y);
           byte visibility = mapGiver.getSectorVisibility(coord);
           if (visibility == PlayerInfo.FOG_OF_WAR
-              || visibility == PlayerInfo.VISIBLE) {
+              || visibility >= PlayerInfo.VISIBLE) {
             byte origVisiblity = mapReceiver.getSectorVisibility(coord);
             if (origVisiblity == PlayerInfo.UNCHARTED) {
               mapReceiver.setSectorVisibility(x, y, PlayerInfo.FOG_OF_WAR);
@@ -2632,7 +2632,7 @@ public class DiplomaticTrade {
           Coordinate coord = new Coordinate(x, y);
           byte visibility = mapGiver.getSectorVisibility(coord);
           if (visibility == PlayerInfo.FOG_OF_WAR
-              || visibility == PlayerInfo.VISIBLE) {
+              || visibility >= PlayerInfo.VISIBLE) {
             byte origVisiblity = mapReceiver.getSectorVisibility(coord);
             if (origVisiblity == PlayerInfo.UNCHARTED) {
               value = value + 1;

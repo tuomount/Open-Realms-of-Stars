@@ -199,7 +199,8 @@ public class AStarSearch {
         } else {
           blockMap[x][y] = UNBLOCKED;
         }
-        if (ownerIndex != -1) {
+        if (ownerIndex != -1 && fleetTiles != null
+            && fleetTiles[x][y] != null) {
           FleetTileInfo fleetTile = fleetTiles[x][y];
           if (fleetTile != null && fleetTile.getPlayerIndex() != ownerIndex) {
             blockMap[x][y] = BLOCKED;
@@ -264,6 +265,41 @@ public class AStarSearch {
   }
 
   /**
+   * Initialize A Star Search for star map to find a route to ascension portal
+   * @param map StarMap
+   * @param sx Starting point X coordinate
+   * @param sy Starting point Y coordinate
+   * @param tx Target X coordinate
+   * @param ty Target Y coordinate
+   */
+  public AStarSearch(final StarMap map, final int sx, final int sy,
+      final int tx, final int ty) {
+    maxX = map.getMaxX();
+    maxY = map.getMaxY();
+    blockMap = new int[maxX][maxY];
+    for (int y = 0; y < maxY; y++) {
+      for (int x = 0; x < maxX; x++) {
+        if (map.isGoodForAscension(x, y)) {
+          blockMap[x][y] = UNBLOCKED;
+        } else {
+          blockMap[x][y] = BLOCKED;
+        }
+      }
+    }
+    points = new ArrayList<>();
+    this.tx = tx;
+    this.ty = ty;
+    this.targetDistance = 0;
+    Coordinate startCoordinate = new Coordinate(sx, sy);
+    Coordinate targetCoordinate = new Coordinate(tx, ty);
+    PathPoint point1 = new PathPoint(sx, sy,
+        startCoordinate.calculateDistance(targetCoordinate));
+    points.add(point1);
+    blockMap[point1.getX()][point1.getY()] = 0;
+    targetPoint = null;
+    routeIndex = -1;
+  }
+  /**
    * Is coordinate valid position on map
    * @param x X Coordinate
    * @param y Y Coordinate
@@ -294,6 +330,83 @@ public class AStarSearch {
         points.remove(0);
         for (int y = -1; y < 2; y++) {
           for (int x = -1; x < 2; x++) {
+            if (y == 0 && x == 0) {
+              continue;
+            }
+            int mx = x + point.getX();
+            int my = y + point.getY();
+            if (isValidPos(mx, my) && blockMap[mx][my] > count
+                && blockMap[mx][my] != BLOCKED) {
+              blockMap[mx][my] = count;
+              Coordinate coordinate = new Coordinate(mx, my);
+              Coordinate targetCoordinate = new Coordinate(tx, ty);
+              double distance = coordinate.calculateDistance(targetCoordinate);
+              PathPoint newPoint = new PathPoint(mx, my, distance);
+              if (distance < point.getDistance()) {
+                if (points.size() > 0) {
+                  PathPoint first = points.get(0);
+                  if (first != null && distance < first.getDistance()) {
+                    // Seems to be closer, so adding it to first one
+                    points.add(0, newPoint);
+                  } else {
+                    // Seems to be closer, but not close as first one in list
+                    points.add(1, newPoint);
+                  }
+                } else {
+                  // Seems to be closer, so adding it to first one
+                  points.add(0, newPoint);
+
+                }
+              } else {
+                // Seems to be more far away so adding it to end
+                points.add(newPoint);
+              }
+              if ((int) Math.ceil(distance) == targetDistance) {
+                // Target found and acquired
+                targetPoint = newPoint;
+                return true;
+              }
+            }
+          }
+        }
+      } else {
+        noMorePoints = true;
+      }
+    }
+    // Target is not found, no path available
+    return false;
+  }
+
+  /**
+   * Do actual A Star search but with square moves only initialized values
+   * @return True if successful and false if not
+   */
+  public boolean doSquareSearch() {
+    boolean noMorePoints = false;
+    int count = 0;
+    if (isValidPos(tx, ty) && blockMap[tx][ty] == BLOCKED
+        && targetDistance == 0) {
+      targetDistance = 1;
+    }
+    while (!noMorePoints) {
+      count++;
+      if (points.size() > 0) {
+        PathPoint point = points.get(0);
+        points.remove(0);
+        for (int y = -1; y < 2; y++) {
+          for (int x = -1; x < 2; x++) {
+            if (y == -1 && x == -1) {
+              continue;
+            }
+            if (y == -1 && x == 1) {
+              continue;
+            }
+            if (y == 1 && x == -1) {
+              continue;
+            }
+            if (y == 1 && x == 1) {
+              continue;
+            }
             if (y == 0 && x == 0) {
               continue;
             }
@@ -462,6 +575,63 @@ public class AStarSearch {
         double bestDistance = START_DISTANCE;
         for (int y = -1; y < 2; y++) {
           for (int x = -1; x < 2; x++) {
+            if (y == 0 && x == 0) {
+              continue;
+            }
+            int mx = x + point.getX();
+            int my = y + point.getY();
+            Coordinate coordinate = new Coordinate(mx, my);
+            Coordinate targetCoordinate = new Coordinate(tx, ty);
+            double distance = coordinate.calculateDistance(targetCoordinate);
+            if (isValidPos(mx, my) && blockMap[mx][my] < count
+                && distance <= bestDistance) {
+              bx = mx;
+              by = my;
+              bestDistance = distance;
+              count = blockMap[bx][by];
+            }
+          }
+        }
+        PathPoint newPoint = new PathPoint(bx, by, bestDistance);
+        if (blockMap[bx][by] != 0) {
+          points.add(newPoint);
+        } else {
+          targetReached = true;
+        }
+
+      }
+      routeIndex = points.size() - 1;
+    }
+  }
+
+  /**
+   * Calculate Route
+   */
+  public void doSquareRoute() {
+    boolean targetReached = false;
+    if (targetPoint != null) {
+      points = new ArrayList<>();
+      points.add(targetPoint);
+      int count = UNBLOCKED;
+      while (!targetReached) {
+        PathPoint point = points.get(points.size() - 1);
+        int bx = 0;
+        int by = 0;
+        double bestDistance = START_DISTANCE;
+        for (int y = -1; y < 2; y++) {
+          for (int x = -1; x < 2; x++) {
+            if (y == -1 && x == -1) {
+              continue;
+            }
+            if (y == -1 && x == 1) {
+              continue;
+            }
+            if (y == 1 && x == -1) {
+              continue;
+            }
+            if (y == 1 && x == 1) {
+              continue;
+            }
             if (y == 0 && x == 0) {
               continue;
             }

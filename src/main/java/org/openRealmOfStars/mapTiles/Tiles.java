@@ -728,13 +728,13 @@ public final class Tiles {
         TileNames.BLACKHOLE_DESCRIPTION);
     bhSecondStart = getTileByName(TileNames.BLACKHOLE_E).getIndex();
     addTile(tilesImage32, tilesImage64, tilesImage16, 0, 5,
-        TileNames.BLACKHOLE_SE,
+        TileNames.BLACKHOLE_SW,
         TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tilesImage32, tilesImage64, tilesImage16, 1, 5,
         TileNames.BLACKHOLE_S,
         TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tilesImage32, tilesImage64, tilesImage16, 2, 5,
-        TileNames.BLACKHOLE_S,
+        TileNames.BLACKHOLE_SE,
         TileNames.BLACKHOLE_DESCRIPTION);
     bhSecondEnd = getTileByName(TileNames.BLACKHOLE_SE).getIndex();
     addTile(tilesImage32, tilesImage64, tilesImage16, 9, 1,
@@ -1031,6 +1031,8 @@ public final class Tiles {
     addTile(tilesImage32, tilesImage64, tilesImage16, 17, 4,
         TileNames.ASCENSION_PORTAL4, TileNames.ASCENSION_PORTAL_DESCRIPTION,
         Tiles.getTileByName(TileNames.ASCENSION_PORTAL1).getIndex());
+    addTile(tilesImage32, tilesImage64, tilesImage16, 0, 0,
+        TileNames.ASCENSION_PORT_CLOSED, null);
   }
   /**
    * Get Blackhole first index start

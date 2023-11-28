@@ -21,8 +21,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 
-import org.openRealmOfStars.gui.mapPanel.BlackHoleEffect;
-
 /**
  *
  * Class for handling star map tiles
@@ -85,10 +83,6 @@ public class Tile {
    */
   private int zoomLevel;
 
-  /**
-   * Static blackhole effect
-   */
-  private static BlackHoleEffect blackholeEffect;
 
   /**
    * Get tile from tileset image, where x is number of tiles in X axel and
@@ -159,31 +153,9 @@ public class Tile {
    * @param y Coordinates on y axel
    */
   public void draw(final Graphics2D g, final int x, final int y) {
-    if (isBlackhole()) {
-      if (blackholeEffect == null) {
-        blackholeEffect = new BlackHoleEffect(new BufferedImage(
-            getMaxWidth(zoomLevel),
-            getMaxHeight(zoomLevel), BufferedImage.TYPE_INT_ARGB), zoomLevel);
-      }
-      blackholeEffect.drawBlackholeTile(g, x, y, this);
-    } else {
-      g.drawImage(img, x, y, null);
-    }
+    g.drawImage(img, x, y, null);
   }
 
-  /**
-   * Update black hole effect for all tiles.
-   * @param img New background for blackhole.
-   * @param zoomLevel Zoom level
-   */
-  public static void updateBlackHoleEffect(final BufferedImage img,
-      final int zoomLevel) {
-    if (blackholeEffect == null) {
-      blackholeEffect = new BlackHoleEffect(img, zoomLevel);
-    } else {
-      blackholeEffect.updateBackground(img);
-    }
-  }
   /**
    * Draw mini sector to target image.
    * @param target Target image where to draw.
@@ -466,6 +438,53 @@ public class Tile {
         || name.equals(TileNames.SPACE_ANOMALY_NEWS_STATION)
         || name.equals(TileNames.SPACE_ANOMALY_LEADER_IN_STASIS)
         || name.equals(TileNames.SPACE_ANOMALY_DESTROYED_PLANET)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Is tile Ascension Vein
+   * @return True if ascension tile
+   */
+  public boolean isAscensionVein() {
+    if (name.equals(TileNames.ASCENSION_VEIN_NSWE1)
+        || name.equals(TileNames.ASCENSION_VEIN_NSWE2)
+        || name.equals(TileNames.ASCENSION_VEIN_NE1)
+        || name.equals(TileNames.ASCENSION_VEIN_NE2)
+        || name.equals(TileNames.ASCENSION_VEIN_NW1)
+        || name.equals(TileNames.ASCENSION_VEIN_NW2)
+        || name.equals(TileNames.ASCENSION_VEIN_NS1)
+        || name.equals(TileNames.ASCENSION_VEIN_NS2)
+        || name.equals(TileNames.ASCENSION_VEIN_NSE1)
+        || name.equals(TileNames.ASCENSION_VEIN_NSE2)
+        || name.equals(TileNames.ASCENSION_VEIN_NSW1)
+        || name.equals(TileNames.ASCENSION_VEIN_NSW2)
+        || name.equals(TileNames.ASCENSION_VEIN_NWE1)
+        || name.equals(TileNames.ASCENSION_VEIN_NWE2)
+        || name.equals(TileNames.ASCENSION_VEIN_SE1)
+        || name.equals(TileNames.ASCENSION_VEIN_SE2)
+        || name.equals(TileNames.ASCENSION_VEIN_SW1)
+        || name.equals(TileNames.ASCENSION_VEIN_SW2)
+        || name.equals(TileNames.ASCENSION_VEIN_SWE1)
+        || name.equals(TileNames.ASCENSION_VEIN_SWE2)
+        || name.equals(TileNames.ASCENSION_VEIN_WE1)
+        || name.equals(TileNames.ASCENSION_VEIN_WE2)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Is tile Ascension portal
+   * @return True if ascension tile
+   */
+  public boolean isAscensionPortal() {
+    if (name.equals(TileNames.ASCENSION_PORT_CLOSED)
+        || name.equals(TileNames.ASCENSION_PORTAL1)
+        || name.equals(TileNames.ASCENSION_PORTAL2)
+        || name.equals(TileNames.ASCENSION_PORTAL3)
+        || name.equals(TileNames.ASCENSION_PORTAL4)) {
       return true;
     }
     return false;

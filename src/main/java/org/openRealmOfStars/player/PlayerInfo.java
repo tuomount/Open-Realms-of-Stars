@@ -253,9 +253,13 @@ public class PlayerInfo {
    */
   public static final byte FOG_OF_WAR = 1;
   /**
-   * Every thing are drawn
+   * Every thing are drawn expect ascension veins
    */
   public static final byte VISIBLE = 2;
+  /**
+   * Every thing are drawn including ascension veins
+   */
+  public static final byte VISIBLE_VEINS = 3;
 
   /**
    * Normal AI controlled player
@@ -1942,7 +1946,7 @@ public class PlayerInfo {
    */
   public void setSectorVisibility(final int x, final int y,
       final byte visibility) {
-    if (visibility >= 0 && visibility <= VISIBLE) {
+    if (visibility >= 0 && visibility <= VISIBLE_VEINS) {
       try {
         mapData[x][y] = visibility;
       } catch (ArrayIndexOutOfBoundsException e) {
@@ -1991,7 +1995,7 @@ public class PlayerInfo {
     for (int y = 0; y < maxCoordinate.getY(); y++) {
       for (int x = 0; x < maxCoordinate.getX(); x++) {
         mapCloakDetection[x][y] = 0;
-        if (mapData[x][y] == VISIBLE) {
+        if (mapData[x][y] >= VISIBLE) {
           mapData[x][y] = FOG_OF_WAR;
         }
       }

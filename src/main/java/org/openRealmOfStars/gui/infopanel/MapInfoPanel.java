@@ -490,10 +490,10 @@ public class MapInfoPanel extends InfoPanel {
         star3.draw(g2d, 32, 32);
         star4.draw(g2d, 0, 32);
       } else if (tile.isBlackhole()) {
-        Tile star1 = Tiles.getTileByName(TileNames.BLACKHOLE_C);
-        Tile star2 = Tiles.getTileByName(TileNames.BLACKHOLE_C);
-        Tile star3 = Tiles.getTileByName(TileNames.BLACKHOLE_C);
-        Tile star4 = Tiles.getTileByName(TileNames.BLACKHOLE_C);
+        Tile star1 = Tiles.getTileByName(TileNames.BLACKHOLE_NW);
+        Tile star2 = Tiles.getTileByName(TileNames.BLACKHOLE_NE);
+        Tile star3 = Tiles.getTileByName(TileNames.BLACKHOLE_SE);
+        Tile star4 = Tiles.getTileByName(TileNames.BLACKHOLE_SW);
         star1.draw(g2d, 0, 0);
         star2.draw(g2d, 32, 0);
         star3.draw(g2d, 32, 32);

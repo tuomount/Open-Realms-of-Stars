@@ -444,6 +444,43 @@ public class Tile {
   }
 
   /**
+   * Is tile AscensionVein or portal
+   * @return True if ascension tile
+   */
+  public boolean isAscensionVein() {
+    if (name.equals(TileNames.ASCENSION_VEIN_NSWE1)
+        || name.equals(TileNames.ASCENSION_VEIN_NSWE2)
+        || name.equals(TileNames.ASCENSION_PORT_CLOSED)
+        || name.equals(TileNames.ASCENSION_PORTAL1)
+        || name.equals(TileNames.ASCENSION_PORTAL2)
+        || name.equals(TileNames.ASCENSION_PORTAL3)
+        || name.equals(TileNames.ASCENSION_PORTAL4)
+        || name.equals(TileNames.ASCENSION_VEIN_NE1)
+        || name.equals(TileNames.ASCENSION_VEIN_NE2)
+        || name.equals(TileNames.ASCENSION_VEIN_NW1)
+        || name.equals(TileNames.ASCENSION_VEIN_NW2)
+        || name.equals(TileNames.ASCENSION_VEIN_NS1)
+        || name.equals(TileNames.ASCENSION_VEIN_NS2)
+        || name.equals(TileNames.ASCENSION_VEIN_NSE1)
+        || name.equals(TileNames.ASCENSION_VEIN_NSE2)
+        || name.equals(TileNames.ASCENSION_VEIN_NSW1)
+        || name.equals(TileNames.ASCENSION_VEIN_NSW2)
+        || name.equals(TileNames.ASCENSION_VEIN_NWE1)
+        || name.equals(TileNames.ASCENSION_VEIN_NWE2)
+        || name.equals(TileNames.ASCENSION_VEIN_SE1)
+        || name.equals(TileNames.ASCENSION_VEIN_SE2)
+        || name.equals(TileNames.ASCENSION_VEIN_SW1)
+        || name.equals(TileNames.ASCENSION_VEIN_SW2)
+        || name.equals(TileNames.ASCENSION_VEIN_SWE1)
+        || name.equals(TileNames.ASCENSION_VEIN_SWE2)
+        || name.equals(TileNames.ASCENSION_VEIN_WE1)
+        || name.equals(TileNames.ASCENSION_VEIN_WE2)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Is tile black hole
    * @return True if black hole
    */

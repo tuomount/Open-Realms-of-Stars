@@ -818,6 +818,7 @@ public class StarMap {
       }
     }
     generateAscensionPortal(ascensionPortalX, ascensionPortalY);
+    smoothAscensionVeins();
     revealWholeMap(players.getPlayerInfoByIndex(0));
   }
 
@@ -830,6 +831,80 @@ public class StarMap {
       for (int y = 0; y < maxY; y++) {
         for (int x = 0; x < maxX; x++) {
           info.setSectorVisibility(x, y, PlayerInfo.VISIBLE_VEINS);
+        }
+      }
+    }
+  }
+
+  /**
+   * Smooth ascension veins.
+   */
+  public void smoothAscensionVeins() {
+    for (int y = 0; y < maxY; y++) {
+      for (int x = 0; x < maxX; x++) {
+        boolean north = false;
+        boolean west = false;
+        boolean east = false;
+        boolean south = false;
+        Tile tile = Tiles.getTileByIndex(tiles[x][y]);
+        if (tile.isAscensionVein()) {
+          int mx = x;
+          int my = y - 1;
+          if (isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(tiles[mx][my]);
+            if (tile.isAscensionVein() || tile.isBlackhole()) {
+              north = true;
+            }
+          }
+          mx = x;
+          my = y + 1;
+          if (isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(tiles[mx][my]);
+            if (tile.isAscensionVein() || tile.isBlackhole()) {
+              south = true;
+            }
+          }
+          mx = x - 1;
+          my = y;
+          if (isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(tiles[mx][my]);
+            if (tile.isAscensionVein() || tile.isBlackhole()) {
+              west = true;
+            }
+          }
+          mx = x + 1;
+          my = y;
+          if (isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(tiles[mx][my]);
+            if (tile.isAscensionVein() || tile.isBlackhole()) {
+              east = true;
+            }
+          }
+          tile = Tiles.getTileByIndex(tiles[x][y]);
+          if (north && south && west && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
+          } else if (north && south && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSW1);
+          } else if (north && east && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NWE1);
+          } else if (north && south && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSE1);
+          } else if (south && east && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SWE1);
+          } else if (north && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NE1);
+          } else if (north && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NW1);
+          } else if (south && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SW1);
+          } else if (south && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SE1);
+          } else if (west && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_WE1);
+          } else if (north && south) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NS1);
+          }
+          tiles[x][y] = tile.getIndex();
         }
       }
     }

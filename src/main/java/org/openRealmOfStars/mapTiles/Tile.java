@@ -444,17 +444,12 @@ public class Tile {
   }
 
   /**
-   * Is tile AscensionVein or portal
+   * Is tile Ascension Vein
    * @return True if ascension tile
    */
   public boolean isAscensionVein() {
     if (name.equals(TileNames.ASCENSION_VEIN_NSWE1)
         || name.equals(TileNames.ASCENSION_VEIN_NSWE2)
-        || name.equals(TileNames.ASCENSION_PORT_CLOSED)
-        || name.equals(TileNames.ASCENSION_PORTAL1)
-        || name.equals(TileNames.ASCENSION_PORTAL2)
-        || name.equals(TileNames.ASCENSION_PORTAL3)
-        || name.equals(TileNames.ASCENSION_PORTAL4)
         || name.equals(TileNames.ASCENSION_VEIN_NE1)
         || name.equals(TileNames.ASCENSION_VEIN_NE2)
         || name.equals(TileNames.ASCENSION_VEIN_NW1)
@@ -475,6 +470,21 @@ public class Tile {
         || name.equals(TileNames.ASCENSION_VEIN_SWE2)
         || name.equals(TileNames.ASCENSION_VEIN_WE1)
         || name.equals(TileNames.ASCENSION_VEIN_WE2)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Is tile Ascension portal
+   * @return True if ascension tile
+   */
+  public boolean isAscensionPortal() {
+    if (name.equals(TileNames.ASCENSION_PORT_CLOSED)
+        || name.equals(TileNames.ASCENSION_PORTAL1)
+        || name.equals(TileNames.ASCENSION_PORTAL2)
+        || name.equals(TileNames.ASCENSION_PORTAL3)
+        || name.equals(TileNames.ASCENSION_PORTAL4)) {
       return true;
     }
     return false;

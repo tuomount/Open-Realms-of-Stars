@@ -780,7 +780,8 @@ public class StarMap {
     }
     // No need to have generator after creation
     nameGenerator = null;
-    generateAscensionPortal(ascensionPortalX, ascensionPortalY);
+    // TODO This is for ascension victory
+    //generateAscensionPortal(ascensionPortalX, ascensionPortalY);
     ascensionPortalX = -1;
     ascensionPortalY = -1;
     if (anchors.size() > 0) {
@@ -808,22 +809,23 @@ public class StarMap {
             ascensionPortalX = x;
             ascensionPortalY = y;
           }
-          if (ascensionPortalX != -1 && DiceGenerator.getRandom(1) == 0) {
+          if (ascensionPortalY != -1 && DiceGenerator.getRandom(1) == 0) {
             break;
           }
         }
-        if (ascensionPortalX != -1) {
+        if (ascensionPortalY != -1) {
           break;
         }
       }
     }
-    generateAscensionPortal(ascensionPortalX, ascensionPortalY);
+    // TODO This is for ascension victory
+    /*generateAscensionPortal(ascensionPortalX, ascensionPortalY);
     smoothAscensionVeins();
-    revealWholeMap(players.getPlayerInfoByIndex(0));
+    revealWholeMap(getCurrentPlayerInfo());*/
   }
 
   /**
-   * Reveal whole map. This should be used only for debuggin.
+   * Reveal whole map. This should be used only for debugging.
    * @param info PlayerInfo who sees everything.
    */
   public void revealWholeMap(final PlayerInfo info) {
@@ -852,7 +854,8 @@ public class StarMap {
           int my = y - 1;
           if (isValidCoordinate(mx, my)) {
             tile = Tiles.getTileByIndex(tiles[mx][my]);
-            if (tile.isAscensionVein() || tile.isBlackhole()) {
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal()) {
               north = true;
             }
           }
@@ -860,7 +863,8 @@ public class StarMap {
           my = y + 1;
           if (isValidCoordinate(mx, my)) {
             tile = Tiles.getTileByIndex(tiles[mx][my]);
-            if (tile.isAscensionVein() || tile.isBlackhole()) {
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal()) {
               south = true;
             }
           }
@@ -868,7 +872,8 @@ public class StarMap {
           my = y;
           if (isValidCoordinate(mx, my)) {
             tile = Tiles.getTileByIndex(tiles[mx][my]);
-            if (tile.isAscensionVein() || tile.isBlackhole()) {
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal()) {
               west = true;
             }
           }
@@ -876,7 +881,8 @@ public class StarMap {
           my = y;
           if (isValidCoordinate(mx, my)) {
             tile = Tiles.getTileByIndex(tiles[mx][my]);
-            if (tile.isAscensionVein() || tile.isBlackhole()) {
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal()) {
               east = true;
             }
           }
@@ -5241,8 +5247,9 @@ public class StarMap {
       return false;
     }
     SquareInfo info = getTileInfo(x, y);
+    Tile tile = Tiles.getTileByIndex(tiles[x][y]);
     if (info.getType() == SquareInfo.TYPE_ASCENSION_VEIN
-        || info.getType() == SquareInfo.TYPE_EMPTY) {
+        || tile.getName().equals(TileNames.EMPTY)) {
       return true;
     }
     return false;

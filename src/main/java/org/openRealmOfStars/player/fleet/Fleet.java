@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Optional;
 
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
@@ -1204,15 +1205,20 @@ public class Fleet {
         .filter(ship -> ship.getFleetCapacity() > 0.0)
         .filter(ship -> getShipObsolete(ship, obsoleteModels) == 1)
         .sorted(cmprFleetCapDesc);
+
+    Optional<Ship> obsoleteShip = obsoleteShips.findFirst();
+    if (!obsoleteShip.isEmpty()) {
+      return obsoleteShip.get();
+    }
     var notObsoleteShips = ships.stream()
         .filter(ship -> ship.getFleetCapacity() > 0.0)
         .filter(ship -> getShipObsolete(ship, obsoleteModels) < 1)
         .sorted(cmprFleetCapDesc);
-
-    if (obsoleteShips.count() > 0) {
-      return obsoleteShips.findFirst().get();
+    Optional<Ship> notObsoleteShip = notObsoleteShips.findFirst();
+    if (!notObsoleteShip.isEmpty()) {
+      return notObsoleteShip.get();
     }
-    return notObsoleteShips.findFirst().get();
+    return null;
   }
 
   /**
@@ -1248,9 +1254,8 @@ public class Fleet {
       if (model.getDesign().getName().equals(ship.getName())) {
         if (model.isObsolete()) {
           return 1;
-        } else {
-          return -1;
         }
+        return -1;
       }
     }
     return 0;

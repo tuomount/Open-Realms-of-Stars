@@ -300,7 +300,7 @@ public class LeaderUtilityTest {
         LeaderUtility.LEVEL_START_RULER);
     Perk[] perks = LeaderUtility.getNewPerks(leader,
         LeaderUtility.PERK_TYPE_GOOD);
-    assertEquals(28, perks.length);
+    assertEquals(29, perks.length);
   }
 
   @Test

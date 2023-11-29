@@ -701,6 +701,12 @@ public final class LeaderBiography {
         sb.append(" is able get bit of extra information.");
         break;
       }
+      case CARTOGRAPHER: {
+        sb.append(name);
+        sb.append(" has great interest for charting unknown planets in"
+            + " the vastness of space.");
+        break;
+      }
     }
     return sb.toString();
   }

@@ -4695,71 +4695,67 @@ public class StarMap {
    */
   private void messageBasedOnTiles(final PlayerInfo info, final int sx,
       final int sy, final Fleet fleet) {
-    if (info.isHuman()) {
-      Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
-      SquareInfo square = tileInfo[sx][sy];
-      if (tile.isSpaceAnomaly()) {
-        Message msg = new Message(MessageType.FLEET,
-            fleet.getName() + " found space anomaly.",
-              Icons.getIconByName(Icons.ICON_HULL_TECH));
-        msg.setCoordinate(fleet.getCoordinate());
-        msg.setMatchByString(fleet.getName());
-        if (aiOrAutomateTakingMoves) {
-          info.getMsgList().addUpcomingMessage(msg);
-        } else {
-          info.getMsgList().addNewMessage(msg);
-        }
-        return;
+    int exp = 0;
+    Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
+    SquareInfo square = tileInfo[sx][sy];
+    if (tile.isSpaceAnomaly()) {
+      Message msg = new Message(MessageType.FLEET,
+          fleet.getName() + " found space anomaly.",
+            Icons.getIconByName(Icons.ICON_HULL_TECH));
+      msg.setCoordinate(fleet.getCoordinate());
+      msg.setMatchByString(fleet.getName());
+      if (aiOrAutomateTakingMoves) {
+        info.getMsgList().addUpcomingMessage(msg);
+      } else {
+        info.getMsgList().addNewMessage(msg);
       }
-      if (square.getType() == SquareInfo.TYPE_PLANET) {
-        Planet planet = planetList.get(square.getValue());
-        if (planet != null) {
-          StringBuilder sb = new StringBuilder();
-          sb.append(fleet.getName());
-          sb.append(" found planet called ");
-          sb.append(planet.getName());
+      return;
+    }
+    if (square.getType() == SquareInfo.TYPE_PLANET) {
+      Planet planet = planetList.get(square.getValue());
+      if (planet != null) {
+        exp = 8;
+        StringBuilder sb = new StringBuilder();
+        sb.append(fleet.getName());
+        sb.append(" found planet called ");
+        sb.append(planet.getName());
+        sb.append(".");
+        if (planet.getPlanetPlayerInfo() != null) {
+          sb.append(" Unfortunately it has been already colonized by ");
+          sb.append(planet.getPlanetPlayerInfo().getEmpireName());
           sb.append(".");
-          if (planet.getPlanetPlayerInfo() != null) {
-            sb.append(" Unfortunately it has been already colonized by ");
-            sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+        } else if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
+          sb.append(" Unfortunately planet's radiation level is too high");
+          sb.append(" for your people to live there...");
+        } else {
+          int value = info.getWorldTypeValue(
+              planet.getPlanetType().getWorldType());
+          if (value > 0) {
+            sb.append(" Planet is ");
+            sb.append(value);
+            sb.append("% habitable for your people.");
+            sb.append(" Planet size is ");
+            sb.append(planet.getSizeAsString());
             sb.append(".");
-          } else if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
-            sb.append(" Unfortunately planet's radiation level is too high");
-            sb.append(" for your people to live there...");
           } else {
-            int value = info.getWorldTypeValue(
-                planet.getPlanetType().getWorldType());
-            if (value > 0) {
-              sb.append(" Planet is ");
-              sb.append(value);
-              sb.append("% habitable for your people.");
-              sb.append(" Planet size is ");
-              sb.append(planet.getSizeAsString());
-              sb.append(".");
-            } else {
-              sb.append(" World type in this planet is something your");
-              sb.append(" people cannot tolarate.");
-            }
+            sb.append(" World type in this planet is something your");
+            sb.append(" people cannot tolarate.");
           }
-          Message msg = new Message(MessageType.FLEET,
-              sb.toString(), Icons.getIconByName(Icons.ICON_PLANET));
-          msg.setCoordinate(planet.getCoordinate());
-          msg.setMatchByString(planet.getName());
-          if (aiOrAutomateTakingMoves) {
-            info.getMsgList().addUpcomingMessage(msg);
-          } else {
-            info.getMsgList().addNewMessage(msg);
-          }
-          return;
         }
-      }
-      if (tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1)
-          || tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR2)) {
+        if (fleet.getCommander() != null) {
+          if (fleet.getCommander().hasPerk(Perk.CARTOGRAPHER)) {
+            exp = exp * 2;
+          }
+          sb.append(" ");
+          sb.append(fleet.getCommander().getCallName());
+          sb.append(" gained ");
+          sb.append(exp);
+          sb.append(" amount of experience.");
+        }
         Message msg = new Message(MessageType.FLEET,
-            fleet.getName() + " found deep space anchor.",
-            Icons.getIconByName(Icons.ICON_STARBASE));
-        msg.setCoordinate(new Coordinate(sx, sy));
-        msg.setMatchByString(fleet.getName());
+            sb.toString(), Icons.getIconByName(Icons.ICON_PLANET));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(planet.getName());
         if (aiOrAutomateTakingMoves) {
           info.getMsgList().addUpcomingMessage(msg);
         } else {
@@ -4767,6 +4763,51 @@ public class StarMap {
         }
         return;
       }
+    }
+    if (square.getType() == SquareInfo.TYPE_GAS_PLANET) {
+      Planet planet = planetList.get(square.getValue());
+      if (planet != null) {
+        exp = 2;
+        StringBuilder sb = new StringBuilder();
+        sb.append(fleet.getName());
+        sb.append(" found gas giant called ");
+        sb.append(planet.getName());
+        sb.append(".");
+        if (fleet.getCommander() != null) {
+          if (fleet.getCommander().hasPerk(Perk.CARTOGRAPHER)) {
+            exp = exp * 2;
+          }
+          sb.append(" ");
+          sb.append(fleet.getCommander().getCallName());
+          sb.append(" gained ");
+          sb.append(exp);
+          sb.append(" amount of experience.");
+        }
+        Message msg = new Message(MessageType.FLEET,
+            sb.toString(), Icons.getIconByName(Icons.ICON_PLANET));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(planet.getName());
+        if (aiOrAutomateTakingMoves) {
+          info.getMsgList().addUpcomingMessage(msg);
+        } else {
+          info.getMsgList().addNewMessage(msg);
+        }
+        return;
+      }
+    }
+    if (tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1)
+        || tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR2)) {
+      Message msg = new Message(MessageType.FLEET,
+          fleet.getName() + " found deep space anchor.",
+          Icons.getIconByName(Icons.ICON_STARBASE));
+      msg.setCoordinate(new Coordinate(sx, sy));
+      msg.setMatchByString(fleet.getName());
+      if (aiOrAutomateTakingMoves) {
+        info.getMsgList().addUpcomingMessage(msg);
+      } else {
+        info.getMsgList().addNewMessage(msg);
+      }
+      return;
     }
   }
 

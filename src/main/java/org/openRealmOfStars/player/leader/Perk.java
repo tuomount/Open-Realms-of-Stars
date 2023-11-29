@@ -246,14 +246,19 @@ public enum Perk {
    */
   ARCHAEOLOGIST(43, "Archaeologist", "Increase ancient artifact study by 2."),
   /**
-   * Gain more experince on away missions on unexplored planets.
+   * Gain more experience on away missions on unexplored planets.
    */
-  TREKKER(44, "Trekker", "Gain more experince on away missions on"
+  TREKKER(44, "Trekker", "Gain more experience on away missions on"
       + " unexplored planets."),
   /**
    * +1 espionage bonus against every realm.
    */
-  NEGOTIATOR(45, "Negotiator", "+1 espionage bonus against every realm.");
+  NEGOTIATOR(45, "Negotiator", "+1 espionage bonus against every realm."),
+  /**
+   * Gain more experience when finding new planets.
+   */
+  CARTOGRAPHER(46, "Cartographer", "Gain more experience when finding new"
+      + " planets.");
 
 
 
@@ -333,7 +338,8 @@ public enum Perk {
         || this == Perk.TRADER
         || this == Perk.SKILLFUL
         || this == Perk.MASTER_ENGINEER
-        || this == Perk.TREKKER) {
+        || this == Perk.TREKKER
+        || this == Perk.CARTOGRAPHER) {
       return true;
     }
     return false;
@@ -588,6 +594,8 @@ public enum Perk {
       }
       case FTL_ENGINEER:
       case MASTER_ENGINEER:
+      case CARTOGRAPHER:
+      case TREKKER:
       case EXPLORER: {
         if (knowledgeBonus > 4) {
           return true;

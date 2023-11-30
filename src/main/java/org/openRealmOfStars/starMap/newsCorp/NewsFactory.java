@@ -874,12 +874,14 @@ public final class NewsFactory {
    * @param planet Null or planet where combat happened
    * @param starYear StarYear when combat happened
    * @param hullSlots number of Hull slots in biggest ship.
+   * @param warhero did commander get war hero perk.
    * @return NewsData
    */
   public static NewsData makeCommanderInCombat(final Leader commander,
       final PlayerInfo realm,
       final PlayerInfo otherRealm, final boolean combatAgainstPrivateer,
-      final Planet planet, final int starYear, final int hullSlots) {
+      final Planet planet, final int starYear, final int hullSlots,
+      final boolean warhero) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -1027,6 +1029,11 @@ public final class NewsFactory {
     sb.append(" was victorious for ");
     sb.append(commander.getGender().getHisHer());
     sb.append(" side.");
+    if (warhero) {
+      sb.append(" ");
+      sb.append(commander.getCallName());
+      sb.append(" has become known war hero!");
+    }
     news.setNewsText(sb.toString());
     realm.appendStory(sb.toString(), starYear);
     otherRealm.appendStory(sb.toString(), starYear);

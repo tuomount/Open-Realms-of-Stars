@@ -346,6 +346,9 @@ public final class LeaderBiography {
           break;
         }
       }
+      if (leader.hasPerk(Perk.WAR_HERO)) {
+        sb.append(" and war hero");
+      }
       sb.append(". ");
     }
     if (stats.getStat(StatType.RESEARCH_ARTIFACTS) > 0) {
@@ -705,6 +708,13 @@ public final class LeaderBiography {
         sb.append(name);
         sb.append(" has great interest for charting unknown planets in"
             + " the vastness of space.");
+        break;
+      }
+      case WAR_HERO: {
+        sb.append(name);
+        sb.append(" has been in great battle and survived.");
+        sb.append(leader.getGender().getHeShe());
+        sb.append(" become a war hero.");
         break;
       }
     }

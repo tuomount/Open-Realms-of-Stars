@@ -258,7 +258,11 @@ public enum Perk {
    * Gain more experience when finding new planets.
    */
   CARTOGRAPHER(46, "Cartographer", "Gain more experience when finding new"
-      + " planets.");
+      + " planets."),
+  /**
+   * Higher chance for critical hit in combat.
+   */
+  WAR_HERO(47, "War hero", "Higher chance for critical hit in combat.");
 
 
 
@@ -339,7 +343,8 @@ public enum Perk {
         || this == Perk.SKILLFUL
         || this == Perk.MASTER_ENGINEER
         || this == Perk.TREKKER
-        || this == Perk.CARTOGRAPHER) {
+        || this == Perk.CARTOGRAPHER
+        || this == Perk.WAR_HERO) {
       return true;
     }
     return false;
@@ -464,7 +469,8 @@ public enum Perk {
   public boolean isGainedPerk() {
     if (this == Perk.CONVICT
         || this == Perk.CRUEL
-        || this == Perk.NEGOTIATOR) {
+        || this == Perk.NEGOTIATOR
+        || this == Perk.WAR_HERO) {
       return true;
     }
     return false;
@@ -550,6 +556,7 @@ public enum Perk {
       case PEACEFUL:
       case STUPID:
       case WEALTHY:
+      case WAR_HERO:
       case DIPLOMATIC: {
         if (knowledgeBonus > 0) {
           return true;

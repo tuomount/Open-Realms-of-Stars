@@ -23,6 +23,7 @@ import java.awt.event.MouseEvent;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
@@ -177,8 +178,21 @@ public class CombatMapMouseListener extends MouseAdapter {
             shipDamage = new ShipDamage(ShipDamage.MISSED_ATTACK,
                 "Attack missed!");
             if (DiceGenerator.getRandom(1, 100) <= accuracy) {
+              int extraCrit = 0;
+              if (target.getPlayer() == combat.getPlayer2()
+                  && combat.getDefendingFleet().getCommander() != null
+                  && combat.getDefendingFleet().getCommander()
+                  .hasPerk(Perk.WAR_HERO)) {
+                extraCrit = 5;
+              }
+              if (target.getPlayer() == combat.getPlayer1()
+                  && combat.getAttackingFleet().getCommander() != null
+                  && combat.getAttackingFleet().getCommander()
+                  .hasPerk(Perk.WAR_HERO)) {
+                extraCrit = 5;
+              }
               shipDamage = target.getShip().damageBy(weapon,
-                  ship.getOverloadedComputer());
+                  ship.getOverloadedComputer() + extraCrit);
               if (shipDamage.getValue() == ShipDamage.DAMAGED) {
                 target.setDamaged();
               }

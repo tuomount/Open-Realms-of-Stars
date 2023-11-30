@@ -34,6 +34,8 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderBiography;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
@@ -226,6 +228,10 @@ public class Combat {
    */
   private int starYear;
   /**
+   * Is combat worth for war hero.
+   */
+  private boolean worthOfWarHero;
+  /**
    * Build shipList in initiative order
    * @param attackerFleet Attacking Player1 fleet
    * @param defenderFleet Defending Player2 fleet
@@ -317,6 +323,10 @@ public class Combat {
    */
   private void initCombat() {
     combatEvent = new CombatEvent(defenderFleet.getCoordinate());
+    if (attackerFleet.getNumberOfShip() > 2
+        && defenderFleet.getNumberOfShip() > 2) {
+      worthOfWarHero = true;
+    }
     if (attackerFleet.getCommander() != null) {
       attackerFleet.getCommander().getStats().addOne(
           StatType.NUMBER_OF_BATTLES);
@@ -1326,11 +1336,23 @@ public boolean launchIntercept(final int distance,
         if (attackerFleet.getCommander() != null) {
           Leader leader = attackerFleet.getCommander();
           leader.setExperience(leader.getExperience() + defenderMilitaryValue);
+          if (worthOfWarHero && !leader.hasPerk(Perk.WAR_HERO)) {
+            leader.addPerk(Perk.WAR_HERO);
+            Message msg = new Message(MessageType.LEADER,
+                LeaderBiography.getReasonForPerk(leader, Perk.WAR_HERO),
+                LeaderUtility.getIconBasedOnLeaderJob(leader));
+            msg.setMatchByString("Index:"
+                + winnerPlayer.getLeaderIndex(leader));
+            winnerPlayer.getMsgList().addUpcomingMessage(msg);
+          } else {
+            worthOfWarHero = false;
+          }
           if (leaderKilledNews == null && orbitalDestroyedNews == null) {
             leaderInCombat = NewsFactory.makeCommanderInCombat(leader,
                 winnerPlayer, looserPlayer, defenderPrivateer, planet,
                 starYear,
-                attackerFleet.getBiggestShip().getHull().getMaxSlot());
+                attackerFleet.getBiggestShip().getHull().getMaxSlot(),
+                worthOfWarHero);
           }
         }
       } else {
@@ -1343,11 +1365,23 @@ public boolean launchIntercept(final int distance,
         if (defenderFleet.getCommander() != null) {
           Leader leader = defenderFleet.getCommander();
           leader.setExperience(leader.getExperience() + attackerMilitaryValue);
+          if (worthOfWarHero && !leader.hasPerk(Perk.WAR_HERO)) {
+            leader.addPerk(Perk.WAR_HERO);
+            Message msg = new Message(MessageType.LEADER,
+                LeaderBiography.getReasonForPerk(leader, Perk.WAR_HERO),
+                LeaderUtility.getIconBasedOnLeaderJob(leader));
+            msg.setMatchByString("Index:"
+                + winnerPlayer.getLeaderIndex(leader));
+            winnerPlayer.getMsgList().addUpcomingMessage(msg);
+          } else {
+            worthOfWarHero = false;
+          }
           if (leaderKilledNews == null && orbitalDestroyedNews == null) {
             leaderInCombat = NewsFactory.makeCommanderInCombat(leader,
                 winnerPlayer, looserPlayer, attackerPrivateer, planet,
                 starYear,
-                defenderFleet.getBiggestShip().getHull().getMaxSlot());
+                defenderFleet.getBiggestShip().getHull().getMaxSlot(),
+                worthOfWarHero);
           }
         }
       }
@@ -1698,12 +1732,23 @@ public boolean launchIntercept(final int distance,
         if (weapon != null && weapon.isWeapon() && !ai.isComponentUsed(i)
             && isClearShot(ai, target)
             && ai.getShip().componentIsWorking(i)) {
+          int extraCrit = 0;
+          if (ai.getPlayer() == defenderInfo
+              && defenderFleet.getCommander() != null
+              && defenderFleet.getCommander().hasPerk(Perk.WAR_HERO)) {
+            extraCrit = 5;
+          }
+          if (ai.getPlayer() == attackerInfo
+              && attackerFleet.getCommander() != null
+              && attackerFleet.getCommander().hasPerk(Perk.WAR_HERO)) {
+            extraCrit = 5;
+          }
           int accuracy = calculateAccuracy(ai, weapon, target);
           ShipDamage shipDamage = new ShipDamage(ShipDamage.MISSED_ATTACK,
               "Attack missed!");
           if (DiceGenerator.getRandom(1, 100) <= accuracy) {
             shipDamage = target.getShip().damageBy(weapon,
-                ai.getOverloadedComputer());
+                ai.getOverloadedComputer() + extraCrit);
             if (shipDamage.getValue() <= ShipDamage.DAMAGED) {
               target.setDamaged();
             }
@@ -2695,10 +2740,18 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
-   * Get the defeding fleet information.
+   * Get the defending fleet information.
    * @return Defending fleet
    */
   public Fleet getDefendingFleet() {
     return defenderFleet;
   }
+  /**
+   * Get the attacking fleet information.
+   * @return Attacking fleet
+   */
+  public Fleet getAttackingFleet() {
+    return attackerFleet;
+  }
+
 }

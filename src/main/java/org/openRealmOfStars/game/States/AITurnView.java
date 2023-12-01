@@ -3189,7 +3189,8 @@ public class AITurnView extends BlackPanel {
             chance = 4;
           }
           if (leader.getRace() == SpaceRace.MECHIONS
-              || leader.getRace() == SpaceRace.REBORGIANS) {
+              || leader.getRace() == SpaceRace.REBORGIANS
+              || leader.getRace() == SpaceRace.SYNTHDROIDS) {
             // Mechions or Reborgians do not get heirs
             chance = 0;
           }

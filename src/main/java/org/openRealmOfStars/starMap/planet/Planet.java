@@ -335,6 +335,10 @@ public class Planet {
    */
   public static final int POPULATION_PLANET = 5;
   /**
+   * Governor guide is passive.
+   */
+  public static final int PASSIVE_GOVERNOR = 6;
+  /**
    * Maximum number of different production
    */
   public static final int MAX_PRODUCTION_TYPE = 6;
@@ -2509,7 +2513,8 @@ public class Planet {
           if (building.isSingleAllowed()) {
             setUnderConstruction(getProductionList()[0]);
           }
-          if (governor != null) {
+          if (governor != null
+              && getGovernorGuide() != Planet.PASSIVE_GOVERNOR) {
             int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
             Attitude attitude = LeaderUtility.getRulerAttitude(governor);
             PlanetHandling.chooseNextConstruction(map, this, index, attitude);

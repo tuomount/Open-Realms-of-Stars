@@ -19,7 +19,7 @@ package org.openRealmOfStars.mapTiles;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRace;
 
 import static org.junit.Assert.*;
 

@@ -27,7 +27,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 
 import org.openRealmOfStars.game.tutorial.HelpLine;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
 *

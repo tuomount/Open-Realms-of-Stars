@@ -31,7 +31,7 @@ import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.planet.Planet;

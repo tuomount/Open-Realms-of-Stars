@@ -25,7 +25,7 @@ import java.util.ListIterator;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.icons.AnimatedImage;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

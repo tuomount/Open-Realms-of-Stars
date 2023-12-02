@@ -25,9 +25,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
-import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.leader.stats.LeaderStats;
+import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**

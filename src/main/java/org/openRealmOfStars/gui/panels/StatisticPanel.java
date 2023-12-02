@@ -25,7 +25,7 @@ import java.awt.Stroke;
 
 import javax.swing.JPanel;
 
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
  *

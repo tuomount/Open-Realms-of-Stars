@@ -21,7 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 

@@ -17,7 +17,7 @@ package org.openRealmOfStars.player.ship;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRace;
 
 /**
  * Static ship images for different races

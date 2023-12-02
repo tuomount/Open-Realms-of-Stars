@@ -30,7 +30,7 @@ import javax.swing.event.ChangeListener;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.IconLabel;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
  *

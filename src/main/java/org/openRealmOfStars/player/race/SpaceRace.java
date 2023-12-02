@@ -1,4 +1,4 @@
-package org.openRealmOfStars.player.SpaceRace;
+package org.openRealmOfStars.player.race;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
@@ -22,7 +22,7 @@ import java.awt.image.BufferedImage;
 import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;

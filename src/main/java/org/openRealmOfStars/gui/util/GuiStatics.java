@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui.utilies;
+package org.openRealmOfStars.gui.util;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
@@ -41,7 +41,7 @@ import org.openRealmOfStars.gui.scheme.GreyScheme;
 import org.openRealmOfStars.gui.scheme.SchemeType;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.mapTiles.Tiles;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 

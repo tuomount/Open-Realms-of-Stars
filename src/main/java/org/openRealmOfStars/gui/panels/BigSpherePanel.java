@@ -29,8 +29,8 @@ import javax.swing.JPanel;
 
 import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
 import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
-import org.openRealmOfStars.gui.utilies.GraphRoutines;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GraphRoutines;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.planet.Planet;

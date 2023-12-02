@@ -26,7 +26,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.border.AbstractBorder;
 
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.IOUtilities;
 

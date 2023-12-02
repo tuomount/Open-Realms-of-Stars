@@ -22,10 +22,10 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import org.openRealmOfStars.gui.utilies.GraphRoutines;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
-import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.gui.util.GraphRoutines;
+import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.utilities.IOUtilities;
 

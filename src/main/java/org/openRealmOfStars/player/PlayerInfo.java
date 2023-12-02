@@ -25,8 +25,6 @@ import java.util.Collections;
 
 import org.openRealmOfStars.ai.mission.MissionList;
 import org.openRealmOfStars.ai.pathfinding.PathPoint;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
-import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.artifact.Artifact;
 import org.openRealmOfStars.player.artifact.ArtifactLists;
 import org.openRealmOfStars.player.artifact.ArtifactType;
@@ -43,6 +41,8 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.MessageList;
+import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;

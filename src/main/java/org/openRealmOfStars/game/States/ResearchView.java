@@ -45,7 +45,7 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ResearchTechPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.artifact.Artifact;
 import org.openRealmOfStars.player.leader.RulerUtility;

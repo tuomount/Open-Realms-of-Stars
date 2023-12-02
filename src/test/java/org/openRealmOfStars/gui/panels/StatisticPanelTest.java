@@ -23,7 +23,7 @@ import java.awt.Color;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
  * Test for StatisticPanel class

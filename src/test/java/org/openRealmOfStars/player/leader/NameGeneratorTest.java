@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRace;
 
 /**
 * Leader Name Generator Tests.

@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui.utilies;
+package org.openRealmOfStars.gui.util;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2021 Tuomo Untinen

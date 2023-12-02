@@ -26,7 +26,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
 import org.openRealmOfStars.gui.borders.SimpleBorder;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**

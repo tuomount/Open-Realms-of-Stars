@@ -20,7 +20,7 @@ package org.openRealmOfStars.gui.labels;
 import java.awt.Graphics;
 import java.awt.Insets;
 
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.utilities.TextUtilities;
 
 /**

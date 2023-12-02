@@ -26,7 +26,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.game.SavedGame;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
  *

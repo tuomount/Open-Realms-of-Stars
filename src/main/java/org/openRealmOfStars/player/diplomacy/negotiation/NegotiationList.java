@@ -19,7 +19,7 @@ package org.openRealmOfStars.player.diplomacy.negotiation;
 
 import java.util.ArrayList;
 
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRace;
 
 /**
 *

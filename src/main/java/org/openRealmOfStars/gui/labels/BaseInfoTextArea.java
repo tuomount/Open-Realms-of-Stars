@@ -22,7 +22,7 @@ import java.awt.Color;
 import javax.swing.JTextArea;
 
 import org.openRealmOfStars.gui.borders.SimpleBorder;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
  *

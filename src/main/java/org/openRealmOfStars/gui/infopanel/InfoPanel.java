@@ -24,7 +24,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import org.openRealmOfStars.gui.borders.ScifiBorder;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
  *

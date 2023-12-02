@@ -31,7 +31,7 @@ import java.util.Calendar;
 
 import javax.imageio.ImageIO;
 
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
  *

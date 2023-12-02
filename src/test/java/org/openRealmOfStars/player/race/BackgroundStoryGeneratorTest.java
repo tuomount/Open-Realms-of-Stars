@@ -1,4 +1,4 @@
-package org.openRealmOfStars.player.SpaceRace;
+package org.openRealmOfStars.player.race;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2023 Tuomo Untinen

@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui.utilities;
+package org.openRealmOfStars.gui.util;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2017 Tuomo Untinen
@@ -24,7 +24,6 @@ import java.awt.image.BufferedImage;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 /**
 *

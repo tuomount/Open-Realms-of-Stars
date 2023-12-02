@@ -27,8 +27,8 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.AiDifficulty;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 
 /**

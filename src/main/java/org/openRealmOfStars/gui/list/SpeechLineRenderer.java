@@ -1,7 +1,7 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2017 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,15 +25,15 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import org.openRealmOfStars.game.SavedGame;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
 
 /**
- *
- * Save game list renderer
- *
- */
-public class SaveGameListRenderer implements ListCellRenderer<SavedGame> {
+*
+* SpeechLine renderer
+*
+*/
+public class SpeechLineRenderer implements ListCellRenderer<SpeechLine> {
 
   /**
    * Default list cell renderer
@@ -43,24 +43,17 @@ public class SaveGameListRenderer implements ListCellRenderer<SavedGame> {
 
   @Override
   public Component getListCellRendererComponent(
-      final JList<? extends SavedGame> list, final SavedGame value,
+      final JList<? extends SpeechLine> list, final SpeechLine value,
       final int index, final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    if (value != null) {
-      String text = value.getFilename() + " - " + value.getTime()
-          + " Star year: " + value.getStarYear() + " - "
-          + value.getEmpireName() + " Realms: "
-          + value.getRealms() + " - "
-          + value.getGalaxySize();
-      renderer.setText(text);
-    }
+    renderer.setText(value.getLine());
     if (isSelected) {
-      renderer.setForeground(GuiStatics.getCoolSpaceColor());
+      renderer.setForeground(GuiStatics.getInfoTextColor());
       renderer.setBackground(Color.BLACK);
     } else {
-      renderer.setForeground(GuiStatics.COLOR_GREY_TEXT);
+      renderer.setForeground(GuiStatics.getInfoTextColorDark());
       renderer.setBackground(Color.BLACK);
     }
     return renderer;

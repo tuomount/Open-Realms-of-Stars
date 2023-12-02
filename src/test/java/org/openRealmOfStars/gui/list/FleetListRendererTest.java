@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2017 Tuomo Untinen
@@ -26,40 +26,42 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.ship.ShipHull;
-import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.ship.Ship;
 
 /**
 *
-* Test for ShipHullListRenderer.
+* Test for FleetListRenderer.
 */
-public class ShipHullListRendererTest {
+public class FleetListRendererTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testShipHullListRenderer() {
-    JList<? extends ShipHull> list = new JList<>();
-    ShipHull hull = Mockito.mock(ShipHull.class);
-    Mockito.when(hull.getName()).thenReturn("Hull 1");
-    Mockito.when(hull.getSize()).thenReturn(ShipSize.MEDIUM);
+  public void testFleetListRenderer() {
+    JList<? extends Fleet> list = new JList<>();
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getName()).thenReturn("Ship 1");
+    Fleet value = Mockito.mock(Fleet.class);
+    Mockito.when(value.getNumberOfShip()).thenReturn(1);
+    Mockito.when(value.getName()).thenReturn("Fleet 1");
+    Mockito.when(value.getFirstShip()).thenReturn(ship);
     int index = 0;
     boolean selected = false;
     boolean cellHasFocus = false;
 
-    ShipHull value = hull;
-    ShipHullListRenderer renderer = new ShipHullListRenderer();
+    FleetListRenderer renderer = new FleetListRenderer();
     JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
-    assertEquals("Hull 1 - Medium",label.getText());
+    assertEquals("Fleet 1 - Ship 1",label.getText());
     assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
     assertEquals(GuiStatics.getDeepSpaceDarkColor(), label.getBackground());
 
-    Mockito.when(hull.getSize()).thenReturn(ShipSize.SMALL);
+    Mockito.when(value.getNumberOfShip()).thenReturn(5);
     selected = true;
-    renderer = new ShipHullListRenderer();
+    renderer = new FleetListRenderer();
     label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
-    assertEquals("Hull 1 - Small",label.getText());
+    assertEquals("Fleet 1 - 5 ships",label.getText());
     assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
     assertEquals(GuiStatics.getDeepSpaceColor(), label.getBackground());
   }

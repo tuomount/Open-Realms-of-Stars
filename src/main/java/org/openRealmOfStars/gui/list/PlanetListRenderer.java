@@ -1,7 +1,7 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016 Tuomo Untinen
+ * Copyright (C) 2017 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,7 +17,6 @@ package org.openRealmOfStars.gui.ListRenderers;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.DefaultListCellRenderer;
@@ -26,14 +25,14 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  *
- * Tech list renderer
+ * Planet list renderer
  *
  */
-public class TechListRenderer implements ListCellRenderer<Tech> {
+public class PlanetListRenderer implements ListCellRenderer<Planet> {
 
   /**
    * Default list cell renderer
@@ -43,18 +42,18 @@ public class TechListRenderer implements ListCellRenderer<Tech> {
 
   @Override
   public Component getListCellRendererComponent(
-      final JList<? extends Tech> list, final Tech value, final int index,
+      final JList<? extends Planet> list, final Planet value, final int index,
       final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    renderer.setIcon(value.getIcon().getAsIcon());
+    renderer.setText(value.getName());
     if (isSelected) {
-      renderer.setForeground(GuiStatics.getInfoTextColor());
-      renderer.setBackground(Color.BLACK);
+      renderer.setForeground(GuiStatics.getCoolSpaceColor());
+      renderer.setBackground(GuiStatics.getDeepSpaceColor());
     } else {
-      renderer.setForeground(GuiStatics.getInfoTextColorDark());
-      renderer.setBackground(Color.BLACK);
+      renderer.setForeground(GuiStatics.getCoolSpaceColorDark());
+      renderer.setBackground(GuiStatics.getDeepSpaceDarkColor());
     }
     return renderer;
   }

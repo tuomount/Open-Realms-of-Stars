@@ -1,7 +1,7 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016 Tuomo Untinen
+ * Copyright (C) 2021 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,7 +17,6 @@ package org.openRealmOfStars.gui.ListRenderers;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.DefaultListCellRenderer;
@@ -26,14 +25,14 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.PlayerColor;
 
 /**
- *
- * ShipStat list renderer
- *
- */
-public class ShipStatRenderer implements ListCellRenderer<ShipStat> {
+*
+* Player Color list cell renderer
+*
+*/
+public class PlayerColorListRenderer implements ListCellRenderer<PlayerColor> {
 
   /**
    * Default list cell renderer
@@ -43,39 +42,13 @@ public class ShipStatRenderer implements ListCellRenderer<ShipStat> {
 
   @Override
   public Component getListCellRendererComponent(
-      final JList<? extends ShipStat> list, final ShipStat value,
+      final JList<? extends PlayerColor> list, final PlayerColor value,
       final int index, final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    StringBuilder sb = new StringBuilder();
-    sb.append(value.getDesign().getName());
-    sb.append(" - ");
-    sb.append(value.getDesign().getHull().getSize());
-    if (value.isObsolete()) {
-      sb.append(" Obsoleted");
-    } else {
-      sb.append(" Cost/Metal: ");
-      sb.append(value.getDesign().getCost());
-      sb.append("/");
-      sb.append(value.getDesign().getMetalCost());
-    }
-    renderer.setText(sb.toString());
-    if (isSelected) {
-      if (value.isObsolete()) {
-        renderer.setForeground(GuiStatics.COLOR_GREY_TEXT);
-      } else {
-        renderer.setForeground(GuiStatics.getInfoTextColor());
-      }
-      renderer.setBackground(Color.BLACK);
-    } else {
-      if (value.isObsolete()) {
-        renderer.setForeground(GuiStatics.COLOR_GREY_TEXT_DARK);
-      } else {
-        renderer.setForeground(GuiStatics.getInfoTextColorDark());
-      }
-      renderer.setBackground(Color.BLACK);
-    }
+    renderer.setText(value.getName());
+    renderer.setForeground(value.getColor());
     return renderer;
   }
 

@@ -1,7 +1,7 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,7 +17,7 @@ package org.openRealmOfStars.gui.ListRenderers;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -26,41 +26,37 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.ship.ShipComponent;
-import org.openRealmOfStars.player.ship.ShipComponentType;
+import org.openRealmOfStars.player.fleet.TradeRoute;
 
 /**
 *
-* Test for ShipComponentListRenderer.
+* Ship trade route list renderer test class
+*
 */
-public class ShipComponentListRendererTest {
+public class TradeRouteListRendererTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void test() {
-    JList<? extends ShipComponent> list = new JList<>();
-    ShipComponent value = Mockito.mock(ShipComponent.class);
-    Mockito.when(value.getName()).thenReturn("Component");
-    Mockito.when(value.getType()).thenReturn(ShipComponentType.ENGINE);
+  public void testTradeRouteListRenderer() {
+    JList<? extends TradeRoute> list = new JList<>();
+    TradeRoute value = Mockito.mock(TradeRoute.class);
+    Mockito.when(value.toString()).thenReturn("ToString");
     int index = 0;
     boolean selected = false;
     boolean cellHasFocus = false;
-
-    ShipComponentListRenderer renderer = new ShipComponentListRenderer();
+    TradeRouteListRenderer renderer = new TradeRouteListRenderer();
     JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
-    assertEquals("Component - Engine",label.getText());
+    assertEquals("ToString", label.getText());
     assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
     assertEquals(GuiStatics.getDeepSpaceDarkColor(), label.getBackground());
-
-    value = null;
     selected = true;
-    renderer = new ShipComponentListRenderer();
     label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
-    assertEquals("None",label.getText());
+    assertEquals("ToString", label.getText());
     assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
     assertEquals(GuiStatics.getDeepSpaceColor(), label.getBackground());
+
   }
 
 }

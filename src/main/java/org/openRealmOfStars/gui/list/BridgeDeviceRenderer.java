@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2021 Tuomo Untinen
@@ -17,6 +17,7 @@ package org.openRealmOfStars.gui.ListRenderers;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.DefaultListCellRenderer;
@@ -24,15 +25,15 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import org.openRealmOfStars.ambient.BridgeDevice;
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.PlayerColor;
 
 /**
 *
-* Player Color list cell renderer
+* BridgeDevice renderer
 *
 */
-public class PlayerColorListRenderer implements ListCellRenderer<PlayerColor> {
+public class BridgeDeviceRenderer implements ListCellRenderer<BridgeDevice> {
 
   /**
    * Default list cell renderer
@@ -42,14 +43,19 @@ public class PlayerColorListRenderer implements ListCellRenderer<PlayerColor> {
 
   @Override
   public Component getListCellRendererComponent(
-      final JList<? extends PlayerColor> list, final PlayerColor value,
+      final JList<? extends BridgeDevice> list, final BridgeDevice value,
       final int index, final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    renderer.setText(value.getName());
-    renderer.setForeground(value.getColor());
+    renderer.setText(value.toString());
+    if (isSelected) {
+      renderer.setForeground(GuiStatics.getInfoTextColor());
+      renderer.setBackground(Color.BLACK);
+    } else {
+      renderer.setForeground(GuiStatics.getInfoTextColorDark());
+      renderer.setBackground(Color.BLACK);
+    }
     return renderer;
   }
-
 }

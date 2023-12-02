@@ -36,7 +36,6 @@ import javax.swing.event.ListSelectionListener;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -44,6 +43,7 @@ import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextPane;
 import org.openRealmOfStars.gui.labels.SpaceComboBox;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
+import org.openRealmOfStars.gui.list.ShipListRenderer;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.util.GuiStatics;

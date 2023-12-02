@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2017 Tuomo Untinen
@@ -19,6 +19,8 @@ package org.openRealmOfStars.gui.ListRenderers;
 
 import static org.junit.Assert.assertEquals;
 
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
 
@@ -26,40 +28,40 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
+import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 
 /**
 *
-* Test for PlanetListRenderer.
+* Test for SpeechLineRenderer.
 */
-public class PlanetListRendererTest {
+public class SpeechLineRendererTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testPlanetListRenderer() {
-    JList<? extends Planet> list = new JList<>();
-    Planet planet = Mockito.mock(Planet.class);
-    Mockito.when(planet.getName()).thenReturn("Planet 1");
-    Planet planet2 = Mockito.mock(Planet.class);
-    Mockito.when(planet2.getName()).thenReturn("Planet 2");
+  public void testSpeechLineRenderer() {
+    JList<? extends SpeechLine> list = new JList<>();
+    SpeechLine line = Mockito.mock(SpeechLine.class);
+    Mockito.when(line.getLine()).thenReturn("My line");
+    Mockito.when(line.getType()).thenReturn(SpeechType.AGREE);
     int index = 0;
     boolean selected = false;
     boolean cellHasFocus = false;
 
-    PlanetListRenderer renderer = new PlanetListRenderer();
-    JLabel label = (JLabel) renderer.getListCellRendererComponent(list, planet, index,
+    SpeechLineRenderer renderer = new SpeechLineRenderer();
+    JLabel label = (JLabel) renderer.getListCellRendererComponent(list, line, index,
         selected, cellHasFocus);
-    assertEquals("Planet 1",label.getText());
-    assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
-    assertEquals(GuiStatics.getDeepSpaceDarkColor(), label.getBackground());
+    assertEquals("My line",label.getText());
+    assertEquals(GuiStatics.getInfoTextColorDark(), label.getForeground());
+    assertEquals(Color.black, label.getBackground());
 
     selected = true;
-    renderer = new PlanetListRenderer();
-    label = (JLabel) renderer.getListCellRendererComponent(list, planet2, index,
+    renderer = new SpeechLineRenderer();
+    label = (JLabel) renderer.getListCellRendererComponent(list, line, index,
         selected, cellHasFocus);
-    assertEquals("Planet 2",label.getText());
-    assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
-    assertEquals(GuiStatics.getDeepSpaceColor(), label.getBackground());
+    assertEquals("My line",label.getText());
+    assertEquals(GuiStatics.getInfoTextColor(), label.getForeground());
+    assertEquals(Color.black, label.getBackground());
   }
 
 }

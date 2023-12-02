@@ -1,7 +1,7 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,7 +17,6 @@ package org.openRealmOfStars.gui.ListRenderers;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.DefaultListCellRenderer;
@@ -26,14 +25,14 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
+import org.openRealmOfStars.player.ship.Ship;
 
 /**
-*
-* SpeechLine renderer
-*
-*/
-public class SpeechLineRenderer implements ListCellRenderer<SpeechLine> {
+ *
+ * Ship list renderer
+ *
+ */
+public class ShipListRenderer implements ListCellRenderer<Ship> {
 
   /**
    * Default list cell renderer
@@ -43,18 +42,20 @@ public class SpeechLineRenderer implements ListCellRenderer<SpeechLine> {
 
   @Override
   public Component getListCellRendererComponent(
-      final JList<? extends SpeechLine> list, final SpeechLine value,
-      final int index, final boolean isSelected, final boolean cellHasFocus) {
+      final JList<? extends Ship> list, final Ship value, final int index,
+      final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    renderer.setText(value.getLine());
+    renderer.setText(
+        value.getName() + " - " + value.getHull().getHullType().toString()
+        + " - " + value.getTotalMilitaryPower());
     if (isSelected) {
-      renderer.setForeground(GuiStatics.getInfoTextColor());
-      renderer.setBackground(Color.BLACK);
+      renderer.setForeground(value.getDamageColor());
+      renderer.setBackground(GuiStatics.getDeepSpaceColor());
     } else {
-      renderer.setForeground(GuiStatics.getInfoTextColorDark());
-      renderer.setBackground(Color.BLACK);
+      renderer.setForeground(value.getDamageColor());
+      renderer.setBackground(GuiStatics.getDeepSpaceDarkColor());
     }
     return renderer;
   }

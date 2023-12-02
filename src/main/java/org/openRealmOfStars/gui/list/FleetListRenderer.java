@@ -1,7 +1,7 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2022 Tuomo Untinen
+ * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,7 +17,6 @@ package org.openRealmOfStars.gui.ListRenderers;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.DefaultListCellRenderer;
@@ -26,15 +25,14 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.player.fleet.Fleet;
 
 /**
-*
-* Voting list renderer
-*
-*/
-public class VotingListRenderer implements ListCellRenderer<Vote> {
+ *
+ * Fleet list renderer
+ *
+ */
+public class FleetListRenderer implements ListCellRenderer<Fleet> {
 
   /**
    * Default list cell renderer
@@ -42,34 +40,27 @@ public class VotingListRenderer implements ListCellRenderer<Vote> {
   private DefaultListCellRenderer defaultRenderer
       = new DefaultListCellRenderer();
 
-  /**
-   * Starmap for getting enough information for voting.
-   */
-  private StarMap map;
-
-  /**
-   * Set Star map for renderer.
-   * @param starMap StarMap
-   */
-  public void setStarMap(final StarMap starMap) {
-    map = starMap;
-  }
   @Override
   public Component getListCellRendererComponent(
-      final JList<? extends Vote> list, final Vote value, final int index,
+      final JList<? extends Fleet> list, final Fleet value, final int index,
       final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    renderer.setText(value.getDescription(map));
-    if (isSelected) {
-      renderer.setForeground(GuiStatics.COLOR_GOLD);
-      renderer.setBackground(Color.BLACK);
+    if (value.getNumberOfShip() == 1) {
+      renderer
+          .setText(value.getName() + " - " + value.getFirstShip().getName());
     } else {
-      renderer.setForeground(GuiStatics.COLOR_GOLD_DARK);
-      renderer.setBackground(Color.BLACK);
+      renderer.setText(
+          value.getName() + " - " + value.getNumberOfShip() + " ships");
+    }
+    if (isSelected) {
+      renderer.setForeground(GuiStatics.getCoolSpaceColor());
+      renderer.setBackground(GuiStatics.getDeepSpaceColor());
+    } else {
+      renderer.setForeground(GuiStatics.getCoolSpaceColorDark());
+      renderer.setBackground(GuiStatics.getDeepSpaceDarkColor());
     }
     return renderer;
   }
-
 }

@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui.mapPanel.Minimap;
+package org.openRealmOfStars.gui.mapPanel;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2019 Tuomo Untinen

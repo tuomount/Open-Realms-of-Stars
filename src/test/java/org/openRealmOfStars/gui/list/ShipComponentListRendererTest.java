@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2017 Tuomo Untinen
@@ -19,8 +19,6 @@ package org.openRealmOfStars.gui.ListRenderers;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Color;
-
 import javax.swing.JLabel;
 import javax.swing.JList;
 
@@ -28,40 +26,41 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
-import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
+import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentType;
 
 /**
 *
-* Test for SpeechLineRenderer.
+* Test for ShipComponentListRenderer.
 */
-public class SpeechLineRendererTest {
+public class ShipComponentListRendererTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testSpeechLineRenderer() {
-    JList<? extends SpeechLine> list = new JList<>();
-    SpeechLine line = Mockito.mock(SpeechLine.class);
-    Mockito.when(line.getLine()).thenReturn("My line");
-    Mockito.when(line.getType()).thenReturn(SpeechType.AGREE);
+  public void test() {
+    JList<? extends ShipComponent> list = new JList<>();
+    ShipComponent value = Mockito.mock(ShipComponent.class);
+    Mockito.when(value.getName()).thenReturn("Component");
+    Mockito.when(value.getType()).thenReturn(ShipComponentType.ENGINE);
     int index = 0;
     boolean selected = false;
     boolean cellHasFocus = false;
 
-    SpeechLineRenderer renderer = new SpeechLineRenderer();
-    JLabel label = (JLabel) renderer.getListCellRendererComponent(list, line, index,
+    ShipComponentListRenderer renderer = new ShipComponentListRenderer();
+    JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
-    assertEquals("My line",label.getText());
-    assertEquals(GuiStatics.getInfoTextColorDark(), label.getForeground());
-    assertEquals(Color.black, label.getBackground());
+    assertEquals("Component - Engine",label.getText());
+    assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
+    assertEquals(GuiStatics.getDeepSpaceDarkColor(), label.getBackground());
 
+    value = null;
     selected = true;
-    renderer = new SpeechLineRenderer();
-    label = (JLabel) renderer.getListCellRendererComponent(list, line, index,
+    renderer = new ShipComponentListRenderer();
+    label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
         selected, cellHasFocus);
-    assertEquals("My line",label.getText());
-    assertEquals(GuiStatics.getInfoTextColor(), label.getForeground());
-    assertEquals(Color.black, label.getBackground());
+    assertEquals("None",label.getText());
+    assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
+    assertEquals(GuiStatics.getDeepSpaceColor(), label.getBackground());
   }
 
 }

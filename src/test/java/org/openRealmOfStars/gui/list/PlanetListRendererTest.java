@@ -1,7 +1,7 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018 Tuomo Untinen
+ * Copyright (C) 2017 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,7 +17,7 @@ package org.openRealmOfStars.gui.ListRenderers;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -26,37 +26,40 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.fleet.TradeRoute;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
 *
-* Ship trade route list renderer test class
-*
+* Test for PlanetListRenderer.
 */
-public class TradeRouteListRendererTest {
+public class PlanetListRendererTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testTradeRouteListRenderer() {
-    JList<? extends TradeRoute> list = new JList<>();
-    TradeRoute value = Mockito.mock(TradeRoute.class);
-    Mockito.when(value.toString()).thenReturn("ToString");
+  public void testPlanetListRenderer() {
+    JList<? extends Planet> list = new JList<>();
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet 1");
+    Planet planet2 = Mockito.mock(Planet.class);
+    Mockito.when(planet2.getName()).thenReturn("Planet 2");
     int index = 0;
     boolean selected = false;
     boolean cellHasFocus = false;
-    TradeRouteListRenderer renderer = new TradeRouteListRenderer();
-    JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
+
+    PlanetListRenderer renderer = new PlanetListRenderer();
+    JLabel label = (JLabel) renderer.getListCellRendererComponent(list, planet, index,
         selected, cellHasFocus);
-    assertEquals("ToString", label.getText());
+    assertEquals("Planet 1",label.getText());
     assertEquals(GuiStatics.getCoolSpaceColorDark(), label.getForeground());
     assertEquals(GuiStatics.getDeepSpaceDarkColor(), label.getBackground());
+
     selected = true;
-    label = (JLabel) renderer.getListCellRendererComponent(list, value, index,
+    renderer = new PlanetListRenderer();
+    label = (JLabel) renderer.getListCellRendererComponent(list, planet2, index,
         selected, cellHasFocus);
-    assertEquals("ToString", label.getText());
+    assertEquals("Planet 2",label.getText());
     assertEquals(GuiStatics.getCoolSpaceColor(), label.getForeground());
     assertEquals(GuiStatics.getDeepSpaceColor(), label.getBackground());
-
   }
 
 }

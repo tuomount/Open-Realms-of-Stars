@@ -1,7 +1,7 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,14 +25,14 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.player.ship.ShipHull;
 
 /**
  *
- * Planet list renderer
+ * Ship Hull list renderer
  *
  */
-public class PlanetListRenderer implements ListCellRenderer<Planet> {
+public class ShipHullListRenderer implements ListCellRenderer<ShipHull> {
 
   /**
    * Default list cell renderer
@@ -42,12 +42,16 @@ public class PlanetListRenderer implements ListCellRenderer<Planet> {
 
   @Override
   public Component getListCellRendererComponent(
-      final JList<? extends Planet> list, final Planet value, final int index,
-      final boolean isSelected, final boolean cellHasFocus) {
+      final JList<? extends ShipHull> list, final ShipHull value,
+      final int index, final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    renderer.setText(value.getName());
+    if (value != null) {
+      renderer.setText(value.getName() + " - " + value.getSize().toString());
+    } else {
+      renderer.setText("No hull");
+    }
     if (isSelected) {
       renderer.setForeground(GuiStatics.getCoolSpaceColor());
       renderer.setBackground(GuiStatics.getDeepSpaceColor());

@@ -1,7 +1,7 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018 Tuomo Untinen
+ * Copyright (C) 2016 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,14 +25,14 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.fleet.TradeRoute;
+import org.openRealmOfStars.starMap.planet.construction.Construction;
 
 /**
-*
-* Ship trade route list renderer
-*
-*/
-public class TradeRouteListRenderer implements ListCellRenderer<TradeRoute> {
+ *
+ * Production list renderer
+ *
+ */
+public class ProductionListRenderer implements ListCellRenderer<Construction> {
 
   /**
    * Default list cell renderer
@@ -42,12 +42,12 @@ public class TradeRouteListRenderer implements ListCellRenderer<TradeRoute> {
 
   @Override
   public Component getListCellRendererComponent(
-      final JList<? extends TradeRoute> list, final TradeRoute value,
+      final JList<? extends Construction> list, final Construction value,
       final int index, final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    renderer.setText(value.toString());
+    renderer.setIcon(value.getIcon().getAsIcon());
     if (isSelected) {
       renderer.setForeground(GuiStatics.getCoolSpaceColor());
       renderer.setBackground(GuiStatics.getDeepSpaceColor());
@@ -57,5 +57,4 @@ public class TradeRouteListRenderer implements ListCellRenderer<TradeRoute> {
     }
     return renderer;
   }
-
 }

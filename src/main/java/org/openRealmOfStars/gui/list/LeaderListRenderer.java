@@ -1,7 +1,7 @@
-package org.openRealmOfStars.gui.ListRenderers;
+package org.openRealmOfStars.gui.list;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2022 Tuomo Untinen
+ * Copyright (C) 2020-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,14 +26,16 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.artifact.Artifact;
+import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.RecruitableLeader;
+
 
 /**
- *
- * Artifact list renderer
- *
- */
-public class ArtifactListRenderer implements ListCellRenderer<Artifact> {
+*
+* Tech list renderer
+*
+*/
+public class LeaderListRenderer implements ListCellRenderer<RecruitableLeader> {
 
   /**
    * Default list cell renderer
@@ -43,13 +45,18 @@ public class ArtifactListRenderer implements ListCellRenderer<Artifact> {
 
   @Override
   public Component getListCellRendererComponent(
-      final JList<? extends Artifact> list, final Artifact value,
-      final int index, final boolean isSelected, final boolean cellHasFocus) {
+      final JList<? extends RecruitableLeader> list,
+      final RecruitableLeader value, final int index,
+      final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
-    renderer.setFont(GuiStatics.getFontCubellan());
-    renderer.setIcon(value.getIcon().getAsIcon());
-    renderer.setText(value.getName());
+    if (value != null) {
+      renderer.setText(value.getLeader().getCallName() + " - "
+          + value.getCost() + " credits");
+      renderer.setFont(GuiStatics.getFontCubellan());
+      renderer.setIcon(
+          LeaderUtility.getIconBasedOnLeaderJob(value.getLeader()).getAsIcon());
+    }
     if (isSelected) {
       renderer.setForeground(GuiStatics.getInfoTextColor());
       renderer.setBackground(Color.BLACK);
@@ -59,4 +66,5 @@ public class ArtifactListRenderer implements ListCellRenderer<Artifact> {
     }
     return renderer;
   }
+
 }

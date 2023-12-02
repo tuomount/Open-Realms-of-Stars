@@ -342,7 +342,10 @@ public final class NewsFactory {
     }
     if (event.getBadType() != null
         && event.getBadType() == BadRandomType.ACCIDENT) {
-      return makeLeaderDies(event.getLeader(), event.getRealm(), "accident");
+      news = makeLeaderDies(event.getLeader(), event.getRealm(), "accident",
+          starYear);
+      news.setImageInstructions(instructions.build());
+      return news;
     }
     if (event.getBadType() != null
         && event.getBadType() == BadRandomType.TERRORIST_ATTACK) {
@@ -350,14 +353,13 @@ public final class NewsFactory {
     }
     if (event.getBadType() != null
         && event.getBadType() == BadRandomType.DEADLY_VIRUS_OUTBREAK) {
-      return makeDeadlyVirusNews(event.getPlanet(), null, starYear);
+      news = makeDeadlyVirusNews(event.getPlanet(), null, starYear);
+      news.setImageInstructions(instructions.build());
+      return news;
     }
     news.setImageInstructions(instructions.build());
     news.setNewsText(event.getText());
-    if (event.getBadType() != null
-        && event.getBadType() == BadRandomType.TERRORIST_ATTACK) {
-      event.getRealm().appendStory(event.getText(), starYear);
-    }
+    event.getRealm().appendStory(event.getText(), starYear);
     return news;
   }
   /**
@@ -439,8 +441,8 @@ public final class NewsFactory {
     sb.append(" is new for ruler of ");
     sb.append(realm.getEmpireName());
     sb.append(". ");
-    realm.appendStory(news.getNewsText(), starYear);
     news.setNewsText(sb.toString());
+    realm.appendStory(news.getNewsText(), starYear);
     return news;
   }
   /**
@@ -584,10 +586,11 @@ public final class NewsFactory {
    * @param leader Ruler who died
    * @param realm Realm where ruler belong
    * @param reason Reason for death
+   * @param starYear Star Year when this happens
    * @return NewsData
    */
   public static NewsData makeLeaderDies(final Leader leader,
-      final PlayerInfo realm, final String reason) {
+      final PlayerInfo realm, final String reason, final int starYear) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
@@ -655,6 +658,7 @@ public final class NewsFactory {
     }
     sb.append(LeaderBiography.createBioForLeader(leader, realm));
     news.setNewsText(sb.toString());
+    realm.appendStory(news.getNewsText(), starYear);
     return news;
   }
   /**

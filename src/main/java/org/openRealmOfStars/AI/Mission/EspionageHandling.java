@@ -1046,7 +1046,7 @@ public final class EspionageHandling {
         makeSpyReportMessage(planetPlayer, governor, planet, msgText);
 
         var news = NewsFactory.makeLeaderDies(governor,
-            planetPlayer, "assasination");
+            planetPlayer, "assasination", game.getStarMap().getStarYear());
         if (starmap.hasHumanMet(planetPlayer)) {
           newsCorp.addNews(news);
         }

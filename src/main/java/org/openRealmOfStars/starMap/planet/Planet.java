@@ -2989,7 +2989,7 @@ public class Planet {
       if (happinessEffect.getType() == HappinessBonus.KILL_POPULATION) {
         // Need to remember owner if last population is killed
         PlayerInfo oldOwner = planetOwnerInfo;
-        killOneWorker("angry mob", "angry mob", null);
+        killOneWorker("angry mob", "angry mob", map);
         msg = new Message(MessageType.PLANETARY, "Population of " + getName()
             + " has formed angry mob. This mob killed one population!",
             Icons.getIconByName(Icons.ICON_DEATH));
@@ -4229,7 +4229,7 @@ public class Planet {
             getGovernor()));
         getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
         NewsData news = NewsFactory.makeLeaderDies(getGovernor(),
-            getPlanetPlayerInfo(), reason);
+            getPlanetPlayerInfo(), reason, starMap.getStarYear());
         if (starMap != null) {
           if (starMap.hasHumanMet(getPlanetPlayerInfo())) {
             starMap.getNewsCorpData().addNews(news);

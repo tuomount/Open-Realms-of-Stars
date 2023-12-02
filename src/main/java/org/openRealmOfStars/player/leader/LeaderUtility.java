@@ -966,9 +966,10 @@ public final class LeaderUtility {
       msg.setMatchByString(planet.getName());
       planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
       fleet.getCommander().setJob(Job.DEAD);
+      int starYear = game.getStarMap().getStarYear();
       NewsData news = NewsFactory.makeLeaderDies(fleet.getCommander(),
           info, "execution by "
-          + planet.getPlanetPlayerInfo().getEmpireName());
+          + planet.getPlanetPlayerInfo().getEmpireName(), starYear);
       if (game.getStarMap().hasHumanMet(info)
           || game.getStarMap().hasHumanMet(planet.getPlanetPlayerInfo())) {
         game.getStarMap().getNewsCorpData().addNews(news);

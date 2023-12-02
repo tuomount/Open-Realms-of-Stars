@@ -2529,7 +2529,7 @@ public class AITurnView extends BlackPanel {
           }
         }
         NewsData news = NewsFactory.makeLeaderDies(leader, realm,
-            reason);
+            reason, game.getStarMap().getStarYear());
         if (game.getStarMap().hasHumanMet(realm)) {
           game.getStarMap().getNewsCorpData().addNews(news);
         }
@@ -2575,7 +2575,7 @@ public class AITurnView extends BlackPanel {
           }
         }
         NewsData news = NewsFactory.makeLeaderDies(leader, realm,
-            reason);
+            reason, game.getStarMap().getStarYear());
         game.getStarMap().getNewsCorpData().addNews(news);
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
@@ -2632,7 +2632,7 @@ public class AITurnView extends BlackPanel {
           }
         }
         NewsData news = NewsFactory.makeLeaderDies(target, realm,
-            reason);
+            reason, game.getStarMap().getStarYear());
         game.getStarMap().getNewsCorpData().addNews(news);
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeLeaderEvent(target, realm,
@@ -3069,7 +3069,7 @@ public class AITurnView extends BlackPanel {
                 }
               }
               NewsData news = NewsFactory.makeLeaderDies(leader, realm,
-                  reason);
+                  reason, game.getStarMap().getStarYear());
               if (game.getStarMap().isAllNewsEnabled()
                   || oldJob == Job.RULER
                   && game.getStarMap().hasHumanMet(realm)) {
@@ -3571,7 +3571,8 @@ public class AITurnView extends BlackPanel {
             leader.setJob(Job.DEAD);
             NewsData news = NewsFactory.makeLeaderDies(leader, realm,
                 "realm lost all colonized planets and there are no"
-                + " usable colony ships left.");
+                + " usable colony ships left.",
+                game.getStarMap().getStarYear());
             game.getStarMap().getNewsCorpData().addNews(news);
           }
           boolean lost = false;

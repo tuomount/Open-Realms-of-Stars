@@ -703,7 +703,7 @@ public class PlanetBombingView extends BlackPanel {
             planet.getGovernor()));
         planet.getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
         NewsData news = NewsFactory.makeLeaderDies(planet.getGovernor(),
-            planet.getPlanetPlayerInfo(), reason);
+            planet.getPlanetPlayerInfo(), reason, starMap.getStarYear());
         if (starMap != null) {
           if (starMap.hasHumanMet(planet.getPlanetPlayerInfo())) {
             starMap.getNewsCorpData().addNews(news);

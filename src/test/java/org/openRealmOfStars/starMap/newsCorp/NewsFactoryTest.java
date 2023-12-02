@@ -123,6 +123,8 @@ public class NewsFactoryTest {
     Mockito.when(event.getBadType()).thenReturn(BadRandomType.SOLAR_ACTIVITY_INCREASE);
     Mockito.when(event.getGoodType()).thenReturn(GoodRandomType.SOLAR_ACTIVITY_DIMISHED);
     Mockito.when(event.getText()).thenReturn("Test event text");
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(event.getRealm()).thenReturn(info);
     NewsData news = NewsFactory.makeRandomEventNews(event, 2553);
     assertEquals("Test event text", news.getNewsText());
     assertNotEquals(null, news.getImageInstructions());

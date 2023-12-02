@@ -74,8 +74,8 @@ public final class RandomEventUtility {
    */
   public static RandomEvent createGoodRandomEvent(final PlayerInfo realm) {
     GoodRandomType[] values = GoodRandomType.values();
-    int index = DiceGenerator.getRandom(values.length - 1);
-    RandomEvent event = new RandomEvent(values[index], realm);
+    var choice = DiceGenerator.pickRandom(values);
+    RandomEvent event = new RandomEvent(choice, realm);
     return event;
   }
 
@@ -86,8 +86,8 @@ public final class RandomEventUtility {
    */
   public static RandomEvent createBadRandomEvent(final PlayerInfo realm) {
     BadRandomType[] values = BadRandomType.values();
-    int index = DiceGenerator.getRandom(values.length - 1);
-    RandomEvent event = new RandomEvent(values[index], realm);
+    var choice = DiceGenerator.pickRandom(values);
+    RandomEvent event = new RandomEvent(choice, realm);
     return event;
   }
 
@@ -111,10 +111,9 @@ public final class RandomEventUtility {
           }
         }
       }
-      int index = DiceGenerator.getRandom(TechType.values().length - 1);
-      info.getTechList().setTechResearchPoints(TechType.getTypeByIndex(index),
-          0);
-      String techName = TechType.getTypeByIndex(index).toString();
+      var techType = DiceGenerator.pickRandom(TechType.values());
+      info.getTechList().setTechResearchPoints(techType, 0);
+      String techName = techType.toString();
       event.setText("A massive computer virus spreads in all labs which study "
           + techName + " technology. "
           + "This virus deletes all the data related to research. "
@@ -163,7 +162,7 @@ public final class RandomEventUtility {
           instructions.addSiluete(info.getRuler().getRace().getNameSingle(),
               ImageInstruction.POSITION_CENTER);
           event.setImageInstructions(instructions.build());
-          Perk perk = perks[DiceGenerator.getRandom(perks.length - 1)];
+          Perk perk = DiceGenerator.pickRandom(perks);
           info.getRuler().addPerk(perk);
           event.setText(info.getRuler().getCallName() + " has been on massive"
               + " stress lately and got " + perk.getName().toLowerCase()
@@ -240,8 +239,7 @@ public final class RandomEventUtility {
         }
       }
       if (leaders.size() > 0) {
-        int index = DiceGenerator.getRandom(leaders.size() - 1);
-        Leader leader = leaders.get(index);
+        Leader leader = DiceGenerator.pickRandom(leaders);
         event.setLeader(leader);
         leader.setLevel(leader.getLevel() + 1);
         Perk[] perksGained = LeaderUtility.addRandomPerks(leader);
@@ -283,9 +281,8 @@ public final class RandomEventUtility {
       final StarMap map) {
     if (event.getGoodType() == GoodRandomType.TECHNICAL_BREAKTHROUGH) {
       PlayerInfo info = event.getRealm();
-      int index = DiceGenerator.getRandom(TechType.values().length - 1);
-      double original = info.getTechList().getTechResearchPoints(
-          TechType.getTypeByIndex(index));
+      var techType = DiceGenerator.pickRandom(TechType.values());
+      double original = info.getTechList().getTechResearchPoints(techType);
       if (original < 10) {
         original = 20;
       } else {
@@ -302,9 +299,8 @@ public final class RandomEventUtility {
           }
         }
       }
-      info.getTechList().setTechResearchPoints(TechType.getTypeByIndex(index),
-          original);
-      String techName = TechType.getTypeByIndex(index).toString();
+      info.getTechList().setTechResearchPoints(techType, original);
+      String techName = techType.toString();
       ImageInstruction instructions = new ImageInstruction();
       instructions.addImage(ImageInstruction.TECHNICAL_BREAKTHROUGH);
       event.setImageInstructions(instructions.build());
@@ -339,8 +335,7 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         event.setPlanet(planet);
         StringBuilder sb = new StringBuilder();
         int occupationIndex = DiceGenerator.getRandom(2);
@@ -387,11 +382,9 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         event.setPlanet(planet);
-        Building[] buildings = planet.getBuildingList();
-        index = DiceGenerator.getRandom(buildings.length - 1);
+        var building = DiceGenerator.pickRandom(planet.getBuildingList());
         StringBuilder sb = new StringBuilder();
         int accidentIndex = DiceGenerator.getRandom(2);
         switch (accidentIndex) {
@@ -400,9 +393,9 @@ public final class RandomEventUtility {
           default:
           case 2: sb.append("Deadly chemical leak "); break;
         }
-        planet.removeBuilding(buildings[index]);
+        planet.removeBuilding(building);
         sb.append(" happened in ");
-        sb.append(buildings[index].getName());
+        sb.append(building.getName());
         if (accidentIndex < 2) {
           sb.append(". This building was totally destroyed");
         } else {
@@ -445,13 +438,11 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         event.setPlanet(planet);
         event.setNewsWorthy(true);
         int happiness = planet.calculateHappiness();
-        Building[] buildings = planet.getBuildingList();
-        index = DiceGenerator.getRandom(buildings.length - 1);
+        var building = DiceGenerator.pickRandom(planet.getBuildingList());
         StringBuilder sb = new StringBuilder();
         int accidentIndex = DiceGenerator.getRandom(2);
         switch (accidentIndex) {
@@ -468,8 +459,8 @@ public final class RandomEventUtility {
         }
         sb.append(". ");
         if (happiness <= 0) {
-          planet.removeBuilding(buildings[index]);
-          sb.append(buildings[index].getName());
+          planet.removeBuilding(building);
+          sb.append(building.getName());
           sb.append(" destroyed during incident. ");
         }
         if (planet.getTotalPopulation() > 1 && happiness < 0) {
@@ -550,8 +541,7 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         event.setPlanet(planet);
         PlayerInfo extraPlayer = new PlayerInfo(SpaceRace.SPACE_PIRATE);
         int numberOfTechs = 5;
@@ -594,8 +584,7 @@ public final class RandomEventUtility {
           }
         }
         if (ships.size() > 0) {
-          index = DiceGenerator.getRandom(ships.size() - 1);
-          ShipDesign design = ships.get(index).getDesign();
+          ShipDesign design = DiceGenerator.pickRandom(ships).getDesign();
           design.setName("Alien vessel");
           Ship ship = new Ship(design);
           boolean exit = false;
@@ -654,8 +643,7 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         event.setPlanet(planet);
         StringBuilder sb = new StringBuilder();
         sb.append("Massive meteor hits the the atmosphere of ");
@@ -730,8 +718,7 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         event.setPlanet(planet);
         String hitType = "movie";
         String hitCapital = "Movie";
@@ -835,8 +822,7 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         event.setPlanet(planet);
         StringBuilder sb = new StringBuilder();
         sb.append("Massive meteoroid passes by ");
@@ -878,8 +864,7 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         if (!info.getTechList().hasTech(
             TechType.Improvements, "Deadly virus")) {
           event.setPlanet(planet);
@@ -1011,8 +996,7 @@ public final class RandomEventUtility {
         }
       }
       if (unknownRealms.size() > 0) {
-        int index = DiceGenerator.getRandom(unknownRealms.size() - 1);
-        PlayerInfo realm = unknownRealms.get(index);
+        PlayerInfo realm = DiceGenerator.pickRandom(unknownRealms);
         ArrayList<Planet> planets = new ArrayList<>();
         for (Planet planet : map.getPlanetList()) {
           if (planet.getPlanetPlayerInfo() == realm
@@ -1021,8 +1005,7 @@ public final class RandomEventUtility {
           }
         }
         if (planets.size() > 0) {
-          index = DiceGenerator.getRandom(planets.size() - 1);
-          Planet planet = planets.get(index);
+          Planet planet = DiceGenerator.pickRandom(planets);
           Sun sun = map.locateSolarSystem(planet.getCoordinate().getX(),
               planet.getCoordinate().getY());
           if (sun != null) {
@@ -1071,8 +1054,7 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         Sun sun = map.locateSolarSystem(planet.getCoordinate().getX(),
             planet.getCoordinate().getY());
         if (sun != null) {
@@ -1119,8 +1101,7 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         Sun sun = map.locateSolarSystem(planet.getCoordinate().getX(),
             planet.getCoordinate().getY());
         if (sun != null) {
@@ -1166,8 +1147,7 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         planet.changeClimate(true);
         event.setPlanet(planet);
         event.setText(planet.getName() + " climate changes so that planet"
@@ -1201,8 +1181,7 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         planet.changeClimate(false);
         event.setPlanet(planet);
         event.setText(planet.getName() + " climate changes so that planet"
@@ -1235,8 +1214,7 @@ public final class RandomEventUtility {
         }
       }
       if (planets.size() > 0) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         event.setPlanet(planet);
         int value = DiceGenerator.getRandom(10, 15);
         planet.fightAgainstAttacker(value, map, "wild life",
@@ -1326,8 +1304,7 @@ public final class RandomEventUtility {
       }
       if (planets.size() > 0
           && map.getPlayerList().getSpacePiratePlayer() != null) {
-        int index = DiceGenerator.getRandom(planets.size() - 1);
-        Planet planet = planets.get(index);
+        Planet planet = DiceGenerator.pickRandom(planets);
         event.setPlanet(planet);
         PlayerInfo board = map.getPlayerList().getSpacePiratePlayer();
         int x = planet.getCoordinate().getX();
@@ -1381,8 +1358,7 @@ public final class RandomEventUtility {
         }
       }
       if (fleets.size() > 0) {
-        int index = DiceGenerator.getRandom(fleets.size() - 1);
-        Fleet fleet = fleets.get(index);
+        Fleet fleet = DiceGenerator.pickRandom(fleets);
         event.setFleet(fleet);
         info.getMissions().deleteMissionForFleet(fleet.getName());
         info.getFleets().removeFleet(fleet);

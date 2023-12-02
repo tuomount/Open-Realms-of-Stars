@@ -174,12 +174,12 @@ public final class LeaderUtility {
     }
     for (int i = 0; i < leader.getLevel(); i++) {
       Perk[] newPerks = getNewPerks(leader, PERK_TYPE_GOOD);
-      int index = DiceGenerator.getRandom(newPerks.length - 1);
-      leader.addPerk(newPerks[index]);
+      var newPerk = DiceGenerator.pickRandom(newPerks);
+      leader.addPerk(newPerk);
       if (DiceGenerator.getRandom(99)  < 10) {
         newPerks = getNewPerks(leader, PERK_TYPE_BAD);
-        index = DiceGenerator.getRandom(newPerks.length - 1);
-        leader.addPerk(newPerks[index]);
+        newPerk = DiceGenerator.pickRandom(newPerks);
+        leader.addPerk(newPerk);
       }
     }
     return leader;
@@ -466,23 +466,23 @@ public final class LeaderUtility {
         newPerks = getNewPerks(leader, PERK_TYPE_COMMANDER);
       }
       if (newPerks != null && newPerks.length > 0) {
-        int index = DiceGenerator.getRandom(newPerks.length - 1);
-        leader.addPerk(newPerks[index]);
-        addedPerks.add(newPerks[index]);
+        var newPerk = DiceGenerator.pickRandom(newPerks);
+        leader.addPerk(newPerk);
+        addedPerks.add(newPerk);
         jobBasedPerkAdded = true;
       }
     }
     if (!jobBasedPerkAdded && goodPerks.length > 0) {
-      int index = DiceGenerator.getRandom(goodPerks.length - 1);
-      leader.addPerk(goodPerks[index]);
-      addedPerks.add(goodPerks[index]);
+      var goodPerk = DiceGenerator.pickRandom(goodPerks);
+      leader.addPerk(goodPerk);
+      addedPerks.add(goodPerk);
     }
     if (DiceGenerator.getRandom(99)  < 10) {
       Perk[] newPerks = getNewPerks(leader, PERK_TYPE_BAD);
       if (newPerks.length > 0) {
-        int index = DiceGenerator.getRandom(newPerks.length - 1);
-        leader.addPerk(newPerks[index]);
-        addedPerks.add(newPerks[index]);
+        var newPerk = DiceGenerator.pickRandom(newPerks);
+        leader.addPerk(newPerk);
+        addedPerks.add(newPerk);
       }
     }
     return addedPerks.toArray(new Perk[0]);
@@ -658,8 +658,7 @@ public final class LeaderUtility {
       }
     }
     if (tmpList.size() > 0) {
-      int index = DiceGenerator.getRandom(tmpList.size() - 1);
-      return tmpList.get(index);
+      return DiceGenerator.pickRandom(tmpList);
     }
     return null;
   }

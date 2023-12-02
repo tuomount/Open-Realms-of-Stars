@@ -873,9 +873,7 @@ public final class TileNames {
         }
       }
     }
-    int value = DiceGenerator.getRandom(list.size() - 1);
-    //int value = list.size() - 1;
-    return list.get(value);
+    return DiceGenerator.pickRandom(list);
   }
   /**
    * Description about deep space anchor

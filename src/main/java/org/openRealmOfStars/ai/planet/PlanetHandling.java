@@ -844,8 +844,8 @@ public final class PlanetHandling {
           list.add(constructions[i]);
         }
       }
-      int rand = DiceGenerator.getRandom(list.size() - 1);
-      planet.setUnderConstruction(list.get(rand));
+      var randConstruction = DiceGenerator.pickRandom(list);
+      planet.setUnderConstruction(randConstruction);
       constructionSelected = true;
     } else {
       ArrayList<Construction> list = new ArrayList<>();
@@ -1069,8 +1069,7 @@ public final class PlanetHandling {
         .getLeastLikingWithLowEspionage(info.getEspionage());
     Planet[] planets = map.getPlanetListSeenByOther(targetRealm, info);
     if (planets.length > 0) {
-      Planet target = planets[DiceGenerator.getRandom(
-          planets.length - 1)];
+      Planet target = DiceGenerator.pickRandom(planets);
       Mission mission = new Mission(MissionType.SPY_MISSION,
           MissionPhase.BUILDING, target.getCoordinate());
       mission.setTargetPlanet(target.getName());
@@ -1080,8 +1079,7 @@ public final class PlanetHandling {
       for (int j = 0; j < maxPlayer; j++) {
         planets = map.getPlanetListSeenByOther(j, info);
         if (planets.length > 0) {
-          Planet target = planets[DiceGenerator.getRandom(
-              planets.length - 1)];
+          Planet target = DiceGenerator.pickRandom(planets);
           Mission mission = new Mission(MissionType.SPY_MISSION,
               MissionPhase.BUILDING, target.getCoordinate());
           mission.setTargetPlanet(target.getName());

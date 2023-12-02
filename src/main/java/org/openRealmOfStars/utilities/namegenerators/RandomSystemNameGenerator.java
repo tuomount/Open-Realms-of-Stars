@@ -78,8 +78,7 @@ public class RandomSystemNameGenerator extends NameGenerator {
   @Override
   protected String generateRandomName() {
     StringBuilder sb = new StringBuilder();
-    sb.append(
-        GREEK_ALPHABET[DiceGenerator.getRandom(GREEK_ALPHABET.length - 1)]);
+    sb.append(DiceGenerator.pickRandom(GREEK_ALPHABET));
     sb.append(" ");
     int parts = 1;
     int random = DiceGenerator.getRandom(100);
@@ -89,12 +88,12 @@ public class RandomSystemNameGenerator extends NameGenerator {
     if (random > 80) {
       parts = 3;
     }
-    sb.append(FIRST_PART[DiceGenerator.getRandom(FIRST_PART.length - 1)]);
+    sb.append(DiceGenerator.pickRandom(FIRST_PART));
     if (parts > 1) {
-      sb.append(SECOND_PART[DiceGenerator.getRandom(SECOND_PART.length - 1)]);
+      sb.append(DiceGenerator.pickRandom(SECOND_PART));
     }
     if (parts > 2 && sb.toString().length() < LIMIT_FOR_TWO_PARTS) {
-      sb.append(THIRD_PART[DiceGenerator.getRandom(THIRD_PART.length - 1)]);
+      sb.append(DiceGenerator.pickRandom(THIRD_PART));
     }
     return sb.toString();
   }

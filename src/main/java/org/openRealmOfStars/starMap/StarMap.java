@@ -585,8 +585,7 @@ public class StarMap {
     int ascensionPortalX = -1;
     int ascensionPortalY = -1;
     for (int i = 0; i < 100; i++) {
-      int ascensionPlanetIndex = DiceGenerator.getRandom(planetList.size() - 1);
-      Planet planet = planetList.get(ascensionPlanetIndex);
+      Planet planet = DiceGenerator.pickRandom(planetList);
       if (planet.isGasGiant()) {
         continue;
       }
@@ -785,8 +784,7 @@ public class StarMap {
     ascensionPortalY = -1;
     if (anchors.size() > 0) {
       for (int i = 0; i < 100; i++) {
-        int index = DiceGenerator.getRandom(anchors.size() - 1);
-        Coordinate coordinate = anchors.get(index);
+        Coordinate coordinate = DiceGenerator.pickRandom(anchors);
         for (int j = 0; j < 4; j++) {
           int mx = 0;
           int my = 0;
@@ -1189,8 +1187,7 @@ public class StarMap {
       }
     }
     if (listStats.size() > 0) {
-      ShipStat stat = listStats.get(DiceGenerator.getRandom(
-          listStats.size() - 1));
+      ShipStat stat = DiceGenerator.pickRandom(listStats);
       Ship ship = new Ship(stat.getDesign());
       stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
       stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
@@ -3054,8 +3051,7 @@ public class StarMap {
     if (result == null) {
       result = locateSolarSystem(x, y);
       if (result == null) {
-        int i = DiceGenerator.getRandom(sunList.size() - 1);
-        result = sunList.get(i);
+        result = DiceGenerator.pickRandom(sunList);
       }
     }
     return result;
@@ -4015,10 +4011,8 @@ public class StarMap {
             }
           }
           if (targetJobPositions.size() > 0) {
-            int index = DiceGenerator.getRandom(
-                targetJobPositions.size() - 1);
-            LeaderUtility.assignLeader(leader, info, planetList,
-                targetJobPositions.get(index));
+            var target = DiceGenerator.pickRandom(targetJobPositions);
+            LeaderUtility.assignLeader(leader, info, planetList, target);
           }
         }
       }

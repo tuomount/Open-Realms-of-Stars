@@ -2,6 +2,7 @@ package org.openRealmOfStars.utilities;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,6 +23,9 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -92,6 +96,37 @@ public final class DiceGenerator {
    */
   public static boolean getBoolean() {
     return getRandom(1) == 0;
+  }
+
+  /**
+   * Pick random element of given array.
+   * @param <T> Type of the array and returned value
+   * @param array Array to select from
+   * @return Randomly selected element
+   */
+  public static <T> T pickRandom(final T[] array) {
+    var idx = getRandom(array.length - 1);
+    return array[idx];
+  }
+
+  /**
+   * Pick random element of given Collection<T>.
+   * Selecting from List<T> is more efficient.
+   * @param <T> Type of the array and returned value
+   * @param collection Collection<T> to select from
+   * @return Randomly selected element
+   */
+  public static <T> T pickRandom(final Collection<T> collection) {
+    // Lists are optimal for randomly selecting elements
+    if (collection instanceof List) {
+      var idx = getRandom(collection.size() - 1);
+      var list = (List<T>) collection;
+      return list.get(idx);
+    }
+
+    var tmpList = new ArrayList<T>(collection);
+    var idx = getRandom(tmpList.size() - 1);
+    return tmpList.get(idx);
   }
 
   /**

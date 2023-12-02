@@ -1492,8 +1492,7 @@ public final class ShipGenerator {
             .add(ShipComponentFactory.createByName(elecTech.getComponent()));
       }
       if (modules.size() > 0) {
-        int index = DiceGenerator.getRandom(modules.size() - 1);
-        result.addComponent(modules.get(index));
+        result.addComponent(DiceGenerator.pickRandom(modules));
       }
       int[] componentScores = new int[components.size()];
       int safetyCount = 500;
@@ -1739,8 +1738,7 @@ public final class ShipGenerator {
             .add(ShipComponentFactory.createByName(elecTech.getComponent()));
       }
       if (modules.size() > 0) {
-        int index = DiceGenerator.getRandom(modules.size() - 1);
-        result.addComponent(modules.get(index));
+        result.addComponent(DiceGenerator.pickRandom(modules));
       }
       int[] componentScores = new int[components.size()];
       int safetyCount = 500;

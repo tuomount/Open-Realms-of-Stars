@@ -24,7 +24,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.game.States.AITurnView;
+import org.openRealmOfStars.game.state.AITurnView;
 import org.openRealmOfStars.game.tutorial.TutorialList;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;

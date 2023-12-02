@@ -25,7 +25,7 @@ import org.openRealmOfStars.ai.planet.PlanetHandling;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameState;
-import org.openRealmOfStars.game.States.PlanetBombingView;
+import org.openRealmOfStars.game.state.PlanetBombingView;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;

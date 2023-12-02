@@ -20,7 +20,7 @@ package org.openRealmOfStars.player.diplomacy;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import org.openRealmOfStars.game.States.DiplomacyView;
+import org.openRealmOfStars.game.state.DiplomacyView;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;

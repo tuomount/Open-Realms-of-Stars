@@ -24,7 +24,7 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.openRealmOfStars.game.States.DiplomacyView;
+import org.openRealmOfStars.game.state.DiplomacyView;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;

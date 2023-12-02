@@ -251,10 +251,10 @@ public class PlanetAnimation {
         int py = (int) Math.round(dist * my + sy);
         int nx = DiceGenerator.getRandom(5);
         int ny = DiceGenerator.getRandom(5);
-        if (DiceGenerator.getRandom(1) == 0) {
+        if (DiceGenerator.getBoolean()) {
           nx = nx * -1;
         }
-        if (DiceGenerator.getRandom(1) == 0) {
+        if (DiceGenerator.getBoolean()) {
           ny = ny * -1;
         }
         px = px + nx;

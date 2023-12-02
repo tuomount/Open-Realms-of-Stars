@@ -611,7 +611,7 @@ public class StarMap {
           ascensionPortalX = x;
           ascensionPortalY = y;
         }
-        if (ascensionPortalX != -1 && DiceGenerator.getRandom(1) == 0) {
+        if (ascensionPortalX != -1 && DiceGenerator.getBoolean()) {
           break;
         }
       }
@@ -808,7 +808,7 @@ public class StarMap {
             ascensionPortalX = x;
             ascensionPortalY = y;
           }
-          if (ascensionPortalY != -1 && DiceGenerator.getRandom(1) == 0) {
+          if (ascensionPortalY != -1 && DiceGenerator.getBoolean()) {
             break;
           }
         }
@@ -2947,7 +2947,7 @@ public class StarMap {
       }
     }
     if (result != null && secondChoice != null && second) {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         return result;
       }
       return secondChoice;
@@ -3009,7 +3009,7 @@ public class StarMap {
       }
     }
     if (result != null && secondChoice != null && second) {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         return result;
       }
       return secondChoice;

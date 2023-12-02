@@ -1619,7 +1619,7 @@ public class PlayerInfo {
       }
     }
     if (bestPoint == null) {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         bestPoint = getClosestUnchartedSector(sun, fleet);
       } else {
         bestPoint = getUnchartedSector(sun, fleet);
@@ -1666,7 +1666,7 @@ public class PlayerInfo {
       }
     }
     if (bestPoint == null) {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         bestPoint = getClosestUnchartedSector(sun, fleet);
       } else {
         bestPoint = getUnchartedSector(sun, fleet);

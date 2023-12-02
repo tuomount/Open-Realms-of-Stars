@@ -300,7 +300,7 @@ public final class PlanetHandling {
       int j = getConstruction(ConstructionFactory.EXTRA_CULTURE,
           constructions);
       if (i != -1 && j != -1) {
-        if (DiceGenerator.getRandom(1) == 0) {
+        if (DiceGenerator.getBoolean()) {
           planet.setUnderConstruction(constructions[i]);
         } else {
           planet.setUnderConstruction(constructions[j]);

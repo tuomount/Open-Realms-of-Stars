@@ -131,7 +131,7 @@ public final class SpaceRaceUtility {
   public static String getRandomName(final SpaceRace race,
       final GovernmentType government) {
     StringBuilder sb = new StringBuilder();
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       if (race == SpaceRace.HUMAN) {
           sb.append(buildSecondaryName(race, "Terran"));
       } else if (race == SpaceRace.MECHIONS) {
@@ -218,7 +218,7 @@ public final class SpaceRaceUtility {
    */
   private static String buildSecondaryName(final SpaceRace race,
           final String secondaryName) {
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
         return secondaryName;
     }
     return race.getNameSingle();

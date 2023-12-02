@@ -634,7 +634,7 @@ public class SpaceAnomaly {
               + " contained strange piece of ancient artifact. "
               + ". This seems to be unusual piece of history."
               + " This finding requires some research time.");
-          if (DiceGenerator.getRandom(1) == 0) {
+          if (DiceGenerator.getBoolean()) {
             result.setImage(GuiStatics.IMAGE_ARTIFACT1);
           } else {
             result.setImage(GuiStatics.IMAGE_ARTIFACT2);

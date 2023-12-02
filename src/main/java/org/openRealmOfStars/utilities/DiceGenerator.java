@@ -87,6 +87,14 @@ public final class DiceGenerator {
   }
 
   /**
+   * Get either true or false, at random
+   * @return true or false, randomly selected
+   */
+  public static boolean getBoolean() {
+    return getRandom(1) == 0;
+  }
+
+  /**
    * Get Java envinronment safely
    * @param param Envinronment parameter
    * @return Envinronment parameter or default value.
@@ -99,6 +107,7 @@ public final class DiceGenerator {
     }
     return param + " not available";
   }
+
   /**
    * Gather Envinronment data. This data will be run through
    * digest function if any of digest function is available.
@@ -154,6 +163,7 @@ public final class DiceGenerator {
     }
     return sb.toString().getBytes(StandardCharsets.US_ASCII);
   }
+
   /**
    * Pseudo random function.
    * @param initialValue Initial value for PRF.
@@ -189,6 +199,7 @@ public final class DiceGenerator {
     }
     return value;
   }
+
   /**
    * Initialize generator. This only needs to be called once.
    */
@@ -205,7 +216,7 @@ public final class DiceGenerator {
       mw = big.intValue();
       mw = mw >> 8;
       big = new BigInteger(loopPrf(gatherEnvData(),
-        generator1.nextInt(512) + 512));
+          generator1.nextInt(512) + 512));
       x = big.longValue();
       numbers = null;
       initialized = true;
@@ -240,6 +251,7 @@ public final class DiceGenerator {
     numbers = values;
     initialized = true;
   }
+
   /**
    * Get Random result from three different pseudo random functions
    * @param maxValue inclusive
@@ -255,17 +267,17 @@ public final class DiceGenerator {
     }
     if (numbers == null) {
       switch (generator1.nextInt(3)) {
-      case 0:
-        result = getRandomJava(maxValue + 1);
-        break;
-      case 1:
-        result = getRandomMultiplyWithCarry(maxValue + 1);
-        break;
-      case 2:
-        result = getRandomXORShift(maxValue + 1);
-        break;
-      default:
-        throw new IllegalArgumentException("Bad behaving PRF!");
+        case 0:
+          result = getRandomJava(maxValue + 1);
+          break;
+        case 1:
+          result = getRandomMultiplyWithCarry(maxValue + 1);
+          break;
+        case 2:
+          result = getRandomXORShift(maxValue + 1);
+          break;
+        default:
+          throw new IllegalArgumentException("Bad behaving PRF!");
       }
     } else {
       result = numbers[numberIndex] % (maxValue + 1);
@@ -351,6 +363,7 @@ public final class DiceGenerator {
    * Magic number 2 for XOR shift
    */
   private static final int XOR_SHIFT_MAGIC2 = 35;
+
   /**
    * Get random with XORShift function
    * @param maxValue exclusive

@@ -1976,10 +1976,10 @@ public class MapPanel extends JPanel {
               30 + beam * 6));
           int ox = DiceGenerator.getRandom(ShipImage.MAX_WIDTH / 2);
           int oy = DiceGenerator.getRandom(ShipImage.MAX_HEIGHT / 2);
-          if (DiceGenerator.getRandom(1) == 1) {
+          if (DiceGenerator.getBoolean()) {
             ox = ox * -1;
           }
-          if (DiceGenerator.getRandom(1) == 1) {
+          if (DiceGenerator.getBoolean()) {
             oy = oy * -1;
           }
           gr.drawLine(anim.getSx() + viewPointOffsetX,

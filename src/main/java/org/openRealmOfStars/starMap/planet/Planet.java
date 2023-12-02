@@ -2745,7 +2745,7 @@ public class Planet {
                   }
                   if (mission.getType() == MissionType.TRADE_FLEET) {
                     String nameFleet = "Trader";
-                    if (DiceGenerator.getRandom(1) == 0) {
+                    if (DiceGenerator.getBoolean()) {
                       nameFleet = "Merchant";
                     }
                     fleet.setName(planetOwnerInfo.getFleets()

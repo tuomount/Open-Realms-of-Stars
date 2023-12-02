@@ -1836,7 +1836,7 @@ public final class ShipGenerator {
     info.getTechList().addTech(TechFactory.createImprovementTech(
         "Starbase music hall", 2));
     ShipSize size = ShipSize.SMALL;
-    if (DiceGenerator.getRandom(1) == 1) {
+    if (DiceGenerator.getBoolean()) {
       size = ShipSize.MEDIUM;
     }
     ShipDesign design = ShipGenerator.createOrbital(info, size);

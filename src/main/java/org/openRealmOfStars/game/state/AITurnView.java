@@ -728,7 +728,7 @@ public class AITurnView extends BlackPanel {
         info.getMissions().add(createGatherMission(mission, coord,
             Mission.ASSAULT_SB_TYPE));
       } else {
-        if (DiceGenerator.getRandom(1) == 0) {
+        if (DiceGenerator.getBoolean()) {
           info.getMissions().add(createGatherMission(mission, coord,
               Mission.ASSAULT_SB_TYPE));
         }

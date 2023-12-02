@@ -106,7 +106,7 @@ public class EndStoryView extends BlackPanel {
     ImageInstruction instructions = new ImageInstruction();
     Planet planet = getHomePlanet();
     if (planet != null) {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
       } else {
         instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
@@ -209,7 +209,7 @@ public class EndStoryView extends BlackPanel {
     ImageInstruction instructions = new ImageInstruction();
     Planet planet = getHomePlanet();
     if (planet != null) {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
       } else {
         instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);

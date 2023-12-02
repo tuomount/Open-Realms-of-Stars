@@ -1330,6 +1330,7 @@ public class MapPanel extends JPanel {
     if (!historyCoordInitialized) {
       historyCoordX = starMap.getDrawX();
       historyCoordY = starMap.getDrawY();
+      historyCoordInitialized = true;
     }
     int cx = historyCoordX;
     int cy = historyCoordY;

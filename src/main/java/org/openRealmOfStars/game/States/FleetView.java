@@ -37,9 +37,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.openRealmOfStars.AI.Mission.Mission;
-import org.openRealmOfStars.AI.Mission.MissionPhase;
-import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.ai.mission.Mission;
+import org.openRealmOfStars.ai.mission.MissionPhase;
+import org.openRealmOfStars.ai.mission.MissionType;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.FleetListRenderer;

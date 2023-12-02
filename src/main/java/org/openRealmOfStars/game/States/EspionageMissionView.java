@@ -30,9 +30,9 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import org.openRealmOfStars.AI.Mission.Mission;
-import org.openRealmOfStars.AI.Mission.MissionPhase;
-import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.ai.mission.Mission;
+import org.openRealmOfStars.ai.mission.MissionPhase;
+import org.openRealmOfStars.ai.mission.MissionType;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.ProductionListRenderer;

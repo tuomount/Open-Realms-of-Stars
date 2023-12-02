@@ -1,4 +1,4 @@
-package org.openRealmOfStars.AI.PlanetHandling;
+package org.openRealmOfStars.ai.planet;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2022 Tuomo Untinen
@@ -19,9 +19,9 @@ package org.openRealmOfStars.AI.PlanetHandling;
 
 import java.util.ArrayList;
 
-import org.openRealmOfStars.AI.Mission.Mission;
-import org.openRealmOfStars.AI.Mission.MissionPhase;
-import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.ai.mission.Mission;
+import org.openRealmOfStars.ai.mission.MissionPhase;
+import org.openRealmOfStars.ai.mission.MissionType;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.WinningStrategy;

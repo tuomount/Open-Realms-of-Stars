@@ -1,4 +1,4 @@
-package org.openRealmOfStars.AI.Mission;
+package org.openRealmOfStars.ai.mission;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2017-2018 Tuomo Untinen
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.openRealmOfStars.AI.PathFinding.AStarSearch;
+import org.openRealmOfStars.ai.pathfinding.AStarSearch;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;

@@ -22,15 +22,14 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
-import org.openRealmOfStars.AI.Mission.Mission;
-import org.openRealmOfStars.AI.Mission.MissionHandling;
-import org.openRealmOfStars.AI.Mission.MissionPhase;
-import org.openRealmOfStars.AI.Mission.MissionType;
-import org.openRealmOfStars.AI.PathFinding.AStarSearch;
-import org.openRealmOfStars.AI.PathFinding.PathPoint;
-import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
-import org.openRealmOfStars.AI.Research.Research;
+import org.openRealmOfStars.ai.mission.Mission;
+import org.openRealmOfStars.ai.mission.MissionHandling;
+import org.openRealmOfStars.ai.mission.MissionPhase;
+import org.openRealmOfStars.ai.mission.MissionType;
+import org.openRealmOfStars.ai.pathfinding.AStarSearch;
+import org.openRealmOfStars.ai.pathfinding.PathPoint;
+import org.openRealmOfStars.ai.planet.PlanetHandling;
+import org.openRealmOfStars.ai.research.Research;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;

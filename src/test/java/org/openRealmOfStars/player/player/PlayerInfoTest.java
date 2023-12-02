@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.AI.PathFinding.PathPoint;
+import org.openRealmOfStars.ai.pathfinding.PathPoint;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;

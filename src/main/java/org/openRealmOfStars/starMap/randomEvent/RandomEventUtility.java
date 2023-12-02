@@ -19,10 +19,10 @@ package org.openRealmOfStars.starMap.randomEvent;
 
 import java.util.ArrayList;
 
-import org.openRealmOfStars.AI.Mission.Mission;
-import org.openRealmOfStars.AI.Mission.MissionPhase;
-import org.openRealmOfStars.AI.Mission.MissionType;
-import org.openRealmOfStars.AI.Research.Research;
+import org.openRealmOfStars.ai.mission.Mission;
+import org.openRealmOfStars.ai.mission.MissionPhase;
+import org.openRealmOfStars.ai.mission.MissionType;
+import org.openRealmOfStars.ai.research.Research;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;

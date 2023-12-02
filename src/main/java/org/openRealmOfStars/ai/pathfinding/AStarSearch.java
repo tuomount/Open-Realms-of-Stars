@@ -1,4 +1,4 @@
-package org.openRealmOfStars.AI.PathFinding;
+package org.openRealmOfStars.ai.pathfinding;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2022 Tuomo Untinen

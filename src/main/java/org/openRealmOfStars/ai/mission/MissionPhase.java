@@ -1,4 +1,4 @@
-package org.openRealmOfStars.AI.Mission;
+package org.openRealmOfStars.ai.mission;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016 Tuomo Untinen

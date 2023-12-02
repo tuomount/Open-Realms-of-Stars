@@ -1,4 +1,4 @@
-package org.openRealmOfStars.AI;
+package org.openRealmOfStars.ai;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2018 Tuomo Untinen

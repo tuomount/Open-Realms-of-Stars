@@ -1,4 +1,4 @@
-package org.openRealmOfStars.AI.Mission;
+package org.openRealmOfStars.ai.mission;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
@@ -19,9 +19,9 @@ package org.openRealmOfStars.AI.Mission;
 
 import java.util.ArrayList;
 
-import org.openRealmOfStars.AI.PathFinding.AStarSearch;
-import org.openRealmOfStars.AI.PathFinding.PathPoint;
-import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
+import org.openRealmOfStars.ai.pathfinding.AStarSearch;
+import org.openRealmOfStars.ai.pathfinding.PathPoint;
+import org.openRealmOfStars.ai.planet.PlanetHandling;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameState;

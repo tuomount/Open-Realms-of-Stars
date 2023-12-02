@@ -40,9 +40,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
-import org.openRealmOfStars.AI.Mission.Mission;
-import org.openRealmOfStars.AI.Mission.MissionPhase;
-import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.ai.mission.Mission;
+import org.openRealmOfStars.ai.mission.MissionPhase;
+import org.openRealmOfStars.ai.mission.MissionType;
 import org.openRealmOfStars.ambient.Bridge;
 import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.ambient.BridgeStatusType;

@@ -20,11 +20,11 @@ package org.openRealmOfStars.player.combat;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.openRealmOfStars.AI.Mission.Mission;
-import org.openRealmOfStars.AI.Mission.MissionPhase;
-import org.openRealmOfStars.AI.Mission.MissionType;
-import org.openRealmOfStars.AI.PathFinding.AStarSearch;
-import org.openRealmOfStars.AI.PathFinding.PathPoint;
+import org.openRealmOfStars.ai.mission.Mission;
+import org.openRealmOfStars.ai.mission.MissionPhase;
+import org.openRealmOfStars.ai.mission.MissionType;
+import org.openRealmOfStars.ai.pathfinding.AStarSearch;
+import org.openRealmOfStars.ai.pathfinding.PathPoint;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;

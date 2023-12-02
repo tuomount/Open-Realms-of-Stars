@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.openRealmOfStars.AI.Mission.MissionList;
-import org.openRealmOfStars.AI.PathFinding.PathPoint;
+import org.openRealmOfStars.ai.mission.MissionList;
+import org.openRealmOfStars.ai.pathfinding.PathPoint;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.artifact.Artifact;

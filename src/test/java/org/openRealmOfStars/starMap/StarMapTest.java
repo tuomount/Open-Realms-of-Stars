@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.openRealmOfStars.AI.Mission.MissionList;
+import org.openRealmOfStars.ai.mission.MissionList;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;

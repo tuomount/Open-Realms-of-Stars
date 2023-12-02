@@ -20,10 +20,10 @@ package org.openRealmOfStars.starMap.planet;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import org.openRealmOfStars.AI.Mission.Mission;
-import org.openRealmOfStars.AI.Mission.MissionPhase;
-import org.openRealmOfStars.AI.Mission.MissionType;
-import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
+import org.openRealmOfStars.ai.mission.Mission;
+import org.openRealmOfStars.ai.mission.MissionPhase;
+import org.openRealmOfStars.ai.mission.MissionType;
+import org.openRealmOfStars.ai.planet.PlanetHandling;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.AiDifficulty;

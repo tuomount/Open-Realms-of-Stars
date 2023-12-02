@@ -2389,6 +2389,134 @@ public class Planet {
   }
 
   /**
+   * Check if special projects are done in planet.
+   * @param map Starmap
+   * @param requiredMetalCost Required metal cost
+   * @param requiredProdCost Required production cost
+   */
+  private void checkIfSpecialProjectsAreDone(final StarMap map,
+      final int requiredMetalCost, final int requiredProdCost) {
+    Message msg;
+    if (underConstruction.getName()
+        .equals(ConstructionFactory.MECHION_CITIZEN)) {
+      if (governor != null) {
+        governor.getStats().addOne(StatType.POPULATION_GROWTH);
+      }
+      metal = metal - requiredMetalCost;
+      prodResource = prodResource - requiredProdCost;
+      workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
+      String nextBuilding = "";
+      String finishedBuilding = underConstruction.getName();
+      if (governor != null
+          && getGovernorGuide() != Planet.PASSIVE_GOVERNOR) {
+        int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+        Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+        PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+        nextBuilding = governor.getCallName() + " selected new "
+            + "construction process where "
+            + getUnderConstruction().getName()
+            + " will be built. Estimated building time is "
+            + getProductionTimeAsString(underConstruction) + ".";
+      }
+      msg = new Message(MessageType.CONSTRUCTION,
+          getName() + " built " + finishedBuilding
+          + ". " + nextBuilding,
+          Icons.getIconByName(Icons.ICON_PEOPLE));
+      msg.setCoordinate(getCoordinate());
+      msg.setMatchByString(getName());
+      planetOwnerInfo.getMsgList().addNewMessage(msg);
+      return;
+    }
+    if (underConstruction.getName()
+        .equals(ConstructionFactory.SYNTHDROID_CITIZEN)) {
+      if (governor != null) {
+        governor.getStats().addOne(StatType.POPULATION_GROWTH);
+      }
+      metal = metal - requiredMetalCost;
+      prodResource = prodResource - requiredProdCost;
+      if (calculateSurPlusFood() > 0) {
+        workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
+      } else {
+        workers[FOOD_FARMERS] = workers[FOOD_FARMERS] + 1;
+      }
+      String nextBuilding = "";
+      String finishedBuilding = underConstruction.getName();
+      if (governor != null
+          && getGovernorGuide() != Planet.PASSIVE_GOVERNOR) {
+        int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+        Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+        PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+        nextBuilding = governor.getCallName() + " selected new "
+            + "construction process where "
+            + getUnderConstruction().getName()
+            + " will be built. Estimated building time is "
+            + getProductionTimeAsString(underConstruction) + ".";
+      }
+      msg = new Message(MessageType.CONSTRUCTION,
+          getName() + " built " + finishedBuilding
+          + ". " + nextBuilding,
+          Icons.getIconByName(Icons.ICON_PEOPLE));
+      msg.setCoordinate(getCoordinate());
+      msg.setMatchByString(getName());
+      planetOwnerInfo.getMsgList().addNewMessage(msg);
+      return;
+    }
+    if (underConstruction.getName()
+        .equals(ConstructionFactory.EXTRA_CULTURE)) {
+      metal = metal - requiredMetalCost;
+      prodResource = prodResource - requiredProdCost;
+      culture = culture + 5;
+      String nextBuilding = "";
+      String finishedBuilding = underConstruction.getName();
+      if (governor != null
+          && getGovernorGuide() != Planet.PASSIVE_GOVERNOR) {
+        int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+        Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+        PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+        nextBuilding = governor.getCallName() + " selected new "
+            + "construction process where "
+            + getUnderConstruction().getName()
+            + " will be built. Estimated building time is "
+            + getProductionTimeAsString(underConstruction) + ".";
+      }
+      msg = new Message(MessageType.CONSTRUCTION,
+          getName() + " built " + finishedBuilding
+          + ". " + nextBuilding,
+          Icons.getIconByName(Icons.ICON_CULTURE));
+      msg.setCoordinate(getCoordinate());
+      msg.setMatchByString(getName());
+      planetOwnerInfo.getMsgList().addNewMessage(msg);
+      return;
+    }
+    if (underConstruction.getName()
+        .equals(ConstructionFactory.EXTRA_CREDIT)) {
+      metal = metal - requiredMetalCost;
+      prodResource = prodResource - requiredProdCost;
+      planetOwnerInfo
+          .setTotalCredits(planetOwnerInfo.getTotalCredits() + 12);
+      String nextBuilding = "";
+      String finishedBuilding = underConstruction.getName();
+      if (governor != null
+          && getGovernorGuide() != Planet.PASSIVE_GOVERNOR) {
+        int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
+        Attitude attitude = LeaderUtility.getRulerAttitude(governor);
+        PlanetHandling.chooseNextConstruction(map, this, index, attitude);
+        nextBuilding = governor.getCallName() + " selected new "
+            + "construction process where "
+            + getUnderConstruction().getName()
+            + " will be built. Estimated building time is "
+            + getProductionTimeAsString(underConstruction) + ".";
+      }
+      msg = new Message(MessageType.CONSTRUCTION,
+          getName() + " built " + finishedBuilding
+          + ". " + nextBuilding,
+          Icons.getIconByName(Icons.ICON_CREDIT));
+      msg.setCoordinate(getCoordinate());
+      msg.setMatchByString(getName());
+      planetOwnerInfo.getMsgList().addNewMessage(msg);
+    }
+  }
+  /**
    * Check if construction is done.
    * @param enemyOrbiting if true it means that other player,
    *        has fleet orbiting on planet.
@@ -2577,7 +2705,8 @@ public class Planet {
             sb.append(getName());
             sb.append(".");
             orbital = ship;
-            if (governor != null) {
+            if (governor != null
+                && getGovernorGuide() != Planet.PASSIVE_GOVERNOR) {
               int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
               Attitude attitude = LeaderUtility.getRulerAttitude(governor);
               PlanetHandling.chooseNextConstruction(map, this, index, attitude);
@@ -2713,7 +2842,8 @@ public class Planet {
             }
             String nextBuilding = "";
             String finishedBuilding = underConstruction.getName();
-            if (governor != null) {
+            if (governor != null
+                && getGovernorGuide() != Planet.PASSIVE_GOVERNOR) {
               int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
               Attitude attitude = LeaderUtility.getRulerAttitude(governor);
               PlanetHandling.chooseNextConstruction(map, this, index, attitude);
@@ -2787,123 +2917,9 @@ public class Planet {
           planetOwnerInfo.getMissions().add(destroy);
         }
       } else {
-        if (underConstruction.getName()
-            .equals(ConstructionFactory.MECHION_CITIZEN)) {
-          if (governor != null) {
-            governor.getStats().addOne(StatType.POPULATION_GROWTH);
-          }
-          metal = metal - requiredMetalCost;
-          prodResource = prodResource - requiredProdCost;
-          workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
-          String nextBuilding = "";
-          String finishedBuilding = underConstruction.getName();
-          if (governor != null) {
-            int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
-            Attitude attitude = LeaderUtility.getRulerAttitude(governor);
-            PlanetHandling.chooseNextConstruction(map, this, index, attitude);
-            nextBuilding = governor.getCallName() + " selected new "
-                + "construction process where "
-                + getUnderConstruction().getName()
-                + " will be built. Estimated building time is "
-                + getProductionTimeAsString(underConstruction) + ".";
-          }
-          msg = new Message(MessageType.CONSTRUCTION,
-              getName() + " built " + finishedBuilding
-              + ". " + nextBuilding,
-              Icons.getIconByName(Icons.ICON_PEOPLE));
-          msg.setCoordinate(getCoordinate());
-          msg.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-          return;
-        }
-        if (underConstruction.getName()
-            .equals(ConstructionFactory.SYNTHDROID_CITIZEN)) {
-          if (governor != null) {
-            governor.getStats().addOne(StatType.POPULATION_GROWTH);
-          }
-          metal = metal - requiredMetalCost;
-          prodResource = prodResource - requiredProdCost;
-          if (calculateSurPlusFood() > 0) {
-            workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
-          } else {
-            workers[FOOD_FARMERS] = workers[FOOD_FARMERS] + 1;
-          }
-          String nextBuilding = "";
-          String finishedBuilding = underConstruction.getName();
-          if (governor != null) {
-            int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
-            Attitude attitude = LeaderUtility.getRulerAttitude(governor);
-            PlanetHandling.chooseNextConstruction(map, this, index, attitude);
-            nextBuilding = governor.getCallName() + " selected new "
-                + "construction process where "
-                + getUnderConstruction().getName()
-                + " will be built. Estimated building time is "
-                + getProductionTimeAsString(underConstruction) + ".";
-          }
-          msg = new Message(MessageType.CONSTRUCTION,
-              getName() + " built " + finishedBuilding
-              + ". " + nextBuilding,
-              Icons.getIconByName(Icons.ICON_PEOPLE));
-          msg.setCoordinate(getCoordinate());
-          msg.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-          return;
-        }
-        if (underConstruction.getName()
-            .equals(ConstructionFactory.EXTRA_CULTURE)) {
-          metal = metal - requiredMetalCost;
-          prodResource = prodResource - requiredProdCost;
-          culture = culture + 5;
-          String nextBuilding = "";
-          String finishedBuilding = underConstruction.getName();
-          if (governor != null) {
-            int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
-            Attitude attitude = LeaderUtility.getRulerAttitude(governor);
-            PlanetHandling.chooseNextConstruction(map, this, index, attitude);
-            nextBuilding = governor.getCallName() + " selected new "
-                + "construction process where "
-                + getUnderConstruction().getName()
-                + " will be built. Estimated building time is "
-                + getProductionTimeAsString(underConstruction) + ".";
-          }
-          msg = new Message(MessageType.CONSTRUCTION,
-              getName() + " built " + finishedBuilding
-              + ". " + nextBuilding,
-              Icons.getIconByName(Icons.ICON_CULTURE));
-          msg.setCoordinate(getCoordinate());
-          msg.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-          return;
-        }
-        if (underConstruction.getName()
-            .equals(ConstructionFactory.EXTRA_CREDIT)) {
-          metal = metal - requiredMetalCost;
-          prodResource = prodResource - requiredProdCost;
-          planetOwnerInfo
-              .setTotalCredits(planetOwnerInfo.getTotalCredits() + 12);
-          String nextBuilding = "";
-          String finishedBuilding = underConstruction.getName();
-          if (governor != null) {
-            int index = map.getPlayerList().getIndex(getPlanetPlayerInfo());
-            Attitude attitude = LeaderUtility.getRulerAttitude(governor);
-            PlanetHandling.chooseNextConstruction(map, this, index, attitude);
-            nextBuilding = governor.getCallName() + " selected new "
-                + "construction process where "
-                + getUnderConstruction().getName()
-                + " will be built. Estimated building time is "
-                + getProductionTimeAsString(underConstruction) + ".";
-          }
-          msg = new Message(MessageType.CONSTRUCTION,
-              getName() + " built " + finishedBuilding
-              + ". " + nextBuilding,
-              Icons.getIconByName(Icons.ICON_CREDIT));
-          msg.setCoordinate(getCoordinate());
-          msg.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-        }
+        checkIfSpecialProjectsAreDone(map, requiredMetalCost, requiredProdCost);
       }
     }
-
   }
   /**
    * Update planet for one turn

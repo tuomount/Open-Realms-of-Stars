@@ -315,7 +315,7 @@ public class MissionHandlingTest {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
-    Mockito.when(playerList.getIndex((PlayerInfo) Mockito.anyObject()))
+    Mockito.when(playerList.getIndex(Mockito.mock(PlayerInfo.class)))
         .thenReturn(1);
     Fleet fleet2 = Mockito.mock(Fleet.class);
     Mockito.when(fleet2.getMilitaryValue()).thenReturn(6);
@@ -352,7 +352,7 @@ public class MissionHandlingTest {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
-    Mockito.when(playerList.getIndex((PlayerInfo) Mockito.anyObject()))
+    Mockito.when(playerList.getIndex(Mockito.mock(PlayerInfo.class)))
         .thenReturn(1);
     Mockito.when(map.getMaxX()).thenReturn(50);
     Mockito.when(map.getMaxY()).thenReturn(50);

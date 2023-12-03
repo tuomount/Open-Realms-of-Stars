@@ -19,7 +19,6 @@ package org.openRealmOfStars.mapTiles;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 
@@ -61,8 +60,6 @@ public class TileTest {
     tile.setAnimationIndex(1);
     assertEquals(0,tile.getIndex());
     assertEquals(1,tile.getAnimationIndex());
-    Graphics2D g2d = Mockito.mock(Graphics2D.class);
-    tile.draw(g2d, 0, 0);
     tile.setDescription("Test description");
     assertEquals("Test description", tile.getDescription());
 

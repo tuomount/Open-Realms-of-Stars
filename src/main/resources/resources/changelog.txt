@@ -9,12 +9,20 @@
 * Improved combat thrusters and added Combat thrusters Mk2 which generate energy.
 * Planetary exploration with fleet commander.
 * Trekker perk where commander gains more experience during planetary exploration.
+* War hero perk which commander may gain via combat and is able to shoot more likely critical shots.
+* Command gains experience when discovering new planets.
+* Cartographer perk where commander gains double the experience when discovering new planets.
+* Negotiator perk where ruler gains a bit of espionage after having enough diplomatic meetings.
+* Possibility to stop governor making building project selections but still gain governor bonuses.
 
 - Bugfixes -
 
 * AI Attitude is now from SpaceRace or from ruler. No longer random one.
 * Bombing with privateer ship is no long war declaration, since privateers are considered unknown ships.
 * Governor is no longer required to build orbital.
+* Fix bug where AI was calculating military alliance military powers wrongly.
+* Fix negative star years in research view. Researching always now takes at least one turn.
+* Obsoleting ship design now stops planets building that even planet view is not viewed.
 
 # Open Realm of Stars 0.23.0Beta 
 

@@ -18,7 +18,6 @@ package org.openRealmOfStars.game;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GraphicsDevice;
@@ -37,7 +36,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -48,7 +46,6 @@ import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.ambient.Bridge;
 import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.ambient.BridgeStatusType;
-import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.States.AITurnView;
@@ -385,11 +382,6 @@ public class Game implements ActionListener {
   private JLayeredPane layeredPane;
 
   /**
-   * Song information to draw
-   */
-  private JLabel songText;
-
-  /**
    * Game ConfigFile
    */
   private ConfigFile configFile;
@@ -419,10 +411,6 @@ public class Game implements ActionListener {
   private Bridge bridge;
 
   /**
-   * Mouse listener for show current music.
-   */
-  private SongMouseListener musicMouseListener;
-  /**
    * Get Star map
    * @return StarMap
    */
@@ -439,16 +427,6 @@ public class Game implements ActionListener {
    * Game window Y size aka height
    */
   private static final int WINDOW_Y_SIZE = 768;
-
-  /**
-   * Y coordinate when showing music text at top of screen
-   */
-  private static final int MUSIC_TEXT_TOP = 25;
-
-  /**
-   * Y coordinate when showing music text at bottom of screen
-   */
-  private static final int MUSIC_TEXT_BOTTOM = 268;
 
   /**
    * Animation timer delay in milli seconds.
@@ -534,7 +512,6 @@ public class Game implements ActionListener {
       animationTimer.start();
       musicTimer = new Timer(MUSIC_TIMER_DELAY, this);
       musicTimer.setActionCommand(GameCommands.COMMAND_MUSIC_TIMER);
-      musicMouseListener = new SongMouseListener();
       gameFrame.setUndecorated(configFile.getBorderless());
       GuiStatics.setLargerFonts(configFile.getLargerFonts());
       GraphicsDevice graphicsDevice = GraphicsEnvironment
@@ -1006,31 +983,6 @@ public class Game implements ActionListener {
       layeredPane.setLayer(view, JLayeredPane.DEFAULT_LAYER);
       layeredPane.add(view);
       layeredPane.setBounds(0, 0, getWidth(), getHeight());
-      int y = MUSIC_TEXT_TOP;
-      if (view instanceof MainMenu || view instanceof ResearchView
-          || view instanceof ShipView
-          || view instanceof PlayerSetupView
-          || view instanceof DiplomacyView
-          || view instanceof BattleView) {
-        y = getHeight() - MUSIC_TEXT_BOTTOM;
-      }
-      songText = new JLabel("Test");
-      songText.setBounds(getWidth() - 374, y, 350, 150);
-      songText.setFont(GuiStatics.getFontSquarionBold());
-      songText.setForeground(Color.white);
-      songText.addMouseListener(musicMouseListener);
-      musicMouseListener.setOpacityCount(0);
-      MusicFileInfo info = MusicPlayer.getNowPlaying();
-      String text = "<html>Now playing: " + info.getName() + " by "
-          + info.getAuthor() + "</html>";
-      songText.setText(text);
-      if (MusicPlayer.isMusicEnabled()) {
-        layeredPane.setLayer(songText, JLayeredPane.POPUP_LAYER);
-        layeredPane.add(songText);
-      }
-      if (MusicPlayer.isTextDisplayedEnough()) {
-        songText.setVisible(false);
-      }
       gameFrame.add(layeredPane);
       gameFrame.validate();
     }
@@ -3590,32 +3542,6 @@ public class Game implements ActionListener {
   @Override
   public void actionPerformed(final ActionEvent arg0) {
     if (arg0.getActionCommand() == GameCommands.COMMAND_MUSIC_TIMER) {
-      if (songText != null) {
-        if (MusicPlayer.isTextDisplayedEnough()) {
-          songText.setVisible(false);
-        } else {
-          if (musicMouseListener.isMouseInArea()) {
-            musicMouseListener.setOpacityCount(
-                musicMouseListener.getOpacityCount() - 64);
-            if (musicMouseListener.getOpacityCount() < 25) {
-              musicMouseListener.setOpacityCount(25);
-            }
-          } else {
-            musicMouseListener.setOpacityCount(255);
-          }
-          MusicFileInfo info = MusicPlayer.getNowPlaying();
-          String text = "<html>Now playing:<br>" + info.getName() + "<br> by "
-              + info.getAuthor() + "</html>";
-          int value = musicMouseListener.getOpacityCount();
-          songText.setForeground(new Color(value, value, value, 255));
-          songText.setText(text);
-          if (musicMouseListener.getOpacityCount() > 25) {
-            songText.setVisible(true);
-          } else {
-            songText.setVisible(false);
-          }
-        }
-      }
       MusicPlayer.handleMusic(gameState);
       return;
     }

@@ -712,7 +712,7 @@ public final class LeaderBiography {
       }
       case WAR_HERO: {
         sb.append(name);
-        sb.append(" has been in great battle and survived.");
+        sb.append(" has been in great battle and survived and ");
         sb.append(leader.getGender().getHeShe());
         sb.append(" become a war hero.");
         break;

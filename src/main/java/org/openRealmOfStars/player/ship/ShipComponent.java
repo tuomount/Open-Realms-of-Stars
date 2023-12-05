@@ -191,6 +191,16 @@ public class ShipComponent {
   }
 
   /**
+   * Is component destructive (hull-damaging) weapon
+   * @return True if destructive weapon
+   */
+  public boolean isDestructiveWeapon() {
+    var weapon = isWeapon();
+    var nondestructive = type == ShipComponentType.WEAPON_ECM_TORPEDO;
+    return weapon && !nondestructive;
+  }
+
+  /**
    * Is privateer module
    * @return True if privateer module
    */

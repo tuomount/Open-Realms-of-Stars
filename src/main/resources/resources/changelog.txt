@@ -14,6 +14,7 @@
 * Cartographer perk where commander gains double the experience when discovering new planets.
 * Negotiator perk where ruler gains a bit of espionage after having enough diplomatic meetings.
 * Possibility to stop governor making building project selections but still gain governor bonuses.
+* Currently playing song display removed since it blocked user to click things behind it.
 
 - Bugfixes -
 
@@ -23,6 +24,8 @@
 * Fix bug where AI was calculating military alliance military powers wrongly.
 * Fix negative star years in research view. Researching always now takes at least one turn.
 * Obsoleting ship design now stops planets building that even planet view is not viewed.
+* Fix NPE from Ambient lights control.
+
 
 # Open Realm of Stars 0.23.0Beta 
 

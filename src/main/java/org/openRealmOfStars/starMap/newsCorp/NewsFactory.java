@@ -442,7 +442,7 @@ public final class NewsFactory {
     sb.append(realm.getEmpireName());
     sb.append(". ");
     news.setNewsText(sb.toString());
-    realm.appendStory(news.getNewsText(), starYear);
+    realm.appendStory(sb.toString(), starYear);
     return news;
   }
   /**
@@ -658,7 +658,7 @@ public final class NewsFactory {
     }
     sb.append(LeaderBiography.createBioForLeader(leader, realm));
     news.setNewsText(sb.toString());
-    realm.appendStory(news.getNewsText(), starYear);
+    realm.appendStory(sb.toString(), starYear);
     return news;
   }
   /**
@@ -1132,7 +1132,7 @@ public final class NewsFactory {
     sb.append(" has lost its last planet from the known galaxy! ");
     sb.append("Galaxy now has one realm less... ");
     news.setNewsText(sb.toString());
-    realm.appendStory(news.getNewsText(), starYear);
+    realm.appendStory(sb.toString(), starYear);
     return news;
   }
   /**
@@ -2012,7 +2012,7 @@ public final class NewsFactory {
       }
     }
     news.setNewsText(sb.toString());
-    realm.appendStory(news.getNewsText(), starYear);
+    realm.appendStory(sb.toString(), starYear);
     return news;
   }
   /**
@@ -2921,10 +2921,10 @@ public final class NewsFactory {
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
       if (winner1 != null) {
-        winner1.appendStory(news.getNewsText(), map.getStarYear());
+        winner1.appendStory(sb.toString(), map.getStarYear());
       }
       if (winner2 != null) {
-        winner2.appendStory(news.getNewsText(), map.getStarYear());
+        winner2.appendStory(sb.toString(), map.getStarYear());
       }
     }
     return news;
@@ -2991,10 +2991,10 @@ public final class NewsFactory {
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
       if (winner1 != null) {
-        winner1.appendStory(news.getNewsText(), map.getStarYear());
+        winner1.appendStory(sb.toString(), map.getStarYear());
       }
       if (winner2 != null) {
-        winner2.appendStory(news.getNewsText(), map.getStarYear());
+        winner2.appendStory(sb.toString(), map.getStarYear());
       }
     }
     return news;
@@ -3061,9 +3061,9 @@ public final class NewsFactory {
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
-      winner.appendStory(news.getNewsText(), map.getStarYear());
+      winner.appendStory(sb.toString(), map.getStarYear());
       if (winner2 != null) {
-        winner2.appendStory(news.getNewsText(), map.getStarYear());
+        winner2.appendStory(sb.toString(), map.getStarYear());
       }
     }
     return news;
@@ -3236,9 +3236,9 @@ public final class NewsFactory {
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
-      winner.appendStory(news.getNewsText(), map.getStarYear());
+      winner.appendStory(sb.toString(), map.getStarYear());
       if (winner2 != null) {
-        winner2.appendStory(news.getNewsText(), map.getStarYear());
+        winner2.appendStory(sb.toString(), map.getStarYear());
       }
     }
     if (removeRulerVote) {
@@ -3337,9 +3337,9 @@ public final class NewsFactory {
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
-      winner.appendStory(news.getNewsText(), map.getStarYear());
+      winner.appendStory(sb.toString(), map.getStarYear());
       if (winner2 != null) {
-        winner2.appendStory(news.getNewsText(), map.getStarYear());
+        winner2.appendStory(sb.toString(), map.getStarYear());
       }
     }
     return news;
@@ -3457,10 +3457,10 @@ public final class NewsFactory {
     news.setImageInstructions(instructions.build());
     news.setNewsText(sb.toString());
     if (winner1 != null) {
-      winner1.appendStory(news.getNewsText(), map.getStarYear());
+      winner1.appendStory(sb.toString(), map.getStarYear());
     }
     if (winner2 != null) {
-      winner2.appendStory(news.getNewsText(), map.getStarYear());
+      winner2.appendStory(sb.toString(), map.getStarYear());
     }
     return news;
   }
@@ -3626,7 +3626,7 @@ public final class NewsFactory {
       sb.append(" is known to have excellent research team. ");
     }
     news.setNewsText(sb.toString());
-    realm.appendStory(news.getNewsText(), starYear);
+    realm.appendStory(sb.toString(), starYear);
     return news;
   }
 
@@ -3662,7 +3662,7 @@ public final class NewsFactory {
     }
     news.setImageInstructions(instructions.build());
     news.setNewsText(text);
-    realm.appendStory(news.getNewsText(), starYear);
+    realm.appendStory(text, starYear);
     return news;
   }
 
@@ -4096,7 +4096,7 @@ public final class NewsFactory {
       sb.append(" is known to have diplomatic leaders. ");
     }
     news.setNewsText(sb.toString());
-    realm.appendStory(news.getNewsText(), starYear);
+    realm.appendStory(sb.toString(), starYear);
     return news;
   }
 
@@ -4146,7 +4146,7 @@ public final class NewsFactory {
     sb.append(realm.getEmpireName());
     sb.append(" is able to spread cultural information to other realms! ");
     news.setNewsText(sb.toString());
-    realm.appendStory(news.getNewsText(), starYear);
+    realm.appendStory(sb.toString(), starYear);
     return news;
   }
 

@@ -2841,11 +2841,16 @@ public class PlayerInfo {
    * @param starYear Star year when story happens
    */
   public void appendStory(final String newStory, final int starYear) {
-    this.backgroundStory = this.backgroundStory + "\n\n";
-    if (starYear > 0) {
-      this.backgroundStory = this.backgroundStory + "At " + starYear + ": ";
+    if (newStory != null && !newStory.isBlank()) {
+      this.backgroundStory = this.backgroundStory + "\n\n";
+      if (starYear > 0) {
+        this.backgroundStory = this.backgroundStory + "At " + starYear + ": ";
+      }
+      this.backgroundStory = this.backgroundStory + newStory;
+    } else {
+      ErrorLogger.log("Null or empty story encountered!");
+      Thread.dumpStack();
     }
-    this.backgroundStory = this.backgroundStory + newStory;
   }
 
 }

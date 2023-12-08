@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <revision>0.25.0</revision>
+        <revision>0.26.0</revision>
         <changelist>-SNAPSHOT</changelist>
         <sha1/>
     </properties>

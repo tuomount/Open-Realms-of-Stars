@@ -1239,7 +1239,7 @@ public final class RandomEventUtility {
         Planet planet = planets.get(index);
         event.setPlanet(planet);
         int value = DiceGenerator.getRandom(10, 15);
-        planet.fightAgainstAttacker(value, null, "wild life",
+        planet.fightAgainstAttacker(value, map, "wild life",
             "fighting against wildlife", "fighting against wildlife");
         StringBuilder sb = new StringBuilder();
         sb.append(planet.getName());

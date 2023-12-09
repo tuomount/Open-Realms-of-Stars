@@ -2,7 +2,7 @@
 
 - Bugfixes -
 
-# Open Realm of Stars 0.25.0Beta
+# Open Realm of Stars 0.25.0
 
 - New features and updates -
 

@@ -2,6 +2,7 @@ package org.openRealmOfStars.starMap.planet;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,6 +20,8 @@ package org.openRealmOfStars.starMap.planet;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.openRealmOfStars.ai.mission.Mission;
 import org.openRealmOfStars.ai.mission.MissionPhase;
@@ -782,7 +785,10 @@ public class Planet {
    */
   public int getFoodProdByPlanetAndBuildings() {
     int total = getTotalProductionFromBuildings(PRODUCTION_FOOD);
-    total = total + event.getExtraFoodProduction() + 2;
+    int statusesBonus = statuses.stream()
+        .map(status -> status.getStatus().getFoodBonus())
+        .reduce(0, Integer::sum);
+    total = total + statusesBonus + 2;
     return total;
   }
   /**
@@ -970,19 +976,22 @@ public class Planet {
       sb.append(getTax());
       sb.append("<br>");
     }
-    if (eventFound && event.getExtraCredit() != 0) {
-      value = event.getExtraCredit();
+    int statusesBonus = statuses.stream()
+        .map(status -> status.getStatus().getCredBonus())
+        .reduce(0, Integer::sum);
+    if (statusesBonus != 0) {
+      value = statusesBonus;
       result = result + value;
       if (value > 0) {
         sb.append("<li> ");
-        sb.append(event.getName());
+        sb.append("Planetary Statuses");
         sb.append(" +");
         sb.append(value);
         sb.append("<br>");
       }
       if (value < 0) {
         sb.append("<li> ");
-        sb.append(event.getName());
+        sb.append("Planetary Statuses");
         sb.append(" ");
         sb.append(value);
         sb.append("<br>");
@@ -1336,19 +1345,22 @@ public class Planet {
       sb.append(value);
       sb.append("<br>");
     }
-    if (eventFound && event.getExtraProduction() != 0) {
-      value = event.getExtraProduction();
+    int statusesBonus = statuses.stream()
+        .map(status -> status.getStatus().getProdBonus())
+        .reduce(0, Integer::sum);
+    if (statusesBonus != 0) {
+      value = statusesBonus;
       result = result + value;
       if (value > 0) {
         sb.append("<li> ");
-        sb.append(event.getName());
+        sb.append("Planetary Statuses");
         sb.append(" +");
         sb.append(value);
         sb.append("<br>");
       }
       if (value < 0) {
         sb.append("<li> ");
-        sb.append(event.getName());
+        sb.append("Planetary Statuses");
         sb.append(" ");
         sb.append(value);
         sb.append("<br>");
@@ -1440,19 +1452,22 @@ public class Planet {
       sb.append(value);
       sb.append("<br>");
     }
-    if (eventFound && event.getExtraMetalProduction() != 0) {
-      value = event.getExtraMetalProduction();
+    int statusesBonus = statuses.stream()
+        .map(status -> status.getStatus().getMineBonus())
+        .reduce(0, Integer::sum);
+    if (statusesBonus != 0) {
+      value = statusesBonus;
       result = result + value;
       if (value > 0) {
         sb.append("<li> ");
-        sb.append(event.getName());
+        sb.append("Planetary Statuses");
         sb.append(" +");
         sb.append(value);
         sb.append("<br>");
       }
       if (value < 0) {
         sb.append("<li> ");
-        sb.append(event.getName());
+        sb.append("Planetary Statuses");
         sb.append(" ");
         sb.append(value);
         sb.append("<br>");
@@ -1538,19 +1553,22 @@ public class Planet {
       sb.append(value);
       sb.append("<br>");
     }
-    if (eventFound && event.getExtraFoodProduction() != 0) {
-      value = event.getExtraFoodProduction();
+    int statusesBonus = statuses.stream()
+        .map(status -> status.getStatus().getFoodBonus())
+        .reduce(0, Integer::sum);
+    if (statusesBonus != 0) {
+      value = statusesBonus;
       result = result + value;
       if (value > 0) {
         sb.append("<li> ");
-        sb.append(event.getName());
+        sb.append("Planetary Statuses");
         sb.append(" +");
         sb.append(value);
         sb.append("<br>");
       }
       if (value < 0) {
         sb.append("<li> ");
-        sb.append(event.getName());
+        sb.append("Planetary Statuses");
         sb.append(" ");
         sb.append(value);
         sb.append("<br>");
@@ -3692,6 +3710,14 @@ public class Planet {
   }
 
   /**
+   * Return unmodifiable list of planet's statuses
+   * @return Unmodifiable List of statuses
+   */
+  public List<AppliedStatus> getStatuses() {
+    return Collections.unmodifiableList(statuses);
+  }
+
+  /**
    * Remove status with specified ID from planet
    * @param statusId ID of status to remove
    * @return True if status was removed
@@ -3742,266 +3768,111 @@ public class Planet {
     if (info != null) {
       realm = info;
     }
-    if (realm != null && !eventFound) {
-      StringBuilder msgText = new StringBuilder();
+    if (realm == null || eventFound || event == PlanetaryEvent.NONE) {
+      return;
+    }
+
+    StringBuilder msgText = new StringBuilder();
+    if (commander == null) {
+      msgText.append("When colonizating ");
+      msgText.append(getName());
+      msgText.append(" colonist found ");
+    } else {
+      msgText.append("Away team on ");
+      msgText.append(getName());
+      msgText.append(" lead by ");
+      msgText.append(commander.getCallName());
+      msgText.append(" found ");
+    }
+
+    eventFound = true;
+
+    if (event == PlanetaryEvent.ANCIENT_ARTIFACT) {
+      exp = 15;
+      event = PlanetaryEvent.NONE;
+      msgText.append("that ");
+      msgText.append(getName() + " has strange ancient artifact.");
       if (commander == null) {
-        msgText.append("When colonizating ");
-        msgText.append(getName());
-        msgText.append(" colonist found ");
+        msgText.append(" Colonists send it immediately for research.");
       } else {
-        msgText.append("Away team on ");
-        msgText.append(getName());
-        msgText.append(" lead by ");
-        msgText.append(commander.getCallName());
-        msgText.append(" found ");
+        msgText.append(" Away team takes it immediately for research.");
       }
-      eventFound = true;
-      if (event.oneTimeOnly()) {
-        if (event == PlanetaryEvent.ANCIENT_ARTIFACT) {
-          exp = 15;
-          event = PlanetaryEvent.NONE;
-          msgText.append("that ");
-          msgText.append(getName() + " has strange ancient artifact.");
-          if (commander == null) {
-            msgText.append(" Colonists send it immediately for research.");
-          } else {
-            msgText.append(" Away team takes it immediately for research.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.ARTIFACT_ON_PLANET);
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-          realm.getArtifactLists().addDiscoveredArtifact(
-              ArtifactFactory.getRandomArtifact());
-          if (Game.getTutorial() != null  && realm.isHuman()
-              && isTutorialEnabled) {
-            String tutorialText = Game.getTutorial().showTutorialText(15);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              realm.getMsgList().addNewMessage(msg);
-            }
-          }
-        } else {
-          exp = 8;
-          Building building = event.getBuilding();
-          addBuilding(building);
-          ImageInstruction imageInst = null;
-          if (event == PlanetaryEvent.ANCIENT_LAB) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.ANCIENT_LABORATORY);
-          }
-          if (event == PlanetaryEvent.ANCIENT_FACTORY) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.ANCIENT_FACTORY);
-          }
-          if (event == PlanetaryEvent.ANCIENT_TEMPLE) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.ANCIENT_TEMPLE);
-          }
-          if (event == PlanetaryEvent.ANCIENT_PALACE) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.ANCIENT_PALACE);
-          }
-          if (event == PlanetaryEvent.BLACK_MONOLITH) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.BLACK_MONOLITH);
-          }
-          event = PlanetaryEvent.NONE;
-          msgText.append(building.getName());
-          if (commander == null) {
-            msgText.append(". Colonists has taken it in use now.");
-          } else {
-            msgText.append(". Building must be left on planet waiting"
-                + " for colonization.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-          msg.setCoordinate(getCoordinate());
-          if (imageInst != null) {
-            msg.setImageInstructions(imageInst.build());
-          }
-          realm.getMsgList().addUpcomingMessage(msg);
+      Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+          Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+      msg.setCoordinate(getCoordinate());
+      ImageInstruction imageInst = new ImageInstruction();
+      imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+      imageInst.addImage(ImageInstruction.ARTIFACT_ON_PLANET);
+      msg.setImageInstructions(imageInst.build());
+      realm.getMsgList().addUpcomingMessage(msg);
+      realm.getArtifactLists().addDiscoveredArtifact(
+          ArtifactFactory.getRandomArtifact());
+      if (Game.getTutorial() != null  && realm.isHuman()
+          && isTutorialEnabled) {
+        String tutorialText = Game.getTutorial().showTutorialText(15);
+        if (tutorialText != null) {
+          msg = new Message(MessageType.INFORMATION, tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
+          realm.getMsgList().addNewMessage(msg);
         }
+      }
+    } else {
+      exp = 8;
+      Building building = event.getBuilding();
+      addBuilding(building);
+      ImageInstruction imageInst = null;
+      if (event == PlanetaryEvent.ANCIENT_LAB) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.ANCIENT_LABORATORY);
+      }
+      if (event == PlanetaryEvent.ANCIENT_FACTORY) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.ANCIENT_FACTORY);
+      }
+      if (event == PlanetaryEvent.ANCIENT_TEMPLE) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.ANCIENT_TEMPLE);
+      }
+      if (event == PlanetaryEvent.ANCIENT_PALACE) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.ANCIENT_PALACE);
+      }
+      if (event == PlanetaryEvent.BLACK_MONOLITH) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.BLACK_MONOLITH);
+      }
+
+      event = PlanetaryEvent.NONE;
+
+      msgText.append(building.getName());
+      if (commander == null) {
+        msgText.append(". Colonists has taken it in use now.");
       } else {
-        if (event == PlanetaryEvent.LUSH_VEGETATION) {
-          exp = 10;
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.LUSH_VEGETATION);
-          msgText.append("that planet has lot's of edible vegetation. ");
-          msgText.append("This gives one extra food per turn.");
-          if (commander != null) {
-            msgText.append(
-                " This can be only utilized by colonizating planet.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_FARM));
-          msg.setCoordinate(getCoordinate());
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        } else if (event == PlanetaryEvent.PARADISE) {
-          exp = 10;
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.PARADISE);
-          msgText.append("that planet is true paradise. ");
-          msgText.append("This gives two extra food per turn.");
-          if (commander != null) {
-            msgText.append(
-                " This can be only utilized by colonizating planet.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_FARM));
-          msg.setCoordinate(getCoordinate());
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        } else if (event == PlanetaryEvent.METAL_RICH_SURFACE) {
-          exp = 10;
-          msgText.append("that planet's surface is full of metal ore. ");
-          msgText.append("This gives one extra metal per turn.");
-          if (commander != null) {
-            msgText.append(
-                " This can be only utilized by colonizating planet.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_METAL_ORE));
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.METAL_RICH_SURFACE);
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        } else if (event == PlanetaryEvent.PRECIOUS_GEMS) {
-          exp = 10;
-          msgText.append("that planet's surface is full of precious gems. ");
-          msgText.append("This gives one extra credit per turn.");
-          if (commander != null) {
-            msgText.append(
-                " This can be only utilized by colonizating planet.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_CREDIT));
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.PRECIOUS_GEMS);
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        } else  if (event == PlanetaryEvent.MOLTEN_LAVA) {
-          exp = 10;
-          msgText.append("that there is massive amount of molten lava ");
-          msgText.append("on planet surface. This gives one extra metal and"
-              + " production per turn but adds also unhappiness of people.");
-          if (commander != null) {
-            msgText.append(
-                " This can be only utilized by colonizating planet.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_METAL_ORE));
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.MOLTEN_LAVA);
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        } else if (event == PlanetaryEvent.ARID) {
-          exp = 6;
-          msgText.append("that planet is arid. Naturally growing food is");
-          msgText.append(" is challenging to find. This planet produces only"
-              + " one food without alterations.");
-          if (commander != null) {
-            msgText.append(
-                " Colonists on this planet would have tough time.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_FARM));
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.ARID);
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        } else if (event == PlanetaryEvent.DESERT) {
-          exp = 6;
-          msgText.append("that planet is dry and full of desert. There is no"
-              + " food growing on planet surface. This planet does not provide"
-              + " any food without alterations.");
-          if (commander != null) {
-            msgText.append(
-                " Colonists on this planet would have tough time.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_FARM));
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.DESERT);
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        }
+        msgText.append(". Building must be left on planet waiting"
+            + " for colonization.");
       }
-      if (commander != null) {
-        if (commander.hasPerk(Perk.TREKKER)) {
-          exp = exp * 2;
-        }
-        commander.setExperience(commander.getExperience() + exp);
+      Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+          Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+      msg.setCoordinate(getCoordinate());
+      if (imageInst != null) {
+        msg.setImageInstructions(imageInst.build());
       }
+      realm.getMsgList().addUpcomingMessage(msg);
+    }
+
+    if (commander != null) {
+      if (commander.hasPerk(Perk.TREKKER)) {
+        exp = exp * 2;
+      }
+      commander.setExperience(commander.getExperience() + exp);
     }
   }
 
-  /**
-   * Planet has climate that could change.
-   * @return True if climate could change.
-   */
-  public boolean hasClimateEvent() {
-    if (event == PlanetaryEvent.DESERT
-        || event == PlanetaryEvent.ARID
-        || event == PlanetaryEvent.NONE
-        || event == PlanetaryEvent.LUSH_VEGETATION
-        || event == PlanetaryEvent.PARADISE) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Change climate on planet if possible.
-   * @param better True for change better climate, false for worse.
-   */
-  public void changeClimate(final boolean better) {
-    if (hasClimateEvent() && better) {
-      if (event == PlanetaryEvent.DESERT) {
-        event = PlanetaryEvent.ARID;
-      } else if (event == PlanetaryEvent.ARID) {
-        event = PlanetaryEvent.NONE;
-      } else if (event == PlanetaryEvent.NONE) {
-        event = PlanetaryEvent.LUSH_VEGETATION;
-      } else if (event == PlanetaryEvent.LUSH_VEGETATION) {
-        event = PlanetaryEvent.PARADISE;
-      }
-    }
-    if (hasClimateEvent() && !better) {
-      if (event == PlanetaryEvent.PARADISE) {
-        event = PlanetaryEvent.LUSH_VEGETATION;
-      } else if (event == PlanetaryEvent.LUSH_VEGETATION) {
-        event = PlanetaryEvent.NONE;
-      } else if (event == PlanetaryEvent.NONE) {
-        event = PlanetaryEvent.ARID;
-      } else if (event == PlanetaryEvent.ARID) {
-        event = PlanetaryEvent.DESERT;
-      }
-    }
-  }
   /**
    * Calculate happiness of the planet. Also updates explanation how
    * happiness is calculated.
@@ -4074,14 +3945,17 @@ public class Planet {
       sb.append(bonusBuildings);
       sb.append("<br>");
     }
-    if (event.getExtraHappiness() != 0) {
+    int statusesBonus = statuses.stream()
+        .map(status -> status.getStatus().getHappinessBonus())
+        .reduce(0, (acc, b) -> acc + b);
+    if (statusesBonus != 0) {
       sb.append("<li>");
       sb.append(event.getName());
-      if (event.getExtraHappiness() > 0) {
+      if (statusesBonus > 0) {
         sb.append("+");
       }
-      base = base + event.getExtraHappiness();
-      sb.append(event.getExtraHappiness());
+      base = base + statusesBonus;
+      sb.append(statusesBonus);
       sb.append("<br>");
     }
     int totalWarFatigue = planetOwnerInfo.getTotalWarFatigue();
@@ -4416,21 +4290,12 @@ public class Planet {
     if (planetOwnerInfo.getWorldTypeValue(planetType.getWorldType()) < 75) {
       score = score - 1;
     }
-    if (getPlanetaryEvent() == PlanetaryEvent.LUSH_VEGETATION) {
-      score = score + 1;
-    }
-    if (getPlanetaryEvent() == PlanetaryEvent.PARADISE) {
-      score = score + 2;
-    }
-    if (getPlanetaryEvent() == PlanetaryEvent.ARID) {
-      score = score - 1;
-    }
-    if (getPlanetaryEvent() == PlanetaryEvent.MOLTEN_LAVA) {
-      score = score - 1;
-    }
-    if (getPlanetaryEvent() == PlanetaryEvent.DESERT) {
-      score = score - 2;
-    }
+
+    int statusesBonus = statuses.stream()
+        .map(status -> status.getStatus().getFoodBonus())
+        .reduce(0, (acc, b) -> acc + b);
+    score += statusesBonus;
+
     if (score > bestScore) {
       bestGuide = POPULATION_PLANET;
       score = bestScore;
@@ -4443,12 +4308,15 @@ public class Planet {
     if (getGroundSize() > 11) {
       score = score + 1;
     }
-    if (getPlanetaryEvent() == PlanetaryEvent.MOLTEN_LAVA) {
-      score = score + 2;
-    }
-    if (getPlanetaryEvent() == PlanetaryEvent.METAL_RICH_SURFACE) {
-      score = score + 1;
-    }
+
+    statusesBonus = statuses.stream()
+        .map(status -> status.getStatus().getMineBonus())
+        .reduce(0, (acc, b) -> acc + b);
+    statusesBonus = statusesBonus + statuses.stream()
+        .map(status -> status.getStatus().getProdBonus())
+        .reduce(0, (acc, b) -> acc + b);
+    score += statusesBonus;
+
     if (score > bestScore) {
       bestGuide = MILITARY_PLANET;
       score = bestScore;
@@ -4497,9 +4365,12 @@ public class Planet {
     if (getGroundSize() > 8) {
       score = score + 1;
     }
-    if (getPlanetaryEvent() == PlanetaryEvent.PRECIOUS_GEMS) {
-      score = score + 1;
-    }
+
+    statusesBonus = statuses.stream()
+        .map(status -> status.getStatus().getCredBonus())
+        .reduce(0, (acc, b) -> acc + b);
+    score += statusesBonus;
+
     if (getTotalCreditProduction() > 1) {
       score = score + 1;
     }

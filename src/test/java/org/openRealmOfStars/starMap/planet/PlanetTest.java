@@ -414,6 +414,18 @@ public class PlanetTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPlanetEvent() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    assertEquals(PlanetaryEvent.NONE, planet.getPlanetaryEvent());
+    assertEquals(true, planet.isEventActivated());
+    planet.setEventActivation(false);
+    planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_ARTIFACT);
+    assertEquals(PlanetaryEvent.ANCIENT_ARTIFACT, planet.getPlanetaryEvent());
+    assertEquals(false, planet.isEventActivated());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFoodProduction() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
@@ -426,48 +438,6 @@ public class PlanetTest {
     Mockito.when(building.getFarmBonus()).thenReturn(1);
     planet.addBuilding(building);
     assertEquals(3, planet.getFoodProdByPlanetAndBuildings());
-    planet.setPlanetaryEvent(PlanetaryEvent.LUSH_VEGETATION);
-    assertEquals(4, planet.getFoodProdByPlanetAndBuildings());
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.UnitTest.class)
-  public void testPlanetEvent() {
-    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
-    assertEquals(PlanetaryEvent.NONE, planet.getPlanetaryEvent());
-    assertEquals(true, planet.isEventActivated());
-    planet.setEventActivation(false);
-    planet.setPlanetaryEvent(PlanetaryEvent.METAL_RICH_SURFACE);
-    assertEquals(PlanetaryEvent.METAL_RICH_SURFACE, planet.getPlanetaryEvent());
-    assertEquals(false, planet.isEventActivated());
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.UnitTest.class)
-  public void testClimateChange() {
-    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
-    assertEquals(PlanetaryEvent.NONE, planet.getPlanetaryEvent());
-    assertEquals(true, planet.isEventActivated());
-    planet.changeClimate(true);
-    assertEquals(PlanetaryEvent.LUSH_VEGETATION, planet.getPlanetaryEvent());
-    planet.changeClimate(true);
-    assertEquals(PlanetaryEvent.PARADISE, planet.getPlanetaryEvent());
-    planet.changeClimate(true);
-    assertEquals(PlanetaryEvent.PARADISE, planet.getPlanetaryEvent());
-    planet.changeClimate(false);
-    assertEquals(PlanetaryEvent.LUSH_VEGETATION, planet.getPlanetaryEvent());
-    planet.changeClimate(false);
-    assertEquals(PlanetaryEvent.NONE, planet.getPlanetaryEvent());
-    planet.changeClimate(false);
-    assertEquals(PlanetaryEvent.ARID, planet.getPlanetaryEvent());
-    planet.changeClimate(false);
-    assertEquals(PlanetaryEvent.DESERT, planet.getPlanetaryEvent());
-    planet.changeClimate(false);
-    assertEquals(PlanetaryEvent.DESERT, planet.getPlanetaryEvent());
-    planet.changeClimate(true);
-    assertEquals(PlanetaryEvent.ARID, planet.getPlanetaryEvent());
-    planet.changeClimate(true);
-    assertEquals(PlanetaryEvent.NONE, planet.getPlanetaryEvent());
   }
 
   @Test
@@ -485,78 +455,6 @@ public class PlanetTest {
     assertNotEquals(0, planet.getAmountMetalInGround());
     planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
     assertEquals(0, planet.getAmountMetalInGround());
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testPlanetEventActivationMetalRichSurface() {
-    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
-    planet.setPlanetOwner(0, info);
-    planet.setEventActivation(false);
-    planet.setPlanetaryEvent(PlanetaryEvent.METAL_RICH_SURFACE);
-    assertEquals(PlanetaryEvent.METAL_RICH_SURFACE, planet.getPlanetaryEvent());
-    assertEquals(false, planet.isEventActivated());
-    planet.eventActivation(false, null, null);
-    assertEquals(true, planet.isEventActivated());
-    info.getMsgList().clearMessages();
-    assertEquals(Icons.getIconByName(Icons.ICON_METAL_ORE),
-        info.getMsgList().getMsg().getIcon());
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testPlanetEventActivationPreciousGems() {
-    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
-    planet.setPlanetOwner(0, info);
-    planet.setEventActivation(false);
-    planet.setPlanetaryEvent(PlanetaryEvent.PRECIOUS_GEMS);
-    assertEquals(PlanetaryEvent.PRECIOUS_GEMS, planet.getPlanetaryEvent());
-    assertEquals(false, planet.isEventActivated());
-    planet.eventActivation(false, null, null);
-    assertEquals(true, planet.isEventActivated());
-    info.getMsgList().clearMessages();
-    assertEquals(Icons.getIconByName(Icons.ICON_CREDIT),
-        info.getMsgList().getMsg().getIcon());
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testPlanetEventActivationLushVegetation() {
-    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
-    planet.setPlanetOwner(0, info);
-    planet.setEventActivation(false);
-    planet.setPlanetaryEvent(PlanetaryEvent.LUSH_VEGETATION);
-    assertEquals(PlanetaryEvent.LUSH_VEGETATION, planet.getPlanetaryEvent());
-    assertEquals(false, planet.isEventActivated());
-    planet.eventActivation(false, null, null);
-    assertEquals(true, planet.isEventActivated());
-    info.getMsgList().clearMessages();
-    assertEquals(Icons.getIconByName(Icons.ICON_FARM),
-        info.getMsgList().getMsg().getIcon());
-    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testPlanetEventActivationParadise() {
-    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
-    planet.setPlanetOwner(0, info);
-    planet.setEventActivation(false);
-    planet.setPlanetaryEvent(PlanetaryEvent.PARADISE);
-    assertEquals(PlanetaryEvent.PARADISE, planet.getPlanetaryEvent());
-    assertEquals(false, planet.isEventActivated());
-    planet.eventActivation(false, null, null);
-    assertEquals(true, planet.isEventActivated());
-    info.getMsgList().clearMessages();
-    assertEquals(Icons.getIconByName(Icons.ICON_FARM),
-        info.getMsgList().getMsg().getIcon());
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test

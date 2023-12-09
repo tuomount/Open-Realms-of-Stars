@@ -1131,74 +1131,6 @@ public final class RandomEventUtility {
   }
 
   /**
-   * Handle good climate change.
-   * @param event Random event must be climate change
-   * @param map Starmap to locate planet
-   */
-  public static void handleGoodClimateChange(final RandomEvent event,
-      final StarMap map) {
-    if (event.getGoodType() == GoodRandomType.CLIMATE_CHANGE) {
-      PlayerInfo info = event.getRealm();
-      ArrayList<Planet> planets = new ArrayList<>();
-      for (Planet planet : map.getPlanetList()) {
-        if (planet.getPlanetPlayerInfo() == info
-            && planet.hasClimateEvent()) {
-          planets.add(planet);
-        }
-      }
-      if (planets.size() > 0) {
-        Planet planet = DiceGenerator.pickRandom(planets);
-        planet.changeClimate(true);
-        event.setPlanet(planet);
-        event.setText(planet.getName() + " climate changes so that planet"
-            + " can provide more food naturally. This is a good progress.");
-        ImageInstruction instructions = new ImageInstruction();
-        instructions.addImage(ImageInstruction.PARADISE);
-        event.setImageInstructions(instructions.build());
-        Message message = new Message(MessageType.PLANETARY, event.getText(),
-            Icons.getIconByName(Icons.ICON_FARM));
-        message.setCoordinate(planet.getCoordinate());
-        message.setRandomEventPop(true);
-        info.getMsgList().addFirstMessage(message);
-      }
-    }
-  }
-
-  /**
-   * Handle bad climate change.
-   * @param event Random event must be climate change
-   * @param map Starmap to locate planet
-   */
-  public static void handleBadClimateChange(final RandomEvent event,
-      final StarMap map) {
-    if (event.getBadType() == BadRandomType.CLIMATE_CHANGE) {
-      PlayerInfo info = event.getRealm();
-      ArrayList<Planet> planets = new ArrayList<>();
-      for (Planet planet : map.getPlanetList()) {
-        if (planet.getPlanetPlayerInfo() == info
-            && planet.hasClimateEvent()) {
-          planets.add(planet);
-        }
-      }
-      if (planets.size() > 0) {
-        Planet planet = DiceGenerator.pickRandom(planets);
-        planet.changeClimate(false);
-        event.setPlanet(planet);
-        event.setText(planet.getName() + " climate changes so that planet"
-            + " provides less food naturally. This is very bad progress.");
-        ImageInstruction instructions = new ImageInstruction();
-        instructions.addImage(ImageInstruction.DESERT);
-        event.setImageInstructions(instructions.build());
-        Message message = new Message(MessageType.PLANETARY, event.getText(),
-            Icons.getIconByName(Icons.ICON_DEATH));
-        message.setCoordinate(planet.getCoordinate());
-        message.setRandomEventPop(true);
-        info.getMsgList().addFirstMessage(message);
-      }
-    }
-  }
-
-  /**
    * Handle aggressive wild life
    * @param event Random event must be aggressive wild life
    * @param map Starmap to locate planet
@@ -1425,10 +1357,6 @@ public final class RandomEventUtility {
           handleCatastrophicAccident(event, map);
           break;
         }
-        case CLIMATE_CHANGE: {
-          handleBadClimateChange(event, map);
-          break;
-        }
         case CORRUPTION_SCANDAL: {
           handleCorruptionScandal(event, map);
           break;
@@ -1473,10 +1401,6 @@ public final class RandomEventUtility {
       }
     } else if (event.getGoodType() != null) {
       switch (event.getGoodType()) {
-        case CLIMATE_CHANGE: {
-          handleGoodClimateChange(event, map);
-          break;
-        }
         case DESERTED_SHIP: {
           handleDesertedShip(event, map);
           break;

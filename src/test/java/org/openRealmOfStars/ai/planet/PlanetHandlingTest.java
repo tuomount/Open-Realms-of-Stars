@@ -389,8 +389,8 @@ public class PlanetHandlingTest {
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(99, scores[2]);
-    assertEquals(39, scores[3]);
+    assertEquals(39, scores[2]);
+    assertEquals(99, scores[3]);
     assertEquals(99, scores[4]);
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicMine());
@@ -400,8 +400,8 @@ public class PlanetHandlingTest {
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(79, scores[2]);
-    assertEquals(39, scores[3]);
+    assertEquals(39, scores[2]);
+    assertEquals(79, scores[3]);
     assertEquals(99, scores[4]);
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicFactory());
@@ -411,8 +411,8 @@ public class PlanetHandlingTest {
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(99, scores[2]);
-    assertEquals(39, scores[3]);
+    assertEquals(39, scores[2]);
+    assertEquals(99, scores[3]);
     assertEquals(99, scores[4]);
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicMine());
@@ -422,8 +422,8 @@ public class PlanetHandlingTest {
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(79, scores[2]);
-    assertEquals(39, scores[3]);
+    assertEquals(39, scores[2]);
+    assertEquals(79, scores[3]);
     assertEquals(99, scores[4]);
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicFactory());
@@ -433,8 +433,8 @@ public class PlanetHandlingTest {
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(99, scores[2]);
-    assertEquals(39, scores[3]);
+    assertEquals(39, scores[2]);
+    assertEquals(99, scores[3]);
     assertEquals(59, scores[4]);
     assertEquals(-1, scores[6]);
 /*    for (int i = 0; i < constructions.length; i++) {
@@ -484,8 +484,8 @@ public class PlanetHandlingTest {
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(119, scores[2]);
-    assertEquals(49, scores[3]);
+    assertEquals(49, scores[2]);
+    assertEquals(119, scores[3]);
     assertEquals(139, scores[4]);
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicFactory());
@@ -500,8 +500,8 @@ public class PlanetHandlingTest {
     assertEquals(8, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(134, scores[2]);
-    assertEquals(49, scores[3]);
+    assertEquals(49, scores[2]);
+    assertEquals(134, scores[3]);
     assertEquals(19, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
@@ -515,8 +515,8 @@ public class PlanetHandlingTest {
     assertEquals(8, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(119, scores[2]);
-    assertEquals(49, scores[3]);
+    assertEquals(49, scores[2]);
+    assertEquals(119, scores[3]);
     assertEquals(119, scores[4]);
     assertEquals(99, scores[5]);
     assertEquals(-1, scores[7]);
@@ -527,8 +527,8 @@ public class PlanetHandlingTest {
     assertEquals(8, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(89, scores[2]);
-    assertEquals(59, scores[3]);
+    assertEquals(59, scores[2]);
+    assertEquals(89, scores[3]);
     assertEquals(119, scores[4]);
     assertEquals(109, scores[5]);
     assertEquals(-1, scores[7]);
@@ -539,8 +539,8 @@ public class PlanetHandlingTest {
     assertEquals(8, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(89, scores[2]);
-    assertEquals(59, scores[3]);
+    assertEquals(59, scores[2]);
+    assertEquals(89, scores[3]);
     assertEquals(119, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
@@ -551,8 +551,8 @@ public class PlanetHandlingTest {
     assertEquals(8, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(109, scores[2]);
-    assertEquals(59, scores[3]);
+    assertEquals(59, scores[2]);
+    assertEquals(109, scores[3]);
     assertEquals(69, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
@@ -565,8 +565,8 @@ public class PlanetHandlingTest {
     assertEquals(9, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(39, scores[2]);
-    assertEquals(59, scores[3]);
+    assertEquals(59, scores[2]);
+    assertEquals(39, scores[3]);
     assertEquals(69, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(79, scores[6]);
@@ -585,8 +585,8 @@ public class PlanetHandlingTest {
     assertEquals(9, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(39, scores[2]);
-    assertEquals(59, scores[3]);
+    assertEquals(59, scores[2]);
+    assertEquals(39, scores[3]);
     assertEquals(69, scores[4]);
     assertEquals(59, scores[5]);
     assertEquals(113, scores[6]);

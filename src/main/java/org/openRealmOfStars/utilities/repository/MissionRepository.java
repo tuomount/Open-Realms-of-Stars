@@ -17,9 +17,9 @@ package org.openRealmOfStars.utilities.repository;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import org.openRealmOfStars.AI.Mission.Mission;
-import org.openRealmOfStars.AI.Mission.MissionPhase;
-import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.ai.mission.Mission;
+import org.openRealmOfStars.ai.mission.MissionPhase;
+import org.openRealmOfStars.ai.mission.MissionType;
 import org.openRealmOfStars.player.leader.EspionageMission;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.utilities.ErrorLogger;

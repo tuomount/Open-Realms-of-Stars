@@ -22,8 +22,8 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import org.openRealmOfStars.gui.utilies.GraphRoutines;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GraphRoutines;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;

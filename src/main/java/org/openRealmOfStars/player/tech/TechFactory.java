@@ -20,7 +20,7 @@ package org.openRealmOfStars.player.tech;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
 

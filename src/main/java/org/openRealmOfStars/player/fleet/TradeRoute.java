@@ -18,7 +18,7 @@ package org.openRealmOfStars.player.fleet;
  */
 
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**

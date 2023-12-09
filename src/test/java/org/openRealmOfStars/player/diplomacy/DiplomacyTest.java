@@ -24,14 +24,14 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.openRealmOfStars.game.States.DiplomacyView;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.game.state.DiplomacyView;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.espionage.Espionage;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.StarMap;
 
 /**

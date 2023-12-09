@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.openRealmOfStars.AI.Mission.MissionList;
+import org.openRealmOfStars.ai.mission.MissionList;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;

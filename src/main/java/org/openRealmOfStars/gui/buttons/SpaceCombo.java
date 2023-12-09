@@ -25,7 +25,7 @@ import javax.swing.JComboBox;
 import javax.swing.JToolTip;
 
 import org.openRealmOfStars.gui.borders.SimpleBorder;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
 *

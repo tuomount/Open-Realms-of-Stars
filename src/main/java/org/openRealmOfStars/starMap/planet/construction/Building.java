@@ -18,7 +18,7 @@ package org.openRealmOfStars.starMap.planet.construction;
  */
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**

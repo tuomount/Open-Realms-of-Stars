@@ -17,7 +17,7 @@ package org.openRealmOfStars.player.government;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

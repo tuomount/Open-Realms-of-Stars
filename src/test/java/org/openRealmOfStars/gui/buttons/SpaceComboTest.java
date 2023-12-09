@@ -20,7 +20,7 @@ package org.openRealmOfStars.gui.buttons;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
  *

@@ -17,7 +17,7 @@ package org.openRealmOfStars.player.message;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import org.openRealmOfStars.game.States.StarMapView;
+import org.openRealmOfStars.game.state.StarMapView;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 

@@ -20,8 +20,8 @@ package org.openRealmOfStars.player.ship;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.mockito.Mockito;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 
 import static org.junit.Assert.*;

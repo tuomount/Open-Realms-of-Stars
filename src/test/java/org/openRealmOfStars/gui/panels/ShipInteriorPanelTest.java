@@ -21,8 +21,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

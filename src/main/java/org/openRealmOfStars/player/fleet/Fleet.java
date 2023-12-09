@@ -26,13 +26,13 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Optional;
 
-import org.openRealmOfStars.AI.Mission.Mission;
-import org.openRealmOfStars.AI.PathFinding.AStarSearch;
+import org.openRealmOfStars.ai.mission.Mission;
+import org.openRealmOfStars.ai.pathfinding.AStarSearch;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;

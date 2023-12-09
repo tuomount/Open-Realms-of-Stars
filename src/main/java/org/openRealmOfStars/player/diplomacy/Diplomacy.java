@@ -20,14 +20,14 @@ package org.openRealmOfStars.player.diplomacy;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import org.openRealmOfStars.game.States.DiplomacyView;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.game.state.DiplomacyView;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.espionage.Espionage;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;

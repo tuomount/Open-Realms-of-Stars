@@ -855,7 +855,7 @@ public final class EspionageHandling {
     final var tplGainTrust = "%1$s from %2$s has gained trust against %3$s."
         + txtGainedVia;
     final var tplStealCredit = "%1$s from %2$s has stolen"
-        + " %3$n credits from %4$s." + txtGainedVia;
+        + " %3$d credits from %4$s." + txtGainedVia;
     final var tplStealTech = "%1$s from %2$s has stolen"
         + " %3$s technology from %4$s." + txtGainedVia;
     final var tplSabotage = "%1$s from %2$s sabotaged %3$s project"

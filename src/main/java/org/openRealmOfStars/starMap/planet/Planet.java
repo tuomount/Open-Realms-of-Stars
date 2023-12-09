@@ -59,6 +59,8 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
+import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
+import org.openRealmOfStars.starMap.planet.status.PlanetaryStatus;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -162,6 +164,9 @@ public class Planet {
    * Planet's culture value
    */
   private int culture;
+
+  /** Statuses applied on the Planet */
+  private ArrayList<AppliedStatus> statuses;
 
   /**
    * Planetary event when colonizing the planet
@@ -456,6 +461,7 @@ public class Planet {
     }
     this.event = PlanetaryEvent.NONE;
     this.eventFound = true;
+    this.statuses = new ArrayList<>();
   }
 
   /**
@@ -3655,6 +3661,43 @@ public class Planet {
    */
   public String getImageInstructions() {
     return planetType.getImageInstructions();
+  }
+
+  /**
+   * Try to add provided status. Returns true if addition
+   * was successful, false otherwise.
+   * @param status AppliedStatus to add
+   * @return True if status was added
+   */
+  public boolean addStatus(final AppliedStatus status) {
+    var statusesArray = statuses.toArray(new PlanetaryStatus[statuses.size()]);
+    var conflicting = PlanetaryStatus.isConflictingWith(status.getStatus(),
+        statusesArray);
+
+    if (conflicting) {
+      return false;
+    }
+
+    return statuses.add(status);
+  }
+
+  /**
+   * Return true if Planet has status with given ID
+   * @param statusId ID of status
+   * @return True if planet has status with given ID
+   */
+  public boolean hasStatus(final String statusId) {
+    return statuses.stream()
+        .anyMatch(status -> status.getStatusId().equals(statusId));
+  }
+
+  /**
+   * Remove status with specified ID from planet
+   * @param statusId ID of status to remove
+   * @return True if status was removed
+   */
+  public boolean removeStatus(final String statusId) {
+    return statuses.removeIf(status -> status.getStatusId().equals(statusId));
   }
 
   /**

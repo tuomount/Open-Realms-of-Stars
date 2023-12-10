@@ -86,7 +86,7 @@ public class WeightedList<T> {
    */
   public static <T> WeightedList.Entry<T> entry(final double weight,
       final T value) {
-    return new Entry<T>(weight, value);
+    return new Entry<>(weight, value);
   }
 
   /** Entries */
@@ -132,7 +132,7 @@ public class WeightedList<T> {
    * If number of entries in one array is different to the other,
    * this fails with IllegalArgumentException.
    * @param weights Array of weights
-   * @param values Arrat of values
+   * @param values Array of values
    */
   public WeightedList(final double[] weights, final T[] values) {
     Objects.requireNonNull(weights);
@@ -165,7 +165,7 @@ public class WeightedList<T> {
    * @return Value selected
    */
   public T pickRandom() {
-    final int randNumber = DiceGenerator.getRandom(Integer.MAX_VALUE);
+    final int randNumber = DiceGenerator.getRandom(Integer.MAX_VALUE - 1);
     return pickRandom(randNumber);
   }
 
@@ -174,7 +174,7 @@ public class WeightedList<T> {
    * relative to other elements, using provided number as base random value.
    * Trying to select from empty list will result
    * in UnsupportedOperationException.
-   * @param randNumber
+   * @param randNumber Random number
    * @return Value selected
    */
   private T pickRandom(final int randNumber) {

@@ -72,6 +72,16 @@ public final class RaceTrait {
       "CONSTRUCTED_POP", "Constructed",
       "Breeds by external process, where individuals "
           + " are \"constructed\" in some way.");
+  /**
+   * Race can gain sustenance from radiation.
+   * This does NOT mean that it able to *produce* food,
+   * but rather that it can *sustain itself* with radiation.
+   */
+  public static final RaceTrait RADIOSYNTHESIS = new RaceTrait(
+      "RADIOSYNTHESIS", "Radiosynthesis",
+      "Required sustenance (food) for population"
+          + " is reduced by 1 per existing population,"
+          + " up to planet's radiation value.");
 
   /** ID of the trait */
   private String traitId;

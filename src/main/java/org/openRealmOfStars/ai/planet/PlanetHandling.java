@@ -33,6 +33,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.race.RaceTrait;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -2304,120 +2305,6 @@ public final class PlanetHandling {
   }
 
   /**
-   * Handle Chiraloid population on planet
-   * @param planet Planet to handle
-   * @param info Owner of the planet
-   * @param totalResearch Total research value for whole realm
-   */
-  protected static void handleChiraloidPopulation(final Planet planet,
-      final PlayerInfo info, final int totalResearch) {
-    int otherWorldResearch = totalResearch - planet.getTotalProduction(
-        Planet.PRODUCTION_RESEARCH);
-    int total = planet.getTotalPopulation();
-    if (total > 3) {
-      int rad = planet.getRadiationLevel();
-      int happy = planet.calculateHappiness();
-      int food = planet.getFoodProdByPlanetAndBuildings();
-      food = food + Math.min(rad, total);
-      int requiredFarmers = total - food;
-      if (total < planet.getGroundSize() && requiredFarmers >= 0
-          && requiredFarmers < total) {
-        requiredFarmers++;
-      }
-
-      setPlanetNoWorkers(planet);
-
-      if (requiredFarmers > 0) {
-        planet.setWorkers(Planet.FOOD_FARMERS, requiredFarmers);
-        total = total - requiredFarmers;
-      }
-      if (planet.getTotalProductionFromBuildings(
-          Planet.PRODUCTION_RESEARCH) == 0 && total > 1
-          && otherWorldResearch < 1) {
-        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-        total = total - 2;
-      }
-      int div = total / 3;
-      int part = total % 3;
-      int miners = div;
-      int workers = div;
-      int artist = div;
-      if (artist > 1) {
-        artist = artist - 1;
-        if (planet.getTotalProductionFromBuildings(
-            Planet.PRODUCTION_METAL) > planet.getTotalProductionFromBuildings(
-                Planet.PRODUCTION_PRODUCTION)) {
-          workers = workers + artist;
-        } else {
-          miners = miners + artist;
-        }
-        artist = 1;
-      }
-      if (happy < 0) {
-        artist = artist + part;
-      } else {
-        workers = workers + part;
-      }
-      if (workers % 2 != 0) {
-        workers--;
-        miners++;
-      }
-      planet.setWorkers(Planet.METAL_MINERS, miners);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, workers);
-      planet.setWorkers(Planet.CULTURE_ARTIST, artist);
-    } else {
-      setPlanetNoWorkers(planet);
-      switch (total) {
-        case 1: {
-          planet.setWorkers(Planet.METAL_MINERS, 1);
-          break;
-        }
-        case 2: {
-          if (planet.getTotalProductionFromBuildings(
-              Planet.PRODUCTION_RESEARCH) == 0
-              && otherWorldResearch < 1) {
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          } else {
-            switch (DiceGenerator.getRandom(2)) {
-              case 0: {
-                planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
-                break;
-              }
-              case 1: {
-                planet.setWorkers(Planet.FOOD_FARMERS, 1);
-                planet.setWorkers(Planet.METAL_MINERS, 1);
-                break;
-              }
-              case 2: {
-                planet.setWorkers(Planet.FOOD_FARMERS, 1);
-                planet.setWorkers(Planet.CULTURE_ARTIST, 1);
-                break;
-              }
-              default: {
-                throw new IllegalArgumentException("Unexpected random value! ");
-              }
-            }
-          }
-          break;
-        }
-        case 3: {
-          planet.setWorkers(Planet.METAL_MINERS, 1);
-          if (otherWorldResearch < 1) {
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          } else {
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
-          }
-          break;
-        }
-        default: {
-          throw new IllegalArgumentException("This should not happen."
-              + " Planet population was " + total);
-        }
-      }
-    }
-  }
-
-  /**
    * Handle Alteirian population
    * @param planet Planet to handle
    * @param info Owner of the planet
@@ -2500,23 +2387,26 @@ public final class PlanetHandling {
       final PlayerInfo info, final int totalResearch) {
     int otherWorldResearch = totalResearch - planet.getTotalProduction(
         Planet.PRODUCTION_RESEARCH);
-    int food = planet.getFoodProdByPlanetAndBuildings();
-    boolean startPlanet = false;
-    int total = planet.getTotalPopulation();
-    if (food == 2 && total == 3) {
-      // Starting planet focus more on science than growth
-      startPlanet = true;
-    }
-    int foodReq = total * info.getRace().getFoodRequire() / 100;
-    int farmersReq = foodReq - food;
+    int totalPop = planet.getTotalPopulation();
     int happy = planet.calculateHappiness();
-    if (total < planet.getPopulationLimit() && farmersReq >= 0 && !startPlanet
-        && farmersReq < total && info.getRace() != SpaceRace.SYNTHDROIDS) {
+    int food = planet.getFoodProdByPlanetAndBuildings();
+
+    if (info.getRace().hasTrait(RaceTrait.RADIOSYNTHESIS.getId())) {
+      int rad = planet.getRadiationLevel();
+      food += Math.min(rad, totalPop);
+    }
+
+    int foodReq = totalPop * info.getRace().getFoodRequire() / 100;
+    int farmersReq = foodReq - food;
+    // Races that grow and are not limited by insufficient space
+    // will want to allocate one more population for farming
+    if (info.getRace().getGrowthSpeed() > 0
+        && totalPop < planet.getPopulationLimit()
+        && farmersReq >= 0 && farmersReq < totalPop) {
       farmersReq++;
     }
+
     if (info.getRace().getFoodSpeed() == 200) {
-      // This part of code is never run since Homarians
-      // are only race with 200% food production
       int extra = 0;
       if (farmersReq % 2 != 0) {
         extra = 1;
@@ -2527,34 +2417,42 @@ public final class PlanetHandling {
 
     setPlanetNoWorkers(planet);
 
+    int freePop = totalPop;
     int workers = 0;
     int miners = 0;
     int artists = 0;
     int scientist = 0;
     if (farmersReq > 0) {
       planet.setWorkers(Planet.FOOD_FARMERS, farmersReq);
-      total = total - farmersReq;
+      freePop -= farmersReq;
     }
+
+    // Prioritize allocation of scientists if possible
+    // -> when have enough people to get at least 1 research
+    int popResearchSpeed = info.getRace().getResearchSpeed();
+    int scientistsPerResearch = Math.max(1, 100 / popResearchSpeed);
     if (planet.getTotalProductionFromBuildings(
-        Planet.PRODUCTION_RESEARCH) == 0 && total > 0
+        Planet.PRODUCTION_RESEARCH) == 0 && freePop > scientistsPerResearch
         && otherWorldResearch < 1) {
-      scientist = 1;
-      total = total - 1;
+      scientist = scientistsPerResearch;
+      freePop -= scientistsPerResearch;
     }
-    if (total > 0) {
+
+    if (freePop > 0) {
       workers++;
-      total--;
+      freePop--;
     }
+
     int part = 0;
     if (info.getRace().getMiningSpeed() == 50) {
-      part = total % 3;
-      int div = total / 3;
+      part = freePop % 3;
+      int div = freePop / 3;
       workers = workers + div;
       artists = artists + div;
       scientist = scientist + div;
     } else {
-      part = total % 4;
-      int div = total / 4;
+      part = freePop % 4;
+      int div = freePop / 4;
       workers = workers + div;
       artists = artists + div;
       scientist = scientist + div;
@@ -2605,6 +2503,7 @@ public final class PlanetHandling {
         miners++;
       }
     }
+
     planet.setWorkers(Planet.PRODUCTION_WORKERS, workers);
     planet.setWorkers(Planet.METAL_MINERS, miners);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, scientist);
@@ -2635,9 +2534,6 @@ public final class PlanetHandling {
     } else if (info.getRace() == SpaceRace.HOMARIANS) {
       handleHomarianPopulation(planet, info, totalResearch);
       branch = 1;
-    } else if (info.getRace() == SpaceRace.CHIRALOIDS) {
-      handleChiraloidPopulation(planet, info, totalResearch);
-      branch = 2;
     } else if (info.getRace() == SpaceRace.LITHORIANS) {
       handleLithorianPopulation(planet, info, totalResearch);
       branch = 3;

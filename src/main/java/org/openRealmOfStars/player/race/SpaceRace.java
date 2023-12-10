@@ -118,7 +118,7 @@ public enum SpaceRace {
           "Chiraloids are creatures with four arms and two legs.\n"
         + "They have hard exoskeleton. They also have special gland\n"
         + "which uses radioactivity to create nutrient. This is called\n"
-        + "radiosynthesis."),
+        + "radiosynthesis.", RaceTrait.RADIOSYNTHESIS),
   /**
    * Reborgians are organism combined with organic and robotic
    * parts. So they are cyborgs. They can synthesize any living space race

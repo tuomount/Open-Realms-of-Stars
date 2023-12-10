@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.tech;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,6 +22,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Function;
 
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -111,7 +113,7 @@ public class TechList {
     int result = 0;
     for (int i = 0; i < MAX_TECH_TYPES; i++) {
       for (int j = 0; j < MAX_TECH_LEVEL; j++) {
-        for (Tech tech :  techList[i][j].getList()) {
+        for (Tech tech : techList[i][j].getList()) {
           if (tech.getImprovement() != null) {
             Building building = BuildingFactory.createByName(
                 tech.getImprovement());
@@ -127,6 +129,7 @@ public class TechList {
     }
     return result;
   }
+
   /**
    * Save Tech list for DataOutputStream
    * @param dos Data output stream
@@ -295,26 +298,14 @@ public class TechList {
    * @return True if tech is in list otherwise false.
    */
   public boolean hasTech(final String techName) {
-    if (hasTech(TechType.Combat, techName)) {
-      return true;
-    }
-    if (hasTech(TechType.Defense, techName)) {
-      return true;
-    }
-    if (hasTech(TechType.Hulls, techName)) {
-      return true;
-    }
-    if (hasTech(TechType.Electrics, techName)) {
-      return true;
-    }
-    if (hasTech(TechType.Propulsion, techName)) {
-      return true;
-    }
-    if (hasTech(TechType.Improvements, techName)) {
-      return true;
+    for (var techType : TechType.values()) {
+      if (hasTech(techType, techName)) {
+        return true;
+      }
     }
     return false;
   }
+
   /**
    * Has certain tech in tech list
    * @param type Tech type
@@ -422,6 +413,7 @@ public class TechList {
     }
     return techList.toArray(new Tech[techList.size()]);
   }
+
   /**
    * Get best Energy source for current technology
    * @return Best energy source tech or null if not found
@@ -455,7 +447,7 @@ public class TechList {
           .createByName(tech.getComponent());
       if (comp != null
           && (comp.getType() == ShipComponentType.ENGINE
-          || comp.getType() == ShipComponentType.SPACE_FIN)) {
+              || comp.getType() == ShipComponentType.SPACE_FIN)) {
         int compValue = -1;
         if (comp.getFtlSpeed() > 1 && comp.getSpeed() == 1
             && comp.getTacticSpeed() == 1) {
@@ -493,7 +485,7 @@ public class TechList {
           .createByName(tech.getComponent());
       if (comp != null
           && (comp.getType() == ShipComponentType.ENGINE
-          || comp.getType() == ShipComponentType.SPACE_FIN)) {
+              || comp.getType() == ShipComponentType.SPACE_FIN)) {
         int compValue = comp.getFtlSpeed();
         if (comp.getSpeed() > bestValue) {
           best = tech;
@@ -523,7 +515,7 @@ public class TechList {
           .createByName(tech.getComponent());
       if (comp != null
           && (comp.getType() == ShipComponentType.ENGINE
-          || comp.getType() == ShipComponentType.SPACE_FIN)) {
+              || comp.getType() == ShipComponentType.SPACE_FIN)) {
         int compValue = comp.getEnergyResource() - comp.getEnergyRequirement();
         if (comp.getTacticSpeed() > bestValue) {
           best = tech;
@@ -546,35 +538,9 @@ public class TechList {
    * @return Best weapon tech or null if not found
    */
   public Tech getBestWeapon() {
-    Tech best = null;
-    int bestValue = -1;
-    Tech[] list = getListForType(TechType.Combat);
-    for (Tech tech : list) {
-      ShipComponent comp = ShipComponentFactory
-          .createByName(tech.getComponent());
-      if (comp != null) {
-        int compValue = -1;
-        if (comp.getType() == ShipComponentType.WEAPON_BEAM
-            || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
-            || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
-            || comp.getType() == ShipComponentType.WEAPON_RAILGUN
-            || comp.getType() == ShipComponentType.PLASMA_CANNON
-            || comp.getType() == ShipComponentType.ION_CANNON
-            || comp.getType() == ShipComponentType.MULTICANNON
-            || comp.getType() == ShipComponentType.GRAVITY_RIPPER
-            || comp.getType() == ShipComponentType.BITE
-            || comp.getType() == ShipComponentType.TENTACLE) {
-          compValue = comp.getDamage();
-        }
-        if (compValue > bestValue) {
-          best = tech;
-          bestValue = compValue;
-        } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
-          best = tech;
-          bestValue = compValue;
-        }
-      }
-    }
+    Tech best = getBestComponentTech(TechType.Combat,
+        comp -> comp.isDestructiveWeapon(),
+        comp -> comp.getDamage());
     return best;
   }
 
@@ -585,27 +551,9 @@ public class TechList {
    * @return Best weapon tech or null if not found
    */
   public Tech getBestWeapon(final ShipComponentType type) {
-    Tech best = null;
-    int bestValue = -1;
-    Tech[] list = getListForType(TechType.Combat);
-    for (Tech tech : list) {
-      ShipComponent comp = ShipComponentFactory
-          .createByName(tech.getComponent());
-      if (comp != null) {
-        int compValue = -1;
-        if (comp.getType() == type) {
-          compValue = comp.getDamage();
-          if (compValue > bestValue) {
-            best = tech;
-            bestValue = compValue;
-          } else if (compValue == bestValue
-              && DiceGenerator.getRandom(1) == 0) {
-            best = tech;
-            bestValue = compValue;
-          }
-        }
-      }
-    }
+    Tech best = getBestComponentTech(TechType.Combat,
+        comp -> comp.getType() == type,
+        comp -> comp.getDamage());
     return best;
   }
 
@@ -614,25 +562,9 @@ public class TechList {
    * @return Tech or null if not available
    */
   public Tech getBestStarbaseLab() {
-    Tech best = null;
-    int bestValue = -1;
-    Tech[] list = getListForType(TechType.Improvements);
-    for (Tech tech : list) {
-      ShipComponent comp = ShipComponentFactory
-          .createByName(tech.getComponent());
-      int compValue = -1;
-      if (comp != null
-          && comp.getType() == ShipComponentType.STARBASE_COMPONENT) {
-        compValue = comp.getResearchBonus();
-        if (compValue > bestValue) {
-          best = tech;
-          bestValue = compValue;
-        } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
-          best = tech;
-          bestValue = compValue;
-        }
-      }
-    }
+    Tech best = getBestComponentTech(TechType.Improvements,
+        comp -> comp.getType() == ShipComponentType.STARBASE_COMPONENT,
+        comp -> comp.getResearchBonus());
     return best;
   }
 
@@ -641,25 +573,9 @@ public class TechList {
    * @return Tech or null if not available
    */
   public Tech getBestStarbaseCulture() {
-    Tech best = null;
-    int bestValue = -1;
-    Tech[] list = getListForType(TechType.Improvements);
-    for (Tech tech : list) {
-      ShipComponent comp = ShipComponentFactory
-          .createByName(tech.getComponent());
-      int compValue = -1;
-      if (comp != null
-          && comp.getType() == ShipComponentType.STARBASE_COMPONENT) {
-        compValue = comp.getCultureBonus();
-        if (compValue > bestValue) {
-          best = tech;
-          bestValue = compValue;
-        } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
-          best = tech;
-          bestValue = compValue;
-        }
-      }
-    }
+    Tech best = getBestComponentTech(TechType.Improvements,
+        comp -> comp.getType() == ShipComponentType.STARBASE_COMPONENT,
+        comp -> comp.getCultureBonus());
     return best;
   }
 
@@ -668,25 +584,9 @@ public class TechList {
    * @return Tech or null if not available
    */
   public Tech getBestStarbaseCredit() {
-    Tech best = null;
-    int bestValue = -1;
-    Tech[] list = getListForType(TechType.Improvements);
-    for (Tech tech : list) {
-      ShipComponent comp = ShipComponentFactory
-          .createByName(tech.getComponent());
-      int compValue = -1;
-      if (comp != null
-          && comp.getType() == ShipComponentType.STARBASE_COMPONENT) {
-        compValue = comp.getCreditBonus();
-        if (compValue > bestValue) {
-          best = tech;
-          bestValue = compValue;
-        } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
-          best = tech;
-          bestValue = compValue;
-        }
-      }
-    }
+    Tech best = getBestComponentTech(TechType.Improvements,
+        comp -> comp.getType() == ShipComponentType.STARBASE_COMPONENT,
+        comp -> comp.getCreditBonus());
     return best;
   }
 
@@ -695,23 +595,45 @@ public class TechList {
    * @return Tech or null if not available
    */
   public Tech getBestStarbaseFleetCap() {
+    Tech best = getBestComponentTech(TechType.Improvements,
+        comp -> comp.getType() == ShipComponentType.STARBASE_COMPONENT,
+        comp -> comp.getFleetCapacityBonus());
+    return best;
+  }
+
+  /**
+   * Get best Tech for Component based on value returned by provided function,
+   * in given list, if it meets conditions as defined by provided function.
+   * @param listType TechType
+   * @param compCheckCondition Function<ShipComponent, Boolean>
+   * @param compAttribGetter Function<ShipComponent, Integer>
+   * @return Best Tech for Component
+   */
+  private Tech getBestComponentTech(final TechType listType,
+      final Function<ShipComponent, Boolean> compCheckCondition,
+      final Function<ShipComponent, Integer> compAttribGetter) {
     Tech best = null;
     int bestValue = -1;
-    Tech[] list = getListForType(TechType.Improvements);
+    Tech[] list = getListForType(listType);
     for (Tech tech : list) {
       ShipComponent comp = ShipComponentFactory
           .createByName(tech.getComponent());
       int compValue = -1;
-      if (comp != null
-          && comp.getType() == ShipComponentType.STARBASE_COMPONENT) {
-        compValue = comp.getFleetCapacityBonus();
-        if (compValue > bestValue) {
-          best = tech;
-          bestValue = compValue;
-        } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
-          best = tech;
-          bestValue = compValue;
-        }
+      if (comp == null) {
+        continue;
+      }
+
+      if (!compCheckCondition.apply(comp)) {
+        continue;
+      }
+      compValue = compAttribGetter.apply(comp);
+
+      if (compValue > bestValue) {
+        best = tech;
+        bestValue = compValue;
+      } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
+        best = tech;
+        bestValue = compValue;
       }
     }
     return best;
@@ -775,8 +697,8 @@ public class TechList {
    */
   public Tech[] getRareTechs() {
     ArrayList<Tech> list = new ArrayList<>();
-    for (int types = 0; types < 5; types++) {
-      for (int level = 0; level < 10; level++) {
+    for (int types = 0; types < MAX_TECH_TYPES; types++) {
+      for (int level = 0; level < MAX_TECH_LEVEL; level++) {
         for (Tech tech : techList[types][level].getList()) {
           if (tech.isRareTech()) {
             list.add(tech);
@@ -786,6 +708,7 @@ public class TechList {
     }
     return list.toArray(new Tech[list.size()]);
   }
+
   /**
    * Is Tech list for certain level full
    * @param type Tech Type
@@ -902,6 +825,7 @@ public class TechList {
   public void setTechResearchPoints(final TechType type, final double value) {
     techResearchPoint[type.getIndex()] = value;
   }
+
   /**
    * Add new random tech to player tech list
    * @param info PlayerInfo
@@ -909,41 +833,51 @@ public class TechList {
    */
   public Tech addNewRandomTech(final PlayerInfo info) {
     Tech result = null;
-    int loop = 10;
-    while (result == null && loop > 0) {
-      loop--;
+    for (int j = 0; result == null && j < MAX_TECH_LEVEL; j++) {
       int index = DiceGenerator.getRandom(0, 5);
       TechType type = TechType.getTypeByIndex(index);
       int lvl = techLevels[index];
       Tech tech = TechFactory.createRandomTech(type, lvl,
           getListForTypeAndLevel(type, lvl), race);
+
       if (tech == null) {
-        if (lvl < 10) {
-          techLevels[index] = techLevels[index] + 1;
+        if (lvl < MAX_TECH_LEVEL) {
+          techLevels[index] += 1;
         }
-      } else {
-        addTech(tech);
-        StringBuilder sb = new StringBuilder();
-        sb.append(info.getEmpireName());
-        sb.append(" researched ");
-        sb.append(tech.getName());
-        sb.append(" in ");
-        sb.append(tech.getType().toString());
-        sb.append(" with level ");
-        sb.append(lvl);
-        sb.append(". ");
-        if (isTechListForLevelFull(type, lvl)) {
-          sb.append(tech.getType().toString());
-          sb.append(" has advanced to next level.");
-        }
-        Message msg = new Message(MessageType.RESEARCH, sb.toString(),
-            Icons.getIconByName(Icons.ICON_RESEARCH));
-        msg.setMatchByString(tech.getName());
-        info.getMsgList().addNewMessage(msg);
-        result = tech;
+
+        continue;
       }
+
+      addTech(tech);
+
+      showResearchComplete(tech, info);
+
+      result = tech;
     }
     return result;
+  }
+
+  /**
+   * Show research completed message for specified tech to specified player
+   * TODO: Replace with Observer pattern "onTechAdded"
+   * @param tech Tech
+   * @param info PlayerInfo
+   */
+  private void showResearchComplete(final Tech tech, final PlayerInfo info) {
+    var tplResearched = "%1$s researched %2$s in %3$s with level %4$d.";
+    var tplHasAdvanced = " %1$s has advanced to next level.";
+
+    var techFieldName = tech.getType().toString();
+    StringBuilder sb = new StringBuilder();
+    sb.append(String.format(tplResearched, info.getEmpireName(),
+        tech.getName(), techFieldName, tech.getLevel()));
+    if (isTechListForLevelFull(tech.getType(), tech.getLevel())) {
+      sb.append(String.format(tplHasAdvanced, techFieldName));
+    }
+    Message msg = new Message(MessageType.RESEARCH, sb.toString(),
+        Icons.getIconByName(Icons.ICON_RESEARCH));
+    msg.setMatchByString(tech.getName());
+    info.getMsgList().addNewMessage(msg);
   }
 
   /**
@@ -960,6 +894,7 @@ public class TechList {
     }
     return false;
   }
+
   /**
    * Check possible rare techs on tree
    * @param techType Tech Type
@@ -984,6 +919,7 @@ public class TechList {
     }
     return list.toArray(new Tech[list.size()]);
   }
+
   /**
    * Update Research points by turn. This will also grant a new technology
    * @param totalResearchPoints player makes per turn
@@ -995,274 +931,172 @@ public class TechList {
       final PlayerInfo info, final int gameLength,
       final boolean tutorialEnabled) {
     for (int i = 0; i < techFocus.length; i++) {
-      techResearchPoint[i] = techResearchPoint[i]
-          + techFocus[i] * totalResearchPoints / 100.0;
-      if (techResearchPoint[i] >= TechFactory.getTechCost(techLevels[i],
-          gameLength)) {
-        techResearchPoint[i] = techResearchPoint[i]
-            - TechFactory.getTechCost(techLevels[i], gameLength);
-        TechType type = TechType.getTypeByIndex(i);
-        int lvl = techLevels[i];
-        Tech[] rareTechs = checkRareTechTree(type, lvl);
-        Tech tech = TechFactory.createRandomTech(type, lvl,
-            getListForTypeAndLevel(type, lvl), rareTechs, race);
-        if (tech == null) {
-          // Apparently tech level was already full,
-          // so let's increase level and try again later.
-          techResearchPoint[i] = techResearchPoint[i]
-              + TechFactory.getTechCost(techLevels[i], gameLength);
-          if (lvl < 10) {
-            techLevels[i] = techLevels[i] + 1;
-          }
-          break;
+      techResearchPoint[i] += techFocus[i] * totalResearchPoints / 100.0;
+
+      var techCost = TechFactory.getTechCost(techLevels[i], gameLength);
+      if (techResearchPoint[i] < techCost) {
+        continue;
+      }
+      techResearchPoint[i] -= techCost;
+
+      TechType type = TechType.getTypeByIndex(i);
+      int lvl = techLevels[i];
+      Tech[] rareTechs = checkRareTechTree(type, lvl);
+      Tech tech = TechFactory.createRandomTech(type, lvl,
+          getListForTypeAndLevel(type, lvl), rareTechs, race);
+
+      if (tech == null) {
+        // Apparently tech level was already full,
+        // so let's increase level and try again later.
+        techResearchPoint[i] += techCost;
+        if (lvl < MAX_TECH_LEVEL) {
+          techLevels[i] = techLevels[i] + 1;
         }
-        addTech(tech);
-        StringBuilder sb = new StringBuilder();
-        sb.append(info.getEmpireName());
-        sb.append(" researched ");
-        sb.append(tech.getName());
-        sb.append(" in ");
-        sb.append(tech.getType().toString());
-        sb.append(" with level ");
-        sb.append(lvl);
-        sb.append(". ");
-        if (isTechListForLevelFull(type, lvl)) {
-          sb.append(tech.getType().toString());
-          sb.append(" has advanced to next level.");
-        }
-        Message msg = new Message(MessageType.RESEARCH, sb.toString(),
-            Icons.getIconByName(Icons.ICON_RESEARCH));
-        msg.setMatchByString(tech.getName());
-        info.getMsgList().addNewMessage(msg);
-        if (Game.getTutorial() != null  && info.isHuman() && tutorialEnabled) {
-          String tutorialText = Game.getTutorial().showTutorialText(13);
-          if (tutorialText != null) {
-            msg = new Message(MessageType.INFORMATION, tutorialText,
-                Icons.getIconByName(Icons.ICON_TUTORIAL));
-            info.getMsgList().addNewMessage(msg);
-          }
-          if (tech.getComponent() != null) {
-            if (tech.getType() == TechType.Defense
-                && tech.getComponent().startsWith("Shield Mk")) {
-              tutorialText = Game.getTutorial().showTutorialText(56);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Defense
-                && tech.getComponent().startsWith("Armor")) {
-              tutorialText = Game.getTutorial().showTutorialText(57);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Defense
-                && tech.getComponent().startsWith("Jammer")) {
-              tutorialText = Game.getTutorial().showTutorialText(58);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Combat
-                && tech.getComponent().startsWith("Laser")) {
-              tutorialText = Game.getTutorial().showTutorialText(51);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Combat
-                && tech.getComponent().startsWith("Photon")) {
-              tutorialText = Game.getTutorial().showTutorialText(53);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Combat
-                && tech.getComponent().startsWith("Railgun")) {
-              tutorialText = Game.getTutorial().showTutorialText(52);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Combat
-                && tech.getComponent().startsWith("Orbital")) {
-              tutorialText = Game.getTutorial().showTutorialText(81);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Combat
-                && tech.getComponent().startsWith("HE missile")) {
-              tutorialText = Game.getTutorial().showTutorialText(54);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Combat
-                && tech.getComponent().startsWith("ECM torpedo")) {
-              tutorialText = Game.getTutorial().showTutorialText(55);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Hulls
-                && tech.getComponent().startsWith("Privateering")) {
-              tutorialText = Game.getTutorial().showTutorialText(59);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-              tutorialText = Game.getTutorial().showTutorialText(73);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getHull() != null || tech.getComponent() != null) {
-              tutorialText = Game.getTutorial().showTutorialText(70);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            boolean specialHull = false;
-            if (tech.getType() == TechType.Hulls
-                && tech.getHull() != null
-                && tech.getHull().startsWith("Probe")) {
-              specialHull = true;
-              tutorialText = Game.getTutorial().showTutorialText(71);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Hulls
-                && tech.getHull() != null
-                && tech.getHull().contains("Starbase")) {
-              specialHull = true;
-              tutorialText = Game.getTutorial().showTutorialText(72);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Hulls
-                && tech.getHull() != null
-                && tech.getHull().contains("Privateer")) {
-              specialHull = true;
-              tutorialText = Game.getTutorial().showTutorialText(73);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Hulls
-                && tech.getHull() != null
-                && tech.getHull().contains("Freighter")) {
-              specialHull = true;
-              tutorialText = Game.getTutorial().showTutorialText(74);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Hulls
-                && tech.getHull() != null
-                && !specialHull) {
-              tutorialText = Game.getTutorial().showTutorialText(75);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Propulsion
-                && tech.getComponent() != null
-                && tech.getComponent().contains("source")) {
-              tutorialText = Game.getTutorial().showTutorialText(77);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Propulsion
-                && tech.getComponent() != null
-                && tech.getComponent().contains("drive")) {
-              tutorialText = Game.getTutorial().showTutorialText(76);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Electrics
-                && tech.getComponent().startsWith("Cloaking")) {
-              tutorialText = Game.getTutorial().showTutorialText(78);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Electrics
-                && tech.getComponent().startsWith("Espionage")) {
-              tutorialText = Game.getTutorial().showTutorialText(79);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Electrics
-                && tech.getComponent().startsWith("Scanner")
-                || tech.getComponent().startsWith("LR scanner")) {
-              tutorialText = Game.getTutorial().showTutorialText(80);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-            if (tech.getType() == TechType.Electrics
-                && tech.getComponent().startsWith("Targeting computer")) {
-              tutorialText = Game.getTutorial().showTutorialText(60);
-              if (tutorialText != null) {
-                msg = new Message(MessageType.INFORMATION, tutorialText,
-                    Icons.getIconByName(Icons.ICON_TUTORIAL));
-                info.getMsgList().addNewMessage(msg);
-              }
-            }
-          }
-        }
+        break;
+      }
+
+      addTech(tech);
+
+      showResearchComplete(tech, info);
+
+      if (Game.getTutorial() == null || !info.isHuman() || !tutorialEnabled) {
+        continue;
+      }
+      showTutorial(13, info);
+      newTechTutorial(tech, info);
+    }
+  }
+
+  /**
+   * Show tutorial for new Tech component/hull.
+   * Expects that tutorials are enabled!
+   * TODO: Replace with Observer pattern "onTechAdded"
+   * @param tech Tech
+   * @param info PlayerInfo
+   */
+  private void newTechTutorial(final Tech tech, final PlayerInfo info) {
+    var techComponent = tech.getComponent();
+    var techHull = tech.getHull();
+    var techType = tech.getType();
+
+    if (techHull != null || techComponent != null) {
+      showTutorial(70, info);
+    }
+
+    if (techComponent != null) {
+      if (techType == TechType.Defense
+          && techComponent.startsWith("Shield Mk")) {
+        showTutorial(56, info);
+      }
+      if (techType == TechType.Defense
+          && techComponent.startsWith("Armor")) {
+        showTutorial(57, info);
+      }
+      if (techType == TechType.Defense
+          && techComponent.startsWith("Jammer")) {
+        showTutorial(58, info);
+      }
+
+      if (techType == TechType.Combat
+          && techComponent.startsWith("Laser")) {
+        showTutorial(51, info);
+      }
+      if (techType == TechType.Combat
+          && techComponent.startsWith("Photon")) {
+        showTutorial(53, info);
+      }
+      if (techType == TechType.Combat
+          && techComponent.startsWith("Railgun")) {
+        showTutorial(52, info);
+      }
+      if (techType == TechType.Combat
+          && techComponent.startsWith("Orbital")) {
+        showTutorial(81, info);
+      }
+      if (techType == TechType.Combat
+          && techComponent.startsWith("HE missile")) {
+        showTutorial(54, info);
+      }
+      if (techType == TechType.Combat
+          && techComponent.startsWith("ECM torpedo")) {
+        showTutorial(55, info);
+      }
+
+      if (techType == TechType.Hulls
+          && techComponent.startsWith("Privateering")) {
+        showTutorial(59, info);
+        showTutorial(73, info);
+      }
+
+      if (techType == TechType.Propulsion
+          && techComponent.contains("source")) {
+        showTutorial(77, info);
+      }
+      if (techType == TechType.Propulsion
+          && techComponent.contains("drive")) {
+        showTutorial(76, info);
+      }
+
+      if (techType == TechType.Electrics
+          && techComponent.startsWith("Cloaking")) {
+        showTutorial(78, info);
+      }
+      if (techType == TechType.Electrics
+          && techComponent.startsWith("Espionage")) {
+        showTutorial(79, info);
+      }
+      if (techType == TechType.Electrics
+          && techComponent.startsWith("Scanner")
+          || techComponent.startsWith("LR scanner")) {
+        showTutorial(80, info);
+      }
+      if (techType == TechType.Electrics
+          && techComponent.startsWith("Targeting computer")) {
+        showTutorial(60, info);
       }
     }
 
+    if (techHull != null) {
+      boolean specialHull = false;
+      if (techType == TechType.Hulls
+          && techHull.startsWith("Probe")) {
+        specialHull = true;
+        showTutorial(71, info);
+      }
+      if (techType == TechType.Hulls
+          && techHull.contains("Starbase")) {
+        specialHull = true;
+        showTutorial(72, info);
+      }
+      if (techType == TechType.Hulls
+          && techHull.contains("Privateer")) {
+        specialHull = true;
+        showTutorial(73, info);
+      }
+      if (techType == TechType.Hulls
+          && techHull.contains("Freighter")) {
+        specialHull = true;
+        showTutorial(74, info);
+      }
+      if (techType == TechType.Hulls
+          && !specialHull) {
+        showTutorial(75, info);
+      }
+    }
+  }
+
+  /**
+   * Show tutorial by tutorial Index for specfied player.
+   * @param tutorialIdx tutorial index
+   * @param info PlayerInfo
+   */
+  private void showTutorial(final int tutorialIdx, final PlayerInfo info) {
+    var tutorialText = Game.getTutorial().showTutorialText(tutorialIdx);
+    if (tutorialText != null) {
+      var msg = new Message(MessageType.INFORMATION, tutorialText,
+          Icons.getIconByName(Icons.ICON_TUTORIAL));
+      info.getMsgList().addNewMessage(msg);
+    }
   }
 
   /**

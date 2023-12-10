@@ -289,6 +289,7 @@ public class StarMapTest {
     Mockito.when(weapon.getEnergyResource()).thenReturn(0);
     Mockito.when(weapon.getDamage()).thenReturn(2);
     Mockito.when(weapon.getWeaponRange()).thenReturn(2);
+    Mockito.when(weapon.isDestructiveWeapon()).thenReturn(true);
     Mockito.when(armor.getDefenseValue()).thenReturn(2);
     components[0] = weapon;
     components[1] = armor;

@@ -732,18 +732,7 @@ private int getRemainingEnergy(final int index) {
   public boolean hasWeapons() {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && hasComponentEnergy(i) && (comp
-          .getType() == ShipComponentType.WEAPON_BEAM
-          || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
-          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
-          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
-          || comp.getType() == ShipComponentType.WEAPON_RAILGUN
-          || comp.getType() == ShipComponentType.MULTICANNON
-          || comp.getType() == ShipComponentType.GRAVITY_RIPPER
-          || comp.getType() == ShipComponentType.PLASMA_CANNON
-          || comp.getType() == ShipComponentType.ION_CANNON
-          || comp.getType() == ShipComponentType.BITE
-          || comp.getType() == ShipComponentType.TENTACLE)) {
+      if (hullPoints[i] > 0 && hasComponentEnergy(i) && comp.isWeapon()) {
         return true;
       }
     }
@@ -1851,16 +1840,7 @@ private int increaseHitChanceByComponent() {
     power = getHull().getSlotHull() * getHull().getMaxSlot();
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (comp.getType() == ShipComponentType.WEAPON_BEAM
-          || comp.getType() == ShipComponentType.WEAPON_RAILGUN
-          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
-          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
-          || comp.getType() == ShipComponentType.PLASMA_CANNON
-          || comp.getType() == ShipComponentType.MULTICANNON
-          || comp.getType() == ShipComponentType.GRAVITY_RIPPER
-          || comp.getType() == ShipComponentType.ION_CANNON
-          || comp.getType() == ShipComponentType.BITE
-          || comp.getType() == ShipComponentType.TENTACLE) {
+      if (comp.isDestructiveWeapon()) {
         militaryShip = true;
         power = power + comp.getDamage();
       }
@@ -1936,17 +1916,7 @@ private int increaseHitChanceByComponent() {
     power = getHull().getSlotHull() * getHull().getMaxSlot();
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if ((comp.getType() == ShipComponentType.WEAPON_BEAM
-          || comp.getType() == ShipComponentType.WEAPON_RAILGUN
-          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
-          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
-          || comp.getType() == ShipComponentType.PLASMA_CANNON
-          || comp.getType() == ShipComponentType.MULTICANNON
-          || comp.getType() == ShipComponentType.ION_CANNON
-          || comp.getType() == ShipComponentType.GRAVITY_RIPPER
-          || comp.getType() == ShipComponentType.BITE
-          || comp.getType() == ShipComponentType.TENTACLE)
-          && componentIsWorking(i)) {
+      if (comp.isDestructiveWeapon() && componentIsWorking(i)) {
         militaryShip = true;
         power = power + comp.getDamage();
       }

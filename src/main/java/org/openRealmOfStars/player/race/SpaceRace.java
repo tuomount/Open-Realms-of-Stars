@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.race;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,6 +19,7 @@ package org.openRealmOfStars.player.race;
  */
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.music.MusicFileInfo;
@@ -45,7 +47,8 @@ public enum SpaceRace {
    */
   MECHIONS(1, "Mechions", "Mechion",
           "Mechanical beings whom do not eat food.\n"
-        + "Each population must be built."),
+        + "Each population must be built.",
+        RaceTrait.ROBOTIC, RaceTrait.ENERGY_POWERED, RaceTrait.NO_HEIRS),
   /**
    * Aggressive and warmongering spieces.
    */
@@ -126,7 +129,8 @@ public enum SpaceRace {
       "Reborgians are organism combined with bionic and robotic "
       + "parts. So they are cyborgs. They can synthesize any living space race"
       + " to their own race, so they are fearful conquerors. They need only"
-      + " very little food surviving, but their reproduction is very slow."),
+      + " very little food surviving, but their reproduction is very slow.",
+      RaceTrait.NO_HEIRS),
   /**
    * Lithorians are creatures that eat metal instead of food. They have slow
    * grow rate and they have -2 population limit. They have
@@ -135,7 +139,7 @@ public enum SpaceRace {
   LITHORIANS(12, "Lithorians", "Lithorian",
       "Lithorians are creatures that eat metal instead of food. They have"
       + " slow grow rate and they have -2 population limit."
-      + " They have excellent ability to mine metal."),
+      + " They have excellent ability to mine metal.", RaceTrait.LITHOVORIC),
   /**
    * Alteirians are creatures that live in zero gravity. Because of this they
    * need special suites to move planet surface. Most of their time they
@@ -167,7 +171,8 @@ public enum SpaceRace {
    * Each population must be built. Alternative name Huskdroid.
    */
   SYNTHDROIDS(16, "Synthdroids", "Synthdroid", "Artificial beings that eat only"
-      + " small amount of food. Each population must be built."),
+      + " small amount of food. Each population must be built.",
+      RaceTrait.ROBOTIC, RaceTrait.NO_HEIRS),
   /**
    * Alonian realm always starts without homeplanet. How ever they get higher
    * starting technology and have special ability where single colony ship
@@ -179,23 +184,24 @@ public enum SpaceRace {
       + " special ability\nwhere single colony ship produces one research"
       + " point.\nAlso starbase's laboratories produces more research points.");
 
-
-
-
   /**
    * Create space race
    * @param index Space race index
    * @param name Space race name in plural
    * @param single Space race name in single format
    * @param description Space race  description
+   * @param traits Race's traits
    */
   SpaceRace(final int index, final String name, final String single,
-      final String description) {
+      final String description, final RaceTrait... traits) {
     this.index = index;
     this.name = name;
     this.nameSingle = single;
     this.description = description;
-
+    this.traits = new ArrayList<>(traits.length);
+    for (var trait : traits) {
+      addTrait(trait);
+    }
   }
 
   /**
@@ -225,6 +231,38 @@ public enum SpaceRace {
    * Space race description
    */
   private String description;
+
+  /** Race traits */
+  private ArrayList<RaceTrait> traits;
+
+  /**
+   * Add RaceTrait to SpaceRace.
+   * Throws IllegalArgumentException if adding trait would result
+   * in conflicting or duplicate traits.
+   * @param trait RaceTrait to add to SpaceRace
+   */
+  private void addTrait(final RaceTrait trait) {
+    var traitArray = this.traits.toArray(new RaceTrait[this.traits.size()]);
+    if (RaceTrait.isTraitConflict(trait, traitArray)) {
+      throw new IllegalArgumentException(
+          "Cannot add RaceTrait because of conflict");
+    }
+    traits.add(trait);
+  }
+
+  /**
+   * Return true if race has trait specified by ID.
+   * @param traitId RaceTrait ID
+   * @return True if race has specified trait
+   */
+  public boolean hasTrait(final String traitId) {
+    for (var trait : traits) {
+      if (trait.getId().equals(traitId)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   /**
    * Get scientist research speed
@@ -1341,14 +1379,26 @@ public enum SpaceRace {
   }
 
   /**
+   * Is race eating organic food?
+   * @return True if eating organic food
+   */
+  public boolean isEatingFood() {
+    if (isLithovorian()) {
+      return false;
+    }
+    if (hasTrait(RaceTrait.ENERGY_POWERED.getId())) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    * Is space race eating metal?
    * @return True if eating metal.
    */
   public boolean isLithovorian() {
-    if (this == SpaceRace.LITHORIANS) {
-      return true;
-    }
-    return false;
+    return hasTrait(RaceTrait.LITHOVORIC.getId());
   }
 
   /**
@@ -1356,14 +1406,9 @@ public enum SpaceRace {
    * @return True if robotic.
    */
   public boolean isRoboticRace() {
-    if (this == SpaceRace.MECHIONS) {
-      return true;
-    }
-    if (this == SpaceRace.SYNTHDROIDS) {
-      return true;
-    }
-    return false;
+    return hasTrait(RaceTrait.ROBOTIC.getId());
   }
+
   /**
    * Extra population for each planet.
    * @return Extra population per planet
@@ -1958,6 +2003,26 @@ public enum SpaceRace {
     } else {
       sb.append("None");
     }
+
+    if (traits.size() > 0) {
+      if (!markDown) {
+        sb.append("<p>");
+      } else {
+        sb.append(lf + lf);
+      }
+      sb.append(lf + "Racial attributes:" + lf);
+      for (var trait : traits) {
+        sb.append(dot);
+        sb.append(trait.getName());
+        sb.append(" - ");
+        sb.append(trait.getDescription());
+        sb.append(lf);
+      }
+      if (!markDown) {
+        sb.append("</p>");
+      }
+    }
+
     if (!markDown) {
       sb.append("</html>");
     }

@@ -70,6 +70,7 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.race.RaceTrait;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -3188,10 +3189,8 @@ public class AITurnView extends BlackPanel {
               && heirs == 1) {
             chance = 4;
           }
-          if (leader.getRace() == SpaceRace.MECHIONS
-              || leader.getRace() == SpaceRace.REBORGIANS
-              || leader.getRace() == SpaceRace.SYNTHDROIDS) {
-            // Mechions or Reborgians do not get heirs
+          if (leader.getRace().hasTrait(RaceTrait.NO_HEIRS.getId())) {
+            // Races without concept of parental heritage do not get heirs
             chance = 0;
           }
           if (DiceGenerator.getRandom(99) < chance && firstPlanet != null

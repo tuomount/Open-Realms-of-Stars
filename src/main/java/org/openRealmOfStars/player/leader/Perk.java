@@ -356,8 +356,8 @@ public enum Perk {
    */
   public boolean isPerkAllowedForRace(final SpaceRace race) {
     boolean result = true;
-    if (this == Perk.AGRICULTURAL && race == SpaceRace.MECHIONS) {
-      // Agricultural perk has no use for mechions.
+    if (this == Perk.AGRICULTURAL && !race.isEatingFood()) {
+      // Agricultural perk has no use for races that don't eat food.
       result = false;
     }
     if (this == Perk.ADDICTED && race.isRoboticRace()) {

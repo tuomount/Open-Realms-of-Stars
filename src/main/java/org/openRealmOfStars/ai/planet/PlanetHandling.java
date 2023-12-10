@@ -201,11 +201,8 @@ public final class PlanetHandling {
         }
       }
     }
-    boolean needFood = true;
-    if (info.getRace() == SpaceRace.MECHIONS
-        || info.getRace() == SpaceRace.LITHORIANS) {
-      needFood = false;
-    }
+
+    boolean needFood = info.getRace().isEatingFood();
     if (gotFarms == -1 && !constructionSelected && !needFood) {
       // No farms at all
       int i = getConstruction("Advanced farm", constructions);

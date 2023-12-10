@@ -39,6 +39,7 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.race.RaceTrait;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.player.ship.Ship;
@@ -863,13 +864,15 @@ public class Planet {
     for (Building build : getBuildingList()) {
       result = result + build.getMaintenanceCost();
     }
+
+    // Energy-powered races have maintenance for every 4th of population
     if (planetOwnerInfo != null
-        && planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
-      // Mechions have maintenance cost for each 4th of population
+        && planetOwnerInfo.getRace()
+            .hasTrait(RaceTrait.ENERGY_POWERED.getId())) {
       result = result + Math.floor(getTotalPopulation() / 4);
     }
-    return (int) Math.floor(result);
 
+    return (int) Math.floor(result);
   }
 
   /**
@@ -1842,13 +1845,8 @@ public class Planet {
         }
         if (tmp != null) {
           if (tmp.getType() == BuildingType.FARM
-              && planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
-            // No farming buildings for Mechions
-            continue;
-          }
-          if (tmp.getType() == BuildingType.FARM
-              && planetOwnerInfo.getRace().isLithovorian()) {
-            // No farming buildings for Lithovorians.
+              && !planetOwnerInfo.getRace().isEatingFood()) {
+            // No farming buildings for races that don't eat organic food
             continue;
           }
           if (tmp.isSingleAllowed()) {
@@ -2170,15 +2168,12 @@ public class Planet {
   }
   /**
    * Calculate sur plus food for planet. This does not take count possible
-   * limitations which space race might have for sur plus food. This will return
-   * zero for mechions or lithovorians.
+   * limitations which space race might have for surplus food. This will return
+   * zero for races that do not eat normal food.
    * @return Sur plus food.
    */
   public int calculateSurPlusFood() {
-    if (planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
-      return 0;
-    }
-    if (planetOwnerInfo.getRace().isLithovorian()) {
+    if (!planetOwnerInfo.getRace().isEatingFood()) {
       return 0;
     }
     int food = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()

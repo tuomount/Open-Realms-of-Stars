@@ -27,7 +27,6 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Calendar;
 
 import javax.imageio.ImageIO;
 
@@ -76,36 +75,6 @@ public final class IOUtilities {
   }
 
   /**
-   * Read all data from input stream
-   * @param is InputStream where to read
-   * @return Read data as a byte array
-   * @throws IOException if reading fails with IOException
-   */
-  public static byte[] readAll(final InputStream is) throws IOException {
-    int dataLength = 0;
-    int byteOffset = 0;
-    int blockSize = 8000;
-    byte[] buffer = null;
-    do {
-      byte[] tmpBuf = new byte[blockSize];
-      dataLength = is.read(tmpBuf, 0, tmpBuf.length);
-      if (dataLength != -1) {
-        byte[] targetBuf;
-        if (buffer == null) {
-          targetBuf = new byte[dataLength];
-          byteOffset = 0;
-        } else {
-          targetBuf = new byte[buffer.length + dataLength];
-          System.arraycopy(buffer, 0, targetBuf, 0, buffer.length);
-          byteOffset = buffer.length;
-        }
-        System.arraycopy(tmpBuf, 0, targetBuf, byteOffset, dataLength);
-        buffer = targetBuf;
-      }
-    } while (dataLength != -1);
-    return buffer;
-  }
-  /**
    * Read file as text file return as US-ASCII string
    * @param is DataInputStream
    * @return String
@@ -113,8 +82,7 @@ public final class IOUtilities {
    */
   public static String readTextFile(final DataInputStream is)
       throws IOException {
-    byte[] dataBuf = new byte[is.available()];
-    is.readFully(dataBuf);
+    byte[] dataBuf = is.readAllBytes();
     int offset = 0;
     int length = dataBuf.length;
     Charset charset = StandardCharsets.US_ASCII;
@@ -128,22 +96,15 @@ public final class IOUtilities {
   }
 
   /**
-   * Big number for placing after screenshot
-   */
-  private static final int BIG_NUMBER = 9999;
-
-  /**
    * Save Buffered Image into file under directory screenshots
    * @param image to save into screenshots directory.
    */
-  public static void saveScreenShot(final BufferedImage image) {
-    Calendar cal = Calendar.getInstance();
+  public static void saveScreenshot(final BufferedImage image) {
     File dir = new File("screenshots");
     if (!dir.exists()) {
       dir.mkdir();
     }
-    String filename = "Screenshot-" + cal.getTimeInMillis() + "-"
-        + DiceGenerator.getRandom(BIG_NUMBER) + ".png";
+    String filename = "Screenshot-" + System.currentTimeMillis() + ".png";
     File file = new File("screenshots/" + filename);
     try {
       ImageIO.write(image, "png", file);

@@ -83,7 +83,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       BufferedImage result = new BufferedImage(game.getWidth(),
           game.getHeight(), BufferedImage.TYPE_INT_RGB);
       game.paint(result.getGraphics());
-      IOUtilities.saveScreenShot(result);
+      IOUtilities.saveScreenshot(result);
       return true;
     }
     if (arg0.getKeyCode() == KeyEvent.VK_F1

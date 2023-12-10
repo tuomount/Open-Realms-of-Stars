@@ -25,7 +25,6 @@ import java.nio.charset.StandardCharsets;
 import org.openRealmOfStars.game.config.ConfigFile;
 import org.openRealmOfStars.game.config.ConfigLine;
 import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -50,7 +49,7 @@ public final class ConfigFileRepository {
    */
   public static ConfigFile readConfigFile(final InputStream is)
       throws IOException {
-    byte[] data = IOUtilities.readAll(is);
+    byte[] data = is.readAllBytes();
     String dataAsString = new String(data, StandardCharsets.UTF_8);
     String[] lines = dataAsString.split("\n");
     ConfigFile config = new ConfigFile();

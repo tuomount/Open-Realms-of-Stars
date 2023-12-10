@@ -306,7 +306,7 @@ public class Bridge {
   private byte[] readInput(final HttpsURLConnection connection) {
     byte[] buf = null;
     try (InputStream is = connection.getInputStream()) {
-      buf = IOUtilities.readAll(is);
+      buf = is.readAllBytes();
     } catch (IOException e) {
       try {
         ErrorLogger.debug("Code:" + connection.getResponseCode());
@@ -510,7 +510,7 @@ public class Bridge {
     ErrorLogger.debug("URL: " + url.toString());
     ErrorLogger.debug(json.getValueAsString());
     try (InputStream is = connection.getInputStream()) {
-      byte[] buf = IOUtilities.readAll(is);
+      byte[] buf = is.readAllBytes();
       if (buf != null) {
         String str = new String(buf, StandardCharsets.UTF_8);
         ErrorLogger.debug("Code:" + connection.getResponseCode());

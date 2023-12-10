@@ -26,7 +26,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.openRealmOfStars.audio.soundeffect.SoundEffect;
-import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -48,7 +47,7 @@ public class SoundRepository {
     URL url = getClass().getResource(filename);
     try (AudioInputStream ais = AudioSystem.getAudioInputStream(url)) {
       format = ais.getFormat();
-      data = IOUtilities.readAll(ais);
+      data = ais.readAllBytes();
     } catch (UnsupportedAudioFileException | IOException e) {
       throw new IOException("Error while reading sound file(" + filename
           + "): " + e.getMessage());

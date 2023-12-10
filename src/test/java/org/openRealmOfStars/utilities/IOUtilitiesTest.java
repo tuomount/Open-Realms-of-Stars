@@ -18,7 +18,6 @@ package org.openRealmOfStars.utilities;
  */
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -32,21 +31,6 @@ import org.junit.experimental.categories.Category;
  */
 
 public class IOUtilitiesTest {
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testReadAll() throws IOException {
-    byte[] data = {0x01, 0x02, 0x03, 0x04, 0x05};
-    ByteArrayInputStream is = new ByteArrayInputStream(data);
-    byte[] buf = IOUtilities.readAll(is);
-    if (data.length == buf.length) {
-      for (int i=0;i<data.length;i++) {
-        assertEquals(data[i],buf[i]);
-      }
-    } else {
-      assertFalse(false);
-    }
-  }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)

@@ -2274,7 +2274,7 @@ private int increaseHitChanceByComponent() {
           tradeCoordinates = planet.getCoordinate();
         }
       } else {
-        tradeCoordinates = new Coordinate(planet.getCoordinate());
+        tradeCoordinates = planet.getCoordinate();
         if (planet.getPlanetPlayerInfo() != null
             && planet.getPlanetPlayerInfo() == trader) {
           setFlag(FLAG_MERCHANT_LEFT_HOMEWORLD, true);

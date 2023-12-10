@@ -41,16 +41,6 @@ public class CoordinateTest {
 
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
-    public void testCreateCoordinateFromAnother() {
-        Coordinate originalCoordinate = new Coordinate(10, 15);
-        Coordinate coordinate = new Coordinate(originalCoordinate);
-
-        assertEquals(originalCoordinate.getX(), coordinate.getX());
-        assertEquals(originalCoordinate.getY(), coordinate.getY());
-    }
-
-    @Test
-    @Category(org.openRealmOfStars.UnitTest.class)
     public void testCreateCoordinateUp() {
         int x = 10;
         int y = 15;

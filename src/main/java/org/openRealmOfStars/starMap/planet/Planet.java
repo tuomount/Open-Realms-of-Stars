@@ -1735,7 +1735,7 @@ public class Planet {
    * @return Coordinate
    */
   public Coordinate getCoordinate() {
-    return new Coordinate(coordinate);
+    return coordinate;
   }
 
   /**
@@ -1743,7 +1743,7 @@ public class Planet {
    * @param coordinate Planet's coordinate
    */
   public void setCoordinate(final Coordinate coordinate) {
-    this.coordinate = new Coordinate(coordinate);
+    this.coordinate = coordinate;
   }
 
   /**

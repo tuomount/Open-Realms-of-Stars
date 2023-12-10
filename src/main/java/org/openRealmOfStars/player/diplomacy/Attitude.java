@@ -108,8 +108,7 @@ public enum Attitude {
    * @return Attitude
    */
   public static Attitude getRandom() {
-    int amount = Attitude.values().length - 1;
-    return getTypeByIndex(DiceGenerator.getRandom(amount));
+    return DiceGenerator.pickRandom(Attitude.values());
   }
 
 }

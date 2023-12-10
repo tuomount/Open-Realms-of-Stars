@@ -2546,11 +2546,11 @@ public final class NewsFactory {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       instructions.addPlanet(ImageInstruction.POSITION_CENTER,
           planet.getImageInstructions(),
           ImageInstruction.SIZE_FULL);
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         instructions.addLogo(ImageInstruction.POSITION_LEFT,
             ImageInstruction.BIG_ORBITAL, ImageInstruction.SIZE_FULL);
         instructions.addLogo(ImageInstruction.POSITION_LEFT,
@@ -2562,7 +2562,7 @@ public final class NewsFactory {
             ImageInstruction.BIG_EXPLOSION, ImageInstruction.SIZE_FULL);
       }
     } else {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         instructions.addPlanet(ImageInstruction.POSITION_LEFT,
             planet.getImageInstructions(),
             ImageInstruction.SIZE_FULL);
@@ -2631,11 +2631,11 @@ public final class NewsFactory {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       instructions.addPlanet(ImageInstruction.POSITION_CENTER,
           planet.getImageInstructions(),
           ImageInstruction.SIZE_FULL);
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         instructions.addLogo(ImageInstruction.POSITION_LEFT,
             ImageInstruction.BIG_ORBITAL, ImageInstruction.SIZE_FULL);
         instructions.addLogo(ImageInstruction.POSITION_LEFT,
@@ -2647,7 +2647,7 @@ public final class NewsFactory {
             ImageInstruction.BIG_EXPLOSION, ImageInstruction.SIZE_FULL);
       }
     } else {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         instructions.addPlanet(ImageInstruction.POSITION_LEFT,
             planet.getImageInstructions(),
             ImageInstruction.SIZE_FULL);
@@ -3681,7 +3681,7 @@ public final class NewsFactory {
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
     if (vote.getType() == VotingType.BAN_NUCLEAR_WEAPONS) {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         instructions.addImage(ImageInstruction.BIG_NUKE);
         instructions.addImage(ImageInstruction.BIG_BAN);
       } else {
@@ -3892,7 +3892,7 @@ public final class NewsFactory {
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
     if (vote.getType() == VotingType.BAN_NUCLEAR_WEAPONS) {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         instructions.addImage(ImageInstruction.BIG_NUKE);
         if (choice == VotingChoice.VOTED_YES) {
           instructions.addImage(ImageInstruction.BIG_BAN);

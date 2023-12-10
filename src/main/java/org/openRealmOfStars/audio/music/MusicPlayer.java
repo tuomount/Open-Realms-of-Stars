@@ -467,15 +467,15 @@ public final class MusicPlayer {
    * Play Combat music
    */
   public static void playCombatMusic() {
-    int index = DiceGenerator.getRandom(COMBAT_MUSIC_LIST.length - 1);
-    play(COMBAT_MUSIC_LIST[index]);
+    var music = DiceGenerator.pickRandom(COMBAT_MUSIC_LIST);
+    play(music);
   }
   /**
    * Play Combat music
    */
   public static void playGameMusic() {
-    int index = DiceGenerator.getRandom(GAME_MUSIC_LIST.length - 1);
-    play(GAME_MUSIC_LIST[index]);
+    var music = DiceGenerator.pickRandom(GAME_MUSIC_LIST);
+    play(music);
   }
   /**
    * Handle music if song playing stops.

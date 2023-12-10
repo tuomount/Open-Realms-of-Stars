@@ -820,7 +820,7 @@ public final class NameGenerator {
       case 22: sb.append("Surz"); break;
       case 23: sb.append("Surs"); break;
     }
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       switch (DiceGenerator.getRandom(12)) {
         default:
         case 0: sb.append("s"); break;
@@ -867,7 +867,7 @@ public final class NameGenerator {
         case 22: sb.append("Surz"); break;
         case 23: sb.append("Surs"); break;
       }
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         switch (DiceGenerator.getRandom(12)) {
           default:
           case 0: sb.append("s"); break;
@@ -1821,7 +1821,7 @@ public final class NameGenerator {
       }
     }
     sb.append(" ");
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       switch (DiceGenerator.getRandom(9)) {
         default:
         case 0: sb.append("X-"); break;
@@ -1898,7 +1898,7 @@ public final class NameGenerator {
         break;
       }
     }
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       sb.append("-");
       switch (DiceGenerator.getRandom(9)) {
         default:
@@ -2119,7 +2119,7 @@ public final class NameGenerator {
         break;
       }
     }
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       sb.append("-");
       switch (DiceGenerator.getRandom(11)) {
         default:

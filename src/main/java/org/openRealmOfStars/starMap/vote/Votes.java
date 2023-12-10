@@ -155,8 +155,8 @@ public class Votes {
       for (Vote vote : listOfVotes) {
         types.remove(vote.getType());
       }
-      int index = DiceGenerator.getRandom(types.size() - 1);
-      Vote vote = new Vote(types.get(index), numberOfRealms, turns);
+      var voteType = DiceGenerator.pickRandom(types);
+      Vote vote = new Vote(voteType, numberOfRealms, turns);
       listOfVotes.add(vote);
       return vote;
     }

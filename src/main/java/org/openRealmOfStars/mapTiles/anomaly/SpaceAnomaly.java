@@ -422,8 +422,7 @@ public class SpaceAnomaly {
             }
           }
           if (listStats.size() > 0) {
-            ShipStat stat = listStats.get(DiceGenerator.getRandom(
-                listStats.size() - 1));
+            ShipStat stat = DiceGenerator.pickRandom(listStats);
             Ship ship = new Ship(stat.getDesign());
             stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
             stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
@@ -513,13 +512,13 @@ public class SpaceAnomaly {
           for (int i = 0; i < leader.getLevel(); i++) {
             Perk[] newPerks = LeaderUtility.getNewPerks(leader,
                 LeaderUtility.PERK_TYPE_GOOD);
-            int index = DiceGenerator.getRandom(newPerks.length - 1);
-            leader.addPerk(newPerks[index]);
+            var newPerk = DiceGenerator.pickRandom(newPerks);
+            leader.addPerk(newPerk);
             if (DiceGenerator.getRandom(99) < 10) {
               newPerks = LeaderUtility.getNewPerks(leader,
                   LeaderUtility.PERK_TYPE_BAD);
-              index = DiceGenerator.getRandom(newPerks.length - 1);
-              leader.addPerk(newPerks[index]);
+              newPerk = DiceGenerator.pickRandom(newPerks);
+              leader.addPerk(newPerk);
             }
           }
           if (fleet.getCommander() != null) {
@@ -634,7 +633,7 @@ public class SpaceAnomaly {
               + " contained strange piece of ancient artifact. "
               + ". This seems to be unusual piece of history."
               + " This finding requires some research time.");
-          if (DiceGenerator.getRandom(1) == 0) {
+          if (DiceGenerator.getBoolean()) {
             result.setImage(GuiStatics.IMAGE_ARTIFACT1);
           } else {
             result.setImage(GuiStatics.IMAGE_ARTIFACT2);
@@ -691,13 +690,13 @@ public class SpaceAnomaly {
           for (int i = 0; i < leader.getLevel(); i++) {
             Perk[] newPerks = LeaderUtility.getNewPerks(leader,
                 LeaderUtility.PERK_TYPE_GOOD);
-            int index = DiceGenerator.getRandom(newPerks.length - 1);
-            leader.addPerk(newPerks[index]);
+            var newPerk = DiceGenerator.pickRandom(newPerks);
+            leader.addPerk(newPerk);
             if (DiceGenerator.getRandom(99) < 10) {
               newPerks = LeaderUtility.getNewPerks(leader,
                   LeaderUtility.PERK_TYPE_BAD);
-              index = DiceGenerator.getRandom(newPerks.length - 1);
-              leader.addPerk(newPerks[index]);
+              newPerk = DiceGenerator.pickRandom(newPerks);
+              leader.addPerk(newPerk);
             }
           }
           if (fleet.getCommander() != null) {

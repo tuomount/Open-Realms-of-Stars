@@ -428,8 +428,7 @@ public class PlayerSetupView extends BlackPanel {
     if (!randomListOfColors.contains(color)) {
       color = config.getRace(index).getSecondaryColor();
       if (!randomListOfColors.contains(color)) {
-        int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
-        color = randomListOfColors.get(colorIndex);
+        color = DiceGenerator.pickRandom(randomListOfColors);
       }
     }
     randomListOfColors.remove(color);

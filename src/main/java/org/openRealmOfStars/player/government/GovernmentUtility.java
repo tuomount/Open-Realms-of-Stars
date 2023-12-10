@@ -42,8 +42,7 @@ public final class GovernmentUtility {
    */
   public static GovernmentType getRandomGovernment(final SpaceRace race) {
     GovernmentType[] govs = getGovernmentsForRace(race);
-    int index = DiceGenerator.getRandom(govs.length - 1);
-    return govs[index];
+    return DiceGenerator.pickRandom(govs);
   }
   /**
    * Get government type by index

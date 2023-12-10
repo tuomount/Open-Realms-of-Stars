@@ -157,10 +157,9 @@ public class ArtifactLists {
    */
   public Artifact researchArtifact() {
     if (discoveredArtifacts.size() > 0) {
-      int index = DiceGenerator.getRandom(0, discoveredArtifacts.size() - 1);
-      Artifact artifact = discoveredArtifacts.get(index);
-      researchedArtifacts.add(discoveredArtifacts.get(index));
-      discoveredArtifacts.remove(index);
+      Artifact artifact = DiceGenerator.pickRandom(discoveredArtifacts);
+      researchedArtifacts.add(artifact);
+      discoveredArtifacts.remove(artifact);
       return artifact;
     }
     return null;
@@ -225,9 +224,8 @@ public class ArtifactLists {
    */
   public Artifact takeRandomDiscoveredArtifact() {
     if (discoveredArtifacts.size() > 0) {
-      int index = DiceGenerator.getRandom(0, discoveredArtifacts.size() - 1);
-      Artifact artifact = discoveredArtifacts.get(index);
-      discoveredArtifacts.remove(index);
+      Artifact artifact = DiceGenerator.pickRandom(discoveredArtifacts);
+      discoveredArtifacts.remove(artifact);
       return artifact;
     }
     return null;

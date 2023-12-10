@@ -74,13 +74,13 @@ public class RoguePlanetNameGenerator extends NameGenerator {
     if (random > 50) {
       parts = 2;
     }
-    sb.append(FIRST_PART[DiceGenerator.getRandom(FIRST_PART.length - 1)]);
+    sb.append(DiceGenerator.pickRandom(FIRST_PART));
     if (parts == 1) {
-      sb.append(THIRD_PART[DiceGenerator.getRandom(THIRD_PART.length - 1)]);
+      sb.append(DiceGenerator.pickRandom(THIRD_PART));
     }
     if (parts == 2) {
-      sb.append(SECOND_PART[DiceGenerator.getRandom(SECOND_PART.length - 1)]);
-      sb.append(THIRD_PART[DiceGenerator.getRandom(THIRD_PART.length - 1)]);
+      sb.append(DiceGenerator.pickRandom(SECOND_PART));
+      sb.append(DiceGenerator.pickRandom(THIRD_PART));
     }
     return sb.toString();
   }

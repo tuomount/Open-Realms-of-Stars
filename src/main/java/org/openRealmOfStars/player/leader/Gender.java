@@ -70,7 +70,7 @@ public enum Gender {
    * @return Gender.
    */
   public static Gender getRandom() {
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       return FEMALE;
     }
     return MALE;

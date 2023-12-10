@@ -36,7 +36,7 @@ public final class StoryGeneratorUtility {
    * @return first or inaugural.
    */
   public static String randomInaugural() {
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       return "first";
     }
     return "inaugural";

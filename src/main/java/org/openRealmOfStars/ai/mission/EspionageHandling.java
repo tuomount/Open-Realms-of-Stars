@@ -486,8 +486,7 @@ public final class EspionageHandling {
       }
     }
     // Just making sure that null is never returned.
-    EspionageMission selectedType = allowedTypes[DiceGenerator.getRandom(
-        allowedTypes.length - 1)];
+    EspionageMission selectedType = DiceGenerator.pickRandom(allowedTypes);
     return selectedType;
   }
 
@@ -930,9 +929,8 @@ public final class EspionageHandling {
         return;
       }
 
-      int index = DiceGenerator.getRandom(0, stealableTechs.length - 1);
-      Tech tech = stealableTechs[index];
-      info.getTechList().addTech(stealableTechs[index]);
+      var tech = DiceGenerator.pickRandom(stealableTechs);
+      info.getTechList().addTech(tech);
 
       var msgText = String.format(tplStealTech, spyCallName, spyEmpireName,
           tech.getName(), planetEmpireName);
@@ -957,9 +955,7 @@ public final class EspionageHandling {
     } else
 
     if (type == EspionageMission.DEMOLISH_BUILDING) {
-      int index = DiceGenerator.getRandom(0,
-          planet.getBuildingList().length - 1);
-      Building building = planet.getBuildingList()[index];
+      var building = DiceGenerator.pickRandom(planet.getBuildingList());
       planet.removeBuilding(building);
 
       var msgText = String.format(tplDemolish, spyCallName, spyEmpireName,
@@ -985,9 +981,7 @@ public final class EspionageHandling {
     } else
 
     if (type == EspionageMission.TERRORIST_ATTACK) {
-      int index = DiceGenerator.getRandom(0,
-          planet.getBuildingList().length - 1);
-      Building building = planet.getBuildingList()[index];
+      var building = DiceGenerator.pickRandom(planet.getBuildingList());
       planet.removeBuilding(building);
 
       handleSpaceportSabotage(planet, building, info);

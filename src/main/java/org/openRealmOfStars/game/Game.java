@@ -2700,7 +2700,7 @@ public class Game implements ActionListener {
   public static ImageInstruction createConflictingShipImage(
       final boolean cloaked, final Planet planet) {
     ImageInstruction instructions = new ImageInstruction();
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
     } else {
       instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);

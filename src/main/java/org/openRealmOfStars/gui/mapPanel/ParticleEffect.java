@@ -94,10 +94,10 @@ public class ParticleEffect {
       mx = mx / 10;
       my = DiceGenerator.getRandom(5, 50);
       my = my / 10;
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         mx = mx * -1;
       }
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         my = my * -1;
       }
       ttl = DiceGenerator.getRandom(15, 30);
@@ -110,10 +110,10 @@ public class ParticleEffect {
       mx = mx / 10;
       my = DiceGenerator.getRandom(5, 40);
       my = my / 10;
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         mx = mx * -1;
       }
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         my = my * -1;
       }
       ttl = DiceGenerator.getRandom(5, 15);
@@ -124,10 +124,10 @@ public class ParticleEffect {
     case ION_PARTICLE_LOW_ACTIVE: {
       mx = 1;
       my = 1;
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         mx = mx * -1;
       }
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         my = my * -1;
       }
       ttl = DiceGenerator.getRandom(1, 5);
@@ -172,10 +172,10 @@ public class ParticleEffect {
       mx = mx / 10;
       my = DiceGenerator.getRandom(5, 20);
       my = my / 10;
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         mx = mx * -1;
       }
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         my = my * -1;
       }
       ttl = 10;
@@ -190,10 +190,10 @@ public class ParticleEffect {
       mx = mx / 10;
       my = DiceGenerator.getRandom(5, 20);
       my = my / 10;
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         mx = mx * -1;
       }
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         my = my * -1;
       }
       ttl = 10;
@@ -247,10 +247,10 @@ public class ParticleEffect {
           mx = mx / 10;
           my = DiceGenerator.getRandom(5, 20);
           my = my / 10;
-          if (DiceGenerator.getRandom(1) == 0) {
+          if (DiceGenerator.getBoolean()) {
             mx = mx * -1;
           }
-          if (DiceGenerator.getRandom(1) == 0) {
+          if (DiceGenerator.getBoolean()) {
             my = my * -1;
           }
         }

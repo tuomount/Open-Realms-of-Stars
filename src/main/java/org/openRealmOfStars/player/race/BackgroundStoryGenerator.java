@@ -308,7 +308,7 @@ public final class BackgroundStoryGenerator {
       sb.append(" is equipped with advanced sensors and"
           + " communication systems, which allow them to coordinate their"
           + " movements and work in harmony with their fellow robots.");
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         sb.append(" This allows ");
         sb.append(name);
         sb.append(" populations to tackle complex tasks "
@@ -321,7 +321,7 @@ public final class BackgroundStoryGenerator {
             + "the capabilities of a solitary robot.");
       }
     } else {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         sb.append(" Each ");
         sb.append(name);
         sb.append(" is equipped with advanced sensors and"
@@ -367,7 +367,7 @@ public final class BackgroundStoryGenerator {
     String name = getRaceNameInSingle(info.getEmpireName(),
         info.getGovernment());
     sb.append(namePlural);
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       sb.append(" are a race of artificial beings that are designed to "
           + "resemble human females. They are often portrayed as being "
           + "sleek and elegant, with graceful movements and a polished "
@@ -380,7 +380,7 @@ public final class BackgroundStoryGenerator {
           + "Despite their inherently robotic nature, ");
     }
     sb.append(namePlural);
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       sb.append(" are able to perform many of the same functions as organic "
           + "beings, including eating, drinking, and speaking. However, they "
           + "require only a small amount of food to sustain themselves, "
@@ -394,7 +394,7 @@ public final class BackgroundStoryGenerator {
           + "self-reliant. Unlike most other species, ");
     }
     sb.append(namePlural);
-    if (DiceGenerator.getRandom(1) == 0) {
+    if (DiceGenerator.getBoolean()) {
       sb.append(" must be built rather than born, and each population must "
           + "be created from scratch. This makes them a relatively rare and "
           + "mysterious race in the galaxy.");
@@ -405,7 +405,7 @@ public final class BackgroundStoryGenerator {
     if (info.getGovernment().isImmuneToHappiness()) {
       sb.append(" Each ");
       sb.append(namePlural);
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         sb.append(" is equipped with positronic computer and"
             + " capable communication systems, which allow them to coordinate"
             + " their movements and work in harmony with their fellow ");
@@ -416,13 +416,13 @@ public final class BackgroundStoryGenerator {
       }
       sb.append(namePlural);
       sb.append(". These features ");
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         sb.append("allow ");
       } else {
         sb.append("empower ");
       }
       sb.append(namePlural);
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         sb.append(" to handle complex tasks "
             + "that would be beyond the capabilities of a single being.");
       } else {
@@ -432,7 +432,7 @@ public final class BackgroundStoryGenerator {
     } else {
       sb.append(" Each ");
       sb.append(namePlural);
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         sb.append(" is equipped with positronic computer and"
             + " positronic neuronetwork, which allows them to individually"
             + " like a living creature. This means that each ");
@@ -442,7 +442,7 @@ public final class BackgroundStoryGenerator {
             + " to living creatures.");
       }
       sb.append(namePlural);
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         sb.append(" is highly advanced AI system that can learn and"
             + " adapt into new things fast.");
       } else {
@@ -654,7 +654,7 @@ public final class BackgroundStoryGenerator {
       }
     }
     if (info.getGovernment().getDiplomaticBonus() > 0) {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         sb.append(namePlural);
         sb.append(" are a peaceful race, and prefer to use their cunning and "
             + "charm to outmaneuver their competitors rather than resorting"
@@ -2154,7 +2154,7 @@ public final class BackgroundStoryGenerator {
               break;
             }
           }
-          if (DiceGenerator.getRandom(1) == 0) {
+          if (DiceGenerator.getBoolean()) {
             sb.append(" By the year ");
           } else {
             sb.append(" In the year ");
@@ -2346,7 +2346,7 @@ public final class BackgroundStoryGenerator {
         }
         case 3: {
           sb.append(name);
-          if (DiceGenerator.getRandom(1) == 0) {
+          if (DiceGenerator.getBoolean()) {
             sb.append(" history is unknown since there is no written text"
                 + " available, until ");
           } else {
@@ -2381,7 +2381,7 @@ public final class BackgroundStoryGenerator {
           sb.append(StoryGeneratorUtility.randomInaugural());
           sb.append(" ");
           sb.append(RulerUtility.getRulerTitle(gender, info.getGovernment()));
-          if (DiceGenerator.getRandom(1) == 0) {
+          if (DiceGenerator.getBoolean()) {
             sb.append(" and ");
             sb.append(gender.getHisHer());
             sb.append(" reign begins ");
@@ -2435,7 +2435,7 @@ public final class BackgroundStoryGenerator {
         switch (DiceGenerator.getRandom(3)) {
         default:
         case 0: {
-          if (DiceGenerator.getRandom(1) == 0) {
+          if (DiceGenerator.getBoolean()) {
             sb.append(name);
             sb.append(" were small tribes first scattered around the planet,"
                 + " until ");
@@ -2562,7 +2562,7 @@ public final class BackgroundStoryGenerator {
         }
       }
       if (traders) {
-        if (DiceGenerator.getRandom(1) == 0) {
+        if (DiceGenerator.getBoolean()) {
           sb.append(" and have reputation to be good traders");
         } else {
           sb.append(" and have cultivated a reputation as skilled traders");
@@ -2577,7 +2577,7 @@ public final class BackgroundStoryGenerator {
          + "multifaceted nature. ");
     } else if (!diplomatic && traders) {
       sb.append(name);
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         sb.append(" have reputation to be good traders. ");
       } else {
         sb.append(" have cultivated a reputation as skilled traders. ");
@@ -2740,7 +2740,7 @@ public final class BackgroundStoryGenerator {
           break;
         }
       }
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         endOfworldDescription = "This harsh envinronment was challenging but "
             + namePlural + " became stronger and more sustainable there.";
       } else {
@@ -2790,7 +2790,7 @@ public final class BackgroundStoryGenerator {
         }
       }
       sb.append(" iron world.");
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         endOfworldDescription = "This planet was full of molten lava and"
             + " hot envinronments " + namePlural + " were able to survive there"
             + " and learn how fluorish there.";
@@ -2839,7 +2839,7 @@ public final class BackgroundStoryGenerator {
           break;
         }
       }
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         endOfworldDescription = "This planet is moist and has huge oceans"
             + " on surface. " + namePlural + " conquered the planet fully"
                 + " for themselves.";

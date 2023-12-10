@@ -940,10 +940,8 @@ public class PlanetBombingView extends BlackPanel {
               extraPop = " Recently dead population is synthesized into your"
                   + " population by adding cybergenetic implants.";
               if (stealableTechs != null && stealableTechs.length > 0) {
-                int index = DiceGenerator.getRandom(0,
-                    stealableTechs.length - 1);
-                Tech tech = stealableTechs[index];
-                attacker.getTechList().addTech(stealableTechs[index]);
+                Tech tech = DiceGenerator.pickRandom(stealableTechs);
+                attacker.getTechList().addTech(tech);
                 Message msg = new Message(MessageType.RESEARCH,
                       attacker.getEmpireName() + " has stolen "
                       + tech.getName() + " technology from "

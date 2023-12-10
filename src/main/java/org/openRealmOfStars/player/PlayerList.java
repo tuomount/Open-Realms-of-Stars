@@ -138,8 +138,8 @@ public class PlayerList {
           || difficultyLevel == PirateDifficultLevel.VERY_HARD) {
         info.setAiDifficulty(AiDifficulty.CHALLENGING);
       }
-      int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
-      info.setColor(randomListOfColors.get(colorIndex));
+      var color = DiceGenerator.pickRandom(randomListOfColors);
+      info.setColor(color);
       players.addPlayer(info);
     }
     if (galaxyConfig.getSpaceAnomaliesLevel() == 2) {
@@ -153,8 +153,8 @@ public class PlayerList {
       info.setGovernment(GovernmentType.SPACE_PIRATES);
       info.setEmpireName("Space monsters");
       info.setAiDifficulty(AiDifficulty.WEAK);
-      int colorIndex = DiceGenerator.getRandom(randomListOfColors.size() - 1);
-      info.setColor(randomListOfColors.get(colorIndex));
+      var color = DiceGenerator.pickRandom(randomListOfColors);
+      info.setColor(color);
       players.addPlayer(info);
     }
     players.calculateInitialDiplomacyBonuses();

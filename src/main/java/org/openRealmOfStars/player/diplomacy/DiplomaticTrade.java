@@ -1586,7 +1586,7 @@ public class DiplomaticTrade {
     } else if (value < 80) {
       generateTechTrade(SELL);
     } else {
-      if (DiceGenerator.getRandom(1) == 0) {
+      if (DiceGenerator.getBoolean()) {
         generateMapTrade(TRADE, true);
       } else {
         generateMapTrade(BUY, true);
@@ -2395,7 +2395,7 @@ public class DiplomaticTrade {
         }
         case DIPLOMATIC:
         case PEACEFUL: {
-          if (DiceGenerator.getRandom(1) == 0) {
+          if (DiceGenerator.getBoolean()) {
             difference = 1;
           }
           break;

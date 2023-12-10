@@ -2,6 +2,7 @@ package org.openRealmOfStars.utilities;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,6 +23,9 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -87,6 +91,45 @@ public final class DiceGenerator {
   }
 
   /**
+   * Get either true or false, at random
+   * @return true or false, randomly selected
+   */
+  public static boolean getBoolean() {
+    return getRandom(1) == 0;
+  }
+
+  /**
+   * Pick random element of given array.
+   * @param <T> Type of the array and returned value
+   * @param array Array to select from
+   * @return Randomly selected element
+   */
+  public static <T> T pickRandom(final T[] array) {
+    var idx = getRandom(array.length - 1);
+    return array[idx];
+  }
+
+  /**
+   * Pick random element of given Collection<T>.
+   * Selecting from List<T> is more efficient.
+   * @param <T> Type of the array and returned value
+   * @param collection Collection<T> to select from
+   * @return Randomly selected element
+   */
+  public static <T> T pickRandom(final Collection<T> collection) {
+    // Lists are optimal for randomly selecting elements
+    if (collection instanceof List) {
+      var idx = getRandom(collection.size() - 1);
+      var list = (List<T>) collection;
+      return list.get(idx);
+    }
+
+    var tmpList = new ArrayList<T>(collection);
+    var idx = getRandom(tmpList.size() - 1);
+    return tmpList.get(idx);
+  }
+
+  /**
    * Get Java envinronment safely
    * @param param Envinronment parameter
    * @return Envinronment parameter or default value.
@@ -99,6 +142,7 @@ public final class DiceGenerator {
     }
     return param + " not available";
   }
+
   /**
    * Gather Envinronment data. This data will be run through
    * digest function if any of digest function is available.
@@ -154,6 +198,7 @@ public final class DiceGenerator {
     }
     return sb.toString().getBytes(StandardCharsets.US_ASCII);
   }
+
   /**
    * Pseudo random function.
    * @param initialValue Initial value for PRF.
@@ -189,6 +234,7 @@ public final class DiceGenerator {
     }
     return value;
   }
+
   /**
    * Initialize generator. This only needs to be called once.
    */
@@ -205,7 +251,7 @@ public final class DiceGenerator {
       mw = big.intValue();
       mw = mw >> 8;
       big = new BigInteger(loopPrf(gatherEnvData(),
-        generator1.nextInt(512) + 512));
+          generator1.nextInt(512) + 512));
       x = big.longValue();
       numbers = null;
       initialized = true;
@@ -240,6 +286,7 @@ public final class DiceGenerator {
     numbers = values;
     initialized = true;
   }
+
   /**
    * Get Random result from three different pseudo random functions
    * @param maxValue inclusive
@@ -255,17 +302,17 @@ public final class DiceGenerator {
     }
     if (numbers == null) {
       switch (generator1.nextInt(3)) {
-      case 0:
-        result = getRandomJava(maxValue + 1);
-        break;
-      case 1:
-        result = getRandomMultiplyWithCarry(maxValue + 1);
-        break;
-      case 2:
-        result = getRandomXORShift(maxValue + 1);
-        break;
-      default:
-        throw new IllegalArgumentException("Bad behaving PRF!");
+        case 0:
+          result = getRandomJava(maxValue + 1);
+          break;
+        case 1:
+          result = getRandomMultiplyWithCarry(maxValue + 1);
+          break;
+        case 2:
+          result = getRandomXORShift(maxValue + 1);
+          break;
+        default:
+          throw new IllegalArgumentException("Bad behaving PRF!");
       }
     } else {
       result = numbers[numberIndex] % (maxValue + 1);
@@ -351,6 +398,7 @@ public final class DiceGenerator {
    * Magic number 2 for XOR shift
    */
   private static final int XOR_SHIFT_MAGIC2 = 35;
+
   /**
    * Get random with XORShift function
    * @param maxValue exclusive

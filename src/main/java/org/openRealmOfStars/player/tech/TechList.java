@@ -462,7 +462,7 @@ public class TechList {
         if (compValue > bestValue) {
           best = tech;
           bestValue = compValue;
-        } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
+        } else if (compValue == bestValue && DiceGenerator.getBoolean()) {
           best = tech;
           bestValue = compValue;
         }
@@ -631,7 +631,7 @@ public class TechList {
       if (compValue > bestValue) {
         best = tech;
         bestValue = compValue;
-      } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
+      } else if (compValue == bestValue && DiceGenerator.getBoolean()) {
         best = tech;
         bestValue = compValue;
       }

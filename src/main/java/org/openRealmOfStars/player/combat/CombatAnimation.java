@@ -501,10 +501,10 @@ public class CombatAnimation {
         int py = (int) Math.round(dist * my + sy);
         int nx = DiceGenerator.getRandom(5);
         int ny = DiceGenerator.getRandom(5);
-        if (DiceGenerator.getRandom(1) == 0) {
+        if (DiceGenerator.getBoolean()) {
           nx = nx * -1;
         }
-        if (DiceGenerator.getRandom(1) == 0) {
+        if (DiceGenerator.getBoolean()) {
           ny = ny * -1;
         }
         px = px + nx;
@@ -549,10 +549,10 @@ public class CombatAnimation {
         int py = (int) Math.round(sy);
         double nx = DiceGenerator.getRandom(5) / 10;
         double ny = DiceGenerator.getRandom(5) / 10;
-        if (DiceGenerator.getRandom(1) == 0) {
+        if (DiceGenerator.getBoolean()) {
           nx = nx * -1;
         }
-        if (DiceGenerator.getRandom(1) == 0) {
+        if (DiceGenerator.getBoolean()) {
           ny = ny * -1;
         }
         double mvx = mx * 5 + nx;
@@ -647,10 +647,10 @@ public class CombatAnimation {
           int py = (int) Math.round(sy);
           int nx = DiceGenerator.getRandom(5);
           int ny = DiceGenerator.getRandom(5);
-          if (DiceGenerator.getRandom(1) == 0) {
+          if (DiceGenerator.getBoolean()) {
             nx = nx * -1;
           }
-          if (DiceGenerator.getRandom(1) == 0) {
+          if (DiceGenerator.getBoolean()) {
             ny = ny * -1;
           }
           px = px + nx;
@@ -847,10 +847,10 @@ public class CombatAnimation {
       for (int i = 0; i < parts; i++) {
         int nx = DiceGenerator.getRandom(5);
         int ny = DiceGenerator.getRandom(5);
-        if (DiceGenerator.getRandom(1) == 0) {
+        if (DiceGenerator.getBoolean()) {
           nx = nx * -1;
         }
-        if (DiceGenerator.getRandom(1) == 0) {
+        if (DiceGenerator.getBoolean()) {
           ny = ny * -1;
         }
         ParticleEffect particle = new ParticleEffect(

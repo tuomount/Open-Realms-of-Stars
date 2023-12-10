@@ -600,10 +600,10 @@ public class BigImagePanel extends JPanel {
             int py = ANIM_Y_OFFSET;
             int nx = DiceGenerator.getRandom(25);
             int ny = DiceGenerator.getRandom(25);
-            if (DiceGenerator.getRandom(1) == 0) {
+            if (DiceGenerator.getBoolean()) {
               nx = nx * -1;
             }
-            if (DiceGenerator.getRandom(1) == 0) {
+            if (DiceGenerator.getBoolean()) {
               ny = ny * -1;
             }
             px = px + nx;

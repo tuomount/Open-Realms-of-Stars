@@ -118,7 +118,8 @@ public final class SpaceRaceUtility {
    * @return SpaceRace
    */
   public static SpaceRace getRandomRace() {
-    return DiceGenerator.pickRandom(SpaceRace.values());
+    var raceName = DiceGenerator.pickRandom(RACE_SELECTION);
+    return getRaceByName(raceName);
   }
 
   /**

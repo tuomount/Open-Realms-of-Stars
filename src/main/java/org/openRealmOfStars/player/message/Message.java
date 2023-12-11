@@ -243,7 +243,7 @@ public class Message {
    * @param coordinate coordinate
    */
   public void setCoordinate(final Coordinate coordinate) {
-    this.coordinate = new Coordinate(coordinate);
+    this.coordinate = coordinate;
   }
 
   /**

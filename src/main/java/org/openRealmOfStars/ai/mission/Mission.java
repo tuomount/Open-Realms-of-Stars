@@ -120,11 +120,7 @@ public class Mission {
    * @param coordinate Target coordinate
    */
   public void setTarget(final Coordinate coordinate) {
-    if (coordinate != null) {
-      targetCoordinate = new Coordinate(coordinate);
-    } else {
-      targetCoordinate = null;
-    }
+    targetCoordinate = coordinate;
   }
 
   /**

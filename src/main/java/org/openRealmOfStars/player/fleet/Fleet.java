@@ -287,7 +287,7 @@ public class Fleet {
    * @param pos Fleet's coordinate
    */
   public void setPos(final Coordinate pos) {
-    this.coordinate = new Coordinate(pos);
+    this.coordinate = pos;
   }
 
   /**

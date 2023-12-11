@@ -1249,7 +1249,7 @@ public class StarMap {
         fleet.setName(playerInfo.getFleets().generateUniqueName(
             ship.getName()));
         Mission mission = new Mission(MissionType.ROAM,
-            MissionPhase.TREKKING, new Coordinate(fleet.getCoordinate()));
+            MissionPhase.TREKKING, fleet.getCoordinate());
         mission.setFleetName(fleet.getName());
         playerInfo.getMissions().add(mission);
       }

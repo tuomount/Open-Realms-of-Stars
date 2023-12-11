@@ -25,9 +25,9 @@ package org.openRealmOfStars.starMap;
 public class Coordinate {
 
     /** The X value of the coordinate */
-    private int x;
+    private final int x;
     /** The Y value of the coordinate */
-    private int y;
+    private final int y;
 
     /** Direction up */
     public static final int UP = 0;
@@ -49,14 +49,6 @@ public class Coordinate {
     }
 
     /**
-     * Constructor for Coordinate
-     * @param coordinate The coordinate to copy it
-     */
-    public Coordinate(final Coordinate coordinate) {
-        this(coordinate.getX(), coordinate.getY());
-    }
-
-    /**
      * Get new coordinate from old one according the direction
      * @param direction UP, RIGHT, DOWN, LEFT are allowd
      * @return New coordinate according direction or old one
@@ -67,9 +59,10 @@ public class Coordinate {
         case RIGHT: return new Coordinate(getX() + 1, getY());
         case DOWN: return new Coordinate(getX(), getY() + 1);
         case LEFT: return new Coordinate(getX() - 1, getY());
-        default: return new Coordinate(this);
+        default: return this;
       }
     }
+
     /**
      * Get the X value ot the coordinate
      * @return the X value ot the coordinate
@@ -92,8 +85,8 @@ public class Coordinate {
      * @return the distance
      */
     public double calculateDistance(final Coordinate otherCoordinate) {
-        int xDistance = Math.abs(otherCoordinate.getX() - getX());
-        int yDistance = Math.abs(otherCoordinate.getY() - getY());
+        int xDistance = otherCoordinate.x - x;
+        int yDistance = otherCoordinate.y - y;
         return Math.sqrt(xDistance * xDistance + yDistance * yDistance);
     }
 
@@ -105,12 +98,7 @@ public class Coordinate {
      * @return true if valid and false if invalid
      */
     public boolean isValidCoordinate(final Coordinate maxCoordinate) {
-        if (getX() >= 0 && getY() >= 0
-                && getX() < maxCoordinate.getX()
-                && getY() < maxCoordinate.getY()) {
-            return true;
-        }
-        return false;
+        return x >= 0 && y >= 0 && x < maxCoordinate.x && y < maxCoordinate.y;
     }
 
     @Override

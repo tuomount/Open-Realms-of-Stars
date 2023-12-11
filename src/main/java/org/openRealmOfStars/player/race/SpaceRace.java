@@ -48,7 +48,8 @@ public enum SpaceRace {
   MECHIONS(1, "Mechions", "Mechion",
           "Mechanical beings whom do not eat food.\n"
         + "Each population must be built.",
-        RaceTrait.ROBOTIC, RaceTrait.ENERGY_POWERED, RaceTrait.NO_HEIRS),
+        RaceTrait.ROBOTIC, RaceTrait.ENERGY_POWERED, RaceTrait.NO_HEIRS,
+        RaceTrait.CONSTRUCTED_POP),
   /**
    * Aggressive and warmongering spieces.
    */
@@ -172,7 +173,7 @@ public enum SpaceRace {
    */
   SYNTHDROIDS(16, "Synthdroids", "Synthdroid", "Artificial beings that eat only"
       + " small amount of food. Each population must be built.",
-      RaceTrait.ROBOTIC, RaceTrait.NO_HEIRS),
+      RaceTrait.ROBOTIC, RaceTrait.NO_HEIRS, RaceTrait.CONSTRUCTED_POP),
   /**
    * Alonian realm always starts without homeplanet. How ever they get higher
    * starting technology and have special ability where single colony ship

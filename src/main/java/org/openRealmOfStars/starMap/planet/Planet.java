@@ -1776,33 +1776,36 @@ public class Planet {
     if (tmp2 != null && !exceedRadiation()) {
       result.add(tmp2);
     }
+
+    if (planetOwnerInfo != null) {
+      SpaceRace planetRace = planetOwnerInfo.getRace();
+      // Population can construct itself
+      // Lookup valid construction project for race based on singular name
+      if (planetRace.hasTrait(RaceTrait.CONSTRUCTED_POP.getId())
+          && getTotalPopulation() < getPopulationLimit()) {
+        var popProjectId = planetRace.getNameSingle() + " citizen";
+        var popProject = ConstructionFactory.createByName(popProjectId);
+        if (popProject != null) {
+          if (!exceedRadiation()) {
+            result.add(popProject);
+          }
+        } else {
+          ErrorLogger.log("Could not find population construction project"
+              + " for race: " + planetRace.getName());
+        }
+      }
+      // Population is eating food, add basic farms
+      if (planetRace.isEatingFood()) {
+        var farmBuilding = BuildingFactory.createByName("Basic farm");
+        if (farmBuilding != null && !exceedRadiation()) {
+          result.add(farmBuilding);
+        }
+      }
+    }
+
     Building tmp = BuildingFactory.createByName("Basic mine");
     if (tmp != null) {
       result.add(tmp);
-    }
-    if (planetOwnerInfo != null
-        && planetOwnerInfo.getRace() == SpaceRace.MECHIONS
-        && getTotalPopulation() < getPopulationLimit()) {
-      tmp2 = ConstructionFactory
-          .createByName(ConstructionFactory.MECHION_CITIZEN);
-      if (tmp2 != null && !exceedRadiation()) {
-        result.add(tmp2);
-      }
-    } else if (planetOwnerInfo != null
-        && !planetOwnerInfo.getRace().isLithovorian()) {
-      tmp = BuildingFactory.createByName("Basic farm");
-      if (tmp != null && !exceedRadiation()) {
-        result.add(tmp);
-      }
-      if (planetOwnerInfo != null
-        && planetOwnerInfo.getRace() == SpaceRace.SYNTHDROIDS
-        && getTotalPopulation() < getPopulationLimit()) {
-        tmp2 = ConstructionFactory
-            .createByName(ConstructionFactory.SYNTHDROID_CITIZEN);
-        if (tmp2 != null && !exceedRadiation()) {
-          result.add(tmp2);
-        }
-      }
     }
     tmp = BuildingFactory.createByName("Basic factory");
     if (tmp != null) {

@@ -67,6 +67,11 @@ public final class RaceTrait {
       "NO_HEIRS", "No heirs",
       "Race has unusual birth process, to which it is"
           + " not possible to apply concept of parental heritage.");
+  /** Race can breed by explictly constructing it's own population. */
+  public static final RaceTrait CONSTRUCTED_POP = new RaceTrait(
+      "CONSTRUCTED_POP", "Constructed",
+      "Breeds by external process, where individuals "
+          + " are \"constructed\" in some way.");
 
   /** ID of the trait */
   private String traitId;

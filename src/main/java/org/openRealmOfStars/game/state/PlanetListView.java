@@ -36,7 +36,7 @@ import org.openRealmOfStars.gui.labels.UncolonizedPlanetInfoLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.RaceTrait;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -180,16 +180,23 @@ public class PlanetListView extends BlackPanel {
             .getWorldType());
         value = value * suitability / 100;
         value = value + 10 - dist / divider;
-        if (info.getRace() != SpaceRace.CHIRALOIDS) {
-          if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
-            value = value - (planet.getRadiationLevel()
-                - info.getRace().getMaxRad()) * 10;
+        final var race = info.getRace();
+        final var raceMaxRad = race.getMaxRad();
+        final var planetRad = planet.getRadiationLevel();
+        // Races with radiosythesis rate planets with radiation more favorably
+        // NOTE: Why is planet-rating logic here, in GUI code???
+        if (race.hasTrait(RaceTrait.RADIOSYNTHESIS.getId())) {
+          if (planetRad > raceMaxRad) {
+            value -= (planetRad - raceMaxRad) * 2;
           } else {
-            value = value
-                + (info.getRace().getMaxRad() - planet.getRadiationLevel());
+            value += planetRad;
           }
         } else {
-          value = value + planet.getRadiationLevel();
+          if (planetRad > raceMaxRad) {
+            value -= (planetRad - raceMaxRad) * 10;
+          } else {
+            value += raceMaxRad - planetRad;
+          }
         }
         if (value > bestValue) {
           bestPlanet = planet;

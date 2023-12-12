@@ -866,10 +866,18 @@ public class Planet {
     }
 
     // Energy-powered races have maintenance for every 4th of population
-    if (planetOwnerInfo != null
-        && planetOwnerInfo.getRace()
-            .hasTrait(RaceTrait.ENERGY_POWERED.getId())) {
-      result = result + Math.floor(getTotalPopulation() / 4);
+    var ownerInfo = planetOwnerInfo;
+    if (ownerInfo != null
+        && ownerInfo.getRace().hasTrait(RaceTrait.ENERGY_POWERED.getId())) {
+      // If race can sustain itself from radiation,
+      // adjust the amount of maintained population accordingly
+      var popToMaintain = getTotalPopulation();
+      if (ownerInfo.getRace().hasTrait(RaceTrait.RADIOSYNTHESIS.getId())) {
+        int sustFromRad = Math.min(getRadiationLevel(), popToMaintain);
+        popToMaintain -= sustFromRad;
+      }
+
+      result += Math.floor(popToMaintain / 4);
     }
 
     return (int) Math.floor(result);
@@ -1497,6 +1505,7 @@ public class Planet {
     int result = 0;
     int mult = 100;
     int div = 100;
+    final var planetRace = planetOwnerInfo.getRace();
     GovernmentType government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
@@ -1540,20 +1549,25 @@ public class Planet {
         sb.append("<br>");
       }
     }
-    if (planetOwnerInfo.getRace() == SpaceRace.CHIRALOIDS) {
-      // Chiraloids radiosynthesis
-      int rad = getRadiationLevel();
-      int currentPop = getTotalPopulation();
-      if (currentPop > 0) {
-        value = Math.min(rad, currentPop);
-        result = result + value;
-        if (value > 0) {
-          sb.append("<li> radio synthesis +");
-          sb.append(value);
-          sb.append("<br>");
+
+    // TODO: "Self-sustenance" radiosynthesis should not "produce" food
+    // It does in order to not break population growing
+    if (planetRace.hasTrait(RaceTrait.RADIOSYNTHESIS.getId())) {
+      final int rad = getRadiationLevel();
+      final int currentPop = getTotalPopulation();
+      final int sustFromRad = Math.min(rad, currentPop);
+      if (planetRace.isEatingFood()) {
+        if (currentPop > 0) {
+          result += sustFromRad;
+          if (value > 0) {
+            sb.append("<li> radiosynthesis +");
+            sb.append(sustFromRad);
+            sb.append("<br>");
+          }
         }
       }
     }
+
     if (totalPopulation >= 4) {
       value = government.getFoodBonus();
       result = result + value;

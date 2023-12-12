@@ -20,7 +20,9 @@ package org.openRealmOfStars.ambient;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
+import java.net.NetworkInterface;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -71,7 +73,7 @@ public class ServiceDiscovery {
     addressBuilder.append("250");
     address = InetAddress.getByName(addressBuilder.toString());
     socket = new MulticastSocket();
-    socket.joinGroup(address);
+    socket.joinGroup(new InetSocketAddress(address, 0), null);
     socket.setSoTimeout(500);
   }
 

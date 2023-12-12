@@ -22,7 +22,6 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
-import java.net.NetworkInterface;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -82,7 +81,7 @@ public class ServiceDiscovery {
    * @param payload Payload to parse
    * @return Bridge id or null.
    */
-  private String parseBridgeId(final String payload) {
+  private static String parseBridgeId(final String payload) {
     if (payload.contains("hue-bridgeid:")) {
       int index = payload.indexOf(BRIDGE_ID);
       if (index > -1) {

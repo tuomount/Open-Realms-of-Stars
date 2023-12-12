@@ -19,9 +19,9 @@ package org.openRealmOfStars.ambient;
 
 import static org.junit.Assert.*;
 
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.utilities.json.values.ObjectValue;
 
 /**
 *
@@ -34,17 +34,18 @@ public class LightTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     Light light = new Light("1");
-    ObjectValue json = light.updateLampJson();
-    assertEquals("{}",json.getValueAsString());
+    JSONObject json = light.updateLampJson();
+    assertEquals("{}",json.toString());
     light.setHumanReadablename("Test room light 1");
     light.setOn(true);
     light.setBri(255);
     light.setSat(0);
     light.setHue(4000);
     json = light.updateLampJson();
-    assertEquals("{\"on\": true,\"bri\": 255,\"hue\": 4000,\"sat\": 0}",json.getValueAsString());
+    assertEquals("{\"sat\":0,\"bri\":255,\"hue\":4000,\"on\":true}",
+        json.toString());
     json = light.updateLampJson();
-    assertEquals("{}",json.getValueAsString());
+    assertEquals("{}",json.toString());
   }
 
 }

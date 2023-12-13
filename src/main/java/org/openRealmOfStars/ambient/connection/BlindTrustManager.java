@@ -84,7 +84,8 @@ public class BlindTrustManager implements X509TrustManager {
     ErrorLogger.debug("Received server certificate...");
     // Check that certificate is currently in valid period.
     arg0[0].checkValidity();
-    String subjectCn = parsePrincipal(arg0[0].getSubjectDN().toString(), "CN");
+    String subjectCn = parsePrincipal(
+        arg0[0].getSubjectX500Principal().toString(), "CN");
     if (bridgeId != null) {
       if (subjectCn == null) {
         throw new CertificateException("Server has invalid certificate!");
@@ -95,7 +96,8 @@ public class BlindTrustManager implements X509TrustManager {
     } else if (subjectCn != null) {
       bridgeId = subjectCn;
     }
-    String issuerCn = parsePrincipal(arg0[0].getIssuerDN().toString(), "CN");
+    String issuerCn = parsePrincipal(
+        arg0[0].getIssuerX500Principal().toString(), "CN");
     if (issuerCn == null) {
       throw new CertificateException("Server has invalid certificate!");
     }

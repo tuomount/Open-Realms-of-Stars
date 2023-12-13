@@ -31,13 +31,14 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.openRealmOfStars.ambient.connection.BlindTrustManager;
 import org.openRealmOfStars.ambient.connection.BridgeHostnameVerifier;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.json.JsonUtil;
 
 /**
 *
@@ -229,11 +230,15 @@ public class Bridge {
   }
 
   /**
-   * Set Username for the bridge.
+   * Set Username for the bridge. Empty username set username to null.
    * @param username the username to set
    */
   public void setUsername(final String username) {
-    this.username = username;
+    if (username == null || username.isEmpty()) {
+      this.username = null;
+    } else {
+      this.username = username;
+    }
   }
 
   /**
@@ -314,15 +319,16 @@ public class Bridge {
   }
 
   /**
-   * Get JSON Root from byte array.
+   * Get Object from byte array.
    * @param buf Byte Array
-   * @return JsonRoot or null
+   * @return Object JSONObject or JSONArray or someother JSON
+   *                or null if parsing fails.
    */
-  private static JSONObject parseJsonRoot(final byte[] buf) {
+  private static Object parseJsonRoot(final byte[] buf) {
     String jsonString = new String(buf, StandardCharsets.UTF_8);
     try {
-      JSONObject jsonRoot = new JSONObject(jsonString);
-      return jsonRoot;
+      JSONTokener tokener = new JSONTokener(jsonString);
+      return tokener.nextValue();
     } catch (JSONException e) {
       return null;
     }
@@ -366,28 +372,36 @@ public class Bridge {
     String str = new String(buf, StandardCharsets.UTF_8);
     if (buf != null) {
       ErrorLogger.debug(str);
-      JSONObject jsonRoot = parseJsonRoot(buf);
-      if (jsonRoot != null) {
-        String errStr = JsonUtil.getJsonString(jsonRoot, "error");
-        if (errStr == null) {
-          String successStr = JsonUtil.getJsonString(jsonRoot, "success");
-          if (successStr != null) {
-            String usernameStr = JsonUtil.getJsonString(jsonRoot, "username");
-            if (usernameStr != null) {
-              username = usernameStr;
-              status = BridgeStatusType.REGISTERED;
-              setLightsEnabled(true);
-            } else {
-              status = BridgeStatusType.NOT_CONNECTED;
-              lastErrorMsg = "No username received.";
-            }
+      Object jsonRoot = parseJsonRoot(buf);
+      if (jsonRoot instanceof JSONObject) {
+        JSONObject json = (JSONObject) jsonRoot;
+        String successStr = json.optString("success");
+        if (successStr != null) {
+          String usernameStr = json.optString("username");
+          if (usernameStr != null) {
+            username = usernameStr;
+            status = BridgeStatusType.REGISTERED;
+            setLightsEnabled(true);
           } else {
-            status = BridgeStatusType.ERROR;
-            lastErrorMsg = "Unknown error happened.";
+            status = BridgeStatusType.NOT_CONNECTED;
+            lastErrorMsg = "No username received.";
           }
         } else {
           status = BridgeStatusType.ERROR;
-          String descStr = JsonUtil.getJsonString(jsonRoot, "description");
+          lastErrorMsg = "Unknown error happened.";
+        }
+      } else if (jsonRoot instanceof JSONArray) {
+        status = BridgeStatusType.ERROR;
+        JSONArray jsonArray = (JSONArray) jsonRoot;
+        JSONObject jsonError = jsonArray.optJSONObject(0);
+        if (jsonError == null) {
+          status = BridgeStatusType.ERROR;
+          lastErrorMsg = "No JSON Error.";
+          return;
+        }
+        JSONObject jsonErrorValue = jsonError.getJSONObject("error");
+        if (jsonErrorValue != null) {
+          String descStr = jsonErrorValue.optString("description");
           if (descStr != null) {
             lastErrorMsg = "Remember press sync button"
                 + " before clicking register. "
@@ -396,10 +410,13 @@ public class Bridge {
             lastErrorMsg = "Remember press sync button"
                 + " before clicking register. ";
           }
+        } else {
+          status = BridgeStatusType.ERROR;
+          lastErrorMsg = "No JSON Error.";
         }
       } else {
         status = BridgeStatusType.ERROR;
-        lastErrorMsg = "No JSON payload.";
+        lastErrorMsg = "Unexpected JSON type";
       }
     } else {
       status = BridgeStatusType.ERROR;
@@ -440,9 +457,10 @@ public class Bridge {
       String str = new String(buf, StandardCharsets.UTF_8);
       ErrorLogger.debug("Code:" + connection.getResponseCode());
       ErrorLogger.debug(str);
-      JSONObject jsonRoot = parseJsonRoot(buf);
-      if (jsonRoot != null) {
-        JSONObject one = JsonUtil.getJsonObject(jsonRoot, "1");
+      Object jsonRoot = parseJsonRoot(buf);
+      if (jsonRoot instanceof JSONObject) {
+        JSONObject json = (JSONObject) jsonRoot;
+        JSONObject one = json.optJSONObject("1");
         if (one != null) {
           status = BridgeStatusType.CONNECTED;
         } else {
@@ -1002,38 +1020,42 @@ public class Bridge {
     String str = new String(buf, StandardCharsets.UTF_8);
     ErrorLogger.debug("Code:" + connection.getResponseCode());
     ErrorLogger.debug(str);
-    JSONObject jsonRoot = parseJsonRoot(buf);
+    Object jsonRoot = parseJsonRoot(buf);
+    if (!(jsonRoot instanceof JSONObject)) {
+      return;
+    }
+    JSONObject json = (JSONObject) jsonRoot;
     lights = new ArrayList<>();
     // Officially Hue bridge supports 50 lights, but let's be on safe side.
     for (int i = 0; i < 255; i++) {
       String lightName = String.valueOf(i);
-      JSONObject member = JsonUtil.getJsonObject(jsonRoot, lightName);
+      JSONObject member = json.optJSONObject(lightName);
       if (member != null) {
         Light light = new Light(lightName);
-        String nameStr = JsonUtil.getJsonString(member, "name");
+        String nameStr = member.optString("name");
         if (nameStr != null) {
           light.setHumanReadablename(nameStr);
         } else {
           ErrorLogger.debug("No name found for light " + lightName + ".");
           continue;
         }
-        JSONObject state = JsonUtil.getJsonObject(member, "state");
+        JSONObject state = member.optJSONObject("state");
         if (state != null) {
-          Boolean on = JsonUtil.getJsonBoolean(state, "on");
+          Boolean on = state.optBooleanObject("on");
           if (on != null) {
             light.setOn(on.booleanValue());
           } else {
             ErrorLogger.debug("No on found for light " + lightName + ".");
             continue;
           }
-          Integer bri = JsonUtil.getJsonInt(state, "bri");
+          Integer bri = state.optIntegerObject("bri");
           if (bri != null) {
             light.setBri(bri.intValue());
           } else {
             ErrorLogger.debug("No bri found for light " + lightName + ".");
             continue;
           }
-          Integer sat = JsonUtil.getJsonInt(state, "sat");
+          Integer sat = state.optIntegerObject("sat");
           if (sat != null) {
             light.setSat(sat.intValue());
           } else {
@@ -1041,7 +1063,7 @@ public class Bridge {
             // We only support full color lights
             continue;
           }
-          Integer hue = JsonUtil.getJsonInt(state, "hue");
+          Integer hue = state.optIntegerObject("hue");
           if (hue != null) {
             light.setHue(hue.intValue());
           } else {

@@ -17,7 +17,7 @@ package org.openRealmOfStars.ambient;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import org.openRealmOfStars.utilities.json.values.ObjectValue;
+import org.json.JSONObject;
 
 /**
 *
@@ -178,13 +178,13 @@ public class Light {
    * This can be used for updating the lamp at bridge.
    * @return Lamp's JSON.
    */
-  public ObjectValue updateLampJson() {
-    ObjectValue value = new ObjectValue();
+  public JSONObject updateLampJson() {
+    JSONObject value = new JSONObject();
     if (updated) {
-      value.addBooleanMember("on", getOn());
-      value.addIntegerMember("bri", getBri());
-      value.addIntegerMember("hue", getHue());
-      value.addIntegerMember("sat", getSat());
+      value.put("bri", getBri());
+      value.put("on", getOn());
+      value.put("hue", getHue());
+      value.put("sat", getSat());
       updated = false;
     }
     return value;

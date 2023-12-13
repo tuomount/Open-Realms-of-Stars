@@ -19,6 +19,8 @@ package org.openRealmOfStars.ambient;
 
 import static org.junit.Assert.*;
 
+import java.nio.charset.StandardCharsets;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -62,6 +64,29 @@ public class BridgeTest {
     assertEquals(BridgeStatusType.NOT_CONNECTED, bridge.getStatus());
     bridge.setStatus(BridgeStatusType.ERROR);
     assertEquals(BridgeStatusType.ERROR, bridge.getStatus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSuccessPairing() {
+    Bridge bridge = new Bridge("127.0.0.1");
+    String json = "[{\"success\":{\"username\":\"longtestusername\"}}]";
+    bridge.registerParsing(json.getBytes(StandardCharsets.UTF_8));
+    assertEquals("", bridge.getLastErrorMsg());
+    assertEquals("longtestusername", bridge.getUsername());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFailedPairing() {
+    Bridge bridge = new Bridge("127.0.0.1");
+    String json = "[{\"error\":{\"type\":101,\"address\":\"\","
+        + "\"description\":\"link button not pressed\"}}]";
+    bridge.registerParsing(json.getBytes(StandardCharsets.UTF_8));
+    assertEquals("Remember press sync button"
+        + " before clicking register. link button not pressed",
+        bridge.getLastErrorMsg());
+    assertNull(bridge.getUsername());
   }
 
 }

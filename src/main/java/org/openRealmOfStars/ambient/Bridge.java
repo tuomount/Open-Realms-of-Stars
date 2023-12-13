@@ -372,36 +372,40 @@ public class Bridge {
     String str = new String(buf, StandardCharsets.UTF_8);
     if (buf != null) {
       ErrorLogger.debug(str);
-      Object jsonRoot = parseJsonRoot(buf);
-      if (jsonRoot instanceof JSONObject) {
-        JSONObject json = (JSONObject) jsonRoot;
-        String successStr = json.optString("success");
-        if (successStr != null) {
-          String usernameStr = json.optString("username");
-          if (usernameStr != null) {
-            username = usernameStr;
-            status = BridgeStatusType.REGISTERED;
-            setLightsEnabled(true);
-          } else {
-            status = BridgeStatusType.NOT_CONNECTED;
-            lastErrorMsg = "No username received.";
-          }
+      registerParsing(buf);
+    } else {
+      status = BridgeStatusType.ERROR;
+      lastErrorMsg = "No payload.";
+    }
+  }
+
+  /**
+   * Register Parsing of JSON.
+   * Handles both success and error.
+   *
+   * @param buf JSON in byte array
+   */
+  public void registerParsing(final byte[] buf) {
+    Object jsonRoot = parseJsonRoot(buf);
+    if (jsonRoot instanceof JSONArray) {
+      JSONArray jsonArray = (JSONArray) jsonRoot;
+      JSONObject jsonFirst = jsonArray.optJSONObject(0);
+      JSONObject success = jsonFirst.optJSONObject("success");
+      if (success != null) {
+        String usernameStr = success.optString("username");
+        if (usernameStr != null) {
+          username = usernameStr;
+          status = BridgeStatusType.REGISTERED;
+          setLightsEnabled(true);
         } else {
-          status = BridgeStatusType.ERROR;
-          lastErrorMsg = "Unknown error happened.";
+          status = BridgeStatusType.NOT_CONNECTED;
+          lastErrorMsg = "No username received.";
         }
-      } else if (jsonRoot instanceof JSONArray) {
+      } else {
         status = BridgeStatusType.ERROR;
-        JSONArray jsonArray = (JSONArray) jsonRoot;
-        JSONObject jsonError = jsonArray.optJSONObject(0);
-        if (jsonError == null) {
-          status = BridgeStatusType.ERROR;
-          lastErrorMsg = "No JSON Error.";
-          return;
-        }
-        JSONObject jsonErrorValue = jsonError.getJSONObject("error");
-        if (jsonErrorValue != null) {
-          String descStr = jsonErrorValue.optString("description");
+        JSONObject jsonError = jsonFirst.optJSONObject("error");
+        if (jsonError != null) {
+          String descStr = jsonError.optString("description");
           if (descStr != null) {
             lastErrorMsg = "Remember press sync button"
                 + " before clicking register. "
@@ -414,16 +418,12 @@ public class Bridge {
           status = BridgeStatusType.ERROR;
           lastErrorMsg = "No JSON Error.";
         }
-      } else {
-        status = BridgeStatusType.ERROR;
-        lastErrorMsg = "Unexpected JSON type";
       }
     } else {
       status = BridgeStatusType.ERROR;
-      lastErrorMsg = "No payload.";
+      lastErrorMsg = "Unexpected JSON type";
     }
   }
-
   /**
    * Method for testing connection OROS to bridge.
    * @throws IOException If something goes wrong.
@@ -1048,23 +1048,23 @@ public class Bridge {
             ErrorLogger.debug("No on found for light " + lightName + ".");
             continue;
           }
-          Integer bri = state.optIntegerObject("bri");
-          if (bri != null) {
+          Integer bri = state.optIntegerObject("bri", -1);
+          if (bri.intValue() != -1) {
             light.setBri(bri.intValue());
           } else {
             ErrorLogger.debug("No bri found for light " + lightName + ".");
             continue;
           }
-          Integer sat = state.optIntegerObject("sat");
-          if (sat != null) {
+          Integer sat = state.optIntegerObject("sat", -1);
+          if (sat.intValue() != -1) {
             light.setSat(sat.intValue());
           } else {
             ErrorLogger.debug("No sat found for light " + lightName + ".");
             // We only support full color lights
             continue;
           }
-          Integer hue = state.optIntegerObject("hue");
-          if (hue != null) {
+          Integer hue = state.optIntegerObject("hue", -1);
+          if (hue.intValue() != -1) {
             light.setHue(hue.intValue());
           } else {
             ErrorLogger.debug("No hue found for light " + lightName + ".");

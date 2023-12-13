@@ -78,7 +78,7 @@ public class BridgeThread extends Thread {
    * Wait for certain amount of milli seconds.
    * @param time in milli seconds.
    */
-  private void sleepFor(final long time) {
+  private static void sleepFor(final long time) {
     try {
       BridgeThread.sleep(time);
     } catch (InterruptedException e) {

@@ -1556,14 +1556,12 @@ public class Planet {
       final int rad = getRadiationLevel();
       final int currentPop = getTotalPopulation();
       final int sustFromRad = Math.min(rad, currentPop);
-      if (planetRace.isEatingFood()) {
-        if (currentPop > 0) {
-          result += sustFromRad;
-          if (value > 0) {
-            sb.append("<li> radiosynthesis +");
-            sb.append(sustFromRad);
-            sb.append("<br>");
-          }
+      if (planetRace.isEatingFood() && currentPop > 0) {
+        result += sustFromRad;
+        if (sustFromRad > 0) {
+          sb.append("<li> radiosynthesis +");
+          sb.append(sustFromRad);
+          sb.append("<br>");
         }
       }
     }

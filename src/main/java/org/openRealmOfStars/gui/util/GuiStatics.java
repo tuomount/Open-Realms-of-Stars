@@ -2,6 +2,7 @@ package org.openRealmOfStars.gui.util;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,6 +28,9 @@ import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Optional;
 
 import javax.swing.BorderFactory;
 import javax.swing.UIManager;
@@ -40,8 +44,8 @@ import org.openRealmOfStars.gui.scheme.ClassicScheme;
 import org.openRealmOfStars.gui.scheme.GreyScheme;
 import org.openRealmOfStars.gui.scheme.SchemeType;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
-import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.utilities.DataSources;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -71,61 +75,108 @@ public final class GuiStatics {
    * Scheme selection for UI.
    */
   private static BaseScheme schemeType = CLASSIC_SCHEME;
-  /**
-   *  Monospace font size 10
-   */
-  public static final Font FONT_SMALL = new Font("monospaced", Font.PLAIN, 10);
-  /**
-   *  Monospace font size 12
-   */
-  public static final Font FONT_NORMAL = new Font("monospaced", Font.BOLD, 12);
 
   /**
    * Text field height in pixels.
    */
   public static final int TEXT_FIELD_HEIGHT = 30;
-  /**
-   * Regular cubellan font
-   */
-  private static Font fontCubellan;
+
+  /** Monospace font size 10. Used as a fallback. */
+  public static final Font FONT_SMALL = new Font("monospaced", Font.PLAIN, 10);
+  /** Monospace font size 12. Used as a fallback.  */
+  public static final Font FONT_NORMAL = new Font("monospaced", Font.BOLD, 12);
+
+  /** Cubellan Font URL */
+  private static final URL CUBELLAN_FONT_URL = DataSources
+      .getDataUrl("resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
+      .orElse(null);
+  /** Cubellan Bold Font URL */
+  private static final URL CUBELLAN_BOLD_FONT_URL = DataSources
+      .getDataUrl("resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf")
+      .orElse(null);
+  /** Cubellan SC Font URL */
+  private static final URL CUBELLAN_SC_FONT_URL = DataSources
+      .getDataUrl("resources/fonts/Cubellan_v_0_7/Cubellan_SC.ttf")
+      .orElse(null);
+  /** Squarion hinted Font URL */
+  private static final URL SQUARION_HINTED_FONT_URL = DataSources
+      .getDataUrl("resources/fonts/Squarion/hinted-Squarion.ttf")
+      .orElse(null);
+
+  /** The Font cache. It caches fonts... End of mandatory Javadoc comment. */
+  private static HashMap<String, Font> fontCache = new HashMap<>();
 
   /**
-   * Regular cubellan font but Larger
+   * Load a TrueType font in it's basic form.
+   * @param fontUrl URL to Font
+   * @return Loaded Font or empty
    */
-  private static Font fontCubellanLarger;
+  private static Optional<Font> loadTrueTypeFont(
+      final URL fontUrl) {
+    try (InputStream is = fontUrl.openStream()) {
+      return Optional.of(Font.createFont(Font.TRUETYPE_FONT, is));
+    } catch (IOException | FontFormatException e) {
+      ErrorLogger.log("Font loading error:" + e.getMessage());
+      return Optional.empty();
+    }
+  }
 
   /**
-   * Regular cubellan font but smaller
+   * Creates a "Font ID" from input. Used for Font caching identifiers.
+   * @param fontResource Font URL as String
+   * @param baseSize base size of the font
+   * @return ID of Font for fontCache
    */
-  private static Font fontVerySmallCubellan;
+  private static String buildFontId(final String fontResource,
+      final float baseSize) {
+    return fontResource.toString() + "SIZE:" + baseSize;
+  }
 
   /**
-   * Regular cubellan font but smaller
+   * Lazy-load a font of specified base size, using internal scaling factor,
+   * and store resulting font to cache
+   * @param fontUrl Font URL
+   * @param baseSize base size of the font
+   * @return Font or empty if loading failed
    */
-  private static Font fontCubellanSmall;
+  private static Optional<Font> getFontFromCache(final URL fontUrl,
+      final float baseSize) {
+    return getFontFromCache(fontUrl, baseSize, fontScalingFactor);
+  }
 
   /**
-   * Regular cubellan font but smaller and larger
+   * Lazy-load a font of specified base size, using specified scaling factor,
+   * and store resulting font to cache
+   * @param fontUrl Font URL
+   * @param baseSize base size of the font
+   * @param scalingFactor load the font using specified scaling
+   * @return Font or empty if loading failed
    */
-  private static Font fontCubellanSmallLarger;
+  private static Optional<Font> getFontFromCache(final URL fontUrl,
+      final float baseSize, final float scalingFactor) {
+    if (fontUrl == null) {
+      return Optional.empty();
+    }
+
+    final var fontOpt = loadTrueTypeFont(fontUrl);
+    final var fontSize = baseSize * scalingFactor;
+
+    if (fontOpt.isPresent()) {
+      final var tmpFont = fontOpt.get().deriveFont(fontSize);
+      final var fontId = buildFontId(fontUrl.toExternalForm(), baseSize);
+      fontCache.put(fontId, tmpFont);
+      return Optional.of(tmpFont);
+    }
+    return Optional.empty();
+  }
 
   /**
    * Get Regular Cubellan font very small
    * @return Cubellan font
    */
   public static Font getFontCubellanVerySmall() {
-    if (fontVerySmallCubellan == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
-          .openStream()) {
-        fontVerySmallCubellan = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontVerySmallCubellan = fontVerySmallCubellan.deriveFont(9F);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
-      }
-    }
-    return fontVerySmallCubellan;
+    // Don't auto-scale this font
+    return getFontFromCache(CUBELLAN_FONT_URL, 9, 1).orElse(FONT_SMALL);
   }
 
   /**
@@ -133,31 +184,7 @@ public final class GuiStatics {
    * @return Cubellan font
    */
   public static Font getFontCubellan() {
-    if (isLargerFonts()) {
-      if (fontCubellanLarger == null) {
-        try (InputStream is = Tiles.class
-            .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
-            .openStream()) {
-          fontCubellanLarger = Font.createFont(Font.TRUETYPE_FONT, is);
-          fontCubellanLarger = fontCubellanLarger.deriveFont(18F);
-        } catch (IOException | FontFormatException e) {
-          ErrorLogger.log("Error:" + e.getMessage());
-          return FONT_SMALL;
-        }
-      }
-      return fontCubellanLarger;
-    } else if (fontCubellan == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
-          .openStream()) {
-        fontCubellan = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontCubellan = fontCubellan.deriveFont(16F);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
-      }
-    }
-    return fontCubellan;
+    return getFontFromCache(CUBELLAN_FONT_URL, 16).orElse(FONT_NORMAL);
   }
 
   /**
@@ -165,251 +192,70 @@ public final class GuiStatics {
    * @return Cubellan font
    */
   public static Font getFontCubellanSmaller() {
-    if (isLargerFonts()) {
-      if (fontCubellanSmallLarger == null) {
-        try (InputStream is = Tiles.class
-            .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
-            .openStream()) {
-          fontCubellanSmallLarger = Font.createFont(Font.TRUETYPE_FONT, is);
-          fontCubellanSmallLarger = fontCubellanSmallLarger.deriveFont(15F);
-        } catch (IOException | FontFormatException e) {
-          ErrorLogger.log("Error:" + e.getMessage());
-          return FONT_SMALL;
-        }
-      }
-      return fontCubellanSmallLarger;
-    } else if (fontCubellanSmall == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
-          .openStream()) {
-        fontCubellanSmall = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontCubellanSmall = fontCubellanSmall.deriveFont(13F);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
-      }
-    }
-    return fontCubellanSmall;
+    return getFontFromCache(CUBELLAN_FONT_URL, 13).orElse(FONT_SMALL);
   }
-
-  /**
-   * Bold cubellan font
-   */
-  private static Font fontCubellanBold;
-
-  /**
-   * Bold cubellan font and larger
-   */
-  private static Font fontCubellanBoldLarger;
 
   /**
    * Get bold Cubellan font
    * @return Cubellan font
    */
   public static Font getFontCubellanBold() {
-    if (isLargerFonts()) {
-      if (fontCubellanBoldLarger == null) {
-        try (InputStream is = Tiles.class
-            .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf")
-            .openStream()) {
-          fontCubellanBoldLarger = Font.createFont(Font.TRUETYPE_FONT, is);
-          fontCubellanBoldLarger = fontCubellanBoldLarger.deriveFont(28F);
-        } catch (IOException | FontFormatException e) {
-          ErrorLogger.log("Error:" + e.getMessage());
-          return FONT_SMALL;
-        }
-      }
-      return fontCubellanBoldLarger;
-    } else if (fontCubellanBold == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf")
-          .openStream()) {
-        fontCubellanBold = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontCubellanBold = fontCubellanBold.deriveFont(24F);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
-      }
-    }
-    return fontCubellanBold;
+    return getFontFromCache(CUBELLAN_BOLD_FONT_URL, 24) .orElse(FONT_NORMAL);
   }
-
-  /**
-   * Bold cubellan font
-   */
-  private static Font fontCubellanBoldBig;
-
-  /**
-   * Bold cubellan font and larger
-   */
-  private static Font fontCubellanBoldBigLarger;
 
   /**
    * Get bold Cubellan font
    * @return Cubellan font
    */
   public static Font getFontCubellanBoldBig() {
-    if (isLargerFonts()) {
-      if (fontCubellanBoldBigLarger == null) {
-        try (InputStream is = Tiles.class
-            .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf")
-            .openStream()) {
-          fontCubellanBoldBigLarger = Font.createFont(Font.TRUETYPE_FONT, is);
-          fontCubellanBoldBigLarger = fontCubellanBoldBigLarger.deriveFont(40F);
-        } catch (IOException | FontFormatException e) {
-          ErrorLogger.log("Error:" + e.getMessage());
-          return FONT_SMALL;
-        }
-      }
-      return fontCubellanBoldBigLarger;
-    } else if (fontCubellanBoldBig == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf")
-          .openStream()) {
-        fontCubellanBoldBig = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontCubellanBoldBig = fontCubellanBoldBig.deriveFont(35F);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
-      }
-    }
-    return fontCubellanBoldBig;
+    return getFontFromCache(CUBELLAN_BOLD_FONT_URL, 35).orElse(FONT_NORMAL);
   }
-
-  /**
-   * Small cubellan font for Small Caps
-   */
-  private static Font fontCubellanSC;
-
-  /**
-   * Small cubellan font for Small Caps and larger
-   */
-  private static Font fontCubellanSCLarger;
 
   /**
    * Get Cubellan font with Small Caps
    * @return Cubellan font
    */
   public static Font getFontCubellanSC() {
-    if (isLargerFonts()) {
-      if (fontCubellanSCLarger == null) {
-        try (InputStream is = Tiles.class
-            .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_SC.ttf")
-            .openStream()) {
-          fontCubellanSCLarger = Font.createFont(Font.TRUETYPE_FONT, is);
-          fontCubellanSCLarger = fontCubellanSCLarger.deriveFont(15F);
-        } catch (IOException | FontFormatException e) {
-          ErrorLogger.log("Error:" + e.getMessage());
-          return FONT_SMALL;
-        }
-      }
-      return fontCubellanSCLarger;
-    } else if (fontCubellanSC == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_SC.ttf")
-          .openStream()) {
-        fontCubellanSC = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontCubellanSC = fontCubellanSC.deriveFont(13F);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
-      }
-    }
-    return fontCubellanSC;
+    return getFontFromCache(CUBELLAN_SC_FONT_URL, 13).orElse(FONT_NORMAL);
   }
-
-  /**
-   * Regular Squarion font
-   */
-  private static Font fontSquarion;
-
-  /**
-   * Regular Squarion font but Larger
-   */
-  private static Font fontSquarionLarger;
 
   /**
    * Get Regular Generale Station font
    * @return Generale Station font
    */
   public static Font getFontSquarion() {
-    if (isLargerFonts()) {
-      if (fontSquarionLarger == null) {
-        try (InputStream is = Tiles.class
-            .getResource("/resources/fonts/Squarion/hinted-Squarion.ttf")
-            .openStream()) {
-          fontSquarionLarger = Font.createFont(Font.TRUETYPE_FONT, is);
-          fontSquarionLarger = fontSquarionLarger.deriveFont(
-              16F);
-        } catch (IOException | FontFormatException e) {
-          ErrorLogger.log("Error:" + e.getMessage());
-          return FONT_SMALL;
-        }
-      }
-      return fontSquarionLarger;
-    } else if (fontSquarion == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Squarion/hinted-Squarion.ttf")
-          .openStream()) {
-        fontSquarion = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontSquarion = fontSquarion.deriveFont(14F);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
-      }
-    }
-    return fontSquarion;
+    return getFontFromCache(SQUARION_HINTED_FONT_URL, 14).orElse(FONT_NORMAL);
   }
-
-  /**
-   * Regular Squarion bold font
-   */
-  private static Font fontSquarionBold;
-
-  /**
-   * Regular Squarion bold font but Larger
-   */
-  private static Font fontSquarionBoldLarger;
 
   /**
    * Get Regular Generale Station font
    * @return Generale Station font
    */
   public static Font getFontSquarionBold() {
-    if (isLargerFonts()) {
-      if (fontSquarionBoldLarger == null) {
-        try (InputStream is = Tiles.class
-            .getResource("/resources/fonts/Squarion/hinted-Squarion.ttf")
-            .openStream()) {
-          fontSquarionBoldLarger = Font.createFont(Font.TRUETYPE_FONT, is);
-          fontSquarionBoldLarger = fontSquarionBoldLarger.deriveFont(
-              22F);
-          fontSquarionBoldLarger = fontSquarionBoldLarger.deriveFont(Font.BOLD);
-        } catch (IOException | FontFormatException e) {
-          ErrorLogger.log("Error:" + e.getMessage());
-          return FONT_SMALL;
-        }
-      }
-      return fontSquarionBoldLarger;
-    } else if (fontSquarionBold == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Squarion/hinted-Squarion.ttf")
-          .openStream()) {
-        fontSquarionBold = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontSquarionBold = fontSquarionBold.deriveFont(18F);
-        fontSquarionBold = fontSquarionBold.deriveFont(Font.BOLD);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
-      }
+    // A little hacky method, but will do
+    // Having proper handling of Font forms (italic, bold, etc.) is in proper
+    final var fontUrlAsString = SQUARION_HINTED_FONT_URL.toExternalForm();
+    final var fontId = buildFontId(fontUrlAsString, 18);
+    final var cachedBoldFont = fontCache.get(fontId);
+    if (cachedBoldFont != null) {
+      return cachedBoldFont;
     }
-    return fontSquarionBold;
+
+    // This will cache the "base" font, but it will be discarded
+    var fontOpt = getFontFromCache(SQUARION_HINTED_FONT_URL, 18);
+    if (fontOpt.isEmpty()) {
+      return FONT_NORMAL;
+    }
+
+    final var processedFont = fontOpt.get().deriveFont(Font.BOLD);
+    fontCache.put(fontId, processedFont);
+    return processedFont;
   }
 
   /**
    * Use larger fonts
    */
-  private static boolean useLargerFonts;
+  private static float fontScalingFactor = 1.0F;
 
   /**
    * Line type for text background
@@ -1746,7 +1592,7 @@ public final class GuiStatics {
    * @return True if larger fonts are in use
    */
   public static boolean isLargerFonts() {
-    return useLargerFonts;
+    return fontScalingFactor > 1.0;
   }
 
   /**
@@ -1754,7 +1600,13 @@ public final class GuiStatics {
    * @param largerFonts the useLargerFonts to set
    */
   public static void setLargerFonts(final boolean largerFonts) {
-    GuiStatics.useLargerFonts = largerFonts;
+    // Invalidate font cache
+    fontCache.clear();
+    if (largerFonts) {
+      GuiStatics.fontScalingFactor = 1.15F;
+    } else {
+      GuiStatics.fontScalingFactor = 1.0F;
+    }
   }
 
   /**

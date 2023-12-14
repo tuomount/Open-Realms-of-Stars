@@ -19,7 +19,7 @@ package org.openRealmOfStars.ai.mission;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.player.race.RaceTrait;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -190,7 +190,7 @@ public class MissionList {
             value = value - 20;
           }
         }
-        if (info.getRace().hasTrait(RaceTrait.RADIOSYNTHESIS.getId())) {
+        if (info.getRace().hasTrait(TraitIds.RADIOSYNTHESIS)) {
           value = value + colonPlanet.getRadiationLevel() * 2;
         } else {
           value = value - colonPlanet.getRadiationLevel();

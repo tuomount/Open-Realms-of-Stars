@@ -27,6 +27,8 @@ import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.race.trait.RaceTrait;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.WorldType;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -1387,7 +1389,7 @@ public enum SpaceRace {
     if (isLithovorian()) {
       return false;
     }
-    if (hasTrait(RaceTrait.ENERGY_POWERED.getId())) {
+    if (hasTrait(TraitIds.ENERGY_POWERED)) {
       return false;
     }
 
@@ -1399,7 +1401,7 @@ public enum SpaceRace {
    * @return True if eating metal.
    */
   public boolean isLithovorian() {
-    return hasTrait(RaceTrait.LITHOVORIC.getId());
+    return hasTrait(TraitIds.LITHOVORIC);
   }
 
   /**
@@ -1407,7 +1409,7 @@ public enum SpaceRace {
    * @return True if robotic.
    */
   public boolean isRoboticRace() {
-    return hasTrait(RaceTrait.ROBOTIC.getId());
+    return hasTrait(TraitIds.ROBOTIC);
   }
 
   /**

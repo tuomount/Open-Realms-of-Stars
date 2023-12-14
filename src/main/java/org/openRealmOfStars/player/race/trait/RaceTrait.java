@@ -1,4 +1,4 @@
-package org.openRealmOfStars.player.race;
+package org.openRealmOfStars.player.race.trait;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2023 BottledByte
@@ -23,6 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.openRealmOfStars.player.race.SpaceRace;
+
 /**
  * Represents a trait that SpaceRace may have.
  *
@@ -45,13 +47,14 @@ import java.util.Objects;
  */
 public final class RaceTrait {
   /** Robotic */
-  public static final RaceTrait ROBOTIC = new RaceTrait("ROBOTIC", "Robotic",
+  public static final RaceTrait ROBOTIC = new RaceTrait(TraitIds.ROBOTIC,
+      "Robotic",
       "Race is robotic.");
   /**
    * Eats minerals.
    * Cannot be combined with ENERGY_POWERED.
    */
-  public static final RaceTrait LITHOVORIC = new RaceTrait("LITHOVORIC",
+  public static final RaceTrait LITHOVORIC = new RaceTrait(TraitIds.LITHOVORIC,
       "Lithovoric",
       "Eats minerals instead of food.", "ENERGY_POWERED");
   /**
@@ -59,17 +62,17 @@ public final class RaceTrait {
    * Cannot be combined with LITHOVORIC.
    */
   public static final RaceTrait ENERGY_POWERED = new RaceTrait(
-      "ENERGY_POWERED", "Powered",
+      TraitIds.ENERGY_POWERED, "Powered",
       "Consumes energy credits instead of food"
           + " at a rate of 1 credit per 4 population.");
   /** Concept of parental heritage is not applicable for the race. */
   public static final RaceTrait NO_HEIRS = new RaceTrait(
-      "NO_HEIRS", "No heirs",
+      TraitIds.NO_HEIRS, "No heirs",
       "Race has unusual birth process, to which it is"
           + " not possible to apply concept of parental heritage.");
   /** Race can breed by explictly constructing it's own population. */
   public static final RaceTrait CONSTRUCTED_POP = new RaceTrait(
-      "CONSTRUCTED_POP", "Constructed",
+      TraitIds.CONSTRUCTED_POP, "Constructed",
       "Breeds by external process, where individuals "
           + " are \"constructed\" in some way.");
   /**
@@ -78,7 +81,7 @@ public final class RaceTrait {
    * but rather that it can *sustain itself* with radiation.
    */
   public static final RaceTrait RADIOSYNTHESIS = new RaceTrait(
-      "RADIOSYNTHESIS", "Radiosynthesis",
+      TraitIds.RADIOSYNTHESIS, "Radiosynthesis",
       "Required sustenance (food) for population"
           + " is reduced by 1 per existing population,"
           + " up to planet's radiation value.");

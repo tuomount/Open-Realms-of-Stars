@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 
@@ -47,7 +48,7 @@ public class ProductionListRenderer implements ListCellRenderer<Construction> {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    renderer.setIcon(value.getIcon().getAsIcon());
+    renderer.setIcon(Icons.getIconByName(value.getIconId()).getAsIcon());
     if (isSelected) {
       renderer.setForeground(GuiStatics.getCoolSpaceColor());
       renderer.setBackground(GuiStatics.getDeepSpaceColor());

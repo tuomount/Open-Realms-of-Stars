@@ -61,7 +61,7 @@ public final class BuildingFactory {
   private void initWildLife() {
       Building tmp = null;
       tmp = new Building("Wildlife: big canine animals",
-          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
+          Icons.ICON_SPINOSAURUS,
           BuildingType.FARM);
       tmp.setProdCost(0);
       tmp.setMetalCost(0);
@@ -72,7 +72,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Wildlife: big feline animals",
-          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
+          Icons.ICON_SPINOSAURUS,
           BuildingType.FARM);
       tmp.setProdCost(0);
       tmp.setMetalCost(0);
@@ -83,7 +83,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Wildlife: big lizard animals",
-          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
+          Icons.ICON_SPINOSAURUS,
           BuildingType.FARM);
       tmp.setProdCost(0);
       tmp.setMetalCost(0);
@@ -94,7 +94,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Wildlife: massive herding pack animals",
-          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
+          Icons.ICON_SPINOSAURUS,
           BuildingType.FARM);
       tmp.setProdCost(0);
       tmp.setMetalCost(0);
@@ -105,7 +105,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Wildlife: ferocious bipedal reptiles",
-          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
+          Icons.ICON_SPINOSAURUS,
           BuildingType.FARM);
       tmp.setProdCost(0);
       tmp.setMetalCost(0);
@@ -116,7 +116,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Wildlife: massive bug like creature",
-          Icons.getIconByName(Icons.ICON_SPINOSAURUS),
+          Icons.ICON_SPINOSAURUS,
           BuildingType.FARM);
       tmp.setProdCost(0);
       tmp.setMetalCost(0);
@@ -134,7 +134,7 @@ public final class BuildingFactory {
   private void initMilitaryFacility() {
       Building tmp = null;
       tmp = new Building("Planetary defense turret Mk1",
-          Icons.getIconByName(Icons.ICON_PLANETARY_TURRET),
+          Icons.ICON_PLANETARY_TURRET,
           BuildingType.MILITARY);
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
@@ -144,7 +144,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Planetary defense turret Mk2",
-          Icons.getIconByName(Icons.ICON_PLANETARY_TURRET),
+          Icons.ICON_PLANETARY_TURRET,
           BuildingType.MILITARY);
       tmp.setProdCost(50);
       tmp.setMetalCost(50);
@@ -154,7 +154,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Planetary defense turret Mk3",
-          Icons.getIconByName(Icons.ICON_PLANETARY_TURRET),
+          Icons.ICON_PLANETARY_TURRET,
           BuildingType.MILITARY);
       tmp.setProdCost(70);
       tmp.setMetalCost(70);
@@ -164,7 +164,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Planetary scanner Mk1",
-          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
+          Icons.ICON_LR_SCANNER, BuildingType.MILITARY);
       tmp.setProdCost(16);
       tmp.setMetalCost(16);
       tmp.setDescription("Planetary scanner to scan fleets around the planet.");
@@ -174,7 +174,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Planetary scanner Mk2",
-          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
+          Icons.ICON_LR_SCANNER, BuildingType.MILITARY);
       tmp.setProdCost(24);
       tmp.setMetalCost(24);
       tmp.setDescription("Planetary scanner to scan fleets around the planet.\n"
@@ -185,7 +185,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Planetary scanner Mk3",
-          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
+          Icons.ICON_LR_SCANNER, BuildingType.MILITARY);
       tmp.setProdCost(40);
       tmp.setMetalCost(40);
       tmp.setDescription("Planetary scanner to scan fleets around the planet.\n"
@@ -196,7 +196,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Planetary scanner Mk4",
-          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
+          Icons.ICON_LR_SCANNER, BuildingType.MILITARY);
       tmp.setProdCost(60);
       tmp.setMetalCost(60);
       tmp.setDescription("Planetary scanner to scan fleets around the planet.\n"
@@ -207,7 +207,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Planetary scanner Mk5",
-          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
+          Icons.ICON_LR_SCANNER, BuildingType.MILITARY);
       tmp.setProdCost(80);
       tmp.setMetalCost(80);
       tmp.setDescription("Planetary scanner to scan fleet around the planet.\n"
@@ -218,7 +218,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Orbital defense grid",
-          Icons.getIconByName(Icons.ICON_PLANETARY_TURRET),
+          Icons.ICON_PLANETARY_TURRET,
           BuildingType.MILITARY);
       tmp.setProdCost(150);
       tmp.setMetalCost(150);
@@ -231,7 +231,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Orbital shield",
-          Icons.getIconByName(Icons.ICON_SHIELD),
+          Icons.ICON_SHIELD,
           BuildingType.MILITARY);
       tmp.setProdCost(100);
       tmp.setMetalCost(180);
@@ -242,7 +242,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Deep space scanner",
-          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.RESEARCH);
+          Icons.ICON_LR_SCANNER, BuildingType.RESEARCH);
       tmp.setProdCost(150);
       tmp.setMetalCost(150);
       tmp.setDescription("Deep space scanner to reveal all the planets.\n"
@@ -254,7 +254,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Planetary ascension portal",
-          Icons.getIconByName(Icons.ICON_AIRLOCK_OPEN),
+          Icons.ICON_AIRLOCK_OPEN,
           BuildingType.RESEARCH);
       tmp.setProdCost(120);
       tmp.setMetalCost(160);
@@ -270,7 +270,7 @@ public final class BuildingFactory {
   private void initProductionFacility() {
       Building tmp = null;
       tmp = new Building("Basic mine",
-          Icons.getIconByName(Icons.ICON_MINE), BuildingType.MINE);
+          Icons.ICON_MINE, BuildingType.MINE);
       tmp.setMineBonus(1);
       tmp.setProdCost(10);
       tmp.setMetalCost(6);
@@ -278,7 +278,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Basic farm",
-          Icons.getIconByName(Icons.ICON_FARM), BuildingType.FARM);
+          Icons.ICON_FARM, BuildingType.FARM);
       tmp.setFarmBonus(1);
       tmp.setProdCost(10);
       tmp.setMetalCost(4);
@@ -286,7 +286,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Basic factory",
-          Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
+          Icons.ICON_FACTORY, BuildingType.FACTORY);
       tmp.setFactBonus(1);
       tmp.setProdCost(15);
       tmp.setMetalCost(5);
@@ -294,7 +294,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Basic lab",
-          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+          Icons.ICON_RESEARCH, BuildingType.RESEARCH);
       tmp.setReseBonus(1);
       tmp.setProdCost(12);
       tmp.setMetalCost(4);
@@ -302,7 +302,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Advanced farm",
-          Icons.getIconByName(Icons.ICON_FARM), BuildingType.FARM);
+          Icons.ICON_FARM, BuildingType.FARM);
       tmp.setFarmBonus(2);
       tmp.setProdCost(20);
       tmp.setMetalCost(8);
@@ -311,7 +311,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Advanced mine",
-          Icons.getIconByName(Icons.ICON_MINE), BuildingType.MINE);
+          Icons.ICON_MINE, BuildingType.MINE);
       tmp.setMineBonus(2);
       tmp.setProdCost(20);
       tmp.setMetalCost(12);
@@ -320,7 +320,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Advanced factory",
-          Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
+          Icons.ICON_FACTORY, BuildingType.FACTORY);
       tmp.setFactBonus(2);
       tmp.setProdCost(30);
       tmp.setMetalCost(10);
@@ -329,7 +329,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Advanced laboratory",
-          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+          Icons.ICON_RESEARCH, BuildingType.RESEARCH);
       tmp.setReseBonus(2);
       tmp.setProdCost(24);
       tmp.setMetalCost(8);
@@ -338,7 +338,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Farming center",
-          Icons.getIconByName(Icons.ICON_FARM), BuildingType.FARM);
+          Icons.ICON_FARM, BuildingType.FARM);
       tmp.setFarmBonus(3);
       tmp.setProdCost(30);
       tmp.setMetalCost(20);
@@ -348,7 +348,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Mining center",
-          Icons.getIconByName(Icons.ICON_MINE), BuildingType.MINE);
+          Icons.ICON_MINE, BuildingType.MINE);
       tmp.setMineBonus(3);
       tmp.setProdCost(30);
       tmp.setMetalCost(24);
@@ -358,7 +358,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Manufacturing center",
-          Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
+          Icons.ICON_FACTORY, BuildingType.FACTORY);
       tmp.setFactBonus(3);
       tmp.setProdCost(40);
       tmp.setMetalCost(20);
@@ -368,7 +368,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Research center",
-          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+          Icons.ICON_RESEARCH, BuildingType.RESEARCH);
       tmp.setReseBonus(3);
       tmp.setProdCost(36);
       tmp.setMetalCost(16);
@@ -378,7 +378,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Hydropodic farming center",
-          Icons.getIconByName(Icons.ICON_FARM), BuildingType.FARM);
+          Icons.ICON_FARM, BuildingType.FARM);
       tmp.setFarmBonus(4);
       tmp.setProdCost(40);
       tmp.setMetalCost(30);
@@ -388,7 +388,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Nanobot mining center",
-          Icons.getIconByName(Icons.ICON_MINE), BuildingType.MINE);
+          Icons.ICON_MINE, BuildingType.MINE);
       tmp.setMineBonus(4);
       tmp.setProdCost(40);
       tmp.setMetalCost(36);
@@ -398,7 +398,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Nanobot manufacturing center",
-          Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
+          Icons.ICON_FACTORY, BuildingType.FACTORY);
       tmp.setFactBonus(4);
       tmp.setProdCost(50);
       tmp.setMetalCost(30);
@@ -408,7 +408,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Neural research center",
-          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+          Icons.ICON_RESEARCH, BuildingType.RESEARCH);
       tmp.setReseBonus(4);
       tmp.setProdCost(48);
       tmp.setMetalCost(24);
@@ -418,7 +418,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Ancient lab",
-          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+          Icons.ICON_RESEARCH, BuildingType.RESEARCH);
       tmp.setReseBonus(1);
       tmp.setProdCost(8);
       tmp.setMetalCost(3);
@@ -426,7 +426,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Ancient factory",
-          Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
+          Icons.ICON_FACTORY, BuildingType.FACTORY);
       tmp.setFactBonus(1);
       tmp.setProdCost(8);
       tmp.setMetalCost(3);
@@ -434,7 +434,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Ancient temple",
-          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+          Icons.ICON_CULTURE, BuildingType.CULTURE);
       tmp.setCultBonus(1);
       tmp.setProdCost(6);
       tmp.setMetalCost(2);
@@ -442,7 +442,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Ancient palace",
-          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+          Icons.ICON_CULTURE, BuildingType.CULTURE);
       tmp.setCultBonus(1);
       tmp.setHappiness(1);
       tmp.setProdCost(15);
@@ -451,7 +451,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Black monolith",
-          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+          Icons.ICON_CULTURE, BuildingType.CULTURE);
       tmp.setCultBonus(2);
       tmp.setHappiness(-1);
       tmp.setProdCost(15);
@@ -461,7 +461,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Material replicator",
-      Icons.getIconByName(Icons.ICON_METAL_ORE), BuildingType.MINE);
+      Icons.ICON_METAL_ORE, BuildingType.MINE);
       tmp.setCultBonus(0);
       tmp.setHappiness(0);
       tmp.setProdCost(200);
@@ -473,7 +473,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Advanced furnace",
-      Icons.getIconByName(Icons.ICON_METAL), BuildingType.MINE);
+      Icons.ICON_METAL, BuildingType.MINE);
       tmp.setCultBonus(0);
       tmp.setHappiness(0);
       tmp.setProdCost(20);
@@ -485,7 +485,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Massive blast furnace",
-      Icons.getIconByName(Icons.ICON_METAL), BuildingType.MINE);
+      Icons.ICON_METAL, BuildingType.MINE);
       tmp.setCultBonus(0);
       tmp.setHappiness(0);
       tmp.setProdCost(20);
@@ -498,7 +498,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Planetary furnace",
-      Icons.getIconByName(Icons.ICON_METAL), BuildingType.MINE);
+      Icons.ICON_METAL, BuildingType.MINE);
       tmp.setCultBonus(0);
       tmp.setHappiness(0);
       tmp.setProdCost(200);
@@ -512,7 +512,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("College of history",
-      Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+      Icons.ICON_RESEARCH, BuildingType.RESEARCH);
       tmp.setReseBonus(1);
       tmp.setAncientArtifactResearch(2);
       tmp.setProdCost(20);
@@ -529,7 +529,7 @@ public final class BuildingFactory {
   private void initPlanetaryImprovement() {
     Building tmp = null;
       tmp = new Building("Space port",
-          Icons.getIconByName(Icons.ICON_STARBASE), BuildingType.MILITARY);
+          Icons.ICON_STARBASE, BuildingType.MILITARY);
       tmp.setDescription("Allows building the space ships and orbitals.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
@@ -539,7 +539,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Barracks",
-          Icons.getIconByName(Icons.ICON_TROOPS), BuildingType.MILITARY);
+          Icons.ICON_TROOPS, BuildingType.MILITARY);
       tmp.setDescription("Population fights better against invaders."
           + "\nRecruited leaders start with 50 experience.");
       tmp.setProdCost(20);
@@ -552,7 +552,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Tax center",
-          Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
+          Icons.ICON_CREDIT, BuildingType.CREDIT);
       tmp.setDescription("Makes population to pay taxes.");
       tmp.setProdCost(15);
       tmp.setMetalCost(5);
@@ -562,7 +562,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Market center",
-          Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
+          Icons.ICON_CREDIT, BuildingType.CREDIT);
       tmp.setDescription("Market center has all sort of goods to sell.");
       tmp.setProdCost(12);
       tmp.setMetalCost(6);
@@ -572,7 +572,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Culture center",
-          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+          Icons.ICON_CULTURE, BuildingType.CULTURE);
       tmp.setDescription("Music, Arts, poetry, movies and video games.");
       tmp.setProdCost(18);
       tmp.setMetalCost(4);
@@ -582,7 +582,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Trade center",
-          Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
+          Icons.ICON_CREDIT, BuildingType.CREDIT);
       tmp.setDescription("Massive trade center for selling goods.");
       tmp.setProdCost(24);
       tmp.setMetalCost(12);
@@ -592,7 +592,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Extreme sports center",
-          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+          Icons.ICON_CULTURE, BuildingType.CULTURE);
       tmp.setDescription("Violent sports is a culture too. Violet sports fans\n"
           + "get very angry if they are going miss next match due invasion.");
       tmp.setProdCost(30);
@@ -605,7 +605,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Recycle center",
-          Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
+          Icons.ICON_IMPROVEMENT_TECH,
           BuildingType.FACTORY);
       tmp.setDescription(
           "When destroying buildings or ships 50%\nmetal is recycled.");
@@ -617,7 +617,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Radiation dampener",
-          Icons.getIconByName(Icons.ICON_RADIATION), BuildingType.FACTORY);
+          Icons.ICON_RADIATION, BuildingType.FACTORY);
       tmp.setDescription("Decrease planet radiation by one.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
@@ -627,7 +627,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Stock market",
-          Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
+          Icons.ICON_CREDIT, BuildingType.CREDIT);
       tmp.setDescription("Planetary stock market, where stonks\n"
           + "rising to the orbit.");
       tmp.setProdCost(36);
@@ -638,7 +638,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Galactic sports center",
-          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+          Icons.ICON_CULTURE, BuildingType.CULTURE);
       tmp.setDescription(
             "Galactic Olympics stadium where \n"
           + "best atheletes compete each others. Building Galactic Olympics\n"
@@ -653,7 +653,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("New technology center",
-          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+          Icons.ICON_RESEARCH, BuildingType.RESEARCH);
       tmp.setDescription("New technology is studied and used in culture.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
@@ -664,7 +664,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("VR movie center",
-          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+          Icons.ICON_CULTURE, BuildingType.CULTURE);
       tmp.setDescription("Galactic VR movie studio, where big galatic\n"
           + "block buster are being made.");
       tmp.setProdCost(30);
@@ -676,7 +676,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Advanced recycle center",
-          Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
+          Icons.ICON_IMPROVEMENT_TECH,
           BuildingType.FACTORY);
       tmp.setDescription(
           "When destroying buildings or ships 75%\nmetal is recycled.");
@@ -688,7 +688,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Galactic bank",
-          Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
+          Icons.ICON_CREDIT, BuildingType.CREDIT);
       tmp.setDescription("Galactic bank is good business. Does stonks go all\n"
           + "the way to out space?");
       tmp.setProdCost(40);
@@ -698,7 +698,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Radiation well",
-          Icons.getIconByName(Icons.ICON_RADIATION), BuildingType.FACTORY);
+          Icons.ICON_RADIATION, BuildingType.FACTORY);
       tmp.setDescription("Decrease planet radiation by one.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
@@ -708,7 +708,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Super AI center",
-          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+          Icons.ICON_RESEARCH, BuildingType.RESEARCH);
       tmp.setDescription("Super AI making science and improving production.");
       tmp.setProdCost(60);
       tmp.setMetalCost(80);
@@ -719,7 +719,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Replicator center",
-          Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
+          Icons.ICON_FACTORY, BuildingType.FACTORY);
       tmp.setDescription("Replicated goods can sold with good profit.");
       tmp.setProdCost(40);
       tmp.setMetalCost(40);
@@ -729,7 +729,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("United Galaxy Tower",
-          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+          Icons.ICON_CULTURE, BuildingType.CULTURE);
       tmp.setDescription("United Galaxy Tower to gain influence of Galaxy.\n"
           + "Depending on galaxy size certain amount is required\n"
           + "to start diplomatic voting.");
@@ -742,7 +742,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Space academy",
-          Icons.getIconByName(Icons.ICON_TROOPS), BuildingType.MILITARY);
+          Icons.ICON_TROOPS, BuildingType.MILITARY);
       tmp.setDescription("Increases training of military personels for\n"
           + " space ships.\nRecruited leaders start at level 2.");
       tmp.setProdCost(30);
@@ -755,7 +755,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Broadcasting antenna",
-          Icons.getIconByName(Icons.ICON_ANTENNA), BuildingType.CULTURE);
+          Icons.ICON_ANTENNA, BuildingType.CULTURE);
       tmp.setDescription("Broadcasting antenna for broadcasting culture.");
       tmp.setProdCost(40);
       tmp.setMetalCost(30);
@@ -765,7 +765,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Broadcasting network",
-          Icons.getIconByName(Icons.ICON_ANTENNA), BuildingType.CULTURE);
+          Icons.ICON_ANTENNA, BuildingType.CULTURE);
       tmp.setDescription("Broadcasting network for creating culture\n"
           + "and happiness.");
       tmp.setProdCost(60);
@@ -778,7 +778,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Cyber lab",
-          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+          Icons.ICON_RESEARCH, BuildingType.RESEARCH);
       tmp.setReseBonus(1);
       tmp.setHappiness(1);
       tmp.setProdCost(15);
@@ -789,7 +789,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Collective research center",
-          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+          Icons.ICON_RESEARCH, BuildingType.RESEARCH);
       tmp.setReseBonus(2);
       tmp.setHappiness(1);
       tmp.setProdCost(25);
@@ -800,7 +800,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Research matrix",
-          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+          Icons.ICON_RESEARCH, BuildingType.RESEARCH);
       tmp.setReseBonus(3);
       tmp.setHappiness(2);
       tmp.setProdCost(40);
@@ -811,7 +811,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Orbital elevator Mk1",
-          Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR),
+          Icons.ICON_ORBITAL_ELEVATOR,
           BuildingType.FACTORY);
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
@@ -824,7 +824,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Orbital elevator Mk2",
-          Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR),
+          Icons.ICON_ORBITAL_ELEVATOR,
           BuildingType.FACTORY);
       tmp.setProdCost(30);
       tmp.setMetalCost(30);
@@ -838,7 +838,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Orbital elevator Mk3",
-          Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR),
+          Icons.ICON_ORBITAL_ELEVATOR,
           BuildingType.FACTORY);
       tmp.setProdCost(40);
       tmp.setMetalCost(40);
@@ -852,7 +852,7 @@ public final class BuildingFactory {
       this.buildings.put(tmp.getName(), tmp);
 
       tmp = new Building("Orbital lift",
-          Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR),
+          Icons.ICON_ORBITAL_ELEVATOR,
           BuildingType.FACTORY);
       tmp.setProdCost(30);
       tmp.setMetalCost(30);

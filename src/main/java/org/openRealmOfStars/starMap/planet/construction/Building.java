@@ -17,7 +17,6 @@ package org.openRealmOfStars.starMap.planet.construction;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -132,12 +131,12 @@ public class Building extends Construction {
   /**
    * Construct building for planet
    * @param name Unique Building name
-   * @param icon Icon to use next to the building
+   * @param iconId ID of Icon to use next to the building
    * @param type BuildingType
    */
-  public Building(final String name, final Icon16x16 icon,
+  public Building(final String name, final String iconId,
       final BuildingType type) {
-    super(name, icon);
+    super(name, iconId);
     this.type = type;
     this.farmBonus = 0;
     this.mineBonus = 0;

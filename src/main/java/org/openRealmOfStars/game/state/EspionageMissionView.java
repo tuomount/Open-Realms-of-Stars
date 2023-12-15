@@ -347,9 +347,11 @@ public class EspionageMissionView extends BlackPanel {
         "No building project selected.");
     constructionLabel.setToolTipText("Production currently underconstruction");
     constructionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    if (planet.getUnderConstruction() != null) {
-      constructionLabel.setText(planet.getUnderConstruction().getName());
-      constructionLabel.setLeftIcon(planet.getUnderConstruction().getIcon());
+    final var underConstruction = planet.getUnderConstruction();
+    if (underConstruction != null) {
+      constructionLabel.setText(underConstruction.getName());
+      final var icon = Icons.getIconByName(underConstruction.getIconId());
+      constructionLabel.setLeftIcon(icon);
     }
     panel.add(constructionLabel);
     panel.add(Box.createRigidArea(new Dimension(60, 5)));

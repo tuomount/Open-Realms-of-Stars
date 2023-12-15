@@ -17,8 +17,6 @@ package org.openRealmOfStars.starMap.planet.construction;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import org.openRealmOfStars.gui.icons.Icon16x16;
-
 /**
  *
  * Base class for planetary construction including buildings and spaceships.
@@ -32,10 +30,8 @@ public class Construction {
    */
   private String name;
 
-  /**
-   * Icon for construction
-   */
-  private Icon16x16 icon;
+  /** ID of Icon for construction */
+  private String iconId;
 
   /**
    * Longer description about the construction
@@ -55,11 +51,11 @@ public class Construction {
   /**
    * Constructor for Construction
    * @param name Construction name
-   * @param icon Icon for construction
+   * @param iconId ID of Icon for construction
    */
-  public Construction(final String name, final Icon16x16 icon) {
+  public Construction(final String name, final String iconId) {
     this.name = name;
-    this.icon = icon;
+    this.iconId = iconId;
     this.description = "";
     this.prodCost = 1;
     this.metalCost = 1;
@@ -96,19 +92,19 @@ public class Construction {
   }
 
   /**
-   * Get icon 16x16 pixels
-   * @return Icon for construction
+   * Get icon ID
+   * @return ID of Icon for construction
    */
-  public Icon16x16 getIcon() {
-    return icon;
+  public String getIconId() {
+    return iconId;
   }
 
   /**
-   * Set icon for construction.
-   * @param icon Icon16x16
+   * Set ID of icon for construction.
+   * @param iconId String ID of Icon
    */
-  public void setIcon(final Icon16x16 icon) {
-    this.icon = icon;
+  public void setIconId(final String iconId) {
+    this.iconId = iconId;
   }
 
   /**

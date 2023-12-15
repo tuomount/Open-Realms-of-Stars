@@ -170,7 +170,7 @@ public class Ship extends Construction {
    * @param design from where actual ship is created
    */
   public Ship(final ShipDesign design) {
-    super(design.getName(), Icons.getIconByName(Icons.ICON_HULL_TECH));
+    super(design.getName(), Icons.ICON_HULL_TECH);
     setProdCost(design.getCost());
     setMetalCost(design.getMetalCost());
     hull = design.getHull();
@@ -199,7 +199,7 @@ public class Ship extends Construction {
    * @throws IOException if there is any problem with DataInputStream
    */
   public Ship(final DataInputStream dis) throws IOException {
-    super("SHIP", Icons.getIconByName(Icons.ICON_HULL_TECH));
+    super("SHIP", Icons.ICON_HULL_TECH);
     String tmpStr = IOUtilities.readString(dis);
     setName(tmpStr);
     setProdCost(dis.readInt());

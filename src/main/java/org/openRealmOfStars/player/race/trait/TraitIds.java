@@ -20,6 +20,7 @@ package org.openRealmOfStars.player.race.trait;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class holding constants with IDs of all {@link RaceTrait}s
@@ -79,7 +80,7 @@ public final class TraitIds {
         .filter(field -> Modifier.isPublic(field.getModifiers()))
         .filter(field -> Modifier.isStatic(field.getModifiers()))
         .map(field -> field.getName())
-        .toList();
+        .collect(Collectors.toList());
     hardcodedIds = idList;
     return idList;
   }

@@ -19,6 +19,7 @@ package org.openRealmOfStars.player.race.trait;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -102,12 +103,24 @@ public final class RaceTrait {
    * @param description description of the trait, must be non-null
    * @param conflictsWith Array of IDs of traits this trait conflicts with
    */
-  private RaceTrait(final String id, final String name,
+  RaceTrait(final String id, final String name,
       final String description, final String... conflictsWith) {
+    this(id, name, description, Arrays.asList(conflictsWith));
+  }
+
+  /**
+   * Creates new RaceTrait
+   * @param id ID of the trait, must be unique and non-null
+   * @param name name of the trait, must be non-null
+   * @param description description of the trait, must be non-null
+   * @param conflictsWith Collection of IDs of traits this trait conflicts with
+   */
+  RaceTrait(final String id, final String name,
+      final String description, final Collection<String> conflictsWith) {
     this.traitId = Objects.requireNonNull(id);
     this.traitName = Objects.requireNonNull(name);
     this.description = Objects.requireNonNull(description);
-    this.conflictsWithIds = new ArrayList<>(Arrays.asList(conflictsWith));
+    this.conflictsWithIds = new ArrayList<>(conflictsWith);
   }
 
   /**

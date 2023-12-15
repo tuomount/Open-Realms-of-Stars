@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -58,11 +59,20 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 
+import junit.framework.TestCase;
+
 /**
  * Test for PlanetHandling class
  */
 
-public class PlanetHandlingTest {
+public class PlanetHandlingTest extends TestCase {
+
+  /** TODO: Remove when SpaceRaces are dehardcoded */
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+    SpaceRace.initialize();
+  }
 
   /**
    * Create basic farm with mockito

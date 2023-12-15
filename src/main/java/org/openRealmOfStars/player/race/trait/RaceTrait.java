@@ -43,50 +43,9 @@ import org.openRealmOfStars.player.race.SpaceRace;
  * Situations like trait A conflicting with trait B,
  * but B NOT conficting with A should be avoided.
  * </p>
- * TODO: Dehardcode actual traits from here
  * @see SpaceRace
  */
 public final class RaceTrait {
-  /** Robotic */
-  public static final RaceTrait ROBOTIC = new RaceTrait(TraitIds.ROBOTIC,
-      "Robotic",
-      "Race is robotic.");
-  /**
-   * Eats minerals.
-   * Cannot be combined with ENERGY_POWERED.
-   */
-  public static final RaceTrait LITHOVORIC = new RaceTrait(TraitIds.LITHOVORIC,
-      "Lithovoric",
-      "Eats minerals instead of food.", "ENERGY_POWERED");
-  /**
-   * Eats energy (credits).
-   * Cannot be combined with LITHOVORIC.
-   */
-  public static final RaceTrait ENERGY_POWERED = new RaceTrait(
-      TraitIds.ENERGY_POWERED, "Powered",
-      "Consumes energy credits instead of food"
-          + " at a rate of 1 credit per 4 population.");
-  /** Concept of parental heritage is not applicable for the race. */
-  public static final RaceTrait NO_HEIRS = new RaceTrait(
-      TraitIds.NO_HEIRS, "No heirs",
-      "Race has unusual birth process, to which it is"
-          + " not possible to apply concept of parental heritage.");
-  /** Race can breed by explictly constructing it's own population. */
-  public static final RaceTrait CONSTRUCTED_POP = new RaceTrait(
-      TraitIds.CONSTRUCTED_POP, "Constructed",
-      "Breeds by external process, where individuals "
-          + " are \"constructed\" in some way.");
-  /**
-   * Race can gain sustenance from radiation.
-   * This does NOT mean that it able to *produce* food,
-   * but rather that it can *sustain itself* with radiation.
-   */
-  public static final RaceTrait RADIOSYNTHESIS = new RaceTrait(
-      TraitIds.RADIOSYNTHESIS, "Radiosynthesis",
-      "Required sustenance (food) for population"
-          + " is reduced by 1 per existing population,"
-          + " up to planet's radiation value.");
-
   /** ID of the trait */
   private String traitId;
   /** Trait name */

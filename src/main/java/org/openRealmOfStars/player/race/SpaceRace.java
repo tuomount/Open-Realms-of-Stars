@@ -28,6 +28,7 @@ import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.race.trait.RaceTrait;
+import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.WorldType;
@@ -49,9 +50,7 @@ public enum SpaceRace {
    */
   MECHIONS(1, "Mechions", "Mechion",
           "Mechanical beings whom do not eat food.\n"
-        + "Each population must be built.",
-        RaceTrait.ROBOTIC, RaceTrait.ENERGY_POWERED, RaceTrait.NO_HEIRS,
-        RaceTrait.CONSTRUCTED_POP),
+        + "Each population must be built."),
   /**
    * Aggressive and warmongering spieces.
    */
@@ -120,7 +119,7 @@ public enum SpaceRace {
           "Chiraloids are creatures with four arms and two legs.\n"
         + "They have hard exoskeleton. They also have special gland\n"
         + "which uses radioactivity to create nutrient. This is called\n"
-        + "radiosynthesis.", RaceTrait.RADIOSYNTHESIS),
+        + "radiosynthesis."),
   /**
    * Reborgians are organism combined with organic and robotic
    * parts. So they are cyborgs. They can synthesize any living space race
@@ -132,8 +131,7 @@ public enum SpaceRace {
       "Reborgians are organism combined with bionic and robotic "
       + "parts. So they are cyborgs. They can synthesize any living space race"
       + " to their own race, so they are fearful conquerors. They need only"
-      + " very little food surviving, but their reproduction is very slow.",
-      RaceTrait.NO_HEIRS),
+      + " very little food surviving, but their reproduction is very slow."),
   /**
    * Lithorians are creatures that eat metal instead of food. They have slow
    * grow rate and they have -2 population limit. They have
@@ -142,7 +140,7 @@ public enum SpaceRace {
   LITHORIANS(12, "Lithorians", "Lithorian",
       "Lithorians are creatures that eat metal instead of food. They have"
       + " slow grow rate and they have -2 population limit."
-      + " They have excellent ability to mine metal.", RaceTrait.LITHOVORIC),
+      + " They have excellent ability to mine metal."),
   /**
    * Alteirians are creatures that live in zero gravity. Because of this they
    * need special suites to move planet surface. Most of their time they
@@ -174,8 +172,7 @@ public enum SpaceRace {
    * Each population must be built. Alternative name Huskdroid.
    */
   SYNTHDROIDS(16, "Synthdroids", "Synthdroid", "Artificial beings that eat only"
-      + " small amount of food. Each population must be built.",
-      RaceTrait.ROBOTIC, RaceTrait.NO_HEIRS, RaceTrait.CONSTRUCTED_POP),
+      + " small amount of food. Each population must be built."),
   /**
    * Alonian realm always starts without homeplanet. How ever they get higher
    * starting technology and have special ability where single colony ship
@@ -186,6 +183,44 @@ public enum SpaceRace {
       + " homeplanet.\nHowever they get higher starting technology and have"
       + " special ability\nwhere single colony ship produces one research"
       + " point.\nAlso starbase's laboratories produces more research points.");
+
+  /**
+   * Explicitly (re)initialize SpaceRaces.
+   * Needed, because RaceTraits are loaded later than SpaceRaces.
+   * Trying to use TraitFactory in an enum constructor
+   * will result in a critical Java failure.
+   * TODO: Remove when SpaceRaces get dehardcoded.
+   */
+  public static void initialize() {
+    // Clear traits from races.
+    for (var race : values()) {
+      race.traits.clear();
+    }
+
+    // Add traits *that exist* to hardcoded list of races
+    TraitFactory.create(TraitIds.ROBOTIC).ifPresent(trait -> {
+      MECHIONS.addTrait(trait);
+      SYNTHDROIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.LITHOVORIC).ifPresent(trait -> {
+      LITHORIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.ENERGY_POWERED).ifPresent(trait -> {
+      MECHIONS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.NO_HEIRS).ifPresent(trait -> {
+      MECHIONS.addTrait(trait);
+      REBORGIANS.addTrait(trait);
+      SYNTHDROIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.CONSTRUCTED_POP).ifPresent(trait -> {
+      MECHIONS.addTrait(trait);
+      SYNTHDROIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.RADIOSYNTHESIS).ifPresent(trait -> {
+      CHIRALOIDS.addTrait(trait);
+    });
+  }
 
   /**
    * Create space race

@@ -1,0 +1,52 @@
+[
+  {
+    "description": "Makes population to pay taxes.",
+    "type": "CREDIT",
+    "metalCost": 5,
+    "prodCost": 15,
+    "iconId": "Credit",
+    "singleAllowed": true,
+    "name": "Tax center",
+    "credBonus": 1
+  },
+  {
+    "description": "Galactic bank is good business. Does stonks go all\nthe way to out space?",
+    "type": "CREDIT",
+    "metalCost": 20,
+    "prodCost": 40,
+    "iconId": "Credit",
+    "singleAllowed": true,
+    "name": "Galactic bank",
+    "credBonus": 4
+  },
+  {
+    "description": "Massive trade center for selling goods.",
+    "type": "CREDIT",
+    "metalCost": 12,
+    "prodCost": 24,
+    "iconId": "Credit",
+    "singleAllowed": true,
+    "name": "Trade center",
+    "credBonus": 2
+  },
+  {
+    "description": "Planetary stock market, where stonks\nrising to the orbit.",
+    "type": "CREDIT",
+    "metalCost": 24,
+    "prodCost": 36,
+    "iconId": "Credit",
+    "singleAllowed": true,
+    "name": "Stock market",
+    "credBonus": 3
+  },
+  {
+    "description": "Market center has all sort of goods to sell.",
+    "type": "CREDIT",
+    "metalCost": 6,
+    "prodCost": 12,
+    "iconId": "Credit",
+    "singleAllowed": true,
+    "name": "Market center",
+    "credBonus": 1
+  }
+]

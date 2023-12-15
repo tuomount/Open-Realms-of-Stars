@@ -1,0 +1,43 @@
+[
+  {
+    "description": "Advanced automation farm.",
+    "type": "FARM",
+    "metalCost": 8,
+    "prodCost": 20,
+    "iconId": "Farm",
+    "maintenanceCost": 0.25,
+    "name": "Advanced farm",
+    "farmBonus": 2
+  },
+  {
+    "description": "Hydropodic farms producing food.",
+    "type": "FARM",
+    "metalCost": 30,
+    "prodCost": 40,
+    "iconId": "Farm",
+    "singleAllowed": true,
+    "maintenanceCost": 0.33,
+    "name": "Hydropodic farming center",
+    "farmBonus": 4
+  },
+  {
+    "description": "Group of automated farms.",
+    "type": "FARM",
+    "metalCost": 20,
+    "prodCost": 30,
+    "iconId": "Farm",
+    "singleAllowed": true,
+    "maintenanceCost": 0.25,
+    "name": "Farming center",
+    "farmBonus": 3
+  },
+  {
+    "description": "Automatic farm to produce food.",
+    "type": "FARM",
+    "metalCost": 4,
+    "prodCost": 10,
+    "iconId": "Farm",
+    "name": "Basic farm",
+    "farmBonus": 1
+  }
+]

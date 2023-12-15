@@ -1,0 +1,116 @@
+[
+  {
+    "description": "Galactic VR movie studio, where big galatic\nblock buster are being made.",
+    "cultBonus": 2,
+    "type": "CULTURE",
+    "metalCost": 30,
+    "prodCost": 30,
+    "happiness": 1,
+    "iconId": "Culture",
+    "singleAllowed": true,
+    "name": "VR movie center",
+    "credBonus": 2
+  },
+  {
+    "description": "United Galaxy Tower to gain influence of Galaxy.\nDepending on galaxy size certain amount is required\nto start diplomatic voting.",
+    "cultBonus": 1,
+    "type": "CULTURE",
+    "metalCost": 40,
+    "prodCost": 60,
+    "happiness": 2,
+    "iconId": "Culture",
+    "singleAllowed": true,
+    "maintenanceCost": 1,
+    "name": "United Galaxy Tower"
+  },
+  {
+    "description": "Unknown origin of Black monolith. Cause unhappiness in population.",
+    "cultBonus": 2,
+    "type": "CULTURE",
+    "metalCost": 30,
+    "prodCost": 15,
+    "happiness": -1,
+    "iconId": "Culture",
+    "name": "Black monolith"
+  },
+  {
+    "description": "Violent sports is a culture too. Violet sports fans\nget very angry if they are going miss next match due invasion.",
+    "cultBonus": 2,
+    "type": "CULTURE",
+    "metalCost": 22,
+    "prodCost": 30,
+    "happiness": 1,
+    "iconId": "Culture",
+    "singleAllowed": true,
+    "maintenanceCost": 0.5,
+    "name": "Extreme sports center",
+    "battleBonus": 15
+  },
+  {
+    "description": "Ancient temple for creating culture.",
+    "cultBonus": 1,
+    "type": "CULTURE",
+    "metalCost": 2,
+    "prodCost": 6,
+    "iconId": "Culture",
+    "name": "Ancient temple"
+  },
+  {
+    "description": "Ancient palace for ruling the planet",
+    "cultBonus": 1,
+    "type": "CULTURE",
+    "metalCost": 8,
+    "prodCost": 15,
+    "happiness": 1,
+    "iconId": "Culture",
+    "name": "Ancient palace"
+  },
+  {
+    "description": "Galactic Olympics stadium where \nbest atheletes compete each others. Building Galactic Olympics\nstadium has possible diplomacy bonuses towards other realms.",
+    "cultBonus": 3,
+    "type": "CULTURE",
+    "metalCost": 30,
+    "prodCost": 40,
+    "happiness": 2,
+    "iconId": "Culture",
+    "singleAllowed": true,
+    "maintenanceCost": 1,
+    "name": "Galactic sports center",
+    "battleBonus": 25
+  },
+  {
+    "broadcaster": true,
+    "description": "Broadcasting network for creating culture\nand happiness.",
+    "cultBonus": 3,
+    "type": "CULTURE",
+    "metalCost": 40,
+    "prodCost": 60,
+    "happiness": 1,
+    "iconId": "IconAntenna",
+    "singleAllowed": true,
+    "maintenanceCost": 0.25,
+    "name": "Broadcasting network"
+  },
+  {
+    "broadcaster": true,
+    "description": "Broadcasting antenna for broadcasting culture.",
+    "cultBonus": 1,
+    "type": "CULTURE",
+    "metalCost": 30,
+    "prodCost": 40,
+    "iconId": "IconAntenna",
+    "singleAllowed": true,
+    "name": "Broadcasting antenna"
+  },
+  {
+    "description": "Music, Arts, poetry, movies and video games.",
+    "cultBonus": 1,
+    "type": "CULTURE",
+    "metalCost": 4,
+    "prodCost": 18,
+    "iconId": "Culture",
+    "singleAllowed": true,
+    "maintenanceCost": 0.25,
+    "name": "Culture center"
+  }
+]

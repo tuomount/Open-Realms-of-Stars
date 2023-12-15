@@ -1,0 +1,147 @@
+[
+  {
+    "description": "Allows building the space ships and orbitals.",
+    "type": "MILITARY",
+    "fleetCapacityBonus": 1,
+    "metalCost": 20,
+    "prodCost": 20,
+    "iconId": "StarBase",
+    "singleAllowed": true,
+    "maintenanceCost": 0.5,
+    "name": "Space port"
+  },
+  {
+    "description": "Huge defense turret.",
+    "type": "MILITARY",
+    "metalCost": 50,
+    "prodCost": 50,
+    "happiness": 1,
+    "defenseDamage": 6,
+    "iconId": "PlanetaryTurret",
+    "name": "Planetary defense turret Mk2"
+  },
+  {
+    "description": "Biggest and meanest defense turret.",
+    "type": "MILITARY",
+    "metalCost": 70,
+    "prodCost": 70,
+    "happiness": 1,
+    "defenseDamage": 9,
+    "iconId": "PlanetaryTurret",
+    "name": "Planetary defense turret Mk3"
+  },
+  {
+    "description": "Big and powerful defense turret.",
+    "type": "MILITARY",
+    "metalCost": 20,
+    "prodCost": 20,
+    "happiness": 1,
+    "defenseDamage": 3,
+    "iconId": "PlanetaryTurret",
+    "name": "Planetary defense turret Mk1"
+  },
+  {
+    "description": "Orbital shield that blocks bombs.",
+    "type": "MILITARY",
+    "metalCost": 180,
+    "prodCost": 100,
+    "happiness": 1,
+    "iconId": "Shield",
+    "singleAllowed": true,
+    "scientificAchievement": true,
+    "name": "Orbital shield"
+  },
+  {
+    "description": "Increases training of military personels for\n space ships.\nRecruited leaders start at level 2.",
+    "type": "MILITARY",
+    "fleetCapacityBonus": 2,
+    "metalCost": 20,
+    "prodCost": 30,
+    "happiness": 1,
+    "iconId": "Troops",
+    "singleAllowed": true,
+    "maintenanceCost": 0.25,
+    "name": "Space academy",
+    "battleBonus": 25
+  },
+  {
+    "description": "Population fights better against invaders.\nRecruited leaders start with 50 experience.",
+    "type": "MILITARY",
+    "fleetCapacityBonus": 1,
+    "metalCost": 20,
+    "prodCost": 20,
+    "happiness": 1,
+    "iconId": "Troops",
+    "singleAllowed": true,
+    "maintenanceCost": 0.33,
+    "name": "Barracks",
+    "battleBonus": 50
+  },
+  {
+    "description": "Planetary scanner to scan fleet around the planet.\nBest planetary scanner available.",
+    "type": "MILITARY",
+    "metalCost": 80,
+    "prodCost": 80,
+    "scanCloakingDetection": 140,
+    "iconId": "LRScanner",
+    "singleAllowed": true,
+    "scanRange": 7,
+    "name": "Planetary scanner Mk5"
+  },
+  {
+    "description": "Planetary scanner to scan fleets around the planet.\nEven longer range.",
+    "type": "MILITARY",
+    "metalCost": 60,
+    "prodCost": 60,
+    "scanCloakingDetection": 120,
+    "iconId": "LRScanner",
+    "singleAllowed": true,
+    "scanRange": 6,
+    "name": "Planetary scanner Mk4"
+  },
+  {
+    "description": "Planetary scanner to scan fleets around the planet.\nNow with increased range.",
+    "type": "MILITARY",
+    "metalCost": 40,
+    "prodCost": 40,
+    "scanCloakingDetection": 100,
+    "iconId": "LRScanner",
+    "singleAllowed": true,
+    "scanRange": 5,
+    "name": "Planetary scanner Mk3"
+  },
+  {
+    "description": "Planetary scanner to scan fleets around the planet.\nThis is the improved version.",
+    "type": "MILITARY",
+    "metalCost": 24,
+    "prodCost": 24,
+    "scanCloakingDetection": 80,
+    "iconId": "LRScanner",
+    "singleAllowed": true,
+    "scanRange": 4,
+    "name": "Planetary scanner Mk2"
+  },
+  {
+    "description": "Planetary scanner to scan fleets around the planet.",
+    "type": "MILITARY",
+    "metalCost": 16,
+    "prodCost": 16,
+    "scanCloakingDetection": 40,
+    "iconId": "LRScanner",
+    "singleAllowed": true,
+    "scanRange": 3,
+    "name": "Planetary scanner Mk1"
+  },
+  {
+    "description": "Laser defense system that shoot enemy ships on the orbit.",
+    "type": "MILITARY",
+    "metalCost": 150,
+    "prodCost": 150,
+    "happiness": 2,
+    "defenseDamage": 1,
+    "iconId": "PlanetaryTurret",
+    "singleAllowed": true,
+    "scientificAchievement": true,
+    "name": "Orbital defense grid"
+  }
+]

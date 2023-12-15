@@ -1,0 +1,157 @@
+[
+  {
+    "description": "Group of automated factories.",
+    "type": "FACTORY",
+    "metalCost": 20,
+    "prodCost": 40,
+    "iconId": "Factory",
+    "singleAllowed": true,
+    "factBonus": 3,
+    "maintenanceCost": 0.25,
+    "name": "Manufacturing center"
+  },
+  {
+    "description": "Single mass production line.",
+    "type": "FACTORY",
+    "metalCost": 5,
+    "prodCost": 15,
+    "iconId": "Factory",
+    "factBonus": 1,
+    "name": "Basic factory"
+  },
+  {
+    "description": "Advanced production line with robotics.",
+    "type": "FACTORY",
+    "metalCost": 10,
+    "prodCost": 30,
+    "iconId": "Factory",
+    "factBonus": 2,
+    "maintenanceCost": 0.25,
+    "name": "Advanced factory"
+  },
+  {
+    "description": "Replicated goods can sold with good profit.",
+    "type": "FACTORY",
+    "metalCost": 40,
+    "prodCost": 40,
+    "iconId": "Factory",
+    "singleAllowed": true,
+    "factBonus": 2,
+    "name": "Replicator center",
+    "credBonus": 2
+  },
+  {
+    "description": "Orbital elevator that increases production and give happiness. Now with bigger elevator.",
+    "type": "FACTORY",
+    "metalCost": 40,
+    "prodCost": 40,
+    "happiness": 1,
+    "orbitalElevator": true,
+    "iconId": "IconOrbitalElevator",
+    "singleAllowed": true,
+    "factBonus": 2,
+    "name": "Orbital elevator Mk3",
+    "credBonus": 1
+  },
+  {
+    "description": "Orbital elevator that increases production and give happiness.",
+    "type": "FACTORY",
+    "metalCost": 20,
+    "prodCost": 20,
+    "happiness": 1,
+    "orbitalElevator": true,
+    "iconId": "IconOrbitalElevator",
+    "singleAllowed": true,
+    "factBonus": 1,
+    "name": "Orbital elevator Mk1"
+  },
+  {
+    "description": "Orbital elevator that increases production and give happiness. Plus makes a bit credit for builder.",
+    "type": "FACTORY",
+    "metalCost": 30,
+    "prodCost": 30,
+    "happiness": 1,
+    "orbitalElevator": true,
+    "iconId": "IconOrbitalElevator",
+    "singleAllowed": true,
+    "factBonus": 1,
+    "name": "Orbital elevator Mk2",
+    "credBonus": 1
+  },
+  {
+    "description": "Orbital lift that increases production and credits income.",
+    "type": "FACTORY",
+    "metalCost": 30,
+    "prodCost": 30,
+    "orbitalElevator": true,
+    "iconId": "IconOrbitalElevator",
+    "singleAllowed": true,
+    "factBonus": 1,
+    "name": "Orbital lift",
+    "credBonus": 1
+  },
+  {
+    "description": "When destroying buildings or ships 75%\nmetal is recycled.",
+    "type": "FACTORY",
+    "metalCost": 10,
+    "prodCost": 25,
+    "iconId": "ImprovementTech",
+    "singleAllowed": true,
+    "maintenanceCost": 1,
+    "recycleBonus": 75,
+    "name": "Advanced recycle center"
+  },
+  {
+    "description": "Decrease planet radiation by one.",
+    "type": "FACTORY",
+    "metalCost": 20,
+    "prodCost": 20,
+    "happiness": 1,
+    "iconId": "Radiation",
+    "singleAllowed": true,
+    "maintenanceCost": 1,
+    "name": "Radiation well"
+  },
+  {
+    "description": "When destroying buildings or ships 50%\nmetal is recycled.",
+    "type": "FACTORY",
+    "metalCost": 5,
+    "prodCost": 15,
+    "iconId": "ImprovementTech",
+    "singleAllowed": true,
+    "maintenanceCost": 1,
+    "recycleBonus": 50,
+    "name": "Recycle center"
+  },
+  {
+    "description": "Production lines full of nanobots.",
+    "type": "FACTORY",
+    "metalCost": 30,
+    "prodCost": 50,
+    "iconId": "Factory",
+    "singleAllowed": true,
+    "factBonus": 4,
+    "maintenanceCost": 0.33,
+    "name": "Nanobot manufacturing center"
+  },
+  {
+    "description": "Ancient production line.",
+    "type": "FACTORY",
+    "metalCost": 3,
+    "prodCost": 8,
+    "iconId": "Factory",
+    "factBonus": 1,
+    "name": "Ancient factory"
+  },
+  {
+    "description": "Decrease planet radiation by one.",
+    "type": "FACTORY",
+    "metalCost": 20,
+    "prodCost": 20,
+    "happiness": 1,
+    "iconId": "Radiation",
+    "singleAllowed": true,
+    "maintenanceCost": 1,
+    "name": "Radiation dampener"
+  }
+]

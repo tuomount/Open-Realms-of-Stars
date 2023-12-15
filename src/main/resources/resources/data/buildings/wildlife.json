@@ -1,0 +1,49 @@
+[
+  {
+    "description": "Dangerous ferocious bipedal reptiles. Population must fight against to destroy them.",
+    "type": "FARM",
+    "iconId": "IconSpinosaurus",
+    "wildLifePower": 20,
+    "name": "Wildlife: massive herding pack animals"
+  },
+  {
+    "description": "Dangerous massive bug like creature. Population must fight against to destroy them.",
+    "type": "FARM",
+    "happiness": -2,
+    "iconId": "IconSpinosaurus",
+    "wildLifePower": 30,
+    "name": "Wildlife: massive bug like creature"
+  },
+  {
+    "description": "Dangerous big feline animals. Population must fight against to destroy them.",
+    "type": "FARM",
+    "happiness": -1,
+    "iconId": "IconSpinosaurus",
+    "wildLifePower": 26,
+    "name": "Wildlife: big lizard animals"
+  },
+  {
+    "description": "Dangerous big canine animals. Population must fight against to destroy them.",
+    "type": "FARM",
+    "happiness": -1,
+    "iconId": "IconSpinosaurus",
+    "wildLifePower": 24,
+    "name": "Wildlife: big canine animals"
+  },
+  {
+    "description": "Dangerous big feline animals. Population must fight against to destroy them.",
+    "type": "FARM",
+    "happiness": -1,
+    "iconId": "IconSpinosaurus",
+    "wildLifePower": 28,
+    "name": "Wildlife: big feline animals"
+  },
+  {
+    "description": "Dangerous ferocious bipedal reptiles. Population must fight against to destroy them.",
+    "type": "FARM",
+    "happiness": -2,
+    "iconId": "IconSpinosaurus",
+    "wildLifePower": 36,
+    "name": "Wildlife: ferocious bipedal reptiles"
+  }
+]

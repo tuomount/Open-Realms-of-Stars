@@ -1,0 +1,143 @@
+[
+  {
+    "description": "Cyber laboratory for research. Gives morale boost for population.",
+    "type": "RESEARCH",
+    "metalCost": 10,
+    "prodCost": 15,
+    "happiness": 1,
+    "iconId": "Research",
+    "singleAllowed": true,
+    "reseBonus": 1,
+    "name": "Cyber lab"
+  },
+  {
+    "description": "Research matrix for robotic minds.",
+    "type": "RESEARCH",
+    "metalCost": 15,
+    "prodCost": 40,
+    "happiness": 2,
+    "iconId": "Research",
+    "singleAllowed": true,
+    "reseBonus": 3,
+    "maintenanceCost": 0.3,
+    "name": "Research matrix"
+  },
+  {
+    "description": "Collective research center for robotic minds.",
+    "type": "RESEARCH",
+    "metalCost": 10,
+    "prodCost": 25,
+    "happiness": 1,
+    "iconId": "Research",
+    "singleAllowed": true,
+    "reseBonus": 2,
+    "maintenanceCost": 0.25,
+    "name": "Collective research center"
+  },
+  {
+    "description": "Neural network in huge research center",
+    "type": "RESEARCH",
+    "metalCost": 24,
+    "prodCost": 48,
+    "iconId": "Research",
+    "singleAllowed": true,
+    "reseBonus": 4,
+    "maintenanceCost": 0.33,
+    "name": "Neural research center"
+  },
+  {
+    "description": "Super AI making science and improving production.",
+    "type": "RESEARCH",
+    "metalCost": 80,
+    "prodCost": 60,
+    "iconId": "Research",
+    "singleAllowed": true,
+    "maintenanceCost": 1,
+    "factBonus": 1,
+    "reseBonus": 4,
+    "name": "Super AI center"
+  },
+  {
+    "description": "New technology is studied and used in culture.",
+    "cultBonus": 1,
+    "type": "RESEARCH",
+    "metalCost": 20,
+    "prodCost": 20,
+    "iconId": "Research",
+    "singleAllowed": true,
+    "reseBonus": 3,
+    "maintenanceCost": 0.5,
+    "name": "New technology center"
+  },
+  {
+    "description": "Fully equiped science laboratory.",
+    "type": "RESEARCH",
+    "metalCost": 8,
+    "prodCost": 24,
+    "iconId": "Research",
+    "reseBonus": 2,
+    "maintenanceCost": 0.25,
+    "name": "Advanced laboratory"
+  },
+  {
+    "ancientArtifactResearch": 2,
+    "description": "College of history which allows doing basic research and improved study on ancient artifacts.",
+    "type": "RESEARCH",
+    "metalCost": 6,
+    "prodCost": 20,
+    "iconId": "Research",
+    "singleAllowed": true,
+    "reseBonus": 1,
+    "name": "College of history"
+  },
+  {
+    "description": "Creates ascension portal near planet.",
+    "type": "RESEARCH",
+    "metalCost": 160,
+    "prodCost": 120,
+    "happiness": 2,
+    "iconId": "IconAirLockOpen",
+    "name": "Planetary ascension portal"
+  },
+  {
+    "description": "Group of research laboratories.",
+    "type": "RESEARCH",
+    "metalCost": 16,
+    "prodCost": 36,
+    "iconId": "Research",
+    "singleAllowed": true,
+    "reseBonus": 3,
+    "maintenanceCost": 0.25,
+    "name": "Research center"
+  },
+  {
+    "broadcaster": true,
+    "description": "Deep space scanner to reveal all the planets.\nThis scanner can be used also massive broadcastings.",
+    "type": "RESEARCH",
+    "metalCost": 150,
+    "prodCost": 150,
+    "iconId": "LRScanner",
+    "singleAllowed": true,
+    "scientificAchievement": true,
+    "reseBonus": 2,
+    "name": "Deep space scanner"
+  },
+  {
+    "description": "Basic laboratory for science.",
+    "type": "RESEARCH",
+    "metalCost": 4,
+    "prodCost": 12,
+    "iconId": "Research",
+    "reseBonus": 1,
+    "name": "Basic lab"
+  },
+  {
+    "description": "Ancient laboratory for science.",
+    "type": "RESEARCH",
+    "metalCost": 3,
+    "prodCost": 8,
+    "iconId": "Research",
+    "reseBonus": 1,
+    "name": "Ancient lab"
+  }
+]

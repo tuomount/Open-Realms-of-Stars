@@ -27,107 +27,61 @@ import org.openRealmOfStars.utilities.IOUtilities;
  */
 public class Building extends Construction {
 
-  /**
-   * Building type
-   */
+  /** Building type */
   private BuildingType type;
 
-  /**
-   * Bonus for farming
-   */
+  /** Bonus for farming */
   private int farmBonus;
-  /**
-   * Bonus for mining
-   */
+  /** Bonus for mining */
   private int mineBonus;
-  /**
-   * Bonus for production
-   */
+  /** Bonus for production */
   private int factBonus;
-  /**
-   * Bonus for culture
-   */
+  /** Bonus for culture */
   private int cultBonus;
-  /**
-   * Bonus for research
-   */
+  /** Bonus for research */
   private int reseBonus;
-
-  /**
-   * Bonus for credits
-   */
+  /** Bonus for credits */
   private int credBonus;
-
-  /**
-   * Maintenance Cost
-   */
-  private double maintenanceCost;
-
-  /**
-   * Only single building allowed per planet
-   */
-  private boolean singleAllowed;
-
-  /**
-   * Building's battle bonus
-   */
-  private int battleBonus;
-
-  /**
-   * Building's recycle bonus
-   */
-  private int recycleBonus;
-
-  /**
-   * Planetary defense damage
-   */
-  private int defenseDamage;
-
-  /**
-   * Planetary scan range
-   */
-  private int scanRange;
-
-  /**
-   * Planetary scanner cloaking detection
-   */
-  private int scanCloakingDetection;
-
-  /**
-   * Happiness bonus
-   */
+  /** Happiness bonus */
   private int happinessBonus;
-
-  /**
-   * Building is scientific achievement
-   */
-  private boolean scientificAchievement;
-  /**
-   * Building material bonus
-   */
+  /** Building material bonus */
   private int materialBonus;
 
-  /**
-   * Fleet capacity bonus
-   */
-  private int fleetCapacityBonus;
-  /**
-   * Broadcasting building. Required for cultural victory.
-   */
+  /** Maintenance Cost */
+  private double maintenanceCost;
+
+  /** Only single building allowed per planet */
+  private boolean singleAllowed;
+  /** Building is scientific achievement */
+  private boolean scientificAchievement;
+  /** Broadcasting building. Required for cultural victory. */
   private boolean broadcaster;
   /**
    * Flag for orbital Elevator.
    * Only single one of these buildings are allowed and orbital is required.
    */
   private boolean orbitalElevator;
-  /**
-   * Wild life power.
-   */
-  private int wildLifePower;
-  /**
-   * Ancient artifact research
-   */
+
+  /** Building's battle bonus */
+  private int battleBonus;
+  /** Planetary defense damage */
+  private int defenseDamage;
+  /*** Planetary scan range */
+  private int scanRange;
+  /** Planetary scanner cloaking detection */
+  private int scanCloakingDetection;
+
+  /** Fleet capacity bonus */
+  private int fleetCapacityBonus;
+
+  /** Building's recycle bonus */
+  private int recycleBonus;
+  /** Ancient artifact research */
   private int ancientArtifactResearch;
+
+  /** Wild life power. */
+  private int wildLifePower;
+
   /**
    * Construct building for planet
    * @param name Unique Building name

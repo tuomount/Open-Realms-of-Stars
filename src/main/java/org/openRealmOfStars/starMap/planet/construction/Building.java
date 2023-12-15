@@ -32,10 +32,6 @@ public class Building extends Construction {
    * Building type
    */
   private BuildingType type;
-  /**
-   * Unique index for factories and saving the game
-   */
-  private int index;
 
   /**
    * Bonus for farming
@@ -135,15 +131,13 @@ public class Building extends Construction {
   private int ancientArtifactResearch;
   /**
    * Construct building for planet
-   * @param index Unique number for building
-   * @param name Building name
+   * @param name Unique Building name
    * @param icon Icon to use next to the building
    * @param type BuildingType
    */
-  public Building(final int index, final String name, final Icon16x16 icon,
+  public Building(final String name, final Icon16x16 icon,
       final BuildingType type) {
     super(name, icon);
-    this.index = index;
     this.type = type;
     this.farmBonus = 0;
     this.mineBonus = 0;
@@ -174,14 +168,6 @@ public class Building extends Construction {
    */
   public BuildingType getType() {
     return type;
-  }
-
-  /**
-   * Get building unique index
-   * @return unique index for building
-   */
-  public int getIndex() {
-    return index;
   }
 
   /**

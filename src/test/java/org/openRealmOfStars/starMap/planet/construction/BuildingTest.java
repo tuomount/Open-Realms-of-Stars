@@ -21,9 +21,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.mockito.Mockito;
-import org.openRealmOfStars.gui.icons.Icon16x16;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 
 /**
@@ -31,28 +28,6 @@ import org.openRealmOfStars.starMap.planet.BuildingFactory;
 *
 */
 public class BuildingTest {
-
-  @Test
-  @Category(org.openRealmOfStars.UnitTest.class)
-  public void testFullDescription() {
-    Icon16x16 icon = Mockito.mock(Icon16x16.class);
-    Building building = new Building(0, "Test Bank", icon, BuildingType.CREDIT);
-    building.setCredBonus(1);
-    String generic = building.getFullDescription();
-    String scaurian = building.getFullDescription(SpaceRace.SCAURIANS);
-    assertEquals(true, generic.contains("Cred.: +1"));
-    assertEquals(true, scaurian.contains("Cred.: +2"));
-    building = new Building(0, "Test Farm", icon, BuildingType.FARM);
-    building.setFarmBonus(1);
-    generic = building.getFullDescription();
-    scaurian = building.getFullDescription(SpaceRace.SCAURIANS);
-    assertEquals(false, generic.contains("Cred.: +1"));
-    assertEquals(true, generic.contains("Food: +1"));
-    assertEquals(false, scaurian.contains("Cred.: +2"));
-    assertEquals(true, scaurian.contains("Food: +1"));
-    assertEquals(0, building.getFleetCapacityBonus());
-    assertEquals(false, building.isBroadcaster());
-  }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)

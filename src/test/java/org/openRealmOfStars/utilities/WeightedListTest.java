@@ -124,4 +124,27 @@ public class WeightedListTest {
     assertTrue(listOfNumber.isEmpty());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFixedArraysWithFixedNumbers() {
+    WeightedList<Integer> listOfNumber = new WeightedList<>(
+        new double[] {
+            1, 1, 1, 1, 1
+        },
+        new Integer[] {
+            0, 1, 2, 3, 4
+        });
+    long[] values = new long[5];
+    int max = 5;
+    for (int i = 0; i < max; i++) {
+      Integer value = listOfNumber.pickRandom(i);
+      values[value.intValue()]++;
+    }
+    assertEquals(1, values[0]);
+    assertEquals(1, values[1]);
+    assertEquals(1, values[2]);
+    assertEquals(1, values[3]);
+    assertEquals(1, values[4]);
+  }
+
 }

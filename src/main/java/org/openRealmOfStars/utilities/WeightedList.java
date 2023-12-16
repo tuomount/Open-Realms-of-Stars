@@ -173,18 +173,18 @@ public class WeightedList<T> {
    * Select random element from the list based on it's weight
    * relative to other elements, using provided number as base random value.
    * Trying to select from empty list will result
-   * in UnsupportedOperationException.
+   * in UnsupportedOperationException. This should be only used internally
+   * or in JUnits.
    * @param randNumber Random number
    * @return Value selected
    */
-  private T pickRandom(final int randNumber) {
+  protected T pickRandom(final int randNumber) {
     if (isEmpty()) {
       throw new UnsupportedOperationException(
           "Cannot pick random entry from empty list");
     }
 
-    final double clampedNum = randNumber % Integer.MAX_VALUE;
-    final double rngVal = (clampedNum / Integer.MAX_VALUE) * total;
+    final double rngVal = randNumber % total;
 
     for (int i = 0; i < entries.size(); i++) {
       var entry = entries.get(i);

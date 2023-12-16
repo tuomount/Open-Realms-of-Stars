@@ -30,8 +30,6 @@ import java.nio.charset.StandardCharsets;
 
 import javax.imageio.ImageIO;
 
-import org.openRealmOfStars.gui.util.GuiStatics;
-
 /**
  *
  * Generic IO Utilities
@@ -52,8 +50,8 @@ public final class IOUtilities {
    * @return BufferedImage if succeed null if fails
    */
   public static BufferedImage loadImage(final String urlToImage) {
-    URL imageUrl = GuiStatics.class.getResource(urlToImage);
-    return loadImage(imageUrl);
+    URL imageUrlOpt = DataSources.getDataUrl(urlToImage).orElse(null);
+    return loadImage(imageUrlOpt);
   }
 
   /**

@@ -30,8 +30,8 @@ import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

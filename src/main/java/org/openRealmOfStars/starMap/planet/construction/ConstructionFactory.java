@@ -128,7 +128,7 @@ public final class ConstructionFactory {
     Construction tmp = null;
     if (index == CONSTRUCTION_EXTRA_CREDIT) {
       tmp = new Construction(EXTRA_CREDIT,
-          Icons.getIconByName(Icons.ICON_CREDIT));
+          Icons.ICON_CREDIT);
       tmp.setProdCost(10);
       tmp.setMetalCost(0);
       tmp.setDescription("Build extra credits");
@@ -136,7 +136,7 @@ public final class ConstructionFactory {
     }
     if (index == CONSTRUCTION_EXTRA_CULTURE) {
       tmp = new Construction(EXTRA_CULTURE,
-          Icons.getIconByName(Icons.ICON_CULTURE));
+          Icons.ICON_CULTURE);
       tmp.setProdCost(10);
       tmp.setMetalCost(0);
       tmp.setDescription("Build extra culture");
@@ -144,7 +144,7 @@ public final class ConstructionFactory {
     }
     if (index == CONSTRUCTION_MECHION_CITIZEN) {
       tmp = new Construction(MECHION_CITIZEN,
-          Icons.getIconByName(Icons.ICON_PEOPLE));
+          Icons.ICON_PEOPLE);
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setDescription("Build new mechion citizen");
@@ -152,7 +152,7 @@ public final class ConstructionFactory {
     }
     if (index == CONSTRUCTION_SYNTHDROID_CITIZEN) {
       tmp = new Construction(SYNTHDROID_CITIZEN,
-          Icons.getIconByName(Icons.ICON_PEOPLE));
+          Icons.ICON_PEOPLE);
       tmp.setProdCost(30);
       tmp.setMetalCost(2);
       tmp.setDescription("Build new synthdroid citizen");

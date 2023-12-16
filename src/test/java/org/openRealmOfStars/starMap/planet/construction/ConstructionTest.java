@@ -21,8 +21,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.mockito.Mockito;
-import org.openRealmOfStars.gui.icons.Icon16x16;
 
 /**
  * Test for Construction
@@ -33,10 +31,8 @@ public class ConstructionTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testConstruction() {
-    Icon16x16 icon = Mockito.mock(Icon16x16.class);
-    Mockito.when(icon.getName()).thenReturn("icon1");
-    Icon16x16 icon2 = Mockito.mock(Icon16x16.class);
-    Mockito.when(icon2.getName()).thenReturn("icon2");
+    String icon = "icon1";
+    String icon2 = "icon2";
     Construction construction = new Construction("Test Thingy",icon);
     construction.setDescription("Here is description!");
     assertEquals("Here is description!",construction.getDescription());
@@ -46,14 +42,14 @@ public class ConstructionTest {
     assertEquals(1,construction.getMetalCost());
     construction.setName("Thingy 2");
     construction.setDescription("Thingy description");
-    construction.setIcon(icon2);
+    construction.setIconId(icon2);
     construction.setMetalCost(2);
     construction.setProdCost(15);
     assertEquals("Thingy description",construction.getDescription());
     assertEquals("Thingy 2",construction.getName());
     assertEquals(15,construction.getProdCost());
     assertEquals(2,construction.getMetalCost());
-    assertEquals("icon2", construction.getIcon().getName());
+    assertEquals("icon2", construction.getIconId());
   }
 
 }

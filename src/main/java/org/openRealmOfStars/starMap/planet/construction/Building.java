@@ -17,7 +17,6 @@ package org.openRealmOfStars.starMap.planet.construction;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -28,122 +27,70 @@ import org.openRealmOfStars.utilities.IOUtilities;
  */
 public class Building extends Construction {
 
-  /**
-   * Building type
-   */
+  /** Building type */
   private BuildingType type;
-  /**
-   * Unique index for factories and saving the game
-   */
-  private int index;
 
-  /**
-   * Bonus for farming
-   */
+  /** Bonus for farming */
   private int farmBonus;
-  /**
-   * Bonus for mining
-   */
+  /** Bonus for mining */
   private int mineBonus;
-  /**
-   * Bonus for production
-   */
+  /** Bonus for production */
   private int factBonus;
-  /**
-   * Bonus for culture
-   */
+  /** Bonus for culture */
   private int cultBonus;
-  /**
-   * Bonus for research
-   */
+  /** Bonus for research */
   private int reseBonus;
-
-  /**
-   * Bonus for credits
-   */
+  /** Bonus for credits */
   private int credBonus;
-
-  /**
-   * Maintenance Cost
-   */
-  private double maintenanceCost;
-
-  /**
-   * Only single building allowed per planet
-   */
-  private boolean singleAllowed;
-
-  /**
-   * Building's battle bonus
-   */
-  private int battleBonus;
-
-  /**
-   * Building's recycle bonus
-   */
-  private int recycleBonus;
-
-  /**
-   * Planetary defense damage
-   */
-  private int defenseDamage;
-
-  /**
-   * Planetary scan range
-   */
-  private int scanRange;
-
-  /**
-   * Planetary scanner cloaking detection
-   */
-  private int scanCloakingDetection;
-
-  /**
-   * Happiness bonus
-   */
+  /** Happiness bonus */
   private int happinessBonus;
-
-  /**
-   * Building is scientific achievement
-   */
-  private boolean scientificAchievement;
-  /**
-   * Building material bonus
-   */
+  /** Building material bonus */
   private int materialBonus;
 
-  /**
-   * Fleet capacity bonus
-   */
-  private int fleetCapacityBonus;
-  /**
-   * Broadcasting building. Required for cultural victory.
-   */
+  /** Maintenance Cost */
+  private double maintenanceCost;
+
+  /** Only single building allowed per planet */
+  private boolean singleAllowed;
+  /** Building is scientific achievement */
+  private boolean scientificAchievement;
+  /** Broadcasting building. Required for cultural victory. */
   private boolean broadcaster;
   /**
    * Flag for orbital Elevator.
    * Only single one of these buildings are allowed and orbital is required.
    */
   private boolean orbitalElevator;
-  /**
-   * Wild life power.
-   */
-  private int wildLifePower;
-  /**
-   * Ancient artifact research
-   */
+
+  /** Building's battle bonus */
+  private int battleBonus;
+  /** Planetary defense damage */
+  private int defenseDamage;
+  /*** Planetary scan range */
+  private int scanRange;
+  /** Planetary scanner cloaking detection */
+  private int scanCloakingDetection;
+
+  /** Fleet capacity bonus */
+  private int fleetCapacityBonus;
+
+  /** Building's recycle bonus */
+  private int recycleBonus;
+  /** Ancient artifact research */
   private int ancientArtifactResearch;
+
+  /** Wild life power. */
+  private int wildLifePower;
+
   /**
    * Construct building for planet
-   * @param index Unique number for building
-   * @param name Building name
-   * @param icon Icon to use next to the building
+   * @param name Unique Building name
+   * @param iconId ID of Icon to use next to the building
    * @param type BuildingType
    */
-  public Building(final int index, final String name, final Icon16x16 icon,
+  public Building(final String name, final String iconId,
       final BuildingType type) {
-    super(name, icon);
-    this.index = index;
+    super(name, iconId);
     this.type = type;
     this.farmBonus = 0;
     this.mineBonus = 0;
@@ -174,14 +121,6 @@ public class Building extends Construction {
    */
   public BuildingType getType() {
     return type;
-  }
-
-  /**
-   * Get building unique index
-   * @return unique index for building
-   */
-  public int getIndex() {
-    return index;
   }
 
   /**

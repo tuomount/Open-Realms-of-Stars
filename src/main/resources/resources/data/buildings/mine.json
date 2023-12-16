@@ -1,0 +1,88 @@
+[
+  {
+    "description": "Massive blast furnace produces metal and production.",
+    "type": "MINE",
+    "metalCost": 30,
+    "prodCost": 20,
+    "mineBonus": 2,
+    "iconId": "Metal",
+    "singleAllowed": true,
+    "factBonus": 1,
+    "name": "Massive blast furnace"
+  },
+  {
+    "description": "Massive material replicator.",
+    "type": "MINE",
+    "metalCost": 40,
+    "prodCost": 200,
+    "materialBonus": 2,
+    "iconId": "MetalOre",
+    "singleAllowed": true,
+    "scientificAchievement": true,
+    "name": "Material replicator"
+  },
+  {
+    "description": "Mega project that uses planet's core for heat source for furnance",
+    "type": "MINE",
+    "metalCost": 100,
+    "prodCost": 200,
+    "mineBonus": 4,
+    "iconId": "Metal",
+    "singleAllowed": true,
+    "scientificAchievement": true,
+    "factBonus": 2,
+    "name": "Planetary furnace"
+  },
+  {
+    "description": "Group of automated mines.",
+    "type": "MINE",
+    "metalCost": 24,
+    "prodCost": 30,
+    "mineBonus": 3,
+    "iconId": "Mine",
+    "singleAllowed": true,
+    "maintenanceCost": 0.25,
+    "name": "Mining center"
+  },
+  {
+    "description": "Advanced mine with robotic miners.",
+    "type": "MINE",
+    "metalCost": 12,
+    "prodCost": 20,
+    "mineBonus": 2,
+    "iconId": "Mine",
+    "maintenanceCost": 0.25,
+    "name": "Advanced mine"
+  },
+  {
+    "description": "Advanced furnace produces metal and production.",
+    "type": "MINE",
+    "metalCost": 20,
+    "prodCost": 20,
+    "mineBonus": 1,
+    "iconId": "Metal",
+    "singleAllowed": true,
+    "factBonus": 1,
+    "name": "Advanced furnace"
+  },
+  {
+    "description": "Mining done by millions of nanobots",
+    "type": "MINE",
+    "metalCost": 36,
+    "prodCost": 40,
+    "mineBonus": 4,
+    "iconId": "Mine",
+    "singleAllowed": true,
+    "maintenanceCost": 0.33,
+    "name": "Nanobot mining center"
+  },
+  {
+    "description": "Small scale automatic mine",
+    "type": "MINE",
+    "metalCost": 6,
+    "prodCost": 10,
+    "mineBonus": 1,
+    "iconId": "Mine",
+    "name": "Basic mine"
+  }
+]

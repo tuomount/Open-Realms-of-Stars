@@ -21,9 +21,9 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.tech.Tech;
-import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 
 /**
 *

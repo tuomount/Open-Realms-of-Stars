@@ -18,6 +18,7 @@ package org.openRealmOfStars.starMap.planet;
  */
 
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

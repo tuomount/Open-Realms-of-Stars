@@ -22,11 +22,11 @@ import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.Coordinate;
-import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.utilities.IOUtilities;
 

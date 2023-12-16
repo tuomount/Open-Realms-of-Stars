@@ -360,7 +360,7 @@ public final class TechFactory {
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL9_NAMES = {
       "Hydropodic farming center", "Nanobot mining center",
-      "Nanobot manufacturing center", "Research Matrix",
+      "Nanobot manufacturing center", "Research matrix",
       "Planetary furnace"};
   /**
    * Planetary Improvement rare tech names for level 9
@@ -371,7 +371,7 @@ public final class TechFactory {
    * Planetary Improvement tech names for level 10
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL10_NAMES = {
-      "Neural research center", "Super AI Center", "Replicator center" };
+      "Neural research center", "Super AI center", "Replicator center" };
 
   /**
    * Propulsion tech names for level 1
@@ -1004,7 +1004,7 @@ public final class TechFactory {
               || techName.startsWith("Research center")
               || techName.startsWith("New technology center")
               || techName.startsWith("Neural research center")
-              || techName.startsWith("Super AI Center")) {
+              || techName.startsWith("Super AI center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
           } else if (techName.startsWith("Orbital lift")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_ORBITAL_ELEVATOR));
@@ -1037,7 +1037,7 @@ public final class TechFactory {
             tech.setSpaceRaces(SpaceRace.MECHIONS, SpaceRace.SYNTHDROIDS);
             tech.setTradeable(false);
           } else if (techName.startsWith("Collective research center")
-              || techName.startsWith("Research Matrix")) {
+              || techName.startsWith("Research matrix")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
             tech.setExcludeList(false);
             tech.setSpaceRaces(SpaceRace.REBORGIANS, SpaceRace.MECHIONS,

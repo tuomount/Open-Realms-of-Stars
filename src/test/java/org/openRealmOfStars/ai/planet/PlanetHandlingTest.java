@@ -1627,13 +1627,13 @@ public class PlanetHandlingTest {
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 5);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 

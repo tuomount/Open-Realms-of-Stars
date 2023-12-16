@@ -60,6 +60,40 @@ public class BuildingTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSuperAiCenter() {
+    Building building = BuildingFactory.createByName("Super AI center");
+    assertEquals("Super AI center", building.getName());
+    assertEquals(4, building.getReseBonus());
+    assertEquals(0, building.getCredBonus());
+    assertEquals(0, building.getCultBonus());
+    assertEquals(0, building.getMineBonus());
+    assertEquals(1, building.getFactBonus());
+    assertEquals(0, building.getFarmBonus());
+    assertEquals(0, building.getFleetCapacityBonus());
+    assertEquals(0, building.getHappiness());
+    assertEquals(1.00, building.getMaintenanceCost(), 0.05);
+    assertEquals(false, building.isBroadcaster());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testResearchMatix() {
+    Building building = BuildingFactory.createByName("Research matrix");
+    assertEquals("Research matrix", building.getName());
+    assertEquals(3, building.getReseBonus());
+    assertEquals(0, building.getCredBonus());
+    assertEquals(0, building.getCultBonus());
+    assertEquals(0, building.getMineBonus());
+    assertEquals(0, building.getFactBonus());
+    assertEquals(0, building.getFarmBonus());
+    assertEquals(0, building.getFleetCapacityBonus());
+    assertEquals(2, building.getHappiness());
+    assertEquals(0.25, building.getMaintenanceCost(), 0.05);
+    assertEquals(false, building.isBroadcaster());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testAncientTemple() {
     Building building = BuildingFactory.createByName("Ancient temple");
     assertEquals("Ancient temple", building.getName());

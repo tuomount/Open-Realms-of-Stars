@@ -117,7 +117,7 @@ public class TechList {
           if (tech.getImprovement() != null) {
             Building building = BuildingFactory.createByName(
                 tech.getImprovement());
-            if (building.getScientificAchievement()) {
+            if (building != null && building.getScientificAchievement()) {
               result++;
             }
             if (tech.getName().equals("Artificial planet")) {
@@ -974,7 +974,7 @@ public class TechList {
    * @param tech Tech
    * @param info PlayerInfo
    */
-  private void newTechTutorial(final Tech tech, final PlayerInfo info) {
+  private static void newTechTutorial(final Tech tech, final PlayerInfo info) {
     var techComponent = tech.getComponent();
     var techHull = tech.getHull();
     var techType = tech.getType();
@@ -1090,7 +1090,8 @@ public class TechList {
    * @param tutorialIdx tutorial index
    * @param info PlayerInfo
    */
-  private void showTutorial(final int tutorialIdx, final PlayerInfo info) {
+  private static void showTutorial(final int tutorialIdx,
+      final PlayerInfo info) {
     var tutorialText = Game.getTutorial().showTutorialText(tutorialIdx);
     if (tutorialText != null) {
       var msg = new Message(MessageType.INFORMATION, tutorialText,

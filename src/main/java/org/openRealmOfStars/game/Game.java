@@ -2103,6 +2103,7 @@ public class Game implements ActionListener {
    * @param level Which tech level
    * @return String of tech info in markdown format
    */
+  @SuppressWarnings("null")
   public static String printTech(final String[] techNames,
       final TechType type, final int level) {
     StringBuilder sb = new StringBuilder();
@@ -2115,6 +2116,9 @@ public class Game implements ActionListener {
             tech.getComponent());
         sb.append(i + 1);
         sb.append(". ");
+        if (comp == null) {
+          ErrorLogger.log("Hull not found:" + tech.getImprovement());
+        }
         sb.append(comp.toString());
         sb.append("\n\n");
         noPrint = false;
@@ -2123,6 +2127,9 @@ public class Game implements ActionListener {
         Building build = BuildingFactory.createByName(tech.getImprovement());
         sb.append(i + 1);
         sb.append(". ");
+        if (build == null) {
+          ErrorLogger.log("Building not found:" + tech.getImprovement());
+        }
         sb.append(build.getFullDescription());
         sb.append("\n\n");
         noPrint = false;
@@ -2132,6 +2139,9 @@ public class Game implements ActionListener {
             SpaceRace.HUMAN);
         sb.append(i + 1);
         sb.append(". ");
+        if (hull == null) {
+          ErrorLogger.log("Hull not found:" + tech.getImprovement());
+        }
         sb.append(hull.toString());
         sb.append("\n\n");
         noPrint = false;

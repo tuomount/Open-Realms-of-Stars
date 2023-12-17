@@ -70,8 +70,8 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.RaceTrait;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
@@ -3189,7 +3189,7 @@ public class AITurnView extends BlackPanel {
               && heirs == 1) {
             chance = 4;
           }
-          if (leader.getRace().hasTrait(RaceTrait.NO_HEIRS.getId())) {
+          if (leader.getRace().hasTrait(TraitIds.NO_HEIRS)) {
             // Races without concept of parental heritage do not get heirs
             chance = 0;
           }

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "ROBOTIC",
+    "name": "Robotic",
+    "description": "Race is robotic."
+  },
+  {
+    "id": "LITHOVORIC",
+    "name": "Lithovoric",
+    "description": "Eats minerals instead of food.",
+    "conflictsWith": [
+      "ENERGY_POWERED"
+    ]
+  },
+  {
+    "id": "ENERGY_POWERED",
+    "name": "Powered",
+    "description": "Consumes energy credits instead of food at a rate of 1 credit per 4 population.",
+    "conflictsWith": [
+      "LITHOVORIC"
+    ]
+  },
+  {
+    "id": "NO_HEIRS",
+    "name": "No heirs",
+    "description": "Race has unusual birth process, to which it is not possible to apply concept of parental heritage."
+  },
+  {
+    "id": "CONSTRUCTED_POP",
+    "name": "Constructed",
+    "description": "Breeds by external process, where individuals are \"constructed\" in some way."
+  },
+  {
+    "id": "RADIOSYNTHESIS",
+    "name": "Radiosynthesis",
+    "description": "Required sustenance (food) for population is reduced by 1 per existing population up to planet's radiation value."
+  }
+]

@@ -33,8 +33,8 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.RaceTrait;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.tech.TechType;
@@ -2391,7 +2391,7 @@ public final class PlanetHandling {
     int happy = planet.calculateHappiness();
     int food = planet.getFoodProdByPlanetAndBuildings();
 
-    if (info.getRace().hasTrait(RaceTrait.RADIOSYNTHESIS.getId())) {
+    if (info.getRace().hasTrait(TraitIds.RADIOSYNTHESIS)) {
       int rad = planet.getRadiationLevel();
       food += Math.min(rad, totalPop);
     }

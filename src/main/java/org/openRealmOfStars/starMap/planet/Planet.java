@@ -39,9 +39,9 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.RaceTrait;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -869,11 +869,11 @@ public class Planet {
     // Energy-powered races have maintenance for every 4th of population
     var ownerInfo = planetOwnerInfo;
     if (ownerInfo != null
-        && ownerInfo.getRace().hasTrait(RaceTrait.ENERGY_POWERED.getId())) {
+        && ownerInfo.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
       // If race can sustain itself from radiation,
       // adjust the amount of maintained population accordingly
       var popToMaintain = getTotalPopulation();
-      if (ownerInfo.getRace().hasTrait(RaceTrait.RADIOSYNTHESIS.getId())) {
+      if (ownerInfo.getRace().hasTrait(TraitIds.RADIOSYNTHESIS)) {
         int sustFromRad = Math.min(getRadiationLevel(), popToMaintain);
         popToMaintain -= sustFromRad;
       }
@@ -1553,7 +1553,7 @@ public class Planet {
 
     // TODO: "Self-sustenance" radiosynthesis should not "produce" food
     // It does in order to not break population growing
-    if (planetRace.hasTrait(RaceTrait.RADIOSYNTHESIS.getId())) {
+    if (planetRace.hasTrait(TraitIds.RADIOSYNTHESIS)) {
       final int rad = getRadiationLevel();
       final int currentPop = getTotalPopulation();
       final int sustFromRad = Math.min(rad, currentPop);
@@ -1794,7 +1794,7 @@ public class Planet {
       SpaceRace planetRace = planetOwnerInfo.getRace();
       // Population can construct itself
       // Lookup valid construction project for race based on singular name
-      if (planetRace.hasTrait(RaceTrait.CONSTRUCTED_POP.getId())
+      if (planetRace.hasTrait(TraitIds.CONSTRUCTED_POP)
           && getTotalPopulation() < getPopulationLimit()) {
         var popProjectId = planetRace.getNameSingle() + " citizen";
         var popProject = ConstructionFactory.createByName(popProjectId);

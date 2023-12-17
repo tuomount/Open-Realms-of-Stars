@@ -2407,6 +2407,8 @@ public class Game implements ActionListener {
    * @param args from Command line
    */
   public static void main(final String[] args) {
+    // TODO: Remove when SpaceRaces are dehardcoded
+    SpaceRace.initialize();
     MusicPlayer.setMusicEnabled(true);
     SoundPlayer.setSoundEnabled(true);
     if (args.length > 0 && args[0].equals("--wiki-research")) {

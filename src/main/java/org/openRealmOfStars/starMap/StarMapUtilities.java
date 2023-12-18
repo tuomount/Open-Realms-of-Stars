@@ -30,6 +30,7 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.TechFactory;
@@ -763,7 +764,7 @@ public final class StarMapUtilities {
         credits++;
       }
       if (credits > 0) {
-        if (info.getRace() == SpaceRace.SCAURIANS) {
+        if (info.getRace().hasTrait(TraitIds.MERCANTILE)) {
           credits = credits * 3 / 2;
         }
         info.setTotalCredits(info.getTotalCredits() + credits);
@@ -806,7 +807,7 @@ public final class StarMapUtilities {
         credits++;
       }
       if (credits > 0) {
-        if (info.getRace() == SpaceRace.SCAURIANS) {
+        if (info.getRace().hasTrait(TraitIds.MERCANTILE)) {
           credits = credits * 3 / 2;
         }
         if (fleet.getCommander() != null) {

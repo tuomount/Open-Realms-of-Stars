@@ -267,6 +267,7 @@ public class MissionHandlingTest {
     Mockito.when(diplomacy.getDiplomacyList(Mockito.anyInt())).thenReturn(diplomacyList);
     Mockito.when(diplomacy.getDiplomaticRelation(0)).thenReturn(Diplomacy.TRADE_ALLIANCE);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);

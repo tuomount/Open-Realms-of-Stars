@@ -61,6 +61,8 @@ public final class TraitIds {
    * but rather that it can *sustain itself* with radiation.
    */
   public static final String RADIOSYNTHESIS = "RADIOSYNTHESIS";
+  /** Gets +1 credit for each "trade" building and +50% from ship trading */
+  public static final String MERCANTILE = "MERCANTILE";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

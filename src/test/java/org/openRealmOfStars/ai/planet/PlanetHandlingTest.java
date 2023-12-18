@@ -17,11 +17,8 @@ package org.openRealmOfStars.ai.planet;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;

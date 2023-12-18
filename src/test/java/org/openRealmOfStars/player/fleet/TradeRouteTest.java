@@ -17,8 +17,6 @@ package org.openRealmOfStars.player.fleet;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -28,11 +26,20 @@ import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
 
+import junit.framework.TestCase;
+
 /**
 * Trade route calculation for fleet
 *
 */
-public class TradeRouteTest {
+public class TradeRouteTest extends TestCase {
+
+  /** TODO: Remove when SpaceRaces are dehardcoded */
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+    SpaceRace.initialize();
+  }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)

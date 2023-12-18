@@ -835,11 +835,11 @@ public class Planet {
     case PRODUCTION_CREDITS: {
       for (Building build : getBuildingList()) {
         result = result + build.getCredBonus();
-        if (planetOwnerInfo.getRace() == SpaceRace.SCAURIANS
+        // Special ability for mercantile races to get
+        // one extra credit per trade building
+        if (planetOwnerInfo.getRace().hasTrait(TraitIds.MERCANTILE)
             && build.getCredBonus() > 0) {
-          // Special ability for scaurians to get one extra credit
-          // per trade building
-          result++;
+          result += 1;
         }
       }
       break;

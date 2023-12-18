@@ -29,11 +29,6 @@ public enum GoodRandomType {
    */
   MYSTERIOUS_SIGNAL,
   /**
-   * Climate changes on planet to provide more food.
-   * DESERT->ARID->None->Lush Vegatation->Paradise
-   */
-  CLIMATE_CHANGE,
-  /**
    * Double the research points in one tech level
    */
   TECHNICAL_BREAKTHROUGH,

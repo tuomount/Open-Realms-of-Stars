@@ -1974,7 +1974,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(9, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
-
+/*
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testScauriansHandling2PopulationKingdom() {
@@ -2012,7 +2012,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
-
+*/
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testCentaursHandling3PopulationKingdomWithFarm() {

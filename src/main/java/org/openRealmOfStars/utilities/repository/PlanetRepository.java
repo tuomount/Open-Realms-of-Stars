@@ -28,6 +28,7 @@ import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
+import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 import java.io.DataInputStream;
@@ -99,6 +100,16 @@ public class PlanetRepository {
     planet.setHomeWorldIndex(dis.readInt());
     planet.setPlanetaryEvent(PlanetaryEvent.getByIndex(dis.read()));
     planet.setEventActivation(dis.readBoolean());
+
+    var statusCount = dis.readShort();
+    for (int i = 0; i < statusCount; i++) {
+      var loadedStatus = AppliedStatus.load(dis);
+      if (loadedStatus.isEmpty()) {
+        continue;
+      }
+      planet.addStatus(loadedStatus.get());
+    }
+
     for (int i = 0; i < Planet.MAX_WORKER_TYPE; i++) {
       planet.setWorkers(i, dis.readInt());
     }
@@ -162,6 +173,13 @@ public class PlanetRepository {
     dos.writeInt(planet.getHomeWorldIndex());
     dos.writeByte(planet.getPlanetaryEvent().getIndex());
     dos.writeBoolean(planet.isEventActivated());
+
+    var statuses = planet.getStatuses();
+    dos.writeShort(statuses.size());
+    for (var status : statuses) {
+      status.save(dos);
+    }
+
     for (int i = 0; i < Planet.MAX_WORKER_TYPE; i++) {
       dos.writeInt(planet.getWorkers(i));
     }

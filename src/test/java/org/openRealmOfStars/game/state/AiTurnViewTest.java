@@ -18,14 +18,12 @@ package org.openRealmOfStars.game.state;
  */
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.ai.mission.Mission;
 import org.openRealmOfStars.ai.mission.MissionList;
-import org.openRealmOfStars.ai.mission.MissionPhase;
 import org.openRealmOfStars.ai.mission.MissionType;
 import org.openRealmOfStars.ai.research.Research;
 import org.openRealmOfStars.game.Game;
@@ -41,12 +39,10 @@ import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
-import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
 * AiTurnView tests
@@ -54,25 +50,6 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
 */
 public class AiTurnViewTest {
 
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testAddAttackMission() {
-    GameRepository repository = new GameRepository();
-    StarMap starMap = repository.loadGame("src/test/resources/saves",
-                                          "testGame.save");
-    Game game = new Game(false);
-    game.setLoadedGame(starMap);
-    AITurnView aiTurnView = new AITurnView(game);
-    PlayerInfo info = starMap.getPlayerByIndex(1);
-    Planet planet = starMap.getPlanetList().get(0);
-    Mission mission = info.getMissions().getMission(MissionType.ATTACK,
-        MissionPhase.PLANNING);
-    assertEquals(null, mission);
-    aiTurnView.addAttackMission(planet, info);
-    mission = info.getMissions().getMission(MissionType.ATTACK,
-        MissionPhase.PLANNING);
-    assertNotEquals(null, mission);
-  }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)

@@ -220,6 +220,9 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.RADIOSYNTHESIS).ifPresent(trait -> {
       CHIRALOIDS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.MERCANTILE).ifPresent(trait -> {
+      SCAURIANS.addTrait(trait);
+    });
   }
 
   /**

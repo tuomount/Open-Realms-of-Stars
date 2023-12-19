@@ -1,4 +1,4 @@
-package org.openRealmOfStars.player.race.trait;
+package org.openRealmOfStars.starMap.planet.status;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2023 BottledByte
@@ -23,46 +23,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Class holding constants with IDs of all {@link RaceTrait}s
- * that are officially hardcoded in game code.
+ * Class containing hardcoded IDs of {@link PlanetaryStatus}es,
+ * that are used in game code.
  *
  * <p>
- * When RaceTrait dependency arises, ID of said RaceTrait
+ * When PlanetaryStatus dependency arises, it's ID
  * should be immediately written here as a constant.
- * There is a method that allows retrieval of all hardcoded trait IDs.
+ * There is a method that allows retrieval of all hardcoded IDs.
  * This method can be used for sanity checks at data-loading, etc.
  * </p>
  *
  * This class relies on Reflection for simple, error-free
- * addition of new trait IDs and their easy use in code,
+ * addition of new IDs and their easy use in code,
  * while allowing listing of all hardcoded IDs.
  * TODO: Use code generation instead, the reflection is not needed for this
+ *
  */
-public final class TraitIds {
-  /** Robotic */
-  public static final String ROBOTIC = "ROBOTIC";
-  /**
-   * Eats minerals.
-   * Cannot be combined with ENERGY_POWERED.
-   */
-  public static final String LITHOVORIC = "LITHOVORIC";
-  /**
-   * Eats energy (credits).
-   * Cannot be combined with LITHOVORIC.
-   */
-  public static final String ENERGY_POWERED = "ENERGY_POWERED";
-  /** Concept of parental heritage is not applicable for the race. */
-  public static final String NO_HEIRS = "NO_HEIRS";
-  /** Race can breed by explictly constructing it's own population. */
-  public static final String CONSTRUCTED_POP = "CONSTRUCTED_POP";
-  /**
-   * Race can gain sustenance from radiation.
-   * This does NOT mean that it able to *produce* food,
-   * but rather that it can *sustain itself* with radiation.
-   */
-  public static final String RADIOSYNTHESIS = "RADIOSYNTHESIS";
-  /** Gets +1 credit for each "trade" building and +50% from ship trading */
-  public static final String MERCANTILE = "MERCANTILE";
+public final class StatusIds {
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
@@ -78,7 +55,7 @@ public final class TraitIds {
 
     // Use class reflection to get all public static
     // fields of this class, then cache the result.
-    final var idList = Arrays.stream(TraitIds.class.getDeclaredFields())
+    final var idList = Arrays.stream(StatusIds.class.getDeclaredFields())
         .filter(field -> Modifier.isPublic(field.getModifiers()))
         .filter(field -> Modifier.isStatic(field.getModifiers()))
         .map(field -> field.getName())
@@ -88,7 +65,6 @@ public final class TraitIds {
   }
 
   /** Hidden constructor */
-  private TraitIds() {
+  private StatusIds() {
   }
-
 }

@@ -18,6 +18,7 @@ package org.openRealmOfStars.starMap.planet.construction;
  */
 
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -308,8 +309,8 @@ public class Building extends Construction {
       }
       sb.append("Cred.: +");
       int value = getCredBonus();
-      if (race != null && race == SpaceRace.SCAURIANS) {
-        value = value + 1;
+      if (race != null && race.hasTrait(TraitIds.MERCANTILE)) {
+        value += 1;
       }
       sb.append(value);
       space = true;

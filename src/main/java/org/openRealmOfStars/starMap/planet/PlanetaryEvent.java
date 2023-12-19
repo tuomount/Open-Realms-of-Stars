@@ -28,99 +28,21 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 */
 public enum PlanetaryEvent {
 
-  /**
-   * Nothing happens
-   */
+  /** Nothing happens */
   NONE,
-  /**
-   * One extra food production
-   */
-  LUSH_VEGETATION,
-  /**
-   * Two extra food production
-   */
-  PARADISE,
-  /**
-   * One extra mining production
-   */
-  METAL_RICH_SURFACE,
-  /**
-   * Building ancient lab
-   */
+
+  /** Building ancient lab */
   ANCIENT_LAB,
-  /**
-   * Building ancient factory
-   */
+  /** Building ancient factory */
   ANCIENT_FACTORY,
-  /**
-   * Building ancient temple
-   */
+  /** Building ancient temple */
   ANCIENT_TEMPLE,
-  /**
-   * Building ancient palace
-   */
+  /** Building ancient palace */
   ANCIENT_PALACE,
-  /**
-   * Building black monolith
-   */
+  /** Building black monolith */
   BLACK_MONOLITH,
-  /**
-   * Molten lava
-   */
-  MOLTEN_LAVA,
-  /**
-   * Arid climate
-   */
-  ARID,
-  /**
-   * Desert climate
-   */
-  DESERT,
-  /**
-   * Ancient artifact
-   */
-  ANCIENT_ARTIFACT,
-  /**
-   * Precious gems
-   */
-  PRECIOUS_GEMS;
-
-
-
-
-  /**
-   * Extra food production due the planetary event
-   * @return Extra food production
-   */
-  public int getExtraFoodProduction() {
-    if (this == LUSH_VEGETATION) {
-      return 1;
-    }
-    if (this == PlanetaryEvent.PARADISE) {
-      return 2;
-    }
-    if (this == PlanetaryEvent.ARID) {
-      return -1;
-    }
-    if (this == PlanetaryEvent.DESERT) {
-      return -2;
-    }
-    return 0;
-  }
-
-  /**
-   * Extra happiness due the planetary event
-   * @return Extra happiness
-   */
-  public int getExtraHappiness() {
-    if (this == PlanetaryEvent.PARADISE) {
-      return 1;
-    }
-    if (this == PlanetaryEvent.MOLTEN_LAVA) {
-      return -1;
-    }
-    return 0;
-  }
+  /** Ancient artifact */
+  ANCIENT_ARTIFACT;
 
   /**
    * Event is only one time event. If true event should be removed
@@ -173,61 +95,18 @@ public enum PlanetaryEvent {
   }
 
   /**
-   * Extra metal production due the planetary event
-   * @return Extra metal production
-   */
-  public int getExtraMetalProduction() {
-    if (this == PlanetaryEvent.METAL_RICH_SURFACE) {
-      return 1;
-    }
-    if (this == PlanetaryEvent.MOLTEN_LAVA) {
-      return 1;
-    }
-    return 0;
-  }
-
-  /**
-   * Extra production due the planetary event
-   * @return Extra production
-   */
-  public int getExtraProduction() {
-    if (this == PlanetaryEvent.MOLTEN_LAVA) {
-      return 1;
-    }
-    return 0;
-  }
-
-  /**
-   * Extra credit due the planetary event
-   * @return Extra credit
-   */
-  public int getExtraCredit() {
-    if (this == PlanetaryEvent.PRECIOUS_GEMS) {
-      return 1;
-    }
-    return 0;
-  }
-
-  /**
    * Get planetary event as index;
    * @return Index
    */
   public int getIndex() {
     switch (this) {
       case NONE: return 0;
-      case LUSH_VEGETATION: return 1;
-      case PARADISE: return 2;
-      case METAL_RICH_SURFACE: return 3;
-      case ANCIENT_LAB: return 4;
-      case ANCIENT_FACTORY: return 5;
-      case ANCIENT_TEMPLE: return 6;
-      case ANCIENT_PALACE: return 7;
-      case BLACK_MONOLITH: return 8;
-      case MOLTEN_LAVA: return 9;
-      case ARID: return 10;
-      case DESERT: return 11;
-      case ANCIENT_ARTIFACT: return 12;
-      case PRECIOUS_GEMS: return 13;
+      case ANCIENT_LAB: return 1;
+      case ANCIENT_FACTORY: return 2;
+      case ANCIENT_TEMPLE: return 3;
+      case ANCIENT_PALACE: return 4;
+      case BLACK_MONOLITH: return 5;
+      case ANCIENT_ARTIFACT: return 6;
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -240,19 +119,12 @@ public enum PlanetaryEvent {
   public String getName() {
     switch (this) {
       case NONE: return "None";
-      case LUSH_VEGETATION: return "Lush vegetation";
-      case PARADISE: return "Paradise";
-      case METAL_RICH_SURFACE: return "Metal rich surface";
       case ANCIENT_LAB: return "Ancient lab";
       case ANCIENT_FACTORY: return "Ancient factory";
       case ANCIENT_TEMPLE: return "Ancient temple";
       case ANCIENT_PALACE: return "Ancient palace";
       case BLACK_MONOLITH: return "Black monolith";
-      case MOLTEN_LAVA: return "Molten lava";
-      case ARID: return "Arid climate";
-      case DESERT: return "Desert climate";
       case ANCIENT_ARTIFACT: return "Ancient artefact";
-      case PRECIOUS_GEMS: return "Precious gems";
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -265,20 +137,12 @@ public enum PlanetaryEvent {
   public String getExplanation() {
     switch (this) {
       case NONE: return "";
-      case LUSH_VEGETATION: return "Lush vegetation +1 Food";
-      case PARADISE: return "Paradise +2 Food, +1 happiness";
-      case METAL_RICH_SURFACE: return "Metal rich surface +1 Metal";
       case ANCIENT_LAB: return "Ancient lab building";
       case ANCIENT_FACTORY: return "Ancient factory building";
       case ANCIENT_TEMPLE: return "Ancient temple building";
       case ANCIENT_PALACE: return "Ancient palace building";
       case BLACK_MONOLITH: return "Black monolith building";
-      case MOLTEN_LAVA: return "Molten lava +1 metal, +1 production,"
-          + " -1 happiness";
-      case ARID: return "Arid climate -1 Food";
-      case DESERT: return "Desert climate -2 Food";
       case ANCIENT_ARTIFACT: return "Ancient artifact found on planet";
-      case PRECIOUS_GEMS: return "Precious gems +1 credit";
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -292,19 +156,12 @@ public enum PlanetaryEvent {
   public static PlanetaryEvent getByIndex(final int index) {
     switch (index) {
       case 0: return NONE;
-      case 1: return LUSH_VEGETATION;
-      case 2: return PARADISE;
-      case 3: return METAL_RICH_SURFACE;
-      case 4: return ANCIENT_LAB;
-      case 5: return ANCIENT_FACTORY;
-      case 6: return ANCIENT_TEMPLE;
-      case 7: return ANCIENT_PALACE;
-      case 8: return BLACK_MONOLITH;
-      case 9: return MOLTEN_LAVA;
-      case 10: return ARID;
-      case 11: return DESERT;
-      case 12: return ANCIENT_ARTIFACT;
-      case 13: return PRECIOUS_GEMS;
+      case 1: return ANCIENT_LAB;
+      case 2: return ANCIENT_FACTORY;
+      case 3: return ANCIENT_TEMPLE;
+      case 4: return ANCIENT_PALACE;
+      case 5: return BLACK_MONOLITH;
+      case 6: return ANCIENT_ARTIFACT;
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -312,6 +169,7 @@ public enum PlanetaryEvent {
 
   /**
    * Get Random event for planet type
+   * FIXME: Correct event weights
    * @param type Planet type
    * @param chance Chance for random event.
    * @return PlanetaryEvent
@@ -325,13 +183,7 @@ public enum PlanetaryEvent {
         case CARBONWORLD2:
         case CARBONWORLD3:
           value = DiceGenerator.getRandom(99);
-          if (value < 25) {
-            return LUSH_VEGETATION;
-          } else if (value < 35) {
-            return PlanetaryEvent.METAL_RICH_SURFACE;
-          } else if (value < 40) {
-            return PlanetaryEvent.PRECIOUS_GEMS;
-          } else if (value < 50) {
+          if (value < 50) {
             return PlanetaryEvent.ANCIENT_ARTIFACT;
           } else if (value < 61) {
             return PlanetaryEvent.ANCIENT_LAB;
@@ -347,11 +199,7 @@ public enum PlanetaryEvent {
           break;
         case SILICONWORLD1:
           value = DiceGenerator.getRandom(99);
-          if (value < 20) {
-            return PlanetaryEvent.METAL_RICH_SURFACE;
-          } else if (value < 25) {
-            return PlanetaryEvent.PRECIOUS_GEMS;
-          } else if (value < 40) {
+          if (value < 40) {
             return PlanetaryEvent.ANCIENT_LAB;
           } else if (value < 50) {
             return PlanetaryEvent.ANCIENT_ARTIFACT;
@@ -370,11 +218,7 @@ public enum PlanetaryEvent {
         case ICEWORLD3:
         case ICEWORLD4:
           value = DiceGenerator.getRandom(99);
-          if (value < 10) {
-            return PlanetaryEvent.METAL_RICH_SURFACE;
-          } else if (value < 15) {
-            return PlanetaryEvent.PRECIOUS_GEMS;
-          } else if (value < 30) {
+          if (value < 30) {
             return PlanetaryEvent.ANCIENT_LAB;
           } else if (value < 40) {
             return PlanetaryEvent.ANCIENT_ARTIFACT;
@@ -392,16 +236,10 @@ public enum PlanetaryEvent {
         case DESERTWORLD2:
         case DESERTWORLD3:
           value = DiceGenerator.getRandom(99);
-          if (value < 10) {
-            return PlanetaryEvent.METAL_RICH_SURFACE;
-          } else if (value < 15) {
-            return PlanetaryEvent.PRECIOUS_GEMS;
-          } else if (value < 30) {
+          if (value < 30) {
             return PlanetaryEvent.ANCIENT_LAB;
           } else if (value < 40) {
             return PlanetaryEvent.ANCIENT_ARTIFACT;
-          } else if (value < 60) {
-            return PlanetaryEvent.ARID;
           } else if (value < 80) {
             return PlanetaryEvent.ANCIENT_TEMPLE;
           } else if (value < 95) {
@@ -417,20 +255,12 @@ public enum PlanetaryEvent {
         case IRONWORLD5:
         case IRONWORLD6:
           value = DiceGenerator.getRandom(99);
-          if (value < 20) {
-            return PlanetaryEvent.METAL_RICH_SURFACE;
-          } else if (value < 25) {
-            return PlanetaryEvent.PRECIOUS_GEMS;
-          } else if (value < 30) {
+          if (value < 30) {
             return PlanetaryEvent.ANCIENT_LAB;
           } else if (value < 37) {
             return PlanetaryEvent.ANCIENT_ARTIFACT;
           } else if (value < 50) {
             return PlanetaryEvent.ANCIENT_FACTORY;
-          } else if (value < 60) {
-            return PlanetaryEvent.ARID;
-          } else if (value < 80) {
-            return PlanetaryEvent.MOLTEN_LAVA;
           } else if (value < 100) {
             return PlanetaryEvent.BLACK_MONOLITH;
           }
@@ -445,16 +275,10 @@ public enum PlanetaryEvent {
         case WATERWORLD8:
         case WATERWORLD9:
           value = DiceGenerator.getRandom(99);
-          if (value < 16) {
-            return LUSH_VEGETATION;
-          } else if (value < 33) {
-            return PlanetaryEvent.PARADISE;
-          } else if (value < 44) {
+          if (value < 44) {
             return PlanetaryEvent.ANCIENT_PALACE;
           } else if (value < 57) {
             return PlanetaryEvent.ANCIENT_LAB;
-          } else if (value < 66) {
-            return PlanetaryEvent.PRECIOUS_GEMS;
           } else if (value < 80) {
             return PlanetaryEvent.ANCIENT_FACTORY;
           } else if (value < 87) {

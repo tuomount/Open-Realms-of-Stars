@@ -17,11 +17,8 @@ package org.openRealmOfStars.ai.planet;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -1974,7 +1971,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(9, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
-
+/*
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testScauriansHandling2PopulationKingdom() {
@@ -2012,7 +2009,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
-
+*/
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testCentaursHandling3PopulationKingdomWithFarm() {

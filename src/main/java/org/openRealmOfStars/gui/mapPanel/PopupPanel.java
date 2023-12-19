@@ -114,10 +114,6 @@ public class PopupPanel {
           title = "Catasrophic accident!";
           break;
         }
-        case CLIMATE_CHANGE: {
-          title = "Climate is drying!";
-          break;
-        }
         case CORRUPTION_SCANDAL: {
           title = "Corrupted goverment!";
           break;
@@ -162,10 +158,6 @@ public class PopupPanel {
       }
     } else {
       switch (event.getGoodType()) {
-        case CLIMATE_CHANGE: {
-          title = "Climate is getting better!";
-          break;
-        }
         case DESERTED_SHIP: {
           title = "Deserted ship found!";
           break;

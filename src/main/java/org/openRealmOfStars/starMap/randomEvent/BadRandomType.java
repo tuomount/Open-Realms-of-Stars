@@ -53,11 +53,6 @@ public enum BadRandomType {
    */
   AGGRESSIVE_WILD_LIFE,
   /**
-   * Planet climate changes to arid. If it is already arid then it turns
-   * to desert.
-   */
-  CLIMATE_CHANGE,
-  /**
    * Massive data lost in research labs. One tech research points for current
    * level is set to zero.
    */

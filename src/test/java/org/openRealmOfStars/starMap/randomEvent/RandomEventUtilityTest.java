@@ -40,7 +40,6 @@ import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.vote.Votes;
 
@@ -334,46 +333,6 @@ public class RandomEventUtilityTest {
     RandomEventUtility.handleAggressiveWildLife(event, starMap);
     assertNotEquals(null, event.getPlanet());
     assertNotEquals("", event.getText());
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testGoodClimateChange() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
-    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
-    planet.setPlanetOwner(0, info);
-    planet.setPlanetaryEvent(PlanetaryEvent.LUSH_VEGETATION);
-    StarMap starMap = Mockito.mock(StarMap.class);
-    ArrayList<Planet> planets = new ArrayList<>();
-    planets.add(planet);
-    Mockito.when(starMap.getPlanetList()).thenReturn(planets);
-    RandomEvent event = new RandomEvent(GoodRandomType.CLIMATE_CHANGE,
-        info);
-    assertEquals("", event.getText());
-    RandomEventUtility.handleGoodClimateChange(event, starMap);
-    assertNotEquals("", event.getText());
-    assertEquals(planet, event.getPlanet());
-    assertEquals(PlanetaryEvent.PARADISE, event.getPlanet().getPlanetaryEvent());
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testBadClimateChange() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
-    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
-    planet.setPlanetOwner(0, info);
-    planet.setPlanetaryEvent(PlanetaryEvent.LUSH_VEGETATION);
-    StarMap starMap = Mockito.mock(StarMap.class);
-    ArrayList<Planet> planets = new ArrayList<>();
-    planets.add(planet);
-    Mockito.when(starMap.getPlanetList()).thenReturn(planets);
-    RandomEvent event = new RandomEvent(BadRandomType.CLIMATE_CHANGE,
-        info);
-    assertEquals("", event.getText());
-    RandomEventUtility.handleBadClimateChange(event, starMap);
-    assertNotEquals("", event.getText());
-    assertEquals(planet, event.getPlanet());
-    assertEquals(PlanetaryEvent.NONE, event.getPlanet().getPlanetaryEvent());
   }
 
   @Test

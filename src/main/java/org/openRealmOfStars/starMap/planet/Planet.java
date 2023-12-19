@@ -2,6 +2,7 @@ package org.openRealmOfStars.starMap.planet;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,6 +20,8 @@ package org.openRealmOfStars.starMap.planet;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.openRealmOfStars.ai.mission.Mission;
 import org.openRealmOfStars.ai.mission.MissionPhase;
@@ -59,6 +62,8 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
+import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
+import org.openRealmOfStars.starMap.planet.status.PlanetaryStatus;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -162,6 +167,9 @@ public class Planet {
    * Planet's culture value
    */
   private int culture;
+
+  /** Statuses applied on the Planet */
+  private ArrayList<AppliedStatus> statuses;
 
   /**
    * Planetary event when colonizing the planet
@@ -456,6 +464,7 @@ public class Planet {
     }
     this.event = PlanetaryEvent.NONE;
     this.eventFound = true;
+    this.statuses = new ArrayList<>();
   }
 
   /**
@@ -776,7 +785,10 @@ public class Planet {
    */
   public int getFoodProdByPlanetAndBuildings() {
     int total = getTotalProductionFromBuildings(PRODUCTION_FOOD);
-    total = total + event.getExtraFoodProduction() + 2;
+    int statusesBonus = statuses.stream()
+        .map(status -> status.getStatus().getFoodBonus())
+        .reduce(0, Integer::sum);
+    total = total + statusesBonus + 2;
     return total;
   }
   /**
@@ -823,11 +835,11 @@ public class Planet {
     case PRODUCTION_CREDITS: {
       for (Building build : getBuildingList()) {
         result = result + build.getCredBonus();
-        if (planetOwnerInfo.getRace() == SpaceRace.SCAURIANS
+        // Special ability for mercantile races to get
+        // one extra credit per trade building
+        if (planetOwnerInfo.getRace().hasTrait(TraitIds.MERCANTILE)
             && build.getCredBonus() > 0) {
-          // Special ability for scaurians to get one extra credit
-          // per trade building
-          result++;
+          result += 1;
         }
       }
       break;
@@ -939,6 +951,21 @@ public class Planet {
   }
 
   /**
+   * Add description entry to StringBuilder if value not 0;
+   * @param sb StringBuilder
+   * @param entryName Entry name
+   * @param val Entry value
+   */
+  private void addEntryIfWorthy(final StringBuilder sb, final String entryName,
+      final int val) {
+    if (val == 0) {
+      return;
+    }
+    final var tplDescEntry = "<li> %1$s %2$+d </li>";
+    sb.append(String.format(tplDescEntry, entryName, val));
+  }
+
+  /**
    * Get total credit production from planet. This includes racial, worker,
    * planetary improvement bonus
    * @return amount of production in one turn
@@ -950,105 +977,64 @@ public class Planet {
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
     sb.append("Total credits production.<br>");
-    // Planet does not have credit bonus
-    result = getTotalProductionFromBuildings(PRODUCTION_CREDITS) + getTax()
-        - getMaintenanceCost();
-    int value = getTotalProductionFromBuildings(PRODUCTION_CREDITS);
-    if (value > 0) {
-      sb.append("<li> buildings +");
-      sb.append(value);
-      sb.append("<br>");
+
+    // Planet does not have innate credit bonus
+
+    var value = getTotalProductionFromBuildings(PRODUCTION_CREDITS);
+    result += value;
+    addEntryIfWorthy(sb, "buildings", value);
+
+    value = getTax();
+    result += value;
+    addEntryIfWorthy(sb, "tax", value);
+
+    for (var appliedStatus : statuses) {
+      final var status = appliedStatus.getStatus();
+      final var tmpVal = status.getCredBonus();
+      result += tmpVal;
+      addEntryIfWorthy(sb, status.getName(), tmpVal);
     }
-    if (getTax() > 0) {
-      sb.append("<li> tax +");
-      sb.append(getTax());
-      sb.append("<br>");
-    }
-    if (eventFound && event.getExtraCredit() != 0) {
-      value = event.getExtraCredit();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> ");
-        sb.append(event.getName());
-        sb.append(" +");
-        sb.append(value);
-        sb.append("<br>");
-      }
-      if (value < 0) {
-        sb.append("<li> ");
-        sb.append(event.getName());
-        sb.append(" ");
-        sb.append(value);
-        sb.append("<br>");
-      }
-    }
+
     value = getMaintenanceCost();
-    if (value > 0) {
-      sb.append("<li> maintenance -");
-      sb.append(value);
-      sb.append("<br>");
-    }
+    result -= value;
+    addEntryIfWorthy(sb, "maintenance", -value);
+
     if (getOrbital() != null) {
       value = getOrbital().getTotalCreditBonus();
-      if (value > 0) {
-        result = result + value;
-        sb.append("<li> orbital +");
-        sb.append(value);
-        sb.append("<br>");
-      }
+      result += value;
+      addEntryIfWorthy(sb, "orbital", value);
     }
+
     if (totalPopulation >= 4) {
       value = government.getCreditBonus();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> government +");
-        sb.append(value);
-        sb.append("<br>");
-      }
-
+      result += value;
+      addEntryIfWorthy(sb, "government", value);
     }
+
     if (happinessEffect.getType() == HappinessBonus.CREDIT) {
       value = happinessEffect.getValue();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> happiness +");
-        sb.append(value);
-        sb.append("<br>");
-      }
-      if (value < 0) {
-        sb.append("<li> happiness ");
-        sb.append(value);
-        sb.append("<br>");
-      }
+      result += value;
+      addEntryIfWorthy(sb, "happiness", value);
+    }
 
-    }
     value = 0;
-    if (governor != null && governor.hasPerk(Perk.MERCHANT)) {
-      result = result + 1;
-      value = value + 1;
+    if (governor != null) {
+      if (governor.hasPerk(Perk.MERCHANT)) {
+        value += 1;
+      }
+      if (governor.hasPerk(Perk.SKILLFUL)) {
+        value += 1;
+      }
+      if (governor.hasPerk(Perk.CORRUPTED)) {
+        value -= 1;
+      }
+      if (governor.hasPerk(Perk.INCOMPETENT)) {
+        value -= 1;
+      }
+      result += value;
+      addEntryIfWorthy(sb, "governor", value);
     }
-    if (governor != null && governor.hasPerk(Perk.SKILLFUL)) {
-      result = result + 1;
-      value = value + 1;
-    }
-    if (governor != null && governor.hasPerk(Perk.CORRUPTED)) {
-      result = result - 1;
-      value = value - 1;
-    }
-    if (governor != null && governor.hasPerk(Perk.INCOMPETENT)) {
-      result = result - 1;
-      value = value - 1;
-    }
-    if (value > 0) {
-      sb.append("<li> governor +");
-      sb.append(value);
-      sb.append("<br>");
-    }
-    if (value < 0) {
-      sb.append("<li> governor ");
-      sb.append(value);
-      sb.append("<br>");
-    }
+
     sb.append("</html>");
     credProdExplain = sb.toString();
     return result;
@@ -1154,71 +1140,54 @@ public class Planet {
   private int getTotalCultureProduction() {
     StringBuilder sb = new StringBuilder();
     int result = 0;
-    int mult = 100;
     int div = 100;
     GovernmentType government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
     sb.append("Total culture production.<br>");
-    mult = planetOwnerInfo.getRace().getCultureSpeed();
-    int value = workers[PRODUCTION_CULTURE] * mult / div;
-    if (value > 0) {
-      sb.append("<li> artists +");
-      sb.append(value);
-      sb.append("<br>");
-    }
-    // Planet does not have culture bonus
+
+    // Planet does not have innate culture bonus
+
+    var mult = planetOwnerInfo.getRace().getCultureSpeed();
+    var value = workers[PRODUCTION_CULTURE] * mult / div;
+    result += value;
+    addEntryIfWorthy(sb, "artists", value);
+
     value = getTotalProductionFromBuildings(PRODUCTION_CULTURE);
-    result = workers[PRODUCTION_CULTURE] * mult / div
-        + value;
-    if (value > 0) {
-      sb.append("<li> buildings +");
-      sb.append(value);
-      sb.append("<br>");
-    }
+    result += value;
+    addEntryIfWorthy(sb, "buildings", value);
+
     if (getOrbital() != null) {
       value = getOrbital().getTotalCultureBonus();
-      if (value > 0) {
-        result = result + value;
-        sb.append("<li> orbital +");
-        sb.append(value);
-        sb.append("<br>");
-      }
+      result += value;
+      addEntryIfWorthy(sb, "orbital", value);
     }
+
     if (totalPopulation >= 4) {
       value = government.getCultureBonus();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> government +");
-        sb.append(value);
-        sb.append("<br>");
-      }
+      result += value;
+      addEntryIfWorthy(sb, "government", value);
     }
+
+    // Home worlds produce one extra culture
     if (homeWorldIndex != -1) {
-      // Home worlds produce one extra culture
-      result++;
-      sb.append("<li> home world +1");
-      sb.append("<br>");
+      value = 1;
+      result += value;
+      addEntryIfWorthy(sb, "home world", value);
     }
+
     if (happinessEffect.getType() == HappinessBonus.CULTURE) {
       value = happinessEffect.getValue();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> happiness +");
-        sb.append(value);
-        sb.append("<br>");
-      }
-      if (value < 0) {
-        sb.append("<li> happiness ");
-        sb.append(value);
-        sb.append("<br>");
-      }
+      result += value;
+      addEntryIfWorthy(sb, "happiness", value);
     }
+
     if (governor != null && governor.hasPerk(Perk.ARTISTIC)) {
-      result = result + 1;
-      sb.append("<li> governor +1");
-      sb.append("<br>");
+      value = 1;
+      result += value;
+      addEntryIfWorthy(sb, "governor", value);
     }
+
     sb.append("</html>");
     cultProdExplain = sb.toString();
     return result;
@@ -1232,66 +1201,50 @@ public class Planet {
   private int getTotalResearchProduction() {
     StringBuilder sb = new StringBuilder();
     int result = 0;
-    int mult = 100;
     int div = 100;
     GovernmentType government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
     sb.append("Total research production.<br>");
-    sb.append("<br>");
-    mult = planetOwnerInfo.getRace().getResearchSpeed();
-    int value = workers[PRODUCTION_RESEARCH] * mult / div;
-    if (value > 0) {
-      sb.append("<li> scientists +");
-      sb.append(value);
-      sb.append("<br>");
-    }
-    // Planet does not have research bonus
+
+    // Planet does not have innate research bonus
+
+    var mult = planetOwnerInfo.getRace().getResearchSpeed();
+    var value = workers[PRODUCTION_RESEARCH] * mult / div;
+    result += value;
+    addEntryIfWorthy(sb, "scientists", value);
+
     value = getTotalProductionFromBuildings(PRODUCTION_RESEARCH);
-    result = workers[PRODUCTION_RESEARCH] * mult / div
-        + value;
-    if (value > 0) {
-      sb.append("<li> buildings +");
-      sb.append(value);
-      sb.append("<br>");
-    }
+    result += value;
+    addEntryIfWorthy(sb, "buildings", value);
+
     if (getOrbital() != null) {
       value = getOrbital().getTotalResearchBonus();
-      if (value > 0) {
-        result = result + value;
-        sb.append("<li> orbital +");
-        sb.append(value);
-        sb.append("<br>");
-      }
+      result += value;
+      addEntryIfWorthy(sb, "orbital", value);
     }
+
     if (totalPopulation >= 4) {
       value = government.getResearchBonus();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> government +");
-        sb.append(value);
-        sb.append("<br>");
-      }
+      result += value;
+      addEntryIfWorthy(sb, "government", value);
     }
+
     value = 0;
-    if (governor != null && governor.hasPerk(Perk.SCIENTIST)) {
-      result = result + 1;
-      value = value + 1;
+    if (governor != null) {
+      if (governor.hasPerk(Perk.SCIENTIST)) {
+        value += 1;
+      }
+      if (governor.hasPerk(Perk.STUPID)) {
+        value -= 1;
+      }
+      result += value;
+      addEntryIfWorthy(sb, "governor", value);
     }
-    if (governor != null && governor.hasPerk(Perk.STUPID)) {
-      result = result - 1;
-      value = value - 1;
-    }
-    if (value > 0) {
-      sb.append("<li> governor +");
-      sb.append(value);
-      sb.append("<br>");
-    }
-    if (value < 0) {
-      sb.append("<li> governor ");
-      sb.append(value);
-      sb.append("<br>");
-    }
+
+    // Ensure it never goes negative
+    result = Math.max(0, result);
+
     sb.append("</html>");
     reseProdExplain = sb.toString();
     return result;
@@ -1306,96 +1259,65 @@ public class Planet {
   private int getTotalProdProduction() {
     StringBuilder sb = new StringBuilder();
     int result = 0;
-    int mult = 100;
     int div = 100;
     GovernmentType government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
     sb.append("Total production.<br>");
-    sb.append("<li> planet +1");
-    sb.append("<br>");
-    mult = planetOwnerInfo.getRace().getProductionSpeed();
-    int value = workers[PRODUCTION_PRODUCTION] * mult / div;
-    if (value > 0) {
-      sb.append("<li> workers +");
-      sb.append(value);
-      sb.append("<br>");
-    }
-    // Planet always produces +1 production
+
+    // Planet always produces +1 by itself
+    var value = 1;
+    result += value;
+    addEntryIfWorthy(sb, "planet", value);
+
+    var mult = planetOwnerInfo.getRace().getProductionSpeed();
+    value = workers[PRODUCTION_PRODUCTION] * mult / div;
+    result += value;
+    addEntryIfWorthy(sb, "workers", value);
+
     value = getTotalProductionFromBuildings(PRODUCTION_PRODUCTION);
-    result = workers[PRODUCTION_PRODUCTION] * mult / div + 1
-        + value;
-    if (value > 0) {
-      sb.append("<li> buildings +");
-      sb.append(value);
-      sb.append("<br>");
+    result += value;
+    addEntryIfWorthy(sb, "buildings", value);
+
+    for (var appliedStatus : statuses) {
+      final var status = appliedStatus.getStatus();
+      final var tmpVal = status.getProdBonus();
+      result += tmpVal;
+      addEntryIfWorthy(sb, status.getName(), tmpVal);
     }
-    if (eventFound && event.getExtraProduction() != 0) {
-      value = event.getExtraProduction();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> ");
-        sb.append(event.getName());
-        sb.append(" +");
-        sb.append(value);
-        sb.append("<br>");
-      }
-      if (value < 0) {
-        sb.append("<li> ");
-        sb.append(event.getName());
-        sb.append(" ");
-        sb.append(value);
-        sb.append("<br>");
-      }
-    }
+
     if (totalPopulation >= 4) {
       value = government.getProductionBonus();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> government +");
-        sb.append(value);
-        sb.append("<br>");
-      }
+      result += value;
+      addEntryIfWorthy(sb, "government", value);
     }
-    result = result - getTax();
-    if (getTax() > 0) {
-      sb.append("<li> tax -");
-      sb.append(getTax());
-      sb.append("<br>");
-    }
+
+    // Subtract taxes
+    value = getTax();
+    result -= value;
+    addEntryIfWorthy(sb, "tax", -value);
+
     if (happinessEffect.getType() == HappinessBonus.PRODUCTION) {
-      result = result + happinessEffect.getValue();
-      if (value > 0) {
-        sb.append("<li> happiness +");
-        sb.append(value);
-        sb.append("<br>");
-      }
-      if (value < 0) {
-        sb.append("<li> happiness ");
-        sb.append(value);
-        sb.append("<br>");
-      }
+      value = happinessEffect.getValue();
+      result += value;
+      addEntryIfWorthy(sb, "happiness", value);
     }
+
     value = 0;
-    if (governor != null && governor.hasPerk(Perk.INDUSTRIAL)) {
-      result = result + 1;
-      value = value + 1;
+    if (governor != null) {
+      if (governor.hasPerk(Perk.INDUSTRIAL)) {
+        value += 1;
+      }
+      if (governor.hasPerk(Perk.MICRO_MANAGER)) {
+        value -= 1;
+      }
+      result += value;
+      addEntryIfWorthy(sb, "governor", value);
     }
-    if (governor != null && governor.hasPerk(Perk.MICRO_MANAGER)
-        && result > 0) {
-      result = result - 1;
-      value = value - 1;
-    }
-    if (value > 0) {
-      sb.append("<li> governor +");
-      sb.append(value);
-      sb.append("<br>");
-    }
-    if (value < 0) {
-      sb.append("<li> governor ");
-      sb.append(value);
-      sb.append("<br>");
-    }
+
+    // Ensure it never goes negative
+    result = Math.max(0, result);
+
     sb.append("</html>");
     prodProdExplain = sb.toString();
     return result;
@@ -1410,86 +1332,65 @@ public class Planet {
   private int getTotalMetalProduction() {
     StringBuilder sb = new StringBuilder();
     int result = 0;
-    int mult = 100;
     int div = 100;
     GovernmentType government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
     sb.append("Total metal production.<br>");
-    sb.append("<li> planet +1");
-    sb.append("<br>");
-    mult = planetOwnerInfo.getRace().getMiningSpeed();
-    int value = workers[METAL_MINERS] * mult / div;
-    if (value > 0) {
-      sb.append("<li> miners +");
-      sb.append(value);
-      sb.append("<br>");
-    }
-    // Planet always produces +1 metal
+
+    // Planet always produces +1 by itself
+    var value = 1;
+    result += value;
+    addEntryIfWorthy(sb, "planet", value);
+
+    var mult = planetOwnerInfo.getRace().getMiningSpeed();
+    value = workers[METAL_MINERS] * mult / div;
+    result += value;
+    addEntryIfWorthy(sb, "miners", value);
+
     value = getTotalProductionFromBuildings(PRODUCTION_METAL);
-    result = workers[METAL_MINERS] * mult / div + 1
-        + value;
-    if (value > 0) {
-      sb.append("<li> buildings +");
-      sb.append(value);
-      sb.append("<br>");
+    result += value;
+    addEntryIfWorthy(sb, "buildings", value);
+
+    for (var appliedStatus : statuses) {
+      final var status = appliedStatus.getStatus();
+      final var tmpVal = status.getMineBonus();
+      result += tmpVal;
+      addEntryIfWorthy(sb, status.getName(), tmpVal);
     }
-    if (eventFound && event.getExtraMetalProduction() != 0) {
-      value = event.getExtraMetalProduction();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> ");
-        sb.append(event.getName());
-        sb.append(" +");
-        sb.append(value);
-        sb.append("<br>");
-      }
-      if (value < 0) {
-        sb.append("<li> ");
-        sb.append(event.getName());
-        sb.append(" ");
-        sb.append(value);
-        sb.append("<br>");
-      }
-    }
+
     if (totalPopulation >= 4) {
       value = government.getMiningBonus();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> government +");
-        sb.append(value);
-        sb.append("<br>");
-      }
+      result += value;
+      addEntryIfWorthy(sb, "government", value);
     }
+
     if (happinessEffect.getType() == HappinessBonus.METAL) {
       value = happinessEffect.getValue();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> happiness +");
-        sb.append(value);
-        sb.append("<br>");
-      }
-      if (value < 0) {
-        sb.append("<li> happiness ");
-        sb.append(value);
-        sb.append("<br>");
-      }
+      result += value;
+      addEntryIfWorthy(sb, "happiness", value);
     }
+
     if (governor != null && governor.hasPerk(Perk.MINER)) {
-      result = result + 1;
-      sb.append("<li> governor +1");
-      sb.append("<br>");
+      value = 1;
+      result += value;
+      addEntryIfWorthy(sb, "governor", value);
     }
+
+    // Ensure it never goes negative
+    result = Math.max(0, result);
+
     if (result > getAmountMetalInGround()) {
       result = getAmountMetalInGround();
       sb.append("Limited by amount of metal available on planet!");
     }
-    int pop = getTotalPopulation() / 2;
+
+    // Add info about lithovoric race's metal consumption
+    int pop = totalPopulation / 2;
     if (planetOwnerInfo.getRace().isLithovorian() && pop > 0) {
-      sb.append("<li> lithovorian -");
-      sb.append(pop);
-      sb.append("<br>");
+      addEntryIfWorthy(sb, "lithovorian", pop);
     }
+
     sb.append("</html>");
     metaProdExplain = sb.toString();
     return result;
@@ -1504,7 +1405,6 @@ public class Planet {
   private int getTotalFoodProduction() {
     StringBuilder sb = new StringBuilder();
     int result = 0;
-    int mult = 100;
     int div = 100;
     final var planetRace = planetOwnerInfo.getRace();
     GovernmentType government = planetOwnerInfo.getGovernment();
@@ -1514,41 +1414,26 @@ public class Planet {
     sb.append(calculateFoodRequirement());
     sb.append("<br><br>");
     sb.append("Total food production.<br>");
-    sb.append("<li> planet +2");
-    sb.append("<br>");
+
     // Planet always produces +2 food
-    mult = planetOwnerInfo.getRace().getFoodSpeed();
-    int value = workers[FOOD_FARMERS] * mult / div;
-    if (value > 0) {
-      sb.append("<li> farmers +");
-      sb.append(value);
-      sb.append("<br>");
-    }
+    var value = 2;
+    result += value;
+    addEntryIfWorthy(sb, "planet", value);
+
+    var mult = planetOwnerInfo.getRace().getFoodSpeed();
+    value = workers[FOOD_FARMERS] * mult / div;
+    result += value;
+    addEntryIfWorthy(sb, "farmers", value);
+
     value = getTotalProductionFromBuildings(Planet.PRODUCTION_FOOD);
-    result = workers[FOOD_FARMERS] * mult / div + 2
-        + value;
-    if (value > 0) {
-      sb.append("<li> buildings +");
-      sb.append(value);
-      sb.append("<br>");
-    }
-    if (eventFound && event.getExtraFoodProduction() != 0) {
-      value = event.getExtraFoodProduction();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> ");
-        sb.append(event.getName());
-        sb.append(" +");
-        sb.append(value);
-        sb.append("<br>");
-      }
-      if (value < 0) {
-        sb.append("<li> ");
-        sb.append(event.getName());
-        sb.append(" ");
-        sb.append(value);
-        sb.append("<br>");
-      }
+    result += value;
+    addEntryIfWorthy(sb, "buildings", value);
+
+    for (var appliedStatus : statuses) {
+      final var status = appliedStatus.getStatus();
+      final var tmpVal = status.getFoodBonus();
+      result += tmpVal;
+      addEntryIfWorthy(sb, status.getName(), tmpVal);
     }
 
     // TODO: "Self-sustenance" radiosynthesis should not "produce" food
@@ -1559,32 +1444,27 @@ public class Planet {
       final int sustFromRad = Math.min(rad, currentPop);
       if (planetRace.isEatingFood() && currentPop > 0) {
         result += sustFromRad;
-        if (sustFromRad > 0) {
-          sb.append("<li> radiosynthesis +");
-          sb.append(sustFromRad);
-          sb.append("<br>");
-        }
+        addEntryIfWorthy(sb, "radiosynthesis", sustFromRad);
       }
     }
 
     if (totalPopulation >= 4) {
       value = government.getFoodBonus();
-      result = result + value;
-      if (value > 0) {
-        sb.append("<li> government +");
-        sb.append(value);
-        sb.append("<br>");
-      }
+      result += value;
+      addEntryIfWorthy(sb, "government", value);
     }
+
     if (governor != null && governor.hasPerk(Perk.AGRICULTURAL)) {
-      result = result + 1;
-      sb.append("<li> governor +1");
-      sb.append("<br>");
+      value = 1;
+      result += value;
+      addEntryIfWorthy(sb, "governor", value);
     }
+
     sb.append("</html>");
     farmProdExplain = sb.toString();
     return result;
   }
+
   /**
    * Get planet name
    * @return Planet name as a String
@@ -3658,6 +3538,51 @@ public class Planet {
   }
 
   /**
+   * Try to add provided status. Returns true if addition
+   * was successful, false otherwise.
+   * @param status AppliedStatus to add
+   * @return True if status was added
+   */
+  public boolean addStatus(final AppliedStatus status) {
+    var statusesArray = statuses.toArray(new PlanetaryStatus[statuses.size()]);
+    var conflicting = PlanetaryStatus.isConflictingWith(status.getStatus(),
+        statusesArray);
+
+    if (conflicting) {
+      return false;
+    }
+
+    return statuses.add(status);
+  }
+
+  /**
+   * Return true if Planet has status with given ID
+   * @param statusId ID of status
+   * @return True if planet has status with given ID
+   */
+  public boolean hasStatus(final String statusId) {
+    return statuses.stream()
+        .anyMatch(status -> status.getStatusId().equals(statusId));
+  }
+
+  /**
+   * Return unmodifiable list of planet's statuses
+   * @return Unmodifiable List of statuses
+   */
+  public List<AppliedStatus> getStatuses() {
+    return Collections.unmodifiableList(statuses);
+  }
+
+  /**
+   * Remove status with specified ID from planet
+   * @param statusId ID of status to remove
+   * @return True if status was removed
+   */
+  public boolean removeStatus(final String statusId) {
+    return statuses.removeIf(status -> status.getStatusId().equals(statusId));
+  }
+
+  /**
    * Set planetary event
    * @param planetaryEvent Event to set
    */
@@ -3699,266 +3624,111 @@ public class Planet {
     if (info != null) {
       realm = info;
     }
-    if (realm != null && !eventFound) {
-      StringBuilder msgText = new StringBuilder();
+    if (realm == null || eventFound || event == PlanetaryEvent.NONE) {
+      return;
+    }
+
+    StringBuilder msgText = new StringBuilder();
+    if (commander == null) {
+      msgText.append("When colonizating ");
+      msgText.append(getName());
+      msgText.append(" colonist found ");
+    } else {
+      msgText.append("Away team on ");
+      msgText.append(getName());
+      msgText.append(" lead by ");
+      msgText.append(commander.getCallName());
+      msgText.append(" found ");
+    }
+
+    eventFound = true;
+
+    if (event == PlanetaryEvent.ANCIENT_ARTIFACT) {
+      exp = 15;
+      event = PlanetaryEvent.NONE;
+      msgText.append("that ");
+      msgText.append(getName() + " has strange ancient artifact.");
       if (commander == null) {
-        msgText.append("When colonizating ");
-        msgText.append(getName());
-        msgText.append(" colonist found ");
+        msgText.append(" Colonists send it immediately for research.");
       } else {
-        msgText.append("Away team on ");
-        msgText.append(getName());
-        msgText.append(" lead by ");
-        msgText.append(commander.getCallName());
-        msgText.append(" found ");
+        msgText.append(" Away team takes it immediately for research.");
       }
-      eventFound = true;
-      if (event.oneTimeOnly()) {
-        if (event == PlanetaryEvent.ANCIENT_ARTIFACT) {
-          exp = 15;
-          event = PlanetaryEvent.NONE;
-          msgText.append("that ");
-          msgText.append(getName() + " has strange ancient artifact.");
-          if (commander == null) {
-            msgText.append(" Colonists send it immediately for research.");
-          } else {
-            msgText.append(" Away team takes it immediately for research.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.ARTIFACT_ON_PLANET);
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-          realm.getArtifactLists().addDiscoveredArtifact(
-              ArtifactFactory.getRandomArtifact());
-          if (Game.getTutorial() != null  && realm.isHuman()
-              && isTutorialEnabled) {
-            String tutorialText = Game.getTutorial().showTutorialText(15);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              realm.getMsgList().addNewMessage(msg);
-            }
-          }
-        } else {
-          exp = 8;
-          Building building = event.getBuilding();
-          addBuilding(building);
-          ImageInstruction imageInst = null;
-          if (event == PlanetaryEvent.ANCIENT_LAB) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.ANCIENT_LABORATORY);
-          }
-          if (event == PlanetaryEvent.ANCIENT_FACTORY) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.ANCIENT_FACTORY);
-          }
-          if (event == PlanetaryEvent.ANCIENT_TEMPLE) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.ANCIENT_TEMPLE);
-          }
-          if (event == PlanetaryEvent.ANCIENT_PALACE) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.ANCIENT_PALACE);
-          }
-          if (event == PlanetaryEvent.BLACK_MONOLITH) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.BLACK_MONOLITH);
-          }
-          event = PlanetaryEvent.NONE;
-          msgText.append(building.getName());
-          if (commander == null) {
-            msgText.append(". Colonists has taken it in use now.");
-          } else {
-            msgText.append(". Building must be left on planet waiting"
-                + " for colonization.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-          msg.setCoordinate(getCoordinate());
-          if (imageInst != null) {
-            msg.setImageInstructions(imageInst.build());
-          }
-          realm.getMsgList().addUpcomingMessage(msg);
+      Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+          Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+      msg.setCoordinate(getCoordinate());
+      ImageInstruction imageInst = new ImageInstruction();
+      imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+      imageInst.addImage(ImageInstruction.ARTIFACT_ON_PLANET);
+      msg.setImageInstructions(imageInst.build());
+      realm.getMsgList().addUpcomingMessage(msg);
+      realm.getArtifactLists().addDiscoveredArtifact(
+          ArtifactFactory.getRandomArtifact());
+      if (Game.getTutorial() != null  && realm.isHuman()
+          && isTutorialEnabled) {
+        String tutorialText = Game.getTutorial().showTutorialText(15);
+        if (tutorialText != null) {
+          msg = new Message(MessageType.INFORMATION, tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
+          realm.getMsgList().addNewMessage(msg);
         }
+      }
+    } else {
+      exp = 8;
+      Building building = event.getBuilding();
+      addBuilding(building);
+      ImageInstruction imageInst = null;
+      if (event == PlanetaryEvent.ANCIENT_LAB) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.ANCIENT_LABORATORY);
+      }
+      if (event == PlanetaryEvent.ANCIENT_FACTORY) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.ANCIENT_FACTORY);
+      }
+      if (event == PlanetaryEvent.ANCIENT_TEMPLE) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.ANCIENT_TEMPLE);
+      }
+      if (event == PlanetaryEvent.ANCIENT_PALACE) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.ANCIENT_PALACE);
+      }
+      if (event == PlanetaryEvent.BLACK_MONOLITH) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.BLACK_MONOLITH);
+      }
+
+      event = PlanetaryEvent.NONE;
+
+      msgText.append(building.getName());
+      if (commander == null) {
+        msgText.append(". Colonists has taken it in use now.");
       } else {
-        if (event == PlanetaryEvent.LUSH_VEGETATION) {
-          exp = 10;
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.LUSH_VEGETATION);
-          msgText.append("that planet has lot's of edible vegetation. ");
-          msgText.append("This gives one extra food per turn.");
-          if (commander != null) {
-            msgText.append(
-                " This can be only utilized by colonizating planet.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_FARM));
-          msg.setCoordinate(getCoordinate());
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        } else if (event == PlanetaryEvent.PARADISE) {
-          exp = 10;
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.PARADISE);
-          msgText.append("that planet is true paradise. ");
-          msgText.append("This gives two extra food per turn.");
-          if (commander != null) {
-            msgText.append(
-                " This can be only utilized by colonizating planet.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_FARM));
-          msg.setCoordinate(getCoordinate());
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        } else if (event == PlanetaryEvent.METAL_RICH_SURFACE) {
-          exp = 10;
-          msgText.append("that planet's surface is full of metal ore. ");
-          msgText.append("This gives one extra metal per turn.");
-          if (commander != null) {
-            msgText.append(
-                " This can be only utilized by colonizating planet.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_METAL_ORE));
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.METAL_RICH_SURFACE);
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        } else if (event == PlanetaryEvent.PRECIOUS_GEMS) {
-          exp = 10;
-          msgText.append("that planet's surface is full of precious gems. ");
-          msgText.append("This gives one extra credit per turn.");
-          if (commander != null) {
-            msgText.append(
-                " This can be only utilized by colonizating planet.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_CREDIT));
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.PRECIOUS_GEMS);
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        } else  if (event == PlanetaryEvent.MOLTEN_LAVA) {
-          exp = 10;
-          msgText.append("that there is massive amount of molten lava ");
-          msgText.append("on planet surface. This gives one extra metal and"
-              + " production per turn but adds also unhappiness of people.");
-          if (commander != null) {
-            msgText.append(
-                " This can be only utilized by colonizating planet.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_METAL_ORE));
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.MOLTEN_LAVA);
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        } else if (event == PlanetaryEvent.ARID) {
-          exp = 6;
-          msgText.append("that planet is arid. Naturally growing food is");
-          msgText.append(" is challenging to find. This planet produces only"
-              + " one food without alterations.");
-          if (commander != null) {
-            msgText.append(
-                " Colonists on this planet would have tough time.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_FARM));
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.ARID);
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        } else if (event == PlanetaryEvent.DESERT) {
-          exp = 6;
-          msgText.append("that planet is dry and full of desert. There is no"
-              + " food growing on planet surface. This planet does not provide"
-              + " any food without alterations.");
-          if (commander != null) {
-            msgText.append(
-                " Colonists on this planet would have tough time.");
-          }
-          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
-              Icons.getIconByName(Icons.ICON_FARM));
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.DESERT);
-          msg.setImageInstructions(imageInst.build());
-          realm.getMsgList().addUpcomingMessage(msg);
-        }
+        msgText.append(". Building must be left on planet waiting"
+            + " for colonization.");
       }
-      if (commander != null) {
-        if (commander.hasPerk(Perk.TREKKER)) {
-          exp = exp * 2;
-        }
-        commander.setExperience(commander.getExperience() + exp);
+      Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+          Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+      msg.setCoordinate(getCoordinate());
+      if (imageInst != null) {
+        msg.setImageInstructions(imageInst.build());
       }
+      realm.getMsgList().addUpcomingMessage(msg);
+    }
+
+    if (commander != null) {
+      if (commander.hasPerk(Perk.TREKKER)) {
+        exp = exp * 2;
+      }
+      commander.setExperience(commander.getExperience() + exp);
     }
   }
 
-  /**
-   * Planet has climate that could change.
-   * @return True if climate could change.
-   */
-  public boolean hasClimateEvent() {
-    if (event == PlanetaryEvent.DESERT
-        || event == PlanetaryEvent.ARID
-        || event == PlanetaryEvent.NONE
-        || event == PlanetaryEvent.LUSH_VEGETATION
-        || event == PlanetaryEvent.PARADISE) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * Change climate on planet if possible.
-   * @param better True for change better climate, false for worse.
-   */
-  public void changeClimate(final boolean better) {
-    if (hasClimateEvent() && better) {
-      if (event == PlanetaryEvent.DESERT) {
-        event = PlanetaryEvent.ARID;
-      } else if (event == PlanetaryEvent.ARID) {
-        event = PlanetaryEvent.NONE;
-      } else if (event == PlanetaryEvent.NONE) {
-        event = PlanetaryEvent.LUSH_VEGETATION;
-      } else if (event == PlanetaryEvent.LUSH_VEGETATION) {
-        event = PlanetaryEvent.PARADISE;
-      }
-    }
-    if (hasClimateEvent() && !better) {
-      if (event == PlanetaryEvent.PARADISE) {
-        event = PlanetaryEvent.LUSH_VEGETATION;
-      } else if (event == PlanetaryEvent.LUSH_VEGETATION) {
-        event = PlanetaryEvent.NONE;
-      } else if (event == PlanetaryEvent.NONE) {
-        event = PlanetaryEvent.ARID;
-      } else if (event == PlanetaryEvent.ARID) {
-        event = PlanetaryEvent.DESERT;
-      }
-    }
-  }
   /**
    * Calculate happiness of the planet. Also updates explanation how
    * happiness is calculated.
@@ -4031,14 +3801,17 @@ public class Planet {
       sb.append(bonusBuildings);
       sb.append("<br>");
     }
-    if (event.getExtraHappiness() != 0) {
+    int statusesBonus = statuses.stream()
+        .map(status -> status.getStatus().getHappinessBonus())
+        .reduce(0, (acc, b) -> acc + b);
+    if (statusesBonus != 0) {
       sb.append("<li>");
       sb.append(event.getName());
-      if (event.getExtraHappiness() > 0) {
+      if (statusesBonus > 0) {
         sb.append("+");
       }
-      base = base + event.getExtraHappiness();
-      sb.append(event.getExtraHappiness());
+      base = base + statusesBonus;
+      sb.append(statusesBonus);
       sb.append("<br>");
     }
     int totalWarFatigue = planetOwnerInfo.getTotalWarFatigue();
@@ -4358,6 +4131,8 @@ public class Planet {
     // Generalist planet is always good.
     int bestGuide = GENERALIST_PLANET;
     int bestScore = 0;
+
+    var planetGroundSize = getGroundSize();
     // Get scoring for population planet
     int score = 0;
     int maxPop = getPopulationLimit();
@@ -4373,49 +4148,45 @@ public class Planet {
     if (planetOwnerInfo.getWorldTypeValue(planetType.getWorldType()) < 75) {
       score = score - 1;
     }
-    if (getPlanetaryEvent() == PlanetaryEvent.LUSH_VEGETATION) {
-      score = score + 1;
-    }
-    if (getPlanetaryEvent() == PlanetaryEvent.PARADISE) {
-      score = score + 2;
-    }
-    if (getPlanetaryEvent() == PlanetaryEvent.ARID) {
-      score = score - 1;
-    }
-    if (getPlanetaryEvent() == PlanetaryEvent.MOLTEN_LAVA) {
-      score = score - 1;
-    }
-    if (getPlanetaryEvent() == PlanetaryEvent.DESERT) {
-      score = score - 2;
-    }
+
+    int statusFoodBonus = statuses.stream()
+        .map(status -> status.getStatus().getFoodBonus())
+        .reduce(0, Integer::sum);
+    score += statusFoodBonus;
+
     if (score > bestScore) {
       bestGuide = POPULATION_PLANET;
       score = bestScore;
     }
+
     // Get scoring for military planet
     score = 0;
-    if (getGroundSize() > 14) {
+    if (planetGroundSize > 14) {
       score = score + 1;
     }
-    if (getGroundSize() > 11) {
+    if (planetGroundSize > 11) {
       score = score + 1;
     }
-    if (getPlanetaryEvent() == PlanetaryEvent.MOLTEN_LAVA) {
-      score = score + 2;
-    }
-    if (getPlanetaryEvent() == PlanetaryEvent.METAL_RICH_SURFACE) {
-      score = score + 1;
-    }
+
+    int statusMineBonus = statuses.stream()
+        .map(status -> status.getStatus().getMineBonus())
+        .reduce(0, Integer::sum);
+    int statusProdBonus = statuses.stream()
+        .map(status -> status.getStatus().getProdBonus())
+        .reduce(0, Integer::sum);
+    score += statusMineBonus + statusProdBonus;
+
     if (score > bestScore) {
       bestGuide = MILITARY_PLANET;
       score = bestScore;
     }
+
     // Get scoring for culture planet
     score = 0;
-    if (getGroundSize() > 12) {
+    if (planetGroundSize > 12) {
       score = score + 1;
     }
-    if (getGroundSize() > 9) {
+    if (planetGroundSize > 9) {
       score = score + 1;
     }
     if (getCulture() > 50) {
@@ -4428,12 +4199,13 @@ public class Planet {
       bestGuide = CULTURE_PLANET;
       score = bestScore;
     }
+
     // Get scoring for research planet
     score = 0;
-    if (getGroundSize() > 10) {
+    if (planetGroundSize > 10) {
       score = score + 1;
     }
-    if (getGroundSize() > 8) {
+    if (planetGroundSize > 8) {
       score = score + 1;
     }
     if (getTotalResearchProduction() > 1) {
@@ -4446,17 +4218,21 @@ public class Planet {
       bestGuide = RESEARCH_PLANET;
       score = bestScore;
     }
+
     // Get scoring for credit planet
     score = 0;
-    if (getGroundSize() > 10) {
+    if (planetGroundSize > 10) {
       score = score + 1;
     }
-    if (getGroundSize() > 8) {
+    if (planetGroundSize > 8) {
       score = score + 1;
     }
-    if (getPlanetaryEvent() == PlanetaryEvent.PRECIOUS_GEMS) {
-      score = score + 1;
-    }
+
+    int statusCredBonus = statuses.stream()
+        .map(status -> status.getStatus().getCredBonus())
+        .reduce(0, Integer::sum);
+    score += statusCredBonus;
+
     if (getTotalCreditProduction() > 1) {
       score = score + 1;
     }
@@ -4467,6 +4243,7 @@ public class Planet {
       bestGuide = CREDIT_PLANET;
       score = bestScore;
     }
+
     return bestGuide;
   }
 }

@@ -18,7 +18,7 @@ package org.openRealmOfStars.player.fleet;
  */
 
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -59,6 +59,8 @@ public class TradeRoute {
     this.tradeWorld = tradeWorld;
     this.trader = trader;
     tradeValue = 0;
+    final var traderRace = this.trader.getRace();
+    final var traderGovernment = this.trader.getGovernment();
     double dist = fleet.getCoordinate().calculateDistance(
         this.originWorld.getCoordinate());
     if (dist <= 1) {
@@ -66,8 +68,8 @@ public class TradeRoute {
       if (tradeValue > 1) {
         tradeValue = tradeValue / 2;
       }
-      tradeValue = tradeValue + this.trader.getGovernment().getTradeBonus();
-      if (tradeValue > 0 && this.trader.getRace() == SpaceRace.SCAURIANS) {
+      tradeValue = tradeValue + traderGovernment.getTradeBonus();
+      if (tradeValue > 0 && traderRace.hasTrait(TraitIds.MERCANTILE)) {
         tradeValue = tradeValue * 3 / 2;
       }
     } else {
@@ -78,8 +80,8 @@ public class TradeRoute {
         if (tradeValue > 1) {
           tradeValue = tradeValue / 2;
         }
-        tradeValue = tradeValue + this.trader.getGovernment().getTradeBonus();
-        if (tradeValue > 0 && this.trader.getRace() == SpaceRace.SCAURIANS) {
+        tradeValue = tradeValue + traderGovernment.getTradeBonus();
+        if (tradeValue > 0 && traderRace.hasTrait(TraitIds.MERCANTILE)) {
           tradeValue = tradeValue * 3 / 2;
         }
       }
@@ -126,6 +128,7 @@ public class TradeRoute {
     }
     return sb.toString();
   }
+
   /**
    * Get the origin world where fleet will start.
    * @return Origin world

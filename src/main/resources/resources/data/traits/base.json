@@ -34,5 +34,10 @@
     "id": "RADIOSYNTHESIS",
     "name": "Radiosynthesis",
     "description": "Required sustenance (food) for population is reduced by 1 per existing population up to planet's radiation value."
+  },
+  {
+    "id": "MERCANTILE",
+    "name": "Mercantile",
+    "description": "Receives +1 additional credit from each credit-producing building and 50% more from trade routes."
   }
 ]

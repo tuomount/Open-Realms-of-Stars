@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.race.trait;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2023 BottledByte
+ * Copyright (C) 2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -63,6 +64,10 @@ public final class TraitIds {
   public static final String RADIOSYNTHESIS = "RADIOSYNTHESIS";
   /** Gets +1 credit for each "trade" building and +50% from ship trading */
   public static final String MERCANTILE = "MERCANTILE";
+
+  /** All ship design have 10% cloaking device built it. */
+  public static final String BUILT_IN_CLOAKING_DEVICE =
+      "BUILT_IN_CLOAKING_DEVICE";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

@@ -30,6 +30,7 @@ import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -936,7 +937,7 @@ private int getRemainingEnergy(final int index) {
           cloak = comp.getCloaking();
       }
     }
-    if (hull.getRace() == SpaceRace.TEUTHIDAES) {
+    if (hull.getRace().hasTrait(TraitIds.BUILT_IN_CLOAKING_DEVICE)) {
       cloak = cloak + 10;
     }
     return cloak;

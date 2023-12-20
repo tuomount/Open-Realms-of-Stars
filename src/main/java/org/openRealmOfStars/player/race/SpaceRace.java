@@ -223,6 +223,9 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.MERCANTILE).ifPresent(trait -> {
       SCAURIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.BUILT_IN_CLOAKING_DEVICE).ifPresent(trait -> {
+      TEUTHIDAES.addTrait(trait);
+    });
   }
 
   /**

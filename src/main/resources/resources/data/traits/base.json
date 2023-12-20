@@ -39,5 +39,11 @@
     "id": "MERCANTILE",
     "name": "Mercantile",
     "description": "Receives +1 additional credit from each credit-producing building and 50% more from trade routes."
+  },
+  {
+    "id": "BUILT_IN_CLOAKING_DEVICE",
+    "name": "Built in cloaking device",
+    "description": "All ships have built-in cloaking device which give 10% cloak."
   }
+
 ]

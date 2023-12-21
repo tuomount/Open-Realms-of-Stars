@@ -44,6 +44,15 @@
     "id": "BUILT_IN_CLOAKING_DEVICE",
     "name": "Built in cloaking device",
     "description": "All ships have built-in cloaking device which give 10% cloak."
+  },
+    {
+    "id": "EAT_LESS",
+    "name": "Eat less",
+    "description": "Required sustenance (food) for population is 50% less than normal requirement.",
+    "conflictsWith": [
+      "ENERGY_POWERED"
+    ]
   }
+
 
 ]

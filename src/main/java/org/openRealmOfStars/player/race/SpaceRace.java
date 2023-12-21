@@ -226,6 +226,10 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.BUILT_IN_CLOAKING_DEVICE).ifPresent(trait -> {
       TEUTHIDAES.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.EAT_LESS).ifPresent(trait -> {
+      REBORGIANS.addTrait(trait);
+      SYNTHDROIDS.addTrait(trait);
+    });
   }
 
   /**
@@ -927,44 +931,17 @@ public enum SpaceRace {
    * @return normal 100, half 50, double 200
    */
   public int getFoodRequire() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 100;
-    case MECHIONS:
-      return 0;
-    case SPORKS:
-      return 100;
-    case GREYANS:
-      return 100;
-    case CENTAURS:
-      return 100;
-    case MOTHOIDS:
-      return 100;
-    case TEUTHIDAES:
-      return 100;
-    case SCAURIANS:
-      return 100;
-    case HOMARIANS:
-      return 100;
-    case CHIRALOIDS:
-      return 100;
-    case REBORGIANS:
-      return 50;
-    case LITHORIANS:
-      return 0;
-    case ALTEIRIANS:
-      return 100;
-    case SMAUGIRIANS:
-      return 100;
-    case SYNTHDROIDS:
-      return 50;
-    case ALONIANS:
-      return 100;
-    default:
-      return 0;
+    int result = 100;
+    if (hasTrait(TraitIds.ENERGY_POWERED)) {
+      result = 0;
     }
+    if (hasTrait(TraitIds.LITHOVORIC)) {
+      result = 0;
+    }
+    if (hasTrait(TraitIds.EAT_LESS)) {
+      result = result / 2;
+    }
+    return result;
   }
 
   /**

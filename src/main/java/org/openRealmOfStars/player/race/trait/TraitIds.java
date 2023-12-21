@@ -69,6 +69,9 @@ public final class TraitIds {
   public static final String BUILT_IN_CLOAKING_DEVICE =
       "BUILT_IN_CLOAKING_DEVICE";
 
+  /** Require 50% less food to survive. */
+  public static final String EAT_LESS = "EAT_LESS";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

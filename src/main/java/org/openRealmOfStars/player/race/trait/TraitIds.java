@@ -88,6 +88,10 @@ public final class TraitIds {
   public static final String CREDIT_RUSH = "CREDIT_RUSH";
   /** Population Rush for projects */
   public static final String POPULATION_RUSH = "POPULATION_RUSH";
+  /** Slow culture speed for artists. */
+  public static final String SLOW_CULTURE = "SLOW_CULTURE";
+  /** Fast culture speed for artists. */
+  public static final String FAST_CULTURE = "FAST_CULTURE";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

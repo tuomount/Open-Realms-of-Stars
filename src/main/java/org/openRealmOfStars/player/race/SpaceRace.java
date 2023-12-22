@@ -261,6 +261,16 @@ public enum SpaceRace {
       HOMARIANS.addTrait(trait);
       REBORGIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.SLOW_CULTURE).ifPresent(trait -> {
+      MECHIONS.addTrait(trait);
+      HOMARIANS.addTrait(trait);
+      REBORGIANS.addTrait(trait);
+      SYNTHDROIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.FAST_CULTURE).ifPresent(trait -> {
+      MOTHOIDS.addTrait(trait);
+      ALTEIRIANS.addTrait(trait);
+    });
   }
 
   /**
@@ -643,44 +653,14 @@ public enum SpaceRace {
    * @return normal 100, half 50, double 200
    */
   public int getCultureSpeed() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 100;
-    case MECHIONS:
-      return 50;
-    case SPORKS:
-      return 100;
-    case GREYANS:
-      return 100;
-    case CENTAURS:
-      return 100;
-    case MOTHOIDS:
-      return 150;
-    case TEUTHIDAES:
-      return 100;
-    case SCAURIANS:
-      return 100;
-    case HOMARIANS:
-      return 50;
-    case CHIRALOIDS:
-      return 100;
-    case REBORGIANS:
-      return 50;
-    case LITHORIANS:
-      return 100;
-    case ALTEIRIANS:
-      return 150;
-    case SMAUGIRIANS:
-      return 100;
-    case SYNTHDROIDS:
-      return 50;
-    case ALONIANS:
-      return 100;
-    default:
-      return 0;
+    int result = 100;
+    if (hasTrait(TraitIds.SLOW_CULTURE)) {
+      result = 50;
     }
+    if (hasTrait(TraitIds.FAST_CULTURE)) {
+      result = 150;
+    }
+    return result;
   }
 
   /**

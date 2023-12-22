@@ -80,7 +80,7 @@
       "CONSTRUCTED_POP"
     ]
   },
-    {
+  {
     "id": "LIMITED_GROWTH",
     "name": "Limited maximum population growth",
     "description": "Population growth is limited.",
@@ -97,6 +97,22 @@
     "id": "POPULATION_RUSH",
     "name": "Population rush",
     "description": "Rush projects by sacrificing population."
+  },
+  {
+    "id": "SLOW_CULTURE",
+    "name": "Slow culture",
+    "description": "Slow culture from artist population.",
+    "conflictsWith": [
+      "FAST_CULTURE"
+    ]
+  },
+  {
+    "id": "FAST_CULTURE",
+    "name": "Fast culture",
+    "description": "Fast culture from artist population.",
+    "conflictsWith": [
+      "SLOW_CULTURE"
+    ]
   }
 
 ]

@@ -87,11 +87,16 @@
     "conflictsWith": [
       "CONSTRUCTED_POP", "FIXED_GROWTH"
     ]
+  },
+  {
+    "id": "CREDIT_RUSH",
+    "name": "Credit rush",
+    "description": "Rush projects by paying extra credits."
+  },
+  {
+    "id": "POPULATION_RUSH",
+    "name": "Population rush",
+    "description": "Rush projects by sacrificing population."
   }
-
-
-
-
-
 
 ]

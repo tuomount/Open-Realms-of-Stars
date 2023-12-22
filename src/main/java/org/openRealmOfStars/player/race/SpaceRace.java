@@ -241,6 +241,26 @@ public enum SpaceRace {
       REBORGIANS.addTrait(trait);
       LITHORIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.CREDIT_RUSH).ifPresent(trait -> {
+      HUMAN.addTrait(trait);
+      SPORKS.addTrait(trait);
+      GREYANS.addTrait(trait);
+      CENTAURS.addTrait(trait);
+      TEUTHIDAES.addTrait(trait);
+      SCAURIANS.addTrait(trait);
+      ALTEIRIANS.addTrait(trait);
+      SMAUGIRIANS.addTrait(trait);
+      ALONIANS.addTrait(trait);
+      SPACE_PIRATE.addTrait(trait);
+      SPACE_MONSTERS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.POPULATION_RUSH).ifPresent(trait -> {
+      MECHIONS.addTrait(trait);
+      SPORKS.addTrait(trait);
+      MOTHOIDS.addTrait(trait);
+      HOMARIANS.addTrait(trait);
+      REBORGIANS.addTrait(trait);
+    });
   }
 
   /**
@@ -1299,88 +1319,14 @@ public enum SpaceRace {
    * @return True if credit rush is possible
    */
   public boolean hasCreditRush() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return true;
-    case MECHIONS:
-      return false;
-    case SPORKS:
-      return true;
-    case GREYANS:
-      return true;
-    case CENTAURS:
-      return true;
-    case MOTHOIDS:
-      return false;
-    case TEUTHIDAES:
-      return true;
-    case SCAURIANS:
-      return true;
-    case HOMARIANS:
-      return false;
-    case CHIRALOIDS:
-      return false;
-    case REBORGIANS:
-      return false;
-    case LITHORIANS:
-      return false;
-    case ALTEIRIANS:
-      return true;
-    case SMAUGIRIANS:
-      return true;
-    case SYNTHDROIDS:
-      return false;
-    case ALONIANS:
-      return true;
-    default:
-      return true;
-    }
+    return hasTrait(TraitIds.CREDIT_RUSH);
   }
   /**
    * Has space race option to rush production with population.
    * @return True if credit rush is possible
    */
   public boolean hasPopulationRush() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return false;
-    case MECHIONS:
-      return true;
-    case SPORKS:
-      return true;
-    case GREYANS:
-      return false;
-    case CENTAURS:
-      return false;
-    case MOTHOIDS:
-      return true;
-    case TEUTHIDAES:
-      return false;
-    case SCAURIANS:
-      return false;
-    case HOMARIANS:
-      return true;
-    case CHIRALOIDS:
-      return false;
-    case REBORGIANS:
-      return true;
-    case LITHORIANS:
-      return false;
-    case ALTEIRIANS:
-      return false;
-    case SMAUGIRIANS:
-      return false;
-    case SYNTHDROIDS:
-      return false;
-    case ALONIANS:
-      return false;
-    default:
-      return false;
-    }
+    return hasTrait(TraitIds.POPULATION_RUSH);
   }
 
   /**

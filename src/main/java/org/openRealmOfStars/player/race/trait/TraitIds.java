@@ -84,6 +84,11 @@ public final class TraitIds {
   /** Limited population growth. */
   public static final String LIMITED_GROWTH = "LIMITED_GROWTH";
 
+  /** Credit Rush for projects */
+  public static final String CREDIT_RUSH = "CREDIT_RUSH";
+  /** Population Rush for projects */
+  public static final String POPULATION_RUSH = "POPULATION_RUSH";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

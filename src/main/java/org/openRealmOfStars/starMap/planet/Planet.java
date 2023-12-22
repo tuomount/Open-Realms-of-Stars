@@ -956,8 +956,8 @@ public class Planet {
    * @param entryName Entry name
    * @param val Entry value
    */
-  private void addEntryIfWorthy(final StringBuilder sb, final String entryName,
-      final int val) {
+  private static void addEntryIfWorthy(final StringBuilder sb,
+      final String entryName, final int val) {
     if (val == 0) {
       return;
     }
@@ -1087,7 +1087,11 @@ public class Planet {
       // Lithovorians eat metal instead of food.
       require = getTotalPopulation() / 2;
       int available = getMetal() + getTotalProduction(PRODUCTION_METAL);
-      if (available >= require * 4) {
+      if (available >= require * 16) {
+        result = 4;
+      } else if (available >= require * 8) {
+        result = 3;
+      } else if (available >= require * 4) {
         result = 2;
       } else if (available > require) {
         result = 1;
@@ -1095,6 +1099,10 @@ public class Planet {
         result = 0;
       } else {
         result = -1;
+      }
+      if (planetOwnerInfo.getRace().hasTrait(TraitIds.LIMITED_GROWTH)
+          && result > 2) {
+        result = 2;
       }
       require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
     } else {
@@ -1109,9 +1117,15 @@ public class Planet {
       } else {
         require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
       }
-      if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && result > 0) {
-        // Limit cyborg grow rate
+      if (planetOwnerInfo.getRace().hasTrait(TraitIds.FIXED_GROWTH)
+          && result > 0) {
+        // Fixed grow rate
         result = 1;
+      }
+      if (planetOwnerInfo.getRace().hasTrait(TraitIds.LIMITED_GROWTH)
+          && result > 2) {
+        // Limited grow rate
+        result = 2;
       }
     }
     if (result > 0) {

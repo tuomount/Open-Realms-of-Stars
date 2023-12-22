@@ -30,7 +30,7 @@
     "name": "Constructed",
     "description": "Breeds by external process, where individuals are \"constructed\" in some way.",
     "conflictsWith": [
-      "SLOW_GROWTH", "FAST_GROWTH"
+      "SLOW_GROWTH", "FAST_GROWTH", "FIXED_GROWTH", "LIMITED_GROWTH"
     ]
   },
   {
@@ -71,7 +71,25 @@
     "conflictsWith": [
       "FAST_GROWTH", "CONSTRUCTED_POP"
     ]
+  },
+  {
+    "id": "FIXED_GROWTH",
+    "name": "Fixed maximum population growth",
+    "description": "Population grows always with fixed speed.",
+    "conflictsWith": [
+      "CONSTRUCTED_POP"
+    ]
+  },
+    {
+    "id": "LIMITED_GROWTH",
+    "name": "Limited maximum population growth",
+    "description": "Population growth is limited.",
+    "conflictsWith": [
+      "CONSTRUCTED_POP", "FIXED_GROWTH"
+    ]
   }
+
+
 
 
 

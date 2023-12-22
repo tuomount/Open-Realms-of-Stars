@@ -78,6 +78,12 @@ public final class TraitIds {
   /** Slow population growth. */
   public static final String SLOW_GROWTH = "SLOW_GROWTH";
 
+  /** Fixed population growth. */
+  public static final String FIXED_GROWTH = "FIXED_GROWTH";
+
+  /** Limited population growth. */
+  public static final String LIMITED_GROWTH = "LIMITED_GROWTH";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

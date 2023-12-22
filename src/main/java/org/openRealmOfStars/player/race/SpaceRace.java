@@ -1918,11 +1918,11 @@ public enum SpaceRace {
     switch (getGrowthSpeed()) {
     case 0: sb.append("never"); break;
     case 50: {
-      if (this == REBORGIANS) {
+      if (hasTrait(TraitIds.FIXED_GROWTH)) {
         sb.append("always ");
       }
       sb.append("20 star years");
-      if (this == LITHORIANS) {
+      if (hasTrait(TraitIds.LIMITED_GROWTH)) {
         sb.append(" limited");
       }
       break;

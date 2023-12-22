@@ -28,7 +28,10 @@
   {
     "id": "CONSTRUCTED_POP",
     "name": "Constructed",
-    "description": "Breeds by external process, where individuals are \"constructed\" in some way."
+    "description": "Breeds by external process, where individuals are \"constructed\" in some way.",
+    "conflictsWith": [
+      "SLOW_GROWTH", "FAST_GROWTH"
+    ]
   },
   {
     "id": "RADIOSYNTHESIS",
@@ -45,14 +48,32 @@
     "name": "Built in cloaking device",
     "description": "All ships have built-in cloaking device which give 10% cloak."
   },
-    {
+  {
     "id": "EAT_LESS",
     "name": "Eat less",
     "description": "Required sustenance (food) for population is 50% less than normal requirement.",
     "conflictsWith": [
       "ENERGY_POWERED"
     ]
+  },
+  {
+    "id": "FAST_GROWTH",
+    "name": "Fast population growth",
+    "description": "Population grows 150% faster than normally",
+    "conflictsWith": [
+      "SLOW_GROWTH", "CONSTRUCTED_POP"
+    ]
+  },
+  {
+    "id": "SLOW_GROWTH",
+    "name": "Slow population growth",
+    "description": "Population grows 50% slower than normally",
+    "conflictsWith": [
+      "FAST_GROWTH", "CONSTRUCTED_POP"
+    ]
   }
+
+
 
 
 ]

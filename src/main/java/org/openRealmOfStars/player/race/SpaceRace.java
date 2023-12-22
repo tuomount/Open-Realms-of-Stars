@@ -230,6 +230,17 @@ public enum SpaceRace {
       REBORGIANS.addTrait(trait);
       SYNTHDROIDS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.FAST_GROWTH).ifPresent(trait -> {
+      MOTHOIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.SLOW_GROWTH).ifPresent(trait -> {
+      GREYANS.addTrait(trait);
+      CENTAURS.addTrait(trait);
+      SCAURIANS.addTrait(trait);
+      CHIRALOIDS.addTrait(trait);
+      REBORGIANS.addTrait(trait);
+      LITHORIANS.addTrait(trait);
+    });
   }
 
   /**
@@ -747,44 +758,17 @@ public enum SpaceRace {
    * @return normal 100, half 50, double 200
    */
   public int getGrowthSpeed() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 100;
-    case MECHIONS:
-      return 0;
-    case SPORKS:
-      return 100;
-    case GREYANS:
-      return 50;
-    case CENTAURS:
-      return 50;
-    case MOTHOIDS:
-      return 150;
-    case TEUTHIDAES:
-      return 100;
-    case SCAURIANS:
-      return 50;
-    case HOMARIANS:
-      return 100;
-    case CHIRALOIDS:
-      return 50;
-    case REBORGIANS:
-      return 50;
-    case LITHORIANS:
-      return 50;
-    case ALTEIRIANS:
-      return 100;
-    case SMAUGIRIANS:
-      return 100;
-    case SYNTHDROIDS:
-      return 0;
-    case ALONIANS:
-      return 100;
-    default:
-      return 0;
+    int result = 100;
+    if (hasTrait(TraitIds.CONSTRUCTED_POP)) {
+      result = 0;
     }
+    if (hasTrait(TraitIds.SLOW_GROWTH)) {
+      result = 50;
+    }
+    if (hasTrait(TraitIds.FAST_GROWTH)) {
+      result = 150;
+    }
+    return result;
   }
 
   /**

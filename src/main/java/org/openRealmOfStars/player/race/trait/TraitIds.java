@@ -72,6 +72,12 @@ public final class TraitIds {
   /** Require 50% less food to survive. */
   public static final String EAT_LESS = "EAT_LESS";
 
+  /** Fast population growth. */
+  public static final String FAST_GROWTH = "FAST_GROWTH";
+
+  /** Slow population growth. */
+  public static final String SLOW_GROWTH = "SLOW_GROWTH";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

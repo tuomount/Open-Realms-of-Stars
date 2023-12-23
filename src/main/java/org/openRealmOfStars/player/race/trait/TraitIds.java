@@ -98,6 +98,18 @@ public final class TraitIds {
   public static final String FAST_RESEARCH = "FAST_RESEARCH";
   /** Very fast research speed for scientist. */
   public static final String VERY_FAST_RESEARCH = "VERY_FAST_RESEARCH";
+  /** Short life span. */
+  public static final String SHORT_LIFE_SPAN = "SHORT_LIFE_SPAN";
+  /** Long life span. */
+  public static final String LONG_LIFE_SPAN = "LONG_LIFE_SPAN";
+  /** Very long life span. */
+  public static final String VERY_LONG_LIFE_SPAN = "VERY_LONG_LIFE_SPAN";
+  /** Cyborg life span. */
+  public static final String CYBORG_LIFE_SPAN = "CYBORG_LIFE_SPAN";
+  /** Massive size */
+  public static final String MASSIVE_SIZE = "MASSIVE_SIZE";
+  /** Slow metabolism */
+  public static final String SLOW_METABOLISM = "SLOW_METABOLISM";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

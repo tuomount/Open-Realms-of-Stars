@@ -283,6 +283,31 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.VERY_FAST_RESEARCH).ifPresent(trait -> {
       ALTEIRIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.SHORT_LIFE_SPAN).ifPresent(trait -> {
+      SPORKS.addTrait(trait);
+      MOTHOIDS.addTrait(trait);
+      HOMARIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.LONG_LIFE_SPAN).ifPresent(trait -> {
+      SCAURIANS.addTrait(trait);
+      ALTEIRIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.VERY_LONG_LIFE_SPAN).ifPresent(trait -> {
+      GREYANS.addTrait(trait);
+      CENTAURS.addTrait(trait);
+      LITHORIANS.addTrait(trait);
+      CHIRALOIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.SLOW_METABOLISM).ifPresent(trait -> {
+      GREYANS.addTrait(trait);
+      LITHORIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.MASSIVE_SIZE).ifPresent(trait -> {
+      CENTAURS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.CYBORG_LIFE_SPAN).ifPresent(trait -> {
+      REBORGIANS.addTrait(trait);
+    });
   }
 
   /**
@@ -1040,44 +1065,10 @@ public enum SpaceRace {
    * @return normal 0 or 1
    */
   public int getExtraHullPoint() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 0;
-    case MECHIONS:
-      return 0;
-    case SPORKS:
-      return 0;
-    case GREYANS:
-      return 0;
-    case CENTAURS:
+    if (hasTrait(TraitIds.MASSIVE_SIZE)) {
       return 1;
-    case MOTHOIDS:
-      return 0;
-    case TEUTHIDAES:
-      return 0;
-    case SCAURIANS:
-      return 0;
-    case HOMARIANS:
-      return 0;
-    case CHIRALOIDS:
-      return 0;
-    case REBORGIANS:
-      return 0;
-    case LITHORIANS:
-      return 0;
-    case ALTEIRIANS:
-      return 0;
-    case SMAUGIRIANS:
-      return 0;
-    case SYNTHDROIDS:
-      return 0;
-    case ALONIANS:
-      return 0;
-    default:
-      return 0;
     }
+    return 0;
   }
 
   /**
@@ -1375,48 +1366,29 @@ public enum SpaceRace {
    * @return Life span of leaders
    */
   public int getLifeSpan() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 80;
-    case MECHIONS:
-      // Robots can be always fixed and parts replaced.
-      // Game last maximum of 1120 star years so 2000 is more than enough.
-      return 2000;
-    case SPORKS:
-      return 75;
-    case GREYANS:
-      return 110;
-    case CENTAURS:
-      return 120;
-    case MOTHOIDS:
-      return 70;
-    case TEUTHIDAES:
-      return 80;
-    case SCAURIANS:
-      return 90;
-    case HOMARIANS:
-      return 70;
-    case CHIRALOIDS:
-      return 100;
-    case REBORGIANS:
-      return 150;
-    case LITHORIANS:
-      return 110;
-    case ALTEIRIANS:
-      return 90;
-    case SMAUGIRIANS:
-      return 80;
-    case SYNTHDROIDS:
-      // Droids can be always fixed and parts replaced.
-      // Game last maximum of 1120 star years so 2000 is more than enough.
-      return 2000;
-    case ALONIANS:
-      return 100;
-    default:
-      return 80;
+    int result = 80;
+    if (hasTrait(TraitIds.SHORT_LIFE_SPAN)) {
+      result = result - 10;
     }
+    if (hasTrait(TraitIds.LONG_LIFE_SPAN)) {
+      result = result + 10;
+    }
+    if (hasTrait(TraitIds.VERY_LONG_LIFE_SPAN)) {
+      result = result + 20;
+    }
+    if (hasTrait(TraitIds.SLOW_METABOLISM)) {
+      result = result + 10;
+    }
+    if (hasTrait(TraitIds.CYBORG_LIFE_SPAN)) {
+      result = result + 70;
+    }
+    if (hasTrait(TraitIds.MASSIVE_SIZE)) {
+      result = result + 20;
+    }
+    if (hasTrait(TraitIds.ROBOTIC)) {
+      result = 2000;
+    }
+    return result;
   }
 
   /**

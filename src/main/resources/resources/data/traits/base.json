@@ -30,7 +30,8 @@
     "name": "Constructed",
     "description": "Breeds by external process, where individuals are \"constructed\" in some way.",
     "conflictsWith": [
-      "SLOW_GROWTH", "FAST_GROWTH", "FIXED_GROWTH", "LIMITED_GROWTH"
+      "SLOW_GROWTH", "FAST_GROWTH", "FIXED_GROWTH", "LIMITED_GROWTH",
+      "SLOW_METABOLISM"
     ]
   },
   {
@@ -137,6 +138,42 @@
     "conflictsWith": [
       "FAST_RESEARCH", "VERY_FAST_RESEARCH"
     ]
+  },
+  {
+    "id": "SHORT_LIFE_SPAN",
+    "name": "Short life spane",
+    "description": "Short life span for leaders. Leaders live about 10 star years below average.",
+    "conflictsWith": [
+      "LONG_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
+    ]
+  },
+  {
+    "id": "LONG_LIFE_SPAN",
+    "name": "Long life spane",
+    "description": "Long life span for leaders. Leaders live about 10 star years longer than average.",
+    "conflictsWith": [
+      "LONG_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
+    ]
+  },
+  {
+    "id": "VERY_LONG_LIFE_SPAN",
+    "name": "Very long life spane",
+    "description": "Very long life span for leaders. Leaders live about 20 star years longer than average.",
+    "conflictsWith": [
+      "LONG_LIFE_SPAN", "SHORT_LIFE_SPAN", "CYBORG_LIFE_SPAN"
+    ]
+  },
+  {
+    "id": "MASSIVE_SIZE",
+    "name": "Massive size",
+    "description": "Massive size, that ships are more robust and leaders live a longer life."    
+  },
+  {
+    "id": "SLOW_METABOLISM",
+    "name": "Slow metabolism",
+    "description": "Leaders live a longer life due slower metabolism but troops fight with less power.",
+    "conflictsWith": [
+      "CONSTRUCTED_POP"
+    ]  
   }
-
 ]

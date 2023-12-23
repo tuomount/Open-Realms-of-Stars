@@ -101,7 +101,7 @@
   {
     "id": "SLOW_CULTURE",
     "name": "Slow culture",
-    "description": "Slow culture from artist population.",
+    "description": "Slow culture speed from artist population.",
     "conflictsWith": [
       "FAST_CULTURE"
     ]
@@ -109,9 +109,33 @@
   {
     "id": "FAST_CULTURE",
     "name": "Fast culture",
-    "description": "Fast culture from artist population.",
+    "description": "Fast culture speed from artist population.",
     "conflictsWith": [
       "SLOW_CULTURE"
+    ]
+  },
+  {
+    "id": "FAST_RESEARCH",
+    "name": "Fast research",
+    "description": "Fast research speed from scientist population.",
+    "conflictsWith": [
+      "SLOW_RESEARCH", "VERY_FAST_RESEARCH"
+    ]
+  },
+  {
+    "id": "VERY_FAST_RESEARCH",
+    "name": "Fast research",
+    "description": "Very fast research speed from scientist population.",
+    "conflictsWith": [
+      "SLOW_RESEARCH", "FAST_RESEARCH"
+    ]
+  },
+  {
+    "id": "SLOW_RESEARCH",
+    "name": "Slow research",
+    "description": "Slow research speed from scientist population.",
+    "conflictsWith": [
+      "FAST_RESEARCH", "VERY_FAST_RESEARCH"
     ]
   }
 

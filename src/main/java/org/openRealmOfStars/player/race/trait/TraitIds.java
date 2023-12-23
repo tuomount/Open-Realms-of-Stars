@@ -92,6 +92,12 @@ public final class TraitIds {
   public static final String SLOW_CULTURE = "SLOW_CULTURE";
   /** Fast culture speed for artists. */
   public static final String FAST_CULTURE = "FAST_CULTURE";
+  /** Slow research speed for scientist. */
+  public static final String SLOW_RESEARCH = "SLOW_RESEARCH";
+  /** Fast research speed for scientist. */
+  public static final String FAST_RESEARCH = "FAST_RESEARCH";
+  /** Very fast research speed for scientist. */
+  public static final String VERY_FAST_RESEARCH = "VERY_FAST_RESEARCH";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

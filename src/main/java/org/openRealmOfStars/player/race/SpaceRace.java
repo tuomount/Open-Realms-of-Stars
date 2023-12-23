@@ -271,6 +271,18 @@ public enum SpaceRace {
       MOTHOIDS.addTrait(trait);
       ALTEIRIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.SLOW_RESEARCH).ifPresent(trait -> {
+      MECHIONS.addTrait(trait);
+      HOMARIANS.addTrait(trait);
+      CHIRALOIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.FAST_RESEARCH).ifPresent(trait -> {
+      GREYANS.addTrait(trait);
+      TEUTHIDAES.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.VERY_FAST_RESEARCH).ifPresent(trait -> {
+      ALTEIRIANS.addTrait(trait);
+    });
   }
 
   /**

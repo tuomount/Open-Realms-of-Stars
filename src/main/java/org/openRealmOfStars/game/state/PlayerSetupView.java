@@ -223,7 +223,7 @@ public class PlayerSetupView extends BlackPanel {
           config.getPlayerGovernment(index));
       comboGovernmentSelect[index].setToolTipText(
           config.getPlayerGovernment(index).getDescription(false));
-      playerName[index].setText(SpaceRaceUtility.getRandomName(race,
+      playerName[index].setText(SpaceRaceUtility.getRealmName(race,
           config.getPlayerGovernment(index)));
       comboGovernmentSelect[index].addActionListener(actionListener);
     }
@@ -248,7 +248,7 @@ public class PlayerSetupView extends BlackPanel {
       String raceStr = (String) comboRaceSelect[index].getSelectedItem();
       SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
       GovernmentType gov = config.getPlayerGovernment(index);
-      playerName[index].setText(SpaceRaceUtility.getRandomName(race, gov));
+      playerName[index].setText(SpaceRaceUtility.getRealmName(race, gov));
     }
     if (arg0.getActionCommand().startsWith(
         GameCommands.COMMAND_DIFFICULT_SETUP)) {

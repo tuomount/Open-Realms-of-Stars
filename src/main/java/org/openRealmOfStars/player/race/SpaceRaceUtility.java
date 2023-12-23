@@ -40,7 +40,6 @@ public final class SpaceRaceUtility {
       "Chiraloid", "Reborgian", "Lithorian", "Alteirian", "Smaugirian",
       "Synthdroid" };
 
-
   /**
    * Get SpaceRace with indexed number
    * @param index Space Race index
@@ -121,100 +120,51 @@ public final class SpaceRaceUtility {
 
   /**
    * Get random empire name for realm
+   * TODO: Remove from here, realm name is only loosely coupled to race
    * @param race SpaceRace for which random name is going to be generated
    * @param government Government type for realm
    * @return realm name
    */
-  public static String getRandomName(final SpaceRace race,
+  public static String getRealmName(final SpaceRace race,
       final GovernmentType government) {
     StringBuilder sb = new StringBuilder();
-    if (DiceGenerator.getBoolean()) {
-      if (race == SpaceRace.HUMAN) {
-          sb.append(buildSecondaryName(race, "Terran"));
-      } else if (race == SpaceRace.MECHIONS) {
-          sb.append(buildSecondaryName(race, "Steel"));
-      } else if (race == SpaceRace.SPORKS) {
-          sb.append(buildSecondaryName(race, "Taurus"));
-      } else if (race == SpaceRace.GREYANS) {
-          sb.append(buildSecondaryName(race, "Aesir"));
-      } else if (race == SpaceRace.CENTAURS) {
-          sb.append(buildSecondaryName(race, "Sagittarian"));
-      } else if (race == SpaceRace.TEUTHIDAES) {
-          sb.append(buildSecondaryName(race, "Squiddan"));
-      } else if (race == SpaceRace.MOTHOIDS) {
-          sb.append(buildSecondaryName(race, "Scorpio"));
-      } else if (race == SpaceRace.SCAURIANS) {
-          sb.append(buildSecondaryName(race, "Nemean"));
-      } else if (race == SpaceRace.HOMARIANS) {
-          sb.append(buildSecondaryName(race, "Cancerian"));
-      } else if (race == SpaceRace.CHIRALOIDS) {
-          sb.append(buildSecondaryName(race, "Capricorn"));
-      } else if (race == SpaceRace.REBORGIANS) {
-        sb.append(buildSecondaryName(race, "Bionian"));
-      } else if (race == SpaceRace.LITHORIANS) {
-        sb.append(buildSecondaryName(race, "Metavore"));
-      } else if (race == SpaceRace.SMAUGIRIANS) {
-        sb.append(buildSecondaryName(race, "Harean"));
-      } else if (race == SpaceRace.SYNTHDROIDS) {
-        sb.append(buildSecondaryName(race, "Huskdroid"));
-      } else {
+    switch (DiceGenerator.getRandom(6)) {
+      default:
+      case 0:
+      case 1:
+      case 2: {
         sb.append(race.getNameSingle());
+        sb.append(" ");
+        sb.append(government.getName());
+        break;
       }
-      sb.append(" ");
-      sb.append(government.getName());
-    } else {
-      sb.append(government.getName());
-      sb.append(" of ");
-      if (race == SpaceRace.HUMAN) {
-        sb.append(buildSecondaryName(race, "Terran"));
-      } else if (race == SpaceRace.MECHIONS) {
-          sb.append(buildSecondaryName(race, "Steel"));
-      } else if (race == SpaceRace.SPORKS) {
-        sb.append(buildSecondaryName(race, "Taurus"));
-      } else if (race == SpaceRace.GREYANS) {
-        sb.append(buildSecondaryName(race, "Aesir"));
-      } else if (race == SpaceRace.CENTAURS) {
-        sb.append(buildSecondaryName(race, "Sagittarian"));
-      } else if (race == SpaceRace.TEUTHIDAES) {
-        sb.append(buildSecondaryName(race, "Squiddan"));
-      } else if (race == SpaceRace.MOTHOIDS) {
-        sb.append(buildSecondaryName(race, "Scorpio"));
-      } else if (race == SpaceRace.SCAURIANS) {
-        sb.append(buildSecondaryName(race, "Nemean"));
-      } else if (race == SpaceRace.HOMARIANS) {
-        sb.append(buildSecondaryName(race, "Cancerian"));
-      } else if (race == SpaceRace.CHIRALOIDS) {
-        sb.append(buildSecondaryName(race, "Capricorn"));
-      } else if (race == SpaceRace.REBORGIANS) {
-        sb.append(buildSecondaryName(race, "Bionian"));
-      } else if (race == SpaceRace.LITHORIANS) {
-        sb.append(buildSecondaryName(race, "Metavore"));
-      } else if (race == SpaceRace.SMAUGIRIANS) {
-        sb.append(buildSecondaryName(race, "Harean"));
-      } else if (race == SpaceRace.SYNTHDROIDS) {
-        sb.append(buildSecondaryName(race, "Huskdroid"));
-      } else {
+      case 3:
+      case 4: {
+        sb.append(government.getName());
+        sb.append(" of ");
         sb.append(race.getNameSingle());
+        break;
+      }
+      case 5: {
+        sb.append(government.getName());
+        sb.append(" of united ");
+        sb.append(race.getName());
+        break;
+      }
+      case 6: {
+        if (DiceGenerator.getBoolean()) {
+          sb.append("Sovereign ");
+        } else {
+          sb.append("Supreme ");
+        }
+        sb.append(race.getNameSingle());
+        sb.append(" ");
+        sb.append(government.getName());
+        break;
       }
     }
-    return sb.toString();
-  }
 
-  /**
-   * Build secondary name for Space race based on the dice number.<br>
-   * If the dice number is 0, the secondary name will be defined based on
-   * the input parameter.<br>
-   * Otherwise, single name from the Space race will be used.
-   * @param race SpaceRace for which random name is going to be generated
-   * @param secondaryName the secondary name default based on type
-   * @return secondary name for Space race
-   */
-  private static String buildSecondaryName(final SpaceRace race,
-          final String secondaryName) {
-    if (DiceGenerator.getBoolean()) {
-        return secondaryName;
-    }
-    return race.getNameSingle();
+    return sb.toString();
   }
 
 }

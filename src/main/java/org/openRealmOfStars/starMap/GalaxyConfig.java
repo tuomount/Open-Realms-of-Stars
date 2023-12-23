@@ -286,7 +286,7 @@ public class GalaxyConfig {
         GovernmentType gov = GovernmentUtility.getRandomGovernment(getRace(i));
         setPlayerGovernment(i, gov);
         setPlayerDifficult(i, AiDifficulty.NORMAL);
-        String tmp = SpaceRaceUtility.getRandomName(getRace(i),
+        String tmp = SpaceRaceUtility.getRealmName(getRace(i),
             getPlayerGovernment(i));
         if (isUniqueName(tmp)) {
           setPlayerName(i, tmp);

@@ -395,44 +395,17 @@ public enum SpaceRace {
    * @return The research speed
    */
   public int getResearchSpeed() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 100;
-    case MECHIONS:
-      return 50;
-    case SPORKS:
-      return 100;
-    case GREYANS:
-      return 150;
-    case CENTAURS:
-      return 100;
-    case MOTHOIDS:
-      return 100;
-    case TEUTHIDAES:
-      return 150;
-    case SCAURIANS:
-      return 100;
-    case HOMARIANS:
-      return 50;
-    case CHIRALOIDS:
-      return 50;
-    case REBORGIANS:
-      return 100;
-    case LITHORIANS:
-      return 100;
-    case ALTEIRIANS:
-      return 200;
-    case SMAUGIRIANS:
-      return 100;
-    case SYNTHDROIDS:
-      return 100;
-    case ALONIANS:
-      return 100;
-    default:
-      return 0;
+    int result = 100;
+    if (hasTrait(TraitIds.SLOW_RESEARCH)) {
+      result = 50;
     }
+    if (hasTrait(TraitIds.FAST_RESEARCH)) {
+      result = 150;
+    }
+    if (hasTrait(TraitIds.VERY_FAST_RESEARCH)) {
+      result = 200;
+    }
+    return result;
   }
 
   /**

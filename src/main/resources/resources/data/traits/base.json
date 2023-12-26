@@ -166,7 +166,7 @@
   {
     "id": "MASSIVE_SIZE",
     "name": "Massive size",
-    "description": "Massive size, that ships are more robust and leaders live a longer life."    
+    "description": "Massive size, that ships are more robust and leaders live a longer life."
   },
   {
     "id": "SLOW_METABOLISM",
@@ -174,7 +174,7 @@
     "description": "Leaders live a longer life due slower metabolism but troops fight with less power.",
     "conflictsWith": [
       "CONSTRUCTED_POP"
-    ]  
+    ]
   },
   {
     "id": "FAST_FOOD_PROD",
@@ -182,7 +182,12 @@
     "description": "Farmers work 100% faster than regular farmers.",
     "conflictsWith": [
       "ENERGY_POWERED", "LITHOVORIC"
-    ]  
+    ]
+  },
+  {
+    "id": "ASSIMILATION",
+    "name": "Assimilation",
+    "description": "Assimilates non-robotic population as own after conquering a planet, while potentially stealing technology in the process."
   }
 
 ]

@@ -308,6 +308,9 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.CYBORG_LIFE_SPAN).ifPresent(trait -> {
       REBORGIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.FAST_FOOD_PROD).ifPresent(trait -> {
+      HOMARIANS.addTrait(trait);
+    });
   }
 
   /**
@@ -786,44 +789,14 @@ public enum SpaceRace {
    * @return normal 100, half 50, double 200
    */
   public int getFoodSpeed() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 100;
-    case MECHIONS:
-      return 0;
-    case SPORKS:
-      return 100;
-    case GREYANS:
-      return 100;
-    case CENTAURS:
-      return 100;
-    case MOTHOIDS:
-      return 100;
-    case TEUTHIDAES:
-      return 100;
-    case SCAURIANS:
-      return 100;
-    case HOMARIANS:
-      return 200;
-    case CHIRALOIDS:
-      return 100;
-    case REBORGIANS:
-      return 100;
-    case LITHORIANS:
-      return 0;
-    case ALTEIRIANS:
-      return 100;
-    case SMAUGIRIANS:
-      return 100;
-    case SYNTHDROIDS:
-      return 100;
-    case ALONIANS:
-      return 100;
-    default:
-      return 100;
+    int result = 100;
+    if (hasTrait(TraitIds.ENERGY_POWERED) || hasTrait(TraitIds.LITHOVORIC)) {
+      result = 0;
     }
+    if (hasTrait(TraitIds.FAST_FOOD_PROD)) {
+      result = 200;
+    }
+    return result;
   }
 
   /**

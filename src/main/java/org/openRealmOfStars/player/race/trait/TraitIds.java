@@ -110,6 +110,8 @@ public final class TraitIds {
   public static final String MASSIVE_SIZE = "MASSIVE_SIZE";
   /** Slow metabolism */
   public static final String SLOW_METABOLISM = "SLOW_METABOLISM";
+  /** Fast food production */
+  public static final String FAST_FOOD_PROD = "FAST_FOOD_PROD";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

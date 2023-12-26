@@ -9,7 +9,7 @@
     "name": "Lithovoric",
     "description": "Eats minerals instead of food.",
     "conflictsWith": [
-      "ENERGY_POWERED"
+      "ENERGY_POWERED", "FAST_FOOD_PROD"
     ]
   },
   {
@@ -17,7 +17,7 @@
     "name": "Powered",
     "description": "Consumes energy credits instead of food at a rate of 1 credit per 4 population.",
     "conflictsWith": [
-      "LITHOVORIC"
+      "LITHOVORIC", "FAST_FOOD_PROD"
     ]
   },
   {
@@ -175,5 +175,14 @@
     "conflictsWith": [
       "CONSTRUCTED_POP"
     ]  
+  },
+  {
+    "id": "FAST_FOOD_PROD",
+    "name": "Fast food production",
+    "description": "Farmers work 100% faster than regular farmers.",
+    "conflictsWith": [
+      "ENERGY_POWERED", "LITHOVORIC"
+    ]  
   }
+
 ]

@@ -64,26 +64,19 @@ public final class TraitIds {
   public static final String RADIOSYNTHESIS = "RADIOSYNTHESIS";
   /** Gets +1 credit for each "trade" building and +50% from ship trading */
   public static final String MERCANTILE = "MERCANTILE";
-
   /** All ship design have 10% cloaking device built it. */
   public static final String BUILT_IN_CLOAKING_DEVICE =
       "BUILT_IN_CLOAKING_DEVICE";
-
   /** Require 50% less food to survive. */
   public static final String EAT_LESS = "EAT_LESS";
-
   /** Fast population growth. */
   public static final String FAST_GROWTH = "FAST_GROWTH";
-
   /** Slow population growth. */
   public static final String SLOW_GROWTH = "SLOW_GROWTH";
-
   /** Fixed population growth. */
   public static final String FIXED_GROWTH = "FIXED_GROWTH";
-
   /** Limited population growth. */
   public static final String LIMITED_GROWTH = "LIMITED_GROWTH";
-
   /** Credit Rush for projects */
   public static final String CREDIT_RUSH = "CREDIT_RUSH";
   /** Population Rush for projects */
@@ -114,6 +107,15 @@ public final class TraitIds {
   public static final String FAST_FOOD_PROD = "FAST_FOOD_PROD";
   /** Assimilates non-robotic population after conquering a planet. */
   public static final String ASSIMILATION = "ASSIMILATION";
+  /** Good war resilience. */
+  public static final String GOOD_WAR_RESILIENCE = "GOOD_WAR_RESILIENCE";
+  /** Excellent war resilience. */
+  public static final String EXCELLENT_WAR_RESILIENCE =
+      "EXCELLENT_WAR_RESILIENCE";
+  /** Poor war resilience. */
+  public static final String POOR_WAR_RESILIENCE = "POOR_WAR_RESILIENCE";
+  /** Weak war resilience. */
+  public static final String WEAK_WAR_RESILIENCE = "WEAK_WAR_RESILIENCE";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

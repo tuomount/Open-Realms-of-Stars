@@ -141,7 +141,7 @@
   },
   {
     "id": "SHORT_LIFE_SPAN",
-    "name": "Short life spane",
+    "name": "Short life span",
     "description": "Short life span for leaders. Leaders live about 10 star years below average.",
     "conflictsWith": [
       "LONG_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
@@ -149,7 +149,7 @@
   },
   {
     "id": "LONG_LIFE_SPAN",
-    "name": "Long life spane",
+    "name": "Long life span",
     "description": "Long life span for leaders. Leaders live about 10 star years longer than average.",
     "conflictsWith": [
       "LONG_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
@@ -157,7 +157,7 @@
   },
   {
     "id": "VERY_LONG_LIFE_SPAN",
-    "name": "Very long life spane",
+    "name": "Very long life span",
     "description": "Very long life span for leaders. Leaders live about 20 star years longer than average.",
     "conflictsWith": [
       "LONG_LIFE_SPAN", "SHORT_LIFE_SPAN", "CYBORG_LIFE_SPAN"
@@ -188,6 +188,38 @@
     "id": "ASSIMILATION",
     "name": "Assimilation",
     "description": "Assimilates non-robotic population as own after conquering a planet, while potentially stealing technology in the process."
+  },
+  {
+    "id": "GOOD_WAR_RESILIENCE",
+    "name": "Good war resilience",
+    "description": "Population can sustain war 10 extra star years longer without fatigue.",
+    "conflictsWith": [
+      "EXCELLENT_WAR_RESILIENCE", "POOR_WAR_RESILIENCE", "WEAK_WAR_RESILIENCE"
+    ]  
+  },
+  {
+    "id": "EXCELLENT_WAR_RESILIENCE",
+    "name": "Excellent war resilience",
+    "description": "Population can sustain war 20 extra star years longer without fatigue.",
+    "conflictsWith": [
+      "GOOD_WAR_RESILIENCE", "POOR_WAR_RESILIENCE", "WEAK_WAR_RESILIENCE"
+    ]  
+  },
+  {
+    "id": "POOR_WAR_RESILIENCE",
+    "name": "Poor war resilience",
+    "description": "Population can sustain war 10 star years less without fatigue.",
+    "conflictsWith": [
+      "GOOD_WAR_RESILIENCE", "EXCELLENT_WAR_RESILIENCE", "WEAK_WAR_RESILIENCE"
+    ]  
+  },
+  {
+    "id": "WEAK_WAR_RESILIENCE",
+    "name": "Weak war resilience",
+    "description": "Population can sustain war 20 star years less without fatigue.",
+    "conflictsWith": [
+      "GOOD_WAR_RESILIENCE", "EXCELLENT_WAR_RESILIENCE", "POOR_WAR_RESILIENCE"
+    ]  
   }
 
 ]

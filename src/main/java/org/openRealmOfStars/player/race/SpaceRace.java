@@ -241,6 +241,9 @@ public enum SpaceRace {
       REBORGIANS.addTrait(trait);
       LITHORIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.FIXED_GROWTH).ifPresent(trait -> {
+      REBORGIANS.addTrait(trait);
+    });
     TraitFactory.create(TraitIds.CREDIT_RUSH).ifPresent(trait -> {
       HUMAN.addTrait(trait);
       SPORKS.addTrait(trait);
@@ -809,7 +812,7 @@ public enum SpaceRace {
    */
   public int getFoodSpeed() {
     int result = 100;
-    if (hasTrait(TraitIds.ENERGY_POWERED) || hasTrait(TraitIds.LITHOVORIC)) {
+    if (!isEatingFood()) {
       result = 0;
     }
     if (hasTrait(TraitIds.FAST_FOOD_PROD)) {
@@ -918,10 +921,7 @@ public enum SpaceRace {
    */
   public int getFoodRequire() {
     int result = 100;
-    if (hasTrait(TraitIds.ENERGY_POWERED)) {
-      result = 0;
-    }
-    if (hasTrait(TraitIds.LITHOVORIC)) {
+    if (!isEatingFood()) {
       result = 0;
     }
     if (hasTrait(TraitIds.EAT_LESS)) {
@@ -999,17 +999,6 @@ public enum SpaceRace {
       result = 30;
     }
     return result;
-  }
-
-  /**
-   * Get racial hull point if available
-   * @return normal 0 or 1
-   */
-  public int getExtraHullPoint() {
-    if (hasTrait(TraitIds.MASSIVE_SIZE)) {
-      return 1;
-    }
-    return 0;
   }
 
   /**
@@ -1099,97 +1088,6 @@ public enum SpaceRace {
       return 55;
     default:
       return 50;
-    }
-  }
-
-  /**
-   * What is the minimum number of attack ships
-   * @return int
-   */
-  public int getAIMinimumAttackShips() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 3;
-    case MECHIONS:
-      return 3;
-    case SPORKS:
-      return 4;
-    case GREYANS:
-      return 3;
-    case CENTAURS:
-      return 2;
-    case MOTHOIDS:
-      return 3;
-    case TEUTHIDAES:
-      return 3;
-    case SCAURIANS:
-      return 3;
-    case HOMARIANS:
-      return 3;
-    case CHIRALOIDS:
-      return 4;
-    case REBORGIANS:
-      return 4;
-    case LITHORIANS:
-      return 3;
-    case ALTEIRIANS:
-      return 3;
-    case SMAUGIRIANS:
-      return 3;
-    case SYNTHDROIDS:
-      return 3;
-    case ALONIANS:
-      return 3;
-    default:
-      return 3;
-    }
-  }
-
-  /**
-   * What is the minimum number of conquer ships aka bomber and
-   * troopers
-   * @return int
-   */
-  public int getAIMinimumConquerShips() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 1;
-    case MECHIONS:
-      return 1;
-    case SPORKS:
-      return 2;
-    case GREYANS:
-      return 1;
-    case CENTAURS:
-      return 1;
-    case MOTHOIDS:
-      return 2;
-    case TEUTHIDAES:
-      return 2;
-    case SCAURIANS:
-      return 1;
-    case HOMARIANS:
-      return 1;
-    case CHIRALOIDS:
-      return 1;
-    case REBORGIANS:
-      return 2;
-    case LITHORIANS:
-      return 1;
-    case ALTEIRIANS:
-      return 2;
-    case SMAUGIRIANS:
-      return 1;
-    case SYNTHDROIDS:
-      return 1;
-    case ALONIANS:
-      return 1;
-    default:
-      return 1;
     }
   }
 
@@ -1309,22 +1207,22 @@ public enum SpaceRace {
   public int getLifeSpan() {
     int result = 80;
     if (hasTrait(TraitIds.SHORT_LIFE_SPAN)) {
-      result = result - 10;
+      result -= 10;
     }
     if (hasTrait(TraitIds.LONG_LIFE_SPAN)) {
-      result = result + 10;
+      result += 10;
     }
     if (hasTrait(TraitIds.VERY_LONG_LIFE_SPAN)) {
-      result = result + 20;
+      result += 20;
     }
     if (hasTrait(TraitIds.SLOW_METABOLISM)) {
-      result = result + 10;
+      result += 10;
     }
     if (hasTrait(TraitIds.CYBORG_LIFE_SPAN)) {
-      result = result + 70;
+      result += 70;
     }
     if (hasTrait(TraitIds.MASSIVE_SIZE)) {
-      result = result + 20;
+      result += 20;
     }
     if (hasTrait(TraitIds.ROBOTIC)) {
       result = 2000;

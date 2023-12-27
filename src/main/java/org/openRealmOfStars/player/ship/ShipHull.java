@@ -20,6 +20,7 @@ package org.openRealmOfStars.player.ship;
 import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -142,9 +143,9 @@ public class ShipHull {
     this.imageIndex = ShipImage.SCOUT;
     // Default for fleet capacity.
     this.fleetCapacity = 0.1;
-    // Centaur ships have extra hull point per slot
+    // Ships of physically large races have extra hull point per slot
     // but hulls are more expensive.
-    if (race == SpaceRace.CENTAURS) {
+    if (race.hasTrait(TraitIds.MASSIVE_SIZE)) {
       this.slotHull = this.slotHull + 1;
       this.metalCost = this.metalCost * 2;
       this.cost = this.cost * 3 / 2;

@@ -2127,12 +2127,13 @@ public class Planet {
         }
       } else {
         food = calculateSurPlusFood();
-        if (planetOwnerInfo.getRace() == SpaceRace.REBORGIANS && food > 0) {
+        if (planetOwnerInfo.getRace().hasTrait(TraitIds.FIXED_GROWTH)
+            && food > 0) {
           food = 1;
         }
       }
       int require = 10;
-      if (planetOwnerInfo.getRace() == SpaceRace.SYNTHDROIDS) {
+      if (planetOwnerInfo.getRace().getGrowthSpeed() == 0) {
         if (food > 0) {
           food = 0;
         }

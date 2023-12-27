@@ -98,20 +98,24 @@ public class WeightedList<T> {
    * Create WeightedList from array of weighted entries.
    * <p>
    * <b>WARNING! This is a convenience, type-unsafe constructor!</b>
-   * It allows WeightedLists to be constructed with initializer lists.
-   * Plus, it cannot fail due to oversights in array sizes when adding
-   * the entries by hand.
+   * It allows WeightedLists to be constructed with initializer lists
+   * and varargs. It is good for creating readable static/hardcoded
+   * WeightedLists. It cannot fail due to oversights in array
+   * sizes when adding the entries by hand.
    * </p>
    * <p>
-   * But because it is not possible to instantiate array with generics using
-   * initializer list, this ignores Value type of Entry values.
+   * It is not possible to instantiate array with generics using
+   * initializer list, nor ensure safety of varags with generics.
+   * So this essentially ignores Value type of Entry values.
    * And, due to type erasure, it then cannot verify at compile-time
-   * that entries provided are of valid type. So, this can actually
-   * make a mess if used incorrectly.
+   * nor runtime that entries provided are of valid type.
+   * So, this can actually make a mess if used incorrectly.
    * </p>
    * <p>
    * Use at your own risk, when want to get comfort and pretty code.
-   * You have been warned.
+   * You have been warned. And compiler/IDE will likely warn you again,
+   * since usage of varargs with generics is recognized by the compiler
+   * as a potential issue.
    * </p>
    *
    * @param entries Array of untyped entries
@@ -119,11 +123,11 @@ public class WeightedList<T> {
    *          Java's type system is a joke. A bad joke.
    */
   @SuppressWarnings("unchecked")
-  public WeightedList(final Entry<?>[] entries) {
+  public WeightedList(final Entry<T>... entries) {
     Objects.requireNonNull(entries);
     this.entries = new ArrayList<>();
     for (var entry : entries) {
-      add((Entry<T>) entry);
+      add(entry);
     }
   }
 

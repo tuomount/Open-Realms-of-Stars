@@ -1767,10 +1767,11 @@ public enum SpaceRace {
       } else {
         sb.append(lf + lf);
       }
-      sb.append(lf + "Racial attributes:" + lf);
+      sb.append(lf + "Racial attributes (trait points):" + lf);
       for (var trait : traits) {
         sb.append(dot);
         sb.append(trait.getName());
+        sb.append(String.format(" (%1$+d)", trait.getPoints()));
         sb.append(" - ");
         sb.append(trait.getDescription());
         sb.append(lf);

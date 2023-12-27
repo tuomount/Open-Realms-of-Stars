@@ -25,6 +25,7 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderBiography;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
@@ -2446,11 +2447,11 @@ public final class NewsFactory {
         sb.append(" population was killed by ground troops of ");
         sb.append(attacker.getEmpireName());
         sb.append(". ");
-        if (attacker.getRace() == SpaceRace.REBORGIANS
-            && defender.getRace() != SpaceRace.MECHIONS) {
-          sb.append("Recently dead population is synthesized into ");
+        if (attacker.getRace().hasTrait(TraitIds.ASSIMILATION)
+            && !defender.getRace().isRoboticRace()) {
+          sb.append("Recently dead population is assimilated into ");
           sb.append(attacker.getEmpireName());
-          sb.append(" population by adding cybergenetic implants. ");
+          sb.append(" population. ");
           sb.append("This process may reveal technology secrets too. ");
         }
       }

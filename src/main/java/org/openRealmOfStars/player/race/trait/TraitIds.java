@@ -105,6 +105,8 @@ public final class TraitIds {
   public static final String SLOW_METABOLISM = "SLOW_METABOLISM";
   /** Fast food production */
   public static final String FAST_FOOD_PROD = "FAST_FOOD_PROD";
+  /** Assimilates non-robotic population after conquering a planet. */
+  public static final String ASSIMILATION = "ASSIMILATION";
   /** Good war resilience. */
   public static final String GOOD_WAR_RESILIENCE = "GOOD_WAR_RESILIENCE";
   /** Excellent war resilience. */

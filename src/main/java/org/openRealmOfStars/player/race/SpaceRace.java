@@ -314,6 +314,9 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.FAST_FOOD_PROD).ifPresent(trait -> {
       HOMARIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.ASSIMILATION).ifPresent(trait -> {
+      REBORGIANS.addTrait(trait);
+    });
     TraitFactory.create(TraitIds.EXCELLENT_WAR_RESILIENCE).ifPresent(trait -> {
       CENTAURS.addTrait(trait);
       LITHORIANS.addTrait(trait);

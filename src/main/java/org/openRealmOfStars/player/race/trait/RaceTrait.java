@@ -54,17 +54,20 @@ public final class RaceTrait {
   private String description;
   /** IDs of traits this trait conflicts with */
   private ArrayList<String> conflictsWithIds;
+  /** How good (+) or bad (-) the trait is from gameplay perspective */
+  private byte traitPoints;
 
   /**
    * Creates new RaceTrait
    * @param id ID of the trait, must be unique and non-null
    * @param name name of the trait, must be non-null
    * @param description description of the trait, must be non-null
+   * @param points how good or bad the trait is from gameplay perspective
    * @param conflictsWith Array of IDs of traits this trait conflicts with
    */
-  RaceTrait(final String id, final String name,
-      final String description, final String... conflictsWith) {
-    this(id, name, description, Arrays.asList(conflictsWith));
+  RaceTrait(final String id, final String name, final String description,
+      final byte points, final String... conflictsWith) {
+    this(id, name, description, points, Arrays.asList(conflictsWith));
   }
 
   /**
@@ -72,13 +75,15 @@ public final class RaceTrait {
    * @param id ID of the trait, must be unique and non-null
    * @param name name of the trait, must be non-null
    * @param description description of the trait, must be non-null
+   * @param points how good or bad the trait is from gameplay perspective
    * @param conflictsWith Collection of IDs of traits this trait conflicts with
    */
-  RaceTrait(final String id, final String name,
-      final String description, final Collection<String> conflictsWith) {
+  RaceTrait(final String id, final String name, final String description,
+      final byte points, final Collection<String> conflictsWith) {
     this.traitId = Objects.requireNonNull(id);
     this.traitName = Objects.requireNonNull(name);
     this.description = Objects.requireNonNull(description);
+    this.traitPoints = points;
     this.conflictsWithIds = new ArrayList<>(conflictsWith);
   }
 
@@ -108,6 +113,14 @@ public final class RaceTrait {
    */
   public List<String> getConflictsWithIds() {
     return Collections.unmodifiableList(conflictsWithIds);
+  }
+
+  /**
+   * How good (+) or bad (-) the trait is from gameplay perspective
+   * @return byte representing trait's benefit value
+   */
+  public byte getPoints() {
+    return traitPoints;
   }
 
   /**

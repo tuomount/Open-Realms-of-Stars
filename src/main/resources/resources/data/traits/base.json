@@ -2,12 +2,14 @@
   {
     "id": "ROBOTIC",
     "name": "Robotic",
-    "description": "Race is robotic."
+    "description": "Race is robotic. It makes it immune to some biological effects and leaders cannot die from old age.",
+    "points": 3
   },
   {
     "id": "LITHOVORIC",
     "name": "Lithovoric",
     "description": "Eats minerals instead of food.",
+    "points": 0,
     "conflictsWith": [
       "ENERGY_POWERED", "FAST_FOOD_PROD"
     ]
@@ -16,6 +18,7 @@
     "id": "ENERGY_POWERED",
     "name": "Powered",
     "description": "Consumes energy credits instead of food at a rate of 1 credit per 4 population.",
+    "points": 1,
     "conflictsWith": [
       "LITHOVORIC", "FAST_FOOD_PROD"
     ]
@@ -23,12 +26,14 @@
   {
     "id": "NO_HEIRS",
     "name": "No heirs",
-    "description": "Race has unusual birth process, to which it is not possible to apply concept of parental heritage."
+    "description": "Race has unusual birth process, to which it is not possible to apply concept of parental heritage.",
+    "points": -1
   },
   {
     "id": "CONSTRUCTED_POP",
     "name": "Constructed",
     "description": "Breeds by external process, where individuals are \"constructed\" in some way.",
+    "points": 0,
     "conflictsWith": [
       "SLOW_GROWTH", "FAST_GROWTH", "FIXED_GROWTH", "LIMITED_GROWTH",
       "SLOW_METABOLISM"
@@ -37,22 +42,26 @@
   {
     "id": "RADIOSYNTHESIS",
     "name": "Radiosynthesis",
-    "description": "Required sustenance (food) for population is reduced by 1 per existing population up to planet's radiation value."
+    "description": "Required sustenance (food) for population is reduced by 1 per existing population up to planet's radiation points.",
+    "points": 3
   },
   {
     "id": "MERCANTILE",
     "name": "Mercantile",
-    "description": "Receives +1 additional credit from each credit-producing building and 50% more from trade routes."
+    "description": "Receives +1 additional credit from each credit-producing building and 50% more from trade routes.",
+    "points": 1
   },
   {
     "id": "BUILT_IN_CLOAKING_DEVICE",
     "name": "Built in cloaking device",
-    "description": "All ships have built-in cloaking device which give 10% cloak."
+    "description": "All ships have built-in cloaking device which give 10% cloak.",
+    "points": 1
   },
   {
     "id": "EAT_LESS",
     "name": "Eat less",
     "description": "Required sustenance (food) for population is 50% less than normal requirement.",
+    "points": 1,
     "conflictsWith": [
       "ENERGY_POWERED"
     ]
@@ -61,6 +70,7 @@
     "id": "FAST_GROWTH",
     "name": "Fast population growth",
     "description": "Population grows 150% faster than normally",
+    "points": 2,
     "conflictsWith": [
       "SLOW_GROWTH", "CONSTRUCTED_POP"
     ]
@@ -69,6 +79,7 @@
     "id": "SLOW_GROWTH",
     "name": "Slow population growth",
     "description": "Population grows 50% slower than normally",
+    "points": -2,
     "conflictsWith": [
       "FAST_GROWTH", "CONSTRUCTED_POP"
     ]
@@ -77,6 +88,7 @@
     "id": "FIXED_GROWTH",
     "name": "Fixed maximum population growth",
     "description": "Population grows always with fixed speed.",
+    "points": -2,
     "conflictsWith": [
       "CONSTRUCTED_POP"
     ]
@@ -85,6 +97,7 @@
     "id": "LIMITED_GROWTH",
     "name": "Limited maximum population growth",
     "description": "Population growth is limited.",
+    "points": -1,
     "conflictsWith": [
       "CONSTRUCTED_POP", "FIXED_GROWTH"
     ]
@@ -92,17 +105,20 @@
   {
     "id": "CREDIT_RUSH",
     "name": "Credit rush",
-    "description": "Rush projects by paying extra credits."
+    "description": "Rush projects by paying extra credits.",
+    "points": 0
   },
   {
     "id": "POPULATION_RUSH",
     "name": "Population rush",
-    "description": "Rush projects by sacrificing population."
+    "description": "Rush projects by sacrificing population.",
+    "points": 0
   },
   {
     "id": "SLOW_CULTURE",
     "name": "Slow culture",
     "description": "Slow culture speed from artist population.",
+    "points": -1,
     "conflictsWith": [
       "FAST_CULTURE"
     ]
@@ -111,6 +127,7 @@
     "id": "FAST_CULTURE",
     "name": "Fast culture",
     "description": "Fast culture speed from artist population.",
+    "points": 1,
     "conflictsWith": [
       "SLOW_CULTURE"
     ]
@@ -119,6 +136,7 @@
     "id": "FAST_RESEARCH",
     "name": "Fast research",
     "description": "Fast research speed from scientist population.",
+    "points": 2,
     "conflictsWith": [
       "SLOW_RESEARCH", "VERY_FAST_RESEARCH"
     ]
@@ -127,6 +145,7 @@
     "id": "VERY_FAST_RESEARCH",
     "name": "Fast research",
     "description": "Very fast research speed from scientist population.",
+    "points": 3,
     "conflictsWith": [
       "SLOW_RESEARCH", "FAST_RESEARCH"
     ]
@@ -135,6 +154,7 @@
     "id": "SLOW_RESEARCH",
     "name": "Slow research",
     "description": "Slow research speed from scientist population.",
+    "points": -2,
     "conflictsWith": [
       "FAST_RESEARCH", "VERY_FAST_RESEARCH"
     ]
@@ -143,6 +163,7 @@
     "id": "SHORT_LIFE_SPAN",
     "name": "Short life span",
     "description": "Short life span for leaders. Leaders live about 10 star years below average.",
+    "points": -1,
     "conflictsWith": [
       "LONG_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
     ]
@@ -151,6 +172,7 @@
     "id": "LONG_LIFE_SPAN",
     "name": "Long life span",
     "description": "Long life span for leaders. Leaders live about 10 star years longer than average.",
+    "points": 1,
     "conflictsWith": [
       "LONG_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
     ]
@@ -159,6 +181,7 @@
     "id": "VERY_LONG_LIFE_SPAN",
     "name": "Very long life span",
     "description": "Very long life span for leaders. Leaders live about 20 star years longer than average.",
+    "points": 2,
     "conflictsWith": [
       "LONG_LIFE_SPAN", "SHORT_LIFE_SPAN", "CYBORG_LIFE_SPAN"
     ]
@@ -166,12 +189,14 @@
   {
     "id": "MASSIVE_SIZE",
     "name": "Massive size",
-    "description": "Massive size, that ships are more robust and leaders live a longer life."
+    "description": "Massive size, that ships are more robust and leaders live a longer life.",
+    "points": 2
   },
   {
     "id": "SLOW_METABOLISM",
     "name": "Slow metabolism",
     "description": "Leaders live a longer life due slower metabolism but troops fight with less power.",
+    "points": 0,
     "conflictsWith": [
       "CONSTRUCTED_POP"
     ]
@@ -180,6 +205,7 @@
     "id": "FAST_FOOD_PROD",
     "name": "Fast food production",
     "description": "Farmers work 100% faster than regular farmers.",
+    "points": 2,
     "conflictsWith": [
       "ENERGY_POWERED", "LITHOVORIC"
     ]
@@ -187,39 +213,44 @@
   {
     "id": "ASSIMILATION",
     "name": "Assimilation",
-    "description": "Assimilates non-robotic population as own after conquering a planet, while potentially stealing technology in the process."
+    "description": "Assimilates non-robotic population as own after conquering a planet, while potentially stealing technology in the process.",
+    "points": 3
   },
   {
     "id": "GOOD_WAR_RESILIENCE",
     "name": "Good war resilience",
     "description": "Population can sustain war 10 extra star years longer without fatigue.",
+    "points": 1,
     "conflictsWith": [
       "EXCELLENT_WAR_RESILIENCE", "POOR_WAR_RESILIENCE", "WEAK_WAR_RESILIENCE"
-    ]  
+    ]
   },
   {
     "id": "EXCELLENT_WAR_RESILIENCE",
     "name": "Excellent war resilience",
     "description": "Population can sustain war 20 extra star years longer without fatigue.",
+    "points": 2,
     "conflictsWith": [
       "GOOD_WAR_RESILIENCE", "POOR_WAR_RESILIENCE", "WEAK_WAR_RESILIENCE"
-    ]  
+    ]
   },
   {
     "id": "POOR_WAR_RESILIENCE",
     "name": "Poor war resilience",
     "description": "Population can sustain war 10 star years less without fatigue.",
+    "points": -1,
     "conflictsWith": [
       "GOOD_WAR_RESILIENCE", "EXCELLENT_WAR_RESILIENCE", "WEAK_WAR_RESILIENCE"
-    ]  
+    ]
   },
   {
     "id": "WEAK_WAR_RESILIENCE",
     "name": "Weak war resilience",
     "description": "Population can sustain war 20 star years less without fatigue.",
+    "points": -2,
     "conflictsWith": [
       "GOOD_WAR_RESILIENCE", "EXCELLENT_WAR_RESILIENCE", "POOR_WAR_RESILIENCE"
-    ]  
+    ]
   }
 
 ]

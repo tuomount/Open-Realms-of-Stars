@@ -183,6 +183,38 @@
     "conflictsWith": [
       "ENERGY_POWERED", "LITHOVORIC"
     ]  
+  },
+  {
+    "id": "GOOD_WAR_RESILIENCE",
+    "name": "Good war resilience",
+    "description": "Population can sustain war 10 extra star years longer without fatigue.",
+    "conflictsWith": [
+      "EXCELLENT_WAR_RESILIENCE", "POOR_WAR_RESILIENCE", "WEAK_WAR_RESILIENCE"
+    ]  
+  },
+  {
+    "id": "EXCELLENT_WAR_RESILIENCE",
+    "name": "Excellent war resilience",
+    "description": "Population can sustain war 20 extra star years longer without fatigue.",
+    "conflictsWith": [
+      "GOOD_WAR_RESILIENCE", "POOR_WAR_RESILIENCE", "WEAK_WAR_RESILIENCE"
+    ]  
+  },
+  {
+    "id": "POOR_WAR_RESILIENCE",
+    "name": "Poor war resilience",
+    "description": "Population can sustain war 10 star years less without fatigue.",
+    "conflictsWith": [
+      "GOOD_WAR_RESILIENCE", "EXCELLENT_WAR_RESILIENCE", "WEAK_WAR_RESILIENCE"
+    ]  
+  },
+  {
+    "id": "WEAK_WAR_RESILIENCE",
+    "name": "Weak war resilience",
+    "description": "Population can sustain war 20 star years less without fatigue.",
+    "conflictsWith": [
+      "GOOD_WAR_RESILIENCE", "EXCELLENT_WAR_RESILIENCE", "POOR_WAR_RESILIENCE"
+    ]  
   }
 
 ]

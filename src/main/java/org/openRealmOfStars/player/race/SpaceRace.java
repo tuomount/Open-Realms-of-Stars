@@ -311,6 +311,25 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.FAST_FOOD_PROD).ifPresent(trait -> {
       HOMARIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.EXCELLENT_WAR_RESILIENCE).ifPresent(trait -> {
+      CENTAURS.addTrait(trait);
+      LITHORIANS.addTrait(trait);
+      SMAUGIRIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.GOOD_WAR_RESILIENCE).ifPresent(trait -> {
+      HUMAN.addTrait(trait);
+      TEUTHIDAES.addTrait(trait);
+      REBORGIANS.addTrait(trait);
+      SPACE_PIRATE.addTrait(trait);
+      SPACE_MONSTERS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.POOR_WAR_RESILIENCE).ifPresent(trait -> {
+      GREYANS.addTrait(trait);
+      SCAURIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.WEAK_WAR_RESILIENCE).ifPresent(trait -> {
+      MOTHOIDS.addTrait(trait);
+    });
   }
 
   /**
@@ -966,44 +985,20 @@ public enum SpaceRace {
    * @return War fatigue resistance
    */
   public int getWarFatigueResistance() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 60;
-    case MECHIONS:
-      return 50;
-    case SPORKS:
-      return 50;
-    case GREYANS:
-      return 40;
-    case CENTAURS:
-      return 70;
-    case MOTHOIDS:
-      return 30;
-    case TEUTHIDAES:
-      return 60;
-    case SCAURIANS:
-      return 40;
-    case HOMARIANS:
-      return 50;
-    case CHIRALOIDS:
-      return 50;
-    case REBORGIANS:
-      return 60;
-    case LITHORIANS:
-      return 70;
-    case ALTEIRIANS:
-      return 50;
-    case SMAUGIRIANS:
-      return 70;
-    case SYNTHDROIDS:
-      return 60;
-    case ALONIANS:
-      return 50;
-    default:
-      return 50;
+    int result = 50;
+    if (hasTrait(TraitIds.EXCELLENT_WAR_RESILIENCE)) {
+      result = 70;
     }
+    if (hasTrait(TraitIds.GOOD_WAR_RESILIENCE)) {
+      result = 60;
+    }
+    if (hasTrait(TraitIds.POOR_WAR_RESILIENCE)) {
+      result = 40;
+    }
+    if (hasTrait(TraitIds.WEAK_WAR_RESILIENCE)) {
+      result = 30;
+    }
+    return result;
   }
 
   /**

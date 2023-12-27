@@ -112,6 +112,15 @@ public final class TraitIds {
   public static final String SLOW_METABOLISM = "SLOW_METABOLISM";
   /** Fast food production */
   public static final String FAST_FOOD_PROD = "FAST_FOOD_PROD";
+  /** Good war resilience. */
+  public static final String GOOD_WAR_RESILIENCE = "GOOD_WAR_RESILIENCE";
+  /** Excellent war resilience. */
+  public static final String EXCELLENT_WAR_RESILIENCE =
+      "EXCELLENT_WAR_RESILIENCE";
+  /** Poor war resilience. */
+  public static final String POOR_WAR_RESILIENCE = "POOR_WAR_RESILIENCE";
+  /** Weak war resilience. */
+  public static final String WEAK_WAR_RESILIENCE = "WEAK_WAR_RESILIENCE";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

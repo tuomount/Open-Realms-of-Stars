@@ -99,7 +99,7 @@ import org.openRealmOfStars.starMap.newsCorp.scoreBoard.Row;
 import org.openRealmOfStars.starMap.newsCorp.scoreBoard.ScoreBoard;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 import org.openRealmOfStars.starMap.randomEvent.RandomEventUtility;
 import org.openRealmOfStars.starMap.vote.Vote;

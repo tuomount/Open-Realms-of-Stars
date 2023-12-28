@@ -33,8 +33,8 @@ import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.race.trait.RaceTrait;
 import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
-import org.openRealmOfStars.starMap.planet.PlanetTypes;
-import org.openRealmOfStars.starMap.planet.WorldType;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

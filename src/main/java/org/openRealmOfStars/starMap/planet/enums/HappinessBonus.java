@@ -1,4 +1,4 @@
-package org.openRealmOfStars.starMap.planet;
+package org.openRealmOfStars.starMap.planet.enums;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2018 Tuomo Untinen

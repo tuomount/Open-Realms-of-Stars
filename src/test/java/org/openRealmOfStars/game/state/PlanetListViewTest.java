@@ -34,8 +34,8 @@ import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 
 /**
 * Test for PlanetListView class

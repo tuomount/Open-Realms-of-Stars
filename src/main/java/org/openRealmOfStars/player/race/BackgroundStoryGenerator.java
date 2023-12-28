@@ -24,7 +24,7 @@ import org.openRealmOfStars.player.leader.RulerUtility;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.NameGenerator;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.WorldType;
+import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

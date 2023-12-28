@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.starMap.planet.WorldType;
+import org.openRealmOfStars.starMap.planet.enums.WorldType;
 
 /**
  * Test for SpaceRaceUtility class

@@ -62,6 +62,11 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
+import org.openRealmOfStars.starMap.planet.enums.GravityType;
+import org.openRealmOfStars.starMap.planet.enums.HappinessBonus;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
+import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
 import org.openRealmOfStars.starMap.planet.status.PlanetaryStatus;
 import org.openRealmOfStars.starMap.vote.Vote;
@@ -141,6 +146,11 @@ public class Planet {
 
   /** Planet's radiation level between 1-10. */
   private int radiationLevel;
+  /**
+   * Planet's gravity type.
+   * between low, normal and high gravity.
+   */
+  private GravityType gravityType;
   /** Is planet inhabitable gas giant. Gas giants just block the radar. */
   private boolean gasGiant;
   /** Planet's coordinate. On gas giant this left upper corner. */
@@ -251,6 +261,7 @@ public class Planet {
     happinessEffect = new HappinessEffect(HappinessBonus.NONE, 0);
     this.setOrderNumber(orderNumber);
     this.setRadiationLevel(DiceGenerator.getRandom(1, 10));
+    this.setGravityType(GravityType.NORMAL_GRAVITY);
     if (orderNumber == 0) {
       // Rogue planet have more metal
       this.setAmountMetalInGround(DiceGenerator.getRandom(MINIMUM_ORE + 2000,
@@ -1373,6 +1384,20 @@ public class Planet {
     if (radiationLevel > 0 && radiationLevel < 11) {
       this.radiationLevel = radiationLevel;
     }
+  }
+
+  /**
+   * @return the gravityType
+   */
+  public GravityType getGravityType() {
+    return gravityType;
+  }
+
+  /**
+   * @param gravityType the gravityType to set
+   */
+  public void setGravityType(GravityType gravityType) {
+    this.gravityType = gravityType;
   }
 
   /**

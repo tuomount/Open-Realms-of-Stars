@@ -45,7 +45,7 @@ import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.KarmaType;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

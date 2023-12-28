@@ -614,7 +614,7 @@ public final class TechFactory {
           tech.setExcludeList(true);
           tech.setSpaceRaces(SpaceRace.HUMAN, SpaceRace.SPORKS,
               SpaceRace.SCAURIANS, SpaceRace.MOTHOIDS,
-              SpaceRace.SMAUGIRIANS, SpaceRace.ALONIANS);
+              SpaceRace.SMAUGIRIANS);
           tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
         } else if (techName.startsWith("ECM torpedo")
             || techName.startsWith("HE missile")) {
@@ -646,7 +646,7 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_MULTI_CANNON));
           tech.setExcludeList(false);
           tech.setSpaceRaces(SpaceRace.HUMAN, SpaceRace.SPORKS,
-              SpaceRace.SPACE_PIRATE, SpaceRace.SCAURIANS, SpaceRace.ALONIANS,
+              SpaceRace.SPACE_PIRATE, SpaceRace.SCAURIANS,
               SpaceRace.MOTHOIDS, SpaceRace.SMAUGIRIANS, SpaceRace.ALTEIRIANS);
         } else if (techName.startsWith("Ion cannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));

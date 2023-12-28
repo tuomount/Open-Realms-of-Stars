@@ -59,10 +59,6 @@ public class SquareInfo {
   public static final byte TYPE_BLACKHOLE_CENTER = 5;
 
   /**
-   * Special alonian start info, value match on player index.
-   */
-  public static final byte TYPE_ALONIAN_START = 6;
-  /**
    * Asccension vein info, value match on player index.
    * Higher value means it high further away from black hole.
    */
@@ -173,8 +169,6 @@ public class SquareInfo {
       return false;
     case TYPE_BLACKHOLE_CENTER:
       return true;
-    case TYPE_ALONIAN_START:
-      return true;
     case TYPE_ASCENSION_VEIN:
       return false;
     default:
@@ -199,8 +193,6 @@ public class SquareInfo {
     case TYPE_BLACKHOLE:
       return true;
     case TYPE_BLACKHOLE_CENTER:
-      return true;
-    case TYPE_ALONIAN_START:
       return true;
     case TYPE_ASCENSION_VEIN:
       return false;

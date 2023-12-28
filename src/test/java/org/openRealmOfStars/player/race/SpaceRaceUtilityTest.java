@@ -239,9 +239,6 @@ public class SpaceRaceUtilityTest {
       case SYNTHDROIDS:
         assertEquals(600, result);
         break;
-      case ALONIANS:
-        assertEquals(625, result);
-        break;
       default:
         assertEquals(0, result);
         break;

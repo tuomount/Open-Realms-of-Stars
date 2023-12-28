@@ -105,11 +105,6 @@ public final class ShipImages {
   private static ShipImage synthdroids;
 
   /**
-   * Alonians ships
-   */
-  private static ShipImage alonians;
-
-  /**
    * Hiding the constructor
    */
   private ShipImages() {
@@ -136,7 +131,6 @@ public final class ShipImages {
     alteirians = new ShipImage("alteirianships.png");
     smaugirians = new ShipImage("smaugirianships.png");
     synthdroids = new ShipImage("synthdroidships.png");
-    alonians = new ShipImage("alonianships.png");
   }
 
   /**
@@ -316,17 +310,6 @@ public final class ShipImages {
   }
 
   /**
-   * Get Alonian ship images
-   * @return Alonian ship images
-   */
-  public static ShipImage alonians() {
-    if (alonians == null) {
-      initImages();
-    }
-    return alonians;
-  }
-
-  /**
    * Get ship images for certain race
    * @param race Space race which images to get
    * @return ShipImage
@@ -366,8 +349,6 @@ public final class ShipImages {
       return smaugirians();
     case SYNTHDROIDS:
       return synthdroids();
-    case ALONIANS:
-      return alonians();
     default:
       return humans();
     }

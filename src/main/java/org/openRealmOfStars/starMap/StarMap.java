@@ -1856,14 +1856,6 @@ public class StarMap {
           && stat.getDesign().isMilitaryShip()) {
         numShip = 2;
       }
-      if (playerInfo.getRace() == SpaceRace.ALONIANS) {
-        if (stat.getDesign().isMilitaryShip()) {
-          numShip = 4;
-        }
-        if (stat.getDesign().getName().startsWith("Colony")) {
-          numShip = 2;
-        }
-      }
       for (int j = 0; j < numShip; j++) {
         if (stat.getDesign().getHull().getHullType() == ShipHullType.ORBITAL) {
           continue;
@@ -1925,135 +1917,6 @@ public class StarMap {
         Icons.getIconByName(Icons.ICON_CULTURE));
     msgStart.setCoordinate(planet.getCoordinate());
     msgStart.setMatchByString(planet.getName());
-    playerInfo.getMsgList().addNewMessage(msgStart);
-  }
-
-  /**
-   * Create realm to galaxy without planet. This will add required ships.
-   * This will also add message about new realm starting.
-   * @param x X coordinate where to start
-   * @param y Y coordinate where to start
-   * @param playerInfo Realm who is starting
-   * @param playerIndex Index for player
-   */
-  public void createRealmToGalaxy(final int x, final int y,
-      final PlayerInfo playerInfo, final int playerIndex) {
-    Coordinate startCoord = new Coordinate(x, y);
-
-    if (Game.getTutorial() != null && playerInfo.isHuman()
-        && isTutorialEnabled()) {
-      String tutorialText = Game.getTutorial().showTutorialText(0);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
-      tutorialText = Game.getTutorial().showTutorialText(3);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.FLEET, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        msg.setCoordinate(startCoord);
-        msg.setMatchByString("Colony #0");
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
-    }
-    Message msg = new Message(
-        MessageType.FLEET, playerInfo.getEmpireName() + " starts at "
-            + "deep space.",
-        Icons.getIconByName(Icons.ICON_CULTURE));
-    PlayerStartEvent event = new PlayerStartEvent(startCoord, "Deep space",
-        playerIndex);
-    history.addEvent(event);
-    msg.setCoordinate(startCoord);
-    msg.setMatchByString("Colony #0");
-    if (playerInfo.getRuler() == null) {
-      Leader ruler = LeaderUtility.createLeader(playerInfo, null,
-          LeaderUtility.LEVEL_START_RULER);
-      ruler.setJob(Job.RULER);
-      ruler.setTitle(LeaderUtility.createTitleForLeader(ruler, playerInfo));
-      playerInfo.getLeaderPool().add(ruler);
-      playerInfo.getMsgList().addNewMessage(msg);
-      playerInfo.setRuler(ruler);
-    }
-
-    ShipStat[] stats = playerInfo.getShipStatList();
-    int count = 0;
-    for (ShipStat stat : stats) {
-      int numShip = 1;
-      if (playerInfo.getRace() == SpaceRace.ALONIANS) {
-        if (stat.getDesign().isMilitaryShip()) {
-          numShip = 4;
-        }
-        if (stat.getDesign().getName().startsWith("Colony")) {
-          numShip = 2;
-        }
-      }
-      for (int j = 0; j < numShip; j++) {
-        if (stat.getDesign().getHull().getHullType() == ShipHullType.ORBITAL) {
-          continue;
-        }
-        Ship ship = new Ship(stat.getDesign());
-        stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
-        stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
-        Fleet fleet = new Fleet(ship, x, y);
-        playerInfo.getFleets().add(fleet);
-        if (ship.isColonyModule()) {
-          fleet.setName("Colony #" + count);
-          fleet.getColonyShip(false).setColonist(2);
-          if (Game.getTutorial() != null && playerInfo.isHuman()
-              && isTutorialEnabled()) {
-            String tutorialText = Game.getTutorial().showTutorialText(7);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.FLEET, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              msg.setCoordinate(fleet.getCoordinate());
-              msg.setMatchByString(fleet.getName());
-              playerInfo.getMsgList().addNewMessage(msg);
-            }
-          }
-        } else {
-          fleet.setName("Scout #" + count);
-          if (Game.getTutorial() != null && playerInfo.isHuman()
-              && isTutorialEnabled()) {
-            String tutorialText = Game.getTutorial().showTutorialText(5);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.FLEET, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              msg.setCoordinate(fleet.getCoordinate());
-              msg.setMatchByString(fleet.getName());
-              playerInfo.getMsgList().addNewMessage(msg);
-            }
-            tutorialText = Game.getTutorial().showTutorialText(6);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.FLEET, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              msg.setCoordinate(fleet.getCoordinate());
-              msg.setMatchByString(fleet.getName());
-              playerInfo.getMsgList().addNewMessage(msg);
-            }
-          }
-
-        }
-        msg = new Message(MessageType.FLEET,
-            fleet.getName() + " is waiting for orders.",
-            Icons.getIconByName(Icons.ICON_HULL_TECH));
-        msg.setCoordinate(fleet.getCoordinate());
-        msg.setMatchByString(fleet.getName());
-        playerInfo.getMsgList().addNewMessage(msg);
-        count++;
-      }
-    }
-    Planet planet = new Planet(startCoord, "Alpha Aurora", 2, false);
-    PlanetTypes planetType = PlanetTypes.getRandomStartPlanetType(
-        playerInfo.getRace());
-    planet.setPlanetType(planetType);
-    String backgroundStory = BackgroundStoryGenerator.generateBackgroundStory(
-        playerInfo, planet, getStarYear());
-    playerInfo.setBackgroundStory(backgroundStory);
-    Message msgStart = new Message(MessageType.STORY, backgroundStory,
-        Icons.getIconByName(Icons.ICON_CULTURE));
-    msgStart.setCoordinate(startCoord);
-    msgStart.setMatchByString("Colony #0");
     playerInfo.getMsgList().addNewMessage(msgStart);
   }
 
@@ -2392,23 +2255,6 @@ public class StarMap {
       if (playerInfo.getRace() == SpaceRace.HUMAN && !solHasAdded) {
         solHasAdded = true;
         return createSolSystem(solarSystem, sunx, suny, playerIndex, config);
-      }
-      if (playerInfo.getRace() == SpaceRace.ALONIANS) {
-        int sx = sunx + DiceGenerator.getRandom(-1, 1);
-        int sy = suny + DiceGenerator.getRandom(-1, 1);
-        if (!elderRealmStart) {
-          createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
-        } else if (playerInfo.isElderRealm()) {
-          createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
-        } else {
-          SquareInfo info = new SquareInfo(SquareInfo.TYPE_ALONIAN_START,
-              playerIndex);
-          tileInfo[sx][sy] = info;
-          tiles[sx][sy] = Tiles.getTileByName(TileNames.EMPTY).getIndex();
-        }
-        int[][] mapOfSolar = StarMapUtilities.setSolarSystem(solarSystem, sx,
-            sy, getMaxX(), getMaxY());
-        return mapOfSolar;
       }
     }
     if (playerIndex == -1 && !solHasAdded
@@ -4896,16 +4742,8 @@ public class StarMap {
         && info.getRuler().hasPerk(Perk.MERCHANT)) {
       result++;
     }
-    boolean alonianColonyInDeepSpace = false;
     for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
       Fleet fleet = info.getFleets().getByIndex(i);
-      if (production == Planet.PRODUCTION_RESEARCH
-          && fleet.hasColonyShip(SpaceRace.ALONIANS)) {
-        Planet planet = getPlanetByCoordinate(fleet.getX(), fleet.getY());
-        if (planet == null) {
-          alonianColonyInDeepSpace = true;
-        }
-      }
       if (production == Planet.PRODUCTION_RESEARCH) {
         result = result + fleet.getTotalReseachBonus();
       }
@@ -4944,10 +4782,6 @@ public class StarMap {
       if (production == Planet.PRODUCTION_CULTURE) {
         result = result + fleet.getTotalCultureBonus();
       }
-    }
-    if (production == Planet.PRODUCTION_RESEARCH && alonianColonyInDeepSpace) {
-      // Alonians get extra research based on colony not on planet.
-      result = result + 1;
     }
     if (production == Planet.PRODUCTION_RESEARCH) {
       if (info.getRuler() != null

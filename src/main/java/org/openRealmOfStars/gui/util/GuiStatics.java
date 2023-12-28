@@ -1051,12 +1051,6 @@ public final class GuiStatics {
       .loadImage("/resources/images/synthdroid_race.png");
 
   /**
-   * Alonian race selection image
-   */
-  public static final BufferedImage IMAGE_ALONIAN_RACE = IOUtilities
-      .loadImage("/resources/images/alonian_race.png");
-
-  /**
    * Privateer race selection image
    */
   public static final BufferedImage IMAGE_PRIVATEER_RACE = IOUtilities
@@ -1486,11 +1480,6 @@ public final class GuiStatics {
    */
   public static final BufferedImage IMAGE_INTERIOR_ALTEIRIAN = IOUtilities
       .loadImage("/resources/images/alteirian_bridge.png");
-  /**
-   * Ship Alonian bridge interior
-   */
-  public static final BufferedImage IMAGE_INTERIOR_ALONIAN = IOUtilities
-      .loadImage("/resources/images/alonian_bridge.png");
 
   /**
    * Get bridge image for race, null or placeholder
@@ -1519,7 +1508,6 @@ public final class GuiStatics {
       case REBORGIANS: return IMAGE_INTERIOR_REBORGIAN;
       case SMAUGIRIANS: return IMAGE_INTERIOR_SMAUGIRIAN;
       case ALTEIRIANS: return IMAGE_INTERIOR_ALTEIRIAN;
-      case ALONIANS: return IMAGE_INTERIOR_ALONIAN;
       default:
       if (usePlaceholder) {
         return IMAGE_INTERIOR1;

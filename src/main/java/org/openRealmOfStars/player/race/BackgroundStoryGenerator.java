@@ -95,9 +95,6 @@ public final class BackgroundStoryGenerator {
     if (info.getRace() == SpaceRace.SYNTHDROIDS) {
       sb.append(generateSynthdroidStory(info, startPlanet, startingYear));
     }
-    if (info.getRace() == SpaceRace.ALONIANS) {
-      sb.append(generateAlonianStory(info, startPlanet, startingYear));
-    }
     return sb.toString();
   }
 
@@ -1749,96 +1746,6 @@ public final class BackgroundStoryGenerator {
   }
 
   /**
-   * Generate background story for Alonian.
-   * @param info Realm from which to generate
-   * @param startPlanet Starting planet
-   * @param startingYear Star year when realm is starting to explore galaxy.
-   * @return Background story as a string.
-   */
-  private static String generateAlonianStory(final PlayerInfo info,
-      final Planet startPlanet, final int startingYear) {
-    StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
-    String shortDescription = "extraterrestrial beings";
-    sb.append(namePlural);
-    switch (DiceGenerator.getRandom(3)) {
-    default:
-    case 0: {
-      shortDescription = "extraterrestrial beings";
-      break;
-    }
-    case 1: {
-      shortDescription = "humanoids";
-      break;
-    }
-    case 2: {
-      shortDescription = "nomading humanoids";
-      break;
-    }
-    }
-    switch (DiceGenerator.getRandom(3)) {
-    default:
-    case 0: {
-      sb.append(" are a race of ");
-      sb.append(shortDescription);
-      sb.append(" that do not have"
-          + " a traditional home planet. Instead, they are a nomadic race "
-          + "that travels from place to place. Their home planet has"
-          + " been destroyed when local star exploded as a super nova."
-          + " Despite their lack of a fixed home, ");
-      break;
-    }
-    case 1: {
-      sb.append(" are a race of ");
-      sb.append(shortDescription);
-      sb.append(" that do not have"
-          + " a traditional home planet. Instead, they are a nomadic race "
-          + "that travels from place to place. Their home planet has"
-          + " been destroyed when it's magnetic core shutdown and atmosphere"
-          + " was blown away. The planet became lifeless rock."
-          + " Despite their lack of a fixed home, ");
-      break;
-    }
-    case 2: {
-      sb.append(" are a race of ");
-      sb.append(shortDescription);
-      sb.append(" that do not have"
-          + " a traditional home planet. Instead, they are a nomadic race "
-          + "that travels from place to place. Their home planet has"
-          + " been destroyed when huge meteor storm hit the planet. Whole"
-          + " planet shattered into pieces."
-          + " Despite their lack of a fixed home, ");
-      break;
-    }
-    }
-    sb.append(namePlural);
-    sb.append(" are highly advanced in the fields of science and technology. ");
-    sb.append(namePlural);
-    sb.append(" also have a special ability where a single colony ship"
-        + " produces one research point, allowing them to quickly advance"
-        + " their technology and gain an edge over their competitors."
-        + " In addition, their starbase laboratories are also more "
-        + "efficient at producing research points, further enhancing"
-        + " their technological advantage. ");
-    if (info.getGovernment().isImmuneToHappiness()) {
-      sb.append(namePlural);
-      sb.append(" are nomading space pirates. They will keep pillaging and"
-          + " looting fleets and do not care about consequences. ");
-    }
-    sb.append("\n\n");
-    sb.append(generateWorldType(info, startPlanet, namePlural, name));
-    sb.append("\n\n");
-    sb.append(generateGovernmentType(info, namePlural));
-    sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
-    sb.append(generateExploration(info, namePlural, startPlanet));
-    return sb.toString();
-  }
-
-  /**
    * Generate exploration part.
    * @param info Realm
    * @param name Race name
@@ -1898,13 +1805,6 @@ public final class BackgroundStoryGenerator {
     if (info.getRace().getResearchSpeed() > 100) {
       scientific = true;
     }
-    if (info.getRace() == SpaceRace.ALONIANS) {
-      sb.append(name);
-      sb.append(" needed space flight very early since their home planet "
-          + "was about to encounter catastrophy. They made fleet large enough"
-          + " to hold their entire population. Fleet started without faster"
-          + " than light travel. ");
-    }
     if (scientific) {
       Gender gender = DiceGenerator.pickRandom(info.getRace().getGenders());
       String greatLeader = NameGenerator.generateName(info.getRace(),
@@ -1917,19 +1817,10 @@ public final class BackgroundStoryGenerator {
               + " travel and thus first prototype of space craft was created at"
               + " star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-          if (info.getRace() == SpaceRace.ALONIANS) {
-            sb.append(". First flights were magnificent success and then ");
-            sb.append(name);
-            sb.append(" scouts and colony ships were upgraded with FTL"
-                + " at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          } else {
-            sb.append(". First flights were magnificent success and then first"
-                + " armed scout and colony ship was create at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          }
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
           break;
         }
         case 1: {
@@ -1956,19 +1847,10 @@ public final class BackgroundStoryGenerator {
             sb.append(greatLeader);
             sb.append(" was able to see his research on action");
           }
-          if (info.getRace() == SpaceRace.ALONIANS) {
-            sb.append(". First flights were magnificent success and then ");
-            sb.append(name);
-            sb.append(" scouts and colony ships were upgraded with FTL"
-                + " at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          } else {
-            sb.append(". First flights were magnificent success and then first"
-                + " armed scout and colony ship was create at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          }
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
           break;
         }
         case 2: {
@@ -1978,19 +1860,10 @@ public final class BackgroundStoryGenerator {
               + " than light travel and thus first prototype of space craft "
               + "was created at star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-          if (info.getRace() == SpaceRace.ALONIANS) {
-            sb.append(". First flights were magnificent success and then ");
-            sb.append(name);
-            sb.append(" scouts and colony ships were upgraded with FTL"
-                + " at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          } else {
-            sb.append(". First flights were magnificent success and then first"
-                + " armed scout and colony ship was create at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          }
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
           break;
         }
         case 3: {
@@ -2000,19 +1873,10 @@ public final class BackgroundStoryGenerator {
               + " and breakthrough was made and soon after it first prototype"
               + " of space craft was created at star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-          if (info.getRace() == SpaceRace.ALONIANS) {
-            sb.append(". First flights were magnificent success and then ");
-            sb.append(name);
-            sb.append(" scouts and colony ships were upgraded with FTL"
-                + " at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          } else {
-            sb.append(". First flights were magnificent success and then first"
-                + " armed scout and colony ship was create at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          }
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
           break;
         }
         case 4: {
@@ -2023,20 +1887,11 @@ public final class BackgroundStoryGenerator {
           sb.append(" pioneered the discovery of faster-than-light travel,"
               + " leading to the creation of the first prototype of a "
               + "spacecraft.");
-          if (info.getRace() == SpaceRace.ALONIANS) {
-            sb.append(" These initial flights marked resounding successes, ");
-            sb.append(name);
-            sb.append(" culminating in the upgrade of the scouts and colony"
-                + " ships with FTL at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          } else {
-            sb.append(". These initial flights marked resounding successes, "
-                + "culminating in the development of the first armed scout "
-                + "and colony ship in the star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          }
+          sb.append(" These initial flights marked resounding successes, "
+              + "culminating in the development of the first armed scout "
+              + "and colony ship in the star year ");
+          sb.append(startingYear);
+          sb.append(". ");
           break;
         }
       }
@@ -2048,19 +1903,10 @@ public final class BackgroundStoryGenerator {
               + " than light travel and thus first prototype of space craft "
               + "was created at star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-          if (info.getRace() == SpaceRace.ALONIANS) {
-            sb.append(". First flights were magnificent success and then ");
-            sb.append(name);
-            sb.append(" scouts and colony ships were upgraded with FTL"
-                + " at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          } else {
-            sb.append(". First flights were magnificent success and then first"
-                + " armed scout and colony ship was create at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          }
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
           break;
         }
         case 1: {
@@ -2069,19 +1915,10 @@ public final class BackgroundStoryGenerator {
               + " years before actual prototype was done. First prototype of"
               + " space craft was created at star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-          if (info.getRace() == SpaceRace.ALONIANS) {
-            sb.append(". First flights were magnificent success and then ");
-            sb.append(name);
-            sb.append(" scouts and colony ships were upgraded with FTL"
-                + " at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          } else {
-            sb.append(". First flights were magnificent success and then first"
-                + " armed scout and colony ship was create at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          }
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
           break;
         }
         case 2: {
@@ -2162,20 +1999,11 @@ public final class BackgroundStoryGenerator {
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
           sb.append(", the first prototype spacecraft had been crafted,"
               + " heralding magnificent success during its maiden voyages. ");
-          if (info.getRace() == SpaceRace.ALONIANS) {
-            sb.append(". First flights were magnificent success and then ");
-            sb.append(name);
-            sb.append(" scouts and colony ships were upgraded with FTL"
-                + " at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          } else {
-            sb.append("This achievement culminated in the creation of the ");
-            sb.append(StoryGeneratorUtility.randomInaugural());
-            sb.append(" armed scout and colony ships by star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          }
+          sb.append("This achievement culminated in the creation of the ");
+          sb.append(StoryGeneratorUtility.randomInaugural());
+          sb.append(" armed scout and colony ships by star year ");
+          sb.append(startingYear);
+          sb.append(". ");
           break;
         }
         case 3: {
@@ -2229,19 +2057,10 @@ public final class BackgroundStoryGenerator {
           }
         }
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-          if (info.getRace() == SpaceRace.ALONIANS) {
-            sb.append(". First flights were magnificent success and then ");
-            sb.append(name);
-            sb.append(" scouts and colony ships were upgraded with FTL"
-                + " at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          } else {
-            sb.append(". First flights were magnificent success and then first"
-                + " armed scout and colony ship was create at star year ");
-            sb.append(startingYear);
-            sb.append(". ");
-          }
+          sb.append(". First flights were magnificent success and then first"
+              + " armed scout and colony ship was create at star year ");
+          sb.append(startingYear);
+          sb.append(". ");
           break;
         }
       }

@@ -3803,12 +3803,7 @@ public class Planet {
       sb.append(artists);
       sb.append("<br>");
     }
-    if (planetOwnerInfo.hasAloniaHeritage()) {
-      sb.append("<li>");
-      sb.append("Old home world found +1");
-      sb.append("<br>");
-      base = base + 1;
-    }
+
     int bonusBuildings = 0;
     for (Building building : buildings) {
       if (building.getHappiness() != 0) {

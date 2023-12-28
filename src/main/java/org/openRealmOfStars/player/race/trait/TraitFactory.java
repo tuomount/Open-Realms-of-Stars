@@ -133,6 +133,7 @@ class RaceTraitLoader extends DataLoader<String, RaceTrait> {
       final var traitId = jobj.getString("id");
       final var name = jobj.getString("name");
       final var description = jobj.getString("description");
+      final var points = ((byte) jobj.getInt("points"));
 
       var jsonConflictingIds = jobj.optJSONArray("conflictsWith",
           new JSONArray());
@@ -141,7 +142,8 @@ class RaceTraitLoader extends DataLoader<String, RaceTrait> {
         conflictingIds.add(jsonConflictingIds.getString(i));
       }
 
-      var tmpTrait = new RaceTrait(traitId, name, description, conflictingIds);
+      var tmpTrait = new RaceTrait(traitId, name, description, points,
+          conflictingIds);
       return Optional.of(tmpTrait);
     } catch (JSONException e) {
       ErrorLogger.log(e);

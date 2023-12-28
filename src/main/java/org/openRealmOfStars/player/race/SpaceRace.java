@@ -1752,25 +1752,16 @@ public enum SpaceRace {
 
   /**
    * Get random living race.
-   * @return Space Race
+   * @return Living SpaceRace
    */
   public static SpaceRace getRandomLivingRace() {
-    switch (DiceGenerator.getRandom(13)) {
-    default:
-    case 0: return HUMAN;
-    case 1: return SPORKS;
-    case 2: return GREYANS;
-    case 3: return CENTAURS;
-    case 4: return MOTHOIDS;
-    case 5: return TEUTHIDAES;
-    case 6: return SCAURIANS;
-    case 7: return HOMARIANS;
-    case 8: return CHIRALOIDS;
-    case 9: return REBORGIANS;
-    case 10: return LITHORIANS;
-    case 11: return ALTEIRIANS;
-    case 12: return SMAUGIRIANS;
+    var nonRoboticRaces = Stream.of(values())
+        .filter(race -> !race.isRoboticRace())
+        .collect(Collectors.toList());
+    if (nonRoboticRaces.isEmpty()) {
+      return null;
     }
+    return DiceGenerator.pickRandom(nonRoboticRaces);
   }
 
   /**

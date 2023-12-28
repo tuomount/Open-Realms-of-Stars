@@ -36,7 +36,6 @@ import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.SocialSystem;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
@@ -84,6 +83,7 @@ public final class LeaderUtility {
    * Perks which is gained via actions.
    */
   public static final int PERK_TYPE_GAINED = 6;
+
   /**
    * Hidden constructor.
    */
@@ -107,6 +107,7 @@ public final class LeaderUtility {
     }
     return heirName;
   }
+
   /**
    * Create new leader based on 3 parameters.
    * @param info Realm who is creating new leader.
@@ -117,31 +118,20 @@ public final class LeaderUtility {
    */
   public static Leader createLeader(final PlayerInfo info, final Planet planet,
       final int level) {
-    Gender gender = Gender.NONE;
-    if (info.getRace() != SpaceRace.MECHIONS
-        && info.getRace() != SpaceRace.REBORGIANS) {
-      if (level == LEVEL_START_RULER) {
-        if (info.getGovernment() == GovernmentType.EMPIRE
-            || info.getGovernment() == GovernmentType.KINGDOM) {
-          if (info.getRace().getSocialSystem() == SocialSystem.PATRIARCHY) {
-            gender = Gender.MALE;
-          }
-          if (info.getRace().getSocialSystem() == SocialSystem.MATRIARCHY) {
-            gender = Gender.FEMALE;
-          }
-          if (info.getRace().getSocialSystem() == SocialSystem.EQUAL) {
-            gender = Gender.getRandom();
-          }
-        } else {
-          gender = Gender.getRandom();
+    Gender gender = DiceGenerator.pickRandom(info.getRace().getGenders());
+    // Adjust gender for starting rulers based on social system
+    if (level == LEVEL_START_RULER) {
+      if (info.getGovernment() == GovernmentType.EMPIRE
+          || info.getGovernment() == GovernmentType.KINGDOM) {
+        if (info.getRace().getSocialSystem() == SocialSystem.PATRIARCHY) {
+          gender = Gender.MALE;
         }
-      } else {
-        gender = Gender.getRandom();
+        if (info.getRace().getSocialSystem() == SocialSystem.MATRIARCHY) {
+          gender = Gender.FEMALE;
+        }
       }
     }
-    if (info.getRace() == SpaceRace.SYNTHDROIDS) {
-      gender = Gender.FEMALE;
-    }
+
     Leader leader = new Leader(NameGenerator.generateName(info.getRace(),
         gender));
     leader.setGender(gender);
@@ -170,7 +160,7 @@ public final class LeaderUtility {
       Perk[] newPerks = getNewPerks(leader, PERK_TYPE_GOOD);
       var newPerk = DiceGenerator.pickRandom(newPerks);
       leader.addPerk(newPerk);
-      if (DiceGenerator.getRandom(99)  < 10) {
+      if (DiceGenerator.getRandom(99) < 10) {
         newPerks = getNewPerks(leader, PERK_TYPE_BAD);
         newPerk = DiceGenerator.pickRandom(newPerks);
         leader.addPerk(newPerk);
@@ -205,12 +195,12 @@ public final class LeaderUtility {
       if (leader.usePopulation()) {
         Planet planet = map.getPlanetByName(leader.getLeader().getHomeworld());
         if (planet != null) {
-          if (planet.getTotalPopulation() - 1
-              >= info.getRace().getMinimumPopulationForLeader()) {
+          if (planet.getTotalPopulation() - 1 >= info.getRace()
+              .getMinimumPopulationForLeader()) {
             score = score + 1;
           }
-          if (planet.getTotalPopulation() - 2
-              >= info.getRace().getMinimumPopulationForLeader()) {
+          if (planet.getTotalPopulation() - 2 >= info.getRace()
+              .getMinimumPopulationForLeader()) {
             score = score + 1;
           }
         }
@@ -288,7 +278,7 @@ public final class LeaderUtility {
         leader.setExperience(xp);
         leader.assignJob(Job.UNASSIGNED, player);
         if (planet.getTotalPopulation() >= player.getRace()
-              .getMinimumPopulationForLeader()) {
+            .getMinimumPopulationForLeader()) {
           leaders.add(leader);
         }
       }
@@ -309,8 +299,8 @@ public final class LeaderUtility {
     for (Leader leader : player.getLeaderRecruitPool()) {
       Planet homePlanet = map.getPlanetByName(leader.getHomeworld());
       if (homePlanet != null
-          && homePlanet.getTotalPopulation()
-          < player.getRace().getMinimumPopulationForLeader()) {
+          && homePlanet.getTotalPopulation() < player.getRace()
+              .getMinimumPopulationForLeader()) {
         removeLeader.add(leader);
       }
     }
@@ -320,6 +310,7 @@ public final class LeaderUtility {
     return player.getLeaderRecruitPool().toArray(
         new Leader[player.getLeaderRecruitPool().size()]);
   }
+
   /**
    * Build Leader pool for recruit
    * @param map StarMap
@@ -435,6 +426,7 @@ public final class LeaderUtility {
     }
     return result;
   }
+
   /**
    * Adds random perks.
    * 60% new perk is related to current job.
@@ -471,7 +463,7 @@ public final class LeaderUtility {
       leader.addPerk(goodPerk);
       addedPerks.add(goodPerk);
     }
-    if (DiceGenerator.getRandom(99)  < 10) {
+    if (DiceGenerator.getRandom(99) < 10) {
       Perk[] newPerks = getNewPerks(leader, PERK_TYPE_BAD);
       if (newPerks.length > 0) {
         var newPerk = DiceGenerator.pickRandom(newPerks);
@@ -513,6 +505,7 @@ public final class LeaderUtility {
     }
     return result;
   }
+
   /**
    * Calculate leader recruit cost.
    * @param realm PlayerInfo
@@ -554,7 +547,7 @@ public final class LeaderUtility {
     StringBuilder sb = new StringBuilder();
     if (leader.getJob() == Job.RULER) {
       sb.append(RulerUtility.getRulerTitle(leader.getGender(),
-        realm.getGovernment()));
+          realm.getGovernment()));
     }
     if (leader.getJob() == Job.COMMANDER) {
       if (leader.getMilitaryRank() == MilitaryRank.CIVILIAN) {
@@ -590,12 +583,13 @@ public final class LeaderUtility {
       } else if (leader.getMilitaryRank() != MilitaryRank.CIVILIAN) {
         sb.append(leader.getMilitaryRank().toString());
       } else {
-       sb.append("");
+        sb.append("");
       }
     }
     // Dead leader keeps it previous title, no need to change it.
     return sb.toString();
   }
+
   /**
    * Get list of new perks that leader is missing.
    * @param leader Leader whose perks to check.
@@ -702,7 +696,7 @@ public final class LeaderUtility {
       }
       case COMMANDER: {
         return Icons.getIconByName(Icons.ICON_COMMANDER);
-     }
+      }
       case GOVERNOR: {
         return Icons.getIconByName(Icons.ICON_GOVERNOR);
       }
@@ -962,7 +956,8 @@ public final class LeaderUtility {
       int starYear = game.getStarMap().getStarYear();
       NewsData news = NewsFactory.makeLeaderDies(fleet.getCommander(),
           info, "execution by "
-          + planet.getPlanetPlayerInfo().getEmpireName(), starYear);
+              + planet.getPlanetPlayerInfo().getEmpireName(),
+          starYear);
       if (game.getStarMap().hasHumanMet(info)
           || game.getStarMap().hasHumanMet(planet.getPlanetPlayerInfo())) {
         game.getStarMap().getNewsCorpData().addNews(news);

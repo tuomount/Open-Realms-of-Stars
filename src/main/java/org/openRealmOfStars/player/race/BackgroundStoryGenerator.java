@@ -1906,7 +1906,7 @@ public final class BackgroundStoryGenerator {
           + " than light travel. ");
     }
     if (scientific) {
-      Gender gender = Gender.getRandom();
+      Gender gender = DiceGenerator.pickRandom(info.getRace().getGenders());
       String greatLeader = NameGenerator.generateName(info.getRace(),
           gender);
       switch (DiceGenerator.getRandom(4)) {
@@ -2313,17 +2313,14 @@ public final class BackgroundStoryGenerator {
         case 2: {
           sb.append(name);
           sb.append(" has been violent history, until ");
-          Gender gender = Gender.getRandom();
+          var gender = DiceGenerator.pickRandom(info.getRace().getGenders());
           if (info.getRace().getSocialSystem() == SocialSystem.PATRIARCHY) {
             gender = Gender.MALE;
           }
           if (info.getRace().getSocialSystem() == SocialSystem.MATRIARCHY) {
             gender = Gender.FEMALE;
           }
-          if (info.getRace() == SpaceRace.MECHIONS
-              || info.getRace() == SpaceRace.REBORGIANS) {
-            gender = Gender.NONE;
-          }
+
           String greatLeader = NameGenerator.generateName(info.getRace(),
               gender);
           if (heirs) {
@@ -2353,17 +2350,14 @@ public final class BackgroundStoryGenerator {
             sb.append(" history remained shrouded in obscurity, devoid of"
                 + " written records, until ");
           }
-          Gender gender = Gender.getRandom();
+          var gender = DiceGenerator.pickRandom(info.getRace().getGenders());
           if (info.getRace().getSocialSystem() == SocialSystem.PATRIARCHY) {
             gender = Gender.MALE;
           }
           if (info.getRace().getSocialSystem() == SocialSystem.MATRIARCHY) {
             gender = Gender.FEMALE;
           }
-          if (info.getRace() == SpaceRace.MECHIONS
-              || info.getRace() == SpaceRace.REBORGIANS) {
-            gender = Gender.NONE;
-          }
+
           String greatLeader = NameGenerator.generateName(info.getRace(),
               gender);
           if (heirs) {
@@ -2481,17 +2475,14 @@ public final class BackgroundStoryGenerator {
         }
         }
       }
-      Gender gender = Gender.getRandom();
+      var gender = DiceGenerator.pickRandom(info.getRace().getGenders());
       if (info.getRace().getSocialSystem() == SocialSystem.PATRIARCHY) {
         gender = Gender.MALE;
       }
       if (info.getRace().getSocialSystem() == SocialSystem.MATRIARCHY) {
         gender = Gender.FEMALE;
       }
-      if (info.getRace() == SpaceRace.MECHIONS
-          || info.getRace() == SpaceRace.REBORGIANS) {
-        gender = Gender.NONE;
-      }
+
       String greatLeader = NameGenerator.generateName(info.getRace(),
           gender);
       if (heirs) {

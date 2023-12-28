@@ -20,7 +20,6 @@ package org.openRealmOfStars.ai.research;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Attitude;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -661,8 +660,8 @@ public final class Research {
       if (build != null) {
         if (build.getFarmBonus() > 0) {
           farmTech = true;
-          if (info.getRace() == SpaceRace.MECHIONS) {
-            // Mechions do not care about farm tech
+          if (!info.getRace().isEatingFood()) {
+            // Races that don't eat food do not care about farm tech
             farmTech = false;
           }
         }

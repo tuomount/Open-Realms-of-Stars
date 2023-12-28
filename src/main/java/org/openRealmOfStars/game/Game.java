@@ -2546,7 +2546,7 @@ public class Game implements ActionListener {
       if (players.getCurrentPlayerInfo().getRace() == SpaceRace.ALTEIRIANS) {
         fleetView.getPlanet().colonizeWithOrbital();
       }
-      if (players.getCurrentPlayerInfo().getRace() == SpaceRace.MECHIONS) {
+      if (players.getCurrentPlayerInfo().getRace().getFoodRequire() == 0) {
         fleetView.getPlanet().setWorkers(Planet.PRODUCTION_WORKERS,
             ship.getColonist());
       } else if (players.getCurrentPlayerInfo().getRace().isLithovorian()) {

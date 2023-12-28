@@ -959,7 +959,7 @@ public class PlanetBombingView extends BlackPanel {
       planet.colonizeWithOrbital();
     }
     result.conquered = true;
-    if (attacker.getRace() == SpaceRace.MECHIONS) {
+    if (!attacker.getRace().isEatingFood()) {
       planet.setWorkers(Planet.PRODUCTION_WORKERS, left);
     } else {
       planet.setWorkers(Planet.PRODUCTION_FOOD, left);

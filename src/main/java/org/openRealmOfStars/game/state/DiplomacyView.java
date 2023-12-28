@@ -71,7 +71,6 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
@@ -756,8 +755,7 @@ public class DiplomacyView extends BlackPanel {
             human.getRace(), null));
         speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE,
             human.getRace(), null));
-        if (human.getRace() != SpaceRace.MECHIONS
-            && human.getRace() != SpaceRace.SYNTHDROIDS) {
+        if (!human.getRace().isRoboticRace()) {
           speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_ANGER,
               human.getRace(), null));
         }

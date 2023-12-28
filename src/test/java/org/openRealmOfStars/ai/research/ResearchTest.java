@@ -451,6 +451,7 @@ public class ResearchTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testUpdateImprovementTech() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     TechList list = new TechList(SpaceRace.HUMAN);
     Mockito.when(info.getTechList()).thenReturn(list);
     list.addTech(TechFactory.createImprovementTech("Barracks", 1));

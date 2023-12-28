@@ -24,7 +24,6 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderBiography;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
@@ -787,13 +786,7 @@ public final class NewsFactory {
     sb.append(" was killed in battle! ");
     if (killer != null) {
       sb.append(killer.getCallName());
-      sb.append(" has ");
-      if (killed.getRace() == SpaceRace.MECHIONS) {
-        sb.append("oil");
-      } else {
-        sb.append("blood");
-      }
-      sb.append(" on ");
+      sb.append(" has blood on ");
       sb.append(killer.getGender().getHisHer());
       sb.append(" hands. ");
     }
@@ -3499,9 +3492,9 @@ public final class NewsFactory {
     sb.append("New deadly virus is spreading on ");
     sb.append(planet.getName());
     sb.append(". ");
-    if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.MECHIONS) {
-      sb.append("Luckily planet is being populated by Mechions "
-          + "which are immune to diseases. ");
+    if (planet.getPlanetPlayerInfo().getRace().isRoboticRace()) {
+      sb.append("Luckily planet is being populated by robotic race "
+          + "which is immune to diseases. ");
     } else {
       sb.append("Majority of planet population has died because of the virus."
           + " Spread has been able to limited on this single planet. ");

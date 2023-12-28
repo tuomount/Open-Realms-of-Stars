@@ -50,6 +50,7 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -483,19 +484,18 @@ public class SpaceAnomaly {
           break;
         }
         case TileNames.SPACE_ANOMALY_MECHION: {
-          result = new SpaceAnomaly(AnomalyType.ANCIENT_ROBOT, 0);
-          SpaceRace leaderRace = SpaceRace.MECHIONS;
-          String name = NameGenerator.generateName(SpaceRace.MECHIONS,
-              Gender.NONE);
-          String capitalDesc = "Ancient Mechion";
-          String desc = "Mechion";
-          if (DiceGenerator.getRandom(99) < 50) {
-            leaderRace = SpaceRace.SYNTHDROIDS;
-            name = NameGenerator.generateName(SpaceRace.SYNTHDROIDS,
-                Gender.FEMALE);
-            capitalDesc = "Ancient Synthdroid";
-            desc = "Synthdroid";
+          final var leaderRace = SpaceRace.getRandomRoboticRace();
+          if (leaderRace == null) {
+            ErrorLogger.debug("Could not get any robotic race for anomaly!");
+            result = null;
+            break;
           }
+
+          result = new SpaceAnomaly(AnomalyType.ANCIENT_ROBOT, 0);
+          final var gender = DiceGenerator.pickRandom(leaderRace.getGenders());
+          String name = NameGenerator.generateName(leaderRace, gender);
+          String capitalDesc = "Ancient " + leaderRace.getNameSingle();
+          String desc = leaderRace.getNameSingle();
           result.setText(capitalDesc + " was in long lasting stasis in "
               + "ancient ship floating in vastness of space. When entering "
               + "the ship " + desc + " wakes and is willing to join your "
@@ -507,6 +507,7 @@ public class SpaceAnomaly {
           leader.setHomeworld("Unknown");
           leader.setLevel(DiceGenerator.getRandom(2, 5));
           leader.setRace(leaderRace);
+          leader.setGender(gender);
           leader.setJob(Job.UNASSIGNED);
           leader.setTitle("");
           for (int i = 0; i < leader.getLevel(); i++) {

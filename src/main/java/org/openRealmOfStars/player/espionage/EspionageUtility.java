@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.EspionageMission;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -149,8 +148,7 @@ public final class EspionageUtility {
           && !planet.getPlanetPlayerInfo().getTechList().hasTech(
               TechType.Improvements, "Deadly virus")
           && planet.getTotalPopulation() > 1
-          && planet.getPlanetPlayerInfo().getRace() != SpaceRace.MECHIONS
-          && planet.getPlanetPlayerInfo().getRace() != SpaceRace.SYNTHDROIDS) {
+          && !planet.getPlanetPlayerInfo().getRace().isRoboticRace()) {
         list.add(EspionageMission.DEADLY_VIRUS);
       }
     }

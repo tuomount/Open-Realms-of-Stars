@@ -26,13 +26,20 @@ import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesignConsts;
 import org.openRealmOfStars.player.tech.TechFactory;
 
-import static org.junit.Assert.*;
+import junit.framework.TestCase;
 
 /**
  * Test for Ship Design class
  * @TODO: Mock dependencies
  */
-public class ShipDesignTest {
+public class ShipDesignTest extends TestCase {
+
+  /** TODO: Remove when SpaceRaces are dehardcoded */
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+    SpaceRace.initialize();
+  }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)

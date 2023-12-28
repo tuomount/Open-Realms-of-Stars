@@ -711,7 +711,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIST_MINUS)
         && fleet.getTotalCargoColonist() > 0 && planet != null) {
-      if (planet.getPlanetPlayerInfo().getRace() != SpaceRace.MECHIONS) {
+      if (planet.getPlanetPlayerInfo().getRace().isEatingFood()) {
         planet.setWorkers(Planet.PRODUCTION_FOOD,
             planet.getWorkers(Planet.PRODUCTION_FOOD) + 1);
         fleet.removeColonist();

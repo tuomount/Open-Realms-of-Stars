@@ -502,53 +502,52 @@ public final class PlanetHandling {
     if (building.getName().equals("United Galaxy Tower")
         && metalProd > 5 && prodProd > 5
         && info.getStrategy() == WinningStrategy.DIPLOMATIC) {
-      score = score + 400;
+      score += 400;
     }
     if (building.getMineBonus() > 0
         && planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET
-        && info.getRace() == SpaceRace.LITHORIANS) {
-      score = score + 20;
+        && info.getRace().isLithovorian()) {
+      score += 20;
     }
-    score = score + building.getMaterialBonus() * 60;
+    score += building.getMaterialBonus() * 60;
     boolean extraFarmBonus = false;
-    if (info.getRace() == SpaceRace.CENTAURS
-        || info.getRace() == SpaceRace.TEUTHIDAES) {
-      score = score + building.getFarmBonus() * 50;
+    if (!info.getRace().isEatingFood()) {
+      score += building.getFarmBonus() * -40;
+    } else if (info.getRace().hasTrait(TraitIds.SLOW_GROWTH)) {
+      score += building.getFarmBonus() * 50;
       extraFarmBonus = true;
-    } else if (info.getRace() == SpaceRace.REBORGIANS) {
-      score = score + building.getFarmBonus() * 20;
-      extraFarmBonus = true;
-    } else if (info.getRace() == SpaceRace.LITHORIANS) {
-      score = score - building.getFarmBonus() * 40;
-    } else if (info.getRace() != SpaceRace.MECHIONS) {
-      score = score + building.getFarmBonus() * 40;
+    } else if (info.getRace().hasTrait(TraitIds.FIXED_GROWTH)) {
+      score += building.getFarmBonus() * 20;
       extraFarmBonus = true;
     } else {
-      score = score - building.getFarmBonus() * 40;
+      score += building.getFarmBonus() * 40;
+      extraFarmBonus = true;
     }
+
     if (extraFarmBonus && building.getFarmBonus() > 0) {
       if (planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
-        score = score + 40;
+        score += 40;
       }
       if (info.getStrategy() == WinningStrategy.POPULATION) {
-        score = score + building.getFarmBonus() * 10;
+        score += building.getFarmBonus() * 10;
       }
     }
-    if (info.getRace() != SpaceRace.MECHIONS
-        && info.getRace() != SpaceRace.LITHORIANS
+    if (!info.getRace().isEatingFood()
         && building.getFarmBonus() > 0
         && planet.getTotalPopulation() == planet.getPopulationLimit()
         && planet.calculateSurPlusFood() >= 0) {
       // Planet population is already max out and food is enough.
       // No need for building more food production.
+      // ... Or the race just does not eat normal food.
+      // XXX: Possible logic error, farms are discarded from scoring lower
       score = 0;
     }
-    if (info.getRace() == SpaceRace.MECHIONS) {
-      score = score + building.getReseBonus() * 80;
-      score = score + building.getCultBonus() * 60;
+    if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
+      score += building.getReseBonus() * 80;
+      score += building.getCultBonus() * 60;
     } else {
-      score = score + building.getReseBonus() * 60;
-      score = score + building.getCultBonus() * 40;
+      score += building.getReseBonus() * 60;
+      score += building.getCultBonus() * 40;
     }
     if (building.getReseBonus() > 0
         && planet.getEffectiveGovernorGuide() == Planet.RESEARCH_PLANET) {
@@ -649,9 +648,9 @@ public final class PlanetHandling {
       // Planet has enough metal production
       score = -1;
     }
-    if (info.getRace() == SpaceRace.MECHIONS
+    if (!info.getRace().isEatingFood()
         && building.getType() == BuildingType.FARM) {
-      // Mechions do not build farms
+      // Races that do not eat normal food do not build farms
       score = -1;
     }
     int time = planet.getProductionTime(building);

@@ -881,8 +881,8 @@ public final class RandomEventUtility {
           }
           sb.append(info.getEmpireName());
           sb.append(". ");
-          if (info.getRace() == SpaceRace.MECHIONS) {
-            sb.append("Luckly planet is occupied by Mechions which are"
+          if (info.getRace().isRoboticRace()) {
+            sb.append("Luckly planet is occupied by a robotic race which is"
                 + " immune to deadly viruses. This does not affect to"
                 + "planet in anyway.");
           } else {

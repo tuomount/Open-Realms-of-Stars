@@ -149,8 +149,7 @@ public class NegotiationOffer {
       } else {
         offerValue = getTech().getLevel() * 2;
       }
-      if ((race.isLithovorian() || race == SpaceRace.MECHIONS)
-          && farmingBuilding) {
+      if (!race.isEatingFood() && farmingBuilding) {
         offerValue = 0;
       }
       break;

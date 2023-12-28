@@ -20,6 +20,8 @@ package org.openRealmOfStars.player.race;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.music.MusicFileInfo;
@@ -27,6 +29,7 @@ import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.race.trait.RaceTrait;
 import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
@@ -1575,6 +1578,28 @@ public enum SpaceRace {
     }
     return 100;
   }
+
+  /**
+   * Genders the race's leaders can have.
+   * @return Array of Genders
+   */
+  public Gender[] getGenders() {
+    if (this == MECHIONS || this == REBORGIANS) {
+      return new Gender[] {
+          Gender.NONE
+      };
+    }
+    if (this == SYNTHDROIDS) {
+      return new Gender[] {
+          Gender.FEMALE
+      };
+    }
+
+    return new Gender[] {
+        Gender.FEMALE, Gender.MALE
+    };
+  }
+
   /**
    * Get rush option as a String
    * @return String
@@ -1809,5 +1834,19 @@ public enum SpaceRace {
     case 12: return SMAUGIRIANS;
     case 13: return ALONIANS;
     }
+  }
+
+  /**
+   * Get random robotic race
+   * @return Robotic SpaceRace
+   */
+  public static SpaceRace getRandomRoboticRace() {
+    var roboticRaces = Stream.of(values())
+        .filter(race -> race.isRoboticRace())
+        .collect(Collectors.toList());
+    if (roboticRaces.isEmpty()) {
+      return null;
+    }
+    return DiceGenerator.pickRandom(roboticRaces);
   }
 }

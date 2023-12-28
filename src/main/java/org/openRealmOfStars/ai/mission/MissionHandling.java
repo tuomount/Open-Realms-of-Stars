@@ -869,7 +869,7 @@ public final class MissionHandling {
           if (info.getRace() == SpaceRace.ALTEIRIANS) {
             planet.colonizeWithOrbital();
           }
-          if (info.getRace() == SpaceRace.MECHIONS) {
+          if (!info.getRace().isEatingFood()) {
             planet.setWorkers(Planet.PRODUCTION_WORKERS, ship.getColonist());
           } else {
             planet.setWorkers(Planet.PRODUCTION_FOOD, ship.getColonist());

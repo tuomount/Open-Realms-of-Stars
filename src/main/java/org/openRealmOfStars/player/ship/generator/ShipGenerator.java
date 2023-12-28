@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
@@ -145,23 +146,11 @@ public final class ShipGenerator {
           if (design.getHull().getSize() == ShipSize.SMALL) {
             scores[i] = scores[i] + comp.getDamage() / 20;
           }
-          if (player.getRace() == SpaceRace.CENTAURS
-              || player.getRace() == SpaceRace.HOMARIANS) {
-            // Centaurs do not like nukes
-            scores[i] = scores[i] - 15;
+
+          if (player.getRace().hasTrait(TraitIds.RADIOSYNTHESIS)) {
+            scores[i] += 10;
           }
-          if (player.getRace() == SpaceRace.MECHIONS) {
-            // Mechions use nukes more likely
-            scores[i] = scores[i] + 5;
-          }
-          if (player.getRace() == SpaceRace.CHIRALOIDS) {
-            // Chiraloids use nukes more likely
-            scores[i] = scores[i] + 25;
-          }
-          if (player.getRace() == SpaceRace.GREYANS) {
-            // Greyans use nukes more likely
-            scores[i] = scores[i] + 2;
-          }
+
           if (attitude == Attitude.AGGRESSIVE
               || attitude == Attitude.MILITARISTIC) {
             scores[i] = scores[i] + 5;

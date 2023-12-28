@@ -173,9 +173,6 @@ public class ShipInteriorPanel extends JPanel {
     if (spaceRace == SpaceRace.ALTEIRIANS) {
       yOffset = 25;
     }
-    if (spaceRace == SpaceRace.ALONIANS) {
-      yOffset = 25;
-    }
     return yOffset;
   }
   @Override

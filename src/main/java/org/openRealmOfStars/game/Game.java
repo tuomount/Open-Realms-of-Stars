@@ -129,7 +129,6 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.Route;
-import org.openRealmOfStars.starMap.SquareInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
@@ -2028,18 +2027,6 @@ public class Game implements ActionListener {
           }
           sb.append("will it change?");
           info.appendStory(sb.toString());
-        }
-        if (info != null && info.getRace() == SpaceRace.ALONIANS) {
-          for (int x = 0; x < starMap.getMaxX(); x++) {
-            for (int y = 0; y < starMap.getMaxY(); y++) {
-               SquareInfo square = starMap.getTileInfo(x, y);
-               if (square.getType() == SquareInfo.TYPE_ALONIAN_START
-                   && square.getValue() == i) {
-                 starMap.clearTileInfo(x, y);
-                 starMap.createRealmToGalaxy(x, y, info, i);
-               }
-            }
-          }
         }
       }
       starMap.clearNewsCorpData();

@@ -120,11 +120,6 @@ public class SpaceAnomaly {
       DESTROYED_PLANET_TEXT_BEGIN + " Your fleet crew gathers some ancient"
           + " technology for later research.";
 
-  /**
-   * Alonian heritage text.
-   */
-  private static final String ALONIAN_HERITAGE_TEXT =
-      " This planet could be the old Alonian home world.";
 /**
    * Destroyed planet text already visited.
    */
@@ -253,11 +248,7 @@ public class SpaceAnomaly {
   private static SpaceAnomaly createDestroyedPlanet(final StarMap map,
       final PlayerInfo info, final Fleet fleet) {
     SpaceAnomaly result = new SpaceAnomaly(AnomalyType.DESTROYED_PLANET, 0);
-    if (info.getRace() == SpaceRace.ALONIANS) {
-      result.setText(DESTROYED_PLANET_TEXT + ALONIAN_HERITAGE_TEXT);
-    } else {
-      result.setText(DESTROYED_PLANET_TEXT);
-    }
+    result.setText(DESTROYED_PLANET_TEXT);
     result.setImage(IOUtilities.loadImage(
         GuiStatics.IMAGE_DESTROYED_PLANET));
     info.getArtifactLists().addDiscoveredArtifact(

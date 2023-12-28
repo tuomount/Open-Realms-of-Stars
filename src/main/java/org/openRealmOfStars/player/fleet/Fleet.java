@@ -1069,18 +1069,10 @@ public class Fleet {
    */
   public int getTotalReseachBonus() {
     int result = 0;
-    boolean alonianShips = false;
     if (isStarBaseDeployed()) {
       for (Ship ship : ships) {
-        result = result + ship.getTotalResearchBonus();
-        if (ship.getHull().getRace() == SpaceRace.ALONIANS) {
-          alonianShips = true;
-        }
+        result += ship.getTotalResearchBonus();
       }
-    }
-    if (result > 0 && alonianShips) {
-      // Alonians get research bonus.
-      result++;
     }
     return result;
   }

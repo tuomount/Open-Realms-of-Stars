@@ -17,7 +17,6 @@ package org.openRealmOfStars.starMap.planet;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
@@ -34,11 +33,20 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
+import junit.framework.TestCase;
+
 /**
  * Test for planet
  *
  */
-public class PlanetTest {
+public class PlanetTest extends TestCase {
+
+  /** TODO: Remove when SpaceRaces are dehardcoded */
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+    SpaceRace.initialize();
+  }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)

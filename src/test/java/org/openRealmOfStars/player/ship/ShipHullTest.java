@@ -17,17 +17,23 @@ package org.openRealmOfStars.player.ship;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.player.race.SpaceRace;
 
+import junit.framework.TestCase;
+
 /**
  * Test for Ship hull class
  */
-public class ShipHullTest {
+public class ShipHullTest extends TestCase {
+
+  /** TODO: Remove when SpaceRaces are dehardcoded */
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+    SpaceRace.initialize();
+  }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)

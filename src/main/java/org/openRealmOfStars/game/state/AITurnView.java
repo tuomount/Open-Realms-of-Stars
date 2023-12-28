@@ -2,6 +2,7 @@ package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,6 +23,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -70,7 +72,6 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -2486,174 +2487,145 @@ public class AITurnView extends BlackPanel {
     if (target.getJob() == Job.TOO_YOUNG) {
       tooYoung = true;
     }
+
     int chance = getKillChance(leader, target);
-    if (DiceGenerator.getRandom(1, 100) < chance) {
-      // Assassination happens
-      if (realm.getRace() != leader.getRace()
-          && realm.getGovernment().isXenophopic()) {
-        Message msg = new Message(MessageType.LEADER,
-            realm.getEmpireName() + " is xenophopic and outsider is caught "
-                + "before entering the palace. "
-                + leader.getGender().getHisHer() + " belongs has found"
-                + " assasination equipments. Quick angry mod kills "
-                + leader.getCallName() + ". Assasination of "
-                + target.getCallName() + " fails.",
-            Icons.getIconByName(Icons.ICON_DEATH));
-        msg.setMatchByString("Index:" + realm.getLeaderIndex(target));
-        realm.getMsgList().addUpcomingMessage(msg);
-        // Assassin is going to die because of treason
-        leader.setJob(Job.DEAD);
-        msg = new Message(MessageType.LEADER,
-            leader.getCallName()
-                + " has died at age of " + leader.getAge()
-                + " due treason against " + realm.getEmpireName()
-                + "! ",
-            Icons.getIconByName(Icons.ICON_DEATH));
-        msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
-        realm.getMsgList().addUpcomingMessage(msg);
-        String reason;
-        switch (DiceGenerator.getRandom(2)) {
-          case 0:
-          default: {
-            reason = "execution because of treason";
-            break;
-          }
-          case 1: {
-              reason = "execution because attempted assasination of "
-                 + target.getTitle();
-            break;
-          }
-          case 2: {
-              reason = "execution because attempted assasination of "
-                 + target.getCallName();
-            break;
-          }
-        }
-        NewsData news = NewsFactory.makeLeaderDies(leader, realm,
-            reason, game.getStarMap().getStarYear());
-        if (game.getStarMap().hasHumanMet(realm)) {
-          game.getStarMap().getNewsCorpData().addNews(news);
-        }
-        game.getStarMap().getHistory().addEvent(
-            NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
-            news));
-      } else if (target.hasPerk(Perk.WEALTHY)) {
-        Message msg = new Message(MessageType.LEADER,
-            target.getCallName()
-                + " has paid massive amount of credits to make "
-                + target.getGender().getHisHer() + " life is"
-                + " protected against assasinations.",
-            Icons.getIconByName(Icons.ICON_DEATH));
-        msg.setMatchByString("Index:" + realm.getLeaderIndex(target));
-        realm.getMsgList().addUpcomingMessage(msg);
-        target.useWealth();
-        // Assassin is going to die because of treason
-        leader.setJob(Job.DEAD);
-        msg = new Message(MessageType.LEADER,
-            leader.getCallName()
-                + " has died at age of " + leader.getAge()
-                + " due treason against " + realm.getEmpireName()
-                + "! ",
-            Icons.getIconByName(Icons.ICON_DEATH));
-        msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
-        realm.getMsgList().addUpcomingMessage(msg);
-        String reason;
-        switch (DiceGenerator.getRandom(2)) {
-          case 0:
-          default: {
-            reason = "execution because of treason";
-            break;
-          }
-          case 1: {
-              reason = "execution because attempted assasination of "
-                 + target.getTitle();
-            break;
-          }
-          case 2: {
-              reason = "execution because attempted assasination of "
-                 + target.getCallName();
-            break;
-          }
-        }
-        NewsData news = NewsFactory.makeLeaderDies(leader, realm,
-            reason, game.getStarMap().getStarYear());
-        game.getStarMap().getNewsCorpData().addNews(news);
-        game.getStarMap().getHistory().addEvent(
-            NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
-            news));
+    if (DiceGenerator.getRandom(1, 100) >= chance) {
+      // Nothing happens this time
+      return;
+    }
+
+    final var tplMsgTreasonExec = "%1$s has at age of %2$d"
+        + " due to treason against %3$s!";
+
+    // Assassination happens
+    if (realm.getGovernment().isXenophopic()
+        && realm.getRace() != leader.getRace()) {
+      final var tplXenophobicExec = "%1$s is xenophopic and outsider is caught"
+          + " before entering ruler's dwelling. Assasination equipment was"
+          + " found in %2$s possesion. Quick, angry mob kills %3$s."
+          + " Assasination of %4$s fails.";
+
+      Message msg = new Message(MessageType.LEADER,
+          String.format(tplXenophobicExec, realm.getEmpireName(),
+              leader.getGender().getHisHer(), leader.getCallName(),
+              target.getCallName()),
+          Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setMatchByString("Index:" + realm.getLeaderIndex(target));
+      realm.getMsgList().addUpcomingMessage(msg);
+
+      // Assassin is going to die because of treason
+      leader.setJob(Job.DEAD);
+      msg = new Message(MessageType.LEADER,
+          String.format(tplMsgTreasonExec, leader.getCallName(),
+              leader.getAge(), realm.getEmpireName()),
+          Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+      realm.getMsgList().addUpcomingMessage(msg);
+
+      String reason;
+      if (DiceGenerator.getBoolean()) {
+        reason = "execution because of treason";
       } else {
-        target.setJob(Job.DEAD);
-        // Leader gains experience for succeesful assasination
-        leader.setExperience(leader.getExperience() + 50);
-        leader.getStats().addOne(StatType.KILLED_ANOTHER_LEADER);
-        Message msg = new Message(MessageType.LEADER,
-            target.getCallName()
-                + " has died at age of " + target.getAge()
-                + ". Death was caused by internal power struggle.",
-            Icons.getIconByName(Icons.ICON_DEATH));
-        msg.setMatchByString("Index:" + realm.getLeaderIndex(target));
-        realm.getMsgList().addUpcomingMessage(msg);
-        String reason;
-        switch (DiceGenerator.getRandom(2)) {
-          case 0:
-          default: {
-            if (target.getRace() == SpaceRace.MECHIONS) {
-              reason = "overload of regular expressions";
-            } else if (target.getRace() == SpaceRace.REBORGIANS) {
-              reason = "burnt cyber interface";
-            } else {
-              reason = "poison drink";
-            }
-            break;
-          }
-          case 1: {
-            if (target.getRace() == SpaceRace.MECHIONS
-                || target.getRace() == SpaceRace.LITHORIANS) {
-              reason = "heavy object crushing the body";
-            } else if (target.getRace() == SpaceRace.REBORGIANS) {
-              reason = "heavy object smashing the body";
-            } else {
-              reason = "heavy object hitting "
-                  + target.getGender().getHisHer()
-                  + " head";
-            }
-            break;
-          }
-          case 2: {
-            if (target.getRace() == SpaceRace.MECHIONS) {
-              reason = "shot to the head";
-            } else if (target.getRace() == SpaceRace.REBORGIANS
-                || target.getRace() == SpaceRace.LITHORIANS) {
-              reason = "explosion to the chest";
-            } else {
-              reason = "blade in "
-                  + target.getGender().getHisHer() + " back";
-            }
-            break;
-          }
-        }
-        NewsData news = NewsFactory.makeLeaderDies(target, realm,
-            reason, game.getStarMap().getStarYear());
+        reason = "execution because attempted assasination of "
+            + target.getCallName();
+      }
+
+      NewsData news = NewsFactory.makeLeaderDies(leader, realm,
+          reason, game.getStarMap().getStarYear());
+      if (game.getStarMap().hasHumanMet(realm)) {
         game.getStarMap().getNewsCorpData().addNews(news);
-        game.getStarMap().getHistory().addEvent(
-            NewsFactory.makeLeaderEvent(target, realm,
-                game.getStarMap(), news));
-        if (targetIsRuler) {
-          realm.setRuler(null);
-        }
-        if (tooYoung) {
-          leader.addPerk(Perk.CRUEL);
-          Message msgTooYoung = new Message(MessageType.LEADER,
-              leader.getCallName()
-                  + " is being accused for killing " + target.getCallName()
-                  + ". Killing such a young heir is cruel task.",
-              Icons.getIconByName(Icons.ICON_DEATH));
-          msgTooYoung.setMatchByString("Index:" + realm.getLeaderIndex(leader));
-          realm.getMsgList().addUpcomingMessage(msgTooYoung);
-        }
+      }
+      game.getStarMap().getHistory()
+          .addEvent(
+          NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
+          news));
+    } else if (target.hasPerk(Perk.WEALTHY)) {
+      Message msg = new Message(MessageType.LEADER,
+          target.getCallName()
+              + " has paid massive amount of credits to make "
+              + target.getGender().getHisHer() + " life is"
+              + " protected against assasinations.",
+          Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setMatchByString("Index:" + realm.getLeaderIndex(target));
+      realm.getMsgList().addUpcomingMessage(msg);
+      target.useWealth();
+
+      // Assassin is going to die because of treason
+      leader.setJob(Job.DEAD);
+      msg = new Message(MessageType.LEADER,
+          String.format(tplMsgTreasonExec, leader.getCallName(),
+              leader.getAge(), realm.getEmpireName()),
+          Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+      realm.getMsgList().addUpcomingMessage(msg);
+
+      String reason;
+      if (DiceGenerator.getBoolean()) {
+        reason = "execution because of treason";
+      } else {
+        reason = "execution because attempted assasination of "
+            + target.getCallName();
+      }
+
+      NewsData news = NewsFactory.makeLeaderDies(leader, realm,
+          reason, game.getStarMap().getStarYear());
+      game.getStarMap().getNewsCorpData().addNews(news);
+      game.getStarMap().getHistory().addEvent(
+          NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
+          news));
+    } else {
+      target.setJob(Job.DEAD);
+      // Leader gains experience for succeesful assasination
+      leader.setExperience(leader.getExperience() + 50);
+      leader.getStats().addOne(StatType.KILLED_ANOTHER_LEADER);
+      Message msg = new Message(MessageType.LEADER,
+          target.getCallName()
+              + " has died at age of " + target.getAge()
+              + ". Death was caused by internal power struggle.",
+          Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setMatchByString("Index:" + realm.getLeaderIndex(target));
+      realm.getMsgList().addUpcomingMessage(msg);
+      final var reasonsNoGender = new String[] {
+        "lethal substance",
+        "shot to the head",
+        "sudden explosion",
+      };
+      final var reasonsGender = new String[] {
+        "heavy object hitting %1$s head",
+        "heavy object crushing %1$s body",
+        "blade in %1$s back",
+      };
+
+      String reason;
+      if (DiceGenerator.getBoolean()) {
+        final var tplReason = DiceGenerator.pickRandom(reasonsGender);
+        reason = String.format(tplReason, target.getGender().getHisHer());
+      } else {
+        reason = DiceGenerator.pickRandom(reasonsNoGender);
+      }
+
+      NewsData news = NewsFactory.makeLeaderDies(target, realm,
+          reason, game.getStarMap().getStarYear());
+      game.getStarMap().getNewsCorpData().addNews(news);
+      game.getStarMap().getHistory().addEvent(
+          NewsFactory.makeLeaderEvent(target, realm,
+              game.getStarMap(), news));
+      if (targetIsRuler) {
+        realm.setRuler(null);
+      }
+      if (tooYoung) {
+        leader.addPerk(Perk.CRUEL);
+        Message msgTooYoung = new Message(MessageType.LEADER,
+            leader.getCallName()
+                + " is being accused for killing " + target.getCallName()
+                + ". Killing such a young heir is cruel task.",
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msgTooYoung.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+        realm.getMsgList().addUpcomingMessage(msgTooYoung);
       }
     }
   }
+
   /**
    * Ruler will free one prisoner.
    * @param realm Realm who is handling leaders currently.
@@ -3045,30 +3017,20 @@ public class AITurnView extends BlackPanel {
                   Icons.getIconByName(Icons.ICON_DEATH));
               msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
               realm.getMsgList().addUpcomingMessage(msg);
-              String reason;
-              switch (DiceGenerator.getRandom(2)) {
-                case 0:
-                default: {
-                  reason = "old age";
-                  break;
-                }
-                case 1: {
-                  if (leader.getRace() != SpaceRace.MECHIONS) {
-                    reason = "heart attack";
-                  } else {
-                    reason = "burnt CPU";
-                  }
-                  break;
-                }
-                case 2: {
-                  if (leader.hasPerk(Perk.ADDICTED)) {
-                    reason = "substance overdose";
-                  } else {
-                    reason = "natural causes";
-                  }
-                  break;
-                }
+
+              final var reasons = new ArrayList<String>(Arrays.asList(
+                  new String[] {
+                      "old age",
+                      "natural causes",
+                  }));
+              if (leader.getRace().isRoboticRace()) {
+                reasons.add("burnt CPU");
               }
+              if (leader.hasPerk(Perk.ADDICTED)) {
+                reasons.add("substance overdose");
+              }
+
+              String reason = DiceGenerator.pickRandom(reasons);
               NewsData news = NewsFactory.makeLeaderDies(leader, realm,
                   reason, game.getStarMap().getStarYear());
               if (game.getStarMap().isAllNewsEnabled()

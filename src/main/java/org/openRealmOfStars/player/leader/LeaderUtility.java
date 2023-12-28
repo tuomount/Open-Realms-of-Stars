@@ -120,15 +120,14 @@ public final class LeaderUtility {
       final int level) {
     Gender gender = DiceGenerator.pickRandom(info.getRace().getGenders());
     // Adjust gender for starting rulers based on social system
-    if (level == LEVEL_START_RULER) {
-      if (info.getGovernment() == GovernmentType.EMPIRE
-          || info.getGovernment() == GovernmentType.KINGDOM) {
-        if (info.getRace().getSocialSystem() == SocialSystem.PATRIARCHY) {
-          gender = Gender.MALE;
-        }
-        if (info.getRace().getSocialSystem() == SocialSystem.MATRIARCHY) {
-          gender = Gender.FEMALE;
-        }
+    if (level == LEVEL_START_RULER
+        && (info.getGovernment() == GovernmentType.EMPIRE
+          || info.getGovernment() == GovernmentType.KINGDOM)) {
+      if (info.getRace().getSocialSystem() == SocialSystem.PATRIARCHY) {
+        gender = Gender.MALE;
+      }
+      if (info.getRace().getSocialSystem() == SocialSystem.MATRIARCHY) {
+        gender = Gender.FEMALE;
       }
     }
 

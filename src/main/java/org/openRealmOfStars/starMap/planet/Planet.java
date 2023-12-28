@@ -75,110 +75,118 @@ import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
  * Class planet
  *
  */
-
 public class Planet {
 
-  /**
-   * Number of credits one population is worth when rushing.
-   */
-  public static final int POPULATION_RUSH_COST = 80;
-  /**
-   * Planet name
-   */
-  private String name;
+  /** Maximum number of different worker types */
+  public static final int MAX_WORKER_TYPE = 5;
+  /** Farmer worker type, produces food */
+  public static final int FOOD_FARMERS = 0;
+  /** Miner worker type, produces metal*/
+  public static final int METAL_MINERS = 1;
+  /** Worker worker type, produces production points */
+  public static final int PRODUCTION_WORKERS = 2;
+  /** Scientist worker type, produces research */
+  public static final int RESEARCH_SCIENTIST = 3;
+  /** Artist worker type, produces culture and happiness */
+  public static final int CULTURE_ARTIST = 4;
 
-  /**
-   * Planet order number in system
-   */
+  /** Governor guide for general guide. This is the regular handling. */
+  public static final int GENERALIST_PLANET = 0;
+  /** Governor guide for getting more credits. */
+  public static final int CREDIT_PLANET = 1;
+  /** Governor guide for getting more research. */
+  public static final int RESEARCH_PLANET = 2;
+  /** Governor guide for getting more culture. */
+  public static final int CULTURE_PLANET = 3;
+  /** Governor guide for getting more military ships from the planet. */
+  public static final int MILITARY_PLANET = 4;
+  /** Governor guide for getting more population quickly for the planet. */
+  public static final int POPULATION_PLANET = 5;
+  /** Governor guide is passive. */
+  public static final int PASSIVE_GOVERNOR = 6;
+
+  // TODO: Enumerize production type fields?
+  // It could remove some safety checks, but would be slightly less extensible
+  /** Food production */
+  public static final int PRODUCTION_FOOD = 0;
+  /** Metal production */
+  public static final int PRODUCTION_METAL = 1;
+  /** Production production */
+  public static final int PRODUCTION_PRODUCTION = 2;
+  /** Research production */
+  public static final int PRODUCTION_RESEARCH = 3;
+  /** Culture production */
+  public static final int PRODUCTION_CULTURE = 4;
+  /** Credit production */
+  public static final int PRODUCTION_CREDITS = 5;
+  /** Population growth */
+  public static final int PRODUCTION_POPULATION = 6;
+  /** Material production from empty */
+  public static final int PRODUCTION_MATERIAL = 7;
+  /** Artifact research production */
+  public static final int PRODUCTION_ARTIFACT_RESEARCH = 8;
+
+  /** Number of credits one population is worth when rushing. */
+  public static final int POPULATION_RUSH_COST = 80;
+
+  /** Minimum amount of ore on planets */
+  private static final int MINIMUM_ORE = 2000;
+  /** Maximum amount of ore on planets */
+  private static final int MAXIMUM_ORE = 10000;
+
+  /** Planet name */
+  private String name;
+  /** Planet order number in system */
   private int orderNumber;
 
-  /**
-   * Planet's radiation level between 1-10.
-   */
+  /** Planet's radiation level between 1-10. */
   private int radiationLevel;
-
-  /**
-   * Planet's ground size aka how many improvements can be fitted there.
-   * This is between 7-16.
-   */
+  /** Is planet inhabitable gas giant. Gas giants just block the radar. */
+  private boolean gasGiant;
+  /** Planet's coordinate. On gas giant this left upper corner. */
+  private Coordinate coordinate;
+  /** Planet type. Constain world type, images and image instruction. */
+  private PlanetTypes planetType;
+  /** Planet's size aka how many improvements can be there. Between 7-16. */
   private int groundSize;
 
-  /**
-   * How much metal there is still in the ground.
-   * This is between 2000-10000.
-   */
+  /** How much metal there is still in the ground. Default is 2000-10000. */
   private int amountMetalInGround;
-
-  /**
-   * How much metal has been mined and available to use
-   */
+  /** How much metal has been mined and available to use */
   private int metal;
-
-  /**
-   * Amount of production resource available
-   */
+  /** Amount of production resource available */
   private int prodResource;
+  /** Extra food, each +10 increases people by 1, each -10 decreases by one. */
+  private int extraFood;
+  /** Planet's culture value */
+  private int culture;
 
-  /**
-   * Is planet inhabitable gas giant. Gas giants just block the radar.
-   */
-  private boolean gasGiant;
-
+  /** Index of planet's owner PlayerInfo, -1 if planet is not colonized. */
+  private int planetOwner;
+  /** Planet playerInfo, null means not colonized. */
+  private PlayerInfo planetOwnerInfo;
   /**
    * Space race index which space race home world planet is.
    * -1 means that is is not an home world.
    * Home world needs generate 1 culture per turn.
    */
   private int homeWorldIndex;
-
   /**
-   * Planet's coordinate. On gas giant this left upper corner.
+   * Starting realm index for elder realm start.
+   * This value is only used when creating galaxy.
+   * This will no be saved on file.
    */
-  private Coordinate coordinate;
+  private int startRealmIndex;
 
-  /**
-   * Planet type. Constain world type, images and image instruction.
-   */
-  private PlanetTypes planetType;
-
-  /**
-   * Planet Owner info, this is index to player index, -1 means
-   * that planet is not colonized yet.
-   */
-  private int planetOwner;
-
-  /**
-   * Planet playerInfo, null means not colonized yet.
-   */
-  private PlayerInfo planetOwnerInfo;
-
-  /**
-   * Extra food, each +10 increases people by one and each -10 decreases
-   * people by one.
-   */
-  private int extraFood;
-
-  /**
-   * How many productions are converted to credits
-   */
+  /** How many productions are converted to credits */
   private int tax;
-
-  /**
-   * Planet's culture value
-   */
-  private int culture;
 
   /** Statuses applied on the Planet */
   private ArrayList<AppliedStatus> statuses;
 
-  /**
-   * Planetary event when colonizing the planet
-   */
+  /** Planetary event when colonizing the planet */
   private PlanetaryEvent event;
-
-  /**
-   * Event found AKA planet has been colonized
-   */
+  /** Event found AKA planet has been colonized */
   private boolean eventFound;
 
   /**
@@ -188,224 +196,37 @@ public class Planet {
    */
   private HappinessEffect happinessEffect;
 
-  /**
-   * String containg how happiness is calculated
-   */
+  /** String containg how happiness is calculated. */
   private String happinessExplanation;
-  /**
-   * String containing how farm production is calculated.
-   */
+  /** String containing how farm production is calculated. */
   private String farmProdExplain;
-  /**
-   * String containing how metal production is calculated.
-   */
+  /** String containing how metal production is calculated. */
   private String metaProdExplain;
-  /**
-   * String containing how production production is calculated.
-   */
+  /** String containing how production production is calculated. */
   private String prodProdExplain;
-  /**
-   * String containing how research production is calculated.
-   */
+  /** String containing how research production is calculated. */
   private String reseProdExplain;
-  /**
-   * String containing how culture production is calculated.
-   */
+  /** String containing how culture production is calculated. */
   private String cultProdExplain;
-  /**
-   * String containing how credit production is calculated.
-   */
+  /** String containing how credit production is calculated. */
   private String credProdExplain;
 
-  /**
-   * Starting realm index for elder realm start.
-   * This value is only used when creating galaxy.
-   * This will no be saved on file.
-   */
-  private int startRealmIndex;
-
-  /**
-   * Current governor of the planet.
-   */
+  /** Current governor of the planet. */
   private Leader governor;
+  /** Guide for governor how to rule the planet. */
+  private int governorGuide;
 
-  /**
-   * Orbital for planet.
-   */
+  /** Orbital for planet. */
   private Ship orbital;
 
-  /**
-   * Maximum number of different works
-   */
-  public static final int MAX_WORKER_TYPE = 5;
-
-  /**
-   * Food production from farmers
-   */
-  public static final int FOOD_FARMERS = 0;
-
-  /**
-   * Metal production from miners
-   */
-  public static final int METAL_MINERS = 1;
-
-  /**
-   * production from workers
-   */
-  public static final int PRODUCTION_WORKERS = 2;
-
-  /**
-   * Research from scientist
-   */
-  public static final int RESEARCH_SCIENTIST = 3;
-
-  /**
-   * Culture from artist
-   */
-  public static final int CULTURE_ARTIST = 4;
-
-  /**
-   * Amount of different workers
-   */
+  /** Amount of different workers */
   private int[] workers;
 
-  /**
-   * Remove one colonist where are the most workers
-   * @return true if colonist is taken, otherwise false
-   */
-  public boolean takeColonist() {
-    boolean result = false;
-    int index = -1;
-    int value = 0;
-    int total = 0;
-    for (int i = 0; i < MAX_WORKER_TYPE; i++) {
-      total = total + workers[i];
-      if (workers[i] > value) {
-        value = workers[i];
-        index = i;
-      }
-    }
-    if (index != -1 && value > 0 && total > 1) {
-      workers[index]--;
-      result = true;
-    }
-    return result;
-  }
-
-  /**
-   * Move one worker from one position to another one.
-   * Method makes all the required checks
-   * @param from Worker position where to take a worker
-   * @param to Worker position where to move the worker
-   */
-  public void moveWorker(final int from, final int to) {
-    if (from > -1 && from < MAX_WORKER_TYPE && to > -1 && to < MAX_WORKER_TYPE
-        && from != to && workers[from] > 0) {
-      workers[from] = workers[from] - 1;
-      workers[to] = workers[to] + 1;
-    }
-  }
-
-  /**
-   * Buildings / Planetary improvements
-   */
+  /** Buildings / Planetary improvements */
   private ArrayList<Building> buildings;
-
-  /**
-   * What building / Planetary improvement is currently under construction
-   */
+  /** What building / Planetary improvement is currently under construction */
   private Construction underConstruction;
 
-  /**
-   * Guide for governor how to rule the planet.
-   */
-  private int governorGuide;
-  /**
-   * Governor guide for general guide. This is the regular handling.
-   */
-  public static final int GENERALIST_PLANET = 0;
-  /**
-   * Governor guide for getting more credits.
-   */
-  public static final int CREDIT_PLANET = 1;
-  /**
-   * Governor guide for getting more research.
-   */
-  public static final int RESEARCH_PLANET = 2;
-  /**
-   * Governor guide for getting more culture.
-   */
-  public static final int CULTURE_PLANET = 3;
-  /**
-   * Governor guide for getting more military ships from the planet.
-   */
-  public static final int MILITARY_PLANET = 4;
-  /**
-   * Governor guide for getting more population quickly for the planet.
-   */
-  public static final int POPULATION_PLANET = 5;
-  /**
-   * Governor guide is passive.
-   */
-  public static final int PASSIVE_GOVERNOR = 6;
-  /**
-   * Maximum number of different production
-   */
-  public static final int MAX_PRODUCTION_TYPE = 6;
-
-  /**
-   * Food production
-   */
-  public static final int PRODUCTION_FOOD = 0;
-
-  /**
-   * Metal production
-   */
-  public static final int PRODUCTION_METAL = 1;
-
-  /**
-   * Production production
-   */
-  public static final int PRODUCTION_PRODUCTION = 2;
-
-  /**
-   * Research production
-   */
-  public static final int PRODUCTION_RESEARCH = 3;
-
-  /**
-   * Culture production
-   */
-  public static final int PRODUCTION_CULTURE = 4;
-
-  /**
-   * Credit production
-   */
-  public static final int PRODUCTION_CREDITS = 5;
-
-  /**
-   * Population growth
-   */
-  public static final int PRODUCTION_POPULATION = 6;
-
-  /**
-   * Material production from empty
-   */
-  public static final int PRODUCTION_MATERIAL = 7;
-
-  /**
-   * Artifact research production
-   */
-  public static final int PRODUCTION_ARTIFACT_RESEARCH = 8;
-
-  /**
-   * Minimum amount of ore on planets
-   */
-  private static final int MINIMUM_ORE = 2000;
-  /**
-   * Maximum amount of ore on planets
-   */
-  private static final int MAXIMUM_ORE = 10000;
   /**
    * Create random planet with name + orderNumber with Roman numbers.
    * Other planet attributes are randomized.
@@ -415,7 +236,7 @@ public class Planet {
    * @param gasGiant Is planet inhabitable gas giant
    */
   public Planet(final Coordinate coordinate, final String name,
-    final int orderNumber, final boolean gasGiant) {
+      final int orderNumber, final boolean gasGiant) {
     this.setCoordinate(coordinate);
     governor = null;
     orbital = null;
@@ -498,6 +319,43 @@ public class Planet {
   }
 
   /**
+   * Remove one colonist where are the most workers
+   * @return true if colonist is taken, otherwise false
+   */
+  public boolean takeColonist() {
+    boolean result = false;
+    int index = -1;
+    int value = 0;
+    int total = 0;
+    for (int i = 0; i < MAX_WORKER_TYPE; i++) {
+      total = total + workers[i];
+      if (workers[i] > value) {
+        value = workers[i];
+        index = i;
+      }
+    }
+    if (index != -1 && value > 0 && total > 1) {
+      workers[index]--;
+      result = true;
+    }
+    return result;
+  }
+
+  /**
+   * Move one worker from one position to another one.
+   * Method makes all the required checks
+   * @param from Worker position where to take a worker
+   * @param to Worker position where to move the worker
+   */
+  public void moveWorker(final int from, final int to) {
+    if (from > -1 && from < MAX_WORKER_TYPE && to > -1 && to < MAX_WORKER_TYPE
+        && from != to && workers[from] > 0) {
+      workers[from] = workers[from] - 1;
+      workers[to] = workers[to] + 1;
+    }
+  }
+
+  /**
    * Planet fights against wildlife.
    * @param building Wildlife building
    * @return True if fight succeed and false if not
@@ -512,6 +370,7 @@ public class Planet {
     }
     return true;
   }
+
   /**
    * Get production time as in star years
    * @param build The construction
@@ -538,6 +397,7 @@ public class Planet {
     }
     return metalTurn;
   }
+
   /**
    * Get production time as String
    * @param build The construction
@@ -604,13 +464,13 @@ public class Planet {
     }
     int populationCost = rushCost / Planet.POPULATION_RUSH_COST + 1;
     if (rushCost > 0 && creditRush && hasCreditRush
-          && rushCost <= info.getTotalCredits()) {
+        && rushCost <= info.getTotalCredits()) {
       info.setTotalCredits(info.getTotalCredits() - rushCost);
       prodResource = prodResource + prodReq;
       metal = metal + metalReq;
     }
     if (rushCost > 0 && !creditRush && hasPopulationRush
-          && populationCost < getTotalPopulation()) {
+        && populationCost < getTotalPopulation()) {
       for (int i = 0; i < populationCost; i++) {
         killOneWorker();
       }
@@ -618,6 +478,7 @@ public class Planet {
       metal = metal + metalReq;
     }
   }
+
   /**
   * Get production time in turn depending on production type.
   * This method estimates how long construction production takes in turn.
@@ -680,23 +541,12 @@ public class Planet {
    * @return Get Total troop power where improvements are taken to count
    */
   public int getTroopPower() {
-    if (planetOwnerInfo != null) {
-      int result = getTotalPopulation()
-          * planetOwnerInfo.getRace().getTrooperPower();
-      int multiply = 100;
-      Building[] buildingsArray = getBuildingList();
-      for (Building building : buildingsArray) {
-        if (building.getBattleBonus() > 0) {
-          multiply = multiply + building.getBattleBonus();
-        }
-      }
-      if (governor != null && governor.hasPerk(Perk.DISCIPLINE)) {
-        multiply = multiply + 25;
-      }
-      result = result * multiply / 100;
-      return result;
+    if (planetOwnerInfo == null) {
+      return 0;
     }
-    return 0;
+
+    int troopCount = getTotalPopulation();
+    return troopCount * getTroopPowerBonus();
   }
 
   /**
@@ -704,22 +554,24 @@ public class Planet {
    * @return Get Total troop power where improvements are taken to count
    */
   public int getTroopPowerBonus() {
-    if (planetOwnerInfo != null) {
-      int result = planetOwnerInfo.getRace().getTrooperPower();
-      int multiply = 100;
-      Building[] buildingsArray = getBuildingList();
-      for (Building building : buildingsArray) {
-        if (building.getBattleBonus() > 0) {
-          multiply = multiply + building.getBattleBonus();
-        }
-      }
-      if (governor != null && governor.hasPerk(Perk.DISCIPLINE)) {
-        multiply = multiply + 25;
-      }
-      result = result * multiply / 100;
-      return result;
+    if (planetOwnerInfo == null) {
+      return 0;
     }
-    return 0;
+
+    int multiply = 100;
+    Building[] buildingsArray = getBuildingList();
+    for (Building building : buildingsArray) {
+      if (building.getBattleBonus() > 0) {
+        multiply += building.getBattleBonus();
+      }
+    }
+
+    if (governor != null && governor.hasPerk(Perk.DISCIPLINE)) {
+      multiply += 25;
+    }
+
+    int basePower = planetOwnerInfo.getRace().getTrooperPower();
+    return basePower * multiply / 100;
   }
 
   /**
@@ -737,31 +589,36 @@ public class Planet {
   public void fightAgainstAttacker(final int attackTroops,
       final StarMap starMap, final String attackType,
       final String reasonGovernor, final String reasonWorker) {
-    if (planetOwnerInfo != null) {
-      int troop = getTroopPowerBonus();
-      int total = getTroopPower();
-      if (attackTroops >= total) {
-        for (int i = 0; i < workers.length; i++) {
-          workers[i] = 0;
-        }
-        killGovernor(attackType, " " + reasonGovernor, starMap);
-        planetOwnerInfo = null;
-        planetOwner = -1;
-        // Fighting on planet drops the culture
-        setCulture(getCulture() - getCulture() / 10);
-      } else {
-        // Fighting on planet drops the culture
-        setCulture(getCulture() - getCulture() / 10);
-        int left = total - attackTroops;
-        left = left / troop;
-        if (left <= 0) {
-          left = 1;
-        }
-        int dies = getTotalPopulation() - left;
-        for (int i = 0; i < dies; i++) {
-          killOneWorker(attackType, " " + reasonWorker, starMap);
-        }
+    if (planetOwnerInfo == null) {
+      return;
+    }
+
+    int troop = getTroopPowerBonus();
+    int total = getTroopPower();
+    // Defenders defeated
+    if (attackTroops >= total) {
+      for (int i = 0; i < workers.length; i++) {
+        workers[i] = 0;
       }
+      killGovernor(attackType, " " + reasonGovernor, starMap);
+      planetOwnerInfo = null;
+      planetOwner = -1;
+      // Fighting on planet drops the culture
+      setCulture(getCulture() - getCulture() / 10);
+
+      return;
+    }
+
+    // Fighting on planet drops the culture
+    setCulture(getCulture() - getCulture() / 10);
+    int left = total - attackTroops;
+    left = left / troop;
+    if (left <= 0) {
+      left = 1;
+    }
+    int dies = getTotalPopulation() - left;
+    for (int i = 0; i < dies; i++) {
+      killOneWorker(attackType, " " + reasonWorker, starMap);
     }
   }
 
@@ -791,6 +648,7 @@ public class Planet {
     total = total + statusesBonus + 2;
     return total;
   }
+
   /**
    * Get total production from planetary improvements.
    * @param prod Production to get: See all PRODUCTION_*
@@ -801,71 +659,60 @@ public class Planet {
     if (gasGiant || planetOwnerInfo == null) {
       return 0;
     }
-    switch (prod) {
-    case PRODUCTION_FOOD: {
-      for (Building build : getBuildingList()) {
-        result = result + build.getFarmBonus();
-      }
-      break;
-    }
-    case PRODUCTION_METAL: {
-      for (Building build : getBuildingList()) {
-        result = result + build.getMineBonus();
-      }
-      break;
-    }
-    case PRODUCTION_PRODUCTION: {
-      for (Building build : getBuildingList()) {
-        result = result + build.getFactBonus();
-      }
-      break;
-    }
-    case PRODUCTION_RESEARCH: {
-      for (Building build : getBuildingList()) {
-        result = result + build.getReseBonus();
-      }
-      break;
-    }
-    case PRODUCTION_CULTURE: {
-      for (Building build : getBuildingList()) {
-        result = result + build.getCultBonus();
-      }
-      break;
-    }
-    case PRODUCTION_CREDITS: {
-      for (Building build : getBuildingList()) {
-        result = result + build.getCredBonus();
-        // Special ability for mercantile races to get
-        // one extra credit per trade building
-        if (planetOwnerInfo.getRace().hasTrait(TraitIds.MERCANTILE)
-            && build.getCredBonus() > 0) {
-          result += 1;
+    for (final var build : getBuildingList()) {
+      var value = 0;
+      switch (prod) {
+        default: {
+          throw new IllegalArgumentException("Illegal production type!");
+        }
+        case PRODUCTION_FOOD: {
+          value = build.getFarmBonus();
+          break;
+        }
+        case PRODUCTION_METAL: {
+          value = build.getMineBonus();
+          break;
+        }
+        case PRODUCTION_PRODUCTION: {
+          value = build.getFactBonus();
+          break;
+        }
+        case PRODUCTION_RESEARCH: {
+          value = build.getReseBonus();
+          break;
+        }
+        case PRODUCTION_CULTURE: {
+          value = build.getCultBonus();
+          break;
+        }
+        case PRODUCTION_CREDITS: {
+          value = build.getCredBonus();
+          // Special ability for mercantile races to get
+          // one extra credit per trade building
+          if (planetOwnerInfo.getRace().hasTrait(TraitIds.MERCANTILE)
+              && build.getCredBonus() > 0) {
+            value += 1;
+          }
+          break;
+        }
+        case PRODUCTION_POPULATION: {
+          value = 0;
+          break;
+        }
+        case PRODUCTION_MATERIAL: {
+          value = build.getMaterialBonus();
+          break;
+        }
+        case PRODUCTION_ARTIFACT_RESEARCH: {
+          value = build.getAncientArtifactResearch();
+          break;
         }
       }
-      break;
-    }
-    case PRODUCTION_POPULATION: {
-      result = 0;
-      break;
-    }
-    case PRODUCTION_MATERIAL: {
-      for (Building build : getBuildingList()) {
-        result = result + build.getMaterialBonus();
-      }
-      break;
-    }
-    case PRODUCTION_ARTIFACT_RESEARCH: {
-      for (Building build : getBuildingList()) {
-        result = result + build.getAncientArtifactResearch();
-      }
-      break;
-    }
-    default: {
-      throw new IllegalArgumentException("Illegal production type!");
-    }
-    }
-    return result;
 
+      result += value;
+    }
+
+    return result;
   }
 
   /**
@@ -911,41 +758,41 @@ public class Planet {
       return 0;
     }
     switch (prod) {
-    case PRODUCTION_FOOD: {
-      result = getTotalFoodProduction();
-      break;
-    }
-    case PRODUCTION_METAL: {
-      result = getTotalMetalProduction();
-      break;
-    }
-    case PRODUCTION_PRODUCTION: {
-      result = getTotalProdProduction();
-      break;
-    }
-    case PRODUCTION_RESEARCH: {
-      result = getTotalResearchProduction();
-      break;
-    }
-    case PRODUCTION_CULTURE: {
-      result = getTotalCultureProduction();
-      break;
-    }
-    case PRODUCTION_CREDITS: {
-      result = getTotalCreditProduction();
-      break;
-    }
-    case PRODUCTION_POPULATION: {
-      result = getTotalPopulationProduction();
-      break;
-    }
-    case PRODUCTION_ARTIFACT_RESEARCH: {
-      result = getTotalArtifactResearchProduction();
-      break;
-    }
-    default: {
-      throw new IllegalArgumentException("Illegal production type!");
-    }
+      case PRODUCTION_FOOD: {
+        result = getTotalFoodProduction();
+        break;
+      }
+      case PRODUCTION_METAL: {
+        result = getTotalMetalProduction();
+        break;
+      }
+      case PRODUCTION_PRODUCTION: {
+        result = getTotalProdProduction();
+        break;
+      }
+      case PRODUCTION_RESEARCH: {
+        result = getTotalResearchProduction();
+        break;
+      }
+      case PRODUCTION_CULTURE: {
+        result = getTotalCultureProduction();
+        break;
+      }
+      case PRODUCTION_CREDITS: {
+        result = getTotalCreditProduction();
+        break;
+      }
+      case PRODUCTION_POPULATION: {
+        result = getTotalPopulationProduction();
+        break;
+      }
+      case PRODUCTION_ARTIFACT_RESEARCH: {
+        result = getTotalArtifactResearchProduction();
+        break;
+      }
+      default: {
+        throw new IllegalArgumentException("Illegal production type!");
+      }
     }
     return result;
   }
@@ -1071,6 +918,7 @@ public class Planet {
     }
     return result;
   }
+
   /**
    * Get total population production from planet. This includes racial, worker,
    * planetary improvement bonus
@@ -1515,7 +1363,7 @@ public class Planet {
     int value = getRadiationLevel();
     for (Building building : buildings) {
       if (building.getName().equals("Radiation dampener")
-        || building.getName().equals("Radiation well")) {
+          || building.getName().equals("Radiation well")) {
         value = value - 1;
       }
     }
@@ -1803,8 +1651,8 @@ public class Planet {
         for (ShipStat stat : ships) {
           boolean addStat = !stat.isObsolete();
           if (orbital != null
-              && stat.getDesign().getHull().getHullType()
-              == ShipHullType.ORBITAL
+              && stat.getDesign().getHull()
+                  .getHullType() == ShipHullType.ORBITAL
               && orbital.getName().equals(stat.getDesign().getName())) {
             addStat = false;
           }
@@ -1847,28 +1695,28 @@ public class Planet {
    */
   public String getSizeAsString() {
     switch (getGroundSize()) {
-    case 7:
-      return "tiny";
-    case 8:
-      return "tiny";
-    case 9:
-      return "small";
-    case 10:
-      return "small";
-    case 11:
-      return "medium";
-    case 12:
-      return "medium";
-    case 13:
-      return "large";
-    case 14:
-      return "large";
-    case 15:
-      return "huge";
-    case 16:
-      return "huge";
-    default:
-      return "small";
+      case 7:
+        return "tiny";
+      case 8:
+        return "tiny";
+      case 9:
+        return "small";
+      case 10:
+        return "small";
+      case 11:
+        return "medium";
+      case 12:
+        return "medium";
+      case 13:
+        return "large";
+      case 14:
+        return "large";
+      case 15:
+        return "huge";
+      case 16:
+        return "huge";
+      default:
+        return "small";
     }
   }
 
@@ -1878,28 +1726,28 @@ public class Planet {
    */
   public int getSizeAsInt() {
     switch (getGroundSize()) {
-    case 7:
-      return 1;
-    case 8:
-      return 1;
-    case 9:
-      return 2;
-    case 10:
-      return 2;
-    case 11:
-      return 3;
-    case 12:
-      return 3;
-    case 13:
-      return 4;
-    case 14:
-      return 4;
-    case 15:
-      return 5;
-    case 16:
-      return 5;
-    default:
-      return 2;
+      case 7:
+        return 1;
+      case 8:
+        return 1;
+      case 9:
+        return 2;
+      case 10:
+        return 2;
+      case 11:
+        return 3;
+      case 12:
+        return 3;
+      case 13:
+        return 4;
+      case 14:
+        return 4;
+      case 15:
+        return 5;
+      case 16:
+        return 5;
+      default:
+        return 2;
     }
   }
 
@@ -2079,6 +1927,7 @@ public class Planet {
     }
     return requiredMetalCost;
   }
+
   /**
    * Calculate sur plus food for planet. This does not take count possible
    * limitations which space race might have for surplus food. This will return
@@ -2335,7 +2184,7 @@ public class Planet {
       }
       msg = new Message(MessageType.CONSTRUCTION,
           getName() + " built " + finishedBuilding
-          + ". " + nextBuilding,
+              + ". " + nextBuilding,
           Icons.getIconByName(Icons.ICON_PEOPLE));
       msg.setCoordinate(getCoordinate());
       msg.setMatchByString(getName());
@@ -2369,7 +2218,7 @@ public class Planet {
       }
       msg = new Message(MessageType.CONSTRUCTION,
           getName() + " built " + finishedBuilding
-          + ". " + nextBuilding,
+              + ". " + nextBuilding,
           Icons.getIconByName(Icons.ICON_PEOPLE));
       msg.setCoordinate(getCoordinate());
       msg.setMatchByString(getName());
@@ -2396,7 +2245,7 @@ public class Planet {
       }
       msg = new Message(MessageType.CONSTRUCTION,
           getName() + " built " + finishedBuilding
-          + ". " + nextBuilding,
+              + ". " + nextBuilding,
           Icons.getIconByName(Icons.ICON_CULTURE));
       msg.setCoordinate(getCoordinate());
       msg.setMatchByString(getName());
@@ -2424,20 +2273,21 @@ public class Planet {
       }
       msg = new Message(MessageType.CONSTRUCTION,
           getName() + " built " + finishedBuilding
-          + ". " + nextBuilding,
+              + ". " + nextBuilding,
           Icons.getIconByName(Icons.ICON_CREDIT));
       msg.setCoordinate(getCoordinate());
       msg.setMatchByString(getName());
       planetOwnerInfo.getMsgList().addNewMessage(msg);
     }
   }
+
   /**
    * Check if construction is done.
    * @param enemyOrbiting if true it means that other player,
    *        has fleet orbiting on planet.
    * @param map StarMap can be null in tests
    */
-  private void checkIfConstructionisDone(final boolean enemyOrbiting,
+  private void checkIfConstructionIsDone(final boolean enemyOrbiting,
       final StarMap map) {
     Message msg;
     int requiredMetalCost = getActualCost(underConstruction,
@@ -2515,7 +2365,7 @@ public class Planet {
                   Icons.getIconByName(Icons.ICON_TUTORIAL));
               msg.setCoordinate(getCoordinate());
               map.getPlayerList().getPlayerInfoByIndex(0).getMsgList()
-                 .addNewMessage(msg);
+                  .addNewMessage(msg);
             }
           }
         }
@@ -2535,7 +2385,7 @@ public class Planet {
             canBeBuilt = false;
             msg = new Message(MessageType.CONSTRUCTION,
                 getName() + " cannot be built " + underConstruction.getName()
-                + " since there is no orbital on the planet.",
+                    + " since there is no orbital on the planet.",
                 Icons.getIconByName(Icons.ICON_STARBASE));
             msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
@@ -2569,7 +2419,7 @@ public class Planet {
           }
           msg = new Message(MessageType.CONSTRUCTION,
               getName() + " built " + finishedBuilding
-              + ". " + nextBuilding,
+                  + ". " + nextBuilding,
               Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
@@ -2587,8 +2437,8 @@ public class Planet {
         if (stat == null) {
           msg = new Message(MessageType.CONSTRUCTION,
               getName() + " cannot built ship "
-          + underConstruction.getName()
-          + " due that blue prints are missing!",
+                  + underConstruction.getName()
+                  + " due that blue prints are missing!",
               Icons.getIconByName(Icons.ICON_HULL_TECH));
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
@@ -2605,8 +2455,8 @@ public class Planet {
             StringBuilder sb = new StringBuilder();
             if (orbital != null) {
               sb.append(orbital.getName());
-              if (orbital.getTheoreticalMilitaryPower()
-                  > ship.getTheoreticalMilitaryPower()) {
+              if (orbital.getTheoreticalMilitaryPower() > ship
+                  .getTheoreticalMilitaryPower()) {
                 sb.append(" downgraded to ");
               } else {
                 sb.append(" upgraded to ");
@@ -2668,13 +2518,13 @@ public class Planet {
                     mission.setFleetName(fleet.getName());
                   }
                   if (mission.getType() == MissionType.SPY_MISSION) {
-                    fleet.setName(planetOwnerInfo.getFleets(
-                        ).generateUniqueName(ship.getName()));
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName(ship.getName()));
                     mission.setFleetName(fleet.getName());
                   }
                   if (mission.getType() == MissionType.DIPLOMATIC_DELEGACY) {
-                    fleet.setName(planetOwnerInfo.getFleets(
-                        ).generateUniqueName(ship.getName()));
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName(ship.getName()));
                     mission.setFleetName(fleet.getName());
                   }
                   if (mission.getType() == MissionType.EXPLORE) {
@@ -2770,14 +2620,14 @@ public class Planet {
             }
             msg = new Message(MessageType.CONSTRUCTION,
                 getName() + " built " + finishedBuilding
-                + ". " + nextBuilding,
+                    + ". " + nextBuilding,
                 Icons.getIconByName(Icons.ICON_HULL_TECH));
             msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
             planetOwnerInfo.getMsgList().addNewMessage(msg);
           }
         }
-      } else  if (underConstruction instanceof Building
+      } else if (underConstruction instanceof Building
           && groundSize <= buildings.size()) {
         if (!planetOwnerInfo.isHuman()
             && planetOwnerInfo.getAiDifficulty() != AiDifficulty.WEAK) {
@@ -2823,8 +2673,7 @@ public class Planet {
         msg.setMatchByString(getName());
         planetOwnerInfo.getMsgList().addNewMessage(msg);
         if (!planetOwnerInfo.isHuman()
-            && planetOwnerInfo.getAiDifficulty()
-            == AiDifficulty.CHALLENGING
+            && planetOwnerInfo.getAiDifficulty() == AiDifficulty.CHALLENGING
             && planetOwnerInfo.getMissions().getDestroyFleetMission(
                 getCoordinate()) == null) {
           Mission destroy = new Mission(MissionType.DESTROY_FLEET,
@@ -2836,6 +2685,7 @@ public class Planet {
       }
     }
   }
+
   /**
    * Update planet for one turn
    * @param enemyOrbiting if true it means that other player,
@@ -2843,130 +2693,146 @@ public class Planet {
    * @param map StarMap can be null in tests
    */
   public void updateOneTurn(final boolean enemyOrbiting, final StarMap map) {
-    if (planetOwnerInfo != null) {
-      if (governor != null) {
-        if (governor.getJob() == Job.DEAD) {
-          governor = null;
-        } else {
-          governor.setExperience(governor.getExperience()
-              + getTotalPopulation());
-        }
-      } else {
-        if (Game.getTutorial() != null && map != null
-            && map.isTutorialEnabled()
-            && map.getTurn() > 10) {
-          String tutorialText = Game.getTutorial().showTutorialText(122);
-          if (tutorialText != null) {
-            Message msg = new Message(MessageType.INFORMATION,
-                tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
-            planetOwnerInfo.getMsgList().addNewMessage(msg);
-          }
-        }
-      }
-      happinessEffect = HappinessEffect.createHappinessEffect(
-          calculateHappiness());
-      if (happinessEffect.getType() != HappinessBonus.KILL_POPULATION
-          && happinessEffect.getType() != HappinessBonus.DESTROY_BUILDING
-          && happinessEffect.getType() != HappinessBonus.NONE) {
-        if (happinessEffect.getValue() > 0) {
-          Message message = new Message(MessageType.PLANETARY,
-              "Population of " + getName() + " is working harder due "
-              + "the happiness. Planet's " + happinessEffect.getType().getName()
-              + " has temporarily increased by " + happinessEffect.getValue()
-              + ".",
-          Icons.getIconByName(Icons.ICON_VERY_HAPPY));
-          message.setCoordinate(getCoordinate());
-          message.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(message);
-        }
-        if (happinessEffect.getValue() < 0) {
-          Message message = new Message(MessageType.PLANETARY,
-              "Population of " + getName() + " is working less due "
-              + "the unhappiness. Planet's "
-              + happinessEffect.getType().getName()
-              + " has temporarily decreased by " + happinessEffect.getValue()
-              + ".",
-          Icons.getIconByName(Icons.ICON_VERY_SAD));
-          message.setCoordinate(getCoordinate());
-          message.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(message);
-        }
-      }
-      int minedMetal = getTotalProduction(PRODUCTION_METAL);
-      if (minedMetal <= amountMetalInGround && minedMetal >= 0) {
-        amountMetalInGround = amountMetalInGround - minedMetal;
-        metal = metal + minedMetal;
-      } else if (minedMetal > 0) {
-        metal = metal + amountMetalInGround;
-        amountMetalInGround = 0;
-      }
-      metal = metal + getTotalProductionFromBuildings(PRODUCTION_MATERIAL);
-      prodResource = prodResource + getTotalProduction(PRODUCTION_PRODUCTION);
-      planetOwnerInfo.setTotalCredits(planetOwnerInfo.getTotalCredits()
-          + getTotalProduction(PRODUCTION_CREDITS));
-      culture = culture + getTotalProduction(PRODUCTION_CULTURE);
+    if (planetOwnerInfo == null) {
+      return;
+    }
 
-      boolean alive = updatePlanetFoodForOneTurn(map);
-      if (!alive) {
-        // Planet has died.
+    if (governor != null) {
+      if (governor.getJob() == Job.DEAD) {
+        governor = null;
+      } else {
+        governor.setExperience(governor.getExperience()
+            + getTotalPopulation());
+      }
+    } else {
+      if (Game.getTutorial() != null && map != null
+          && map.isTutorialEnabled()
+          && map.getTurn() > 10) {
+        String tutorialText = Game.getTutorial().showTutorialText(122);
+        if (tutorialText != null) {
+          Message msg = new Message(MessageType.INFORMATION,
+              tutorialText, Icons.getIconByName(Icons.ICON_TUTORIAL));
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        }
+      }
+    }
+
+    happinessEffect = HappinessEffect.createHappinessEffect(
+        calculateHappiness());
+    final var happinessType = happinessEffect.getType();
+    // Report planet is working more/less due to happiness
+    if (happinessType != HappinessBonus.KILL_POPULATION
+        && happinessType != HappinessBonus.DESTROY_BUILDING
+        && happinessType != HappinessBonus.NONE) {
+      if (happinessEffect.getValue() > 0) {
+        final var tplProdBonus = "Population of %1$s is working harder due to"
+            + "happiness. Planet's %2$s has temporarily increased by %3$d.";
+        Message message = new Message(MessageType.PLANETARY,
+            String.format(tplProdBonus, getName(), happinessType.getName(),
+                happinessEffect.getValue()),
+            Icons.getIconByName(Icons.ICON_VERY_HAPPY));
+        message.setCoordinate(getCoordinate());
+        message.setMatchByString(getName());
+        planetOwnerInfo.getMsgList().addNewMessage(message);
+      }
+      if (happinessEffect.getValue() < 0) {
+        final var tplProdMalus = "Population of %1$s is working less due to"
+            + "happiness. Planet's %2$s has temporarily decreased by %3$d.";
+        Message message = new Message(MessageType.PLANETARY,
+            String.format(tplProdMalus, getName(), happinessType.getName(),
+                happinessEffect.getValue()),
+            Icons.getIconByName(Icons.ICON_VERY_SAD));
+        message.setCoordinate(getCoordinate());
+        message.setMatchByString(getName());
+        planetOwnerInfo.getMsgList().addNewMessage(message);
+      }
+    }
+
+    int minedMetal = getTotalProduction(PRODUCTION_METAL);
+    if (minedMetal <= amountMetalInGround && minedMetal >= 0) {
+      amountMetalInGround = amountMetalInGround - minedMetal;
+      metal = metal + minedMetal;
+    } else if (minedMetal > 0) {
+      metal = metal + amountMetalInGround;
+      amountMetalInGround = 0;
+    }
+    metal = metal + getTotalProductionFromBuildings(PRODUCTION_MATERIAL);
+    prodResource = prodResource + getTotalProduction(PRODUCTION_PRODUCTION);
+    planetOwnerInfo.setTotalCredits(planetOwnerInfo.getTotalCredits()
+        + getTotalProduction(PRODUCTION_CREDITS));
+    culture = culture + getTotalProduction(PRODUCTION_CULTURE);
+
+    boolean alive = updatePlanetFoodForOneTurn(map);
+    // Planet population has died.
+    if (!alive) {
+      return;
+    }
+
+    // Forcing planet to have something to construct if player is human.
+    if (planetOwnerInfo.isHuman() && underConstruction == null) {
+      setUnderConstruction(ConstructionFactory.createByName("Extra credit"));
+    }
+
+    checkIfConstructionIsDone(enemyOrbiting, map);
+
+    Message msg;
+    if (happinessType == HappinessBonus.KILL_POPULATION) {
+      // Need to remember owner if last population is killed
+      PlayerInfo oldOwner = planetOwnerInfo;
+      killOneWorker("angry mob", "angry mob", map);
+      final var tplAngryMob = "Population of %1$s has formed an angry mob."
+          + " One population died in the riots!";
+      msg = new Message(MessageType.PLANETARY,
+          String.format(tplAngryMob, getName()),
+          Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setCoordinate(getCoordinate());
+      msg.setMatchByString(getName());
+      oldOwner.getMsgList().addNewMessage(msg);
+      // Planet got abandonned
+      if (planetOwnerInfo == null) {
         return;
       }
-      Message msg;
-      if (planetOwnerInfo.isHuman() && underConstruction == null) {
-        // Forcing planet to have something to construct if player is human.
-        setUnderConstruction(ConstructionFactory.createByName("Extra credit"));
-      }
-      checkIfConstructionisDone(enemyOrbiting, map);
-      if (happinessEffect.getType() == HappinessBonus.KILL_POPULATION) {
-        // Need to remember owner if last population is killed
-        PlayerInfo oldOwner = planetOwnerInfo;
-        killOneWorker("angry mob", "angry mob", map);
-        msg = new Message(MessageType.PLANETARY, "Population of " + getName()
-            + " has formed angry mob. This mob killed one population!",
-            Icons.getIconByName(Icons.ICON_DEATH));
+    }
+    if (happinessType == HappinessBonus.DESTROY_BUILDING) {
+      Building destroyed = destroyOneBuilding();
+      if (destroyed != null) {
+        final var tplDestroyed = "%1$s population was so angry that"
+            + " they destroyed %2$s in the riots!";
+        msg = new Message(MessageType.PLANETARY,
+            String.format(tplDestroyed, getName(), destroyed.getName()),
+            Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
         msg.setCoordinate(getCoordinate());
         msg.setMatchByString(getName());
-        oldOwner.getMsgList().addNewMessage(msg);
-        if (planetOwnerInfo == null) {
-          return;
-        }
+        planetOwnerInfo.getMsgList().addNewMessage(msg);
       }
-      if (happinessEffect.getType() == HappinessBonus.DESTROY_BUILDING) {
-        Building destroyed = destroyOneBuilding();
-        if (destroyed != null) {
-          msg = new Message(MessageType.PLANETARY, getName()
-              + " population was so angry that they destroyed "
-              + destroyed.getName() + "!",
-              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-          msg.setCoordinate(getCoordinate());
-          msg.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-        }
+    }
+
+    happinessEffect = new HappinessEffect(HappinessBonus.NONE, 0);
+
+    if (planetOwnerInfo.getGovernment().isImmuneToHappiness()
+        && planetOwnerInfo.getWarFatigue() < 0) {
+      Building destroyed = destroyOneBuilding();
+      if (destroyed != null) {
+        final var tplCollapsed = "%1$s building %2$s collapsed"
+            + " due to lack of funding!";
+        planetOwnerInfo.setWarFatigue(planetOwnerInfo.getWarFatigue() + 1);
+        msg = new Message(MessageType.PLANETARY,
+            String.format(tplCollapsed, getName(), destroyed.getName()),
+            Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+        msg.setCoordinate(getCoordinate());
+        msg.setMatchByString(getName());
+        planetOwnerInfo.getMsgList().addNewMessage(msg);
       }
-      if (planetOwnerInfo.getGovernment().isImmuneToHappiness()
-         && planetOwnerInfo.getWarFatigue() < 0) {
-        Building destroyed = destroyOneBuilding();
-        if (destroyed != null) {
-          planetOwnerInfo.setWarFatigue(planetOwnerInfo.getWarFatigue() + 1);
-          msg = new Message(MessageType.PLANETARY, getName()
-              + " building " + destroyed.getName()
-              + " collapsed due lack of funding!",
-              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-          msg.setCoordinate(getCoordinate());
-          msg.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-        }
-      }
-      if (getCulture() == 0) {
-        // Planet is owned but no culture
-        // Setting it to one
-        setCulture(1);
-      }
-      happinessEffect = new HappinessEffect(HappinessBonus.NONE, 0);
-      if (orbital != null) {
-        // Orbital is always fixed in one turn.
-        orbital.fixShip(true);
-      }
+    }
+
+    if (getCulture() == 0) {
+      // Planet is owned but no culture, setting it to 1
+      setCulture(1);
+    }
+
+    if (orbital != null) {
+      // Orbital is always fixed in one turn.
+      orbital.fixShip(true);
     }
   }
 
@@ -3039,6 +2905,7 @@ public class Planet {
     }
     return result;
   }
+
   /**
    * Is planet full of population or not
    * @return True if planet is full of population
@@ -3132,6 +2999,7 @@ public class Planet {
     }
     return false;
   }
+
   /**
    * Check if planet has United Galaxy Tower?
    * @return True if planet has United Galaxy Tower?
@@ -3153,6 +3021,7 @@ public class Planet {
     }
     return false;
   }
+
   /**
    * Check if planet has revealing building.
    * This could be broadcaster or Galactic sport center.
@@ -3221,6 +3090,7 @@ public class Planet {
   public int getCulture() {
     return culture;
   }
+
   /**
    * Kill randomly one worker. This could be used for example on bombing.
    * This will also kill governor if one exists on planet.
@@ -3232,8 +3102,8 @@ public class Planet {
    * @param starMap StarMap add news and history event. If null then history
    *                or news is not added.
    */
-  public void killOneWorker(final String attackType, final String reason, final
-      StarMap starMap) {
+  public void killOneWorker(final String attackType, final String reason,
+      final StarMap starMap) {
     if (getTotalPopulation() > 0) {
       ArrayList<Integer> list = new ArrayList<>();
       for (int i = 0; i < workers.length; i++) {
@@ -3249,6 +3119,7 @@ public class Planet {
       setPlanetOwner(-1, null);
     }
   }
+
   /**
    * Kill randomly one worker. This could be used for example on bombing.
    */
@@ -3361,7 +3232,7 @@ public class Planet {
       if (radiationLevel < 10 && DiceGenerator.getRandom(100) < strength) {
         radiationLevel++;
         sb.append(" Radiation level rised on planet surface to "
-        + radiationLevel + ".");
+            + radiationLevel + ".");
       }
     }
     if (bombName.equals("Orbital antimatter bomb")) {
@@ -3395,7 +3266,7 @@ public class Planet {
       if (radiationLevel < 10) {
         radiationLevel++;
         sb.append(" Radiation level rised on planet surface to "
-        + radiationLevel + ".");
+            + radiationLevel + ".");
       }
     }
     if (bombName.equals("Orbital neutron bomb")) {
@@ -3429,7 +3300,7 @@ public class Planet {
       if (radiationLevel < 10) {
         radiationLevel++;
         sb.append(" Radiation level rised on planet surface to "
-        + radiationLevel + ".");
+            + radiationLevel + ".");
       }
     }
     for (int i = 0; i < dead; i++) {
@@ -3534,6 +3405,7 @@ public class Planet {
   public int getPlanetTypeIndex() {
     return planetType.getPlanetTypeIndex();
   }
+
   /**
    * Set planet type
    * @param newType the type to set
@@ -3613,6 +3485,7 @@ public class Planet {
   public void setPlanetaryEvent(final PlanetaryEvent planetaryEvent) {
     event = planetaryEvent;
   }
+
   /**
    * Get planetary event
    * @return Planetary event
@@ -3620,6 +3493,7 @@ public class Planet {
   public PlanetaryEvent getPlanetaryEvent() {
     return event;
   }
+
   /**
    * Has planetary event been activated by colonization
    * @return True or false
@@ -3627,6 +3501,7 @@ public class Planet {
   public boolean isEventActivated() {
     return eventFound;
   }
+
   /**
    * Set planetary event activation
    * @param activation True for activate event.
@@ -3687,7 +3562,7 @@ public class Planet {
       realm.getMsgList().addUpcomingMessage(msg);
       realm.getArtifactLists().addDiscoveredArtifact(
           ArtifactFactory.getRandomArtifact());
-      if (Game.getTutorial() != null  && realm.isHuman()
+      if (Game.getTutorial() != null && realm.isHuman()
           && isTutorialEnabled) {
         String tutorialText = Game.getTutorial().showTutorialText(15);
         if (tutorialText != null) {
@@ -3924,6 +3799,7 @@ public class Planet {
     }
     return farmProdExplain;
   }
+
   /**
    * Get Metal production explanation how it is calculated.
    * @return Metal production explanation
@@ -3934,6 +3810,7 @@ public class Planet {
     }
     return metaProdExplain;
   }
+
   /**
    * Get production production explanation how it is calculated.
    * @return Production explanation
@@ -3944,6 +3821,7 @@ public class Planet {
     }
     return prodProdExplain;
   }
+
   /**
    * Get research production explanation how it is calculated.
    * @return Research production explanation
@@ -3954,6 +3832,7 @@ public class Planet {
     }
     return reseProdExplain;
   }
+
   /**
    * Get culture production explanation how it is calculated.
    * @return Culture production explanation
@@ -3964,6 +3843,7 @@ public class Planet {
     }
     return cultProdExplain;
   }
+
   /**
    * Get credits production explanation how it is calculated.
    * @return Credits production explanation
@@ -3974,6 +3854,7 @@ public class Planet {
     }
     return credProdExplain;
   }
+
   /**
    * Does planet have Orbital shield and bombing is not possible.
    * Orbital shield does not protect against invasion
@@ -4007,6 +3888,7 @@ public class Planet {
   public Leader getGovernor() {
     return governor;
   }
+
   /**
    * Set the current governor of the planet
    * @param governor the governor to set
@@ -4025,8 +3907,8 @@ public class Planet {
    * @param starMap StarMap add news and history event. If null then
    *        history isn't written.
    */
-  public void killGovernor(final String attackType, final String reason, final
-      StarMap starMap) {
+  public void killGovernor(final String attackType, final String reason,
+      final StarMap starMap) {
     if (getTotalPopulation() == 0
         && getGovernor() != null) {
       if (getGovernor().hasPerk(Perk.WEALTHY)) {

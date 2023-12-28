@@ -114,6 +114,7 @@ public abstract class DataLoader<K, V> {
    */
   protected int loadFromUrl(final URL url, final Map<K, V> storage) {
     final var urlString = url.toExternalForm();
+    final var typeName = typeNameGetter();
     try (var ins = url.openStream()) {
       final var jsonArray = new JSONArray(new JSONTokener(ins));
       var loadedDefs = new ArrayList<V>();
@@ -126,11 +127,18 @@ public abstract class DataLoader<K, V> {
 
         var buildingOpt = parseFromJson((JSONObject) obj);
         if (buildingOpt.isEmpty()) {
-          ErrorLogger.log("Malformed " + typeNameGetter()
-              + " in file: " + urlString);
+          final var tplMalform = "Malformed %1$s in file: %2$s";
+          ErrorLogger.log(String.format(tplMalform, typeName, urlString));
+
+          if (loadedDefs.size() == 0) {
+            ErrorLogger.log("No successfully loaded " + typeName);
+            return 0;
+          }
+
           var lastGoodObject = loadedDefs.get(loadedDefs.size() - 1);
-          ErrorLogger.log("Last successfully loaded " + typeNameGetter()
-              + " had ID: \"" + valueIdGetter(lastGoodObject) + "\"");
+          final var id = valueIdGetter(lastGoodObject);
+          final var tplLastGood = "Last loaded %1$s had ID: \"%2$s\"";
+          ErrorLogger.log(String.format(tplLastGood, typeName, id.toString()));
           return 0;
         }
 
@@ -140,7 +148,7 @@ public abstract class DataLoader<K, V> {
       for (var def : loadedDefs) {
         final var identifier = valueIdGetter(def);
         if (storage.containsKey(identifier)) {
-          ErrorLogger.log(typeNameGetter() + " \"" + identifier
+          ErrorLogger.log(typeName + " \"" + identifier
               + "\" already defined, redefining");
         }
         storage.put(identifier, def);

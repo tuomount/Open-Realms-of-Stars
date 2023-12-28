@@ -26,7 +26,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -686,12 +685,7 @@ public class PlanetBombingView extends BlackPanel {
    *             0 that nothing happened.
    */
   private int attackBombOrTroops() {
-    var attackResult = new AttackResult();
-    attackResult.conquered = false;
-    attackResult.bombed = false;
-    attackResult.shot = false;
-    attackResult.attackType = "conquest";
-    attackResult.reason = " conquest of planet";
+    AttackResult attackResult = new AttackResult();
     if (usedComponentIndex == -1) {
       return NO_EFFECT;
     }
@@ -706,29 +700,29 @@ public class PlanetBombingView extends BlackPanel {
 
     final var compType = comp.getType();
     if (compType == ShipComponentType.ORBITAL_NUKE) {
-      attackNuke(attackResult, ship, comp);
+      attackResult = attackNuke(ship, comp);
     }
     if (compType == ShipComponentType.WEAPON_BEAM
         || compType == ShipComponentType.WEAPON_RAILGUN
         || compType == ShipComponentType.MULTICANNON
         || compType == ShipComponentType.PLASMA_CANNON) {
-      attackConventionalWeapon(attackResult, ship, comp.getDamage() * 3,
+      attackResult = attackConventionalWeapon(ship, comp.getDamage() * 3,
           comp.getDamage());
     }
     if (compType == ShipComponentType.WEAPON_PHOTON_TORPEDO
         || compType == ShipComponentType.WEAPON_HE_MISSILE) {
-      attackConventionalWeapon(attackResult, ship, comp.getDamage() * 2,
+      attackResult = attackConventionalWeapon(ship, comp.getDamage() * 2,
           comp.getDamage() * 2);
     }
     if (compType == ShipComponentType.GRAVITY_RIPPER) {
-      attackConventionalWeapon(attackResult, ship, comp.getDamage() * 2,
+      attackResult = attackConventionalWeapon(ship, comp.getDamage() * 2,
           comp.getDamage() * 6);
     }
     if (compType == ShipComponentType.ORBITAL_BOMBS) {
-      attackConvetionalBomb(attackResult, ship, comp.getDamage());
+      attackResult = attackConvetionalBomb(ship, comp.getDamage());
     }
     if (compType == ShipComponentType.PLANETARY_INVASION_MODULE) {
-      attackInvasionModule(attackResult, ship, comp);
+      attackResult = attackInvasionModule(ship, comp);
     }
 
     usedComponentIndex = -1;
@@ -760,17 +754,28 @@ public class PlanetBombingView extends BlackPanel {
     private String attackType;
     /** Reason */
     private String reason;
+
+    /**
+     * Empty attack result.
+     */
+    AttackResult() {
+      conquered = false;
+      bombed = false;
+      shot = false;
+      attackType = "conquest";
+      reason = " conquest of planet";
+    }
   }
 
   /**
-   * Attack the planet with a nuke
-   * @param outResult AttackResult "output" object
-   * @param ship Ship
-   * @param comp ShipComponent
+   * Attack the planet with a orbital nuke.
+   * @param ship Ship which is attacking
+   * @param comp ShipComponent Orbital nuke component
+   * @return AttackResult
    */
-  private void attackNuke(final AttackResult outResult, final Ship ship,
+  private AttackResult attackNuke(final Ship ship,
       final ShipComponent comp) {
-    final var result = Objects.requireNonNull(outResult);
+    AttackResult result = new AttackResult();
     if (!allAi && game != null) {
       game.setBridgeCommand(BridgeCommandType.NUKE_START);
     }
@@ -779,7 +784,7 @@ public class PlanetBombingView extends BlackPanel {
 
     if (planet.isShieldForBombing()) {
       textLogger.addLog("Orbital shield protects the planet!");
-      return;
+      return result;
     }
 
     nuked = planet.nukem(comp.getDamage(), comp.getName(), starMap,
@@ -791,17 +796,18 @@ public class PlanetBombingView extends BlackPanel {
     if (planet.getTotalPopulation() == 0) {
       planet.setPlanetOwner(-1, null);
     }
+    return result;
   }
 
   /**
    * Attack the planet with conventional bomb
-   * @param outResult AttackResult "output" object
    * @param ship Ship
    * @param hitDmg int
+   * @return AttackResult
    */
-  private void attackConvetionalBomb(final AttackResult outResult,
-      final Ship ship, final int hitDmg) {
-    final var result = Objects.requireNonNull(outResult);
+  private AttackResult attackConvetionalBomb(final Ship ship,
+      final int hitDmg) {
+    AttackResult result = new AttackResult();
     if (!allAi && game != null) {
       game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
     }
@@ -810,7 +816,7 @@ public class PlanetBombingView extends BlackPanel {
 
     if (planet.isShieldForBombing()) {
       textLogger.addLog("Orbital shield protects the planet!");
-      return;
+      return result;
     }
 
     int hit = DiceGenerator.getRandom(1, 100);
@@ -829,18 +835,19 @@ public class PlanetBombingView extends BlackPanel {
     result.bombed = true;
     result.attackType = "bombing";
     result.reason = " massive orbital bombing";
+    return result;
   }
 
   /**
    * Attack the planet with conventional weapon
-   * @param outResult AttackResult "output" object
-   * @param ship Ship
-   * @param shotDmg int
-   * @param destructionDmg int
+   * @param ship Ship which attacks.
+   * @param suppressionChance Suppression chance
+   * @param destructionChance Building destruction chance
+   * @return AttackResult
    */
-  private void attackConventionalWeapon(final AttackResult outResult,
-      final Ship ship, final int shotDmg, final int destructionDmg) {
-    final var result = Objects.requireNonNull(outResult);
+  private AttackResult attackConventionalWeapon(final Ship ship,
+      final int suppressionChance, final int destructionChance) {
+    AttackResult result = new AttackResult();
     if (!allAi && game != null) {
       game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
     }
@@ -849,18 +856,18 @@ public class PlanetBombingView extends BlackPanel {
 
     if (planet.isShieldForBombing()) {
       textLogger.addLog("Orbital shield protects the planet!");
-      return;
+      return result;
     }
 
     int hit = DiceGenerator.getRandom(1, 100);
     StringBuilder sb = new StringBuilder();
-    if (hit <= shotDmg) {
+    if (hit <= suppressionChance) {
       suppressionFire++;
       sb.append(ship.getName());
       sb.append(" causes suppression against defenders");
       result.shot = true;
     }
-    if (hit <= destructionDmg && planet.bombOneBuilding()) {
+    if (hit <= destructionChance && planet.bombOneBuilding()) {
       if (result.shot) {
         sb.append(" and destroyers building...");
       } else {
@@ -876,17 +883,18 @@ public class PlanetBombingView extends BlackPanel {
     result.attackType = "shooting";
     result.reason = " space ship weapon";
     textLogger.addLog(sb.toString());
+    return result;
   }
 
   /**
    * Attack the planet with invasion module
-   * @param outResult AttackResult "output" object
-   * @param ship Ship
-   * @param comp ShipComponent
+   * @param ship Ship which attacks
+   * @param comp ShipComponent for invasion module.
+   * @return AttackResult
    */
-  private void attackInvasionModule(final AttackResult outResult,
-      final Ship ship, final ShipComponent comp) {
-    var result = new AttackResult();
+  private AttackResult attackInvasionModule(final Ship ship,
+      final ShipComponent comp) {
+    AttackResult result = new AttackResult();
     if (!allAi && game != null) {
       game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
     }
@@ -905,7 +913,7 @@ public class PlanetBombingView extends BlackPanel {
       planet.fightAgainstAttacker(shipTroops, starMap);
       ship.setColonist(0);
       textLogger.addLog("Your troops are killed during the attack!");
-      return;
+      return result;
     }
 
     int origPop = planet.getTotalPopulation();
@@ -959,7 +967,7 @@ public class PlanetBombingView extends BlackPanel {
     textLogger.addLog("Your troops colonize the planet!" + extraPop);
     result.attackType = "conquest";
     result.reason = " conquest of planet";
-
+    return result;
   }
 
   /**
@@ -1028,10 +1036,26 @@ public class PlanetBombingView extends BlackPanel {
         oneAttackFound = false;
         troops = false;
       }
+      if (!actionsLeft()) {
+        exitLoop = true;
+      }
     } while (!exitLoop);
     handleLastNewsAndReputation();
   }
 
+  /**
+   * Check if bombers have actions left.
+   * @return True if actions left.
+   */
+  public boolean actionsLeft() {
+    boolean actionsLeft = false;
+    for (BombingShip ship : bombers) {
+      if (ship.getActions() > 0) {
+        actionsLeft = true;
+      }
+    }
+    return actionsLeft;
+  }
   /**
    * Handle actions for Planet view.
    * @param arg0 ActionEvent command what player did
@@ -1119,6 +1143,9 @@ public class PlanetBombingView extends BlackPanel {
             }
           }
         } else {
+          if (!actionsLeft()) {
+            aiExitLoop = true;
+          }
           endButton.setEnabled(true);
         }
       }

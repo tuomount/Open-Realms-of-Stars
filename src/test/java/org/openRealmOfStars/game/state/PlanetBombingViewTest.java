@@ -238,4 +238,47 @@ public class PlanetBombingViewTest {
     assertEquals(attackerPlayerInfo, planet.getPlanetPlayerInfo());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testAiConqueringWithoutTrooperOrBombs() {
+    PlayerInfo defender = new PlayerInfo(SpaceRace.CENTAURS, 3, 0);
+    Planet planet = new Planet(new Coordinate(5, 5), "Testopia", 1, false);
+    planet.setPlanetOwner(2, defender);
+    planet.setWorkers(Planet.FOOD_FARMERS, 2);
+
+    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRace.SPORKS, 3, 1);
+    attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
+        "Destroyer Mk1", 1));
+    attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
+        "Small freighter", 2));
+    ShipDesign design = ShipGenerator.createBattleShip(attackerPlayerInfo,
+        ShipSize.MEDIUM, false, false);
+    Ship ship = new Ship(design);
+    Fleet fleet = new Fleet(ship, 5, 5);
+    int attackerPlayerIndex = 0;
+    ActionListener listener = Mockito.mock(ActionListener.class);
+
+    planetBombingView = new PlanetBombingView(planet, fleet,
+        attackerPlayerInfo, attackerPlayerIndex, listener);
+    assertEquals(defender, planet.getPlanetPlayerInfo());
+    ActionEvent action = Mockito.mock(ActionEvent.class);
+    Mockito.when(action.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_ANIMATION_TIMER);
+
+    //This will check that AI does not get stuck even it does not have bombers
+    // or troopers.
+    int safetyCounter = 10000;
+    while (!planetBombingView.isAiDone()) {
+      planetBombingView.handleAction(action);
+      planetBombingView.handleAction(action);
+      planetBombingView.skipAnimation();
+      safetyCounter--;
+      if (safetyCounter <= 0) {
+        assertFalse(true);
+      }
+    }
+    // Owner of the planet should not have changed
+    assertEquals(defender, planet.getPlanetPlayerInfo());
+  }
+
 }

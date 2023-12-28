@@ -1002,6 +1002,7 @@ public class NewsFactoryTest {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(aggressor.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");

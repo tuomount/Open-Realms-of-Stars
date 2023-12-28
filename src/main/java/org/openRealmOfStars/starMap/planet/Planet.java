@@ -1078,8 +1078,10 @@ public class Planet {
    */
   private int getTotalPopulationProduction() {
     int result = 0;
-    if (planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
-      // Mechions never starve or populate
+    if (planetOwnerInfo.getRace().getFoodRequire() == 0
+        && planetOwnerInfo.getRace().getGrowthSpeed() == 0) {
+      // Races that do not require food and do not grow naturally
+      // never starve nor populate
       return 0;
     }
     int require = 10;
@@ -1109,7 +1111,8 @@ public class Planet {
       // Planet does not have population bonus
       result = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
           * planetOwnerInfo.getRace().getFoodRequire() / 100;
-      if (planetOwnerInfo.getRace() == SpaceRace.SYNTHDROIDS) {
+      if (planetOwnerInfo.getRace().getGrowthSpeed() == 0) {
+        // Race never grows naturally
         require = 10;
         if (result > 0) {
           result = 0;

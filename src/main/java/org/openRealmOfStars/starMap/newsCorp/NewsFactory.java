@@ -3499,9 +3499,9 @@ public final class NewsFactory {
     sb.append("New deadly virus is spreading on ");
     sb.append(planet.getName());
     sb.append(". ");
-    if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.MECHIONS) {
-      sb.append("Luckily planet is being populated by Mechions "
-          + "which are immune to diseases. ");
+    if (planet.getPlanetPlayerInfo().getRace().isRoboticRace()) {
+      sb.append("Luckily planet is being populated by robotic race "
+          + "which is immune to diseases. ");
     } else {
       sb.append("Majority of planet population has died because of the virus."
           + " Spread has been able to limited on this single planet. ");

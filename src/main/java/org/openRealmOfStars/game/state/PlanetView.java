@@ -51,6 +51,7 @@ import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -558,6 +559,7 @@ public class PlanetView extends BlackPanel {
     resePanel.setText(": " + planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     cultureLabel.setText(": " + planet.getWorkers(Planet.CULTURE_ARTIST));
 
+    final var planetOwner = planet.getPlanetPlayerInfo();
     int peopleGrow = planet.getTotalProduction(Planet.PRODUCTION_POPULATION);
     if (peopleGrow > 0) {
       if (planet.exceedRadiation()) {
@@ -572,16 +574,12 @@ public class PlanetView extends BlackPanel {
       peopleGrowth.setText(peopleGrow + " star years");
       peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_DEATH));
     } else {
-      if (planet.getPlanetPlayerInfo() != null
-          && planet.getPlanetPlayerInfo().getRace() == SpaceRace.MECHIONS) {
+      if (planetOwner != null
+          && planetOwner.getRace().hasTrait(TraitIds.CONSTRUCTED_POP)) {
         peopleGrowth.setText("no growth");
+        final var tplBuild = "%1$s have to be built to get more population.";
         peopleGrowth.setToolTipText(
-            "Mechions needs to be built to get more population.");
-      } else if (planet.getPlanetPlayerInfo() != null
-          && planet.getPlanetPlayerInfo().getRace() == SpaceRace.SYNTHDROIDS) {
-        peopleGrowth.setText("no growth");
-        peopleGrowth.setToolTipText(
-            "Synthdroids needs to be cloned to get more population.");
+            String.format(tplBuild, planetOwner.getRace().getName()));
       } else {
         peopleGrowth.setText("stable ");
       }
@@ -595,8 +593,7 @@ public class PlanetView extends BlackPanel {
     farmProd.setText(": " + planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     farmProd.setToolTipText(planet.getFarmProdExplanation());
     int metalProd = planet.getTotalProduction(Planet.PRODUCTION_METAL);
-    if (planet.getPlanetPlayerInfo() != null
-        && planet.getPlanetPlayerInfo().getRace().isLithovorian()) {
+    if (planetOwner != null && planetOwner.getRace().isLithovorian()) {
       metalProd = metalProd - planet.getTotalPopulation() / 2;
     }
     mineProd.setText(": " + metalProd);
@@ -618,8 +615,8 @@ public class PlanetView extends BlackPanel {
     metal.setText(": " + planet.getMetal());
     metalOre.setText(": " + planet.getAmountMetalInGround());
     int happyValue = planet.calculateHappiness();
-    if (planet.getPlanetPlayerInfo() != null
-        && planet.getPlanetPlayerInfo().getGovernment().isImmuneToHappiness()) {
+    if (planetOwner != null
+        && planetOwner.getGovernment().isImmuneToHappiness()) {
       happiness.setText(": -");
       happiness.setToolTipText(
           "<html>Government is single minded, no happiness or sadness.</html>");

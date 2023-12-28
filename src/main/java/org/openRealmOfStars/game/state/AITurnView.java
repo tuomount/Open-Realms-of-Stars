@@ -3025,6 +3025,8 @@ public class AITurnView extends BlackPanel {
                   }));
               if (leader.getRace().isRoboticRace()) {
                 reasons.add("burnt CPU");
+              } else {
+                reasons.add("heart attack");
               }
               if (leader.hasPerk(Perk.ADDICTED)) {
                 reasons.add("substance overdose");

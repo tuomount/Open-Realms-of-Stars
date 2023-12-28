@@ -24,7 +24,6 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderBiography;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
@@ -787,13 +786,7 @@ public final class NewsFactory {
     sb.append(" was killed in battle! ");
     if (killer != null) {
       sb.append(killer.getCallName());
-      sb.append(" has ");
-      if (killed.getRace() == SpaceRace.MECHIONS) {
-        sb.append("oil");
-      } else {
-        sb.append("blood");
-      }
-      sb.append(" on ");
+      sb.append(" has blood on ");
       sb.append(killer.getGender().getHisHer());
       sb.append(" hands. ");
     }

@@ -161,17 +161,11 @@ public final class LeaderUtility {
         // Low life span starts about 10 years younger as starting ruler
         leader.setAge(25 + DiceGenerator.getRandom(10));
       }
-      if (leader.getRace() == SpaceRace.MECHIONS) {
-        leader.setAge(4 + DiceGenerator.getRandom(10));
-      }
     } else {
       leader.setLevel(level);
       leader.setAge(23 + DiceGenerator.getRandom(15));
-      if (leader.getRace() == SpaceRace.MECHIONS) {
-        // Mechion leaders are always almost brand new ones.
-        leader.setAge(1);
-      }
     }
+
     for (int i = 0; i < leader.getLevel(); i++) {
       Perk[] newPerks = getNewPerks(leader, PERK_TYPE_GOOD);
       var newPerk = DiceGenerator.pickRandom(newPerks);

@@ -29,7 +29,6 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -367,28 +366,15 @@ public final class StarMapUtilities {
         vote.getType());
     result = result + getVotingSupportAccordingAttitude(
         info.getRace().getAttitude(), vote.getType());
-    if (vote.getType() == VotingType.BAN_NUCLEAR_WEAPONS) {
-      if (info.getRace() == SpaceRace.CENTAURS
-          || info.getRace() == SpaceRace.HOMARIANS) {
-        result = result + 20;
-      } else if (info.getRace() == SpaceRace.CHIRALOIDS) {
-        result = result - 20;
-      } else if (info.getRace() == SpaceRace.MECHIONS) {
-        result = result - 10;
-      } else if (info.getRace() == SpaceRace.GREYANS
-          || info.getRace() == SpaceRace.MOTHOIDS) {
-        result = result - 5;
-      } else if (info.getRace() == SpaceRace.HUMAN
-          || info.getRace() == SpaceRace.TEUTHIDAES) {
-        result = result + 10;
-      }
+    // Species with radiosynthesis don't benefit that much from banning nukes
+    if (vote.getType() == VotingType.BAN_NUCLEAR_WEAPONS
+        && info.getRace().hasTrait(TraitIds.RADIOSYNTHESIS)) {
+      result -= 20;
     }
     if (vote.getType() == VotingType.BAN_PRIVATEER_SHIPS) {
-      if (info.getRace() == SpaceRace.SCAURIANS) {
-        result = result + 10;
-      }
-      if (info.getRace() == SpaceRace.TEUTHIDAES) {
-        result = result - 10;
+      // Mercantile races are likely to benefit from less privateers
+      if (info.getRace().hasTrait(TraitIds.MERCANTILE)) {
+        result += 10;
       }
       int privateerFleets = 0;
       for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {

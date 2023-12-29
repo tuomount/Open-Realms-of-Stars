@@ -52,10 +52,10 @@
     "points": 1
   },
   {
-    "id": "BUILT_IN_CLOAKING_DEVICE",
-    "name": "Built in cloaking device",
-    "description": "All ships have built-in cloaking device which give 10% cloak.",
-    "points": 1
+    "id": "STEALTHY",
+    "name": "Stealthy",
+    "description": "Natural aptitude towards stealthy movement and actions. Race's ships have 10% cloaking, sharing this trait with their constructors.",
+    "points": 2
   },
   {
     "id": "EAT_LESS",
@@ -251,6 +251,32 @@
     "conflictsWith": [
       "GOOD_WAR_RESILIENCE", "EXCELLENT_WAR_RESILIENCE", "POOR_WAR_RESILIENCE"
     ]
+  },
+  {
+    "id": "NATURAL_CHARM",
+    "name": "Natural charm",
+    "description": "Naturally charming, others just tend to like individuals of the race, which makes diplomacy easier for the race.",
+    "points": 1,
+    "conflictsWith": [
+      "REPULSIVE", "DISGUSTING"
+    ]
+  },
+  {
+    "id": "REPULSIVE",
+    "name": "Repulsive",
+    "description": "Be it because of it's bad looks or habits, others tend to dislike the race. Diplomacy suffers as a consequence.",
+    "points": -1,
+    "conflictsWith": [
+      "NATURAL_CHARM", "DISGUSTING"
+    ]
+  },
+  {
+    "id": "DISGUSTING",
+    "name": "Disgusting",
+    "description": "Race's habits or appearance are so unnaceptable to other races that race's attempts to do diplomacy are practically futile.",
+    "points": -3,
+    "conflictsWith": [
+      "NATURAL_CHARM", "REPULSIVE"
+    ]
   }
-
 ]

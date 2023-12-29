@@ -216,7 +216,7 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.MERCANTILE).ifPresent(trait -> {
       SCAURIANS.addTrait(trait);
     });
-    TraitFactory.create(TraitIds.BUILT_IN_CLOAKING_DEVICE).ifPresent(trait -> {
+    TraitFactory.create(TraitIds.STEALTHY).ifPresent(trait -> {
       TEUTHIDAES.addTrait(trait);
     });
     TraitFactory.create(TraitIds.EAT_LESS).ifPresent(trait -> {
@@ -327,6 +327,22 @@ public enum SpaceRace {
     });
     TraitFactory.create(TraitIds.WEAK_WAR_RESILIENCE).ifPresent(trait -> {
       MOTHOIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.NATURAL_CHARM).ifPresent(trait -> {
+      HUMAN.addTrait(trait);
+      SCAURIANS.addTrait(trait);
+      HOMARIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.REPULSIVE).ifPresent(trait -> {
+      MECHIONS.addTrait(trait);
+      SPORKS.addTrait(trait);
+      TEUTHIDAES.addTrait(trait);
+      CHIRALOIDS.addTrait(trait);
+      LITHORIANS.addTrait(trait);
+      SMAUGIRIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.DISGUSTING).ifPresent(trait -> {
+      REBORGIANS.addTrait(trait);
     });
   }
 
@@ -912,42 +928,17 @@ public enum SpaceRace {
    * @return normal 0, +2 positive, -2 negative
    */
   public int getDiplomacyBonus() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 2;
-    case MECHIONS:
-      return -2;
-    case SPORKS:
-      return -3;
-    case GREYANS:
-      return 0;
-    case CENTAURS:
-      return -1;
-    case MOTHOIDS:
-      return 0;
-    case TEUTHIDAES:
-      return -2;
-    case SCAURIANS:
-      return 1;
-    case HOMARIANS:
-      return 1;
-    case CHIRALOIDS:
-      return -4;
-    case REBORGIANS:
-      return -8;
-    case LITHORIANS:
-      return -2;
-    case ALTEIRIANS:
-      return -1;
-    case SMAUGIRIANS:
-      return -2;
-    case SYNTHDROIDS:
-      return 0;
-    default:
-      return 0;
+    var result = 0;
+    if (hasTrait(TraitIds.NATURAL_CHARM)) {
+      result += 2;
     }
+    if (hasTrait(TraitIds.REPULSIVE)) {
+      result -= 2;
+    }
+    if (hasTrait(TraitIds.DISGUSTING)) {
+      result -= 7;
+    }
+    return result;
   }
 
   /**

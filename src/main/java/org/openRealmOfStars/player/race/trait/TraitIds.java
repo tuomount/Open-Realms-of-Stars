@@ -65,8 +65,7 @@ public final class TraitIds {
   /** Gets +1 credit for each "trade" building and +50% from ship trading */
   public static final String MERCANTILE = "MERCANTILE";
   /** All ship design have 10% cloaking device built it. */
-  public static final String BUILT_IN_CLOAKING_DEVICE =
-      "BUILT_IN_CLOAKING_DEVICE";
+  public static final String STEALTHY = "STEALTHY";
   /** Require 50% less food to survive. */
   public static final String EAT_LESS = "EAT_LESS";
   /** Fast population growth. */
@@ -116,6 +115,12 @@ public final class TraitIds {
   public static final String POOR_WAR_RESILIENCE = "POOR_WAR_RESILIENCE";
   /** Weak war resilience. */
   public static final String WEAK_WAR_RESILIENCE = "WEAK_WAR_RESILIENCE";
+  /** Naturally charming, others just tend to like individuals of the race */
+  public static final String NATURAL_CHARM = "NATURAL_CHARM";
+  /** Be it because of bad looks or habits, others tend to dislike this race */
+  public static final String REPULSIVE = "REPULSIVE";
+  /** Race's habits/looks are unnaceptable to others, diplomacy is futile */
+  public static final String DISGUSTING = "DISGUSTING";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

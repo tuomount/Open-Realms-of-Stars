@@ -937,7 +937,7 @@ private int getRemainingEnergy(final int index) {
           cloak = comp.getCloaking();
       }
     }
-    if (hull.getRace().hasTrait(TraitIds.BUILT_IN_CLOAKING_DEVICE)) {
+    if (hull.getRace().hasTrait(TraitIds.STEALTHY)) {
       cloak = cloak + 10;
     }
     return cloak;

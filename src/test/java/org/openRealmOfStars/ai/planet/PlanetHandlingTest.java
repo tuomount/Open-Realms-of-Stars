@@ -1268,7 +1268,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getTotalCredits()).thenReturn(500);
     Mockito.when(info.getMsgList()).thenReturn(list);
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.DEMOCRACY);
     MissionList missionList = Mockito.mock(MissionList.class);
     Mockito.when(info.getMissions()).thenReturn(missionList);
     Planet planet = new Planet(new Coordinate(6, 6), "Test planet", 1, false);
@@ -1299,7 +1299,7 @@ public class PlanetHandlingTest extends TestCase {
     ArrayList<Message> fullList = new ArrayList<>();
     Mockito.when(list.getFullList()).thenReturn(fullList);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
     Mockito.when(info.getTotalCredits()).thenReturn(500);
     Mockito.when(info.getMsgList()).thenReturn(list);

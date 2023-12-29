@@ -3126,32 +3126,11 @@ public class AITurnView extends BlackPanel {
             }
           }
           int chance = 2;
-          if ((realm.getGovernment() == GovernmentType.CLAN
-               || realm.getGovernment() == GovernmentType.HORDE)
-              && heirs == 0) {
-            chance = 6;
+          if (heirs == 0) {
+            chance = realm.getGovernment().getHeirChance();
           }
-          if ((realm.getGovernment() == GovernmentType.CLAN
-              || realm.getGovernment() == GovernmentType.HORDE)
-             && heirs == 1) {
-           chance = 4;
-         }
-          if ((realm.getGovernment() == GovernmentType.EMPIRE
-              || realm.getGovernment() == GovernmentType.KINGDOM
-              || realm.getGovernment() == GovernmentType.NEST
-              || realm.getGovernment() == GovernmentType.FEUDALISM)
-              && heirs == 0) {
-            chance = 10;
-          }
-          if ((realm.getGovernment() == GovernmentType.EMPIRE
-              || realm.getGovernment() == GovernmentType.KINGDOM
-              || realm.getGovernment() == GovernmentType.FEUDALISM)
-              && heirs == 1) {
-            chance = 5;
-          }
-          if (realm.getGovernment() == GovernmentType.NEST
-              && heirs == 1) {
-            chance = 4;
+          if (heirs == 1) {
+            chance = realm.getGovernment().getHeirChance() / 2;
           }
           if (leader.getRace().hasTrait(TraitIds.NO_HEIRS)) {
             // Races without concept of parental heritage do not get heirs

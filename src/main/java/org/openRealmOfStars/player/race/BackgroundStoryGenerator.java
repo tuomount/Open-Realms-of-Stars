@@ -2515,19 +2515,19 @@ public final class BackgroundStoryGenerator {
       sb.append(" of star years ago on");
     }
     String endOfworldDescription = null;
-    if (startPlanet.getPlanetType().getWorldType() == WorldType.CARBONWORLD) {
+    if (startPlanet.getPlanetType().getWorldType() == WorldType.SWAMPWORLD) {
       switch (DiceGenerator.getRandom(2)) {
         default:
         case 0: {
-          sb.append(" a carbon-rich planet with full of life.");
+          sb.append(" a swamp planet with full of life.");
           break;
         }
         case 1: {
-          sb.append(" a carbon-rich planet teeming with life.");
+          sb.append(" a swamp planet teeming with life.");
           break;
         }
         case 2: {
-          sb.append(" a carbon-rich planet where life was flourishing.");
+          sb.append(" a swamp planet where life was flourishing.");
           break;
         }
       }
@@ -2583,23 +2583,22 @@ public final class BackgroundStoryGenerator {
       cold = true;
       harsh = true;
     }
-    if (startPlanet.getPlanetType().getWorldType() == WorldType.IRONWORLD) {
+    if (startPlanet.getPlanetType().getWorldType() == WorldType.VOLCANICWORLD) {
       switch (DiceGenerator.getRandom(2)) {
         default:
         case 0: {
-          sb.append(" an iron world.");
+          sb.append(" a volcanic world.");
           break;
         }
         case 1: {
-          sb.append(" a lava flowing iron world.");
+          sb.append(" a lava flowing volcanic world.");
           break;
         }
         case 2: {
-          sb.append(" a hot iron world.");
+          sb.append(" a hot volcanic world.");
           break;
         }
       }
-      sb.append(" iron world.");
       if (DiceGenerator.getBoolean()) {
         endOfworldDescription = "This planet was full of molten lava and"
             + " hot envinronments " + namePlural + " were able to survive there"
@@ -2611,23 +2610,22 @@ public final class BackgroundStoryGenerator {
       }
       hot = true;
     }
-    if (startPlanet.getPlanetType().getWorldType() == WorldType.SILICONWORLD) {
+    if (startPlanet.getPlanetType().getWorldType() == WorldType.BARRENWORLD) {
       switch (DiceGenerator.getRandom(2)) {
         default:
         case 0: {
-          sb.append(" a silicon world.");
+          sb.append(" a barren world.");
           break;
         }
         case 1: {
-          sb.append(" a deadly looking silicon world.");
+          sb.append(" a deadly looking barren world.");
           break;
         }
         case 2: {
-          sb.append(" an empty silicon world.");
+          sb.append(" an empty barren world.");
           break;
         }
       }
-      sb.append(" a silicon world.");
       endOfworldDescription = "This almost barren planet is one the"
           + " harshest envinronments in the galaxy. " + namePlural
           + " still call this place as home.";

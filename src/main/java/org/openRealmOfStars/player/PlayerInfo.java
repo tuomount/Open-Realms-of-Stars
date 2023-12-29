@@ -2636,7 +2636,7 @@ public class PlayerInfo {
    */
   public int getWorldTypeValue(final WorldType worldType) {
     int result = this.getRace().getWorldTypeBaseValue(worldType);
-    if (worldType == WorldType.SILICONWORLD
+    if (worldType == WorldType.BARRENWORLD
         && techList.hasTech("Advanced colonization")) {
       result = result + 25;
     }
@@ -2644,7 +2644,7 @@ public class PlayerInfo {
         && techList.hasTech("Desert colonization")) {
       result = result + 25;
     }
-    if (worldType == WorldType.CARBONWORLD
+    if (worldType == WorldType.SWAMPWORLD
         && techList.hasTech("Carbon colonization")) {
       result = result + 25;
     }
@@ -2652,7 +2652,7 @@ public class PlayerInfo {
         && techList.hasTech("Ice colonization")) {
       result = result + 25;
     }
-    if (worldType == WorldType.IRONWORLD
+    if (worldType == WorldType.VOLCANICWORLD
         && techList.hasTech("Iron colonization")) {
       result = result + 25;
     }

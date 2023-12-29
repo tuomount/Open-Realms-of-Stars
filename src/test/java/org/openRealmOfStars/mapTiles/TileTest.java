@@ -89,7 +89,7 @@ public class TileTest {
     assertEquals(true, tile.isStarTile());
     assertEquals(false, tile.isDangerous());
     assertEquals(false, tile.isSpaceAnomaly());
-    tile = Tiles.getTileByName(TileNames.IRONPLANET1);
+    tile = Tiles.getTileByName(TileNames.VOLCANICPLANET1);
     assertEquals(false, tile.isStarTile());
     assertEquals(false, tile.isDangerous());
     assertEquals(false, tile.isSpaceAnomaly());

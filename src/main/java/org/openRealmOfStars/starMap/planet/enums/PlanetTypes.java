@@ -34,10 +34,10 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 */
 public enum PlanetTypes {
   /**
-   * Silicon world for first image. Planet looks plain rocky planet
+   * Barren world for first image. Planet looks plain rocky planet
    */
-  SILICONWORLD1(Tiles.getTileByName(TileNames.ROCK1).getIndex(),
-      GuiStatics.BIG_PLANET_ROCK1, WorldType.SILICONWORLD,
+  BARRENWORLD1(Tiles.getTileByName(TileNames.ROCK1).getIndex(),
+      GuiStatics.BIG_PLANET_ROCK1, WorldType.BARRENWORLD,
       ImageInstruction.PLANET_ROCK1, false, false),
   /**
    * First water world images
@@ -52,11 +52,11 @@ public enum PlanetTypes {
       GuiStatics.BIG_PLANET_WATERWORLD2, WorldType.WATERWORLD,
       ImageInstruction.PLANET_WATERWORLD2, false, false),
   /**
-   * First iron world images
+   * First volcanic world images
    */
-  IRONWORLD1(Tiles.getTileByName(TileNames.IRONPLANET1).getIndex(),
-      GuiStatics.BIG_PLANET_IRONPLANET1, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD1, false, false),
+  VOLCANICWORLD1(Tiles.getTileByName(TileNames.VOLCANICPLANET1).getIndex(),
+      GuiStatics.BIG_PLANET_VOLCANICPLANET1, WorldType.VOLCANICWORLD,
+      ImageInstruction.PLANET_VOLCANICWORLD1, false, false),
   /**
    * Gas giant 1
    */
@@ -64,11 +64,11 @@ public enum PlanetTypes {
       GuiStatics.BIG_GASWORLD1, WorldType.GASWORLD,
       ImageInstruction.PLANET_GASGIANT1, true, false),
   /**
-   * Second iron world images
+   * Second volcanic world images
    */
-  IRONWORLD2(Tiles.getTileByName(TileNames.IRONPLANET2).getIndex(),
-      GuiStatics.BIG_PLANET_IRONPLANET2, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD2, false, false),
+  VOLCANICWORLD2(Tiles.getTileByName(TileNames.VOLCANICPLANET2).getIndex(),
+      GuiStatics.BIG_PLANET_VOLCANICPLANET2, WorldType.VOLCANICWORLD,
+      ImageInstruction.PLANET_VOLCANICWORLD2, false, false),
   /**
    * Third water world images
    */
@@ -100,17 +100,17 @@ public enum PlanetTypes {
       GuiStatics.BIG_PLANET_ICEWORLD2, WorldType.ICEWORLD,
       ImageInstruction.PLANET_ICEWORLD2, false, false),
   /**
-   * Third iron world images
+   * Third volcanic world images
    */
-  IRONWORLD3(Tiles.getTileByName(TileNames.IRONPLANET3).getIndex(),
-      GuiStatics.BIG_PLANET_IRONPLANET3, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD3, false, false),
+  VOLCANICWORLD3(Tiles.getTileByName(TileNames.VOLCANICPLANET3).getIndex(),
+      GuiStatics.BIG_PLANET_VOLCANICPLANET3, WorldType.VOLCANICWORLD,
+      ImageInstruction.PLANET_VOLCANICWORLD3, false, false),
   /**
-   * First carbon world images
+   * First swamp world images
    */
-  CARBONWORLD1(Tiles.getTileByName(TileNames.CARBONWORLD1).getIndex(),
-      GuiStatics.BIG_PLANET_CARBONWORLD1, WorldType.CARBONWORLD,
-      ImageInstruction.PLANET_CARBONWORLD1, false, false),
+  SWAMPWORLD1(Tiles.getTileByName(TileNames.SWAMPWORLD1).getIndex(),
+      GuiStatics.BIG_PLANET_SWAMPWORLD1, WorldType.SWAMPWORLD,
+      ImageInstruction.PLANET_SWAMPWORLD1, false, false),
   /**
    * Gas giant 3
    */
@@ -124,17 +124,17 @@ public enum PlanetTypes {
       GuiStatics.BIG_PLANET_ICEWORLD3, WorldType.ICEWORLD,
       ImageInstruction.PLANET_ICEWORLD3, false, false),
   /**
-   * Fourth iron world images
+   * Fourth volcanic world images
    */
-  IRONWORLD4(Tiles.getTileByName(TileNames.IRONPLANET4).getIndex(),
-      GuiStatics.BIG_PLANET_IRONPLANET4, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD4, false, false),
+  VOLCANICWORLD4(Tiles.getTileByName(TileNames.VOLCANICPLANET4).getIndex(),
+      GuiStatics.BIG_PLANET_VOLCANICPLANET4, WorldType.VOLCANICWORLD,
+      ImageInstruction.PLANET_VOLCANICWORLD4, false, false),
   /**
-   * second carbon world images
+   * second swamp world images
    */
-  CARBONWORLD2(Tiles.getTileByName(TileNames.CARBONWORLD2).getIndex(),
-      GuiStatics.BIG_PLANET_CARBONWORLD2, WorldType.CARBONWORLD,
-      ImageInstruction.PLANET_CARBONWORLD2, false, false),
+  SWAMPWORLD2(Tiles.getTileByName(TileNames.SWAMPWORLD2).getIndex(),
+      GuiStatics.BIG_PLANET_SWAMPWORLD2, WorldType.SWAMPWORLD,
+      ImageInstruction.PLANET_SWAMPWORLD2, false, false),
   /**
    * First desert world images
    */
@@ -184,17 +184,17 @@ public enum PlanetTypes {
       GuiStatics.BIG_PLANET_WATERWORLD9, WorldType.WATERWORLD,
       ImageInstruction.PLANET_WATERWORLD9, false, false),
   /**
-   * Fifth iron world images
+   * Fifth volcanic world images
    */
-  IRONWORLD5(Tiles.getTileByName(TileNames.IRONPLANET5).getIndex(),
-      GuiStatics.BIG_PLANET_IRONPLANET5, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD5, false, false),
+  VOLCANICWORLD5(Tiles.getTileByName(TileNames.VOLCANICPLANET5).getIndex(),
+      GuiStatics.BIG_PLANET_VOLCANICPLANET5, WorldType.VOLCANICWORLD,
+      ImageInstruction.PLANET_VOLCANICWORLD5, false, false),
   /**
-   * Sixth iron world images
+   * Sixth volcanic world images
    */
-  IRONWORLD6(Tiles.getTileByName(TileNames.IRONPLANET6).getIndex(),
-      GuiStatics.BIG_PLANET_IRONPLANET6, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD6, false, false),
+  VOLCANICWORLD6(Tiles.getTileByName(TileNames.VOLCANICPLANET6).getIndex(),
+      GuiStatics.BIG_PLANET_VOLCANICPLANET6, WorldType.VOLCANICWORLD,
+      ImageInstruction.PLANET_VOLCANICWORLD6, false, false),
   /**
    * Third desert world images
    */
@@ -202,11 +202,11 @@ public enum PlanetTypes {
       GuiStatics.BIG_PLANET_DESERTWORLD3, WorldType.DESERTWORLD,
       ImageInstruction.PLANET_DESERTWORLD3, false, false),
   /**
-   * Third carbon world images
+   * Third swamp world images
    */
-  CARBONWORLD3(Tiles.getTileByName(TileNames.CARBONWORLD3).getIndex(),
-      GuiStatics.BIG_PLANET_CARBONWORLD3, WorldType.CARBONWORLD,
-      ImageInstruction.PLANET_CARBONWORLD3, false, false),
+  SWAMPWORLD3(Tiles.getTileByName(TileNames.SWAMPWORLD3).getIndex(),
+      GuiStatics.BIG_PLANET_SWAMPWORLD3, WorldType.SWAMPWORLD,
+      ImageInstruction.PLANET_SWAMPWORLD3, false, false),
   /**
    * First artificial world images
    */
@@ -223,7 +223,7 @@ public enum PlanetTypes {
    * Planet Mars
    */
   PLANET_MARS(Tiles.getTileByName(TileNames.PLANET_MARS).getIndex(),
-      GuiStatics.BIG_PLANET_MARS, WorldType.IRONWORLD,
+      GuiStatics.BIG_PLANET_MARS, WorldType.DESERTWORLD,
       ImageInstruction.PLANET_MARS, false, true),
   /**
    * Planet Jupiter
@@ -420,21 +420,21 @@ public enum PlanetTypes {
     switch (this) {
       case GASGIANT1: return 0;
       case GASGIANT2: return 1;
-      case SILICONWORLD1: return 0;
+      case BARRENWORLD1: return 0;
       case WATERWORLD1: return 1;
       case WATERWORLD2: return 2;
-      case IRONWORLD1: return 3;
-      case IRONWORLD2: return 4;
+      case VOLCANICWORLD1: return 3;
+      case VOLCANICWORLD2: return 4;
       case WATERWORLD3: return 5;
       case WATERWORLD4: return 6;
       case ICEWORLD1: return 7;
       case ICEWORLD2: return 8;
-      case IRONWORLD3: return 9;
-      case CARBONWORLD1: return 10;
+      case VOLCANICWORLD3: return 9;
+      case SWAMPWORLD1: return 10;
       case GASGIANT3: return 2;
       case ICEWORLD3: return 11;
-      case IRONWORLD4: return 12;
-      case CARBONWORLD2: return 13;
+      case VOLCANICWORLD4: return 12;
+      case SWAMPWORLD2: return 13;
       case DESERTWORLD1: return 14;
       case WATERWORLD5: return 15;
       case WATERWORLD6: return 16;
@@ -443,10 +443,10 @@ public enum PlanetTypes {
       case WATERWORLD8: return 19;
       case DESERTWORLD2: return 20;
       case WATERWORLD9: return 21;
-      case IRONWORLD5: return 22;
-      case IRONWORLD6: return 23;
+      case VOLCANICWORLD5: return 22;
+      case VOLCANICWORLD6: return 23;
       case DESERTWORLD3: return 24;
-      case CARBONWORLD3: return 25;
+      case SWAMPWORLD3: return 25;
       case ARTIFICIALWORLD1: return 26;
       case PLANET_EARTH: return 27;
       case PLANET_MARS: return 28;
@@ -483,20 +483,20 @@ public enum PlanetTypes {
       }
     }
     switch (index) {
-      case  0: return SILICONWORLD1;
+      case  0: return BARRENWORLD1;
       case  1: return WATERWORLD1;
       case  2: return WATERWORLD2;
-      case  3: return IRONWORLD1;
-      case  4: return IRONWORLD2;
+      case  3: return VOLCANICWORLD1;
+      case  4: return VOLCANICWORLD2;
       case  5: return WATERWORLD3;
       case  6: return WATERWORLD4;
       case  7: return ICEWORLD1;
       case  8: return ICEWORLD2;
-      case  9: return IRONWORLD3;
-      case 10: return CARBONWORLD1;
+      case  9: return VOLCANICWORLD3;
+      case 10: return SWAMPWORLD1;
       case 11: return ICEWORLD3;
-      case 12: return IRONWORLD4;
-      case 13: return CARBONWORLD2;
+      case 12: return VOLCANICWORLD4;
+      case 13: return SWAMPWORLD2;
       case 14: return DESERTWORLD1;
       case 15: return WATERWORLD5;
       case 16: return WATERWORLD6;
@@ -505,10 +505,10 @@ public enum PlanetTypes {
       case 19: return WATERWORLD8;
       case 20: return DESERTWORLD2;
       case 21: return WATERWORLD9;
-      case 22: return IRONWORLD5;
-      case 23: return IRONWORLD6;
+      case 22: return VOLCANICWORLD5;
+      case 23: return VOLCANICWORLD6;
       case 24: return DESERTWORLD3;
-      case 25: return CARBONWORLD3;
+      case 25: return SWAMPWORLD3;
       case 26: return ARTIFICIALWORLD1;
       case 27: return PLANET_EARTH;
       case 28: return PLANET_MARS;
@@ -528,7 +528,7 @@ public enum PlanetTypes {
       case GASGIANT1:
       case GASGIANT2:
       case GASGIANT3: return "Gas giant";
-      case SILICONWORLD1: return "Silicon world";
+      case BARRENWORLD1: return "Barren world";
       case WATERWORLD1:
       case WATERWORLD2:
       case WATERWORLD3:
@@ -538,19 +538,19 @@ public enum PlanetTypes {
       case WATERWORLD7:
       case WATERWORLD8:
       case WATERWORLD9: return "Water world";
-      case IRONWORLD1:
-      case IRONWORLD2:
-      case IRONWORLD3:
-      case IRONWORLD4:
-      case IRONWORLD5:
-      case IRONWORLD6: return "Iron world";
+      case VOLCANICWORLD1:
+      case VOLCANICWORLD2:
+      case VOLCANICWORLD3:
+      case VOLCANICWORLD4:
+      case VOLCANICWORLD5:
+      case VOLCANICWORLD6: return "Volcanic world";
       case ICEWORLD1: return "Ice world";
       case ICEWORLD2:
       case ICEWORLD3:
       case ICEWORLD4: return "Ice world";
-      case CARBONWORLD1:
-      case CARBONWORLD2:
-      case CARBONWORLD3: return "Carbon world";
+      case SWAMPWORLD1:
+      case SWAMPWORLD2:
+      case SWAMPWORLD3: return "Swamp world";
       case DESERTWORLD1:
       case DESERTWORLD2:
       case DESERTWORLD3: return "Desert world";

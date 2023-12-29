@@ -179,9 +179,9 @@ public enum PlanetaryEvent {
     int value = DiceGenerator.getRandom(99);
     if (value < chance) {
       switch (type) {
-        case CARBONWORLD1:
-        case CARBONWORLD2:
-        case CARBONWORLD3:
+        case SWAMPWORLD1:
+        case SWAMPWORLD2:
+        case SWAMPWORLD3:
           value = DiceGenerator.getRandom(99);
           if (value < 50) {
             return PlanetaryEvent.ANCIENT_ARTIFACT;
@@ -197,7 +197,7 @@ public enum PlanetaryEvent {
             return PlanetaryEvent.BLACK_MONOLITH;
           }
           break;
-        case SILICONWORLD1:
+        case BARRENWORLD1:
           value = DiceGenerator.getRandom(99);
           if (value < 40) {
             return PlanetaryEvent.ANCIENT_LAB;
@@ -248,12 +248,12 @@ public enum PlanetaryEvent {
             return PlanetaryEvent.BLACK_MONOLITH;
           }
           break;
-        case IRONWORLD1:
-        case IRONWORLD2:
-        case IRONWORLD3:
-        case IRONWORLD4:
-        case IRONWORLD5:
-        case IRONWORLD6:
+        case VOLCANICWORLD1:
+        case VOLCANICWORLD2:
+        case VOLCANICWORLD3:
+        case VOLCANICWORLD4:
+        case VOLCANICWORLD5:
+        case VOLCANICWORLD6:
           value = DiceGenerator.getRandom(99);
           if (value < 30) {
             return PlanetaryEvent.ANCIENT_LAB;

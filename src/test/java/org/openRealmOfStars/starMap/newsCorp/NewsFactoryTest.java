@@ -226,7 +226,7 @@ public class NewsFactoryTest {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
     Mockito.when(planet.getImageInstructions()).thenReturn(
-        PlanetTypes.IRONWORLD3.getImageInstructions());
+        PlanetTypes.VOLCANICWORLD3.getImageInstructions());
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(aggressor.getAiAttitude()).thenReturn(Attitude.AGGRESSIVE);
@@ -280,7 +280,7 @@ public class NewsFactoryTest {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
     Mockito.when(planet.getImageInstructions()).thenReturn(
-        PlanetTypes.IRONWORLD2.getImageInstructions());
+        PlanetTypes.VOLCANICWORLD2.getImageInstructions());
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(aggressor.getAiAttitude()).thenReturn(Attitude.PEACEFUL);
@@ -634,7 +634,7 @@ public class NewsFactoryTest {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
     Mockito.when(planet.getImageInstructions()).thenReturn(
-        PlanetTypes.IRONWORLD1.getImageInstructions());
+        PlanetTypes.VOLCANICWORLD1.getImageInstructions());
     PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
     Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.PEACEFUL);
@@ -1009,7 +1009,7 @@ public class NewsFactoryTest {
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
     Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(planet.getImageInstructions()).thenReturn(
-        PlanetTypes.CARBONWORLD1.getImageInstructions());
+        PlanetTypes.SWAMPWORLD1.getImageInstructions());
     NewsData news = NewsFactory.makePlanetConqueredNews(aggressor, defender,
         planet, null, 2453);
     assertEquals(true, news.getNewsText().contains(
@@ -1024,7 +1024,7 @@ public class NewsFactoryTest {
   public void testConquerPlanetWithNukes() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getImageInstructions()).thenReturn(
-        PlanetTypes.SILICONWORLD1.getImageInstructions());
+        PlanetTypes.BARRENWORLD1.getImageInstructions());
     Mockito.when(planet.getName()).thenReturn("Planet I");
     Mockito.when(planet.getTotalRadiationLevel()).thenReturn(9);
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
@@ -1054,7 +1054,7 @@ public class NewsFactoryTest {
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
     Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(planet.getImageInstructions()).thenReturn(
-        PlanetTypes.CARBONWORLD1.getImageInstructions());
+        PlanetTypes.SWAMPWORLD1.getImageInstructions());
     NewsData news = NewsFactory.makePlanetBombedNews(aggressor, defender,
         planet, null, -1);
     assertEquals(true, news.getNewsText().contains(
@@ -1069,7 +1069,7 @@ public class NewsFactoryTest {
   public void testBombPlanetWithNukes() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getImageInstructions()).thenReturn(
-        PlanetTypes.SILICONWORLD1.getImageInstructions());
+        PlanetTypes.BARRENWORLD1.getImageInstructions());
     Mockito.when(planet.getName()).thenReturn("Planet I");
     Mockito.when(planet.getTotalRadiationLevel()).thenReturn(9);
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
@@ -1715,8 +1715,8 @@ public class NewsFactoryTest {
     Mockito.when(building.getName()).thenReturn("Awesome building");
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
-    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.IRONWORLD6);
-    Mockito.when(planet.getImageInstructions()).thenReturn(PlanetTypes.IRONWORLD6.getImageInstructions());
+    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.VOLCANICWORLD6);
+    Mockito.when(planet.getImageInstructions()).thenReturn(PlanetTypes.VOLCANICWORLD6.getImageInstructions());
     NewsData news = NewsFactory.makeScientificAchivementNews(maker, planet,
         building, 2500);
     assertEquals(true, news.getNewsText().contains(
@@ -1736,8 +1736,8 @@ public class NewsFactoryTest {
     Building building = null;
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
-    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.IRONWORLD6);
-    Mockito.when(planet.getImageInstructions()).thenReturn(PlanetTypes.IRONWORLD6.getImageInstructions());
+    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.VOLCANICWORLD6);
+    Mockito.when(planet.getImageInstructions()).thenReturn(PlanetTypes.VOLCANICWORLD6.getImageInstructions());
     NewsData news = NewsFactory.makeScientificAchivementNews(maker, planet,
         building, 2550);
     assertEquals(true, news.getNewsText().contains(
@@ -1765,7 +1765,7 @@ public class NewsFactoryTest {
     ArrayList<Planet> planets = new ArrayList<>();
     planets.add(planet);
     planets.add(planet2);
-    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.CARBONWORLD1);
+    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.SWAMPWORLD1);
     Mockito.when(planet2.getPlanetType()).thenReturn(PlanetTypes.ARTIFICIALWORLD1);
     Building[] buildings = new Building[2];
     buildings[0] = Mockito.mock(Building.class);
@@ -1804,7 +1804,7 @@ public class NewsFactoryTest {
     ArrayList<Planet> planets = new ArrayList<>();
     planets.add(planet);
     planets.add(planet2);
-    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.CARBONWORLD1);
+    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.SWAMPWORLD1);
     Mockito.when(planet2.getPlanetType()).thenReturn(PlanetTypes.ARTIFICIALWORLD1);
     Building[] buildings = new Building[2];
     buildings[0] = Mockito.mock(Building.class);

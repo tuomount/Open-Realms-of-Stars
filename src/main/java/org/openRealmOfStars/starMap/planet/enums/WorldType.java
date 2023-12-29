@@ -24,13 +24,13 @@ package org.openRealmOfStars.starMap.planet.enums;
 */
 public enum WorldType {
   /**
-   * Silicon world
+   * Barren world
    */
-  SILICONWORLD,
+  BARRENWORLD,
   /**
-   * Iron world
+   * Volcanic world
    */
-  IRONWORLD,
+  VOLCANICWORLD,
   /**
    * Waterworld
    */
@@ -40,9 +40,9 @@ public enum WorldType {
    */
   ICEWORLD,
   /**
-   * Carbon world
+   * Swamp world
    */
-  CARBONWORLD,
+  SWAMPWORLD,
   /**
    * Inhabitable gas world
    */

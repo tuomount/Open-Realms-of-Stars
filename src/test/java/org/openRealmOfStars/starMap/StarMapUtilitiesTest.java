@@ -97,7 +97,7 @@ public class StarMapUtilitiesTest {
     Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(5, 5));
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info2);
     Mockito.when(planet.getName()).thenReturn("Market");
-    Mockito.when(planet.getImageInstructions()).thenReturn(ImageInstruction.PLANET_IRONWORLD1);
+    Mockito.when(planet.getImageInstructions()).thenReturn(ImageInstruction.PLANET_VOLCANICWORLD1);
     Fleet fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.doTrade(planet, info)).thenReturn(10);
     DiplomacyBonusList diplomacy = Mockito.mock(DiplomacyBonusList.class);

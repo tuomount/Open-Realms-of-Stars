@@ -278,7 +278,7 @@ public class ImageInstructionTest {
 
     instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
-    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_IRONWORLD1,
+    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_VOLCANICWORLD1,
         ImageInstruction.SIZE_FULL);
     image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
@@ -289,7 +289,7 @@ public class ImageInstructionTest {
 
     instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
-    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_IRONWORLD2,
+    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_VOLCANICWORLD2,
         ImageInstruction.SIZE_FULL);
     image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
@@ -351,7 +351,7 @@ public class ImageInstructionTest {
   public void testBackgroundAndPlanet() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
-    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_IRONWORLD1,
+    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_VOLCANICWORLD1,
         ImageInstruction.SIZE_HALF);
     assertEquals("background(stars)+planet(position center,ironworld1,half)", instruction.build());
   }
@@ -363,7 +363,7 @@ public class ImageInstructionTest {
     instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
     instruction.addLogo(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_SPORTS,
         ImageInstruction.SIZE_HALF);
-    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_IRONWORLD1,
+    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_VOLCANICWORLD1,
         ImageInstruction.SIZE_HALF);
     assertEquals("background(stars)+drawLogo(position center,sportslogo,half)"
         + "+planet(position center,ironworld1,half)", instruction.build());
@@ -387,7 +387,7 @@ public class ImageInstructionTest {
   public void testBackgroundAndPlanetPositionWeird() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
-    instruction.addPlanet("Weird", ImageInstruction.PLANET_IRONWORLD1,
+    instruction.addPlanet("Weird", ImageInstruction.PLANET_VOLCANICWORLD1,
         ImageInstruction.SIZE_HALF);
     assertEquals("background(stars)+planet(position center,ironworld1,half)", instruction.build());
   }

@@ -1225,11 +1225,11 @@ public enum SpaceRace {
   public int getWorldTypeBaseValue(final WorldType worldType) {
     if (this == HUMAN) {
       switch (worldType) {
-      case SILICONWORLD: return 50;
+      case BARRENWORLD: return 50;
       case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
+      case VOLCANICWORLD: return 50;
       case ICEWORLD: return 75;
-      case CARBONWORLD: return 100;
+      case SWAMPWORLD: return 100;
       case DESERTWORLD: return 75;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1238,11 +1238,11 @@ public enum SpaceRace {
     }
     if (this == MECHIONS) {
       switch (worldType) {
-      case SILICONWORLD: return 100;
+      case BARRENWORLD: return 100;
       case WATERWORLD: return 75;
-      case IRONWORLD: return 100;
+      case VOLCANICWORLD: return 100;
       case ICEWORLD: return 25;
-      case CARBONWORLD: return 75;
+      case SWAMPWORLD: return 75;
       case DESERTWORLD: return 50;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1251,11 +1251,11 @@ public enum SpaceRace {
     }
     if (this == SPORKS) {
       switch (worldType) {
-      case SILICONWORLD: return 50;
+      case BARRENWORLD: return 50;
       case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
+      case VOLCANICWORLD: return 50;
       case ICEWORLD: return 50;
-      case CARBONWORLD: return 100;
+      case SWAMPWORLD: return 100;
       case DESERTWORLD: return 75;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1264,11 +1264,11 @@ public enum SpaceRace {
     }
     if (this == GREYANS) {
       switch (worldType) {
-      case SILICONWORLD: return 50;
+      case BARRENWORLD: return 50;
       case WATERWORLD: return 125;
-      case IRONWORLD: return 50;
+      case VOLCANICWORLD: return 50;
       case ICEWORLD: return 50;
-      case CARBONWORLD: return 100;
+      case SWAMPWORLD: return 100;
       case DESERTWORLD: return 50;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1277,11 +1277,11 @@ public enum SpaceRace {
     }
     if (this == CENTAURS) {
       switch (worldType) {
-      case SILICONWORLD: return 50;
+      case BARRENWORLD: return 50;
       case WATERWORLD: return 100;
-      case IRONWORLD: return 75;
+      case VOLCANICWORLD: return 75;
       case ICEWORLD: return 100;
-      case CARBONWORLD: return 125;
+      case SWAMPWORLD: return 125;
       case DESERTWORLD: return 100;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1290,11 +1290,11 @@ public enum SpaceRace {
     }
     if (this == MOTHOIDS) {
       switch (worldType) {
-      case SILICONWORLD: return 50;
+      case BARRENWORLD: return 50;
       case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
+      case VOLCANICWORLD: return 50;
       case ICEWORLD: return 25;
-      case CARBONWORLD: return 100;
+      case SWAMPWORLD: return 100;
       case DESERTWORLD: return 75;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1303,11 +1303,11 @@ public enum SpaceRace {
     }
     if (this == TEUTHIDAES) {
       switch (worldType) {
-      case SILICONWORLD: return 50;
+      case BARRENWORLD: return 50;
       case WATERWORLD: return 125;
-      case IRONWORLD: return 50;
+      case VOLCANICWORLD: return 50;
       case ICEWORLD: return 75;
-      case CARBONWORLD: return 125;
+      case SWAMPWORLD: return 125;
       case DESERTWORLD: return 25;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1316,11 +1316,11 @@ public enum SpaceRace {
     }
     if (this == SCAURIANS) {
       switch (worldType) {
-      case SILICONWORLD: return 25;
+      case BARRENWORLD: return 25;
       case WATERWORLD: return 100;
-      case IRONWORLD: return 75;
+      case VOLCANICWORLD: return 75;
       case ICEWORLD: return 75;
-      case CARBONWORLD: return 75;
+      case SWAMPWORLD: return 75;
       case DESERTWORLD: return 75;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1329,11 +1329,11 @@ public enum SpaceRace {
     }
     if (this == HOMARIANS) {
       switch (worldType) {
-      case SILICONWORLD: return 50;
+      case BARRENWORLD: return 50;
       case WATERWORLD: return 125;
-      case IRONWORLD: return 50;
+      case VOLCANICWORLD: return 50;
       case ICEWORLD: return 100;
-      case CARBONWORLD: return 125;
+      case SWAMPWORLD: return 125;
       case DESERTWORLD: return 50;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1342,11 +1342,11 @@ public enum SpaceRace {
     }
     if (this == SPACE_PIRATE || this == SPACE_MONSTERS) {
       switch (worldType) {
-      case SILICONWORLD: return 75;
+      case BARRENWORLD: return 75;
       case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
+      case VOLCANICWORLD: return 50;
       case ICEWORLD: return 75;
-      case CARBONWORLD: return 75;
+      case SWAMPWORLD: return 75;
       case DESERTWORLD: return 75;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1355,11 +1355,11 @@ public enum SpaceRace {
     }
     if (this == CHIRALOIDS) {
       switch (worldType) {
-      case SILICONWORLD: return 50;
+      case BARRENWORLD: return 50;
       case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
+      case VOLCANICWORLD: return 50;
       case ICEWORLD: return 50;
-      case CARBONWORLD: return 100;
+      case SWAMPWORLD: return 100;
       case DESERTWORLD: return 50;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1368,11 +1368,11 @@ public enum SpaceRace {
     }
     if (this == REBORGIANS) {
       switch (worldType) {
-      case SILICONWORLD: return 75;
+      case BARRENWORLD: return 75;
       case WATERWORLD: return 100;
-      case IRONWORLD: return 100;
+      case VOLCANICWORLD: return 100;
       case ICEWORLD: return 50;
-      case CARBONWORLD: return 75;
+      case SWAMPWORLD: return 75;
       case DESERTWORLD: return 50;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1381,11 +1381,11 @@ public enum SpaceRace {
     }
     if (this == LITHORIANS) {
       switch (worldType) {
-      case SILICONWORLD: return 100;
+      case BARRENWORLD: return 100;
       case WATERWORLD: return 50;
-      case IRONWORLD: return 125;
+      case VOLCANICWORLD: return 125;
       case ICEWORLD: return 25;
-      case CARBONWORLD: return 50;
+      case SWAMPWORLD: return 50;
       case DESERTWORLD: return 75;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1398,11 +1398,11 @@ public enum SpaceRace {
     }
     if (this == SMAUGIRIANS) {
       switch (worldType) {
-      case SILICONWORLD: return 50;
+      case BARRENWORLD: return 50;
       case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
+      case VOLCANICWORLD: return 50;
       case ICEWORLD: return 50;
-      case CARBONWORLD: return 100;
+      case SWAMPWORLD: return 100;
       case DESERTWORLD: return 75;
       case ICEGIANTWORLD: return 0;
       default:
@@ -1411,11 +1411,11 @@ public enum SpaceRace {
     }
     if (this == SYNTHDROIDS) {
       switch (worldType) {
-      case SILICONWORLD: return 50;
+      case BARRENWORLD: return 50;
       case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
+      case VOLCANICWORLD: return 50;
       case ICEWORLD: return 25;
-      case CARBONWORLD: return 100;
+      case SWAMPWORLD: return 100;
       case DESERTWORLD: return 75;
       case ICEGIANTWORLD: return 0;
       default:

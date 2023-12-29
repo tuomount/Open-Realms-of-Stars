@@ -1989,13 +1989,13 @@ public class StarMap {
             planets, false);
         planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
         if (planets == 1) {
-          planet.setPlanetType(PlanetTypes.SILICONWORLD1);
+          planet.setPlanetType(PlanetTypes.BARRENWORLD1);
           planet.setRadiationLevel(6);
           planet.setGroundSize(7);
           planet.setName("Mercury I");
         }
         if (planets == 2) {
-          planet.setPlanetType(PlanetTypes.CARBONWORLD2);
+          planet.setPlanetType(PlanetTypes.SWAMPWORLD2);
           planet.setRadiationLevel(4);
           planet.setGroundSize(11);
           planet.setName("Venus II");

@@ -302,7 +302,7 @@ public class Planet {
     if (this.gasGiant) {
       this.planetType = PlanetTypes.GASGIANT1;
     } else {
-      this.planetType = PlanetTypes.CARBONWORLD1;
+      this.planetType = PlanetTypes.SWAMPWORLD1;
     }
     this.event = PlanetaryEvent.NONE;
     this.eventFound = true;

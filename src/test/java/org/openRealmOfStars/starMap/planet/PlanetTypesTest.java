@@ -39,13 +39,13 @@ public class PlanetTypesTest {
     type = PlanetTypes.getRandomPlanetType(true, true, true);
     assertEquals(PlanetTypes.WATERWORLD1, type);
     type = PlanetTypes.getRandomPlanetType(true, true, true);
-    assertEquals(PlanetTypes.CARBONWORLD1, type);
+    assertEquals(PlanetTypes.SWAMPWORLD1, type);
     type = PlanetTypes.getRandomPlanetType(true, true, true);
-    assertEquals(PlanetTypes.IRONWORLD4, type);
+    assertEquals(PlanetTypes.VOLCANICWORLD4, type);
     type = PlanetTypes.getRandomPlanetType(true, true, true);
     assertEquals(PlanetTypes.DESERTWORLD2, type);
     type = PlanetTypes.getRandomPlanetType(true, true, true);
-    assertEquals(PlanetTypes.IRONWORLD5, type);
+    assertEquals(PlanetTypes.VOLCANICWORLD5, type);
   }
 
   @Test
@@ -81,20 +81,20 @@ public class PlanetTypesTest {
   public void testRandomNormalPlanets() {
     DiceGenerator.initializeGenerators(0,1,2,3);
     PlanetTypes type = PlanetTypes.getRandomPlanetType(false, true, false);
-    assertEquals(PlanetTypes.SILICONWORLD1, type);
+    assertEquals(PlanetTypes.BARRENWORLD1, type);
     type = PlanetTypes.getRandomPlanetType(false, true, false);
     assertEquals(PlanetTypes.WATERWORLD1, type);
     type = PlanetTypes.getRandomPlanetType(false, true, false);
     assertEquals(PlanetTypes.WATERWORLD2, type);
     type = PlanetTypes.getRandomPlanetType(false, true, false);
-    assertEquals(PlanetTypes.IRONWORLD1, type);
+    assertEquals(PlanetTypes.VOLCANICWORLD1, type);
   }
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRandomNormalAndGasPlanets() {
     DiceGenerator.initializeGenerators(0,1,2,4);
     PlanetTypes type = PlanetTypes.getRandomPlanetType(true, true, false);
-    assertEquals(PlanetTypes.SILICONWORLD1, type);
+    assertEquals(PlanetTypes.BARRENWORLD1, type);
     type = PlanetTypes.getRandomPlanetType(true, true, false);
     assertEquals(PlanetTypes.WATERWORLD1, type);
     type = PlanetTypes.getRandomPlanetType(true, true, false);

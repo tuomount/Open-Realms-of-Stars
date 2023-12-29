@@ -75,8 +75,11 @@ import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
+import org.openRealmOfStars.starMap.planet.enums.GravityType;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
+import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
+import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -2328,6 +2331,9 @@ public class StarMap {
             planet.setPlanetType(planetType);
           }
           planet.setRadiationLevel(1);
+          planet.setGravityType(GravityType.NORMAL_GRAVITY);
+          planet.setTemperatureType(TemperatureType.TEMPERATE);
+          planet.setWaterLevel(WaterLevelType.HUMID);
           planet.setGroundSize(12);
           planet.setAmountMetalInGround(HOMEWORLD_METAL);
           planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
@@ -5433,6 +5439,9 @@ public class StarMap {
       planet.setCulture(starbaseFleet.getCulturalValue());
       planet.setMetal(metal);
       planet.setRadiationLevel(1);
+      planet.setTemperatureType(TemperatureType.TEMPERATE);
+      planet.setWaterLevel(WaterLevelType.HUMID);
+      planet.setGravityType(GravityType.NORMAL_GRAVITY);
       String[] buildingList = realm.getTechList().getBuildingListFromTech();
       boolean lab = StarMapUtilities.listContains(buildingList, "Basic lab");
       boolean taxCenter = StarMapUtilities.listContains(buildingList,

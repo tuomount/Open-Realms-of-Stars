@@ -67,6 +67,7 @@ import org.openRealmOfStars.starMap.planet.enums.HappinessBonus;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
+import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
 import org.openRealmOfStars.starMap.planet.status.PlanetaryStatus;
@@ -158,6 +159,7 @@ public class Planet {
    */
   private TemperatureType temperatureType;
   /** Is planet inhabitable gas giant. Gas giants just block the radar. */
+  private WaterLevelType waterLevel;
   private boolean gasGiant;
   /** Planet's coordinate. On gas giant this left upper corner. */
   private Coordinate coordinate;
@@ -268,6 +270,8 @@ public class Planet {
     this.setOrderNumber(orderNumber);
     this.setRadiationLevel(DiceGenerator.getRandom(1, 10));
     this.setGravityType(GravityType.NORMAL_GRAVITY);
+    this.setTemperatureType(TemperatureType.TEMPERATE);
+    this.setWaterLevel(WaterLevelType.HUMID);
     if (orderNumber == 0) {
       // Rogue planet have more metal
       this.setAmountMetalInGround(DiceGenerator.getRandom(MINIMUM_ORE + 2000,
@@ -1422,6 +1426,22 @@ public class Planet {
    */
   public void setTemperatureType(final TemperatureType temperatureType) {
     this.temperatureType = temperatureType;
+  }
+
+  /**
+   * Get planet's water level
+   * @return the waterLevel
+   */
+  public WaterLevelType getWaterLevel() {
+    return waterLevel;
+  }
+
+  /**
+   * Set planet's waterlevel
+   * @param waterLevel the waterLevel to set
+   */
+  public void setWaterLevel(final WaterLevelType waterLevel) {
+    this.waterLevel = waterLevel;
   }
 
   /**

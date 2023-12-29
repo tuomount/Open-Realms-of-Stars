@@ -47,4 +47,19 @@ public enum GravityType {
       default: throw new IllegalArgumentException("Unknown gravity");
     }
   }
+
+  /**
+   * Get gravity type based on index.
+   * @param index Index
+   * @return GravityType
+   */
+  public static GravityType getByIndex(final int index) {
+    switch (index) {
+      case 1: return LOW_GRAVITY;
+      case 2: return NORMAL_GRAVITY;
+      case 3: return HIGH_GRAVITY;
+      default: throw new IllegalArgumentException("Unknown gravity");
+    }
+  }
+
 }

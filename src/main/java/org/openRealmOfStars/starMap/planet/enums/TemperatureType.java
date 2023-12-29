@@ -64,4 +64,22 @@ public enum TemperatureType {
     }
   }
 
+  /**
+   * Get temperature type based on index.
+   * @param index Index
+   * @return TemperatureType
+   */
+  public static TemperatureType getByIndex(final int index) {
+    switch (index) {
+      case 0: return FROZEN;
+      case 1: return ARCTIC;
+      case 2: return COLD;
+      case 3: return TEMPERATE;
+      case 4: return TROPICAL;
+      case 5: return HOT;
+      case 6: return VOLCANIC;
+      case 7: return INFERNO;
+      default: throw new IllegalArgumentException("Unknown temperature");
+    }
+  }
 }

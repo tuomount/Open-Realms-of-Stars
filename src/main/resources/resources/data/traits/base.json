@@ -175,6 +175,15 @@
     ]
   },
   {
+    "id": "CYBORG_LIFE_SPAN",
+    "name": "Cyborg life span",
+    "description": "Cyborgs live exceptionally long life, since those can be repaired.. Leaders live about 70 star years longer than average.",
+    "points": 3,
+    "conflictsWith": [
+      "LONG_LIFE_SPAN", "SHORT_LIFE_SPAN", "VERY_LONG_LIFE_SPAN"
+    ]
+  },
+  {
     "id": "MASSIVE_SIZE",
     "name": "Massive size",
     "description": "Massive size, that ships are more robust and leaders live a longer life.",

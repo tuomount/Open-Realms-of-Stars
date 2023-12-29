@@ -116,6 +116,12 @@ public final class TraitIds {
   public static final String POOR_WAR_RESILIENCE = "POOR_WAR_RESILIENCE";
   /** Weak war resilience. */
   public static final String WEAK_WAR_RESILIENCE = "WEAK_WAR_RESILIENCE";
+  /** Naturally charming, others just tend to like individuals of the race */
+  public static final String NATURAL_CHARM = "NATURAL_CHARM";
+  /** Be it because of bad looks or habits, others tend to dislike this race */
+  public static final String REPULSIVE = "REPULSIVE";
+  /** Race's habits/looks are unnaceptable to others, diplomacy is futile */
+  public static final String DISGUSTING = "DISGUSTING";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

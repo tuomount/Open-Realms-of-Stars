@@ -76,10 +76,6 @@ public final class TraitIds {
   public static final String FIXED_GROWTH = "FIXED_GROWTH";
   /** Limited population growth. */
   public static final String LIMITED_GROWTH = "LIMITED_GROWTH";
-  /** Credit Rush for projects */
-  public static final String CREDIT_RUSH = "CREDIT_RUSH";
-  /** Population Rush for projects */
-  public static final String POPULATION_RUSH = "POPULATION_RUSH";
   /** Slow culture speed for artists. */
   public static final String SLOW_CULTURE = "SLOW_CULTURE";
   /** Fast culture speed for artists. */

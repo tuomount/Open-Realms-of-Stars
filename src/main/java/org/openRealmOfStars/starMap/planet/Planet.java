@@ -452,16 +452,8 @@ public class Planet {
     if (prodReq < 0) {
       prodReq = 0;
     }
-    boolean hasCreditRush = false;
-    boolean hasPopulationRush = false;
-    if (info.getRace().hasCreditRush()
-        || info.getGovernment().hasCreditRush()) {
-      hasCreditRush = true;
-    }
-    if (info.getRace().hasPopulationRush()
-        || info.getGovernment().hasPopulationRush()) {
-      hasPopulationRush = true;
-    }
+    boolean hasCreditRush = info.getGovernment().hasCreditRush();
+    boolean hasPopulationRush = info.getGovernment().hasPopulationRush();
     int populationCost = rushCost / Planet.POPULATION_RUSH_COST + 1;
     if (rushCost > 0 && creditRush && hasCreditRush
         && rushCost <= info.getTotalCredits()) {

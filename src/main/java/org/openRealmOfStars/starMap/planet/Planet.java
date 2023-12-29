@@ -66,6 +66,7 @@ import org.openRealmOfStars.starMap.planet.enums.GravityType;
 import org.openRealmOfStars.starMap.planet.enums.HappinessBonus;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
+import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
 import org.openRealmOfStars.starMap.planet.status.PlanetaryStatus;
@@ -151,6 +152,11 @@ public class Planet {
    * between low, normal and high gravity.
    */
   private GravityType gravityType;
+  /**
+   * Planet's temperature type.
+   * From Frozen to volcanic.
+   */
+  private TemperatureType temperatureType;
   /** Is planet inhabitable gas giant. Gas giants just block the radar. */
   private boolean gasGiant;
   /** Planet's coordinate. On gas giant this left upper corner. */
@@ -1387,6 +1393,7 @@ public class Planet {
   }
 
   /**
+   * Get GravityType from planet.
    * @return the gravityType
    */
   public GravityType getGravityType() {
@@ -1394,10 +1401,27 @@ public class Planet {
   }
 
   /**
+   * Set gravity for planet.
    * @param gravityType the gravityType to set
    */
-  public void setGravityType(GravityType gravityType) {
+  public void setGravityType(final GravityType gravityType) {
     this.gravityType = gravityType;
+  }
+
+  /**
+   * Get planet's temperature
+   * @return the temperatureType
+   */
+  public TemperatureType getTemperatureType() {
+    return temperatureType;
+  }
+
+  /**
+   * Set planet's temperature
+   * @param temperatureType the temperatureType to set
+   */
+  public void setTemperatureType(final TemperatureType temperatureType) {
+    this.temperatureType = temperatureType;
   }
 
   /**

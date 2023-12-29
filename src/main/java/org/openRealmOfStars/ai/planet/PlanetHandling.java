@@ -375,16 +375,8 @@ public final class PlanetHandling {
             planet.getUnderConstruction());
         int rushChange = 0;
         boolean creditRush = true;
-        boolean hasCreditRush = false;
-        boolean hasPopulationRush = false;
-        if (info.getRace().hasCreditRush()
-            || info.getGovernment().hasCreditRush()) {
-          hasCreditRush = true;
-        }
-        if (info.getRace().hasPopulationRush()
-            || info.getGovernment().hasPopulationRush()) {
-          hasPopulationRush = true;
-        }
+        boolean hasCreditRush = info.getGovernment().hasCreditRush();
+        boolean hasPopulationRush = info.getGovernment().hasPopulationRush();
         if (hasCreditRush
             && rushCost < info.getTotalCredits() && buildingTime > 1
             && rushCost > 0) {

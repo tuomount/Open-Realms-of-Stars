@@ -237,25 +237,6 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.FIXED_GROWTH).ifPresent(trait -> {
       REBORGIANS.addTrait(trait);
     });
-    TraitFactory.create(TraitIds.CREDIT_RUSH).ifPresent(trait -> {
-      HUMAN.addTrait(trait);
-      SPORKS.addTrait(trait);
-      GREYANS.addTrait(trait);
-      CENTAURS.addTrait(trait);
-      TEUTHIDAES.addTrait(trait);
-      SCAURIANS.addTrait(trait);
-      ALTEIRIANS.addTrait(trait);
-      SMAUGIRIANS.addTrait(trait);
-      SPACE_PIRATE.addTrait(trait);
-      SPACE_MONSTERS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.POPULATION_RUSH).ifPresent(trait -> {
-      MECHIONS.addTrait(trait);
-      SPORKS.addTrait(trait);
-      MOTHOIDS.addTrait(trait);
-      HOMARIANS.addTrait(trait);
-      REBORGIANS.addTrait(trait);
-    });
     TraitFactory.create(TraitIds.SLOW_CULTURE).ifPresent(trait -> {
       MECHIONS.addTrait(trait);
       HOMARIANS.addTrait(trait);
@@ -1096,20 +1077,6 @@ public enum SpaceRace {
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }
   }
-  /**
-   * Has space race option to rush production with credits.
-   * @return True if credit rush is possible
-   */
-  public boolean hasCreditRush() {
-    return hasTrait(TraitIds.CREDIT_RUSH);
-  }
-  /**
-   * Has space race option to rush production with population.
-   * @return True if credit rush is possible
-   */
-  public boolean hasPopulationRush() {
-    return hasTrait(TraitIds.POPULATION_RUSH);
-  }
 
   /**
    * Is race eating organic food?
@@ -1534,22 +1501,6 @@ public enum SpaceRace {
   }
 
   /**
-   * Get rush option as a String
-   * @return String
-   */
-  private String getRushOption() {
-    if (hasCreditRush() && hasPopulationRush()) {
-      return "Credit and population";
-    }
-    if (hasCreditRush() && !hasPopulationRush()) {
-      return "Credit";
-    }
-    if (!hasCreditRush() && hasPopulationRush()) {
-      return "Population";
-    }
-    return "None";
-  }
-  /**
    * Get full description about the race, including the stats.
    * @param markDown if true then markDown is being used, otherwise HTML.
    * @param image Add image to wiki page if true
@@ -1668,10 +1619,6 @@ public enum SpaceRace {
     sb.append(dot);
     sb.append(" War resistance: ");
     sb.append(getWarFatigueResistance());
-    sb.append(lf);
-    sb.append(dot);
-    sb.append(" Rush: ");
-    sb.append(getRushOption());
     PlanetTypes planetTypes = PlanetTypes.getRandomStartPlanetType(this);
     int sustainable = getWorldTypeBaseValue(planetTypes.getWorldType());
     sb.append(lf);

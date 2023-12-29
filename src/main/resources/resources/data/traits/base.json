@@ -103,18 +103,6 @@
     ]
   },
   {
-    "id": "CREDIT_RUSH",
-    "name": "Credit rush",
-    "description": "Rush projects by paying extra credits.",
-    "points": 0
-  },
-  {
-    "id": "POPULATION_RUSH",
-    "name": "Population rush",
-    "description": "Rush projects by sacrificing population.",
-    "points": 0
-  },
-  {
     "id": "SLOW_CULTURE",
     "name": "Slow culture",
     "description": "Slow culture speed from artist population.",

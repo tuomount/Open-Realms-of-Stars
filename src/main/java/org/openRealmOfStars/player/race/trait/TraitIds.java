@@ -65,8 +65,7 @@ public final class TraitIds {
   /** Gets +1 credit for each "trade" building and +50% from ship trading */
   public static final String MERCANTILE = "MERCANTILE";
   /** All ship design have 10% cloaking device built it. */
-  public static final String BUILT_IN_CLOAKING_DEVICE =
-      "BUILT_IN_CLOAKING_DEVICE";
+  public static final String STEALTHY = "STEALTHY";
   /** Require 50% less food to survive. */
   public static final String EAT_LESS = "EAT_LESS";
   /** Fast population growth. */

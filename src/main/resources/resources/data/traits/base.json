@@ -52,10 +52,10 @@
     "points": 1
   },
   {
-    "id": "BUILT_IN_CLOAKING_DEVICE",
-    "name": "Built in cloaking device",
-    "description": "All ships have built-in cloaking device which give 10% cloak.",
-    "points": 1
+    "id": "STEALTHY",
+    "name": "Stealthy",
+    "description": "Natural aptitude towards stealthy movement and actions. Race's ships have 10% cloaking, sharing this trait with their constructors.",
+    "points": 2
   },
   {
     "id": "EAT_LESS",

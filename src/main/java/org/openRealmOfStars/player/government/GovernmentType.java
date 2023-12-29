@@ -458,40 +458,33 @@ public enum GovernmentType {
   }
 
   /**
+   * Chance that heir will be born/found, 0 means no heirs.
+   * @return Chance for new heir, 0 if government does not have heirs.
+   */
+  public int getHeirChance() {
+    switch (this) {
+      case EMPIRE:
+      case KINGDOM:
+      case FEUDALISM: {
+        return 10;
+      }
+      case NEST:
+      case HORDE:
+      case CLAN: {
+        return 6;
+      }
+      default: {
+        return 0;
+      }
+    }
+  }
+
+  /**
    * Goverment can have heirs.
    * @return True or false
    */
   public boolean hasHeirs() {
-    switch (this) {
-      default:
-      case UNION:
-      case DEMOCRACY:
-      case FEDERATION:
-      case MECHANICAL_HORDE:
-      case AI:
-      case SPACE_PIRATES:
-      case HIVEMIND:
-      case GUILD:
-      case ENTERPRISE:
-      case HEGEMONY:
-      case HIERARCHY:
-      case REPUBLIC:
-      case COLLECTIVE:
-      case UTOPIA:
-      case TECHNOCRACY:
-      case SYNDICATE:
-      case REGIME: {
-        return false;
-      }
-      case NEST:
-      case EMPIRE:
-      case KINGDOM:
-      case HORDE:
-      case FEUDALISM:
-      case CLAN: {
-        return true;
-      }
-    }
+    return getHeirChance() > 0;
   }
 
   /**

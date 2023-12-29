@@ -342,21 +342,21 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info,
+    int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(39,score);
 
-    score = PlanetHandling.scoreBuilding(building, planet, info,
+    score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.EXPANSIONIST, false);
     assertEquals(49,score);
 
     Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
+    score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(49,score);
 
     Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
+    score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(-1,score);
 
@@ -391,7 +391,7 @@ public class PlanetHandlingTest extends TestCase {
     }
 
     Construction[] constructions = planet.getProductionList();
-    int[] scores = PlanetHandling.scoreConstructions(constructions,
+    int[] scores = DefaultScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
@@ -402,7 +402,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicMine());
     constructions = planet.getProductionList();
-    scores = PlanetHandling.scoreConstructions(constructions,
+    scores = DefaultScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
@@ -413,7 +413,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicFactory());
     constructions = planet.getProductionList();
-    scores = PlanetHandling.scoreConstructions(constructions,
+    scores = DefaultScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
@@ -424,7 +424,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicMine());
     constructions = planet.getProductionList();
-    scores = PlanetHandling.scoreConstructions(constructions,
+    scores = DefaultScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
@@ -435,7 +435,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[6]);
     planet.addBuilding(createBasicFactory());
     constructions = planet.getProductionList();
-    scores = PlanetHandling.scoreConstructions(constructions,
+    scores = DefaultScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
     assertEquals(7, scores.length);
     assertEquals(-1, scores[0]);
@@ -483,7 +483,7 @@ public class PlanetHandlingTest extends TestCase {
     planet.setPlanetaryEvent(PlanetaryEvent.NONE);
 
     Construction[] constructions = planet.getProductionList();
-    int[] scores = PlanetHandling.highScoreConstructions(constructions,
+    int[] scores = ChallengingScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
 /*    for (int i = 0; i < constructions.length; i++) {
       System.out.println(constructions[i].getName() + " - " + scores[i]);
@@ -499,7 +499,7 @@ public class PlanetHandlingTest extends TestCase {
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab",
         1));
     constructions = planet.getProductionList();
-    scores = PlanetHandling.highScoreConstructions(constructions,
+    scores = ChallengingScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
 /*    for (int i = 0; i < constructions.length; i++) {
       System.out.println(constructions[i].getName() + " - " + scores[i]);
@@ -514,7 +514,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicMine());
     constructions = planet.getProductionList();
-    scores = PlanetHandling.highScoreConstructions(constructions,
+    scores = ChallengingScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
 /*    for (int i = 0; i < constructions.length; i++) {
       System.out.println(constructions[i].getName() + " - " + scores[i]);
@@ -529,7 +529,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicMine());
     constructions = planet.getProductionList();
-    scores = PlanetHandling.highScoreConstructions(constructions,
+    scores = ChallengingScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
     assertEquals(8, scores.length);
     assertEquals(-1, scores[0]);
@@ -541,7 +541,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicLab());
     constructions = planet.getProductionList();
-    scores = PlanetHandling.highScoreConstructions(constructions,
+    scores = ChallengingScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
     assertEquals(8, scores.length);
     assertEquals(-1, scores[0]);
@@ -553,7 +553,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicFactory());
     constructions = planet.getProductionList();
-    scores = PlanetHandling.highScoreConstructions(constructions,
+    scores = ChallengingScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
     assertEquals(8, scores.length);
     assertEquals(-1, scores[0]);
@@ -567,7 +567,7 @@ public class PlanetHandlingTest extends TestCase {
     info.getTechList().addTech(TechFactory.createImprovementTech("Tax center",
         1));
     constructions = planet.getProductionList();
-    scores = PlanetHandling.highScoreConstructions(constructions,
+    scores = ChallengingScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
     assertEquals(9, scores.length);
     assertEquals(-1, scores[0]);
@@ -582,7 +582,7 @@ public class PlanetHandlingTest extends TestCase {
     info.getTechList().addTech(TechFactory.createImprovementTech(
         "Advanced factory", 2));
     constructions = planet.getProductionList();
-    scores = PlanetHandling.highScoreConstructions(constructions,
+    scores = ChallengingScoring.scoreConstructions(constructions,
         planet, info, map, Attitude.LOGICAL, false);
 /*    System.out.println(planet.getBuildingList().length + "/"
         + planet.getGroundSize());
@@ -614,32 +614,9 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info,
+    int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(39,score);
-
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SPORKS);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL, false);
-    assertEquals(54,score);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.MILITARISTIC, false);
-    assertEquals(69,score);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.AGGRESSIVE, false);
-    assertEquals(64,score);
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HEGEMONY);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL, false);
-    assertEquals(69,score);
-    Mockito.when(planet.calculateHappiness()).thenReturn(80);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL, false);
-    assertEquals(64,score);
-    Mockito.when(planet.calculateHappiness()).thenReturn(-80);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL, false);
-    assertEquals(94,score);
   }
 
   @Test
@@ -656,39 +633,12 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info,
+    int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(76,score);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
+    score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, true);
     assertEquals(126,score);
-
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SPORKS);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL, false);
-    assertEquals(91,score);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL, true);
-    assertEquals(141,score);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.MILITARISTIC, false);
-    assertEquals(106,score);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.MILITARISTIC, true);
-    assertEquals(156,score);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.AGGRESSIVE, false);
-    assertEquals(101,score);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.AGGRESSIVE, true);
-    assertEquals(151,score);
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HEGEMONY);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL, false);
-    assertEquals(106,score);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL, true);
-    assertEquals(156,score);
   }
 
   @Test
@@ -709,7 +659,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(5);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(5);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info,
+    int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(59,score);
   }
@@ -732,7 +682,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(5);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(1);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info,
+    int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(-1,score);
   }
@@ -755,7 +705,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(1);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(1);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info,
+    int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(99,score);
   }
@@ -776,18 +726,12 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info,
+    int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(59,score);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
+    score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.SCIENTIFIC, false);
     assertEquals(74,score);
-
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL, false);
-    assertEquals(74,score);
-
   }
 
   @Test
@@ -808,7 +752,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(5);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(5);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info,
+    int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(39,score);
   }
@@ -831,7 +775,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info,
+    int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(-1,score);
   }
@@ -854,7 +798,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(2);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(2);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info,
+    int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(79, score);
   }
@@ -873,10 +817,10 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info,
+    int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(39,score);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
+    score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.DIPLOMATIC, false);
     assertEquals(54,score);
   }
@@ -895,10 +839,10 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info,
+    int score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(79,score);
-    score = PlanetHandling.scoreBuilding(building, planet, info,
+    score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.MERCHANTICAL, false);
     assertEquals(94,score);
   }
@@ -970,16 +914,16 @@ public class PlanetHandlingTest extends TestCase {
     ShipHull hull = Mockito.mock(ShipHull.class);
     Mockito.when(hull.getHullType()).thenReturn(ShipHullType.NORMAL);
     Mockito.when(ship.getHull()).thenReturn(hull);
-    int score = PlanetHandling.scoreShip(ship, GameLengthState.START_GAME,
+    int score = DefaultScoring.scoreShip(ship, GameLengthState.START_GAME,
         planet);
     assertEquals(49, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
     assertEquals(49, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
     assertEquals(65, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.LATE_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.LATE_GAME, planet);
     assertEquals(81, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.END_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.END_GAME, planet);
     assertEquals(97, score);
   }
 
@@ -999,16 +943,16 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.ALTEIRIANS);
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info);
-    int score = PlanetHandling.scoreShip(ship, GameLengthState.START_GAME,
+    int score = DefaultScoring.scoreShip(ship, GameLengthState.START_GAME,
         planet);
     assertEquals(109, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
     assertEquals(109, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
     assertEquals(125, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.LATE_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.LATE_GAME, planet);
     assertEquals(141, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.END_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.END_GAME, planet);
     assertEquals(157, score);
   }
 
@@ -1040,16 +984,16 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.ALTEIRIANS);
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info);
     Mockito.when(planet.getOrbital()).thenReturn(ship2);
-    int score = PlanetHandling.scoreShip(ship, GameLengthState.START_GAME,
+    int score = DefaultScoring.scoreShip(ship, GameLengthState.START_GAME,
         planet);
     assertEquals(0, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
     assertEquals(0, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
     assertEquals(0, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.LATE_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.LATE_GAME, planet);
     assertEquals(0, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.END_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.END_GAME, planet);
     assertEquals(0, score);
   }
 
@@ -1081,16 +1025,16 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.ALTEIRIANS);
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info);
     Mockito.when(planet.getOrbital()).thenReturn(ship2);
-    int score = PlanetHandling.scoreShip(ship, GameLengthState.START_GAME,
+    int score = DefaultScoring.scoreShip(ship, GameLengthState.START_GAME,
         planet);
     assertEquals(0, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.EARLY_GAME, planet);
     assertEquals(0, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.MIDDLE_GAME, planet);
     assertEquals(0, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.LATE_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.LATE_GAME, planet);
     assertEquals(0, score);
-    score = PlanetHandling.scoreShip(ship, GameLengthState.END_GAME, planet);
+    score = DefaultScoring.scoreShip(ship, GameLengthState.END_GAME, planet);
     assertEquals(0, score);
   }
 
@@ -1111,24 +1055,24 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(info.getMissions()).thenReturn(missionList);
     StarMap map = Mockito.mock(StarMap.class);
 
-    int score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
+    int score = DefaultScoring.scoreTradeShip(20, ship, planet, info, map,
         Attitude.MERCHANTICAL);
     assertEquals(40, score);
-    score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
+    score = DefaultScoring.scoreTradeShip(20, ship, planet, info, map,
         Attitude.DIPLOMATIC);
     assertEquals(35, score);
-    score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
+    score = DefaultScoring.scoreTradeShip(20, ship, planet, info, map,
         Attitude.PEACEFUL);
     assertEquals(30, score);
-    score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
+    score = DefaultScoring.scoreTradeShip(20, ship, planet, info, map,
         Attitude.SCIENTIFIC);
     assertEquals(25, score);
-    score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
+    score = DefaultScoring.scoreTradeShip(20, ship, planet, info, map,
         Attitude.AGGRESSIVE);
     assertEquals(10, score);
     Mockito.when(missionList.getMission(MissionType.TRADE_FLEET,
         MissionPhase.PLANNING)).thenReturn(null);
-    score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
+    score = DefaultScoring.scoreTradeShip(20, ship, planet, info, map,
         Attitude.MERCHANTICAL);
     assertEquals(-1, score);
   }
@@ -1158,13 +1102,13 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(9);
     Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(8);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
-    int score = PlanetHandling.scoreSpyShip(20, ship, info, map,
+    int score = DefaultScoring.scoreSpyShip(20, ship, info, map,
         Attitude.BACKSTABBING);
     assertEquals(40, score);
-    score = PlanetHandling.scoreSpyShip(20, ship, info, map,
+    score = DefaultScoring.scoreSpyShip(20, ship, info, map,
         Attitude.AGGRESSIVE);
     assertEquals(35, score);
-    score = PlanetHandling.scoreSpyShip(20, ship, info, map,
+    score = DefaultScoring.scoreSpyShip(20, ship, info, map,
         Attitude.EXPANSIONIST);
     assertEquals(30, score);
   }
@@ -1233,26 +1177,26 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.LATE_GAME);
     Mockito.when(map.getPlanetByCoordinate(Mockito.anyInt(),
         Mockito.anyInt())).thenReturn(planet);
-    int score = PlanetHandling.scoreColonyShip(20, ship, info, map,
+    int score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
     assertEquals(62, score);
-    score = PlanetHandling.scoreColonyShip(20, ship, info, map,
+    score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.MERCHANTICAL, planet);
     assertEquals(42, score);
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.START_GAME);
-    score = PlanetHandling.scoreColonyShip(20, ship, info, map,
+    score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
     assertEquals(92, score);
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.EARLY_GAME);
-    score = PlanetHandling.scoreColonyShip(20, ship, info, map,
+    score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
     assertEquals(82, score);
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.MIDDLE_GAME);
-    score = PlanetHandling.scoreColonyShip(20, ship, info, map,
+    score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
     assertEquals(72, score);
     missionList.remove(mission);
-    score = PlanetHandling.scoreColonyShip(20, ship, info, map,
+    score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.AGGRESSIVE, planet);
     assertEquals(-1, score);
   }

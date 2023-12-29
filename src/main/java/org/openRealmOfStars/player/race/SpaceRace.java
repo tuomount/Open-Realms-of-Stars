@@ -1695,6 +1695,9 @@ public enum SpaceRace {
   public static SpaceRace getRandomLivingRace() {
     var nonRoboticRaces = Stream.of(values())
         .filter(race -> !race.isRoboticRace())
+        // Filter out "pseudo-races"
+        .filter(
+            race -> race != SPACE_PIRATE && race != SpaceRace.SPACE_MONSTERS)
         .collect(Collectors.toList());
     if (nonRoboticRaces.isEmpty()) {
       return null;

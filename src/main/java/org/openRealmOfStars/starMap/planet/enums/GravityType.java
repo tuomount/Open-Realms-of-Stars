@@ -62,4 +62,15 @@ public enum GravityType {
     }
   }
 
+  @Override
+  public String toString() {
+    switch (this) {
+      case LOW_GRAVITY: return "low gravity";
+      case NORMAL_GRAVITY: return "normal gravity";
+      case HIGH_GRAVITY: return "high gravity";
+      default:
+        throw new IllegalArgumentException("Unknown gravity");
+    }
+  }
+
 }

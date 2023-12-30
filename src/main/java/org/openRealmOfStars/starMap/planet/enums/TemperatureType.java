@@ -82,4 +82,20 @@ public enum TemperatureType {
       default: throw new IllegalArgumentException("Unknown temperature");
     }
   }
+
+  @Override
+  public String toString() {
+    switch (this) {
+      case FROZEN: return "frozen";
+      case ARCTIC: return "arctic";
+      case COLD: return "cold";
+      case TEMPERATE: return "temperate";
+      case HOT: return "hot";
+      case VOLCANIC: return "volcanic";
+      case INFERNO: return "inferno";
+      default:
+        throw new IllegalArgumentException("Unknown temperature");
+    }
+  }
+
 }

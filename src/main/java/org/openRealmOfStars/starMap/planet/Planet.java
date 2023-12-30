@@ -75,6 +75,7 @@ import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.WeightedList;
 import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 
 /**
@@ -272,9 +273,15 @@ public class Planet {
     happinessEffect = new HappinessEffect(HappinessBonus.NONE, 0);
     this.setOrderNumber(orderNumber);
     this.setRadiationLevel(DiceGenerator.getRandom(1, 10));
-    this.setGravityType(GravityType.NORMAL_GRAVITY);
-    this.setTemperatureType(TemperatureType.TEMPERATE);
-    this.setWaterLevel(WaterLevelType.HUMID);
+    if (gasGiant) {
+      this.setGravityType(GravityType.HIGH_GRAVITY);
+      this.setTemperatureType(TemperatureType.ARCTIC);
+      this.setWaterLevel(WaterLevelType.MARINE);
+    } else {
+      this.setGravityType(GravityType.NORMAL_GRAVITY);
+      this.setTemperatureType(TemperatureType.TEMPERATE);
+      this.setWaterLevel(WaterLevelType.HUMID);
+    }
     if (orderNumber == 0) {
       // Rogue planet have more metal
       this.setAmountMetalInGround(DiceGenerator.getRandom(MINIMUM_ORE + 2000,
@@ -1448,6 +1455,122 @@ public class Planet {
   }
 
   /**
+   * Generate gravity based on planet ground size.
+   * Bigger planet bigger gravity.
+   */
+  public void generateGravityBasedOnSize() {
+    setGravityType(GravityType.NORMAL_GRAVITY);
+    if (getGroundSize() <= 10) {
+      setGravityType(GravityType.LOW_GRAVITY);
+    }
+    if (getGroundSize() > 13) {
+      setGravityType(GravityType.HIGH_GRAVITY);
+    }
+  }
+
+  /**
+   * Generate water level based on temperature.
+   * Only planet hotness limits how much water can be
+   * on planet.
+   */
+  public void generateWaterLevelBasedOnTemperature() {
+    int index = DiceGenerator.getRandom(WaterLevelType.values().length - 1);
+    setWaterLevel(WaterLevelType.values()[index]);
+    if (getTemperatureType() == TemperatureType.INFERNO) {
+      setWaterLevel(WaterLevelType.BARREN);
+    }
+    if (getTemperatureType() == TemperatureType.VOLCANIC && index > 1) {
+      setWaterLevel(WaterLevelType.DESERT);
+    }
+    if (getTemperatureType() == TemperatureType.HOT && index > 2) {
+      setWaterLevel(WaterLevelType.ARID);
+    }
+  }
+
+  /**
+   * Generate world type based on planet attributes.
+   */
+  public void generateWorldType() {
+    WeightedList<PlanetTypes> planetTypes = new WeightedList<>();
+    if (getTemperatureType() == TemperatureType.INFERNO
+        || getTemperatureType() == TemperatureType.VOLCANIC) {
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD1);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD2);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD3);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD4);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD5);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD6);
+      setPlanetType(planetTypes.pickRandom());
+      return;
+    }
+    if (getWaterLevel() == WaterLevelType.BARREN) {
+      setPlanetType(PlanetTypes.BARRENWORLD1);
+      return;
+    }
+    if (getTemperatureType() == TemperatureType.FROZEN
+        || getTemperatureType() == TemperatureType.ARCTIC
+        || getTemperatureType() == TemperatureType.COLD) {
+      planetTypes.add(1, PlanetTypes.ICEWORLD1);
+      planetTypes.add(1, PlanetTypes.ICEWORLD2);
+      planetTypes.add(1, PlanetTypes.ICEWORLD3);
+      planetTypes.add(1, PlanetTypes.ICEWORLD4);
+      if (getWaterLevel() == WaterLevelType.DESERT
+          || getWaterLevel() == WaterLevelType.ARID) {
+        planetTypes.add(1, PlanetTypes.DESERTWORLD2);
+        planetTypes.add(1, PlanetTypes.DESERTWORLD3);
+        if (getTemperatureType() == TemperatureType.COLD) {
+          planetTypes.add(1, PlanetTypes.DESERTWORLD1);
+        }
+      } else if (getTemperatureType() == TemperatureType.COLD) {
+        planetTypes.add(1, PlanetTypes.SWAMPWORLD2);
+      }
+      setPlanetType(planetTypes.pickRandom());
+      return;
+    }
+    if (getTemperatureType() == TemperatureType.HOT) {
+      planetTypes.add(1, PlanetTypes.DESERTWORLD1);
+      planetTypes.add(1, PlanetTypes.DESERTWORLD2);
+      planetTypes.add(1, PlanetTypes.DESERTWORLD3);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD2);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD3);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD4);
+    }
+    if (getTemperatureType() == TemperatureType.TEMPERATE
+        || getTemperatureType() == TemperatureType.TROPICAL) {
+      if (getWaterLevel() == WaterLevelType.DESERT
+          || getWaterLevel() == WaterLevelType.ARID) {
+        planetTypes.add(1, PlanetTypes.DESERTWORLD1);
+        planetTypes.add(1, PlanetTypes.DESERTWORLD2);
+        planetTypes.add(1, PlanetTypes.DESERTWORLD3);
+      }
+      if (getWaterLevel() == WaterLevelType.HUMID) {
+        planetTypes.add(1, PlanetTypes.SWAMPWORLD1);
+        planetTypes.add(1, PlanetTypes.SWAMPWORLD2);
+        planetTypes.add(1, PlanetTypes.SWAMPWORLD3);
+        planetTypes.add(1, PlanetTypes.WATERWORLD2);
+      }
+      if (getWaterLevel() == WaterLevelType.MARINE) {
+        planetTypes.add(1, PlanetTypes.WATERWORLD1);
+        planetTypes.add(1, PlanetTypes.WATERWORLD2);
+        planetTypes.add(1, PlanetTypes.WATERWORLD3);
+        planetTypes.add(1, PlanetTypes.WATERWORLD5);
+        planetTypes.add(1, PlanetTypes.WATERWORLD9);
+      }
+      if (getWaterLevel() == WaterLevelType.OCEAN) {
+        planetTypes.add(1, PlanetTypes.WATERWORLD1);
+        planetTypes.add(1, PlanetTypes.WATERWORLD3);
+        planetTypes.add(1, PlanetTypes.WATERWORLD4);
+        planetTypes.add(1, PlanetTypes.WATERWORLD5);
+        planetTypes.add(1, PlanetTypes.WATERWORLD6);
+        planetTypes.add(1, PlanetTypes.WATERWORLD7);
+        planetTypes.add(1, PlanetTypes.WATERWORLD8);
+        planetTypes.add(1, PlanetTypes.WATERWORLD9);
+      }
+      setPlanetType(planetTypes.pickRandom());
+    }
+
+  }
+  /**
    * How many buildings can be fitted on planet
    * @return Maximum number of building can be fitted on planet
    */
@@ -1862,6 +1985,13 @@ public class Planet {
       }
       sb.append("Radiation: ");
       sb.append(getTotalRadiationLevel());
+      sb.append(" Temperature: ");
+      sb.append(getTemperatureType().toString());
+      sb.append("\n");
+      sb.append("Water: ");
+      sb.append(getWaterLevel().toString());
+      sb.append(" Gravity: ");
+      sb.append(getGravityType().toString());
       sb.append("\n");
       sb.append("Size: ");
       sb.append(getSizeAsString());

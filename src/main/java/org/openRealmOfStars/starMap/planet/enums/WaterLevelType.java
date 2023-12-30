@@ -71,4 +71,18 @@ public enum WaterLevelType {
     }
   }
 
+  @Override
+  public String toString() {
+    switch (this) {
+      case BARREN: return "barren";
+      case DESERT: return "desert";
+      case ARID: return "arid";
+      case HUMID: return "humid";
+      case MARINE: return "marine";
+      case OCEAN: return "ocean";
+      default:
+        throw new IllegalArgumentException("Unknown water level type");
+    }
+  }
+
 }

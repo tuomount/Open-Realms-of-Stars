@@ -349,7 +349,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.25";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.26";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -1593,7 +1593,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.25");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.26");
     // Turn number
     dos.writeInt(turn);
     // Victory conditions
@@ -1992,18 +1992,29 @@ public class StarMap {
           planet.setPlanetType(PlanetTypes.BARRENWORLD1);
           planet.setRadiationLevel(6);
           planet.setGroundSize(7);
+          planet.setTemperatureType(TemperatureType.VOLCANIC);
+          planet.generateWaterLevelBasedOnTemperature();
+          planet.generateGravityBasedOnSize();
+          planet.generateWorldType();
           planet.setName("Mercury I");
         }
         if (planets == 2) {
           planet.setPlanetType(PlanetTypes.SWAMPWORLD2);
           planet.setRadiationLevel(4);
           planet.setGroundSize(11);
+          planet.setTemperatureType(TemperatureType.VOLCANIC);
+          planet.generateWaterLevelBasedOnTemperature();
+          planet.generateGravityBasedOnSize();
+          planet.generateWorldType();
           planet.setName("Venus II");
         }
         if (planets == 3) {
           planet.setPlanetType(PlanetTypes.PLANET_EARTH);
           planet.setRadiationLevel(1);
           planet.setGroundSize(12);
+          planet.setTemperatureType(TemperatureType.TEMPERATE);
+          planet.setWaterLevel(WaterLevelType.OCEAN);
+          planet.generateGravityBasedOnSize();
           planet.setName("Earth III");
           if (playerIndex != -1) {
             PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
@@ -2052,6 +2063,9 @@ public class StarMap {
           planet.setPlanetType(PlanetTypes.PLANET_MARS);
           planet.setRadiationLevel(2);
           planet.setGroundSize(8);
+          planet.setTemperatureType(TemperatureType.COLD);
+          planet.setWaterLevel(WaterLevelType.ARID);
+          planet.generateGravityBasedOnSize();
           planet.setName("Mars IV");
           if (playerIndex == -1 && DiceGenerator.getRandom(99) <= 25) {
             int index = DiceGenerator.getRandom(3);
@@ -2325,16 +2339,12 @@ public class StarMap {
         if (planets == startingPlanet && playerIndex != -1) {
           PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
           playerInfo.setElderRealm(config.getPlayerElderRealm(playerIndex));
-          PlanetTypes planetType = PlanetTypes.getRandomStartPlanetType(
-              playerInfo.getRace());
-          if (planetType != null) {
-            planet.setPlanetType(planetType);
-          }
           planet.setRadiationLevel(1);
           planet.setGravityType(GravityType.NORMAL_GRAVITY);
           planet.setTemperatureType(TemperatureType.TEMPERATE);
           planet.setWaterLevel(WaterLevelType.HUMID);
           planet.setGroundSize(12);
+          planet.generateWorldType();
           planet.setAmountMetalInGround(HOMEWORLD_METAL);
           planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
           planet.setStartRealmIndex(playerIndex);
@@ -2344,10 +2354,14 @@ public class StarMap {
             createRealmToPlanet(planet, playerInfo, playerIndex);
           }
         } else {
-            planet.setPlanetaryEvent(PlanetaryEvent.getRandomEvent(
-                planet.getPlanetType(), chanceForPlanetaryEvent));
-            planet.setRadiationLevel(SunType.getRadiation(sunType));
-            planet.setEventActivation(false);
+          planet.setPlanetaryEvent(PlanetaryEvent.getRandomEvent(
+              planet.getPlanetType(), chanceForPlanetaryEvent));
+          planet.setRadiationLevel(SunType.getRadiation(sunType));
+          planet.setTemperatureType(SunType.getTemperature(sunType));
+          planet.generateGravityBasedOnSize();
+          planet.generateWaterLevelBasedOnTemperature();
+          planet.generateWorldType();
+          planet.setEventActivation(false);
         }
         planetList.add(planet);
         int planetNumber = planetList.size() - 1;

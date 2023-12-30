@@ -18,6 +18,7 @@ package org.openRealmOfStars.starMap;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.WeightedList;
 
@@ -72,6 +73,40 @@ public enum SunType {
       new Integer[] {
           2, 3, 4, 5, 6, 7, 8, 9,
       });
+  /** Weighted list of temperature probabilities for red suns */
+  private static final WeightedList<TemperatureType> RED_SUN_TEMP =
+      new WeightedList<>(
+      new double[] {
+          2, 3, 4, 3, 2, 1,
+      },
+      new TemperatureType[] {
+          TemperatureType.FROZEN, TemperatureType.ARCTIC, TemperatureType.COLD,
+          TemperatureType.TEMPERATE, TemperatureType.TROPICAL,
+          TemperatureType.VOLCANIC
+      });
+
+  /** Weighted list of temperature probabilities for red suns */
+  private static final WeightedList<TemperatureType> YELLOW_SUN_TEMP =
+      new WeightedList<>(
+      new double[] {
+          1, 2, 3, 4, 3, 2, 1
+      },
+      new TemperatureType[] {
+          TemperatureType.FROZEN, TemperatureType.ARCTIC, TemperatureType.COLD,
+          TemperatureType.TEMPERATE, TemperatureType.TROPICAL,
+          TemperatureType.VOLCANIC, TemperatureType.INFERNO
+      });
+  /** Weighted list of temperature probabilities for red suns */
+  private static final WeightedList<TemperatureType> BLUE_SUN_TEMP =
+      new WeightedList<>(
+      new double[] {
+          1, 2, 3, 4, 3, 2
+      },
+      new TemperatureType[] {
+          TemperatureType.ARCTIC, TemperatureType.COLD,
+          TemperatureType.TEMPERATE, TemperatureType.TROPICAL,
+          TemperatureType.VOLCANIC, TemperatureType.INFERNO
+      });
 
   /**
    * Get radiation for planet based on sun type
@@ -95,6 +130,30 @@ public enum SunType {
     }
 
     return radiation;
+  }
+
+  /**
+   * Get radiation for planet based on sun type
+   * @param sunType 0 - red star, 1 - blue star, 2 - yellow star
+   * @return Radiation level 1-10
+   */
+  static TemperatureType getTemperature(final SunType sunType) {
+    TemperatureType temperature = TemperatureType.TEMPERATE;
+
+    // Red star aka SUN
+    if (sunType == RED_STAR) {
+      temperature = RED_SUN_TEMP.pickRandom();
+    }
+    // Blue star
+    if (sunType == BLUE_STAR) {
+      temperature = BLUE_SUN_TEMP.pickRandom();
+    }
+    // Yellow star
+    if (sunType == YELLOW_STAR) {
+      temperature = YELLOW_SUN_TEMP.pickRandom();
+    }
+
+    return temperature;
   }
 
 }

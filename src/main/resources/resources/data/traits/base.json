@@ -8,7 +8,7 @@
   {
     "id": "LITHOVORIC",
     "name": "Lithovoric",
-    "description": "Eats minerals instead of food.",
+    "description": "Eats minerals instead of food. This life-long bond with earth consquently results in talent for mining.",
     "points": 0,
     "conflictsWith": [
       "ENERGY_POWERED", "FAST_FOOD_PROD"
@@ -187,7 +187,7 @@
     "id": "MASSIVE_SIZE",
     "name": "Massive size",
     "description": "Massive size, that ships are more robust and leaders live a longer life.",
-    "points": 2
+    "points": 3
   },
   {
     "id": "SLOW_METABOLISM",
@@ -274,6 +274,42 @@
     "points": -3,
     "conflictsWith": [
       "NATURAL_CHARM", "REPULSIVE"
+    ]
+  },
+  {
+    "id": "STRONG",
+    "name": "Strong",
+    "description": "Unnaturally strong for it's size. Race's troops are more powerful and mining minerals is easier.",
+    "points": 2,
+    "conflictsWith": [
+      "WEAK"
+    ]
+  },
+  {
+    "id": "WEAK",
+    "name": "Weak",
+    "description": "Race is weaker than usual. This weakness is negatively impacting it's combat abilities, as well as labor work.",
+    "points": -2,
+    "conflictsWith": [
+      "STRONG"
+    ]
+  },
+  {
+    "id": "HANDY",
+    "name": "Handy",
+    "description": "Whether it is due to anatomy or cognitive abilities, race exhibits unnatural handiness, benefiting production.",
+    "points": 2,
+    "conflictsWith": [
+      "IMPRACTICAL"
+    ]
+  },
+  {
+    "id": "IMPRACTICAL",
+    "name": "Impractical",
+    "description": "Anatomy or cognitive abilities of the race negatively impact it's production capabilities.",
+    "points": -2,
+    "conflictsWith": [
+      "HANDY"
     ]
   }
 ]

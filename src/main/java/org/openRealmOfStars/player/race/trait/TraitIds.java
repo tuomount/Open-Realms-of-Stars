@@ -121,6 +121,10 @@ public final class TraitIds {
   public static final String STRONG = "STRONG";
   /** Race is weaker than usual */
   public static final String WEAK = "WEAK";
+  /** Be it due to anatomy or cognitive abilities, race exhibits handiness */
+  public static final String HANDY = "HANDY";
+  /** Due to body anatomy or cognitive abilites, working is difficult */
+  public static final String IMPRACTICAL = "IMPRACTICAL";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

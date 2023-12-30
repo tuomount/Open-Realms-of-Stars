@@ -339,6 +339,13 @@ public enum SpaceRace {
       CHIRALOIDS.addTrait(trait);
       ALTEIRIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.HANDY).ifPresent(trait -> {
+      HOMARIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.IMPRACTICAL).ifPresent(trait -> {
+      CHIRALOIDS.addTrait(trait);
+      ALTEIRIANS.addTrait(trait);
+    });
   }
 
   /**
@@ -695,42 +702,14 @@ public enum SpaceRace {
    * @return normal 100, half 50, double 200
    */
   public int getProductionSpeed() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 100;
-    case MECHIONS:
-      return 100;
-    case SPORKS:
-      return 100;
-    case GREYANS:
-      return 100;
-    case CENTAURS:
-      return 100;
-    case MOTHOIDS:
-      return 100;
-    case TEUTHIDAES:
-      return 100;
-    case SCAURIANS:
-      return 100;
-    case HOMARIANS:
-      return 150;
-    case CHIRALOIDS:
-      return 50;
-    case REBORGIANS:
-      return 100;
-    case LITHORIANS:
-      return 100;
-    case ALTEIRIANS:
-      return 50;
-    case SMAUGIRIANS:
-      return 100;
-    case SYNTHDROIDS:
-      return 100;
-    default:
-      return 0;
+    var result = 100;
+    if (hasTrait(TraitIds.HANDY)) {
+      result += 50;
     }
+    if (hasTrait(TraitIds.IMPRACTICAL)) {
+      result -= 50;
+    }
+    return result;
   }
 
   /**

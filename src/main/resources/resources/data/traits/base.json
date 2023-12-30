@@ -293,5 +293,23 @@
     "conflictsWith": [
       "STRONG"
     ]
+  },
+  {
+    "id": "HANDY",
+    "name": "Handy",
+    "description": "Whether it is due to anatomy or cognitive abilities, race exhibits unnatural handiness, benefiting production.",
+    "points": 2,
+    "conflictsWith": [
+      "IMPRACTICAL"
+    ]
+  },
+  {
+    "id": "IMPRACTICAL",
+    "name": "Impractical",
+    "description": "Anatomy or cognitive abilities of the race negatively impact it's production capabilities.",
+    "points": -2,
+    "conflictsWith": [
+      "HANDY"
+    ]
   }
 ]

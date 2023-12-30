@@ -158,8 +158,11 @@ public class Planet {
    * From Frozen to volcanic.
    */
   private TemperatureType temperatureType;
-  /** Is planet inhabitable gas giant. Gas giants just block the radar. */
+  /**
+   * Planet's water level type.
+   */
   private WaterLevelType waterLevel;
+  /** Is planet inhabitable gas giant. Gas giants just block the radar. */
   private boolean gasGiant;
   /** Planet's coordinate. On gas giant this left upper corner. */
   private Coordinate coordinate;

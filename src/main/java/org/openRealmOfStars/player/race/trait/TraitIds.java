@@ -117,6 +117,10 @@ public final class TraitIds {
   public static final String REPULSIVE = "REPULSIVE";
   /** Race's habits/looks are unnaceptable to others, diplomacy is futile */
   public static final String DISGUSTING = "DISGUSTING";
+  /** Unnaturally strong for it's size */
+  public static final String STRONG = "STRONG";
+  /** Race is weaker than usual */
+  public static final String WEAK = "WEAK";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

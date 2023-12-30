@@ -325,6 +325,20 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.DISGUSTING).ifPresent(trait -> {
       REBORGIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.STRONG).ifPresent(trait -> {
+      MECHIONS.addTrait(trait);
+      SPORKS.addTrait(trait);
+      CENTAURS.addTrait(trait);
+      HOMARIANS.addTrait(trait);
+      REBORGIANS.addTrait(trait);
+      LITHORIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.WEAK).ifPresent(trait -> {
+      GREYANS.addTrait(trait);
+      MOTHOIDS.addTrait(trait);
+      CHIRALOIDS.addTrait(trait);
+      ALTEIRIANS.addTrait(trait);
+    });
   }
 
   /**
@@ -627,42 +641,17 @@ public enum SpaceRace {
    * @return normal 100, half 50, double 200
    */
   public int getMiningSpeed() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 100;
-    case MECHIONS:
-      return 150;
-    case SPORKS:
-      return 100;
-    case GREYANS:
-      return 100;
-    case CENTAURS:
-      return 100;
-    case MOTHOIDS:
-      return 50;
-    case TEUTHIDAES:
-      return 100;
-    case SCAURIANS:
-      return 50;
-    case HOMARIANS:
-      return 150;
-    case CHIRALOIDS:
-      return 100;
-    case REBORGIANS:
-      return 100;
-    case LITHORIANS:
-      return 200;
-    case ALTEIRIANS:
-      return 50;
-    case SMAUGIRIANS:
-      return 100;
-    case SYNTHDROIDS:
-      return 100;
-    default:
-      return 0;
+    var result = 100;
+    if (hasTrait(TraitIds.STRONG)) {
+      result += 50;
     }
+    if (hasTrait(TraitIds.WEAK)) {
+      result -= 50;
+    }
+    if (isLithovorian()) {
+      result += 50;
+    }
+    return result;
   }
 
   /**
@@ -685,42 +674,20 @@ public enum SpaceRace {
    * @return normal 10
    */
   public int getTrooperPower() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 10;
-    case MECHIONS:
-      return 12;
-    case SPORKS:
-      return 12;
-    case GREYANS:
-      return 8;
-    case CENTAURS:
-      return 14;
-    case MOTHOIDS:
-      return 9;
-    case TEUTHIDAES:
-      return 10;
-    case SCAURIANS:
-      return 10;
-    case HOMARIANS:
-      return 11;
-    case CHIRALOIDS:
-      return 9;
-    case REBORGIANS:
-      return 13;
-    case LITHORIANS:
-      return 12;
-    case ALTEIRIANS:
-      return 6;
-    case SMAUGIRIANS:
-      return 11;
-    case SYNTHDROIDS:
-      return 10;
-    default:
-      return 0;
+    var result = 10;
+    if (hasTrait(TraitIds.STRONG)) {
+      result += 2;
     }
+    if (hasTrait(TraitIds.WEAK)) {
+      result -= 2;
+    }
+    if (hasTrait(TraitIds.SLOW_METABOLISM)) {
+      result -= 1;
+    }
+    if (hasTrait(TraitIds.MASSIVE_SIZE)) {
+      result += 2;
+    }
+    return result;
   }
 
   /**

@@ -131,6 +131,14 @@ public final class TraitIds {
   public static final String HIGH_GRAVITY_BEING = "HIGH_GRAVITY_BEING";
   /** Race is used to work in zero gravity conditions. */
   public static final String ZERO_GRAVITY_BEING = "ZERO_GRAVITY_BEING";
+  /** Tolerate low radiation on planets. */
+  public static final String TOLERATE_LOW_RADIATION = "TOLERATE_LOW_RADIATION";
+  /** Tolerate high radiation on planets. */
+  public static final String TOLERATE_HIGH_RADIATION =
+      "TOLERATE_HIGH_RADIATION";
+  /** Tolerate very high radiation on planets. */
+  public static final String TOLERATE_VERY_HIGH_RADIATION =
+      "TOLERATE_VERY_HIGH_RADIATION";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

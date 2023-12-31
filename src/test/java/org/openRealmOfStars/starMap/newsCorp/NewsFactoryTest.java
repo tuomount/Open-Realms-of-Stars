@@ -36,6 +36,7 @@ import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.randomEvent.BadRandomType;
 import org.openRealmOfStars.starMap.randomEvent.GoodRandomType;
 import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
@@ -1026,7 +1027,8 @@ public class NewsFactoryTest {
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.BARRENWORLD1.getImageInstructions());
     Mockito.when(planet.getName()).thenReturn("Planet I");
-    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(9);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(
+        RadiationType.VERY_HIGH_RAD);
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
@@ -1071,7 +1073,8 @@ public class NewsFactoryTest {
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.BARRENWORLD1.getImageInstructions());
     Mockito.when(planet.getName()).thenReturn("Planet I");
-    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(9);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(
+        RadiationType.VERY_HIGH_RAD);
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);

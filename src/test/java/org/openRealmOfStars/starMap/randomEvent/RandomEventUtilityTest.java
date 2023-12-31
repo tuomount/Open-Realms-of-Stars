@@ -41,6 +41,7 @@ import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.vote.Votes;
 
 
@@ -88,7 +89,8 @@ public class RandomEventUtilityTest {
     Mockito.when(map.locateSolarSystem(0, 0)).thenReturn(sun);
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(player2);
     Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(0, 0));
-    Mockito.when(planet.getRadiationLevel()).thenReturn(2);
+    Mockito.when(planet.getRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     Mockito.when(planet.getGroundSize()).thenReturn(12);
     Mockito.when(planet.getTotalPopulation()).thenReturn(1);
     Mockito.when(planet.getOrderNumber()).thenReturn(1);

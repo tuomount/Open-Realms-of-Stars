@@ -1310,16 +1310,9 @@ public class AITurnView extends BlackPanel {
       ArrayList<Planet> planets = game.getStarMap().getPlanetList();
       int colonizations = info.getMissions().getNumberOfMissionTypes(
           MissionType.COLONIZE, MissionPhase.PLANNING);
-      int maxRad = info.getRace().getMaxRad();
-      if (info.getTechList().isTech("Radiation dampener")) {
-        maxRad++;
-      }
-      if (info.getTechList().isTech("Radiation well")) {
-        maxRad++;
-      }
       ArrayList<Mission> colonyMissions = new ArrayList<>();
       for (Planet planet : planets) {
-        if (planet.getTotalRadiationLevel() <= maxRad
+        if (planet.isColonizeablePlanet(info.getRace())
             && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
             && info.getSectorVisibility(planet.getCoordinate())
             >= PlayerInfo.VISIBLE) {
@@ -1332,7 +1325,7 @@ public class AITurnView extends BlackPanel {
             colonyMissions.add(mission);
           }
         }
-        if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
+        if (planet.isColonizeablePlanet(info.getRace())
             && !planet.isGasGiant()
             && planet.getPlanetPlayerInfo() == null
             && info.getSectorVisibility(planet.getCoordinate())
@@ -1364,18 +1357,11 @@ public class AITurnView extends BlackPanel {
           MissionType.COLONIZE, MissionPhase.PLANNING);
       int attacks = info.getMissions().getNumberOfMissionTypes(
           MissionType.ATTACK);
-      int maxRad = info.getRace().getMaxRad();
-      if (info.getTechList().isTech("Radiation dampener")) {
-        maxRad++;
-      }
-      if (info.getTechList().isTech("Radiation well")) {
-        maxRad++;
-      }
       ArrayList<Mission> colonyMissions = new ArrayList<>();
       ArrayList<Planet> attackMissions = new ArrayList<>();
       ArrayList<Planet> tradeMissions = new ArrayList<>();
       for (Planet planet : planets) {
-        if (planet.getTotalRadiationLevel() <= maxRad
+        if (planet.isColonizeablePlanet(info.getRace())
             && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
             && info.getSectorVisibility(planet.getCoordinate())
             >= PlayerInfo.VISIBLE) {
@@ -1388,7 +1374,7 @@ public class AITurnView extends BlackPanel {
             colonyMissions.add(mission);
           }
         }
-        if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
+        if (planet.isColonizeablePlanet(info.getRace())
             && !planet.isGasGiant()
             && planet.getPlanetPlayerInfo() == null
             && info.getSectorVisibility(planet.getCoordinate())
@@ -1401,7 +1387,7 @@ public class AITurnView extends BlackPanel {
             colonyMissions.add(mission);
           }
         }
-        if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
+        if (planet.isColonizeablePlanet(info.getRace())
             && planet.getPlanetPlayerInfo() != null
             && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()) {
           if (info.getSectorVisibility(planet.getCoordinate())

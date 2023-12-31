@@ -55,6 +55,7 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 
 import junit.framework.TestCase;
 
@@ -1160,7 +1161,8 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(ship.getProdCost()).thenReturn(22);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getGroundSize()).thenReturn(12);
-    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(2);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     Coordinate planetCoord = Mockito.mock(Coordinate.class);
     Mockito.when(planet.getCoordinate()).thenReturn(planetCoord);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
@@ -1856,7 +1858,7 @@ public class PlanetHandlingTest extends TestCase {
   public void testChiraloidHandling4PopulationHighRad() {
     PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
-    planet.setRadiationLevel(4);
+    planet.setRadiationLevel(RadiationType.LOW_RADIATION);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 4);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);

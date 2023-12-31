@@ -157,7 +157,7 @@ public class NegotiationOffer {
       offerValue = getPlanet().getAmountMetalInGround() / 1000;
       offerValue = offerValue + getPlanet().getTotalPopulation() / 3;
       offerValue = offerValue + getPlanet().getGroundSize() - 7;
-      if (getPlanet().getTotalRadiationLevel() > race.getMaxRad()) {
+      if (getPlanet().isColonizeablePlanet(race)) {
         offerValue = 0;
       }
       break;

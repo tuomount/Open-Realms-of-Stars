@@ -34,6 +34,7 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.enums.HappinessBonus;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 import junit.framework.TestCase;
@@ -56,7 +57,7 @@ public class PlanetTest extends TestCase {
   public void testPlanetPopulationGrowthAndBuilding() {
     Coordinate planetCoordinate = new Coordinate(10, 15);
     Planet planet = new Planet(planetCoordinate, "Earth", 1, false);
-    planet.setRadiationLevel(1);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
     info.setEmpireName("Alliance of Humans");
     planet.setPlanetOwner(0, info);
@@ -87,7 +88,7 @@ public class PlanetTest extends TestCase {
   public void testPlanetShipBuilding() {
     Coordinate planetCoordinate = new Coordinate(10, 15);
     Planet planet = new Planet(planetCoordinate, "Earth", 1, false);
-    planet.setRadiationLevel(1);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
     info.setEmpireName("Alliance of Humans");
     planet.setPlanetOwner(0, info);
@@ -126,7 +127,7 @@ public class PlanetTest extends TestCase {
       Planet planet = new Planet(planetCoordinate, "Earth", 1, false);
       planet.setGroundSize(10);
       planet.setAmountMetalInGround(6543);
-      planet.setRadiationLevel(1);
+      planet.setRadiationLevel(RadiationType.NO_RADIATION);
       planet.setName("Earth");
       planet.setPlanetType(PlanetTypes.WATERWORLD1);
 
@@ -186,7 +187,7 @@ public class PlanetTest extends TestCase {
   public void testBombBuilding() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     assertEquals(0, planet.calculateHappiness());
-    planet.setRadiationLevel(6);
+    planet.setRadiationLevel(RadiationType.HIGH_RADIATION);
     assertEquals(0, planet.getNumberOfBuildings());
     Building building = Mockito.mock(Building.class);
     Mockito.when(building.getName()).thenReturn("Radiation well");
@@ -218,7 +219,7 @@ public class PlanetTest extends TestCase {
   public void testOrbitalNuke() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     planet.setGroundSize(8);
-    planet.setRadiationLevel(1);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
     Building building = Mockito.mock(Building.class);
     Mockito.when(building.getName()).thenReturn("Random building");
     Mockito.when(building.getProdCost()).thenReturn(10);
@@ -240,7 +241,7 @@ public class PlanetTest extends TestCase {
   public void testOrbitalNuke2() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     planet.setGroundSize(8);
-    planet.setRadiationLevel(1);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
     Building building = Mockito.mock(Building.class);
     Mockito.when(building.getName()).thenReturn("Random building");
     Mockito.when(building.getProdCost()).thenReturn(10);
@@ -265,7 +266,7 @@ public class PlanetTest extends TestCase {
   public void testOrbitalAntimaterBomb() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     planet.setGroundSize(8);
-    planet.setRadiationLevel(1);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
     Building building = Mockito.mock(Building.class);
     Mockito.when(building.getName()).thenReturn("Random building");
     Mockito.when(building.getProdCost()).thenReturn(10);
@@ -287,7 +288,7 @@ public class PlanetTest extends TestCase {
   public void testOrbitalNeutronBomb() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     planet.setGroundSize(8);
-    planet.setRadiationLevel(1);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
     Building building = Mockito.mock(Building.class);
     Mockito.when(building.getName()).thenReturn("Random building");
     Mockito.when(building.getProdCost()).thenReturn(10);
@@ -310,7 +311,7 @@ public class PlanetTest extends TestCase {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     assertEquals(0, planet.calculateHappiness());
     assertEquals("<html>Planet is not colonized!</html>", planet.getHappinessExplanation());
-    planet.setRadiationLevel(6);
+    planet.setRadiationLevel(RadiationType.HIGH_RADIATION);
     assertEquals(0, planet.getNumberOfBuildings());
     Building building = Mockito.mock(Building.class);
     Mockito.when(building.getName()).thenReturn("Radiation well");
@@ -417,7 +418,7 @@ public class PlanetTest extends TestCase {
     Mockito.when(building2.getCredBonus()).thenReturn(0);
     planet.addBuilding(building2);
     assertEquals(2, planet.getNumberOfBuildings());
-    planet.setRadiationLevel(5);
+    planet.setRadiationLevel(RadiationType.LOW_RADIATION);
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
     Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));

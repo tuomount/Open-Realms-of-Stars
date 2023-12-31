@@ -18,6 +18,7 @@ package org.openRealmOfStars.starMap;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.WeightedList;
@@ -50,28 +51,34 @@ public enum SunType {
   }
 
   /** Weighted list of radiation strength probabilities for red suns */
-  private static final WeightedList<Integer> RED_SUN_RAD = new WeightedList<>(
+  private static final WeightedList<RadiationType> RED_SUN_RAD =
+      new WeightedList<>(
       new double[] {
-          6, 5, 4, 3, 2, 1, 1,
+          6, 3, 1
       },
-      new Integer[] {
-          1, 2, 3, 4, 5, 6, 7,
+      new RadiationType[] {
+          RadiationType.NO_RADIATION, RadiationType.LOW_RADIATION,
+          RadiationType.HIGH_RADIATION
       });
   /** Weighted list of radiation strength probabilities for blue suns */
-  private static final WeightedList<Integer> BLUE_SUN_RAD = new WeightedList<>(
+  private static final WeightedList<RadiationType> BLUE_SUN_RAD =
+      new WeightedList<>(
       new double[] {
-          6, 5, 4, 3, 2, 1, 1,
+          6, 3, 1
       },
-      new Integer[] {
-          10, 9, 8, 7, 6, 5, 4,
+      new RadiationType[] {
+          RadiationType.VERY_HIGH_RAD, RadiationType.HIGH_RADIATION,
+          RadiationType.LOW_RADIATION
       });
   /** Weighted list of radiation strength probabilities for yellow suns */
-  private static final WeightedList<Integer> YLW_SUN_RAD = new WeightedList<>(
+  private static final WeightedList<RadiationType> YLW_SUN_RAD =
+      new WeightedList<>(
       new double[] {
-          1, 2, 2, 3, 3, 2, 2, 1,
+          3, 4, 2, 1
       },
-      new Integer[] {
-          2, 3, 4, 5, 6, 7, 8, 9,
+      new RadiationType[] {
+          RadiationType.NO_RADIATION, RadiationType.LOW_RADIATION,
+          RadiationType.HIGH_RADIATION, RadiationType.VERY_HIGH_RAD
       });
   /** Weighted list of temperature probabilities for red suns */
   private static final WeightedList<TemperatureType> RED_SUN_TEMP =
@@ -111,10 +118,10 @@ public enum SunType {
   /**
    * Get radiation for planet based on sun type
    * @param sunType 0 - red star, 1 - blue star, 2 - yellow star
-   * @return Radiation level 1-10
+   * @return RadiationType
    */
-  static int getRadiation(final SunType sunType) {
-    int radiation = DiceGenerator.getRandom(1, 10);
+  static RadiationType getRadiation(final SunType sunType) {
+    RadiationType radiation = RadiationType.NO_RADIATION;
 
     // Red star aka SUN
     if (sunType == RED_STAR) {

@@ -43,6 +43,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.starMap.vote.VotingType;
@@ -1145,7 +1146,8 @@ return map;
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(5, 5));
     Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(0);
-    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(1);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     Mockito.when(planet.getGovernor()).thenReturn(null);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     NegotiationList offerList1 = new NegotiationList();
@@ -1260,13 +1262,15 @@ return map;
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getCoordinate()).thenReturn(coord);
     Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(0);
-    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(1);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     planets.add(planet);
     planets.add(planet);
     Planet planet2 = Mockito.mock(Planet.class);
     Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(1);
     Mockito.when(planet2.getCoordinate()).thenReturn(coord);
-    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(1);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     planets.add(planet2);
     Mockito.when(map.getPlanetList()).thenReturn(planets);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
@@ -1307,7 +1311,8 @@ return map;
     Mockito.when(planetOne.getGroundSize()).thenReturn(10);
     Mockito.when(planetOne.getTotalPopulation()).thenReturn(4);
     Mockito.when(planetOne.getHomeWorldIndex()).thenReturn(-1);
-    Mockito.when(planetOne.getRadiationLevel()).thenReturn(1);
+    Mockito.when(planetOne.getRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     Mockito.when(planetOne.getPlanetPlayerInfo()).thenReturn(info);
     planets.add(planetOne);
     Planet planetTwo = Mockito.mock(Planet.class);
@@ -1315,15 +1320,19 @@ return map;
     Mockito.when(planetTwo.getGroundSize()).thenReturn(10);
     Mockito.when(planetTwo.getTotalPopulation()).thenReturn(4);
     Mockito.when(planetTwo.getHomeWorldIndex()).thenReturn(0);
-    Mockito.when(planetTwo.getRadiationLevel()).thenReturn(1);
+    Mockito.when(planetTwo.getRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     Mockito.when(planetTwo.getPlanetPlayerInfo()).thenReturn(info);
     planets.add(planetTwo);
     assertEquals(planetTwo, trade.getTradeablePlanet(info, planets));
-    Mockito.when(planetTwo.getRadiationLevel()).thenReturn(10);
+    Mockito.when(planetTwo.getRadiationLevel()).thenReturn(
+        RadiationType.VERY_HIGH_RAD);
     assertEquals(planetOne, trade.getTradeablePlanet(info, planets));
-    Mockito.when(planetTwo.getRadiationLevel()).thenReturn(1);
+    Mockito.when(planetTwo.getRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     assertEquals(planetOne, trade.getTradeablePlanet(null, planets));
-    Mockito.when(planetTwo.getRadiationLevel()).thenReturn(10);
+    Mockito.when(planetTwo.getRadiationLevel()).thenReturn(
+        RadiationType.VERY_HIGH_RAD);
     assertEquals(planetTwo, trade.getTradeablePlanet(null, planets));
   }
 

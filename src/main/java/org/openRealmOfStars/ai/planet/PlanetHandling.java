@@ -967,7 +967,7 @@ public final class PlanetHandling {
     int food = planet.getFoodProdByPlanetAndBuildings();
 
     if (info.getRace().hasTrait(TraitIds.RADIOSYNTHESIS)) {
-      int rad = planet.getRadiationLevel();
+      int rad = planet.getRadiationLevel().getRadiosynthesisFood();
       food += Math.min(rad, totalPop);
     }
 

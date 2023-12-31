@@ -186,16 +186,16 @@ public class PlanetListView extends BlackPanel {
         // Races with radiosythesis rate planets with radiation more favorably
         // NOTE: Why is planet-rating logic here, in GUI code???
         if (race.hasTrait(TraitIds.RADIOSYNTHESIS)) {
-          if (planetRad > raceMaxRad) {
-            value -= (planetRad - raceMaxRad) * 2;
+          if (planetRad.getIndex() > raceMaxRad.getIndex()) {
+            value -= (planetRad.getIndex() - raceMaxRad.getIndex()) * 2;
           } else {
-            value += planetRad;
+            value += planetRad.getRadiosynthesisFood();
           }
         } else {
-          if (planetRad > raceMaxRad) {
-            value -= (planetRad - raceMaxRad) * 10;
+          if (planetRad.getIndex() > raceMaxRad.getIndex()) {
+            value -= (planetRad.getIndex() - raceMaxRad.getIndex()) * 10;
           } else {
-            value += raceMaxRad - planetRad;
+            value += raceMaxRad.getIndex() - planetRad.getIndex();
           }
         }
         if (value > bestValue) {

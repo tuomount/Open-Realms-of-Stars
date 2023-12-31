@@ -27,6 +27,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 
 /**
  * Tests for NegotiationOffer
@@ -172,14 +173,16 @@ public class NegotiationOfferTest {
     Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
     Mockito.when(planet.getGroundSize()).thenReturn(13);
     Mockito.when(planet.getTotalPopulation()).thenReturn(6);
-    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(2);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     offer = new NegotiationOffer(NegotiationType.PLANET, planet);
     assertEquals(13, offer.getOfferValue(SpaceRace.HUMAN));
     planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
     Mockito.when(planet.getGroundSize()).thenReturn(13);
     Mockito.when(planet.getTotalPopulation()).thenReturn(6);
-    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(10);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(
+        RadiationType.VERY_HIGH_RAD);
     offer = new NegotiationOffer(NegotiationType.PLANET, planet);
     assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
 

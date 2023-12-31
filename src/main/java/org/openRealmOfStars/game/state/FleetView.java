@@ -280,7 +280,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       panel = new SpaceGreyPanel();
       panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
       if (colonizeBtn != null) {
-        if (planet.getTotalRadiationLevel() > info.getRace().getMaxRad()) {
+        if (planet.isColonizeablePlanet(playerInfo.getRace())) {
           SpaceLabel radWarning = new SpaceLabel("Warning! High radiation!");
           radWarning.setForeground(GuiStatics.COLOR_RED_TEXT);
           panel.add(radWarning);

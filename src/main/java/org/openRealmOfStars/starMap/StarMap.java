@@ -78,6 +78,7 @@ import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
 import org.openRealmOfStars.starMap.planet.enums.GravityType;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.starMap.vote.Vote;
@@ -1127,15 +1128,8 @@ public class StarMap {
       final int x, final int y) {
     Planet result = null;
     double distance = 999;
-    int maxRad = pirate.getRace().getMaxRad();
-    if (pirate.getTechList().isTech("Radiation dampener")) {
-      maxRad++;
-    }
-    if (pirate.getTechList().isTech("Radiation well")) {
-      maxRad++;
-    }
     for (Planet planet : getPlanetList()) {
-      if (planet.getTotalRadiationLevel() <= maxRad
+      if (planet.isColonizeablePlanet(pirate.getRace())
           && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
           && pirate.getSectorVisibility(planet.getCoordinate())
           > PlayerInfo.UNCHARTED && planet.getPlanetOwnerIndex() == -1) {
@@ -1990,7 +1984,7 @@ public class StarMap {
         planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
         if (planets == 1) {
           planet.setPlanetType(PlanetTypes.BARRENWORLD1);
-          planet.setRadiationLevel(6);
+          planet.setRadiationLevel(RadiationType.HIGH_RADIATION);
           planet.setGroundSize(7);
           planet.setTemperatureType(TemperatureType.VOLCANIC);
           planet.generateWaterLevelBasedOnTemperature();
@@ -2000,7 +1994,7 @@ public class StarMap {
         }
         if (planets == 2) {
           planet.setPlanetType(PlanetTypes.SWAMPWORLD2);
-          planet.setRadiationLevel(4);
+          planet.setRadiationLevel(RadiationType.LOW_RADIATION);
           planet.setGroundSize(11);
           planet.setTemperatureType(TemperatureType.VOLCANIC);
           planet.generateWaterLevelBasedOnTemperature();
@@ -2010,7 +2004,7 @@ public class StarMap {
         }
         if (planets == 3) {
           planet.setPlanetType(PlanetTypes.PLANET_EARTH);
-          planet.setRadiationLevel(1);
+          planet.setRadiationLevel(RadiationType.NO_RADIATION);
           planet.setGroundSize(12);
           planet.setTemperatureType(TemperatureType.TEMPERATE);
           planet.setWaterLevel(WaterLevelType.OCEAN);
@@ -2061,7 +2055,7 @@ public class StarMap {
         }
         if (planets == 4) {
           planet.setPlanetType(PlanetTypes.PLANET_MARS);
-          planet.setRadiationLevel(2);
+          planet.setRadiationLevel(RadiationType.NO_RADIATION);
           planet.setGroundSize(8);
           planet.setTemperatureType(TemperatureType.COLD);
           planet.setWaterLevel(WaterLevelType.ARID);
@@ -2339,7 +2333,7 @@ public class StarMap {
         if (planets == startingPlanet && playerIndex != -1) {
           PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
           playerInfo.setElderRealm(config.getPlayerElderRealm(playerIndex));
-          planet.setRadiationLevel(1);
+          planet.setRadiationLevel(RadiationType.NO_RADIATION);
           planet.setGravityType(GravityType.NORMAL_GRAVITY);
           planet.setTemperatureType(TemperatureType.TEMPERATE);
           planet.setWaterLevel(WaterLevelType.HUMID);
@@ -2590,26 +2584,17 @@ public class StarMap {
     double distance = LONGEST_DISTANCE;
     double blueStarDistance = 10;
     double yellowStarDistance = 10;
-    if (info.getRace().getMaxRad() < 4) {
+    if (info.getRace().getMaxRad() == RadiationType.NO_RADIATION) {
       blueStarDistance = 40;
       yellowStarDistance = 15;
-    } else if (info.getRace().getMaxRad() == 4) {
-      blueStarDistance = 30;
+    } else if (info.getRace().getMaxRad() == RadiationType.LOW_RADIATION) {
+      blueStarDistance = 20;
       yellowStarDistance = 10;
-    } else if (info.getRace().getMaxRad() == 5) {
-      blueStarDistance = 25;
-      yellowStarDistance = 10;
-    } else if (info.getRace().getMaxRad() == 6) {
-      blueStarDistance = 15;
-      yellowStarDistance = 5;
-    } else if (info.getRace().getMaxRad() == 7) {
-      blueStarDistance = 7;
-      yellowStarDistance = 0;
-    } else if (info.getRace().getMaxRad() == 7) {
+    } else if (info.getRace().getMaxRad() == RadiationType.HIGH_RADIATION) {
+      blueStarDistance = 8;
+      yellowStarDistance = 2;
+    } else if (info.getRace().getMaxRad() == RadiationType.VERY_HIGH_RAD) {
       blueStarDistance = 2;
-      yellowStarDistance = 0;
-    } else {
-      blueStarDistance = 0;
       yellowStarDistance = 0;
     }
 
@@ -4430,8 +4415,8 @@ public class StarMap {
           sb.append(" Unfortunately it has been already colonized by ");
           sb.append(planet.getPlanetPlayerInfo().getEmpireName());
           sb.append(".");
-        } else if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
-          sb.append(" Unfortunately planet's radiation level is too high");
+        } else if (planet.isColonizeablePlanet(info.getRace())) {
+          sb.append(" Unfortunately planet is not suitable");
           sb.append(" for your people to live there...");
         } else {
           int value = info.getWorldTypeValue(
@@ -4573,10 +4558,11 @@ public class StarMap {
               return;
             }
           }
-          if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
+          if (planet.isColonizeablePlanet(info.getRace())) {
             // High radiation
             tutorialText = Game.getTutorial().showTutorialText(23);
             if (tutorialText != null) {
+              // TODO: Check tutorial text
               Message msg = new Message(MessageType.PLANETARY, tutorialText,
                   Icons.getIconByName(Icons.ICON_TUTORIAL));
               msg.setCoordinate(new Coordinate(sx, sy));
@@ -5452,7 +5438,7 @@ public class StarMap {
       planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
       planet.setCulture(starbaseFleet.getCulturalValue());
       planet.setMetal(metal);
-      planet.setRadiationLevel(1);
+      planet.setRadiationLevel(RadiationType.NO_RADIATION);
       planet.setTemperatureType(TemperatureType.TEMPERATE);
       planet.setWaterLevel(WaterLevelType.HUMID);
       planet.setGravityType(GravityType.NORMAL_GRAVITY);

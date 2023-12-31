@@ -752,7 +752,7 @@ public final class MissionHandling {
     Planet result = null;
     double distance = 999;
     for (Planet planet : planets) {
-      if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
+      if (planet.isColonizeablePlanet(info.getRace())
           && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
           && info.getSectorVisibility(planet.getCoordinate())
           >= PlayerInfo.FOG_OF_WAR) {
@@ -847,7 +847,7 @@ public final class MissionHandling {
           }
         }
         if (planet != null && planet.getPlanetPlayerInfo() == null
-            && planet.getRadiationLevel() <= info.getRace().getMaxRad()) {
+            && planet.isColonizeablePlanet(info.getRace())) {
           // On top of planet waiting for colonization.
           mission.setTarget(planet.getCoordinate());
           mission.setPhase(MissionPhase.TREKKING);

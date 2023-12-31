@@ -93,8 +93,8 @@ public class GameTest {
       }
       int maxSectors = game.getStarMap().getMaxX() * game.getStarMap().getMaxY();
       for (int j = 0; j < game.getPlayers().getCurrentMaxPlayers(); j++) {
-        if (planet.getRadiationLevel() <= game.getPlayers()
-            .getPlayerInfoByIndex(j).getRace().getMaxRad()
+        if (planet.isColonizeablePlanet(game.getPlayers()
+            .getPlayerInfoByIndex(j).getRace())
             && planet.getPlanetOwnerIndex() == -1) {
           maxPlanets[j]++;
         }

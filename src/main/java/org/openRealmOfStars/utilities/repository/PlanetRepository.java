@@ -29,6 +29,7 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.enums.GravityType;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
@@ -71,7 +72,7 @@ public class PlanetRepository {
     int prodResource = dis.readInt();
     boolean gasGiant = dis.readBoolean();
     Planet planet = new Planet(coordinate, name, orderNumber, gasGiant);
-    planet.setRadiationLevel(radiationLevel);
+    planet.setRadiationLevel(RadiationType.getByIndex(radiationLevel));
     planet.setGravityType(GravityType.getByIndex(gravity));
     planet.setTemperatureType(TemperatureType.getByIndex(temperature));
     planet.setWaterLevel(WaterLevelType.getByIndex(water));
@@ -160,7 +161,7 @@ public class PlanetRepository {
     dos.writeInt(planet.getCoordinate().getY());
     IOUtilities.writeString(dos, planet.getName());
     dos.writeInt(planet.getOrderNumber());
-    dos.writeInt(planet.getRadiationLevel());
+    dos.writeInt(planet.getRadiationLevel().getIndex());
     dos.writeInt(planet.getGroundSize());
     dos.writeInt(planet.getGravityType().getIndex());
     dos.writeInt(planet.getTemperatureType().getIndex());

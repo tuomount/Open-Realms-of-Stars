@@ -234,7 +234,7 @@ public class BigImagePanel extends JPanel {
           player));
       if (player != null && planet.getPlanetPlayerInfo() != player
           && !planet.isGasGiant()) {
-        if (planet.getTotalRadiationLevel() > player.getRace().getMaxRad()) {
+        if (planet.isColonizeablePlanet(player.getRace())) {
           sb.append("High radiation! Maximum radiation is ");
           sb.append(player.getRace().getMaxRad());
         } else {

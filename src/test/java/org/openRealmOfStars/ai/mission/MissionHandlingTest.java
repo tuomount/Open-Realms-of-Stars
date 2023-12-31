@@ -46,6 +46,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 
 /**
 *
@@ -454,28 +455,32 @@ public class MissionHandlingTest {
         PlayerInfo.VISIBLE);
     Mockito.when(planet1.getCoordinate()).thenReturn(planet1Coord);
     Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(info);
-    Mockito.when(planet1.getRadiationLevel()).thenReturn(1);
+    Mockito.when(planet1.getRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     Planet planet2 = Mockito.mock(Planet.class);
     Coordinate planet2Coord = new Coordinate(8, 8);
     Mockito.when(info.getSectorVisibility(planet2Coord)).thenReturn(
         PlayerInfo.VISIBLE);
     Mockito.when(planet2.getCoordinate()).thenReturn(planet2Coord);
     Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(info2);
-    Mockito.when(planet2.getRadiationLevel()).thenReturn(1);
+    Mockito.when(planet2.getRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     Planet planet3 = Mockito.mock(Planet.class);
     Coordinate planet3Coord = new Coordinate(20, 20);
     Mockito.when(info.getSectorVisibility(planet3Coord)).thenReturn(
         PlayerInfo.VISIBLE);
     Mockito.when(planet3.getCoordinate()).thenReturn(planet3Coord);
     Mockito.when(planet3.getPlanetPlayerInfo()).thenReturn(null);
-    Mockito.when(planet3.getRadiationLevel()).thenReturn(1);
+    Mockito.when(planet3.getRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     Planet planet4 = Mockito.mock(Planet.class);
     Coordinate planet4Coord = new Coordinate(30, 30);
     Mockito.when(info.getSectorVisibility(planet4Coord)).thenReturn(
         PlayerInfo.VISIBLE);
     Mockito.when(planet4.getCoordinate()).thenReturn(planet4Coord);
     Mockito.when(planet4.getPlanetPlayerInfo()).thenReturn(null);
-    Mockito.when(planet4.getRadiationLevel()).thenReturn(1);
+    Mockito.when(planet4.getRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     ArrayList<Planet> planets = new ArrayList<>();
     planets.add(planet1);
     planets.add(planet2);

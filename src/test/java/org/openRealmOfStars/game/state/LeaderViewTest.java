@@ -32,6 +32,7 @@ import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 
 /**
 *
@@ -69,7 +70,7 @@ public class LeaderViewTest {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = new PlayerList();
     Planet planet = new Planet(new Coordinate(5, 6), "Test planet", 1, false);
-    planet.setRadiationLevel(1);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN,4,0);
     info1.setEmpireName("Human Empire");
     Leader leader = LeaderUtility.createLeader(info1, planet, 1);

@@ -34,6 +34,7 @@ import org.openRealmOfStars.player.race.trait.RaceTrait;
 import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.planet.enums.GravityType;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -360,6 +361,28 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.ZERO_GRAVITY_BEING).ifPresent(trait -> {
       ALTEIRIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.TOLERATE_LOW_RADIATION).ifPresent(trait -> {
+      HUMAN.addTrait(trait);
+      SPACE_PIRATE.addTrait(trait);
+      SPACE_MONSTERS.addTrait(trait);
+      SPORKS.addTrait(trait);
+      SCAURIANS.addTrait(trait);
+      REBORGIANS.addTrait(trait);
+      TEUTHIDAES.addTrait(trait);
+      SMAUGIRIANS.addTrait(trait);
+      SYNTHDROIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.TOLERATE_HIGH_RADIATION).ifPresent(trait -> {
+      GREYANS.addTrait(trait);
+      ALTEIRIANS.addTrait(trait);
+      LITHORIANS.addTrait(trait);
+      MOTHOIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.TOLERATE_VERY_HIGH_RADIATION).ifPresent(
+        trait -> {
+      MECHIONS.addTrait(trait);
+      CHIRALOIDS.addTrait(trait);
+    });
   }
 
   /**
@@ -508,43 +531,18 @@ public enum SpaceRace {
    * Get race maximum Radiation
    * @return The race maximum radiation
    */
-  public int getMaxRad() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 4;
-    case MECHIONS:
-      return 8;
-    case SPORKS:
-      return 5;
-    case GREYANS:
-      return 6;
-    case CENTAURS:
-      return 3;
-    case MOTHOIDS:
-      return 6;
-    case TEUTHIDAES:
-      return 4;
-    case SCAURIANS:
-      return 5;
-    case HOMARIANS:
-      return 3;
-    case CHIRALOIDS:
-      return 10;
-    case REBORGIANS:
-      return 5;
-    case LITHORIANS:
-      return 7;
-    case ALTEIRIANS:
-      return 7;
-    case SMAUGIRIANS:
-      return 5;
-    case SYNTHDROIDS:
-      return 5;
-    default:
-      return -1;
+  public RadiationType getMaxRad() {
+    RadiationType result = RadiationType.NO_RADIATION;
+    if (hasTrait(TraitIds.TOLERATE_LOW_RADIATION)) {
+      result = RadiationType.LOW_RADIATION;
     }
+    if (hasTrait(TraitIds.TOLERATE_HIGH_RADIATION)) {
+      result = RadiationType.HIGH_RADIATION;
+    }
+    if (hasTrait(TraitIds.TOLERATE_VERY_HIGH_RADIATION)) {
+      result = RadiationType.VERY_HIGH_RAD;
+    }
+    return result;
   }
 
   /**
@@ -1674,6 +1672,7 @@ public enum SpaceRace {
       sb.append(lf + "Racial attributes (trait points):" + lf);
       for (var trait : traits) {
         sb.append(dot);
+        sb.append(" ");
         sb.append(trait.getName());
         points = points + trait.getPoints();
         sb.append(String.format(" (%1$+d)", trait.getPoints()));

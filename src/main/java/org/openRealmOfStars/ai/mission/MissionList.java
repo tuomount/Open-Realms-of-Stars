@@ -23,6 +23,7 @@ import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.utilities.repository.MissionRepository;
 
 import java.io.DataInputStream;
@@ -166,13 +167,14 @@ public class MissionList {
       final PlayerInfo info, final Coordinate coordinate) {
     int totalValue = 0;
     Mission result = null;
-    int maxRad = info.getRace().getMaxRad();
+    int maxRad = info.getRace().getMaxRad().getIndex();
     if (info.getTechList().isTech("Radiation dampener")) {
       maxRad++;
     }
     if (info.getTechList().isTech("Radiation well")) {
       maxRad++;
     }
+    maxRad = Math.min(RadiationType.values().length - 1, maxRad);
     for (Mission mission : missions) {
       if (mission.getType() == MissionType.COLONIZE
           && mission.getPhase() == MissionPhase.PLANNING) {
@@ -191,10 +193,11 @@ public class MissionList {
           }
         }
         if (info.getRace().hasTrait(TraitIds.RADIOSYNTHESIS)) {
-          value = value + colonPlanet.getRadiationLevel() * 2;
+          value = value + colonPlanet
+              .getRadiationLevel().getRadiosynthesisFood() * 2;
         } else {
-          value = value - colonPlanet.getRadiationLevel();
-          if (colonPlanet.getRadiationLevel() > maxRad) {
+          value = value - colonPlanet.getRadiationLevel().getIndex() * 2;
+          if (colonPlanet.getRadiationLevel().getIndex() > maxRad) {
             value = 0;
           }
         }

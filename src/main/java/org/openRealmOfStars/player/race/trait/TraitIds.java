@@ -125,6 +125,12 @@ public final class TraitIds {
   public static final String HANDY = "HANDY";
   /** Due to body anatomy or cognitive abilites, working is difficult */
   public static final String IMPRACTICAL = "IMPRACTICAL";
+  /** Race is used to work in low gravity conditions. */
+  public static final String LOW_GRAVITY_BEING = "LOW_GRAVITY_BEING";
+  /** Race is used to work in high gravity conditions. */
+  public static final String HIGH_GRAVITY_BEING = "HIGH_GRAVITY_BEING";
+  /** Race is used to work in zero gravity conditions. */
+  public static final String ZERO_GRAVITY_BEING = "ZERO_GRAVITY_BEING";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

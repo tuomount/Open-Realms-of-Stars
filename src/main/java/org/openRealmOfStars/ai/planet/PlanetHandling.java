@@ -973,15 +973,29 @@ public final class PlanetHandling {
 
     int foodReq = totalPop * info.getRace().getFoodRequire() / 100;
     int farmersReq = foodReq - food;
+    double foodMult = info.getRace().getFoodSpeed(
+        planet.getGravityType()) / 100;
+    boolean uselessFarmers = false;
+    if (foodMult == 0) {
+      // No matter what farmers aren't useful.
+      farmersReq = 0;
+      uselessFarmers = true;
+    } else {
+      farmersReq = (int) Math.round(farmersReq / foodMult);
+      if (farmersReq > totalPop) {
+        farmersReq = totalPop;
+      }
+    }
     // Races that grow and are not limited by insufficient space
     // will want to allocate one more population for farming
     if (info.getRace().getGrowthSpeed() > 0
         && totalPop < planet.getPopulationLimit()
-        && farmersReq >= 0 && farmersReq < totalPop) {
+        && farmersReq >= 0 && farmersReq < totalPop
+        && !uselessFarmers) {
       farmersReq++;
     }
 
-    if (info.getRace().getFoodSpeed() == 200) {
+    if (info.getRace().getFoodSpeed(planet.getGravityType()) == 200) {
       int extra = 0;
       if (farmersReq % 2 != 0) {
         extra = 1;
@@ -1013,16 +1027,30 @@ public final class PlanetHandling {
       freePop -= scientistsPerResearch;
     }
 
-    if (freePop > 0) {
+    if (freePop > 0
+        && info.getRace().getProductionSpeed(planet.getGravityType()) >= 100) {
       workers++;
       freePop--;
     }
 
     int part = 0;
-    if (info.getRace().getMiningSpeed() == 50) {
+    if (info.getRace().getMiningSpeed(planet.getGravityType()) <= 50
+        && info.getRace().getProductionSpeed(planet.getGravityType()) <= 50) {
+      part = freePop % 2;
+      int div = freePop / 2;
+      artists = artists + div;
+      scientist = scientist + div;
+    } else if (info.getRace().getMiningSpeed(planet.getGravityType()) <= 50) {
       part = freePop % 3;
       int div = freePop / 3;
       workers = workers + div;
+      artists = artists + div;
+      scientist = scientist + div;
+    } else if (info.getRace().getProductionSpeed(
+        planet.getGravityType()) <= 50) {
+      part = freePop % 3;
+      int div = freePop / 3;
+      miners = miners + div;
       artists = artists + div;
       scientist = scientist + div;
     } else {
@@ -1038,17 +1066,23 @@ public final class PlanetHandling {
       part--;
     }
     if (part == 1) {
-      if (info.getRace().getResearchSpeed() > 100) {
+      if (info.getRace().getResearchSpeed() >= 100) {
         scientist++;
-      } else if (info.getRace().getCultureSpeed() > 100) {
+      } else if (info.getRace().getCultureSpeed() >= 100) {
         artists++;
+      } else if (info.getRace().getProductionSpeed(
+          planet.getGravityType()) >= 100) {
+        workers++;
+      } else if (info.getRace().getMiningSpeed(
+          planet.getGravityType()) >= 100) {
+        miners++;
       } else {
         workers++;
       }
     }
     if (part == 2) {
       workers++;
-      if (info.getRace().getMiningSpeed() == 50) {
+      if (info.getRace().getMiningSpeed(planet.getGravityType()) == 50) {
         workers++;
       } else {
         miners++;

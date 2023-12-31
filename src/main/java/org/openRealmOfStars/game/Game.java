@@ -2360,6 +2360,23 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Print whole race wiki page contain all information about space races
+   * @return Race wiki page as a String
+   */
+  public static String printRaceWiki() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("# Space races");
+    sb.append("![spaceraces]"
+        + "(https://github.com/tuomount/Open-Realms-of-Stars/assets/"
+        + "15839156/2ea934aa-5092-4cbc-a7c8-e8348939ace4)");
+    sb.append("\n");
+    for (SpaceRace race : SpaceRace.values()) {
+      sb.append("\n");
+      sb.append(race.getFullDescription(true, true));
+    }
+    return sb.toString();
+  }
+  /**
    * Update all save files in default save folder.
    * This is dev tool, which is use to upgrade previous
    * save format to new one.
@@ -2402,6 +2419,8 @@ public class Game implements ActionListener {
       System.out.println(printTechWiki());
     } else if (args.length > 0 && args[0].equals("--wiki-rare")) {
       System.out.println(printRareTechWiki());
+    } else if (args.length > 0 && args[0].equals("--wiki-race")) {
+      System.out.println(printRaceWiki());
     } else if (args.length > 0 && args[0].equals("--save-update")) {
       saveGameUpdate();
     } else if (args.length > 1 && args[0].equals("--text")) {

@@ -368,7 +368,7 @@ public final class DefaultScoring {
 
     if (planet.getAmountMetalInGround() > 30) {
       score = score + building.getMineBonus() * 40;
-      if (info.getRace().getMiningSpeed() < 100) {
+      if (info.getRace().getMiningSpeed(planet.getGravityType()) < 100) {
         score = score + building.getMineBonus() * 30;
       }
       if (building.getMineBonus() > 0

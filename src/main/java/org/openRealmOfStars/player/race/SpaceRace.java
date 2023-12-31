@@ -33,7 +33,7 @@ import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.race.trait.RaceTrait;
 import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
-import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.GravityType;
 import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -346,6 +346,20 @@ public enum SpaceRace {
       CHIRALOIDS.addTrait(trait);
       ALTEIRIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.HIGH_GRAVITY_BEING).ifPresent(trait -> {
+      MECHIONS.addTrait(trait);
+      CENTAURS.addTrait(trait);
+      HOMARIANS.addTrait(trait);
+      LITHORIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.LOW_GRAVITY_BEING).ifPresent(trait -> {
+      MOTHOIDS.addTrait(trait);
+      GREYANS.addTrait(trait);
+      SCAURIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.ZERO_GRAVITY_BEING).ifPresent(trait -> {
+      ALTEIRIANS.addTrait(trait);
+    });
   }
 
   /**
@@ -644,10 +658,12 @@ public enum SpaceRace {
   }
 
   /**
-   * Get miners mining speed
+   * Get miners mining speed based on gravity.
+   * If gravity is null then just return production speed bonus.
+   * @param gravity GravityType or null.
    * @return normal 100, half 50, double 200
    */
-  public int getMiningSpeed() {
+  public int getMiningSpeed(final GravityType gravity) {
     var result = 100;
     if (hasTrait(TraitIds.STRONG)) {
       result += 50;
@@ -656,6 +672,23 @@ public enum SpaceRace {
       result -= 50;
     }
     if (isLithovorian()) {
+      result += 50;
+    }
+    if (gravity == null) {
+      // Just returning mining speed bonus
+      return result;
+    }
+    if (hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+      result -= 50;
+    }
+    if (hasTrait(TraitIds.LOW_GRAVITY_BEING)
+        && (gravity == GravityType.NORMAL_GRAVITY
+        || gravity == GravityType.HIGH_GRAVITY)) {
+      result -= 50;
+    }
+    if (hasTrait(TraitIds.HIGH_GRAVITY_BEING)
+        && (gravity == GravityType.NORMAL_GRAVITY
+        || gravity == GravityType.LOW_GRAVITY)) {
       result += 50;
     }
     return result;
@@ -698,16 +731,35 @@ public enum SpaceRace {
   }
 
   /**
-   * Get worker production speed
+   * Get worker production speed based on gravity.
+   * If gravity is null then just return production speed bonus.
+   * @param gravity GravityType or null.
    * @return normal 100, half 50, double 200
    */
-  public int getProductionSpeed() {
+  public int getProductionSpeed(final GravityType gravity) {
     var result = 100;
     if (hasTrait(TraitIds.HANDY)) {
       result += 50;
     }
     if (hasTrait(TraitIds.IMPRACTICAL)) {
       result -= 50;
+    }
+    if (gravity == null) {
+      // Just returning production speed bonus
+      return result;
+    }
+    if (hasTrait(TraitIds.ZERO_GRAVITY_BEING)
+        && (gravity == GravityType.NORMAL_GRAVITY
+        || gravity == GravityType.HIGH_GRAVITY)) {
+      result -= 50;
+    }
+    if (hasTrait(TraitIds.LOW_GRAVITY_BEING)
+        && gravity == GravityType.HIGH_GRAVITY) {
+      result -= 50;
+    }
+    if (hasTrait(TraitIds.HIGH_GRAVITY_BEING)
+            && gravity == GravityType.LOW_GRAVITY) {
+      result += 50;
     }
     return result;
   }
@@ -731,16 +783,26 @@ public enum SpaceRace {
   }
 
   /**
-   * Get Food growth speed
+   * Get Food growth speed based on gravity.
+   * If gravity is null then just return production speed bonus
+   * @param gravity GravityType or null.
    * @return normal 100, half 50, double 200
    */
-  public int getFoodSpeed() {
+  public int getFoodSpeed(final GravityType gravity) {
     int result = 100;
     if (!isEatingFood()) {
       result = 0;
     }
     if (hasTrait(TraitIds.FAST_FOOD_PROD)) {
       result = 200;
+    }
+    if (gravity == null) {
+      // Just returning production speed bonus
+      return result;
+    }
+    if (hasTrait(TraitIds.ZERO_GRAVITY_BEING)
+        && gravity == GravityType.HIGH_GRAVITY) {
+      result -= 50;
     }
     return result;
   }
@@ -1502,12 +1564,12 @@ public enum SpaceRace {
     sb.append(lf);
     sb.append(dot);
     sb.append(" Production: ");
-    sb.append(getProductionSpeed());
+    sb.append(getProductionSpeed(null));
     sb.append("%");
     sb.append(lf);
     sb.append(dot);
     sb.append(" Mining: ");
-    sb.append(getMiningSpeed());
+    sb.append(getMiningSpeed(null));
     sb.append("%");
     sb.append(lf);
     sb.append(dot);
@@ -1517,7 +1579,7 @@ public enum SpaceRace {
     sb.append(lf);
     sb.append(dot);
     sb.append(" Food production: ");
-    sb.append(getFoodSpeed());
+    sb.append(getFoodSpeed(null));
     sb.append("%");
     sb.append(lf);
     sb.append(dot);
@@ -1565,12 +1627,6 @@ public enum SpaceRace {
     sb.append(dot);
     sb.append(" War resistance: ");
     sb.append(getWarFatigueResistance());
-    PlanetTypes planetTypes = PlanetTypes.getRandomStartPlanetType(this);
-    int sustainable = getWorldTypeBaseValue(planetTypes.getWorldType());
-    sb.append(lf);
-    sb.append(dot);
-    sb.append(" Start planet value: ");
-    sb.append(sustainable);
     sb.append(lf);
     sb.append(dot);
     sb.append(" Special: ");
@@ -1614,15 +1670,20 @@ public enum SpaceRace {
       } else {
         sb.append(lf + lf);
       }
+      int points = 0;
       sb.append(lf + "Racial attributes (trait points):" + lf);
       for (var trait : traits) {
         sb.append(dot);
         sb.append(trait.getName());
+        points = points + trait.getPoints();
         sb.append(String.format(" (%1$+d)", trait.getPoints()));
         sb.append(" - ");
         sb.append(trait.getDescription());
         sb.append(lf);
       }
+      sb.append("Total trait points: ");
+      sb.append(points);
+      sb.append(lf);
       if (!markDown) {
         sb.append("</p>");
       }

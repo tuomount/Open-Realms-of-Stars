@@ -1158,7 +1158,7 @@ public class Planet {
     result += value;
     addEntryIfWorthy(sb, "planet", value);
 
-    var mult = planetOwnerInfo.getRace().getProductionSpeed();
+    var mult = planetOwnerInfo.getRace().getProductionSpeed(getGravityType());
     value = workers[PRODUCTION_PRODUCTION] * mult / div;
     result += value;
     addEntryIfWorthy(sb, "workers", value);
@@ -1231,7 +1231,7 @@ public class Planet {
     result += value;
     addEntryIfWorthy(sb, "planet", value);
 
-    var mult = planetOwnerInfo.getRace().getMiningSpeed();
+    var mult = planetOwnerInfo.getRace().getMiningSpeed(getGravityType());
     value = workers[METAL_MINERS] * mult / div;
     result += value;
     addEntryIfWorthy(sb, "miners", value);
@@ -1308,7 +1308,7 @@ public class Planet {
     result += value;
     addEntryIfWorthy(sb, "planet", value);
 
-    var mult = planetOwnerInfo.getRace().getFoodSpeed();
+    var mult = planetOwnerInfo.getRace().getFoodSpeed(getGravityType());
     value = workers[FOOD_FARMERS] * mult / div;
     result += value;
     addEntryIfWorthy(sb, "farmers", value);
@@ -3038,7 +3038,7 @@ public class Planet {
     int mult;
     int result = 0;
     int div = 100;
-    mult = planetOwnerInfo.getRace().getProductionSpeed();
+    mult = planetOwnerInfo.getRace().getProductionSpeed(getGravityType());
     // Planet always produces +1 production
     result = workers[PRODUCTION_PRODUCTION] * mult / div + 1
         + getTotalProductionFromBuildings(PRODUCTION_PRODUCTION);

@@ -311,5 +311,32 @@
     "conflictsWith": [
       "HANDY"
     ]
+  },
+  {
+    "id": "LOW_GRAVITY_BEING",
+    "name": "Low gravity being",
+    "description": "Race is use to work in low gravity conditions. Working in normal or high gravity is much more challenging.",
+    "points": -2,
+    "conflictsWith": [
+      "HIGH_GRAVITY_BEING","ZERO_GRAVITY_BEING"
+    ]
+  },
+  {
+    "id": "HIGH_GRAVITY_BEING",
+    "name": "High gravity being",
+    "description": "Race is use to work in high gravity conditions. Working in normal or low gravity is much lighter.",
+    "points": 2,
+    "conflictsWith": [
+      "LOW_GRAVITY_BEING","ZERO_GRAVITY_BEING"
+    ]
+  },
+  {
+    "id": "ZERO_GRAVITY_BEING",
+    "name": "Zero gravity being",
+    "description": "Race is use to work in zero gravity conditions. Working in low, normal or high gravity is much more challenging.",
+    "points": -4,
+    "conflictsWith": [
+      "HIGH_GRAVITY_BEING","LOW_GRAVITY_BEING"
+    ]
   }
 ]

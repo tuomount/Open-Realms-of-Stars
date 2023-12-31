@@ -668,7 +668,7 @@ public class Planet {
     int statusesBonus = statuses.stream()
         .map(status -> status.getStatus().getFoodBonus())
         .reduce(0, Integer::sum);
-    total = total + statusesBonus + 2;
+    total = total + statusesBonus + getWaterLevel().getPlanetFoodProd();
     return total;
   }
 
@@ -1303,8 +1303,8 @@ public class Planet {
     sb.append("<br><br>");
     sb.append("Total food production.<br>");
 
-    // Planet always produces +2 food
-    var value = 2;
+    // Planet always produces 0 - 5 food
+    var value = getWaterLevel().getPlanetFoodProd();
     result += value;
     addEntryIfWorthy(sb, "planet", value);
 

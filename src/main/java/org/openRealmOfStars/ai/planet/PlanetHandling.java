@@ -1027,6 +1027,9 @@ public final class PlanetHandling {
       freePop -= scientistsPerResearch;
     }
 
+    int cultureSpeed = info.getRace().getCultureSpeed();
+    int artistPerCulture = Math.max(1, 100 / cultureSpeed);
+
     if (freePop > 0
         && info.getRace().getProductionSpeed(planet.getGravityType()) >= 100) {
       workers++;
@@ -1044,15 +1047,41 @@ public final class PlanetHandling {
       part = freePop % 3;
       int div = freePop / 3;
       workers = workers + div;
-      artists = artists + div;
-      scientist = scientist + div;
+      if (div == 1) {
+        if (artistPerCulture == 1 && scientistsPerResearch == 1) {
+          artists = artists + div;
+          scientist = scientist + div;
+        } else if (scientistsPerResearch == 1) {
+          scientist = scientist + div + div;
+        } else if (artistPerCulture == 1) {
+          artistPerCulture = artistPerCulture + div + div;
+        } else {
+          workers = workers + div + div;
+        }
+      } else {
+        artists = artists + div;
+        scientist = scientist + div;
+      }
     } else if (info.getRace().getProductionSpeed(
         planet.getGravityType()) <= 50) {
       part = freePop % 3;
       int div = freePop / 3;
       miners = miners + div;
-      artists = artists + div;
-      scientist = scientist + div;
+      if (div == 1) {
+        if (artistPerCulture == 1 && scientistsPerResearch == 1) {
+          artists = artists + div;
+          scientist = scientist + div;
+        } else if (scientistsPerResearch == 1) {
+          scientist = scientist + div + div;
+        } else if (artistPerCulture == 1) {
+          artistPerCulture = artistPerCulture + div + div;
+        } else {
+          miners = miners + div + div;
+        }
+      } else {
+        artists = artists + div;
+        scientist = scientist + div;
+      }
     } else {
       part = freePop % 4;
       int div = freePop / 4;
@@ -1081,11 +1110,30 @@ public final class PlanetHandling {
       }
     }
     if (part == 2) {
-      workers++;
-      if (info.getRace().getMiningSpeed(planet.getGravityType()) == 50) {
+      if (info.getRace().getProductionSpeed(planet.getGravityType()) >= 100) {
         workers++;
-      } else {
+      } else if (info.getRace().getResearchSpeed() >= 100) {
+        scientist++;
+      } else if (info.getRace().getMiningSpeed(
+          planet.getGravityType()) >= 100) {
         miners++;
+      } else if (info.getRace().getCultureSpeed() >= 100) {
+        artists++;
+      } else {
+        workers++;
+      }
+      if (info.getRace().getResearchSpeed() >= 100) {
+        scientist++;
+      } else if (info.getRace().getMiningSpeed(
+          planet.getGravityType()) >= 100) {
+        miners++;
+      } else if (info.getRace().getProductionSpeed(
+          planet.getGravityType()) >= 100) {
+        workers++;
+      } else if (info.getRace().getCultureSpeed() >= 100) {
+        artists++;
+      } else {
+        workers++;
       }
     }
     // Part 3 is never for miners 50%
@@ -1098,6 +1146,10 @@ public final class PlanetHandling {
     planet.setWorkers(Planet.METAL_MINERS, miners);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, scientist);
     planet.setWorkers(Planet.CULTURE_ARTIST, artists);
+    if (totalPop != planet.getTotalPopulation()) {
+      ErrorLogger.log("Original population: " + totalPop + " new pop: "
+         + planet.getTotalPopulation());
+    }
   }
 
   /**

@@ -85,4 +85,20 @@ public enum WaterLevelType {
     }
   }
 
+  /**
+   * Get amount food planet produces.
+   * @return Food amount
+   */
+  public int getPlanetFoodProd() {
+    switch (this) {
+      case BARREN: return 0;
+      case DESERT: return 1;
+      case ARID: return 2;
+      case HUMID: return 3;
+      case MARINE: return 4;
+      case OCEAN: return 5;
+      default:
+        throw new IllegalArgumentException("Unknown water level type");
+    }
+  }
 }

@@ -986,22 +986,19 @@ public final class PlanetHandling {
         farmersReq = totalPop;
       }
     }
+    int foodByFarmers = (int) Math.round(farmersReq * foodMult);
+    boolean surplusFood = false;
+    if (food + foodByFarmers > foodReq) {
+      surplusFood = true;
+    }
     // Races that grow and are not limited by insufficient space
     // will want to allocate one more population for farming
     if (info.getRace().getGrowthSpeed() > 0
         && totalPop < planet.getPopulationLimit()
         && farmersReq >= 0 && farmersReq < totalPop
-        && !uselessFarmers) {
+        && !uselessFarmers
+        && !surplusFood) {
       farmersReq++;
-    }
-
-    if (info.getRace().getFoodSpeed(planet.getGravityType()) == 200) {
-      int extra = 0;
-      if (farmersReq % 2 != 0) {
-        extra = 1;
-      }
-      farmersReq = farmersReq / 2;
-      farmersReq = farmersReq + extra;
     }
 
     setPlanetNoWorkers(planet);
@@ -1021,7 +1018,7 @@ public final class PlanetHandling {
     int popResearchSpeed = info.getRace().getResearchSpeed();
     int scientistsPerResearch = Math.max(1, 100 / popResearchSpeed);
     if (planet.getTotalProductionFromBuildings(
-        Planet.PRODUCTION_RESEARCH) == 0 && freePop > scientistsPerResearch
+        Planet.PRODUCTION_RESEARCH) == 0 && freePop >= scientistsPerResearch
         && otherWorldResearch < 1) {
       scientist = scientistsPerResearch;
       freePop -= scientistsPerResearch;
@@ -1029,6 +1026,18 @@ public final class PlanetHandling {
 
     int cultureSpeed = info.getRace().getCultureSpeed();
     int artistPerCulture = Math.max(1, 100 / cultureSpeed);
+    int workerSpeed = info.getRace().getProductionSpeed(
+        planet.getGravityType());
+    int workerPerProd = 0;
+    if (workerSpeed > 0) {
+      workerPerProd = Math.max(1, 100 / workerSpeed);
+    }
+    int minerSpeed = info.getRace().getMiningSpeed(
+        planet.getGravityType());
+    int minerPerMetal = 0;
+    if (minerSpeed > 0) {
+      minerPerMetal = Math.max(1, 100 / minerSpeed);
+    }
 
     if (freePop > 0
         && info.getRace().getProductionSpeed(planet.getGravityType()) >= 100) {
@@ -1041,8 +1050,19 @@ public final class PlanetHandling {
         && info.getRace().getProductionSpeed(planet.getGravityType()) <= 50) {
       part = freePop % 2;
       int div = freePop / 2;
-      artists = artists + div;
-      scientist = scientist + div;
+      if (div == 1) {
+        if (workerPerProd == 2) {
+          workers = workers + div + div;
+        } else if (minerPerMetal == 2) {
+          miners = miners + div + div;
+        } else {
+          artists = artists + div;
+          scientist = scientist + div;
+        }
+      } else {
+        artists = artists + div;
+        scientist = scientist + div;
+      }
     } else if (info.getRace().getMiningSpeed(planet.getGravityType()) <= 50) {
       part = freePop % 3;
       int div = freePop / 3;
@@ -1170,12 +1190,12 @@ public final class PlanetHandling {
           + " Population: " + population);
     }
     int branch = -1;
-    if (!info.getRace().isEatingFood()) {
-      handleMechionPopulation(planet, info, totalResearch);
-      branch = 0;
-    } else if (info.getRace().isLithovorian()) {
+    if (info.getRace().isLithovorian()) {
       handleLithorianPopulation(planet, info, totalResearch);
       branch = 3;
+    } else if (!info.getRace().isEatingFood()) {
+      handleMechionPopulation(planet, info, totalResearch);
+      branch = 0;
     } else {
       // Handle races whom need something to eat and have regular research
       handleGenericPopulation(planet, info, totalResearch);

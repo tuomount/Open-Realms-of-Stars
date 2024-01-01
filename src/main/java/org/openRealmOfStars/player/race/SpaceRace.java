@@ -329,16 +329,10 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.STRONG).ifPresent(trait -> {
       MECHIONS.addTrait(trait);
       SPORKS.addTrait(trait);
-      CENTAURS.addTrait(trait);
-      HOMARIANS.addTrait(trait);
       REBORGIANS.addTrait(trait);
-      LITHORIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.WEAK).ifPresent(trait -> {
-      GREYANS.addTrait(trait);
-      MOTHOIDS.addTrait(trait);
       CHIRALOIDS.addTrait(trait);
-      ALTEIRIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.HANDY).ifPresent(trait -> {
       HOMARIANS.addTrait(trait);
@@ -348,10 +342,8 @@ public enum SpaceRace {
       ALTEIRIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.HIGH_GRAVITY_BEING).ifPresent(trait -> {
-      MECHIONS.addTrait(trait);
       CENTAURS.addTrait(trait);
       HOMARIANS.addTrait(trait);
-      LITHORIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.LOW_GRAVITY_BEING).ifPresent(trait -> {
       MOTHOIDS.addTrait(trait);
@@ -732,6 +724,15 @@ public enum SpaceRace {
     var result = 10;
     if (hasTrait(TraitIds.STRONG)) {
       result += 2;
+    }
+    if (hasTrait(TraitIds.HIGH_GRAVITY_BEING)) {
+      result += 1;
+    }
+    if (hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+      result -= 2;
+    }
+    if (hasTrait(TraitIds.LOW_GRAVITY_BEING)) {
+      result -= 1;
     }
     if (hasTrait(TraitIds.WEAK)) {
       result -= 2;

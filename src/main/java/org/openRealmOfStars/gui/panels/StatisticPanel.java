@@ -25,6 +25,7 @@ import java.awt.Stroke;
 
 import javax.swing.JPanel;
 
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -131,7 +132,7 @@ public class StatisticPanel extends JPanel {
     if (yDataNames != null) {
       for (int i = 0; i < yDataNames.length; i++) {
         String name = getFullText(i);
-        int value = GuiStatics.getTextWidth(GuiStatics.getFontCubellanSC(),
+        int value = GuiStatics.getTextWidth(GuiFonts.getFontCubellanSC(),
             name);
         if (value > largest) {
           largest = value;
@@ -254,7 +255,7 @@ public class StatisticPanel extends JPanel {
         && largestY < victoryScoreLimit) {
       biggestY = victoryScoreLimit * 11 / 10;
     }
-    int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellanSC(),
+    int textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellanSC(),
         String.valueOf(biggestY));
     textWidth = textWidth + 5;
     offsetX = offsetX + textWidth + getWidestDataName() + 5;
@@ -267,8 +268,8 @@ public class StatisticPanel extends JPanel {
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-    g2d.setFont(GuiStatics.getFontCubellanSC());
-    int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellanSC(),
+    g2d.setFont(GuiFonts.getFontCubellanSC());
+    int textHeight = GuiStatics.getTextHeight(GuiFonts.getFontCubellanSC(),
         "0");
 
     //Draw the grid
@@ -347,9 +348,9 @@ public class StatisticPanel extends JPanel {
       if (yDataNames != null && yDataNames.length == data.length) {
         String nameText = getFullText(p);
         int nameHeight = GuiStatics.getTextHeight(
-            GuiStatics.getFontCubellanSC(), nameText);
+            GuiFonts.getFontCubellanSC(), nameText);
         int nameWidth = GuiStatics.getTextWidth(
-            GuiStatics.getFontCubellanSC(), nameText);
+            GuiFonts.getFontCubellanSC(), nameText);
         g2d.drawString(nameText, offsetX / 2 - nameWidth / 2 - 10,
             this.getHeight() / 2 - 4 * nameHeight + p * nameHeight);
       }

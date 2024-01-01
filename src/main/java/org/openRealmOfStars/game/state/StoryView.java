@@ -34,7 +34,7 @@ import org.openRealmOfStars.gui.labels.InfoTextPane;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
 import org.openRealmOfStars.gui.panels.ShipInteriorPanel;
-import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
@@ -142,7 +142,7 @@ public class StoryView extends BlackPanel {
     centerPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     textArea = new InfoTextPane();
     textArea.setEditable(false);
-    textArea.setFont(GuiStatics.getFontSquarion());
+    textArea.setFont(GuiFonts.getFontSquarion());
     JScrollPane scroll = new JScrollPane(textArea);
     textArea.setText(realm.getBackgroundStory());
     textArea.setCaretPosition(0);

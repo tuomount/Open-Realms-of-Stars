@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.vote.Vote;
@@ -60,7 +61,7 @@ public class VotingListRenderer implements ListCellRenderer<Vote> {
       final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
-    renderer.setFont(GuiStatics.getFontCubellan());
+    renderer.setFont(GuiFonts.getFontCubellan());
     renderer.setText(value.getDescription(map));
     if (isSelected) {
       renderer.setForeground(GuiStatics.COLOR_GOLD);

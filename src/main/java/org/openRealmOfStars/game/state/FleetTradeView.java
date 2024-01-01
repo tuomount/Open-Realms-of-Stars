@@ -45,6 +45,7 @@ import org.openRealmOfStars.gui.list.TradeRouteListRenderer;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -196,7 +197,7 @@ public class FleetTradeView extends BlackPanel
     eastPanel.add(label);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     fleetNameText = new JTextField();
-    fleetNameText.setFont(GuiStatics.getFontCubellan());
+    fleetNameText.setFont(GuiFonts.getFontCubellan());
     fleetNameText.setForeground(GuiStatics.getInfoTextColor());
     fleetNameText.setBackground(Color.BLACK);
     fleetNameText.setText(getFleet().getName());

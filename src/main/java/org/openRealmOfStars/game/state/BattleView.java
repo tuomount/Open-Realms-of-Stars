@@ -37,6 +37,7 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
@@ -262,7 +263,7 @@ public class BattleView extends BlackPanel {
     bottom.add(panel);
     bottom.add(Box.createRigidArea(new Dimension(10, 10)));
     int numberOfRows = 10;
-    if (GuiStatics.isLargerFonts()) {
+    if (GuiFonts.isLargerFonts()) {
       numberOfRows = MAX_LOG_NUMBER;
     }
     logArea = new InfoTextArea(numberOfRows, 30);

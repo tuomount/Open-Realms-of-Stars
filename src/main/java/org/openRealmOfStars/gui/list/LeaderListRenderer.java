@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.RecruitableLeader;
@@ -53,7 +54,7 @@ public class LeaderListRenderer implements ListCellRenderer<RecruitableLeader> {
     if (value != null) {
       renderer.setText(value.getLeader().getCallName() + " - "
           + value.getCost() + " credits");
-      renderer.setFont(GuiStatics.getFontCubellan());
+      renderer.setFont(GuiFonts.getFontCubellan());
       renderer.setIcon(
           LeaderUtility.getIconBasedOnLeaderJob(value.getLeader()).getAsIcon());
     }

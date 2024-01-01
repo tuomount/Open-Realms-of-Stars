@@ -25,7 +25,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 
-import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 
@@ -57,7 +57,7 @@ public class LeaderTreeCellRenderer implements TreeCellRenderer {
       if (object instanceof Leader) {
         Leader leader = (Leader) object;
         renderer.setText(leader.getCallName());
-        renderer.setFont(GuiStatics.getFontCubellan());
+        renderer.setFont(GuiFonts.getFontCubellan());
         renderer.setIcon(
             LeaderUtility.getIconBasedOnLeaderJob(leader).getAsIcon());
       }

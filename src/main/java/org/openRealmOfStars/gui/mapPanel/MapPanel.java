@@ -36,6 +36,7 @@ import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.util.GraphRoutines;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -728,9 +729,9 @@ public class MapPanel extends JPanel {
       Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
       if (sun != null) {
         redrawTile[i + viewPointX][j + viewPointY] = true;
-        Font font = GuiStatics.getFontCubellanSC();
+        Font font = GuiFonts.getFontCubellanSC();
         if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
-          font = GuiStatics.getFontCubellanVerySmall();
+          font = GuiFonts.getFontCubellanVerySmall();
         }
         int textWidth = (int) font.getStringBounds(sun.getName(),
             gr.getFontRenderContext()).getWidth();
@@ -778,9 +779,9 @@ public class MapPanel extends JPanel {
             .getSectorVisibility(new Coordinate(i + cx,
                 j + cy)) != PlayerInfo.UNCHARTED) {
       redrawTile[i + viewPointX][j + viewPointY] = true;
-      Font font = GuiStatics.getFontCubellanSC();
+      Font font = GuiFonts.getFontCubellanSC();
       if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
-        font = GuiStatics.getFontCubellanVerySmall();
+        font = GuiFonts.getFontCubellanVerySmall();
       }
       int textWidth = (int) font.getStringBounds(
           RandomSystemNameGenerator.numberToRoman(
@@ -803,9 +804,9 @@ public class MapPanel extends JPanel {
         && planet.getOrderNumber() != 0 && info != null && info
         .getSectorVisibility(new Coordinate(i + cx,
             j + cy)) != PlayerInfo.UNCHARTED) {
-      Font font = GuiStatics.getFontCubellanSC();
+      Font font = GuiFonts.getFontCubellanSC();
       if (starMap.getZoomLevel() == Tile.ZOOM_OUT1) {
-        font = GuiStatics.getFontCubellanVerySmall();
+        font = GuiFonts.getFontCubellanVerySmall();
       }
       int textWidth = (int) font.getStringBounds(
           RandomSystemNameGenerator.numberToRoman(
@@ -1498,7 +1499,7 @@ public class MapPanel extends JPanel {
             && i > -viewPointX + 1) {
           Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
           if (sun != null) {
-            int textWidth = (int) GuiStatics.getFontCubellanSC()
+            int textWidth = (int) GuiFonts.getFontCubellanSC()
                 .getStringBounds(sun.getName(), gr.getFontRenderContext())
                 .getWidth();
             int offset = tileWidth / 2 + textWidth / 2 - 2;
@@ -1508,7 +1509,7 @@ public class MapPanel extends JPanel {
                 pixelX - tileWidth + offset,
                 pixelY + tileHeight / 2 - 3);
             gr.setColor(Color.BLACK);
-            gr.setFont(GuiStatics.getFontCubellanSC());
+            gr.setFont(GuiFonts.getFontCubellanSC());
             gr.drawString(sun.getName(),
                 pixelX - tileWidth / 2 - textWidth / 2,
                 pixelY + tileHeight / 2);
@@ -1530,7 +1531,7 @@ public class MapPanel extends JPanel {
             || tile.getName().equals(TileNames.ICEGIANT2_SE)
                 && i > -viewPointX)
             && planet != null) {
-          int textWidth = (int) GuiStatics.getFontCubellanSC()
+          int textWidth = (int) GuiFonts.getFontCubellanSC()
               .getStringBounds(RandomSystemNameGenerator.numberToRoman(
                   planet.getOrderNumber()), gr.getFontRenderContext())
               .getWidth();
@@ -1539,7 +1540,7 @@ public class MapPanel extends JPanel {
           gr.setColor(GuiStatics.COLOR_GREYBLUE_NO_OPAGUE);
           gr.drawLine(pixelX - offset, pixelY - 3, pixelX + offset, pixelY - 3);
           gr.setColor(Color.BLACK);
-          gr.setFont(GuiStatics.getFontCubellanSC());
+          gr.setFont(GuiFonts.getFontCubellanSC());
           gr.drawString(
               RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
               pixelX - textWidth / 2, pixelY);
@@ -1548,7 +1549,7 @@ public class MapPanel extends JPanel {
         // Draw planet text
         if (planet != null && !planet.isGasGiant()
             && planet.getOrderNumber() != 0) {
-          int textWidth = (int) GuiStatics.getFontCubellanSC()
+          int textWidth = (int) GuiFonts.getFontCubellanSC()
               .getStringBounds(RandomSystemNameGenerator.numberToRoman(
                   planet.getOrderNumber()), gr.getFontRenderContext())
               .getWidth();
@@ -1559,7 +1560,7 @@ public class MapPanel extends JPanel {
               pixelX + tileWidth - offset,
               pixelY + tileHeight / 2 - 3);
           gr.setColor(Color.BLACK);
-          gr.setFont(GuiStatics.getFontCubellanSC());
+          gr.setFont(GuiFonts.getFontCubellanSC());
           gr.drawString(
               RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
               pixelX + tileWidth / 2 - textWidth / 2,
@@ -1804,7 +1805,7 @@ public class MapPanel extends JPanel {
               if (accuracy == -1) {
                 accuracyStr = "NO LOCK";
               }
-              int textWidth = (int) GuiStatics.getFontCubellan()
+              int textWidth = (int) GuiFonts.getFontCubellan()
                   .getStringBounds(accuracyStr, gr.getFontRenderContext())
                   .getWidth();
               gr.setColor(GuiStatics.getCoolSpaceColorDarker());

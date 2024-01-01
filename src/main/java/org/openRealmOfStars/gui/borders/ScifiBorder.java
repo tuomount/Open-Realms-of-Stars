@@ -26,6 +26,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.border.AbstractBorder;
 
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -239,7 +240,7 @@ public class ScifiBorder extends AbstractBorder {
     }
 
     if (title != null && !title.isEmpty()) {
-      int textWidth = (int) GuiStatics.getFontCubellanSC()
+      int textWidth = (int) GuiFonts.getFontCubellanSC()
           .getStringBounds(title, g2d.getFontRenderContext()).getWidth();
       String text = title;
       if (textWidth > width - 2 * CORNER_IMAGE.getWidth()) {
@@ -280,7 +281,7 @@ public class ScifiBorder extends AbstractBorder {
           x + width / 2 - textWidth / 2 + centerPiece.getWidth(), y, null);
 
       g2d.setColor(GuiStatics.COLOR_GOLD_TRANS);
-      g2d.setFont(GuiStatics.getFontCubellanSC());
+      g2d.setFont(GuiFonts.getFontCubellanSC());
       int offsetY = 0;
       if (hires) {
         offsetY = 6;

@@ -20,6 +20,7 @@ package org.openRealmOfStars.gui.buttons;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -35,7 +36,7 @@ public class SpaceComboTest {
     tmpStr[1] = "Test B";
     tmpStr[2] = "Test C";
     SpaceCombo<String> combo = new SpaceCombo<>(tmpStr);
-    assertEquals(GuiStatics.getFontCubellan(), combo.getFont());
+    assertEquals(GuiFonts.getFontCubellan(), combo.getFont());
     assertEquals(GuiStatics.getDeepSpaceDarkColor(), combo.getBackground());
     assertEquals(GuiStatics.getCoolSpaceColor(), combo.getForeground());
   }

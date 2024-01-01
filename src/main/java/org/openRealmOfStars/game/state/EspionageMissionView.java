@@ -48,6 +48,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.espionage.EspionageUtility;
@@ -411,7 +412,7 @@ public class EspionageMissionView extends BlackPanel {
     missionType.setActionCommand(GameCommands.COMMAND_ESPIONAGE_MISSIONS);
     eastPanel.add(missionType);
     missionInfo = new InfoTextArea(5, 35);
-    missionInfo.setFont(GuiStatics.getFontCubellanSmaller());
+    missionInfo.setFont(GuiFonts.getFontCubellanSmaller());
     missionInfo.setEditable(false);
     missionInfo.setWrapStyleWord(true);
     missionInfo.setLineWrap(true);

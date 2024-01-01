@@ -21,16 +21,10 @@ package org.openRealmOfStars.gui.util;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Optional;
 
 import javax.swing.BorderFactory;
 import javax.swing.UIManager;
@@ -45,441 +39,161 @@ import org.openRealmOfStars.gui.scheme.GreyScheme;
 import org.openRealmOfStars.gui.scheme.SchemeType;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.player.race.SpaceRace;
-import org.openRealmOfStars.utilities.DataSources;
-import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
  *
- * Static GUI component like fonts and colors.
+ * Static GUI components like images and colors.
  *
  */
 public final class GuiStatics {
 
-  /**
-   * Hiding the constructor for utility class
-   */
+  /** Hiding the constructor for utility class */
   private GuiStatics() {
     // Nothing to do
   }
 
-  /**
-   * Classic scheme
-   */
+  /** Classic scheme */
   public static final BaseScheme CLASSIC_SCHEME = new ClassicScheme();
-  /**
-   * Classic scheme
-   */
+  /** Classic scheme */
   public static final BaseScheme GREY_SCHEME = new GreyScheme();
-  /**
-   * Scheme selection for UI.
-   */
+  /** Scheme selection for UI. */
   private static BaseScheme schemeType = CLASSIC_SCHEME;
 
-  /**
-   * Text field height in pixels.
-   */
+  /** Text field height in pixels. */
   public static final int TEXT_FIELD_HEIGHT = 30;
 
-  /** Monospace font size 10. Used as a fallback. */
-  public static final Font FONT_SMALL = new Font("monospaced", Font.PLAIN, 10);
-  /** Monospace font size 12. Used as a fallback.  */
-  public static final Font FONT_NORMAL = new Font("monospaced", Font.BOLD, 12);
-
-  /** Cubellan Font URL */
-  private static final URL CUBELLAN_FONT_URL = DataSources
-      .getDataUrl("resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
-      .orElse(null);
-  /** Cubellan Bold Font URL */
-  private static final URL CUBELLAN_BOLD_FONT_URL = DataSources
-      .getDataUrl("resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf")
-      .orElse(null);
-  /** Cubellan SC Font URL */
-  private static final URL CUBELLAN_SC_FONT_URL = DataSources
-      .getDataUrl("resources/fonts/Cubellan_v_0_7/Cubellan_SC.ttf")
-      .orElse(null);
-  /** Squarion hinted Font URL */
-  private static final URL SQUARION_HINTED_FONT_URL = DataSources
-      .getDataUrl("resources/fonts/Squarion/hinted-Squarion.ttf")
-      .orElse(null);
-
-  /** The Font cache. It caches fonts... End of mandatory Javadoc comment. */
-  private static HashMap<String, Font> fontCache = new HashMap<>();
-
-  /**
-   * Load a TrueType font in it's basic form.
-   * @param fontUrl URL to Font
-   * @return Loaded Font or empty
-   */
-  private static Optional<Font> loadTrueTypeFont(
-      final URL fontUrl) {
-    try (InputStream is = fontUrl.openStream()) {
-      return Optional.of(Font.createFont(Font.TRUETYPE_FONT, is));
-    } catch (IOException | FontFormatException e) {
-      ErrorLogger.log("Font loading error:" + e.getMessage());
-      return Optional.empty();
-    }
-  }
-
-  /**
-   * Creates a "Font ID" from input. Used for Font caching identifiers.
-   * @param fontResource Font URL as String
-   * @param baseSize base size of the font
-   * @return ID of Font for fontCache
-   */
-  private static String buildFontId(final String fontResource,
-      final float baseSize) {
-    return fontResource.toString() + "SIZE:" + baseSize;
-  }
-
-  /**
-   * Lazy-load a font of specified base size, using internal scaling factor,
-   * and store resulting font to cache
-   * @param fontUrl Font URL
-   * @param baseSize base size of the font
-   * @return Font or empty if loading failed
-   */
-  private static Optional<Font> getFontFromCache(final URL fontUrl,
-      final float baseSize) {
-    return getFontFromCache(fontUrl, baseSize, fontScalingFactor);
-  }
-
-  /**
-   * Lazy-load a font of specified base size, using specified scaling factor,
-   * and store resulting font to cache
-   * @param fontUrl Font URL
-   * @param baseSize base size of the font
-   * @param scalingFactor load the font using specified scaling
-   * @return Font or empty if loading failed
-   */
-  private static Optional<Font> getFontFromCache(final URL fontUrl,
-      final float baseSize, final float scalingFactor) {
-    if (fontUrl == null) {
-      return Optional.empty();
-    }
-
-    final var fontOpt = loadTrueTypeFont(fontUrl);
-    final var fontSize = baseSize * scalingFactor;
-
-    if (fontOpt.isPresent()) {
-      final var tmpFont = fontOpt.get().deriveFont(fontSize);
-      final var fontId = buildFontId(fontUrl.toExternalForm(), baseSize);
-      fontCache.put(fontId, tmpFont);
-      return Optional.of(tmpFont);
-    }
-    return Optional.empty();
-  }
-
-  /**
-   * Get Regular Cubellan font very small
-   * @return Cubellan font
-   */
-  public static Font getFontCubellanVerySmall() {
-    // Don't auto-scale this font
-    return getFontFromCache(CUBELLAN_FONT_URL, 9, 1).orElse(FONT_SMALL);
-  }
-
-  /**
-   * Get Regular Cubellan font
-   * @return Cubellan font
-   */
-  public static Font getFontCubellan() {
-    return getFontFromCache(CUBELLAN_FONT_URL, 16).orElse(FONT_NORMAL);
-  }
-
-  /**
-   * Get Regular Cubellan font but smaller
-   * @return Cubellan font
-   */
-  public static Font getFontCubellanSmaller() {
-    return getFontFromCache(CUBELLAN_FONT_URL, 13).orElse(FONT_SMALL);
-  }
-
-  /**
-   * Get bold Cubellan font
-   * @return Cubellan font
-   */
-  public static Font getFontCubellanBold() {
-    return getFontFromCache(CUBELLAN_BOLD_FONT_URL, 24) .orElse(FONT_NORMAL);
-  }
-
-  /**
-   * Get bold Cubellan font
-   * @return Cubellan font
-   */
-  public static Font getFontCubellanBoldBig() {
-    return getFontFromCache(CUBELLAN_BOLD_FONT_URL, 35).orElse(FONT_NORMAL);
-  }
-
-  /**
-   * Get Cubellan font with Small Caps
-   * @return Cubellan font
-   */
-  public static Font getFontCubellanSC() {
-    return getFontFromCache(CUBELLAN_SC_FONT_URL, 13).orElse(FONT_NORMAL);
-  }
-
-  /**
-   * Get Regular Generale Station font
-   * @return Generale Station font
-   */
-  public static Font getFontSquarion() {
-    return getFontFromCache(SQUARION_HINTED_FONT_URL, 14).orElse(FONT_NORMAL);
-  }
-
-  /**
-   * Get Regular Generale Station font
-   * @return Generale Station font
-   */
-  public static Font getFontSquarionBold() {
-    // A little hacky method, but will do
-    // Having proper handling of Font forms (italic, bold, etc.) is in proper
-    final var fontUrlAsString = SQUARION_HINTED_FONT_URL.toExternalForm();
-    final var fontId = buildFontId(fontUrlAsString, 18);
-    final var cachedBoldFont = fontCache.get(fontId);
-    if (cachedBoldFont != null) {
-      return cachedBoldFont;
-    }
-
-    // This will cache the "base" font, but it will be discarded
-    var fontOpt = getFontFromCache(SQUARION_HINTED_FONT_URL, 18);
-    if (fontOpt.isEmpty()) {
-      return FONT_NORMAL;
-    }
-
-    final var processedFont = fontOpt.get().deriveFont(Font.BOLD);
-    fontCache.put(fontId, processedFont);
-    return processedFont;
-  }
-
-  /**
-   * Use larger fonts
-   */
-  private static float fontScalingFactor = 1.0F;
-
-  /**
-   * Line type for text background
-   */
+  /** Line type for text background */
   public static final Stroke TEXT_LINE = new BasicStroke(12,
       BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1, new float[] {1f }, 0);
 
-  /**
-   * Sun Line type for text background, opacity 230.
-   */
+  /** Sun Line type for text background, opacity 230. */
   public static final Color COLOR_GOLD_TRANS = new Color(210, 181, 44, 230);
 
-  /**
-   * Gold color
-   */
+  /** Gold color */
   public static final Color COLOR_GOLD = new Color(210, 181, 44);
 
-  /**
-   * Space yellow
-   */
+  /** Space yellow */
   public static final Color COLOR_SPACE_YELLOW = new Color(251, 255, 51);
 
-  /**
-   * Bright white
-   */
+  /** Bright white */
   public static final Color COLOR_BRIGHT_WHITE = new Color(241, 255, 241, 128);
-  /**
-   * Transparent black
-   */
+  /** Transparent black */
   public static final Color COLOR_TRANSPARENT_GREY = new Color(40, 40, 40, 128);
-  /**
-   * Transparent black
-   */
+  /** Transparent black */
   public static final Color COLOR_TRANSPARENT_BLACK = new Color(5, 5, 5, 128);
 
-  /**
-   * Space grey
-   */
+  /** Space grey */
   public static final Color COLOR_SPACE_GREY = new Color(180, 180, 221);
 
-  /**
-   * Dark space yellow
-   */
+  /** Dark space yellow */
   public static final Color COLOR_SPACE_YELLOW_DARK = new Color(134, 134, 33);
 
-  /**
-   * Dark Gold color
-   */
+  /** Dark Gold color */
   public static final Color COLOR_GOLD_DARK = new Color(155, 130, 13);
 
-  /**
-   * Planet Line type for text background, opacity 65.
-   */
+  /** Planet Line type for text background, opacity 65. */
   public static final Color COLOR_GREYBLUE = new Color(180, 180, 200, 65);
-  /**
-   * Planet Line type for text background.
-   */
+  /** Planet Line type for text background. */
   public static final Color COLOR_GREYBLUE_NO_OPAGUE =
       new Color(180, 180, 200);
 
-  /**
-   * Green text
-   */
+  /** Green text */
   public static final Color COLOR_GREEN_TEXT = new Color(4, 186, 0, 255);
 
-  /**
-   * Green text
-   */
+  /** Green text */
   public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
 
-  /**
-   * Grey text dark one
-   */
+  /** Grey text dark one */
   public static final Color COLOR_GREY_TEXT_DARK = new Color(90, 95, 90);
 
-  /**
-   * Grey text
-   */
+  /** Grey text */
   public static final Color COLOR_GREY_TEXT = new Color(160, 165, 160);
 
-  /**
-   * Red text
-   */
+  /** Red text */
   public static final Color COLOR_RED_TEXT = new Color(186, 4, 0, 255);
-  /**
-   * Red text Dark
-   */
+  /** Red text Dark */
   public static final Color COLOR_RED_TEXT_DARK = new Color(93, 2, 0, 255);
 
-  /**
-   * Yellow text
-   */
+  /** Yellow text */
   public static final Color COLOR_YELLOW_TEXT = new Color(220, 220, 4, 255);
 
-  /**
-   * Yellow text Dark
-   */
+  /** Yellow text Dark */
   public static final Color COLOR_YELLOW_TEXT_DARK = new Color(110, 110, 2,
       255);
 
-  /**
-   * Damage 3/4
-   */
+  /** Damage 3/4 */
   public static final Color COLOR_DAMAGE_LITTLE = new Color(177, 255, 11, 255);
 
-  /**
-   * Damage half
-   */
+  /** Damage half */
   public static final Color COLOR_DAMAGE_HALF = new Color(252, 255, 11, 255);
 
-  /**
-   * Damage MUCH
-   */
+  /** Damage MUCH */
   public static final Color COLOR_DAMAGE_MUCH = new Color(255, 189, 11, 255);
 
-  /**
-   * Damage almost destroyed
-   */
+  /** Damage almost destroyed */
   public static final Color COLOR_DAMAGE_ALMOST_DESTROYED = new Color(255, 143,
       11, 255);
 
-  /**
-   * Weapon Range Max
-   */
+  /** Weapon Range Max */
   public static final Color COLOR_WEAPON_RANGE_MAX = new Color(255, 45,
       11, 64);
-  /**
-   * Weapon Range Min
-   */
+  /** Weapon Range Min */
   public static final Color COLOR_WEAPON_RANGE_MIN = new Color(253, 248,
       110, 64);
 
-  /**
-   * Damage destroyed
-   */
+  /** Damage destroyed */
   public static final Color COLOR_DESTROYED = new Color(255, 28, 11, 255);
 
-  /**
-   * Dark grey, opacity 128
-   */
+  /** Dark grey, opacity 128 */
   public static final Color COLOR_VERY_DARK_GREY_TRANS = new Color(20, 20,
       20, 128);
 
-  /**
-   * Grey 160
-   */
+  /** Grey 160 */
   public static final Color COLOR_GREY_160 = new Color(160, 160, 160);
 
-  /**
-   * Grey 80
-   */
+  /** Grey 80 */
   public static final Color COLOR_GREY_80 = new Color(80, 80, 80);
 
-  /**
-   * Grey 40
-   */
+  /** Grey 40 */
   public static final Color COLOR_GREY_40 = new Color(40, 40, 40);
 
-  /**
-   * First color for explosion
-   */
+  /** First color for explosion */
   private static final Color EXPLOSION_COLOR_1 = new Color(255, 196, 18);
-  /**
-   * Second color for explosion
-   */
+  /** Second color for explosion */
   private static final Color EXPLOSION_COLOR_2 = new Color(244, 101, 14);
-  /**
-   * Third color for explosion
-   */
+  /** Third color for explosion */
   private static final Color EXPLOSION_COLOR_3 = new Color(255, 218, 72);
-  /**
-   * Fourth color for explosion
-   */
+  /** Fourth color for explosion */
   private static final Color EXPLOSION_COLOR_4 = new Color(241, 223, 17);
-  /**
-   * Fifth color for explosion
-   */
+  /** Fifth color for explosion */
   private static final Color EXPLOSION_COLOR_5 = new Color(255, 133, 13);
 
-  /**
-   * Explosion colors
-   */
+  /** Explosion colors */
   public static final Color[] EXPLOSION_COLORS = {EXPLOSION_COLOR_1,
       EXPLOSION_COLOR_2, EXPLOSION_COLOR_3, EXPLOSION_COLOR_4,
       EXPLOSION_COLOR_5 };
 
-  /**
-   * First color for red beam
-   */
+  /** First color for red beam */
   private static final Color BEAM_COLOR_1 = new Color(255, 36, 0);
-  /**
-   * Second color for red beam
-   */
+  /** Second color for red beam */
   private static final Color BEAM_COLOR_2 = new Color(255, 96, 0);
-  /**
-   * Third color for red beam
-   */
+  /** Third color for red beam */
   private static final Color BEAM_COLOR_3 = new Color(255, 128, 0);
-  /**
-   * Fourth color for red beam
-   */
+  /** Fourth color for red beam */
   private static final Color BEAM_COLOR_4 = new Color(255, 18, 0);
-  /**
-   * Fifth color for red beam
-   */
+  /** Fifth color for red beam */
   private static final Color BEAM_COLOR_5 = new Color(255, 115, 77);
 
-  /**
-   * Red beam colors
-   */
+  /** Red beam colors */
   public static final Color[] BEAM_COLORS = {BEAM_COLOR_1, BEAM_COLOR_2,
       BEAM_COLOR_3, BEAM_COLOR_4, BEAM_COLOR_5, };
 
-  /**
-   * Base color for tentacle.
-   */
+  /** Base color for tentacle. */
   public static final Color TENTACLE_COLOR_1 = new Color(65, 50, 44);
-  /**
-   * Second color for tentacle.
-   */
+  /** Second color for tentacle. */
   public static final Color TENTACLE_COLOR_2 = new Color(88, 73, 52);
-  /**
-   * Green beam colors
-   */
+  /** Green beam colors */
   public static final Color[] GREEN_BEAM_COLORS = {
       new Color(36, 255,  0),
       new Color(96, 255, 0),
@@ -487,9 +201,7 @@ public final class GuiStatics {
       new Color(18, 255, 0),
       new Color(155, 255, 77)};
 
-  /**
-   * Blue beam colors
-   */
+  /** Blue beam colors */
   public static final Color[] BLUE_BEAM_COLORS = {
       new Color(36, 0,  255),
       new Color(96, 0, 255),
@@ -497,987 +209,600 @@ public final class GuiStatics {
       new Color(18, 18, 255),
       new Color(155, 77, 255)};
 
-  /**
-   * Player color red.
-   */
+  /** Player color red. */
   public static final Color PLAYER_RED = new Color(215, 30, 34);
-  /**
-   * Player color blue.
-   */
+  /** Player color blue. */
   public static final Color PLAYER_BLUE = new Color(29, 60, 233);
-  /**
-   * Player color green.
-   */
+  /** Player color green. */
   public static final Color PLAYER_GREEN = new Color(27, 145, 62);
-  /**
-   * Player color pink.
-   */
+  /** Player color pink. */
   public static final Color PLAYER_PINK = new Color(237, 84, 186);
-  /**
-   * Player color orange.
-   */
+  /** Player color orange. */
   public static final Color PLAYER_ORANGE = new Color(255, 148, 28);
-  /**
-   * Player color yellow.
-   */
+  /** Player color yellow. */
   public static final Color PLAYER_YELLOW = new Color(255, 255, 103);
-  /**
-   * Player color black.
-   */
+  /** Player color black. */
   public static final Color PLAYER_BLACK = new Color(63, 71, 78);
-  /**
-   * Player color white.
-   */
+  /** Player color white. */
   public static final Color PLAYER_WHITE = new Color(214, 224, 240);
-  /**
-   * Player color purple.
-   */
+  /** Player color purple. */
   public static final Color PLAYER_PURPLE = new Color(107, 49, 188);
-  /**
-   * Player color brown.
-   */
+  /** Player color brown. */
   public static final Color PLAYER_BROWN = new Color(113, 73, 30);
-  /**
-   * Player color cyan.
-   */
+  /** Player color cyan. */
   public static final Color PLAYER_CYAN = new Color(68, 253, 245);
-  /**
-   * Player color lime.
-   */
+  /** Player color lime. */
   public static final Color PLAYER_LIME = new Color(80, 239, 57);
-  /**
-   * Player color chestnut.
-   */
+  /** Player color chestnut. */
   public static final Color PLAYER_CHESTNUT = new Color(115, 27, 19);
-  /**
-   * Player color rose.
-   */
+  /** Player color rose. */
   public static final Color PLAYER_ROSE = new Color(236, 192, 211);
-  /**
-   * Player color banana.
-   */
+  /** Player color banana. */
   public static final Color PLAYER_BANANA = new Color(255, 253, 190);
-  /**
-   * Player color gray.
-   */
+  /** Player color gray. */
   public static final Color PLAYER_GRAY = new Color(112, 132, 151);
-  /**
-   * Player color tan.
-   */
+  /** Player color tan. */
   public static final Color PLAYER_TAN = new Color(146, 135, 118);
-  /**
-   * Player color coral.
-   */
+  /** Player color coral. */
   public static final Color PLAYER_CORAL = new Color(236, 117, 120);
 
-  /**
-   * Player color olive.
-   */
+  /** Player color olive. */
   public static final Color PLAYER_OLIVE = new Color(97, 114, 24);
 
-  /**
-   * Player color sky.
-   */
+  /** Player color sky. */
   public static final Color PLAYER_SKY = new Color(110, 127, 217);
 
-  /**
-   * Relation unknown icon
-   */
+  /** Relation unknown icon */
   public static final BufferedImage RELATION_UNKNOWN = Icons.loadBigIcon(
       "/resources/images/bigicons.png", 0, 0, 32, 32);
-  /**
-   * Relation peace icon
-   */
+  /** Relation peace icon */
   public static final BufferedImage RELATION_PEACE = Icons.loadBigIcon(
       "/resources/images/bigicons.png", 32, 0, 32, 32);
-  /**
-   * Relation war icon
-   */
+  /** Relation war icon */
   public static final BufferedImage RELATION_WAR = Icons.loadBigIcon(
       "/resources/images/bigicons.png", 64, 0, 32, 32);
-  /**
-   * Relation trade alliance icon
-   */
+  /** Relation trade alliance icon */
   public static final BufferedImage RELATION_TRADE_ALLIANCE = Icons.loadBigIcon(
       "/resources/images/bigicons.png", 96, 0, 32, 32);
-  /**
-   * Relation trade embargo icon
-   */
+  /** Relation trade embargo icon */
   public static final BufferedImage RELATION_TRADE_EMBARGO = Icons.loadBigIcon(
       "/resources/images/bigicons.png", 96, 32, 32, 32);
-  /**
-   * Relation alliance icon
-   */
+  /** Relation alliance icon */
   public static final BufferedImage RELATION_ALLIANCE = Icons.loadBigIcon(
       "/resources/images/bigicons.png", 64, 32, 32, 32);
-  /**
-   * Defensive Pact icon
-   */
+  /** Defensive Pact icon */
   public static final BufferedImage DEFENSIVE_PACT = Icons.loadBigIcon(
       "/resources/images/bigicons.png", 32, 32, 32, 32);
-  /**
-   * Photon torpedo
-   */
+  /** Photon torpedo */
   public static final BufferedImage PHOTON_TORPEDO = IOUtilities
       .loadImage("/resources/images/photon_torp.png");
-  /**
-   * Plasma bullet
-   */
+  /** Plasma bullet */
   public static final BufferedImage PLASMA_BULLET = IOUtilities
       .loadImage("/resources/images/plasma.png");
 
-  /**
-   * Explosion animation
-   */
+  /** Explosion animation */
   public static final AnimatedImage EXPLOSION1 = new AnimatedImage(64, 64,
       "/resources/images/explosion1.png");
 
-  /**
-   * Blue explosion animation
-   */
+  /** Blue explosion animation */
   public static final AnimatedImage EXPLOSION2 = new AnimatedImage(64, 64,
       "/resources/images/explosion2.png");
 
-  /**
-   * Small explosion animation
-   */
+  /** Small explosion animation */
   public static final AnimatedImage EXPLOSION3 = new AnimatedImage(32, 32,
       "/resources/images/explosion3.png");
 
-  /**
-   * Nuke animation
-   */
+  /** Nuke animation */
   public static final AnimatedImage EXPLOSION4 = new AnimatedImage(64, 64,
       "/resources/images/explosion4.png");
 
-  /**
-   * Gravity ripper animation
-   */
+  /** Gravity ripper animation */
   public static final AnimatedImage GRAVITY_RIPPER = new AnimatedImage(64, 64,
       "/resources/images/gravity_ripper.png");
 
-  /**
-   * Lighting animation
-   */
+  /** Lighting animation */
   public static final AnimatedImage LIGHTNING = new AnimatedImage(64, 64,
       "/resources/images/lightning.png");
 
-  /**
-   * Shield animation
-   */
+  /** Shield animation */
   public static final AnimatedImage SHIELD1 = new AnimatedImage(64, 64,
       "/resources/images/shield.png");
 
-  /**
-   * Scanner animation
-   */
+  /** Scanner animation */
   public static final AnimatedImage SCANNER = new AnimatedImage(64, 64,
       "/resources/images/scanner.png");
 
-  /**
-   * Privateering animation
-   */
+  /** Privateering animation */
   public static final AnimatedImage PRIVATEER = new AnimatedImage(64, 64,
       "/resources/images/privateer.png");
 
-  /**
-   * Bite animation
-   */
+  /** Bite animation */
   public static final AnimatedImage BITE = new AnimatedImage(64, 64,
       "/resources/images/bite.png");
 
-  /**
-   * Wormhole animation
-   */
+  /** Wormhole animation */
   public static final AnimatedImage WORMHOLE = new AnimatedImage(64, 64,
       "/resources/images/wormhole.png");
 
-  /**
-   * Crosshair for combat
-   */
+  /** Crosshair for combat */
   public static final BufferedImage CROSSHAIR = IOUtilities
       .loadImage("/resources/images/crosshair.png");
 
-  /**
-   * ORoS icon 32x32
-   */
+  /** ORoS icon 32x32 */
   public static final BufferedImage LOGO32 = IOUtilities
       .loadImage("/resources/images/oros-logo32.png");
-  /**
-   * ORoS icon 48x48
-   */
+  /** ORoS icon 48x48 */
   public static final BufferedImage LOGO48 = IOUtilities
       .loadImage("/resources/images/oros-logo48.png");
-  /**
-   * ORoS icon 64x64
-   */
+  /** ORoS icon 64x64 */
   public static final BufferedImage LOGO64 = IOUtilities
       .loadImage("/resources/images/oros-logo64.png");
-  /**
-   * ORoS icon 128x128
-   */
+  /** ORoS icon 128x128 */
   public static final BufferedImage LOGO128 = IOUtilities
       .loadImage("/resources/images/oros-logo128.png");
 
-  /**
-   * Red Crosshair for combat
-   */
+  /** Red Crosshair for combat */
   public static final BufferedImage RED_CROSSHAIR = IOUtilities
       .loadImage("/resources/images/red_crosshair.png");
 
-  /**
-   * Big planet screen Rock 1
-   */
+  /** Big planet screen Rock 1 */
   public static final BufferedImage BIG_PLANET_ROCK1 = IOUtilities
       .loadImage("/resources/images/rock1.png");
 
-  /**
-   * Big planet screen water world 1
-   */
+  /** Big planet screen water world 1 */
   public static final BufferedImage BIG_PLANET_WATERWORLD1 = IOUtilities
       .loadImage("/resources/images/waterworld1.png");
 
-  /**
-   * Big planet screen water world 2
-   */
+  /** Big planet screen water world 2 */
   public static final BufferedImage BIG_PLANET_WATERWORLD2 = IOUtilities
       .loadImage("/resources/images/waterworld2.png");
 
-  /**
-   * Big planet screen water world 3
-   */
+  /** Big planet screen water world 3 */
   public static final BufferedImage BIG_PLANET_WATERWORLD3 = IOUtilities
       .loadImage("/resources/images/waterworld3.png");
 
-  /**
-   * Big planet screen water world 4
-   */
+  /** Big planet screen water world 4 */
   public static final BufferedImage BIG_PLANET_WATERWORLD4 = IOUtilities
       .loadImage("/resources/images/waterworld4.png");
-  /**
-   * Big planet screen water world 5
-   */
+  /** Big planet screen water world 5 */
   public static final BufferedImage BIG_PLANET_WATERWORLD5 = IOUtilities
       .loadImage("/resources/images/waterworld5.png");
-  /**
-   * Big planet screen water world 6
-   */
+  /** Big planet screen water world 6 */
   public static final BufferedImage BIG_PLANET_WATERWORLD6 = IOUtilities
       .loadImage("/resources/images/waterworld6.png");
-  /**
-   * Big planet screen water world 7
-   */
+  /** Big planet screen water world 7 */
   public static final BufferedImage BIG_PLANET_WATERWORLD7 = IOUtilities
       .loadImage("/resources/images/waterworld7.png");
-  /**
-   * Big planet screen water world 8
-   */
+  /** Big planet screen water world 8 */
   public static final BufferedImage BIG_PLANET_WATERWORLD8 = IOUtilities
       .loadImage("/resources/images/waterworld8.png");
-  /**
-   * Big planet screen water world 9
-   */
+  /** Big planet screen water world 9 */
   public static final BufferedImage BIG_PLANET_WATERWORLD9 = IOUtilities
       .loadImage("/resources/images/waterworld9.png");
 
-  /**
-   * Big planet screen ice world 1
-   */
+  /** Big planet screen ice world 1 */
   public static final BufferedImage BIG_PLANET_ICEWORLD1 = IOUtilities
       .loadImage("/resources/images/iceworld1.png");
 
-  /**
-   * Big planet screen ice world 2
-   */
+  /** Big planet screen ice world 2 */
   public static final BufferedImage BIG_PLANET_ICEWORLD2 = IOUtilities
       .loadImage("/resources/images/iceworld2.png");
-  /**
-   * Big planet screen ice world 3
-   */
+  /** Big planet screen ice world 3 */
   public static final BufferedImage BIG_PLANET_ICEWORLD3 = IOUtilities
       .loadImage("/resources/images/iceworld3.png");
-  /**
-   * Big planet screen ice world 4
-   */
+  /** Big planet screen ice world 4 */
   public static final BufferedImage BIG_PLANET_ICEWORLD4 = IOUtilities
       .loadImage("/resources/images/iceworld4.png");
 
-  /**
-   * Big planet screen carbon world 1
-   */
+  /** Big planet screen carbon world 1 */
   public static final BufferedImage BIG_PLANET_SWAMPWORLD1 = IOUtilities
       .loadImage("/resources/images/carbonworld1.png");
-  /**
-   * Big planet screen carbon world 2
-   */
+  /** Big planet screen carbon world 2 */
   public static final BufferedImage BIG_PLANET_SWAMPWORLD2 = IOUtilities
       .loadImage("/resources/images/carbonworld2.png");
-  /**
-   * Big planet screen carbon world 3
-   */
+  /** Big planet screen carbon world 3 */
   public static final BufferedImage BIG_PLANET_SWAMPWORLD3 = IOUtilities
       .loadImage("/resources/images/carbonworld3.png");
 
-  /**
-   * Big planet screen iron planet 1
-   */
+  /** Big planet screen iron planet 1 */
   public static final BufferedImage BIG_PLANET_VOLCANICPLANET1 = IOUtilities
       .loadImage("/resources/images/ironplanet1.png");
 
-  /**
-   * Big planet screen iron planet 2
-   */
+  /** Big planet screen iron planet 2 */
   public static final BufferedImage BIG_PLANET_VOLCANICPLANET2 = IOUtilities
       .loadImage("/resources/images/ironplanet2.png");
 
-  /**
-   * Big planet screen iron planet 3
-   */
+  /** Big planet screen iron planet 3 */
   public static final BufferedImage BIG_PLANET_VOLCANICPLANET3 = IOUtilities
       .loadImage("/resources/images/ironplanet3.png");
-  /**
-   * Big planet screen iron planet 4
-   */
+  /** Big planet screen iron planet 4 */
   public static final BufferedImage BIG_PLANET_VOLCANICPLANET4 = IOUtilities
       .loadImage("/resources/images/ironplanet4.png");
-  /**
-   * Big planet screen iron planet 5
-   */
+  /** Big planet screen iron planet 5 */
   public static final BufferedImage BIG_PLANET_VOLCANICPLANET5 = IOUtilities
       .loadImage("/resources/images/ironplanet5.png");
-  /**
-   * Big planet screen iron planet 6
-   */
+  /** Big planet screen iron planet 6 */
   public static final BufferedImage BIG_PLANET_VOLCANICPLANET6 = IOUtilities
       .loadImage("/resources/images/ironplanet6.png");
 
-  /**
-   * Big planet gas world
-   */
+  /** Big planet gas world */
   public static final BufferedImage BIG_GASWORLD1 = IOUtilities
       .loadImage("/resources/images/gasworld1.png");
 
-  /**
-   * Big planet screen gas world
-   */
+  /** Big planet screen gas world */
   public static final BufferedImage BIG_GASWORLD2 = IOUtilities
       .loadImage("/resources/images/gasworld2.png");
-  /**
-   * Big planet screen gas world
-   */
+  /** Big planet screen gas world */
   public static final BufferedImage BIG_GASWORLD3 = IOUtilities
       .loadImage("/resources/images/gasworld3.png");
-  /**
-   * Big planet screen desert planet 1
-   */
+  /** Big planet screen desert planet 1 */
   public static final BufferedImage BIG_PLANET_DESERTWORLD1 = IOUtilities
       .loadImage("/resources/images/desertplanet1.png");
-  /**
-   * Big planet screen desert planet 2
-   */
+  /** Big planet screen desert planet 2 */
   public static final BufferedImage BIG_PLANET_DESERTWORLD2 = IOUtilities
       .loadImage("/resources/images/desertplanet2.png");
-  /**
-   * Big planet screen desert planet 3
-   */
+  /** Big planet screen desert planet 3 */
   public static final BufferedImage BIG_PLANET_DESERTWORLD3 = IOUtilities
       .loadImage("/resources/images/desertplanet3.png");
-  /**
-   * Big planet screen artificial planet 1
-   */
+  /** Big planet screen artificial planet 1 */
   public static final BufferedImage BIG_PLANET_ARTIFICIALPLANET1 = IOUtilities
       .loadImage("/resources/images/artificialworld1.png");
-  /**
-   * Big planet screen Earth
-   */
+  /** Big planet screen Earth */
   public static final BufferedImage BIG_PLANET_EARTH = IOUtilities
       .loadImage("/resources/images/earth.png");
-  /**
-   * Big planet screen Mars
-   */
+  /** Big planet screen Mars */
   public static final BufferedImage BIG_PLANET_MARS = IOUtilities
       .loadImage("/resources/images/mars.png");
 
-  /**
-   * Big planet screen Jupiter
-   */
+  /** Big planet screen Jupiter */
   public static final BufferedImage BIG_PLANET_JUPITER = IOUtilities
       .loadImage("/resources/images/jupiter.png");
-  /**
-   * Big planet screen Saturn
-   */
+  /** Big planet screen Saturn */
   public static final BufferedImage BIG_PLANET_SATURN = IOUtilities
       .loadImage("/resources/images/saturn.png");
-  /**
-   * Big planet screen IceGiant1
-   */
+  /** Big planet screen IceGiant1 */
   public static final BufferedImage BIG_PLANET_ICEGIANT1 = IOUtilities
       .loadImage("/resources/images/icegiant1.png");
-  /**
-   * Big planet screen IceGiant2
-   */
+  /** Big planet screen IceGiant2 */
   public static final BufferedImage BIG_PLANET_ICEGIANT2 = IOUtilities
       .loadImage("/resources/images/icegiant2.png");
 
-  /**
-   * Big sports logo
-   */
+  /** Big sports logo */
   public static final String BIG_SPORT_LOGO = "/resources/images/olympics.png";
 
-  /**
-   * Star field image for parallax scrolling
-   */
+  /** Star field image for parallax scrolling */
   private static final BufferedImage STAR_FIELD_IMAGE = IOUtilities
       .loadImage("/resources/images/starfield.png");
 
-  /**
-   * Generated star field image.
-   */
+  /** Generated star field image. */
   private static BufferedImage starField = null;
 
-  /**
-   * Generated star nebula image.
-   */
+  /** Generated star nebula image. */
   private static BufferedImage starNebulae = null;
-  /**
-   * Separate thread to generate background stars.
-   */
+  /** Separate thread to generate background stars. */
   private static ProceduralRenderer proceduralRenderer = null;
-  /**
-   * Nebula image for parallax scrolling
-   */
+  /** Nebula image for parallax scrolling */
   public static final BufferedImage NEBULAE_IMAGE = IOUtilities
       .loadImage("/resources/images/nebulae.png");
 
-  /**
-   * Image used for calculation text width and heights.
-   */
+  /** Image used for calculation text width and heights. */
   private static final BufferedImage TEMP_IMAGE = new BufferedImage(100, 100,
       BufferedImage.TYPE_4BYTE_ABGR);
 
-  /**
-   * Horizontal thumb
-   */
+  /** Horizontal thumb */
   public static final BufferedImage IMAGE_SCROLL_BAR_THUMB = IOUtilities
       .loadImage("/resources/images/thumb.png");
 
-  /**
-   * Vertical thumb
-   */
+  /** Vertical thumb */
   public static final BufferedImage IMAGE_SCROLL_BAR_THUMB2 = IOUtilities
       .loadImage("/resources/images/thumb2.png");
 
-  /**
-   * Teuthidae race selection image
-   */
+  /** Teuthidae race selection image */
   public static final BufferedImage IMAGE_TEUTHIDAE_RACE = IOUtilities
       .loadImage("/resources/images/teuthidae_race.png");
-  /**
-   * Scaurian race selection image
-   */
+  /** Scaurian race selection image */
   public static final BufferedImage IMAGE_SCAURIAN_RACE = IOUtilities
       .loadImage("/resources/images/scaurian_race.png");
-  /**
-   * Homarian race selection image
-   */
+  /** Homarian race selection image */
   public static final BufferedImage IMAGE_HOMARIAN_RACE = IOUtilities
       .loadImage("/resources/images/homarian_race.png");
-  /**
-   * Mothoid race selection image
-   */
+  /** Mothoid race selection image */
   public static final BufferedImage IMAGE_MOTHOID_RACE = IOUtilities
       .loadImage("/resources/images/mothoid_race.png");
-  /**
-   * Centaur race selection image
-   */
+  /** Centaur race selection image */
   public static final BufferedImage IMAGE_CENTAUR_RACE = IOUtilities
       .loadImage("/resources/images/centaur_race.png");
-  /**
-   * Greyan race selection image
-   */
+  /** Greyan race selection image */
   public static final BufferedImage IMAGE_GREYAN_RACE = IOUtilities
       .loadImage("/resources/images/greyan_race.png");
-  /**
-   * Mechion race selection image
-   */
+  /** Mechion race selection image */
   public static final BufferedImage IMAGE_MECHION_RACE = IOUtilities
       .loadImage("/resources/images/mechion_race.png");
-  /**
-   * Spork race selection image
-   */
+  /** Spork race selection image */
   public static final BufferedImage IMAGE_SPORK_RACE = IOUtilities
       .loadImage("/resources/images/spork_race.png");
 
-  /**
-   * Human race selection image
-   */
+  /** Human race selection image */
   public static final BufferedImage IMAGE_HUMAN_RACE = IOUtilities
       .loadImage("/resources/images/human_race.png");
 
-  /**
-   * Chiraloid race selection image
-   */
+  /** Chiraloid race selection image */
   public static final BufferedImage IMAGE_CHIRALOID_RACE = IOUtilities
       .loadImage("/resources/images/chiraloid_race.png");
 
-  /**
-   * Reborgian race selection image
-   */
+  /** Reborgian race selection image */
   public static final BufferedImage IMAGE_REBORGIAN_RACE = IOUtilities
       .loadImage("/resources/images/reborgian_race.png");
 
-  /**
-   * Lithorian race selection image
-   */
+  /** Lithorian race selection image */
   public static final BufferedImage IMAGE_LITHORIAN_RACE = IOUtilities
       .loadImage("/resources/images/lithorian_race.png");
 
-  /**
-   * Alteirian race selection image
-   */
+  /** Alteirian race selection image */
   public static final BufferedImage IMAGE_ALTEIRIAN_RACE = IOUtilities
       .loadImage("/resources/images/alteirian_race.png");
 
-  /**
-   * Smaugirian race selection image
-   */
+  /** Smaugirian race selection image */
   public static final BufferedImage IMAGE_SMAUGIRIAN_RACE = IOUtilities
       .loadImage("/resources/images/smaugirian_race.png");
 
-  /**
-   * Synthdroid race selection image
-   */
+  /** Synthdroid race selection image */
   public static final BufferedImage IMAGE_SYNTHDROID_RACE = IOUtilities
       .loadImage("/resources/images/synthdroid_race.png");
 
-  /**
-   * Privateer race selection image
-   */
+  /** Privateer race selection image */
   public static final BufferedImage IMAGE_PRIVATEER_RACE = IOUtilities
       .loadImage("/resources/images/privateer_race.png");
 
-  /**
-   * Newsreader image for GBNC
-   */
+  /** Newsreader image for GBNC */
   public static final BufferedImage IMAGE_NEWSREADER = IOUtilities
       .loadImage("/resources/images/newsreader.png");
 
-  /**
-   * GBNC logo
-   */
+  /** GBNC logo */
   public static final BufferedImage IMAGE_GBNC = IOUtilities
       .loadImage("/resources/images/gbnc-logo.png");
 
-  /**
-   * ASTEROIDS
-   */
+  /** ASTEROIDS */
   public static final BufferedImage IMAGE_ASTEROIDS = IOUtilities
       .loadImage("/resources/images/asteroids.png");
 
-  /**
-   * Pirate pilot
-   */
+  /** Pirate pilot */
   public static final String IMAGE_PIRATE_PILOT =
       "/resources/images/pirate_pilot.png";
 
-  /**
-   * Space kraken
-   */
+  /** Space kraken */
   public static final String IMAGE_KRAKEN = "/resources/images/kraken.png";
 
-  /**
-   * Pirate raiders
-   */
+  /** Pirate raiders */
   public static final String IMAGE_PIRATE_RAIDERS =
       "/resources/images/pirate_raiders.png";
 
-  /**
-   * Big corvette
-   */
+  /** Big corvette */
   public static final String IMAGE_CORVETTE =
       "/resources/images/corvette.png";
-  /**
-   * Big cruiser
-   */
+  /** Big cruiser */
   public static final String IMAGE_CRUISER =
       "/resources/images/cruiser.png";
 
-  /**
-   * Mutiny
-   */
+  /** Mutiny */
   public static final String IMAGE_MUTINY = "/resources/images/mutiny.png";
-  /**
-   * Dataloss
-   */
+  /** Dataloss */
   public static final String IMAGE_DATALOSS = "/resources/images/dataloss.png";
 
-  /**
-   * Newstation
-   */
+  /** Newstation */
   public static final String IMAGE_NEWSTATION =
       "/resources/images/newstation.png";
 
-  /**
-   * Destroyed PLanet
-   */
+  /** Destroyed PLanet */
   public static final String IMAGE_DESTROYED_PLANET =
       "/resources/images/destroyedPlanet.png";
 
-  /**
-   * Shuttle
-   */
+  /** Shuttle */
   public static final String IMAGE_SHUTTLE = "/resources/images/shuttle.png";
 
-  /**
-   * Blackhole pilot
-   */
+  /** Blackhole pilot */
   public static final BufferedImage IMAGE_BLACKHOLE = IOUtilities
       .loadImage("/resources/images/blackhole.png");
 
-  /**
-   * Old probe
-   */
+  /** Old probe */
   public static final BufferedImage IMAGE_OLD_PROBE = IOUtilities
       .loadImage("/resources/images/oldprobe.png");
 
-  /**
-   * Rare tech
-   */
+  /** Rare tech */
   public static final BufferedImage IMAGE_RARE_TECH = IOUtilities
       .loadImage("/resources/images/raretech.png");
 
-  /**
-   * Artifact 1
-   */
+  /** Artifact 1 */
   public static final BufferedImage IMAGE_ARTIFACT1 = IOUtilities
       .loadImage("/resources/images/artifact1.png");
-  /**
-   * Artifact 2
-   */
+  /** Artifact 2 */
   public static final BufferedImage IMAGE_ARTIFACT2 = IOUtilities
       .loadImage("/resources/images/artifact2.png");
 
-  /**
-   * Old Ship
-   */
+  /** Old Ship */
   public static final String IMAGE_OLD_SHIP = "/resources/images/oldship.png";
 
-  /**
-   * Alien Vessel
-   */
+  /** Alien Vessel */
   public static final String IMAGE_ALIEN_SHIP =
       "/resources/images/alienship.png";
-  /**
-   * Time Warp
-   */
+  /** Time Warp */
   public static final BufferedImage IMAGE_TIME_WARP = IOUtilities
       .loadImage("/resources/images/timewarp.png");
-  /**
-   * Factory
-   */
+  /** Factory */
   public static final String IMAGE_FACTORY = "/resources/images/factory.png";
-  /**
-   * Pirate lair
-   */
+  /** Pirate lair */
   public static final BufferedImage IMAGE_PIRATE_LAIR = IOUtilities
       .loadImage("/resources/images/piratelair.png");
-  /**
-   * Electron nebula
-   */
+  /** Electron nebula */
   public static final BufferedImage IMAGE_DSA = IOUtilities
       .loadImage("/resources/images/electron nebula.png");
-  /**
-   * Space ship
-   */
+  /** Space ship */
   public static final BufferedImage IMAGE_SPACE_SHIP = IOUtilities
       .loadImage("/resources/images/spaceship_final.png");
-  /**
-   * Trade Space ship 1
-   */
+  /** Trade Space ship 1 */
   public static final String IMAGE_TRADE_SHIP =
       "/resources/images/tradeship-learmarch.png";
-  /**
-   * Trade Space ship 2
-   */
+  /** Trade Space ship 2 */
   public static final String IMAGE_TRADE_SHIP2 =
       "/resources/images/tradeship-learmarch1.png";
-  /**
-   * Cloaked ship
-   */
+  /** Cloaked ship */
   public static final String IMAGE_CLOAKED_SHIP =
       "/resources/images/cloaked_ship.png";
-  /**
-   * Shuttle 2
-   */
+  /** Shuttle 2 */
   public static final String IMAGE_SHUTTLE2 = "/resources/images/shuttle2.png";
-  /**
-   * Big nuke image
-   */
+  /** Big nuke image */
   public static final String IMAGE_BIG_NUKE =
       "/resources/images/bignuke.png";
-  /**
-   * Big ban icon
-   */
+  /** Big ban icon */
   public static final String IMAGE_BIG_BAN_ICON =
       "/resources/images/bigban.png";
-  /**
-   * Big ban peace
-   */
+  /** Big ban peace */
   public static final String IMAGE_BIG_PEACE_ICON =
       "/resources/images/bigpeace.png";
-  /**
-   * Big pirate ship.
-   */
+  /** Big pirate ship. */
   public static final String IMAGE_PRIVATEER =
       "/resources/images/pirateship.png";
-  /**
-   * Galaxy image
-   */
+  /** Galaxy image */
   public static final String IMAGE_GALAXY =
       "/resources/images/galaxy.png";
-  /**
-   * United Galaxy Tower image
-   */
+  /** United Galaxy Tower image */
   public static final String IMAGE_UNITED_GALAXY_TOWER =
       "/resources/images/unitedgalaxytower.png";
-  /**
-   * Big missile image
-   */
+  /** Big missile image */
   public static final String IMAGE_BIG_MISSILE =
       "/resources/images/bigmissile.png";
-  /**
-   * Big money image
-   */
+  /** Big money image */
   public static final String IMAGE_BIG_MONEY =
       "/resources/images/bigmoney.png";
-  /**
-   * Solar flares images
-   */
+  /** Solar flares images */
   public static final String IMAGE_SOLAR_FLARES =
       "/resources/images/sun-flares.png";
-  /**
-   * Solar no flares images
-   */
+  /** Solar no flares images */
   public static final String IMAGE_SOLAR_NO_FLARES =
       "/resources/images/sun-noflares.png";
-  /**
-   * Image desert planet image
-   */
+  /** Image desert planet image */
   public static final String IMAGE_DESERT = "/resources/images/desert.png";
-  /**
-   * Image old table with book, lamp and court hammer
-   */
+  /** Image old table with book, lamp and court hammer */
   public static final BufferedImage IMAGE_DESKTOP = IOUtilities
       .loadImage("/resources/images/olddesk.png");
-  /**
-   * Image paradise planet
-   */
+  /** Image paradise planet */
   public static final String IMAGE_PARADISE = "/resources/images/landscape.png";
-  /**
-   * Image viruses
-   */
+  /** Image viruses */
   public static final String IMAGE_VIRUSES = "/resources/images/viruses.png";
-  /**
-   * Image mysterious signal
-   */
+  /** Image mysterious signal */
   public static final String IMAGE_SIGNAL =
       "/resources/images/mysterious_signal.png";
-  /**
-   * Image technical breakthrough
-   */
+  /** Image technical breakthrough */
   public static final String IMAGE_TECHNICAL_BREAKTHROUGH =
       "/resources/images/technical_breakthrough.png";
 
-  /**
-   * Image meteor
-   */
+  /** Image meteor */
   public static final String IMAGE_METEOR =
       "/resources/images/meteor.png";
-  /**
-   * Image meteor hit explosion
-   */
+  /** Image meteor hit explosion */
   public static final String IMAGE_METEOR_HIT =
       "/resources/images/meteorhit.png";
-  /**
-   * Image ship destroyed
-   */
+  /** Image ship destroyed */
   public static final String IMAGE_SHIP_DESTROYED =
       "/resources/images/ship_destroyed.png";
-  /**
-   * Image spinosaurus
-   */
+  /** Image spinosaurus */
   public static final String IMAGE_SPINOSAURUS =
       "/resources/images/spinosaurus.png";
-  /**
-   * Image stasis
-   */
+  /** Image stasis */
   public static final String IMAGE_STASIS = "/resources/images/stasis.png";
-  /**
-   * Image containers
-   */
+  /** Image containers */
   public static final String IMAGE_CONTAINERS =
       "/resources/images/containers.png";
-  /**
-   * Image terror strike
-   */
+  /** Image terror strike */
   public static final String IMAGE_TERROR = "/resources/images/terror.png";
-  /**
-   * Image metal rich surface
-   */
+  /** Image metal rich surface */
   public static final String IMAGE_METAL_RICH_SURFACE =
       "/resources/images/metal_rich_surface.png";
-  /**
-   * Image precious gems
-   */
+  /** Image precious gems */
   public static final String IMAGE_PRECIOUS_GEMS =
       "/resources/images/gems.png";
-  /**
-   * Image ancient laboratory
-   */
+  /** Image ancient laboratory */
   public static final String IMAGE_ANCIENT_LABORATORY =
       "/resources/images/ancientlaboratory.png";
-  /**
-   * Image ancient research
-   */
+  /** Image ancient research */
   public static final String IMAGE_ANCIENT_RESEARCH =
       "/resources/images/ancientresearch.png";
-  /**
-   * Image ancient factory
-   */
+  /** Image ancient factory */
   public static final String IMAGE_ANCIENT_FACTORY =
       "/resources/images/ancientfactory.png";
-  /**
-   * Image ancient temple
-   */
+  /** Image ancient temple */
   public static final String IMAGE_ANCIENT_TEMPLE =
       "/resources/images/ancienttemple.png";
-  /**
-   * Image ancient palace
-   */
+  /** Image ancient palace */
   public static final String IMAGE_ANCIENT_PALACE =
       "/resources/images/ancientpalace.png";
-  /**
-   * Image Black Monolith
-   */
+  /** Image Black Monolith */
   public static final String IMAGE_BLACK_MONOLITH =
       "/resources/images/blackmonolith.png";
-  /**
-   * Image Molten lava
-   */
+  /** Image Molten lava */
   public static final String IMAGE_MOLTEN_LAVA =
       "/resources/images/moltenlava.png";
-  /**
-   * Image Arid
-   */
+  /** Image Arid */
   public static final String IMAGE_ARID = "/resources/images/arid.png";
-  /**
-   * Image Lush vegetation
-   */
+  /** Image Lush vegetation */
   public static final String IMAGE_LUSH_VEGETATION =
       "/resources/images/lushvegetation.png";
-  /**
-   * Image Artifact on planet
-   */
+  /** Image Artifact on planet */
   public static final String IMAGE_ARTIFACT_ON_PLANET =
       "/resources/images/artifactonplanet.png";
-  /**
-   * Big Orbital.
-   */
+  /** Big Orbital. */
   public static final String IMAGE_BIG_ORBITAL =
       "/resources/images/bigorbital.png";
-  /**
-   * Big Explosion
-   */
+  /** Big Explosion */
   public static final String IMAGE_BIG_EXPLOSION =
       "/resources/images/bigexplosion.png";
 
-  /**
-   * Ship bridge interior 1
-   */
+  /** Ship bridge interior 1 */
   public static final BufferedImage IMAGE_INTERIOR1 = IOUtilities
       .loadImage("/resources/images/bridge1.png");
-  /**
-   * Ship centaur bridge interior
-   */
+  /** Ship centaur bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_CENTAUR = IOUtilities
       .loadImage("/resources/images/centaur_bridge.png");
-  /**
-   * Ship Scaurian bridge interior
-   */
+  /** Ship Scaurian bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_SCAURIAN = IOUtilities
       .loadImage("/resources/images/scaurian_bridge.png");
-  /**
-   * Ship Mechion bridge interior
-   */
+  /** Ship Mechion bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_MECHION = IOUtilities
       .loadImage("/resources/images/mechion_bridge.png");
-
-  /**
-   * Ship Human bridge interior
-   */
+  /** Ship Human bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_HUMAN = IOUtilities
       .loadImage("/resources/images/human_bridge.png");
-
-  /**
-   * Ship Mothoid bridge interior
-   */
+  /** Ship Mothoid bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_MOTHOID = IOUtilities
       .loadImage("/resources/images/mothoid_bridge.png");
-
-  /**
-   * Ship Greyan bridge interior
-   */
+  /** Ship Greyan bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_GREYAN = IOUtilities
       .loadImage("/resources/images/greyan_bridge.png");
-
-  /**
-   * Ship Homarian bridge interior
-   */
+  /** Ship Homarian bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_HOMARIAN = IOUtilities
       .loadImage("/resources/images/homarian_bridge.png");
-
-  /**
-   * Ship Teuthidae bridge interior
-   */
+  /** Ship Teuthidae bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_TEUTHIDAE = IOUtilities
       .loadImage("/resources/images/teuthidae_bridge.png");
-
-  /**
-   * Ship Spork bridge interior
-   */
+  /** Ship Spork bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_SPORK = IOUtilities
       .loadImage("/resources/images/spork_bridge.png");
-  /**
-   * Ship Chiraloid bridge interior
-   */
+  /** Ship Chiraloid bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_CHIRALOID = IOUtilities
       .loadImage("/resources/images/chiraloid_bridge.png");
-  /**
-   * Ship Pirate bridge interior
-   */
+  /** Ship Pirate bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_PIRATE = IOUtilities
       .loadImage("/resources/images/pirate_bridge.png");
-  /**
-   * Ship Lithorian bridge interior
-   */
+  /** Ship Lithorian bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_LITHORIAN = IOUtilities
       .loadImage("/resources/images/lithorian_bridge.png");
-
-  /**
-   * Ship Reborgian bridge interior
-   */
+  /** Ship Reborgian bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_REBORGIAN = IOUtilities
       .loadImage("/resources/images/reborgian_bridge.png");
-
-  /**
-   * Ship Smaugirian bridge interior
-   */
+  /** Ship Smaugirian bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_SMAUGIRIAN = IOUtilities
       .loadImage("/resources/images/smaugirian_bridge.png");
-
-  /**
-   * Ship Alteirian bridge interior
-   */
+  /** Ship Alteirian bridge interior */
   public static final BufferedImage IMAGE_INTERIOR_ALTEIRIAN = IOUtilities
       .loadImage("/resources/images/alteirian_bridge.png");
 
@@ -1576,28 +901,6 @@ public final class GuiStatics {
   }
 
   /**
-   * Is larger fonts in use?
-   * @return True if larger fonts are in use
-   */
-  public static boolean isLargerFonts() {
-    return fontScalingFactor > 1.0;
-  }
-
-  /**
-   * Set use of larger fonts
-   * @param largerFonts the useLargerFonts to set
-   */
-  public static void setLargerFonts(final boolean largerFonts) {
-    // Invalidate font cache
-    fontCache.clear();
-    if (largerFonts) {
-      GuiStatics.fontScalingFactor = 1.15F;
-    } else {
-      GuiStatics.fontScalingFactor = 1.0F;
-    }
-  }
-
-  /**
    * Get star field image and generate if not available.
    * @return BufferedImage
    */
@@ -1645,9 +948,7 @@ public final class GuiStatics {
     initializeUiDefaults();
   }
 
-  /**
-   * Initialize UI manager.
-   */
+  /** Initialize UI manager. */
   public static void initializeUiDefaults() {
     UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
     UIManager.put("Tree.paintLines", false);
@@ -1678,6 +979,7 @@ public final class GuiStatics {
     UIManager.put("ToolTip.border", BorderFactory
         .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
   }
+
   /**
    * Set Scheme type.
    * @param schemeType the BaseScheme to set
@@ -1706,6 +1008,7 @@ public final class GuiStatics {
   public static Color getPanelBackground() {
     return schemeType.getPanelBackground();
   }
+
   /**
    * Get cool space color
    * @return Color
@@ -1713,6 +1016,7 @@ public final class GuiStatics {
   public static Color getCoolSpaceColor() {
     return schemeType.getCoolSpaceColor();
   }
+
   /**
    * Get cool space color transparent.
    * @return Color
@@ -1752,6 +1056,7 @@ public final class GuiStatics {
   public static Color getCoolSpaceColorDarker() {
     return schemeType.getCoolSpaceColorDarker();
   }
+
   /**
    * Get Cool Space Color Darker transparent
    * @return Color
@@ -1775,6 +1080,7 @@ public final class GuiStatics {
   public static Color getDeepSpaceDarkColor() {
     return schemeType.getDeepSpaceDarkColor();
   }
+
   /**
    * Get Deep Space Activity Color
    * @return Color

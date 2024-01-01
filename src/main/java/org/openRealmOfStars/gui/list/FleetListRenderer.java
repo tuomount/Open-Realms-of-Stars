@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.fleet.Fleet;
 
@@ -46,7 +47,7 @@ public class FleetListRenderer implements ListCellRenderer<Fleet> {
       final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
-    renderer.setFont(GuiStatics.getFontCubellan());
+    renderer.setFont(GuiFonts.getFontCubellan());
     if (value.getNumberOfShip() == 1) {
       renderer
           .setText(value.getName() + " - " + value.getFirstShip().getName());

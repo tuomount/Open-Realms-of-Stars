@@ -51,6 +51,7 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.list.TutorialTreeCellRenderer;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.utilities.TextUtilities;
 
@@ -137,7 +138,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     tutorialTree.setBackground(Color.BLACK);
     tutorialTree.setForeground(GuiStatics.getInfoTextColor());
     tutorialTree.setCellRenderer(new TutorialTreeCellRenderer());
-    tutorialTree.setFont(GuiStatics.getFontCubellanSmaller());
+    tutorialTree.setFont(GuiFonts.getFontCubellanSmaller());
     tutorialTree.addTreeSelectionListener(this);
     JScrollPane scroll = new JScrollPane(tutorialTree);
     base.add(scroll, BorderLayout.WEST);
@@ -145,7 +146,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     infoText.setLineWrap(true);
     infoText.setCharacterWidth(7);
     infoText.setEditable(false);
-    infoText.setFont(GuiStatics.getFontCubellanSmaller());
+    infoText.setFont(GuiFonts.getFontCubellanSmaller());
     base.add(infoText, BorderLayout.CENTER);
     checkBox = new SpaceCheckBox("Tutorial enabled");
     checkBox.setToolTipText("If checked then tutorial is enabled in game.");
@@ -157,7 +158,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
     greyPanel.add(checkBox);
     searchText = new JTextField();
-    searchText.setFont(GuiStatics.getFontCubellan());
+    searchText.setFont(GuiFonts.getFontCubellan());
     searchText.setForeground(GuiStatics.getInfoTextColor());
     searchText.setBackground(Color.BLACK);
     searchText.setMaximumSize(new Dimension(300,

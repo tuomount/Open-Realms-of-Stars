@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
 import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
 import org.openRealmOfStars.gui.util.GraphRoutines;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipImage;
@@ -228,7 +229,7 @@ public class BigImagePanel extends JPanel {
    * @param g Graphics to use for drawing
    */
   private void drawTextArea(final Graphics g) {
-    g.setFont(GuiStatics.getFontCubellan());
+    g.setFont(GuiFonts.getFontCubellan());
     if (title == null && planet != null) {
       StringBuilder sb = new StringBuilder(planet.generateInfoText(true,
           player));
@@ -274,7 +275,7 @@ public class BigImagePanel extends JPanel {
       }
       String[] texts = sb.toString().split("\n");
       int offsetX = (PLANET_X_OFFSET - backgroundImg.getWidth()) / 2
-          - GuiStatics.getTextWidth(GuiStatics.getFontCubellanBold(), texts[0])
+          - GuiStatics.getTextWidth(GuiFonts.getFontCubellanBold(), texts[0])
               / 2
           + backgroundImg.getWidth() / 2;
       int offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
@@ -284,20 +285,20 @@ public class BigImagePanel extends JPanel {
       if (offsetY < 75) {
         offsetY = 75;
       }
-      g.setFont(GuiStatics.getFontCubellanBold());
+      g.setFont(GuiFonts.getFontCubellanBold());
       drawBoldText(g, GuiStatics.getCoolSpaceColorDarkerTransparent(),
           GuiStatics.getCoolSpaceColorTransparent(), offsetX, offsetY,
           texts[0]);
       if (planet.getPlanetPlayerInfo() != null) {
         offsetX = (PLANET_X_OFFSET - backgroundImg.getWidth()) / 2
-            - GuiStatics.getTextWidth(GuiStatics.getFontCubellanBold(),
+            - GuiStatics.getTextWidth(GuiFonts.getFontCubellanBold(),
                 planet.getPlanetPlayerInfo().getEmpireName()) / 2
             + backgroundImg.getWidth() / 2;
         drawBoldText(g, GuiStatics.getCoolSpaceColorDarkerTransparent(),
             GuiStatics.getCoolSpaceColorTransparent(), offsetX, offsetY + 25,
             planet.getPlanetPlayerInfo().getEmpireName());
       }
-      g.setFont(GuiStatics.getFontCubellan());
+      g.setFont(GuiFonts.getFontCubellan());
       for (int i = 1; i < texts.length; i++) {
         drawBoldText(g, GuiStatics.getCoolSpaceColorDarkerTransparent(),
             GuiStatics.getCoolSpaceColorTransparent(), 25,
@@ -305,10 +306,10 @@ public class BigImagePanel extends JPanel {
       }
       if (planet.getOrbital() != null) {
         texts = planet.getOrbital().getDescription().split("\n");
-        g.setFont(GuiStatics.getFontCubellan());
+        g.setFont(GuiFonts.getFontCubellan());
         offsetX = 0;
         for (int i = 0; i < texts.length; i++) {
-          int value = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+          int value = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
               texts[i]);
           if (value > offsetX) {
             offsetX = value;
@@ -326,12 +327,12 @@ public class BigImagePanel extends JPanel {
       if (title == null) {
         title = "In Deep Space...";
       }
-      g.setFont(GuiStatics.getFontCubellanBoldBig());
+      g.setFont(GuiFonts.getFontCubellanBoldBig());
       int offsetX = 50;
       int offsetY = 75;
       if (backgroundImg != null) {
         offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2 - GuiStatics
-            .getTextWidth(GuiStatics.getFontCubellanBoldBig(), title) / 2
+            .getTextWidth(GuiFonts.getFontCubellanBoldBig(), title) / 2
             + backgroundImg.getWidth() / 2;
         offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
         if (planet.isGasGiant()) {
@@ -342,7 +343,7 @@ public class BigImagePanel extends JPanel {
         }
         if (textInMiddle) {
           offsetY = (this.getHeight() - backgroundImg.getHeight()) / 2
-              - GuiStatics.getTextHeight(GuiStatics.getFontCubellanBoldBig(),
+              - GuiStatics.getTextHeight(GuiFonts.getFontCubellanBoldBig(),
                   title) / 2;
         }
       }
@@ -352,10 +353,10 @@ public class BigImagePanel extends JPanel {
 
     if (textInformation != null) {
       String[] texts = textInformation.split("\n");
-      g.setFont(GuiStatics.getFontCubellan());
+      g.setFont(GuiFonts.getFontCubellan());
       int offsetX = 0;
       for (int i = 0; i < texts.length; i++) {
-        int value = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+        int value = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
             texts[i]);
         if (value > offsetX) {
           offsetX = value;

@@ -48,6 +48,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.race.SpaceRace;
@@ -370,7 +371,7 @@ public class PlanetView extends BlackPanel {
     constructionSelect.setBackground(GuiStatics.getCoolSpaceColorDark());
     constructionSelect.setForeground(GuiStatics.getCoolSpaceColor());
     constructionSelect.setBorder(new SimpleBorder());
-    constructionSelect.setFont(GuiStatics.getFontCubellan());
+    constructionSelect.setFont(GuiFonts.getFontCubellan());
     constructionSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     constructionSelect.setRenderer(new ProductionListRenderer());
@@ -415,7 +416,7 @@ public class PlanetView extends BlackPanel {
 
     topPanel.add(Box.createRigidArea(new Dimension(10, 25)));
     productionInfo = new BaseInfoTextArea(5, 35);
-    productionInfo.setFont(GuiStatics.getFontCubellanSmaller());
+    productionInfo.setFont(GuiFonts.getFontCubellanSmaller());
     productionInfo.setEditable(false);
     JScrollPane scroll = new JScrollPane(productionInfo);
     scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
@@ -501,7 +502,7 @@ public class PlanetView extends BlackPanel {
     scroll.setPreferredSize(new Dimension(200, 200));
     eastPanel.add(scroll);
     buildingInfo = new InfoTextArea(5, 35);
-    buildingInfo.setFont(GuiStatics.getFontCubellanSmaller());
+    buildingInfo.setFont(GuiFonts.getFontCubellanSmaller());
     buildingInfo.setEditable(false);
     eastPanel.add(buildingInfo);
     String demoBtnText = "Demolish";

@@ -36,6 +36,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
@@ -148,7 +149,7 @@ public class VoteView extends BlackPanel {
     votingPanel.setTitle("Voting results");
     votedText = new InfoTextArea();
     votedText.setEditable(false);
-    votedText.setFont(GuiStatics.getFontCubellanSmaller());
+    votedText.setFont(GuiFonts.getFontCubellanSmaller());
     votingPanel.add(votedText, BorderLayout.CENTER);
     center.add(votingPanel);
     votingInfoTitle = new InfoPanel();
@@ -156,7 +157,7 @@ public class VoteView extends BlackPanel {
     votingInfoTitle.setTitle("Your promises");
     votingInfoText = new InfoTextArea();
     votingInfoText.setEditable(false);
-    votingInfoText.setFont(GuiStatics.getFontCubellanSmaller());
+    votingInfoText.setFont(GuiFonts.getFontCubellanSmaller());
     votingInfoText.setWrapStyleWord(true);
     votingInfoText.setLineWrap(true);
     votingInfoTitle.add(votingInfoText, BorderLayout.CENTER);

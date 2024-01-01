@@ -36,6 +36,7 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -124,7 +125,7 @@ public class HistoryView extends BlackPanel {
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
-    textArea.setFont(GuiStatics.getFontCubellanSmaller());
+    textArea.setFont(GuiFonts.getFontCubellanSmaller());
     textArea.setCharacterWidth(8);
     infoPanel.add(textArea, BorderLayout.CENTER);
     EmptyInfoPanel panel = new EmptyInfoPanel();

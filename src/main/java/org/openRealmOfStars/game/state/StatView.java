@@ -36,6 +36,7 @@ import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.StatisticPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
@@ -80,7 +81,7 @@ public class StatView extends BlackPanel {
     base.setTitle("Statistics");
 
     JTabbedPane tabs = new JTabbedPane();
-    tabs.setFont(GuiStatics.getFontCubellanSmaller());
+    tabs.setFont(GuiFonts.getFontCubellanSmaller());
     tabs.setForeground(GuiStatics.getCoolSpaceColorDarker());
     tabs.setBackground(GuiStatics.getDeepSpaceDarkColor());
 

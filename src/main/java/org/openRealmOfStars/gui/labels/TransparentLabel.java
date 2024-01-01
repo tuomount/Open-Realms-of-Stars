@@ -27,6 +27,7 @@ import javax.swing.JToolTip;
 import javax.swing.border.EtchedBorder;
 
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -64,11 +65,11 @@ public class TransparentLabel extends JLabel {
     super(text);
     this.parent = parent;
     this.setForeground(GuiStatics.getCoolSpaceColor());
-    this.setFont(GuiStatics.getFontCubellan());
+    this.setFont(GuiFonts.getFontCubellan());
     Dimension size = this.getPreferredSize();
-    size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)
+    size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(), text)
         + 10;
-    size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text);
+    size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(), text);
     this.setMinimumSize(size);
     this.setPreferredSize(size);
     this.setMaximumSize(size);
@@ -86,11 +87,11 @@ public class TransparentLabel extends JLabel {
     super(text);
     this.parent = parent;
     this.setForeground(GuiStatics.getCoolSpaceColor());
-    this.setFont(GuiStatics.getFontCubellan());
+    this.setFont(GuiFonts.getFontCubellan());
     Dimension size = this.getPreferredSize();
-    size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)
+    size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(), text)
         + 10;
-    size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text);
+    size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(), text);
     this.setMinimumSize(size);
     this.setPreferredSize(size);
     this.setMaximumSize(size);
@@ -135,12 +136,12 @@ public class TransparentLabel extends JLabel {
       String[] texts = this.getText().split(" ");
       int totalHeight = 0;
       int totalLineLen = 0;
-      int spaceLen = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+      int spaceLen = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
           " ");
       for (int i = 0; i < texts.length; i++) {
-        int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+        int textHeight = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
             texts[i]);
-        int textLen = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+        int textLen = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
             texts[i]);
         if (totalLineLen + textLen > this.getWidth() - 10) {
           sb.append("\n");
@@ -163,9 +164,9 @@ public class TransparentLabel extends JLabel {
       texts = sb.toString().split("\n");
       totalHeight = totalHeight * texts.length;
       for (int i = 0; i < texts.length; i++) {
-        int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+        int textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
             texts[i]);
-        int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+        int textHeight = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
             texts[i]);
         x = this.getWidth() / 2 - textWidth / 2;
         y = this.getHeight() / 2 - totalHeight / 2 + textHeight;

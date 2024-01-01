@@ -28,6 +28,7 @@ import javax.swing.JTextArea;
 
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.util.GraphRoutines;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -232,7 +233,7 @@ public class StarFieldTextArea extends JTextArea {
     GraphRoutines.drawTiling(g2d, GuiStatics.getStarField(),
         STAR_FIELD_OFFSET, STAR_FIELD_OFFSET, width, height);
 
-    g.setFont(GuiStatics.getFontCubellan());
+    g.setFont(GuiFonts.getFontCubellan());
     if (getText() != null) {
       StringBuilder sb = new StringBuilder();
       if (!autoScroll) {
@@ -290,11 +291,11 @@ public class StarFieldTextArea extends JTextArea {
         } else {
           String line = texts[i];
           if (line.startsWith("# ")) {
-            g.setFont(GuiStatics.getFontCubellanBold());
+            g.setFont(GuiFonts.getFontCubellanBold());
             line = line.substring(2);
             bigFont = true;
           } else {
-            g.setFont(GuiStatics.getFontSquarion());
+            g.setFont(GuiFonts.getFontSquarion());
           }
           int w = GuiStatics.getTextWidth(g.getFont(), line);
           w = this.getWidth() / 2 + sx - w / 2;

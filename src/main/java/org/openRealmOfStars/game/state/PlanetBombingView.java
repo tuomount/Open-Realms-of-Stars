@@ -51,6 +51,7 @@ import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
@@ -326,7 +327,7 @@ public class PlanetBombingView extends BlackPanel {
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
     int numberOfRows = 10;
-    if (GuiStatics.isLargerFonts()) {
+    if (GuiFonts.isLargerFonts()) {
       numberOfRows = MAX_LOG_NUMBER;
     }
     textArea = new InfoTextArea(numberOfRows, 30);

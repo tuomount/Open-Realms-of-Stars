@@ -28,6 +28,7 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.Tiles;
@@ -81,7 +82,7 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
     } else {
       this.add(Box.createRigidArea(new Dimension(26, 25)));
     }
-    int textWidth = 150 - GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+    int textWidth = 150 - GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
         planet.getName());
     if (textWidth > 0) {
       this.add(Box.createRigidArea(new Dimension(textWidth, 25)));
@@ -135,8 +136,8 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
    */
   private void addIcon(final IconLabel icon) {
     this.add(icon);
-    int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), "88")
-        - GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), icon.getText());
+    int textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(), "88")
+        - GuiStatics.getTextWidth(GuiFonts.getFontCubellan(), icon.getText());
     if (textWidth > 0) {
       this.add(Box.createRigidArea(new Dimension(textWidth, 25)));
     }

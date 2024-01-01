@@ -25,6 +25,7 @@ import javax.swing.JComboBox;
 import javax.swing.JToolTip;
 
 import org.openRealmOfStars.gui.borders.SimpleBorder;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -50,7 +51,7 @@ public class SpaceCombo<E> extends JComboBox<E> {
     setBackground(GuiStatics.getDeepSpaceDarkColor());
     setForeground(GuiStatics.getCoolSpaceColor());
     setBorder(new SimpleBorder());
-    setFont(GuiStatics.getFontCubellan());
+    setFont(GuiFonts.getFontCubellan());
     setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     DefaultListCellRenderer dlcr = new DefaultListCellRenderer();

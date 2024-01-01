@@ -23,6 +23,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.gui.util.GraphRoutines;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
 import org.openRealmOfStars.player.combat.Combat;
@@ -418,7 +419,7 @@ public class PopupPanel {
     gr.fillRect(textX + borderSize, textY + borderSize,
         textWidth - borderSize * 2, textHeight - borderSize * 2);
     gr.setColor(GuiStatics.getCoolSpaceColorDark());
-    gr.setFont(GuiStatics.getFontCubellanBoldBig());
+    gr.setFont(GuiFonts.getFontCubellanBoldBig());
     int h = GuiStatics.getTextHeight(gr.getFont(), title);
     int w = GuiStatics.getTextWidth(gr.getFont(), title);
     w = width / 2  - w / 2;
@@ -428,7 +429,7 @@ public class PopupPanel {
     gr.drawString(title, x + w, y + h + borderSize + 1);
     gr.setColor(GuiStatics.getCoolSpaceColor());
     gr.drawString(title, x + w, y + h + borderSize);
-    gr.setFont(GuiStatics.getFontCubellanSmaller());
+    gr.setFont(GuiFonts.getFontCubellanSmaller());
     w = GuiStatics.getTextWidth(gr.getFont(), "AveragemiuM");
     w = w / 11;
     h = GuiStatics.getTextHeight(gr.getFont(), "AveragemiuM");
@@ -440,7 +441,7 @@ public class PopupPanel {
       gr.drawString(rows[i], textX + w, textY + h * 2 + h * i);
     }
     gr.setColor(GuiStatics.getCoolSpaceColorDark());
-    gr.setFont(GuiStatics.getFontCubellanSC());
+    gr.setFont(GuiFonts.getFontCubellanSC());
     String hint = "Press enter/space bar or click to continue";
     h = GuiStatics.getTextHeight(gr.getFont(), hint);
     w = GuiStatics.getTextWidth(gr.getFont(), hint);

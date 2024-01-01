@@ -24,6 +24,7 @@ import java.awt.Insets;
 import javax.swing.JTextArea;
 
 import org.openRealmOfStars.gui.borders.SimpleBorder;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -126,7 +127,7 @@ public class InfoTextArea extends JTextArea {
    */
   public InfoTextArea(final int rows, final int columns) {
     super(rows, columns);
-    this.setFont(GuiStatics.getFontCubellanSC());
+    this.setFont(GuiFonts.getFontCubellanSC());
     this.setForeground(GuiStatics.getInfoTextColor());
     this.setTextColor(GuiStatics.getInfoTextColor(),
         GuiStatics.getInfoTextColorDark());
@@ -142,7 +143,7 @@ public class InfoTextArea extends JTextArea {
    */
   public InfoTextArea() {
     super(17, 10);
-    this.setFont(GuiStatics.getFontCubellanSC());
+    this.setFont(GuiFonts.getFontCubellanSC());
     this.setForeground(GuiStatics.getInfoTextColor());
     this.setTextColor(GuiStatics.getInfoTextColor(),
         GuiStatics.getInfoTextColorDark());
@@ -159,7 +160,7 @@ public class InfoTextArea extends JTextArea {
    */
   public InfoTextArea(final String text) {
     super(text);
-    this.setFont(GuiStatics.getFontCubellanSC());
+    this.setFont(GuiFonts.getFontCubellanSC());
     textToShow = text;
     this.setForeground(GuiStatics.getInfoTextColor());
     this.setTextColor(GuiStatics.getInfoTextColor(),
@@ -262,7 +263,7 @@ public class InfoTextArea extends JTextArea {
       customCharWidth = -1;
     } else {
       customCharWidth = width;
-      if (GuiStatics.isLargerFonts()) {
+      if (GuiFonts.isLargerFonts()) {
         customCharWidth = customCharWidth + 2;
       }
     }
@@ -296,7 +297,7 @@ public class InfoTextArea extends JTextArea {
           if (isTextShadow()) {
             g.drawString(sb.toString(), x + 3 + offset, y);
           }
-          if (getFont() == GuiStatics.getFontCubellanSC() && isTextShadow()) {
+          if (getFont() == GuiFonts.getFontCubellanSC() && isTextShadow()) {
             g.drawString(sb.toString(), x + 1 + offset, y);
             g.drawString(sb.toString(), x + 2 + offset, y - 1);
           }
@@ -310,7 +311,7 @@ public class InfoTextArea extends JTextArea {
           if (isTextShadow()) {
             g.drawString(sb.toString(), x + 3 + offset, y);
           }
-          if (getFont() == GuiStatics.getFontCubellanSC() && isTextShadow()) {
+          if (getFont() == GuiFonts.getFontCubellanSC() && isTextShadow()) {
             g.drawString(sb.toString(), x + 1 + offset, y);
             g.drawString(sb.toString(), x + 2 + offset, y - 1);
           }
@@ -327,7 +328,7 @@ public class InfoTextArea extends JTextArea {
       if (isTextShadow()) {
         g.drawString(text, x + 3, y);
       }
-      if (getFont() == GuiStatics.getFontCubellanSC() && isTextShadow()) {
+      if (getFont() == GuiFonts.getFontCubellanSC() && isTextShadow()) {
         g.drawString(text, x + 1, y);
         g.drawString(text, x + 2, y - 1);
       }

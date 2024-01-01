@@ -31,6 +31,7 @@ import javax.swing.JToolTip;
 import javax.swing.border.EtchedBorder;
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -69,9 +70,9 @@ public class SpaceButton extends JButton {
       }
     }
     Dimension size = this.getPreferredSize();
-    size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+    size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
         texts[longest]) + 20;
-    size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+    size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
         texts[longest]) * texts.length + 10;
     this.setMinimumSize(size);
     this.setPreferredSize(size);
@@ -97,14 +98,14 @@ public class SpaceButton extends JButton {
     this.icon = spaceButtonIcon;
     Dimension size = this.getPreferredSize();
     if (this.icon != null) {
-      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+      size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
           getText()) + 20 + 16;
-      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+      size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
           getText()) + 10;
     } else {
-      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+      size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
           getText()) + 20;
-      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+      size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
           getText()) + 10;
     }
     this.setMinimumSize(size);
@@ -159,16 +160,16 @@ public class SpaceButton extends JButton {
       g2d.setColor(GuiStatics.getCoolSpaceColorDarker());
     }
     String[] texts = getText().split("\n");
-    g.setFont(GuiStatics.getFontCubellan());
+    g.setFont(GuiFonts.getFontCubellan());
     int longest = 0;
     for (int i = 0; i < texts.length; i++) {
       if (texts[i].length() > texts[longest].length()) {
         longest = i;
       }
     }
-    int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+    int textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
         texts[longest]);
-    int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+    int textHeight = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
         texts[longest]);
     int offsetX = sx;
     if (icon != null) {
@@ -180,7 +181,7 @@ public class SpaceButton extends JButton {
       icon.draw(g2d, offsetX, offsetY);
     }
     for (int i = 0; i < texts.length; i++) {
-      textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+      textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
           texts[i]);
       offsetX = width / 2 - textWidth / 2 + sx;
       int offsetY = textHeight * (i + 1) + sy;

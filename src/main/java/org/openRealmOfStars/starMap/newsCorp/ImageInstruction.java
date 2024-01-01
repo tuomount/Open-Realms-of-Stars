@@ -23,6 +23,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.gui.util.GraphRoutines;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
@@ -1568,7 +1569,7 @@ public class ImageInstruction {
       if (TEXT.equals(command)) {
         Graphics2D g = (Graphics2D) workImage.getGraphics();
         g.setColor(textColor);
-        g.setFont(GuiStatics.getFontCubellanBoldBig());
+        g.setFont(GuiFonts.getFontCubellanBoldBig());
         int textWidth = GuiStatics.getTextWidth(g.getFont(), parameters[0]);
         int height = GuiStatics.getTextHeight(g.getFont(), parameters[0]);
         g.drawString(parameters[0], workImage.getWidth() / 2 - textWidth / 2,

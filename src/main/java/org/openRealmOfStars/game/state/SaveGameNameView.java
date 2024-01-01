@@ -38,6 +38,7 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -108,7 +109,7 @@ public class SaveGameNameView extends BlackPanel {
     saveGameField = new JTextField(fileName + ".save");
     saveGameField.setBackground(GuiStatics.getDeepSpaceDarkColor());
     saveGameField.setForeground(GuiStatics.getCoolSpaceColor());
-    saveGameField.setFont(GuiStatics.getFontCubellanSmaller());
+    saveGameField.setFont(GuiFonts.getFontCubellanSmaller());
     saveGameField.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     saveGameField.getDocument().addDocumentListener(new DocumentListener() {

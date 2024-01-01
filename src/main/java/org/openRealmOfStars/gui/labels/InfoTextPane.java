@@ -26,6 +26,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
 import org.openRealmOfStars.gui.borders.SimpleBorder;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
@@ -47,7 +48,7 @@ public class InfoTextPane extends JTextPane {
    */
   public InfoTextPane() {
     super();
-    this.setFont(GuiStatics.getFontCubellanSmaller());
+    this.setFont(GuiFonts.getFontCubellanSmaller());
     this.setForeground(GuiStatics.getInfoTextColor());
     this.setBackground(Color.BLACK);
     this.setBorder(new SimpleBorder());

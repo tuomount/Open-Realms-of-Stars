@@ -90,6 +90,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scheme.SchemeType;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -513,7 +514,7 @@ public class Game implements ActionListener {
       musicTimer = new Timer(MUSIC_TIMER_DELAY, this);
       musicTimer.setActionCommand(GameCommands.COMMAND_MUSIC_TIMER);
       gameFrame.setUndecorated(configFile.getBorderless());
-      GuiStatics.setLargerFonts(configFile.getLargerFonts());
+      GuiFonts.setLargerFonts(configFile.getLargerFonts());
       GraphicsDevice graphicsDevice = GraphicsEnvironment
           .getLocalGraphicsEnvironment().getDefaultScreenDevice();
       fullscreenMode = false;
@@ -3007,7 +3008,7 @@ public class Game implements ActionListener {
         if (isResolutionChanged()) {
           configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         }
-        GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        GuiFonts.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
@@ -3045,7 +3046,7 @@ public class Game implements ActionListener {
         if (isResolutionChanged()) {
           configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         }
-        GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        GuiFonts.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
@@ -3071,7 +3072,7 @@ public class Game implements ActionListener {
         configFile.setImprovedParallax(optionsView.getImprovedParallax());
         configFile.setLargerFonts(optionsView.getLargerFonts());
         configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
-        GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        GuiFonts.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());

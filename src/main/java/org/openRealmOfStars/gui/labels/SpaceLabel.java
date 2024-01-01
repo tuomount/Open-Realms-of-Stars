@@ -23,6 +23,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JToolTip;
 
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -44,11 +45,11 @@ public class SpaceLabel extends JLabel {
  public SpaceLabel(final String text) {
    super(text);
    this.setForeground(GuiStatics.getCoolSpaceColor());
-   this.setFont(GuiStatics.getFontCubellan());
+   this.setFont(GuiFonts.getFontCubellan());
    Dimension size = this.getPreferredSize();
-   size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)
+   size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(), text)
        + 10;
-   size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text)
+   size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(), text)
        + 4;
    this.setMinimumSize(size);
    this.setPreferredSize(size);

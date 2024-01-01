@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.ship.Ship;
 
@@ -46,7 +47,7 @@ public class ShipListRenderer implements ListCellRenderer<Ship> {
       final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
-    renderer.setFont(GuiStatics.getFontCubellan());
+    renderer.setFont(GuiFonts.getFontCubellan());
     renderer.setText(
         value.getName() + " - " + value.getHull().getHullType().toString()
         + " - " + value.getTotalMilitaryPower());

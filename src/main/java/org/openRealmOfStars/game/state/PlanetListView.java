@@ -34,6 +34,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.PlanetInfoLabel;
 import org.openRealmOfStars.gui.labels.UncolonizedPlanetInfoLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.race.trait.TraitIds;
@@ -87,7 +88,7 @@ public class PlanetListView extends BlackPanel {
     info = realm;
     this.map = map;
     JTabbedPane tabs = new JTabbedPane();
-    tabs.setFont(GuiStatics.getFontCubellanSmaller());
+    tabs.setFont(GuiFonts.getFontCubellanSmaller());
     tabs.setForeground(GuiStatics.getCoolSpaceColorDarker());
     tabs.setBackground(GuiStatics.getDeepSpaceDarkColor());
     tabs.add("Colonized planets", createColonizedPlanets(listener));

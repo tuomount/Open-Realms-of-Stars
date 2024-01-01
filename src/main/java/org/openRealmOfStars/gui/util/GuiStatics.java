@@ -842,6 +842,15 @@ public final class GuiStatics {
   }
 
   /**
+   * Return image for specified race
+   * @param race SpaceRace
+   * @return BufferedImage
+   */
+  public static BufferedImage getRaceImg(final SpaceRace race) {
+    return IOUtilities.loadImage(race.getImage());
+  }
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

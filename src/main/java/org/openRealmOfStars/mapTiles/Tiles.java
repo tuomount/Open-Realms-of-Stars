@@ -354,13 +354,11 @@ public final class Tiles {
    */
   private static void initTiles() {
     BufferedImage tilesImage32 = IOUtilities
-        .loadImage(Tiles.class.getResource("/resources/images/maptiles.png"));
+        .loadImage("/resources/images/maptiles.png");
     BufferedImage tilesImage16 = IOUtilities
-        .loadImage(Tiles.class.getResource(
-            "/resources/images/maptiles_16.png"));
+        .loadImage("/resources/images/maptiles_16.png");
     BufferedImage tilesImage64 = IOUtilities
-        .loadImage(Tiles.class.getResource(
-            "/resources/images/maptiles_64.png"));
+        .loadImage("/resources/images/maptiles_64.png");
     listOfTiles32 = new ArrayList<>();
     hashOfTiles32 = new HashMap<>();
     listOfTiles16 = new ArrayList<>();

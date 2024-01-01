@@ -22,7 +22,6 @@ import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -161,14 +160,13 @@ public class ClassicScheme extends BaseScheme {
         "/resources/images/classic_arrows.png", 1, 1,
         Icons.ICON_SCROLL_RIGHT_PRESSED);
     scrollLeft = IOUtilities
-        .loadImage(Tiles.class.getResource("/resources/images/left_arrow.png"));
-    scrollLeftPressed = IOUtilities.loadImage(Tiles.class.getResource(
-        "/resources/images/left_arrow_pressed.png"));
+        .loadImage("/resources/images/left_arrow.png");
+    scrollLeftPressed = IOUtilities.loadImage(
+        "/resources/images/left_arrow_pressed.png");
     scrollRight = IOUtilities
-        .loadImage(Tiles.class.getResource(
-            "/resources/images/right_arrow.png"));
-    scrollRightPressed = IOUtilities.loadImage(Tiles.class.getResource(
-        "/resources/images/right_arrow_pressed.png"));
+        .loadImage("/resources/images/right_arrow.png");
+    scrollRightPressed = IOUtilities.loadImage(
+        "/resources/images/right_arrow_pressed.png");
   }
 
   @Override

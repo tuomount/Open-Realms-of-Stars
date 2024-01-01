@@ -19,7 +19,6 @@ package org.openRealmOfStars.starMap;
 
 import java.awt.image.BufferedImage;
 
-import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -270,8 +269,7 @@ public class Route {
   public static BufferedImage getRouteDot(final int zoomLevel) {
     if (routeDot == null) {
       routeDot = IOUtilities
-          .loadImage(Icons.class.getResource(
-              "/resources/images/ftl_routedot.png"));
+          .loadImage("/resources/images/ftl_routedot.png");
       smallRouteDot = GuiStatics.scaleToHalf(routeDot);
     }
     if (zoomLevel == Tile.ZOOM_OUT1) {
@@ -297,8 +295,7 @@ public class Route {
   public static BufferedImage getGreenRouteDot(final int zoomLevel) {
     if (greenRouteDot == null) {
       greenRouteDot = IOUtilities
-          .loadImage(Icons.class.getResource(
-              "/resources/images/green_routedot.png"));
+          .loadImage("/resources/images/green_routedot.png");
       smallGreenRouteDot = GuiStatics.scaleToHalf(greenRouteDot);
     }
     if (zoomLevel == Tile.ZOOM_OUT1) {
@@ -324,7 +321,7 @@ public class Route {
   public static BufferedImage getYellowRouteDot(final int zoomLevel) {
     if (yellowRouteDot == null) {
       yellowRouteDot = IOUtilities
-          .loadImage(Icons.class.getResource("/resources/images/routedot.png"));
+          .loadImage("/resources/images/routedot.png");
       smallYellowRouteDot = GuiStatics.scaleToHalf(yellowRouteDot);
     }
     if (zoomLevel == Tile.ZOOM_OUT1) {
@@ -350,7 +347,7 @@ public class Route {
   public static BufferedImage getRepairDot(final int zoomLevel) {
     if (repairDot == null) {
       repairDot = IOUtilities
-          .loadImage(Icons.class.getResource("/resources/images/repair.png"));
+          .loadImage("/resources/images/repair.png");
       smallRepairDot = GuiStatics.scaleToHalf(repairDot);
     }
     if (zoomLevel == Tile.ZOOM_OUT1) {
@@ -366,7 +363,7 @@ public class Route {
   public static BufferedImage getDefenseDot(final int zoomLevel) {
     if (defenseDot == null) {
       defenseDot = IOUtilities
-          .loadImage(Icons.class.getResource("/resources/images/defense.png"));
+          .loadImage("/resources/images/defense.png");
       smallDefenseDot = GuiStatics.scaleToHalf(defenseDot);
     }
     if (zoomLevel == Tile.ZOOM_OUT1) {
@@ -392,7 +389,7 @@ public class Route {
   public static BufferedImage getBombedDot(final int zoomLevel) {
     if (bombedDot == null) {
       bombedDot = IOUtilities
-          .loadImage(Icons.class.getResource("/resources/images/bombed.png"));
+          .loadImage("/resources/images/bombed.png");
       smallBombedDot = GuiStatics.scaleToHalf(bombedDot);
     }
     if (zoomLevel == Tile.ZOOM_OUT1) {
@@ -418,7 +415,7 @@ public class Route {
   public static BufferedImage getExploredDot(final int zoomLevel) {
     if (exploredDot == null) {
       exploredDot = IOUtilities
-          .loadImage(Icons.class.getResource("/resources/images/explored.png"));
+          .loadImage("/resources/images/explored.png");
       smallExploredDot = GuiStatics.scaleToHalf(exploredDot);
     }
     if (zoomLevel == Tile.ZOOM_OUT1) {

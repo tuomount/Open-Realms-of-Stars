@@ -21,7 +21,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -30,26 +29,17 @@ import org.openRealmOfStars.utilities.IOUtilities;
  * image just got all frames in width.
  *
  */
-
 public class AnimatedImage {
 
-  /**
-   * Animation frames in list
-   */
+  /** Animation frames in list */
   private List<BufferedImage> animations;
 
-  /**
-   * Frame index
-   */
+  /** Frame index */
   private int frame;
 
-  /**
-   * Image size in X axel in pixel
-   */
+  /** Image size in X axel in pixel */
   private int sizeX;
-  /**
-   * Image size in Y axel in pixel
-   */
+  /** Image size in Y axel in pixel */
   private int sizeY;
 
   /**
@@ -59,8 +49,7 @@ public class AnimatedImage {
    * @param filename Filename to load. File must be as a resource file in jar.
    */
   public AnimatedImage(final int sx, final int sy, final String filename) {
-    BufferedImage bigImage = IOUtilities
-        .loadImage(Tiles.class.getResource(filename));
+    BufferedImage bigImage = IOUtilities.loadImage(filename);
     sizeX = sx;
     sizeY = sy;
     animations = new ArrayList<>();

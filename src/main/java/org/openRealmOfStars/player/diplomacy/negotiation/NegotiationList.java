@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.diplomacy.negotiation;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,7 +19,7 @@ package org.openRealmOfStars.player.diplomacy.negotiation;
 
 import java.util.ArrayList;
 
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.PlayerInfo;
 
 /**
 *
@@ -81,13 +81,13 @@ public class NegotiationList {
 
   /**
    * Get the all offer values in list
-   * @param race SpaceRace who is valueing the offer
+   * @param info PlayerInfo
    * @return Value of offer
    */
-  public int getOfferValue(final SpaceRace race) {
+  public int getOfferValue(final PlayerInfo info) {
     int value = 0;
     for (NegotiationOffer offer : list) {
-      value = value + offer.getOfferValue(race);
+      value = value + offer.getOfferValue(info);
     }
     return value;
   }

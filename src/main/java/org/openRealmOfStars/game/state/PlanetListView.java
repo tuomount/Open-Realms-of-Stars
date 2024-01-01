@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2023 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -176,8 +176,7 @@ public class PlanetListView extends BlackPanel {
       for (Planet planet : tempList) {
         int value = planet.getSizeAsInt() * 10;
         int dist = (int) coord.calculateDistance(planet.getCoordinate());
-        int suitability = info.getWorldTypeValue(planet.getPlanetType()
-            .getWorldType());
+        int suitability = info.getPlanetSuitabilityValue(planet);
         value = value * suitability / 100;
         value = value + 10 - dist / divider;
         final var race = info.getRace();

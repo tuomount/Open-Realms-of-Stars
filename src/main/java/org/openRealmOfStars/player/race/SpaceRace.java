@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.race;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -35,7 +35,7 @@ import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.planet.enums.GravityType;
 import org.openRealmOfStars.starMap.planet.enums.RadiationType;
-import org.openRealmOfStars.starMap.planet.enums.WorldType;
+import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -382,6 +382,23 @@ public enum SpaceRace {
         trait -> {
       MECHIONS.addTrait(trait);
       CHIRALOIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.TOLERATE_COLD).ifPresent(
+        trait -> {
+      HUMAN.addTrait(trait);
+      CENTAURS.addTrait(trait);
+      SCAURIANS.addTrait(trait);
+      HOMARIANS.addTrait(trait);
+      TEUTHIDAES.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.TOLERATE_HOT).ifPresent(
+        trait -> {
+      MECHIONS.addTrait(trait);
+      REBORGIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.TOLERATE_LAVA).ifPresent(
+        trait -> {
+      LITHORIANS.addTrait(trait);
     });
   }
 
@@ -1276,213 +1293,69 @@ public enum SpaceRace {
     }
   }
   /**
-   * Get World base value for space race.
+   * Get planet's base value based on temperature for space race.
    * This will tell how much of population world type can
    * hold.
-   * @param worldType World Type
-   * @return Base value between 25 - 125 %.
+   * @param temperature TemperatureType
+   * @return Base value between 0 - 100 %.
    */
-  public int getWorldTypeBaseValue(final WorldType worldType) {
-    if (this == HUMAN) {
-      switch (worldType) {
-      case BARRENWORLD: return 50;
-      case WATERWORLD: return 100;
-      case VOLCANICWORLD: return 50;
-      case ICEWORLD: return 75;
-      case SWAMPWORLD: return 100;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+  public int getTemperatureBaseValue(final TemperatureType temperature) {
+    if (temperature == TemperatureType.ARCTIC) {
+      int result = 25;
+      if (hasTrait(TraitIds.TOLERATE_COLD)) {
+        result = result + 25;
       }
-    }
-    if (this == MECHIONS) {
-      switch (worldType) {
-      case BARRENWORLD: return 100;
-      case WATERWORLD: return 75;
-      case VOLCANICWORLD: return 100;
-      case ICEWORLD: return 25;
-      case SWAMPWORLD: return 75;
-      case DESERTWORLD: return 50;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+      if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result - 25;
       }
+      return result;
     }
-    if (this == SPORKS) {
-      switch (worldType) {
-      case BARRENWORLD: return 50;
-      case WATERWORLD: return 100;
-      case VOLCANICWORLD: return 50;
-      case ICEWORLD: return 50;
-      case SWAMPWORLD: return 100;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+    if (temperature == TemperatureType.COLD) {
+      int result = 50;
+      if (hasTrait(TraitIds.TOLERATE_COLD)) {
+        result = result + 25;
       }
-    }
-    if (this == GREYANS) {
-      switch (worldType) {
-      case BARRENWORLD: return 50;
-      case WATERWORLD: return 125;
-      case VOLCANICWORLD: return 50;
-      case ICEWORLD: return 50;
-      case SWAMPWORLD: return 100;
-      case DESERTWORLD: return 50;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+      if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result - 25;
       }
+      return result;
     }
-    if (this == CENTAURS) {
-      switch (worldType) {
-      case BARRENWORLD: return 50;
-      case WATERWORLD: return 100;
-      case VOLCANICWORLD: return 75;
-      case ICEWORLD: return 100;
-      case SWAMPWORLD: return 125;
-      case DESERTWORLD: return 100;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+    if (temperature == TemperatureType.TEMPERATE) {
+      int result = 100;
+      if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result - 25;
       }
+      return result;
     }
-    if (this == MOTHOIDS) {
-      switch (worldType) {
-      case BARRENWORLD: return 50;
-      case WATERWORLD: return 100;
-      case VOLCANICWORLD: return 50;
-      case ICEWORLD: return 25;
-      case SWAMPWORLD: return 100;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+    if (temperature == TemperatureType.TROPICAL) {
+      int result = 75;
+      if (hasTrait(TraitIds.TOLERATE_HOT)) {
+        result = result + 25;
       }
-    }
-    if (this == TEUTHIDAES) {
-      switch (worldType) {
-      case BARRENWORLD: return 50;
-      case WATERWORLD: return 125;
-      case VOLCANICWORLD: return 50;
-      case ICEWORLD: return 75;
-      case SWAMPWORLD: return 125;
-      case DESERTWORLD: return 25;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+      if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result + 25;
       }
+      return result;
     }
-    if (this == SCAURIANS) {
-      switch (worldType) {
-      case BARRENWORLD: return 25;
-      case WATERWORLD: return 100;
-      case VOLCANICWORLD: return 75;
-      case ICEWORLD: return 75;
-      case SWAMPWORLD: return 75;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+    if (temperature == TemperatureType.HOT) {
+      int result = 50;
+      if (hasTrait(TraitIds.TOLERATE_HOT)) {
+        result = result + 25;
       }
-    }
-    if (this == HOMARIANS) {
-      switch (worldType) {
-      case BARRENWORLD: return 50;
-      case WATERWORLD: return 125;
-      case VOLCANICWORLD: return 50;
-      case ICEWORLD: return 100;
-      case SWAMPWORLD: return 125;
-      case DESERTWORLD: return 50;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+      if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result + 25;
       }
+      return result;
     }
-    if (this == SPACE_PIRATE || this == SPACE_MONSTERS) {
-      switch (worldType) {
-      case BARRENWORLD: return 75;
-      case WATERWORLD: return 100;
-      case VOLCANICWORLD: return 50;
-      case ICEWORLD: return 75;
-      case SWAMPWORLD: return 75;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+    if (temperature == TemperatureType.VOLCANIC) {
+      int result = 0;
+      if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result + 50;
       }
+      return result;
     }
-    if (this == CHIRALOIDS) {
-      switch (worldType) {
-      case BARRENWORLD: return 50;
-      case WATERWORLD: return 100;
-      case VOLCANICWORLD: return 50;
-      case ICEWORLD: return 50;
-      case SWAMPWORLD: return 100;
-      case DESERTWORLD: return 50;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
-      }
-    }
-    if (this == REBORGIANS) {
-      switch (worldType) {
-      case BARRENWORLD: return 75;
-      case WATERWORLD: return 100;
-      case VOLCANICWORLD: return 100;
-      case ICEWORLD: return 50;
-      case SWAMPWORLD: return 75;
-      case DESERTWORLD: return 50;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
-      }
-    }
-    if (this == LITHORIANS) {
-      switch (worldType) {
-      case BARRENWORLD: return 100;
-      case WATERWORLD: return 50;
-      case VOLCANICWORLD: return 125;
-      case ICEWORLD: return 25;
-      case SWAMPWORLD: return 50;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 75;
-      }
-    }
-    if (this == ALTEIRIANS) {
-      // All planets are equal since this race lives in orbit.
-      return 100;
-    }
-    if (this == SMAUGIRIANS) {
-      switch (worldType) {
-      case BARRENWORLD: return 50;
-      case WATERWORLD: return 100;
-      case VOLCANICWORLD: return 50;
-      case ICEWORLD: return 50;
-      case SWAMPWORLD: return 100;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
-      }
-    }
-    if (this == SYNTHDROIDS) {
-      switch (worldType) {
-      case BARRENWORLD: return 50;
-      case WATERWORLD: return 100;
-      case VOLCANICWORLD: return 50;
-      case ICEWORLD: return 25;
-      case SWAMPWORLD: return 100;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
-      }
-    }
-    return 100;
+    // Frozen and Inferno are here
+    return 0;
   }
 
   /**

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap.planet;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -1976,14 +1976,12 @@ public class Planet {
       sb.append("\n");
       if (getPlanetPlayerInfo() != null) {
         sb.append("Suitable: ");
-        sb.append(getPlanetPlayerInfo().getWorldTypeValue(
-            getPlanetType().getWorldType()));
+        sb.append(getPlanetPlayerInfo().getPlanetSuitabilityValue(this));
         sb.append("%\n");
       }
       if (getPlanetPlayerInfo() == null && viewerInfo != null) {
         sb.append("Suitable: ");
-        sb.append(viewerInfo.getWorldTypeValue(
-            getPlanetType().getWorldType()));
+        sb.append(viewerInfo.getPlanetSuitabilityValue(this));
         sb.append("%\n");
       }
       if (activeScanned && event != PlanetaryEvent.NONE && eventFound) {
@@ -3071,10 +3069,9 @@ public class Planet {
     }
     result = result + getGroundSize();
     if (planetOwnerInfo != null) {
-      int percent = planetOwnerInfo.getWorldTypeValue(
-          planetType.getWorldType());
+      int percent = planetOwnerInfo.getPlanetSuitabilityValue(this);
       result = result * percent / 100;
-      if (result < 2) {
+      if (result < 2 && percent > 0) {
         result = 2;
       }
     }
@@ -3519,20 +3516,27 @@ public class Planet {
   }
 
   /**
-   * Is planet colonizable for space race
-   * @param race Space
+   * Is planet colonizable for realm
+   * @param realm PlayerINfo
    * @return True or false
    */
-  public boolean isColonizeablePlanet(final SpaceRace race) {
+  public boolean isColonizeablePlanet(final PlayerInfo realm) {
     boolean result = true;
-    if (race.getMaxRad().getIndex() < getTotalRadiationLevel().getIndex()) {
+    int maxRad = realm.getRace().getMaxRad().getIndex();
+    if (realm.getTechList().hasTech("Radiation dampener")) {
+      maxRad++;
+    }
+    if (realm.getTechList().hasTech("Radiation well")) {
+      maxRad++;
+    }
+    if (maxRad
+        < getTotalRadiationLevel().getIndex()) {
       result = false;
     }
-    if (getTemperatureType() == TemperatureType.FROZEN
-        || getTemperatureType() == TemperatureType.INFERNO) {
+    int suitability = realm.getPlanetSuitabilityValue(this);
+    if (suitability == 0) {
       result = false;
     }
-    //FIXME: Missing temperature
     return result;
   }
   /**
@@ -4268,10 +4272,10 @@ public class Planet {
     if (getTotalPopulation() < maxPop) {
       score = score + 1;
     }
-    if (planetOwnerInfo.getWorldTypeValue(planetType.getWorldType()) > 100) {
+    if (planetOwnerInfo.getPlanetSuitabilityValue(this) > 100) {
       score = score + 1;
     }
-    if (planetOwnerInfo.getWorldTypeValue(planetType.getWorldType()) < 75) {
+    if (planetOwnerInfo.getPlanetSuitabilityValue(this) < 75) {
       score = score - 1;
     }
 

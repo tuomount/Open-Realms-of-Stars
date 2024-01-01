@@ -365,7 +365,32 @@
     "conflictsWith": [
       "TOLERATE_LOW_RADIATION","TOLERATE_HIGH_RADIATION"
     ]
+  },
+  {
+    "id": "TOLERATE_COLD",
+    "name": "Tolerate cold temperature",
+    "description": "Race is able to tolerate cold temperature on planets.",
+    "points": 1,
+    "conflictsWith": [
+      "TOLERATE_LAVA"
+    ]
+  },
+  {
+    "id": "TOLERATE_HOT",
+    "name": "Tolerate hot temperature",
+    "description": "Race is able to tolerate hot temperature on planets.",
+    "points": 1,
+    "conflictsWith": [
+      "TOLERATE_LAVA"
+    ]
+  },
+  {
+    "id": "TOLERATE_LAVA",
+    "name": "Tolerate volcanic temperature",
+    "description": "Race is able to tolerate volcanic temperature and lava on planets, but cold temperature causes problems.",
+    "points": 1,
+    "conflictsWith": [
+      "TOLERATE_COLD", "TOLERATE_HOT"
+    ]
   }
-
-
 ]

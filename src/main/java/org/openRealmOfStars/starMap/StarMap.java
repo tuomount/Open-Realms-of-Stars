@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1129,7 +1129,7 @@ public class StarMap {
     Planet result = null;
     double distance = 999;
     for (Planet planet : getPlanetList()) {
-      if (planet.isColonizeablePlanet(pirate.getRace())
+      if (planet.isColonizeablePlanet(pirate)
           && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
           && pirate.getSectorVisibility(planet.getCoordinate())
           > PlayerInfo.UNCHARTED && planet.getPlanetOwnerIndex() == -1) {
@@ -4415,12 +4415,11 @@ public class StarMap {
           sb.append(" Unfortunately it has been already colonized by ");
           sb.append(planet.getPlanetPlayerInfo().getEmpireName());
           sb.append(".");
-        } else if (planet.isColonizeablePlanet(info.getRace())) {
+        } else if (planet.isColonizeablePlanet(info)) {
           sb.append(" Unfortunately planet is not suitable");
           sb.append(" for your people to live there...");
         } else {
-          int value = info.getWorldTypeValue(
-              planet.getPlanetType().getWorldType());
+          int value = info.getPlanetSuitabilityValue(planet);
           if (value > 0) {
             sb.append(" Planet is ");
             sb.append(value);
@@ -4429,7 +4428,7 @@ public class StarMap {
             sb.append(planet.getSizeAsString());
             sb.append(".");
           } else {
-            sb.append(" World type in this planet is something your");
+            sb.append(" Planet has conditions that your");
             sb.append(" people cannot tolarate.");
           }
         }
@@ -4558,11 +4557,10 @@ public class StarMap {
               return;
             }
           }
-          if (planet.isColonizeablePlanet(info.getRace())) {
+          if (planet.isColonizeablePlanet(info)) {
             // High radiation
             tutorialText = Game.getTutorial().showTutorialText(23);
             if (tutorialText != null) {
-              // TODO: Check tutorial text
               Message msg = new Message(MessageType.PLANETARY, tutorialText,
                   Icons.getIconByName(Icons.ICON_TUTORIAL));
               msg.setCoordinate(new Coordinate(sx, sy));

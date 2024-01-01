@@ -1,7 +1,7 @@
 package org.openRealmOfStars.gui.labels;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2023 Tuomo Untinen
+ * Copyright (C) 2023-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -95,8 +95,7 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
         Icons.ICON_RADIATION), String.valueOf(planet.getRadiationLevel()));
     icon.setToolTipText("Planet's current radiation level");
     addIcon(icon);
-    int suitable = info.getWorldTypeValue(
-        planet.getPlanetType().getWorldType());
+    int suitable = info.getPlanetSuitabilityValue(planet);
     String iconName = Icons.ICON_OKAY;
     if (suitable >= 150) {
       iconName = Icons.ICON_VERY_HAPPY;

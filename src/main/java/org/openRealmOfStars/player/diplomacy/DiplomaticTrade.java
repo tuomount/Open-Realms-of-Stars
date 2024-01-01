@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.diplomacy;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2023 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -394,8 +394,7 @@ public class DiplomaticTrade {
     NegotiationOffer voteNo = createPromiseNo(agree);
     NegotiationOffer voteYes = createPromiseYes(agree);
     if (voteNo != null && voteYes != null) {
-      if (voteNo.getOfferValue(agree.getRace()) < voteYes.getOfferValue(
-          agree.getRace())) {
+      if (voteNo.getOfferValue(agree) < voteYes.getOfferValue(agree)) {
         return voteNo;
       }
       return voteYes;
@@ -443,7 +442,7 @@ public class DiplomaticTrade {
         int index = getBestTech(techListForFirst, offerMaker.getAiAttitude());
         firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
             techListForFirst.get(index)));
-        int value = firstOffer.getOfferValue(offerMaker.getRace());
+        int value = firstOffer.getOfferValue(offerMaker);
         if (value < 15) {
           int credit = 15 - value;
           if (credit > agree.getTotalCredits()) {
@@ -471,7 +470,7 @@ public class DiplomaticTrade {
         int index = getBestTech(techListForSecond, agree.getAiAttitude());
         secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
             techListForSecond.get(index)));
-        int value = secondOffer.getOfferValue(agree.getRace());
+        int value = secondOffer.getOfferValue(agree);
         if (value < 15) {
           int credit = 15 - value;
           if (credit > offerMaker.getTotalCredits()) {
@@ -517,11 +516,11 @@ public class DiplomaticTrade {
               techListForSecond.get(i)));
         } else {
           NegotiationOffer voteOffer = createBestVotePromise(offerMaker);
-          int value = firstOffer.getOfferValue(offerMaker.getRace());
-          if (voteOffer != null && voteOffer.getOfferValue(
-              offerMaker.getRace()) >= value && !isDiplomacyWithPirates()) {
+          int value = firstOffer.getOfferValue(offerMaker);
+          if (voteOffer != null && voteOffer.getOfferValue(offerMaker)
+              >= value && !isDiplomacyWithPirates()) {
             secondOffer.add(voteOffer);
-            value = value - voteOffer.getOfferValue(offerMaker.getRace());
+            value = value - voteOffer.getOfferValue(offerMaker);
           }
           if (value > 0) {
             int maxAmount = offerMaker.getArtifactLists()
@@ -547,8 +546,8 @@ public class DiplomaticTrade {
           break;
         }
         i++;
-      } while (firstOffer.getOfferValue(offerMaker.getRace())
-          > secondOffer.getOfferValue(offerMaker.getRace()));
+      } while (firstOffer.getOfferValue(offerMaker)
+          > secondOffer.getOfferValue(offerMaker));
     }
     if (tradeType == SELL && techListForSecond.size() > 0) {
       int index = getBestTech(techListForSecond, agree.getAiAttitude());
@@ -657,7 +656,7 @@ public class DiplomaticTrade {
       NegotiationOffer voteOffer = createBestVotePromise(offerMaker);
       if (voteOffer != null && !isDiplomacyWithPirates()) {
         secondOffer.add(voteOffer);
-        value = value - voteOffer.getOfferValue(offerMaker.getRace());
+        value = value - voteOffer.getOfferValue(offerMaker);
       }
       if (offerMaker.getTotalCredits() < value) {
         value = offerMaker.getTotalCredits();
@@ -817,7 +816,7 @@ public class DiplomaticTrade {
     if (planet.getHomeWorldIndex() != -1) {
       result = result + 3;
     }
-    if (planet.isColonizeablePlanet(demander.getRace())) {
+    if (planet.isColonizeablePlanet(demander)) {
       result = 0;
     }
     return result;
@@ -2245,10 +2244,8 @@ public class DiplomaticTrade {
       // Just creating empty list
       secondOffer = new NegotiationList();
     }
-    firstValue = firstOffer.getOfferValue(starMap.getPlayerByIndex(first)
-        .getRace());
-    secondValue = secondOffer.getOfferValue(starMap.getPlayerByIndex(second)
-        .getRace());
+    firstValue = firstOffer.getOfferValue(starMap.getPlayerByIndex(first));
+    secondValue = secondOffer.getOfferValue(starMap.getPlayerByIndex(second));
     PlayerInfo info1 = starMap.getPlayerByIndex(first);
     PlayerInfo info2 = starMap.getPlayerByIndex(second);
     NegotiationOffer offer = firstOffer.getEmbargoOffer();
@@ -2658,7 +2655,7 @@ public class DiplomaticTrade {
    * Check negotiator perk, if it should be given to ruler.
    * @param info PlayerInfo
    */
-  private void checkNegotiatorPerk(final PlayerInfo info) {
+  private static void checkNegotiatorPerk(final PlayerInfo info) {
     if (info.getRuler() != null
         && info.getRuler().getStats().getStat(
         StatType.DIPLOMATIC_TRADE) >= 4
@@ -2688,7 +2685,7 @@ public class DiplomaticTrade {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < offerList.getSize(); i++) {
       NegotiationOffer offer = offerList.getByIndex(i);
-      totalValue = totalValue + offer.getOfferValue(info.getRace());
+      totalValue = totalValue + offer.getOfferValue(info);
       switch (offer.getNegotiationType()) {
       case CREDIT: {
         info.setTotalCredits(info.getTotalCredits() + offer.getCreditValue());

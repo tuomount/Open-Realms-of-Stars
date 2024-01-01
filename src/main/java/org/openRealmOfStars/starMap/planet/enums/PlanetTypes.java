@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap.planet.enums;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2022 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -299,38 +298,6 @@ public enum PlanetTypes {
     return list.get(index);
   }
 
-  /**
-   * Get Highest random start planet type.
-   * @param race Space race for best starting planet
-   * @return Planet type
-   */
-  public static PlanetTypes getRandomStartPlanetType(final SpaceRace race) {
-    ArrayList<PlanetTypes> list = new ArrayList<>();
-    int highestValue = 0;
-    for (WorldType worldType : WorldType.values()) {
-      if (worldType != WorldType.ARTIFICALWORLD
-          && race.getWorldTypeBaseValue(worldType) > highestValue) {
-          highestValue = race.getWorldTypeBaseValue(worldType);
-      }
-    }
-    for (PlanetTypes type : PlanetTypes.values()) {
-      if (type.isNamedPlanet()) {
-        continue;
-      }
-      if (type.worldType != WorldType.ARTIFICALWORLD && !type.isGasGiant()) {
-        int value = race.getWorldTypeBaseValue(type.getWorldType());
-        if (value == highestValue) {
-          list.add(type);
-        }
-      }
-    }
-    if (list.size() == 0) {
-      // This should not really happen.
-      return null;
-    }
-    int index = DiceGenerator.getRandom(0, list.size() - 1);
-    return list.get(index);
-  }
   /**
    * Tile index
    */

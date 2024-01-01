@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.race;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,7 +23,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.starMap.planet.enums.WorldType;
 
 /**
  * Test for SpaceRaceUtility class
@@ -179,72 +178,6 @@ public class SpaceRaceUtilityTest {
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.AI);
     assertEquals(true, str.contains("Synthdroid") || str.contains("Huskdroid"));
     assertEquals(true, str.contains("AI"));
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.UnitTest.class)
-  public void testWorldTypes() {
-    for (int i = 0; i <  SpaceRaceUtility.RACE_SELECTION.length; i++) {
-      SpaceRace race = SpaceRaceUtility.getRaceByName(
-          SpaceRaceUtility.RACE_SELECTION[i]);
-      int result = 0;
-      for (int j = 0; j < WorldType.values().length; j++) {
-        WorldType type = WorldType.values()[j];
-        result = result + race.getWorldTypeBaseValue(type);
-      }
-      //System.out.println(race.toString() + " Rad: " + race.getMaxRad() + " Sum: " + result);
-      switch (race) {
-      case HUMAN:
-        assertEquals(650, result);
-        break;
-      case MECHIONS:
-        assertEquals(625, result);
-        break;
-      case SPORKS:
-        assertEquals(625, result);
-        break;
-      case GREYANS:
-        assertEquals(625, result);
-        break;
-      case CENTAURS:
-        assertEquals(750, result);
-        break;
-      case MOTHOIDS:
-        assertEquals(600, result);
-        break;
-      case TEUTHIDAES:
-        assertEquals(650, result);
-        break;
-      case SCAURIANS:
-        assertEquals(625, result);
-        break;
-      case HOMARIANS:
-        assertEquals(700, result);
-        break;
-      case CHIRALOIDS:
-        assertEquals(600, result);
-        break;
-      case REBORGIANS:
-        assertEquals(650, result);
-        break;
-      case LITHORIANS:
-        assertEquals(575, result);
-        break;
-      case ALTEIRIANS:
-        assertEquals(900, result);
-        break;
-      case SMAUGIRIANS:
-        assertEquals(625, result);
-        break;
-      case SYNTHDROIDS:
-        assertEquals(600, result);
-        break;
-      default:
-        assertEquals(0, result);
-        break;
-      }
-      //System.out.println(race.getName() + ": " + result + "(" + race.getMaxRad()+ ")");
-    }
   }
 
 }

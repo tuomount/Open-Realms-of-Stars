@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.diplomacy.negotiation;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2019 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -58,7 +58,8 @@ public class NegotiationOfferTest {
     assertEquals(12, offer.getMapValue());
     offer.setMapValue(18);
     assertEquals(15, offer.getMapValue());
-    assertEquals(15, offer.getOfferValue(SpaceRace.HUMAN));
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    assertEquals(15, offer.getOfferValue(info));
     assertEquals(NegotiationType.MAP, offer.getNegotiationType());
     assertEquals(null, offer.getOfferObject());
 
@@ -102,11 +103,10 @@ public class NegotiationOfferTest {
     assertEquals(5, offer.getMapValue());
     offer.setMapValue(18);
     assertEquals(7, offer.getMapValue());
-    assertEquals(7, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(7, offer.getOfferValue(info));
     assertEquals(NegotiationType.MAP_PLANETS, offer.getNegotiationType());
     assertEquals(null, offer.getOfferObject());
 
-    PlayerInfo info = Mockito.mock(PlayerInfo.class);
     offer = new NegotiationOffer(NegotiationType.TRADE_EMBARGO, info);
     assertEquals(NegotiationType.TRADE_EMBARGO, offer.getNegotiationType());
     assertEquals(info, offer.getOfferObject());
@@ -137,37 +137,38 @@ public class NegotiationOfferTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testOfferValues() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
     NegotiationOffer offer = new NegotiationOffer(NegotiationType.ALLIANCE, null);
-    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(0, offer.getOfferValue(info));
 
     offer = new NegotiationOffer(NegotiationType.TRADE_ALLIANCE, null);
-    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(0, offer.getOfferValue(info));
 
     offer = new NegotiationOffer(NegotiationType.PEACE, null);
-    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(0, offer.getOfferValue(info));
 
     offer = new NegotiationOffer(NegotiationType.SPY_TRADE, null);
-    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(0, offer.getOfferValue(info));
 
     offer = new NegotiationOffer(NegotiationType.DIPLOMAT, null);
-    assertEquals(5, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(5, offer.getOfferValue(info));
 
     offer = new NegotiationOffer(NegotiationType.MAP, null);
-    assertEquals(12, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(12, offer.getOfferValue(info));
 
     Integer credit = Integer.valueOf(7);
     offer = new NegotiationOffer(NegotiationType.CREDIT, credit);
-    assertEquals(7, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(7, offer.getOfferValue(info));
 
     Fleet fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.getMilitaryValue()).thenReturn(24);
     offer = new NegotiationOffer(NegotiationType.FLEET, fleet);
-    assertEquals(12, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(12, offer.getOfferValue(info));
 
     fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.getMilitaryValue()).thenReturn(24);
     offer = new NegotiationOffer(NegotiationType.RECALL_FLEET, fleet);
-    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(0, offer.getOfferValue(info));
 
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
@@ -175,8 +176,9 @@ public class NegotiationOfferTest {
     Mockito.when(planet.getTotalPopulation()).thenReturn(6);
     Mockito.when(planet.getTotalRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
+    Mockito.when(planet.isColonizeablePlanet(Mockito.any())).thenReturn(true);
     offer = new NegotiationOffer(NegotiationType.PLANET, planet);
-    assertEquals(13, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(13, offer.getOfferValue(info));
     planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
     Mockito.when(planet.getGroundSize()).thenReturn(13);
@@ -184,35 +186,34 @@ public class NegotiationOfferTest {
     Mockito.when(planet.getTotalRadiationLevel()).thenReturn(
         RadiationType.VERY_HIGH_RAD);
     offer = new NegotiationOffer(NegotiationType.PLANET, planet);
-    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(0, offer.getOfferValue(info));
 
     Tech tech = Mockito.mock(Tech.class);
     Mockito.when(tech.getLevel()).thenReturn(3);
     offer = new NegotiationOffer(NegotiationType.TECH, tech);
-    assertEquals(6, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(6, offer.getOfferValue(info));
 
     offer = new NegotiationOffer(NegotiationType.MAP_PLANETS, null);
     assertEquals(NegotiationType.MAP_PLANETS, offer.getNegotiationType());
     assertEquals(null, offer.getOfferObject());
-    assertEquals(5, offer.getOfferValue(SpaceRace.HOMARIANS));
+    assertEquals(5, offer.getOfferValue(info));
 
-    PlayerInfo info = Mockito.mock(PlayerInfo.class);
     offer = new NegotiationOffer(NegotiationType.TRADE_EMBARGO, info);
     assertEquals(NegotiationType.TRADE_EMBARGO, offer.getNegotiationType());
     assertEquals(info, offer.getOfferObject());
-    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(0, offer.getOfferValue(info));
 
     Integer value = Integer.valueOf(5);
     offer = new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES, value);
     assertEquals(NegotiationType.PROMISE_VOTE_YES, offer.getNegotiationType());
     assertEquals(value, offer.getOfferObject());
-    assertEquals(5, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(5, offer.getOfferValue(info));
 
     value = Integer.valueOf(5);
     offer = new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO, value);
     assertEquals(NegotiationType.PROMISE_VOTE_NO, offer.getNegotiationType());
     assertEquals(value, offer.getOfferObject());
-    assertEquals(5, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(5, offer.getOfferValue(info));
 
   }
 

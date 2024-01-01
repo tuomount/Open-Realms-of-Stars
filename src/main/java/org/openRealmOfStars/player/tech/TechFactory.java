@@ -178,7 +178,7 @@ public final class TechFactory {
    * Defense tech names for level 6
    */
   public static final String[] DEFENSE_TECH_LEVEL6_NAMES = {"Shield Mk6",
-      "Armor plating Mk6", "Space academy", "Iron colonization" };
+      "Armor plating Mk6", "Space academy", "Volcanic colonization" };
   /**
    * Defense rare tech names for level 6.
    */
@@ -318,7 +318,7 @@ public final class TechFactory {
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL4_NAMES = {"Trade center",
       "Extreme sports center", "Recycle center", "Starbase lab",
-      "Carbon colonization"};
+      "Swamp colonization"};
   /**
    * Planetary Improvement rare tech names for level 4
    */
@@ -746,7 +746,7 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Defense, level);
-        if (techName.equals("Iron colonization")) {
+        if (techName.equals("Volcanic colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
@@ -981,7 +981,7 @@ public final class TechFactory {
           tech.setTradeable(false);
           tech.setExcludeList(true);
           tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
-        } else if (techName.equals("Carbon colonization")) {
+        } else if (techName.equals("Swamp colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);

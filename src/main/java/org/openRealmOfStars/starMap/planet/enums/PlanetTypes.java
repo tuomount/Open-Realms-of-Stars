@@ -523,7 +523,7 @@ public enum PlanetTypes {
       case DESERTWORLD3: return "Desert world";
       case ARTIFICIALWORLD1: return "Artificial world";
       case PLANET_EARTH: return "Water world";
-      case PLANET_MARS: return "Iron world";
+      case PLANET_MARS: return "Desert world";
       case PLANET_JUPITER: return "Gas giant";
       case PLANET_SATURN: return "Gas giant";
       case ICEGIANT1: return "Ice giant";

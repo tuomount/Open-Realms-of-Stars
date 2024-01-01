@@ -2647,7 +2647,7 @@ public class PlayerInfo {
       result = result + 25;
     }
     if (worldType == WorldType.SWAMPWORLD
-        && techList.hasTech("Carbon colonization")) {
+        && techList.hasTech("Swamp colonization")) {
       result = result + 25;
     }
     if (worldType == WorldType.ICEWORLD

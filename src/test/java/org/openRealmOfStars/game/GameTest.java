@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2021 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -93,8 +93,8 @@ public class GameTest {
       }
       int maxSectors = game.getStarMap().getMaxX() * game.getStarMap().getMaxY();
       for (int j = 0; j < game.getPlayers().getCurrentMaxPlayers(); j++) {
-        if (planet.getRadiationLevel() <= game.getPlayers()
-            .getPlayerInfoByIndex(j).getRace().getMaxRad()
+        if (planet.isColonizeablePlanet(game.getPlayers()
+            .getPlayerInfoByIndex(j))
             && planet.getPlanetOwnerIndex() == -1) {
           maxPlanets[j]++;
         }

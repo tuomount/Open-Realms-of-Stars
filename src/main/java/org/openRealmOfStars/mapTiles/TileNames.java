@@ -281,11 +281,11 @@ public final class TileNames {
   /**
    * Planet 4 Iron world 1
    */
-  public static final String IRONPLANET1 = "IRONPLANET1";
+  public static final String VOLCANICPLANET1 = "IRONPLANET1";
   /**
    * Planet 5 Iron world 2
    */
-  public static final String IRONPLANET2 = "IRONPLANET2";
+  public static final String VOLCANICPLANET2 = "IRONPLANET2";
 
   /**
    * Planet 6 Water world 3
@@ -310,11 +310,11 @@ public final class TileNames {
   /**
    * Planet 10 iron world 3
    */
-  public static final String IRONPLANET3 = "IRONPLANET3";
+  public static final String VOLCANICPLANET3 = "IRONPLANET3";
   /**
    * Planet 11 carbon world 1
    */
-  public static final String CARBONWORLD1 = "CARBONWORLD1";
+  public static final String SWAMPWORLD1 = "CARBONWORLD1";
   /**
    * Planet 12 Ice world 3
    */
@@ -322,11 +322,11 @@ public final class TileNames {
   /**
    * Planet 13 Iron world 4
    */
-  public static final String IRONPLANET4 = "IRONPLANET4";
+  public static final String VOLCANICPLANET4 = "IRONPLANET4";
   /**
    * Planet 14 carbon world 2
    */
-  public static final String CARBONWORLD2 = "CARBONWORLD2";
+  public static final String SWAMPWORLD2 = "CARBONWORLD2";
   /**
    * Planet 15 desert world 1
    */
@@ -362,11 +362,11 @@ public final class TileNames {
   /**
    * Planet 23 Iron world 5
    */
-  public static final String IRONPLANET5 = "IRONPLANET5";
+  public static final String VOLCANICPLANET5 = "IRONPLANET5";
   /**
    * Planet 24 Iron world 6
    */
-  public static final String IRONPLANET6 = "IRONPLANET6";
+  public static final String VOLCANICPLANET6 = "IRONPLANET6";
   /**
    * Planet 25 desert world 3
    */
@@ -374,7 +374,7 @@ public final class TileNames {
   /**
    * Planet 26 carbon world 3
    */
-  public static final String CARBONWORLD3 = "CARBONWORLD3";
+  public static final String SWAMPWORLD3 = "CARBONWORLD3";
   /**
    * Planet 27 artificial planet 1
    */

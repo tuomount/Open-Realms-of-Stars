@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -99,7 +99,7 @@ import org.openRealmOfStars.starMap.newsCorp.scoreBoard.Row;
 import org.openRealmOfStars.starMap.newsCorp.scoreBoard.ScoreBoard;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 import org.openRealmOfStars.starMap.randomEvent.RandomEventUtility;
 import org.openRealmOfStars.starMap.vote.Vote;
@@ -1188,8 +1188,7 @@ public class AITurnView extends BlackPanel {
     for (Mission mission : colonyMissions) {
       Planet planet = map.getPlanetByCoordinate(mission.getX(), mission.getY());
       if (planet != null) {
-        int worldValue = info.getWorldTypeValue(
-            planet.getPlanetType().getWorldType());
+        int worldValue = info.getPlanetSuitabilityValue(planet);
         int size = planet.getGroundSize();
         double dist = info.getCenterRealm().calculateDistance(
             new Coordinate(mission.getX(), mission.getY()));
@@ -1310,16 +1309,9 @@ public class AITurnView extends BlackPanel {
       ArrayList<Planet> planets = game.getStarMap().getPlanetList();
       int colonizations = info.getMissions().getNumberOfMissionTypes(
           MissionType.COLONIZE, MissionPhase.PLANNING);
-      int maxRad = info.getRace().getMaxRad();
-      if (info.getTechList().isTech("Radiation dampener")) {
-        maxRad++;
-      }
-      if (info.getTechList().isTech("Radiation well")) {
-        maxRad++;
-      }
       ArrayList<Mission> colonyMissions = new ArrayList<>();
       for (Planet planet : planets) {
-        if (planet.getTotalRadiationLevel() <= maxRad
+        if (planet.isColonizeablePlanet(info)
             && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
             && info.getSectorVisibility(planet.getCoordinate())
             >= PlayerInfo.VISIBLE) {
@@ -1332,7 +1324,7 @@ public class AITurnView extends BlackPanel {
             colonyMissions.add(mission);
           }
         }
-        if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
+        if (planet.isColonizeablePlanet(info)
             && !planet.isGasGiant()
             && planet.getPlanetPlayerInfo() == null
             && info.getSectorVisibility(planet.getCoordinate())
@@ -1364,18 +1356,11 @@ public class AITurnView extends BlackPanel {
           MissionType.COLONIZE, MissionPhase.PLANNING);
       int attacks = info.getMissions().getNumberOfMissionTypes(
           MissionType.ATTACK);
-      int maxRad = info.getRace().getMaxRad();
-      if (info.getTechList().isTech("Radiation dampener")) {
-        maxRad++;
-      }
-      if (info.getTechList().isTech("Radiation well")) {
-        maxRad++;
-      }
       ArrayList<Mission> colonyMissions = new ArrayList<>();
       ArrayList<Planet> attackMissions = new ArrayList<>();
       ArrayList<Planet> tradeMissions = new ArrayList<>();
       for (Planet planet : planets) {
-        if (planet.getTotalRadiationLevel() <= maxRad
+        if (planet.isColonizeablePlanet(info)
             && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
             && info.getSectorVisibility(planet.getCoordinate())
             >= PlayerInfo.VISIBLE) {
@@ -1388,7 +1373,7 @@ public class AITurnView extends BlackPanel {
             colonyMissions.add(mission);
           }
         }
-        if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
+        if (planet.isColonizeablePlanet(info)
             && !planet.isGasGiant()
             && planet.getPlanetPlayerInfo() == null
             && info.getSectorVisibility(planet.getCoordinate())
@@ -1401,7 +1386,7 @@ public class AITurnView extends BlackPanel {
             colonyMissions.add(mission);
           }
         }
-        if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
+        if (planet.isColonizeablePlanet(info)
             && planet.getPlanetPlayerInfo() != null
             && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()) {
           if (info.getSectorVisibility(planet.getCoordinate())
@@ -3018,7 +3003,7 @@ public class AITurnView extends BlackPanel {
               msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
               realm.getMsgList().addUpcomingMessage(msg);
 
-              final var reasons = new ArrayList<String>(Arrays.asList(
+              final var reasons = new ArrayList<>(Arrays.asList(
                   new String[] {
                       "old age",
                       "natural causes",

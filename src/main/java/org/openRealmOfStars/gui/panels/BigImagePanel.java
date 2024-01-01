@@ -1,7 +1,7 @@
 package org.openRealmOfStars.gui.panels;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -234,15 +234,13 @@ public class BigImagePanel extends JPanel {
           player));
       if (player != null && planet.getPlanetPlayerInfo() != player
           && !planet.isGasGiant()) {
-        if (planet.getTotalRadiationLevel() > player.getRace().getMaxRad()) {
-          sb.append("High radiation! Maximum radiation is ");
-          sb.append(player.getRace().getMaxRad());
+        if (!planet.isColonizeablePlanet(player)) {
+          sb.append("Warning! Planet is not colonizable for your people.");
         } else {
           sb.append(player.getRace().getName());
           sb.append(" can colonize this planet.");
           sb.append(" Planet has total value of ");
-          sb.append(player.getWorldTypeValue(
-              planet.getPlanetType().getWorldType()));
+          sb.append(player.getPlanetSuitabilityValue(planet));
           sb.append("%.");
         }
       }

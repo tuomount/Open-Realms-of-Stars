@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.diplomacy.negotiation;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2022 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -91,12 +91,13 @@ public class NegotiationOffer {
 
   /**
    * Get the offer value. More valuable offer is better.
-   * @param race SpaceRace for valuing the offer. Mostly used for
-   *        Determine if planet is valuable for certain race
+   * @param info Realm for valuing the offer. Mostly used for
+   *        Determine if planet is valuable for certain realm
    * @return offer value
    */
-  public int getOfferValue(final SpaceRace race) {
+  public int getOfferValue(final PlayerInfo info) {
     int offerValue = 0;
+    SpaceRace race = info.getRace();
     switch (negotiationType) {
     case ALLIANCE:
       // Both sides get Alliance so it's value to zero.
@@ -157,7 +158,7 @@ public class NegotiationOffer {
       offerValue = getPlanet().getAmountMetalInGround() / 1000;
       offerValue = offerValue + getPlanet().getTotalPopulation() / 3;
       offerValue = offerValue + getPlanet().getGroundSize() - 7;
-      if (getPlanet().getTotalRadiationLevel() > race.getMaxRad()) {
+      if (!getPlanet().isColonizeablePlanet(info)) {
         offerValue = 0;
       }
       break;

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.diplomacy.negotiation;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.race.SpaceRace;
 
 /**
@@ -32,43 +33,45 @@ public class NegotiationListTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
     NegotiationOffer offer = Mockito.mock(NegotiationOffer.class);
-    Mockito.when(offer.getOfferValue(SpaceRace.HUMAN)).thenReturn(5);
+    Mockito.when(offer.getOfferValue(info)).thenReturn(5);
     NegotiationOffer offer2 = Mockito.mock(NegotiationOffer.class);
-    Mockito.when(offer2.getOfferValue(SpaceRace.HUMAN)).thenReturn(7);
+    Mockito.when(offer2.getOfferValue(info)).thenReturn(7);
 
     NegotiationList list = new NegotiationList();
     list.add(offer);
     assertEquals(1, list.getSize());
     assertEquals(offer, list.getByIndex(0));
-    assertEquals(5, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(5, list.getOfferValue(info));
     list.add(offer2);
     assertEquals(2, list.getSize());
     assertEquals(offer, list.getByIndex(0));
     assertEquals(offer2, list.getByIndex(1));
-    assertEquals(12, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(12, list.getOfferValue(info));
     list.remove(0);
     assertEquals(1, list.getSize());
     assertEquals(offer2, list.getByIndex(0));
-    assertEquals(7, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(7, list.getOfferValue(info));
     list.add(offer);
-    assertEquals(12, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(12, list.getOfferValue(info));
   }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testPlanetsAndFleets() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
     NegotiationOffer offer = Mockito.mock(NegotiationOffer.class);
-    Mockito.when(offer.getOfferValue(SpaceRace.HUMAN)).thenReturn(15);
+    Mockito.when(offer.getOfferValue(info)).thenReturn(15);
     Mockito.when(offer.getNegotiationType()).thenReturn(NegotiationType.PLANET);
     NegotiationOffer offer2 = Mockito.mock(NegotiationOffer.class);
-    Mockito.when(offer2.getOfferValue(SpaceRace.HUMAN)).thenReturn(7);
+    Mockito.when(offer2.getOfferValue(info)).thenReturn(7);
     Mockito.when(offer2.getNegotiationType()).thenReturn(NegotiationType.FLEET);
     NegotiationOffer offer3 = Mockito.mock(NegotiationOffer.class);
-    Mockito.when(offer3.getOfferValue(SpaceRace.HUMAN)).thenReturn(25);
+    Mockito.when(offer3.getOfferValue(info)).thenReturn(25);
     Mockito.when(offer3.getNegotiationType()).thenReturn(NegotiationType.PEACE);
     NegotiationOffer offer4 = Mockito.mock(NegotiationOffer.class);
-    Mockito.when(offer4.getOfferValue(SpaceRace.HUMAN)).thenReturn(-30);
+    Mockito.when(offer4.getOfferValue(info)).thenReturn(-30);
     Mockito.when(offer4.getNegotiationType()).thenReturn(NegotiationType.WAR);
 
     NegotiationList list = new NegotiationList();
@@ -76,7 +79,7 @@ public class NegotiationListTest {
     list.add(offer);
     assertEquals(1, list.getSize());
     assertEquals(offer, list.getByIndex(0));
-    assertEquals(15, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(15, list.getOfferValue(info));
     assertEquals(true, list.isPlanetInOffer());
     assertEquals(false, list.isFleetInOffer());
     assertEquals(false, list.isPeaceInOffer());
@@ -85,7 +88,7 @@ public class NegotiationListTest {
     assertEquals(2, list.getSize());
     assertEquals(offer, list.getByIndex(0));
     assertEquals(offer2, list.getByIndex(1));
-    assertEquals(22, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(22, list.getOfferValue(info));
     assertEquals(true, list.isPlanetInOffer());
     assertEquals(true, list.isFleetInOffer());
     assertEquals(false, list.isPeaceInOffer());
@@ -93,19 +96,19 @@ public class NegotiationListTest {
     list.remove(0);
     assertEquals(1, list.getSize());
     assertEquals(offer2, list.getByIndex(0));
-    assertEquals(7, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(7, list.getOfferValue(info));
     assertEquals(false, list.isPlanetInOffer());
     assertEquals(true, list.isFleetInOffer());
     assertEquals(false, list.isPeaceInOffer());
     assertEquals(false, list.isWarInOffer());
     list.add(offer3);
-    assertEquals(32, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(32, list.getOfferValue(info));
     assertEquals(false, list.isPlanetInOffer());
     assertEquals(true, list.isFleetInOffer());
     assertEquals(true, list.isPeaceInOffer());
     assertEquals(false, list.isWarInOffer());
     list.add(offer4);
-    assertEquals(2, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(2, list.getOfferValue(info));
     assertEquals(false, list.isPlanetInOffer());
     assertEquals(true, list.isFleetInOffer());
     assertEquals(true, list.isPeaceInOffer());

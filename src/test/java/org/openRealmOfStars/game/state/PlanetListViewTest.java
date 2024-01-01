@@ -34,8 +34,9 @@ import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 
 /**
 * Test for PlanetListView class
@@ -113,10 +114,10 @@ public class PlanetListViewTest {
     StarMap map = Mockito.mock(StarMap.class);
     ArrayList<Planet> listOfPlanets = new ArrayList<>();
     Planet planet1 = new Planet(new Coordinate(5, 5), "Test", 1, false);
-    planet1.setRadiationLevel(1);
+    planet1.setRadiationLevel(RadiationType.NO_RADIATION);
     listOfPlanets.add(planet1);
     Planet planet2 = new Planet(new Coordinate(8, 8), "Test", 2, false);
-    planet2.setRadiationLevel(1);
+    planet2.setRadiationLevel(RadiationType.NO_RADIATION);
     listOfPlanets.add(planet2);
     PlayerInfo realm = new PlayerInfo(SpaceRace.GREYANS, 2, 0);
     realm.initMapData(50, 50);

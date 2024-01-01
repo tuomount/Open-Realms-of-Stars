@@ -38,6 +38,7 @@ import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 /**
  *
  * Test for FleetViewTest class
@@ -77,7 +78,7 @@ public class FleetViewTest {
     Fleet fleet1 = new Fleet(colony, 5, 5);
     info.getFleets().add(fleet1);
     Planet planet = new Planet(new Coordinate(5, 5), "Test", 1, false);
-    planet.setRadiationLevel(1);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
     planet.setWorkers(Planet.FOOD_FARMERS, 5);
     planet.setMetal(50);
     planet.setPlanetOwner(0, info);

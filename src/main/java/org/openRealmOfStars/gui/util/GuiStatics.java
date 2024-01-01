@@ -805,50 +805,50 @@ public final class GuiStatics {
   /**
    * Big planet screen carbon world 1
    */
-  public static final BufferedImage BIG_PLANET_CARBONWORLD1 = IOUtilities
+  public static final BufferedImage BIG_PLANET_SWAMPWORLD1 = IOUtilities
       .loadImage("/resources/images/carbonworld1.png");
   /**
    * Big planet screen carbon world 2
    */
-  public static final BufferedImage BIG_PLANET_CARBONWORLD2 = IOUtilities
+  public static final BufferedImage BIG_PLANET_SWAMPWORLD2 = IOUtilities
       .loadImage("/resources/images/carbonworld2.png");
   /**
    * Big planet screen carbon world 3
    */
-  public static final BufferedImage BIG_PLANET_CARBONWORLD3 = IOUtilities
+  public static final BufferedImage BIG_PLANET_SWAMPWORLD3 = IOUtilities
       .loadImage("/resources/images/carbonworld3.png");
 
   /**
    * Big planet screen iron planet 1
    */
-  public static final BufferedImage BIG_PLANET_IRONPLANET1 = IOUtilities
+  public static final BufferedImage BIG_PLANET_VOLCANICPLANET1 = IOUtilities
       .loadImage("/resources/images/ironplanet1.png");
 
   /**
    * Big planet screen iron planet 2
    */
-  public static final BufferedImage BIG_PLANET_IRONPLANET2 = IOUtilities
+  public static final BufferedImage BIG_PLANET_VOLCANICPLANET2 = IOUtilities
       .loadImage("/resources/images/ironplanet2.png");
 
   /**
    * Big planet screen iron planet 3
    */
-  public static final BufferedImage BIG_PLANET_IRONPLANET3 = IOUtilities
+  public static final BufferedImage BIG_PLANET_VOLCANICPLANET3 = IOUtilities
       .loadImage("/resources/images/ironplanet3.png");
   /**
    * Big planet screen iron planet 4
    */
-  public static final BufferedImage BIG_PLANET_IRONPLANET4 = IOUtilities
+  public static final BufferedImage BIG_PLANET_VOLCANICPLANET4 = IOUtilities
       .loadImage("/resources/images/ironplanet4.png");
   /**
    * Big planet screen iron planet 5
    */
-  public static final BufferedImage BIG_PLANET_IRONPLANET5 = IOUtilities
+  public static final BufferedImage BIG_PLANET_VOLCANICPLANET5 = IOUtilities
       .loadImage("/resources/images/ironplanet5.png");
   /**
    * Big planet screen iron planet 6
    */
-  public static final BufferedImage BIG_PLANET_IRONPLANET6 = IOUtilities
+  public static final BufferedImage BIG_PLANET_VOLCANICPLANET6 = IOUtilities
       .loadImage("/resources/images/ironplanet6.png");
 
   /**

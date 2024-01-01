@@ -46,8 +46,8 @@ import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.newsCorp.GalaxyStat;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 

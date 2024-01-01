@@ -50,11 +50,14 @@ import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
+import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
+import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
+import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 
 import junit.framework.TestCase;
 
@@ -534,7 +537,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(8, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(59, scores[2]);
+    assertEquals(49, scores[2]);
     assertEquals(89, scores[3]);
     assertEquals(119, scores[4]);
     assertEquals(109, scores[5]);
@@ -546,7 +549,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(8, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(59, scores[2]);
+    assertEquals(49, scores[2]);
     assertEquals(89, scores[3]);
     assertEquals(119, scores[4]);
     assertEquals(59, scores[5]);
@@ -558,7 +561,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(8, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(59, scores[2]);
+    assertEquals(49, scores[2]);
     assertEquals(109, scores[3]);
     assertEquals(69, scores[4]);
     assertEquals(59, scores[5]);
@@ -572,7 +575,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(9, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(59, scores[2]);
+    assertEquals(49, scores[2]);
     assertEquals(39, scores[3]);
     assertEquals(69, scores[4]);
     assertEquals(59, scores[5]);
@@ -592,7 +595,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(9, scores.length);
     assertEquals(-1, scores[0]);
     assertEquals(-1, scores[1]);
-    assertEquals(59, scores[2]);
+    assertEquals(49, scores[2]);
     assertEquals(39, scores[3]);
     assertEquals(69, scores[4]);
     assertEquals(59, scores[5]);
@@ -1160,7 +1163,10 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(ship.getProdCost()).thenReturn(22);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getGroundSize()).thenReturn(12);
-    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(2);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
+    Mockito.when(planet.getRadiationLevel()).thenReturn(
+        RadiationType.NO_RADIATION);
     Coordinate planetCoord = Mockito.mock(Coordinate.class);
     Mockito.when(planet.getCoordinate()).thenReturn(planetCoord);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
@@ -1179,22 +1185,22 @@ public class PlanetHandlingTest extends TestCase {
         Mockito.anyInt())).thenReturn(planet);
     int score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
-    assertEquals(62, score);
+    assertEquals(63, score);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.MERCHANTICAL, planet);
-    assertEquals(42, score);
+    assertEquals(43, score);
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.START_GAME);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
-    assertEquals(92, score);
+    assertEquals(93, score);
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.EARLY_GAME);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
-    assertEquals(82, score);
+    assertEquals(83, score);
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.MIDDLE_GAME);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
-    assertEquals(72, score);
+    assertEquals(73, score);
     missionList.remove(mission);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.AGGRESSIVE, planet);
@@ -1463,13 +1469,18 @@ public class PlanetHandlingTest extends TestCase {
   public void testHomarianHandling2Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 2);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
   }
 
@@ -1479,6 +1490,11 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     info.setGovernment(GovernmentType.NEST);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 3);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
@@ -1489,7 +1505,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1498,17 +1514,22 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     info.setGovernment(GovernmentType.NEST);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 4);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1517,17 +1538,22 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     info.setGovernment(GovernmentType.CLAN);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 4);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1536,6 +1562,11 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     info.setGovernment(GovernmentType.NEST);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 5);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
@@ -1546,7 +1577,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1555,16 +1586,21 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     info.setGovernment(GovernmentType.CLAN);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.MARINE);
+    planet.setTemperatureType(TemperatureType.TROPICAL);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 5);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
@@ -1574,26 +1610,12 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     info.setGovernment(GovernmentType.CLAN);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
-    planet.addBuilding(BuildingFactory.createByName("Basic Lab"));
-    planet.setPlanetOwner(1, info);
-    planet.setWorkers(Planet.METAL_MINERS, 5);
-    PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
-    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testHomarianHandling5PopulationHegemony() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
-    info.setGovernment(GovernmentType.HEGEMONY);
-    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
+    planet.addBuilding(BuildingFactory.createByName("Basic lab"));
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 5);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
@@ -1604,7 +1626,32 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(8, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHomarianHandling5PopulationHegemony() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    info.setGovernment(GovernmentType.HEGEMONY);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 5);
+    PlanetHandling.handlePlanetPopulation(planet, info, 0);
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1612,15 +1659,20 @@ public class PlanetHandlingTest extends TestCase {
   public void testHomarianHandling6Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 1);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
     planet.setWorkers(Planet.FOOD_FARMERS, 2);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(3, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
   }
@@ -1630,16 +1682,21 @@ public class PlanetHandlingTest extends TestCase {
   public void testHomarianHandling6PopulationAllMiners() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 6);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
     planet.setWorkers(Planet.FOOD_FARMERS, 0);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(4, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
   }
 
@@ -1648,16 +1705,21 @@ public class PlanetHandlingTest extends TestCase {
   public void testHomarianHandling6Population4Miners() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 4);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
     planet.setWorkers(Planet.FOOD_FARMERS, 1);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(3, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
   }
 
@@ -1666,16 +1728,21 @@ public class PlanetHandlingTest extends TestCase {
   public void testHomarianHandling6Population3Miners() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 3);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
     planet.setWorkers(Planet.FOOD_FARMERS, 2);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(3, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
   }
 
@@ -1684,17 +1751,29 @@ public class PlanetHandlingTest extends TestCase {
   public void testHomarianHandling6Population2Miners() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 2);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
     planet.setWorkers(Planet.FOOD_FARMERS, 3);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(3, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+
   }
 
   @Test
@@ -1702,6 +1781,11 @@ public class PlanetHandlingTest extends TestCase {
   public void testAlteirianHandling1Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.colonizeWithOrbital();
     planet.setWorkers(Planet.METAL_MINERS, 1);
@@ -1711,6 +1795,12 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1718,15 +1808,26 @@ public class PlanetHandlingTest extends TestCase {
   public void testAlteirianHandling2Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.colonizeWithOrbital();
     planet.setWorkers(Planet.METAL_MINERS, 2);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1734,58 +1835,92 @@ public class PlanetHandlingTest extends TestCase {
   public void testAlteirianHandling3Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.colonizeWithOrbital();
     planet.setWorkers(Planet.METAL_MINERS, 3);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAlteirianHandling3PopulationWithFarm() {
     PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.colonizeWithOrbital();
     planet.setWorkers(Planet.METAL_MINERS, 3);
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
-    boolean ok = false;
-    if (planet.getWorkers(Planet.RESEARCH_SCIENTIST)
-        + planet.getWorkers(Planet.CULTURE_ARTIST) == 2) {
-      ok = true;
-    }
-    assertEquals(true, ok);
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAlteirianHandling3PopulationWithFarmAndLab() {
     PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.colonizeWithOrbital();
     planet.setWorkers(Planet.METAL_MINERS, 3);
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic lab"));
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAlteirianHandling3PopulationWithFactoryMineLab() {
     PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.colonizeWithOrbital();
     planet.setWorkers(Planet.METAL_MINERS, 3);
@@ -1794,14 +1929,14 @@ public class PlanetHandlingTest extends TestCase {
     planet.addBuilding(BuildingFactory.createByName("Basic lab"));
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
-    boolean ok = false;
-    if (planet.getWorkers(Planet.RESEARCH_SCIENTIST)
-        + planet.getWorkers(Planet.CULTURE_ARTIST) == 1) {
-      ok = true;
-    }
-    assertEquals(true, ok);
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1809,17 +1944,28 @@ public class PlanetHandlingTest extends TestCase {
   public void testAlteirianHandling4PopulationWithFarmAndLab() {
     PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.colonizeWithOrbital();
     planet.setWorkers(Planet.METAL_MINERS, 4);
     planet.addBuilding(BuildingFactory.createByName("Advanced farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic lab"));
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
-    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1827,28 +1973,27 @@ public class PlanetHandlingTest extends TestCase {
   public void testChiraloidHandling2PopulationWithLab() {
     PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 2);
-    planet.addBuilding(BuildingFactory.createByName("Basic Lab"));
+    planet.addBuilding(BuildingFactory.createByName("Basic lab"));
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(2, planet.getTotalPopulation());
-    int farmers = planet.getWorkers(Planet.FOOD_FARMERS);
-    int workers = planet.getWorkers(Planet.PRODUCTION_WORKERS);
-    int miners = planet.getWorkers(Planet.METAL_MINERS);
-    int artists = planet.getWorkers(Planet.CULTURE_ARTIST);
-    if (farmers > 1) {
-      assertEquals(true, false);
-    }
-    if (workers == 1) {
-      assertEquals(true, false);
-    }
-    if (miners < 0 || miners > 1) {
-      assertEquals(true, false);
-    }
-    if (artists < 0 || artists > 1) {
-      assertEquals(true, false);
-    }
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1856,7 +2001,11 @@ public class PlanetHandlingTest extends TestCase {
   public void testChiraloidHandling4PopulationHighRad() {
     PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
-    planet.setRadiationLevel(4);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.LOW_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 4);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
@@ -1866,6 +2015,12 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1874,6 +2029,11 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRace.LITHORIANS);
     info.setGovernment(GovernmentType.KINGDOM);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 0);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
@@ -1888,8 +2048,8 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_METAL));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1898,6 +2058,11 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRace.LITHORIANS);
     info.setGovernment(GovernmentType.KINGDOM);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.BARREN);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 0);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
@@ -1912,17 +2077,21 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(9, planet.getTotalProduction(Planet.PRODUCTION_METAL));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
-/*
+
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testScauriansHandling2PopulationKingdom() {
     PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
     info.setGovernment(GovernmentType.EMPIRE);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
     planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.addBuilding(BuildingFactory.createByName("Space port"));
     planet.addBuilding(BuildingFactory.createByName("Tax center"));
     planet.addBuilding(BuildingFactory.createByName("Advanced laboratory"));
@@ -1935,8 +2104,6 @@ public class PlanetHandlingTest extends TestCase {
     planet.addBuilding(BuildingFactory.createByName("Planetary defense turret Mk1"));
     planet.addBuilding(BuildingFactory.createByName("Manufacturing center"));
     planet.addBuilding(BuildingFactory.createByName("Basic mine"));
-    planet.setPlanetaryEvent(PlanetaryEvent.DESERT);
-    planet.setEventActivation(true);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 0);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
@@ -1944,22 +2111,27 @@ public class PlanetHandlingTest extends TestCase {
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(3, planet.getTotalPopulation());
-    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(3, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
-*/
+
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testCentaursHandling3PopulationKingdomWithFarm() {
     PlayerInfo info = new PlayerInfo(SpaceRace.CENTAURS);
     info.setGovernment(GovernmentType.KINGDOM);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 0);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
@@ -1970,10 +2142,10 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(3, planet.getTotalPopulation());
     assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
@@ -1984,42 +2156,12 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
     info.setGovernment(GovernmentType.KINGDOM);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
-    planet.setPlanetOwner(1, info);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
     planet.setGroundSize(12);
-    planet.addBuilding(BuildingFactory.createByName("Basic lab"));
-    planet.addBuilding(BuildingFactory.createByName("Basic mine"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic factory"));
-    planet.setWorkers(Planet.METAL_MINERS, 0);
-    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-    planet.setWorkers(Planet.FOOD_FARMERS, 10);
-    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-    PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(10, planet.getTotalPopulation());
-    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(6, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
-    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
-    assertEquals(-2, planet.calculateHappiness());
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testMothoidsHandling10PopulationKingdomFull() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
-    info.setGovernment(GovernmentType.KINGDOM);
-    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
-    planet.setGroundSize(10);
     planet.addBuilding(BuildingFactory.createByName("Basic lab"));
     planet.addBuilding(BuildingFactory.createByName("Basic mine"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
@@ -2039,8 +2181,46 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(10, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(-1, planet.calculateHappiness());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMothoidsHandling10PopulationKingdomFull() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
+    info.setGovernment(GovernmentType.KINGDOM);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(10);
+    planet.generateGravityBasedOnSize();
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic lab"));
+    planet.addBuilding(BuildingFactory.createByName("Basic mine"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic factory"));
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 10);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info, 0);
+    assertEquals(10, planet.getTotalPopulation());
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(4, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(10, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
     assertEquals(-1, planet.calculateHappiness());
@@ -2051,6 +2231,11 @@ public class PlanetHandlingTest extends TestCase {
   public void testGreyansHandling6PopulationAllFarmers() {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
@@ -2062,10 +2247,17 @@ public class PlanetHandlingTest extends TestCase {
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
-    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+
   }
 
   @Test
@@ -2073,6 +2265,11 @@ public class PlanetHandlingTest extends TestCase {
   public void testGreyansHandling6PopulationAllFarmers2() {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
@@ -2086,10 +2283,16 @@ public class PlanetHandlingTest extends TestCase {
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(3, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(9, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -2097,7 +2300,125 @@ public class PlanetHandlingTest extends TestCase {
   public void testGreyansHandling7PopulationFullFarms() {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 7);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info, 0);
+    assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(3, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(7, planet.getTotalPopulation());
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(10, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTeuthidaesHandling9PopulationFullFarmers() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(10);
+    planet.generateGravityBasedOnSize();
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 9);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info, 0);
+    assertEquals(4, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(13, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHumansHandling9PopulationFullFarmers() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(10);
+    planet.generateGravityBasedOnSize();
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 9);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info, 0);
+    assertEquals(4, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(12, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHumansHandling7PopulationFullFarmers() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(10);
+    planet.generateGravityBasedOnSize();
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
@@ -2115,110 +2436,9 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(3, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
-    assertEquals(7, planet.getTotalPopulation());
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(9, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testTeuthidaesHandling9PopulationFullFarmers() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
-    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
-    planet.setPlanetOwner(1, info);
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.setGroundSize(10);
-    planet.setWorkers(Planet.METAL_MINERS, 0);
-    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-    planet.setWorkers(Planet.FOOD_FARMERS, 9);
-    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-    PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(4, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
-    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
-    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(12, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testHumansHandling9PopulationFullFarmers() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
-    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
-    planet.setPlanetOwner(1, info);
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.setGroundSize(10);
-    planet.setWorkers(Planet.METAL_MINERS, 0);
-    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-    planet.setWorkers(Planet.FOOD_FARMERS, 9);
-    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-    PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(4, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
-    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
-    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_METAL));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testHumansHandling7PopulationFullFarmers() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
-    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
-    planet.setPlanetOwner(1, info);
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.setGroundSize(10);
-    planet.setWorkers(Planet.METAL_MINERS, 0);
-    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-    planet.setWorkers(Planet.FOOD_FARMERS, 7);
-    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-    PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
-    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
   }
@@ -2228,6 +2448,11 @@ public class PlanetHandlingTest extends TestCase {
   public void testHumansHandling8PopulationFullFarmers() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(10);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
@@ -2238,21 +2463,20 @@ public class PlanetHandlingTest extends TestCase {
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.setGroundSize(10);
     planet.setWorkers(Planet.METAL_MINERS, 0);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
     planet.setWorkers(Planet.FOOD_FARMERS, 8);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(3, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
-    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(12, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
   }
 
@@ -2261,6 +2485,11 @@ public class PlanetHandlingTest extends TestCase {
   public void testTeuthidaesHandling10PopulationFullFarmers() {
     PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(10);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
@@ -2272,7 +2501,6 @@ public class PlanetHandlingTest extends TestCase {
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-    planet.setGroundSize(10);
     planet.setWorkers(Planet.METAL_MINERS, 0);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
     planet.setWorkers(Planet.FOOD_FARMERS, 10);
@@ -2285,7 +2513,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(12, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(13, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
   }
@@ -2295,6 +2523,11 @@ public class PlanetHandlingTest extends TestCase {
   public void testMothoidsHandling6PopulationFullFarms() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
@@ -2310,14 +2543,14 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
-    assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(3, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(6, planet.getTotalPopulation());
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(8, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(9, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
-    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
   }
 
   @Test
@@ -2325,6 +2558,11 @@ public class PlanetHandlingTest extends TestCase {
   public void testMothoidsHandling7PopulationFullFarms() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
@@ -2342,14 +2580,14 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
-    assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(3, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(7, planet.getTotalPopulation());
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(10, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
-    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
   }
 
   @Test
@@ -2357,6 +2595,11 @@ public class PlanetHandlingTest extends TestCase {
   public void testScaurianHandling7PopulationFullFarms() {
     PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
     planet.setPlanetOwner(1, info);
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
     planet.addBuilding(BuildingFactory.createByName("Basic farm"));
@@ -2371,15 +2614,15 @@ public class PlanetHandlingTest extends TestCase {
     planet.setWorkers(Planet.FOOD_FARMERS, 7);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(4, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(3, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(7, planet.getTotalPopulation());
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(10, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
   }

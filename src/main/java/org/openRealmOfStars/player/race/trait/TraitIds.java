@@ -2,7 +2,7 @@ package org.openRealmOfStars.player.race.trait;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2023 BottledByte
- * Copyright (C) 2023 Tuomo Untinen
+ * Copyright (C) 2023-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -125,6 +125,26 @@ public final class TraitIds {
   public static final String HANDY = "HANDY";
   /** Due to body anatomy or cognitive abilites, working is difficult */
   public static final String IMPRACTICAL = "IMPRACTICAL";
+  /** Race is used to work in low gravity conditions. */
+  public static final String LOW_GRAVITY_BEING = "LOW_GRAVITY_BEING";
+  /** Race is used to work in high gravity conditions. */
+  public static final String HIGH_GRAVITY_BEING = "HIGH_GRAVITY_BEING";
+  /** Race is used to work in zero gravity conditions. */
+  public static final String ZERO_GRAVITY_BEING = "ZERO_GRAVITY_BEING";
+  /** Tolerate low radiation on planets. */
+  public static final String TOLERATE_LOW_RADIATION = "TOLERATE_LOW_RADIATION";
+  /** Tolerate high radiation on planets. */
+  public static final String TOLERATE_HIGH_RADIATION =
+      "TOLERATE_HIGH_RADIATION";
+  /** Tolerate very high radiation on planets. */
+  public static final String TOLERATE_VERY_HIGH_RADIATION =
+      "TOLERATE_VERY_HIGH_RADIATION";
+  /** Tolerate cold temperature on planets. */
+  public static final String TOLERATE_COLD = "TOLERATE_COLD";
+  /** Tolerate hot temperature on planets. */
+  public static final String TOLERATE_HOT = "TOLERATE_HOT";
+  /** Tolerate lava on planets. */
+  public static final String TOLERATE_LAVA = "TOLERATE_LAVA";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

@@ -368,7 +368,7 @@ public final class DefaultScoring {
 
     if (planet.getAmountMetalInGround() > 30) {
       score = score + building.getMineBonus() * 40;
-      if (info.getRace().getMiningSpeed() < 100) {
+      if (info.getRace().getMiningSpeed(planet.getGravityType()) < 100) {
         score = score + building.getMineBonus() * 30;
       }
       if (building.getMineBonus() > 0
@@ -781,8 +781,8 @@ public final class DefaultScoring {
             mission.getY());
         int colonyScore = (colonPlanet.getGroundSize() - 7) * 3
             + colonPlanet.getAmountMetalInGround() / 400;
-        score = score + info.getRace().getMaxRad()
-            - colonPlanet.getTotalRadiationLevel();
+        score = score + info.getRace().getMaxRad().getIndex() * 3
+            - colonPlanet.getTotalRadiationLevel().getIndex() * 3;
         score = score + colonyScore;
         if (attitude == Attitude.EXPANSIONIST) {
           score = score + 20;

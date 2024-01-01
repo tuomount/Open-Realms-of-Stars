@@ -36,7 +36,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
+import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 
 /**

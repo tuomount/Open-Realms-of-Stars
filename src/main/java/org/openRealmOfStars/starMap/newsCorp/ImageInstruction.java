@@ -26,7 +26,7 @@ import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
-import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -144,29 +144,29 @@ public class ImageInstruction {
    */
   public static final String PLANET_WATERWORLD9 = "waterworld9";
   /**
-   * Planet type ironworld1
+   * Planet type volcanicworld1
    */
-  public static final String PLANET_IRONWORLD1 = "ironworld1";
+  public static final String PLANET_VOLCANICWORLD1 = "volcanicworld1";
   /**
-   * Planet type ironworld2
+   * Planet type volcanicworld2
    */
-  public static final String PLANET_IRONWORLD2 = "ironworld2";
+  public static final String PLANET_VOLCANICWORLD2 = "volcanicworld2";
   /**
-   * Planet type ironworld3
+   * Planet type volcanicworld3
    */
-  public static final String PLANET_IRONWORLD3 = "ironworld3";
+  public static final String PLANET_VOLCANICWORLD3 = "volcanicworld3";
   /**
-   * Planet type ironworld4
+   * Planet type volcanicworld4
    */
-  public static final String PLANET_IRONWORLD4 = "ironworld4";
+  public static final String PLANET_VOLCANICWORLD4 = "volcanicworld4";
   /**
-   * Planet type ironworld5
+   * Planet type volcanicworld5
    */
-  public static final String PLANET_IRONWORLD5 = "ironworld5";
+  public static final String PLANET_VOLCANICWORLD5 = "volcanicworld5";
   /**
-   * Planet type ironworld6
+   * Planet type volcanicworld6
    */
-  public static final String PLANET_IRONWORLD6 = "ironworld6";
+  public static final String PLANET_VOLCANICWORLD6 = "volcanicworld6";
   /**
    * Planet type iceworld1
    */
@@ -184,17 +184,17 @@ public class ImageInstruction {
    */
   public static final String PLANET_ICEWORLD4 = "iceworld3";
   /**
-   * Planet type carbon world 1
+   * Planet type swamp world 1
    */
-  public static final String PLANET_CARBONWORLD1 = "carbonworld1";
+  public static final String PLANET_SWAMPWORLD1 = "swampworld1";
   /**
-   * Planet type carbon world 2
+   * Planet type swamp world 2
    */
-  public static final String PLANET_CARBONWORLD2 = "carbonworld2";
+  public static final String PLANET_SWAMPWORLD2 = "swampworld2";
   /**
-   * Planet type carbon world 3
+   * Planet type swamp world 3
    */
-  public static final String PLANET_CARBONWORLD3 = "carbonworld3";
+  public static final String PLANET_SWAMPWORLD3 = "swampworld3";
   /**
    * Planet type gas giant 1
    */
@@ -1099,14 +1099,14 @@ public class ImageInstruction {
     if (PLANET_ICEWORLD4.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_ICEWORLD4;
     }
-    if (PLANET_CARBONWORLD1.equals(planetType)) {
-      planetImg = GuiStatics.BIG_PLANET_CARBONWORLD1;
+    if (PLANET_SWAMPWORLD1.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_SWAMPWORLD1;
     }
-    if (PLANET_CARBONWORLD2.equals(planetType)) {
-      planetImg = GuiStatics.BIG_PLANET_CARBONWORLD2;
+    if (PLANET_SWAMPWORLD2.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_SWAMPWORLD2;
     }
-    if (PLANET_CARBONWORLD3.equals(planetType)) {
-      planetImg = GuiStatics.BIG_PLANET_CARBONWORLD3;
+    if (PLANET_SWAMPWORLD3.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_SWAMPWORLD3;
     }
     if (PLANET_DESERTWORLD1.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_DESERTWORLD1;
@@ -1132,23 +1132,23 @@ public class ImageInstruction {
     if (PLANET_SATURN.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_SATURN;
     }
-    if (PLANET_IRONWORLD1.equals(planetType)) {
-      planetImg = GuiStatics.BIG_PLANET_IRONPLANET1;
+    if (PLANET_VOLCANICWORLD1.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_VOLCANICPLANET1;
     }
-    if (PLANET_IRONWORLD2.equals(planetType)) {
-      planetImg = GuiStatics.BIG_PLANET_IRONPLANET2;
+    if (PLANET_VOLCANICWORLD2.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_VOLCANICPLANET2;
     }
-    if (PLANET_IRONWORLD3.equals(planetType)) {
-      planetImg = GuiStatics.BIG_PLANET_IRONPLANET3;
+    if (PLANET_VOLCANICWORLD3.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_VOLCANICPLANET3;
     }
-    if (PLANET_IRONWORLD4.equals(planetType)) {
-      planetImg = GuiStatics.BIG_PLANET_IRONPLANET4;
+    if (PLANET_VOLCANICWORLD4.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_VOLCANICPLANET4;
     }
-    if (PLANET_IRONWORLD5.equals(planetType)) {
-      planetImg = GuiStatics.BIG_PLANET_IRONPLANET5;
+    if (PLANET_VOLCANICWORLD5.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_VOLCANICPLANET5;
     }
-    if (PLANET_IRONWORLD6.equals(planetType)) {
-      planetImg = GuiStatics.BIG_PLANET_IRONPLANET6;
+    if (PLANET_VOLCANICWORLD6.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_VOLCANICPLANET6;
     }
     if (PLANET_GASGIANT1.equals(planetType)) {
       planetImg = GuiStatics.BIG_GASWORLD1;

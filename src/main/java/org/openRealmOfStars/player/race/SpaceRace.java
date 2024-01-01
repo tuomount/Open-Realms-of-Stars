@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.race;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -33,8 +33,9 @@ import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.race.trait.RaceTrait;
 import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
-import org.openRealmOfStars.starMap.planet.PlanetTypes;
-import org.openRealmOfStars.starMap.planet.WorldType;
+import org.openRealmOfStars.starMap.planet.enums.GravityType;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
+import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -328,16 +329,10 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.STRONG).ifPresent(trait -> {
       MECHIONS.addTrait(trait);
       SPORKS.addTrait(trait);
-      CENTAURS.addTrait(trait);
-      HOMARIANS.addTrait(trait);
       REBORGIANS.addTrait(trait);
-      LITHORIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.WEAK).ifPresent(trait -> {
-      GREYANS.addTrait(trait);
-      MOTHOIDS.addTrait(trait);
       CHIRALOIDS.addTrait(trait);
-      ALTEIRIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.HANDY).ifPresent(trait -> {
       HOMARIANS.addTrait(trait);
@@ -345,6 +340,57 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.IMPRACTICAL).ifPresent(trait -> {
       CHIRALOIDS.addTrait(trait);
       ALTEIRIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.HIGH_GRAVITY_BEING).ifPresent(trait -> {
+      CENTAURS.addTrait(trait);
+      HOMARIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.LOW_GRAVITY_BEING).ifPresent(trait -> {
+      MOTHOIDS.addTrait(trait);
+      GREYANS.addTrait(trait);
+      SCAURIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.ZERO_GRAVITY_BEING).ifPresent(trait -> {
+      ALTEIRIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.TOLERATE_LOW_RADIATION).ifPresent(trait -> {
+      HUMAN.addTrait(trait);
+      SPACE_PIRATE.addTrait(trait);
+      SPACE_MONSTERS.addTrait(trait);
+      SPORKS.addTrait(trait);
+      SCAURIANS.addTrait(trait);
+      REBORGIANS.addTrait(trait);
+      TEUTHIDAES.addTrait(trait);
+      SMAUGIRIANS.addTrait(trait);
+      SYNTHDROIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.TOLERATE_HIGH_RADIATION).ifPresent(trait -> {
+      GREYANS.addTrait(trait);
+      ALTEIRIANS.addTrait(trait);
+      LITHORIANS.addTrait(trait);
+      MOTHOIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.TOLERATE_VERY_HIGH_RADIATION).ifPresent(
+        trait -> {
+      MECHIONS.addTrait(trait);
+      CHIRALOIDS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.TOLERATE_COLD).ifPresent(
+        trait -> {
+      HUMAN.addTrait(trait);
+      CENTAURS.addTrait(trait);
+      SCAURIANS.addTrait(trait);
+      HOMARIANS.addTrait(trait);
+      TEUTHIDAES.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.TOLERATE_HOT).ifPresent(
+        trait -> {
+      MECHIONS.addTrait(trait);
+      REBORGIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.TOLERATE_LAVA).ifPresent(
+        trait -> {
+      LITHORIANS.addTrait(trait);
     });
   }
 
@@ -494,43 +540,18 @@ public enum SpaceRace {
    * Get race maximum Radiation
    * @return The race maximum radiation
    */
-  public int getMaxRad() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 4;
-    case MECHIONS:
-      return 8;
-    case SPORKS:
-      return 5;
-    case GREYANS:
-      return 6;
-    case CENTAURS:
-      return 3;
-    case MOTHOIDS:
-      return 6;
-    case TEUTHIDAES:
-      return 4;
-    case SCAURIANS:
-      return 5;
-    case HOMARIANS:
-      return 3;
-    case CHIRALOIDS:
-      return 10;
-    case REBORGIANS:
-      return 5;
-    case LITHORIANS:
-      return 7;
-    case ALTEIRIANS:
-      return 7;
-    case SMAUGIRIANS:
-      return 5;
-    case SYNTHDROIDS:
-      return 5;
-    default:
-      return -1;
+  public RadiationType getMaxRad() {
+    RadiationType result = RadiationType.NO_RADIATION;
+    if (hasTrait(TraitIds.TOLERATE_LOW_RADIATION)) {
+      result = RadiationType.LOW_RADIATION;
     }
+    if (hasTrait(TraitIds.TOLERATE_HIGH_RADIATION)) {
+      result = RadiationType.HIGH_RADIATION;
+    }
+    if (hasTrait(TraitIds.TOLERATE_VERY_HIGH_RADIATION)) {
+      result = RadiationType.VERY_HIGH_RAD;
+    }
+    return result;
   }
 
   /**
@@ -644,10 +665,12 @@ public enum SpaceRace {
   }
 
   /**
-   * Get miners mining speed
+   * Get miners mining speed based on gravity.
+   * If gravity is null then just return production speed bonus.
+   * @param gravity GravityType or null.
    * @return normal 100, half 50, double 200
    */
-  public int getMiningSpeed() {
+  public int getMiningSpeed(final GravityType gravity) {
     var result = 100;
     if (hasTrait(TraitIds.STRONG)) {
       result += 50;
@@ -656,6 +679,23 @@ public enum SpaceRace {
       result -= 50;
     }
     if (isLithovorian()) {
+      result += 50;
+    }
+    if (gravity == null) {
+      // Just returning mining speed bonus
+      return result;
+    }
+    if (hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+      result -= 50;
+    }
+    if (hasTrait(TraitIds.LOW_GRAVITY_BEING)
+        && (gravity == GravityType.NORMAL_GRAVITY
+        || gravity == GravityType.HIGH_GRAVITY)) {
+      result -= 50;
+    }
+    if (hasTrait(TraitIds.HIGH_GRAVITY_BEING)
+        && (gravity == GravityType.NORMAL_GRAVITY
+        || gravity == GravityType.LOW_GRAVITY)) {
       result += 50;
     }
     return result;
@@ -685,6 +725,15 @@ public enum SpaceRace {
     if (hasTrait(TraitIds.STRONG)) {
       result += 2;
     }
+    if (hasTrait(TraitIds.HIGH_GRAVITY_BEING)) {
+      result += 1;
+    }
+    if (hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+      result -= 2;
+    }
+    if (hasTrait(TraitIds.LOW_GRAVITY_BEING)) {
+      result -= 1;
+    }
     if (hasTrait(TraitIds.WEAK)) {
       result -= 2;
     }
@@ -698,16 +747,35 @@ public enum SpaceRace {
   }
 
   /**
-   * Get worker production speed
+   * Get worker production speed based on gravity.
+   * If gravity is null then just return production speed bonus.
+   * @param gravity GravityType or null.
    * @return normal 100, half 50, double 200
    */
-  public int getProductionSpeed() {
+  public int getProductionSpeed(final GravityType gravity) {
     var result = 100;
     if (hasTrait(TraitIds.HANDY)) {
       result += 50;
     }
     if (hasTrait(TraitIds.IMPRACTICAL)) {
       result -= 50;
+    }
+    if (gravity == null) {
+      // Just returning production speed bonus
+      return result;
+    }
+    if (hasTrait(TraitIds.ZERO_GRAVITY_BEING)
+        && (gravity == GravityType.NORMAL_GRAVITY
+        || gravity == GravityType.HIGH_GRAVITY)) {
+      result -= 50;
+    }
+    if (hasTrait(TraitIds.LOW_GRAVITY_BEING)
+        && gravity == GravityType.HIGH_GRAVITY) {
+      result -= 50;
+    }
+    if (hasTrait(TraitIds.HIGH_GRAVITY_BEING)
+            && gravity == GravityType.LOW_GRAVITY) {
+      result += 50;
     }
     return result;
   }
@@ -731,16 +799,26 @@ public enum SpaceRace {
   }
 
   /**
-   * Get Food growth speed
+   * Get Food growth speed based on gravity.
+   * If gravity is null then just return production speed bonus
+   * @param gravity GravityType or null.
    * @return normal 100, half 50, double 200
    */
-  public int getFoodSpeed() {
+  public int getFoodSpeed(final GravityType gravity) {
     int result = 100;
     if (!isEatingFood()) {
       result = 0;
     }
     if (hasTrait(TraitIds.FAST_FOOD_PROD)) {
       result = 200;
+    }
+    if (gravity == null) {
+      // Just returning production speed bonus
+      return result;
+    }
+    if (hasTrait(TraitIds.ZERO_GRAVITY_BEING)
+        && gravity == GravityType.HIGH_GRAVITY) {
+      result -= 50;
     }
     return result;
   }
@@ -1216,213 +1294,69 @@ public enum SpaceRace {
     }
   }
   /**
-   * Get World base value for space race.
+   * Get planet's base value based on temperature for space race.
    * This will tell how much of population world type can
    * hold.
-   * @param worldType World Type
-   * @return Base value between 25 - 125 %.
+   * @param temperature TemperatureType
+   * @return Base value between 0 - 100 %.
    */
-  public int getWorldTypeBaseValue(final WorldType worldType) {
-    if (this == HUMAN) {
-      switch (worldType) {
-      case SILICONWORLD: return 50;
-      case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
-      case ICEWORLD: return 75;
-      case CARBONWORLD: return 100;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+  public int getTemperatureBaseValue(final TemperatureType temperature) {
+    if (temperature == TemperatureType.ARCTIC) {
+      int result = 25;
+      if (hasTrait(TraitIds.TOLERATE_COLD)) {
+        result = result + 25;
       }
-    }
-    if (this == MECHIONS) {
-      switch (worldType) {
-      case SILICONWORLD: return 100;
-      case WATERWORLD: return 75;
-      case IRONWORLD: return 100;
-      case ICEWORLD: return 25;
-      case CARBONWORLD: return 75;
-      case DESERTWORLD: return 50;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+      if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result - 25;
       }
+      return result;
     }
-    if (this == SPORKS) {
-      switch (worldType) {
-      case SILICONWORLD: return 50;
-      case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
-      case ICEWORLD: return 50;
-      case CARBONWORLD: return 100;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+    if (temperature == TemperatureType.COLD) {
+      int result = 50;
+      if (hasTrait(TraitIds.TOLERATE_COLD)) {
+        result = result + 25;
       }
-    }
-    if (this == GREYANS) {
-      switch (worldType) {
-      case SILICONWORLD: return 50;
-      case WATERWORLD: return 125;
-      case IRONWORLD: return 50;
-      case ICEWORLD: return 50;
-      case CARBONWORLD: return 100;
-      case DESERTWORLD: return 50;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+      if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result - 25;
       }
+      return result;
     }
-    if (this == CENTAURS) {
-      switch (worldType) {
-      case SILICONWORLD: return 50;
-      case WATERWORLD: return 100;
-      case IRONWORLD: return 75;
-      case ICEWORLD: return 100;
-      case CARBONWORLD: return 125;
-      case DESERTWORLD: return 100;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+    if (temperature == TemperatureType.TEMPERATE) {
+      int result = 100;
+      if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result - 25;
       }
+      return result;
     }
-    if (this == MOTHOIDS) {
-      switch (worldType) {
-      case SILICONWORLD: return 50;
-      case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
-      case ICEWORLD: return 25;
-      case CARBONWORLD: return 100;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+    if (temperature == TemperatureType.TROPICAL) {
+      int result = 75;
+      if (hasTrait(TraitIds.TOLERATE_HOT)) {
+        result = result + 25;
       }
-    }
-    if (this == TEUTHIDAES) {
-      switch (worldType) {
-      case SILICONWORLD: return 50;
-      case WATERWORLD: return 125;
-      case IRONWORLD: return 50;
-      case ICEWORLD: return 75;
-      case CARBONWORLD: return 125;
-      case DESERTWORLD: return 25;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+      if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result + 25;
       }
+      return result;
     }
-    if (this == SCAURIANS) {
-      switch (worldType) {
-      case SILICONWORLD: return 25;
-      case WATERWORLD: return 100;
-      case IRONWORLD: return 75;
-      case ICEWORLD: return 75;
-      case CARBONWORLD: return 75;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+    if (temperature == TemperatureType.HOT) {
+      int result = 50;
+      if (hasTrait(TraitIds.TOLERATE_HOT)) {
+        result = result + 25;
       }
-    }
-    if (this == HOMARIANS) {
-      switch (worldType) {
-      case SILICONWORLD: return 50;
-      case WATERWORLD: return 125;
-      case IRONWORLD: return 50;
-      case ICEWORLD: return 100;
-      case CARBONWORLD: return 125;
-      case DESERTWORLD: return 50;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+      if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result + 25;
       }
+      return result;
     }
-    if (this == SPACE_PIRATE || this == SPACE_MONSTERS) {
-      switch (worldType) {
-      case SILICONWORLD: return 75;
-      case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
-      case ICEWORLD: return 75;
-      case CARBONWORLD: return 75;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
+    if (temperature == TemperatureType.VOLCANIC) {
+      int result = 0;
+      if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result + 50;
       }
+      return result;
     }
-    if (this == CHIRALOIDS) {
-      switch (worldType) {
-      case SILICONWORLD: return 50;
-      case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
-      case ICEWORLD: return 50;
-      case CARBONWORLD: return 100;
-      case DESERTWORLD: return 50;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
-      }
-    }
-    if (this == REBORGIANS) {
-      switch (worldType) {
-      case SILICONWORLD: return 75;
-      case WATERWORLD: return 100;
-      case IRONWORLD: return 100;
-      case ICEWORLD: return 50;
-      case CARBONWORLD: return 75;
-      case DESERTWORLD: return 50;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
-      }
-    }
-    if (this == LITHORIANS) {
-      switch (worldType) {
-      case SILICONWORLD: return 100;
-      case WATERWORLD: return 50;
-      case IRONWORLD: return 125;
-      case ICEWORLD: return 25;
-      case CARBONWORLD: return 50;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 75;
-      }
-    }
-    if (this == ALTEIRIANS) {
-      // All planets are equal since this race lives in orbit.
-      return 100;
-    }
-    if (this == SMAUGIRIANS) {
-      switch (worldType) {
-      case SILICONWORLD: return 50;
-      case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
-      case ICEWORLD: return 50;
-      case CARBONWORLD: return 100;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
-      }
-    }
-    if (this == SYNTHDROIDS) {
-      switch (worldType) {
-      case SILICONWORLD: return 50;
-      case WATERWORLD: return 100;
-      case IRONWORLD: return 50;
-      case ICEWORLD: return 25;
-      case CARBONWORLD: return 100;
-      case DESERTWORLD: return 75;
-      case ICEGIANTWORLD: return 0;
-      default:
-      case ARTIFICALWORLD: return 100;
-      }
-    }
-    return 100;
+    // Frozen and Inferno are here
+    return 0;
   }
 
   /**
@@ -1502,12 +1436,12 @@ public enum SpaceRace {
     sb.append(lf);
     sb.append(dot);
     sb.append(" Production: ");
-    sb.append(getProductionSpeed());
+    sb.append(getProductionSpeed(null));
     sb.append("%");
     sb.append(lf);
     sb.append(dot);
     sb.append(" Mining: ");
-    sb.append(getMiningSpeed());
+    sb.append(getMiningSpeed(null));
     sb.append("%");
     sb.append(lf);
     sb.append(dot);
@@ -1517,7 +1451,7 @@ public enum SpaceRace {
     sb.append(lf);
     sb.append(dot);
     sb.append(" Food production: ");
-    sb.append(getFoodSpeed());
+    sb.append(getFoodSpeed(null));
     sb.append("%");
     sb.append(lf);
     sb.append(dot);
@@ -1565,12 +1499,6 @@ public enum SpaceRace {
     sb.append(dot);
     sb.append(" War resistance: ");
     sb.append(getWarFatigueResistance());
-    PlanetTypes planetTypes = PlanetTypes.getRandomStartPlanetType(this);
-    int sustainable = getWorldTypeBaseValue(planetTypes.getWorldType());
-    sb.append(lf);
-    sb.append(dot);
-    sb.append(" Start planet value: ");
-    sb.append(sustainable);
     sb.append(lf);
     sb.append(dot);
     sb.append(" Special: ");
@@ -1614,15 +1542,21 @@ public enum SpaceRace {
       } else {
         sb.append(lf + lf);
       }
+      int points = 0;
       sb.append(lf + "Racial attributes (trait points):" + lf);
       for (var trait : traits) {
         sb.append(dot);
+        sb.append(" ");
         sb.append(trait.getName());
+        points = points + trait.getPoints();
         sb.append(String.format(" (%1$+d)", trait.getPoints()));
         sb.append(" - ");
         sb.append(trait.getDescription());
         sb.append(lf);
       }
+      sb.append("Total trait points: ");
+      sb.append(points);
+      sb.append(lf);
       if (!markDown) {
         sb.append("</p>");
       }

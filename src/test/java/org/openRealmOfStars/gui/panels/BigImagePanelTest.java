@@ -28,7 +28,7 @@ import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 
 /**
 *

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -56,7 +56,7 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.WorldType;
+import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
@@ -2628,15 +2628,17 @@ public class PlayerInfo {
   }
 
   /**
-   * Get World base value for space race.
+   * Get planet base value for space race.
    * This will tell how much of population world type can
    * hold.
-   * @param worldType World Type
-   * @return Base value between 25 - 150 %.
+   * @param planet Planet
+   * @return Base value between 0 - 125 %.
    */
-  public int getWorldTypeValue(final WorldType worldType) {
-    int result = this.getRace().getWorldTypeBaseValue(worldType);
-    if (worldType == WorldType.SILICONWORLD
+  public int getPlanetSuitabilityValue(final Planet planet) {
+    int result = this.getRace().getTemperatureBaseValue(
+        planet.getTemperatureType());
+    WorldType worldType = planet.getPlanetType().getWorldType();
+    if (worldType == WorldType.BARRENWORLD
         && techList.hasTech("Advanced colonization")) {
       result = result + 25;
     }
@@ -2644,7 +2646,7 @@ public class PlayerInfo {
         && techList.hasTech("Desert colonization")) {
       result = result + 25;
     }
-    if (worldType == WorldType.CARBONWORLD
+    if (worldType == WorldType.SWAMPWORLD
         && techList.hasTech("Carbon colonization")) {
       result = result + 25;
     }
@@ -2652,8 +2654,8 @@ public class PlayerInfo {
         && techList.hasTech("Ice colonization")) {
       result = result + 25;
     }
-    if (worldType == WorldType.IRONWORLD
-        && techList.hasTech("Iron colonization")) {
+    if (worldType == WorldType.VOLCANICWORLD
+        && techList.hasTech("Volcanic colonization")) {
       result = result + 25;
     }
     if (worldType == WorldType.WATERWORLD

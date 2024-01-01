@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap.planet;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -62,12 +62,21 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
+import org.openRealmOfStars.starMap.planet.enums.GravityType;
+import org.openRealmOfStars.starMap.planet.enums.HappinessBonus;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
+import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
+import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
+import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
 import org.openRealmOfStars.starMap.planet.status.PlanetaryStatus;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.WeightedList;
 import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 
 /**
@@ -139,8 +148,22 @@ public class Planet {
   /** Planet order number in system */
   private int orderNumber;
 
-  /** Planet's radiation level between 1-10. */
-  private int radiationLevel;
+  /** Planet's radiation type. */
+  private RadiationType radiationType;
+  /**
+   * Planet's gravity type.
+   * between low, normal and high gravity.
+   */
+  private GravityType gravityType;
+  /**
+   * Planet's temperature type.
+   * From Frozen to volcanic.
+   */
+  private TemperatureType temperatureType;
+  /**
+   * Planet's water level type.
+   */
+  private WaterLevelType waterLevel;
   /** Is planet inhabitable gas giant. Gas giants just block the radar. */
   private boolean gasGiant;
   /** Planet's coordinate. On gas giant this left upper corner. */
@@ -250,12 +273,26 @@ public class Planet {
     }
     happinessEffect = new HappinessEffect(HappinessBonus.NONE, 0);
     this.setOrderNumber(orderNumber);
-    this.setRadiationLevel(DiceGenerator.getRandom(1, 10));
+    this.setRadiationLevel(RadiationType.values()[DiceGenerator.getRandom(
+        RadiationType.values().length - 1)]);
+    if (gasGiant) {
+      this.setGravityType(GravityType.HIGH_GRAVITY);
+      this.setTemperatureType(TemperatureType.ARCTIC);
+      this.setWaterLevel(WaterLevelType.MARINE);
+    } else {
+      this.setGravityType(GravityType.NORMAL_GRAVITY);
+      this.setTemperatureType(TemperatureType.TEMPERATE);
+      this.setWaterLevel(WaterLevelType.HUMID);
+    }
     if (orderNumber == 0) {
       // Rogue planet have more metal
       this.setAmountMetalInGround(DiceGenerator.getRandom(MINIMUM_ORE + 2000,
           MAXIMUM_ORE));
-      this.setRadiationLevel(DiceGenerator.getRandom(1, 5));
+      if (DiceGenerator.getBoolean()) {
+        this.setRadiationLevel(RadiationType.NO_RADIATION);
+      } else {
+        this.setRadiationLevel(RadiationType.LOW_RADIATION);
+      }
     } else {
       this.setAmountMetalInGround(DiceGenerator.getRandom(MINIMUM_ORE,
           MAXIMUM_ORE));
@@ -281,7 +318,7 @@ public class Planet {
     if (this.gasGiant) {
       this.planetType = PlanetTypes.GASGIANT1;
     } else {
-      this.planetType = PlanetTypes.CARBONWORLD1;
+      this.planetType = PlanetTypes.SWAMPWORLD1;
     }
     this.event = PlanetaryEvent.NONE;
     this.eventFound = true;
@@ -637,7 +674,7 @@ public class Planet {
     int statusesBonus = statuses.stream()
         .map(status -> status.getStatus().getFoodBonus())
         .reduce(0, Integer::sum);
-    total = total + statusesBonus + 2;
+    total = total + statusesBonus + getWaterLevel().getPlanetFoodProd();
     return total;
   }
 
@@ -725,7 +762,8 @@ public class Planet {
       // adjust the amount of maintained population accordingly
       var popToMaintain = getTotalPopulation();
       if (ownerInfo.getRace().hasTrait(TraitIds.RADIOSYNTHESIS)) {
-        int sustFromRad = Math.min(getRadiationLevel(), popToMaintain);
+        int sustFromRad = Math.min(getRadiationLevel().getRadiosynthesisFood(),
+            popToMaintain);
         popToMaintain -= sustFromRad;
       }
 
@@ -1127,7 +1165,7 @@ public class Planet {
     result += value;
     addEntryIfWorthy(sb, "planet", value);
 
-    var mult = planetOwnerInfo.getRace().getProductionSpeed();
+    var mult = planetOwnerInfo.getRace().getProductionSpeed(getGravityType());
     value = workers[PRODUCTION_PRODUCTION] * mult / div;
     result += value;
     addEntryIfWorthy(sb, "workers", value);
@@ -1200,7 +1238,7 @@ public class Planet {
     result += value;
     addEntryIfWorthy(sb, "planet", value);
 
-    var mult = planetOwnerInfo.getRace().getMiningSpeed();
+    var mult = planetOwnerInfo.getRace().getMiningSpeed(getGravityType());
     value = workers[METAL_MINERS] * mult / div;
     result += value;
     addEntryIfWorthy(sb, "miners", value);
@@ -1272,12 +1310,12 @@ public class Planet {
     sb.append("<br><br>");
     sb.append("Total food production.<br>");
 
-    // Planet always produces +2 food
-    var value = 2;
+    // Planet always produces 0 - 5 food
+    var value = getWaterLevel().getPlanetFoodProd();
     result += value;
     addEntryIfWorthy(sb, "planet", value);
 
-    var mult = planetOwnerInfo.getRace().getFoodSpeed();
+    var mult = planetOwnerInfo.getRace().getFoodSpeed(getGravityType());
     value = workers[FOOD_FARMERS] * mult / div;
     result += value;
     addEntryIfWorthy(sb, "farmers", value);
@@ -1296,7 +1334,7 @@ public class Planet {
     // TODO: "Self-sustenance" radiosynthesis should not "produce" food
     // It does in order to not break population growing
     if (planetRace.hasTrait(TraitIds.RADIOSYNTHESIS)) {
-      final int rad = getRadiationLevel();
+      final int rad = getRadiationLevel().getRadiosynthesisFood();
       final int currentPop = getTotalPopulation();
       final int sustFromRad = Math.min(rad, currentPop);
       if (planetRace.isEatingFood() && currentPop > 0) {
@@ -1342,8 +1380,8 @@ public class Planet {
    * Get planet radiation level
    * @return radiation level
    */
-  public int getRadiationLevel() {
-    return radiationLevel;
+  public RadiationType getRadiationLevel() {
+    return radiationType;
   }
 
   /**
@@ -1351,30 +1389,192 @@ public class Planet {
    * buildings.
    * @return radiation level
    */
-  public int getTotalRadiationLevel() {
-    int value = getRadiationLevel();
+  public RadiationType getTotalRadiationLevel() {
+    int value = getRadiationLevel().getIndex();
     for (Building building : buildings) {
       if (building.getName().equals("Radiation dampener")
           || building.getName().equals("Radiation well")) {
         value = value - 1;
       }
     }
-    if (value < 1) {
-      value = 1;
+    if (value < 0) {
+      value = 0;
     }
-    return value;
+    return RadiationType.getByIndex(value);
   }
 
   /**
-   * Set planet's radiation level
-   * @param radiationLevel Radiation level between 1 and 10
+   * Set planet's radiation type
+   * @param radiationLevel RadiationType
    */
-  public void setRadiationLevel(final int radiationLevel) {
-    if (radiationLevel > 0 && radiationLevel < 11) {
-      this.radiationLevel = radiationLevel;
+  public void setRadiationLevel(final RadiationType radiationLevel) {
+    this.radiationType = radiationLevel;
+  }
+
+  /**
+   * Get GravityType from planet.
+   * @return the gravityType
+   */
+  public GravityType getGravityType() {
+    return gravityType;
+  }
+
+  /**
+   * Set gravity for planet.
+   * @param gravityType the gravityType to set
+   */
+  public void setGravityType(final GravityType gravityType) {
+    this.gravityType = gravityType;
+  }
+
+  /**
+   * Get planet's temperature
+   * @return the temperatureType
+   */
+  public TemperatureType getTemperatureType() {
+    return temperatureType;
+  }
+
+  /**
+   * Set planet's temperature
+   * @param temperatureType the temperatureType to set
+   */
+  public void setTemperatureType(final TemperatureType temperatureType) {
+    this.temperatureType = temperatureType;
+  }
+
+  /**
+   * Get planet's water level
+   * @return the waterLevel
+   */
+  public WaterLevelType getWaterLevel() {
+    return waterLevel;
+  }
+
+  /**
+   * Set planet's waterlevel
+   * @param waterLevel the waterLevel to set
+   */
+  public void setWaterLevel(final WaterLevelType waterLevel) {
+    this.waterLevel = waterLevel;
+  }
+
+  /**
+   * Generate gravity based on planet ground size.
+   * Bigger planet bigger gravity.
+   */
+  public void generateGravityBasedOnSize() {
+    setGravityType(GravityType.NORMAL_GRAVITY);
+    if (getGroundSize() <= 10) {
+      setGravityType(GravityType.LOW_GRAVITY);
+    }
+    if (getGroundSize() > 13) {
+      setGravityType(GravityType.HIGH_GRAVITY);
     }
   }
 
+  /**
+   * Generate water level based on temperature.
+   * Only planet hotness limits how much water can be
+   * on planet.
+   */
+  public void generateWaterLevelBasedOnTemperature() {
+    int index = DiceGenerator.getRandom(WaterLevelType.values().length - 1);
+    setWaterLevel(WaterLevelType.values()[index]);
+    if (getTemperatureType() == TemperatureType.INFERNO) {
+      setWaterLevel(WaterLevelType.BARREN);
+    }
+    if (getTemperatureType() == TemperatureType.VOLCANIC && index > 1) {
+      setWaterLevel(WaterLevelType.DESERT);
+    }
+    if (getTemperatureType() == TemperatureType.HOT && index > 2) {
+      setWaterLevel(WaterLevelType.ARID);
+    }
+  }
+
+  /**
+   * Generate world type based on planet attributes.
+   */
+  public void generateWorldType() {
+    WeightedList<PlanetTypes> planetTypes = new WeightedList<>();
+    if (getTemperatureType() == TemperatureType.INFERNO
+        || getTemperatureType() == TemperatureType.VOLCANIC) {
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD1);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD2);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD3);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD4);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD5);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD6);
+      setPlanetType(planetTypes.pickRandom());
+      return;
+    }
+    if (getWaterLevel() == WaterLevelType.BARREN) {
+      setPlanetType(PlanetTypes.BARRENWORLD1);
+      return;
+    }
+    if (getTemperatureType() == TemperatureType.FROZEN
+        || getTemperatureType() == TemperatureType.ARCTIC
+        || getTemperatureType() == TemperatureType.COLD) {
+      planetTypes.add(1, PlanetTypes.ICEWORLD1);
+      planetTypes.add(1, PlanetTypes.ICEWORLD2);
+      planetTypes.add(1, PlanetTypes.ICEWORLD3);
+      planetTypes.add(1, PlanetTypes.ICEWORLD4);
+      if (getWaterLevel() == WaterLevelType.DESERT
+          || getWaterLevel() == WaterLevelType.ARID) {
+        planetTypes.add(1, PlanetTypes.DESERTWORLD2);
+        planetTypes.add(1, PlanetTypes.DESERTWORLD3);
+        if (getTemperatureType() == TemperatureType.COLD) {
+          planetTypes.add(1, PlanetTypes.DESERTWORLD1);
+        }
+      } else if (getTemperatureType() == TemperatureType.COLD) {
+        planetTypes.add(1, PlanetTypes.SWAMPWORLD2);
+      }
+      setPlanetType(planetTypes.pickRandom());
+      return;
+    }
+    if (getTemperatureType() == TemperatureType.HOT) {
+      planetTypes.add(1, PlanetTypes.DESERTWORLD1);
+      planetTypes.add(1, PlanetTypes.DESERTWORLD2);
+      planetTypes.add(1, PlanetTypes.DESERTWORLD3);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD2);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD3);
+      planetTypes.add(1, PlanetTypes.VOLCANICWORLD4);
+    }
+    if (getTemperatureType() == TemperatureType.TEMPERATE
+        || getTemperatureType() == TemperatureType.TROPICAL) {
+      if (getWaterLevel() == WaterLevelType.DESERT
+          || getWaterLevel() == WaterLevelType.ARID) {
+        planetTypes.add(1, PlanetTypes.DESERTWORLD1);
+        planetTypes.add(1, PlanetTypes.DESERTWORLD2);
+        planetTypes.add(1, PlanetTypes.DESERTWORLD3);
+      }
+      if (getWaterLevel() == WaterLevelType.HUMID) {
+        planetTypes.add(1, PlanetTypes.SWAMPWORLD1);
+        planetTypes.add(1, PlanetTypes.SWAMPWORLD2);
+        planetTypes.add(1, PlanetTypes.SWAMPWORLD3);
+        planetTypes.add(1, PlanetTypes.WATERWORLD2);
+      }
+      if (getWaterLevel() == WaterLevelType.MARINE) {
+        planetTypes.add(1, PlanetTypes.WATERWORLD1);
+        planetTypes.add(1, PlanetTypes.WATERWORLD2);
+        planetTypes.add(1, PlanetTypes.WATERWORLD3);
+        planetTypes.add(1, PlanetTypes.WATERWORLD5);
+        planetTypes.add(1, PlanetTypes.WATERWORLD9);
+      }
+      if (getWaterLevel() == WaterLevelType.OCEAN) {
+        planetTypes.add(1, PlanetTypes.WATERWORLD1);
+        planetTypes.add(1, PlanetTypes.WATERWORLD3);
+        planetTypes.add(1, PlanetTypes.WATERWORLD4);
+        planetTypes.add(1, PlanetTypes.WATERWORLD5);
+        planetTypes.add(1, PlanetTypes.WATERWORLD6);
+        planetTypes.add(1, PlanetTypes.WATERWORLD7);
+        planetTypes.add(1, PlanetTypes.WATERWORLD8);
+        planetTypes.add(1, PlanetTypes.WATERWORLD9);
+      }
+      setPlanetType(planetTypes.pickRandom());
+    }
+
+  }
   /**
    * How many buildings can be fitted on planet
    * @return Maximum number of building can be fitted on planet
@@ -1503,7 +1703,8 @@ public class Planet {
   public boolean exceedRadiation() {
     boolean exceedRad = false;
     if (planetOwnerInfo != null
-        && planetOwnerInfo.getRace().getMaxRad() < getTotalRadiationLevel()) {
+        && planetOwnerInfo.getRace().getMaxRad().getIndex()
+        < getTotalRadiationLevel().getIndex()) {
       // Planet's radiation exceeds owner max rad level
       exceedRad = true;
     }
@@ -1586,7 +1787,8 @@ public class Planet {
         if (tmp == null) {
           System.out.println("Null building: " + buildingsNames[i]);
         }
-        if (getTotalRadiationLevel() == 1 && tmp != null
+        if (getTotalRadiationLevel() == RadiationType.NO_RADIATION
+            && tmp != null
             && (tmp.getName().equals("Radiation dampener")
                 || tmp.getName().equals("Radiation well"))) {
           // No need for radiation well or dampener on small radiation planets
@@ -1774,14 +1976,12 @@ public class Planet {
       sb.append("\n");
       if (getPlanetPlayerInfo() != null) {
         sb.append("Suitable: ");
-        sb.append(getPlanetPlayerInfo().getWorldTypeValue(
-            getPlanetType().getWorldType()));
+        sb.append(getPlanetPlayerInfo().getPlanetSuitabilityValue(this));
         sb.append("%\n");
       }
       if (getPlanetPlayerInfo() == null && viewerInfo != null) {
         sb.append("Suitable: ");
-        sb.append(viewerInfo.getWorldTypeValue(
-            getPlanetType().getWorldType()));
+        sb.append(viewerInfo.getPlanetSuitabilityValue(this));
         sb.append("%\n");
       }
       if (activeScanned && event != PlanetaryEvent.NONE && eventFound) {
@@ -1790,6 +1990,13 @@ public class Planet {
       }
       sb.append("Radiation: ");
       sb.append(getTotalRadiationLevel());
+      sb.append(" Temperature: ");
+      sb.append(getTemperatureType().toString());
+      sb.append("\n");
+      sb.append("Water: ");
+      sb.append(getWaterLevel().toString());
+      sb.append(" Gravity: ");
+      sb.append(getGravityType().toString());
       sb.append("\n");
       sb.append("Size: ");
       sb.append(getSizeAsString());
@@ -2836,7 +3043,7 @@ public class Planet {
     int mult;
     int result = 0;
     int div = 100;
-    mult = planetOwnerInfo.getRace().getProductionSpeed();
+    mult = planetOwnerInfo.getRace().getProductionSpeed(getGravityType());
     // Planet always produces +1 production
     result = workers[PRODUCTION_PRODUCTION] * mult / div + 1
         + getTotalProductionFromBuildings(PRODUCTION_PRODUCTION);
@@ -2862,10 +3069,9 @@ public class Planet {
     }
     result = result + getGroundSize();
     if (planetOwnerInfo != null) {
-      int percent = planetOwnerInfo.getWorldTypeValue(
-          planetType.getWorldType());
+      int percent = planetOwnerInfo.getPlanetSuitabilityValue(this);
       result = result * percent / 100;
-      if (result < 2) {
+      if (result < 2 && percent > 0) {
         result = 2;
       }
     }
@@ -3221,10 +3427,13 @@ public class Planet {
       } else {
         sb.append("!");
       }
-      if (radiationLevel < 10 && DiceGenerator.getRandom(100) < strength) {
-        radiationLevel++;
+      if (radiationType.getIndex()
+          < RadiationType.VERY_HIGH_RAD.getIndex()
+          && DiceGenerator.getRandom(100) < strength) {
+        setRadiationLevel(
+            RadiationType.getByIndex(radiationType.getIndex() + 1));
         sb.append(" Radiation level rised on planet surface to "
-            + radiationLevel + ".");
+            + radiationType.toString() + ".");
       }
     }
     if (bombName.equals("Orbital antimatter bomb")) {
@@ -3255,10 +3464,12 @@ public class Planet {
       } else {
         sb.append("!");
       }
-      if (radiationLevel < 10) {
-        radiationLevel++;
+      if (radiationType != RadiationType.VERY_HIGH_RAD
+          && DiceGenerator.getBoolean()) {
+        setRadiationLevel(
+            RadiationType.getByIndex(radiationType.getIndex() + 1));
         sb.append(" Radiation level rised on planet surface to "
-            + radiationLevel + ".");
+            + radiationType + ".");
       }
     }
     if (bombName.equals("Orbital neutron bomb")) {
@@ -3289,10 +3500,12 @@ public class Planet {
       } else {
         sb.append("!");
       }
-      if (radiationLevel < 10) {
-        radiationLevel++;
+      if (radiationType != RadiationType.VERY_HIGH_RAD
+          && DiceGenerator.getBoolean()) {
+        setRadiationLevel(
+            RadiationType.getByIndex(radiationType.getIndex() + 1));
         sb.append(" Radiation level rised on planet surface to "
-            + radiationLevel + ".");
+            + radiationType + ".");
       }
     }
     for (int i = 0; i < dead; i++) {
@@ -3302,6 +3515,30 @@ public class Planet {
     return nuked;
   }
 
+  /**
+   * Is planet colonizable for realm
+   * @param realm PlayerINfo
+   * @return True or false
+   */
+  public boolean isColonizeablePlanet(final PlayerInfo realm) {
+    boolean result = true;
+    int maxRad = realm.getRace().getMaxRad().getIndex();
+    if (realm.getTechList().hasTech("Radiation dampener")) {
+      maxRad++;
+    }
+    if (realm.getTechList().hasTech("Radiation well")) {
+      maxRad++;
+    }
+    if (maxRad
+        < getTotalRadiationLevel().getIndex()) {
+      result = false;
+    }
+    int suitability = realm.getPlanetSuitabilityValue(this);
+    if (suitability == 0) {
+      result = false;
+    }
+    return result;
+  }
   /**
    * Set Planet's culture value
    * @param culture new culture value
@@ -4035,10 +4272,10 @@ public class Planet {
     if (getTotalPopulation() < maxPop) {
       score = score + 1;
     }
-    if (planetOwnerInfo.getWorldTypeValue(planetType.getWorldType()) > 100) {
+    if (planetOwnerInfo.getPlanetSuitabilityValue(this) > 100) {
       score = score + 1;
     }
-    if (planetOwnerInfo.getWorldTypeValue(planetType.getWorldType()) < 75) {
+    if (planetOwnerInfo.getPlanetSuitabilityValue(this) < 75) {
       score = score - 1;
     }
 

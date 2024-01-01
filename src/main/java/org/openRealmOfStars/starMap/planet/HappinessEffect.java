@@ -17,6 +17,7 @@ package org.openRealmOfStars.starMap.planet;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import org.openRealmOfStars.starMap.planet.enums.HappinessBonus;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

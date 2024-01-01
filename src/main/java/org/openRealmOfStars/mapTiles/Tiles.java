@@ -534,10 +534,10 @@ public final class Tiles {
       final BufferedImage tilesImage64, final BufferedImage tilesImage16) {
     // Reading the iron planet
     addTile(tilesImage32, tilesImage64, tilesImage16, 12, 0,
-        TileNames.IRONPLANET1,
+        TileNames.VOLCANICPLANET1,
         null);
     addTile(tilesImage32, tilesImage64, tilesImage16, 13, 0,
-        TileNames.IRONPLANET2,
+        TileNames.VOLCANICPLANET2,
         null);
     // Reading the deep space anchors
     addTile(tilesImage32, tilesImage64, tilesImage16, 7, 1,
@@ -561,10 +561,10 @@ public final class Tiles {
         TileNames.ICEWORLD2,
         null);
     addTile(tilesImage32, tilesImage64, tilesImage16, 18, 0,
-        TileNames.IRONPLANET3,
+        TileNames.VOLCANICPLANET3,
         null);
     addTile(tilesImage32, tilesImage64, tilesImage16, 19, 0,
-        TileNames.CARBONWORLD1,
+        TileNames.SWAMPWORLD1,
         null);
     // Reading the ship color tiles
     addTile(tilesImage32, tilesImage64, tilesImage16, 7, 2,
@@ -661,10 +661,10 @@ public final class Tiles {
         TileNames.ICEWORLD3,
         null);
     addTile(tilesImage32, tilesImage64, tilesImage16, 15, 1,
-        TileNames.IRONPLANET4,
+        TileNames.VOLCANICPLANET4,
         null);
     addTile(tilesImage32, tilesImage64, tilesImage16, 16, 1,
-        TileNames.CARBONWORLD2,
+        TileNames.SWAMPWORLD2,
         null);
     addTile(tilesImage32, tilesImage64, tilesImage16, 17, 1,
         TileNames.DESERTWORLD1,
@@ -691,16 +691,16 @@ public final class Tiles {
         TileNames.WATERWORLD9,
         null);
     addTile(tilesImage32, tilesImage64, tilesImage16, 19, 2,
-        TileNames.IRONPLANET5,
+        TileNames.VOLCANICPLANET5,
         null);
     addTile(tilesImage32, tilesImage64, tilesImage16, 14, 3,
-        TileNames.IRONPLANET6,
+        TileNames.VOLCANICPLANET6,
         null);
     addTile(tilesImage32, tilesImage64, tilesImage16, 15, 3,
         TileNames.DESERTWORLD3,
         null);
     addTile(tilesImage32, tilesImage64, tilesImage16, 16, 3,
-        TileNames.CARBONWORLD3,
+        TileNames.SWAMPWORLD3,
         null);
     addTile(tilesImage32, tilesImage64, tilesImage16, 17, 3,
         TileNames.ARTIFICIALWORLD1,

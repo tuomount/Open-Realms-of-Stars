@@ -311,5 +311,86 @@
     "conflictsWith": [
       "HANDY"
     ]
+  },
+  {
+    "id": "LOW_GRAVITY_BEING",
+    "name": "Low gravity being",
+    "description": "Race is use to work in low gravity conditions. Working in normal or high gravity is much more challenging.",
+    "points": -1,
+    "conflictsWith": [
+      "HIGH_GRAVITY_BEING","ZERO_GRAVITY_BEING"
+    ]
+  },
+  {
+    "id": "HIGH_GRAVITY_BEING",
+    "name": "High gravity being",
+    "description": "Race is use to work in high gravity conditions. Working in normal or low gravity is much lighter.",
+    "points": 1,
+    "conflictsWith": [
+      "LOW_GRAVITY_BEING","ZERO_GRAVITY_BEING"
+    ]
+  },
+  {
+    "id": "ZERO_GRAVITY_BEING",
+    "name": "Zero gravity being",
+    "description": "Race is use to work in zero gravity conditions. Working in low, normal or high gravity is much more challenging. Race has focus living on orbitals.",
+    "points": -3,
+    "conflictsWith": [
+      "HIGH_GRAVITY_BEING","LOW_GRAVITY_BEING"
+    ]
+  },
+  {
+    "id": "TOLERATE_LOW_RADIATION",
+    "name": "Tolerate low radiation",
+    "description": "Race is able to tolerate low radiation on planets.",
+    "points": 1,
+    "conflictsWith": [
+      "TOLERATE_HIGH_RADIATION","TOLERATE_VERY_HIGH_RADIATION"
+    ]
+  },
+  {
+    "id": "TOLERATE_HIGH_RADIATION",
+    "name": "Tolerate high radiation",
+    "description": "Race is able to tolerate high radiation on planets.",
+    "points": 2,
+    "conflictsWith": [
+      "TOLERATE_LOW_RADIATION","TOLERATE_VERY_HIGH_RADIATION"
+    ]
+  },
+  {
+    "id": "TOLERATE_VERY_HIGH_RADIATION",
+    "name": "Tolerate very high radiation",
+    "description": "Race is able to tolerate very high radiation on planets.",
+    "points": 3,
+    "conflictsWith": [
+      "TOLERATE_LOW_RADIATION","TOLERATE_HIGH_RADIATION"
+    ]
+  },
+  {
+    "id": "TOLERATE_COLD",
+    "name": "Tolerate cold temperature",
+    "description": "Race is able to tolerate cold temperature on planets.",
+    "points": 1,
+    "conflictsWith": [
+      "TOLERATE_LAVA"
+    ]
+  },
+  {
+    "id": "TOLERATE_HOT",
+    "name": "Tolerate hot temperature",
+    "description": "Race is able to tolerate hot temperature on planets.",
+    "points": 1,
+    "conflictsWith": [
+      "TOLERATE_LAVA"
+    ]
+  },
+  {
+    "id": "TOLERATE_LAVA",
+    "name": "Tolerate volcanic temperature",
+    "description": "Race is able to tolerate volcanic temperature and lava on planets, but cold temperature causes problems.",
+    "points": 1,
+    "conflictsWith": [
+      "TOLERATE_COLD", "TOLERATE_HOT"
+    ]
   }
 ]

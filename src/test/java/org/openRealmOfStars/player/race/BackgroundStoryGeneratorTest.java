@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Leader;
@@ -95,7 +95,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -118,7 +118,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD2);
+        .thenReturn(PlanetTypes.SWAMPWORLD2);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -141,7 +141,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Alpha Muert");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.IRONWORLD1);
+        .thenReturn(PlanetTypes.VOLCANICWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -164,7 +164,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Alpha Muert");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.IRONWORLD1);
+        .thenReturn(PlanetTypes.VOLCANICWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -187,7 +187,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -210,7 +210,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -233,7 +233,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -256,7 +256,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -279,7 +279,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -302,7 +302,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -325,7 +325,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -348,7 +348,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -486,7 +486,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -509,7 +509,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -532,7 +532,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -555,7 +555,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.CARBONWORLD1);
+        .thenReturn(PlanetTypes.SWAMPWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -579,7 +579,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.IRONWORLD1);
+        .thenReturn(PlanetTypes.VOLCANICWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -603,7 +603,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.IRONWORLD1);
+        .thenReturn(PlanetTypes.VOLCANICWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -627,7 +627,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.IRONWORLD1);
+        .thenReturn(PlanetTypes.VOLCANICWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -651,7 +651,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.IRONWORLD1);
+        .thenReturn(PlanetTypes.VOLCANICWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -675,7 +675,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.IRONWORLD1);
+        .thenReturn(PlanetTypes.VOLCANICWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
@@ -699,7 +699,7 @@ public class BackgroundStoryGeneratorTest {
     Planet startingPlanet = Mockito.mock(Planet.class);
     Mockito.when(startingPlanet.getName()).thenReturn("Mars");
     Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.IRONWORLD1);
+        .thenReturn(PlanetTypes.VOLCANICWORLD1);
     int starYear = 2400;
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);

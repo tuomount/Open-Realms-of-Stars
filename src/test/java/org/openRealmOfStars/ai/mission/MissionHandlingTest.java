@@ -1,7 +1,7 @@
 package org.openRealmOfStars.ai.mission;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2018 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -442,7 +442,7 @@ public class MissionHandlingTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testClosetPlanet() {
+  public void testClosestPlanet() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
@@ -457,6 +457,8 @@ public class MissionHandlingTest {
     Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(info);
     Mockito.when(planet1.getRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
+    Mockito.when(planet1.isColonizeablePlanet(info)).thenReturn(true);
+    Mockito.when(planet1.isColonizeablePlanet(info2)).thenReturn(true);
     Planet planet2 = Mockito.mock(Planet.class);
     Coordinate planet2Coord = new Coordinate(8, 8);
     Mockito.when(info.getSectorVisibility(planet2Coord)).thenReturn(
@@ -465,6 +467,8 @@ public class MissionHandlingTest {
     Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(info2);
     Mockito.when(planet2.getRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
+    Mockito.when(planet2.isColonizeablePlanet(info)).thenReturn(true);
+    Mockito.when(planet2.isColonizeablePlanet(info2)).thenReturn(true);
     Planet planet3 = Mockito.mock(Planet.class);
     Coordinate planet3Coord = new Coordinate(20, 20);
     Mockito.when(info.getSectorVisibility(planet3Coord)).thenReturn(
@@ -473,6 +477,8 @@ public class MissionHandlingTest {
     Mockito.when(planet3.getPlanetPlayerInfo()).thenReturn(null);
     Mockito.when(planet3.getRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
+    Mockito.when(planet3.isColonizeablePlanet(info)).thenReturn(true);
+    Mockito.when(planet3.isColonizeablePlanet(info2)).thenReturn(true);
     Planet planet4 = Mockito.mock(Planet.class);
     Coordinate planet4Coord = new Coordinate(30, 30);
     Mockito.when(info.getSectorVisibility(planet4Coord)).thenReturn(
@@ -481,6 +487,8 @@ public class MissionHandlingTest {
     Mockito.when(planet4.getPlanetPlayerInfo()).thenReturn(null);
     Mockito.when(planet4.getRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
+    Mockito.when(planet4.isColonizeablePlanet(info)).thenReturn(true);
+    Mockito.when(planet4.isColonizeablePlanet(info2)).thenReturn(true);
     ArrayList<Planet> planets = new ArrayList<>();
     planets.add(planet1);
     planets.add(planet2);

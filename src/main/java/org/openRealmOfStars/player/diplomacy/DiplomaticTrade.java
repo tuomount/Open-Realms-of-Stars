@@ -816,7 +816,7 @@ public class DiplomaticTrade {
     if (planet.getHomeWorldIndex() != -1) {
       result = result + 3;
     }
-    if (planet.isColonizeablePlanet(demander)) {
+    if (!planet.isColonizeablePlanet(demander)) {
       result = 0;
     }
     return result;

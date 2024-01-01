@@ -1050,7 +1050,7 @@ public final class RandomEventUtility {
       for (Planet planet : map.getPlanetList()) {
         if (planet.getPlanetPlayerInfo() == info
             && planet.getOrderNumber() > 0
-            && planet.getRadiationLevel().getIndex() > 1) {
+            && planet.getRadiationLevel().getIndex() > 0) {
           planets.add(planet);
         }
       }
@@ -1075,7 +1075,7 @@ public final class RandomEventUtility {
           for (Planet orbiter : map.getPlanetList()) {
             Sun solar = map.locateSolarSystem(orbiter.getCoordinate().getX(),
                 orbiter.getCoordinate().getY());
-            if (solar == sun) {
+            if (solar == sun && orbiter.getRadiationLevel().getIndex() > 0) {
               orbiter.setRadiationLevel(RadiationType.getByIndex(
                   orbiter.getRadiationLevel().getIndex() - 1));
             }
@@ -1123,7 +1123,9 @@ public final class RandomEventUtility {
           for (Planet orbiter : map.getPlanetList()) {
             Sun solar = map.locateSolarSystem(orbiter.getCoordinate().getX(),
                 orbiter.getCoordinate().getY());
-            if (solar == sun) {
+            if (solar == sun
+                && orbiter.getRadiationLevel().getIndex()
+                < RadiationType.VERY_HIGH_RAD.getIndex()) {
               orbiter.setRadiationLevel(RadiationType.getByIndex(
                   orbiter.getRadiationLevel().getIndex() + 1));
             }

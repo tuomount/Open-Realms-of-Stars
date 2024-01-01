@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap.planet;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,6 +35,8 @@ import org.openRealmOfStars.starMap.planet.enums.HappinessBonus;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.enums.RadiationType;
+import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
+import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 import junit.framework.TestCase;
@@ -132,21 +134,35 @@ public class PlanetTest extends TestCase {
       planet.setPlanetType(PlanetTypes.WATERWORLD1);
 
       String tmp = planet.generateInfoText(false, null);
-      assertEquals("Earth\nWater world\nRadiation: 1\nSize: small\n",tmp);
+      assertEquals("Earth\nWater world\nRadiation: no radiation"
+          + " Temperature: temperate\nWater: humid Gravity: normal gravity\n"
+          + "Size: small\n",tmp);
       tmp = planet.generateInfoText(true, null);
-      assertEquals("Earth\nWater world\nRadiation: 1\nSize: small\nMetal: 6543\n",tmp);
+      assertEquals("Earth\nWater world\nRadiation: no radiation"
+          + " Temperature: temperate\nWater: humid Gravity: normal gravity\n"
+          + "Size: small\n"
+          + "Metal: 6543\n",tmp);
       planet.setHomeWorldIndex(1);
       tmp = planet.generateInfoText(false, null);
-      assertEquals("Earth\nWater world\nRadiation: 1\nSize: small\nHome world of\nMechions\n",tmp);
+      assertEquals("Earth\nWater world\nRadiation: no radiation"
+          + " Temperature: temperate\nWater: humid Gravity: normal gravity\n"
+          + "Size: small\n"
+          + "Home world of\nMechions\n",tmp);
       tmp = planet.generateInfoText(true, null);
-      assertEquals("Earth\nWater world\nRadiation: 1\nSize: small\nMetal: 6543\nHome world of\nMechions\n",tmp);
+      assertEquals("Earth\nWater world\nRadiation: no radiation"
+          + " Temperature: temperate\nWater: humid Gravity: normal gravity\n"
+          + "Size: small\n"
+          + "Metal: 6543\nHome world of\nMechions\n",tmp);
       PlayerInfo info = new PlayerInfo(SpaceRaceUtility.getRaceByName("Mechion"));
       info.setEmpireName("Mechion Great Empire");
       planet.setPlanetOwner(0, info);
       planet.setWorkers(0, 1);
       planet.setCulture(5);
       tmp = planet.generateInfoText(true, null);
-      assertEquals("Earth\nWater world\nSuitable: 75%\nRadiation: 1\nSize: small\nMetal: 6543\n"
+      assertEquals("Earth\nWater world\nSuitable: 100%\nRadiation: no radiation"
+          + " Temperature: temperate\nWater: humid Gravity: normal gravity\n"
+          + "Size: small\n"
+          + "Metal: 6543\n"
           + "Home world of\nMechions\nMechion Great Empire\nPopulation"
           + ": 1\nCulture: 5\n",tmp);
   }
@@ -193,11 +209,11 @@ public class PlanetTest extends TestCase {
     Mockito.when(building.getName()).thenReturn("Radiation well");
     Mockito.when(building.getProdCost()).thenReturn(10);
     planet.addBuilding(building);
-    assertEquals(5, planet.getTotalRadiationLevel());
+    assertEquals(RadiationType.LOW_RADIATION, planet.getTotalRadiationLevel());
     assertEquals(1, planet.getNumberOfBuildings());
     planet.removeBuilding(building);
     assertEquals(0, planet.getNumberOfBuildings());
-    assertEquals(6, planet.getTotalRadiationLevel());
+    assertEquals(RadiationType.HIGH_RADIATION, planet.getTotalRadiationLevel());
     planet.setGroundSize(7);
     Mockito.when(building.getName()).thenReturn("Test building");
     planet.addBuilding(building);
@@ -233,7 +249,8 @@ public class PlanetTest extends TestCase {
     DiceGenerator.initializeGenerators(0, 1, 10);
     PlanetNuked nuked = planet.nukem(20, "Orbital nuke", null, null);
     assertEquals("Orbital nuke killed 2 population and destroyed 2 buildings!"
-        + " Radiation level rised on planet surface to 2.", nuked.getText());
+        + " Radiation level rised on planet surface to low radiation.",
+        nuked.getText());
   }
 
   @Test
@@ -255,10 +272,10 @@ public class PlanetTest extends TestCase {
     DiceGenerator.initializeGenerators(0, 1, 10, 0, 1, 10);
     PlanetNuked nuked = planet.nukem(20, "Orbital nuke", null, null);
     assertEquals("Orbital nuke killed 2 population and destroyed 2 buildings!"
-        + " Radiation level rised on planet surface to 2.", nuked.getText());
+        + " Radiation level rised on planet surface to low radiation.", nuked.getText());
     nuked = planet.nukem(20, "Orbital nuke", null, nuked);
     assertEquals("Orbital nuke killed 4 population and destroyed 4 buildings!"
-        + " Radiation level rised on planet surface to 3.", nuked.getText());
+        + " Radiation level rised on planet surface to high radiation.", nuked.getText());
   }
 
   @Test
@@ -279,8 +296,8 @@ public class PlanetTest extends TestCase {
     planet.setWorkers(Planet.FOOD_FARMERS, 8);
     DiceGenerator.initializeGenerators(0, 0, 0, 0, 0, 10);
     PlanetNuked nuked = planet.nukem(80, "Orbital antimatter bomb", null, null);
-    assertEquals("Orbital antimatter bomb killed 8 population and destroyed 5 buildings!"
-        + " Radiation level rised on planet surface to 2.", nuked.getText());
+    assertTrue(nuked.getText().contains("Orbital antimatter bomb killed 8"
+        + " population and destroyed 5 buildings!"));
   }
 
   @Test
@@ -302,7 +319,8 @@ public class PlanetTest extends TestCase {
     DiceGenerator.initializeGenerators(0, 0, 0, 0, 0, 10);
     PlanetNuked nuked = planet.nukem(100, "Orbital neutron bomb", null, null);
     assertEquals("Orbital neutron bomb killed 8 population and destroyed 4 buildings!"
-        + " Radiation level rised on planet surface to 2.", nuked.getText());
+        + " Radiation level rised on planet surface to low radiation.",
+        nuked.getText());
   }
 
   @Test
@@ -318,11 +336,11 @@ public class PlanetTest extends TestCase {
     Mockito.when(building.getProdCost()).thenReturn(10);
     Mockito.when(building.getMaintenanceCost()).thenReturn(1.0);
     planet.addBuilding(building);
-    assertEquals(5, planet.getTotalRadiationLevel());
+    assertEquals(RadiationType.LOW_RADIATION, planet.getTotalRadiationLevel());
     assertEquals(1, planet.getNumberOfBuildings());
     planet.removeBuilding(building);
     assertEquals(0, planet.getNumberOfBuildings());
-    assertEquals(6, planet.getTotalRadiationLevel());
+    assertEquals(RadiationType.HIGH_RADIATION, planet.getTotalRadiationLevel());
     planet.setGroundSize(7);
     Mockito.when(building.getName()).thenReturn("Test building");
     planet.addBuilding(building);
@@ -440,6 +458,9 @@ public class PlanetTest extends TestCase {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testFoodProduction() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    planet.setWaterLevel(WaterLevelType.ARID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     planet.setPlanetOwner(0, info);

@@ -235,8 +235,7 @@ public class BigImagePanel extends JPanel {
       if (player != null && planet.getPlanetPlayerInfo() != player
           && !planet.isGasGiant()) {
         if (!planet.isColonizeablePlanet(player)) {
-          sb.append("High radiation! Maximum radiation is ");
-          sb.append(player.getRace().getMaxRad());
+          sb.append("Warning! Planet is not colonizable for your people.");
         } else {
           sb.append(player.getRace().getName());
           sb.append(" can colonize this planet.");

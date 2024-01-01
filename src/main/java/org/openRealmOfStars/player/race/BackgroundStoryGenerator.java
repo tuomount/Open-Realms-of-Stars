@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.race;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2023 Tuomo Untinen
+ * Copyright (C) 2023-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -246,7 +246,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -344,7 +344,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -451,7 +451,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -515,7 +515,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -567,7 +567,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append("\n\n");
     switch (DiceGenerator.getRandom(2)) {
       default:
@@ -697,7 +697,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append("\n\n");
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
@@ -793,7 +793,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -871,7 +871,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -968,7 +968,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -1131,7 +1131,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -1237,7 +1237,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -1351,7 +1351,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -1417,7 +1417,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append("\n\n");
     switch (DiceGenerator.getRandom(2)) {
       default:
@@ -1614,7 +1614,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -1740,7 +1740,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear, namePlural));
+    sb.append(generateFtlStory(info, startingYear));
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -1791,11 +1791,10 @@ public final class BackgroundStoryGenerator {
    * Generate FTL background story.
    * @param info Realm
    * @param startingYear Starting year of the game
-   * @param name Race name
    * @return FTL background story
    */
   private static String generateFtlStory(final PlayerInfo info,
-      final int startingYear, final String name) {
+      final int startingYear) {
     StringBuilder sb = new StringBuilder();
     boolean scientific = false;
     if (info.getGovernment() == GovernmentType.TECHNOCRACY

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.diplomacy;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2023 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1314,6 +1314,7 @@ return map;
     Mockito.when(planetOne.getRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
     Mockito.when(planetOne.getPlanetPlayerInfo()).thenReturn(info);
+    Mockito.when(planetOne.isColonizeablePlanet(info)).thenReturn(true);
     planets.add(planetOne);
     Planet planetTwo = Mockito.mock(Planet.class);
     Mockito.when(planetTwo.getAmountMetalInGround()).thenReturn(3463);
@@ -1323,16 +1324,20 @@ return map;
     Mockito.when(planetTwo.getRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
     Mockito.when(planetTwo.getPlanetPlayerInfo()).thenReturn(info);
+    Mockito.when(planetTwo.isColonizeablePlanet(info)).thenReturn(true);
     planets.add(planetTwo);
     assertEquals(planetTwo, trade.getTradeablePlanet(info, planets));
     Mockito.when(planetTwo.getRadiationLevel()).thenReturn(
         RadiationType.VERY_HIGH_RAD);
+    Mockito.when(planetTwo.isColonizeablePlanet(info)).thenReturn(false);
     assertEquals(planetOne, trade.getTradeablePlanet(info, planets));
     Mockito.when(planetTwo.getRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
+    Mockito.when(planetTwo.isColonizeablePlanet(info)).thenReturn(true);
     assertEquals(planetOne, trade.getTradeablePlanet(null, planets));
     Mockito.when(planetTwo.getRadiationLevel()).thenReturn(
         RadiationType.VERY_HIGH_RAD);
+    Mockito.when(planetTwo.isColonizeablePlanet(info)).thenReturn(false);
     assertEquals(planetTwo, trade.getTradeablePlanet(null, planets));
   }
 

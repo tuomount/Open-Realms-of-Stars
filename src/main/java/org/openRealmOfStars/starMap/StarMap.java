@@ -4415,7 +4415,7 @@ public class StarMap {
           sb.append(" Unfortunately it has been already colonized by ");
           sb.append(planet.getPlanetPlayerInfo().getEmpireName());
           sb.append(".");
-        } else if (planet.isColonizeablePlanet(info)) {
+        } else if (!planet.isColonizeablePlanet(info)) {
           sb.append(" Unfortunately planet is not suitable");
           sb.append(" for your people to live there...");
         } else {
@@ -4557,7 +4557,7 @@ public class StarMap {
               return;
             }
           }
-          if (planet.isColonizeablePlanet(info)) {
+          if (!planet.isColonizeablePlanet(info)) {
             // High radiation
             tutorialText = Game.getTutorial().showTutorialText(23);
             if (tutorialText != null) {

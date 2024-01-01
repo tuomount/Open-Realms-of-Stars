@@ -36,12 +36,13 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
-import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.enums.RadiationType;
+import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
+import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.starMap.vote.Votes;
 
 
@@ -51,7 +52,7 @@ import org.openRealmOfStars.starMap.vote.Votes;
 */
 public class RandomEventUtilityTest {
 
-  private StarMap generateMapWithPlayer(final SpaceRace race) {
+  private static StarMap generateMapWithPlayer(final SpaceRace race) {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
@@ -83,20 +84,17 @@ public class RandomEventUtilityTest {
     Mockito.when(newsData.getMilitaryDifference(0, 1)).thenReturn(50);
     StarMap map = Mockito.mock(StarMap.class);
     ArrayList<Planet> planetList = new ArrayList<>();
-    Planet planet = Mockito.mock(Planet.class);
+    Planet planet = new Planet(new Coordinate(0, 0), "Planet I", 1, false);
     Sun sun = Mockito.mock(Sun.class);
-    Mockito.when(sun.getCenterCoordinate()).thenReturn(new Coordinate(3, 3));
     Mockito.when(map.locateSolarSystem(0, 0)).thenReturn(sun);
-    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(player2);
-    Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(0, 0));
-    Mockito.when(planet.getRadiationLevel()).thenReturn(
-        RadiationType.NO_RADIATION);
-    Mockito.when(planet.getGroundSize()).thenReturn(12);
-    Mockito.when(planet.getTotalPopulation()).thenReturn(1);
-    Mockito.when(planet.getOrderNumber()).thenReturn(1);
-    Mockito.when(planet.getImageInstructions()).thenReturn(
-        ImageInstruction.PLANET_WATERWORLD1);
-    Mockito.when(planet.getName()).thenReturn("Planet I");
+    planet.setRadiationLevel(RadiationType.LOW_RADIATION);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
+    planet.generateWorldType();
+    planet.setWorkers(Planet.FOOD_FARMERS, 1);
+    planet.setPlanetOwner(1, player2);
     Leader leader1 = LeaderUtility.createLeader(player1, planet,
         LeaderUtility.LEVEL_START_RULER);
     player1.setRuler(leader1);
@@ -105,12 +103,8 @@ public class RandomEventUtilityTest {
         LeaderUtility.LEVEL_START_RULER);
     player2.setRuler(leader2);
     player2.getLeaderPool().add(leader2);
-    Building[] buildingList = new Building[2];
-    Building build = Mockito.mock(Building.class);
-    Mockito.when(build.getName()).thenReturn("Test building");
-    buildingList[0] = build;
-    buildingList[1] = build;
-    Mockito.when(planet.getBuildingList()).thenReturn(buildingList);
+    planet.addBuilding(BuildingFactory.createByName("Basic factory"));
+    planet.addBuilding(BuildingFactory.createByName("Basic mine"));
     planetList.add(planet);
     Mockito.when(map.getPlanetList()).thenReturn(planetList);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);

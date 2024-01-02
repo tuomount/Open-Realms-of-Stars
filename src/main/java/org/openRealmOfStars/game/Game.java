@@ -1828,14 +1828,14 @@ public class Game implements ActionListener {
       break;
     }
     case STORY_VIEW: {
-      setBridgeCommand(starMap.getCurrentPlayerInfo()
-          .getRace().getBridgeEffect());
+      var race = starMap.getCurrentPlayerInfo().getRace();
+      setBridgeCommand(GuiStatics.getRaceBridgeEffect(race));
       showStoryView();
       break;
     }
     case END_STORY_VIEW: {
-      setBridgeCommand(starMap.getPlayerList().getPlayerInfoByIndex(0)
-          .getRace().getBridgeEffect());
+      var race = starMap.getPlayerList().getPlayerInfoByIndex(0).getRace();
+      setBridgeCommand(GuiStatics.getRaceBridgeEffect(race));
       showEndStoryView();
       break;
     }
@@ -2876,8 +2876,8 @@ public class Game implements ActionListener {
         changeGameState(GameState.HISTORY_VIEW);
       } else {
         endStoryView.handleAction(arg0);
-        setBridgeCommand(endStoryView.getCurrentRealm().getRace()
-            .getBridgeEffect());
+        var race = endStoryView.getCurrentRealm().getRace();
+        setBridgeCommand(GuiStatics.getRaceBridgeEffect(race));
       }
       return;
     }

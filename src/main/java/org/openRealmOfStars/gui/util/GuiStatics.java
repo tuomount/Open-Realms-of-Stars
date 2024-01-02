@@ -29,6 +29,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.UIManager;
 
+import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.gui.icons.Icon16x16;
@@ -848,6 +849,51 @@ public final class GuiStatics {
    */
   public static BufferedImage getRaceImg(final SpaceRace race) {
     return IOUtilities.loadImage(race.getImage());
+  }
+
+  /**
+   * Get bridge effect for diplomacy screen
+   * @param race SpaceRace in diplomacy
+   * @return BridgeCommandType
+   */
+  public static BridgeCommandType getRaceBridgeEffect(final SpaceRace race) {
+    switch (race) {
+    case HUMAN:
+      return BridgeCommandType.WARM_WHITE;
+    case SPACE_MONSTERS:
+    case SPACE_PIRATE:
+      return BridgeCommandType.DARKEST;
+    case MECHIONS:
+      return BridgeCommandType.WARM_WHITE;
+    case SPORKS:
+      return BridgeCommandType.DARK_RED;
+    case GREYANS:
+      return BridgeCommandType.WARM_WHITE;
+    case CENTAURS:
+      return BridgeCommandType.BRIGHT_CYAN;
+    case MOTHOIDS:
+      return BridgeCommandType.GREEN_CONSOLE;
+    case TEUTHIDAES:
+      return BridgeCommandType.PURPLE_DREAM;
+    case SCAURIANS:
+      return BridgeCommandType.DARK_ORANGE;
+    case HOMARIANS:
+      return BridgeCommandType.BLUEISH_WHITE;
+    case CHIRALOIDS:
+      return BridgeCommandType.BLUEISH_WHITE;
+    case REBORGIANS:
+      return BridgeCommandType.DARKEST;
+    case LITHORIANS:
+      return BridgeCommandType.DARKEST;
+    case ALTEIRIANS:
+      return BridgeCommandType.GREYBLUE;
+    case SMAUGIRIANS:
+      return BridgeCommandType.ORANGE_BLINK;
+    case SYNTHDROIDS:
+      return BridgeCommandType.WARM_WHITE;
+    default:
+      return BridgeCommandType.WARM_WHITE;
+    }
   }
 
   /**

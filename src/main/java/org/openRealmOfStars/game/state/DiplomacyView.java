@@ -509,7 +509,7 @@ public class DiplomacyView extends BlackPanel {
       planetImage = planet.getBigImage();
     }
     aiImg = new ShipInteriorPanel(ai.getRace(), planetImage);
-    setAmbientEffect(ai.getRace().getBridgeEffect());
+    setAmbientEffect(GuiStatics.getRaceBridgeEffect(ai.getRace()));
     aiImg.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(aiImg);
     likenessLabel = new SpaceLabel("Friends for ever Defensive pact");

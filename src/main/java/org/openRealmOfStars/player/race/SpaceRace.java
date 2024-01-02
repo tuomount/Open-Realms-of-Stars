@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.player.diplomacy.Attitude;
@@ -1084,50 +1083,6 @@ public enum SpaceRace {
       return SocialSystem.MATRIARCHY;
     default:
       return SocialSystem.EQUAL;
-    }
-  }
-
-  /**
-   * Get bridge effect for diplomacy screen
-   * @return BridgeCommandType
-   */
-  public BridgeCommandType getBridgeEffect() {
-    switch (this) {
-    case HUMAN:
-      return BridgeCommandType.WARM_WHITE;
-    case SPACE_MONSTERS:
-    case SPACE_PIRATE:
-      return BridgeCommandType.DARKEST;
-    case MECHIONS:
-      return BridgeCommandType.WARM_WHITE;
-    case SPORKS:
-      return BridgeCommandType.DARK_RED;
-    case GREYANS:
-      return BridgeCommandType.WARM_WHITE;
-    case CENTAURS:
-      return BridgeCommandType.BRIGHT_CYAN;
-    case MOTHOIDS:
-      return BridgeCommandType.GREEN_CONSOLE;
-    case TEUTHIDAES:
-      return BridgeCommandType.PURPLE_DREAM;
-    case SCAURIANS:
-      return BridgeCommandType.DARK_ORANGE;
-    case HOMARIANS:
-      return BridgeCommandType.BLUEISH_WHITE;
-    case CHIRALOIDS:
-      return BridgeCommandType.BLUEISH_WHITE;
-    case REBORGIANS:
-      return BridgeCommandType.DARKEST;
-    case LITHORIANS:
-      return BridgeCommandType.DARKEST;
-    case ALTEIRIANS:
-      return BridgeCommandType.GREYBLUE;
-    case SMAUGIRIANS:
-      return BridgeCommandType.ORANGE_BLINK;
-    case SYNTHDROIDS:
-      return BridgeCommandType.WARM_WHITE;
-    default:
-      return BridgeCommandType.WARM_WHITE;
     }
   }
 

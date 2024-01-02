@@ -322,8 +322,9 @@ public class DiplomacyView extends BlackPanel {
       game = null;
     }
     ai = info2;
-    if (MusicPlayer.getNowPlaying() != ai.getRace().getDiplomacyMusic()) {
-      MusicPlayer.play(ai.getRace().getDiplomacyMusic());
+    final var raceMusic = GuiStatics.getRaceDiplomacyMusic(ai.getRace());
+    if (MusicPlayer.getNowPlaying() != raceMusic) {
+      MusicPlayer.play(raceMusic);
     }
     starMap = map;
     humanCredits = 0;

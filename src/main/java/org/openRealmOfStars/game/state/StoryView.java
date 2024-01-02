@@ -35,6 +35,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
 import org.openRealmOfStars.gui.panels.ShipInteriorPanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
@@ -75,8 +76,9 @@ public class StoryView extends BlackPanel {
    */
   public StoryView(final StarMap map, final PlayerInfo realm,
       final ActionListener listener) {
-    if (MusicPlayer.getNowPlaying() != realm.getRace().getDiplomacyMusic()) {
-      MusicPlayer.play(realm.getRace().getDiplomacyMusic());
+    final var raceMusic = GuiStatics.getRaceDiplomacyMusic(realm.getRace());
+    if (MusicPlayer.getNowPlaying() != raceMusic) {
+      MusicPlayer.play(raceMusic);
     }
     this.setLayout(new BorderLayout());
     this.map = map;

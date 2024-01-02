@@ -96,8 +96,9 @@ public class EndStoryView extends BlackPanel {
   public EndStoryView(final StarMap map, final ActionListener listener) {
     index = 0;
     realm = map.getPlayerByIndex(index);
-    if (MusicPlayer.getNowPlaying() != realm.getRace().getDiplomacyMusic()) {
-      MusicPlayer.play(realm.getRace().getDiplomacyMusic());
+    final var raceMusic = GuiStatics.getRaceDiplomacyMusic(realm.getRace());
+    if (MusicPlayer.getNowPlaying() != raceMusic) {
+      MusicPlayer.play(raceMusic);
     }
     this.setLayout(new BorderLayout());
     this.map = map;
@@ -204,8 +205,9 @@ public class EndStoryView extends BlackPanel {
    * Update panels
    */
   public void updatePanels() {
-    if (MusicPlayer.getNowPlaying() != realm.getRace().getDiplomacyMusic()) {
-      MusicPlayer.play(realm.getRace().getDiplomacyMusic());
+    final var raceMusic = GuiStatics.getRaceDiplomacyMusic(realm.getRace());
+    if (MusicPlayer.getNowPlaying() != raceMusic) {
+      MusicPlayer.play(raceMusic);
     }
     ImageInstruction instructions = new ImageInstruction();
     Planet planet = getHomePlanet();

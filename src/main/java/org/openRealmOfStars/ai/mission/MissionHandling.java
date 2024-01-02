@@ -49,6 +49,7 @@ import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -866,9 +867,11 @@ public final class MissionHandling {
           // Make sure that ship is really colony and there is planet to
           // colonize
           planet.setPlanetOwner(game.getStarMap().getAiTurnNumber(), info);
-          if (info.getRace() == SpaceRace.ALTEIRIANS) {
+          // Zero-G beings colonize with orbitals
+          if (info.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
             planet.colonizeWithOrbital();
           }
+
           if (!info.getRace().isEatingFood()) {
             planet.setWorkers(Planet.PRODUCTION_WORKERS, ship.getColonist());
           } else {

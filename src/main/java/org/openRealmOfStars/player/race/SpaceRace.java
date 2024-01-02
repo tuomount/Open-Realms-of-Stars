@@ -353,16 +353,9 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.ZERO_GRAVITY_BEING).ifPresent(trait -> {
       ALTEIRIANS.addTrait(trait);
     });
-    TraitFactory.create(TraitIds.TOLERATE_LOW_RADIATION).ifPresent(trait -> {
-      HUMAN.addTrait(trait);
-      SPACE_PIRATE.addTrait(trait);
-      SPACE_MONSTERS.addTrait(trait);
-      SPORKS.addTrait(trait);
-      SCAURIANS.addTrait(trait);
-      REBORGIANS.addTrait(trait);
-      TEUTHIDAES.addTrait(trait);
-      SMAUGIRIANS.addTrait(trait);
-      SYNTHDROIDS.addTrait(trait);
+    TraitFactory.create(TraitIds.TOLERATE_NO_RADIATION).ifPresent(trait -> {
+      CENTAURS.addTrait(trait);
+      HOMARIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.TOLERATE_HIGH_RADIATION).ifPresent(trait -> {
       GREYANS.addTrait(trait);
@@ -370,7 +363,7 @@ public enum SpaceRace {
       LITHORIANS.addTrait(trait);
       MOTHOIDS.addTrait(trait);
     });
-    TraitFactory.create(TraitIds.TOLERATE_VERY_HIGH_RADIATION).ifPresent(
+    TraitFactory.create(TraitIds.TOLERATE_EXTREME_RADIATION).ifPresent(
         trait -> {
       MECHIONS.addTrait(trait);
       CHIRALOIDS.addTrait(trait);
@@ -541,14 +534,14 @@ public enum SpaceRace {
    * @return The race maximum radiation
    */
   public RadiationType getMaxRad() {
-    RadiationType result = RadiationType.NO_RADIATION;
-    if (hasTrait(TraitIds.TOLERATE_LOW_RADIATION)) {
-      result = RadiationType.LOW_RADIATION;
+    RadiationType result = RadiationType.LOW_RADIATION;
+    if (hasTrait(TraitIds.TOLERATE_NO_RADIATION)) {
+      result = RadiationType.NO_RADIATION;
     }
     if (hasTrait(TraitIds.TOLERATE_HIGH_RADIATION)) {
       result = RadiationType.HIGH_RADIATION;
     }
-    if (hasTrait(TraitIds.TOLERATE_VERY_HIGH_RADIATION)) {
+    if (hasTrait(TraitIds.TOLERATE_EXTREME_RADIATION)) {
       result = RadiationType.VERY_HIGH_RAD;
     }
     return result;

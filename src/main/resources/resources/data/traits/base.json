@@ -340,12 +340,12 @@
     ]
   },
   {
-    "id": "TOLERATE_LOW_RADIATION",
-    "name": "Tolerate low radiation",
-    "description": "Race is able to tolerate low radiation on planets.",
-    "points": 1,
+    "id": "TOLERATE_NO_RADIATION",
+    "name": "Radiation intolerant",
+    "description": "Race does not handle radiation well, and is able tolerate only very small levels of radiation on planets.",
+    "points": -1,
     "conflictsWith": [
-      "TOLERATE_HIGH_RADIATION","TOLERATE_VERY_HIGH_RADIATION"
+      "TOLERATE_HIGH_RADIATION","TOLERATE_EXTREME_RADIATION"
     ]
   },
   {
@@ -354,13 +354,13 @@
     "description": "Race is able to tolerate high radiation on planets.",
     "points": 2,
     "conflictsWith": [
-      "TOLERATE_LOW_RADIATION","TOLERATE_VERY_HIGH_RADIATION"
+      "TOLERATE_LOW_RADIATION","TOLERATE_EXTREME_RADIATION"
     ]
   },
   {
-    "id": "TOLERATE_VERY_HIGH_RADIATION",
-    "name": "Tolerate very high radiation",
-    "description": "Race is able to tolerate very high radiation on planets.",
+    "id": "TOLERATE_EXTREME_RADIATION",
+    "name": "Tolerate extreme radiation",
+    "description": "Race is able to tolerate extremely high radiation on planets.",
     "points": 3,
     "conflictsWith": [
       "TOLERATE_LOW_RADIATION","TOLERATE_HIGH_RADIATION"

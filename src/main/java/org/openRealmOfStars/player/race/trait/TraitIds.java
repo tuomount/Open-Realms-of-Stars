@@ -131,14 +131,14 @@ public final class TraitIds {
   public static final String HIGH_GRAVITY_BEING = "HIGH_GRAVITY_BEING";
   /** Race is used to work in zero gravity conditions. */
   public static final String ZERO_GRAVITY_BEING = "ZERO_GRAVITY_BEING";
-  /** Tolerate low radiation on planets. */
-  public static final String TOLERATE_LOW_RADIATION = "TOLERATE_LOW_RADIATION";
+  /** Tolerate only very little radiation on planets. */
+  public static final String TOLERATE_NO_RADIATION = "TOLERATE_NO_RADIATION";
   /** Tolerate high radiation on planets. */
   public static final String TOLERATE_HIGH_RADIATION =
       "TOLERATE_HIGH_RADIATION";
   /** Tolerate very high radiation on planets. */
-  public static final String TOLERATE_VERY_HIGH_RADIATION =
-      "TOLERATE_VERY_HIGH_RADIATION";
+  public static final String TOLERATE_EXTREME_RADIATION =
+      "TOLERATE_EXTREME_RADIATION";
   /** Tolerate cold temperature on planets. */
   public static final String TOLERATE_COLD = "TOLERATE_COLD";
   /** Tolerate hot temperature on planets. */

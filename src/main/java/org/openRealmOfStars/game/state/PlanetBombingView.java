@@ -61,7 +61,6 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -955,7 +954,7 @@ public class PlanetBombingView extends BlackPanel {
     ship.setColonist(0);
 
     planet.setPlanetOwner(attackPlayerIndex, attacker);
-    if (attacker.getRace() == SpaceRace.ALTEIRIANS) {
+    if (attacker.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       planet.colonizeWithOrbital();
     }
     result.conquered = true;

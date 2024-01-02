@@ -105,6 +105,7 @@ public class PlayerSetupView extends BlackPanel {
    * Combobox for selecting difficulty for each realm.
    */
   private SpaceComboBox<AiDifficulty>[] comboDifficult;
+
   /**
    * Galaxy config
    */
@@ -119,6 +120,7 @@ public class PlayerSetupView extends BlackPanel {
    * Random list for colors.
    */
   private ArrayList<PlayerColor> randomListOfColors;
+
   /**
    * Constructor for Player Setup view
    * @param config Galaxy Configuration
@@ -425,13 +427,8 @@ public class PlayerSetupView extends BlackPanel {
     comboRealmColor[index].setForeground(GuiStatics.getCoolSpaceColor());
     comboRealmColor[index].setBorder(new SimpleBorder());
     comboRealmColor[index].setFont(GuiFonts.getFontCubellan());
-    PlayerColor color = config.getRace(index).getPrimaryColor();
-    if (!randomListOfColors.contains(color)) {
-      color = config.getRace(index).getSecondaryColor();
-      if (!randomListOfColors.contains(color)) {
-        color = DiceGenerator.pickRandom(randomListOfColors);
-      }
-    }
+
+    PlayerColor color = DiceGenerator.pickRandom(randomListOfColors);
     randomListOfColors.remove(color);
     comboRealmColor[index].getModel()
         .setSelectedItem(color);

@@ -1579,9 +1579,9 @@ public final class ShipGenerator {
       if (DiceGenerator.getRandom(99) < militaryChance) {
         military = true;
       }
-      if (player.getRace() == SpaceRace.ALTEIRIANS) {
+      // Zero-G races will lose planet if orbital is lost.
+      if (player.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
         military = true;
-        // Alteirians will lose planet if orbital is lost.
       }
       if (military || player.isBoard()) {
         ShipComponent weapon = ShipComponentFactory

@@ -115,6 +115,7 @@ import org.openRealmOfStars.player.message.ChangeMessagePlanet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
@@ -2545,23 +2546,25 @@ public class Game implements ActionListener {
     Ship ship = fleetView.getFleet().getColonyShip();
     if (ship != null && fleetView.getPlanet() != null
         && fleetView.getPlanet().getPlanetPlayerInfo() == null) {
+      final var currPlayer = players.getCurrentPlayerInfo();
       // Make sure that ship is really colony and there is planet to
       // colonize
       fleetView.getPlanet().setPlanetOwner(players.getCurrentPlayer(),
-          players.getCurrentPlayerInfo());
-      if (players.getCurrentPlayerInfo().getRace() == SpaceRace.ALTEIRIANS) {
+          currPlayer);
+      if (currPlayer.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
         fleetView.getPlanet().colonizeWithOrbital();
       }
-      if (players.getCurrentPlayerInfo().getRace().getFoodRequire() == 0) {
+      if (currPlayer.getRace().getFoodRequire() == 0) {
         fleetView.getPlanet().setWorkers(Planet.PRODUCTION_WORKERS,
             ship.getColonist());
-      } else if (players.getCurrentPlayerInfo().getRace().isLithovorian()) {
+      } else if (currPlayer.getRace().isLithovorian()) {
         fleetView.getPlanet().setWorkers(Planet.METAL_MINERS,
             ship.getColonist());
       } else {
         fleetView.getPlanet().setWorkers(Planet.FOOD_FARMERS,
             ship.getColonist());
       }
+
       // Remove the ship and show the planet view you just colonized
       fleetView.getFleet().removeShip(ship);
       ShipStat stat = starMap.getCurrentPlayerInfo()
@@ -2576,7 +2579,7 @@ public class Game implements ActionListener {
         fleetView.getPlanet().getGovernor().setTitle(
             LeaderUtility.createTitleForLeader(
                 fleetView.getPlanet().getGovernor(),
-                players.getCurrentPlayerInfo()));
+                currPlayer));
         fleetView.getFleet().setCommander(null);
       }
       fleetView.getFleetList().recalculateList();
@@ -2586,7 +2589,7 @@ public class Game implements ActionListener {
       EventOnPlanet event = new EventOnPlanet(EventType.PLANET_COLONIZED,
           fleetView.getPlanet().getCoordinate(),
           fleetView.getPlanet().getName(), players.getCurrentPlayer());
-      event.setText(players.getCurrentPlayerInfo().getEmpireName()
+      event.setText(currPlayer.getEmpireName()
           + " colonized planet " + fleetView.getPlanet().getName()
           + ". ");
       SoundPlayer.playSound(SoundPlayer.COLONIZED);

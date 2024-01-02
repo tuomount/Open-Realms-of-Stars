@@ -40,6 +40,7 @@ import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
@@ -780,8 +781,9 @@ public boolean launchIntercept(final int distance,
           Icons.getIconByName(Icons.ICON_STARBASE));
       msg.setMatchByString(planet.getName());
       defenderInfo.getMsgList().addNewMessage(msg);
-      if (planet.getPlanetPlayerInfo() != null
-          && planet.getPlanetPlayerInfo().getRace() == SpaceRace.ALTEIRIANS) {
+      final var planetOwner = planet.getPlanetPlayerInfo();
+      if (planetOwner != null
+          && planetOwner.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
         orbitalDestroyedNews = NewsFactory.makeAlteirianLoseOrbitalNews(
             attackerInfo, defenderInfo, planet, attackerPrivateer);
         planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);

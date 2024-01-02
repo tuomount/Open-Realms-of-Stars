@@ -29,7 +29,6 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -576,7 +575,7 @@ public final class PlanetHandling {
               mission.setPlanetBuilding(planet.getName());
               break;
             }
-            if (info.getRace() == SpaceRace.ALTEIRIANS) {
+            if (info.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
               mission = info.getMissions().getMissionForPlanet(
                   planet.getName(), MissionType.DEFEND);
               if (mission != null && ship.getTotalMilitaryPower() > 0

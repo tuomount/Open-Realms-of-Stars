@@ -3076,7 +3076,7 @@ public class Planet {
       }
     }
     if (planetOwnerInfo != null
-        && planetOwnerInfo.getRace() == SpaceRace.ALTEIRIANS) {
+        && planetOwnerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       result = 0;
       if (getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
         result = getGroundSize();

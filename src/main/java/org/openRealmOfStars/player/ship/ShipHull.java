@@ -150,7 +150,9 @@ public class ShipHull {
       this.metalCost = this.metalCost * 2;
       this.cost = this.cost * 3 / 2;
     }
-    if (race == SpaceRace.ALTEIRIANS && this.hullType == ShipHullType.ORBITAL) {
+    // Zero-G races have greatly lowered price of orbitals
+    if (race.hasTrait(TraitIds.ZERO_GRAVITY_BEING)
+        && this.hullType == ShipHullType.ORBITAL) {
       this.metalCost = this.metalCost / 2;
       this.cost = this.cost / 2;
     }

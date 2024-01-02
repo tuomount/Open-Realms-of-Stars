@@ -41,6 +41,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -2791,9 +2792,11 @@ public class DiplomaticTrade {
           planet.setGovernor(null);
         }
         planet.setPlanetOwner(index, info);
-        if (info.getRace() == SpaceRace.ALTEIRIANS) {
+
+        if (info.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
           planet.colonizeWithOrbital();
         }
+
         sb.append(info.getEmpireName());
         switch (DiceGenerator.getRandom(2)) {
           case 0:

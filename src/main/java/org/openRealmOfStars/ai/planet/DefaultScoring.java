@@ -27,7 +27,6 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -636,10 +635,12 @@ public final class DefaultScoring {
     score = score - ship.getMetalCost() / 10;
     score = score - ship.getProdCost() / 10;
     if (ship.getHull().getHullType() == ShipHullType.ORBITAL) {
-      if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.ALTEIRIANS) {
-        // Alteirians should built orbitals more frequently
+      // Zero-G races should built orbitals more frequently
+      if (planet.getPlanetPlayerInfo().getRace()
+          .hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
         score += 50;
       }
+
       score = score + ship.getHull().getSize().getMass() * 5;
       if (ship.getHull().getName().startsWith("Minor orbital")) {
         // Minor orbital should not be built.

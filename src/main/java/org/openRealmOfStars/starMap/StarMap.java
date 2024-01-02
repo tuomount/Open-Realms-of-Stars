@@ -59,6 +59,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.BackgroundStoryGenerator;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -1736,7 +1737,7 @@ public class StarMap {
       //where is another realm's home planet.
     }
     planet.setPlanetOwner(playerIndex, playerInfo);
-    if (playerInfo.getRace() == SpaceRace.ALTEIRIANS) {
+    if (playerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       planet.colonizeWithOrbital();
     }
     if (Game.getTutorial() != null && playerInfo.isHuman()
@@ -1783,7 +1784,7 @@ public class StarMap {
       playerInfo.setRuler(ruler);
     }
 
-    if (playerInfo.getRace() != SpaceRace.ALTEIRIANS
+    if (!playerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)
         && !planet.hasSpacePort()) {
        if (planet.getBuildingList().length >= planet.getGroundSize()) {
          // Planet is full and no space for space port.

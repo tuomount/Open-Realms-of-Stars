@@ -182,7 +182,7 @@ public class KarmaEvents implements GalaxyEvents {
       return;
     }
 
-    RandomEvent event = RandomEventUtility.createBadRandomEvent(info);
+    RandomEvent event = createBadRandomEvent(info);
     if (!RandomEventUtility.handleRandomEvent(event, map)) {
       return;
     }
@@ -210,7 +210,7 @@ public class KarmaEvents implements GalaxyEvents {
       return;
     }
 
-    RandomEvent event = RandomEventUtility.createGoodRandomEvent(info);
+    RandomEvent event = createGoodRandomEvent(info);
     if (!RandomEventUtility.handleRandomEvent(event, map)) {
       return;
     }
@@ -222,5 +222,30 @@ public class KarmaEvents implements GalaxyEvents {
       map.getNewsCorpData().addNews(news);
     }
     info.setRandomEventOccured(event);
+  }
+
+  // TODO: Replace "event selection" methods with WeightedLists
+  /**
+   * Create good random event.
+   * @param realm Realm who is getting the event
+   * @return RandomEvent
+   */
+  private RandomEvent createGoodRandomEvent(final PlayerInfo realm) {
+    GoodRandomType[] values = GoodRandomType.values();
+    var choice = DiceGenerator.pickRandom(values);
+    RandomEvent event = new RandomEvent(choice, realm);
+    return event;
+  }
+
+  /**
+   * Create bad random event.
+   * @param realm Realm who is getting the event
+   * @return RandomEvent
+   */
+  private RandomEvent createBadRandomEvent(final PlayerInfo realm) {
+    BadRandomType[] values = BadRandomType.values();
+    var choice = DiceGenerator.pickRandom(values);
+    RandomEvent event = new RandomEvent(choice, realm);
+    return event;
   }
 }

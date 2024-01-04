@@ -21,6 +21,8 @@ package org.openRealmOfStars.starMap.event;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.StarMap;
@@ -231,7 +233,9 @@ public class KarmaEvents implements GalaxyEvents {
    * @return RandomEvent
    */
   private RandomEvent createGoodRandomEvent(final PlayerInfo realm) {
-    GoodRandomType[] values = GoodRandomType.values();
+    var values = Arrays.stream(RandomEventType.values())
+        .filter(type -> !type.isBad())
+        .collect(Collectors.toList());
     var choice = DiceGenerator.pickRandom(values);
     RandomEvent event = new RandomEvent(choice, realm);
     return event;
@@ -243,7 +247,9 @@ public class KarmaEvents implements GalaxyEvents {
    * @return RandomEvent
    */
   private RandomEvent createBadRandomEvent(final PlayerInfo realm) {
-    BadRandomType[] values = BadRandomType.values();
+    var values = Arrays.stream(RandomEventType.values())
+        .filter(type -> type.isBad())
+        .collect(Collectors.toList());
     var choice = DiceGenerator.pickRandom(values);
     RandomEvent event = new RandomEvent(choice, realm);
     return event;

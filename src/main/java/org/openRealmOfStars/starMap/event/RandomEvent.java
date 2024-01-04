@@ -30,17 +30,8 @@ import org.openRealmOfStars.starMap.planet.Planet;
 */
 public class RandomEvent {
 
-  /**
-   * Bad Random event type. Event should have either bad or good type.
-   * Not both.
-   */
-  private BadRandomType badType;
-
-  /**
-   * Good Random event type. Event should have either bad or good type.
-   * Not both.
-   */
-  private GoodRandomType goodType;
+  /** Random event type. Defines event "behavior" */
+  private RandomEventType type;
 
   /**
    * Realm info who is getting the random event.
@@ -86,33 +77,14 @@ public class RandomEvent {
    * Popup has been shown
    */
   private boolean popupShown;
-  /**
-   * Constructor for Bad random event type.
-   * @param badType Bad random event type
-   * @param info Realm info who is experiencing bad event.
-   */
-  public RandomEvent(final BadRandomType badType, final PlayerInfo info) {
-    this.badType = badType;
-    this.goodType = null;
-    this.realm = info;
-    this.setPlanet(null);
-    this.setSun(null);
-    this.setFleet(null);
-    this.setText("");
-    this.setNewsWorthy(false);
-    this.setImageInstructions("");
-    this.setPopupShown(false);
-    this.setLeader(null);
-  }
 
   /**
    * Constructor for Good random event type.
-   * @param goodType Good random event type
+   * @param type Good random event type
    * @param info Realm info who is experiencing good event.
    */
-  public RandomEvent(final GoodRandomType goodType, final PlayerInfo info) {
-    this.badType = null;
-    this.goodType = goodType;
+  public RandomEvent(final RandomEventType type, final PlayerInfo info) {
+    this.type = type;
     this.realm = info;
     this.setPlanet(null);
     this.setSun(null);
@@ -122,22 +94,14 @@ public class RandomEvent {
     this.setImageInstructions("");
     this.setPopupShown(false);
     this.setLeader(null);
-  }
-
-  /**
-   * Get random event's bad type.
-   * @return Bad Event type or null.
-   */
-  public BadRandomType getBadType() {
-    return badType;
   }
 
   /**
    * Get random event's good type.
    * @return Good event type or null.
    */
-  public GoodRandomType getGoodType() {
-    return goodType;
+  public RandomEventType getType() {
+    return type;
   }
 
   /**

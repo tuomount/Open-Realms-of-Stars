@@ -32,8 +32,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.starMap.event.BadRandomType;
-import org.openRealmOfStars.starMap.event.GoodRandomType;
+import org.openRealmOfStars.starMap.event.RandomEventType;
 import org.openRealmOfStars.starMap.event.RandomEvent;
 import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -121,8 +120,7 @@ public class NewsFactoryTest {
   public void testRandomEvent() {
     RandomEvent event = Mockito.mock(RandomEvent.class);
     Mockito.when(event.getImageInstructions()).thenReturn("BACKGROUND(BLACK)");
-    Mockito.when(event.getBadType()).thenReturn(BadRandomType.SOLAR_ACTIVITY_INCREASE);
-    Mockito.when(event.getGoodType()).thenReturn(GoodRandomType.SOLAR_ACTIVITY_DIMISHED);
+    Mockito.when(event.getType()).thenReturn(RandomEventType.SOLAR_ACTIVITY_INCREASE);
     Mockito.when(event.getText()).thenReturn("Test event text");
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(event.getRealm()).thenReturn(info);

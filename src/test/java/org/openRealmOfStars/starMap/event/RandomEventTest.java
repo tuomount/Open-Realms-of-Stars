@@ -38,13 +38,12 @@ public class RandomEventTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGoodType() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    RandomEvent event = new RandomEvent(GoodRandomType.MYSTERIOUS_SIGNAL,
+    RandomEvent event = new RandomEvent(RandomEventType.MYSTERIOUS_SIGNAL,
         info);
     assertEquals(false, event.isPopupShown());
     event.setPopupShown(true);
     assertEquals(true, event.isPopupShown());
-    assertEquals(null, event.getBadType());
-    assertEquals(GoodRandomType.MYSTERIOUS_SIGNAL, event.getGoodType());
+    assertEquals(RandomEventType.MYSTERIOUS_SIGNAL, event.getType());
     assertEquals(info, event.getRealm());
     assertEquals(null, event.getPlanet());
     Planet planet = Mockito.mock(Planet.class);
@@ -70,12 +69,11 @@ public class RandomEventTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBadType() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    RandomEvent event = new RandomEvent(BadRandomType.RAIDERS, info);
+    RandomEvent event = new RandomEvent(RandomEventType.RAIDERS, info);
     assertEquals(false, event.isPopupShown());
     event.setPopupShown(true);
     assertEquals(true, event.isPopupShown());
-    assertEquals(BadRandomType.RAIDERS, event.getBadType());
-    assertEquals(null, event.getGoodType());
+    assertEquals(RandomEventType.RAIDERS, event.getType());
     assertEquals(info, event.getRealm());
     assertEquals(null, event.getPlanet());
     assertEquals(null, event.getSun());

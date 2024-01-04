@@ -133,7 +133,7 @@ public class RandomEventUtilityTest {
     info.getTechList().setTechResearchPoints(TechType.Propulsion, 20);
     info.getTechList().setTechResearchPoints(TechType.Improvements, 20);
     info.getTechList().setTechResearchPoints(TechType.Electrics, 20);
-    RandomEvent event = new RandomEvent(BadRandomType.MASSIVE_DATA_LOST, info);
+    RandomEvent event = new RandomEvent(RandomEventType.MASSIVE_DATA_LOST, info);
     assertEquals("", event.getText());
     RandomEventUtility.handleMassiveDataLost(event, starMap);
     boolean found = false;
@@ -151,7 +151,7 @@ public class RandomEventUtilityTest {
   public void testTechBreakThrough() {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
-    RandomEvent event = new RandomEvent(GoodRandomType.TECHNICAL_BREAKTHROUGH,
+    RandomEvent event = new RandomEvent(RandomEventType.TECHNICAL_BREAKTHROUGH,
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleTechnicalBreakThrough(event, starMap);
@@ -170,7 +170,7 @@ public class RandomEventUtilityTest {
   public void testMeteorHit() {
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = starMap.getPlayerByIndex(1);
-    RandomEvent event = new RandomEvent(BadRandomType.METEOR_HIT, info);
+    RandomEvent event = new RandomEvent(RandomEventType.METEOR_HIT, info);
     assertEquals("", event.getText());
     RandomEventUtility.handleMeteorHit(event, starMap);
     assertNotEquals("", event.getText());
@@ -182,7 +182,7 @@ public class RandomEventUtilityTest {
   public void testMissedMeteoroid() {
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = starMap.getPlayerByIndex(1);
-    RandomEvent event = new RandomEvent(GoodRandomType.MISSED_METEOROID, info);
+    RandomEvent event = new RandomEvent(RandomEventType.MISSED_METEOROID, info);
     assertEquals("", event.getText());
     RandomEventUtility.handleMissedMeteoroid(event, starMap);
     assertNotEquals("", event.getText());
@@ -194,7 +194,7 @@ public class RandomEventUtilityTest {
   public void testVirusOutbreak() {
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = starMap.getPlayerByIndex(1);
-    RandomEvent event = new RandomEvent(BadRandomType.DEADLY_VIRUS_OUTBREAK,
+    RandomEvent event = new RandomEvent(RandomEventType.DEADLY_VIRUS_OUTBREAK,
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleDeadlyVirusOutbreak(event, starMap);
@@ -203,7 +203,7 @@ public class RandomEventUtilityTest {
     assertEquals(true, event.isNewsWorthy());
     assertEquals(1, event.getPlanet().getTotalPopulation());
     info = starMap.getPlayerByIndex(1);
-    event = new RandomEvent(BadRandomType.DEADLY_VIRUS_OUTBREAK,
+    event = new RandomEvent(RandomEventType.DEADLY_VIRUS_OUTBREAK,
         info);
     RandomEventUtility.handleDeadlyVirusOutbreak(event, starMap);
     assertEquals("", event.getText());
@@ -216,7 +216,7 @@ public class RandomEventUtilityTest {
   public void testCorruptionScandal() {
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
-    RandomEvent event = new RandomEvent(BadRandomType.CORRUPTION_SCANDAL,
+    RandomEvent event = new RandomEvent(RandomEventType.CORRUPTION_SCANDAL,
         info);
     assertEquals("", event.getText());
     info.setTotalCredits(32);
@@ -230,7 +230,7 @@ public class RandomEventUtilityTest {
   public void testMysteriousSignal() {
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = starMap.getPlayerByIndex(0);
-    RandomEvent event = new RandomEvent(GoodRandomType.MYSTERIOUS_SIGNAL,
+    RandomEvent event = new RandomEvent(RandomEventType.MYSTERIOUS_SIGNAL,
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleMysteriousSignal(event, starMap);
@@ -243,7 +243,7 @@ public class RandomEventUtilityTest {
   public void testSolarActivityDimished() {
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = starMap.getPlayerByIndex(1);
-    RandomEvent event = new RandomEvent(GoodRandomType.SOLAR_ACTIVITY_DIMISHED,
+    RandomEvent event = new RandomEvent(RandomEventType.SOLAR_ACTIVITY_DIMISHED,
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleSolarActivityDecreased(event, starMap);
@@ -257,7 +257,7 @@ public class RandomEventUtilityTest {
   public void testSolarActivityIncreased() {
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = starMap.getPlayerByIndex(1);
-    RandomEvent event = new RandomEvent(BadRandomType.SOLAR_ACTIVITY_INCREASE,
+    RandomEvent event = new RandomEvent(RandomEventType.SOLAR_ACTIVITY_INCREASE,
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleSolarActivityIncreased(event, starMap);
@@ -271,7 +271,7 @@ public class RandomEventUtilityTest {
   public void testDesertedShip() {
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = starMap.getPlayerByIndex(1);
-    RandomEvent event = new RandomEvent(GoodRandomType.DESERTED_SHIP,
+    RandomEvent event = new RandomEvent(RandomEventType.DESERTED_SHIP,
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleDesertedShip(event, starMap);
@@ -286,7 +286,7 @@ public class RandomEventUtilityTest {
   public void testCatastrohicAccident() {
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = starMap.getPlayerByIndex(1);
-    RandomEvent event = new RandomEvent(BadRandomType.CATASTROPHIC_ACCIDENT,
+    RandomEvent event = new RandomEvent(RandomEventType.CATASTROPHIC_ACCIDENT,
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleCatastrophicAccident(event, starMap);
@@ -299,7 +299,7 @@ public class RandomEventUtilityTest {
   public void testRulerStress() {
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = starMap.getPlayerByIndex(1);
-    RandomEvent event = new RandomEvent(BadRandomType.RULER_STRESS,
+    RandomEvent event = new RandomEvent(RandomEventType.RULER_STRESS,
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleRulerStress(event, starMap);
@@ -311,7 +311,7 @@ public class RandomEventUtilityTest {
   public void testLeaderLevel() {
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = starMap.getPlayerByIndex(1);
-    RandomEvent event = new RandomEvent(GoodRandomType.LEADER_LEVEL,
+    RandomEvent event = new RandomEvent(RandomEventType.LEADER_LEVEL,
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleLeaderLevel(event);
@@ -323,7 +323,7 @@ public class RandomEventUtilityTest {
   public void testAggresiveWildLife() {
     StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
     PlayerInfo info = starMap.getPlayerByIndex(1);
-    RandomEvent event = new RandomEvent(BadRandomType.AGGRESSIVE_WILD_LIFE,
+    RandomEvent event = new RandomEvent(RandomEventType.AGGRESSIVE_WILD_LIFE,
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleAggressiveWildLife(event, starMap);
@@ -342,7 +342,7 @@ public class RandomEventUtilityTest {
     ArrayList<Planet> planets = new ArrayList<>();
     planets.add(planet);
     Mockito.when(starMap.getPlanetList()).thenReturn(planets);
-    RandomEvent event = new RandomEvent(GoodRandomType.LOST_TREASURE_FOUND,
+    RandomEvent event = new RandomEvent(RandomEventType.LOST_TREASURE_FOUND,
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleLostTreasure(event, starMap);
@@ -362,7 +362,7 @@ public class RandomEventUtilityTest {
     Coordinate coord = new Coordinate(5,6);
     Mockito.when(fleet.getCoordinate()).thenReturn(coord);
     info.getFleets().add(fleet);
-    RandomEvent event = new RandomEvent(BadRandomType.MUTINY,
+    RandomEvent event = new RandomEvent(RandomEventType.MUTINY,
         info);
     assertEquals("", event.getText());
     assertEquals(1, info.getFleets().getNumberOfFleets());
@@ -388,7 +388,7 @@ public class RandomEventUtilityTest {
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(playerList.getSpacePiratePlayer()).thenReturn(board);
     Mockito.when(starMap.getPlayerList()).thenReturn(playerList);
-    RandomEvent event = new RandomEvent(BadRandomType.RAIDERS,
+    RandomEvent event = new RandomEvent(RandomEventType.RAIDERS,
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleRaiders(event, starMap);

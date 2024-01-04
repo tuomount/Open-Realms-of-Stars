@@ -23,6 +23,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.starMap.event.KarmaType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

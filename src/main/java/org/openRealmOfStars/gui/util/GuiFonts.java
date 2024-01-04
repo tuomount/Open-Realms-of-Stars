@@ -217,13 +217,16 @@ public final class GuiFonts {
     if (fontUrl == null) {
       return Optional.empty();
     }
-
+    final var fontId = buildFontId(fontUrl.toExternalForm(), baseSize);
+    Font result = fontCache.get(fontId);
+    if (result != null) {
+      return Optional.of(result);
+    }
     final var fontOpt = loadTrueTypeFont(fontUrl);
     final var fontSize = baseSize * scalingFactor;
 
     if (fontOpt.isPresent()) {
       final var tmpFont = fontOpt.get().deriveFont(fontSize);
-      final var fontId = buildFontId(fontUrl.toExternalForm(), baseSize);
       fontCache.put(fontId, tmpFont);
       return Optional.of(tmpFont);
     }

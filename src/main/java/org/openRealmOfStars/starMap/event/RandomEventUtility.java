@@ -1,4 +1,4 @@
-package org.openRealmOfStars.starMap.randomEvent;
+package org.openRealmOfStars.starMap.event;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2019-2022 Tuomo Untinen

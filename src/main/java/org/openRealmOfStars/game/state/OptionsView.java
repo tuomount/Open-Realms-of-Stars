@@ -42,6 +42,7 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceSliderPanel;
 import org.openRealmOfStars.gui.scheme.SchemeType;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -172,7 +173,7 @@ public class OptionsView extends BlackPanel {
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
     JTabbedPane tabs = new JTabbedPane();
-    tabs.setFont(GuiStatics.getFontCubellanSmaller());
+    tabs.setFont(GuiFonts.getFontCubellanSmaller());
     tabs.setForeground(GuiStatics.getCoolSpaceColorDarker());
     tabs.setBackground(GuiStatics.getDeepSpaceDarkColor());
     // Screen panel starts here
@@ -199,7 +200,7 @@ public class OptionsView extends BlackPanel {
     resolutionSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
     resolutionSelection.setForeground(GuiStatics.getCoolSpaceColor());
     resolutionSelection.setBorder(new SimpleBorder());
-    resolutionSelection.setFont(GuiStatics.getFontCubellan());
+    resolutionSelection.setFont(GuiFonts.getFontCubellan());
     resolutionSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     if (gameFrame.isFullscreenMode()) {
@@ -324,7 +325,7 @@ public class OptionsView extends BlackPanel {
     uiSchemeSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
     uiSchemeSelection.setForeground(GuiStatics.getCoolSpaceColor());
     uiSchemeSelection.setBorder(new SimpleBorder());
-    uiSchemeSelection.setFont(GuiStatics.getFontCubellan());
+    uiSchemeSelection.setFont(GuiFonts.getFontCubellan());
     uiSchemeSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     for (int i = 0; i < uiScheme.length; i++) {

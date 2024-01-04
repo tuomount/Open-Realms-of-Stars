@@ -24,6 +24,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import org.openRealmOfStars.gui.borders.ScifiBorder;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -48,7 +49,7 @@ public class InfoPanel extends JPanel {
    */
   public InfoPanel() {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    border = new ScifiBorder("Galactic Info", GuiStatics.isLargerFonts());
+    border = new ScifiBorder("Galactic Info", GuiFonts.isLargerFonts());
     this.setBorder(border);
   }
 

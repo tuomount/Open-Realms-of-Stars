@@ -17,6 +17,7 @@ package org.openRealmOfStars.gui.panels;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
 
@@ -79,7 +80,7 @@ public class RaceImagePanel extends ImagePanel {
         setText(raceToShow);
       } else {
         setText(null);
-        setImage(race.getRaceImage());
+        setImage(GuiStatics.getRaceImg(race));
       }
       repaint();
     } else {

@@ -31,6 +31,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.list.ProductionListRenderer;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.Tiles;
@@ -90,7 +91,7 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
     } else {
       this.add(Box.createRigidArea(new Dimension(26, 25)));
     }
-    int textWidth = 150 - GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+    int textWidth = 150 - GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
         planet.getName());
     if (textWidth > 0) {
       this.add(Box.createRigidArea(new Dimension(textWidth, 25)));
@@ -159,7 +160,7 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
     constructionSelect.setBackground(GuiStatics.getCoolSpaceColorDark());
     constructionSelect.setForeground(GuiStatics.getCoolSpaceColor());
     constructionSelect.setBorder(new SimpleBorder());
-    constructionSelect.setFont(GuiStatics.getFontCubellan());
+    constructionSelect.setFont(GuiFonts.getFontCubellan());
     constructionSelect.setRenderer(new ProductionListRenderer());
     constructionSelect.setToolTipText("Current project to be build on the"
         + " planet.");
@@ -194,8 +195,8 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
    */
   private void addIcon(final IconLabel icon) {
     this.add(icon);
-    int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), "88")
-        - GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), icon.getText());
+    int textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(), "88")
+        - GuiStatics.getTextWidth(GuiFonts.getFontCubellan(), icon.getText());
     if (textWidth > 0) {
       this.add(Box.createRigidArea(new Dimension(textWidth, 25)));
     }

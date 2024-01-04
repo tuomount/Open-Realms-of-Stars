@@ -23,6 +23,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
@@ -281,12 +282,12 @@ public class GalaxyConfig {
     setAllNews(false);
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
       setRace(i, SpaceRaceUtility.getRandomRace());
-      setPlayerColor(i, getRace(i).getPrimaryColor());
+      setPlayerColor(i, DiceGenerator.pickRandom(PlayerColor.values()));
       while (true) {
         GovernmentType gov = GovernmentUtility.getRandomGovernment(getRace(i));
         setPlayerGovernment(i, gov);
         setPlayerDifficult(i, AiDifficulty.NORMAL);
-        String tmp = SpaceRaceUtility.getRandomName(getRace(i),
+        String tmp = SpaceRaceUtility.getRealmName(getRace(i),
             getPlayerGovernment(i));
         if (isUniqueName(tmp)) {
           setPlayerName(i, tmp);

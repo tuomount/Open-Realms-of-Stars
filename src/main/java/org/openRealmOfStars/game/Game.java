@@ -90,6 +90,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scheme.SchemeType;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -513,7 +514,7 @@ public class Game implements ActionListener {
       musicTimer = new Timer(MUSIC_TIMER_DELAY, this);
       musicTimer.setActionCommand(GameCommands.COMMAND_MUSIC_TIMER);
       gameFrame.setUndecorated(configFile.getBorderless());
-      GuiStatics.setLargerFonts(configFile.getLargerFonts());
+      GuiFonts.setLargerFonts(configFile.getLargerFonts());
       GraphicsDevice graphicsDevice = GraphicsEnvironment
           .getLocalGraphicsEnvironment().getDefaultScreenDevice();
       fullscreenMode = false;
@@ -1827,14 +1828,14 @@ public class Game implements ActionListener {
       break;
     }
     case STORY_VIEW: {
-      setBridgeCommand(starMap.getCurrentPlayerInfo()
-          .getRace().getBridgeEffect());
+      var race = starMap.getCurrentPlayerInfo().getRace();
+      setBridgeCommand(GuiStatics.getRaceBridgeEffect(race));
       showStoryView();
       break;
     }
     case END_STORY_VIEW: {
-      setBridgeCommand(starMap.getPlayerList().getPlayerInfoByIndex(0)
-          .getRace().getBridgeEffect());
+      var race = starMap.getPlayerList().getPlayerInfoByIndex(0).getRace();
+      setBridgeCommand(GuiStatics.getRaceBridgeEffect(race));
       showEndStoryView();
       break;
     }
@@ -2875,8 +2876,8 @@ public class Game implements ActionListener {
         changeGameState(GameState.HISTORY_VIEW);
       } else {
         endStoryView.handleAction(arg0);
-        setBridgeCommand(endStoryView.getCurrentRealm().getRace()
-            .getBridgeEffect());
+        var race = endStoryView.getCurrentRealm().getRace();
+        setBridgeCommand(GuiStatics.getRaceBridgeEffect(race));
       }
       return;
     }
@@ -3007,7 +3008,7 @@ public class Game implements ActionListener {
         if (isResolutionChanged()) {
           configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         }
-        GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        GuiFonts.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
@@ -3045,7 +3046,7 @@ public class Game implements ActionListener {
         if (isResolutionChanged()) {
           configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         }
-        GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        GuiFonts.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
@@ -3071,7 +3072,7 @@ public class Game implements ActionListener {
         configFile.setImprovedParallax(optionsView.getImprovedParallax());
         configFile.setLargerFonts(optionsView.getLargerFonts());
         configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
-        GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        GuiFonts.setLargerFonts(configFile.getLargerFonts());
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());

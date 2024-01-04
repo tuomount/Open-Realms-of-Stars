@@ -26,8 +26,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.border.AbstractBorder;
 
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -46,52 +46,49 @@ public class ScifiBorder extends AbstractBorder {
    * Corner piece for info panels
    */
   private static final BufferedImage CORNER_IMAGE = IOUtilities
-      .loadImage(Tiles.class.getResource("/resources/images/panel-corner.png"));
+      .loadImage("/resources/images/panel-corner.png");
 
   /**
    * Smaller and square corner piece for info panels
    */
-  private static final BufferedImage CORNER_SMALL_IMAGE = IOUtilities.loadImage(
-      Tiles.class.getResource("/resources/images/panel-corner-small.png"));
+  private static final BufferedImage CORNER_SMALL_IMAGE = IOUtilities
+      .loadImage("/resources/images/panel-corner-small.png");
 
   /**
    * Title left piece
    */
-  private static final BufferedImage TITLE_LEFT_IMAGE = IOUtilities.loadImage(
-      Tiles.class.getResource("/resources/images/panel-title-left.png"));
+  private static final BufferedImage TITLE_LEFT_IMAGE = IOUtilities
+      .loadImage("/resources/images/panel-title-left.png");
 
   /**
    * Title center piece
    */
-  private static final BufferedImage TITLE_CENTER_IMAGE = IOUtilities.loadImage(
-      Tiles.class.getResource("/resources/images/panel-title-center.png"));
+  private static final BufferedImage TITLE_CENTER_IMAGE = IOUtilities
+      .loadImage("/resources/images/panel-title-center.png");
 
   /**
    * Title right piece
    */
-  private static final BufferedImage TITLE_RIGHT_IMAGE = IOUtilities.loadImage(
-      Tiles.class.getResource("/resources/images/panel-title-right.png"));
+  private static final BufferedImage TITLE_RIGHT_IMAGE = IOUtilities
+      .loadImage("/resources/images/panel-title-right.png");
 
   /**
    * Title left piece Hires
    */
-  private static final BufferedImage TITLE_LEFT_IMAGE_HIRES =
-      IOUtilities.loadImage(Tiles.class.getResource(
-          "/resources/images/panel-title-left-hires.png"));
+  private static final BufferedImage TITLE_LEFT_IMAGE_HIRES = IOUtilities
+      .loadImage("/resources/images/panel-title-left-hires.png");
 
   /**
    * Title center piece Hires
    */
-  private static final BufferedImage TITLE_CENTER_IMAGE_HIRES =
-      IOUtilities.loadImage(Tiles.class.getResource(
-          "/resources/images/panel-title-center-hires.png"));
+  private static final BufferedImage TITLE_CENTER_IMAGE_HIRES = IOUtilities
+      .loadImage("/resources/images/panel-title-center-hires.png");
 
   /**
    * Title right piece Hires
    */
-  private static final BufferedImage TITLE_RIGHT_IMAGE_HIRES =
-      IOUtilities.loadImage(Tiles.class.getResource(
-          "/resources/images/panel-title-right-hires.png"));
+  private static final BufferedImage TITLE_RIGHT_IMAGE_HIRES = IOUtilities
+      .loadImage("/resources/images/panel-title-right-hires.png");
 
   /**
    * Gap on top
@@ -243,7 +240,7 @@ public class ScifiBorder extends AbstractBorder {
     }
 
     if (title != null && !title.isEmpty()) {
-      int textWidth = (int) GuiStatics.getFontCubellanSC()
+      int textWidth = (int) GuiFonts.getFontCubellanSC()
           .getStringBounds(title, g2d.getFontRenderContext()).getWidth();
       String text = title;
       if (textWidth > width - 2 * CORNER_IMAGE.getWidth()) {
@@ -284,7 +281,7 @@ public class ScifiBorder extends AbstractBorder {
           x + width / 2 - textWidth / 2 + centerPiece.getWidth(), y, null);
 
       g2d.setColor(GuiStatics.COLOR_GOLD_TRANS);
-      g2d.setFont(GuiStatics.getFontCubellanSC());
+      g2d.setFont(GuiFonts.getFontCubellanSC());
       int offsetY = 0;
       if (hires) {
         offsetY = 6;

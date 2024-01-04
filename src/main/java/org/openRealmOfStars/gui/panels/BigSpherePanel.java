@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
 import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
 import org.openRealmOfStars.gui.util.GraphRoutines;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipImage;
@@ -341,16 +342,16 @@ public class BigSpherePanel extends JPanel {
    * @param g Graphics to use for drawing
    */
   private void drawTextArea(final Graphics g) {
-    g.setFont(GuiStatics.getFontCubellan());
+    g.setFont(GuiFonts.getFontCubellan());
    if (title == null) {
       title = "In Deep Space...";
     }
-    g.setFont(GuiStatics.getFontCubellanBoldBig());
+    g.setFont(GuiFonts.getFontCubellanBoldBig());
     int offsetX = 50;
     int offsetY = 75;
     if (backgroundImg != null) {
       offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2 - GuiStatics
-          .getTextWidth(GuiStatics.getFontCubellanBoldBig(), title) / 2
+          .getTextWidth(GuiFonts.getFontCubellanBoldBig(), title) / 2
           + backgroundImg.getWidth() / 2;
       offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
       if (offsetY < 75) {
@@ -358,7 +359,7 @@ public class BigSpherePanel extends JPanel {
       }
       if (textInMiddle) {
         offsetY = (this.getHeight() - backgroundImg.getHeight()) / 2
-            - GuiStatics.getTextHeight(GuiStatics.getFontCubellanBoldBig(),
+            - GuiStatics.getTextHeight(GuiFonts.getFontCubellanBoldBig(),
                 title) / 2;
       }
     }
@@ -367,10 +368,10 @@ public class BigSpherePanel extends JPanel {
 
     if (textInformation != null) {
       String[] texts = textInformation.split("\n");
-      g.setFont(GuiStatics.getFontCubellan());
+      g.setFont(GuiFonts.getFontCubellan());
       offsetX = 0;
       for (int i = 0; i < texts.length; i++) {
-        int value = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+        int value = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
             texts[i]);
         if (value > offsetX) {
           offsetX = value;

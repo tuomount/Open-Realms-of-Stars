@@ -35,8 +35,8 @@ public class GuiStatisticsTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCubellanBold() {
-    Font font = GuiStatics.getFontCubellanBold();
-    assertNotEquals(GuiStatics.FONT_SMALL, font);
+    Font font = GuiFonts.getFontCubellanBold();
+    assertNotEquals(GuiFonts.FONT_SMALL, font);
     // Just calling these. Actual width and height vary between
     // machines. TravisCI has different size than when run locally.
     GuiStatics.getTextHeight(font, "test text");
@@ -46,29 +46,29 @@ public class GuiStatisticsTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCubellanBoldBig() {
-    Font font = GuiStatics.getFontCubellanBoldBig();
-    assertNotEquals(GuiStatics.FONT_SMALL, font);
+    Font font = GuiFonts.getFontCubellanBoldBig();
+    assertNotEquals(GuiFonts.FONT_SMALL, font);
   }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCubellanSC() {
-    Font font = GuiStatics.getFontCubellanSC();
-    assertNotEquals(GuiStatics.FONT_SMALL, font);
+    Font font = GuiFonts.getFontCubellanSC();
+    assertNotEquals(GuiFonts.FONT_SMALL, font);
   }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCubellanSmaller() {
-    Font font = GuiStatics.getFontCubellanSmaller();
-    assertNotEquals(GuiStatics.FONT_SMALL, font);
+    Font font = GuiFonts.getFontCubellanSmaller();
+    assertNotEquals(GuiFonts.FONT_SMALL, font);
   }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCubellan() {
-    Font font = GuiStatics.getFontCubellan();
-    assertNotEquals(GuiStatics.FONT_SMALL, font);
+    Font font = GuiFonts.getFontCubellan();
+    assertNotEquals(GuiFonts.FONT_SMALL, font);
   }
 
   @Test

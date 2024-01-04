@@ -38,6 +38,7 @@ import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.list.ShipStatRenderer;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipImage;
@@ -147,7 +148,7 @@ public class ShipView extends BlackPanel {
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
     infoText = new BaseInfoTextArea(30, 30);
     infoText.setEditable(false);
-    infoText.setFont(GuiStatics.getFontCubellanSmaller());
+    infoText.setFont(GuiFonts.getFontCubellanSmaller());
     scroll = new JScrollPane(infoText);
     scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     panel.add(scroll);

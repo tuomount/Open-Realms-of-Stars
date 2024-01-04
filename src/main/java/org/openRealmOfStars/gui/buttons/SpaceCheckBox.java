@@ -29,6 +29,7 @@ import javax.swing.border.EtchedBorder;
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -99,14 +100,14 @@ public class SpaceCheckBox extends JCheckBox {
     this.icon = spaceButtonIcon;
     Dimension size = this.getPreferredSize();
     if (this.icon != null) {
-      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+      size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
           getText()) + 20 + 16;
-      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+      size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
           getText()) + 10;
     } else {
-      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+      size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
           getText()) + 20;
-      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+      size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
           getText()) + 10;
     }
     this.setMinimumSize(size);
@@ -141,16 +142,16 @@ public class SpaceCheckBox extends JCheckBox {
       g2d.setColor(GuiStatics.getCoolSpaceColorDarker());
     }
     String[] texts = getText().split("\n");
-    g.setFont(GuiStatics.getFontCubellan());
+    g.setFont(GuiFonts.getFontCubellan());
     int longest = 0;
     for (int i = 0; i < texts.length; i++) {
       if (texts[i].length() > texts[longest].length()) {
         longest = i;
       }
     }
-    int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+    int textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
         texts[longest]);
-    int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+    int textHeight = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
         texts[longest]);
     int offsetX = width / 2 - textWidth / 2 + sx;
     if (icon != null) {
@@ -177,7 +178,7 @@ public class SpaceCheckBox extends JCheckBox {
       offsetX = sx;
     }
     for (int i = 0; i < texts.length; i++) {
-      textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+      textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
           texts[i]);
       offsetX = width / 2 - textWidth / 2 + sx;
       g2d.drawString(texts[i], offsetX, textHeight * (i + 1) + sy);

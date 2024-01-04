@@ -21,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -77,7 +78,7 @@ public class ComponentButton extends JButton {
     } else {
       this.setText("");
     }
-    this.setFont(GuiStatics.getFontCubellanSmaller());
+    this.setFont(GuiFonts.getFontCubellanSmaller());
     this.setForeground(GuiStatics.getCoolSpaceColor());
     this.setBackground(GuiStatics.getDeepSpaceColor());
     this.setFocusPainted(false);

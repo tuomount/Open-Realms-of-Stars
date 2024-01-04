@@ -216,11 +216,11 @@ public class ShipInteriorPanel extends JPanel {
       drawImage = false;
       SoundPlayer.playSound(SoundPlayer.GLITCH);
     }
+    final var raceImg = GuiStatics.getRaceImg(race);
     if (drawImage) {
-      g.drawImage(race.getRaceImage(),
-          this.getWidth() / 2 - race.getRaceImage().getWidth() / 2,
-          this.getHeight() - race.getRaceImage().getHeight()
-          - yOffset, null);
+      g.drawImage(raceImg,
+          this.getWidth() / 2 - raceImg.getWidth() / 2,
+          this.getHeight() - raceImg.getHeight() - yOffset, null);
     }
     if (race == SpaceRace.SPACE_PIRATE) {
       float value1 = DiceGenerator.getRandom(1, 50) / 10f;
@@ -230,11 +230,11 @@ public class ShipInteriorPanel extends JPanel {
       g2d.setStroke(dashed);
       int grey = DiceGenerator.getRandom(40, 200);
       g2d.setColor(new Color(grey, grey, grey));
-      g2d.drawLine(this.getWidth() / 2 - race.getRaceImage().getWidth() / 2,
-          this.getHeight() - race.getRaceImage().getHeight()
+      g2d.drawLine(this.getWidth() / 2 - raceImg.getWidth() / 2,
+          this.getHeight() - raceImg.getHeight()
           - yOffset + glitchLine,
-          this.getWidth() / 2 + race.getRaceImage().getWidth() / 2,
-          this.getHeight() - race.getRaceImage().getHeight()
+          this.getWidth() / 2 + raceImg.getWidth() / 2,
+          this.getHeight() - raceImg.getHeight()
           - yOffset + glitchLine);
       value1 = DiceGenerator.getRandom(1, 50) / 10f;
       value2 = DiceGenerator.getRandom(1, 50) / 10f;
@@ -243,17 +243,17 @@ public class ShipInteriorPanel extends JPanel {
       g2d.setStroke(dashed);
       grey = DiceGenerator.getRandom(40, 200);
       g2d.setColor(new Color(grey, grey, grey));
-      g2d.drawLine(this.getWidth() / 2 - race.getRaceImage().getWidth() / 2,
-          this.getHeight() - race.getRaceImage().getHeight()
+      g2d.drawLine(this.getWidth() / 2 - raceImg.getWidth() / 2,
+          this.getHeight() - raceImg.getHeight()
           - yOffset + glitchLine + 1,
-          this.getWidth() / 2 + race.getRaceImage().getWidth() / 2,
-          this.getHeight() - race.getRaceImage().getHeight()
+          this.getWidth() / 2 + raceImg.getWidth() / 2,
+          this.getHeight() - raceImg.getHeight()
           - yOffset + glitchLine + 1);
       Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
           BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
       g2d.setStroke(full);
       glitchLine = glitchLine + 2;
-      if (glitchLine > race.getRaceImage().getHeight()) {
+      if (glitchLine > raceImg.getHeight()) {
         glitchLine = 0;
       }
     }

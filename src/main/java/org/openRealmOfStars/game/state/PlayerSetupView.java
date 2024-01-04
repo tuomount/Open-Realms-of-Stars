@@ -45,6 +45,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
@@ -104,6 +105,7 @@ public class PlayerSetupView extends BlackPanel {
    * Combobox for selecting difficulty for each realm.
    */
   private SpaceComboBox<AiDifficulty>[] comboDifficult;
+
   /**
    * Galaxy config
    */
@@ -118,6 +120,7 @@ public class PlayerSetupView extends BlackPanel {
    * Random list for colors.
    */
   private ArrayList<PlayerColor> randomListOfColors;
+
   /**
    * Constructor for Player Setup view
    * @param config Galaxy Configuration
@@ -222,7 +225,7 @@ public class PlayerSetupView extends BlackPanel {
           config.getPlayerGovernment(index));
       comboGovernmentSelect[index].setToolTipText(
           config.getPlayerGovernment(index).getDescription(false));
-      playerName[index].setText(SpaceRaceUtility.getRandomName(race,
+      playerName[index].setText(SpaceRaceUtility.getRealmName(race,
           config.getPlayerGovernment(index)));
       comboGovernmentSelect[index].addActionListener(actionListener);
     }
@@ -247,7 +250,7 @@ public class PlayerSetupView extends BlackPanel {
       String raceStr = (String) comboRaceSelect[index].getSelectedItem();
       SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
       GovernmentType gov = config.getPlayerGovernment(index);
-      playerName[index].setText(SpaceRaceUtility.getRandomName(race, gov));
+      playerName[index].setText(SpaceRaceUtility.getRealmName(race, gov));
     }
     if (arg0.getActionCommand().startsWith(
         GameCommands.COMMAND_DIFFICULT_SETUP)) {
@@ -326,7 +329,7 @@ public class PlayerSetupView extends BlackPanel {
         .setBackground(GuiStatics.getDeepSpaceDarkColor());
     comboRaceSelect[index].setForeground(GuiStatics.getCoolSpaceColor());
     comboRaceSelect[index].setBorder(new SimpleBorder());
-    comboRaceSelect[index].setFont(GuiStatics.getFontCubellan());
+    comboRaceSelect[index].setFont(GuiFonts.getFontCubellan());
     comboRaceSelect[index].getModel()
         .setSelectedItem(config.getRace(index).getNameSingle());
     DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
@@ -351,7 +354,7 @@ public class PlayerSetupView extends BlackPanel {
     comboGovernmentSelect[index].setForeground(
         GuiStatics.getCoolSpaceColor());
     comboGovernmentSelect[index].setBorder(new SimpleBorder());
-    comboGovernmentSelect[index].setFont(GuiStatics.getFontCubellan());
+    comboGovernmentSelect[index].setFont(GuiFonts.getFontCubellan());
     comboGovernmentSelect[index].getModel()
         .setSelectedItem(config.getRace(index).getNameSingle());
     dlcr = new DefaultListCellRenderer();
@@ -385,7 +388,7 @@ public class PlayerSetupView extends BlackPanel {
         "Empire of " + config.getRace(index).getName());
     playerName[index].setBackground(GuiStatics.getDeepSpaceDarkColor());
     playerName[index].setForeground(GuiStatics.getCoolSpaceColor());
-    playerName[index].setFont(GuiStatics.getFontCubellanSmaller());
+    playerName[index].setFont(GuiFonts.getFontCubellanSmaller());
     playerName[index].setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     if (config.getMaxPlayers() < (index + 1)) {
@@ -405,7 +408,7 @@ public class PlayerSetupView extends BlackPanel {
         GuiStatics.getDeepSpaceDarkColor());
     comboDifficult[index].setForeground(
         GuiStatics.getCoolSpaceColor());
-    comboDifficult[index].setFont(GuiStatics.getFontCubellanSmaller());
+    comboDifficult[index].setFont(GuiFonts.getFontCubellanSmaller());
     comboDifficult[index].setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     comboDifficult[index].setActionCommand(
@@ -423,14 +426,9 @@ public class PlayerSetupView extends BlackPanel {
         .setBackground(GuiStatics.getDeepSpaceDarkColor());
     comboRealmColor[index].setForeground(GuiStatics.getCoolSpaceColor());
     comboRealmColor[index].setBorder(new SimpleBorder());
-    comboRealmColor[index].setFont(GuiStatics.getFontCubellan());
-    PlayerColor color = config.getRace(index).getPrimaryColor();
-    if (!randomListOfColors.contains(color)) {
-      color = config.getRace(index).getSecondaryColor();
-      if (!randomListOfColors.contains(color)) {
-        color = DiceGenerator.pickRandom(randomListOfColors);
-      }
-    }
+    comboRealmColor[index].setFont(GuiFonts.getFontCubellan());
+
+    PlayerColor color = DiceGenerator.pickRandom(randomListOfColors);
     randomListOfColors.remove(color);
     comboRealmColor[index].getModel()
         .setSelectedItem(color);

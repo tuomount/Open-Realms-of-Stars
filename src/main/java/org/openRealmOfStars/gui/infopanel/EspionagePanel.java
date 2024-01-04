@@ -31,6 +31,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -85,7 +86,7 @@ public class EspionagePanel extends InfoPanel {
     this.add(Box.createRigidArea(new Dimension(5, 5)));
     InfoTextArea infoText = new InfoTextArea();
     infoText.setEditable(false);
-    infoText.setFont(GuiStatics.getFontCubellanSmaller());
+    infoText.setFont(GuiFonts.getFontCubellanSmaller());
     infoText.setCharacterWidth(8);
     infoText.setLineWrap(true);
     JScrollPane scroll = new JScrollPane(infoText);

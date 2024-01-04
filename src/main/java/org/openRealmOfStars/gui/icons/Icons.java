@@ -595,8 +595,7 @@ public final class Icons {
   public static BufferedImage loadBigIcon(final String imageFile, final int x,
       final int y, final int width, final int height)
           throws RasterFormatException {
-    BufferedImage image = IOUtilities
-        .loadImage(Icons.class.getResource(imageFile));
+    BufferedImage image = IOUtilities.loadImage(imageFile);
     if (x >= 0 && y >= 0 && x + width < image.getWidth() + 1
         && y + height < image.getHeight() + 1) {
       return image.getSubimage(x, y, width, height);
@@ -614,8 +613,7 @@ public final class Icons {
    */
   public static Icon16x16 loadSmallIcon(final String imageFile,
       final int x, final int y, final String name) {
-    BufferedImage image = IOUtilities
-        .loadImage(Icons.class.getResource(imageFile));
+    BufferedImage image = IOUtilities.loadImage(imageFile);
     Icon16x16 icon = new Icon16x16(image, x, y, name);
     return icon;
   }
@@ -624,8 +622,7 @@ public final class Icons {
    * Init Icons
    */
   private static void initIcons() {
-    BufferedImage image = IOUtilities
-        .loadImage(Icons.class.getResource("/resources/images/icons.png"));
+    BufferedImage image = IOUtilities.loadImage("/resources/images/icons.png");
     listOfIcons = new ArrayList<>();
     hashOfIcons = new HashMap<>();
     Icon16x16 icon = new Icon16x16(image, 0, 0, ICON_MINE);
@@ -756,8 +753,8 @@ public final class Icons {
     addIcon(icon);
     icon = new Icon16x16(image, 7, 7, ICON_VERY_SAD);
     addIcon(icon);
-    image = IOUtilities.loadImage(Icons.class.getResource(
-        "/resources/images/icons2.png"));
+
+    image = IOUtilities.loadImage("/resources/images/icons2.png");
     icon = new Icon16x16(image, 0, 0, ICON_PLANET);
     addIcon(icon);
     icon = new Icon16x16(image, 1, 0, ICON_STATS);

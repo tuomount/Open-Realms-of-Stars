@@ -27,6 +27,7 @@ import javax.swing.JToolTip;
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -80,20 +81,20 @@ public class IconLabel extends JLabel {
     this.parent = parent;
     this.icon = icon;
     this.setForeground(GuiStatics.getCoolSpaceColor());
-    this.setFont(GuiStatics.getFontCubellan());
+    this.setFont(GuiFonts.getFontCubellan());
     Dimension size = this.getPreferredSize();
     if (icon != null) {
-      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)
+      size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(), text)
           + this.icon.getIcon().getWidth() + 10;
-      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+      size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
           text);
       if (size.height < this.icon.getIcon().getHeight() + 2) {
         size.height = this.icon.getIcon().getHeight() + 2;
       }
     } else {
-      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)
+      size.width = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(), text)
           + 10;
-      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+      size.height = GuiStatics.getTextHeight(GuiFonts.getFontCubellan(),
           text);
     }
     this.setMinimumSize(size);

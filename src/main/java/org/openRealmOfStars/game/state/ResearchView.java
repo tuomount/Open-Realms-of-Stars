@@ -45,6 +45,7 @@ import org.openRealmOfStars.gui.list.TechListRenderer;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ResearchTechPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.artifact.Artifact;
@@ -324,7 +325,7 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
 
     infoText = new InfoTextArea(20, 35);
     infoText.setEditable(false);
-    infoText.setFont(GuiStatics.getFontCubellanSmaller());
+    infoText.setFont(GuiFonts.getFontCubellanSmaller());
     infoText.setCharacterWidth(8);
     greyPanel.add(infoText);
     greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));

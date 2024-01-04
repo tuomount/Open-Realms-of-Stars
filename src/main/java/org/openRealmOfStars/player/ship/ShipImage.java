@@ -20,7 +20,6 @@ package org.openRealmOfStars.player.ship;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 
-import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -179,7 +178,7 @@ public class ShipImage {
    */
   private void loadImages(final String fileToRead, final boolean monsters) {
     BufferedImage image = IOUtilities
-        .loadImage(Icons.class.getResource("/resources/images/" + fileToRead));
+        .loadImage("/resources/images/" + fileToRead);
     int number = NUMBER_OF_IMAGES;
     if (monsters) {
       number = number + NUMBER_OF_MONSTER_IMAGES;

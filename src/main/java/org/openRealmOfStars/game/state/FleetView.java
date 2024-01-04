@@ -53,6 +53,7 @@ import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
@@ -321,7 +322,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     eastPanel.add(label);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     fleetNameText = new JTextField();
-    fleetNameText.setFont(GuiStatics.getFontCubellan());
+    fleetNameText.setFont(GuiFonts.getFontCubellan());
     fleetNameText.setForeground(GuiStatics.getInfoTextColor());
     fleetNameText.setBackground(Color.BLACK);
     fleetNameText.setText(getFleet().getName());

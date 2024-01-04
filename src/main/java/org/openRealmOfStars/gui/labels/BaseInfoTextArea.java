@@ -22,6 +22,7 @@ import java.awt.Color;
 import javax.swing.JTextArea;
 
 import org.openRealmOfStars.gui.borders.SimpleBorder;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -44,7 +45,7 @@ public class BaseInfoTextArea extends JTextArea {
    */
   public BaseInfoTextArea(final int rows, final int columns) {
     super(rows, columns);
-    this.setFont(GuiStatics.getFontCubellanSmaller());
+    this.setFont(GuiFonts.getFontCubellanSmaller());
     this.setForeground(GuiStatics.getInfoTextColor());
     this.setBackground(Color.BLACK);
     this.setBorder(new SimpleBorder());
@@ -57,7 +58,7 @@ public class BaseInfoTextArea extends JTextArea {
    */
   public BaseInfoTextArea() {
     super(17, 10);
-    this.setFont(GuiStatics.getFontCubellanSmaller());
+    this.setFont(GuiFonts.getFontCubellanSmaller());
     this.setForeground(GuiStatics.getInfoTextColor());
     this.setBackground(Color.BLACK);
     this.setBorder(new SimpleBorder());
@@ -71,7 +72,7 @@ public class BaseInfoTextArea extends JTextArea {
    */
   public BaseInfoTextArea(final String text) {
     super(text);
-    this.setFont(GuiStatics.getFontCubellanSmaller());
+    this.setFont(GuiFonts.getFontCubellanSmaller());
     this.setForeground(GuiStatics.getInfoTextColor());
     this.setBackground(Color.BLACK);
     this.setBorder(new SimpleBorder());

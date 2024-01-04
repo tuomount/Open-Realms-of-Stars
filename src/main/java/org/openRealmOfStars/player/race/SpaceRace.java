@@ -18,16 +18,10 @@ package org.openRealmOfStars.player.race;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.openRealmOfStars.ambient.BridgeCommandType;
-import org.openRealmOfStars.audio.music.MusicFileInfo;
-import org.openRealmOfStars.audio.music.MusicPlayer;
-import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.race.trait.RaceTrait;
@@ -368,21 +362,18 @@ public enum SpaceRace {
       MECHIONS.addTrait(trait);
       CHIRALOIDS.addTrait(trait);
     });
-    TraitFactory.create(TraitIds.TOLERATE_COLD).ifPresent(
-        trait -> {
+    TraitFactory.create(TraitIds.TOLERATE_COLD).ifPresent(trait -> {
       HUMAN.addTrait(trait);
       CENTAURS.addTrait(trait);
       SCAURIANS.addTrait(trait);
       HOMARIANS.addTrait(trait);
       TEUTHIDAES.addTrait(trait);
     });
-    TraitFactory.create(TraitIds.TOLERATE_HOT).ifPresent(
-        trait -> {
+    TraitFactory.create(TraitIds.TOLERATE_HOT).ifPresent(trait -> {
       MECHIONS.addTrait(trait);
       REBORGIANS.addTrait(trait);
     });
-    TraitFactory.create(TraitIds.TOLERATE_LAVA).ifPresent(
-        trait -> {
+    TraitFactory.create(TraitIds.TOLERATE_LAVA).ifPresent(trait -> {
       LITHORIANS.addTrait(trait);
     });
   }
@@ -548,46 +539,46 @@ public enum SpaceRace {
   }
 
   /**
-   * Get race image
-   * @return BufferedImage
+   * Return path to race's image
+   * @return String path to image resource
    */
-  public BufferedImage getRaceImage() {
+  public String getImage() {
     switch (this) {
-    case HUMAN:
-      return GuiStatics.IMAGE_HUMAN_RACE;
-    case MECHIONS:
-      return GuiStatics.IMAGE_MECHION_RACE;
-    case SPORKS:
-      return GuiStatics.IMAGE_SPORK_RACE;
-    case GREYANS:
-      return GuiStatics.IMAGE_GREYAN_RACE;
-    case CENTAURS:
-      return GuiStatics.IMAGE_CENTAUR_RACE;
-    case MOTHOIDS:
-      return GuiStatics.IMAGE_MOTHOID_RACE;
-    case TEUTHIDAES:
-      return GuiStatics.IMAGE_TEUTHIDAE_RACE;
-    case SCAURIANS:
-      return GuiStatics.IMAGE_SCAURIAN_RACE;
-    case HOMARIANS:
-      return GuiStatics.IMAGE_HOMARIAN_RACE;
-    case SPACE_MONSTERS: // No diplomacy so image should not matter
-    case SPACE_PIRATE:
-      return GuiStatics.IMAGE_PRIVATEER_RACE;
-    case CHIRALOIDS:
-      return GuiStatics.IMAGE_CHIRALOID_RACE;
-    case REBORGIANS:
-      return GuiStatics.IMAGE_REBORGIAN_RACE;
-    case LITHORIANS:
-      return GuiStatics.IMAGE_LITHORIAN_RACE;
-    case ALTEIRIANS:
-      return GuiStatics.IMAGE_ALTEIRIAN_RACE;
-    case SMAUGIRIANS:
-      return GuiStatics.IMAGE_SMAUGIRIAN_RACE;
-    case SYNTHDROIDS:
-      return GuiStatics.IMAGE_SYNTHDROID_RACE;
-    default:
-      return GuiStatics.IMAGE_CENTAUR_RACE;
+      case HUMAN:
+        return "resources/images/human_race.png";
+      case MECHIONS:
+        return "resources/images/mechion_race.png";
+      case SPORKS:
+        return "resources/images/spork_race.png";
+      case GREYANS:
+        return "resources/images/greyan_race.png";
+      case CENTAURS:
+        return "resources/images/centaur_race.png";
+      case MOTHOIDS:
+        return "resources/images/mothoid_race.png";
+      case TEUTHIDAES:
+        return "resources/images/teuthidae_race.png";
+      case SCAURIANS:
+        return "resources/images/scaurian_race.png";
+      case HOMARIANS:
+        return "resources/images/homarian_race.png";
+      case SPACE_MONSTERS: // Should not matter
+      case SPACE_PIRATE:
+        return "resources/images/privateer_race.png";
+      case CHIRALOIDS:
+        return "resources/images/chiraloid_race.png";
+      case REBORGIANS:
+        return "resources/images/reborgian_race.png";
+      case LITHORIANS:
+        return "resources/images/lithorian_race.png";
+      case ALTEIRIANS:
+        return "resources/images/alteirian_race.png";
+      case SMAUGIRIANS:
+        return "resources/images/smaugirian_race.png";
+      case SYNTHDROIDS:
+        return "resources/images/synthdroid_race.png";
+      default:
+        return "resources/images/centaur_race.png";
     }
   }
 
@@ -598,44 +589,9 @@ public enum SpaceRace {
   private String getRaceImagePathToWiki() {
     String start = "https://github.com/tuomount/Open-Realms-of-Stars/blob"
         + "/master/src/main/resources/";
-    switch (this) {
-      case HUMAN:
-        return start + "resources/images/human_race.png";
-      case MECHIONS:
-        return start + "resources/images/mechion_race.png";
-      case SPORKS:
-        return start + "resources/images/spork_race.png";
-      case GREYANS:
-        return start + "resources/images/greyan_race.png";
-      case CENTAURS:
-        return start + "resources/images/centaur_race.png";
-      case MOTHOIDS:
-        return start + "resources/images/mothoid_race.png";
-      case TEUTHIDAES:
-        return start + "resources/images/teuthidae_race.png";
-      case SCAURIANS:
-        return start + "resources/images/scaurian_race.png";
-      case HOMARIANS:
-        return start + "resources/images/homarian_race.png";
-      case SPACE_MONSTERS: // Should not matter
-      case SPACE_PIRATE:
-        return start + "resources/images/privateer_race.png";
-      case CHIRALOIDS:
-        return start + "resources/images/chiraloid_race.png";
-      case REBORGIANS:
-        return start + "resources/images/reborgian_race.png";
-      case LITHORIANS:
-        return start + "resources/images/lithorian_race.png";
-      case ALTEIRIANS:
-        return start + "resources/images/alteirian_race.png";
-      case SMAUGIRIANS:
-        return start + "resources/images/smaugirian_race.png";
-      case SYNTHDROIDS:
-        return start + "resources/images/synthdroid_race.png";
-      default:
-        return start + "resources/images/centaur_race.png";
-    }
+    return start + this.getImage();
   }
+
   /**
    * @return the index
    */
@@ -674,10 +630,12 @@ public enum SpaceRace {
     if (isLithovorian()) {
       result += 50;
     }
+
+    // Return "base" bonus when gravity is not considered
     if (gravity == null) {
-      // Just returning mining speed bonus
       return result;
     }
+
     if (hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       result -= 50;
     }
@@ -817,96 +775,6 @@ public enum SpaceRace {
   }
 
   /**
-   * Get space race default color
-   * @return PlayerColor
-   */
-  public PlayerColor getPrimaryColor() {
-    switch (this) {
-    case HUMAN:
-      return PlayerColor.WHITE;
-    case SPACE_MONSTERS:
-      return PlayerColor.RED;
-    case SPACE_PIRATE:
-      return PlayerColor.BLACK;
-    case MECHIONS:
-      return PlayerColor.ORANGE;
-    case SPORKS:
-      return PlayerColor.LIME;
-    case GREYANS:
-      return PlayerColor.BLUE;
-    case CENTAURS:
-      return PlayerColor.PURPLE;
-    case MOTHOIDS:
-      return PlayerColor.GREEN;
-    case TEUTHIDAES:
-      return PlayerColor.GRAY;
-    case SCAURIANS:
-      return PlayerColor.CYAN;
-    case HOMARIANS:
-      return PlayerColor.BROWN;
-    case CHIRALOIDS:
-      return PlayerColor.RED;
-    case REBORGIANS:
-      return PlayerColor.CHESTNUT;
-    case LITHORIANS:
-      return PlayerColor.YELLOW;
-    case ALTEIRIANS:
-      return PlayerColor.SKY;
-    case SMAUGIRIANS:
-      return PlayerColor.TAN;
-    case SYNTHDROIDS:
-      return PlayerColor.WHITE;
-    default:
-      return PlayerColor.CORAL;
-    }
-  }
-
-  /**
-   * Get space race secondary color
-   * @return PlayerColor
-   */
-  public PlayerColor getSecondaryColor() {
-    switch (this) {
-    case HUMAN:
-      return PlayerColor.ROSE;
-    case SPACE_MONSTERS:
-      return PlayerColor.CORAL;
-    case SPACE_PIRATE:
-      return PlayerColor.GRAY;
-    case MECHIONS:
-      return PlayerColor.YELLOW;
-    case SPORKS:
-      return PlayerColor.GREEN;
-    case GREYANS:
-      return PlayerColor.SKY;
-    case CENTAURS:
-      return PlayerColor.PINK;
-    case MOTHOIDS:
-      return PlayerColor.OLIVE;
-    case TEUTHIDAES:
-      return PlayerColor.BLACK;
-    case SCAURIANS:
-      return PlayerColor.BLUE;
-    case HOMARIANS:
-      return PlayerColor.CORAL;
-    case CHIRALOIDS:
-      return PlayerColor.CORAL;
-    case REBORGIANS:
-      return PlayerColor.BLACK;
-    case LITHORIANS:
-      return PlayerColor.BANANA;
-    case ALTEIRIANS:
-      return PlayerColor.BLUE;
-    case SMAUGIRIANS:
-      return PlayerColor.OLIVE;
-    case SYNTHDROIDS:
-      return PlayerColor.ROSE;
-    default:
-      return PlayerColor.CORAL;
-    }
-  }
-
-  /**
    * Get population food requirement
    * @return normal 100, half 50, double 200
    */
@@ -966,136 +834,6 @@ public enum SpaceRace {
   }
 
   /**
-   * Get how many star years to update defense
-   * @return int
-   */
-  public int getAIDefenseUpdate() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 15;
-    case MECHIONS:
-      return 15;
-    case SPORKS:
-      return 10;
-    case GREYANS:
-      return 16;
-    case CENTAURS:
-      return 18;
-    case MOTHOIDS:
-      return 12;
-    case TEUTHIDAES:
-      return 13;
-    case SCAURIANS:
-      return 15;
-    case HOMARIANS:
-      return 16;
-    case CHIRALOIDS:
-      return 12;
-    case REBORGIANS:
-      return 10;
-    case LITHORIANS:
-      return 13;
-    case ALTEIRIANS:
-      return 10;
-    case SMAUGIRIANS:
-      return 11;
-    case SYNTHDROIDS:
-      return 15;
-    default:
-      return 15;
-    }
-  }
-
-  /**
-   * Get how many star years to explore solar system
-   * @return int
-   */
-  public int getAIExploringAmount() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return 50;
-    case MECHIONS:
-      return 50;
-    case SPORKS:
-      return 48;
-    case GREYANS:
-      return 55;
-    case CENTAURS:
-      return 50;
-    case MOTHOIDS:
-      return 52;
-    case TEUTHIDAES:
-      return 55;
-    case SCAURIANS:
-      return 55;
-    case HOMARIANS:
-      return 55;
-    case CHIRALOIDS:
-      return 53;
-    case REBORGIANS:
-      return 50;
-    case LITHORIANS:
-      return 52;
-    case ALTEIRIANS:
-      return 50;
-    case SMAUGIRIANS:
-      return 52;
-    case SYNTHDROIDS:
-      return 50;
-    default:
-      return 50;
-    }
-  }
-
-  /**
-   * Get race specific diplomacy music
-   * @return MusicFileInfo
-   */
-  public MusicFileInfo getDiplomacyMusic() {
-    switch (this) {
-    case HUMAN:
-      return MusicPlayer.WALKING_WITH_POSEIDON;
-    case MECHIONS:
-      return MusicPlayer.ABANDONED_STEEL_MILL;
-    case SPORKS:
-      return MusicPlayer.CONQUERORS;
-    case GREYANS:
-      return MusicPlayer.TROGL;
-    case CENTAURS:
-      return MusicPlayer.OVE_MELAA_DIPLOMACY;
-    case MOTHOIDS:
-      return MusicPlayer.FANTASY_CHOIR_2;
-    case TEUTHIDAES:
-      return MusicPlayer.PRESSURE;
-    case SCAURIANS:
-      return MusicPlayer.INTERPLANETARY_ODYSSEY;
-    case HOMARIANS:
-      return MusicPlayer.MALLOGA_BALLING;
-    case SPACE_MONSTERS: // No diplomacy so should not matter
-    case SPACE_PIRATE:
-      return MusicPlayer.SET_FIRE_TO_REALITY;
-    case CHIRALOIDS:
-      return MusicPlayer.MENACE;
-    case REBORGIANS:
-      return MusicPlayer.BRAINDEAD;
-    case LITHORIANS:
-      return MusicPlayer.TECHNODRIVE;
-    case ALTEIRIANS:
-      return MusicPlayer.SKY_PORTAL;
-    case SMAUGIRIANS:
-      return MusicPlayer.GUITAR_SONG;
-    case SYNTHDROIDS:
-      return MusicPlayer.CYBORG;
-    default:
-      return MusicPlayer.MILLION_LIGHT_YEARS;
-    }
-  }
-
-  /**
    * Is race eating organic food?
    * @return True if eating organic food
    */
@@ -1139,6 +877,7 @@ public enum SpaceRace {
     }
     return 0;
   }
+
   /**
    * Get life span of leaders.
    * This is amount the age leaders will always get.
@@ -1214,49 +953,6 @@ public enum SpaceRace {
       return SocialSystem.EQUAL;
     }
   }
-  /**
-   * Get bridge effect for diplomacy screen
-   * @return BridgeCommandType
-   */
-  public BridgeCommandType getBridgeEffect() {
-    switch (this) {
-    case HUMAN:
-      return BridgeCommandType.WARM_WHITE;
-    case SPACE_MONSTERS:
-    case SPACE_PIRATE:
-      return BridgeCommandType.DARKEST;
-    case MECHIONS:
-      return BridgeCommandType.WARM_WHITE;
-    case SPORKS:
-      return BridgeCommandType.DARK_RED;
-    case GREYANS:
-      return BridgeCommandType.WARM_WHITE;
-    case CENTAURS:
-      return BridgeCommandType.BRIGHT_CYAN;
-    case MOTHOIDS:
-      return BridgeCommandType.GREEN_CONSOLE;
-    case TEUTHIDAES:
-      return BridgeCommandType.PURPLE_DREAM;
-    case SCAURIANS:
-      return BridgeCommandType.DARK_ORANGE;
-    case HOMARIANS:
-      return BridgeCommandType.BLUEISH_WHITE;
-    case CHIRALOIDS:
-      return BridgeCommandType.BLUEISH_WHITE;
-    case REBORGIANS:
-      return BridgeCommandType.DARKEST;
-    case LITHORIANS:
-      return BridgeCommandType.DARKEST;
-    case ALTEIRIANS:
-      return BridgeCommandType.GREYBLUE;
-    case SMAUGIRIANS:
-      return BridgeCommandType.ORANGE_BLINK;
-    case SYNTHDROIDS:
-      return BridgeCommandType.WARM_WHITE;
-    default:
-      return BridgeCommandType.WARM_WHITE;
-    }
-  }
 
   /**
    * Get Minimum population for leader on planet.
@@ -1286,6 +982,7 @@ public enum SpaceRace {
       return 4;
     }
   }
+
   /**
    * Get planet's base value based on temperature for space race.
    * This will tell how much of population world type can
@@ -1304,6 +1001,7 @@ public enum SpaceRace {
       }
       return result;
     }
+
     if (temperature == TemperatureType.COLD) {
       int result = 50;
       if (hasTrait(TraitIds.TOLERATE_COLD)) {
@@ -1314,6 +1012,7 @@ public enum SpaceRace {
       }
       return result;
     }
+
     if (temperature == TemperatureType.TEMPERATE) {
       int result = 100;
       if (hasTrait(TraitIds.TOLERATE_LAVA)) {
@@ -1321,6 +1020,7 @@ public enum SpaceRace {
       }
       return result;
     }
+
     if (temperature == TemperatureType.TROPICAL) {
       int result = 75;
       if (hasTrait(TraitIds.TOLERATE_HOT)) {
@@ -1331,6 +1031,7 @@ public enum SpaceRace {
       }
       return result;
     }
+
     if (temperature == TemperatureType.HOT) {
       int result = 50;
       if (hasTrait(TraitIds.TOLERATE_HOT)) {
@@ -1341,6 +1042,7 @@ public enum SpaceRace {
       }
       return result;
     }
+
     if (temperature == TemperatureType.VOLCANIC) {
       int result = 0;
       if (hasTrait(TraitIds.TOLERATE_LAVA)) {

@@ -36,6 +36,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
@@ -185,7 +186,7 @@ public class MapInfoPanel extends InfoPanel {
     this.add(panel);
     this.add(Box.createRigidArea(new Dimension(10, space)));
     textArea = new InfoTextArea();
-    textArea.setFont(GuiStatics.getFontCubellanSmaller());
+    textArea.setFont(GuiFonts.getFontCubellanSmaller());
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);

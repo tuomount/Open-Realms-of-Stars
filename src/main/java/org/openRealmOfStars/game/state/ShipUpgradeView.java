@@ -46,6 +46,7 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.list.ShipListRenderer;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -190,7 +191,7 @@ public class ShipUpgradeView extends BlackPanel
     upgradeList.setBackground(GuiStatics.getDeepSpaceDarkColor());
     upgradeList.setForeground(GuiStatics.getCoolSpaceColor());
     upgradeList.setBorder(new SimpleBorder());
-    upgradeList.setFont(GuiStatics.getFontCubellan());
+    upgradeList.setFont(GuiFonts.getFontCubellan());
     upgradeList.getModel().setSelectedItem("None");
     DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
     dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);

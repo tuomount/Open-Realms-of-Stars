@@ -99,122 +99,6 @@ public final class BackgroundStoryGenerator {
   }
 
   /**
-   * This method tries to guess space race name and give it back in plural.
-   * This is making best guess for English names.
-   * @param empireName EmpireName
-   * @param government Government type
-   * @return Race name in plural
-   */
-  public static String getRaceNameInPlural(final String empireName,
-      final GovernmentType government) {
-    String[] params = empireName.split(" ");
-    String result = params[0];
-    if (params.length == 2) {
-      if (params[0].equalsIgnoreCase(government.getName())) {
-        result = params[1];
-      } else {
-       result = params[0];
-      }
-    }
-    if (params.length == 3) {
-      if (params[1].equalsIgnoreCase("of")) {
-        if (params[0].equalsIgnoreCase(government.getName())) {
-          result = params[2];
-        } else {
-          result = params[0];
-        }
-      }
-      if (params[0].equalsIgnoreCase("the")) {
-        if (params[1].equalsIgnoreCase(government.getName())) {
-          result = params[2];
-        } else {
-          result = params[1];
-        }
-      }
-    }
-    if (endRe(result)) {
-      result = result.substring(0, result.length() - 1);
-      result = result + "ians";
-    } else if (endVowel(result)) {
-      if (result.endsWith("o")) {
-        result = result + "id";
-      }
-      if (result.endsWith("i")) {
-        result = result + "an";
-      }
-      result = result + "s";
-    } else if (endPeople(result)) {
-      result = result + "s";
-    } else {
-      result = result + "ians";
-    }
-    if (params.length == 4 && params[0].equalsIgnoreCase("the")
-       && params[2].equalsIgnoreCase("of")) {
-      if (params[1].equalsIgnoreCase(government.getName())) {
-        result = params[3];
-      } else {
-        result = params[1];
-      }
-    }
-    if (!result.endsWith("s")) {
-      result = result + "s";
-    }
-    return result;
-  }
-
-  /**
-   * This method tries to guess space race name and give it back in single.
-   * This is making best guess for English names.
-   * @param empireName EmpireName
-   * @param government Government type
-   * @return Race name in plural
-   */
-  public static String getRaceNameInSingle(final String empireName,
-      final GovernmentType government) {
-    String result = getRaceNameInPlural(empireName, government);
-    result = result.substring(0, result.length() - 1);
-    return result;
-  }
-
-  /**
-   * Check if string has end vowel or not.
-   * @param input String to check
-   * @return True if ends with vowel.
-   */
-  private static boolean endVowel(final String input) {
-    String temp = input.toLowerCase();
-    if (temp.endsWith("a") || temp.endsWith("e")  || temp.endsWith("i")
-        || temp.endsWith("o")  || temp.endsWith("u")  || temp.endsWith("y")) {
-      return true;
-    }
-    return false;
-  }
-  /**
-   * Check if string has end people/population meaning.
-   * @param input String to check
-   * @return True if ends with special ending.
-   */
-  private static boolean endPeople(final String input) {
-    String temp = input.toLowerCase();
-    if (temp.endsWith("an") || temp.endsWith("oid") || temp.endsWith("on")
-        || temp.endsWith("ing") || temp.endsWith("aur")) {
-      return true;
-    }
-    return false;
-  }
-  /**
-   * Check if string has end re.
-   * @param input String to check
-   * @return True if ends with special ending.
-   */
-  private static boolean endRe(final String input) {
-    String temp = input.toLowerCase();
-    if (temp.endsWith("re")) {
-      return true;
-    }
-    return false;
-  }
-  /**
    * Generate background story for humans.
    * @param info Realm from which to generate
    * @param startPlanet Starting planet
@@ -224,10 +108,9 @@ public final class BackgroundStoryGenerator {
   private static String generateHumanStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
     if (startPlanet.getName().startsWith("Earth")) {
       sb.append(namePlural);
       sb.append(", the inhabitants of Earth,");
@@ -261,14 +144,9 @@ public final class BackgroundStoryGenerator {
   private static String generateMechionStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    if (info.getEmpireName().contains("Steel")) {
-      namePlural = "Mechions";
-      name = "Mechion";
-    }
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
     sb.append(namePlural);
     switch (DiceGenerator.getRandom(2)) {
       default:
@@ -359,10 +237,9 @@ public final class BackgroundStoryGenerator {
   private static String generateSynthdroidStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
     sb.append(namePlural);
     if (DiceGenerator.getBoolean()) {
       sb.append(" are a race of artificial beings that are designed to "
@@ -466,10 +343,9 @@ public final class BackgroundStoryGenerator {
   private static String generateSporkStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
     sb.append(namePlural);
     switch (DiceGenerator.getRandom(3)) {
       default:
@@ -530,10 +406,8 @@ public final class BackgroundStoryGenerator {
   private static String generateTeuthidaeStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
 
     sb.append(namePlural);
     switch (DiceGenerator.getRandom(2)) {
@@ -618,10 +492,8 @@ public final class BackgroundStoryGenerator {
   private static String generateScaurianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
 
     sb.append(namePlural);
     switch (DiceGenerator.getRandom(2)) {
@@ -713,18 +585,8 @@ public final class BackgroundStoryGenerator {
   private static String generateGreyanStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = "Greyans";
-    String name = "Greyan";
-
-    if (info.getEmpireName().contains("Aesir")) {
-      namePlural = "Aesirians";
-      name = "Aesirian";
-    } else {
-      namePlural = getRaceNameInPlural(info.getEmpireName(),
-          info.getGovernment());
-      name = getRaceNameInSingle(info.getEmpireName(),
-          info.getGovernment());
-    }
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
 
     sb.append(namePlural);
     switch (DiceGenerator.getRandom(2)) {
@@ -808,10 +670,9 @@ public final class BackgroundStoryGenerator {
   private static String generateHomarianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
     sb.append(namePlural);
     switch (DiceGenerator.getRandom(2)) {
       default:
@@ -886,14 +747,9 @@ public final class BackgroundStoryGenerator {
   private static String generateChiraloidStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
-    if (info.getEmpireName().contains("Capricorn")) {
-      namePlural = "Capricornians";
-      name = "Capricornian";
-    }
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
     sb.append(namePlural);
     switch (DiceGenerator.getRandom(2)) {
       default:
@@ -983,10 +839,9 @@ public final class BackgroundStoryGenerator {
   private static String generateReborgianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
     sb.append(namePlural);
     switch (DiceGenerator.getRandom(3)) {
       default:
@@ -1146,14 +1001,9 @@ public final class BackgroundStoryGenerator {
   private static String generateLithorianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
-    if (info.getEmpireName().contains("Metavore")) {
-      namePlural = "Metavorians";
-      name = "Metavorian";
-    }
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
     sb.append(namePlural);
     switch (DiceGenerator.getRandom(1)) {
       default:
@@ -1252,10 +1102,9 @@ public final class BackgroundStoryGenerator {
   private static String generateAlteirianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
     sb.append(namePlural);
     switch (DiceGenerator.getRandom(2)) {
       default:
@@ -1366,14 +1215,9 @@ public final class BackgroundStoryGenerator {
   private static String generateCentaurStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
-    if (info.getEmpireName().contains("Taurus")) {
-      namePlural = "Taurians";
-      name = "Taurian";
-    }
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
     sb.append(namePlural);
     switch (DiceGenerator.getRandom(3)) {
       default:
@@ -1477,10 +1321,9 @@ public final class BackgroundStoryGenerator {
   private static String generateMothoidStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
     if (info.getGovernment().isImmuneToHappiness()) {
       sb.append(namePlural);
       switch (DiceGenerator.getRandom(2)) {
@@ -1629,10 +1472,9 @@ public final class BackgroundStoryGenerator {
   private static String generateSmaugirianStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = getRaceNameInPlural(info.getEmpireName(),
-        info.getGovernment());
-    String name = getRaceNameInSingle(info.getEmpireName(),
-        info.getGovernment());
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
     sb.append(namePlural);
     switch (DiceGenerator.getRandom(2)) {
       default:

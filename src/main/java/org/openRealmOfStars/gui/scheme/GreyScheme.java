@@ -22,7 +22,6 @@ import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -160,15 +159,13 @@ public class GreyScheme extends BaseScheme {
         "/resources/images/grey_arrows.png", 1, 1,
         Icons.ICON_SCROLL_RIGHT_PRESSED);
     scrollLeft = IOUtilities
-        .loadImage(Tiles.class.getResource(
-            "/resources/images/grey_left_arrow.png"));
-    scrollLeftPressed = IOUtilities.loadImage(Tiles.class.getResource(
-        "/resources/images/grey_left_arrow_pressed.png"));
+        .loadImage("/resources/images/grey_left_arrow.png");
+    scrollLeftPressed = IOUtilities.loadImage(
+        "/resources/images/grey_left_arrow_pressed.png");
     scrollRight = IOUtilities
-        .loadImage(Tiles.class.getResource(
-            "/resources/images/grey_right_arrow.png"));
-    scrollRightPressed = IOUtilities.loadImage(Tiles.class.getResource(
-        "/resources/images/grey_right_arrow_pressed.png"));
+        .loadImage("/resources/images/grey_right_arrow.png");
+    scrollRightPressed = IOUtilities.loadImage(
+        "/resources/images/grey_right_arrow_pressed.png");
   }
   @Override
   public Color getPanelBackground() {

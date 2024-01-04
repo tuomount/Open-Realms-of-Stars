@@ -37,6 +37,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceSliderPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
@@ -104,7 +105,7 @@ public class EspionageView extends BlackPanel {
     topPanel.add(Box.createRigidArea(new Dimension(15, 10)));
     fakeMilitaryText = new InfoTextArea();
     fakeMilitaryText.setEditable(false);
-    fakeMilitaryText.setFont(GuiStatics.getFontCubellanSmaller());
+    fakeMilitaryText.setFont(GuiFonts.getFontCubellanSmaller());
     fakeMilitaryText.setCharacterWidth(8);
     fakeMilitaryText.setLineWrap(true);
     JScrollPane scroll = new JScrollPane(fakeMilitaryText);

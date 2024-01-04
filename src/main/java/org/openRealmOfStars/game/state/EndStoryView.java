@@ -40,6 +40,7 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
 import org.openRealmOfStars.gui.panels.ShipInteriorPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.StarMap;
@@ -95,8 +96,9 @@ public class EndStoryView extends BlackPanel {
   public EndStoryView(final StarMap map, final ActionListener listener) {
     index = 0;
     realm = map.getPlayerByIndex(index);
-    if (MusicPlayer.getNowPlaying() != realm.getRace().getDiplomacyMusic()) {
-      MusicPlayer.play(realm.getRace().getDiplomacyMusic());
+    final var raceMusic = GuiStatics.getRaceDiplomacyMusic(realm.getRace());
+    if (MusicPlayer.getNowPlaying() != raceMusic) {
+      MusicPlayer.play(raceMusic);
     }
     this.setLayout(new BorderLayout());
     this.map = map;
@@ -161,7 +163,7 @@ public class EndStoryView extends BlackPanel {
     centerPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     textArea = new InfoTextPane();
     textArea.setEditable(false);
-    textArea.setFont(GuiStatics.getFontSquarion());
+    textArea.setFont(GuiFonts.getFontSquarion());
     JScrollPane scroll = new JScrollPane(textArea);
     textArea.setText(realm.getBackgroundStory());
     textArea.setCaretPosition(0);
@@ -203,8 +205,9 @@ public class EndStoryView extends BlackPanel {
    * Update panels
    */
   public void updatePanels() {
-    if (MusicPlayer.getNowPlaying() != realm.getRace().getDiplomacyMusic()) {
-      MusicPlayer.play(realm.getRace().getDiplomacyMusic());
+    final var raceMusic = GuiStatics.getRaceDiplomacyMusic(realm.getRace());
+    if (MusicPlayer.getNowPlaying() != raceMusic) {
+      MusicPlayer.play(raceMusic);
     }
     ImageInstruction instructions = new ImageInstruction();
     Planet planet = getHomePlanet();

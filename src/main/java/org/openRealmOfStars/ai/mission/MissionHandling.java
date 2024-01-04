@@ -73,6 +73,11 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  */
 public final class MissionHandling {
 
+  /** How many turns AI explores */
+  private static final int AI_EXPLORING_AMOUNT = 50;
+  /** How many turns before AI starts improving defenses */
+  private static final int AI_DEFENSE_UPDATE_TURN = 15;
+
   /**
    * Just hiding MissionHandling constructor
    */
@@ -409,8 +414,7 @@ public final class MissionHandling {
       if (mission.getPhase() == MissionPhase.EXECUTING) {
         mission.setMissionTime(mission.getMissionTime() + 1);
         if (mission.getMissionTime()
-            >= info.getRace().getAIExploringAmount() * 2) {
-          // Depending on race it decides enough is enough
+            >= AI_EXPLORING_AMOUNT * 2) {
           fleet.setaStarSearch(null);
         }
         if (fleet.getaStarSearch() == null) {
@@ -598,8 +602,7 @@ public final class MissionHandling {
         }
         mission.setMissionTime(mission.getMissionTime() + 1);
         boolean missionComplete = false;
-        if (mission.getMissionTime() >= info.getRace().getAIExploringAmount()) {
-          // Depending on race it decides enough is enough
+        if (mission.getMissionTime() >= AI_EXPLORING_AMOUNT) {
           fleet.setaStarSearch(null);
           missionComplete = true;
         }
@@ -688,8 +691,7 @@ public final class MissionHandling {
       if (mission.getPhase() == MissionPhase.EXECUTING) {
         mission.setMissionTime(mission.getMissionTime() + 1);
         boolean missionComplete = false;
-        if (mission.getMissionTime() >= info.getRace().getAIExploringAmount()) {
-          // Depending on race it decides enough is enough
+        if (mission.getMissionTime() >= AI_EXPLORING_AMOUNT) {
           fleet.setaStarSearch(null);
           missionComplete = true;
         }
@@ -1719,7 +1721,7 @@ public final class MissionHandling {
             fleet.getY(), 0));
       } else if (mission.getPhase() == MissionPhase.EXECUTING) {
         mission.setMissionTime(mission.getMissionTime() + 1);
-        if (mission.getMissionTime() >= info.getRace().getAIDefenseUpdate()) {
+        if (mission.getMissionTime() >= AI_DEFENSE_UPDATE_TURN) {
           // New defender is needed
           mission.setMissionTime(0);
           mission.setPhase(MissionPhase.PLANNING);
@@ -2561,5 +2563,4 @@ public final class MissionHandling {
     }
 
   }
-
 }

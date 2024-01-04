@@ -37,6 +37,7 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.list.VotingListRenderer;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
@@ -111,7 +112,7 @@ public class VotingSelectionView extends BlackPanel {
     renderer.setStarMap(map);
     votingSelect.setRenderer(renderer);
     votingSelect.setBorder(new SimpleBorder());
-    votingSelect.setFont(GuiStatics.getFontCubellan());
+    votingSelect.setFont(GuiFonts.getFontCubellan());
     votingSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     InfoPanel centerPanel = new InfoPanel();
@@ -120,7 +121,7 @@ public class VotingSelectionView extends BlackPanel {
     centerPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     textArea = new InfoTextArea();
     textArea.setEditable(false);
-    textArea.setFont(GuiStatics.getFontCubellanSmaller());
+    textArea.setFont(GuiFonts.getFontCubellanSmaller());
     textArea.setWrapStyleWord(true);
     textArea.setLineWrap(true);
     textArea.setCharacterWidth(8);

@@ -23,6 +23,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.gui.util.GraphRoutines;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
@@ -1203,10 +1204,10 @@ public class ImageInstruction {
     }
     SpaceRace race = SpaceRaceUtility.getRaceByName(planetType);
     if (race != null) {
-      planetImg = race.getRaceImage();
+      planetImg = GuiStatics.getRaceImg(race);
     }
     if (SpaceRace.SPACE_PIRATE.getNameSingle().equals(planetType)) {
-      planetImg = SpaceRace.SPACE_PIRATE.getRaceImage();
+      planetImg = GuiStatics.getRaceImg(SpaceRace.SPACE_PIRATE);
     }
     if (SIZE_HALF.equals(size)) {
       planetImg = GuiStatics.scaleToHalf(planetImg);
@@ -1282,29 +1283,29 @@ public class ImageInstruction {
    */
   private static void paintSiluete(final BufferedImage workImage,
       final String raceName, final String position) {
-    BufferedImage silueteImg = GuiStatics.IMAGE_HUMAN_RACE;
+    BufferedImage silhoutteImg = GuiStatics.IMAGE_HUMAN_RACE;
     SpaceRace race = SpaceRaceUtility.getRaceByName(raceName);
     if (race != null) {
-      silueteImg = race.getRaceImage();
+      silhoutteImg = GuiStatics.getRaceImg(race);
     }
-    silueteImg = GraphRoutines.blackSiluete(silueteImg);
+    silhoutteImg = GraphRoutines.blackSiluete(silhoutteImg);
 
     Graphics2D g = (Graphics2D) workImage.getGraphics();
     if (POSITION_CENTER.equals(position)) {
-      g.drawImage(silueteImg,
-          workImage.getWidth() / 2 - silueteImg.getWidth() / 2,
-          workImage.getHeight() / 2 - silueteImg.getHeight() / 2, null);
+      g.drawImage(silhoutteImg,
+          workImage.getWidth() / 2 - silhoutteImg.getWidth() / 2,
+          workImage.getHeight() / 2 - silhoutteImg.getHeight() / 2, null);
     }
     if (POSITION_LEFT.equals(position)) {
-      g.drawImage(silueteImg,
-          workImage.getWidth() / 5 - silueteImg.getWidth() / 2,
-          workImage.getHeight() / 2 - silueteImg.getHeight() / 2, null);
+      g.drawImage(silhoutteImg,
+          workImage.getWidth() / 5 - silhoutteImg.getWidth() / 2,
+          workImage.getHeight() / 2 - silhoutteImg.getHeight() / 2, null);
     }
     if (POSITION_RIGHT.equals(position)) {
-      g.drawImage(silueteImg,
+      g.drawImage(silhoutteImg,
           (workImage.getWidth() - workImage.getWidth() / 5)
-          - silueteImg.getWidth() / 2,
-          workImage.getHeight() / 2 - silueteImg.getHeight() / 2, null);
+          - silhoutteImg.getWidth() / 2,
+          workImage.getHeight() / 2 - silhoutteImg.getHeight() / 2, null);
     }
   }
 
@@ -1319,14 +1320,14 @@ public class ImageInstruction {
     BufferedImage drawImg = GuiStatics.BIG_PLANET_ROCK1;
     SpaceRace race = SpaceRaceUtility.getRaceByName(image);
     if (race != null) {
-      drawImg = race.getRaceImage();
+      drawImg = GuiStatics.getRaceImg(race);
     }
     if (SpaceRace.SPACE_MONSTERS.getNameSingle().equals(image)) {
       //FIXME: This might be needed for changing...
-      drawImg = SpaceRace.SPACE_PIRATE.getRaceImage();
+      drawImg = GuiStatics.getRaceImg(SpaceRace.SPACE_PIRATE);
     }
     if (SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)) {
-      drawImg = SpaceRace.SPACE_PIRATE.getRaceImage();
+      drawImg = GuiStatics.getRaceImg(SpaceRace.SPACE_PIRATE);
     }
     if (LOGO.equals(image)) {
       drawImg = GuiStatics.IMAGE_GBNC;
@@ -1490,7 +1491,7 @@ public class ImageInstruction {
     BufferedImage drawImg = GuiStatics.IMAGE_HUMAN_RACE;
     SpaceRace race = SpaceRaceUtility.getRaceByName(image);
     if (race != null) {
-      drawImg = race.getRaceImage();
+      drawImg = GuiStatics.getRaceImg(race);
     }
     BufferedImage img = workImage;
     if (img == null) {
@@ -1568,7 +1569,7 @@ public class ImageInstruction {
       if (TEXT.equals(command)) {
         Graphics2D g = (Graphics2D) workImage.getGraphics();
         g.setColor(textColor);
-        g.setFont(GuiStatics.getFontCubellanBoldBig());
+        g.setFont(GuiFonts.getFontCubellanBoldBig());
         int textWidth = GuiStatics.getTextWidth(g.getFont(), parameters[0]);
         int height = GuiStatics.getTextHeight(g.getFont(), parameters[0]);
         g.drawString(parameters[0], workImage.getWidth() / 2 - textWidth / 2,

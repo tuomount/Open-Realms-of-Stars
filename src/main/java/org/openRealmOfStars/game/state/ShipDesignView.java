@@ -55,6 +55,7 @@ import org.openRealmOfStars.gui.list.ShipComponentListRenderer;
 import org.openRealmOfStars.gui.list.ShipHullListRenderer;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -252,7 +253,7 @@ public class ShipDesignView extends BlackPanel {
     hullSelect.setBackground(GuiStatics.getCoolSpaceColorDark());
     hullSelect.setForeground(GuiStatics.getCoolSpaceColor());
     hullSelect.setBorder(new SimpleBorder());
-    hullSelect.setFont(GuiStatics.getFontCubellan());
+    hullSelect.setFont(GuiFonts.getFontCubellan());
     hullSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     hullSelect.setRenderer(new ShipHullListRenderer());
@@ -263,7 +264,7 @@ public class ShipDesignView extends BlackPanel {
     greyPanel.add(label);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     designNameText = new JTextField();
-    designNameText.setFont(GuiStatics.getFontCubellan());
+    designNameText.setFont(GuiFonts.getFontCubellan());
     designNameText.setForeground(GuiStatics.getInfoTextColor());
     designNameText.setBackground(Color.BLACK);
     designNameText.setMaximumSize(new Dimension(Integer.MAX_VALUE,
@@ -310,7 +311,7 @@ public class ShipDesignView extends BlackPanel {
 
     hullInfoText = new InfoTextArea(10, 30);
     hullInfoText.setEditable(false);
-    hullInfoText.setFont(GuiStatics.getFontCubellanSmaller());
+    hullInfoText.setFont(GuiFonts.getFontCubellanSmaller());
     JScrollPane scroll = new JScrollPane(hullInfoText);
     scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     hullPanel.add(Box.createRigidArea(new Dimension(25, 25)));
@@ -352,7 +353,7 @@ public class ShipDesignView extends BlackPanel {
     variantSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());
     variantSelection.setForeground(GuiStatics.getCoolSpaceColor());
     variantSelection.setBorder(new SimpleBorder());
-    variantSelection.setFont(GuiStatics.getFontCubellan());
+    variantSelection.setFont(GuiFonts.getFontCubellan());
     variantSelection.setMaximumSize(new Dimension(200,
         GuiStatics.TEXT_FIELD_HEIGHT));
     variantSelection.addActionListener(listener);
@@ -397,7 +398,7 @@ public class ShipDesignView extends BlackPanel {
     componentFilter.setBackground(GuiStatics.getDeepSpaceDarkColor());
     componentFilter.setForeground(GuiStatics.getCoolSpaceColor());
     componentFilter.setBorder(new SimpleBorder());
-    componentFilter.setFont(GuiStatics.getFontCubellan());
+    componentFilter.setFont(GuiFonts.getFontCubellan());
     componentFilter.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     componentFilter.addActionListener(listener);
@@ -410,7 +411,7 @@ public class ShipDesignView extends BlackPanel {
     componentSelect.setBackground(GuiStatics.getDeepSpaceDarkColor());
     componentSelect.setForeground(GuiStatics.getCoolSpaceColor());
     componentSelect.setBorder(new SimpleBorder());
-    componentSelect.setFont(GuiStatics.getFontCubellan());
+    componentSelect.setFont(GuiFonts.getFontCubellan());
     componentSelect.setRenderer(new ShipComponentListRenderer());
     componentSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
@@ -419,7 +420,7 @@ public class ShipDesignView extends BlackPanel {
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     componentInfoText = new InfoTextArea(10, 30);
     componentInfoText.setEditable(false);
-    componentInfoText.setFont(GuiStatics.getFontCubellanSmaller());
+    componentInfoText.setFont(GuiFonts.getFontCubellanSmaller());
     scroll = new JScrollPane(componentInfoText);
     scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     greyPanel.add(scroll);
@@ -474,7 +475,7 @@ public class ShipDesignView extends BlackPanel {
     greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
     designInfoText = new BaseInfoTextArea(10, 30);
     designInfoText.setEditable(false);
-    designInfoText.setFont(GuiStatics.getFontCubellanSmaller());
+    designInfoText.setFont(GuiFonts.getFontCubellanSmaller());
     scroll = new JScrollPane(designInfoText);
     scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     label = new SpaceLabel("Design info");
@@ -489,7 +490,7 @@ public class ShipDesignView extends BlackPanel {
     greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
     designFlawsText = new BaseInfoTextArea(10, 30);
     designFlawsText.setEditable(false);
-    designFlawsText.setFont(GuiStatics.getFontCubellanSmaller());
+    designFlawsText.setFont(GuiFonts.getFontCubellanSmaller());
     scroll = new JScrollPane(designFlawsText);
     scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
     label = new SpaceLabel("Design flaws");

@@ -36,6 +36,7 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -124,7 +125,7 @@ public class HistoryView extends BlackPanel {
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
-    textArea.setFont(GuiStatics.getFontCubellanSmaller());
+    textArea.setFont(GuiFonts.getFontCubellanSmaller());
     textArea.setCharacterWidth(8);
     infoPanel.add(textArea, BorderLayout.CENTER);
     EmptyInfoPanel panel = new EmptyInfoPanel();
@@ -224,108 +225,111 @@ public class HistoryView extends BlackPanel {
   public void updateTextArea() {
     HistoryTurn turn = map.getHistory().getByIndex(turnNumber);
     Event event = turn.getEvent(eventNumber);
-    if (event != null) {
-      if (event.getType() == EventType.DIPLOMATIC_RELATION_CHANGE) {
-        DiplomaticEvent diplomatic = (DiplomaticEvent) event;
-        String startText;
-        if (diplomatic.getCoordinate().getX() == 0
-            && diplomatic.getCoordinate().getY() == 0) {
-          targetCoordinate = null;
-          startText = "Diplomatic meeting happened somewhere in deep and"
-              + " cold space. ";
-        } else {
-          targetCoordinate = diplomatic.getCoordinate();
-          startText = "Diplomatic meeting happened somewhere in deep space. ";
-          if (diplomatic.getPlanetName() != null) {
-            startText = "Diplomatic meeting in planet called "
-                + diplomatic.getPlanetName() + ". ";
-          } else {
-            PlayerInfo info = getSpaceSectorOwner(targetCoordinate);
-            if (info != null) {
-              startText = "Diplomatic meeting happened in "
-                  + info.getEmpireName() + " space. ";
-            }
-          }
-        }
-        textArea.setText(startText + diplomatic.getText());
-      }
-      if (event.getType() == EventType.GALACTIC_NEWS) {
-        GalacticEvent galactic = (GalacticEvent) event;
-        textArea.setText(galactic.getText());
+    if (event == null) {
+      return;
+    }
+
+    if (event.getType() == EventType.DIPLOMATIC_RELATION_CHANGE) {
+      DiplomaticEvent diplomatic = (DiplomaticEvent) event;
+      String startText;
+      if (diplomatic.getCoordinate().getX() == 0
+          && diplomatic.getCoordinate().getY() == 0) {
         targetCoordinate = null;
-      }
-      if (event.getType() == EventType.PLANET_COLONIZED
-          || event.getType() == EventType.PLANET_CONQUERED
-          || event.getType() == EventType.ARTIFICAL_PLANET_CREATED
-          || event.getType() == EventType.PLANET_BUILDING) {
-        EventOnPlanet planetary = (EventOnPlanet) event;
-        textArea.setText("Event on planet called " + planetary.getName() + ": "
-            + planetary.getText());
-        targetCoordinate = planetary.getCoordinate();
-      }
-      if (event.getType() == EventType.LEADER_EVENT) {
-        LeaderEvent leaderEvent = (LeaderEvent) event;
-        if (leaderEvent.getPlanetName() != null
-            && !leaderEvent.getPlanetName().isEmpty()) {
-          textArea.setText("Event on " + leaderEvent.getPlanetName() + ": "
-              + TextUtilities.removeLineChanges(leaderEvent.getText()));
+        startText = "Diplomatic meeting happened somewhere in deep and"
+            + " cold space. ";
+      } else {
+        targetCoordinate = diplomatic.getCoordinate();
+        startText = "Diplomatic meeting happened somewhere in deep space. ";
+        if (diplomatic.getPlanetName() != null) {
+          startText = "Diplomatic meeting in planet called "
+              + diplomatic.getPlanetName() + ". ";
         } else {
-          textArea.setText(TextUtilities.removeLineChanges(
-              leaderEvent.getText()));
-        }
-        targetCoordinate = leaderEvent.getCoordinate();
-      }
-      if (event.getType() == EventType.SPACE_COMBAT) {
-        CombatEvent combat = (CombatEvent) event;
-        if (combat.getPlanetName() != null) {
-          textArea.setText("Combat happened at orbit of "
-              + combat.getPlanetName() + ". " + combat.getText());
-        } else {
-          PlayerInfo info = getSpaceSectorOwner(combat.getCoordinate());
+          PlayerInfo info = getSpaceSectorOwner(targetCoordinate);
           if (info != null) {
-            textArea.setText("Combat happened in " + info.getEmpireName()
-                + " space. " + combat.getText());
-          } else {
-            textArea.setText("Combat happened in deep space. "
-                + combat.getText());
+            startText = "Diplomatic meeting happened in "
+                + info.getEmpireName() + " space. ";
           }
         }
-        targetCoordinate = combat.getCoordinate();
       }
-      if (event.getType() == EventType.PLAYER_START) {
-        PlayerStartEvent start = (PlayerStartEvent) event;
-        PlayerInfo info = map.getPlayerList().getPlayerInfoByIndex(
-            start.getPlayerIndex());
-        textArea.setText(info.getEmpireName() + " starts from "
-            + start.getName() + "!");
-        targetCoordinate = start.getCoordinate();
-      }
-      PlayerInfo[] infos = map.getPlayerList().findRealmNamesFromText(
-          textArea.getText());
-      if (event.getType() == EventType.GALACTIC_NEWS) {
-        if (infos.length == 1) {
-          mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_NEWSREADER);
-          mapPanel.setRightSpaceImage(infos[0].getRace().getRaceImage());
-        } else if (infos.length >= 2) {
-          mapPanel.setLeftSpaceImage(infos[0].getRace().getRaceImage());
-          mapPanel.setRightSpaceImage(infos[1].getRace().getRaceImage());
-        } else {
-          mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_NEWSREADER);
-          mapPanel.setRightSpaceImage(null);
-        }
+      textArea.setText(startText + diplomatic.getText());
+    }
+    if (event.getType() == EventType.GALACTIC_NEWS) {
+      GalacticEvent galactic = (GalacticEvent) event;
+      textArea.setText(galactic.getText());
+      targetCoordinate = null;
+    }
+    if (event.getType() == EventType.PLANET_COLONIZED
+        || event.getType() == EventType.PLANET_CONQUERED
+        || event.getType() == EventType.ARTIFICAL_PLANET_CREATED
+        || event.getType() == EventType.PLANET_BUILDING) {
+      EventOnPlanet planetary = (EventOnPlanet) event;
+      textArea.setText("Event on planet called " + planetary.getName() + ": "
+          + planetary.getText());
+      targetCoordinate = planetary.getCoordinate();
+    }
+    if (event.getType() == EventType.LEADER_EVENT) {
+      LeaderEvent leaderEvent = (LeaderEvent) event;
+      if (leaderEvent.getPlanetName() != null
+          && !leaderEvent.getPlanetName().isEmpty()) {
+        textArea.setText("Event on " + leaderEvent.getPlanetName() + ": "
+            + TextUtilities.removeLineChanges(leaderEvent.getText()));
       } else {
-        if (infos.length >= 1) {
-          mapPanel.setLeftSpaceImage(infos[0].getRace().getRaceImage());
+        textArea.setText(TextUtilities.removeLineChanges(
+            leaderEvent.getText()));
+      }
+      targetCoordinate = leaderEvent.getCoordinate();
+    }
+    if (event.getType() == EventType.SPACE_COMBAT) {
+      CombatEvent combat = (CombatEvent) event;
+      if (combat.getPlanetName() != null) {
+        textArea.setText("Combat happened at orbit of "
+            + combat.getPlanetName() + ". " + combat.getText());
+      } else {
+        PlayerInfo info = getSpaceSectorOwner(combat.getCoordinate());
+        if (info != null) {
+          textArea.setText("Combat happened in " + info.getEmpireName()
+              + " space. " + combat.getText());
         } else {
-          mapPanel.setLeftSpaceImage(null);
+          textArea.setText("Combat happened in deep space. "
+              + combat.getText());
         }
-        if (infos.length >= 2) {
-          mapPanel.setRightSpaceImage(infos[1].getRace().getRaceImage());
-        } else {
-          mapPanel.setRightSpaceImage(null);
-        }
+      }
+      targetCoordinate = combat.getCoordinate();
+    }
+    if (event.getType() == EventType.PLAYER_START) {
+      PlayerStartEvent start = (PlayerStartEvent) event;
+      PlayerInfo info = map.getPlayerList().getPlayerInfoByIndex(
+          start.getPlayerIndex());
+      textArea.setText(info.getEmpireName() + " starts from "
+          + start.getName() + "!");
+      targetCoordinate = start.getCoordinate();
+    }
+    PlayerInfo[] infos = map.getPlayerList().findRealmNamesFromText(
+        textArea.getText());
+    if (event.getType() == EventType.GALACTIC_NEWS) {
+      if (infos.length == 1) {
+        mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_NEWSREADER);
+        mapPanel.setRightSpaceImage(GuiStatics.getRaceImg(infos[0].getRace()));
+      } else if (infos.length >= 2) {
+        mapPanel.setLeftSpaceImage(GuiStatics.getRaceImg(infos[0].getRace()));
+        mapPanel.setRightSpaceImage(GuiStatics.getRaceImg(infos[1].getRace()));
+      } else {
+        mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_NEWSREADER);
+        mapPanel.setRightSpaceImage(null);
+      }
+    } else {
+      if (infos.length >= 1) {
+        mapPanel.setLeftSpaceImage(GuiStatics.getRaceImg(infos[0].getRace()));
+      } else {
+        mapPanel.setLeftSpaceImage(null);
+      }
+      if (infos.length >= 2) {
+        mapPanel.setRightSpaceImage(GuiStatics.getRaceImg(infos[1].getRace()));
+      } else {
+        mapPanel.setRightSpaceImage(null);
       }
     }
+
   }
 
   /**

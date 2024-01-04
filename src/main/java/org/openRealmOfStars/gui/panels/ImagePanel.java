@@ -27,6 +27,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 import org.openRealmOfStars.gui.borders.SimpleBorder;
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -122,9 +123,9 @@ public class ImagePanel extends JPanel {
     g2d.setPaint(gradient);
     g.fillRect(0, 0, this.getWidth(), this.getHeight());
     if (text != null) {
-      g2d.setFont(GuiStatics.getFontCubellan());
+      g2d.setFont(GuiFonts.getFontCubellan());
       g2d.setColor(GuiStatics.getCoolSpaceColor());
-      int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+      int textWidth = GuiStatics.getTextWidth(GuiFonts.getFontCubellan(),
           text);
       int offsetX = this.getWidth() / 2 - textWidth / 2;
       g2d.drawString(text, offsetX, this.getHeight() / 2);

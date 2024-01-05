@@ -18,86 +18,46 @@ package org.openRealmOfStars.player.diplomacy.negotiation;
  */
 
 /**
-*
-* Negotiation type
-*
-*/
+ * Negotiation type
+ */
 public enum NegotiationType {
-  /**
-   * Credit offering
-   */
+  /** Credit offering */
   CREDIT,
-  /**
-   * Planet offering
-   */
+  /** Planet offering */
   PLANET,
-  /**
-   * Fleet offering
-   */
+  /** Fleet offering */
   FLEET,
-  /**
-   * Tech offering
-   */
+  /** Tech offering */
   TECH,
-  /**
-   * Peace offering
-   */
+  /** Peace offering */
   PEACE,
-  /**
-   * Trade alliance offering
-   */
+  /** Trade alliance offering */
   TRADE_ALLIANCE,
-  /**
-   * Alliance offering
-   */
+  /** Alliance offering */
   ALLIANCE,
-  /**
-   * Map offering
-   */
+  /** Map offering */
   MAP,
-  /**
-   * Captured diplomat offering
-   */
+  /** Captured diplomat offering */
   DIPLOMAT,
-  /**
-   * War offering or threat
-   */
+  /** War offering or threat */
   WAR,
-  /**
-   * Recall fleet due border crossing
-   */
+  /** Recall fleet due border crossing */
   RECALL_FLEET,
-  /**
-   * Defensive pact offering
-   */
+  /** Defensive pact offering */
   DEFENSIVE_PACT,
-  /**
-   * Spy trade offering
-   */
+  /** Spy trade offering */
   SPY_TRADE,
-  /**
-   * Trade embargo offering
-   */
+  /** Trade embargo offering */
   TRADE_EMBARGO,
-  /**
-   * Map containing only realm's planets
-   */
+  /** Map containing only realm's planets */
   MAP_PLANETS,
-  /**
-   * Promise to vote yes in next important voting.
-   */
+  /** Promise to vote yes in next important voting. */
   PROMISE_VOTE_YES,
-  /**
-   * Promise to vote no in next important voting.
-   */
+  /** Promise to vote no in next important voting. */
   PROMISE_VOTE_NO,
-  /**
-   * Discovered ancient artifact.
-   */
+  /** Discovered ancient artifact. */
   DISCOVERED_ARTIFACT,
-  /**
-   * Ask protection from space pirates.
-   */
+  /** Ask protection from space pirates. */
   ASK_PROTECTION;
 
 }

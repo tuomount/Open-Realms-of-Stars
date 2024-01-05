@@ -22,16 +22,12 @@ import java.util.ArrayList;
 import org.openRealmOfStars.player.PlayerInfo;
 
 /**
-*
-* Negotiation list containing multiple offers. This is not saved for
-* saved games. Negotations needs to be handled immediately.
-*
-*/
+ * Negotiation list containing multiple offers. This is not saved for
+ * saved games. Negotations needs to be handled immediately.
+ */
 public class NegotiationList {
 
-  /**
-   * List containing NegotiationOffers
-   */
+  /** List containing NegotiationOffers */
   private ArrayList<NegotiationOffer> list;
 
   /**

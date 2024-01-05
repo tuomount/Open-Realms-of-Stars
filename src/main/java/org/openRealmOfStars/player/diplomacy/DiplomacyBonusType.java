@@ -18,10 +18,8 @@ package org.openRealmOfStars.player.diplomacy;
  */
 
 /**
-*
-* Diplomacy Bonus Type
-*
-*/
+ * Diplomacy Bonus Type
+ */
 public enum DiplomacyBonusType {
   /**
    * Two players are in war.
@@ -191,14 +189,6 @@ public enum DiplomacyBonusType {
    */
   SIMILAR_GOVERNMENT_DIFFERENT_GROUP;
 
-
-
-
-  /**
-   * Number of Bonus type. This should be one larger than actual bonus types.
-   */
-  public static final int MAX_BONUS_TYPE = 39;
-
   /**
    * Get DiplomacyBonus index
    * @return int
@@ -350,6 +340,7 @@ public enum DiplomacyBonusType {
           + " Type!");
     }
   }
+
   /**
    * Get Casus belli reason as string
    * @return Casus belli reason
@@ -399,6 +390,7 @@ public enum DiplomacyBonusType {
           + " Type!");
     }
   }
+
   /**
    * Return diplomacy bonus type by index.
    * @param index This must be between 0-10

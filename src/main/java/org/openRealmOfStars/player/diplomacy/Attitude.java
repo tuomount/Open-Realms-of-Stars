@@ -26,42 +26,23 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 */
 public enum Attitude {
 
-  /**
-   * Aggressive AI attacking often, making threats.
-   */
+  /** Aggressive AI attacking often, making threats. */
   AGGRESSIVE,
-  /**
-   * Diplomatic tries to be nice with every one.
-   */
+  /** Diplomatic tries to be nice with every one. */
   DIPLOMATIC,
-  /**
-   * Scientist tries to achieve more knowledge.
-   */
+  /** Scientist tries to achieve more knowledge. */
   SCIENTIFIC,
-  /**
-   * Tries to search galaxy fully and conquer as many planet as possible.
-   */
+  /** Tries to search galaxy fully and conquer as many planet as possible. */
   EXPANSIONIST,
-  /**
-   * Backstabbing like diplomatic but can make backstabbing move.
-   */
+  /** Backstabbing like diplomatic but can make backstabbing move. */
   BACKSTABBING,
-  /**
-   * Focus more on trading and trading vessels.
-   */
+  /** Focus more on trading and trading vessels. */
   MERCHANTICAL,
-  /**
-   * Military focus on military things, slightly aggressive but very
-   * trustworthy.
-   */
+  /** Focus on military things, slightly aggressive but very trustworthy. */
   MILITARISTIC,
-  /**
-   * Peaceful tries to avoid conflict at any cost
-   */
+  /** Peaceful tries to avoid conflict at any cost */
   PEACEFUL,
-  /**
-   * Logical very basic AI that tries to do everything with simple logic.
-   */
+  /** Logical very basic AI that tries to do everything with simple logic. */
   LOGICAL;
 
   /**

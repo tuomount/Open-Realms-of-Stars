@@ -59,70 +59,35 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  */
 public class DiplomaticTrade {
 
-  /**
-   * Starmap object containing all player infos and map infos.
-   */
+  /** Starmap object containing all player infos and map infos. */
   private StarMap starMap;
 
-  /**
-   * Index for First player.
-   */
+  /** Index for first player. */
   private int first;
-
-  /**
-   * Index for second player.
-   */
+  /** Index for second player. */
   private int second;
 
-  /**
-   * First player is getting in offer.
-   */
+  /** First player is getting in offer. */
   private NegotiationList firstOffer;
-
-  /**
-   * Second player is getting in offer.
-   */
+  /** Second player is getting in offer. */
   private NegotiationList secondOffer;
 
-  /**
-   * Tech List for first player. This list contains techs which first player
-   * is missing.
-   */
+  /** List of Techs which the first player is missing. */
   private ArrayList<Tech> techListForFirst;
-
-  /**
-   * Tech List for second player. This list contains techs which second player
-   * is missing.
-   */
+  /** List of Techs which the second player is missing. */
   private ArrayList<Tech> techListForSecond;
 
-  /**
-   * Fleet list for first player. This list contain fleets which are actually
-   * first player's fleets.
-   */
+  /** List of Fleets of the first player, visible to second player. */
   private ArrayList<Fleet> fleetListForFirst;
-
-  /**
-   * Fleet list for second player. This list contain fleets which are actually
-   * second player's fleet.
-   */
+  /** List of Fleets of the second player, visible to first player. */
   private ArrayList<Fleet> fleetListForSecond;
 
-  /**
-   * Planet list for first player. This list contain planets which are actually
-   * first player's.
-   */
+  /** List of Planets of the first player, visible to second player */
   private ArrayList<Planet> planetListForFirst;
-
-  /**
-   * Planet list for second player. This list contain planets which are actually
-   * second player's.
-   */
+  /** List of Planets of the second player, visible to first player */
   private ArrayList<Planet> planetListForSecond;
 
-  /**
-   * Flag for indicating diplomacy with pirates.
-   */
+  /** Flag for indicating diplomacy with pirates. */
   private boolean diplomacyWithPirates = false;
 
   /**
@@ -131,36 +96,24 @@ public class DiplomaticTrade {
    */
   private String majorDeals;
 
-  /**
-   * Flag for planet traded.
-   */
+  /** Flag for planet traded. */
   private boolean planetTraded;
-  /**
-   * Gift trade.
-   */
+  /** Gift trade. */
   private boolean giftTrade;
-  /**
-   * Difference between two parties which is considered as
-   * insult;
-   */
+
+  /** Difference between two parties which is considered as insult */
   public static final int DECLINE_INSULT = 10000;
 
-  /**
-   * Equal trade
-   */
+  /** Equal trade */
   public static final int TRADE = 0;
-  /**
-   * Buy trade
-   */
+  /** Buy trade */
   public static final int BUY = 1;
-  /**
-   * Sell trade
-   */
+  /** Sell trade */
   public static final int SELL = 2;
-  /**
-   * Power of multiple border crossing.
-   */
+
+  /** Power of multiple border crossing. */
   private static final int BORDER_CROSSING_POWER = 20;
+
   /**
    * Constructor for Diplomatic trade.
    * @param map Starmap
@@ -209,6 +162,7 @@ public class DiplomaticTrade {
   public String getMajorDeals() {
     return majorDeals;
   }
+
   /**
    * Gets the speechtype by current offer
    * @return SpeechType
@@ -577,6 +531,7 @@ public class DiplomaticTrade {
           Integer.valueOf(1)));
     }
   }
+
   /**
    * Generate credit gift
    * @param giver player who is giving the gift
@@ -600,6 +555,7 @@ public class DiplomaticTrade {
       }
     }
   }
+
   /**
    * Generate tech demand or artifact demand or money demand
    * @param agreePlayer Who is need to agree with trade
@@ -635,6 +591,7 @@ public class DiplomaticTrade {
     }
     secondOffer = new NegotiationList();
   }
+
   /**
    * Generate Map trade between two players.
    * @param tradeType Choices are TRADE, BUY and SELL
@@ -860,6 +817,7 @@ public class DiplomaticTrade {
     }
     return bestPlanet;
   }
+
   /**
    * Generate peace offer depending on military power difference
    * and war fatigue
@@ -1083,6 +1041,7 @@ public class DiplomaticTrade {
       }
     }
   }
+
   /**
    * Generate first offer depending on AI's attitude.
    */
@@ -1190,6 +1149,7 @@ public class DiplomaticTrade {
     }
     return -1;
   }
+
   /**
    * Offer by aggressive attitude.
    * This makes war quite easily and can make demands.
@@ -1388,9 +1348,6 @@ public class DiplomaticTrade {
       }
     }
   }
-  /**
-   * Generate diplomatic trade offer between two players
-   */
 
   /**
    * Offer by diplomatic attitude.
@@ -1593,6 +1550,7 @@ public class DiplomaticTrade {
       }
     }
   }
+
   /**
    * Offer by scientific attitude.
    * Tries to focus trading or buying the tech
@@ -1803,6 +1761,7 @@ public class DiplomaticTrade {
       }
     }
   }
+
   /**
    * Offer by Militaristic attitude.
    * This makes war quite easily and can make demands if
@@ -1901,6 +1860,7 @@ public class DiplomaticTrade {
       }
     }
   }
+
   /**
    * Very basic offer by logical attitude.
    * This makes war only if power difference goes too big.
@@ -1988,6 +1948,7 @@ public class DiplomaticTrade {
       }
     }
   }
+
   /**
    * Offer by peaceful attitude.
    * This makes war only if power difference goes too big.
@@ -2078,6 +2039,7 @@ public class DiplomaticTrade {
       }
     }
   }
+
   /**
    * Generate diplomatic trade offer between two players
    */
@@ -2223,6 +2185,7 @@ public class DiplomaticTrade {
     }
     return value;
   }
+
   /**
    * Is offer good for both. This assumes that first one is making the offer
    * and is okay with it. So it only checks that second one likes it.
@@ -2402,6 +2365,7 @@ public class DiplomaticTrade {
     }
     return difference;
   }
+
   /**
    * Is offer good for both. This assumes that first one is making the offer
    * and is okay with it. So it only checks that second one likes it.
@@ -2435,6 +2399,7 @@ public class DiplomaticTrade {
     }
     return planets.toArray(new Planet[planets.size()]);
   }
+
   /**
    * Get war chance for getting decline for offer
    * @param type What was the original SpeechType
@@ -2671,6 +2636,7 @@ public class DiplomaticTrade {
       info.getMsgList().addUpcomingMessage(msg);
     }
   }
+
   /**
    * Do trading for one player
    * @param offerList Trade goods aka offering list
@@ -2984,6 +2950,7 @@ public class DiplomaticTrade {
           DiplomacyBonusType.GIVEN_VALUABLE_FREE, info.getRace());
     }
   }
+
   /**
    * Has planet traded?
    * @return True if planet has traded.
@@ -2991,6 +2958,7 @@ public class DiplomaticTrade {
   public boolean isPlanetTraded() {
     return planetTraded;
   }
+
   /**
    * Trade has been gift?
    * @return True if trade has been gift.
@@ -2998,65 +2966,63 @@ public class DiplomaticTrade {
   public boolean isGiftTraded() {
     return giftTrade;
   }
+
   /**
-   * Generate Fleet list containing all fleets from both players.
+   * Generate Fleet list containing all visible fleets from both players.
    */
   private void generateFleetList() {
-    fleetListForFirst = new ArrayList<>();
-    fleetListForSecond = new ArrayList<>();
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo viewer = starMap.getPlayerByIndex(second);
-    int size = info.getFleets().getNumberOfFleets();
-    for (int i = 0; i < size; i++) {
-      Fleet fleet = info.getFleets().getByIndex(i);
-      FleetVisibility visiblity = new FleetVisibility(viewer, fleet, first);
-      if (visiblity.isFleetVisible()) {
-        if (fleet.isPrivateerFleet() && visiblity.isRecognized()) {
-          fleetListForFirst.add(fleet);
-        } else if (!fleet.isPrivateerFleet()) {
-          fleetListForFirst.add(fleet);
-        }
-      }
-    }
+    fleetListForFirst = generateFleetList(info, viewer);
+
     info = starMap.getPlayerByIndex(second);
     viewer = starMap.getPlayerByIndex(first);
-    size = info.getFleets().getNumberOfFleets();
+    fleetListForSecond = generateFleetList(info, viewer);
+  }
+
+  /**
+   * Generate List containing all fleets of owner, visible by viewer.
+   * @param owner Owner of fleets
+   * @param viewer Player to check fleet visibility for
+   * @return ArrayList<Fleet> of owner fleets visible to viewer
+   */
+  private ArrayList<Fleet> generateFleetList(final PlayerInfo owner,
+      final PlayerInfo viewer) {
+    var list = new ArrayList<Fleet>();
+    final var size = owner.getFleets().getNumberOfFleets();
     for (int i = 0; i < size; i++) {
-      Fleet fleet = info.getFleets().getByIndex(i);
+      Fleet fleet = owner.getFleets().getByIndex(i);
       FleetVisibility visiblity = new FleetVisibility(viewer, fleet, second);
       if (visiblity.isFleetVisible()) {
         if (fleet.isPrivateerFleet() && visiblity.isRecognized()) {
-          fleetListForSecond.add(fleet);
+          list.add(fleet);
         }  else if (!fleet.isPrivateerFleet()) {
-          fleetListForSecond.add(fleet);
+          list.add(fleet);
         }
       }
     }
+
+    return list;
   }
+
   /**
    * Generate Tech list containing techs whichs are tradeable.
    */
   private void generateTechList() {
     techListForFirst = new ArrayList<>();
     techListForSecond = new ArrayList<>();
-    for (int type = 0; type < 6; type++) {
+    for (var techType : TechType.values()) {
       Tech[] tradeTechs = starMap.getPlayerByIndex(second)
-          .getTechList().getListForType(TechType
-              .getTypeByIndex(type));
+          .getTechList().getListForType(techType);
       Tech[] ownTechs = starMap.getPlayerByIndex(first)
-          .getTechList().getListForType(TechType
-              .getTypeByIndex(type));
+          .getTechList().getListForType(techType);
+
       Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
       for (Tech tech : techs) {
         techListForFirst.add(tech);
       }
-      tradeTechs = starMap.getPlayerByIndex(first)
-          .getTechList().getListForType(TechType
-              .getTypeByIndex(type));
-      ownTechs = starMap.getPlayerByIndex(second)
-          .getTechList().getListForType(TechType
-              .getTypeByIndex(type));
-      techs = TechList.getTechDifference(tradeTechs, ownTechs);
+
+      techs = TechList.getTechDifference(ownTechs, tradeTechs);
       for (Tech tech : techs) {
         techListForSecond.add(tech);
       }

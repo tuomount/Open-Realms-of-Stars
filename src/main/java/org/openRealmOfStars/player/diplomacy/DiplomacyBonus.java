@@ -44,425 +44,219 @@ public class DiplomacyBonus {
    */
   public DiplomacyBonus(final DiplomacyBonusType bonusType,
       final SpaceRace race) {
-   type = bonusType;
-   onlyOne = false;
-   switch (type) {
-     case BORDER_CROSSED: {
-       if (race == SpaceRace.SPORKS || race == SpaceRace.SCAURIANS) {
-         bonusValue = -2;
-         bonusLasting = 15;
-       } else if (race == SpaceRace.MECHIONS) {
-         bonusValue = -3;
-         bonusLasting = 15;
-       } else if (race == SpaceRace.SMAUGIRIANS) {
-         bonusValue = -1;
-         bonusLasting = 20;
-       } else {
-         bonusValue = -3;
-         bonusLasting = 20;
-       }
-       break;
-     }
-     case GIVEN_VALUABLE_FREE: {
-       if (race == SpaceRace.HUMAN || race == SpaceRace.SCAURIANS) {
-         bonusValue = 3;
-         bonusLasting = 50;
-       } else {
-         bonusValue = 2;
-         bonusLasting = 50;
-       }
-       break;
-     }
-     case IN_ALLIANCE: {
-       onlyOne = true;
-       if (race == SpaceRace.GREYANS) {
-         bonusValue = 30;
-         bonusLasting = 255;
-       } else {
-         bonusValue = 25;
-         bonusLasting = 255;
-       }
-       break;
-     }
-     case IN_TRADE_ALLIANCE: {
-       onlyOne = true;
-       if (race == SpaceRace.GREYANS || race == SpaceRace.SCAURIANS) {
-         bonusValue = 18;
-         bonusLasting = 255;
-       } else {
-         bonusValue = 12;
-         bonusLasting = 255;
-       }
-       break;
-     }
-     case LONG_PEACE: {
-       onlyOne = true;
-       if (race == SpaceRace.SPORKS || race == SpaceRace.REBORGIANS) {
-         bonusValue = 1;
-         bonusLasting = 1;
-       } else if (race == SpaceRace.MOTHOIDS) {
-         bonusValue = 8;
-         bonusLasting = 1;
-       } else if (race == SpaceRace.SCAURIANS) {
-         bonusValue = 6;
-         bonusLasting = 1;
-       } else {
-         bonusValue = 5;
-         bonusLasting = 1;
-       }
-       break;
-     }
-     case DIPLOMATIC_TRADE: {
-       if (race == SpaceRace.HUMAN || race == SpaceRace.SCAURIANS) {
-         bonusValue = 5;
-         bonusLasting = 110;
-       } else if (race == SpaceRace.REBORGIANS) {
-         bonusValue = 3;
-         bonusLasting = 100;
-       } else {
-         bonusValue = 4;
-         bonusLasting = 100;
-       }
-       break;
-     }
-     case IN_WAR: {
-       onlyOne = true;
-       if (race == SpaceRace.GREYANS || race == SpaceRace.ALTEIRIANS) {
-         bonusValue = -40;
-         bonusLasting = 255;
-       } else {
-         bonusValue = -30;
-         bonusLasting = 255;
-       }
-       break;
-     }
-     case WAR_DECLARTION: {
-       if (race == SpaceRace.SPORKS) {
-         bonusValue = -2;
-         bonusLasting = 100;
-       } else if (race == SpaceRace.REBORGIANS) {
-         bonusValue = -4;
-         bonusLasting = 100;
-       } else {
-         bonusValue = -8;
-         bonusLasting = 150;
-       }
-       break;
-     }
-     case MADE_DEMAND: {
-       if (race == SpaceRace.SPORKS) {
-         bonusValue = -10;
-         bonusLasting = 150;
-       } else {
-         bonusValue = -5;
-         bonusLasting = 80;
-       }
-       break;
-     }
-     case INSULT: {
-       if (race == SpaceRace.SPORKS || race == SpaceRace.CHIRALOIDS) {
-         bonusValue = -2;
-         bonusLasting = 60;
-       } else if (race == SpaceRace.MECHIONS || race == SpaceRace.REBORGIANS
-           || race == SpaceRace.SYNTHDROIDS) {
-         bonusValue = -1;
-         bonusLasting = 20;
-       } else {
-         bonusValue = -3;
-         bonusLasting = 70;
-       }
-       break;
-     }
-     case SAME_RACE: {
-       onlyOne = true;
-       if (race == SpaceRace.MECHIONS || race == SpaceRace.TEUTHIDAES) {
-         bonusValue = -3;
-         bonusLasting = 255;
-       } else if (race == SpaceRace.SPORKS) {
-         bonusValue = 2;
-         bonusLasting = 255;
-       } else {
-         bonusValue = 5;
-         bonusLasting = 255;
-       }
-       break;
-     }
-     case SIMILAR_GOVERNMENT: {
-       onlyOne = true;
-       bonusValue = 2;
-       bonusLasting = 255;
-       break;
-     }
-     case SAME_GOVERNMENT: {
-       onlyOne = true;
-       bonusValue = 3;
-       bonusLasting = 255;
-       break;
-     }
-     case SIMILAR_GOVERNMENT_DIFFERENT_GROUP: {
-       onlyOne = true;
-       bonusValue = 1;
-       bonusLasting = 255;
-       break;
-     }
-     case DIFFERENT_GOVERNMENT: {
-       onlyOne = true;
-       bonusValue = -2;
-       bonusLasting = 255;
-       break;
-     }
-     case NUKED: {
-       if (race == SpaceRace.CENTAURS || race == SpaceRace.HOMARIANS) {
-         bonusValue = -8;
-         bonusLasting = 120;
-       } else if (race == SpaceRace.HUMAN || race == SpaceRace.TEUTHIDAES) {
-         bonusValue = -6;
-         bonusLasting = 120;
-       } else if (race == SpaceRace.SPORKS || race == SpaceRace.SCAURIANS
-           || race == SpaceRace.SYNTHDROIDS) {
-         bonusValue = -4;
-         bonusLasting = 100;
-       } else if (race == SpaceRace.MECHIONS) {
-         bonusValue = -3;
-         bonusLasting = 80;
-       } else if (race == SpaceRace.CHIRALOIDS) {
-         bonusValue = 2;
-         bonusLasting = 40;
-       } else {
-         bonusValue = -5;
-         bonusLasting = 100;
-       }
-       break;
-     }
-     case NOTHING_TO_TRADE: {
-       onlyOne = true;
-       bonusValue = 0;
-       bonusLasting = 10;
-       break;
-     }
-     case IN_DEFENSIVE_PACT: {
-       onlyOne = true;
-       if (race == SpaceRace.HUMAN || race == SpaceRace.HOMARIANS
-           || race == SpaceRace.LITHORIANS) {
-         bonusValue = 30;
-         bonusLasting = 255;
-       } else if (race == SpaceRace.TEUTHIDAES || race == SpaceRace.SPORKS) {
-         bonusValue = 20;
-         bonusLasting = 255;
-       } else {
-         bonusValue = 25;
-         bonusLasting = 255;
-       }
-       break;
-     }
-     case ESPIONAGE_BORDER_CROSS: {
-       if (race == SpaceRace.SPORKS || race == SpaceRace.TEUTHIDAES
-           || race == SpaceRace.CHIRALOIDS) {
-         bonusValue = -2;
-         bonusLasting = 20;
-       } else if (race == SpaceRace.MECHIONS) {
-         bonusValue = -6;
-         bonusLasting = 20;
-       } else if (race == SpaceRace.SYNTHDROIDS) {
-         bonusValue = -5;
-         bonusLasting = 25;
-       } else {
-         bonusValue = -4;
-         bonusLasting = 30;
-       }
-       break;
-     }
-     case SPY_TRADE: {
-       if (race == SpaceRace.TEUTHIDAES) {
-         bonusValue = 15;
-       } else if (race == SpaceRace.SPORKS) {
-         bonusValue = 13;
-       } else if (race == SpaceRace.CHIRALOIDS) {
-         bonusValue = 12;
-       } else if (race == SpaceRace.HOMARIANS) {
-         bonusValue = 8;
-       } else if (race == SpaceRace.MECHIONS) {
-         bonusValue = 8;
-       } else {
-         bonusValue = 10;
-       }
-       bonusLasting = 20;
-       onlyOne = true;
-       break;
-     }
-     case DIPLOMACY_BONUS: {
-       bonusValue = race.getDiplomacyBonus();
-       bonusLasting = 255;
-       break;
-     }
-     case TRADE_FLEET: {
-       if (race == SpaceRace.SCAURIANS) {
-         bonusValue = 6;
-       } else if (race == SpaceRace.HUMAN) {
-         bonusValue = 4;
-       } else {
-         bonusValue = 3;
-       }
-       bonusLasting = 255;
-       onlyOne = true;
-       break;
-     }
-     case BOARD_PLAYER: {
-       onlyOne = true;
-       bonusValue = 0;
-       bonusLasting = 255;
-       break;
-     }
-     case EMBARGO: {
-       onlyOne = true;
-       if (race == SpaceRace.SCAURIANS
-           || race == SpaceRace.SPORKS
-           || race == SpaceRace.CHIRALOIDS) {
-         bonusValue = -8;
-         bonusLasting = 20;
-       } else {
-         bonusValue = -5;
-         bonusLasting = 20;
-       }
-       break;
-     }
-     case LIKED_EMBARGO: {
-       if (race == SpaceRace.SCAURIANS
-           || race == SpaceRace.HUMAN
-           || race == SpaceRace.GREYANS
-           || race == SpaceRace.CENTAURS) {
-         bonusValue = 4;
-         bonusLasting = 60;
-       } else {
-         bonusValue = 2;
-         bonusLasting = 60;
-       }
-       break;
-     }
-     case DISLIKED_EMBARGO: {
-       if (race == SpaceRace.SCAURIANS
-           || race == SpaceRace.HUMAN
-           || race == SpaceRace.GREYANS
-           || race == SpaceRace.CENTAURS) {
-         bonusValue = -4;
-         bonusLasting = 60;
-       } else {
-         bonusValue = -2;
-         bonusLasting = 60;
-       }
-       break;
-     }
-     case REALM_LOST: {
-       onlyOne = true;
-       bonusValue = 0;
-       bonusLasting = 255;
-       break;
-     }
-     case OLYMPICS: {
-       if (race == SpaceRace.HUMAN || race == SpaceRace.SPORKS) {
-         bonusValue = 10;
-         bonusLasting = 110;
-       } else if (race == SpaceRace.MECHIONS
-           || race == SpaceRace.SYNTHDROIDS) {
-         bonusValue = 5;
-         bonusLasting = 90;
-       } else {
-         bonusValue = 7;
-         bonusLasting = 100;
-       }
-       break;
-     }
-     case DNS_OLYMPICS: {
-       if (race == SpaceRace.SPORKS) {
-         bonusValue = -10;
-         bonusLasting = 110;
-       } else if (race == SpaceRace.MECHIONS
-           || race == SpaceRace.SYNTHDROIDS) {
-         bonusValue = -5;
-         bonusLasting = 90;
-       } else {
-         bonusValue = -7;
-         bonusLasting = 100;
-       }
-       break;
-     }
-     case OLYMPICS_EMBARGO: {
-       if (race == SpaceRace.HUMAN) {
-         bonusValue = 8;
-         bonusLasting = 110;
-       } else if (race == SpaceRace.MECHIONS
-           || race == SpaceRace.SYNTHDROIDS) {
-         bonusValue = 4;
-         bonusLasting = 90;
-       } else {
-         bonusValue = 6;
-         bonusLasting = 100;
-       }
-       break;
-     }
-     case PROMISED_VOTE_YES: {
-       bonusValue = 3;
-       bonusLasting = 40;
-       break;
-     }
-     case PROMISED_VOTE_NO: {
-       bonusValue = 3;
-       bonusLasting = 40;
-       break;
-     }
-     case PROMISE_KEPT: {
-       if (race == SpaceRace.HUMAN) {
-         bonusValue = 10;
-         bonusLasting = 100;
-       } else if (race == SpaceRace.MECHIONS) {
-         bonusValue = 6;
-         bonusLasting = 100;
-       } else {
-         bonusValue = 8;
-         bonusLasting = 100;
-       }
-       break;
-     }
-     case PROMISE_BROKEN: {
-       if (race == SpaceRace.HUMAN) {
-         bonusValue = -10;
-         bonusLasting = 100;
-       } else if (race == SpaceRace.MECHIONS) {
-         bonusValue = -6;
-         bonusLasting = 100;
-       } else if (race == SpaceRace.SPORKS) {
-         bonusValue = -4;
-         bonusLasting = 100;
-       } else {
-         bonusValue = -8;
-         bonusLasting = 100;
-       }
-       break;
-     }
-     case WAR_DECLARATION_AGAINST_US: {
-       bonusValue = -12;
-       bonusLasting = 255;
-       break;
-     }
-     case FALSE_FLAG: {
-       bonusValue = -4;
-       bonusLasting = 60;
-       break;
-     }
-     case FREED_CONVICT: {
-       bonusValue = -2;
-       bonusLasting = 60;
-       break;
-     }
-     case PROMISED_PROTECTION: {
-       bonusValue = 3;
-       bonusLasting = 5;
-       break;
-     }
-     default: {
-       throw new IllegalArgumentException("Unknown bonus type!!");
-     }
-   }
+    type = bonusType;
+    onlyOne = false;
+    switch (type) {
+      case BORDER_CROSSED: {
+        bonusValue = -3;
+        bonusLasting = 20;
+        break;
+      }
+      case GIVEN_VALUABLE_FREE: {
+        bonusValue = 2;
+        bonusLasting = 50;
+        break;
+      }
+      case IN_ALLIANCE: {
+        onlyOne = true;
+        bonusValue = 25;
+        bonusLasting = 255;
+        break;
+      }
+      case IN_TRADE_ALLIANCE: {
+        onlyOne = true;
+        bonusValue = 12;
+        bonusLasting = 255;
+        break;
+      }
+      case LONG_PEACE: {
+        onlyOne = true;
+        bonusValue = 5;
+        bonusLasting = 1;
+        break;
+      }
+      case DIPLOMATIC_TRADE: {
+        bonusValue = 4;
+        bonusLasting = 100;
+        break;
+      }
+      case IN_WAR: {
+        onlyOne = true;
+        bonusValue = -30;
+        bonusLasting = 255;
+        break;
+      }
+      case WAR_DECLARTION: {
+        bonusValue = -8;
+        bonusLasting = 150;
+        break;
+      }
+      case MADE_DEMAND: {
+        bonusValue = -5;
+        bonusLasting = 80;
+        break;
+      }
+      case INSULT: {
+        bonusValue = -3;
+        bonusLasting = 70;
+        break;
+      }
+      case SAME_RACE: {
+        onlyOne = true;
+        bonusValue = 5;
+        bonusLasting = 255;
+        break;
+      }
+      case SIMILAR_GOVERNMENT: {
+        onlyOne = true;
+        bonusValue = 2;
+        bonusLasting = 255;
+        break;
+      }
+      case SAME_GOVERNMENT: {
+        onlyOne = true;
+        bonusValue = 3;
+        bonusLasting = 255;
+        break;
+      }
+      case SIMILAR_GOVERNMENT_DIFFERENT_GROUP: {
+        onlyOne = true;
+        bonusValue = 1;
+        bonusLasting = 255;
+        break;
+      }
+      case DIFFERENT_GOVERNMENT: {
+        onlyOne = true;
+        bonusValue = -2;
+        bonusLasting = 255;
+        break;
+      }
+      case NUKED: {
+        bonusValue = -5;
+        bonusLasting = 100;
+        break;
+      }
+      case NOTHING_TO_TRADE: {
+        onlyOne = true;
+        bonusValue = 0;
+        bonusLasting = 10;
+        break;
+      }
+      case IN_DEFENSIVE_PACT: {
+        onlyOne = true;
+        bonusValue = 25;
+        bonusLasting = 255;
+        break;
+      }
+      case ESPIONAGE_BORDER_CROSS: {
+        bonusValue = -4;
+        bonusLasting = 30;
+        break;
+      }
+      case SPY_TRADE: {
+        bonusValue = 10;
+        bonusLasting = 20;
+        onlyOne = true;
+        break;
+      }
+      case DIPLOMACY_BONUS: {
+        bonusValue = race.getDiplomacyBonus();
+        bonusLasting = 255;
+        break;
+      }
+      case TRADE_FLEET: {
+        bonusValue = 3;
+        bonusLasting = 255;
+        onlyOne = true;
+        break;
+      }
+      case BOARD_PLAYER: {
+        onlyOne = true;
+        bonusValue = 0;
+        bonusLasting = 255;
+        break;
+      }
+      case EMBARGO: {
+        onlyOne = true;
+        bonusValue = -5;
+        bonusLasting = 20;
+        break;
+      }
+      case LIKED_EMBARGO: {
+        bonusValue = 2;
+        bonusLasting = 60;
+        break;
+      }
+      case DISLIKED_EMBARGO: {
+        bonusValue = -2;
+        bonusLasting = 60;
+        break;
+      }
+      case REALM_LOST: {
+        onlyOne = true;
+        bonusValue = 0;
+        bonusLasting = 255;
+        break;
+      }
+      case OLYMPICS: {
+        bonusValue = 7;
+        bonusLasting = 100;
+        break;
+      }
+      case DNS_OLYMPICS: {
+        bonusValue = -7;
+        bonusLasting = 100;
+        break;
+      }
+      case OLYMPICS_EMBARGO: {
+        bonusValue = 6;
+        bonusLasting = 100;
+        break;
+      }
+      case PROMISED_VOTE_YES: {
+        bonusValue = 3;
+        bonusLasting = 40;
+        break;
+      }
+      case PROMISED_VOTE_NO: {
+        bonusValue = 3;
+        bonusLasting = 40;
+        break;
+      }
+      case PROMISE_KEPT: {
+        bonusValue = 8;
+        bonusLasting = 100;
+        break;
+      }
+      case PROMISE_BROKEN: {
+        bonusValue = -8;
+        bonusLasting = 100;
+        break;
+      }
+      case WAR_DECLARATION_AGAINST_US: {
+        bonusValue = -12;
+        bonusLasting = 255;
+        break;
+      }
+      case FALSE_FLAG: {
+        bonusValue = -4;
+        bonusLasting = 60;
+        break;
+      }
+      case FREED_CONVICT: {
+        bonusValue = -2;
+        bonusLasting = 60;
+        break;
+      }
+      case PROMISED_PROTECTION: {
+        bonusValue = 3;
+        bonusLasting = 5;
+        break;
+      }
+      default: {
+        throw new IllegalArgumentException("Unknown bonus type!!");
+      }
+    }
   }
 
   /**
@@ -502,6 +296,7 @@ public class DiplomacyBonus {
   public boolean isOnlyOne() {
     return onlyOne;
   }
+
   /**
    * Set Diplomacy Bonus value.
    * @param bonusValue to set
@@ -544,6 +339,5 @@ public class DiplomacyBonus {
   public String toString() {
     return type.name() + " Value: " + bonusValue + " Lasting: " + bonusLasting;
   }
-
 
 }

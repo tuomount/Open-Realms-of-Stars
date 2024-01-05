@@ -63,19 +63,6 @@ public class DiplomacyBonus {
        }
        break;
      }
-     case DIPLOMAT_CAPTURED: {
-       if (race == SpaceRace.SPORKS) {
-         bonusValue = -3;
-         bonusLasting = 200;
-       } else if (race == SpaceRace.CENTAURS) {
-         bonusValue = -8;
-         bonusLasting = 200;
-       } else {
-         bonusValue = -5;
-         bonusLasting = 200;
-       }
-       break;
-     }
      case GIVEN_VALUABLE_FREE: {
        if (race == SpaceRace.HUMAN || race == SpaceRace.SCAURIANS) {
          bonusValue = 3;

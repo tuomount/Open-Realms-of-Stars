@@ -38,10 +38,6 @@ public enum DiplomacyBonusType {
    */
   IN_ALLIANCE,
   /**
-   * Other player has captured a diplomat.
-   */
-  DIPLOMAT_CAPTURED,
-  /**
    * Border has been crossed with any ship where there is no alliance.
    */
   BORDER_CROSSED,
@@ -194,49 +190,13 @@ public enum DiplomacyBonusType {
    * @return int
    */
   public int getIndex() {
-    switch (this) {
-      case IN_WAR: return 0;
-      case WAR_DECLARTION: return 1;
-      case IN_TRADE_ALLIANCE: return 2;
-      case IN_ALLIANCE: return 3;
-      case DIPLOMAT_CAPTURED: return 4;
-      case BORDER_CROSSED: return 5;
-      case GIVEN_VALUABLE_FREE: return 6;
-      case MADE_DEMAND: return 7;
-      case DIPLOMATIC_TRADE: return 8;
-      case SAME_RACE: return 9;
-      case LONG_PEACE: return 10;
-      case INSULT: return 11;
-      case NUKED: return 12;
-      case NOTHING_TO_TRADE: return 13;
-      case IN_DEFENSIVE_PACT: return 14;
-      case ESPIONAGE_BORDER_CROSS: return 15;
-      case SPY_TRADE: return 16;
-      case DIPLOMACY_BONUS: return 17;
-      case TRADE_FLEET: return 18;
-      case BOARD_PLAYER: return 19;
-      case EMBARGO: return 20;
-      case LIKED_EMBARGO: return 21;
-      case DISLIKED_EMBARGO: return 22;
-      case REALM_LOST: return 23;
-      case OLYMPICS: return 24;
-      case DNS_OLYMPICS: return 25;
-      case OLYMPICS_EMBARGO: return 26;
-      case PROMISED_VOTE_YES: return 27;
-      case PROMISED_VOTE_NO: return 28;
-      case PROMISE_KEPT: return 29;
-      case PROMISE_BROKEN: return 30;
-      case WAR_DECLARATION_AGAINST_US: return 31;
-      case FALSE_FLAG: return 32;
-      case FREED_CONVICT: return 33;
-      case PROMISED_PROTECTION: return 34;
-      case SIMILAR_GOVERNMENT: return 35;
-      case SAME_GOVERNMENT: return 36;
-      case DIFFERENT_GOVERNMENT: return 37;
-      case SIMILAR_GOVERNMENT_DIFFERENT_GROUP: return 38;
-      default: throw new IllegalArgumentException("No such Diplomacy Bonus"
-          + " Type!");
+    final var values = DiplomacyBonusType.values();
+    for (int i = 0; i < values.length; i++) {
+      if (values[i] == this) {
+        return i;
+      }
     }
+    return -1;
   }
 
   /**
@@ -249,7 +209,6 @@ public enum DiplomacyBonusType {
       case WAR_DECLARTION: return "You have made war declaration";
       case IN_TRADE_ALLIANCE: return "We have trade alliance";
       case IN_ALLIANCE: return "We are at alliance";
-      case DIPLOMAT_CAPTURED: return "Diplomat has been captured";
       case BORDER_CROSSED: return "You have crossed borders";
       case GIVEN_VALUABLE_FREE: return "You have given gift";
       case MADE_DEMAND: return "You have demanded something";
@@ -301,7 +260,6 @@ public enum DiplomacyBonusType {
       case WAR_DECLARTION: return 5;
       case IN_TRADE_ALLIANCE: return 0; // Diplomatic relation
       case IN_ALLIANCE: return 0; // Diplomatic relation
-      case DIPLOMAT_CAPTURED: return 0; // Not used
       case BORDER_CROSSED: return 3;
       case GIVEN_VALUABLE_FREE: return 0;  // Positive bonus
       case MADE_DEMAND: return 7;
@@ -351,7 +309,6 @@ public enum DiplomacyBonusType {
       case WAR_DECLARTION: return "war declarations";
       case IN_TRADE_ALLIANCE: return "in trade alliance"; // Diplomatic relatio
       case IN_ALLIANCE: return "in alliance"; // Diplomatic relation
-      case DIPLOMAT_CAPTURED: return "diplomat captured"; // Not used
       case BORDER_CROSSED: return "borders crossed";
       case GIVEN_VALUABLE_FREE: return "gift";  // Positive bonus
       case MADE_DEMAND: return "demands";
@@ -397,88 +354,11 @@ public enum DiplomacyBonusType {
    * @return Diplomacy Bonus Type
    */
   public static DiplomacyBonusType getTypeByIndex(final int index) {
-    switch (index) {
-    case 0:
-      return DiplomacyBonusType.IN_WAR;
-    case 1:
-      return DiplomacyBonusType.WAR_DECLARTION;
-    case 2:
-      return DiplomacyBonusType.IN_TRADE_ALLIANCE;
-    case 3:
-      return DiplomacyBonusType.IN_ALLIANCE;
-    case 4:
-      return DiplomacyBonusType.DIPLOMAT_CAPTURED;
-    case 5:
-      return DiplomacyBonusType.BORDER_CROSSED;
-    case 6:
-      return DiplomacyBonusType.GIVEN_VALUABLE_FREE;
-    case 7:
-      return DiplomacyBonusType.MADE_DEMAND;
-    case 8:
-      return DiplomacyBonusType.DIPLOMATIC_TRADE;
-    case 9:
-      return DiplomacyBonusType.SAME_RACE;
-    case 10:
-      return DiplomacyBonusType.LONG_PEACE;
-    case 11:
-      return DiplomacyBonusType.INSULT;
-    case 12:
-      return DiplomacyBonusType.NUKED;
-    case 13:
-      return DiplomacyBonusType.NOTHING_TO_TRADE;
-    case 14:
-      return DiplomacyBonusType.IN_DEFENSIVE_PACT;
-    case 15:
-      return DiplomacyBonusType.ESPIONAGE_BORDER_CROSS;
-    case 16:
-      return DiplomacyBonusType.SPY_TRADE;
-    case 17:
-      return DiplomacyBonusType.DIPLOMACY_BONUS;
-    case 18:
-      return DiplomacyBonusType.TRADE_FLEET;
-    case 19:
-      return DiplomacyBonusType.BOARD_PLAYER;
-    case 20:
-      return DiplomacyBonusType.EMBARGO;
-    case 21:
-      return DiplomacyBonusType.LIKED_EMBARGO;
-    case 22:
-      return DiplomacyBonusType.DISLIKED_EMBARGO;
-    case 23:
-      return DiplomacyBonusType.REALM_LOST;
-    case 24:
-      return DiplomacyBonusType.OLYMPICS;
-    case 25:
-      return DiplomacyBonusType.DNS_OLYMPICS;
-    case 26:
-      return DiplomacyBonusType.OLYMPICS_EMBARGO;
-    case 27:
-      return DiplomacyBonusType.PROMISED_VOTE_YES;
-    case 28:
-      return DiplomacyBonusType.PROMISED_VOTE_NO;
-    case 29:
-      return DiplomacyBonusType.PROMISE_KEPT;
-    case 30:
-      return DiplomacyBonusType.PROMISE_BROKEN;
-    case 31:
-      return DiplomacyBonusType.WAR_DECLARATION_AGAINST_US;
-    case 32:
-      return DiplomacyBonusType.FALSE_FLAG;
-    case 33:
-      return DiplomacyBonusType.FREED_CONVICT;
-    case 34:
-      return DiplomacyBonusType.PROMISED_PROTECTION;
-    case 35:
-      return DiplomacyBonusType.SIMILAR_GOVERNMENT;
-    case 36:
-      return DiplomacyBonusType.SAME_GOVERNMENT;
-    case 37:
-      return DiplomacyBonusType.DIFFERENT_GOVERNMENT;
-    case 38:
-      return DiplomacyBonusType.SIMILAR_GOVERNMENT_DIFFERENT_GROUP;
-    default:
+    final var values = DiplomacyBonusType.values();
+    if (index > values.length - 1 || index < 0) {
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }
+    return values[index];
   }
 
 }

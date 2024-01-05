@@ -18,20 +18,13 @@ package org.openRealmOfStars.player.diplomacy.speeches;
  */
 
 /**
-*
-* Speech lines
-*
-*/
+ * Speech lines
+ */
 public class SpeechLine {
 
-  /**
-   * Speech type
-   */
+  /** Speech type */
   private SpeechType type;
-
-  /**
-   * Actual line in text
-   */
+  /** Actual line in text */
   private String line;
 
   /**
@@ -43,6 +36,7 @@ public class SpeechLine {
     type = speechType;
     line = text;
   }
+
   /**
    * Get line type
    * @return Speech type

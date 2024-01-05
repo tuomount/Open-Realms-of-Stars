@@ -33,108 +33,68 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 
 /**
-*
-* Diplomacy for player and handling of it.
-* Diplomacy creates Diplomacy Bonus lists for all players
-* except the one who is creating the Diplomacy.
-*
-*/
+ * Diplomacy for player and handling of it.
+ * Diplomacy creates Diplomacy Bonus lists for all players
+ * except the one who is creating the Diplomacy.
+ */
 public class Diplomacy {
 
-  /**
-   * How much player likes another one: Neutral
-   */
+  /** How much player likes another one: Neutral */
   public static final int NEUTRAL = 0;
-
-  /**
-   * How much player likes another one: Like
-   */
+  /** How much player likes another one: Like */
   public static final int LIKE = 1;
-
-  /**
-   * How much player likes another one: Friends
-   */
+  /** How much player likes another one: Friends */
   public static final int FRIENDS = 2;
-
-  /**
-   * How much player likes another one: Dislike
-   */
+  /** How much player likes another one: Dislike */
   public static final int DISLIKE = -1;
-
-  /**
-   * How much player likes another one: Hate
-   */
+  /** How much player likes another one: Hate */
   public static final int HATE = -2;
-  /**
-   * Limit when realm has casus belli.
-   */
+
+  /** Limit when realm has casus belli. */
   public static final int CASUS_BELLI_LIMIT = 20;
 
-  /**
-   * String for Trade Alliance.
-   */
+  /** String for Trade Alliance. */
   public static final String TRADE_ALLIANCE = "Trade alliance";
-
-  /**
-   * String for Peace.
-   */
+  /** String for Peace. */
   public static final String PEACE = "Peace";
-
-  /**
-   * No diplomatic relation yet.
-   */
+  /** No diplomatic relation yet. */
   public static final String NO_RELATION = "";
-  /**
-   * String for Alliance.
-   */
+  /** String for Alliance. */
   public static final String ALLIANCE = "Alliance";
-
-  /**
-   * String for Defensive pact.
-   */
+  /** String for Defensive pact. */
   public static final String DEFENSIVE_PACT = "Defensive pact";
-
-  /**
-   * String for War.
-   */
+  /** String for War. */
   public static final String WAR = "War";
-  /**
-   * String for Trade embargo
-   */
+  /** String for Trade embargo */
   public static final String TRADE_EMBARGO = "Trade embargo";
 
-  /**
-   * Relation int for WAR
-   */
+  /** Relation int for WAR */
   public static final int RELATION_WAR = -2;
-  /**
-   * Relation int for TRADE_WAR
-   */
+  /** Relation int for TRADE_WAR */
   public static final int RELATION_TRADE_WAR = -1;
-  /**
-   * Relation int for no relation
-   */
+  /** Relation int for no relation */
   public static final int RELATION_NO_RELATION = 0;
-  /**
-   * Relation int for peace
-   */
+  /** Relation int for peace */
   public static final int RELATION_PEACE = 1;
-  /**
-   * Relation int for trade alliance
-   */
+  /** Relation int for trade alliance */
   public static final int RELATION_TRADE_ALLIANCE = 2;
-  /**
-   * Relation int for defensive pact
-   */
+  /** Relation int for defensive pact */
   public static final int RELATION_DEFENSIVE_PACT = 3;
-  /**
-   * Relation int for alliance
-   */
+  /** Relation int for alliance */
   public static final int RELATION_ALLIANCE = 4;
 
-  /**
-   * Diplomacy Bonus list for each player
-   */
+  /** Lowest value for neutral */
+  private static final int LOW_NEUTRAL = -10;
+  /** High value for neutral */
+  private static final int HIGH_NEUTRAL = 10;
+  /** Low value for dislike */
+  private static final int LOW_DISLIKE = -20;
+  /** High value for like */
+  private static final int HIGH_LIKE = 20;
+  /** Very High value for looking least liking */
+  private static final int VERY_HIGH_LIKE = 9999;
+
+  /** Diplomacy Bonus list for each player */
   private DiplomacyBonusList[] diplomacyList;
 
   /**
@@ -367,31 +327,6 @@ public class Diplomacy {
     }
     return -1;
   }
-
-  /**
-   * Lowest value for neutral
-   */
-  private static final int LOW_NEUTRAL = -10;
-
-  /**
-   * High value for neutral
-   */
-  private static final int HIGH_NEUTRAL = 10;
-
-  /**
-   * Low value for dislike
-   */
-  private static final int LOW_DISLIKE = -20;
-
-  /**
-   * High value for like
-   */
-  private static final int HIGH_LIKE = 20;
-
-  /**
-   * Very High value for looking least liking
-   */
-  private static final int VERY_HIGH_LIKE = 9999;
 
   /**
    * Get numeric value how much player likes another player.

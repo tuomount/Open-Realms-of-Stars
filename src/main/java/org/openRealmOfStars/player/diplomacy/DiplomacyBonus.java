@@ -20,10 +20,22 @@ package org.openRealmOfStars.player.diplomacy;
 import org.openRealmOfStars.player.race.SpaceRace;
 
 /**
-*
-* Diplomacy Bonus
-*/
+ * Diplomacy Bonus
+ */
 public class DiplomacyBonus {
+
+  /** Diplomacy Bonus type */
+  private DiplomacyBonusType type;
+  /** Only one this kind of bonus allowed in list */
+  private boolean onlyOne;
+  /** Bonus value for diplomacy. This can be both negative or positive */
+  private int bonusValue;
+  /**
+   * How long bonus has lasted or how many star years ago something happened.
+   * Value 255 means that it will last for ever unless something happens
+   * if Value goes zero then bonusValue goes also zero.
+   */
+  private int bonusLasting;
 
   /**
    * Create diplomacy bonus with certain type.
@@ -481,28 +493,6 @@ public class DiplomacyBonus {
       }
     }
   }
-
-  /**
-   * Diplomacy Bonus type
-   */
-  private DiplomacyBonusType type;
-
-  /**
-   * Only one this kind of bonus allowed in list
-   */
-  private boolean onlyOne;
-
-  /**
-   * Bonus value for diplomacy. This can be both negative or positive
-   */
-  private int bonusValue;
-
-  /**
-   * How long bonus has lasted or how many star years ago something happened.
-   * Value 255 means that it will last for ever unless something happens
-   * if Value goes zero then bonusValue goes also zero.
-   */
-  private int bonusLasting;
 
   /**
    * Get the Diplomacy bonus value

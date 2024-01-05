@@ -26,25 +26,18 @@ import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 
 /**
-*
-* Negotiation offer for single object. This is not saved for
-* saved games. Negotations needs to be handled immediately.
-*
-*/
+ * Negotiation offer for single object. This is not saved for
+ * saved games. Negotations needs to be handled immediately.
+ */
 public class NegotiationOffer {
-  /**
-   * Negotiation type
-   */
+  /** Negotiation type */
   private NegotiationType negotiationType;
-  /**
-   * Offer object. This can be fleet, planet
-   */
+  /** Offer object. This can be fleet, planet */
   private Object offerObject;
 
-  /**
-   * Map Value. Used for valuing the map.
-   */
+  /** Map Value. Used for valuing the map. */
   private int mapValue;
+
   /**
    * Constructor for Negotiation offer
    * @param type Negotiation Type
@@ -283,6 +276,7 @@ public class NegotiationOffer {
     }
     return 0;
   }
+
   /**
    * Get Negotiation type
    * @return Negotiation type

@@ -18,18 +18,13 @@ package org.openRealmOfStars.player.diplomacy;
  */
 
 /**
-*
-* Attitude scoring for rulers
-*/
+ * Attitude scoring for rulers
+ */
 public class AttitudeScore implements Comparable<AttitudeScore> {
 
-  /**
-   * Attitude
-   */
+  /** Attitude */
   private Attitude attitude;
-  /**
-   * Scoring value
-   */
+  /** Scoring value */
   private int value;
 
   /**
@@ -40,6 +35,7 @@ public class AttitudeScore implements Comparable<AttitudeScore> {
     this.attitude = attitude;
     value = 0;
   }
+
   @Override
   public int compareTo(final AttitudeScore arg0) {
     return this.value - arg0.value;
@@ -60,6 +56,7 @@ public class AttitudeScore implements Comparable<AttitudeScore> {
   public int getValue() {
     return value;
   }
+
   /**
    * Set Value for attitude
    * @param value the value to set
@@ -67,6 +64,5 @@ public class AttitudeScore implements Comparable<AttitudeScore> {
   public void setValue(final int value) {
     this.value = value;
   }
-
 
 }

@@ -18,125 +18,65 @@ package org.openRealmOfStars.player.diplomacy.speeches;
  */
 
 /**
-*
-* Speech types for lines and answers
-*
-*/
+ * Speech types for lines and answers
+ */
 public enum SpeechType {
-  /**
-   * LINE: Trade offer a fair one made sincerely
-   */
+  /** LINE: Trade offer a fair one made sincerely */
   TRADE,
-  /**
-   * LINE: Trade offer made with demand
-   */
+  /** LINE: Trade offer made with demand */
   DEMAND,
-  /**
-   * LINE: Make war between
-   */
+  /** LINE: Make war between */
   MAKE_WAR,
-  /**
-   * LINE: Offer trade alliance
-   */
+  /** LINE: Offer trade alliance */
   TRADE_ALLIANCE,
-  /**
-   * LINE: Offer alliance
-   */
+  /** LINE: Offer alliance */
   ALLIANCE,
-  /**
-   * Answer: Agree to offer
-   */
+  /** Answer: Agree to offer */
   AGREE,
-  /**
-   * Answer: Decline offer politely
-   */
+  /** Answer: Decline offer politely */
   DECLINE,
-  /**
-   * Answer: Decline offer with anger
-   */
+  /** Answer: Decline offer with anger */
   DECLINE_ANGER,
-  /**
-   * Answer: Decline offer with war
-   */
+  /** Answer: Decline offer with war */
   DECLINE_WAR,
-  /**
-   * Neutral greeting
-   */
+  /** Neutral greeting */
   NEUTRAL_GREET,
-  /**
-   * Dislike greeting
-   */
+  /** Dislike greeting */
   DISLIKE_GREET,
-  /**
-   * Hate greeting
-   */
+  /** Hate greeting */
   HATE_GREET,
-  /**
-   * Like greeting
-   */
+  /** Like greeting */
   LIKE_GREET,
-  /**
-   * Friends greeting
-   */
+  /** Friends greeting */
   FRIENDS_GREET,
-  /**
-   * Peace offer
-   */
+  /** Peace offer */
   PEACE_OFFER,
-  /**
-   * Respond for insult
-   */
+  /** Respond for insult */
   INSULT_RESPOND,
-  /**
-   * Offer has been rejected
-   */
+  /** Offer has been rejected */
   OFFER_REJECTED,
-  /**
-   * Offer has been accepted
-   */
+  /** Offer has been accepted */
   OFFER_ACCEPTED,
-  /**
-   * Demand move fleet
-   */
+  /** Demand move fleet */
   ASK_MOVE_FLEET,
-  /**
-   * Agree to move fleet
-   */
+  /** Agree to move fleet */
   MOVE_FLEET,
-  /**
-   * AI notices that there weren't really anything for trade.
-   */
+  /** AI notices that there weren't really anything for trade. */
   NOTHING_TO_TRADE,
-  /**
-   * LINE: Offer defensive pact
-   */
+  /** LINE: Offer defensive pact */
   DEFESIVE_PACT,
-  /**
-   * Demand move espionage fleet
-   */
+  /** Demand move espionage fleet */
   ASK_MOVE_SPY,
-  /**
-   * Offer espionage trade for 20 star years.
-   */
+  /** Offer espionage trade for 20 star years. */
   OFFER_SPY_TRADE,
-  /**
-   * Offer trade embargo for 20 star years
-   */
+  /** Offer trade embargo for 20 star years */
   TRADE_EMBARGO,
-  /**
-   * Realm choice for embargo, not real speech line
-   */
+  /** Realm choice for embargo, not real speech line */
   TRADE_EMBARGO_REALM_CHOICE,
-  /**
-   * Fleets have crossed borders too many times, declared the war.
-   */
+  /** Fleets have crossed borders too many times, declared the war. */
   BORDER_WARS,
-  /**
-   * Space pirates could ask protection or realm could pay for protection
-   */
+  /** Space pirates could ask protection or realm could pay for protection */
   ASK_PROTECTION;
-
-
 
   /**
    * Get Speech Type as a string.

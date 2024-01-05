@@ -200,8 +200,7 @@ public final class GuiFonts {
    */
   private static Optional<Font> getFontFromCache(final URL fontUrl,
       final float baseSize) {
-    return GuiFonts.getFontFromCache(fontUrl, baseSize,
-        GuiFonts.fontScalingFactor);
+    return getFontFromCache(fontUrl, baseSize, fontScalingFactor);
   }
 
   /**

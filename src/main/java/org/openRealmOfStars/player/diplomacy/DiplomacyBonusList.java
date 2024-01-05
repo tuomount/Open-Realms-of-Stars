@@ -25,26 +25,16 @@ import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
-*
-* Diplomacy Bonus List and handling of it. This is list of diplomacy
-* bonus for certain player.
-*
-*/
+ * Diplomacy Bonus List and handling of it. This is list of diplomacy
+ * bonus for certain player.
+ */
 public class DiplomacyBonusList {
 
-  /**
-   * This is for saving PlayerInfo index for saved game
-   */
+  /** This is for saving PlayerInfo index for saved game */
   private int playerIndex;
-
-  /**
-   * Diplomacy Bonus list
-   */
+  /** Diplomacy Bonus list */
   private List<DiplomacyBonus> list;
-
-  /**
-   * Number of diplomatic meetings
-   */
+  /** Number of diplomatic meetings */
   private int numberOfMeetings;
 
   /**
@@ -97,14 +87,15 @@ public class DiplomacyBonusList {
    * @return Casus belli reason.
    */
   public String getMostCassusBelli() {
-    int[] score = new int[DiplomacyBonusType.MAX_BONUS_TYPE];
+    final var bonusTypeCount = DiplomacyBonusType.values().length;
+    int[] score = new int[bonusTypeCount];
     for (DiplomacyBonus bonus : list) {
       int i = bonus.getType().getIndex();
       score[i] = score[i] + bonus.getType().getCasusBelliScore();
     }
     int biggestIndex = -1;
     int biggestScore = 0;
-    for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
+    for (int i = 0; i < bonusTypeCount; i++) {
       if (score[i] > biggestScore) {
         biggestIndex = i;
         biggestScore = score[i];

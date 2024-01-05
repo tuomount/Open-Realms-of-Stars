@@ -164,8 +164,9 @@ public final class GraphRoutines {
     gr2D.dispose();
     return transparentImg;
   }
+
   /**
-   * Draw transparent grey siluete version of bufferedImage.
+   * Draw transparent grey silhouette version of bufferedImage.
    * Image must be 4byte ABGR type.
    * @param image Buffered Image
    * @param transparency Transparency value
@@ -209,12 +210,12 @@ public final class GraphRoutines {
   }
 
   /**
-   * Draw black siluete version of bufferedImage.
+   * Draw black silhouette version of bufferedImage.
    * Image must be 4byte ABGR type.
    * @param image Buffered Image
-   * @return black siluete version of image
+   * @return black silhouette version of image
    */
-  public static BufferedImage blackSiluete(final BufferedImage image) {
+  public static BufferedImage blackSilhouette(final BufferedImage image) {
     if (image == null) {
       return null;
     }

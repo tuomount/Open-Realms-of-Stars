@@ -88,50 +88,11 @@ public final class SpaceRaceUtility {
     if (name == null) {
       return null;
     }
-    if (name.equals(SpaceRace.HUMAN.getNameSingle())) {
-      return SpaceRace.HUMAN;
-    }
-    if (name.equals(SpaceRace.MECHIONS.getNameSingle())) {
-      return SpaceRace.MECHIONS;
-    }
-    if (name.equals(SpaceRace.SPORKS.getNameSingle())) {
-      return SpaceRace.SPORKS;
-    }
-    if (name.equals(SpaceRace.GREYANS.getNameSingle())) {
-      return SpaceRace.GREYANS;
-    }
-    if (name.equals(SpaceRace.CENTAURS.getNameSingle())) {
-      return SpaceRace.CENTAURS;
-    }
-    if (name.equals(SpaceRace.MOTHOIDS.getNameSingle())) {
-      return SpaceRace.MOTHOIDS;
-    }
-    if (name.equals(SpaceRace.TEUTHIDAES.getNameSingle())) {
-      return SpaceRace.TEUTHIDAES;
-    }
-    if (name.equals(SpaceRace.SCAURIANS.getNameSingle())) {
-      return SpaceRace.SCAURIANS;
-    }
-    if (name.equals(SpaceRace.HOMARIANS.getNameSingle())) {
-      return SpaceRace.HOMARIANS;
-    }
-    if (name.equals(SpaceRace.CHIRALOIDS.getNameSingle())) {
-      return SpaceRace.CHIRALOIDS;
-    }
-    if (name.equals(SpaceRace.REBORGIANS.getNameSingle())) {
-      return SpaceRace.REBORGIANS;
-    }
-    if (name.equals(SpaceRace.LITHORIANS.getNameSingle())) {
-      return SpaceRace.LITHORIANS;
-    }
-    if (name.equals(SpaceRace.ALTEIRIANS.getNameSingle())) {
-      return SpaceRace.ALTEIRIANS;
-    }
-    if (name.equals(SpaceRace.SMAUGIRIANS.getNameSingle())) {
-      return SpaceRace.SMAUGIRIANS;
-    }
-    if (name.equals(SpaceRace.SYNTHDROIDS.getNameSingle())) {
-      return SpaceRace.SYNTHDROIDS;
+
+    for (var race : SpaceRace.values()) {
+      if (name.equals(race.getNameSingle())) {
+        return race;
+      }
     }
     return null;
   }

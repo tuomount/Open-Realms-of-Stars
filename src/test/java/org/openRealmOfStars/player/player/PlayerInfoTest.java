@@ -37,8 +37,8 @@ import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.event.RandomEvent;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
-import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 import org.mockito.Mockito;
 
 /**

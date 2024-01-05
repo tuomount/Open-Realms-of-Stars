@@ -65,6 +65,8 @@ import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.event.KarmaEvents;
+import org.openRealmOfStars.starMap.event.KarmaType;
 import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
@@ -294,26 +296,8 @@ public class StarMap {
    */
   private PirateDifficultLevel pirateDifficulty;
 
-  /**
-   * Karma type for random events.
-   */
-  private KarmaType karmaType;
-
-  /**
-   * How fast karma speed is increased.
-   * This amount of karma counts are incresed each turn.
-   */
-  private int karmaSpeed;
-
-  /**
-   * Bad karma count. How likely bad stuff is going to happen.
-   */
-  private int badKarmaCount;
-
-  /***
-   * Good karma count. How likely good stuff is goint to happen.
-   */
-  private int goodKarmaCount;
+  /** Karma event system */
+  private KarmaEvents karmaEvents;
 
   /**
    * Flag for tutorial enabled
@@ -375,10 +359,8 @@ public class StarMap {
     setScoreDiplomacy(config.getScoreLimitDiplomacy());
     setScorePopulation(config.getScoreLimitPopulation());
     setPirateDifficulty(PirateDifficultLevel.NORMAL);
-    setKarmaType(config.getKarmaType());
-    setKarmaSpeed(config.getKarmaSpeed());
-    setGoodKarmaCount(0);
-    setBadKarmaCount(0);
+    karmaEvents = new KarmaEvents(config.getKarmaType(),
+        config.getKarmaSpeed());
     setAllNewsEnabled(config.isAllNews());
     history = new History();
     votes = new Votes();
@@ -1479,10 +1461,7 @@ public class StarMap {
     tutorialEnabled = false;
     solHasAdded = false;
     setPirateDifficulty(PirateDifficultLevel.NORMAL);
-    setKarmaType(KarmaType.DISABLED);
-    setKarmaSpeed(1);
-    setGoodKarmaCount(0);
-    setBadKarmaCount(0);
+    karmaEvents = new KarmaEvents(KarmaType.DISABLED, 0);
     String str = IOUtilities.readString(dis);
     if (str.equals(MAGIC_STRING)) {
       turn = dis.readInt();
@@ -1496,10 +1475,7 @@ public class StarMap {
       setScoreDiplomacy(dis.readInt());
       setScorePopulation(dis.readInt());
       setPirateDifficulty(PirateDifficultLevel.getLevelByInt(dis.read()));
-      setKarmaType(KarmaType.getTypeByInt(dis.read()));
-      setKarmaSpeed(dis.read());
-      setGoodKarmaCount(dis.readInt());
-      setBadKarmaCount(dis.readInt());
+      karmaEvents = new KarmaEvents(dis);
       maxX = dis.readInt();
       maxY = dis.readInt();
       culture = new CulturePower[maxX][maxY];
@@ -1599,10 +1575,7 @@ public class StarMap {
     dos.writeInt(getScoreDiplomacy());
     dos.writeInt(getScorePopulation());
     dos.writeByte(getPirateDifficulty().getIndex());
-    dos.writeByte(getKarmaType().getIndex());
-    dos.writeByte(getKarmaSpeed());
-    dos.writeInt(getGoodKarmaCount());
-    dos.writeInt(getBadKarmaCount());
+    karmaEvents.save(dos);
     // Map size
     dos.writeInt(maxX);
     dos.writeInt(maxY);
@@ -3232,70 +3205,9 @@ public class StarMap {
     this.pirateDifficulty = pirateDifficulty;
   }
 
-  /**
-   * Get Karma type.
-   * @return Karma type
-   */
-  public KarmaType getKarmaType() {
-    return karmaType;
-  }
-
-  /**
-   * Set Karma type.
-   * @param karmaType to set.
-   */
-  public void setKarmaType(final KarmaType karmaType) {
-    this.karmaType = karmaType;
-  }
-
-  /**
-   * Get karma speed. How much karma counts are
-   * incresed per each turn.
-   * @return Karma speed
-   */
-  public int getKarmaSpeed() {
-    return karmaSpeed;
-  }
-
-  /**
-   * Set karma speed. How much karma counts are
-   * incresed per each turn.
-   * @param karmaSpeed to set.
-   */
-  public void setKarmaSpeed(final int karmaSpeed) {
-    this.karmaSpeed = karmaSpeed;
-  }
-
-  /**
-   * How likely bad random event is to happen.
-   * @return Bad karma count
-   */
-  public int getBadKarmaCount() {
-    return badKarmaCount;
-  }
-
-  /**
-   * Set bad karma count. How likely bad random event is to happen.
-   * @param badKarmaCount to set.
-   */
-  public void setBadKarmaCount(final int badKarmaCount) {
-    this.badKarmaCount = badKarmaCount;
-  }
-
-  /**
-   * How likely good random event is to happen.
-   * @return Good karma count
-   */
-  public int getGoodKarmaCount() {
-    return goodKarmaCount;
-  }
-
-  /**
-   * Set good karma count. How likely good random event is to happen.
-   * @param goodKarmaCount to set.
-   */
-  public void setGoodKarmaCount(final int goodKarmaCount) {
-    this.goodKarmaCount = goodKarmaCount;
+  /** Process and execute events. Should be called on turn start. */
+  public void handleEvents() {
+    karmaEvents.handleEvents(this);
   }
 
   /**

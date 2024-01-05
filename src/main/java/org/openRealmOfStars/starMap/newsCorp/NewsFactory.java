@@ -29,6 +29,8 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
+import org.openRealmOfStars.starMap.event.RandomEventType;
+import org.openRealmOfStars.starMap.event.RandomEvent;
 import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
 import org.openRealmOfStars.starMap.history.event.Event;
 import org.openRealmOfStars.starMap.history.event.LeaderEvent;
@@ -37,9 +39,6 @@ import org.openRealmOfStars.starMap.newsCorp.scoreBoard.ScoreBoard;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
-import org.openRealmOfStars.starMap.randomEvent.BadRandomType;
-import org.openRealmOfStars.starMap.randomEvent.GoodRandomType;
-import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.starMap.vote.sports.Athlete;
@@ -328,35 +327,38 @@ public final class NewsFactory {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addInstruction(event.getImageInstructions());
-    if (event.getGoodType() != null
-        && event.getGoodType() == GoodRandomType.SOLAR_ACTIVITY_DIMISHED) {
+
+    if (event.getType() == null) {
+      news.setImageInstructions(instructions.build());
+      news.setNewsText(event.getText());
+      event.getRealm().appendStory(event.getText(), starYear);
+      return news;
+    }
+
+    if (event.getType() == RandomEventType.SOLAR_ACTIVITY_DIMISHED) {
       instructions.addText("SOLAR ACTIVITY DECREASED!");
     }
-    if (event.getGoodType() != null
-        && event.getGoodType() == GoodRandomType.CULTURAL_HIT) {
+    if (event.getType() == RandomEventType.CULTURAL_HIT) {
       instructions.addText("MASSIVE SUCCESS!");
     }
-    if (event.getBadType() != null
-        && event.getBadType() == BadRandomType.SOLAR_ACTIVITY_INCREASE) {
+    if (event.getType() == RandomEventType.SOLAR_ACTIVITY_INCREASE) {
       instructions.addText("SOLAR ACTIVITY INCREASED!");
     }
-    if (event.getBadType() != null
-        && event.getBadType() == BadRandomType.ACCIDENT) {
+    if (event.getType() == RandomEventType.ACCIDENT) {
       news = makeLeaderDies(event.getLeader(), event.getRealm(), "accident",
           starYear);
       news.setImageInstructions(instructions.build());
       return news;
     }
-    if (event.getBadType() != null
-        && event.getBadType() == BadRandomType.TERRORIST_ATTACK) {
+    if (event.getType() == RandomEventType.TERRORIST_ATTACK) {
       instructions.addText("TERRORIST ATTACK!");
     }
-    if (event.getBadType() != null
-        && event.getBadType() == BadRandomType.DEADLY_VIRUS_OUTBREAK) {
+    if (event.getType() == RandomEventType.DEADLY_VIRUS_OUTBREAK) {
       news = makeDeadlyVirusNews(event.getPlanet(), null, starYear);
       news.setImageInstructions(instructions.build());
       return news;
     }
+
     news.setImageInstructions(instructions.build());
     news.setNewsText(event.getText());
     event.getRealm().appendStory(event.getText(), starYear);

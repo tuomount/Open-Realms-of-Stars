@@ -27,8 +27,8 @@ import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
 import org.openRealmOfStars.player.combat.Combat;
+import org.openRealmOfStars.starMap.event.RandomEvent;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
-import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 
 
 /**
@@ -105,94 +105,9 @@ public class PopupPanel {
         instruction.build());
     combat = null;
     dismissed = false;
-    if (event.getBadType() != null) {
-      switch (event.getBadType()) {
-        case AGGRESSIVE_WILD_LIFE: {
-          title = "Aggressive wild life";
-          break;
-        }
-        case CATASTROPHIC_ACCIDENT: {
-          title = "Catasrophic accident!";
-          break;
-        }
-        case CORRUPTION_SCANDAL: {
-          title = "Corrupted goverment!";
-          break;
-        }
-        case DEADLY_VIRUS_OUTBREAK: {
-          title = "Deadly virus outbreak!";
-          break;
-        }
-        case MASSIVE_DATA_LOST: {
-          title = "Research data lost";
-          break;
-        }
-        case METEOR_HIT: {
-          title = "Meteor strike!";
-          break;
-        }
-        case MUTINY: {
-          title = "Mutiny!";
-          break;
-        }
-        case RAIDERS: {
-          title = "Space pirates!";
-          break;
-        }
-        case RULER_STRESS: {
-          title = "Ruler stress!";
-          break;
-        }
-        case ACCIDENT: {
-          title = "Accident!";
-          break;
-        }
-        case TERRORIST_ATTACK: {
-          title = "Terrorist attack!";
-          break;
-        }
-        default:
-        case SOLAR_ACTIVITY_INCREASE: {
-          title = "Solar activity increased";
-          break;
-        }
-      }
-    } else {
-      switch (event.getGoodType()) {
-        case DESERTED_SHIP: {
-          title = "Deserted ship found!";
-          break;
-        }
-        case LOST_TREASURE_FOUND: {
-          title = "Lost treasure";
-          break;
-        }
-        case MISSED_METEOROID: {
-          title = "Meteoroid missed";
-          break;
-        }
-        case MYSTERIOUS_SIGNAL: {
-          title = "The Signal";
-          break;
-        }
-        case SOLAR_ACTIVITY_DIMISHED: {
-          title = "Solar activity decreased";
-          break;
-        }
-        case LEADER_LEVEL: {
-          title = "Experienced leader";
-          break;
-        }
-        case CULTURAL_HIT: {
-          title = "Cultural hit";
-          break;
-        }
-        default:
-        case TECHNICAL_BREAKTHROUGH: {
-          title = "Techical breakthrough";
-          break;
-        }
-      }
+
+    if (event.getType() != null) {
+      title = event.getType().getTitle();
     }
   }
   /**

@@ -1,4 +1,4 @@
-package org.openRealmOfStars.starMap;
+package org.openRealmOfStars.starMap.event;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2019 Tuomo Untinen
@@ -18,14 +18,11 @@ package org.openRealmOfStars.starMap;
  */
 
 /**
-*
-* Karma type
-*
-*/
+ * Enumeration of karma-based event target selection methods.
+ * TODO: Replace with interface + classes that define karma target selection
+ */
 public enum KarmaType {
-  /**
-   * Random effects are disabled.
-   */
+  /** Karma is disabled. */
   DISABLED,
   /**
    * Realm with most score will get bad karma effects,
@@ -42,17 +39,11 @@ public enum KarmaType {
    * Realms with lowest scores will get good karma effect
    */
   BALANCED,
-  /**
-   * Bad and good karma effect can happen any realm.
-   */
+  /** Bad and good karma effect can happen any realm. */
   RANDOM,
-  /**
-   * Only good events happen on last half realms.
-   */
+  /** Only good events happen on last half realms. */
   ONLY_GOODS_FOR_LAST,
-  /**
-   * Good events can happen to any realm.
-   */
+  /** Good events can happen to any realm. */
   RANDOM_GOOD_ONES;
 
   /**
@@ -61,14 +52,21 @@ public enum KarmaType {
    */
   public int getIndex() {
     switch (this) {
-      case DISABLED: return 0;
-      case FIRST_AND_LAST: return 1;
+      case DISABLED:
+        return 0;
+      case FIRST_AND_LAST:
+        return 1;
       default:
-      case SECOND_FIRST_AND_LAST: return 2;
-      case BALANCED: return 3;
-      case RANDOM: return 4;
-      case ONLY_GOODS_FOR_LAST: return 5;
-      case RANDOM_GOOD_ONES: return 6;
+      case SECOND_FIRST_AND_LAST:
+        return 2;
+      case BALANCED:
+        return 3;
+      case RANDOM:
+        return 4;
+      case ONLY_GOODS_FOR_LAST:
+        return 5;
+      case RANDOM_GOOD_ONES:
+        return 6;
     }
   }
 
@@ -79,14 +77,21 @@ public enum KarmaType {
    */
   public static KarmaType getTypeByInt(final int value) {
     switch (value) {
-      case 0: return DISABLED;
-      case 1: return FIRST_AND_LAST;
+      case 0:
+        return DISABLED;
+      case 1:
+        return FIRST_AND_LAST;
       default:
-      case 2: return SECOND_FIRST_AND_LAST;
-      case 3: return BALANCED;
-      case 4: return RANDOM;
-      case 5: return ONLY_GOODS_FOR_LAST;
-      case 6: return RANDOM_GOOD_ONES;
+      case 2:
+        return SECOND_FIRST_AND_LAST;
+      case 3:
+        return BALANCED;
+      case 4:
+        return RANDOM;
+      case 5:
+        return ONLY_GOODS_FOR_LAST;
+      case 6:
+        return RANDOM_GOOD_ONES;
     }
   }
 

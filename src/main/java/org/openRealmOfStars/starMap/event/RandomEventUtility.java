@@ -1,4 +1,4 @@
-package org.openRealmOfStars.starMap.randomEvent;
+package org.openRealmOfStars.starMap.event;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2019-2022 Tuomo Untinen
@@ -69,37 +69,13 @@ public final class RandomEventUtility {
   }
 
   /**
-   * Create good random event.
-   * @param realm Realm who is getting the event
-   * @return RandomEvent
-   */
-  public static RandomEvent createGoodRandomEvent(final PlayerInfo realm) {
-    GoodRandomType[] values = GoodRandomType.values();
-    var choice = DiceGenerator.pickRandom(values);
-    RandomEvent event = new RandomEvent(choice, realm);
-    return event;
-  }
-
-  /**
-   * Create bad random event.
-   * @param realm Realm who is getting the event
-   * @return RandomEvent
-   */
-  public static RandomEvent createBadRandomEvent(final PlayerInfo realm) {
-    BadRandomType[] values = BadRandomType.values();
-    var choice = DiceGenerator.pickRandom(values);
-    RandomEvent event = new RandomEvent(choice, realm);
-    return event;
-  }
-
-  /**
    * Handle massive data lost event.
    * @param event Random event, must be Massive data lost.
    * @param map StarMap for getting location for focus.
    */
   public static void handleMassiveDataLost(final RandomEvent event,
       final StarMap map) {
-    if (event.getBadType() == BadRandomType.MASSIVE_DATA_LOST) {
+    if (event.getType() == RandomEventType.MASSIVE_DATA_LOST) {
       PlayerInfo info = event.getRealm();
       Planet mostValuablePlanet = null;
       int bestValue = 0;
@@ -140,7 +116,7 @@ public final class RandomEventUtility {
    */
   public static void handleRulerStress(final RandomEvent event,
       final StarMap map) {
-    if (event.getBadType() == BadRandomType.RULER_STRESS) {
+    if (event.getType() == RandomEventType.RULER_STRESS) {
       PlayerInfo info = event.getRealm();
       if (info.getRuler() != null) {
         Planet mostValuablePlanet = null;
@@ -186,7 +162,7 @@ public final class RandomEventUtility {
    * @param event Random event, must be accident
    */
   public static void handleAccident(final RandomEvent event) {
-    if (event.getBadType() == BadRandomType.ACCIDENT) {
+    if (event.getType() == RandomEventType.ACCIDENT) {
       PlayerInfo info = event.getRealm();
       Leader leader = LeaderUtility.getRandomLivingLeader(info);
       ImageInstruction instructions = new ImageInstruction();
@@ -231,7 +207,7 @@ public final class RandomEventUtility {
    * @param event Random event, must be leader level
    */
   public static void handleLeaderLevel(final RandomEvent event) {
-    if (event.getGoodType() == GoodRandomType.LEADER_LEVEL) {
+    if (event.getType() == RandomEventType.LEADER_LEVEL) {
       PlayerInfo info = event.getRealm();
       ArrayList<Leader> leaders = new ArrayList<>();
       for (Leader leader : info.getLeaderPool()) {
@@ -280,7 +256,7 @@ public final class RandomEventUtility {
    */
   public static void handleTechnicalBreakThrough(final RandomEvent event,
       final StarMap map) {
-    if (event.getGoodType() == GoodRandomType.TECHNICAL_BREAKTHROUGH) {
+    if (event.getType() == RandomEventType.TECHNICAL_BREAKTHROUGH) {
       PlayerInfo info = event.getRealm();
       var techType = DiceGenerator.pickRandom(TechType.values());
       double original = info.getTechList().getTechResearchPoints(techType);
@@ -327,7 +303,7 @@ public final class RandomEventUtility {
    */
   public static void handleLostTreasure(final RandomEvent event,
       final StarMap map) {
-    if (event.getGoodType() == GoodRandomType.LOST_TREASURE_FOUND) {
+    if (event.getType() == RandomEventType.LOST_TREASURE_FOUND) {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -373,7 +349,7 @@ public final class RandomEventUtility {
    */
   public static void handleCatastrophicAccident(final RandomEvent event,
       final StarMap map) {
-    if (event.getBadType() == BadRandomType.CATASTROPHIC_ACCIDENT) {
+    if (event.getType() == RandomEventType.CATASTROPHIC_ACCIDENT) {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -429,7 +405,7 @@ public final class RandomEventUtility {
    */
   public static void handleTerroristAttack(final RandomEvent event,
       final StarMap map) {
-    if (event.getBadType() == BadRandomType.TERRORIST_ATTACK) {
+    if (event.getType() == RandomEventType.TERRORIST_ATTACK) {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -533,7 +509,7 @@ public final class RandomEventUtility {
    */
   public static void handleDesertedShip(final RandomEvent event,
       final StarMap map) {
-    if (event.getGoodType() == GoodRandomType.DESERTED_SHIP) {
+    if (event.getType() == RandomEventType.DESERTED_SHIP) {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -635,7 +611,7 @@ public final class RandomEventUtility {
    */
   public static void handleMeteorHit(final RandomEvent event,
       final StarMap map) {
-    if (event.getBadType() == BadRandomType.METEOR_HIT) {
+    if (event.getType() == RandomEventType.METEOR_HIT) {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -710,7 +686,7 @@ public final class RandomEventUtility {
    */
   public static void handleCulturalHit(final RandomEvent event,
       final StarMap map) {
-    if (event.getGoodType() == GoodRandomType.CULTURAL_HIT) {
+    if (event.getType() == RandomEventType.CULTURAL_HIT) {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -814,7 +790,7 @@ public final class RandomEventUtility {
    */
   public static void handleMissedMeteoroid(final RandomEvent event,
       final StarMap map) {
-    if (event.getGoodType() == GoodRandomType.MISSED_METEOROID) {
+    if (event.getType() == RandomEventType.MISSED_METEOROID) {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -856,7 +832,7 @@ public final class RandomEventUtility {
    */
   public static void handleDeadlyVirusOutbreak(final RandomEvent event,
       final StarMap map) {
-    if (event.getBadType() == BadRandomType.DEADLY_VIRUS_OUTBREAK) {
+    if (event.getType() == RandomEventType.DEADLY_VIRUS_OUTBREAK) {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -921,7 +897,7 @@ public final class RandomEventUtility {
    */
   public static void handleCorruptionScandal(final RandomEvent event,
       final StarMap map) {
-    if (event.getBadType() == BadRandomType.CORRUPTION_SCANDAL) {
+    if (event.getType() == RandomEventType.CORRUPTION_SCANDAL) {
       PlayerInfo info = event.getRealm();
       ImageInstruction instructions = new ImageInstruction();
       instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
@@ -983,7 +959,7 @@ public final class RandomEventUtility {
    */
   public static void handleMysteriousSignal(final RandomEvent event,
       final StarMap map) {
-    if (event.getGoodType() == GoodRandomType.MYSTERIOUS_SIGNAL) {
+    if (event.getType() == RandomEventType.MYSTERIOUS_SIGNAL) {
       PlayerInfo info = event.getRealm();
       ArrayList<PlayerInfo> unknownRealms = new ArrayList<>();
       for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
@@ -1044,7 +1020,7 @@ public final class RandomEventUtility {
    */
   public static void handleSolarActivityDecreased(final RandomEvent event,
       final StarMap map) {
-    if (event.getGoodType() == GoodRandomType.SOLAR_ACTIVITY_DIMISHED) {
+    if (event.getType() == RandomEventType.SOLAR_ACTIVITY_DIMISHED) {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -1092,7 +1068,7 @@ public final class RandomEventUtility {
    */
   public static void handleSolarActivityIncreased(final RandomEvent event,
       final StarMap map) {
-    if (event.getBadType() == BadRandomType.SOLAR_ACTIVITY_INCREASE) {
+    if (event.getType() == RandomEventType.SOLAR_ACTIVITY_INCREASE) {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -1142,7 +1118,7 @@ public final class RandomEventUtility {
    */
   public static void handleAggressiveWildLife(final RandomEvent event,
       final StarMap map) {
-    if (event.getBadType() == BadRandomType.AGGRESSIVE_WILD_LIFE) {
+    if (event.getType() == RandomEventType.AGGRESSIVE_WILD_LIFE) {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -1231,7 +1207,7 @@ public final class RandomEventUtility {
    */
   public static void handleRaiders(final RandomEvent event,
       final StarMap map) {
-    if (event.getBadType() == BadRandomType.RAIDERS) {
+    if (event.getType() == RandomEventType.RAIDERS) {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
@@ -1284,7 +1260,7 @@ public final class RandomEventUtility {
    */
   public static void handleMutiny(final RandomEvent event,
       final PlayerInfo boardPlayer) {
-    if (event.getBadType() == BadRandomType.MUTINY
+    if (event.getType() == RandomEventType.MUTINY
         && boardPlayer != null) {
       PlayerInfo info = event.getRealm();
       ArrayList<Fleet> fleets = new ArrayList<>();
@@ -1352,8 +1328,8 @@ public final class RandomEventUtility {
    */
   public static boolean handleRandomEvent(final RandomEvent event,
       final StarMap map) {
-    if (event.getBadType() != null) {
-      switch (event.getBadType()) {
+    if (event.getType() != null) {
+      switch (event.getType()) {
         case AGGRESSIVE_WILD_LIFE: {
           handleAggressiveWildLife(event, map);
           break;
@@ -1404,8 +1380,8 @@ public final class RandomEventUtility {
           break;
         }
       }
-    } else if (event.getGoodType() != null) {
-      switch (event.getGoodType()) {
+    } else if (event.getType() != null) {
+      switch (event.getType()) {
         case DESERTED_SHIP: {
           handleDesertedShip(event, map);
           break;

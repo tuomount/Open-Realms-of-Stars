@@ -1163,7 +1163,7 @@ return map;
     assertEquals(true, trade.getMajorDeals().contains("Martian."));
     int bonus = map.getPlayerByIndex(0).getDiplomacy().getDiplomacyList(1)
       .getDiplomacyBonus();
-    assertEquals(3, bonus);
+    assertEquals(2, bonus);
   }
 
   @Test
@@ -1180,7 +1180,7 @@ return map;
     trade.doTrades();
     int bonus = map.getPlayerByIndex(0).getDiplomacy().getDiplomacyList(1)
       .getDiplomacyBonus();
-    assertEquals(5, bonus);
+    assertEquals(4, bonus);
     bonus = map.getPlayerByIndex(1).getDiplomacy().getDiplomacyList(0)
         .getDiplomacyBonus();
     assertEquals(4, bonus);

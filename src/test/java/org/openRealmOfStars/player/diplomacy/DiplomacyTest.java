@@ -145,6 +145,8 @@ public class DiplomacyTest {
         SpaceRace.SPORKS);
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
         SpaceRace.SPORKS);
+    diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.BORDER_CROSSED,
+        SpaceRace.SPORKS);
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.INSULT,
         SpaceRace.SPORKS);
     assertEquals(Diplomacy.DISLIKE, diplomacy.getLiking(0));

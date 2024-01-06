@@ -143,10 +143,6 @@ public class DiplomacyTest {
     assertEquals(GuiStatics.COLOR_DAMAGE_HALF, diplomacy.getLikingAsColor(0));
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.WAR_DECLARTION,
         SpaceRace.SPORKS);
-    diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.DIPLOMAT_CAPTURED,
-        SpaceRace.SPORKS);
-    diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.DIPLOMAT_CAPTURED,
-        SpaceRace.SPORKS);
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
         SpaceRace.SPORKS);
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.INSULT,

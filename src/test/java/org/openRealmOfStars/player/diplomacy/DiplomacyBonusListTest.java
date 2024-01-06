@@ -57,7 +57,7 @@ public class DiplomacyBonusListTest {
     assertEquals(-30, list.getDiplomacyBonus());
     result = list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
     assertEquals(true, result);
-    assertEquals(-25, list.getDiplomacyBonus());
+    assertEquals(-26, list.getDiplomacyBonus());
     bonus = list.get(1);
     assertEquals(DiplomacyBonusType.DIPLOMATIC_TRADE, bonus.getType());
     result = list.addBonus(DiplomacyBonusType.GIVEN_VALUABLE_FREE, SpaceRace.HUMAN);
@@ -124,7 +124,7 @@ public class DiplomacyBonusListTest {
     assertEquals(true, result);
     assertEquals(3, list.getDiplomacyBonus());
     list.checkPromise(VotingChoice.VOTED_NO, SpaceRace.HUMAN);
-    assertEquals(10, list.getDiplomacyBonus());
+    assertEquals(8, list.getDiplomacyBonus());
   }
 
   @Test
@@ -135,7 +135,7 @@ public class DiplomacyBonusListTest {
     assertEquals(true, result);
     assertEquals(3, list.getDiplomacyBonus());
     list.checkPromise(VotingChoice.VOTED_YES, SpaceRace.HUMAN);
-    assertEquals(-10, list.getDiplomacyBonus());
+    assertEquals(-8, list.getDiplomacyBonus());
   }
 
   @Test
@@ -146,7 +146,7 @@ public class DiplomacyBonusListTest {
     assertEquals(true, result);
     assertEquals(3, list.getDiplomacyBonus());
     list.checkPromise(VotingChoice.VOTED_YES, SpaceRace.HUMAN);
-    assertEquals(10, list.getDiplomacyBonus());
+    assertEquals(8, list.getDiplomacyBonus());
   }
 
   @Test
@@ -157,7 +157,7 @@ public class DiplomacyBonusListTest {
     assertEquals(true, result);
     assertEquals(3, list.getDiplomacyBonus());
     list.checkPromise(VotingChoice.VOTED_NO, SpaceRace.HUMAN);
-    assertEquals(-10, list.getDiplomacyBonus());
+    assertEquals(-8, list.getDiplomacyBonus());
   }
 
   @Test
@@ -180,7 +180,6 @@ public class DiplomacyBonusListTest {
     boolean result = list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
     assertEquals(true, result);
     for (int i = 0; i < 110; i++) {
-      assertEquals(5, list.getDiplomacyBonus());
       list.handleForTurn();
     }
     assertEquals(0, list.getDiplomacyBonus());

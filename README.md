@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/tuomount/Open-Realms-of-Stars.svg?branch=master)](https://travis-ci.org/tuomount/Open-Realms-of-Stars)
-
 # Open Realm of Stars
 
 ![](src/main/resources/resources/images/oros-logo128.png)

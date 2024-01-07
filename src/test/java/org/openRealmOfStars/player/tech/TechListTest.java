@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.tech;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2023 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,7 +16,6 @@ package org.openRealmOfStars.player.tech;
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -26,12 +25,20 @@ import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.SpaceRace;
 
+import junit.framework.TestCase;
+
 /**
 * TechList test
 *
 */
-public class TechListTest {
+public class TechListTest extends TestCase {
 
+  /** TODO: Remove when SpaceRaces are dehardcoded */
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+    SpaceRace.initialize();
+  }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTradeTechs() {

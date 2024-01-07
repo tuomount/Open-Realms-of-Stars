@@ -613,18 +613,15 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_LASERGUN));
         } else if (techName.startsWith("Railgun")
             || techName.startsWith("Massdrive")) {
-          tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRace.HUMAN, SpaceRace.SPORKS,
-              SpaceRace.SCAURIANS, SpaceRace.MOTHOIDS,
-              SpaceRace.SMAUGIRIANS);
+          //TODO: Currently there is no reason to exclude railgun from
+          //based on any traits. Maybe this could be randomize later
+          //If realm will get railguns or chainguns
           tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
         } else if (techName.startsWith("ECM torpedo")
             || techName.startsWith("HE missile")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_MISSILE));
         } else if (techName.startsWith("Photon torpedo")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PHOTON_TORPEDO));
-          tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
         } else if (techName.startsWith("Orbital bomb")
             || techName.startsWith("Orbital smart bomb")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_BOMB));
@@ -646,10 +643,9 @@ public final class TechFactory {
             || techName.startsWith("Autocannon")
             || techName.startsWith("Chaingun")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_MULTI_CANNON));
-          tech.setExcludeList(false);
-          tech.setSpaceRaces(SpaceRace.HUMAN, SpaceRace.SPORKS,
-              SpaceRace.SPACE_PIRATE, SpaceRace.SCAURIANS,
-              SpaceRace.MOTHOIDS, SpaceRace.SMAUGIRIANS, SpaceRace.ALTEIRIANS);
+          //TODO: Currently there is no reason to exclude railgun from
+          //based on any traits. Maybe this could be randomize later
+          //If realm will get railguns or chainguns
         } else if (techName.startsWith("Ion cannon")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ION_CANNON));
           tech.setRareTech(true);
@@ -752,13 +748,13 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
         } else if (techName.equals("Desert colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
         } else if (techName.startsWith("Planetary defense turret Mk")
             || techName.startsWith("Orbital shield")
@@ -767,12 +763,12 @@ public final class TechFactory {
           tech.setImprovement(techName);
           if (techName.startsWith("Planetary defense turret Mk")) {
             tech.setExcludeList(true);
-            tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+            tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
                 TraitIds.ZERO_GRAVITY_BEING));
           }
           if (techName.startsWith("Orbital elevator Mk")) {
             tech.setExcludeList(false);
-            tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+            tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
                 TraitIds.ZERO_GRAVITY_BEING));
           }
         } else {
@@ -891,7 +887,7 @@ public final class TechFactory {
         if (techName.equals("Advanced colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
           tech.setTradeable(false);
           return tech;
@@ -901,7 +897,7 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
           tech.setTradeable(false);
           tech.setExcludeList(false);
-          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
           tech.setHull(techName);
           return tech;
@@ -988,13 +984,13 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
         } else if (techName.equals("Swamp colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
         } else if (techName.startsWith("Starbase")) {
           tech.setComponent(techName);
@@ -1034,31 +1030,34 @@ public final class TechFactory {
           } else if (techName.startsWith("Advanced farm")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
             tech.setExcludeList(true);
-            tech.setSpaceRaces(SpaceRace.LITHORIANS, SpaceRace.MECHIONS);
+            tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+                TraitIds.ENERGY_POWERED, TraitIds.LITHOVORIC));
           } else if (techName.startsWith("Farming center")
               || techName.startsWith("Hydropodic farming center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
             tech.setExcludeList(true);
-            tech.setSpaceRaces(SpaceRace.LITHORIANS, SpaceRace.MECHIONS,
-                SpaceRace.SYNTHDROIDS);
+            tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+                TraitIds.ENERGY_POWERED, TraitIds.LITHOVORIC));
           } else if (techName.startsWith("Cyber lab")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
             tech.setExcludeList(false);
-            tech.setSpaceRaces(SpaceRace.MECHIONS, SpaceRace.SYNTHDROIDS);
+            tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
+                TraitIds.ROBOTIC));
             tech.setTradeable(false);
           } else if (techName.startsWith("Collective research center")
               || techName.startsWith("Research matrix")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
             tech.setExcludeList(false);
-            tech.setSpaceRaces(SpaceRace.REBORGIANS, SpaceRace.MECHIONS,
-                SpaceRace.SYNTHDROIDS);
+            tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+                TraitIds.ROBOTIC, TraitIds.CYBORG_LIFE_SPAN));
             tech.setTradeable(false);
           } else if (techName.startsWith("Advanced furnace")
               || techName.startsWith("Massive blast furnace")
               || techName.startsWith("Planetary furnace")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_METAL));
             tech.setExcludeList(false);
-            tech.setSpaceRaces(SpaceRace.LITHORIANS);
+            tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
+                TraitIds.LITHOVORIC));
             // This tech is rare tech that only Lithorians will learn it
             // but they can trade it to others if they wish.
             tech.setRareTech(true);
@@ -1141,7 +1140,7 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
         } else if (tech.getName().equals("Material replicator")) {
           tech.setImprovement(techName);

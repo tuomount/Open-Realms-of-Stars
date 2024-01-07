@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
 
@@ -750,12 +752,14 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+              TraitIds.ZERO_GRAVITY_BEING));
         } else if (techName.equals("Desert colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+              TraitIds.ZERO_GRAVITY_BEING));
         } else if (techName.startsWith("Planetary defense turret Mk")
             || techName.startsWith("Orbital shield")
             || techName.equals("Space academy")
@@ -763,11 +767,13 @@ public final class TechFactory {
           tech.setImprovement(techName);
           if (techName.startsWith("Planetary defense turret Mk")) {
             tech.setExcludeList(true);
-            tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
+            tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+                TraitIds.ZERO_GRAVITY_BEING));
           }
           if (techName.startsWith("Orbital elevator Mk")) {
             tech.setExcludeList(false);
-            tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
+            tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+                TraitIds.ZERO_GRAVITY_BEING));
           }
         } else {
           tech.setComponent(techName);
@@ -885,7 +891,8 @@ public final class TechFactory {
         if (techName.equals("Advanced colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+              TraitIds.ZERO_GRAVITY_BEING));
           tech.setTradeable(false);
           return tech;
         } else if (techName.equals("Minor orbital")
@@ -894,7 +901,8 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
           tech.setTradeable(false);
           tech.setExcludeList(false);
-          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+              TraitIds.ZERO_GRAVITY_BEING));
           tech.setHull(techName);
           return tech;
         } else if (techName.contains("starbase")
@@ -980,12 +988,14 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+              TraitIds.ZERO_GRAVITY_BEING));
         } else if (techName.equals("Swamp colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+              TraitIds.ZERO_GRAVITY_BEING));
         } else if (techName.startsWith("Starbase")) {
           tech.setComponent(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
@@ -1131,7 +1141,8 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRace.ALTEIRIANS);
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+              TraitIds.ZERO_GRAVITY_BEING));
         } else if (tech.getName().equals("Material replicator")) {
           tech.setImprovement(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_METAL_ORE));

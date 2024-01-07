@@ -17,6 +17,8 @@ package org.openRealmOfStars.player.race;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import java.util.ArrayList;
+
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -52,6 +54,20 @@ public final class SpaceRaceUtility {
     return SpaceRace.HUMAN;
   }
 
+  /**
+   * Get all SpaceRace with certain trait.
+   * @param traitId Trait Id
+   * @return Array of Space Race with certain trait.
+   */
+  public static SpaceRace[] getRacesByTraits(final String traitId) {
+    ArrayList<SpaceRace> list = new ArrayList<>();
+    for (SpaceRace race : SpaceRace.values()) {
+      if (race.hasTrait(traitId)) {
+        list.add(race);
+      }
+    }
+    return list.toArray(new SpaceRace[list.size()]);
+  }
   /**
    * Get Space race by single name
    * @param name Race name in single format

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.ai.research;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2022 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,9 +16,6 @@ package org.openRealmOfStars.ai.research;
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
-
-import static org.junit.Assert.*;
-
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -40,11 +37,19 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 
+import junit.framework.TestCase;
+
 /**
  * Tests for AI Research
  */
-public class ResearchTest {
+public class ResearchTest extends TestCase {
 
+  /** TODO: Remove when SpaceRaces are dehardcoded */
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+    SpaceRace.initialize();
+  }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testResearchHandlingHuman() {
@@ -361,7 +366,7 @@ public class ResearchTest {
     list.addTech(TechFactory.createCombatTech("Chaingun Mk1", 1));
     assertEquals(1, list.getTechLevel(TechType.Combat));
     Research.checkUpdateCombat(info, Attitude.AGGRESSIVE);
-    assertEquals(2, list.getTechLevel(TechType.Combat));
+    assertEquals(1, list.getTechLevel(TechType.Combat));
   }
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)

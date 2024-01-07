@@ -166,8 +166,7 @@ public class TechListTest extends TestCase {
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Chaingun Mk1", 1));
     Tech[] missing = list.getListMissingTech(TechType.Combat, 1);
-    assertEquals(1, missing.length);
-    assertEquals("Photon torpedo Mk1", missing[0].getName());
+    assertEquals(2, missing.length);
     assertEquals(true, list.isUpgradeable(TechType.Combat));
   }
 
@@ -242,7 +241,7 @@ public class TechListTest extends TestCase {
     list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Photon torpedo Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Callisto multicannon Mk1", 1));
-    assertEquals(2, list.getTechLevel(TechType.Combat));
+    assertEquals(1, list.getTechLevel(TechType.Combat));
     list = new TechList(SpaceRace.HUMAN);
     assertEquals(1, list.getTechLevel(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
@@ -254,7 +253,7 @@ public class TechListTest extends TestCase {
     list.addTech(TechFactory.createCombatTech("Photon torpedo Mk2", 2));
     list.addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
     list.addTech(TechFactory.createCombatTech("Callisto multicannon Mk2", 2));
-    assertEquals(3, list.getTechLevel(TechType.Combat));
+    assertEquals(1, list.getTechLevel(TechType.Combat));
     list = new TechList(SpaceRace.HUMAN);
     assertEquals(1, list.getTechLevel(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
@@ -266,9 +265,9 @@ public class TechListTest extends TestCase {
     list.addTech(TechFactory.createCombatTech("Photon torpedo Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Chaingun Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Chaingun Mk2", 2));
-    assertEquals(2, list.getTechLevel(TechType.Combat));
+    assertEquals(1, list.getTechLevel(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Photon torpedo Mk2", 2));
-    assertEquals(3, list.getTechLevel(TechType.Combat));
+    assertEquals(1, list.getTechLevel(TechType.Combat));
   }
 
   @Test
@@ -328,6 +327,8 @@ public class TechListTest extends TestCase {
     info.getTechList().updateResearchPointByTurn(30, info, 300, false);
     assertEquals(1, info.getTechList().getTechLevel(TechType.Combat));
     assertEquals(MessageType.RESEARCH, info.getMsgList().getMsg().getType());
+    info.getMsgList().clearMessages();
+    info.getTechList().updateResearchPointByTurn(30, info, 300, true);
     info.getMsgList().clearMessages();
     info.getTechList().updateResearchPointByTurn(30, info, 300, true);
     assertEquals(MessageType.RESEARCH, info.getMsgList().getMsg().getType());

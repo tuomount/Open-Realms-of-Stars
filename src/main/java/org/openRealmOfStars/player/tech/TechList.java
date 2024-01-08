@@ -194,18 +194,23 @@ public class TechList {
    * @param tech Tech to add
    */
   public void addTech(final Tech tech) {
-    if (tech != null) {
-      int index = tech.getType().getIndex();
-      int lvl = tech.getLevel() - 1;
-      if (!techList[index][lvl].isTech(tech.getName())) {
-        techList[index][lvl].addTech(tech);
-        if (isTechListForLevelFull(tech.getType(), lvl + 1)
-            && lvl + 1 >= techLevels[index]) {
-          techLevels[index] = lvl + 2;
-          if (techLevels[index] > 10) {
-            techLevels[index] = 10;
-          }
-        }
+    if (tech == null) {
+      return;
+    }
+    int index = tech.getType().getIndex();
+    int lvl = tech.getLevel() - 1;
+    var listForLevel = techList[index][lvl];
+    if (listForLevel.isTech(tech.getName())) {
+      return;
+    }
+
+    listForLevel.addTech(tech);
+
+    if (isTechListForLevelFull(tech.getType(), lvl + 1)
+        && lvl + 1 >= techLevels[index]) {
+      techLevels[index] = lvl + 2;
+      if (techLevels[index] > 10) {
+        techLevels[index] = 10;
       }
     }
   }
@@ -832,13 +837,11 @@ public class TechList {
    * @return Added Tech or null if all tech has been invented
    */
   public Tech addNewRandomTech(final PlayerInfo info) {
-    Tech result = null;
-    for (int j = 0; result == null && j < MAX_TECH_LEVEL; j++) {
+    for (int j = 0; j < MAX_TECH_LEVEL; j++) {
       int index = DiceGenerator.getRandom(0, 5);
       TechType type = TechType.getTypeByIndex(index);
       int lvl = techLevels[index];
-      Tech tech = TechFactory.createRandomTech(type, lvl,
-          getListForTypeAndLevel(type, lvl), race);
+      Tech tech = findRandomNewTech(type, lvl);
 
       if (tech == null) {
         if (lvl < MAX_TECH_LEVEL) {
@@ -852,9 +855,21 @@ public class TechList {
 
       showResearchComplete(tech, info);
 
-      result = tech;
+      return tech;
     }
-    return result;
+
+    return null;
+  }
+
+  /**
+   * Find new random Tech that is not in this TechList
+   * @param type TechType
+   * @param level Tech level
+   * @return New Random Tech or null if no other new Techs match criteria
+   */
+  public Tech findRandomNewTech(final TechType type, final int level) {
+    return TechFactory.createRandomTech(type, level,
+        getListForTypeAndLevel(type, level), race);
   }
 
   /**

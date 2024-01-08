@@ -2,6 +2,7 @@ package org.openRealmOfStars.player;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2024 BottledByte
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -381,450 +382,209 @@ public class PlayerInfo {
   }
 
   /**
+   * Add techs by their names
+   * @param techNames Tech names
+   */
+  private void addTechs(final String... techNames) {
+    for (var techName : techNames) {
+      var tech = TechFactory.findTech(techName);
+      techList.addTech(tech);
+    }
+  }
+
+  /**
+   * Try to add number of random Tech of specified level.
+   * If count is more than there are possible Techs for given type/level,
+   * more Techs will not be added.
+   * @param count How many Techs to add
+   * @param type Type of Techs
+   * @param level Level of Techs
+   */
+  private void addRandomTechs(final int count, final TechType type,
+      final int level) {
+    for (int i = 0; i < count; i++) {
+      var tech = techList.findRandomNewTech(type, level);
+      techList.addTech(tech);
+    }
+  }
+
+  /**
+   * Design initial Ship/Orbital/Starbase designs based on available Tech.
+   */
+  private void designInitialShips() {
+    ShipDesign design = ShipGenerator.createScout(this);
+    if (design != null) {
+      addShipStat(new ShipStat(design));
+    }
+
+    design = ShipGenerator.createColony(this, false);
+    if (design != null) {
+      addShipStat(new ShipStat(design));
+    }
+
+    design = ShipGenerator.createMinorOrbital(this);
+    if (design != null) {
+      addShipStat(new ShipStat(design));
+    }
+
+    design = ShipGenerator.createStarbase(this, ShipSize.SMALL);
+    if (design != null) {
+      addShipStat(new ShipStat(design));
+    }
+  }
+
+  /**
    * Default techs and ship design.
    */
   private void addDefaultTechs() {
-    /*
-     * Humans, Mechions and Centaurs get 1 Combat, 1 Defense, Scout and Colony
-     */
-    Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Defense, 1,
-        techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Colony", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Scout Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    ShipDesign design = ShipGenerator.createScout(this);
-    ShipStat stat = new ShipStat(design);
-    addShipStat(stat);
-    design = ShipGenerator.createColony(this, false);
-    stat = new ShipStat(design);
-    addShipStat(stat);
+    final String[] techs = {
+      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
+    };
+    addTechs(techs);
+
+    addRandomTechs(1, TechType.Combat, 1);
+    addRandomTechs(1, TechType.Defense, 1);
+
+    designInitialShips();
   }
+
   /**
    * Add alteirian techs and ship designs.
    */
   private void addAlteirianTechs() {
-    /*
-     * Alteirians get Railgun, shield, nuclear drive, Scout, Colony,
-     * minor orbital
-     */
-    Tech tech = TechFactory.createCombatTech("Railgun Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createDefenseTech("Shield Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Colony", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Scout Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Minor orbital", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Nuclear drive Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    ShipDesign design = ShipGenerator.createScout(this);
-    ShipStat stat = new ShipStat(design);
-    addShipStat(stat);
-    design = ShipGenerator.createColony(this, false);
-    stat = new ShipStat(design);
-    addShipStat(stat);
-    design = ShipGenerator.createMinorOrbital(this);
-    stat = new ShipStat(design);
-    addShipStat(stat);
+    final String[] techs = {
+      "Railgun Mk1", "Shield Mk1", "Colony", "Scout Mk1", "Minor orbital",
+      "Nuclear drive Mk1", "Fission source Mk1",
+    };
+    addTechs(techs);
+
+    designInitialShips();
   }
+
   /**
    * Add Chiraloid techs and ship designs.
    */
   private void addChiraloidTechs() {
-    /*
-     * Chiraloids get 2 Combat, 1 Defense, Scout and Colony
-     */
-    Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Defense, 1,
-        techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Colony", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Scout Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Nuclear drive Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    ShipDesign design = ShipGenerator.createScout(this);
-    ShipStat stat = new ShipStat(design);
-    addShipStat(stat);
-    design = ShipGenerator.createColony(this, false);
-    stat = new ShipStat(design);
-    addShipStat(stat);
+    final String[] techs = {
+      "Colony", "Scout Mk1", "Nuclear drive Mk1", "Fission source Mk1",
+    };
+    addTechs(techs);
+
+    addRandomTechs(2, TechType.Combat, 1);
+    addRandomTechs(1, TechType.Defense, 1);
+
+    designInitialShips();
   }
+
   /**
    * Add Greyan techs and shipdesigns.
    */
   private void addGreyanTechs() {
-    /*
-     * Greyans get 1 Combat, 1 Defense, Scout and Colony, 1 propulsion, 1
-     * electronics
-     */
-    Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Defense, 1,
-        techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Colony", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Scout Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Propulsion, 1,
-        techList.getListForTypeAndLevel(TechType.Propulsion, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Electrics, 1,
-        techList.getListForTypeAndLevel(TechType.Electrics, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    ShipDesign design = ShipGenerator.createScout(this);
-    ShipStat stat = new ShipStat(design);
-    addShipStat(stat);
-    design = ShipGenerator.createColony(this, false);
-    stat = new ShipStat(design);
-    addShipStat(stat);
+    final String[] techs = {
+      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
+    };
+    addTechs(techs);
+
+    addRandomTechs(1, TechType.Combat, 1);
+    addRandomTechs(1, TechType.Defense, 1);
+    addRandomTechs(1, TechType.Propulsion, 1);
+    addRandomTechs(1, TechType.Electrics, 1);
+
+    designInitialShips();
   }
+
   /**
    * Add Lithorian Tech and ship designs.
    */
   private void addLithorianTech() {
-    /*
-     * Lithorians get 1 Combat, 1 Defense, 1 electric, Scout and Colony
-     */
-    Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Defense, 1,
-        techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Colony", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Scout Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Nuclear drive Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Electrics, 1,
-        techList.getListForTypeAndLevel(TechType.Electrics, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    ShipDesign design = ShipGenerator.createScout(this);
-    ShipStat stat = new ShipStat(design);
-    addShipStat(stat);
-    design = ShipGenerator.createColony(this, false);
-    stat = new ShipStat(design);
-    addShipStat(stat);
+    final String[] techs = {
+      "Colony", "Scout Mk1", "Nuclear drive Mk1", "Fission source Mk1",
+    };
+    addTechs(techs);
+
+    addRandomTechs(1, TechType.Combat, 1);
+    addRandomTechs(1, TechType.Defense, 1);
+    addRandomTechs(1, TechType.Electrics, 1);
+
+    designInitialShips();
   }
+
   /**
    * Add Mothoid techs and ship designs.
    */
   private void addMothoidTechs() {
-    /*
-     * Mothoids get 1 Combat, 1 improvement, Scout and Colony
-     */
-    Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Colony", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Improvements, 1,
-        techList.getListForTypeAndLevel(TechType.Improvements, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Scout Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    ShipDesign design = ShipGenerator.createScout(this);
-    ShipStat stat = new ShipStat(design);
-    addShipStat(stat);
-    design = ShipGenerator.createColony(this, false);
-    stat = new ShipStat(design);
-    addShipStat(stat);
+    final String[] techs = {
+      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
+    };
+    addTechs(techs);
+
+    addRandomTechs(1, TechType.Combat, 1);
+    addRandomTechs(1, TechType.Improvements, 1);
+
+    designInitialShips();
   }
+
   /**
    * Add Reborgian techs and ship designs.
    */
   private void addReborgianTechs() {
-    /*
-     * Reborgians get 1 Combat, 1 Defense, 1 improvement, Scout and Colony
-     */
-    Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Defense, 1,
-        techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Colony", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Improvements, 1,
-        techList.getListForTypeAndLevel(TechType.Improvements, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Scout Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    ShipDesign design = ShipGenerator.createScout(this);
-    ShipStat stat = new ShipStat(design);
-    addShipStat(stat);
-    design = ShipGenerator.createColony(this, false);
-    stat = new ShipStat(design);
-    addShipStat(stat);
+    final String[] techs = {
+      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
+    };
+    addTechs(techs);
+
+    addRandomTechs(1, TechType.Combat, 1);
+    addRandomTechs(1, TechType.Defense, 1);
+    addRandomTechs(1, TechType.Improvements, 1);
+
+    designInitialShips();
   }
+
   /**
    * Add Scaurian techs and ship designs.
    */
   private void addScaurianTechs() {
-    /*
-     * Scaurians get 1 Combat, 1 Defense, Scout, Colony and Tax center
-     */
-    Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Defense, 1,
-        techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Colony", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Scout Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createImprovementTech("Tax center", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    ShipDesign design = ShipGenerator.createScout(this);
-    ShipStat stat = new ShipStat(design);
-    addShipStat(stat);
-    design = ShipGenerator.createColony(this, false);
-    stat = new ShipStat(design);
-    addShipStat(stat);
+    final String[] techs = {
+      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
+      "Tax center",
+    };
+    addTechs(techs);
+
+    addRandomTechs(1, TechType.Combat, 1);
+    addRandomTechs(1, TechType.Defense, 1);
+
+    designInitialShips();
   }
+
   /**
    * Adds Spork techs and ship designs.
    */
   private void addSporkTechs() {
-    /*
-     * Sporks get 2 Combat, 1 Defense, Scout and Colony
-     */
-    Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Defense, 1,
-        techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Colony", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Scout Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    ShipDesign design = ShipGenerator.createScout(this);
-    ShipStat stat = new ShipStat(design);
-    addShipStat(stat);
-    design = ShipGenerator.createColony(this, false);
-    stat = new ShipStat(design);
-    addShipStat(stat);
+    final String[] techs = {
+      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
+    };
+    addTechs(techs);
+
+    addRandomTechs(2, TechType.Combat, 1);
+    addRandomTechs(1, TechType.Defense, 1);
+
+    designInitialShips();
   }
+
   /**
    * Add Greyan techs and shipdesigns.
    */
   private void addSynthdroidTechs() {
-    /*
-     * Synthdroids get 1 Combat, 1 Defense, Scout and Colony, 1 electronics
-     */
-    Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Defense, 1,
-        techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Colony", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Scout Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Electrics, 1,
-        techList.getListForTypeAndLevel(TechType.Electrics, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    ShipDesign design = ShipGenerator.createScout(this);
-    ShipStat stat = new ShipStat(design);
-    addShipStat(stat);
-    design = ShipGenerator.createColony(this, false);
-    stat = new ShipStat(design);
-    addShipStat(stat);
+    final String[] techs = {
+      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
+    };
+    addTechs(techs);
+
+    addRandomTechs(1, TechType.Combat, 1);
+    addRandomTechs(1, TechType.Defense, 1);
+    addRandomTechs(1, TechType.Electrics, 1);
+
+    designInitialShips();
   }
 
   /**
@@ -833,70 +593,21 @@ public class PlayerInfo {
   private void addSpacePirateTechs() {
     // Space pirate is always board player
     setBoard(true);
-    /*
-     * Space pirates get higher start tech
-     */
-    Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Combat, 1,
-        techList.getListForTypeAndLevel(TechType.Combat, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Combat, 2,
-        techList.getListForTypeAndLevel(TechType.Combat, 2), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Defense, 1,
-        techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Defense, 1,
-        techList.getListForTypeAndLevel(TechType.Defense, 1), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createRandomTech(TechType.Defense, 2,
-        techList.getListForTypeAndLevel(TechType.Defense, 2), getRace());
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Small starbase Mk1", 2);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createHullTech("Scout Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Nuclear drive Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    tech = TechFactory.createPropulsionTech("Fission source Mk2", 1);
-    if (tech != null) {
-      techList.addTech(tech);
-    }
-    ShipDesign design = ShipGenerator.createScout(this);
-    ShipStat stat = new ShipStat(design);
-    addShipStat(stat);
-    design = ShipGenerator.createStarbase(this, ShipSize.SMALL);
-    stat = new ShipStat(design);
-    addShipStat(stat);
+
+    final String[] techs = {
+      "Small starbase Mk1", "Scout Mk1", "Ion drive Mk1", "Nuclear drive Mk1",
+      "Fission source Mk1", "Fission source Mk2",
+    };
+    addTechs(techs);
+
+    addRandomTechs(2, TechType.Combat, 1);
+    addRandomTechs(1, TechType.Combat, 2);
+    addRandomTechs(2, TechType.Defense, 1);
+    addRandomTechs(1, TechType.Defense, 2);
+
+    designInitialShips();
   }
+
   /**
    * Add Space monster techs and ship designs.
    */
@@ -907,72 +618,49 @@ public class PlayerInfo {
      */
     Tech tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 1,
         "Massive mouth with teeth Mk1");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
     tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 2,
         "Massive mouth with teeth Mk2");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
     tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 3,
         "Massive mouth with teeth Mk3");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
+
     tech = TechFactory.createSpaceMonsterTech(TechType.Defense, 1,
         "Organic armor Mk1");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
     tech = TechFactory.createSpaceMonsterTech(TechType.Defense, 2,
         "Organic armor Mk2");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
     tech = TechFactory.createSpaceMonsterTech(TechType.Defense, 3,
         "Organic armor Mk3");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
+
     tech = TechFactory.createSpaceMonsterTech(TechType.Propulsion, 1,
         "Space fin");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
     tech = TechFactory.createSpaceMonsterTech(TechType.Propulsion, 1,
         "Heart");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
     tech = TechFactory.createSpaceMonsterTech(TechType.Propulsion, 2,
         "Large heart");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
+
     tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 1,
         "Tentacle Mk1");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
     tech = TechFactory.createSpaceMonsterTech(TechType.Combat, 2,
         "Tentacle Mk2");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
+
     tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 1, "Space worm");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
     tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 2, "Kraken");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
     tech = TechFactory.createSpaceMonsterTech(TechType.Hulls, 3,
         "Large kraken");
-    if (tech != null) {
-      techList.addTech(tech);
-    }
+    techList.addTech(tech);
+
     ShipDesign design = ShipGenerator.createSpaceWorm(this);
     ShipStat stat = new ShipStat(design);
     addShipStat(stat);
@@ -986,6 +674,7 @@ public class PlayerInfo {
     stat = new ShipStat(design);
     addShipStat(stat);
   }
+
   /**
    * Constructor player info.
    * This constructor should be used only when

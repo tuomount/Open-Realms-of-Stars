@@ -837,28 +837,26 @@ public class TechList {
    * @return Added Tech or null if all tech has been invented
    */
   public Tech addNewRandomTech(final PlayerInfo info) {
+    Tech tech = null;
     for (int j = 0; j < MAX_TECH_LEVEL; j++) {
       int index = DiceGenerator.getRandom(0, 5);
       TechType type = TechType.getTypeByIndex(index);
       int lvl = techLevels[index];
-      Tech tech = findRandomNewTech(type, lvl);
+      tech = findRandomNewTech(type, lvl);
 
       if (tech == null) {
         if (lvl < MAX_TECH_LEVEL) {
           techLevels[index] += 1;
         }
-
         continue;
       }
-
-      addTech(tech);
-
-      showResearchComplete(tech, info);
-
-      return tech;
+      break;
     }
+    addTech(tech);
 
-    return null;
+    showResearchComplete(tech, info);
+
+    return tech;
   }
 
   /**

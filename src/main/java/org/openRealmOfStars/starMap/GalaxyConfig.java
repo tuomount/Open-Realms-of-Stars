@@ -285,7 +285,7 @@ public class GalaxyConfig {
       setRace(i, SpaceRaceUtility.getRandomRace());
       setPlayerColor(i, DiceGenerator.pickRandom(PlayerColor.values()));
       while (true) {
-        GovernmentType gov = GovernmentUtility.getRandomGovernment(getRace(i));
+        GovernmentType gov = GovernmentUtility.getRandomGovernment();
         setPlayerGovernment(i, gov);
         setPlayerDifficult(i, AiDifficulty.NORMAL);
         String tmp = SpaceRaceUtility.getRealmName(getRace(i),

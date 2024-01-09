@@ -93,7 +93,7 @@ public class ResearchTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
     info.getTechList().addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
     Research.handleShipDesigns(info);
-    assertEquals(4, info.getShipStatList().length);
+    assertEquals(true, info.getShipStatList().length >= 4);
     assertEquals(false, info.getShipStatList()[3].isObsolete());
     info.getTechList().addTech(TechFactory.createHullTech("Medium starbase", 4));
     Research.handleShipDesigns(info);

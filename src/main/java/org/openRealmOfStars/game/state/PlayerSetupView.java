@@ -215,12 +215,12 @@ public class PlayerSetupView extends BlackPanel {
       comboGovernmentSelect[index].removeActionListener(actionListener);
       comboGovernmentSelect[index].removeAllItems();
       SpaceRace race = config.getRace(index);
-      GovernmentType[] govs = GovernmentUtility.getGovernmentsForRace(race);
+      GovernmentType[] govs = GovernmentType.values();
       for (GovernmentType gov : govs) {
         comboGovernmentSelect[index].addItem(gov);
       }
       config.setPlayerGovernment(index,
-          GovernmentUtility.getRandomGovernment(race));
+          GovernmentUtility.getRandomGovernment());
       comboGovernmentSelect[index].setSelectedItem(
           config.getPlayerGovernment(index));
       comboGovernmentSelect[index].setToolTipText(
@@ -347,8 +347,7 @@ public class PlayerSetupView extends BlackPanel {
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     EmptyInfoPanel info2 = new EmptyInfoPanel();
     info2.setLayout(new BoxLayout(info2, BoxLayout.X_AXIS));
-    comboGovernmentSelect[index] = new SpaceComboBox<>(
-        GovernmentUtility.getGovernmentsForRace(config.getRace(index)));
+    comboGovernmentSelect[index] = new SpaceComboBox<>(GovernmentType.values());
     comboGovernmentSelect[index].setBackground(
         GuiStatics.getDeepSpaceDarkColor());
     comboGovernmentSelect[index].setForeground(
@@ -369,8 +368,7 @@ public class PlayerSetupView extends BlackPanel {
     comboGovernmentSelect[index].setSelectedItem(
         config.getPlayerGovernment(index));
     int i = comboGovernmentSelect[index].getSelectedIndex();
-    GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
-        config.getRace(index));
+    GovernmentType[] governments = GovernmentType.values();
     comboGovernmentSelect[index].setToolTipText(
         governments[i].getDescription(false));
     info2.add(comboGovernmentSelect[index]);

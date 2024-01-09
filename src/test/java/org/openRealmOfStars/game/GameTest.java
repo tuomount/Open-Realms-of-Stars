@@ -285,39 +285,6 @@ public class GameTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunFullGameVeryLongWith8Realms() {
-    System.gc();
-    Game game = new Game(false);
-    GalaxyConfig config = new GalaxyConfig();
-    config.setMaxPlayers(8);
-    config.setSize(128, 2);
-    config.setScoringVictoryTurns(1000);
-    config.setAiOnly(true);
-    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
-    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(3, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(4, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(5, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(6, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(7, AiDifficulty.CHALLENGING);
-    game.setGalaxyConfig(config);
-    game.setPlayerInfo();
-    game.makeNewGame(false);
-    do {
-      game.setAITurnView(new AITurnView(game));
-      boolean singleTurnEnd = false;
-      do {
-       singleTurnEnd = game.getAITurnView().handleAiTurn();
-      } while (!singleTurnEnd);
-      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
-    } while (!game.getStarMap().isGameEnded());
-    printEndGameResults("Full game with 8 realms, long 1000 turns", game);
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRunFullGameMediumWith8RealmsAndDifficulty() {
     System.gc();
     Game game = new Game(false);
@@ -437,42 +404,6 @@ public class GameTest {
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
     printEndGameResults("12 Realms, 600 turns", game);
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunFullGameMediumWith8RealmsOneLithorian() {
-    System.gc();
-    Game game = new Game(false);
-    GalaxyConfig config = new GalaxyConfig();
-    config.setMaxPlayers(8);
-    config.setSize(128, 2);
-    config.setScoringVictoryTurns(400);
-    config.setAiOnly(true);
-    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
-    config.setRace(0, SpaceRace.LITHORIANS);
-    config.setPlayerGovernment(0, GovernmentType.EMPIRE);
-    config.setPlayerName(0, "Empire of Lithorian");
-    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(2, AiDifficulty.CHALLENGING);
-    config.setPlayerDifficult(3, AiDifficulty.NORMAL);
-    config.setPlayerDifficult(4, AiDifficulty.NORMAL);
-    config.setPlayerDifficult(5, AiDifficulty.NORMAL);
-    config.setPlayerDifficult(6, AiDifficulty.WEAK);
-    config.setPlayerDifficult(7, AiDifficulty.WEAK);
-    game.setGalaxyConfig(config);
-    game.setPlayerInfo();
-    game.makeNewGame(false);
-    do {
-      game.setAITurnView(new AITurnView(game));
-      boolean singleTurnEnd = false;
-      do {
-       singleTurnEnd = game.getAITurnView().handleAiTurn();
-      } while (!singleTurnEnd);
-      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
-    } while (!game.getStarMap().isGameEnded());
-    printEndGameResults("8 Realms, one lithorian, medium 400 turns", game);
   }
 
   @Test

@@ -136,7 +136,7 @@ public final class RandomEventUtility {
         if (perks.length > 0) {
           ImageInstruction instructions = new ImageInstruction();
           instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
-          instructions.addSiluete(info.getRuler().getRace().getNameSingle(),
+          instructions.addSilhouette(info.getRuler().getRace().getNameSingle(),
               ImageInstruction.POSITION_CENTER);
           event.setImageInstructions(instructions.build());
           Perk perk = DiceGenerator.pickRandom(perks);
@@ -192,7 +192,7 @@ public final class RandomEventUtility {
               event.getText(), Icons.getIconByName(Icons.ICON_LEADERS));
           info.getMsgList().addFirstMessage(message);
           instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
-          instructions.addSiluete(leader.getRace().getNameSingle(),
+          instructions.addSilhouette(leader.getRace().getNameSingle(),
               ImageInstruction.POSITION_CENTER);
           event.setImageInstructions(instructions.build());
           message.setRandomEventPop(true);
@@ -222,7 +222,7 @@ public final class RandomEventUtility {
         Perk[] perksGained = LeaderUtility.addRandomPerks(leader);
         ImageInstruction instructions = new ImageInstruction();
         instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
-        instructions.addSiluete(leader.getRace().getNameSingle(),
+        instructions.addSilhouette(leader.getRace().getNameSingle(),
             ImageInstruction.POSITION_CENTER);
         event.setImageInstructions(instructions.build());
         StringBuilder sb = new StringBuilder();
@@ -901,7 +901,7 @@ public final class RandomEventUtility {
       PlayerInfo info = event.getRealm();
       ImageInstruction instructions = new ImageInstruction();
       instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
-      instructions.addSiluete(info.getRace().getNameSingle(),
+      instructions.addSilhouette(info.getRace().getNameSingle(),
           ImageInstruction.POSITION_LEFT);
       int bestValue = 0;
       Planet mostValuablePlanet = null;
@@ -917,7 +917,7 @@ public final class RandomEventUtility {
       String governorCorrupted = "";
       if (mostValuablePlanet != null
           && mostValuablePlanet.getGovernor() != null) {
-        instructions.addSiluete(mostValuablePlanet.getGovernor().getRace()
+        instructions.addSilhouette(mostValuablePlanet.getGovernor().getRace()
             .getNameSingle(), ImageInstruction.POSITION_RIGHT);
         if (!mostValuablePlanet.getGovernor().hasPerk(Perk.CORRUPTED)) {
           mostValuablePlanet.getGovernor().addPerk(Perk.CORRUPTED);
@@ -928,7 +928,7 @@ public final class RandomEventUtility {
       Leader ruler = info.getRuler();
       String rulerCorrupted = "";
       if (ruler != null) {
-        instructions.addSiluete(ruler.getRace().getNameSingle(),
+        instructions.addSilhouette(ruler.getRace().getNameSingle(),
             ImageInstruction.POSITION_CENTER);
         if (!ruler.hasPerk(Perk.CORRUPTED)) {
           ruler.addPerk(Perk.CORRUPTED);

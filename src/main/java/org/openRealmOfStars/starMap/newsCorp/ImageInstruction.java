@@ -502,27 +502,27 @@ public class ImageInstruction {
    */
   public static final String ARTIFACT_ON_PLANET = "ArtifactOnPlanet";
 
-  /**
-   * Instruction to draw image
-   */
+  /** Instruction to draw image */
   private static final String IMAGE = "image";
-  /**
-   * Instruction to draw captain image
-   */
+  /** Instruction to draw captain image */
   private static final String CAPTAIN = "captain";
-  /**
-   * Instruction to draw space ship bridge
-   */
+  /** Instruction to draw space ship bridge */
   private static final String BRIDGE = "bridge";
-  /**
-   * Instruction to draw siluete
-   */
-  private static final String SILUETE = "siluete";
+  /** Instruction to draw silhouette */
+  private static final String SILHOUETTE = "silhouette";
 
-  /**
-   * String builder used to collect all the instructions
-   */
+  /** Character for starting parameters */
+  private static final char PARAM_START = '(';
+  /** Character for ending parameters */
+  private static final char PARAM_END = ')';
+  /** Instruction delimiter */
+  private static final char INSTRUCTION_DELIM = '+';
+  /** Parameter delimiter */
+  private static final char PARAMETER_DELIM = ',';
+
+  /** String builder used to collect all the instructions */
   private StringBuilder sb;
+
   /**
    * Constructor for Image instruction
    */
@@ -539,24 +539,6 @@ public class ImageInstruction {
     checkDelim();
     sb.append(instruction);
   }
-  /**
-   * Character for starting parameters
-   */
-  private static final char PARAM_START = '(';
-
-  /**
-   * Character for ending parameters
-   */
-  private static final char PARAM_END = ')';
-
-  /**
-   * Instruction delimiter
-   */
-  private static final char INSTRUCTION_DELIM = '+';
-  /**
-   * Parameter delimiter
-   */
-  private static final char PARAMETER_DELIM = ',';
 
   /**
    * Check if there is instruction delimiter if it is missing
@@ -672,24 +654,8 @@ public class ImageInstruction {
    */
   public ImageInstruction addCaptain(final String image, final int adjust) {
     checkDelim();
-    if (!SpaceRace.CENTAURS.getNameSingle().equals(image)
-        && !SpaceRace.HUMAN.getNameSingle().equals(image)
-        && !SpaceRace.SPORKS.getNameSingle().equals(image)
-        && !SpaceRace.GREYANS.getNameSingle().equals(image)
-        && !SpaceRace.MOTHOIDS.getNameSingle().equals(image)
-        && !SpaceRace.TEUTHIDAES.getNameSingle().equals(image)
-        && !SpaceRace.MECHIONS.getNameSingle().equals(image)
-        && !SpaceRace.SCAURIANS.getNameSingle().equals(image)
-        && !SpaceRace.HOMARIANS.getNameSingle().equals(image)
-        && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)
-        && !SpaceRace.CHIRALOIDS.getNameSingle().equals(image)
-        && !SpaceRace.REBORGIANS.getNameSingle().equals(image)
-        && !SpaceRace.LITHORIANS.getNameSingle().equals(image)
-        && !SpaceRace.ALTEIRIANS.getNameSingle().equals(image)
-        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(image)
-        && !SpaceRace.SYNTHDROIDS.getNameSingle().equals(image)) {
-      throw new IllegalArgumentException("Illegal captain image: "
-          + image);
+    if (SpaceRaceUtility.getRaceByName(image) == null) {
+      throw new IllegalArgumentException("Illegal captain image: " + image);
     }
     sb.append(CAPTAIN);
     sb.append(PARAM_START);
@@ -709,22 +675,7 @@ public class ImageInstruction {
    */
   public ImageInstruction addImage(final String image) {
     checkDelim();
-    if (!SpaceRace.CENTAURS.getNameSingle().equals(image)
-        && !SpaceRace.HUMAN.getNameSingle().equals(image)
-        && !SpaceRace.SPORKS.getNameSingle().equals(image)
-        && !SpaceRace.GREYANS.getNameSingle().equals(image)
-        && !SpaceRace.MOTHOIDS.getNameSingle().equals(image)
-        && !SpaceRace.TEUTHIDAES.getNameSingle().equals(image)
-        && !SpaceRace.MECHIONS.getNameSingle().equals(image)
-        && !SpaceRace.SCAURIANS.getNameSingle().equals(image)
-        && !SpaceRace.HOMARIANS.getNameSingle().equals(image)
-        && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)
-        && !SpaceRace.CHIRALOIDS.getNameSingle().equals(image)
-        && !SpaceRace.REBORGIANS.getNameSingle().equals(image)
-        && !SpaceRace.LITHORIANS.getNameSingle().equals(image)
-        && !SpaceRace.ALTEIRIANS.getNameSingle().equals(image)
-        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(image)
-        && !SpaceRace.SYNTHDROIDS.getNameSingle().equals(image)
+    if (SpaceRaceUtility.getRaceByName(image) == null
         && !LOGO.equals(image)
         && !BIG_BAN.equals(image)
         && !BIG_PEACE.equals(image)
@@ -768,8 +719,7 @@ public class ImageInstruction {
         && !LUSH_VEGETATION.equals(image)
         && !ARTIFACT_ON_PLANET.equals(image)
         && !FACTORY.equals(image)) {
-      throw new IllegalArgumentException("Illegal image: "
-        + image);
+      throw new IllegalArgumentException("Illegal image: " + image);
     }
     sb.append(IMAGE);
     sb.append(PARAM_START);
@@ -787,24 +737,8 @@ public class ImageInstruction {
    */
   public ImageInstruction addBridge(final String image) {
     checkDelim();
-    if (!SpaceRace.CENTAURS.getNameSingle().equals(image)
-        && !SpaceRace.HUMAN.getNameSingle().equals(image)
-        && !SpaceRace.SPORKS.getNameSingle().equals(image)
-        && !SpaceRace.GREYANS.getNameSingle().equals(image)
-        && !SpaceRace.MOTHOIDS.getNameSingle().equals(image)
-        && !SpaceRace.TEUTHIDAES.getNameSingle().equals(image)
-        && !SpaceRace.MECHIONS.getNameSingle().equals(image)
-        && !SpaceRace.SCAURIANS.getNameSingle().equals(image)
-        && !SpaceRace.HOMARIANS.getNameSingle().equals(image)
-        && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)
-        && !SpaceRace.CHIRALOIDS.getNameSingle().equals(image)
-        && !SpaceRace.REBORGIANS.getNameSingle().equals(image)
-        && !SpaceRace.LITHORIANS.getNameSingle().equals(image)
-        && !SpaceRace.ALTEIRIANS.getNameSingle().equals(image)
-        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(image)
-        && !SpaceRace.SYNTHDROIDS.getNameSingle().equals(image)) {
-      throw new IllegalArgumentException("Illegal image: "
-        + image);
+    if (SpaceRaceUtility.getRaceByName(image) == null) {
+      throw new IllegalArgumentException("Illegal image: " + image);
     }
     sb.append(BRIDGE);
     sb.append(PARAM_START);
@@ -814,33 +748,17 @@ public class ImageInstruction {
   }
 
   /**
-   * Add another image siluete to image instructions.
+   * Add another image silhouette to image instructions.
    * @param image image name to place into image
-   * @param position Where siluete is going go be drawn.
+   * @param position Where silhouette is going go be drawn.
    *        POSITION_CENTER, POSITION_LEFT, POSITION_RIGHT
    * @return ImageInstruction with text
    */
-  public ImageInstruction addSiluete(final String image,
+  public ImageInstruction addSilhouette(final String image,
       final String position) {
     checkDelim();
-    if (!SpaceRace.CENTAURS.getNameSingle().equals(image)
-        && !SpaceRace.HUMAN.getNameSingle().equals(image)
-        && !SpaceRace.SPORKS.getNameSingle().equals(image)
-        && !SpaceRace.GREYANS.getNameSingle().equals(image)
-        && !SpaceRace.MOTHOIDS.getNameSingle().equals(image)
-        && !SpaceRace.TEUTHIDAES.getNameSingle().equals(image)
-        && !SpaceRace.MECHIONS.getNameSingle().equals(image)
-        && !SpaceRace.SCAURIANS.getNameSingle().equals(image)
-        && !SpaceRace.HOMARIANS.getNameSingle().equals(image)
-        && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)
-        && !SpaceRace.CHIRALOIDS.getNameSingle().equals(image)
-        && !SpaceRace.REBORGIANS.getNameSingle().equals(image)
-        && !SpaceRace.LITHORIANS.getNameSingle().equals(image)
-        && !SpaceRace.ALTEIRIANS.getNameSingle().equals(image)
-        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(image)
-        && !SpaceRace.SYNTHDROIDS.getNameSingle().equals(image)) {
-      throw new IllegalArgumentException("Illegal image: "
-        + image);
+    if (SpaceRaceUtility.getRaceByName(image) == null) {
+      throw new IllegalArgumentException("Illegal image: " + image);
     }
     if (!POSITION_CENTER.equals(position)
         && !POSITION_LEFT.equals(position)
@@ -848,7 +766,7 @@ public class ImageInstruction {
       throw new IllegalArgumentException("Illegal logo position: "
         + position);
     }
-    sb.append(SILUETE);
+    sb.append(SILHOUETTE);
     sb.append(PARAM_START);
     sb.append(sanitizeParameters(image));
     sb.append(PARAMETER_DELIM);
@@ -914,7 +832,8 @@ public class ImageInstruction {
       throw new IllegalArgumentException("Illegal logo position: "
         + position);
     }
-    if (!PLANET_SPORTS.equals(logoType)
+    if (SpaceRaceUtility.getRaceByName(logoType) == null
+        && !PLANET_SPORTS.equals(logoType)
         && !BIG_BAN.equals(logoType)
         && !BIG_PEACE.equals(logoType)
         && !BIG_NUKE.equals(logoType)
@@ -926,24 +845,7 @@ public class ImageInstruction {
         && !METEOR.equals(logoType)
         && !METEOR_HIT.equals(logoType)
         && !BIG_EXPLOSION.equals(logoType)
-        && !BIG_ORBITAL.equals(logoType)
-        && !SpaceRace.CENTAURS.getNameSingle().equals(logoType)
-        && !SpaceRace.HUMAN.getNameSingle().equals(logoType)
-        && !SpaceRace.SPORKS.getNameSingle().equals(logoType)
-        && !SpaceRace.GREYANS.getNameSingle().equals(logoType)
-        && !SpaceRace.MOTHOIDS.getNameSingle().equals(logoType)
-        && !SpaceRace.TEUTHIDAES.getNameSingle().equals(logoType)
-        && !SpaceRace.MECHIONS.getNameSingle().equals(logoType)
-        && !SpaceRace.SCAURIANS.getNameSingle().equals(logoType)
-        && !SpaceRace.HOMARIANS.getNameSingle().equals(logoType)
-        && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(logoType)
-        && !SpaceRace.CHIRALOIDS.getNameSingle().equals(logoType)
-        && !SpaceRace.REBORGIANS.getNameSingle().equals(logoType)
-        && !SpaceRace.LITHORIANS.getNameSingle().equals(logoType)
-        && !SpaceRace.ALTEIRIANS.getNameSingle().equals(logoType)
-        && !SpaceRace.SMAUGIRIANS.getNameSingle().equals(logoType)
-        && !SpaceRace.SYNTHDROIDS.getNameSingle().equals(logoType)
-        && !SpaceRace.SPACE_MONSTERS.getNameSingle().equals(logoType)) {
+        && !BIG_ORBITAL.equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }
     if (!SIZE_FULL.equals(size)
@@ -1276,19 +1178,19 @@ public class ImageInstruction {
   }
 
   /**
-   * Draw siluete on image
+   * Draw silhouette on image
    * @param workImage Image where to draw
-   * @param raceName Race whom's siluete is drawn
+   * @param raceName Race whom's silhouette is drawn
    * @param position LEFT, CENTER or RIGHT
    */
-  private static void paintSiluete(final BufferedImage workImage,
+  private static void paintSilhouette(final BufferedImage workImage,
       final String raceName, final String position) {
     BufferedImage silhoutteImg = GuiStatics.IMAGE_HUMAN_RACE;
     SpaceRace race = SpaceRaceUtility.getRaceByName(raceName);
     if (race != null) {
       silhoutteImg = GuiStatics.getRaceImg(race);
     }
-    silhoutteImg = GraphRoutines.blackSiluete(silhoutteImg);
+    silhoutteImg = GraphRoutines.blackSilhouette(silhoutteImg);
 
     Graphics2D g = (Graphics2D) workImage.getGraphics();
     if (POSITION_CENTER.equals(position)) {
@@ -1594,8 +1496,8 @@ public class ImageInstruction {
       if (BRIDGE.equals(command)) {
         workImage = paintBridge(workImage, parameters[0]);
       }
-      if (SILUETE.equals(command)) {
-        paintSiluete(workImage, parameters[0], parameters[1]);
+      if (SILHOUETTE.equals(command)) {
+        paintSilhouette(workImage, parameters[0], parameters[1]);
       }
       if (RELATION_SYMBOL.equals(command)) {
         Graphics2D g = (Graphics2D) workImage.getGraphics();

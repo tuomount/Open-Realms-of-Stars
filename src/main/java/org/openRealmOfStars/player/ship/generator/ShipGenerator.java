@@ -886,20 +886,15 @@ public final class ShipGenerator {
       if (armor != null) {
         armorComp = ShipComponentFactory.createByName(armor.getComponent());
       }
-      if (player.getRace() == SpaceRace.CENTAURS
-          || player.getRace() == SpaceRace.MOTHOIDS) {
-        // Centaurs could ignore defense since they got more hull points.
-        // Mothoids does not have defense tech at start so adding another
-        // weapon.
-        result.addComponent(weapon);
-      } else {
-        if (shieldComp != null
-            && result.getFreeEnergy() >= shieldComp.getEnergyRequirement()) {
-          result.addComponent(shieldComp);
-        } else if (armorComp != null) {
-          result.addComponent(armorComp);
-        }
+
+      // TODO: Consider stronger hulls from MASSIVE_SIZE RaceTrait?
+      if (shieldComp != null
+          && result.getFreeEnergy() >= shieldComp.getEnergyRequirement()) {
+        result.addComponent(shieldComp);
+      } else if (armorComp != null) {
+        result.addComponent(armorComp);
       }
+
       if (result.getNumberOfComponents() == 2) {
         if (shieldComp != null) {
           result.addComponent(shieldComp);
@@ -990,15 +985,12 @@ public final class ShipGenerator {
         cloakComp = ShipComponentFactory.createByName(cloak.getComponent());
       }
       if (probe) {
-        if (player.getRace() == SpaceRace.TEUTHIDAES && scannerComp != null) {
+        // TODO: Consider innate cloaking from STEALTHY RaceTrait?
+        if (cloakComp != null
+            && result.getFreeEnergy() >= cloakComp.getEnergyRequirement()) {
+          result.addComponent(cloakComp);
+        } else if (scannerComp != null) {
           result.addComponent(scannerComp);
-        } else {
-          if (cloakComp != null
-              && result.getFreeEnergy() >= cloakComp.getEnergyRequirement()) {
-            result.addComponent(cloakComp);
-          } else if (scannerComp != null) {
-            result.addComponent(scannerComp);
-          }
         }
       } else {
         if (cloakComp != null

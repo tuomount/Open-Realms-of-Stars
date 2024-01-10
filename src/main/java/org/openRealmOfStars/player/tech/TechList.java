@@ -838,19 +838,17 @@ public class TechList {
    */
   public Tech addNewRandomTech(final PlayerInfo info) {
     Tech tech = null;
-    for (int j = 0; j < MAX_TECH_LEVEL; j++) {
+    int loopCount = 0;
+    while (tech == null && loopCount < 10) {
+      loopCount++;
       int index = DiceGenerator.getRandom(0, 5);
       TechType type = TechType.getTypeByIndex(index);
       int lvl = techLevels[index];
       tech = findRandomNewTech(type, lvl);
 
-      if (tech == null) {
-        if (lvl < MAX_TECH_LEVEL) {
-          techLevels[index] += 1;
-        }
-        continue;
+      if (tech == null && lvl < MAX_TECH_LEVEL) {
+        techLevels[index] += 1;
       }
-      break;
     }
     addTech(tech);
 

@@ -376,6 +376,9 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.TOLERATE_LAVA).ifPresent(trait -> {
       LITHORIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.ARMED_FREIGHTERS).ifPresent(trait -> {
+      SMAUGIRIANS.addTrait(trait);
+    });
   }
 
   /**

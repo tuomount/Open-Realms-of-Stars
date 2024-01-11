@@ -392,5 +392,11 @@
     "conflictsWith": [
       "TOLERATE_COLD", "TOLERATE_HOT"
     ]
+  },
+  {
+    "id": "ARMED_FREIGHTERS",
+    "name": "Armed freighters",
+    "description": "Can build Freighter Ships with privateering modules and single hidden weapon.",
+    "points": 2
   }
 ]

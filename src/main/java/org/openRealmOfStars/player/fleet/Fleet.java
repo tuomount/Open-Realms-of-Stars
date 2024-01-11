@@ -33,6 +33,7 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -988,7 +989,7 @@ public class Fleet {
     for (Ship ship : ships) {
       if (!ship.isStarBase() || ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
         result = result + ship.getTotalMilitaryPower();
-        if (ship.getHull().getRace() == SpaceRace.SMAUGIRIANS
+        if (ship.getHull().getRace().hasTrait(TraitIds.ARMED_FREIGHTERS)
             && ship.getHull().getHullType() == ShipHullType.FREIGHTER) {
           result = result - ship.getTotalMilitaryPower();
         }

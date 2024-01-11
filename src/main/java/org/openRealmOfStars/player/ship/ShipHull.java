@@ -276,7 +276,7 @@ public class ShipHull {
           "Probe, no weapons allowed. Faster regular and FTL speed.",
           LINE_LENGTH);
     }
-    if (originalBuilder == SpaceRace.SMAUGIRIANS
+    if (originalBuilder.hasTrait(TraitIds.ARMED_FREIGHTERS)
         && getHullType() == ShipHullType.FREIGHTER) {
       hullDescription = IOUtilities.stringWrapper(
           "Freighter, single weapon and privateer module allowed. Cargo ship",

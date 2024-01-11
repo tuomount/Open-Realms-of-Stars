@@ -1186,7 +1186,7 @@ public final class ShipGenerator {
     ShipComponent power = ShipComponentFactory.createByName(
         player.getTechList().getBestEnergySource().getComponent());
     result.addComponent(power);
-    if (player.getRace() == SpaceRace.SMAUGIRIANS
+    if (player.getRace().hasTrait(TraitIds.ARMED_FREIGHTERS)
         && result.getFreeSlots() > 2) {
       ShipComponent weapon = ShipComponentFactory
           .createByName(player.getTechList().getBestWeapon().getComponent());
@@ -1254,7 +1254,7 @@ public final class ShipGenerator {
         }
       }
     }
-    if (player.getRace() == SpaceRace.SMAUGIRIANS
+    if (player.getRace().hasTrait(TraitIds.ARMED_FREIGHTERS)
         && result.getFreeSlots() > 3
         && (player.getTechList().hasTech("Privateer Mk1")
             || player.getTechList().hasTech("Privateer Mk2")

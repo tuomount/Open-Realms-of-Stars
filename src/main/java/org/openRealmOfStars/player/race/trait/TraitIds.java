@@ -145,6 +145,8 @@ public final class TraitIds {
   public static final String TOLERATE_HOT = "TOLERATE_HOT";
   /** Tolerate lava on planets. */
   public static final String TOLERATE_LAVA = "TOLERATE_LAVA";
+  /** Can build freighters with hidden weapons, TODO: Replace, see GH-726 */
+  public static final String ARMED_FREIGHTERS = "ARMED_FREIGHTERS";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

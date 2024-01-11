@@ -1900,7 +1900,7 @@ private int increaseHitChanceByComponent() {
    * @return True if smuggler ship.
    */
   public boolean isSmuggler() {
-    if (getHull().getRace() == SpaceRace.SMAUGIRIANS
+    if (getHull().getRace().hasTrait(TraitIds.ARMED_FREIGHTERS)
         && getHull().getHullType() == ShipHullType.FREIGHTER) {
       return true;
     }

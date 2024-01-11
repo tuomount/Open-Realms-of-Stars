@@ -25,6 +25,7 @@ import java.util.Collections;
 
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipComponentType;
@@ -861,7 +862,7 @@ public class ShipDesign {
     if (getFreeSlots() == 0 && hull.getHullType() == ShipHullType.FREIGHTER) {
       flawNoCargoSpace = true;
     }
-    if (hull.getRace() == SpaceRace.SMAUGIRIANS
+    if (hull.getRace().hasTrait(TraitIds.ARMED_FREIGHTERS)
         && hull.getHullType() == ShipHullType.FREIGHTER) {
       if (countWeapons() > 1) {
         designOk = false;
@@ -919,7 +920,7 @@ public class ShipDesign {
       }
       if (comp.getType() == ShipComponentType.PRIVATEERING_MODULE) {
         privateerModule = true;
-        if (hull.getRace() == SpaceRace.SMAUGIRIANS) {
+        if (hull.getRace().hasTrait(TraitIds.ARMED_FREIGHTERS)) {
           if (hull.getHullType() != ShipHullType.PRIVATEER
               && hull.getHullType() != ShipHullType.FREIGHTER) {
             designOk = false;

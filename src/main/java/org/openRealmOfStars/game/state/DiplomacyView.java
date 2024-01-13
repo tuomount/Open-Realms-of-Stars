@@ -1600,7 +1600,7 @@ public class DiplomacyView extends BlackPanel {
           }
         }
         trade.generateEqualTrade(NegotiationType.WAR);
-        finishTransaction(SpeechType.MAKE_WAR);
+        finishTransaction(SpeechType.ACKNOWLEDGE_WAR);
       } else {
         if (speechType == SpeechType.DECLINE_ANGER) {
           updatePanel(SpeechType.INSULT_RESPOND);

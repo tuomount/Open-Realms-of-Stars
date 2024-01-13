@@ -1823,10 +1823,6 @@ public class StarMap {
     int count = 0;
     for (ShipStat stat : stats) {
       int numShip = 1;
-      if (playerInfo.getRace() == SpaceRace.SPORKS
-          && stat.getDesign().isMilitaryShip()) {
-        numShip = 2;
-      }
       for (int j = 0; j < numShip; j++) {
         if (stat.getDesign().getHull().getHullType() == ShipHullType.ORBITAL) {
           continue;

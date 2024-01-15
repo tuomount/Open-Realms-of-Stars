@@ -132,6 +132,7 @@ import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapGenerator;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
@@ -1974,7 +1975,8 @@ public class Game implements ActionListener {
    */
   public void makeNewGame(final boolean allowHumanElderRealm) {
     setPlayerInfo();
-    starMap = new StarMap(galaxyConfig, players);
+    StarMapGenerator mapGenerator = new StarMapGenerator();
+    starMap = mapGenerator.generateStarMap(galaxyConfig, players);
     starMap.updateStarMapOnStartGame();
     NewsCorpData corpData = starMap.getNewsCorpData();
     calculateCorpData(corpData);
@@ -2012,7 +2014,7 @@ public class Game implements ActionListener {
           int index = planet.getstartRealmIndex();
           PlayerInfo info = starMap.getPlayerByIndex(index);
           if (!info.isElderRealm()) {
-            starMap.createRealmToPlanet(planet, info, index);
+            mapGenerator.createRealmToPlanet(planet, info, index);
           }
         }
       }

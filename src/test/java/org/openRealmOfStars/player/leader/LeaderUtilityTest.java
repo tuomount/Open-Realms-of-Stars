@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.leader;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2020-2023 Tuomo Untinen
+ * Copyright (C) 2020-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -34,6 +34,7 @@ import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapGenerator;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -669,7 +670,8 @@ public class LeaderUtilityTest {
     config.setPlayerGovernment(1, GovernmentType.DEMOCRACY);
     config.setRace(1, SpaceRace.HUMAN);
     PlayerList playerList = PlayerList.createPlayerList(config);
-    StarMap map = new StarMap(config, playerList);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, playerList);
     PlayerInfo info = map.getPlayerByIndex(0);
     info.getDiplomacy().getDiplomacyList(1).addBonus(
         new DiplomacyBonus(DiplomacyBonusType.IN_DEFENSIVE_PACT,

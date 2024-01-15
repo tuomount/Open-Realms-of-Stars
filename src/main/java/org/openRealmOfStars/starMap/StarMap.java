@@ -321,8 +321,10 @@ public class StarMap {
    * @param maxX Maximum X coordinate
    * @param maxY maximum Y coordinate
    * @param maxPlayers Maximum number of players
+   * @param maxRealms Maximum number of realms
    */
-  public StarMap(final int maxX, final int maxY, final int maxPlayers) {
+  public StarMap(final int maxX, final int maxY, final int maxPlayers,
+      final int maxRealms) {
     zoomLevel = Tile.ZOOM_NORMAL;
     setDebug(false);
     setHumanLost(false);
@@ -346,7 +348,7 @@ public class StarMap {
         culture[i][j] = new CulturePower(maxPlayers);
       }
     }
-    newsCorpData = new NewsCorpData(maxPlayers);
+    newsCorpData = new NewsCorpData(maxRealms);
     aiTurnNumber = 0;
     aiFleet = null;
 

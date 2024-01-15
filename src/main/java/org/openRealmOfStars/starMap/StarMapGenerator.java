@@ -106,7 +106,8 @@ public class StarMapGenerator {
   private void reinitStarMap(final GalaxyConfig config,
       final PlayerList players) {
     starMap = new StarMap(config.getSizeX(), config.getSizeY(),
-        players.getCurrentMaxPlayers());
+        players.getCurrentMaxPlayers(), players.getCurrentMaxRealms());
+    starMap.setPlayers(players);
     solarSystem = new int[starMap.getMaxX()][starMap.getMaxY()];
     for (int i = 0; i < starMap.getMaxX(); i++) {
       for (int j = 0; j < starMap.getMaxY(); j++) {

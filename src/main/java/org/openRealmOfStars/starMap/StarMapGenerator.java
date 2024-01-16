@@ -188,61 +188,12 @@ public class StarMapGenerator {
       createBorderStartingSystems(config);
     }
     // Random system
-    loop = 0;
-    while (loop < MAX_LOOPS) {
-      int sx = DiceGenerator.getRandom(StarMap.SOLAR_SYSTEM_WIDTH,
-          getMaxX() - StarMap.SOLAR_SYSTEM_WIDTH);
-      int sy = DiceGenerator.getRandom(StarMap.SOLAR_SYSTEM_WIDTH,
-          getMaxY() - StarMap.SOLAR_SYSTEM_WIDTH);
-      int planets = DiceGenerator.getRandom(1, 6);
-      int gasGiants = DiceGenerator.getRandom(3);
-      if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, getMaxX(),
-          getMaxY(), config.getSolarSystemDistance()) == 0) {
-        createSolarSystem(sx, sy, planets, gasGiants, config);
-        int full = StarMapUtilities.getSystemFullness(solarSystem, getMaxX(),
-            getMaxY());
-        if (full > 60) {
-          // Enough solar systems
-          break;
-        }
-      }
-      loop++;
-    }
-    // Create rogue planets
-    if (config.getNumberOfRoguePlanets() != GalaxyConfig.ROGUE_PLANETS_NONE) {
-      loop = 0;
-      int roguePlanets = config.getNumberOfRoguePlanets()
-          * (config.getGalaxySizeIndex() + 1);
-      RoguePlanetNameGenerator ng = new RoguePlanetNameGenerator();
-      Tile empty = Tiles.getTileByName(TileNames.EMPTY);
-      for (int i = 0; i < roguePlanets; i++) {
-        while (loop < MAX_LOOPS) {
-          int sx = DiceGenerator.getRandom(1,
-              getMaxX() - 2);
-          int sy = DiceGenerator.getRandom(1,
-              getMaxY() - 2);
-          if (starMap.getTile(sx, sy).getIndex() == empty.getIndex()
-              && starMap.getPlanetByCoordinate(sx, sy) == null
-              && starMap.locateSolarSystem(sx, sy) == null) {
-            String name = ng.generate();
-            Planet planet = new Planet(new Coordinate(sx, sy), name, 0, false);
-            planet.setPlanetaryEvent(PlanetaryEvent.getRandomEvent(
-                planet.getPlanetType(), config.getChanceForPlanetaryEvent()));
-            planet.setEventActivation(false);
-            starMap.getPlanetList().add(planet);
-            int planetNumber = starMap.getPlanetList().size() - 1;
-            SquareInfo info = new SquareInfo(SquareInfo.TYPE_PLANET,
-                planetNumber);
-            starMap.setSquareInfo(sx, sy, info);
-            starMap.setTile(sx, sy, planet.getPlanetType().getTileIndex());
-            break;
-          }
-          loop++;
-        }
-      }
-    }
+    generateRandomSystems(config);
+    // Rogue planets
+    generateRoguePlanets(config);
     // Planetary Ascension portal
-    int ascensionPortalX = -1;
+    // TODO: Implment later
+    /*int ascensionPortalX = -1;
     int ascensionPortalY = -1;
     for (int i = 0; i < 100; i++) {
       Planet planet = DiceGenerator.pickRandom(starMap.getPlanetList());
@@ -278,204 +229,9 @@ public class StarMapGenerator {
       if (ascensionPortalX != -1) {
         break;
       }
-    }
-    // Create random deep space anchors
-    loop = 0;
-    int numberOfAnchors = config.getMaxPlayers() * 3;
-    if (config.getGalaxySizeIndex() >= 2) {
-      numberOfAnchors = numberOfAnchors
-          + 2 * (config.getGalaxySizeIndex() - 1);
-    }
-    int pirateLairs = 0;
-    switch (config.getSpacePiratesLevel()) {
-      case 0: {
-        pirateLairs = 0;
-        break;
-      }
-      case 1: {
-        // 10%
-        pirateLairs = numberOfAnchors * 10 / 100;
-        if (pirateLairs < 1) {
-          pirateLairs = 1;
-        }
-        break;
-      }
-      case 2: {
-        // 20%
-        pirateLairs = numberOfAnchors * 20 / 100;
-        break;
-      }
-      case 3: {
-        // 40%
-        pirateLairs = numberOfAnchors * 40 / 100;
-        break;
-      }
-      case 4: {
-        // 60%
-        pirateLairs = numberOfAnchors * 60 / 100;
-        break;
-      }
-      case 5: {
-        // 80%
-        pirateLairs = numberOfAnchors * 80 / 100;
-        break;
-      }
-      case 6: {
-        // 100%
-        pirateLairs = numberOfAnchors;
-        break;
-      }
-      default: {
-        pirateLairs = 0;
-      }
-    }
-    Tile empty = Tiles.getTileByName(TileNames.EMPTY);
-    for (int i = 0; i < numberOfAnchors; i++) {
-      while (loop < MAX_LOOPS) {
-        int sx = DiceGenerator.getRandom(1,
-            getMaxX() - 2);
-        int sy = DiceGenerator.getRandom(1,
-            getMaxY() - 2);
-        if (starMap.getTileIndex(sx, sy) == empty.getIndex()
-            && starMap.getPlanetByCoordinate(sx, sy) == null) {
-          Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
-          starMap.setTile(sx, sy, anchor.getIndex());
-          PlayerInfo board = players.getSpacePiratePlayer();
-          if (board != null && i < pirateLairs) {
-            starMap.addSpacePirateLair(sx, sy, board);
-          }
-          break;
-        }
-        loop++;
-      }
-    }
-    // Create random space anomalies
-    loop = 0;
-    int numberOfAnomalies = 0;
-    boolean harmful = false;
-    boolean pirate = players.getSpacePiratePlayer() != null;
-    boolean monsters = players.getSpaceMonsterPlayer() != null;
-    if (config.getSpaceAnomaliesLevel() == 1) {
-      numberOfAnomalies = config.getMaxPlayers() * 5;
-    }
-    if (config.getSpaceAnomaliesLevel() == 2) {
-      numberOfAnomalies = config.getMaxPlayers() * 7;
-      harmful = true;
-    }
-    if (config.getGalaxySizeIndex() >= 2) {
-      numberOfAnomalies = numberOfAnomalies
-          + 10 * (config.getGalaxySizeIndex() - 1);
-    }
-    if (numberOfAnomalies < 20 && config.getSpaceAnomaliesLevel() > 0) {
-      numberOfAnomalies = 20;
-    }
-    if (config.getSpaceAnomaliesLevel() > 0) {
-      // Destroyed planet
-      numberOfAnomalies++;
-    }
-    int numberOfArtifacts = config.getMaxPlayers() * 3
-        + 3 * config.getGalaxySizeIndex();
-    for (int i = 0; i < numberOfAnomalies + numberOfArtifacts; i++) {
-      while (loop < MAX_LOOPS) {
-        int sx = DiceGenerator.getRandom(1, getMaxX() - 2);
-        int sy = DiceGenerator.getRandom(1, getMaxY() - 2);
-        if (starMap.getTileIndex(sx, sy) == empty.getIndex()
-            && starMap.getPlanetByCoordinate(sx, sy) == null) {
-          String tileName = TileNames.SPACE_ANOMALY_CREDITS;
-          if (i == 0) {
-            tileName = TileNames.SPACE_ANOMALY_DESTROYED_PLANET;
-          } else if (i < numberOfAnomalies) {
-            tileName = TileNames.getRandomSpaceAnomaly(harmful, pirate,
-                monsters);
-          } else {
-            tileName = TileNames.SPACE_ANOMALY_ANCIENT_ARTIFACT;
-          }
-          Tile anomaly = Tiles.getTileByName(tileName);
-          starMap.setTile(sx, sy, anomaly);
-          break;
-        }
-        loop++;
-      }
-    }
-    int bx = -1;
-    int by = -1;
-    double bestValue = -1;
-    ArrayList<Coordinate> anchors = new ArrayList<>();
-    for (int sy = 0; sy < getMaxY(); sy++) {
-      for (int sx = 0; sx < getMaxX(); sx++) {
-        if (starMap.getTileIndex(sx, sy) == empty.getIndex()
-            && starMap.getPlanetByCoordinate(sx, sy) == null
-            && starMap.locateSolarSystem(sx, sy) == null) {
-          Coordinate coord = new Coordinate(sx, sy);
-          Coordinate center = new Coordinate(getMaxX() / 2, getMaxY() / 2);
-          double shortestDistance = getMaxX() * 10;
-          double centerDist = center.calculateDistance(coord);
-          for (Sun sun : starMap.getSunList()) {
-            double value = coord.calculateDistance(
-                new Coordinate(sun.getCenterX(), sun.getCenterY()));
-            if (value < shortestDistance) {
-              shortestDistance = value;
-            }
-          }
-          if (shortestDistance > bestValue
-              && centerDist > (getMaxX() / 2) * 0.75
-              && centerDist < (getMaxX() / 2) * 0.95) {
-            bx = sx;
-            by = sy;
-            bestValue = shortestDistance;
-          }
-        }
-        Tile tile = Tiles.getTileByIndex(starMap.getTileIndex(sx, sy));
-        if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
-            || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)
-            || tile.getName().equals(TileNames.SPACE_ANOMALY_DSA)
-            || tile.getName().equals(TileNames.SPACE_ANOMALY_LAIR)) {
-          anchors.add(new Coordinate(sx, sy));
-        }
-      }
-    }
-    if (bestValue > 0) {
-      Tile anomaly = Tiles.getTileByName(TileNames.SPACE_ANOMALY_NEWS_STATION);
-      starMap.setTile(bx, by, anomaly);
-    }
-    // TODO This is for ascension victory
-    //generateAscensionPortal(ascensionPortalX, ascensionPortalY);
-    ascensionPortalX = -1;
-    ascensionPortalY = -1;
-    if (anchors.size() > 0) {
-      for (int i = 0; i < 100; i++) {
-        Coordinate coordinate = DiceGenerator.pickRandom(anchors);
-        for (int j = 0; j < 4; j++) {
-          int mx = 0;
-          int my = 0;
-          if (j == 0) {
-            my = -1;
-          }
-          if (j == 1) {
-            mx = 1;
-          }
-          if (j == 2) {
-            my = 1;
-          }
-          if (j == 3) {
-            mx = -1;
-          }
-          int x = coordinate.getX() + mx;
-          int y = coordinate.getY() + my;
-          if (starMap.isValidCoordinate(x, y)
-              && starMap.getTileIndex(x, y) == 0) {
-            ascensionPortalX = x;
-            ascensionPortalY = y;
-          }
-          if (ascensionPortalY != -1 && DiceGenerator.getBoolean()) {
-            break;
-          }
-        }
-        if (ascensionPortalY != -1) {
-          break;
-        }
-      }
-    }
+    }*/
+    generateDeepSpaceAnchors(config);
+    generateSpaceAnomalies(config);
     // TODO This is for ascension victory
     /*generateAscensionPortal(ascensionPortalX, ascensionPortalY);
     smoothAscensionVeins();
@@ -1312,6 +1068,284 @@ public class StarMapGenerator {
     }
   }
 
+  /**
+   * Generate random system.
+   * @param config GalaxyConfig.
+   */
+  private void generateRandomSystems(final GalaxyConfig config) {
+ // Random system
+    int loop = 0;
+    while (loop < MAX_LOOPS) {
+      int sx = DiceGenerator.getRandom(StarMap.SOLAR_SYSTEM_WIDTH,
+          getMaxX() - StarMap.SOLAR_SYSTEM_WIDTH);
+      int sy = DiceGenerator.getRandom(StarMap.SOLAR_SYSTEM_WIDTH,
+          getMaxY() - StarMap.SOLAR_SYSTEM_WIDTH);
+      int planets = DiceGenerator.getRandom(1, 6);
+      int gasGiants = DiceGenerator.getRandom(3);
+      if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, getMaxX(),
+          getMaxY(), config.getSolarSystemDistance()) == 0) {
+        createSolarSystem(sx, sy, planets, gasGiants, config);
+        int full = StarMapUtilities.getSystemFullness(solarSystem, getMaxX(),
+            getMaxY());
+        if (full > 60) {
+          // Enough solar systems
+          break;
+        }
+      }
+      loop++;
+    }
+  }
+  /**
+   * Generate rogue planets.
+   * @param config GalaxyConfig
+   */
+  private void generateRoguePlanets(final GalaxyConfig config) {
+    // Create rogue planets
+    if (config.getNumberOfRoguePlanets() != GalaxyConfig.ROGUE_PLANETS_NONE) {
+      int loop = 0;
+      int roguePlanets = config.getNumberOfRoguePlanets()
+          * (config.getGalaxySizeIndex() + 1);
+      RoguePlanetNameGenerator ng = new RoguePlanetNameGenerator();
+      Tile empty = Tiles.getTileByName(TileNames.EMPTY);
+      for (int i = 0; i < roguePlanets; i++) {
+        while (loop < MAX_LOOPS) {
+          int sx = DiceGenerator.getRandom(1,
+              getMaxX() - 2);
+          int sy = DiceGenerator.getRandom(1,
+              getMaxY() - 2);
+          if (starMap.getTile(sx, sy).getIndex() == empty.getIndex()
+              && starMap.getPlanetByCoordinate(sx, sy) == null
+              && starMap.locateSolarSystem(sx, sy) == null) {
+            String name = ng.generate();
+            Planet planet = new Planet(new Coordinate(sx, sy), name, 0, false);
+            planet.setPlanetaryEvent(PlanetaryEvent.getRandomEvent(
+                planet.getPlanetType(), config.getChanceForPlanetaryEvent()));
+            planet.setEventActivation(false);
+            starMap.getPlanetList().add(planet);
+            int planetNumber = starMap.getPlanetList().size() - 1;
+            SquareInfo info = new SquareInfo(SquareInfo.TYPE_PLANET,
+                planetNumber);
+            starMap.setSquareInfo(sx, sy, info);
+            starMap.setTile(sx, sy, planet.getPlanetType().getTileIndex());
+            break;
+          }
+          loop++;
+        }
+      }
+    }
+  }
+  /**
+   * Generate Deep Space Anchor.
+   * @param config GalaxyConfig
+   */
+  private void generateDeepSpaceAnchors(final GalaxyConfig config) {
+    // Create random deep space anchors
+    int loop = 0;
+    int numberOfAnchors = config.getMaxPlayers() * 3;
+    if (config.getGalaxySizeIndex() >= 2) {
+      numberOfAnchors = numberOfAnchors
+          + 2 * (config.getGalaxySizeIndex() - 1);
+    }
+    int pirateLairs = 0;
+    switch (config.getSpacePiratesLevel()) {
+      case 0: {
+        pirateLairs = 0;
+        break;
+      }
+      case 1: {
+        // 10%
+        pirateLairs = numberOfAnchors * 10 / 100;
+        if (pirateLairs < 1) {
+          pirateLairs = 1;
+        }
+        break;
+      }
+      case 2: {
+        // 20%
+        pirateLairs = numberOfAnchors * 20 / 100;
+        break;
+      }
+      case 3: {
+        // 40%
+        pirateLairs = numberOfAnchors * 40 / 100;
+        break;
+      }
+      case 4: {
+        // 60%
+        pirateLairs = numberOfAnchors * 60 / 100;
+        break;
+      }
+      case 5: {
+        // 80%
+        pirateLairs = numberOfAnchors * 80 / 100;
+        break;
+      }
+      case 6: {
+        // 100%
+        pirateLairs = numberOfAnchors;
+        break;
+      }
+      default: {
+        pirateLairs = 0;
+      }
+    }
+    Tile empty = Tiles.getTileByName(TileNames.EMPTY);
+    for (int i = 0; i < numberOfAnchors; i++) {
+      while (loop < MAX_LOOPS) {
+        int sx = DiceGenerator.getRandom(1,
+            getMaxX() - 2);
+        int sy = DiceGenerator.getRandom(1,
+            getMaxY() - 2);
+        if (starMap.getTileIndex(sx, sy) == empty.getIndex()
+            && starMap.getPlanetByCoordinate(sx, sy) == null) {
+          Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
+          starMap.setTile(sx, sy, anchor.getIndex());
+          PlayerInfo board = starMap.getPlayerList().getSpacePiratePlayer();
+          if (board != null && i < pirateLairs) {
+            starMap.addSpacePirateLair(sx, sy, board);
+          }
+          break;
+        }
+        loop++;
+      }
+    }
+  }
+
+  /**
+   * Generate space anomalies.
+   * @param config GalaxyConfig
+   */
+  private void generateSpaceAnomalies(final GalaxyConfig config) {
+    // Create random space anomalies
+    int loop = 0;
+    int numberOfAnomalies = 0;
+    boolean harmful = false;
+    boolean pirate = starMap.getPlayerList().getSpacePiratePlayer() != null;
+    boolean monsters = starMap.getPlayerList().getSpaceMonsterPlayer() != null;
+    if (config.getSpaceAnomaliesLevel() == 1) {
+      numberOfAnomalies = config.getMaxPlayers() * 5;
+    }
+    if (config.getSpaceAnomaliesLevel() == 2) {
+      numberOfAnomalies = config.getMaxPlayers() * 7;
+      harmful = true;
+    }
+    if (config.getGalaxySizeIndex() >= 2) {
+      numberOfAnomalies = numberOfAnomalies
+          + 10 * (config.getGalaxySizeIndex() - 1);
+    }
+    if (numberOfAnomalies < 20 && config.getSpaceAnomaliesLevel() > 0) {
+      numberOfAnomalies = 20;
+    }
+    if (config.getSpaceAnomaliesLevel() > 0) {
+      // Destroyed planet
+      numberOfAnomalies++;
+    }
+    int numberOfArtifacts = config.getMaxPlayers() * 3
+        + 3 * config.getGalaxySizeIndex();
+    Tile empty = Tiles.getTileByName(TileNames.EMPTY);
+    for (int i = 0; i < numberOfAnomalies + numberOfArtifacts; i++) {
+      while (loop < MAX_LOOPS) {
+        int sx = DiceGenerator.getRandom(1, getMaxX() - 2);
+        int sy = DiceGenerator.getRandom(1, getMaxY() - 2);
+        if (starMap.getTileIndex(sx, sy) == empty.getIndex()
+            && starMap.getPlanetByCoordinate(sx, sy) == null) {
+          String tileName = TileNames.SPACE_ANOMALY_CREDITS;
+          if (i == 0) {
+            tileName = TileNames.SPACE_ANOMALY_DESTROYED_PLANET;
+          } else if (i < numberOfAnomalies) {
+            tileName = TileNames.getRandomSpaceAnomaly(harmful, pirate,
+                monsters);
+          } else {
+            tileName = TileNames.SPACE_ANOMALY_ANCIENT_ARTIFACT;
+          }
+          Tile anomaly = Tiles.getTileByName(tileName);
+          starMap.setTile(sx, sy, anomaly);
+          break;
+        }
+        loop++;
+      }
+    }
+    int bx = -1;
+    int by = -1;
+    double bestValue = -1;
+    ArrayList<Coordinate> anchors = new ArrayList<>();
+    for (int sy = 0; sy < getMaxY(); sy++) {
+      for (int sx = 0; sx < getMaxX(); sx++) {
+        if (starMap.getTileIndex(sx, sy) == empty.getIndex()
+            && starMap.getPlanetByCoordinate(sx, sy) == null
+            && starMap.locateSolarSystem(sx, sy) == null) {
+          Coordinate coord = new Coordinate(sx, sy);
+          Coordinate center = new Coordinate(getMaxX() / 2, getMaxY() / 2);
+          double shortestDistance = getMaxX() * 10;
+          double centerDist = center.calculateDistance(coord);
+          for (Sun sun : starMap.getSunList()) {
+            double value = coord.calculateDistance(
+                new Coordinate(sun.getCenterX(), sun.getCenterY()));
+            if (value < shortestDistance) {
+              shortestDistance = value;
+            }
+          }
+          if (shortestDistance > bestValue
+              && centerDist > (getMaxX() / 2) * 0.75
+              && centerDist < (getMaxX() / 2) * 0.95) {
+            bx = sx;
+            by = sy;
+            bestValue = shortestDistance;
+          }
+        }
+        Tile tile = Tiles.getTileByIndex(starMap.getTileIndex(sx, sy));
+        if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
+            || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)
+            || tile.getName().equals(TileNames.SPACE_ANOMALY_DSA)
+            || tile.getName().equals(TileNames.SPACE_ANOMALY_LAIR)) {
+          anchors.add(new Coordinate(sx, sy));
+        }
+      }
+    }
+    if (bestValue > 0) {
+      Tile anomaly = Tiles.getTileByName(TileNames.SPACE_ANOMALY_NEWS_STATION);
+      starMap.setTile(bx, by, anomaly);
+    }
+    // TODO This is for ascension victory
+    //generateAscensionPortal(ascensionPortalX, ascensionPortalY);
+/*    int ascensionPortalX = -1;
+    int ascensionPortalY = -1;
+    if (anchors.size() > 0) {
+      for (int i = 0; i < 100; i++) {
+        Coordinate coordinate = DiceGenerator.pickRandom(anchors);
+        for (int j = 0; j < 4; j++) {
+          int mx = 0;
+          int my = 0;
+          if (j == 0) {
+            my = -1;
+          }
+          if (j == 1) {
+            mx = 1;
+          }
+          if (j == 2) {
+            my = 1;
+          }
+          if (j == 3) {
+            mx = -1;
+          }
+          int x = coordinate.getX() + mx;
+          int y = coordinate.getY() + my;
+          if (starMap.isValidCoordinate(x, y)
+              && starMap.getTileIndex(x, y) == 0) {
+            ascensionPortalX = x;
+            ascensionPortalY = y;
+          }
+          if (ascensionPortalY != -1 && DiceGenerator.getBoolean()) {
+            break;
+          }
+        }
+        if (ascensionPortalY != -1) {
+          break;
+        }
+      }
+    }*/
+
+  }
   /**
    * Create realm to planet. This will add require buildings, workers
    * and ships. This will also add message about new realm starting.

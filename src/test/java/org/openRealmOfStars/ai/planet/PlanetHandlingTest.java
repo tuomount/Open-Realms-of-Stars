@@ -531,7 +531,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(49, scores[2]);
     assertEquals(119, scores[3]);
     assertEquals(119, scores[4]);
-    assertEquals(99, scores[5]);
+    assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicMine());
     constructions = planet.getProductionList();
@@ -543,7 +543,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(49, scores[2]);
     assertEquals(89, scores[3]);
     assertEquals(119, scores[4]);
-    assertEquals(109, scores[5]);
+    assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicLab());
     constructions = planet.getProductionList();

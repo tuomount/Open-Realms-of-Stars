@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import org.openRealmOfStars.ai.pathfinding.AStarSearch;
 import org.openRealmOfStars.ai.pathfinding.PathPoint;
+import org.openRealmOfStars.ai.planet.PlanetHandling;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -260,55 +261,12 @@ public class StarMapGenerator {
       planet.setUnderConstruction(ConstructionFactory.createByName(
           "Extra credit"));
     }
-    if (playerInfo.getRace() == SpaceRace.MECHIONS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else if (playerInfo.getRace() == SpaceRace.HOMARIANS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 2);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else if (playerInfo.getRace() == SpaceRace.CHIRALOIDS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else if (playerInfo.getRace() == SpaceRace.REBORGIANS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 1);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else if (playerInfo.getRace() == SpaceRace.LITHORIANS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 1);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else if (playerInfo.getRace() == SpaceRace.ALTEIRIANS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 1);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 1);
-    } else if (playerInfo.getRace() == SpaceRace.SYNTHDROIDS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else {
-      planet.setWorkers(Planet.FOOD_FARMERS, 1);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    }
+    planet.setWorkers(Planet.FOOD_FARMERS, 0);
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+    planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, playerInfo, playerIndex);
     ShipStat[] stats = playerInfo.getShipStatList();
     int count = 0;
     for (ShipStat stat : stats) {
@@ -884,13 +842,13 @@ public class StarMapGenerator {
     starMap.getSunList().add(sun);
     int sunNumber = starMap.getSunList().size() - 1;
     SquareInfo info = new SquareInfo(SquareInfo.TYPE_SUN, sunNumber);
-    place3x3SquareInfo(sy, sy, info);
+    place3x3SquareInfo(sx, sy, info);
     SunType sunType = SunType.getRandomType();
     if (playerIndex != -1) {
       // Realms start from red star aka sun.
       sunType = SunType.RED_STAR;
     }
-    placeSunTiles(sy, sy, sunType);
+    placeSunTiles(sx, sy, sunType);
     int planets = 0;
     int startingPlanet = DiceGenerator.getRandom(1, numberOfPlanets);
     while (planets < numberOfPlanets) {
@@ -1015,6 +973,7 @@ public class StarMapGenerator {
       final GalaxyConfig config) {
     createSolarSystem(sx, sy, numberOfPlanets, numberOfGasGiants, -1, config);
   }
+
   /**
    * Create Sol System
    * @param sunx Sun's about coordinates
@@ -1042,7 +1001,7 @@ public class StarMapGenerator {
     starMap.getSunList().add(sun);
     int sunNumber = starMap.getSunList().size() - 1;
     SquareInfo info = new SquareInfo(SquareInfo.TYPE_SUN, sunNumber);
-    place3x3SquareInfo(sy, sy, info);
+    place3x3SquareInfo(sx, sy, info);
     // Sol has sun type 0.
     SunType sunType = SunType.RED_STAR;
     placeSunTiles(sx, sy, sunType);
@@ -1232,6 +1191,19 @@ public class StarMapGenerator {
   private void buildBlackHole() {
     int cx = starMap.getMaxX() / 2;
     int cy = starMap.getMaxY() / 2;
+    starMap.setTile(cx, cy, Tiles.getTileByName(TileNames.BLACKHOLE_C));
+    starMap.setTile(cx - 1, cy - 1,
+        Tiles.getTileByName(TileNames.BLACKHOLE_NW));
+    starMap.setTile(cx, cy - 1, Tiles.getTileByName(TileNames.BLACKHOLE_N));
+    starMap.setTile(cx + 1, cy - 1,
+        Tiles.getTileByName(TileNames.BLACKHOLE_NE));
+    starMap.setTile(cx - 1, cy, Tiles.getTileByName(TileNames.BLACKHOLE_W));
+    starMap.setTile(cx + 1, cy, Tiles.getTileByName(TileNames.BLACKHOLE_E));
+    starMap.setTile(cx - 1, cy + 1,
+        Tiles.getTileByName(TileNames.BLACKHOLE_SW));
+    starMap.setTile(cx, cy + 1, Tiles.getTileByName(TileNames.BLACKHOLE_S));
+    starMap.setTile(cx + 1, cy + 1,
+        Tiles.getTileByName(TileNames.BLACKHOLE_SE));
     place3x3SquareInfo(cx, cy,
         new SquareInfo(SquareInfo.TYPE_BLACKHOLE_CENTER, 0),
         new SquareInfo(SquareInfo.TYPE_BLACKHOLE, 0));
@@ -1304,6 +1276,7 @@ public class StarMapGenerator {
     starMap.setTile(tx, ty + 1, southWest);
     starMap.setTile(tx + 1, ty + 1, southEast);
   }
+
   /**
    * Place Sun/Star tiles
    * @param cx Center of Star X coordinate
@@ -1326,6 +1299,7 @@ public class StarMapGenerator {
     starMap.setTile(cx + 1, cy + 1, Tiles.getSunTile(TileNames.SUN_SE,
         sunType));
   }
+
   /**
    * Generate random system.
    * @param config GalaxyConfig.
@@ -1353,6 +1327,7 @@ public class StarMapGenerator {
       loop++;
     }
   }
+
   /**
    * Generate rogue planets.
    * @param config GalaxyConfig
@@ -1392,6 +1367,7 @@ public class StarMapGenerator {
       }
     }
   }
+
   /**
    * Generate Deep Space Anchor.
    * @param config GalaxyConfig
@@ -1604,6 +1580,7 @@ public class StarMapGenerator {
     }*/
 
   }
+
   /**
    * Helper getter for getting maximum galaxy X size.
    * @return Max galaxy size
@@ -1611,6 +1588,7 @@ public class StarMapGenerator {
   private int getMaxX() {
     return starMap.getMaxX();
   }
+
   /**
    * Helper getter for getting maximum galaxy Y size.
    * @return Max galaxy size

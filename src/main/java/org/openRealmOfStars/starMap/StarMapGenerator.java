@@ -1,5 +1,21 @@
 package org.openRealmOfStars.starMap;
-
+/*
+ * Open Realm of Stars game project
+ * Copyright (C) 2024 Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ */
 
 import java.util.ArrayList;
 
@@ -36,26 +52,11 @@ import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.WeightedList;
 import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 import org.openRealmOfStars.utilities.namegenerators.RoguePlanetNameGenerator;
 
-/*
- * Open Realm of Stars game project
- * Copyright (C) 2024 Tuomo Untinen
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, see http://www.gnu.org/licenses/
- */
+
 
 /**
  * Generates star map for whole game.
@@ -63,87 +64,30 @@ import org.openRealmOfStars.utilities.namegenerators.RoguePlanetNameGenerator;
  */
 public class StarMapGenerator {
 
-  /**
-   * Name generator for all systems aka stars.
-   */
+  /** Name generator for all systems aka stars. */
   private RandomSystemNameGenerator nameGenerator;
   /**
    * Just flag for galaxy generation. When this is true Sol is no longer added
    * to starmap. This will not be saved on file.
    */
   private boolean solHasAdded = false;
-  /**
-   * Solar System map for generation.
-   */
+  /** Solar System map for generation. */
   private int[][] solarSystem;
-  /**
-   * Maximum amount of looping when finding free solar system spot.
-   */
+  /** Maximum amount of looping when finding free solar system spot. */
   private static final int MAX_LOOPS = 10000;
 
-  /**
-   * Default amount of metal in home worlds.
-   */
+  /** Default amount of metal in home worlds. */
   private static final int HOMEWORLD_METAL = 8000;
 
-  /**
-   * StarMap about to be generated.
-   */
+  /** StarMap about to be generated. */
   private StarMap starMap;
+
   /**
    * StarMap Generator constructor
    */
   public StarMapGenerator() {
     solHasAdded = false;
     nameGenerator = new RandomSystemNameGenerator();
-  }
-
-  /**
-   * Reinit whole starmap.
-   * @param config GalaxyConfig
-   * @param players PlayerList
-   */
-  private void reinitStarMap(final GalaxyConfig config,
-      final PlayerList players) {
-    starMap = new StarMap(config.getSizeX(), config.getSizeY(),
-        players.getCurrentMaxPlayers(), players.getCurrentMaxRealms());
-    starMap.setPlayers(players);
-    solarSystem = new int[starMap.getMaxX()][starMap.getMaxY()];
-    for (int i = 0; i < starMap.getMaxX(); i++) {
-      for (int j = 0; j < starMap.getMaxY(); j++) {
-        solarSystem[i][j] = 0;
-      }
-    }
-    starMap.setScoreVictoryTurn(config.getScoringVictoryTurns());
-    starMap.setScoreCulture(config.getScoreLimitCulture());
-    starMap.setScoreConquer(config.getScoreLimitConquer());
-    starMap.setScoreResearch(config.getScoreLimitResearch());
-    starMap.setScoreDiplomacy(config.getScoreLimitDiplomacy());
-    starMap.setScorePopulation(config.getScoreLimitPopulation());
-    starMap.setPirateDifficulty(PirateDifficultLevel.NORMAL);
-    starMap.defineKarmaEvents(config.getKarmaType(), config.getKarmaSpeed());
-    starMap.setAllNewsEnabled(config.isAllNews());
-    starMap.setTutorialEnabled(config.isEnableTutorial());
-    boolean elderRealmStart = false;
-    for (int i = 0; i < config.getMaxPlayers(); i++) {
-      if (config.getPlayerElderRealm(i)) {
-        elderRealmStart = true;
-      }
-    }
-    if (elderRealmStart) {
-      starMap.getHistory().addTurn(-config.getElderHeadStart());
-      starMap.setTurn(-config.getElderHeadStart());
-    } else {
-      starMap.setTurn(0);
-      starMap.getHistory().addTurn(0);
-    }
-    starMap.setPirateDifficulty(config.getSpacePiratesDifficulty());
-    starMap.setPlayers(players);
-    starMap.getPlayerList().initVisibilityMaps(starMap.getMaxX(),
-        starMap.getMaxY());
-
-    buildBlackHole();
-
   }
 
   /**
@@ -236,8 +180,391 @@ public class StarMapGenerator {
     /*generateAscensionPortal(ascensionPortalX, ascensionPortalY);
     smoothAscensionVeins();
     revealWholeMap(getCurrentPlayerInfo());*/
-
     return starMap;
+  }
+
+  /**
+   * Create realm to planet. This will add require buildings, workers
+   * and ships. This will also add message about new realm starting.
+   * Not this does not add home planet information.
+   * @param planet Planet where player starts.
+   * @param playerInfo Realm who is starting
+   * @param playerIndex Index for player
+   */
+  public void createRealmToPlanet(final Planet planet,
+      final PlayerInfo playerInfo, final int playerIndex) {
+    if (planet.getPlanetPlayerInfo() != null && planet.getGovernor() != null) {
+      planet.getGovernor().setJob(Job.UNASSIGNED);
+      planet.setGovernor(null);
+      //TODO: What to do when elder realm conquers other realm's starting
+      //Planet? Set culture 0 and destroy all buildings? Elder realm knows
+      //where is another realm's home planet.
+    }
+    planet.setPlanetOwner(playerIndex, playerInfo);
+    if (playerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+      planet.colonizeWithOrbital();
+    }
+    if (Game.getTutorial() != null && playerInfo.isHuman()
+        && starMap.isTutorialEnabled()) {
+      String tutorialText = Game.getTutorial().showTutorialText(0);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        playerInfo.getMsgList().addNewMessage(msg);
+      }
+      tutorialText = Game.getTutorial().showTutorialText(1);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.PLANETARY, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(planet.getName());
+        playerInfo.getMsgList().addNewMessage(msg);
+      }
+      tutorialText = Game.getTutorial().showTutorialText(2);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.PLANETARY, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(planet.getName());
+        playerInfo.getMsgList().addNewMessage(msg);
+      }
+    }
+    Message msg = new Message(
+        MessageType.PLANETARY, playerInfo.getEmpireName() + " starts at "
+            + planet.getName() + ".",
+        Icons.getIconByName(Icons.ICON_CULTURE));
+    PlayerStartEvent event = new PlayerStartEvent(planet.getCoordinate(),
+        planet.getName(), playerIndex);
+    starMap.getHistory().addEvent(event);
+    msg.setCoordinate(planet.getCoordinate());
+    msg.setMatchByString(planet.getName());
+    if (playerInfo.getRuler() == null) {
+      Leader ruler = LeaderUtility.createLeader(playerInfo, planet,
+          LeaderUtility.LEVEL_START_RULER);
+      ruler.setJob(Job.RULER);
+      ruler.setTitle(LeaderUtility.createTitleForLeader(ruler, playerInfo));
+      playerInfo.getLeaderPool().add(ruler);
+      playerInfo.getMsgList().addNewMessage(msg);
+      playerInfo.setRuler(ruler);
+    }
+    if (!playerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)
+        && !planet.hasSpacePort()) {
+       if (planet.getBuildingList().length >= planet.getGroundSize()) {
+         // Planet is full and no space for space port.
+         planet.destroyOneBuilding();
+       }
+      planet.addBuilding(BuildingFactory.createByName("Space port"));
+    }
+    if (playerInfo.isHuman()) {
+      // Adding starting building for human.
+      planet.setUnderConstruction(ConstructionFactory.createByName(
+          "Extra credit"));
+    }
+    if (playerInfo.getRace() == SpaceRace.MECHIONS) {
+      planet.setWorkers(Planet.FOOD_FARMERS, 0);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    } else if (playerInfo.getRace() == SpaceRace.HOMARIANS) {
+      planet.setWorkers(Planet.FOOD_FARMERS, 2);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    } else if (playerInfo.getRace() == SpaceRace.CHIRALOIDS) {
+      planet.setWorkers(Planet.FOOD_FARMERS, 0);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    } else if (playerInfo.getRace() == SpaceRace.REBORGIANS) {
+      planet.setWorkers(Planet.FOOD_FARMERS, 0);
+      planet.setWorkers(Planet.METAL_MINERS, 1);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    } else if (playerInfo.getRace() == SpaceRace.LITHORIANS) {
+      planet.setWorkers(Planet.FOOD_FARMERS, 0);
+      planet.setWorkers(Planet.METAL_MINERS, 1);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    } else if (playerInfo.getRace() == SpaceRace.ALTEIRIANS) {
+      planet.setWorkers(Planet.FOOD_FARMERS, 1);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 1);
+    } else if (playerInfo.getRace() == SpaceRace.SYNTHDROIDS) {
+      planet.setWorkers(Planet.FOOD_FARMERS, 0);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    } else {
+      planet.setWorkers(Planet.FOOD_FARMERS, 1);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    }
+    ShipStat[] stats = playerInfo.getShipStatList();
+    int count = 0;
+    for (ShipStat stat : stats) {
+      int numShip = 1;
+      for (int j = 0; j < numShip; j++) {
+        if (stat.getDesign().getHull().getHullType() == ShipHullType.ORBITAL) {
+          continue;
+        }
+        Ship ship = new Ship(stat.getDesign());
+        stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+        stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+        Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
+        playerInfo.getFleets().add(fleet);
+        if (ship.isColonyModule()) {
+          fleet.setName("Colony #" + count);
+          if (Game.getTutorial() != null && playerInfo.isHuman()
+              && starMap.isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(7);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.FLEET, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(planet.getCoordinate());
+              msg.setMatchByString(fleet.getName());
+              playerInfo.getMsgList().addNewMessage(msg);
+            }
+          }
+        } else {
+          fleet.setName("Scout #" + count);
+          if (Game.getTutorial() != null && playerInfo.isHuman()
+              && starMap.isTutorialEnabled()) {
+            String tutorialText = Game.getTutorial().showTutorialText(5);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.FLEET, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(planet.getCoordinate());
+              msg.setMatchByString(fleet.getName());
+              playerInfo.getMsgList().addNewMessage(msg);
+            }
+            tutorialText = Game.getTutorial().showTutorialText(6);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.FLEET, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(planet.getCoordinate());
+              msg.setMatchByString(fleet.getName());
+              playerInfo.getMsgList().addNewMessage(msg);
+            }
+          }
+        }
+        msg = new Message(MessageType.FLEET,
+            fleet.getName() + " is waiting for orders.",
+            Icons.getIconByName(Icons.ICON_HULL_TECH));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getName());
+        playerInfo.getMsgList().addNewMessage(msg);
+        count++;
+      }
+    }
+    String backgroundStory = BackgroundStoryGenerator.generateBackgroundStory(
+        playerInfo, planet, starMap.getStarYear());
+    playerInfo.setBackgroundStory(backgroundStory);
+    Message msgStart = new Message(MessageType.STORY, backgroundStory,
+        Icons.getIconByName(Icons.ICON_CULTURE));
+    msgStart.setCoordinate(planet.getCoordinate());
+    msgStart.setMatchByString(planet.getName());
+    playerInfo.getMsgList().addNewMessage(msgStart);
+  }
+
+  /**
+   * Smooth ascension veins.
+   */
+  public void smoothAscensionVeins() {
+    for (int y = 0; y < getMaxY(); y++) {
+      for (int x = 0; x < getMaxX(); x++) {
+        boolean north = false;
+        boolean west = false;
+        boolean east = false;
+        boolean south = false;
+        Tile tile = Tiles.getTileByIndex(starMap.getTileIndex(x, y));
+        if (tile.isAscensionVein()) {
+          int mx = x;
+          int my = y - 1;
+          if (starMap.isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal()) {
+              north = true;
+            }
+          }
+          mx = x;
+          my = y + 1;
+          if (starMap.isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal()) {
+              south = true;
+            }
+          }
+          mx = x - 1;
+          my = y;
+          if (starMap.isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal()) {
+              west = true;
+            }
+          }
+          mx = x + 1;
+          my = y;
+          if (starMap.isValidCoordinate(mx, my)) {
+            tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
+            if (tile.isAscensionVein() || tile.isBlackhole()
+                || tile.isAscensionPortal()) {
+              east = true;
+            }
+          }
+          tile = Tiles.getTileByIndex(starMap.getTileIndex(x, y));
+          if (north && south && west && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
+          } else if (north && south && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSW1);
+          } else if (north && east && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NWE1);
+          } else if (north && south && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSE1);
+          } else if (south && east && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SWE1);
+          } else if (north && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NE1);
+          } else if (north && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NW1);
+          } else if (south && west) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SW1);
+          } else if (south && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SE1);
+          } else if (west && east) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_WE1);
+          } else if (north && south) {
+            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NS1);
+          }
+          starMap.setTile(x, y, tile);
+        }
+      }
+    }
+  }
+
+  /**
+   * Generate Ascension portal to map and ascension veins.
+   *
+   * @param x X coordinate for portal
+   * @param y Y Coordinate for portal
+   */
+  public void generateAscensionPortal(final int x, final int y) {
+    int cx = getMaxX() / 2;
+    int cy = getMaxY() / 2;
+    int[] sax = new int[4];
+    int[] say = new int[4];
+    sax[0] = cx;
+    say[0] = cy - 2;
+    sax[1] = cx + 2;
+    say[1] = cy;
+    sax[2] = cx;
+    say[2] = cy + 2;
+    sax[3] = cx - 2;
+    say[3] = cy;
+    int best = -1;
+    double bestDist = 999;
+    for (int i = 0; i < sax.length; i++) {
+      Coordinate target = new Coordinate(x, y);
+      Coordinate start = new Coordinate(sax[i], say[i]);
+      double dist = target.calculateDistance(start);
+      if (dist < bestDist) {
+        best = i;
+        bestDist = dist;
+      }
+    }
+    int sx = sax[best];
+    int sy = say[best];
+    Tile tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
+    starMap.setTile(sx, sy, tile);
+    starMap.setSquareInfo(sx, sy, new SquareInfo(
+        SquareInfo.TYPE_ASCENSION_VEIN, 0));
+    AStarSearch search = new AStarSearch(starMap, sx, sy, x, y);
+    if (search.doSquareSearch()) {
+      search.doSquareRoute();
+      int count = 0;
+      do {
+        count++;
+        PathPoint point = search.getMove();
+        if (point != null) {
+          starMap.setTile(point.getX(), point.getY(), tile.getIndex());
+          starMap.setSquareInfo(point.getX(), point.getY(), new SquareInfo(
+              SquareInfo.TYPE_ASCENSION_VEIN, count));
+          search.nextMove();
+          if (search.isLastMove()) {
+            point = search.getMove();
+            if (point != null) {
+              starMap.setTile(point.getX(), point.getY(), tile.getIndex());
+              starMap.setSquareInfo(point.getX(), point.getY(), new SquareInfo(
+                  SquareInfo.TYPE_ASCENSION_VEIN, count));
+            }
+          }
+        } else {
+          break;
+        }
+      } while (!search.isLastMove());
+      starMap.setTile(x, y, Tiles.getTileByName(
+          TileNames.ASCENSION_PORTAL1).getIndex());
+    }
+  }
+
+  /**
+   * Reinit whole starmap.
+   * @param config GalaxyConfig
+   * @param players PlayerList
+   */
+  private void reinitStarMap(final GalaxyConfig config,
+      final PlayerList players) {
+    starMap = new StarMap(config.getSizeX(), config.getSizeY(),
+        players.getCurrentMaxPlayers(), players.getCurrentMaxRealms());
+    starMap.setPlayers(players);
+    solarSystem = new int[starMap.getMaxX()][starMap.getMaxY()];
+    for (int i = 0; i < starMap.getMaxX(); i++) {
+      for (int j = 0; j < starMap.getMaxY(); j++) {
+        solarSystem[i][j] = 0;
+      }
+    }
+    starMap.setScoreVictoryTurn(config.getScoringVictoryTurns());
+    starMap.setScoreCulture(config.getScoreLimitCulture());
+    starMap.setScoreConquer(config.getScoreLimitConquer());
+    starMap.setScoreResearch(config.getScoreLimitResearch());
+    starMap.setScoreDiplomacy(config.getScoreLimitDiplomacy());
+    starMap.setScorePopulation(config.getScoreLimitPopulation());
+    starMap.setPirateDifficulty(PirateDifficultLevel.NORMAL);
+    starMap.defineKarmaEvents(config.getKarmaType(), config.getKarmaSpeed());
+    starMap.setAllNewsEnabled(config.isAllNews());
+    starMap.setTutorialEnabled(config.isEnableTutorial());
+    boolean elderRealmStart = false;
+    for (int i = 0; i < config.getMaxPlayers(); i++) {
+      if (config.getPlayerElderRealm(i)) {
+        elderRealmStart = true;
+      }
+    }
+    if (elderRealmStart) {
+      starMap.getHistory().addTurn(-config.getElderHeadStart());
+      starMap.setTurn(-config.getElderHeadStart());
+    } else {
+      starMap.setTurn(0);
+      starMap.getHistory().addTurn(0);
+    }
+    starMap.setPirateDifficulty(config.getSpacePiratesDifficulty());
+    starMap.setPlayers(players);
+    starMap.getPlayerList().initVisibilityMaps(starMap.getMaxX(),
+        starMap.getMaxY());
+
+    buildBlackHole();
+
   }
 
   /**
@@ -557,35 +884,13 @@ public class StarMapGenerator {
     starMap.getSunList().add(sun);
     int sunNumber = starMap.getSunList().size() - 1;
     SquareInfo info = new SquareInfo(SquareInfo.TYPE_SUN, sunNumber);
-    starMap.setSquareInfo(sx - 1, sy - 1, info);
-    starMap.setSquareInfo(sx, sy - 1, info);
-    starMap.setSquareInfo(sx + 1, sy - 1, info);
-    starMap.setSquareInfo(sx - 1, sy, info);
-    starMap.setSquareInfo(sx, sy, info);
-    starMap.setSquareInfo(sx + 1, sy, info);
-    starMap.setSquareInfo(sx - 1, sy + 1, info);
-    starMap.setSquareInfo(sx, sy + 1, info);
-    starMap.setSquareInfo(sx + 1, sy + 1, info);
+    place3x3SquareInfo(sy, sy, info);
     SunType sunType = SunType.getRandomType();
     if (playerIndex != -1) {
       // Realms start from red star aka sun.
       sunType = SunType.RED_STAR;
     }
-    starMap.setTile(sx, sy, Tiles.getSunTile(TileNames.SUN_C, sunType));
-    starMap.setTile(sx - 1, sy - 1, Tiles.getSunTile(TileNames.SUN_NW,
-        sunType));
-    starMap.setTile(sx, sy - 1, Tiles.getSunTile(TileNames.SUN_N, sunType));
-    starMap.setTile(sx + 1, sy - 1, Tiles.getSunTile(TileNames.SUN_NE,
-        sunType));
-    starMap.setTile(sx - 1, sy, Tiles.getSunTile(TileNames.SUN_W,
-        sunType));
-    starMap.setTile(sx + 1, sy, Tiles.getSunTile(TileNames.SUN_E,
-        sunType));
-    starMap.setTile(sx - 1, sy + 1, Tiles.getSunTile(TileNames.SUN_SW,
-        sunType));
-    starMap.setTile(sx, sy + 1, Tiles.getSunTile(TileNames.SUN_S, sunType));
-    starMap.setTile(sx + 1, sy + 1, Tiles.getSunTile(TileNames.SUN_SE,
-        sunType));
+    placeSunTiles(sy, sy, sunType);
     int planets = 0;
     int startingPlanet = DiceGenerator.getRandom(1, numberOfPlanets);
     while (planets < numberOfPlanets) {
@@ -652,63 +957,40 @@ public class StarMapGenerator {
         starMap.getPlanetList().add(planet);
         int planetNumber = starMap.getPlanetList().size() - 1;
         info = new SquareInfo(SquareInfo.TYPE_GAS_PLANET, planetNumber);
-        starMap.setSquareInfo(px, py, info);
-        starMap.setSquareInfo(px + 1, py, info);
-        starMap.setSquareInfo(px, py + 1, info);
-        starMap.setSquareInfo(px + 1, py + 1, info);
+        place2x2SquareInfo(px, py, info);
         switch (planet.getPlanetTypeIndex()) {
         case 0: {
-          starMap.setTile(px, py,
-              Tiles.getTileByName(TileNames.GAS_GIANT_1_NW));
-          starMap.setTile(px + 1, py,
-              Tiles.getTileByName(TileNames.GAS_GIANT_1_NE));
-          starMap.setTile(px, py + 1,
-              Tiles.getTileByName(TileNames.GAS_GIANT_1_SW));
-          starMap.setTile(px + 1, py + 1,
+          place2x2Tiles(px, py, Tiles.getTileByName(TileNames.GAS_GIANT_1_NW),
+              Tiles.getTileByName(TileNames.GAS_GIANT_1_NE),
+              Tiles.getTileByName(TileNames.GAS_GIANT_1_SW),
               Tiles.getTileByName(TileNames.GAS_GIANT_1_SE));
           break;
         }
         case 1: {
-          starMap.setTile(px, py,
-              Tiles.getTileByName(TileNames.GAS_GIANT_2_NW));
-          starMap.setTile(px + 1, py,
-              Tiles.getTileByName(TileNames.GAS_GIANT_2_NE));
-          starMap.setTile(px, py + 1,
-              Tiles.getTileByName(TileNames.GAS_GIANT_2_SW));
-          starMap.setTile(px + 1, py + 1,
+          place2x2Tiles(px, py, Tiles.getTileByName(TileNames.GAS_GIANT_2_NW),
+              Tiles.getTileByName(TileNames.GAS_GIANT_2_NE),
+              Tiles.getTileByName(TileNames.GAS_GIANT_2_SW),
               Tiles.getTileByName(TileNames.GAS_GIANT_2_SE));
           break;
         }
         case 2: {
-          starMap.setTile(px, py,
-              Tiles.getTileByName(TileNames.GAS_GIANT_3_NW));
-          starMap.setTile(px + 1, py,
-              Tiles.getTileByName(TileNames.GAS_GIANT_3_NE));
-          starMap.setTile(px, py + 1,
-              Tiles.getTileByName(TileNames.GAS_GIANT_3_SW));
-          starMap.setTile(px + 1, py + 1,
+          place2x2Tiles(px, py, Tiles.getTileByName(TileNames.GAS_GIANT_3_NW),
+              Tiles.getTileByName(TileNames.GAS_GIANT_3_NE),
+              Tiles.getTileByName(TileNames.GAS_GIANT_3_SW),
               Tiles.getTileByName(TileNames.GAS_GIANT_3_SE));
           break;
         }
         case 31: {
-          starMap.setTile(px, py,
-              Tiles.getTileByName(TileNames.ICEGIANT1_NW));
-          starMap.setTile(px + 1, py,
-              Tiles.getTileByName(TileNames.ICEGIANT1_NE));
-          starMap.setTile(px, py + 1,
-              Tiles.getTileByName(TileNames.ICEGIANT1_SW));
-          starMap.setTile(px + 1, py + 1,
+          place2x2Tiles(px, py, Tiles.getTileByName(TileNames.ICEGIANT1_NW),
+              Tiles.getTileByName(TileNames.ICEGIANT1_NE),
+              Tiles.getTileByName(TileNames.ICEGIANT1_SW),
               Tiles.getTileByName(TileNames.ICEGIANT1_SE));
           break;
         }
         case 32: {
-          starMap.setTile(px, py,
-              Tiles.getTileByName(TileNames.ICEGIANT2_NW));
-          starMap.setTile(px + 1, py,
-              Tiles.getTileByName(TileNames.ICEGIANT2_NE));
-          starMap.setTile(px, py + 1,
-              Tiles.getTileByName(TileNames.ICEGIANT2_SW));
-          starMap.setTile(px + 1, py + 1,
+          place2x2Tiles(px, py, Tiles.getTileByName(TileNames.ICEGIANT2_NW),
+              Tiles.getTileByName(TileNames.ICEGIANT2_NE),
+              Tiles.getTileByName(TileNames.ICEGIANT2_SW),
               Tiles.getTileByName(TileNames.ICEGIANT2_SE));
           break;
         }
@@ -760,30 +1042,10 @@ public class StarMapGenerator {
     starMap.getSunList().add(sun);
     int sunNumber = starMap.getSunList().size() - 1;
     SquareInfo info = new SquareInfo(SquareInfo.TYPE_SUN, sunNumber);
-    starMap.setSquareInfo(sx - 1, sy - 1, info);
-    starMap.setSquareInfo(sx, sy - 1, info);
-    starMap.setSquareInfo(sx + 1, sy - 1, info);
-    starMap.setSquareInfo(sx - 1, sy, info);
-    starMap.setSquareInfo(sx, sy, info);
-    starMap.setSquareInfo(sx + 1, sy, info);
-    starMap.setSquareInfo(sx - 1, sy + 1, info);
-    starMap.setSquareInfo(sx, sy + 1, info);
-    starMap.setSquareInfo(sx + 1, sy + 1, info);
+    place3x3SquareInfo(sy, sy, info);
     // Sol has sun type 0.
     SunType sunType = SunType.RED_STAR;
-    starMap.setTile(sx, sy, Tiles.getSunTile(TileNames.SUN_C, sunType));
-    starMap.setTile(sx - 1, sy - 1, Tiles.getSunTile(TileNames.SUN_NW,
-        sunType));
-    starMap.setTile(sx, sy - 1, Tiles.getSunTile(TileNames.SUN_N, sunType));
-    starMap.setTile(sx + 1, sy - 1, Tiles.getSunTile(TileNames.SUN_NE,
-        sunType));
-    starMap.setTile(sx - 1, sy, Tiles.getSunTile(TileNames.SUN_W, sunType));
-    starMap.setTile(sx + 1, sy, Tiles.getSunTile(TileNames.SUN_E, sunType));
-    starMap.setTile(sx - 1, sy + 1, Tiles.getSunTile(TileNames.SUN_SW,
-        sunType));
-    starMap.setTile(sx, sy + 1, Tiles.getSunTile(TileNames.SUN_S, sunType));
-    starMap.setTile(sx + 1, sy + 1, Tiles.getSunTile(TileNames.SUN_SE,
-        sunType));
+    placeSunTiles(sx, sy, sunType);
     int planets = 0;
     while (planets < numberOfPlanets) {
       int px = sx + DiceGenerator.getRandom(-StarMap.SOLAR_SYSTEM_WIDTH,
@@ -837,34 +1099,14 @@ public class StarMapGenerator {
             }
           }
           if (playerIndex == -1) {
-            int index = DiceGenerator.getRandom(5);
-            switch (index) {
-              case 0: {
-                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
-                break;
-              }
-              case 1: {
-                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_LAB);
-                break;
-              }
-              case 2: {
-                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_PALACE);
-                break;
-              }
-              case 3: {
-                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_TEMPLE);
-                break;
-              }
-              default:
-              case 4: {
-                planet.setPlanetaryEvent(PlanetaryEvent.BLACK_MONOLITH);
-                break;
-              }
-              case 5: {
-                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_ARTIFACT);
-                break;
-              }
-            }
+            WeightedList<PlanetaryEvent> list = new WeightedList<>();
+            list.add(1, PlanetaryEvent.ANCIENT_FACTORY);
+            list.add(1, PlanetaryEvent.ANCIENT_LAB);
+            list.add(1, PlanetaryEvent.ANCIENT_PALACE);
+            list.add(1, PlanetaryEvent.ANCIENT_TEMPLE);
+            list.add(1, PlanetaryEvent.BLACK_MONOLITH);
+            list.add(1, PlanetaryEvent.ANCIENT_ARTIFACT);
+            planet.setPlanetaryEvent(list.pickRandom());
           }
         }
         if (planets == 4) {
@@ -876,26 +1118,12 @@ public class StarMapGenerator {
           planet.generateGravityBasedOnSize();
           planet.setName("Mars IV");
           if (playerIndex == -1 && DiceGenerator.getRandom(99) <= 25) {
-            int index = DiceGenerator.getRandom(3);
-            switch (index) {
-              case 0: {
-                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
-                break;
-              }
-              case 1: {
-                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_LAB);
-                break;
-              }
-              default:
-              case 2: {
-                planet.setPlanetaryEvent(PlanetaryEvent.BLACK_MONOLITH);
-                break;
-              }
-              case 3: {
-                planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_ARTIFACT);
-                break;
-              }
-            }
+            WeightedList<PlanetaryEvent> list = new WeightedList<>();
+            list.add(1, PlanetaryEvent.ANCIENT_FACTORY);
+            list.add(1, PlanetaryEvent.ANCIENT_LAB);
+            list.add(1, PlanetaryEvent.BLACK_MONOLITH);
+            list.add(1, PlanetaryEvent.ANCIENT_ARTIFACT);
+            planet.setPlanetaryEvent(list.pickRandom());
           }
         }
         starMap.getPlanetList().add(planet);
@@ -939,85 +1167,54 @@ public class StarMapGenerator {
         starMap.getPlanetList().add(planet);
         int planetNumber = starMap.getPlanetList().size() - 1;
         info = new SquareInfo(SquareInfo.TYPE_GAS_PLANET, planetNumber);
-        starMap.setSquareInfo(px, py, info);
-        starMap.setSquareInfo(px + 1, py, info);
-        starMap.setSquareInfo(px, py + 1, info);
-        starMap.setSquareInfo(px + 1, py + 1, info);
+        place2x2SquareInfo(px, py, info);
         switch (planet.getPlanetTypeIndex()) {
         case 0: {
-          starMap.setTile(px, py,
-              Tiles.getTileByName(TileNames.GAS_GIANT_1_NW));
-          starMap.setTile(px + 1, py,
-              Tiles.getTileByName(TileNames.GAS_GIANT_1_NE));
-          starMap.setTile(px, py + 1,
-              Tiles.getTileByName(TileNames.GAS_GIANT_1_SW));
-          starMap.setTile(px + 1, py + 1,
+          place2x2Tiles(px, py, Tiles.getTileByName(TileNames.GAS_GIANT_1_NW),
+              Tiles.getTileByName(TileNames.GAS_GIANT_1_NE),
+              Tiles.getTileByName(TileNames.GAS_GIANT_1_SW),
               Tiles.getTileByName(TileNames.GAS_GIANT_1_SE));
           break;
         }
         case 1: {
-          starMap.setTile(px, py,
-              Tiles.getTileByName(TileNames.GAS_GIANT_2_NW));
-          starMap.setTile(px + 1, py,
-              Tiles.getTileByName(TileNames.GAS_GIANT_2_NE));
-          starMap.setTile(px, py + 1,
-              Tiles.getTileByName(TileNames.GAS_GIANT_2_SW));
-          starMap.setTile(px + 1, py + 1,
+          place2x2Tiles(px, py, Tiles.getTileByName(TileNames.GAS_GIANT_2_NW),
+              Tiles.getTileByName(TileNames.GAS_GIANT_2_NE),
+              Tiles.getTileByName(TileNames.GAS_GIANT_2_SW),
               Tiles.getTileByName(TileNames.GAS_GIANT_2_SE));
           break;
         }
         case 2: {
-          starMap.setTile(px, py,
-              Tiles.getTileByName(TileNames.GAS_GIANT_3_NW));
-          starMap.setTile(px + 1, py,
-              Tiles.getTileByName(TileNames.GAS_GIANT_3_NE));
-          starMap.setTile(px, py + 1,
-              Tiles.getTileByName(TileNames.GAS_GIANT_3_SW));
-          starMap.setTile(px + 1, py + 1,
+          place2x2Tiles(px, py, Tiles.getTileByName(TileNames.GAS_GIANT_3_NW),
+              Tiles.getTileByName(TileNames.GAS_GIANT_3_NE),
+              Tiles.getTileByName(TileNames.GAS_GIANT_3_SW),
               Tiles.getTileByName(TileNames.GAS_GIANT_3_SE));
           break;
         }
         case 29: {
-          starMap.setTile(px, py,
-              Tiles.getTileByName(TileNames.JUPITER_NW));
-          starMap.setTile(px + 1, py,
-              Tiles.getTileByName(TileNames.JUPITER_NE));
-          starMap.setTile(px, py + 1,
-              Tiles.getTileByName(TileNames.JUPITER_SW));
-          starMap.setTile(px + 1, py + 1,
+          place2x2Tiles(px, py, Tiles.getTileByName(TileNames.JUPITER_NW),
+              Tiles.getTileByName(TileNames.JUPITER_NE),
+              Tiles.getTileByName(TileNames.JUPITER_SW),
               Tiles.getTileByName(TileNames.JUPITER_SE));
           break;
         }
         case 30: {
-          starMap.setTile(px, py,
-              Tiles.getTileByName(TileNames.SATURN_NW));
-          starMap.setTile(px + 1, py,
-              Tiles.getTileByName(TileNames.SATURN_NE));
-          starMap.setTile(px, py + 1,
-              Tiles.getTileByName(TileNames.SATURN_SW));
-          starMap.setTile(px + 1, py + 1,
+          place2x2Tiles(px, py, Tiles.getTileByName(TileNames.SATURN_NW),
+              Tiles.getTileByName(TileNames.SATURN_NE),
+              Tiles.getTileByName(TileNames.SATURN_SW),
               Tiles.getTileByName(TileNames.SATURN_SE));
           break;
         }
         case 31: {
-          starMap.setTile(px, py,
-              Tiles.getTileByName(TileNames.ICEGIANT1_NW));
-          starMap.setTile(px + 1, py,
-              Tiles.getTileByName(TileNames.ICEGIANT1_NE));
-          starMap.setTile(px, py + 1,
-              Tiles.getTileByName(TileNames.ICEGIANT1_SW));
-          starMap.setTile(px + 1, py + 1,
+          place2x2Tiles(px, py, Tiles.getTileByName(TileNames.ICEGIANT1_NW),
+              Tiles.getTileByName(TileNames.ICEGIANT1_NE),
+              Tiles.getTileByName(TileNames.ICEGIANT1_SW),
               Tiles.getTileByName(TileNames.ICEGIANT1_SE));
           break;
         }
         case 32: {
-          starMap.setTile(px, py,
-              Tiles.getTileByName(TileNames.ICEGIANT2_NW));
-          starMap.setTile(px + 1, py,
-              Tiles.getTileByName(TileNames.ICEGIANT2_NE));
-          starMap.setTile(px, py + 1,
-              Tiles.getTileByName(TileNames.ICEGIANT2_SW));
-          starMap.setTile(px + 1, py + 1,
+          place2x2Tiles(px, py, Tiles.getTileByName(TileNames.ICEGIANT2_NW),
+              Tiles.getTileByName(TileNames.ICEGIANT2_NE),
+              Tiles.getTileByName(TileNames.ICEGIANT2_SW),
               Tiles.getTileByName(TileNames.ICEGIANT2_SE));
           break;
         }
@@ -1035,31 +1232,9 @@ public class StarMapGenerator {
   private void buildBlackHole() {
     int cx = starMap.getMaxX() / 2;
     int cy = starMap.getMaxY() / 2;
-    starMap.setTile(cx, cy, Tiles.getTileByName(TileNames.BLACKHOLE_C));
-    starMap.setSquareInfo(cx, cy, SquareInfo.TYPE_BLACKHOLE_CENTER, 0);
-    starMap.setTile(cx - 1, cy - 1,
-        Tiles.getTileByName(TileNames.BLACKHOLE_NW));
-    starMap.setSquareInfo(cx - 1, cy - 1, SquareInfo.TYPE_BLACKHOLE, 0);
-    starMap.setTile(cx, cy - 1, Tiles.getTileByName(TileNames.BLACKHOLE_N));
-    starMap.setSquareInfo(cx, cy - 1, SquareInfo.TYPE_BLACKHOLE, 0);
-    starMap.setTile(cx + 1, cy - 1,
-        Tiles.getTileByName(TileNames.BLACKHOLE_NE));
-    starMap.setSquareInfo(cx + 1, cy - 1, SquareInfo.TYPE_BLACKHOLE, 0);
-
-    starMap.setTile(cx - 1, cy, Tiles.getTileByName(TileNames.BLACKHOLE_W));
-    starMap.setSquareInfo(cx - 1, cy, SquareInfo.TYPE_BLACKHOLE, 0);
-    starMap.setTile(cx + 1, cy, Tiles.getTileByName(TileNames.BLACKHOLE_E));
-    starMap.setSquareInfo(cx + 1, cy, SquareInfo.TYPE_BLACKHOLE, 0);
-
-    starMap.setTile(cx - 1, cy + 1,
-        Tiles.getTileByName(TileNames.BLACKHOLE_SW));
-    starMap.setSquareInfo(cx - 1, cy + 1, SquareInfo.TYPE_BLACKHOLE, 0);
-    starMap.setTile(cx, cy + 1, Tiles.getTileByName(TileNames.BLACKHOLE_S));
-    starMap.setSquareInfo(cx, cy + 1, SquareInfo.TYPE_BLACKHOLE, 0);
-    starMap.setTile(cx + 1, cy + 1,
-        Tiles.getTileByName(TileNames.BLACKHOLE_SE));
-    starMap.setSquareInfo(cx + 1, cy + 1, SquareInfo.TYPE_BLACKHOLE, 0);
-
+    place3x3SquareInfo(cx, cy,
+        new SquareInfo(SquareInfo.TYPE_BLACKHOLE_CENTER, 0),
+        new SquareInfo(SquareInfo.TYPE_BLACKHOLE, 0));
     /* Mark blackhole as solar system, so no star will replace it. */
     for (int i = -2; i < 3; i++) {
       for (int j = -2; j < 2; j++) {
@@ -1068,6 +1243,89 @@ public class StarMapGenerator {
     }
   }
 
+  /**
+   * Place 3x3 square info
+   * @param cx Center X coordinate
+   * @param cy Center Y coordinate
+   * @param info SquareInfo
+   */
+  private void place3x3SquareInfo(final int cx, final int cy,
+      final SquareInfo info) {
+    place3x3SquareInfo(cx, cy, info, info);
+  }
+
+  /**
+   * Place 3x3 square infos
+   * @param cx Center X coordinate
+   * @param cy Center Y coordinate
+   * @param centerInfo SquareInfo on center
+   * @param info SquareInfo on borders
+   */
+  private void place3x3SquareInfo(final int cx, final int cy,
+      final SquareInfo centerInfo, final SquareInfo info) {
+    starMap.setSquareInfo(cx - 1, cy - 1, info);
+    starMap.setSquareInfo(cx, cy - 1, info);
+    starMap.setSquareInfo(cx + 1, cy - 1, info);
+    starMap.setSquareInfo(cx - 1, cy, info);
+    starMap.setSquareInfo(cx, cy, centerInfo);
+    starMap.setSquareInfo(cx + 1, cy, info);
+    starMap.setSquareInfo(cx - 1, cy + 1, info);
+    starMap.setSquareInfo(cx, cy + 1, info);
+    starMap.setSquareInfo(cx + 1, cy + 1, info);
+  }
+
+  /**
+   * Place 2x2 square info
+   * @param tx Top left X coordinate
+   * @param ty Top left Y coordinate
+   * @param info SquareInfo
+   */
+  private void place2x2SquareInfo(final int tx, final int ty,
+      final SquareInfo info) {
+    starMap.setSquareInfo(tx, ty, info);
+    starMap.setSquareInfo(tx + 1, ty, info);
+    starMap.setSquareInfo(tx, ty + 1, info);
+    starMap.setSquareInfo(tx + 1, ty + 1, info);
+  }
+
+  /**
+   * Place 2x2 tiles into starmap.
+   * @param tx Top corner X coordinate AKA NorthWest tile
+   * @param ty Top corner Y coordinate AKA NorthWest tile
+   * @param northWest Tile in north west corner
+   * @param northEast Tile in north east corner
+   * @param southWest Tile in south west corner
+   * @param southEast Tile in south east corner
+   */
+  private void place2x2Tiles(final int tx, final int ty, final Tile northWest,
+      final Tile northEast, final Tile southWest, final Tile southEast) {
+    starMap.setTile(tx, ty, northWest);
+    starMap.setTile(tx + 1, ty, northEast);
+    starMap.setTile(tx, ty + 1, southWest);
+    starMap.setTile(tx + 1, ty + 1, southEast);
+  }
+  /**
+   * Place Sun/Star tiles
+   * @param cx Center of Star X coordinate
+   * @param cy Center of Star Y coordinate
+   * @param sunType SunType
+   */
+  private void placeSunTiles(final int cx, final int cy,
+      final SunType sunType) {
+    starMap.setTile(cx, cy, Tiles.getSunTile(TileNames.SUN_C, sunType));
+    starMap.setTile(cx - 1, cy - 1, Tiles.getSunTile(TileNames.SUN_NW,
+        sunType));
+    starMap.setTile(cx, cy - 1, Tiles.getSunTile(TileNames.SUN_N, sunType));
+    starMap.setTile(cx + 1, cy - 1, Tiles.getSunTile(TileNames.SUN_NE,
+        sunType));
+    starMap.setTile(cx - 1, cy, Tiles.getSunTile(TileNames.SUN_W, sunType));
+    starMap.setTile(cx + 1, cy, Tiles.getSunTile(TileNames.SUN_E, sunType));
+    starMap.setTile(cx - 1, cy + 1, Tiles.getSunTile(TileNames.SUN_SW,
+        sunType));
+    starMap.setTile(cx, cy + 1, Tiles.getSunTile(TileNames.SUN_S, sunType));
+    starMap.setTile(cx + 1, cy + 1, Tiles.getSunTile(TileNames.SUN_SE,
+        sunType));
+  }
   /**
    * Generate random system.
    * @param config GalaxyConfig.
@@ -1346,344 +1604,6 @@ public class StarMapGenerator {
     }*/
 
   }
-  /**
-   * Create realm to planet. This will add require buildings, workers
-   * and ships. This will also add message about new realm starting.
-   * Not this does not add home planet information.
-   * @param planet Planet where player starts.
-   * @param playerInfo Realm who is starting
-   * @param playerIndex Index for player
-   */
-  public void createRealmToPlanet(final Planet planet,
-      final PlayerInfo playerInfo, final int playerIndex) {
-
-    if (planet.getPlanetPlayerInfo() != null && planet.getGovernor() != null) {
-      planet.getGovernor().setJob(Job.UNASSIGNED);
-      planet.setGovernor(null);
-      //TODO: What to do when elder realm conquers other realm's starting
-      //Planet? Set culture 0 and destroy all buildings? Elder realm knows
-      //where is another realm's home planet.
-    }
-    planet.setPlanetOwner(playerIndex, playerInfo);
-    if (playerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
-      planet.colonizeWithOrbital();
-    }
-    if (Game.getTutorial() != null && playerInfo.isHuman()
-        && starMap.isTutorialEnabled()) {
-      String tutorialText = Game.getTutorial().showTutorialText(0);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
-      tutorialText = Game.getTutorial().showTutorialText(1);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.PLANETARY, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        msg.setCoordinate(planet.getCoordinate());
-        msg.setMatchByString(planet.getName());
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
-      tutorialText = Game.getTutorial().showTutorialText(2);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.PLANETARY, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        msg.setCoordinate(planet.getCoordinate());
-        msg.setMatchByString(planet.getName());
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
-    }
-    Message msg = new Message(
-        MessageType.PLANETARY, playerInfo.getEmpireName() + " starts at "
-            + planet.getName() + ".",
-        Icons.getIconByName(Icons.ICON_CULTURE));
-    PlayerStartEvent event = new PlayerStartEvent(planet.getCoordinate(),
-        planet.getName(), playerIndex);
-    starMap.getHistory().addEvent(event);
-    msg.setCoordinate(planet.getCoordinate());
-    msg.setMatchByString(planet.getName());
-    if (playerInfo.getRuler() == null) {
-      Leader ruler = LeaderUtility.createLeader(playerInfo, planet,
-          LeaderUtility.LEVEL_START_RULER);
-      ruler.setJob(Job.RULER);
-      ruler.setTitle(LeaderUtility.createTitleForLeader(ruler, playerInfo));
-      playerInfo.getLeaderPool().add(ruler);
-      playerInfo.getMsgList().addNewMessage(msg);
-      playerInfo.setRuler(ruler);
-    }
-
-    if (!playerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)
-        && !planet.hasSpacePort()) {
-       if (planet.getBuildingList().length >= planet.getGroundSize()) {
-         // Planet is full and no space for space port.
-         planet.destroyOneBuilding();
-       }
-      planet.addBuilding(BuildingFactory.createByName("Space port"));
-    }
-    if (playerInfo.isHuman()) {
-      // Adding starting building for human.
-      planet.setUnderConstruction(ConstructionFactory.createByName(
-          "Extra credit"));
-    }
-    if (playerInfo.getRace() == SpaceRace.MECHIONS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else if (playerInfo.getRace() == SpaceRace.HOMARIANS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 2);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else if (playerInfo.getRace() == SpaceRace.CHIRALOIDS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else if (playerInfo.getRace() == SpaceRace.REBORGIANS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 1);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else if (playerInfo.getRace() == SpaceRace.LITHORIANS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 1);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else if (playerInfo.getRace() == SpaceRace.ALTEIRIANS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 1);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 1);
-    } else if (playerInfo.getRace() == SpaceRace.SYNTHDROIDS) {
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    } else {
-      planet.setWorkers(Planet.FOOD_FARMERS, 1);
-      planet.setWorkers(Planet.METAL_MINERS, 0);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
-      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    }
-    ShipStat[] stats = playerInfo.getShipStatList();
-    int count = 0;
-    for (ShipStat stat : stats) {
-      int numShip = 1;
-      for (int j = 0; j < numShip; j++) {
-        if (stat.getDesign().getHull().getHullType() == ShipHullType.ORBITAL) {
-          continue;
-        }
-        Ship ship = new Ship(stat.getDesign());
-        stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
-        stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
-        Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
-        playerInfo.getFleets().add(fleet);
-        if (ship.isColonyModule()) {
-          fleet.setName("Colony #" + count);
-          if (Game.getTutorial() != null && playerInfo.isHuman()
-              && starMap.isTutorialEnabled()) {
-            String tutorialText = Game.getTutorial().showTutorialText(7);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.FLEET, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              msg.setCoordinate(planet.getCoordinate());
-              msg.setMatchByString(fleet.getName());
-              playerInfo.getMsgList().addNewMessage(msg);
-            }
-          }
-        } else {
-          fleet.setName("Scout #" + count);
-          if (Game.getTutorial() != null && playerInfo.isHuman()
-              && starMap.isTutorialEnabled()) {
-            String tutorialText = Game.getTutorial().showTutorialText(5);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.FLEET, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              msg.setCoordinate(planet.getCoordinate());
-              msg.setMatchByString(fleet.getName());
-              playerInfo.getMsgList().addNewMessage(msg);
-            }
-            tutorialText = Game.getTutorial().showTutorialText(6);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.FLEET, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              msg.setCoordinate(planet.getCoordinate());
-              msg.setMatchByString(fleet.getName());
-              playerInfo.getMsgList().addNewMessage(msg);
-            }
-          }
-
-        }
-        msg = new Message(MessageType.FLEET,
-            fleet.getName() + " is waiting for orders.",
-            Icons.getIconByName(Icons.ICON_HULL_TECH));
-        msg.setCoordinate(planet.getCoordinate());
-        msg.setMatchByString(fleet.getName());
-        playerInfo.getMsgList().addNewMessage(msg);
-        count++;
-      }
-    }
-    String backgroundStory = BackgroundStoryGenerator.generateBackgroundStory(
-        playerInfo, planet, starMap.getStarYear());
-    playerInfo.setBackgroundStory(backgroundStory);
-    Message msgStart = new Message(MessageType.STORY, backgroundStory,
-        Icons.getIconByName(Icons.ICON_CULTURE));
-    msgStart.setCoordinate(planet.getCoordinate());
-    msgStart.setMatchByString(planet.getName());
-    playerInfo.getMsgList().addNewMessage(msgStart);
-  }
-
-  /**
-   * Smooth ascension veins.
-   */
-  public void smoothAscensionVeins() {
-    for (int y = 0; y < getMaxY(); y++) {
-      for (int x = 0; x < getMaxX(); x++) {
-        boolean north = false;
-        boolean west = false;
-        boolean east = false;
-        boolean south = false;
-        Tile tile = Tiles.getTileByIndex(starMap.getTileIndex(x, y));
-        if (tile.isAscensionVein()) {
-          int mx = x;
-          int my = y - 1;
-          if (starMap.isValidCoordinate(mx, my)) {
-            tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
-            if (tile.isAscensionVein() || tile.isBlackhole()
-                || tile.isAscensionPortal()) {
-              north = true;
-            }
-          }
-          mx = x;
-          my = y + 1;
-          if (starMap.isValidCoordinate(mx, my)) {
-            tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
-            if (tile.isAscensionVein() || tile.isBlackhole()
-                || tile.isAscensionPortal()) {
-              south = true;
-            }
-          }
-          mx = x - 1;
-          my = y;
-          if (starMap.isValidCoordinate(mx, my)) {
-            tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
-            if (tile.isAscensionVein() || tile.isBlackhole()
-                || tile.isAscensionPortal()) {
-              west = true;
-            }
-          }
-          mx = x + 1;
-          my = y;
-          if (starMap.isValidCoordinate(mx, my)) {
-            tile = Tiles.getTileByIndex(starMap.getTileIndex(mx, my));
-            if (tile.isAscensionVein() || tile.isBlackhole()
-                || tile.isAscensionPortal()) {
-              east = true;
-            }
-          }
-          tile = Tiles.getTileByIndex(starMap.getTileIndex(x, y));
-          if (north && south && west && east) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
-          } else if (north && south && west) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSW1);
-          } else if (north && east && west) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NWE1);
-          } else if (north && south && east) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSE1);
-          } else if (south && east && west) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SWE1);
-          } else if (north && east) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NE1);
-          } else if (north && west) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NW1);
-          } else if (south && west) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SW1);
-          } else if (south && east) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_SE1);
-          } else if (west && east) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_WE1);
-          } else if (north && south) {
-            tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NS1);
-          }
-          starMap.setTile(x, y, tile);
-        }
-      }
-    }
-  }
-  /**
-   * Generate Ascension portal to map and ascension veins.
-   *
-   * @param x X coordinate for portal
-   * @param y Y Coordinate for portal
-   */
-  public void generateAscensionPortal(final int x, final int y) {
-    int cx = getMaxX() / 2;
-    int cy = getMaxY() / 2;
-    int[] sax = new int[4];
-    int[] say = new int[4];
-    sax[0] = cx;
-    say[0] = cy - 2;
-    sax[1] = cx + 2;
-    say[1] = cy;
-    sax[2] = cx;
-    say[2] = cy + 2;
-    sax[3] = cx - 2;
-    say[3] = cy;
-    int best = -1;
-    double bestDist = 999;
-    for (int i = 0; i < sax.length; i++) {
-      Coordinate target = new Coordinate(x, y);
-      Coordinate start = new Coordinate(sax[i], say[i]);
-      double dist = target.calculateDistance(start);
-      if (dist < bestDist) {
-        best = i;
-        bestDist = dist;
-      }
-    }
-    int sx = sax[best];
-    int sy = say[best];
-    Tile tile = Tiles.getTileByName(TileNames.ASCENSION_VEIN_NSWE1);
-    starMap.setTile(sx, sy, tile);
-    starMap.setSquareInfo(sx, sy, new SquareInfo(
-        SquareInfo.TYPE_ASCENSION_VEIN, 0));
-    AStarSearch search = new AStarSearch(starMap, sx, sy, x, y);
-    if (search.doSquareSearch()) {
-      search.doSquareRoute();
-      int count = 0;
-      do {
-        count++;
-        PathPoint point = search.getMove();
-        if (point != null) {
-          starMap.setTile(point.getX(), point.getY(), tile.getIndex());
-          starMap.setSquareInfo(point.getX(), point.getY(), new SquareInfo(
-              SquareInfo.TYPE_ASCENSION_VEIN, count));
-          search.nextMove();
-          if (search.isLastMove()) {
-            point = search.getMove();
-            if (point != null) {
-              starMap.setTile(point.getX(), point.getY(), tile.getIndex());
-              starMap.setSquareInfo(point.getX(), point.getY(), new SquareInfo(
-                  SquareInfo.TYPE_ASCENSION_VEIN, count));
-            }
-          }
-        } else {
-          break;
-        }
-      } while (!search.isLastMove());
-      starMap.setTile(x, y, Tiles.getTileByName(
-          TileNames.ASCENSION_PORTAL1).getIndex());
-    }
-  }
-
   /**
    * Helper getter for getting maximum galaxy X size.
    * @return Max galaxy size

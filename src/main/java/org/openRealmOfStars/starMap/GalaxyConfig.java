@@ -833,6 +833,20 @@ public class GalaxyConfig {
   }
 
   /**
+   * Is Elder realm start? Which means that there are at least one or more
+   * elder realms in config.
+   * @return True if there is one or more elder realms.
+   */
+  public boolean isElderRealmStart() {
+    boolean elderRealmStart = false;
+    for (int i = 0; i < getMaxPlayers(); i++) {
+      if (getPlayerElderRealm(i)) {
+        elderRealmStart = true;
+      }
+    }
+    return elderRealmStart;
+  }
+  /**
    * Set scoring condition for population
    * 0 Disabled victory by populations
    * 1 40% population of whole galaxy

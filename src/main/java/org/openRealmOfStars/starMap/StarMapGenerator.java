@@ -205,31 +205,7 @@ public class StarMapGenerator {
     if (playerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       planet.colonizeWithOrbital();
     }
-    if (Game.getTutorial() != null && playerInfo.isHuman()
-        && starMap.isTutorialEnabled()) {
-      String tutorialText = Game.getTutorial().showTutorialText(0);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
-      tutorialText = Game.getTutorial().showTutorialText(1);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.PLANETARY, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        msg.setCoordinate(planet.getCoordinate());
-        msg.setMatchByString(planet.getName());
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
-      tutorialText = Game.getTutorial().showTutorialText(2);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.PLANETARY, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        msg.setCoordinate(planet.getCoordinate());
-        msg.setMatchByString(planet.getName());
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
-    }
+    makeStartingTutorialTexts(playerInfo, planet);
     Message msg = new Message(
         MessageType.PLANETARY, playerInfo.getEmpireName() + " starts at "
             + planet.getName() + ".",
@@ -282,39 +258,10 @@ public class StarMapGenerator {
         playerInfo.getFleets().add(fleet);
         if (ship.isColonyModule()) {
           fleet.setName("Colony #" + count);
-          if (Game.getTutorial() != null && playerInfo.isHuman()
-              && starMap.isTutorialEnabled()) {
-            String tutorialText = Game.getTutorial().showTutorialText(7);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.FLEET, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              msg.setCoordinate(planet.getCoordinate());
-              msg.setMatchByString(fleet.getName());
-              playerInfo.getMsgList().addNewMessage(msg);
-            }
-          }
         } else {
           fleet.setName("Scout #" + count);
-          if (Game.getTutorial() != null && playerInfo.isHuman()
-              && starMap.isTutorialEnabled()) {
-            String tutorialText = Game.getTutorial().showTutorialText(5);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.FLEET, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              msg.setCoordinate(planet.getCoordinate());
-              msg.setMatchByString(fleet.getName());
-              playerInfo.getMsgList().addNewMessage(msg);
-            }
-            tutorialText = Game.getTutorial().showTutorialText(6);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.FLEET, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              msg.setCoordinate(planet.getCoordinate());
-              msg.setMatchByString(fleet.getName());
-              playerInfo.getMsgList().addNewMessage(msg);
-            }
-          }
         }
+        makeStartingFleetTutorialTexts(playerInfo, fleet);
         msg = new Message(MessageType.FLEET,
             fleet.getName() + " is waiting for orders.",
             Icons.getIconByName(Icons.ICON_HULL_TECH));
@@ -503,12 +450,7 @@ public class StarMapGenerator {
     starMap.defineKarmaEvents(config.getKarmaType(), config.getKarmaSpeed());
     starMap.setAllNewsEnabled(config.isAllNews());
     starMap.setTutorialEnabled(config.isEnableTutorial());
-    boolean elderRealmStart = false;
-    for (int i = 0; i < config.getMaxPlayers(); i++) {
-      if (config.getPlayerElderRealm(i)) {
-        elderRealmStart = true;
-      }
-    }
+    boolean elderRealmStart = config.isElderRealmStart();
     if (elderRealmStart) {
       starMap.getHistory().addTurn(-config.getElderHeadStart());
       starMap.setTurn(-config.getElderHeadStart());
@@ -804,12 +746,7 @@ public class StarMapGenerator {
   private void createSolarSystem(final int sunx, final int suny,
       final int planetsToCreate, final int gasGiantsToCreate,
       final int playerIndex, final GalaxyConfig config) {
-    boolean elderRealmStart = false;
-    for (int i = 0; i < config.getMaxPlayers(); i++) {
-      if (config.getPlayerElderRealm(i)) {
-        elderRealmStart = true;
-      }
-    }
+    boolean elderRealmStart = config.isElderRealmStart();
     if (playerIndex != -1) {
       PlayerInfo playerInfo = starMap.getPlayerList().getPlayerInfoByIndex(
           playerIndex);
@@ -874,9 +811,7 @@ public class StarMapGenerator {
           planet.setAmountMetalInGround(HOMEWORLD_METAL);
           planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
           planet.setStartRealmIndex(playerIndex);
-          if (!elderRealmStart) {
-            createRealmToPlanet(planet, playerInfo, playerIndex);
-          } else if (playerInfo.isElderRealm()) {
+          if (!elderRealmStart || playerInfo.isElderRealm()) {
             createRealmToPlanet(planet, playerInfo, playerIndex);
           }
         } else {
@@ -984,12 +919,7 @@ public class StarMapGenerator {
    */
   private void createSolSystem(final int sunx,
       final int suny, final int playerIndex, final GalaxyConfig config) {
-    boolean elderRealmStart = false;
-    for (int i = 0; i < config.getMaxPlayers(); i++) {
-      if (config.getPlayerElderRealm(i)) {
-        elderRealmStart = true;
-      }
-    }
+    boolean elderRealmStart = config.isElderRealmStart();
     int numberOfPlanets = 4;
     int numberOfGasGiants = 4;
     // The Sun
@@ -1056,8 +986,7 @@ public class StarMapGenerator {
             } else if (playerInfo.isElderRealm()) {
               createRealmToPlanet(planet, playerInfo, playerIndex);
             }
-          }
-          if (playerIndex == -1) {
+          } else {
             WeightedList<PlanetaryEvent> list = new WeightedList<>();
             list.add(1, PlanetaryEvent.ANCIENT_FACTORY);
             list.add(1, PlanetaryEvent.ANCIENT_LAB);
@@ -1381,46 +1310,14 @@ public class StarMapGenerator {
           + 2 * (config.getGalaxySizeIndex() - 1);
     }
     int pirateLairs = 0;
-    switch (config.getSpacePiratesLevel()) {
-      case 0: {
-        pirateLairs = 0;
-        break;
-      }
-      case 1: {
-        // 10%
-        pirateLairs = numberOfAnchors * 10 / 100;
-        if (pirateLairs < 1) {
-          pirateLairs = 1;
-        }
-        break;
-      }
-      case 2: {
-        // 20%
-        pirateLairs = numberOfAnchors * 20 / 100;
-        break;
-      }
-      case 3: {
-        // 40%
-        pirateLairs = numberOfAnchors * 40 / 100;
-        break;
-      }
-      case 4: {
-        // 60%
-        pirateLairs = numberOfAnchors * 60 / 100;
-        break;
-      }
-      case 5: {
-        // 80%
-        pirateLairs = numberOfAnchors * 80 / 100;
-        break;
-      }
-      case 6: {
-        // 100%
-        pirateLairs = numberOfAnchors;
-        break;
-      }
-      default: {
-        pirateLairs = 0;
+    int value = config.getSpacePiratesLevel();
+    value = value - 1;
+    if (value > 0) {
+      pirateLairs = numberOfAnchors * value * 20 / 100;
+    } else if (value == 0) {
+      pirateLairs = numberOfAnchors * 10 / 100;
+      if (pirateLairs < 1) {
+        pirateLairs = 1;
       }
     }
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
@@ -1616,6 +1513,84 @@ public class StarMapGenerator {
     return true;
   }
 
+  /**
+   * Make starting tutorial texts about starting planet.
+   * @param playerInfo Realm must be human player.
+   * @param planet Planet
+   */
+  private void makeStartingTutorialTexts(final PlayerInfo playerInfo,
+      final Planet planet) {
+    if (Game.getTutorial() != null && playerInfo.isHuman()
+        && starMap.isTutorialEnabled()) {
+      String tutorialText = Game.getTutorial().showTutorialText(0);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        playerInfo.getMsgList().addNewMessage(msg);
+      }
+      tutorialText = Game.getTutorial().showTutorialText(1);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.PLANETARY, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(planet.getName());
+        playerInfo.getMsgList().addNewMessage(msg);
+      }
+      tutorialText = Game.getTutorial().showTutorialText(2);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.PLANETARY, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(planet.getName());
+        playerInfo.getMsgList().addNewMessage(msg);
+      }
+    }
+  }
+
+  /**
+   * Make Starting fleet tutorial texts. This will handle tutorial text for
+   * both colony and scout ship.
+   * @param playerInfo Realm, must be human player
+   * @param fleet Fleet where tutorial text are placed.
+   */
+  private void makeStartingFleetTutorialTexts(final PlayerInfo playerInfo,
+      final Fleet fleet) {
+    Ship ship = fleet.getFirstShip();
+    if (ship.isColonyModule()) {
+      if (Game.getTutorial() != null && playerInfo.isHuman()
+          && starMap.isTutorialEnabled()) {
+        String tutorialText = Game.getTutorial().showTutorialText(7);
+        if (tutorialText != null) {
+          Message msg = new Message(MessageType.FLEET, tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
+          msg.setCoordinate(fleet.getCoordinate());
+          msg.setMatchByString(fleet.getName());
+          playerInfo.getMsgList().addNewMessage(msg);
+        }
+      }
+    } else {
+      if (Game.getTutorial() != null && playerInfo.isHuman()
+          && starMap.isTutorialEnabled()) {
+        String tutorialText = Game.getTutorial().showTutorialText(5);
+        if (tutorialText != null) {
+          Message msg = new Message(MessageType.FLEET, tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
+          msg.setCoordinate(fleet.getCoordinate());
+          msg.setMatchByString(fleet.getName());
+          playerInfo.getMsgList().addNewMessage(msg);
+        }
+        tutorialText = Game.getTutorial().showTutorialText(6);
+        if (tutorialText != null) {
+          Message msg = new Message(MessageType.FLEET, tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
+          msg.setCoordinate(fleet.getCoordinate());
+          msg.setMatchByString(fleet.getName());
+          playerInfo.getMsgList().addNewMessage(msg);
+        }
+      }
+    }
+
+  }
   /**
    * Checks if 4x4 area is empty around the coordinate.
    * Note this is not centered. This is more closer

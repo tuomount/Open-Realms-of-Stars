@@ -1,7 +1,7 @@
 package org.openRealmOfStars.ai.planet;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,6 +48,7 @@ import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapGenerator;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
@@ -384,7 +385,8 @@ public class PlanetHandlingTest extends TestCase {
     playerList.addPlayer(info2);
     playerList.setCurrentPlayer(0);
     playerList.calculateInitialDiplomacyBonuses();
-    StarMap map = new StarMap(config, playerList);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, playerList);
     Planet planet  =map.getPlanetList().get(0);
     for (int i = 0; i < map.getPlanetList().size(); i++) {
       Planet iterator = map.getPlanetList().get(i);
@@ -472,8 +474,9 @@ public class PlanetHandlingTest extends TestCase {
     playerList.addPlayer(info2);
     playerList.setCurrentPlayer(0);
     playerList.calculateInitialDiplomacyBonuses();
-    StarMap map = new StarMap(config, playerList);
-    // Let's remove possibility to have scientific ruler
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, playerList);
+   // Let's remove possibility to have scientific ruler
     info.getRuler().setJob(Job.DEAD);
     info.setRuler(null);
     Planet planet  =map.getPlanetList().get(0);
@@ -528,7 +531,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(49, scores[2]);
     assertEquals(119, scores[3]);
     assertEquals(119, scores[4]);
-    assertEquals(99, scores[5]);
+    assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicMine());
     constructions = planet.getProductionList();
@@ -540,7 +543,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(49, scores[2]);
     assertEquals(89, scores[3]);
     assertEquals(119, scores[4]);
-    assertEquals(109, scores[5]);
+    assertEquals(59, scores[5]);
     assertEquals(-1, scores[7]);
     planet.addBuilding(createBasicLab());
     constructions = planet.getProductionList();

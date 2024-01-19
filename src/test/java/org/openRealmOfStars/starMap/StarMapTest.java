@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -77,7 +77,9 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
+
     assertNotNull(map.getHistory());
     History history = Mockito.mock(History.class);
     map.setHistory(history);
@@ -141,7 +143,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     assertEquals(4,map.getNewsCorpData().getCredit().getMaxPlayers());
     assertEquals(4,map.getNewsCorpData().getMilitary().getMaxPlayers());
     assertEquals(4,map.getNewsCorpData().getCultural().getMaxPlayers());
@@ -187,7 +190,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     map.getPlanetList().clear();
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(0);
@@ -275,7 +279,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     Fleet fleet = map.addSpaceAnomalyEnemy(5, 6, board, StarMap.ENEMY_PIRATE);
     assertNotNull(fleet);
   }
@@ -352,7 +357,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     Fleet fleet = map.addSpaceAnomalyEnemy(5, 6, board, StarMap.ENEMY_PIRATE_LAIR);
     assertNotNull(fleet);
   }
@@ -435,7 +441,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     Fleet fleet = map.addSpaceAnomalyEnemy(5, 6, board, StarMap.ENEMY_PIRATE_LAIR);
     assertEquals(starbaseFleet, fleet);
   }
@@ -469,7 +476,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
 
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     assertEquals(75, map.getMaxX());
     assertEquals(75, map.getMaxY());
     assertEquals(true, map.isValidCoordinate(25, 25));
@@ -508,7 +516,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
 
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     map.getPlanetList().get(1).setPlanetOwner(0, info);
     map.getPlanetList().get(1).setWorkers(Planet.FOOD_FARMERS, 2);
     assertEquals(5, map.getTotalNumberOfPopulation(0));
@@ -592,7 +601,8 @@ public class StarMapTest {
     list.add(planet2);
     list.add(planetUnhabitated);
     list.add(planetUnhabitated);
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     map.setPlanetList(list);
     Planet test = map.getNextPlanetForPlayer(info, planet1, true);
     assertEquals(planet2, test);
@@ -703,7 +713,8 @@ public class StarMapTest {
     list.add(planet2);
     list.add(planetUnhabitated);
     list.add(planetUnhabitated);
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     map.setPlanetList(list);
     Planet[] listPlanet = map.getPlanetListSeenByOther(0, info2);
     assertEquals(3, listPlanet.length);
@@ -788,7 +799,8 @@ public class StarMapTest {
     list.add(planet2);
     list.add(planetUnhabitated);
     list.add(planetUnhabitated);
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     map.setPlanetList(list);
     Coordinate coord = Mockito.mock(Coordinate.class);
     Mockito.when(coord.calculateDistance(Mockito.any(Coordinate.class))).thenReturn(3.2);
@@ -825,7 +837,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(0));
     assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(1));
     assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(2));
@@ -877,7 +890,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     assertEquals(0,map.getNewsCorpData().getCredit().getLatest(0));
     assertEquals(0,map.getNewsCorpData().getCredit().getLatest(1));
     assertEquals(0,map.getNewsCorpData().getCredit().getLatest(2));
@@ -920,7 +934,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     assertEquals(0,map.getNewsCorpData().getCredit().getLatest(0));
     assertEquals(0,map.getNewsCorpData().getCredit().getLatest(1));
     assertEquals(0,map.getNewsCorpData().getCredit().getLatest(2));
@@ -964,7 +979,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(0));
     assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(1));
     assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(2));
@@ -991,7 +1007,8 @@ public class StarMapTest {
     players.addPlayer(info1);
     players.addPlayer(info2);
     players.addPlayer(info3);
-    StarMap starMap = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap starMap = generator.generateStarMap(config, players);
     PlayerInfo attacker = starMap.getPlayerByIndex(0);
     info1 = starMap.getPlayerByIndex(1);
     info2 = starMap.getPlayerByIndex(2);
@@ -1070,7 +1087,8 @@ public class StarMapTest {
     players.addPlayer(info1);
     players.addPlayer(info2);
     players.addPlayer(info3);
-    StarMap starMap = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap starMap = generator.generateStarMap(config, players);
     PlayerInfo attacker = starMap.getPlayerByIndex(0);
     info1 = starMap.getPlayerByIndex(1);
     info2 = starMap.getPlayerByIndex(2);
@@ -1114,7 +1132,8 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     map.resetCulture();
     map.calculateCulture(5, 5, 4, 0);
     assertEquals(0, map.getSectorCulture(5, 5).getHighestCulture());
@@ -1266,7 +1285,8 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info2);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(5);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     map.getNewsCorpData().calculateMilitary(players, false);
     int diff = map.getMilitaryDifference(0, 2);
     assertEquals(-48, diff);
@@ -1345,7 +1365,8 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info2);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     map.getNewsCorpData().calculateMilitary(players, false);
     assertEquals(72, map.getMilitaryEstimation(0, 2));
     espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Test");
@@ -1427,7 +1448,8 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info2);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(5);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     map.getNewsCorpData().calculateMilitary(players, false);
     assertEquals(144, map.getMilitaryEstimationForDefensivePact(0, 2, false));
     assertEquals(-120, map.getMilitaryDifference(0, 2));
@@ -1520,7 +1542,8 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info2);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(5);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     map.getNewsCorpData().calculateMilitary(players, false);
     assertEquals(72, map.getMilitaryEstimationForDefensivePact(0, 2, true));
     assertEquals(-120, map.getMilitaryDifference(0, 2));
@@ -1614,7 +1637,8 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info2);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(5);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     map.getNewsCorpData().calculateMilitary(players, false);
     assertEquals(144, map.getMilitaryEstimationForDefensivePact(0, 2, false));
     assertEquals(-120, map.getMilitaryDifference(0, 2));
@@ -1658,7 +1682,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     Fleet fleet = Mockito.mock(Fleet.class);
     Coordinate coord = new Coordinate(5, 5);
     Mockito.when(fleet.getCoordinate()).thenReturn(coord);
@@ -1706,7 +1731,8 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
 
-    StarMap map = new StarMap(config, players);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, players);
     Coordinate coord = map.calculateCenterOfRealm(0);
     assertEquals(false, coord.getX() != map.getMaxX() / 2);
     assertEquals(false, coord.getY() != map.getMaxY() / 2);

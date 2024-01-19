@@ -36,6 +36,7 @@ import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapGenerator;
 
 import junit.framework.TestCase;
 
@@ -169,7 +170,8 @@ public class ResearchTest extends TestCase {
     PlayerList list = new PlayerList();
     list.addPlayer(info);
     list.addPlayer(info2);
-    StarMap map = new StarMap(config, list);
+    StarMapGenerator generator = new StarMapGenerator();
+    StarMap map = generator.generateStarMap(config, list);
     assertEquals(2, info.getShipStatList().length);
     Research.handleShipDesigns(info);
     assertEquals(3, info.getShipStatList().length);

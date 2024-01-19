@@ -1177,7 +1177,7 @@ public final class PlanetHandling {
    * @param info Player who owns the planet
    * @param totalResearch Total research value for whole realm
    */
-  protected static void handlePlanetPopulation(final Planet planet,
+  public static void handlePlanetPopulation(final Planet planet,
       final PlayerInfo info, final int totalResearch) {
     int population = planet.getTotalPopulation();
     if (population <= 0) {

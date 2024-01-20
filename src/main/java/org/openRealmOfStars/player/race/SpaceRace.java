@@ -172,6 +172,8 @@ public enum SpaceRace {
   SYNTHDROIDS(16, "Synthdroids", "Synthdroid", "Artificial beings that eat only"
       + " small amount of food. Each population must be built.");
 
+  /** Space race has not been initialized yet. */
+  private static boolean initialized = false;
   /**
    * Explicitly (re)initialize SpaceRaces.
    * Needed, because RaceTraits are loaded later than SpaceRaces.
@@ -180,6 +182,9 @@ public enum SpaceRace {
    * TODO: Remove when SpaceRaces get dehardcoded.
    */
   public static void initialize() {
+    if (initialized) {
+      return;
+    }
     // Clear traits from races.
     for (var race : values()) {
       race.traits.clear();
@@ -379,6 +384,7 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.ARMED_FREIGHTERS).ifPresent(trait -> {
       SMAUGIRIANS.addTrait(trait);
     });
+    initialized = true;
   }
 
   /**

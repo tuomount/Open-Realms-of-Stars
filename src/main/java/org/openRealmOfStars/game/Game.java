@@ -469,6 +469,7 @@ public class Game implements ActionListener {
    * @param visible Is game actually visible or not
    */
   public Game(final boolean visible) {
+    SpaceRace.initialize();
     readConfigFile();
     setShowMiniMapFlag(configFile.isShowMinimap());
     int musicVolume = configFile.getMusicVolume();

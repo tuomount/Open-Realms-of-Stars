@@ -30,6 +30,8 @@ import javax.swing.JPanel;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
+import org.openRealmOfStars.gui.graphs.BridgeGraph;
+import org.openRealmOfStars.gui.graphs.BridgeGraphFactory;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -121,60 +123,6 @@ public class ShipInteriorPanel extends JPanel {
     return planetImage;
   }
 
-  /**
-   * Get captain adjustment for bridge image
-   * @param spaceRace Captain's space race
-   * @return Adjustment
-   */
-  public static int getAdjustment(final SpaceRace spaceRace) {
-    int yOffset = 57;
-    if (spaceRace == SpaceRace.CENTAURS) {
-      yOffset = 20;
-    }
-    if (spaceRace == SpaceRace.SCAURIANS) {
-      yOffset = 20;
-    }
-    if (spaceRace == SpaceRace.MECHIONS) {
-      yOffset = 20;
-    }
-    if (spaceRace == SpaceRace.HUMAN) {
-      yOffset = 20;
-    }
-    if (spaceRace == SpaceRace.MOTHOIDS) {
-      yOffset = 35;
-    }
-    if (spaceRace == SpaceRace.GREYANS) {
-      yOffset = 30;
-    }
-    if (spaceRace == SpaceRace.HOMARIANS) {
-      yOffset = 20;
-    }
-    if (spaceRace == SpaceRace.TEUTHIDAES) {
-      yOffset = 20;
-    }
-    if (spaceRace == SpaceRace.SPORKS) {
-      yOffset = 20;
-    }
-    if (spaceRace == SpaceRace.CHIRALOIDS) {
-      yOffset = 15;
-    }
-    if (spaceRace == SpaceRace.SPACE_PIRATE) {
-      yOffset = 15;
-    }
-    if (spaceRace == SpaceRace.LITHORIANS) {
-      yOffset = 15;
-    }
-    if (spaceRace == SpaceRace.REBORGIANS) {
-      yOffset = 25;
-    }
-    if (spaceRace == SpaceRace.SMAUGIRIANS) {
-      yOffset = 20;
-    }
-    if (spaceRace == SpaceRace.ALTEIRIANS) {
-      yOffset = 25;
-    }
-    return yOffset;
-  }
   @Override
   protected void paintComponent(final Graphics g) {
     GradientPaint gradient = new GradientPaint(this.getWidth() / 2, 0,
@@ -204,8 +152,9 @@ public class ShipInteriorPanel extends JPanel {
           offsetY, null);
     }
     BufferedImage interior = GuiStatics.IMAGE_INTERIOR1;
-    int yOffset = getAdjustment(race);
-    interior = GuiStatics.getRaceBridgeImage(race, true);
+    BridgeGraph graph = BridgeGraphFactory.create(race.getBridgeId());
+    int yOffset = graph.getyOffset();
+    interior = graph.getBridgeImage();
 
     g.drawImage(interior,
         this.getWidth() / 2 - interior.getWidth() / 2,

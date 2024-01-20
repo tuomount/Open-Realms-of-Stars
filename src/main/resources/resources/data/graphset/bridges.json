@@ -1,0 +1,82 @@
+[
+  {
+    "id": "Centaur",
+    "path": "/resources/images/centaur_bridge.png",
+    "y-offset": 20
+  },
+  {
+    "id": "Scaurian",
+    "path": "/resources/images/scaurian_bridge.png",
+    "y-offset": 20
+  },
+  {
+    "id": "Mechion",
+    "path": "/resources/images/mechion_bridge.png",
+    "y-offset": 20
+  },
+  {
+    "id": "Human",
+    "path": "/resources/images/human_bridge.png",
+    "y-offset": 20
+  },
+  {
+    "id": "Mothoid",
+    "path": "/resources/images/mothoid_bridge.png",
+    "y-offset": 35
+  },
+  {
+    "id": "Greyan",
+    "path": "/resources/images/greyan_bridge.png",
+    "y-offset": 30
+  },
+  {
+    "id": "Homarian",
+    "path": "/resources/images/homarian_bridge.png",
+    "y-offset": 20
+  },
+  {
+    "id": "Teuthidae",
+    "path": "/resources/images/teuthidae_bridge.png",
+    "y-offset": 20
+  },
+  {
+    "id": "Spork",
+    "path": "/resources/images/spork_bridge.png",
+    "y-offset": 20
+  },
+  {
+    "id": "Chiraloid",
+    "path": "/resources/images/chiraloid_bridge.png",
+    "y-offset": 15
+  },
+  {
+    "id": "Space pirate",
+    "path": "/resources/images/pirate_bridge.png",
+    "y-offset": 15
+  },
+  {
+    "id": "Lithorian",
+    "path": "/resources/images/lithorian_bridge.png",
+    "y-offset": 15
+  },
+  {
+    "id": "Reborgian",
+    "path": "/resources/images/reborgian_bridge.png",
+    "y-offset": 25
+  },
+  {
+    "id": "Smaugirian",
+    "path": "/resources/images/smaugirian_bridge.png",
+    "y-offset": 20
+  },
+  {
+    "id": "Alteirian",
+    "path": "/resources/images/alteirian_bridge.png",
+    "y-offset": 25
+  },
+  {
+    "id": "Synthdroid",
+    "path": "/resources/images/bridge1.png",
+    "y-offset": 57
+  }
+]

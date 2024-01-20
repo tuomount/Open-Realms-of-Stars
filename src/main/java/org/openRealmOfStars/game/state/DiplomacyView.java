@@ -749,8 +749,8 @@ public class DiplomacyView extends BlackPanel {
     } else if (startType == AI_REGULAR) {
       if (trade.getFirstOffer() != null
           && trade.getFirstOffer().isWarInOffer()) {
-        speechLines.add(SpeechFactory.createAgreeWithWarLine(
-            human.getRace()));
+        speechLines.add(SpeechFactory.createLine(SpeechType.ACKNOWLEDGE_WAR,
+            human.getRace(), casusBelli));
       } else {
         speechLines.add(SpeechFactory.createLine(SpeechType.AGREE,
             human.getRace(), null));
@@ -766,8 +766,8 @@ public class DiplomacyView extends BlackPanel {
     } else if (startType == AI_BORDER_CROSS) {
       if (trade.getFirstOffer() != null
           && trade.getFirstOffer().isWarInOffer()) {
-        speechLines.add(SpeechFactory.createAgreeWithWarLine(
-            human.getRace()));
+        speechLines.add(SpeechFactory.createLine(SpeechType.ACKNOWLEDGE_WAR,
+            human.getRace(), casusBelli));
       } else {
         speechLines.add(SpeechFactory.createLine(SpeechType.MOVE_FLEET,
             human.getRace(), null));
@@ -777,8 +777,8 @@ public class DiplomacyView extends BlackPanel {
     } else if (startType == AI_ESPIONAGE) {
       if (trade.getFirstOffer() != null
           && trade.getFirstOffer().isWarInOffer()) {
-        speechLines.add(SpeechFactory.createAgreeWithWarLine(
-            human.getRace()));
+        speechLines.add(SpeechFactory.createLine(SpeechType.ACKNOWLEDGE_WAR,
+            human.getRace(), casusBelli));
       } else {
         speechLines.add(SpeechFactory.createLine(SpeechType.MOVE_FLEET,
             human.getRace(), null));
@@ -1541,7 +1541,8 @@ public class DiplomacyView extends BlackPanel {
     }
     SpeechType speechType = speechSelected.getType();
 
-    if (speechType == SpeechType.AGREE) {
+    if (speechType == SpeechType.AGREE
+        || speechType == SpeechType.ACKNOWLEDGE_WAR) {
       handleActionCommandOkAgree();
     }
     if (speechType == SpeechType.ASK_PROTECTION) {
@@ -1600,7 +1601,7 @@ public class DiplomacyView extends BlackPanel {
           }
         }
         trade.generateEqualTrade(NegotiationType.WAR);
-        finishTransaction(SpeechType.ACKNOWLEDGE_WAR);
+        finishTransaction(SpeechType.MAKE_WAR);
       } else {
         if (speechType == SpeechType.DECLINE_ANGER) {
           updatePanel(SpeechType.INSULT_RESPOND);
@@ -1921,6 +1922,7 @@ public class DiplomacyView extends BlackPanel {
       if (textCounter > 40) {
         textCounter = 40;
         if (lastSpeechType == SpeechType.AGREE
+            || lastSpeechType == SpeechType.ACKNOWLEDGE_WAR
             || lastSpeechType == SpeechType.DECLINE
             || lastSpeechType == SpeechType.OFFER_ACCEPTED
             || lastSpeechType == SpeechType.OFFER_REJECTED

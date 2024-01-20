@@ -55,7 +55,6 @@ public final class SpeechFactory {
       case ALLIANCE: return createAllianceLine(race);
       case TRADE_ALLIANCE: return createTradeAllianceLine(race);
       case MAKE_WAR: return createMakeWarLine(race, dynamicContent);
-      case ACKNOWLEDGE_WAR: return createAcknowledgeWarLine(race);
       case DECLINE: return createDeclineLine(race);
       case DECLINE_ANGER: return createDeclineAngerLine(race);
       case DECLINE_WAR: return createDeclineWarLine(race, dynamicContent);
@@ -78,6 +77,7 @@ public final class SpeechFactory {
       case TRADE_EMBARGO: return createEmbargoLine(race, dynamicContent);
       case BORDER_WARS: return createMakeBorderWarLine(race, dynamicContent);
       case ASK_PROTECTION: return createAskProtection(race);
+      case ACKNOWLEDGE_WAR: return createAgreeWithWarLine(race);
       default: return null;
     }
   }
@@ -697,9 +697,7 @@ public final class SpeechFactory {
       case HUMAN: return new SpeechLine(type,
           "I'll take this as an insult!");
       case MECHIONS: {
-        // Mechions do not know how to decline with anger
-        type = SpeechType.DECLINE;
-        return new SpeechLine(type, "Negative!");
+        return new SpeechLine(type, "Negative! Insult detected!");
       }
       case MOTHOIDS: return new SpeechLine(type,
           "We feel insulted about this!");
@@ -725,9 +723,7 @@ public final class SpeechFactory {
       case SMAUGIRIANS: return new SpeechLine(type,
           "What kind offer is this? There is not enough for me!");
       case SYNTHDROIDS: {
-        // Synthdroids do not know how to decline with anger
-        type = SpeechType.DECLINE;
-        return new SpeechLine(type, "Cannot comply!");
+        return new SpeechLine(type, "Cannot comply! Taking insult!");
       }
       default: return null;
     }
@@ -915,51 +911,6 @@ public final class SpeechFactory {
           "Get ready for fight!" + extra);
       case SYNTHDROIDS: return new SpeechLine(type,
           "Starting war protocol!" + extra);
-      default: return null;
-    }
-  }
-
-  /**
-   * Create Acknowledge War SpeechLine according the race
-   * @param race SpaceRace
-   * @return SpeechLine or null if creating line fails
-   */
-  private static SpeechLine createAcknowledgeWarLine(final SpaceRace race) {
-    SpeechType type = SpeechType.ACKNOWLEDGE_WAR;
-    switch (race) {
-      case CENTAURS: return new SpeechLine(type,
-          "You will be stomped and crushed!");
-      case GREYANS: return new SpeechLine(type,
-          "Prepare to be anhilated!");
-      case HUMAN: return new SpeechLine(type,
-          "This means war!");
-      case MECHIONS: return new SpeechLine(type,
-          "Initializing war protocol!");
-      case MOTHOIDS: return new SpeechLine(type,
-          "We will kill all your kind!");
-      case SPORKS: return new SpeechLine(type,
-          "Shields up! Ready to fire!");
-      case TEUTHIDAES: return new SpeechLine(type,
-          "Prepare to die!");
-      case SCAURIANS: return new SpeechLine(type,
-          "Time to die!");
-      case HOMARIANS: return new SpeechLine(type,
-          "Time to get sliced and boiled!");
-      case SPACE_MONSTERS:
-      case SPACE_PIRATE: return new SpeechLine(type,
-          "Yarr, Time to die!");
-      case CHIRALOIDS: return new SpeechLine(type,
-          "Prepare to be nuked!");
-      case REBORGIANS: return new SpeechLine(type,
-          "We will start synthesize with your species!");
-      case LITHORIANS: return new SpeechLine(type,
-          "Prepare to encounter hot blazing war from us!");
-      case ALTEIRIANS: return new SpeechLine(type,
-          "Prepare to to feel wrath from us!");
-      case SMAUGIRIANS: return new SpeechLine(type,
-          "Get ready for fight!");
-      case SYNTHDROIDS: return new SpeechLine(type,
-          "Starting war protocol!");
       default: return null;
     }
   }
@@ -1277,8 +1228,8 @@ public final class SpeechFactory {
    * @param race SpaceRace
    * @return SpeechLine or null if creating line fails
    */
-  public static SpeechLine createAgreeWithWarLine(final SpaceRace race) {
-    SpeechType type = SpeechType.AGREE;
+  private static SpeechLine createAgreeWithWarLine(final SpaceRace race) {
+    SpeechType type = SpeechType.ACKNOWLEDGE_WAR;
     switch (race) {
       case CENTAURS: return new SpeechLine(type,
           "Very well, prepare to be stomped!");

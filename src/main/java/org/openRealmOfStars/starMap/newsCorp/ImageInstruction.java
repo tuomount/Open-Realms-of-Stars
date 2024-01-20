@@ -22,6 +22,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.gui.graphs.BridgeGraphFactory;
 import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
@@ -1417,10 +1418,7 @@ public class ImageInstruction {
   private static BufferedImage paintBridge(final BufferedImage workImage,
       final String image) {
     BufferedImage drawImg = GuiStatics.BIG_PLANET_ROCK1;
-    SpaceRace race = SpaceRaceUtility.getRaceByName(image);
-    if (race != null) {
-      drawImg = GuiStatics.getRaceBridgeImage(race, true);
-    }
+    drawImg = BridgeGraphFactory.create(image).getBridgeImage();
     BufferedImage img = workImage;
     if (img == null) {
       img = new BufferedImage(drawImg.getWidth(), drawImg.getHeight(),

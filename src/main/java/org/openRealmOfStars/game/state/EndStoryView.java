@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2023 Tuomo Untinen
+ * Copyright (C) 2023-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,13 +33,13 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.graphs.BridgeGraphFactory;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextPane;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
-import org.openRealmOfStars.gui.panels.ShipInteriorPanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -145,9 +145,10 @@ public class EndStoryView extends BlackPanel {
     } else {
       instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
     }
-    instructions.addBridge(realm.getRace().getNameSingle());
+    String bridgeId = realm.getRace().getBridgeId();
+    instructions.addBridge(bridgeId);
     instructions.addCaptain(realm.getRace().getNameSingle(),
-        ShipInteriorPanel.getAdjustment(realm.getRace()));
+        BridgeGraphFactory.create(bridgeId).getyOffset());
     int widthHeadLine = 711;
     int heightHeadLine = 400;
     BufferedImage image = new BufferedImage(widthHeadLine, heightHeadLine,
@@ -249,9 +250,10 @@ public class EndStoryView extends BlackPanel {
     } else {
       instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
     }
-    instructions.addBridge(realm.getRace().getNameSingle());
+    String bridgeId = realm.getRace().getBridgeId();
+    instructions.addBridge(bridgeId);
     instructions.addCaptain(realm.getRace().getNameSingle(),
-        ShipInteriorPanel.getAdjustment(realm.getRace()));
+        BridgeGraphFactory.create(bridgeId).getyOffset());
     int widthHeadLine = 711;
     int heightHeadLine = 400;
     BufferedImage image = new BufferedImage(widthHeadLine, heightHeadLine,

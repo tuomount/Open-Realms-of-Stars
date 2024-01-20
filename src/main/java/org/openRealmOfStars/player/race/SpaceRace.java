@@ -425,6 +425,13 @@ public enum SpaceRace {
   }
 
   /**
+   * Get ID for bridge ID. Currently Bridge ID matches space race name.
+   * @return Space ship bridge ID.
+   */
+  public String getBridgeId() {
+    return getNameSingle();
+  }
+  /**
    * Space race description
    */
   private String description;

@@ -999,9 +999,9 @@ public class PlanetBombingView extends BlackPanel {
             troops = true;
           }
           if (usedComponentIndex != -1) {
-            oneAttackFound = true;
             int result = attackBombOrTroops();
             if (result == CONQUERED) {
+              oneAttackFound = true;
               // Planet conquered
               exitLoop = true;
               if (starMap != null) {
@@ -1010,6 +1010,7 @@ public class PlanetBombingView extends BlackPanel {
               }
             }
             if (result == ONLY_BOMBED && starMap != null) {
+              oneAttackFound = true;
               newsData = NewsFactory.makePlanetBombedNews(attacker,
                   defender, planet, nuked.getText(), starMap.getStarYear());
             }

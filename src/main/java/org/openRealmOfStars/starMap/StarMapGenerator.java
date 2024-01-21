@@ -101,6 +101,7 @@ public class StarMapGenerator {
       final PlayerList players) {
     reinitStarMap(config, players);
     int loop = 0;
+    boolean tooFullSpace = false;
     // Create starting systems
     try {
       if (config.getStartingPosition() == GalaxyConfig.START_POSITION_RANDOM) {
@@ -114,11 +115,11 @@ public class StarMapGenerator {
       }
     } catch (IllegalStateException illegalState) {
       ErrorLogger.log(illegalState);
-      loop = MAX_LOOPS;
+      tooFullSpace = true;
     }
     if (config.getStartingPosition() == GalaxyConfig.START_POSITION_BORDER
-        || loop == MAX_LOOPS) {
-      if (loop == MAX_LOOPS) {
+        || tooFullSpace) {
+      if (tooFullSpace) {
         // Need to reinit whole map
         reinitStarMap(config, players);
         players.reInit();
@@ -629,6 +630,7 @@ public class StarMapGenerator {
           angle = angle - 360;
         }
       }
+      return;
     }
     // Old border star system is only used with Tiny map.
     if (config.getMaxPlayers() == 2) {

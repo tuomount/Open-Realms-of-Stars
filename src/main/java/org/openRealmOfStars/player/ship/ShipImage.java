@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -51,6 +51,10 @@ public class ShipImage {
    */
   private BufferedImage[] smallShipImages;
 
+  /** Ship image id. */
+  private String id;
+  /** Flag for monsters. */
+  private boolean monsters;
   /**
    * Index for Scout
    */
@@ -157,26 +161,21 @@ public class ShipImage {
   /**
    * Initialize ship images
    * @param fileToRead Needs to be inside JAR file
-   */
-  public ShipImage(final String fileToRead) {
-    loadImages(fileToRead, false);
-  }
-
-  /**
-   * Initialize ship images
-   * @param fileToRead Needs to be inside JAR file
    * @param monsters Read space monster images if true.
+   * @param id ShipImage Id.
    */
-  public ShipImage(final String fileToRead, final boolean monsters) {
+  public ShipImage(final String fileToRead, final boolean monsters,
+      final String id) {
+    this.id = id;
     loadImages(fileToRead, monsters);
   }
 
   /**
    * Initialize ship images.
    * @param fileToRead Needs to be inside JAR file
-   * @param monsters Read space monster images if true.
+   * @param hasMonsters Read space monster images if true.
    */
-  private void loadImages(final String fileToRead, final boolean monsters) {
+  private void loadImages(final String fileToRead, final boolean hasMonsters) {
     BufferedImage image = IOUtilities
         .loadImage("/resources/images/" + fileToRead);
     int number = NUMBER_OF_IMAGES;
@@ -354,6 +353,13 @@ public class ShipImage {
     return smallShipImages[0];
   }
 
+  /**
+   * Get ShipImage id.
+   * @return ShipImage id
+   */
+  public String getId() {
+    return id;
+  }
   /**
    * Scale 64x64 image to 32x32 image
    * @param source Buffered image to scale

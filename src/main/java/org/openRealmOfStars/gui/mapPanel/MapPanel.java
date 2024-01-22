@@ -1,7 +1,7 @@
 package org.openRealmOfStars.gui.mapPanel;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -54,7 +54,7 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipImage;
-import org.openRealmOfStars.player.ship.ShipImages;
+import org.openRealmOfStars.player.ship.ShipImageFactor;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.Route;
@@ -532,8 +532,8 @@ public class MapPanel extends JPanel {
         }
       }
       if (drawShip) {
-        BufferedImage img = ShipImages
-            .getByRace(fleetMap[i + cx][j + cy].getRace())
+        BufferedImage img = ShipImageFactor.create(fleetMap[i + cx][j + cy]
+            .getRace().getSpaceShipId())
             .getShipZoomedImage(fleetMap[i + cx][j + cy].getImageIndex(),
                 starMap.getZoomLevel());
         gr.drawImage(img, pixelX, pixelY, null);
@@ -580,8 +580,8 @@ public class MapPanel extends JPanel {
           && info.getSectorVisibility(planetOrbital.getCoordinate())
           >= PlayerInfo.VISIBLE) {
         // Draw orbital
-        BufferedImage img = ShipImages
-            .getByRace(fleetMap[i + cx][j + cy].getRace())
+        BufferedImage img = ShipImageFactor.create(fleetMap[i + cx][j + cy]
+            .getRace().getSpaceShipId())
             .getNormalShipImage(fleetMap[i + cx][j + cy].getImageIndex());
         gr.drawImage(img, pixelX, pixelY, null);
       }
@@ -1765,8 +1765,8 @@ public class MapPanel extends JPanel {
         // Draw fleet
         CombatShip ship = combat.getShipFromCoordinate(i, j);
         if (ship != null) {
-          BufferedImage img = ShipImages
-              .getByRace(ship.getShip().getHull().getRace())
+          BufferedImage img = ShipImageFactor.create(
+              ship.getShip().getHull().getRace().getSpaceShipId())
               .getShipImage(ship.getShip().getHull().getImageIndex());
           if (ship.isCloakOverloaded()) {
             img = GraphRoutines.greyTransparent(img, transparency);

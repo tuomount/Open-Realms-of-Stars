@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -65,7 +65,7 @@ import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipImage;
-import org.openRealmOfStars.player.ship.ShipImages;
+import org.openRealmOfStars.player.ship.ShipImageFactor;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
@@ -321,7 +321,7 @@ public class ShipDesignView extends BlackPanel {
     greyPanel = new SpaceGreyPanel();
     greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
     hullImage = new ImageLabel(
-        ShipImages.humans().getShipImage(ShipImage.COLONY), true);
+        ShipImageFactor.create("DEFAULT").getShipImage(ShipImage.COLONY), true);
     hullImage.setFillColor(Color.BLACK);
     hullImage.setAlignmentX(JComponent.CENTER_ALIGNMENT);
     greyPanel.add(hullImage);

@@ -70,7 +70,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { weapon, engine, energy, armor, shield, shieldgenerator };
@@ -112,7 +113,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { weapon, engine, energy, armor, shield, shieldgenerator };
@@ -120,7 +122,8 @@ public class Ship2Test {
         Ship ship = new Ship(shipdesign);
 
         assertEquals(shiphull, ship.getHull());
-        assertEquals(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX), ship.getHull().getImage());
+        assertEquals(ShipImageFactor.create("Human")
+            .getShipImage(SHIP_IMAGE_INDEX), ship.getHull().getImage());
         assertEquals(SHIP_HULL_SLOT, ship.getHullPointForComponent(SHIP_COMPONENT_INDEX));
     }
 
@@ -151,7 +154,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { weapon, engine, energy, armor, shield, shieldgenerator };
@@ -190,7 +194,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { weapon, engine, energy, armor, shield, shieldgenerator };
@@ -228,7 +233,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { weapon, engine, energy, armor, shield, shieldgenerator };
@@ -269,7 +275,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { weapon, engine, energy, armor, shield, shieldgenerator };
@@ -316,7 +323,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { energy };
@@ -348,7 +356,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { engine, energy };
@@ -381,7 +390,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { energy };
@@ -422,7 +432,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents1 = new ShipComponent[] { weaponLaser, energy };
@@ -477,7 +488,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents1 = new ShipComponent[] { energy };
@@ -510,7 +522,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents1 = new ShipComponent[] { weaponLaser };
@@ -549,7 +562,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents1 = new ShipComponent[] { weaponLaser, weaponECMTorpedo, weaponPhotoTorpedo,
@@ -584,7 +598,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents1 = new ShipComponent[] {};
@@ -617,7 +632,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] {};
@@ -664,7 +680,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
         ShipComponent[] shipcomponents1 = new ShipComponent[] {};
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
@@ -708,7 +725,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
         ShipComponent[] shipcomponents1 = new ShipComponent[] { orbitalBomb, orbitalNuke, energy };
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
@@ -762,7 +780,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
         ShipComponent[] shipcomponents1 = new ShipComponent[] { engine, energy };
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
@@ -795,7 +814,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
         ShipComponent[] shipcomponents1 = new ShipComponent[] { targetingComputer, energy };
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
@@ -829,7 +849,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
         ShipComponent[] shipcomponents1 = new ShipComponent[] {engine, energy};
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
@@ -874,7 +895,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
         ShipComponent[] shipcomponents1 = new ShipComponent[] {engine, energy, jammer};
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
@@ -916,7 +938,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
         ShipComponent[] shipcomponents1 = new ShipComponent[] {energy};
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
@@ -963,7 +986,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
         ShipComponent[] shipcomponents = new ShipComponent[] { scanner, energy };
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
@@ -1003,7 +1027,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents1 = new ShipComponent[] { weaponLaser, energy };
@@ -1066,7 +1091,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { weapon, engine, energy, armor, shield, shieldgenerator };
@@ -1113,7 +1139,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { weapon, engine, energy, armor, shield, shieldgenerator };
@@ -1172,7 +1199,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { engine, energy };
@@ -1281,7 +1309,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { weaponMissile, weaponTorpedo, armor, shield, engine,
@@ -1319,7 +1348,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { weaponMissile, targetingComputer, jammer, energy };
@@ -1354,7 +1384,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { planetaryInvasion, energy };
@@ -1389,7 +1420,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { energy };
@@ -1423,7 +1455,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { colonizationmodule };
@@ -1457,7 +1490,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent[] shipcomponents = new ShipComponent[] { troopermodule };
@@ -1496,7 +1530,8 @@ public class Ship2Test {
         Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
         Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
         Mockito.when(shipdesign.getHull().getImage())
-                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+                .thenReturn(ShipImageFactor.create("Human")
+                    .getShipImage(SHIP_IMAGE_INDEX));
         Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
 
         ShipComponent colonizationmodule = ShipComponentFactory.createByName("Colonization module");

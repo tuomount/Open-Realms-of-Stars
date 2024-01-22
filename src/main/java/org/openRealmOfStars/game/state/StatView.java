@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2023 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -40,7 +40,7 @@ import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
-import org.openRealmOfStars.player.ship.ShipImages;
+import org.openRealmOfStars.player.ship.ShipImageFactor;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
@@ -308,7 +308,8 @@ public class StatView extends BlackPanel {
           + stat.getNumberOfBuilt(), true, true);
       label.setForeground(realm.getColor().getColor());
       ImageLabel image = new ImageLabel(
-          ShipImages.getByRace(stat.getDesign().getHull().getRace())
+          ShipImageFactor.create(
+              stat.getDesign().getHull().getRace().getSpaceShipId())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
       BlackPanel invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
@@ -323,7 +324,8 @@ public class StatView extends BlackPanel {
           + stat.getDesign().getTotalMilitaryPower(), true, true);
       label.setForeground(realm.getColor().getColor());
       image = new ImageLabel(
-          ShipImages.getByRace(stat.getDesign().getHull().getRace())
+          ShipImageFactor.create(
+              stat.getDesign().getHull().getRace().getSpaceShipId())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
@@ -338,7 +340,8 @@ public class StatView extends BlackPanel {
           + stat.getNumberOfCombats(), true, true);
       label.setForeground(realm.getColor().getColor());
       image = new ImageLabel(
-          ShipImages.getByRace(stat.getDesign().getHull().getRace())
+          ShipImageFactor.create(
+              stat.getDesign().getHull().getRace().getSpaceShipId())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
@@ -353,7 +356,8 @@ public class StatView extends BlackPanel {
           + stat.getNumberOfVictories(), true, true);
       label.setForeground(realm.getColor().getColor());
       image = new ImageLabel(
-          ShipImages.getByRace(stat.getDesign().getHull().getRace())
+          ShipImageFactor.create(
+              stat.getDesign().getHull().getRace().getSpaceShipId())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
@@ -368,7 +372,8 @@ public class StatView extends BlackPanel {
           + stat.getNumberOfLoses(), true, true);
       label.setForeground(realm.getColor().getColor());
       image = new ImageLabel(
-          ShipImages.getByRace(stat.getDesign().getHull().getRace())
+          ShipImageFactor.create(
+              stat.getDesign().getHull().getRace().getSpaceShipId())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
@@ -383,7 +388,8 @@ public class StatView extends BlackPanel {
           + stat.getNumberOfKills(), true, true);
       label.setForeground(realm.getColor().getColor());
       image = new ImageLabel(
-          ShipImages.getByRace(stat.getDesign().getHull().getRace())
+          ShipImageFactor.create(
+              stat.getDesign().getHull().getRace().getSpaceShipId())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));

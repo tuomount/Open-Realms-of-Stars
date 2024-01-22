@@ -1,7 +1,7 @@
 package org.openRealmOfStars.mapTiles.anomaly;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2022 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,7 +36,7 @@ import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
-import org.openRealmOfStars.player.ship.ShipImages;
+import org.openRealmOfStars.player.ship.ShipImageFactor;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
@@ -309,7 +309,8 @@ public class SpaceAnomalyTest {
     components[3] = power;
     ShipHull hull = Mockito.mock(ShipHull.class);
     Mockito.when(hull.getSlotHull()).thenReturn(1);
-    Mockito.when(hull.getImage()).thenReturn(ShipImages.spacePirates().getShipImage(0));
+    Mockito.when(hull.getImage()).thenReturn(ShipImageFactor.create("Default")
+        .getShipImage(0));
     Mockito.when(hull.getHullType()).thenReturn(ShipHullType.NORMAL);
     Mockito.when(hull.getSize()).thenReturn(ShipSize.SMALL);
     Mockito.when(design.getHull()).thenReturn(hull);

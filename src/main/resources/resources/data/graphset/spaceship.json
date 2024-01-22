@@ -1,0 +1,94 @@
+[
+  {
+    "id": "Centaur",
+    "path": "centaurships.png",
+    "monsters": false
+  },
+  {
+    "id": "Scaurian",
+    "path": "scaurianships.png",
+    "monsters": false
+  },
+  {
+    "id": "Mechion",
+    "path": "mechionships.png",
+    "monsters": false
+  },
+  {
+    "id": "Human",
+    "path": "humanships.png",
+    "monsters": false
+  },
+  {
+    "id": "Mothoid",
+    "path": "mothoidships.png",
+    "monsters": false
+  },
+  {
+    "id": "Greyan",
+    "path": "greyanships.png",
+    "monsters": false
+  },
+  {
+    "id": "Homarian",
+    "path": "homarianships.png",
+    "monsters": false
+  },
+  {
+    "id": "Teuthidae",
+    "path": "teuthidaeships.png",
+    "monsters": false
+  },
+  {
+    "id": "Spork",
+    "path": "sporkships.png",
+    "monsters": false
+  },
+  {
+    "id": "Chiraloid",
+    "path": "chiraloidships.png",
+    "monsters": false
+  },
+  {
+    "id": "Space pirate",
+    "path": "privateerships.png",
+    "monsters": true
+  },
+  {
+    "id": "Lithorian",
+    "path": "lithorianships.png",
+    "monsters": false
+  },
+  {
+    "id": "Reborgian",
+    "path": "reborgianships.png",
+    "monsters": false
+  },
+  {
+    "id": "Smaugirian",
+    "path": "smaugirianships.png",
+    "monsters": false
+  },
+  {
+    "id": "Alteirian",
+    "path": "alteirianships.png",
+    "monsters": false
+  },
+  {
+    "id": "Synthdroid",
+    "path": "synthdroidships.png",
+    "monsters": false
+  },
+  {
+    "id": "Space monsters",
+    "path": "privateerships.png",
+    "monsters": true
+  },
+  {
+    "id": "Default",
+    "path": "humanships.png",
+    "monsters": false
+  }
+
+
+]

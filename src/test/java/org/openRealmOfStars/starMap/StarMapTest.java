@@ -45,7 +45,7 @@ import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.player.ship.ShipHullType;
-import org.openRealmOfStars.player.ship.ShipImages;
+import org.openRealmOfStars.player.ship.ShipImageFactor;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.TechList;
@@ -262,7 +262,8 @@ public class StarMapTest {
     components[3] = power;
     ShipHull hull = Mockito.mock(ShipHull.class);
     Mockito.when(hull.getSlotHull()).thenReturn(1);
-    Mockito.when(hull.getImage()).thenReturn(ShipImages.spacePirates().getShipImage(0));
+    Mockito.when(hull.getImage()).thenReturn(
+        ShipImageFactor.create("Space pirate").getShipImage(0));
     Mockito.when(design.getHull()).thenReturn(hull);
     Mockito.when(design.getComponentList()).thenReturn(components);
     ShipStat stat = Mockito.mock(ShipStat.class);
@@ -337,7 +338,8 @@ public class StarMapTest {
     components[3] = power;
     ShipHull hull = Mockito.mock(ShipHull.class);
     Mockito.when(hull.getSlotHull()).thenReturn(1);
-    Mockito.when(hull.getImage()).thenReturn(ShipImages.spacePirates().getShipImage(0));
+    Mockito.when(hull.getImage()).thenReturn(ShipImageFactor.create(
+        "Space pirate").getShipImage(0));
     Mockito.when(hull.getHullType()).thenReturn(ShipHullType.STARBASE);
     Mockito.when(hull.getName()).thenReturn("Medium starbase");
     Mockito.when(design.getHull()).thenReturn(hull);
@@ -421,7 +423,8 @@ public class StarMapTest {
     components[3] = power;
     ShipHull hull = Mockito.mock(ShipHull.class);
     Mockito.when(hull.getSlotHull()).thenReturn(1);
-    Mockito.when(hull.getImage()).thenReturn(ShipImages.spacePirates().getShipImage(0));
+    Mockito.when(hull.getImage()).thenReturn(ShipImageFactor.create(
+        "Space pirate").getShipImage(0));
     Mockito.when(hull.getHullType()).thenReturn(ShipHullType.STARBASE);
     Mockito.when(hull.getName()).thenReturn("Large starbase");
     Mockito.when(design.getHull()).thenReturn(hull);

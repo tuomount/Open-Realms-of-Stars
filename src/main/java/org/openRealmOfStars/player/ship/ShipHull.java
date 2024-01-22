@@ -163,7 +163,8 @@ public class ShipHull {
    * @return BufferedImage
    */
   public BufferedImage getImage() {
-    return ShipImages.getByRace(originalBuilder).getShipImage(imageIndex);
+    return ShipImageFactor.create(originalBuilder.getSpaceShipId())
+        .getShipImage(imageIndex);
   }
 
   /**
@@ -171,7 +172,8 @@ public class ShipHull {
    * @return BufferedImage
    */
   public BufferedImage getSmallImage() {
-    return ShipImages.getByRace(originalBuilder).getNormalShipImage(imageIndex);
+    return ShipImageFactor.create(originalBuilder.getSpaceShipId())
+        .getNormalShipImage(imageIndex);
   }
 
   /**

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,7 +42,7 @@ import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipImage;
-import org.openRealmOfStars.player.ship.ShipImages;
+import org.openRealmOfStars.player.ship.ShipImageFactor;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 
@@ -142,7 +142,7 @@ public class ShipView extends BlackPanel {
     panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     shipImage = new ImageLabel(
-        ShipImages.humans().getShipImage(ShipImage.SCOUT), true);
+        ShipImageFactor.create("Default").getShipImage(ShipImage.SCOUT), true);
     shipImage.setFillColor(Color.BLACK);
     panel.add(shipImage);
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -200,7 +200,8 @@ public class ShipView extends BlackPanel {
         lastSelectedIndex = -1;
         infoText.setText("");
         this.repaint();
-        shipImage.setImage(ShipImages.humans().getShipImage(ShipImage.COLONY));
+        shipImage.setImage(ShipImageFactor.create("Default")
+            .getShipImage(ShipImage.COLONY));
       }
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_OBSOLETE_SHIP)

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2021-2023 Tuomo Untinen
+ * Copyright (C) 2021-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -53,7 +53,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipImage;
-import org.openRealmOfStars.player.ship.ShipImages;
+import org.openRealmOfStars.player.ship.ShipImageFactor;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.StarMapUtilities;
@@ -174,7 +174,7 @@ public class ShipUpgradeView extends BlackPanel
     panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     shipImage = new ImageLabel(
-        ShipImages.humans().getShipImage(ShipImage.SCOUT), true);
+        ShipImageFactor.create("Default").getShipImage(ShipImage.SCOUT), true);
     shipImage.setFillColor(Color.BLACK);
     panel.add(shipImage);
     panel.add(Box.createRigidArea(new Dimension(5, 5)));

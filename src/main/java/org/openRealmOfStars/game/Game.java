@@ -1831,13 +1831,13 @@ public class Game implements ActionListener {
     }
     case STORY_VIEW: {
       var race = starMap.getCurrentPlayerInfo().getRace();
-      setBridgeCommand(GuiStatics.getRaceBridgeEffect(race));
+      setBridgeCommand(race.getRaceBridgeEffect());
       showStoryView();
       break;
     }
     case END_STORY_VIEW: {
       var race = starMap.getPlayerList().getPlayerInfoByIndex(0).getRace();
-      setBridgeCommand(GuiStatics.getRaceBridgeEffect(race));
+      setBridgeCommand(race.getRaceBridgeEffect());
       showEndStoryView();
       break;
     }
@@ -2880,7 +2880,7 @@ public class Game implements ActionListener {
       } else {
         endStoryView.handleAction(arg0);
         var race = endStoryView.getCurrentRealm().getRace();
-        setBridgeCommand(GuiStatics.getRaceBridgeEffect(race));
+        setBridgeCommand(race.getRaceBridgeEffect());
       }
       return;
     }

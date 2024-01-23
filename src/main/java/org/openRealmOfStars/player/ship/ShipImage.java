@@ -167,15 +167,15 @@ public class ShipImage {
   public ShipImage(final String fileToRead, final boolean monsters,
       final String id) {
     this.id = id;
-    loadImages(fileToRead, monsters);
+    this.monsters = monsters;
+    loadImages(fileToRead);
   }
 
   /**
    * Initialize ship images.
    * @param fileToRead Needs to be inside JAR file
-   * @param hasMonsters Read space monster images if true.
    */
-  private void loadImages(final String fileToRead, final boolean hasMonsters) {
+  private void loadImages(final String fileToRead) {
     BufferedImage image = IOUtilities
         .loadImage("/resources/images/" + fileToRead);
     int number = NUMBER_OF_IMAGES;

@@ -100,7 +100,6 @@ public class StarMapGenerator {
   public StarMap generateStarMap(final GalaxyConfig config,
       final PlayerList players) {
     reinitStarMap(config, players);
-    int loop = 0;
     boolean tooFullSpace = false;
     // Create starting systems
     try {
@@ -129,7 +128,6 @@ public class StarMapGenerator {
             solarSystem[i][j] = 0;
           }
         }
-        loop = 0;
       }
       createBorderStartingSystems(config);
     }

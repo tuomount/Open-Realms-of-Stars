@@ -23,6 +23,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.openRealmOfStars.ambient.BridgeCommandType;
+import org.openRealmOfStars.audio.music.MusicFileInfo;
+import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.race.trait.RaceTrait;
@@ -1362,4 +1364,49 @@ public enum SpaceRace {
       return BridgeCommandType.WARM_WHITE;
     }
   }
+
+  /**
+   * Get race specific diplomacy music.
+   * @return MusicFileInfo
+   */
+  public MusicFileInfo getRaceDiplomacyMusic() {
+    switch (this) {
+    case HUMAN:
+      return MusicPlayer.WALKING_WITH_POSEIDON;
+    case MECHIONS:
+      return MusicPlayer.ABANDONED_STEEL_MILL;
+    case SPORKS:
+      return MusicPlayer.CONQUERORS;
+    case GREYANS:
+      return MusicPlayer.TROGL;
+    case CENTAURS:
+      return MusicPlayer.OVE_MELAA_DIPLOMACY;
+    case MOTHOIDS:
+      return MusicPlayer.FANTASY_CHOIR_2;
+    case TEUTHIDAES:
+      return MusicPlayer.PRESSURE;
+    case SCAURIANS:
+      return MusicPlayer.INTERPLANETARY_ODYSSEY;
+    case HOMARIANS:
+      return MusicPlayer.MALLOGA_BALLING;
+    case SPACE_MONSTERS: // No diplomacy so should not matter
+    case SPACE_PIRATE:
+      return MusicPlayer.SET_FIRE_TO_REALITY;
+    case CHIRALOIDS:
+      return MusicPlayer.MENACE;
+    case REBORGIANS:
+      return MusicPlayer.BRAINDEAD;
+    case LITHORIANS:
+      return MusicPlayer.TECHNODRIVE;
+    case ALTEIRIANS:
+      return MusicPlayer.SKY_PORTAL;
+    case SMAUGIRIANS:
+      return MusicPlayer.GUITAR_SONG;
+    case SYNTHDROIDS:
+      return MusicPlayer.CYBORG;
+    default:
+      return MusicPlayer.MILLION_LIGHT_YEARS;
+    }
+  }
+
 }

@@ -96,7 +96,7 @@ public class EndStoryView extends BlackPanel {
   public EndStoryView(final StarMap map, final ActionListener listener) {
     index = 0;
     realm = map.getPlayerByIndex(index);
-    final var raceMusic = GuiStatics.getRaceDiplomacyMusic(realm.getRace());
+    final var raceMusic = realm.getRace().getRaceDiplomacyMusic();
     if (MusicPlayer.getNowPlaying() != raceMusic) {
       MusicPlayer.play(raceMusic);
     }
@@ -206,7 +206,7 @@ public class EndStoryView extends BlackPanel {
    * Update panels
    */
   public void updatePanels() {
-    final var raceMusic = GuiStatics.getRaceDiplomacyMusic(realm.getRace());
+    final var raceMusic = realm.getRace().getRaceDiplomacyMusic();
     if (MusicPlayer.getNowPlaying() != raceMusic) {
       MusicPlayer.play(raceMusic);
     }

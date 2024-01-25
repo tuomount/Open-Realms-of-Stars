@@ -27,6 +27,7 @@ import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.leader.Gender;
+import org.openRealmOfStars.player.leader.NameGeneratorType;
 import org.openRealmOfStars.player.race.trait.RaceTrait;
 import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
@@ -1406,6 +1407,50 @@ public enum SpaceRace {
       return MusicPlayer.CYBORG;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
+    }
+  }
+
+  /**
+   * Get Name Generator type for space race.
+   * @return NameGeneratorType Name generator type.
+   */
+  public NameGeneratorType getNameGeneratorType() {
+    switch (this) {
+    case HUMAN:
+      return NameGeneratorType.SCIFI_HUMAN;
+    case MECHIONS:
+      return NameGeneratorType.ROBOT;
+    case SPORKS:
+      return NameGeneratorType.SPACE_ORC;
+    case GREYANS:
+      return NameGeneratorType.ANCIENT_NORDIC;
+    case CENTAURS:
+      return NameGeneratorType.LONG_NAMES;
+    case MOTHOIDS:
+      return NameGeneratorType.INSECT;
+    case TEUTHIDAES:
+      return NameGeneratorType.DEEP_ANCIENT_MONSTER;
+    case SCAURIANS:
+      return NameGeneratorType.ANCIENT_ROMAN;
+    case HOMARIANS:
+      return NameGeneratorType.DEEP_CREATURE;
+    case SPACE_MONSTERS: // No diplomacy so should not matter
+    case SPACE_PIRATE:
+      return NameGeneratorType.ALL;
+    case CHIRALOIDS:
+      return NameGeneratorType.EVIL_CREATURE;
+    case REBORGIANS:
+      return NameGeneratorType.CYBORG;
+    case LITHORIANS:
+      return NameGeneratorType.STONE_PEOPLE;
+    case ALTEIRIANS:
+      return NameGeneratorType.GASEOUS_CREATURE;
+    case SMAUGIRIANS:
+      return NameGeneratorType.PIRATE;
+    case SYNTHDROIDS:
+      return NameGeneratorType.FEMALE_ROBOT;
+    default:
+      return NameGeneratorType.ALL;
     }
   }
 

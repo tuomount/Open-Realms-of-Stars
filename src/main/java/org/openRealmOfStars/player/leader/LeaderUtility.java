@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.leader;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2020-2023 Tuomo Untinen
+ * Copyright (C) 2020-2024 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -131,8 +131,8 @@ public final class LeaderUtility {
       }
     }
 
-    Leader leader = new Leader(NameGenerator.generateName(info.getRace(),
-        gender));
+    Leader leader = new Leader(NameGenerator.generateName(
+        info.getRace().getNameGeneratorType(), gender));
     leader.setGender(gender);
     leader.setRace(info.getRace());
     leader.setExperience(0);

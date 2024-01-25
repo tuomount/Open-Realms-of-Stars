@@ -1,7 +1,7 @@
 package org.openRealmOfStars.mapTiles.anomaly;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2023 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -484,7 +484,8 @@ public class SpaceAnomaly {
 
           result = new SpaceAnomaly(AnomalyType.ANCIENT_ROBOT, 0);
           final var gender = DiceGenerator.pickRandom(leaderRace.getGenders());
-          String name = NameGenerator.generateName(leaderRace, gender);
+          String name = NameGenerator.generateName(
+              leaderRace.getNameGeneratorType(), gender);
           String capitalDesc = "Ancient " + leaderRace.getNameSingle();
           String desc = leaderRace.getNameSingle();
           result.setText(capitalDesc + " was in long lasting stasis in "
@@ -664,7 +665,8 @@ public class SpaceAnomaly {
           result = new SpaceAnomaly(AnomalyType.LEADER_IN_STASIS, 0);
           SpaceRace leaderRace = SpaceRace.getRandomLivingRace();
           Gender gender = Gender.getRandom();
-          String name = NameGenerator.generateName(leaderRace, gender);
+          String name = NameGenerator.generateName(
+              leaderRace.getNameGeneratorType(), gender);
           String desc = leaderRace.getNameSingle();
           result.setText(desc + " was in long lasting stasis in "
               + "old ship floating in vastness of space. When entering "

@@ -17,7 +17,6 @@ package org.openRealmOfStars.player.leader;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -35,11 +34,11 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate Teuthidae leader name
+   * Generate Deep Ancient leader name
    * @param gender Leader gender
-   * @return Teuthidae leader name
+   * @return Deep Ancient leader name
    */
-  private static String generateTeuthidaeName(final Gender gender) {
+  private static String generateDeepAncient(final Gender gender) {
     StringBuilder sb = new StringBuilder();
     switch (DiceGenerator.getRandom(62)) {
       default:
@@ -314,11 +313,11 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate Chiraloid leader name
+   * Generate Evil leader name
    * @param gender Leader gender
-   * @return Chiraloid leader name
+   * @return Evil leader name
    */
-  private static String generateChiraloidName(final Gender gender) {
+  private static String generateEvilName(final Gender gender) {
     StringBuilder sb = new StringBuilder();
     if (gender == Gender.MALE) {
       switch (DiceGenerator.getRandom(49)) {
@@ -573,11 +572,11 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate spork leader name
+   * Generate space orc leader name
    * @param gender Leader gender
-   * @return Spork leader name
+   * @return space orc leader name
    */
-  private static String generateSporkName(final Gender gender) {
+  private static String generateSpaceOrc(final Gender gender) {
     StringBuilder sb = new StringBuilder();
     if (gender == Gender.MALE) {
       switch (DiceGenerator.getRandom(19)) {
@@ -776,11 +775,11 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate mothoid leader name
+   * Generate insect leader name
    * @param gender Leader gender
-   * @return Mothoid leader name
+   * @return Insect leader name
    */
-  private static String generateMothoidName(final Gender gender) {
+  private static String generateInsect(final Gender gender) {
     StringBuilder sb = new StringBuilder();
     if (gender == Gender.FEMALE) {
       switch (DiceGenerator.getRandom(5)) {
@@ -952,12 +951,12 @@ public final class NameGenerator {
   }
 
   /**
-   * Method to generate Scaurian Male name.
-   * Scaurian surname is same as male name.
+   * Method to generate Roman Male name.
+   * Roman surname is same as male name.
    * @param longerChance Bigger number less chance to have third syllable
-   * @return Scaurian male name.
+   * @return Roman male name.
    */
-  private static String generateScaurianMaleName(final int longerChance) {
+  private static String generateRomanMaleName(final int longerChance) {
     StringBuilder sb = new StringBuilder();
     switch (DiceGenerator.getRandom(33)) {
       default:
@@ -1067,14 +1066,14 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate scaurian leader name
+   * Generate Roman leader name
    * @param gender Leader gender
-   * @return Scaurian leader name
+   * @return Roman leader name
    */
-  private static String generateScaurianName(final Gender gender) {
+  private static String generateRomanName(final Gender gender) {
     StringBuilder sb = new StringBuilder();
     if (gender == Gender.MALE) {
-      sb.append(generateScaurianMaleName(3));
+      sb.append(generateRomanMaleName(3));
     }
     if (gender == Gender.FEMALE) {
       switch (DiceGenerator.getRandom(36)) {
@@ -1165,15 +1164,15 @@ public final class NameGenerator {
     }
     sb.append(" ");
     //Surname
-    sb.append(generateScaurianMaleName(1));
+    sb.append(generateRomanMaleName(1));
     return sb.toString();
   }
 
   /**
-   * Generate centaur male name
-   * @return Centaur male name
+   * Generate long male name
+   * @return Long male name
    */
-  private static String generateCentaurMaleName() {
+  private static String generateLongNameMaleName() {
     StringBuilder sb = new StringBuilder();
     switch (DiceGenerator.getRandom(25)) {
       default:
@@ -1253,14 +1252,14 @@ public final class NameGenerator {
     return sb.toString();
   }
   /**
-   * Generate centaur leader name
+   * Generate long name leader name
    * @param gender Leader gender
-   * @return centaur leader name
+   * @return long name leader name
    */
-  private static String generateCentaurName(final Gender gender) {
+  private static String generateLongNameName(final Gender gender) {
     StringBuilder sb = new StringBuilder();
     if (gender == Gender.MALE) {
-      sb.append(generateCentaurMaleName());
+      sb.append(generateLongNameMaleName());
     }
     if (gender == Gender.FEMALE) {
       switch (DiceGenerator.getRandom(25)) {
@@ -1346,16 +1345,16 @@ public final class NameGenerator {
     } else {
       sb.append("Yios-");
     }
-    sb.append(generateCentaurMaleName());
+    sb.append(generateLongNameMaleName());
     return sb.toString();
   }
 
   /**
-   * Generate homarian leader name
+   * Generate deep creature leader name
    * @param gender Leader gender
-   * @return Homarian leader name
+   * @return deep creature leader name
    */
-  private static String generateHomarianName(final Gender gender) {
+  private static String generateDeepCreatureName(final Gender gender) {
     StringBuilder sb = new StringBuilder();
     if (gender == Gender.MALE) {
       switch (DiceGenerator.getRandom(60)) {
@@ -1606,11 +1605,11 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate greyan leader name
+   * Generate ancient nordic leader name
    * @param gender Leader gender
-   * @return Greyan leader name
+   * @return ancient nordic leader name
    */
-  private static String generateGreyanName(final Gender gender) {
+  private static String generateAncientNordicName(final Gender gender) {
     StringBuilder sb = new StringBuilder();
     if (gender == Gender.MALE) {
       switch (DiceGenerator.getRandom(40)) {
@@ -1746,10 +1745,10 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate synthdroid leader name
-   * @return Synthdroid leader name
+   * Generate female robot leader name
+   * @return female robot leader name
    */
-  private static String generateSynthdroidName() {
+  private static String generateFemaleRobotName() {
     StringBuilder sb = new StringBuilder();
     int type = DiceGenerator.getRandom(1);
     if (type == 0) {
@@ -1871,10 +1870,10 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate mechion leader name
-   * @return Mechion leader name
+   * Generate robot leader name
+   * @return robot leader name
    */
-  private static String generateMechionName() {
+  private static String generateRobotName() {
     StringBuilder sb = new StringBuilder();
     switch (DiceGenerator.getRandom(14)) {
       default:
@@ -1949,11 +1948,11 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate human leader name
+   * Generate scifi human leader name
    * @param gender Leader gender
-   * @return Human leader name
+   * @return scifi human leader name
    */
-  private static String generateHumanName(final Gender gender) {
+  private static String generateScifiHumanName(final Gender gender) {
     StringBuilder sb = new StringBuilder();
     if (gender == Gender.MALE) {
       switch (DiceGenerator.getRandom(26)) {
@@ -2092,10 +2091,10 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate reborgian leader name
-   * @return Reborgian leader name
+   * Generate cyborg leader name
+   * @return Cyborg leader name
    */
-  private static String generateReborgianName() {
+  private static String generateCyborgName() {
     StringBuilder sb = new StringBuilder();
     switch (DiceGenerator.getRandom(14)) {
       default:
@@ -2173,11 +2172,11 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate Lithorian leader name
+   * Generate stone people leader name
    * @param gender Leader gender
-   * @return Lithorian leader name
+   * @return stone people leader name
    */
-  private static String generateLithorianName(final Gender gender) {
+  private static String generateStonePeopleName(final Gender gender) {
     StringBuilder sb = new StringBuilder();
     if (gender == Gender.MALE) {
       switch (DiceGenerator.getRandom(19)) {
@@ -2376,11 +2375,11 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate Alteirian leader name
+   * Generate gaseous people leader name
    * @param gender Leader gender
-   * @return Alteirian leader name
+   * @return gaseous people leader name
    */
-  private static String generateAlteirianName(final Gender gender) {
+  private static String generateGaseousPeople(final Gender gender) {
     StringBuilder sb = new StringBuilder();
     if (gender == Gender.MALE) {
       switch (DiceGenerator.getRandom(21)) {
@@ -2581,11 +2580,11 @@ public final class NameGenerator {
   }
 
   /**
-   * Generate Smaugirian leader name
+   * Generate pirate leader name
    * @param gender Leader gender
-   * @return Smaugirian leader name
+   * @return pirate leader name
    */
-  private static String generateSmaugirianName(final Gender gender) {
+  private static String generatePirateName(final Gender gender) {
     StringBuilder sb = new StringBuilder();
     if (gender == Gender.MALE) {
       switch (DiceGenerator.getRandom(22)) {
@@ -2749,75 +2748,76 @@ public final class NameGenerator {
 
   /**
    * Generate Leader name.
-   * @param race SpaceRace for which name will generated
+   * @param type NameGeneratorType
    * @param gender Leader gender
    * @return Leader name.
    */
-  public static String generateName(final SpaceRace race, final Gender gender) {
-    if (race == SpaceRace.SPACE_PIRATE) {
+  public static String generateName(final NameGeneratorType type,
+      final Gender gender) {
+    if (type == NameGeneratorType.ALL) {
       switch (DiceGenerator.getRandom(14)) {
         default:
-        case 0: return generateHumanName(gender);
-        case 1: return generateSporkName(gender);
-        case 2: return generateTeuthidaeName(gender);
-        case 3: return generateChiraloidName(gender);
-        case 4: return generateMothoidName(gender);
-        case 5: return generateScaurianName(gender);
-        case 6: return generateHomarianName(gender);
-        case 7: return generateGreyanName(gender);
-        case 8: return generateCentaurName(gender);
-        case 9: return generateMechionName();
-        case 10: return generateReborgianName();
-        case 11: return generateLithorianName(gender);
-        case 12: return generateAlteirianName(gender);
-        case 13: return generateSmaugirianName(gender);
-        case 14: return generateSynthdroidName();
+        case 0: return generateScifiHumanName(gender);
+        case 1: return generateSpaceOrc(gender);
+        case 2: return generateDeepAncient(gender);
+        case 3: return generateEvilName(gender);
+        case 4: return generateInsect(gender);
+        case 5: return generateRomanName(gender);
+        case 6: return generateDeepCreatureName(gender);
+        case 7: return generateAncientNordicName(gender);
+        case 8: return generateLongNameName(gender);
+        case 9: return generateRobotName();
+        case 10: return generateCyborgName();
+        case 11: return generateStonePeopleName(gender);
+        case 12: return generateGaseousPeople(gender);
+        case 13: return generatePirateName(gender);
+        case 14: return generateFemaleRobotName();
       }
     }
-    if (race == SpaceRace.HUMAN) {
-      return generateHumanName(gender);
+    if (type == NameGeneratorType.SCIFI_HUMAN) {
+      return generateScifiHumanName(gender);
     }
-    if (race == SpaceRace.SPORKS) {
-      return generateSporkName(gender);
+    if (type == NameGeneratorType.SPACE_ORC) {
+      return generateSpaceOrc(gender);
     }
-    if (race == SpaceRace.TEUTHIDAES) {
-      return generateTeuthidaeName(gender);
+    if (type == NameGeneratorType.DEEP_ANCIENT_MONSTER) {
+      return generateDeepAncient(gender);
     }
-    if (race == SpaceRace.CHIRALOIDS) {
-      return generateChiraloidName(gender);
+    if (type == NameGeneratorType.EVIL_CREATURE) {
+      return generateEvilName(gender);
     }
-    if (race == SpaceRace.MOTHOIDS) {
-      return generateMothoidName(gender);
+    if (type == NameGeneratorType.INSECT) {
+      return generateInsect(gender);
     }
-    if (race == SpaceRace.SCAURIANS) {
-      return generateScaurianName(gender);
+    if (type == NameGeneratorType.ANCIENT_ROMAN) {
+      return generateRomanName(gender);
     }
-    if (race == SpaceRace.HOMARIANS) {
-      return generateHomarianName(gender);
+    if (type == NameGeneratorType.DEEP_CREATURE) {
+      return generateDeepCreatureName(gender);
     }
-    if (race == SpaceRace.GREYANS) {
-      return generateGreyanName(gender);
+    if (type == NameGeneratorType.ANCIENT_NORDIC) {
+      return generateAncientNordicName(gender);
     }
-    if (race == SpaceRace.CENTAURS) {
-      return generateCentaurName(gender);
+    if (type == NameGeneratorType.LONG_NAMES) {
+      return generateLongNameName(gender);
     }
-    if (race == SpaceRace.MECHIONS) {
-      return generateMechionName();
+    if (type == NameGeneratorType.ROBOT) {
+      return generateRobotName();
     }
-    if (race == SpaceRace.REBORGIANS) {
-      return generateReborgianName();
+    if (type == NameGeneratorType.CYBORG) {
+      return generateCyborgName();
     }
-    if (race == SpaceRace.LITHORIANS) {
-      return generateLithorianName(gender);
+    if (type == NameGeneratorType.STONE_PEOPLE) {
+      return generateStonePeopleName(gender);
     }
-    if (race == SpaceRace.ALTEIRIANS) {
-      return generateAlteirianName(gender);
+    if (type == NameGeneratorType.GASEOUS_CREATURE) {
+      return generateGaseousPeople(gender);
     }
-    if (race == SpaceRace.SMAUGIRIANS) {
-      return generateSmaugirianName(gender);
+    if (type == NameGeneratorType.PIRATE) {
+      return generatePirateName(gender);
     }
-    if (race == SpaceRace.SYNTHDROIDS) {
-      return generateSynthdroidName();
+    if (type == NameGeneratorType.FEMALE_ROBOT) {
+      return generateFemaleRobotName();
     }
     return "Noname";
   }

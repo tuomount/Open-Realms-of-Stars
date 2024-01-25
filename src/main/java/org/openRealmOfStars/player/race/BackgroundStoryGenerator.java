@@ -1648,8 +1648,8 @@ public final class BackgroundStoryGenerator {
     }
     if (scientific) {
       Gender gender = DiceGenerator.pickRandom(info.getRace().getGenders());
-      String greatLeader = NameGenerator.generateName(info.getRace(),
-          gender);
+      String greatLeader = NameGenerator.generateName(
+          info.getRace().getNameGeneratorType(), gender);
       switch (DiceGenerator.getRandom(4)) {
         default:
         case 0: {
@@ -1981,8 +1981,8 @@ public final class BackgroundStoryGenerator {
             gender = Gender.FEMALE;
           }
 
-          String greatLeader = NameGenerator.generateName(info.getRace(),
-              gender);
+          String greatLeader = NameGenerator.generateName(
+              info.getRace().getNameGeneratorType(), gender);
           if (heirs) {
             greatLeader = LeaderUtility.getParentSurname(greatLeader,
                 info.getRuler().getName());
@@ -2018,8 +2018,8 @@ public final class BackgroundStoryGenerator {
             gender = Gender.FEMALE;
           }
 
-          String greatLeader = NameGenerator.generateName(info.getRace(),
-              gender);
+          String greatLeader = NameGenerator.generateName(
+              info.getRace().getNameGeneratorType(), gender);
           if (heirs) {
             greatLeader = LeaderUtility.getParentSurname(greatLeader,
                 info.getRuler().getName());
@@ -2143,8 +2143,8 @@ public final class BackgroundStoryGenerator {
         gender = Gender.FEMALE;
       }
 
-      String greatLeader = NameGenerator.generateName(info.getRace(),
-          gender);
+      String greatLeader = NameGenerator.generateName(
+          info.getRace().getNameGeneratorType(), gender);
       if (heirs) {
         greatLeader = LeaderUtility.getParentSurname(greatLeader,
             info.getRuler().getName());

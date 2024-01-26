@@ -25,6 +25,8 @@ import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -53,24 +55,27 @@ public class ResearchTest extends TestCase {
   }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testResearchHandlingHuman() {
+  public void testResearchHandlingDiplomatic() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    Leader leader = LeaderUtility.createLeader(info, null, 0);
+    leader.addPerk(Perk.DIPLOMATIC);
+    info.setRuler(leader);
     Research.handle(info);
     assertEquals(Research.FOCUS_FOR_LAB,
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
-    assertEquals(Research.HIGH_FOCUS_LEVEL,
+    assertEquals(Research.LOW_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Combat));
     assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Defense));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Hulls));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Improvements));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Propulsion));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
+    assertEquals(Research.LOW_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
   }
 
@@ -187,8 +192,11 @@ public class ResearchTest extends TestCase {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testResearchHandlingCentaurs() {
+  public void testResearchHandlingMercantile() {
     PlayerInfo info = new PlayerInfo(SpaceRace.CENTAURS);
+    Leader leader = LeaderUtility.createLeader(info, null, 0);
+    leader.addPerk(Perk.MERCHANT);
+    info.setRuler(leader);
     Research.handle(info);
     assertEquals(Research.FOCUS_FOR_LAB,
         info.getTechList().getTechFocus(TechType.Improvements));
@@ -210,8 +218,12 @@ public class ResearchTest extends TestCase {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testResearchHandlingGreyans() {
+  public void testResearchHandlingScientific() {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    Leader leader = LeaderUtility.createLeader(info, null, 0);
+    leader.addPerk(Perk.ACADEMIC);
+    leader.addPerk(Perk.SCIENTIST);
+    info.setRuler(leader);
     Research.handle(info);
     assertEquals(Research.FOCUS_FOR_LAB,
         info.getTechList().getTechFocus(TechType.Improvements));
@@ -233,7 +245,7 @@ public class ResearchTest extends TestCase {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testResearchHandlingSporks() {
+  public void testResearchHandlingAggresive() {
     PlayerInfo info = new PlayerInfo(SpaceRace.SPORKS);
     Research.handle(info);
     assertEquals(Research.FOCUS_FOR_LAB,
@@ -256,8 +268,11 @@ public class ResearchTest extends TestCase {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testResearchHandlingMechions() {
+  public void testResearchHandlingLogical() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    Leader leader = LeaderUtility.createLeader(info, null, 0);
+    leader.addPerk(Perk.LOGICAL);
+    info.setRuler(leader);
     Research.handle(info);
     assertEquals(Research.FOCUS_FOR_LAB_HIGH,
         info.getTechList().getTechFocus(TechType.Improvements));
@@ -271,16 +286,17 @@ public class ResearchTest extends TestCase {
         info.getTechList().getTechFocus(TechType.Hulls));
     assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Improvements));
-    assertEquals(Research.HIGH_FOCUS_LEVEL,
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Propulsion));
-    assertEquals(Research.LOW_FOCUS_LEVEL,
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
   }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testResearchHandlingMothoids() {
+  public void testResearchHandlingExpansionist() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
+    
     // Skipping the regular basic lab check since Mothoids might
     // get it at start
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
@@ -301,9 +317,13 @@ public class ResearchTest extends TestCase {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testResearchHandlingTeuthidaes() {
+  public void testResearchHandlingBackstabbing() {
     PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
-    info.setAttitude(Attitude.BACKSTABBING);
+    Leader leader = LeaderUtility.createLeader(info, null, 0);
+    leader.addPerk(Perk.CORRUPTED);
+    leader.addPerk(Perk.CONVICT);
+    leader.addPerk(Perk.CRUEL);
+    info.setRuler(leader);
     Research.handle(info);
     assertEquals(Research.FOCUS_FOR_LAB,
         info.getTechList().getTechFocus(TechType.Improvements));
@@ -315,9 +335,9 @@ public class ResearchTest extends TestCase {
         info.getTechList().getTechFocus(TechType.Defense));
     assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Hulls));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
-        info.getTechList().getTechFocus(TechType.Improvements));
     assertEquals(Research.LOW_FOCUS_LEVEL,
+        info.getTechList().getTechFocus(TechType.Improvements));
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Propulsion));
     assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
@@ -330,24 +350,29 @@ public class ResearchTest extends TestCase {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testResearchHandlingScaurians() {
+  public void testResearchHandlingPeaceful() {
     PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
+    Leader leader = LeaderUtility.createLeader(info, null, 0);
+    leader.addPerk(Perk.PEACEFUL);
+    leader.addPerk(Perk.PACIFIST);
+    info.setRuler(leader);
+
     Research.handle(info);
     assertEquals(Research.FOCUS_FOR_LAB,
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);
-    assertEquals(Research.LOW_FOCUS_LEVEL,
-        info.getTechList().getTechFocus(TechType.Combat));
     assertEquals(Research.DEFAULT_FOCUS_LEVEL,
+        info.getTechList().getTechFocus(TechType.Combat));
+    assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Defense));
-    assertEquals(Research.HIGH_FOCUS_LEVEL,
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Hulls));
-    assertEquals(Research.HIGH_FOCUS_LEVEL,
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Improvements));
-    assertEquals(Research.HIGH_FOCUS_LEVEL,
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Propulsion));
-    assertEquals(Research.LOW_FOCUS_LEVEL,
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
   }
 

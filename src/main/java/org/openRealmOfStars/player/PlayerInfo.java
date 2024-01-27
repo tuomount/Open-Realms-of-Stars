@@ -42,6 +42,7 @@ import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -321,64 +322,17 @@ public class PlayerInfo {
     // This is the old way of government
     setGovernment(GovernmentType.AI);
     setWarFatigue(0);
-    switch (getRace()) {
-    case HUMAN:
-    case MECHIONS:
-    case CENTAURS:
-    case TEUTHIDAES:
-    case SMAUGIRIANS:
-    case HOMARIANS: {
-      addDefaultTechs();
-      break;
+    if (getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+      addZeroGravityTechs();
+    } else {
+      if (getRace() == SpaceRace.SPACE_MONSTERS) {
+        addSpaceMonsterTechs();
+      } else if (getRace() == SpaceRace.SPACE_PIRATE) {
+        addSpacePirateTechs();
+      } else {
+        addDefaultTechs();
+      }
     }
-    case LITHORIANS: {
-      addLithorianTech();
-      break;
-    }
-    case CHIRALOIDS: {
-      addChiraloidTechs();
-      break;
-    }
-    case SPACE_PIRATE: {
-      addSpacePirateTechs();
-      break;
-    }
-    case MOTHOIDS: {
-      addMothoidTechs();
-      break;
-    }
-    case REBORGIANS: {
-      addReborgianTechs();
-      break;
-    }
-    case SPORKS: {
-      addSporkTechs();
-      break;
-    }
-    case GREYANS: {
-      addGreyanTechs();
-      break;
-    }
-    case SCAURIANS: {
-      addScaurianTechs();
-      break;
-    }
-    case ALTEIRIANS: {
-      addAlteirianTechs();
-      break;
-    }
-    case SYNTHDROIDS: {
-      addSynthdroidTechs();
-      break;
-    }
-    case SPACE_MONSTERS: {
-      addSpaceMonsterTechs();
-      break;
-    }
-    default:
-      ErrorLogger.log("PlayerInfo.class: Unexpected race:" + getRace());
-    }
-
   }
 
   /**
@@ -437,10 +391,17 @@ public class PlayerInfo {
    * Default techs and ship design.
    */
   private void addDefaultTechs() {
-    final String[] techs = {
+    final String[] techs1 = {
       "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
     };
-    addTechs(techs);
+    final String[] techs2 = {
+        "Colony", "Scout Mk1", "Nuclear drive Mk1", "Fission source Mk1",
+      };
+    if (DiceGenerator.getBoolean()) {
+      addTechs(techs1);
+    } else {
+      addTechs(techs2);
+    }
 
     addRandomTechs(1, TechType.Combat, 1);
     addRandomTechs(1, TechType.Defense, 1);
@@ -448,10 +409,8 @@ public class PlayerInfo {
     designInitialShips();
   }
 
-  /**
-   * Add alteirian techs and ship designs.
-   */
-  private void addAlteirianTechs() {
+  /** Add Zero Gravity techs and ship designs. */
+  private void addZeroGravityTechs() {
     final String[] techs = {
       "Railgun Mk1", "Shield Mk1", "Colony", "Scout Mk1", "Minor orbital",
       "Nuclear drive Mk1", "Fission source Mk1",
@@ -461,135 +420,7 @@ public class PlayerInfo {
     designInitialShips();
   }
 
-  /**
-   * Add Chiraloid techs and ship designs.
-   */
-  private void addChiraloidTechs() {
-    final String[] techs = {
-      "Colony", "Scout Mk1", "Nuclear drive Mk1", "Fission source Mk1",
-    };
-    addTechs(techs);
-
-    addRandomTechs(2, TechType.Combat, 1);
-    addRandomTechs(1, TechType.Defense, 1);
-
-    designInitialShips();
-  }
-
-  /**
-   * Add Greyan techs and shipdesigns.
-   */
-  private void addGreyanTechs() {
-    final String[] techs = {
-      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
-    };
-    addTechs(techs);
-
-    addRandomTechs(1, TechType.Combat, 1);
-    addRandomTechs(1, TechType.Defense, 1);
-    addRandomTechs(1, TechType.Propulsion, 1);
-    addRandomTechs(1, TechType.Electrics, 1);
-
-    designInitialShips();
-  }
-
-  /**
-   * Add Lithorian Tech and ship designs.
-   */
-  private void addLithorianTech() {
-    final String[] techs = {
-      "Colony", "Scout Mk1", "Nuclear drive Mk1", "Fission source Mk1",
-    };
-    addTechs(techs);
-
-    addRandomTechs(1, TechType.Combat, 1);
-    addRandomTechs(1, TechType.Defense, 1);
-    addRandomTechs(1, TechType.Electrics, 1);
-
-    designInitialShips();
-  }
-
-  /**
-   * Add Mothoid techs and ship designs.
-   */
-  private void addMothoidTechs() {
-    final String[] techs = {
-      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
-    };
-    addTechs(techs);
-
-    addRandomTechs(1, TechType.Combat, 1);
-    addRandomTechs(1, TechType.Improvements, 1);
-
-    designInitialShips();
-  }
-
-  /**
-   * Add Reborgian techs and ship designs.
-   */
-  private void addReborgianTechs() {
-    final String[] techs = {
-      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
-    };
-    addTechs(techs);
-
-    addRandomTechs(1, TechType.Combat, 1);
-    addRandomTechs(1, TechType.Defense, 1);
-    addRandomTechs(1, TechType.Improvements, 1);
-
-    designInitialShips();
-  }
-
-  /**
-   * Add Scaurian techs and ship designs.
-   */
-  private void addScaurianTechs() {
-    final String[] techs = {
-      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
-      "Tax center",
-    };
-    addTechs(techs);
-
-    addRandomTechs(1, TechType.Combat, 1);
-    addRandomTechs(1, TechType.Defense, 1);
-
-    designInitialShips();
-  }
-
-  /**
-   * Adds Spork techs and ship designs.
-   */
-  private void addSporkTechs() {
-    final String[] techs = {
-      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
-    };
-    addTechs(techs);
-
-    addRandomTechs(2, TechType.Combat, 1);
-    addRandomTechs(1, TechType.Defense, 1);
-
-    designInitialShips();
-  }
-
-  /**
-   * Add Greyan techs and shipdesigns.
-   */
-  private void addSynthdroidTechs() {
-    final String[] techs = {
-      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
-    };
-    addTechs(techs);
-
-    addRandomTechs(1, TechType.Combat, 1);
-    addRandomTechs(1, TechType.Defense, 1);
-    addRandomTechs(1, TechType.Electrics, 1);
-
-    designInitialShips();
-  }
-
-  /**
-   * Add space pirate techs and ship designs.
-   */
+  /** Add space pirate techs and ship designs. */
   private void addSpacePirateTechs() {
     // Space pirate is always board player
     setBoard(true);
@@ -607,10 +438,7 @@ public class PlayerInfo {
 
     designInitialShips();
   }
-
-  /**
-   * Add Space monster techs and ship designs.
-   */
+  /** Add Space monster techs and ship designs. */
   private void addSpaceMonsterTechs() {
     /*
      * Space monsters get space monster tech.

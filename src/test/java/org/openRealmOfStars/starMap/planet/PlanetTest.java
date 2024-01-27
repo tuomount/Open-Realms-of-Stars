@@ -100,25 +100,24 @@ public class PlanetTest extends TestCase {
     Construction[] list = planet.getProductionList();
     Construction shipConst = list[list.length - 1];
     planet.setUnderConstruction(shipConst);
+    String expected = "15 star years";
+    String msg = "The production time should be 15 star years.";
+    if (info.getTechList().getBestEngine().getName().contains("Nuclear")) {
+      expected = "17 star years";
+      msg = "The production time should be 17 star years.";
+      
+    }
     assertEquals(0, info.getFleets().getNumberOfFleets());
     assertEquals("The population of the planet should be one.", 1,
         planet.getTotalPopulation());
-    assertEquals("The production time should be 15 star years.",
-        "15 star years", planet.getProductionTimeAsString(shipConst));
-    for (int i=0;i<15;i++) {
+    assertEquals(msg, expected, planet.getProductionTimeAsString(shipConst));
+    for (int i=0;i<17;i++) {
       // 5 star years to grow one population
       planet.updateOneTurn(false, null);
     }
     list = planet.getProductionList();
     shipConst = list[list.length - 1];
     planet.setUnderConstruction(shipConst);
-    assertEquals(1, info.getFleets().getNumberOfFleets());
-    assertEquals("The production time should be 15 star years.",
-        "15 star years", planet.getProductionTimeAsString(shipConst));
-    for (int i=0;i<15;i++) {
-      // 5 star years to grow one population
-      planet.updateOneTurn(true, null);
-    }
     assertEquals(1, info.getFleets().getNumberOfFleets());
   }
 

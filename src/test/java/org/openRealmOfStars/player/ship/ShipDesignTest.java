@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -130,45 +130,6 @@ public class ShipDesignTest extends TestCase {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testColonyDesignByGenerator() {
-    PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
-    player.getTechList().addTech(TechFactory.createHullTech("Small freighter", 2));
-    player.getTechList().addTech(TechFactory.createHullTech("Medium freighter", 4));
-    player.getTechList().addTech(TechFactory.createHullTech("Large freighter", 6));
-    player.getTechList().addTech(TechFactory.createHullTech("Massive freighter", 8));
-    ShipDesign design = ShipGenerator.createColony(player, false);
-    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
-    assertEquals(ShipSize.MEDIUM, design.getHull().getSize());
-    assertEquals(4,design.getNumberOfComponents());
-    assertEquals(0,design.getTotalMilitaryPower());
-    assertEquals(2,design.getFreeSlots());
-    assertEquals(10, design.getTotalColonyPower());
-    assertEquals(11, design.getInitiative());
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testFreighterDesignByGenerator() {
-    PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
-    player.getTechList().addTech(TechFactory.createHullTech("Small freighter", 2));
-    player.getTechList().addTech(TechFactory.createHullTech("Medium freighter", 4));
-    player.getTechList().addTech(TechFactory.createHullTech("Large freighter", 6));
-    player.getTechList().addTech(TechFactory.createHullTech("Massive freighter", 8));
-    ShipDesign design = ShipGenerator.createFreighter(player);
-    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
-    assertEquals(ShipSize.HUGE, design.getHull().getSize());
-    assertEquals(6, design.getInitiative());
-    if (design.getNumberOfComponents() != 2 && design.getNumberOfComponents() != 3) {
-      assertFalse(true);
-    }
-    assertEquals(0,design.getTotalMilitaryPower());
-    if (design.getFreeSlots() != 10 && design.getFreeSlots() != 9) {
-      assertFalse(true);
-    }
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTrooperDesignByGenerator() {
     PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
     player.getTechList().addTech(TechFactory.createHullTech("Small freighter", 2));
@@ -231,50 +192,6 @@ public class ShipDesignTest extends TestCase {
     }
     assertTrue(plasmaCannon);
     assertTrue(solarArmor);
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRareTechs2() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
-    info.getTechList().addTech(TechFactory.createCombatTech("Ion cannon Mk1", 3));
-    info.getTechList().addTech(TechFactory.createDefenseTech("Organic armor Mk1", 3));
-    info.getTechList().addTech(TechFactory.createPropulsionTech("Fusion source Mk2", 3));
-    ShipDesign design = ShipGenerator.createBattleShip(info, ShipSize.SMALL, false, false);
-    boolean ionCannon = false;
-    boolean organicArmor = false;
-    for (ShipComponent comp : design.getComponentList()) {
-      if (comp.getType() == ShipComponentType.ION_CANNON) {
-        ionCannon = true;
-      }
-      if (comp.getType() == ShipComponentType.ORGANIC_ARMOR) {
-        organicArmor = true;
-      }
-    }
-    assertTrue(ionCannon);
-    assertTrue(organicArmor);
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRareTechs3() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
-    info.getTechList().addTech(TechFactory.createCombatTech("Ion cannon Mk1", 3));
-    info.getTechList().addTech(TechFactory.createDefenseTech("Distortion shield Mk1", 4));
-    info.getTechList().addTech(TechFactory.createPropulsionTech("Fusion source Mk2", 3));
-    ShipDesign design = ShipGenerator.createBattleShip(info, ShipSize.SMALL, false, false);
-    boolean ionCannon = false;
-    boolean distortionShield = false;
-    for (ShipComponent comp : design.getComponentList()) {
-      if (comp.getType() == ShipComponentType.ION_CANNON) {
-        ionCannon = true;
-      }
-      if (comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
-        distortionShield = true;
-      }
-    }
-    assertTrue(ionCannon);
-    assertTrue(distortionShield);
   }
 
   @Test

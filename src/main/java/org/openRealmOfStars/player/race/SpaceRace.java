@@ -1454,4 +1454,115 @@ public enum SpaceRace {
     }
   }
 
+  /**
+   * Get Racial description text. This should contain only physical attributes
+   * and description. Nothing about the government or such.
+   * @return String of description.
+   */
+  public String getRacialDescription() {
+    switch (this) {
+    case HUMAN:
+      return "Humans are commonly regarded as possessing average physical and "
+          + "mental attributes. ";
+    case MECHIONS:
+      return "Mechions are a type of mechanical robot that are designed to"
+          + " function without the need for food or other organic"
+          + " sustenance. Instead, they are powered by advanced technology,"
+          + " such as batteries or fuel cells, which allow them to operate"
+          + " for long periods of time without needing to be refueled.";
+    case SPORKS:
+      return "Sporks are a species of aggressive and warmongering"
+          + " creatures that are known for their ferocity and their love of"
+          + " battle. ";
+    case GREYANS:
+      return "Greyans are typically tall and slender, with long, graceful limbs"
+          + " and delicate features. Their grey skin is smooth and sleek,"
+          + " and it is said to shimmer in the light. They have large,"
+          + " almond-shaped eyes that are capable of seeing in a wide"
+          + " range of light levels, and they are highly perceptive"
+          + " and intuitive. ";
+    case CENTAURS:
+      return "Centaurs, reminiscent of the mythical beings from ancient"
+          + " Greek and Roman lore, bear a striking resemblance to "
+          + "their legendary counterparts. They possess the upper "
+          + "body of a humanoid, juxtaposed with a lower body "
+          + "reminiscent of an ant. Their formidable, resilient skin"
+          + " and towering stature further distinguish them.";
+    case MOTHOIDS:
+      return "Mothoids are renowned for their rapid reproductive rates,"
+          + " enabling them to swiftly bolster their population and"
+          + " expand their dominion. ";
+    case TEUTHIDAES:
+      return "Teuthidae an octopus-like species, possess unparalleled"
+          + " advancements in both scientific and military domains."
+          + " Renowned for their insatiable scientific curiosity, they"
+          + " are driven by a relentless pursuit of exploration and"
+          + " conquest. ";
+    case SCAURIANS:
+      return "Scaurians are a race of small but wide humanoids that are"
+          + " known for their merchantile abilities. They are highly skilled"
+          + " at making profitable trades and deals, and are always on the"
+          + " lookout for new opportunities to gain more credits. ";
+    case HOMARIANS:
+      return "Homarians are a race of humanoid crabs that are known for their "
+          + "immense strength and hard exoskeletons. This exoskeleton also"
+          + " gives them incredible strength, allowing them to easily"
+          + " perform physical tasks that would be difficult for other"
+          + " species. ";
+    case SPACE_MONSTERS:
+    case SPACE_PIRATE:
+      return "Monsters of the space.";
+    case CHIRALOIDS:
+      return "Chiraloids are creatures that are distinguished by their four"
+          + " arms and two legs. They have a hard exoskeleton that provides"
+          + " them with protection and allows them to withstand harsh "
+          + "environments. ";
+    case REBORGIANS:
+      return "Reborgians are a race of cyborgs that are created by combining"
+          + " organic organisms with bionic and robotic parts. This gives"
+          + " them enhanced physical abilities and allows them to"
+          + " operate in a wide variety of environments. ";
+    case LITHORIANS:
+      return "Lithorians are a race of creatures that subsist on metal"
+          + " instead of traditional food sources. This unique dietary"
+          + " requirement gives them a slow growth rate. However, their "
+          + "ability to digest metal allows them to extract valuable"
+          + " nutrients from metal ores and other metallic substances,"
+          + " making them excellent miners.";
+    case ALTEIRIANS:
+      return "Alteirians are a race of creatures that are adapted to life in"
+          + " zero gravity. Because of this, they require special suits"
+          + " to move on the surfaces of planets, and they spend most of"
+          + " their time living and working in orbit. Their bodies are "
+          + "mostly just mouth and big bulpy eyes with multiple long limbs"
+          + " and a slender tail that help them move gracefully in zero"
+          + " gravity. ";
+    case SMAUGIRIANS:
+      return "Smaugirians are known for their versatile cargo ships, which"
+          + " can be outfitted with a variety of modules to accommodate"
+          + " different types of cargo. Some of these ships even have weapons"
+          + " or privateering modules, allowing them to defend themselves"
+          + " against hostile forces or engage in piracy."
+          + " Despite their illicit activities, the Smaugirians"
+          + " are often depicted as being honorable and loyal to their"
+          + " friends and allies. They are also known for their"
+          + " resourcefulness and ingenuity, which allows them to overcome"
+          + " obstacles and succeed in their dangerous line of work. ";
+    case SYNTHDROIDS:
+      return "Synthdroids are a race of artificial beings that are designed to "
+          + "resemble human females. They are often portrayed as being "
+          + "sleek and elegant, with graceful movements and a polished "
+          + "appearance. Despite their robotic nature, Synthdroids,"
+          + " are able to perform many of the same functions as organic "
+          + "beings, including eating, drinking, and speaking. However, they "
+          + "require only a small amount of food to sustain themselves, "
+          + "making them highly efficient and self-sufficient. Unlike most "
+          + "other races, Synthdroids "
+          + "must be built rather than born, and each population must "
+          + "be created from scratch. This makes them a relatively rare and "
+          + "mysterious race in the galaxy. ";
+    default:
+      return "Unknown race, no description.";
+    }
+  }
 }

@@ -50,51 +50,18 @@ public final class BackgroundStoryGenerator {
   public static String generateBackgroundStory(final PlayerInfo info,
       final Planet startPlanet, final int startingYear) {
     StringBuilder sb = new StringBuilder();
-    if (info.getRace() == SpaceRace.HUMAN) {
-      sb.append(generateHumanStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.MECHIONS) {
-      sb.append(generateMechionStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.SPORKS) {
-      sb.append(generateSporkStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.GREYANS) {
-      sb.append(generateGreyanStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.HOMARIANS) {
-      sb.append(generateHomarianStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.CENTAURS) {
-      sb.append(generateCentaurStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.MOTHOIDS) {
-      sb.append(generateMothoidStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.TEUTHIDAES) {
-      sb.append(generateTeuthidaeStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.SCAURIANS) {
-      sb.append(generateScaurianStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.CHIRALOIDS) {
-      sb.append(generateChiraloidStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.REBORGIANS) {
-      sb.append(generateReborgianStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.LITHORIANS) {
-      sb.append(generateLithorianStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.ALTEIRIANS) {
-      sb.append(generateAlteirianStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.SMAUGIRIANS) {
-      sb.append(generateSmaugirianStory(info, startPlanet, startingYear));
-    }
-    if (info.getRace() == SpaceRace.SYNTHDROIDS) {
-      sb.append(generateSynthdroidStory(info, startPlanet, startingYear));
-    }
+    String namePlural = info.getRace().getName();
+    String name = info.getRace().getNameSingle();
+
+    sb.append(info.getRace().getRacialDescription());
+    //FIXME Go throught traits, hivemind etc. here
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, namePlural, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, namePlural));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
 

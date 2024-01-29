@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.combat;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2023 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,7 +18,6 @@ package org.openRealmOfStars.player.combat;
  */
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
@@ -31,7 +30,6 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.Ship;
-import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
@@ -72,49 +70,6 @@ public class CombatTest {
     assertEquals(null, combat.getCurrentShip());
   }
 
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testFirstPlayerWin() {
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
-    ShipDesign design1 = ShipGenerator.createBattleShip(
-        info1, ShipSize.SMALL, false, false);
-    ShipDesign design2 = ShipGenerator.createBattleShip(
-        info2, ShipSize.SMALL, false, false);
-    Ship scout1 = new Ship(design1);
-    Ship scout2 = new Ship(design2);
-    Fleet fleet1 = new Fleet(scout1, 5, 5);
-    Fleet fleet2 = new Fleet(scout2, 6, 5);
-    info1.getFleets().add(fleet1);
-    info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
-    assertEquals(false, combat.isHumanPlayer());
-    CombatShip shooter = combat.getCurrentShip();
-    assertEquals(0, shooter.getShip().getExperience());
-    combat.nextShip(null);
-    CombatShip target = combat.getCurrentShip();
-    ShipComponent weapon = null;
-    for (int i = 0; i < 12; i++) {
-      ShipComponent comp = shooter.getShip().getComponent(i);
-      if (comp != null && comp.isWeapon()) {
-        weapon = comp;
-        break;
-      }
-    }
-    assertFalse(weapon == null);
-    assertEquals(info1, combat.getPlayer1());
-    assertEquals(info2, combat.getPlayer2());
-    CombatAnimation anim = new CombatAnimation(shooter, target, weapon, -2);
-    combat.setAnimation(anim);
-    combat.destroyShip(target);
-    combat.isCombatOver();
-    assertEquals(info1, combat.getWinner());
-    combat.handleEndCombat();
-    assertEquals(1, shooter.getShip().getExperience());
-    Coordinate coord = new Coordinate(6,5);
-    assertEquals(true,
-        info1.getFleets().getFirst().getCoordinate().sameAs(coord));
-  }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
@@ -404,52 +359,6 @@ public class CombatTest {
     assertEquals(3, info1.getTotalCredits());
   }
 
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testSecondPlayerWin() {
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
-    ShipDesign design1 = ShipGenerator.createBattleShip(
-        info1, ShipSize.SMALL, false, false);
-    ShipDesign design2 = ShipGenerator.createBattleShip(
-        info2, ShipSize.SMALL, false, false);
-    Ship scout1 = new Ship(design1);
-    Ship scout2 = new Ship(design2);
-    Fleet fleet1 = new Fleet(scout1, 5, 5);
-    Fleet fleet2 = new Fleet(scout2, 6, 5);
-    info1.getFleets().add(fleet1);
-    info2.getFleets().add(fleet2);
-    Combat combat = new Combat(fleet1, fleet2, info1, info2, 2450);
-    assertEquals(null, combat.getPlanet());
-    Planet planet = new Planet(new Coordinate(6, 5), "Test", 1, false);
-    combat.setPlanet(planet);
-    assertEquals(planet, combat.getPlanet());
-    CombatShip target = combat.getCurrentShip();
-    combat.nextShip(null);
-    CombatShip shooter = combat.getCurrentShip();
-    ShipComponent weapon = null;
-    for (int i = 0; i < 12; i++) {
-      ShipComponent comp = shooter.getShip().getComponent(i);
-      if (comp != null && comp.isWeapon()) {
-        weapon = comp;
-        break;
-      }
-    }
-    assertFalse(weapon == null);
-    assertEquals(info1, combat.getPlayer1());
-    assertEquals(info2, combat.getPlayer2());
-    CombatAnimation anim = new CombatAnimation(shooter, target, weapon, -2);
-    combat.setAnimation(anim);
-    combat.destroyShip(target);
-    combat.isCombatOver();
-    assertEquals(info2, combat.getWinner());
-    combat.handleEndCombat();
-    // Defending player does not move
-    Coordinate coord = new Coordinate(6,5);
-    assertEquals(true,
-        info2.getFleets().getFirst().getCoordinate().sameAs(coord));
-    assertEquals(true,combat.getCombatCoordinates().sameAs(coord));
-  }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)

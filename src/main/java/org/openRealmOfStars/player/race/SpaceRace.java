@@ -1465,15 +1465,11 @@ public enum SpaceRace {
       return "Humans are commonly regarded as possessing average physical and "
           + "mental attributes. ";
     case MECHIONS:
-      return "Mechions are a type of mechanical robot that are designed to"
-          + " function without the need for food or other organic"
-          + " sustenance. Instead, they are powered by advanced technology,"
-          + " such as batteries or fuel cells, which allow them to operate"
-          + " for long periods of time without needing to be refueled.";
+      return "Mechions are a race of humanoid robot that resemble industrial"
+          + " machines. Heavy and sturdy looking mechanical creatures. ";
     case SPORKS:
-      return "Sporks are a species of aggressive and warmongering"
-          + " creatures that are known for their ferocity and their love of"
-          + " battle. ";
+      return "Sporks are a humanoid species which have green and tough skin."
+          + " They also have horns growing from their skull. ";
     case GREYANS:
       return "Greyans are typically tall and slender, with long, graceful limbs"
           + " and delicate features. Their grey skin is smooth and sleek,"
@@ -1487,22 +1483,16 @@ public enum SpaceRace {
           + "their legendary counterparts. They possess the upper "
           + "body of a humanoid, juxtaposed with a lower body "
           + "reminiscent of an ant. Their formidable, resilient skin"
-          + " and towering stature further distinguish them.";
+          + " and towering stature further distinguish them. ";
     case MOTHOIDS:
-      return "Mothoids are renowned for their rapid reproductive rates,"
-          + " enabling them to swiftly bolster their population and"
-          + " expand their dominion. ";
+      return "Mothoids are insect like creatures with exo-skeleton and"
+          + " pair of wings. They also have antenas for extra sensing. ";
     case TEUTHIDAES:
-      return "Teuthidae an octopus-like species, possess unparalleled"
-          + " advancements in both scientific and military domains."
-          + " Renowned for their insatiable scientific curiosity, they"
-          + " are driven by a relentless pursuit of exploration and"
-          + " conquest. ";
+      return "Teuthidae an octopus-like species with intelligence. They are"
+          + " not humanoid creatures like most of the other sentient creatures"
+          + " in galaxy. ";
     case SCAURIANS:
-      return "Scaurians are a race of small but wide humanoids that are"
-          + " known for their merchantile abilities. They are highly skilled"
-          + " at making profitable trades and deals, and are always on the"
-          + " lookout for new opportunities to gain more credits. ";
+      return "Scaurians are a race of small but wide humanoids. ";
     case HOMARIANS:
       return "Homarians are a race of humanoid crabs that are known for their "
           + "immense strength and hard exoskeletons. This exoskeleton also"
@@ -1523,44 +1513,23 @@ public enum SpaceRace {
           + " them enhanced physical abilities and allows them to"
           + " operate in a wide variety of environments. ";
     case LITHORIANS:
-      return "Lithorians are a race of creatures that subsist on metal"
-          + " instead of traditional food sources. This unique dietary"
-          + " requirement gives them a slow growth rate. However, their "
-          + "ability to digest metal allows them to extract valuable"
-          + " nutrients from metal ores and other metallic substances,"
-          + " making them excellent miners.";
+      return "Lithorians are a race of crab like creatures. They have large"
+          + " and strong claws and very hard external shell. They have"
+          + " multiple legs which they use to move around. ";
     case ALTEIRIANS:
-      return "Alteirians are a race of creatures that are adapted to life in"
-          + " zero gravity. Because of this, they require special suits"
-          + " to move on the surfaces of planets, and they spend most of"
-          + " their time living and working in orbit. Their bodies are "
-          + "mostly just mouth and big bulpy eyes with multiple long limbs"
-          + " and a slender tail that help them move gracefully in zero"
-          + " gravity. ";
+      return "Alteirians are a race of creatures that look a bit like floating"
+          + " octopus. They are main just body, mouth and eyes. Below the body"
+          + " there are seven tentacles. ";
     case SMAUGIRIANS:
-      return "Smaugirians are known for their versatile cargo ships, which"
-          + " can be outfitted with a variety of modules to accommodate"
-          + " different types of cargo. Some of these ships even have weapons"
-          + " or privateering modules, allowing them to defend themselves"
-          + " against hostile forces or engage in piracy."
-          + " Despite their illicit activities, the Smaugirians"
-          + " are often depicted as being honorable and loyal to their"
-          + " friends and allies. They are also known for their"
-          + " resourcefulness and ingenuity, which allows them to overcome"
-          + " obstacles and succeed in their dangerous line of work. ";
+      return "Smaugirians are a humanoid race that resembles hare. They have"
+          + " quite large feet and very strong legs. They have two long ears"
+          + " and they can eat pretty much anything with those rodent like"
+          + " teeths. ";
     case SYNTHDROIDS:
       return "Synthdroids are a race of artificial beings that are designed to "
           + "resemble human females. They are often portrayed as being "
           + "sleek and elegant, with graceful movements and a polished "
-          + "appearance. Despite their robotic nature, Synthdroids,"
-          + " are able to perform many of the same functions as organic "
-          + "beings, including eating, drinking, and speaking. However, they "
-          + "require only a small amount of food to sustain themselves, "
-          + "making them highly efficient and self-sufficient. Unlike most "
-          + "other races, Synthdroids "
-          + "must be built rather than born, and each population must "
-          + "be created from scratch. This makes them a relatively rare and "
-          + "mysterious race in the galaxy. ";
+          + "appearance. ";
     default:
       return "Unknown race, no description.";
     }

@@ -55,69 +55,31 @@ public final class BackgroundStoryGenerator {
     String name = info.getRace().getNameSingle();
 
     sb.append(info.getRace().getRacialDescription());
-    if (info.getRace().hasTrait(TraitIds.ROBOTIC)) {
-      if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
-        sb.append(namePlural);
-        sb.append(" are a type of mechanical robot that are designed to"
-            + " function without the need for food or other organic"
-            + " sustenance. Instead, they are powered by advanced technology,"
-            + " such as batteries or fuel cells, which allow them to operate"
-            + " for long periods of time without needing to be refueled. ");
-      } else {
-        sb.append("Despite their robotic nature, ");
-        sb.append(namePlural);
-        sb.append(" are able to perform many of the same functions as organic "
-            + "beings, including eating, drinking, and speaking. However,"
-            + " they require only a small amount of food to sustain"
-            + " themselves, making them highly efficient"
-            + " and self-sufficient. ");
-      }
-    } else if (info.getRace().hasTrait(TraitIds.CYBORG_LIFE_SPAN)) {
-      if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
-        sb.append(namePlural);
-        sb.append(" are a type of cyborg creates which are mix of organic "
-            + " and robotic parts. This allows them to function without "
-            + "the need of food or other organic sustenance."
-            + " Instead, they are powered by advanced technology,"
-            + " such as batteries or fuel cells, which allow them to operate"
-            + " for long periods of time without needing to be refueled. ");
-      } else {
-        sb.append(namePlural);
-        sb.append(" are a type of cyborg creates which are mix of organic "
-            + " and robotic parts. Despite of this, ");
-        sb.append(namePlural);
-        sb.append(" still require food to survive. ");
-      }
-    } else if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
-      sb.append(namePlural);
-      sb.append(" are a strange type of creatures which allow sustaining "
-          + "themselves using pure energy. They can store this energy into"
-          + " their bodies and allow them function for extended lengths. ");
-    }
-    if (info.getRace().hasTrait(TraitIds.CONSTRUCTED_POP)) {
-      sb.append(" Unlike most other races, ");
-      sb.append(namePlural);
-      sb.append("must be built rather than born, and each population must "
-          + "be created from scratch. This makes them a relatively rare and "
-          + "mysterious race in the galaxy. ");
-    }
-    if (info.getRace().hasTrait(TraitIds.FAST_GROWTH)) {
-      sb.append(namePlural);
-      sb.append(" are renowned for their rapid reproductive rates,"
-          + " enabling them to swiftly bolster their population. ");
-    }
-    if (info.getRace().hasTrait(TraitIds.RADIOSYNTHESIS)) {
-      sb.append(namePlural);
-      sb.append(" have special ability called radiosynthesis. This unique"
-          + " ability allows them to gain nutrience via any radiation. ");
-    }
-    if (info.getRace().hasTrait(TraitIds.LITHOVORIC)) {
-      sb.append(namePlural);
-      sb.append(" are able to eat and digest minerals. This is great benefit"
-          + " since there is no need for growing food. This means that ");
-      sb.append(namePlural);
-      sb.append(" are excellent miners. ");
-    }
+    sb.append(generateRobotCyborgBackground(info));
+    sb.append(generateGravityBackground(info));
+    sb.append(generateRadiationBackground(info));
+    sb.append(generatePopGrowBackground(info));
+    sb.append(generateEnergyBackground(info));
+    sb.append(generateResearchBackground(info));
+    sb.append(generateSizeAndStrengthBackground(info));
+    sb.append("\n\n");
+    sb.append(generateWorldType(info, startPlanet, namePlural, name));
+    sb.append("\n\n");
+    sb.append(generateGovernmentType(info, namePlural));
+    sb.append("\n\n");
+    sb.append(generateFtlStory(info, startingYear));
+    sb.append(generateExploration(info, namePlural, startPlanet));
+    return sb.toString();
+  }
+
+  /**
+   * Generate research background story.
+   * @param info PlayerInfo
+   * @return Background string.
+   */
+  private static String generateResearchBackground(final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = info.getRace().getName();
     if (info.getRace().hasTrait(TraitIds.SLOW_RESEARCH)) {
       sb.append(namePlural);
       sb.append(" are known for their need for taking a longer time to graps"
@@ -135,16 +97,227 @@ public final class BackgroundStoryGenerator {
       sb.append(namePlural);
       sb.append(". ");
     }
-    sb.append("\n\n");
-    sb.append(generateWorldType(info, startPlanet, namePlural, name));
-    sb.append("\n\n");
-    sb.append(generateGovernmentType(info, namePlural));
-    sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
-    sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
 
+  /**
+   * Generate energy or other sustance background.
+   * @param info PlayerInfo
+   * @return Background string.
+   */
+  private static String generateEnergyBackground(final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = info.getRace().getName();
+    if (info.getRace().hasTrait(TraitIds.RADIOSYNTHESIS)) {
+      sb.append(namePlural);
+      sb.append(" have special ability called radiosynthesis. This unique"
+          + " ability allows them to gain nutrience via any radiation. ");
+    }
+    if (info.getRace().hasTrait(TraitIds.LITHOVORIC)) {
+      sb.append(namePlural);
+      sb.append(" are able to eat and digest minerals. This is great benefit"
+          + " since there is no need for growing food. This means that ");
+      sb.append(namePlural);
+      sb.append(" are excellent miners. ");
+    }
+    if (info.getRace().hasTrait(TraitIds.FAST_FOOD_PROD)) {
+      sb.append(namePlural);
+      sb.append(" are keen to farming and growing food. They have used do it"
+          + " for many star years and have now mastered this craft almost"
+          + " perfectly.");
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Generate population growth background.
+   * @param info PlayerInfo
+   * @return background string
+   */
+  private static String generatePopGrowBackground(final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = info.getRace().getName();
+    if (info.getRace().hasTrait(TraitIds.CONSTRUCTED_POP)) {
+      sb.append(" Unlike most other races, ");
+      sb.append(namePlural);
+      sb.append(" must be built rather than born, and each population must "
+          + "be created from scratch. This makes them a relatively rare and "
+          + "mysterious race in the galaxy. ");
+    }
+    if (info.getRace().hasTrait(TraitIds.FAST_GROWTH)) {
+      sb.append(namePlural);
+      sb.append(" are renowned for their rapid reproductive rates,"
+          + " enabling them to swiftly bolster their population. ");
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Generate size and strength background.
+   * @param info PlayerInfo
+   * @return Background string.
+   */
+  private static String generateSizeAndStrengthBackground(
+      final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = info.getRace().getName();
+    if (info.getRace().hasTrait(TraitIds.MASSIVE_SIZE)) {
+      sb.append(namePlural);
+      sb.append(" are massive in their physical size. This requires them"
+          + " to build more stronger and robust space ships. ");
+      if (info.getRace().hasTrait(TraitIds.STRONG)) {
+        sb.append("Due their massive size they are also strong creatures. "
+            + " This extreme power boost their combat prowress and mining"
+            + " abilities. ");
+      }
+    } else {
+      if (info.getRace().hasTrait(TraitIds.STRONG)) {
+        sb.append(namePlural);
+        sb.append(" are unexpectedly strong creatures. "
+            + " This extreme power boost their combat prowress and mining"
+            + " abilities. ");
+      } else if (info.getRace().hasTrait(TraitIds.WEAK)) {
+        sb.append(namePlural);
+        sb.append(" are surprisingly weak creatures. "
+            + " This extreme weakness is dimishing their direct combat"
+            + " abilities and working skills. ");
+      }
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Generate gravity background for space race.
+   * @param info PlayerInfo
+   * @return background string.
+   */
+  private static String generateGravityBackground(final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = info.getRace().getName();
+    if (info.getRace().hasTrait(TraitIds.HIGH_GRAVITY_BEING)) {
+      sb.append(namePlural);
+      sb.append(" are creatures which sturdy and hardy beings. This is due that"
+          + " they are used to be working in high gravity planet. This gives"
+          + " them extra edge working on planets where gravity is lower. ");
+    } else if (info.getRace().hasTrait(TraitIds.LOW_GRAVITY_BEING)) {
+      sb.append(namePlural);
+      sb.append(" are creatures which are bit flimsy beings. This is due that"
+          + " they are used to be working in low gravity planet. This gives"
+          + " them extra challenge working on planets where gravity is"
+          + " higher. ");
+    } else if (info.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+      sb.append(namePlural);
+      sb.append(" are creatures which are bit floaty beings. This is due that"
+          + " they are used to be working in zero gravity. This gives"
+          + " them extra challenge working on any planets. ");
+      sb.append(namePlural);
+      sb.append(" natural envinronment is actually living and working on"
+          + " planet's orbit. ");
+    } else {
+      sb.append(namePlural);
+      sb.append(" are creatures which are able to function in normal gravity."
+          + " This gives them edge on low gravity planets, but it is a bit"
+          + " challenge work on high gravity planets.");
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Generate radiation background for space race.
+   * @param info PlayerInfo
+   * @return background string.
+   */
+  private static String generateRadiationBackground(final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = info.getRace().getName();
+    if (info.getRace().hasTrait(TraitIds.TOLERATE_EXTREME_RADIATION)) {
+      sb.append(namePlural);
+      sb.append(" are creatures which are able to withstand high and extreme"
+          + " radiation conditions. This gives them edge to conquer even most"
+          + " radioactive planets in the galaxy.");
+    } else if (info.getRace().hasTrait(TraitIds.TOLERATE_HIGH_RADIATION)) {
+      sb.append(namePlural);
+      sb.append(" are creatures which are able to withstand high"
+          + " radiation conditions. This enables them to colonize many of the"
+          + " planets in the galaxy.");
+    } else if (info.getRace().hasTrait(TraitIds.TOLERATE_NO_RADIATION)) {
+      sb.append(namePlural);
+      sb.append(" are creatures which cannot stand any radiation at all."
+          + " This makes them a bit challenging position to find colonizeable"
+          + " planets.");
+    } else {
+      sb.append(namePlural);
+      sb.append(" are creatures which can tolerate low amount of radiation."
+          + " They need to pick which planets to colonize.");
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Generate robot and cyborg background. This will also add if race needs
+   * to eat less. If space race is either then this returns empty string.
+   * @param info PlayerInfo
+   * @return Background string
+   */
+  private static String generateRobotCyborgBackground(final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = info.getRace().getName();
+    if (info.getRace().hasTrait(TraitIds.ROBOTIC)) {
+      if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
+        sb.append(namePlural);
+        sb.append(" are a type of mechanical robot that are designed to"
+            + " function without the need for food or other organic"
+            + " sustenance. Instead, they are powered by advanced technology,"
+            + " such as batteries or fuel cells, which allow them to operate"
+            + " for long periods of time without needing to be refueled. ");
+      } else {
+        sb.append("Despite their robotic nature, ");
+        sb.append(namePlural);
+        sb.append(" are able to perform many of the same functions as organic "
+            + "beings, including eating, drinking, and speaking. ");
+        if (info.getRace().hasTrait(TraitIds.EAT_LESS)) {
+          sb.append("However,"
+              + " they require only a small amount of food to sustain"
+              + " themselves, making them highly efficient"
+              + " and self-sufficient. ");
+        }
+      }
+    } else if (info.getRace().hasTrait(TraitIds.CYBORG_LIFE_SPAN)) {
+      if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
+        sb.append(namePlural);
+        sb.append(" are a type of cyborg creates which are mix of organic "
+            + " and robotic parts. This allows them to function without "
+            + "the need of food or other organic sustenance."
+            + " Instead, they are powered by advanced technology,"
+            + " such as batteries or fuel cells, which allow them to operate"
+            + " for long periods of time without needing to be refueled. ");
+      } else {
+        sb.append(namePlural);
+        sb.append(" are a type of cyborg creates which are mix of organic "
+            + " and robotic parts. Despite of this, ");
+        sb.append(namePlural);
+        sb.append(" still require food to survive. ");
+        if (info.getRace().hasTrait(TraitIds.EAT_LESS)) {
+          sb.append("However,"
+              + " they require only a small amount of food to sustain"
+              + " themselves, making them highly efficient"
+              + " and self-sufficient. ");
+        }
+
+      }
+    } else if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
+      sb.append(namePlural);
+      sb.append(" are a strange type of creatures which allow sustaining "
+          + "themselves using pure energy. They can store this energy into"
+          + " their bodies and allow them function for extended lengths. ");
+    } else if (info.getRace().hasTrait(TraitIds.EAT_LESS)) {
+      sb.append(namePlural);
+      sb.append(" require only a small amount of food to sustain"
+          + " themselves, making them highly efficient"
+          + " and self-sufficient. ");
+    }
+    return sb.toString();
+  }
   /**
    * Generate exploration part.
    * @param info Realm
@@ -1246,7 +1419,6 @@ public final class BackgroundStoryGenerator {
         break;
       }
       }
-
     }
     sb.append(endOfworldDescription);
     return sb.toString();

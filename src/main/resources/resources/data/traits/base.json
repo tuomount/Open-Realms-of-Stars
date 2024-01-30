@@ -354,7 +354,7 @@
     "description": "Race is able to tolerate high radiation on planets.",
     "points": 2,
     "conflictsWith": [
-      "TOLERATE_LOW_RADIATION","TOLERATE_EXTREME_RADIATION"
+      "TOLERATE_NO_RADIATION","TOLERATE_EXTREME_RADIATION"
     ]
   },
   {
@@ -363,7 +363,7 @@
     "description": "Race is able to tolerate extremely high radiation on planets.",
     "points": 3,
     "conflictsWith": [
-      "TOLERATE_LOW_RADIATION","TOLERATE_HIGH_RADIATION"
+      "TOLERATE_NO_RADIATION","TOLERATE_HIGH_RADIATION"
     ]
   },
   {

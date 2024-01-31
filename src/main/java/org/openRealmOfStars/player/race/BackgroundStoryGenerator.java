@@ -58,10 +58,13 @@ public final class BackgroundStoryGenerator {
     sb.append(generateRobotCyborgBackground(info));
     sb.append(generateGravityBackground(info));
     sb.append(generateRadiationBackground(info));
+    sb.append(generateTemperatureBackground(info));
+    sb.append(generateLifeSpanBackground(info));
     sb.append(generatePopGrowBackground(info));
     sb.append(generateEnergyBackground(info));
     sb.append(generateResearchBackground(info));
     sb.append(generateSizeAndStrengthBackground(info));
+    sb.append(generateCharmingBackground(info));
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));
     sb.append("\n\n");
@@ -217,7 +220,7 @@ public final class BackgroundStoryGenerator {
       sb.append(namePlural);
       sb.append(" are creatures which are able to function in normal gravity."
           + " This gives them edge on low gravity planets, but it is a bit"
-          + " challenge work on high gravity planets.");
+          + " challenge work on high gravity planets. ");
     }
     return sb.toString();
   }
@@ -234,21 +237,136 @@ public final class BackgroundStoryGenerator {
       sb.append(namePlural);
       sb.append(" are creatures which are able to withstand high and extreme"
           + " radiation conditions. This gives them edge to conquer even most"
-          + " radioactive planets in the galaxy.");
+          + " radioactive planets in the galaxy. ");
     } else if (info.getRace().hasTrait(TraitIds.TOLERATE_HIGH_RADIATION)) {
       sb.append(namePlural);
       sb.append(" are creatures which are able to withstand high"
           + " radiation conditions. This enables them to colonize many of the"
-          + " planets in the galaxy.");
+          + " planets in the galaxy. ");
     } else if (info.getRace().hasTrait(TraitIds.TOLERATE_NO_RADIATION)) {
       sb.append(namePlural);
       sb.append(" are creatures which cannot stand any radiation at all."
           + " This makes them a bit challenging position to find colonizeable"
-          + " planets.");
+          + " planets. ");
     } else {
       sb.append(namePlural);
       sb.append(" are creatures which can tolerate low amount of radiation."
-          + " They need to pick which planets to colonize.");
+          + " They need to pick which planets to colonize. ");
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Generate life span background
+   * @param info PlayerInfo
+   * @return Background string.
+   */
+  private static String generateLifeSpanBackground(final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = info.getRace().getName();
+    if (info.getRace().hasTrait(TraitIds.SHORT_LIFE_SPAN)) {
+      sb.append(namePlural);
+      sb.append(" have shorter life span than average sentient being in"
+          + " the galaxy. ");
+    }
+    if (info.getRace().hasTrait(TraitIds.LONG_LIFE_SPAN)) {
+      sb.append(namePlural);
+      sb.append(" have longer life span than average sentient being in"
+          + " the galaxy. ");
+    }
+    if (info.getRace().hasTrait(TraitIds.VERY_LONG_LIFE_SPAN)) {
+      sb.append(namePlural);
+      sb.append(" have extremely longer life span than average sentient"
+          + " being in the galaxy. ");
+    }
+    return sb.toString();
+  }
+  /**
+   * Generate charming background
+   * @param info PlayerInfo
+   * @return Background string.
+   */
+  private static String generateCharmingBackground(final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = info.getRace().getName();
+    if (info.getRace().hasTrait(TraitIds.NATURAL_CHARM)) {
+      sb.append(namePlural);
+      sb.append(" are naturally charming creatures and others space race "
+          + " usually tend to like them or being more polite towards them. ");
+    }
+    if (info.getRace().hasTrait(TraitIds.REPULSIVE)) {
+      sb.append(namePlural);
+      switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        sb.append(" have repulsive odor around them, which feels disgusting"
+            + " for other space races. ");
+        break;
+      }
+      default:
+      case 1: {
+        sb.append(" are just repulsive to look, which other space races"
+            + " have difficult to tolerate. ");
+        break;
+      }
+      case 2: {
+        sb.append(" are just naturally bad behaving. They have disgusting"
+            + " habits which other space race have challenge to accept. ");
+        break;
+      }
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.DISGUSTING)) {
+      sb.append(namePlural);
+      switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        sb.append(" have extremely repulsive odor around them, which"
+            + " feels nauseating for other space races. ");
+        break;
+      }
+      default:
+      case 1: {
+        sb.append(" are just hideous to look, which other space races"
+            + " have difficult to tolerate and handle it. ");
+        break;
+      }
+      case 2: {
+        sb.append(" are just constantly bad behaving. They have extremely "
+            + "disgusting habits which other space race have"
+            + " challenge to accept. ");
+        break;
+      }
+      }
+    }
+    return sb.toString();
+  }
+  /**
+   * Generate Temperature background.
+   * @param info PlayerInfo
+   * @return Background string.
+   */
+  private static String generateTemperatureBackground(final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = info.getRace().getName();
+    if (info.getRace().hasTrait(TraitIds.TOLERATE_LAVA)) {
+      sb.append(namePlural);
+      sb.append(" are able to tolerate blazing hot of lava planet, but"
+          + " extreme cold is too much for these creatures. ");
+    } else {
+      if (info.getRace().hasTrait(TraitIds.TOLERATE_COLD)
+          && info.getRace().hasTrait(TraitIds.TOLERATE_HOT)) {
+        sb.append(namePlural);
+        sb.append(" are able to tolerate both hot and cold athmosphere."
+            + " This feat is really beneficial when colonizing planets. ");
+      } else if (info.getRace().hasTrait(TraitIds.TOLERATE_COLD)) {
+        sb.append(namePlural);
+        sb.append(" are able to tolerate cold conditions on planets.");
+      } else if (info.getRace().hasTrait(TraitIds.TOLERATE_HOT)) {
+        sb.append(namePlural);
+        sb.append(" are able to tolerate hot conditions on planets.");
+      } else {
+        sb.append(namePlural);
+        sb.append(" feel most comfortable in temperate planets.");
+      }
     }
     return sb.toString();
   }

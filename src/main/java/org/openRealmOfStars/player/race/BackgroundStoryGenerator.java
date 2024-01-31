@@ -65,6 +65,9 @@ public final class BackgroundStoryGenerator {
     sb.append(generateResearchBackground(info));
     sb.append(generateSizeAndStrengthBackground(info));
     sb.append(generateCharmingBackground(info));
+    String tmp = replaceMarkerWithRaceName(info, sb.toString());
+    sb = new StringBuilder();
+    sb.append(tmp);
     sb.append("\n\n");
     sb.append(generateWorldType(info, startPlanet, namePlural, name));
     sb.append("\n\n");
@@ -76,13 +79,53 @@ public final class BackgroundStoryGenerator {
   }
 
   /**
+   * Replace $1 marker with Space race plural name or word they
+   * @param info PlayerInfo
+   * @param text Background text
+   * @return String
+   */
+  private static String replaceMarkerWithRaceName(final PlayerInfo info,
+      final String text) {
+    String namePlural = info.getRace().getName();
+    String[] parts = text.split("\\$1");
+    StringBuilder sb = new StringBuilder();
+    int countThey = 0;
+    int countPart = 0;
+    for (String part : parts) {
+      sb.append(part);
+      if (countPart == parts.length - 1) {
+        break;
+      }
+      if (countThey == 0) {
+        sb.append(namePlural);
+        countThey++;
+      } else if (countThey >= 1) {
+        if (part.endsWith(". ") || part.endsWith("? ") || part.endsWith("! ")) {
+          sb.append("They");
+        } else {
+          sb.append("They");
+        }
+        if (DiceGenerator.getBoolean()) {
+          countThey++;
+        } else {
+          countThey = 0;
+        }
+      }
+      if (countThey >= 3) {
+        countThey = 0;
+      }
+      countPart++;
+    }
+    return sb.toString();
+  }
+  /**
    * Generate research background story.
    * @param info PlayerInfo
    * @return Background string.
    */
   private static String generateResearchBackground(final PlayerInfo info) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = info.getRace().getName();
+    String namePlural = "$1";
     if (info.getRace().hasTrait(TraitIds.SLOW_RESEARCH)) {
       sb.append(namePlural);
       sb.append(" are known for their need for taking a longer time to graps"
@@ -110,7 +153,7 @@ public final class BackgroundStoryGenerator {
    */
   private static String generateEnergyBackground(final PlayerInfo info) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = info.getRace().getName();
+    String namePlural = "$1";
     if (info.getRace().hasTrait(TraitIds.RADIOSYNTHESIS)) {
       sb.append(namePlural);
       sb.append(" have special ability called radiosynthesis. This unique"
@@ -139,7 +182,7 @@ public final class BackgroundStoryGenerator {
    */
   private static String generatePopGrowBackground(final PlayerInfo info) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = info.getRace().getName();
+    String namePlural = "$1";
     if (info.getRace().hasTrait(TraitIds.CONSTRUCTED_POP)) {
       sb.append(" Unlike most other races, ");
       sb.append(namePlural);
@@ -163,7 +206,7 @@ public final class BackgroundStoryGenerator {
   private static String generateSizeAndStrengthBackground(
       final PlayerInfo info) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = info.getRace().getName();
+    String namePlural = "$1";
     if (info.getRace().hasTrait(TraitIds.MASSIVE_SIZE)) {
       sb.append(namePlural);
       sb.append(" are massive in their physical size. This requires them"
@@ -196,7 +239,7 @@ public final class BackgroundStoryGenerator {
    */
   private static String generateGravityBackground(final PlayerInfo info) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = info.getRace().getName();
+    String namePlural = "$1";
     if (info.getRace().hasTrait(TraitIds.HIGH_GRAVITY_BEING)) {
       sb.append(namePlural);
       sb.append(" are creatures which sturdy and hardy beings. This is due that"
@@ -232,7 +275,7 @@ public final class BackgroundStoryGenerator {
    */
   private static String generateRadiationBackground(final PlayerInfo info) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = info.getRace().getName();
+    String namePlural = "$1";
     if (info.getRace().hasTrait(TraitIds.TOLERATE_EXTREME_RADIATION)) {
       sb.append(namePlural);
       sb.append(" are creatures which are able to withstand high and extreme"
@@ -263,7 +306,7 @@ public final class BackgroundStoryGenerator {
    */
   private static String generateLifeSpanBackground(final PlayerInfo info) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = info.getRace().getName();
+    String namePlural = "$1";
     if (info.getRace().hasTrait(TraitIds.SHORT_LIFE_SPAN)) {
       sb.append(namePlural);
       sb.append(" have shorter life span than average sentient being in"
@@ -288,7 +331,7 @@ public final class BackgroundStoryGenerator {
    */
   private static String generateCharmingBackground(final PlayerInfo info) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = info.getRace().getName();
+    String namePlural = "$1";
     if (info.getRace().hasTrait(TraitIds.NATURAL_CHARM)) {
       sb.append(namePlural);
       sb.append(" are naturally charming creatures and others space race "
@@ -346,7 +389,7 @@ public final class BackgroundStoryGenerator {
    */
   private static String generateTemperatureBackground(final PlayerInfo info) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = info.getRace().getName();
+    String namePlural = "$1";
     if (info.getRace().hasTrait(TraitIds.TOLERATE_LAVA)) {
       sb.append(namePlural);
       sb.append(" are able to tolerate blazing hot of lava planet, but"
@@ -379,7 +422,7 @@ public final class BackgroundStoryGenerator {
    */
   private static String generateRobotCyborgBackground(final PlayerInfo info) {
     StringBuilder sb = new StringBuilder();
-    String namePlural = info.getRace().getName();
+    String namePlural = "$1";
     if (info.getRace().hasTrait(TraitIds.ROBOTIC)) {
       if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
         sb.append(namePlural);

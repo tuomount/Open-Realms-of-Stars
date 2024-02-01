@@ -29,6 +29,7 @@ import org.openRealmOfStars.ai.mission.MissionType;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.StartingScenario;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -461,6 +462,7 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
     info.setEmpireName("Human Kingdom");
     info.setGovernment(GovernmentType.KINGDOM);
+    info.setStartingScenario(StartingScenario.EARTH);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.HUMAN, 2, 1);
     info2.setEmpireName("Terran Federation");
     info2.setGovernment(GovernmentType.FEDERATION);
@@ -468,6 +470,8 @@ public class PlanetHandlingTest extends TestCase {
     GalaxyConfig config = new GalaxyConfig();
     config.setPlayerName(0, info.getEmpireName());
     config.setPlayerName(1, info2.getEmpireName());
+    config.setStartingScenario(0, StartingScenario.EARTH);
+    config.setStartingScenario(1, StartingScenario.TEMPERATE_HUMID_SIZE12);
     config.setMaxPlayers(2);
     PlayerList playerList = new PlayerList();
     playerList.addPlayer(info);

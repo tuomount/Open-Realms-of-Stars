@@ -109,6 +109,11 @@ public class PlayerList {
       info.setElderRealm(galaxyConfig.getPlayerElderRealm(i));
       info.setAiDifficulty(galaxyConfig.getDifficulty(i));
       info.setColor(galaxyConfig.getPlayerColor(i));
+      StartingScenario scenario = galaxyConfig.getStartingScenario(i);
+      if (scenario == StartingScenario.RANDOM) {
+        scenario = StartingScenario.pickRandom();
+      }
+      info.setStartingScenario(scenario);
       randomListOfColors.remove(galaxyConfig.getPlayerColor(i));
       if (i == 0 && !galaxyConfig.isAiOnly()) {
         info.setHuman(true);

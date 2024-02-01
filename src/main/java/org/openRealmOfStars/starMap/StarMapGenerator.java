@@ -29,6 +29,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.StartingScenario;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
@@ -36,7 +37,6 @@ import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.BackgroundStoryGenerator;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -750,10 +750,13 @@ public class StarMapGenerator {
     if (playerIndex != -1) {
       PlayerInfo playerInfo = starMap.getPlayerList().getPlayerInfoByIndex(
           playerIndex);
-      if (playerInfo.getRace() == SpaceRace.HUMAN && !solHasAdded) {
-        solHasAdded = true;
-        createSolSystem(sunx, suny, playerIndex, config);
-        return;
+      if (playerInfo.getStartingScenario() == StartingScenario.EARTH) {
+        if (!solHasAdded) {
+          solHasAdded = true;
+          createSolSystem(sunx, suny, playerIndex, config);
+          return;
+        }
+        playerInfo.setStartingScenario(StartingScenario.TEMPERATE_HUMID_SIZE12);
       }
     }
     if (playerIndex == -1 && !solHasAdded

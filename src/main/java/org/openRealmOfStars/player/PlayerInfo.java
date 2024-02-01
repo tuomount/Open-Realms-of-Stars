@@ -278,6 +278,11 @@ public class PlayerInfo {
   private static final int BOARD_CONTROLLED = 2;
 
   /**
+   * Realm's staring scenario.
+   */
+  private StartingScenario startingScenario;
+
+  /**
    * Constructor player info. Use this only for JUnits.
    * @param race Space Race for player
    * @param maxPlayers Maximum number of players when game is created
@@ -311,6 +316,7 @@ public class PlayerInfo {
     color = PlayerColor.getByIndex(index);
     aiDifficulty = AiDifficulty.NORMAL;
     setRandomEventOccured(null);
+    setStartingScenario(StartingScenario.TEMPERATE_HUMID_SIZE12);
     setHuman(false);
     setBoard(false);
     missions = new MissionList();
@@ -533,6 +539,7 @@ public class PlayerInfo {
     }
     artifactLists = new ArtifactLists(dis);
     color = PlayerColor.getByIndex(dis.read());
+    startingScenario = StartingScenario.getByIndex(dis.read());
     aiDifficulty = AiDifficulty.getByIndex(dis.read());
     government = GovernmentUtility.getGovernmentByIndex(dis.readInt());
     warFatigue = dis.readInt();
@@ -657,6 +664,7 @@ public class PlayerInfo {
     }
     artifactLists.saveArtifactLists(dos);
     dos.writeByte(color.getIndex());
+    dos.writeByte(startingScenario.getIndex());
     dos.writeByte(aiDifficulty.getIndex());
     dos.writeInt(government.getIndex());
     dos.writeInt(warFatigue);
@@ -2293,6 +2301,20 @@ public class PlayerInfo {
       ErrorLogger.log("Null or empty story encountered!");
       Thread.dumpStack();
     }
+  }
+  /**
+   * Get Starting scenario.
+   * @return the startingScenario
+   */
+  public StartingScenario getStartingScenario() {
+    return startingScenario;
+  }
+  /**
+   * Set starting scenario.
+   * @param startingScenario the startingScenario to set
+   */
+  public void setStartingScenario(final StartingScenario startingScenario) {
+    this.startingScenario = startingScenario;
   }
 
 }

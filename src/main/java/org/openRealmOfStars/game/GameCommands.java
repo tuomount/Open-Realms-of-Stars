@@ -565,6 +565,11 @@ public final class GameCommands {
   public static final String COMMAND_DIFFICULT_SETUP = "DifficultSetup";
 
   /**
+   * StartingScenario has changed in Galaxy Setup
+   */
+  public static final String COMMAND_SCENARIO_SETUP = "ScenarioSetup";
+
+  /**
    * Random name button action
    */
   public static final String COMMAND_RANDOM_NAME = "RandomName";

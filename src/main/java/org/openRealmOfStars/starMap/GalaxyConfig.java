@@ -19,6 +19,7 @@ package org.openRealmOfStars.starMap;
 
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
+import org.openRealmOfStars.player.StartingScenario;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.race.SpaceRace;
@@ -135,6 +136,8 @@ public class GalaxyConfig {
    */
   private boolean[] playerElderRealm;
 
+  /** Player Starting scenario */
+  private StartingScenario[] startingScenario;
   /**
    * Chance for planetary event
    */
@@ -278,12 +281,14 @@ public class GalaxyConfig {
     playerElderRealm = new boolean[StarMap.MAX_PLAYERS];
     playerDifficult = new AiDifficulty[StarMap.MAX_PLAYERS];
     playerColors = new PlayerColor[StarMap.MAX_PLAYERS];
+    startingScenario = new StartingScenario[StarMap.MAX_PLAYERS];
     setEnableTutorial(true);
     setAiOnly(false);
     setAllNews(false);
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
       setRace(i, SpaceRaceUtility.getRandomRace());
       setPlayerColor(i, DiceGenerator.pickRandom(PlayerColor.values()));
+      setStartingScenario(i, StartingScenario.RANDOM);
       while (true) {
         GovernmentType gov = GovernmentUtility.getRandomGovernment();
         setPlayerGovernment(i, gov);
@@ -405,6 +410,29 @@ public class GalaxyConfig {
     return null;
   }
 
+  /**
+   * Set player starting scenario.
+   * @param index PlayerIndex
+   * @param scenario Starting Scenario
+   */
+  public void setStartingScenario(final int index,
+      final StartingScenario scenario) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      startingScenario[index] = scenario;
+    }
+  }
+
+  /**
+   * Get starting scenario for player index.
+   * @param index PlayerIndex
+   * @return StartingScenario or null if out of bounds.
+   */
+  public StartingScenario getStartingScenario(final int index) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      return startingScenario[index];
+    }
+    return null;
+  }
   /**
    * Get Player difficulty.
    * @param index Player Index

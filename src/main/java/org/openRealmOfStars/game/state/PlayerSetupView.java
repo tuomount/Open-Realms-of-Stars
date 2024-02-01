@@ -49,6 +49,7 @@ import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
+import org.openRealmOfStars.player.StartingScenario;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.race.SpaceRace;
@@ -107,6 +108,11 @@ public class PlayerSetupView extends BlackPanel {
   private SpaceComboBox<AiDifficulty>[] comboDifficult;
 
   /**
+   * Combobox for selecting starting scenario for each realm.
+   */
+  private SpaceComboBox<StartingScenario>[] comboScenario;
+
+  /**
    * Galaxy config
    */
   private GalaxyConfig config;
@@ -163,6 +169,7 @@ public class PlayerSetupView extends BlackPanel {
     raceImgs = new RaceImagePanel[StarMap.MAX_PLAYERS];
     playerName = new JTextField[StarMap.MAX_PLAYERS];
     comboRealmColor = new SpaceComboBox[StarMap.MAX_PLAYERS];
+    comboScenario = new SpaceComboBox[StarMap.MAX_PLAYERS];
 
     SpaceGreyPanel xgrey = new SpaceGreyPanel();
     xgrey.setLayout(new GridLayout(4, 4));
@@ -262,6 +269,20 @@ public class PlayerSetupView extends BlackPanel {
           if (diff != null) {
             config.setPlayerDifficult(i, diff);
             comboDifficult[i].setToolTipText(diff.getDescription());
+          }
+        }
+      }
+    }
+    if (arg0.getActionCommand().startsWith(
+        GameCommands.COMMAND_SCENARIO_SETUP)) {
+      SoundPlayer.playMenuSound();
+      for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
+        if (comboScenario[i].isEnabled()) {
+          StartingScenario scenario = (StartingScenario) comboScenario[i]
+              .getSelectedItem();
+          if (scenario != null) {
+            config.setStartingScenario(i, scenario);
+            comboScenario[i].setToolTipText(scenario.getDescription());
           }
         }
       }
@@ -439,6 +460,19 @@ public class PlayerSetupView extends BlackPanel {
     comboRealmColor[index].setToolTipText("<html>Realm color in map and"
         + " statistics.</html>");
     info.add(comboRealmColor[index]);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    comboScenario[index] = new SpaceComboBox<>(StartingScenario.values());
+    comboScenario[index]
+        .setBackground(GuiStatics.getDeepSpaceDarkColor());
+    comboScenario[index].setForeground(GuiStatics.getCoolSpaceColor());
+    comboScenario[index].setBorder(new SimpleBorder());
+    comboScenario[index].setFont(GuiFonts.getFontCubellan());
+    comboScenario[index].setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    comboScenario[index].setActionCommand(
+        GameCommands.COMMAND_SCENARIO_SETUP);
+    comboScenario[index].addActionListener(listener);
+    info.add(comboScenario[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(25, 25)));

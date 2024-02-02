@@ -1,0 +1,36 @@
+[
+  {
+    "id": "HOMARIANS",
+    "data": {
+      "TRADE": ["What do you think about my offer?"],
+      "MOVE_FLEET": ["I am calling the fleet back!"],
+      "LIKE_GREET": ["Nice to meet you again, my fellow!"],
+      "DEFESIVE_PACT": ["Are you insterested in defensive pact?"],
+      "BORDER_WARS": ["Fleet %1$shas been seen. Time to get sliced and boiled!"],
+      "ASK_PROTECTION": ["I am willing to pay for you not to attack my fleet for 5 star years."],
+      "ASK_MOVE_FLEET": ["Your fleet has entered on my sector. Move %1$s it away, please!"],
+      "OFFER_SPY_TRADE": ["Do you have spies? We should work together for 20 star years?"],
+      "MAKE_WAR": ["Time to get sliced and boiled!%1$s"],
+      "OFFER_ACCEPTED": ["I glad to shake chelae with you!"],
+      "TRADE_EMBARGO": ["We should work together embargo for 20 star years against %1$s?"],
+      "DECLINE_WAR": ["Prepare to be sliced!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["Let the war begin!"],
+      "NOTHING_TO_TRADE": ["I am sorry, but I couldn't find anything to trade with you."],
+      "NEUTRAL_GREET": ["Let's do excellent deals today %1$s!"],
+      "DECLINE_ANGER": ["Your offer stinks ancient mold!"],
+      "FRIENDS_GREET": ["My fellow, let's shake chelae!"],
+      "OFFER_REJECTED": ["Any counter offers then?"],
+      "ALLIANCE": ["Are you insterested in alliance?"],
+      "DECLINE": ["I have to turn down this offer."],
+      "TRADE_ALLIANCE": ["Are you insterested in trade alliance?"],
+      "DISLIKE_GREET": ["Just be quick and tell your thing..."],
+      "DEMAND": ["Accept this deal or prepare to be boiled!"],
+      "HATE_GREET": ["I really hate these meeting with you..."],
+      "AGREE": ["Let's shake chelae for this!"],
+      "PEACE_OFFER": ["Interested to sign peace with me?"],
+      "INSULT_RESPOND": ["You are making fool of yourself with your insults!"],
+      "ASK_MOVE_SPY": ["Your spy fleet has enter on my sector. Move %1$s it away, please!"]
+    }
+  }
+]

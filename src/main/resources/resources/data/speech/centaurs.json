@@ -1,0 +1,39 @@
+[
+  {
+    "id": "CENTAURS",
+    "data": {
+      "TRADE": ["What do you think about this?"],
+      "MOVE_FLEET": ["I call my fleet back!"],
+      "LIKE_GREET": ["Nice to meet you again!"],
+      "DEFESIVE_PACT": ["We should defend each others. What do you say?"],
+      "BORDER_WARS": ["Your %1$s will be stomped and crushed along with you!"],
+      "ASK_PROTECTION": ["Hey, I could pay if you leave my fleet alone for 5 star years!"],
+      "ASK_MOVE_FLEET": ["Hey, your fleet called %1$s is in our sector!"],
+      "OFFER_SPY_TRADE": ["Let's change information for 20 star years?"],
+      "MAKE_WAR": ["You will be stomped and crushed!%1$s"],
+      "OFFER_ACCEPTED": [
+        "This is a begin of friendship!",
+        "Magnificent trade!"
+      ],
+      "TRADE_EMBARGO": ["Let's do trade embargo for 20 star years for %1$s?"],
+      "DECLINE_WAR": ["This is your last insult! Prepare to be stomped!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["Very well, prepare to be stomped!"],
+      "NOTHING_TO_TRADE": ["Sorry, you got nothing to trade with me."],
+      "NEUTRAL_GREET": ["Don't be affaird of our big size, %1$s."],
+      "DECLINE_ANGER": ["Take your offer away!"],
+      "FRIENDS_GREET": ["My friend let's do big trades today!"],
+      "OFFER_REJECTED": ["So maybe next time then..."],
+      "ALLIANCE": ["We should join our forces. What do you say?"],
+      "DECLINE": ["I cannot accept your offer."],
+      "TRADE_ALLIANCE": ["We should start trading between!"],
+      "DISLIKE_GREET": ["Hmm, it's you. We have size on our side!"],
+      "DEMAND": ["You accept this offer or be stomped!"],
+      "HATE_GREET": ["Be careful what you say or you'll be stomped!"],
+      "AGREE": ["Very well, agreed!"],
+      "PEACE_OFFER": ["Are ready to make a peace?"],
+      "INSULT_RESPOND": ["You are rude, we should stomp on you!"],
+      "ASK_MOVE_SPY": ["Hey, your SPY FLEET called %1$s is in our sector!"]
+    }
+  }
+]

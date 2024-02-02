@@ -1,0 +1,36 @@
+[
+  {
+    "id": "GREYANS",
+    "data": {
+      "TRADE": ["Are interested about this?"],
+      "MOVE_FLEET": ["My mistake, calling my fleet back!"],
+      "LIKE_GREET": ["Interesting! Another sentient race that I like!"],
+      "DEFESIVE_PACT": ["We should join our defending forces? "],
+      "BORDER_WARS": ["%1$s prepare to be anhilated!"],
+      "ASK_PROTECTION": ["I'll pay for leaving my fleet alone for 5 star years!"],
+      "ASK_MOVE_FLEET": ["Your fleet %1$s is on my sector!"],
+      "OFFER_SPY_TRADE": ["Let's trade espionage information for 20 star years?"],
+      "MAKE_WAR": ["Prepare to be anhilated!%1$s"],
+      "OFFER_ACCEPTED": ["Fantastic!"],
+      "TRADE_EMBARGO": ["Let's make embargo for 20 star years against %1$s?"],
+      "DECLINE_WAR": ["Your offer insulted us final time! Prepare to be anhilated!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["Prepare to be anhilated!"],
+      "NOTHING_TO_TRADE": ["My mistake, you had nothing to trade."],
+      "NEUTRAL_GREET": ["Interesting! %1$s is sentient race!"],
+      "DECLINE_ANGER": ["Your offer insults us!"],
+      "FRIENDS_GREET": ["Most interesting to meet with you my friend!"],
+      "OFFER_REJECTED": ["Hmm, do you have counter offer?"],
+      "ALLIANCE": ["We should join our venture. "],
+      "DECLINE": ["This offer is not good enough."],
+      "TRADE_ALLIANCE": ["We should start trade alliance!"],
+      "DISLIKE_GREET": ["Meeting sentient being is interesting but are you a sentient?"],
+      "DEMAND": ["Accept this offer or be anhilated!"],
+      "HATE_GREET": ["Ah non-sentient spieces has learn how to speak..."],
+      "AGREE": ["Fantastic, agreed!"],
+      "PEACE_OFFER": ["Are interested about peace?"],
+      "INSULT_RESPOND": ["You do not seem sentient at all."],
+      "ASK_MOVE_SPY": ["Your espionage fleet %1$s is on my sector!"]
+    }
+  }
+]

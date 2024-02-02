@@ -1,0 +1,39 @@
+[
+  {
+    "id": "SCAURIANS",
+    "data": {
+      "TRADE": ["What do you say about my offer?"],
+      "MOVE_FLEET": ["I will call the fleet back!"],
+      "LIKE_GREET": ["Fellow trade companion, nice to meet again!"],
+      "DEFESIVE_PACT": ["Let's build awesome defending power!"],
+      "BORDER_WARS": ["Fleet %1$s has entered our sector! Time to die!"],
+      "ASK_PROTECTION": ["I offer you all this for 5 turn safety, what do you say?"],
+      "ASK_MOVE_FLEET": ["Your fleet has crossed my borders. Move %1$s away now!"],
+      "OFFER_SPY_TRADE": ["Let's build together awesome spy network for 20 star years?"],
+      "MAKE_WAR": ["Time to die!%1$s"],
+      "OFFER_ACCEPTED": [
+        "I am happy to make business with you!",
+        "Agreed and happy to make business with you!"
+      ],
+      "TRADE_EMBARGO": ["Let's build embargo of trade for 20 star years for %1$s?"],
+      "DECLINE_WAR": ["I will take last credits from your cold body!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["Agreed! Time to die!"],
+      "NOTHING_TO_TRADE": ["You should find something to trade! I have excellent deals just for you."],
+      "NEUTRAL_GREET": ["Let's do some trading %1$s!"],
+      "DECLINE_ANGER": ["Your offer insults me!"],
+      "FRIENDS_GREET": ["My friend, I have my pockets full of credits! Let's do business."],
+      "OFFER_REJECTED": ["Do you have counter offer?"],
+      "ALLIANCE": ["Let's build awesome alliance!"],
+      "DECLINE": ["Your offer isn't good enough!"],
+      "TRADE_ALLIANCE": ["Let's build magnificent trade alliance!"],
+      "DISLIKE_GREET": ["Hmph, the one with no credits..."],
+      "DEMAND": ["You better accept this deal or suffer!"],
+      "HATE_GREET": ["This is going to be a fight, but..."],
+      "AGREE": ["Agreed!"],
+      "PEACE_OFFER": ["Let's sign a peace contract?"],
+      "INSULT_RESPOND": ["Insults do not help here!"],
+      "ASK_MOVE_SPY": ["Your espionage fleet has crossed my borders. Move %1$s away now!"]
+    }
+  }
+]

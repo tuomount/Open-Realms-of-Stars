@@ -1,0 +1,36 @@
+[
+  {
+    "id": "SPORKS",
+    "data": {
+      "TRADE": ["What you say about this?"],
+      "MOVE_FLEET": ["Fine I'll call the fleet back!"],
+      "LIKE_GREET": ["Ah the one I like to do business."],
+      "DEFESIVE_PACT": ["Join my military defense group!"],
+      "BORDER_WARS": ["Intruder %1$s! Shields up! Ready to fire!"],
+      "ASK_PROTECTION": ["I propose a deal. 5 star years safety and you will get all this?"],
+      "ASK_MOVE_FLEET": ["Your ship has crossed our borders. Move fleet %1$s now away!"],
+      "OFFER_SPY_TRADE": ["How about share spy information for 20 star years?"],
+      "MAKE_WAR": ["Shields up! Ready to fire!%1$s"],
+      "OFFER_ACCEPTED": ["Happy to make business with you!"],
+      "TRADE_EMBARGO": ["How about embargo for 20 star years for %1$s?"],
+      "DECLINE_WAR": ["You either take this with good or bad!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["WAR! SHIELDS UP AND FIRE!"],
+      "NOTHING_TO_TRADE": ["Hmm, You got zero tradable things..."],
+      "NEUTRAL_GREET": ["Peace or war, it's up to you, %1$s!"],
+      "DECLINE_ANGER": ["You call this a deal? Go away!"],
+      "FRIENDS_GREET": ["Ah my trustful friend. Let's talk!"],
+      "OFFER_REJECTED": ["So, do you have an offer?"],
+      "ALLIANCE": ["Join my alliance! What do you say?"],
+      "DECLINE": ["No deal!"],
+      "TRADE_ALLIANCE": ["Let's start non military alliance!"],
+      "DISLIKE_GREET": ["Oh, it's you. Crew, be ready to rise shields!"],
+      "DEMAND": ["You take this deal or it war!"],
+      "HATE_GREET": ["I am glad to see you when my targeting system is locked on you!"],
+      "AGREE": ["Deal!"],
+      "PEACE_OFFER": ["What you say about peace?"],
+      "INSULT_RESPOND": ["You are insulting me? How dare you!"],
+      "ASK_MOVE_SPY": ["Your spy ship has crossed our borders. Move fleet %1$s now away!"]
+    }
+  }
+]

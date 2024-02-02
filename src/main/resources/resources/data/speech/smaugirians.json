@@ -1,0 +1,36 @@
+[
+  {
+    "id": "SMAUGIRIANS",
+    "data": {
+      "TRADE": ["I am offering you this. Interested?"],
+      "MOVE_FLEET": ["I'll move my fleet."],
+      "LIKE_GREET": ["Well met, my pal!"],
+      "DEFESIVE_PACT": ["I am ready to defend you. Are you ready for defensive pact?"],
+      "BORDER_WARS": ["Your puny fleet %1$s is seen. Prepare to fight with me!"],
+      "ASK_PROTECTION": ["Are you interested to get these for protection of my fleet?"],
+      "ASK_MOVE_FLEET": ["I have spotted your fleet %1$s in my sector. Fleet must be moved!"],
+      "OFFER_SPY_TRADE": ["I have good intel for you 20 star years. Interested?"],
+      "MAKE_WAR": ["Get ready for fight!%1$s"],
+      "OFFER_ACCEPTED": ["This is good deal for both of us!"],
+      "TRADE_EMBARGO": ["Let's put %1$s to trade embargo for 20 star years?"],
+      "DECLINE_WAR": ["You shall pay for your nonsense!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["We will fight now!"],
+      "NOTHING_TO_TRADE": ["You don't have anything we would like to trade..."],
+      "NEUTRAL_GREET": ["This could be interesting, %1$s."],
+      "DECLINE_ANGER": ["What kind offer is this? There is not enough for me!"],
+      "FRIENDS_GREET": ["Ah good old pal. Let's sit down and talk."],
+      "OFFER_REJECTED": ["I am waiting your offer then..."],
+      "ALLIANCE": ["We should join to same alliance, what do you think?"],
+      "DECLINE": ["Your offer is not high enough."],
+      "TRADE_ALLIANCE": ["How about if we start to trade?"],
+      "DISLIKE_GREET": ["Are you ready to make proposal?"],
+      "DEMAND": ["Quick, accept this or you will suffer!"],
+      "HATE_GREET": ["Uh, oh. This could end really bad or..."],
+      "AGREE": ["I agree with this!"],
+      "PEACE_OFFER": ["How about peace contract?"],
+      "INSULT_RESPOND": ["You are offer is full of junk, like yourself!"],
+      "ASK_MOVE_SPY": ["I have spotted your spy fleet %1$s in my sector. Spy must be moved!"]
+    }
+  }
+]

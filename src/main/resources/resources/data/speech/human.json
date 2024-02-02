@@ -1,0 +1,36 @@
+[
+  {
+    "id": "HUMAN",
+    "data": {
+      "TRADE": ["How about this?"],
+      "MOVE_FLEET": ["Sorry about the fleet. I'll call it back."],
+      "LIKE_GREET": ["Good day! I'll hope we can make business today."],
+      "DEFESIVE_PACT": ["Let's make defensive pact together!"],
+      "BORDER_WARS": ["Your fleet %1$s has crossed our borders! This means war!"],
+      "ASK_PROTECTION": ["If you leave my fleet alone for 5 star years, I'll pay for it."],
+      "ASK_MOVE_FLEET": ["Your fleet %1$s has crossed my sector. Please move it away!"],
+      "OFFER_SPY_TRADE": ["How about some intelligence trades for 20 star years?"],
+      "MAKE_WAR": ["This means war!%1$s"],
+      "OFFER_ACCEPTED": ["Glad to make business with you!"],
+      "TRADE_EMBARGO": ["How about trade embargo for 20 star years against %1$s?"],
+      "DECLINE_WAR": ["This was your last insult! Die!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["This means war then!"],
+      "NOTHING_TO_TRADE": ["Sorry about this call. I thought you would have something to trade."],
+      "NEUTRAL_GREET": ["Good day! Let's get to know each others, %1$s."],
+      "DECLINE_ANGER": ["I'll take this as an insult!"],
+      "FRIENDS_GREET": ["Good day, friend! Let's sit down and talk a bit!"],
+      "OFFER_REJECTED": ["I am waiting your counter offer then."],
+      "ALLIANCE": ["Let's build alliance together!"],
+      "DECLINE": ["I am sorry, I cannot accept this."],
+      "TRADE_ALLIANCE": ["Let's build trade alliance together!"],
+      "DISLIKE_GREET": ["Think carefully what you do next..."],
+      "DEMAND": ["This is take it or leave it deal!"],
+      "HATE_GREET": ["This meeting is something we both hate, but let's try it anyway!"],
+      "AGREE": ["Glad to make business with you!"],
+      "PEACE_OFFER": ["How about peace?"],
+      "INSULT_RESPOND": ["Hmm, childish insulting..."],
+      "ASK_MOVE_SPY": ["Your espionage fleet %1$s has crossed my sector. Please move it away!"]
+    }
+  }
+]

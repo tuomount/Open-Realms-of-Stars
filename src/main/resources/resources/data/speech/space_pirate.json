@@ -1,0 +1,40 @@
+[
+  {
+    "id": "SPACE_PIRATE",
+    "data": {
+      "TRADE": ["Yarr, What say you about my loot?"],
+      "MOVE_FLEET": ["Yarr, I am towing my sails back!"],
+      "LIKE_GREET": ["Yarr!"],
+      "DEFESIVE_PACT": ["Yarr, Are you interested in defensive pact?"],
+      "BORDER_WARS": ["Yarr, scurvy fleet %1$s spotted. Time to die!"],
+      "ASK_PROTECTION": [
+        "Are you interested in insurance? That's against pirates!",
+        "Yarr! It would be a shame to scratch your fleet, but that can be avoid by paying this.",
+        "Ohoy, looks like you have nice fleet here. Not to lose it will cost for you."
+      ],
+      "ASK_MOVE_FLEET": ["Your fleet %1$s has crossed my sector. Please move it away!"],
+      "OFFER_SPY_TRADE": ["Yarr, Are you interested in espionage trade for 20 star years?"],
+      "MAKE_WAR": ["Yarr, Time to die!%1$s"],
+      "OFFER_ACCEPTED": ["Yarr, Most excellent deal!"],
+      "TRADE_EMBARGO": ["Yarr, Are you interested in trade emparbo for 20 star years against %1$s?"],
+      "DECLINE_WAR": ["Yarr, Prepate to be boarded and destroyed!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["Yarr, I agree! Now we fight!"],
+      "NOTHING_TO_TRADE": ["Yarr, you got no loot!"],
+      "NEUTRAL_GREET": ["Yarr, Let's look some loot %1$s!"],
+      "DECLINE_ANGER": ["Yarr, My socks smell better than your offer!"],
+      "FRIENDS_GREET": ["Matey, let's split some loot!"],
+      "OFFER_REJECTED": ["Yarr, I'll wait your counter offer then..."],
+      "ALLIANCE": ["Yarr, Are you interested in alliance?"],
+      "DECLINE": ["Yarr, I cannot accept this!"],
+      "TRADE_ALLIANCE": ["Yarr, Are you interested in trade alliance?"],
+      "DISLIKE_GREET": ["Hmph, yarr..."],
+      "DEMAND": ["Yarr, Accept this or slice your throat!"],
+      "HATE_GREET": ["Yarr, I'll be needing sum rum after this!"],
+      "AGREE": ["Yarr, I agreed!"],
+      "PEACE_OFFER": ["Care to sign peace?"],
+      "INSULT_RESPOND": ["Yarr, You start getting my nerve!"],
+      "ASK_MOVE_SPY": ["Yarr! Your espionage fleet %1$s has crossed my sector. Tow it away!"]
+    }
+  }
+]

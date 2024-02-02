@@ -1,0 +1,36 @@
+[
+  {
+    "id": "CHIRALOIDS",
+    "data": {
+      "TRADE": ["What say you about my trade offer?"],
+      "MOVE_FLEET": ["I am pulling the fleet back!"],
+      "LIKE_GREET": ["Nice to see you, again!"],
+      "DEFESIVE_PACT": ["Are you ready to make defensive pact?"],
+      "BORDER_WARS": ["Your fleet %1$s has betrayed us. Prepare to be nuked!"],
+      "ASK_PROTECTION": ["I see our problem. I am willing to pay for 5 star years protection."],
+      "ASK_MOVE_FLEET": ["I have detected your fleet on my sector. Pull your %1$s away, now!"],
+      "OFFER_SPY_TRADE": ["Are you willing to trade intel for 20 star years?"],
+      "MAKE_WAR": ["Prepare to be nuked!%1$s"],
+      "OFFER_ACCEPTED": ["Excellent. This was great deal!"],
+      "TRADE_EMBARGO": ["Are you willing make trade embargo for 20 star years against %1$s?"],
+      "DECLINE_WAR": ["I say no and I will nuke you now!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["I will nuke you!"],
+      "NOTHING_TO_TRADE": ["Hmm, oh you didn't have anything to trade..."],
+      "NEUTRAL_GREET": ["Nice to meet with you %1$s!"],
+      "DECLINE_ANGER": ["Your offer is mad!"],
+      "FRIENDS_GREET": ["My fellow, let's talk a while..."],
+      "OFFER_REJECTED": ["What do you propose then?"],
+      "ALLIANCE": ["Are you ready to join my alliance?"],
+      "DECLINE": ["No, no, and no thanks!"],
+      "TRADE_ALLIANCE": ["Let's form a trade alliance!"],
+      "DISLIKE_GREET": ["Okay, I'll listen but be quick!"],
+      "DEMAND": ["Agree or burn in nuclear fire!"],
+      "HATE_GREET": ["Watch your tongue or I'll rip it off!"],
+      "AGREE": ["I am willing to agree!"],
+      "PEACE_OFFER": ["Do you want peace or nuke?"],
+      "INSULT_RESPOND": ["You seem quiet mad... Are you?"],
+      "ASK_MOVE_SPY": ["I have detected your spy fleet on my sector. Pull your %1$s away, now!"]
+    }
+  }
+]

@@ -1,0 +1,36 @@
+[
+  {
+    "id": "TEUTHIDAES",
+    "data": {
+      "TRADE": ["This is our fair trade?"],
+      "MOVE_FLEET": ["I'll call the sp..am..ship back!"],
+      "LIKE_GREET": ["Nice to appear to you..."],
+      "DEFESIVE_PACT": ["Join my side defense organization!"],
+      "BORDER_WARS": ["Fleet %1$s located. Prepare to die!"],
+      "ASK_PROTECTION": ["You will get all these for 5 turn safety for my fleets."],
+      "ASK_MOVE_FLEET": ["My scanners has detected your fleet %1$s in our space. Move it away!"],
+      "OFFER_SPY_TRADE": ["Are you interested in intellingence trading for 20 star years?"],
+      "MAKE_WAR": ["Prepare to die!%1$s"],
+      "OFFER_ACCEPTED": ["Excellent!"],
+      "TRADE_EMBARGO": ["Are you interested in embargo for 20 against %1$s?"],
+      "DECLINE_WAR": ["You will pay for your insults!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["Prepare to be dead!"],
+      "NOTHING_TO_TRADE": ["Let's talk later when you have something to trade."],
+      "NEUTRAL_GREET": ["We appear in peace to you...%1$s!"],
+      "DECLINE_ANGER": ["Your offer repulses me."],
+      "FRIENDS_GREET": ["My friend, let's shake tentacles!"],
+      "OFFER_REJECTED": ["I understand. Please do you have counter offer?"],
+      "ALLIANCE": ["Join my side to alliance!"],
+      "DECLINE": ["Offer does not please me."],
+      "TRADE_ALLIANCE": ["Let's start a trade union!"],
+      "DISLIKE_GREET": ["Hmm, it's you mud dirt..."],
+      "DEMAND": ["Please take this deal or suffer!"],
+      "HATE_GREET": ["Ah my nemesis..."],
+      "AGREE": ["Excellent!"],
+      "PEACE_OFFER": ["Are you ready for peace?"],
+      "INSULT_RESPOND": ["You are getting on my nerves!"],
+      "ASK_MOVE_SPY": ["My scanners has detected your espionage fleet %1$s in our space. Move it away!"]
+    }
+  }
+]

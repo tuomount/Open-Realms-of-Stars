@@ -85,12 +85,12 @@ public class ResearchTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
     assertEquals(2, info.getShipStatList().length);
     Research.handleShipDesigns(info);
-    assertEquals(3, info.getShipStatList().length);
+    int amount = info.getShipStatList().length;
     info.getTechList().addTech(TechFactory.createHullTech("Small freighter", 2));
     info.getTechList().addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
     info.getTechList().addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
     Research.handleShipDesigns(info);
-    assertEquals(7, info.getShipStatList().length);
+    assertEquals(amount + 4, info.getShipStatList().length);
   }
 
   @Test
@@ -132,11 +132,11 @@ public class ResearchTest extends TestCase {
     info.setAttitude(Attitude.BACKSTABBING);
     assertEquals(2, info.getShipStatList().length);
     Research.handleShipDesigns(info);
-    assertEquals(3, info.getShipStatList().length);
+    int amount = info.getShipStatList().length;
     info.getTechList().addTech(TechFactory.createHullTech("Probe", 2));
     info.getTechList().addTech(TechFactory.createElectronicsTech("Espionage module Mk1", 2));
     Research.handleShipDesigns(info);
-    assertEquals(4, info.getShipStatList().length);
+    assertEquals(amount + 1, info.getShipStatList().length);
   }
 
   @Test
@@ -146,10 +146,10 @@ public class ResearchTest extends TestCase {
     info.setAttitude(Attitude.BACKSTABBING);
     assertEquals(2, info.getShipStatList().length);
     Research.handleShipDesigns(info);
-    assertEquals(3, info.getShipStatList().length);
+    int amount = info.getShipStatList().length;
     info.getTechList().addTech(TechFactory.createHullTech("Privateer Mk1", 5));
     Research.handleShipDesigns(info);
-    assertEquals(4, info.getShipStatList().length);
+    assertEquals(amount + 1, info.getShipStatList().length);
   }
 
   @Test
@@ -179,15 +179,15 @@ public class ResearchTest extends TestCase {
     StarMap map = generator.generateStarMap(config, list);
     assertEquals(2, info.getShipStatList().length);
     Research.handleShipDesigns(info);
-    assertEquals(3, info.getShipStatList().length);
+    int amount = info.getShipStatList().length;
     ShipDesign design = ShipGenerator.createBattleShip(info, ShipSize.SMALL,
         false, false);
     ShipStat stat = new ShipStat(design);
     info.addShipStat(stat);
-    assertEquals(4, info.getShipStatList().length);
+    assertEquals(amount + 1, info.getShipStatList().length);
     stat.setObsolete(true);
     Research.removeUnusedAndObsoleteDesigns(info, map);
-    assertEquals(3, info.getShipStatList().length);
+    assertEquals(amount, info.getShipStatList().length);
   }
 
   @Test
@@ -341,11 +341,11 @@ public class ResearchTest extends TestCase {
         info.getTechList().getTechFocus(TechType.Propulsion));
     assertEquals(Research.HIGH_FOCUS_LEVEL,
         info.getTechList().getTechFocus(TechType.Electrics));
-    assertEquals(2, info.getShipStatList().length);
+    int amount = info.getShipStatList().length;
     info.getTechList().addTech(TechFactory.createHullTech("Probe", 2));
     info.getTechList().addTech(TechFactory.createElectronicsTech("Espionage module Mk1", 2));
     Research.handleShipDesigns(info);
-    assertEquals(4, info.getShipStatList().length);
+    assertEquals(amount + 2, info.getShipStatList().length);
   }
 
   @Test

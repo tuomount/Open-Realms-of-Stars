@@ -332,6 +332,15 @@ public class PlayerInfo {
       extraTech[0] = "randomElectronics";
       extraTech[1] = "randomPropulsion";
     }
+    if (getStartingScenario() == StartingScenario.COLD_HUMID_SIZE12) {
+      extraTech = new String[1];
+      extraTech[0] = "randomImprovement";
+    }
+    if (getStartingScenario() == StartingScenario.HOT_ARID_SIZE12) {
+      extraTech = new String[2];
+      extraTech[0] = "randomElectronics";
+      extraTech[1] = "randomCombat";
+    }
     setFakeMilitarySize(100);
     // This is the old way of government
     setGovernment(GovernmentType.AI);

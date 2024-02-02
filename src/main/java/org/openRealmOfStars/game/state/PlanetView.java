@@ -244,7 +244,15 @@ public class PlanetView extends BlackPanel {
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     totalPeople = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_PEOPLE), ": 00");
-    totalPeople.setToolTipText("Total number of people on planet.");
+    String maxPop = "";
+    if (planet.getPlanetPlayerInfo() != null) {
+      maxPop = "Maximum population is "
+          + String.valueOf(planet.getPopulationLimit());
+    } else {
+      maxPop = "Maximum population if colonized is "
+          + String.valueOf(planet.getPopulationLimit(player));
+    }
+    totalPeople.setToolTipText("Total number of people on planet. " + maxPop);
     totalPeople.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(totalPeople);
     farmPanel = new WorkerProductionPanel(

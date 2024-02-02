@@ -3063,20 +3063,29 @@ public class Planet {
    * @return Planet's population limit
    */
   public int getPopulationLimit() {
+    return getPopulationLimit(getPlanetPlayerInfo());
+  }
+
+  /**
+   * Get Planet's population limit based on certain realm.
+   * @param info PlayerInfo
+   * @return Planet's population limit
+   */
+  public int getPopulationLimit(final PlayerInfo info) {
     int result = 0;
-    if (planetOwnerInfo != null) {
-      result = planetOwnerInfo.getRace().getExtraPopulation();
+    if (info != null) {
+      result = info.getRace().getExtraPopulation();
     }
     result = result + getGroundSize();
-    if (planetOwnerInfo != null) {
-      int percent = planetOwnerInfo.getPlanetSuitabilityValue(this);
+    if (info != null) {
+      int percent = info.getPlanetSuitabilityValue(this);
       result = result * percent / 100;
       if (result < 2 && percent > 0) {
         result = 2;
       }
     }
-    if (planetOwnerInfo != null
-        && planetOwnerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+    if (info != null
+        && info.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       result = 0;
       if (getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
         result = getGroundSize();
@@ -3103,7 +3112,6 @@ public class Planet {
     }
     return result;
   }
-
   /**
    * Is planet full of population or not
    * @return True if planet is full of population

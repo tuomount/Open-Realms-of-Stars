@@ -331,7 +331,7 @@ public class PlayerSetupView extends BlackPanel {
       final int index, final ActionListener listener) {
     InvisiblePanel xinvis = new InvisiblePanel(base);
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
-    xinvis.add(Box.createRigidArea(new Dimension(25, 25)));
+    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
 
     InfoPanel info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
@@ -475,7 +475,7 @@ public class PlayerSetupView extends BlackPanel {
     info.add(comboScenario[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
-    xinvis.add(Box.createRigidArea(new Dimension(25, 25)));
+    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
     return xinvis;
   }
 

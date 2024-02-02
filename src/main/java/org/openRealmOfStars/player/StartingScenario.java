@@ -33,7 +33,7 @@ public enum StartingScenario {
   RANDOM,
   /**
    * So called standard starting scenario.
-   * Temperate humind planet with size 12.
+   * Temperate humid planet with size 12.
    */
   TEMPERATE_HUMID_SIZE12,
   /**
@@ -41,9 +41,30 @@ public enum StartingScenario {
    */
   EARTH,
   /**
-   * Arid planet size 12, single extra technology for starters.
+   * Arid planet size 12, two extra technology for starters.
    */
-  TEMPERATE_ARID_SIZE12;
+  TEMPERATE_ARID_SIZE12,
+  /**
+   * Marine planet size 9.
+   */
+  TEMPERATE_MARINE_SIZE9,
+  /**
+   * Marine planet size 14.
+   */
+  TEMPERATE_MARINE_SIZE14,
+  /**
+   * Cold humid planet size 12, extra technology for starters.
+   */
+  COLD_HUMID_SIZE12,
+  /**
+   * Tropical humid planet size 12
+   */
+  TROPICAL_HUMID_SIZE12,
+  /**
+   * Hot arid planet size 12, extra technology for starters.
+   */
+  HOT_ARID_SIZE12;
+
 
   /**
    * Get starting scenarion as an integer value.
@@ -55,6 +76,11 @@ public enum StartingScenario {
       case TEMPERATE_HUMID_SIZE12: return 1;
       case EARTH: return 2;
       case TEMPERATE_ARID_SIZE12: return 3;
+      case TEMPERATE_MARINE_SIZE9: return 4;
+      case TEMPERATE_MARINE_SIZE14: return 5;
+      case COLD_HUMID_SIZE12: return 6;
+      case TROPICAL_HUMID_SIZE12: return 7;
+      case HOT_ARID_SIZE12: return 8;
       default: throw new IllegalArgumentException("Unknown starting scenario.");
     }
   }
@@ -70,6 +96,11 @@ public enum StartingScenario {
       case 1: return TEMPERATE_HUMID_SIZE12;
       case 2: return EARTH;
       case 3: return TEMPERATE_ARID_SIZE12;
+      case 4: return TEMPERATE_MARINE_SIZE9;
+      case 5: return TEMPERATE_MARINE_SIZE14;
+      case 6: return COLD_HUMID_SIZE12;
+      case 7: return TROPICAL_HUMID_SIZE12;
+      case 8: return HOT_ARID_SIZE12;
       default: throw new IllegalArgumentException("Unknown starting scenario.");
     }
   }
@@ -81,7 +112,15 @@ public enum StartingScenario {
     case RANDOM: return "Random starting scenario";
     case TEMPERATE_HUMID_SIZE12: return "Temperate and humid planet";
     case EARTH: return "Start from Earth";
-    case TEMPERATE_ARID_SIZE12: return "Temperate and arid, with extra tech";
+    case TEMPERATE_ARID_SIZE12: return "Temperate and arid planet,"
+        + " with extra tech";
+    case TEMPERATE_MARINE_SIZE9: return "Temperate, marine and low gravity"
+        + " planet";
+    case TEMPERATE_MARINE_SIZE14: return "Temperate, marine and high gravity"
+        + " planet";
+    case COLD_HUMID_SIZE12: return "Cold, humid planet with extra tech";
+    case TROPICAL_HUMID_SIZE12: return "Tropical, humid planet";
+    case HOT_ARID_SIZE12: return "Hot, arid planet with extra tech";
     }
   }
 
@@ -97,7 +136,19 @@ public enum StartingScenario {
         + " ground size 12. World type is either Swamp or water planet.";
     case EARTH: return "Realm starts at Earth and solar system is Sol.";
     case TEMPERATE_ARID_SIZE12: return "Temperate and arid planet with"
-        + " ground size 12. World type is desert. Start extra technology.";
+        + " ground size 12. World type is desert. Start with extra 2"
+        + " technology.";
+    case TEMPERATE_MARINE_SIZE9: return "Temperate, marine and low gravity"
+        + " planet with ground size 9. World type is water world.";
+    case TEMPERATE_MARINE_SIZE14: return "Temperate, marine and high gravity"
+    + " planet with ground size 14. World type is water world.";
+    case COLD_HUMID_SIZE12: return "Cold and humid planet with"
+    + " ground size 12. World type is ice world. Start with extra technology.";
+    case TROPICAL_HUMID_SIZE12: return "Tropical and humid planet with"
+    + " ground size 12. World type is either Swamp or water planet.";
+    case HOT_ARID_SIZE12: return "Hot and arid planet with"
+    + " ground size 12. World type is desert world. Start with extra"
+    + " 2 technology.";
     }
   }
 

@@ -90,6 +90,7 @@ public enum TemperatureType {
       case ARCTIC: return "arctic";
       case COLD: return "cold";
       case TEMPERATE: return "temperate";
+      case TROPICAL: return "tropical";
       case HOT: return "hot";
       case VOLCANIC: return "volcanic";
       case INFERNO: return "inferno";

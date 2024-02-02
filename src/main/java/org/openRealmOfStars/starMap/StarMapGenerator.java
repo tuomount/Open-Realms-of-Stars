@@ -810,6 +810,31 @@ public class StarMapGenerator {
             planet.setTemperatureType(TemperatureType.TEMPERATE);
             planet.setWaterLevel(WaterLevelType.ARID);
             planet.setGroundSize(12);
+          } else if (playerInfo.getStartingScenario()
+              == StartingScenario.TEMPERATE_MARINE_SIZE9) {
+            planet.setTemperatureType(TemperatureType.TEMPERATE);
+            planet.setWaterLevel(WaterLevelType.MARINE);
+            planet.setGroundSize(9);
+          } else if (playerInfo.getStartingScenario()
+              == StartingScenario.TEMPERATE_MARINE_SIZE14) {
+            planet.setTemperatureType(TemperatureType.TEMPERATE);
+            planet.setWaterLevel(WaterLevelType.MARINE);
+            planet.setGroundSize(14);
+          } else if (playerInfo.getStartingScenario()
+              == StartingScenario.COLD_HUMID_SIZE12) {
+            planet.setTemperatureType(TemperatureType.COLD);
+            planet.setWaterLevel(WaterLevelType.HUMID);
+            planet.setGroundSize(12);
+          } else if (playerInfo.getStartingScenario()
+              == StartingScenario.HOT_ARID_SIZE12) {
+            planet.setTemperatureType(TemperatureType.HOT);
+            planet.setWaterLevel(WaterLevelType.ARID);
+            planet.setGroundSize(12);
+          } else if (playerInfo.getStartingScenario()
+              == StartingScenario.TROPICAL_HUMID_SIZE12) {
+            planet.setTemperatureType(TemperatureType.TROPICAL);
+            planet.setWaterLevel(WaterLevelType.HUMID);
+            planet.setGroundSize(12);
           } else {
             planet.setTemperatureType(TemperatureType.TEMPERATE);
             planet.setWaterLevel(WaterLevelType.HUMID);

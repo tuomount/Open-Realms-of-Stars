@@ -39,7 +39,11 @@ public enum StartingScenario {
   /**
    * Starting system is sol.
    */
-  EARTH;
+  EARTH,
+  /**
+   * Arid planet size 12, single extra technology for starters.
+   */
+  TEMPERATE_ARID_SIZE12;
 
   /**
    * Get starting scenarion as an integer value.
@@ -50,6 +54,7 @@ public enum StartingScenario {
       case RANDOM: return 0;
       case TEMPERATE_HUMID_SIZE12: return 1;
       case EARTH: return 2;
+      case TEMPERATE_ARID_SIZE12: return 3;
       default: throw new IllegalArgumentException("Unknown starting scenario.");
     }
   }
@@ -64,6 +69,7 @@ public enum StartingScenario {
       case 0: return RANDOM;
       case 1: return TEMPERATE_HUMID_SIZE12;
       case 2: return EARTH;
+      case 3: return TEMPERATE_ARID_SIZE12;
       default: throw new IllegalArgumentException("Unknown starting scenario.");
     }
   }
@@ -75,6 +81,7 @@ public enum StartingScenario {
     case RANDOM: return "Random starting scenario";
     case TEMPERATE_HUMID_SIZE12: return "Temperate and humid planet";
     case EARTH: return "Start from Earth";
+    case TEMPERATE_ARID_SIZE12: return "Temperate and arid, with extra tech";
     }
   }
 
@@ -89,6 +96,8 @@ public enum StartingScenario {
     case TEMPERATE_HUMID_SIZE12: return "Temperate and humid planet with"
         + " ground size 12. World type is either Swamp or water planet.";
     case EARTH: return "Realm starts at Earth and solar system is Sol.";
+    case TEMPERATE_ARID_SIZE12: return "Temperate and arid planet with"
+        + " ground size 12. World type is desert. Start extra technology.";
     }
   }
 

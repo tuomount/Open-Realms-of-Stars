@@ -102,18 +102,17 @@ public class PlayerList {
       randomListOfColors.add(color);
     }
     for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
+      StartingScenario scenario = galaxyConfig.getStartingScenario(i);
+      if (scenario == StartingScenario.RANDOM) {
+        scenario = StartingScenario.pickRandom();
+      }
       PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i),
-          maxPlayers, i, boardIndex);
+          maxPlayers, i, boardIndex, scenario);
       info.setGovernment(galaxyConfig.getPlayerGovernment(i));
       info.setEmpireName(galaxyConfig.getPlayerName(i));
       info.setElderRealm(galaxyConfig.getPlayerElderRealm(i));
       info.setAiDifficulty(galaxyConfig.getDifficulty(i));
       info.setColor(galaxyConfig.getPlayerColor(i));
-      StartingScenario scenario = galaxyConfig.getStartingScenario(i);
-      if (scenario == StartingScenario.RANDOM) {
-        scenario = StartingScenario.pickRandom();
-      }
-      info.setStartingScenario(scenario);
       randomListOfColors.remove(galaxyConfig.getPlayerColor(i));
       if (i == 0 && !galaxyConfig.isAiOnly()) {
         info.setHuman(true);
@@ -126,7 +125,7 @@ public class PlayerList {
     if (galaxyConfig.getSpacePiratesLevel() > 0) {
       int index = galaxyConfig.getMaxPlayers();
       PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_PIRATE, maxPlayers,
-          index, boardIndex);
+          index, boardIndex, StartingScenario.TEMPERATE_HUMID_SIZE12);
       info.setBoard(true);
       info.setGovernment(GovernmentType.SPACE_PIRATES);
       info.setEmpireName("Space pirates");
@@ -153,7 +152,7 @@ public class PlayerList {
         index++;
       }
       PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_MONSTERS, maxPlayers,
-          index, boardIndex);
+          index, boardIndex, StartingScenario.TEMPERATE_HUMID_SIZE12);
       info.setBoard(true);
       info.setGovernment(GovernmentType.SPACE_PIRATES);
       info.setEmpireName("Space monsters");

@@ -45,7 +45,6 @@ import org.openRealmOfStars.starMap.history.event.PlayerStartEvent;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
-import org.openRealmOfStars.starMap.planet.enums.GravityType;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.enums.RadiationType;
@@ -806,10 +805,17 @@ public class StarMapGenerator {
               .getPlayerInfoByIndex(playerIndex);
           playerInfo.setElderRealm(config.getPlayerElderRealm(playerIndex));
           planet.setRadiationLevel(RadiationType.NO_RADIATION);
-          planet.setGravityType(GravityType.NORMAL_GRAVITY);
-          planet.setTemperatureType(TemperatureType.TEMPERATE);
-          planet.setWaterLevel(WaterLevelType.HUMID);
-          planet.setGroundSize(12);
+          if (playerInfo.getStartingScenario()
+              == StartingScenario.TEMPERATE_ARID_SIZE12) {
+            planet.setTemperatureType(TemperatureType.TEMPERATE);
+            planet.setWaterLevel(WaterLevelType.ARID);
+            planet.setGroundSize(12);
+          } else {
+            planet.setTemperatureType(TemperatureType.TEMPERATE);
+            planet.setWaterLevel(WaterLevelType.HUMID);
+            planet.setGroundSize(12);
+          }
+          planet.generateGravityBasedOnSize();
           planet.generateWorldType();
           planet.setAmountMetalInGround(HOMEWORLD_METAL);
           planet.setHomeWorldIndex(playerInfo.getRace().getIndex());

@@ -290,7 +290,7 @@ public class PlayerInfo {
    */
   public PlayerInfo(final SpaceRace race, final int maxPlayers,
       final int index) {
-    this(race, maxPlayers, index, -1);
+    this(race, maxPlayers, index, -1, StartingScenario.TEMPERATE_HUMID_SIZE12);
   }
   /**
    * Constructor player info. This can be used for game playing.
@@ -298,9 +298,11 @@ public class PlayerInfo {
    * @param maxPlayers Maximum number of players when game is created
    * @param index Player's index in list when creating the player
    * @param boardPlayerIndex Board player index
+   * @param scenario Starting scenario
    */
   public PlayerInfo(final SpaceRace race, final int maxPlayers,
-      final int index, final int boardPlayerIndex) {
+      final int index, final int boardPlayerIndex,
+      final StartingScenario scenario) {
     setBackgroundStory("");
     setTechList(new TechList(race));
     strategy = WinningStrategy.GENERIC;
@@ -316,7 +318,7 @@ public class PlayerInfo {
     color = PlayerColor.getByIndex(index);
     aiDifficulty = AiDifficulty.NORMAL;
     setRandomEventOccured(null);
-    setStartingScenario(StartingScenario.TEMPERATE_HUMID_SIZE12);
+    setStartingScenario(scenario);
     setHuman(false);
     setBoard(false);
     missions = new MissionList();
@@ -324,31 +326,53 @@ public class PlayerInfo {
     diplomacy = new Diplomacy(maxPlayers, index, boardPlayerIndex);
     espionage = new Espionage(maxPlayers);
     attitude = Attitude.getRandom();
+    String[] extraTech = null;
+    if (getStartingScenario() == StartingScenario.TEMPERATE_ARID_SIZE12) {
+      extraTech = new String[2];
+      extraTech[0] = "randomElectronics";
+      extraTech[1] = "randomPropulsion";
+    }
     setFakeMilitarySize(100);
     // This is the old way of government
     setGovernment(GovernmentType.AI);
     setWarFatigue(0);
     if (getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
-      addZeroGravityTechs();
+      addZeroGravityTechs(extraTech);
     } else {
       if (getRace() == SpaceRace.SPACE_MONSTERS) {
         addSpaceMonsterTechs();
       } else if (getRace() == SpaceRace.SPACE_PIRATE) {
         addSpacePirateTechs();
       } else {
-        addDefaultTechs();
+        addDefaultTechs(extraTech);
       }
     }
   }
 
   /**
    * Add techs by their names
+   * Special names are randomCombat, randomDefense, randomHull,
+   *  randomImprovement, randomPropulsion, randomElectronics
    * @param techNames Tech names
    */
   private void addTechs(final String... techNames) {
     for (var techName : techNames) {
-      var tech = TechFactory.findTech(techName);
-      techList.addTech(tech);
+      if (techName.equals("randomCombat")) {
+        addRandomTechs(1, TechType.Combat, 1);
+      } else if (techName.equals("randomDefense")) {
+        addRandomTechs(1, TechType.Defense, 1);
+      } else if (techName.equals("randomHull")) {
+        addRandomTechs(1, TechType.Hulls, 1);
+      } else if (techName.equals("randomImprovement")) {
+        addRandomTechs(1, TechType.Improvements, 1);
+      } else if (techName.equals("randomPropulsion")) {
+        addRandomTechs(1, TechType.Propulsion, 1);
+      } else if (techName.equals("randomElectronics")) {
+        addRandomTechs(1, TechType.Electrics, 1);
+      } else {
+        var tech = TechFactory.findTech(techName);
+        techList.addTech(tech);
+      }
     }
   }
 
@@ -395,8 +419,9 @@ public class PlayerInfo {
 
   /**
    * Default techs and ship design.
+   * @param extraTech Extra tech based on starting scenario.
    */
-  private void addDefaultTechs() {
+  private void addDefaultTechs(final String[] extraTech) {
     final String[] techs1 = {
       "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
     };
@@ -408,6 +433,9 @@ public class PlayerInfo {
     } else {
       addTechs(techs2);
     }
+    if (extraTech != null) {
+      addTechs(extraTech);
+    }
 
     addRandomTechs(1, TechType.Combat, 1);
     addRandomTechs(1, TechType.Defense, 1);
@@ -415,13 +443,18 @@ public class PlayerInfo {
     designInitialShips();
   }
 
-  /** Add Zero Gravity techs and ship designs. */
-  private void addZeroGravityTechs() {
+  /** Add Zero Gravity techs and ship designs.
+   * @param extraTech Extra tech based on starting scenario.
+   */
+  private void addZeroGravityTechs(final String[] extraTech) {
     final String[] techs = {
       "Railgun Mk1", "Shield Mk1", "Colony", "Scout Mk1", "Minor orbital",
       "Nuclear drive Mk1", "Fission source Mk1",
     };
     addTechs(techs);
+    if (extraTech != null) {
+      addTechs(extraTech);
+    }
 
     designInitialShips();
   }

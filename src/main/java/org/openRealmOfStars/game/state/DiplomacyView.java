@@ -1686,8 +1686,7 @@ public class DiplomacyView extends BlackPanel {
       }
     }
     if (speechType == SpeechType.TRADE_EMBARGO
-        && !speechSelected.getLine().equals(
-            SpeechFactory.TRADE_EMBARGO_SUGGESTION)) {
+        && !speechSelected.getLine().equals(SpeechFactory.SUGGEST_EMBARGO)) {
       PlayerInfo realm = getRealmFromString(speechSelected.getLine());
       if (realm != null) {
         NegotiationList list1 = getHumanNegotiationList();
@@ -1934,7 +1933,7 @@ public class DiplomacyView extends BlackPanel {
       if (humanLines.getSelectedValue() != null
           && humanLines.getSelectedValue().getType() == SpeechType.TRADE_EMBARGO
           && humanLines.getSelectedValue().getLine().equals(
-              SpeechFactory.TRADE_EMBARGO_SUGGESTION)) {
+              SpeechFactory.SUGGEST_EMBARGO)) {
         SpeechLine[] lines = createTradeEmbargoChoicesLines();
         if (lines.length > 0) {
           humanLines.setListData(lines);

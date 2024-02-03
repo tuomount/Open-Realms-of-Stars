@@ -25,7 +25,6 @@ import java.util.Collections;
 
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
-import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipComponentType;
@@ -921,14 +920,7 @@ public class ShipDesign {
       }
       if (comp.getType() == ShipComponentType.PRIVATEERING_MODULE) {
         privateerModule = true;
-        if (hull.getRace().hasTrait(TraitIds.ARMED_FREIGHTERS)) {
-          if (hull.getHullType() != ShipHullType.PRIVATEER
-              && hull.getHullType() != ShipHullType.FREIGHTER) {
-            designOk = false;
-            sb.append(ShipDesignConsts.PRIVATEER_MODULE_IN_NOT_PRIVATEER);
-            sb.append("\n");
-          }
-        } else if (hull.getHullType() != ShipHullType.PRIVATEER) {
+        if (hull.getHullType() != ShipHullType.PRIVATEER) {
           designOk = false;
           sb.append(ShipDesignConsts.PRIVATEER_MODULE_IN_NOT_PRIVATEER);
           sb.append("\n");

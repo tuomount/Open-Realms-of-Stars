@@ -1,0 +1,36 @@
+[
+  {
+    "id": "ALTEIRIANS",
+    "data": {
+      "TRADE": ["I am offering this one, are you feeling it?"],
+      "MOVE_FLEET": ["I'll be moving our pod."],
+      "LIKE_GREET": ["It is nice to see you again!"],
+      "DEFESIVE_PACT": ["We should join side by side to defend ourselves!"],
+      "BORDER_WARS": ["Your puny pod %1$s has been detected. Prepare to feel the wrath from us!"],
+      "ASK_PROTECTION": ["My pod is in danger. I'll pay for it's protection for 5 star years."],
+      "ASK_MOVE_FLEET": ["Your pod %1$s has detected in my sector. Move it!"],
+      "OFFER_SPY_TRADE": ["Are you interested joining to my spy network for 20 star years?"],
+      "MAKE_WAR": ["Prepare to to feel wrath from us!%1$s"],
+      "OFFER_ACCEPTED": ["I feel your offer. This is good!"],
+      "TRADE_EMBARGO": ["Will you accept trade embargo for 20 star years against %1$s?"],
+      "DECLINE_WAR": ["Your offer is full gas and you will feel our wrath!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["Prepare feel the wrath of us!"],
+      "NOTHING_TO_TRADE": ["We don't feel you have anything to trade."],
+      "NEUTRAL_GREET": ["Let us feel for this moment, %1$s."],
+      "DECLINE_ANGER": ["This offer is full of ether and gases!"],
+      "FRIENDS_GREET": ["Ah my friend!"],
+      "OFFER_REJECTED": ["So, what is your offer then?"],
+      "ALLIANCE": ["We should join side by side to rule the galaxy!"],
+      "DECLINE": ["I cannot accept your offer."],
+      "TRADE_ALLIANCE": ["Let's join to mutual trading, what say you?"],
+      "DISLIKE_GREET": ["Hmm, do I smell foul gases here?"],
+      "DEMAND": ["Accept this offer or you will feel our wrath!"],
+      "HATE_GREET": ["Urgh, I can feel and smell the foul gases..."],
+      "AGREE": ["Most excellent deal!"],
+      "PEACE_OFFER": ["Let's join together with peace..."],
+      "INSULT_RESPOND": ["You are full of gases and you seem to leak it..."],
+      "ASK_MOVE_SPY": ["Your spy pod %1$s has detected in my sector. Move it!"]
+    }
+  }
+]

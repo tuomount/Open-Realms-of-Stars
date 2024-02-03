@@ -1,0 +1,36 @@
+[
+  {
+    "id": "REBORGIANS",
+    "data": {
+      "TRADE": ["Here is our offer!"],
+      "MOVE_FLEET": ["We will move the fleet!"],
+      "LIKE_GREET": ["We might not synthesize you, for now."],
+      "DEFESIVE_PACT": ["Are ready to be our battle thrall?"],
+      "BORDER_WARS": ["Our scanners have detected %1$s in our sectors.We will start synthesize with your species!"],
+      "ASK_PROTECTION": ["We have detected danger. We are paying for protection of 5 star years."],
+      "ASK_MOVE_FLEET": ["Your fleet %1$s is in our sector! Pull it away immediately!"],
+      "OFFER_SPY_TRADE": ["We are offering you our spy information for 20 star years. Interested?"],
+      "MAKE_WAR": ["We will start synthesize with your species!%1$s"],
+      "OFFER_ACCEPTED": ["We accept your deal!"],
+      "TRADE_EMBARGO": ["We ask you to make trade embargo for 20 star years against %1$s?"],
+      "DECLINE_WAR": ["We will not accept but your species is good synthesize material for us!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["We will synthetize you!"],
+      "NOTHING_TO_TRADE": ["We see you have nothing to trade with us, except yourself!"],
+      "NEUTRAL_GREET": ["We haven't decide if you will be synthesized %1$s!"],
+      "DECLINE_ANGER": ["We will not accept this!"],
+      "FRIENDS_GREET": ["Our thrall! Speak, we listen."],
+      "OFFER_REJECTED": ["Our offer was not good enough, what do you offer then?"],
+      "ALLIANCE": ["Be our thrall or be our future synthesize material. Join to our alliance!"],
+      "DECLINE": ["We will not accept this!"],
+      "TRADE_ALLIANCE": ["Your species has trading value for us, trade alliance?"],
+      "DISLIKE_GREET": ["YES?!"],
+      "DEMAND": ["You will accept this or we will synthesize your species!"],
+      "HATE_GREET": ["Synthesis material, speak now!"],
+      "AGREE": ["We will agree with your offer!"],
+      "PEACE_OFFER": ["We offer you mutual coexistance."],
+      "INSULT_RESPOND": ["Adding cybergenetic implants might help you!"],
+      "ASK_MOVE_SPY": ["We have detected your spy fleet %1$s in our sector. Pull it away!"]
+    }
+  }
+]

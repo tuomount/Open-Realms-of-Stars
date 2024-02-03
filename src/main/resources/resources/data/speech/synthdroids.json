@@ -1,0 +1,36 @@
+[
+  {
+    "id": "SYNTHDROIDS",
+    "data": {
+      "TRADE": ["Handshake?"],
+      "MOVE_FLEET": ["Handshake for fleet moving out!"],
+      "LIKE_GREET": ["Starting liking encounter..."],
+      "DEFESIVE_PACT": ["Handshake for defending together?"],
+      "BORDER_WARS": ["Detected fleet %1$s again! Starting war protocol!"],
+      "ASK_PROTECTION": ["Detected danger! Paying for protection of 5 star years."],
+      "ASK_MOVE_FLEET": ["Detected border crossing. Fleet %1$s. Move it!"],
+      "OFFER_SPY_TRADE": ["Handshake for espionage information? 20 star years?"],
+      "MAKE_WAR": ["Starting war protocol!%1$s"],
+      "OFFER_ACCEPTED": ["Handshake done!"],
+      "TRADE_EMBARGO": ["Handshake for trade embargo? 20 star years? %1$s?"],
+      "DECLINE_WAR": ["Starting war protocol!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["Starting war protocols!"],
+      "NOTHING_TO_TRADE": ["No trade detected!"],
+      "NEUTRAL_GREET": ["Starting neutral encounter protocol with %1$s."],
+      "DECLINE_ANGER": ["Cannot comply! Taking insult!"],
+      "FRIENDS_GREET": ["Starting peer encounter!"],
+      "OFFER_REJECTED": ["Handshake failre! Restart offer?"],
+      "ALLIANCE": ["Handshake for alliance?"],
+      "DECLINE": ["Handshake failure!"],
+      "TRADE_ALLIANCE": ["Handshake for trade alliance?"],
+      "DISLIKE_GREET": ["Preparing for negative meeting..."],
+      "DEMAND": ["Handshake this OR start war protocol!"],
+      "HATE_GREET": ["Starting hate encounter..."],
+      "AGREE": ["Handshake for agreement!"],
+      "PEACE_OFFER": ["Handshake for peace?"],
+      "INSULT_RESPOND": ["Guru mediatation?"],
+      "ASK_MOVE_SPY": ["Detected spy and border crossing. Fleet %1$s. Move it!"]
+    }
+  }
+]

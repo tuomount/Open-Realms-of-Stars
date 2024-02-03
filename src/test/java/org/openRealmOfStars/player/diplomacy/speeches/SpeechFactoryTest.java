@@ -117,7 +117,7 @@ public class SpeechFactoryTest {
   public void testTradeEmbargoSuggestion() {
     SpeechLine line = SpeechFactory.createEmbargoSuggestion();
     assertEquals(SpeechType.TRADE_EMBARGO, line.getType());
-    assertEquals(SpeechFactory.TRADE_EMBARGO_SUGGESTION, line.getLine());
+    assertEquals(SpeechFactory.SUGGEST_EMBARGO, line.getLine());
   }
 
 }

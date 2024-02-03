@@ -1104,6 +1104,15 @@ public enum SpaceRace {
   }
 
   /**
+   * Get ID of SpeechSet this race is using
+   * TODO: Move this from SpaceRace to PlayerInfo or "Realm Preset"
+   * @return SpeechSet ID
+   */
+  public String getSpeechSetId() {
+    return this.name();
+  }
+
+  /**
    * Get full description about the race, including the stats.
    * @param markDown if true then markDown is being used, otherwise HTML.
    * @param image Add image to wiki page if true

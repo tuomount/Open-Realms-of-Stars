@@ -1,0 +1,36 @@
+[
+  {
+    "id": "MECHIONS",
+    "data": {
+      "TRADE": ["Trade?"],
+      "MOVE_FLEET": ["Fleet return to base!"],
+      "LIKE_GREET": ["Initiating liking encounter..."],
+      "DEFESIVE_PACT": ["Defend together?"],
+      "BORDER_WARS": ["Fleet %1$s detected again! Initializing war protocol!"],
+      "ASK_PROTECTION": ["My fleet in danger. Safe for 5 star years?"],
+      "ASK_MOVE_FLEET": ["Border crossed. Fleet %1$s. Move it!"],
+      "OFFER_SPY_TRADE": ["Espionage information? 20 star years?"],
+      "MAKE_WAR": ["Initializing war protocol!%1$s"],
+      "OFFER_ACCEPTED": ["Acknowledge!"],
+      "TRADE_EMBARGO": ["Trade embargo? 20 star years? %1$s?"],
+      "DECLINE_WAR": ["Initiating war protocol!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["Initiating war protocol!"],
+      "NOTHING_TO_TRADE": ["Nothing to trade!"],
+      "NEUTRAL_GREET": ["Initiating neutral encounter protocol with %1$s."],
+      "DECLINE_ANGER": ["Negative! Insult detected!"],
+      "FRIENDS_GREET": ["Peer encountered!"],
+      "OFFER_REJECTED": ["Acknowledge! Offer?"],
+      "ALLIANCE": ["Mutual alliance?"],
+      "DECLINE": ["Negative!"],
+      "TRADE_ALLIANCE": ["Trade alliance?"],
+      "DISLIKE_GREET": ["Dislike encounter..."],
+      "DEMAND": ["Accept this OR initialize war!"],
+      "HATE_GREET": ["Hate encounter..."],
+      "AGREE": ["Acknowledge!"],
+      "PEACE_OFFER": ["Peace?"],
+      "INSULT_RESPOND": ["Core dumped?"],
+      "ASK_MOVE_SPY": ["Border crossed. Spy detected! Fleet %1$s. Move it!"]
+    }
+  }
+]

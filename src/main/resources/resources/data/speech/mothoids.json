@@ -1,0 +1,36 @@
+[
+  {
+    "id": "MOTHOIDS",
+    "data": {
+      "TRADE": ["We offer your kind this!"],
+      "MOVE_FLEET": ["We'll call the fleet back!"],
+      "LIKE_GREET": ["We like to meet with you!"],
+      "DEFESIVE_PACT": ["Join your drones with ours to defend!"],
+      "BORDER_WARS": ["We have detected %1$s! We will kill all your kind!"],
+      "ASK_PROTECTION": ["We pay for safety of our fleet for 5 star years, how you answer?"],
+      "ASK_MOVE_FLEET": ["We have noticed your fleet %1$s in our sector! Move it away immediately!"],
+      "OFFER_SPY_TRADE": ["Join your spies with our spies for 20 star years?"],
+      "MAKE_WAR": ["We will kill all your kind!%1$s"],
+      "OFFER_ACCEPTED": ["We are happy to make trade with you!"],
+      "TRADE_EMBARGO": ["We should turn our backs for 20 star years against %1$s."],
+      "DECLINE_WAR": ["We offer you this and you accept it?%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["We accept your war offer and kill all your kinds!"],
+      "NOTHING_TO_TRADE": ["We found out that you had nothing we want."],
+      "NEUTRAL_GREET": ["We come in peace, %1$s!"],
+      "DECLINE_ANGER": ["We feel insulted about this!"],
+      "FRIENDS_GREET": ["Our friend! We are ready to talk with you!"],
+      "OFFER_REJECTED": ["We are waiting your counter offer..."],
+      "ALLIANCE": ["Join your mind with ours!"],
+      "DECLINE": ["We cannot accept this!"],
+      "TRADE_ALLIANCE": ["We offer you trade alliance!"],
+      "DISLIKE_GREET": ["We are watching you carefully!"],
+      "DEMAND": ["We demand you to accept this!"],
+      "HATE_GREET": ["We hate meetings with you but let's see your offer!"],
+      "AGREE": ["We accept your offer!"],
+      "PEACE_OFFER": ["We offer your kind peace!"],
+      "INSULT_RESPOND": ["You are acting like a larvae!"],
+      "ASK_MOVE_SPY": ["We have noticed your spy fleet %1$s in our sector! Move it away immediately!"]
+    }
+  }
+]

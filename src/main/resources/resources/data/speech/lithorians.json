@@ -1,0 +1,36 @@
+[
+  {
+    "id": "LITHORIANS",
+    "data": {
+      "TRADE": ["This is my offer!"],
+      "MOVE_FLEET": ["I am moving the fleet from your sector."],
+      "LIKE_GREET": ["Nice to see warm person in cool space."],
+      "DEFESIVE_PACT": ["Let's form guarding pact, what say you?"],
+      "BORDER_WARS": ["Your puny %1$s has been detected. Prepare to encounter hot blazing war from us!"],
+      "ASK_PROTECTION": ["I am ready to pay for my fleet protection for 5 star years."],
+      "ASK_MOVE_FLEET": ["Your fleet %1$s has entered into my sector. Remove it!"],
+      "OFFER_SPY_TRADE": ["I offer you our spy information for 20 star years. Interested?"],
+      "MAKE_WAR": ["Prepare to encounter hot blazing war from us!%1$s"],
+      "OFFER_ACCEPTED": ["I accept your offer with warm!"],
+      "TRADE_EMBARGO": ["Are you will to do trade embargo for 20 star years against %1$s?"],
+      "DECLINE_WAR": ["This offer is so bad, I'll explode and prepare yourself for war!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["We will crush you like a pebble stone!"],
+      "NOTHING_TO_TRADE": ["You don't seem to have even pebble to trade."],
+      "NEUTRAL_GREET": ["Let's cool down and discuss, %1$s."],
+      "DECLINE_ANGER": ["This offer makes me blazing hot and I getting close to explode!"],
+      "FRIENDS_GREET": ["Greetings, my fellow friend!"],
+      "OFFER_REJECTED": ["Suggest your counter offer then..."],
+      "ALLIANCE": ["Let's stand together like rocks and defend ourselves!"],
+      "DECLINE": ["I'll have to cool down this offer."],
+      "TRADE_ALLIANCE": ["Let's start trading together, what is your answer?"],
+      "DISLIKE_GREET": ["Ah, something to put into smelting pot and eat up..."],
+      "DEMAND": ["Accept this or I will eat you like a pebble stone!"],
+      "HATE_GREET": ["Be quick or I will explode..."],
+      "AGREE": ["This deal makes me warm inside."],
+      "PEACE_OFFER": ["There is room for both of us."],
+      "INSULT_RESPOND": ["You seem like a good fuel for furnace..."],
+      "ASK_MOVE_SPY": ["Your spy %1$s has entered into my sector. Remove it! NOW!"]
+    }
+  }
+]

@@ -33,6 +33,7 @@ import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -293,7 +294,8 @@ public final class PlanetHandling {
       int totalResearch = map.getTotalProductionByPlayerPerTurn(
           Planet.PRODUCTION_RESEARCH, index);
       Attitude attitude = info.getAiAttitude();
-      handlePlanetPopulation(planet, info, totalResearch);
+      handlePlanetPopulation(planet, info, totalResearch,
+          map.getGameLengthState());
       if (credit < 0
           && planet.getTax() < planet.getTotalProduction(
               Planet.PRODUCTION_PRODUCTION) + 2) {
@@ -956,9 +958,11 @@ public final class PlanetHandling {
    * @param planet Planet to handle
    * @param info Owner of the planet
    * @param totalResearch Total research value for whole realm
+   * @param state GameLengthState
    */
   protected static void handleGenericPopulation(final Planet planet,
-      final PlayerInfo info, final int totalResearch) {
+      final PlayerInfo info, final int totalResearch,
+      final GameLengthState state) {
     int otherWorldResearch = totalResearch - planet.getTotalProduction(
         Planet.PRODUCTION_RESEARCH);
     int totalPop = planet.getTotalPopulation();
@@ -970,6 +974,11 @@ public final class PlanetHandling {
       food += Math.min(rad, totalPop);
     }
 
+    boolean gameStart = false;
+    if (state == GameLengthState.START_GAME
+        || state == GameLengthState.ELDER_HEAD_START) {
+      gameStart = true;
+    }
     int foodReq = totalPop * info.getRace().getFoodRequire() / 100;
     int farmersReq = foodReq - food;
     double foodMult = info.getRace().getFoodSpeed(
@@ -996,7 +1005,8 @@ public final class PlanetHandling {
         && totalPop < planet.getPopulationLimit()
         && farmersReq >= 0 && farmersReq < totalPop
         && !uselessFarmers
-        && !surplusFood) {
+        && !surplusFood
+        && !gameStart) {
       farmersReq++;
     }
 
@@ -1172,13 +1182,27 @@ public final class PlanetHandling {
   }
 
   /**
-   * Handle planet population positions
+   * Handle planet population positions for JUnits.
    * @param planet Planet to handle
    * @param info Player who owns the planet
    * @param totalResearch Total research value for whole realm
    */
   public static void handlePlanetPopulation(final Planet planet,
       final PlayerInfo info, final int totalResearch) {
+    handlePlanetPopulation(planet, info, totalResearch,
+        GameLengthState.START_GAME);
+  }
+
+  /**
+   * Handle planet population positions
+   * @param planet Planet to handle
+   * @param info Player who owns the planet
+   * @param totalResearch Total research value for whole realm
+   * @param state GameLengthState
+   */
+  public static void handlePlanetPopulation(final Planet planet,
+      final PlayerInfo info, final int totalResearch,
+      final GameLengthState state) {
     int population = planet.getTotalPopulation();
     if (population <= 0) {
       ErrorLogger.enabledDebugging();
@@ -1197,7 +1221,7 @@ public final class PlanetHandling {
       branch = 0;
     } else {
       // Handle races whom need something to eat and have regular research
-      handleGenericPopulation(planet, info, totalResearch);
+      handleGenericPopulation(planet, info, totalResearch, state);
       branch = 5;
     }
     if (population != planet.getTotalPopulation()) {

@@ -42,6 +42,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.history.event.PlayerStartEvent;
+import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
@@ -240,7 +241,8 @@ public class StarMapGenerator {
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
     planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-    PlanetHandling.handlePlanetPopulation(planet, playerInfo, playerIndex);
+    PlanetHandling.handlePlanetPopulation(planet, playerInfo, playerIndex,
+        GameLengthState.START_GAME);
     ShipStat[] stats = playerInfo.getShipStatList();
     int count = 0;
     for (ShipStat stat : stats) {

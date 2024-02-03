@@ -1505,6 +1505,31 @@ public class PlanetHandlingTest extends TestCase {
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 3);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHomarianHandling3PopulationLateGame() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    info.setGovernment(GovernmentType.NEST);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 3);
+    PlanetHandling.handlePlanetPopulation(planet, info, 0,
+        GameLengthState.LATE_GAME);
     assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
@@ -1514,7 +1539,6 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
-
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling4Population() {
@@ -1577,14 +1601,14 @@ public class PlanetHandlingTest extends TestCase {
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 5);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
-    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1627,14 +1651,14 @@ public class PlanetHandlingTest extends TestCase {
     planet.setWorkers(Planet.METAL_MINERS, 5);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(8, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
   }
 
   @Test
@@ -1653,12 +1677,12 @@ public class PlanetHandlingTest extends TestCase {
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
-    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1852,16 +1876,16 @@ public class PlanetHandlingTest extends TestCase {
     planet.setWorkers(Planet.METAL_MINERS, 3);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
     assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
@@ -1937,13 +1961,14 @@ public class PlanetHandlingTest extends TestCase {
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_METAL));
-    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
     assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -2118,14 +2143,14 @@ public class PlanetHandlingTest extends TestCase {
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
     assertEquals(3, planet.getTotalPopulation());
-    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(8, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -2183,12 +2208,12 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(10, planet.getTotalPopulation());
     assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
-    assertEquals(5, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(4, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(10, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
@@ -2252,6 +2277,41 @@ public class PlanetHandlingTest extends TestCase {
     planet.setWorkers(Planet.FOOD_FARMERS, 6);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
     PlanetHandling.handlePlanetPopulation(planet, info, 0);
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(3, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testGreyansHandling6PopulationAllFarmersLateGame() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.HUMID);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 6);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info, 0,
+        GameLengthState.LATE_GAME);
     assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));

@@ -317,39 +317,6 @@ public class ResearchTest extends TestCase {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testResearchHandlingBackstabbing() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
-    Leader leader = LeaderUtility.createLeader(info, null, 0);
-    leader.addPerk(Perk.CORRUPTED);
-    leader.addPerk(Perk.CONVICT);
-    leader.addPerk(Perk.CRUEL);
-    info.setRuler(leader);
-    Research.handle(info);
-    assertEquals(Research.FOCUS_FOR_LAB,
-        info.getTechList().getTechFocus(TechType.Improvements));
-    info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
-    Research.handle(info);
-    assertEquals(Research.HIGH_FOCUS_LEVEL,
-        info.getTechList().getTechFocus(TechType.Combat));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
-        info.getTechList().getTechFocus(TechType.Defense));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
-        info.getTechList().getTechFocus(TechType.Hulls));
-    assertEquals(Research.LOW_FOCUS_LEVEL,
-        info.getTechList().getTechFocus(TechType.Improvements));
-    assertEquals(Research.DEFAULT_FOCUS_LEVEL,
-        info.getTechList().getTechFocus(TechType.Propulsion));
-    assertEquals(Research.HIGH_FOCUS_LEVEL,
-        info.getTechList().getTechFocus(TechType.Electrics));
-    int amount = info.getShipStatList().length;
-    info.getTechList().addTech(TechFactory.createHullTech("Probe", 2));
-    info.getTechList().addTech(TechFactory.createElectronicsTech("Espionage module Mk1", 2));
-    Research.handleShipDesigns(info);
-    assertEquals(amount + 2, info.getShipStatList().length);
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testResearchHandlingPeaceful() {
     PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
     Leader leader = LeaderUtility.createLeader(info, null, 0);

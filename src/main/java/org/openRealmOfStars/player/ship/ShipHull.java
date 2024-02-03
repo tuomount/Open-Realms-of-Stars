@@ -270,6 +270,15 @@ public class ShipHull {
 
   @Override
   public String toString() {
+    return getDescription(false);
+  }
+
+  /**
+   * Get hull description.
+   * @param allowArmedFreighter True if arms are allowed in freighters
+   * @return description as a string.
+   */
+  public String getDescription(final boolean allowArmedFreighter) {
     String hullDescription = IOUtilities.stringWrapper(
         getHullType().getDescription(), LINE_LENGTH);
     if (getHullType() == ShipHullType.PROBE
@@ -278,8 +287,7 @@ public class ShipHull {
           "Probe, no weapons allowed. Faster regular and FTL speed.",
           LINE_LENGTH);
     }
-    if (originalBuilder.hasTrait(TraitIds.ARMED_FREIGHTERS)
-        && getHullType() == ShipHullType.FREIGHTER) {
+    if (allowArmedFreighter && getHullType() == ShipHullType.FREIGHTER) {
       hullDescription = IOUtilities.stringWrapper(
           "Freighter, single weapon and privateer module allowed. Cargo ship",
           LINE_LENGTH);

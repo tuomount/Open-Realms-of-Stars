@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship.shipdesign;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -837,9 +837,11 @@ public class ShipDesign {
    * Get ship design flaws as a string.
    * @param banNukes True if nuclear weapons are banned.
    * @param banPrivateer true if privateer ships are banned
+   * @param allowArmedFreighters True if armed freighters are allowed.
    * @return Design flaws in a string
    */
-  public String getFlaws(final boolean banNukes, final boolean banPrivateer) {
+  public String getFlaws(final boolean banNukes, final boolean banPrivateer,
+      final boolean allowArmedFreighters) {
     boolean designOk = true;
     boolean flawNoCargoSpace = false;
     StringBuilder sb = new StringBuilder();
@@ -862,8 +864,7 @@ public class ShipDesign {
     if (getFreeSlots() == 0 && hull.getHullType() == ShipHullType.FREIGHTER) {
       flawNoCargoSpace = true;
     }
-    if (hull.getRace().hasTrait(TraitIds.ARMED_FREIGHTERS)
-        && hull.getHullType() == ShipHullType.FREIGHTER) {
+    if (allowArmedFreighters && hull.getHullType() == ShipHullType.FREIGHTER) {
       if (countWeapons() > 1) {
         designOk = false;
         sb.append(ShipDesignConsts.SINGLE_WEAPON_ALLOWED)
@@ -1024,7 +1025,7 @@ public class ShipDesign {
    * @return Design flaws in a string
    */
   public String getFlaws() {
-    return getFlaws(false, false);
+    return getFlaws(false, false, false);
   }
 
   /**

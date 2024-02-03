@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship.generator;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1186,7 +1186,7 @@ public final class ShipGenerator {
     ShipComponent power = ShipComponentFactory.createByName(
         player.getTechList().getBestEnergySource().getComponent());
     result.addComponent(power);
-    if (player.getRace().hasTrait(TraitIds.ARMED_FREIGHTERS)
+    if (player.getGovernment().allowArmedFreighters()
         && result.getFreeSlots() > 2) {
       ShipComponent weapon = ShipComponentFactory
           .createByName(player.getTechList().getBestWeapon().getComponent());
@@ -1253,14 +1253,6 @@ public final class ShipGenerator {
           result.addComponent(spyModule);
         }
       }
-    }
-    if (player.getRace().hasTrait(TraitIds.ARMED_FREIGHTERS)
-        && result.getFreeSlots() > 3
-        && (player.getTechList().hasTech("Privateer Mk1")
-            || player.getTechList().hasTech("Privateer Mk2")
-            || player.getTechList().hasTech("Privateer Mk3"))) {
-      result.addComponent(ShipComponentFactory.createByName(
-          "Privateer module"));
     }
     return result;
   }

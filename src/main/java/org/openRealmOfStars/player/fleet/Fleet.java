@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.fleet;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -33,7 +33,6 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.race.SpaceRace;
-import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -980,8 +979,9 @@ public class Fleet {
 
   /**
    * Smuggler fleet is one with no apparent military power on fleet.
-   * Only Freighter ships are allowed to have weapons, if they are
-   * Smaugirians.
+   * Only Freighter ships are allowed to have weapons, if realm has certain
+   * government. This is resticted in ship design. Generally speaking
+   * Armed freighter is a smuggler fleet.
    * @return True if fleet is smuggler fleet.
    */
   public boolean isSmugglerFleet() {
@@ -989,8 +989,7 @@ public class Fleet {
     for (Ship ship : ships) {
       if (!ship.isStarBase() || ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
         result = result + ship.getTotalMilitaryPower();
-        if (ship.getHull().getRace().hasTrait(TraitIds.ARMED_FREIGHTERS)
-            && ship.getHull().getHullType() == ShipHullType.FREIGHTER) {
+        if (ship.isSmuggler()) {
           result = result - ship.getTotalMilitaryPower();
         }
       }

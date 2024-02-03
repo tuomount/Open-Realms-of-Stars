@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  * Copyright (C) 2017 Lucas
  *
  * This program is free software; you can redistribute it and/or
@@ -1900,8 +1900,7 @@ private int increaseHitChanceByComponent() {
    * @return True if smuggler ship.
    */
   public boolean isSmuggler() {
-    if (getHull().getRace().hasTrait(TraitIds.ARMED_FREIGHTERS)
-        && getHull().getHullType() == ShipHullType.FREIGHTER) {
+    if (getHull().getHullType() == ShipHullType.FREIGHTER && hasWeapons()) {
       return true;
     }
     return false;

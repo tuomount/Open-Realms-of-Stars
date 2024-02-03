@@ -278,6 +278,7 @@ public class ShipDesignView extends BlackPanel {
 
       @Override
       public void focusGained(final FocusEvent e) {
+        // Nothing to do here
       }
     });
     designNameText.addKeyListener(new KeyListener() {
@@ -632,12 +633,14 @@ public class ShipDesignView extends BlackPanel {
   public void updatePanels() {
     ShipHull hull = (ShipHull) hullSelect.getSelectedItem();
     if (hull != null) {
-      hullInfoText.setText(hull.toString());
+      hullInfoText.setText(hull.getDescription(
+          player.getGovernment().allowArmedFreighters()));
       hullImage.setImage(hull.getImage());
     }
     if (design != null) {
       designNameText.setText(design.getName());
-      String flaws = design.getFlaws(banNukes, banPrivateer);
+      String flaws = design.getFlaws(banNukes, banPrivateer,
+          player.getGovernment().allowArmedFreighters());
       boolean duplicate = player.duplicateShipDesignName(design.getName());
       if (duplicate) {
         illegalName = true;
@@ -825,7 +828,8 @@ public class ShipDesignView extends BlackPanel {
   public boolean isDesignOK() {
     updatePanels();
      if (design != null
-            && design.getFlaws(banNukes, banPrivateer).equals(
+            && design.getFlaws(banNukes, banPrivateer,
+                player.getGovernment().allowArmedFreighters()).equals(
                 ShipDesignConsts.DESIGN_OK) && !illegalName) {
       return true;
     }

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.government;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2021 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -357,6 +357,17 @@ public enum GovernmentType {
     return false;
   }
 
+  /**
+   * Allow building armed freighters.
+   * @return True if armed freigters are ok.
+   */
+  public boolean allowArmedFreighters() {
+    if (this == SPACE_PIRATES || this == REGIME || this == SYNDICATE) {
+      return true;
+    }
+    return false;
+  }
+
   @Override
   public String toString() {
     return name;
@@ -622,6 +633,11 @@ public enum GovernmentType {
     if (LeaderUtility.isPowerHungryReadyForKill(this)) {
       sb.append(dot);
       sb.append(" Possibility to internal power struggle");
+      sb.append(lf);
+    }
+    if (allowArmedFreighters()) {
+      sb.append(dot);
+      sb.append(" Armed freighters");
       sb.append(lf);
     }
     if (isImmuneToHappiness()) {

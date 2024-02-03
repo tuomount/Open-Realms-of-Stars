@@ -91,7 +91,7 @@ public class ShipHullTest extends TestCase {
         + "Slots:6 Hull:6\n"
         + "Size:Medium Fleet capacity: 0.1\n"
         + "Freighter, single weapon and privateer\n"
-        + "module allowed. Cargo ship", hull.toString());
+        + "module allowed. Cargo ship", hull.getDescription(true));
   }
 
 }

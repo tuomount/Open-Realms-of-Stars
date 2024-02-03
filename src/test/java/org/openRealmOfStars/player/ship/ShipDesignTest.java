@@ -245,7 +245,8 @@ public class ShipDesignTest extends TestCase {
     assertEquals(true, tmp.contains(ShipDesignConsts.PRIVATEER_MODULE_MISSING));
     design.addComponent(module);
     assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
-    assertEquals(false,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws(false, true)));
+    assertEquals(false,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws(false,
+        true, false)));
   }
 
   @Test
@@ -294,7 +295,8 @@ public class ShipDesignTest extends TestCase {
     assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     assertEquals(true, design.isBomberShip());
     assertEquals(false, design.isTrooperShip());
-    assertEquals(false,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws(true, false)));
+    assertEquals(false,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws(true,
+        false, false)));
   }
 
   @Test

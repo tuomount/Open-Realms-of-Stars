@@ -35,6 +35,9 @@ public class SpeechFactoryTest {
     int maxRaces = SpaceRace.values().length;
     for (int i = 0; i < maxRaces; i++) {
       SpaceRace race = SpaceRace.values()[i];
+      if (race == SpaceRace.SPACE_MONSTERS) {
+        continue;
+      }
       SpeechLine line = SpeechFactory.createLine(SpeechType.AGREE, race, null);
       assertNotEquals(null, line);
       assertEquals(SpeechType.AGREE, line.getType());

@@ -385,6 +385,15 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.TOLERATE_LAVA).ifPresent(trait -> {
       LITHORIANS.addTrait(trait);
     });
+    TraitFactory.create(TraitIds.COMMUNAL).ifPresent(trait -> {
+      CENTAURS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.SOLITARY).ifPresent(trait -> {
+      LITHORIANS.addTrait(trait);
+    });
+    TraitFactory.create(TraitIds.NATURAL_LEADERS).ifPresent(trait -> {
+      ALTEIRIANS.addTrait(trait);
+    });
     initialized = true;
   }
 
@@ -894,10 +903,10 @@ public enum SpaceRace {
    * @return Extra population per planet
    */
   public int getExtraPopulation() {
-    if (this == SpaceRace.LITHORIANS) {
+    if (this.hasTrait(TraitIds.SOLITARY)) {
       return -2;
     }
-    if (this == SpaceRace.CENTAURS) {
+    if (this.hasTrait(TraitIds.COMMUNAL)) {
       return 2;
     }
     return 0;
@@ -984,28 +993,11 @@ public enum SpaceRace {
    * @return Minimum population number.
    */
   public int getMinimumPopulationForLeader() {
-    switch (this) {
-    default:
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-    case MECHIONS:
-    case SPORKS:
-    case GREYANS:
-    case CENTAURS:
-    case MOTHOIDS:
-    case TEUTHIDAES:
-    case SCAURIANS:
-    case HOMARIANS:
-    case CHIRALOIDS:
-    case REBORGIANS:
-    case LITHORIANS:
-    case SMAUGIRIANS:
-    case SYNTHDROIDS:
-      return 5;
-    case ALTEIRIANS:
-      return 4;
+    int result = 5;
+    if (this.hasTrait(TraitIds.NATURAL_LEADERS)) {
+      result--;
     }
+    return result;
   }
 
   /**

@@ -392,5 +392,30 @@
     "conflictsWith": [
       "TOLERATE_COLD", "TOLERATE_HOT"
     ]
+  },
+  {
+    "id": "COMMUNAL",
+    "name": "Communal",
+    "description": "Race is able to tolerate more dense population. Allows growing 2 extra population to planet.",
+    "points": 1,
+    "conflictsWith": [
+      "SOLITARY"
+    ]
+  },
+  {
+    "id": "SOLITARY",
+    "name": "Solitary",
+    "description": "Race is not able to tolerate dense population. Maximum population is 2 lower than normally.",
+    "points": -1,
+    "conflictsWith": [
+      "Communal"
+    ]
+  },
+  {
+    "id": "NATURAL_LEADERS",
+    "name": "Natural leaders",
+    "description": "Race has more natural leaders, one less population is required for trainig a leader.",
+    "points": 1
   }
+  
 ]

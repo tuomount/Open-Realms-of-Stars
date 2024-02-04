@@ -145,6 +145,12 @@ public final class TraitIds {
   public static final String TOLERATE_HOT = "TOLERATE_HOT";
   /** Tolerate lava on planets. */
   public static final String TOLERATE_LAVA = "TOLERATE_LAVA";
+  /** Communal, like to live together  */
+  public static final String COMMUNAL = "COMMUNAL";
+  /** Solitary, do not like to live together  */
+  public static final String SOLITARY = "SOLITARY";
+  /** Natural leaders, leaders are available a bit sooner. */
+  public static final String NATURAL_LEADERS = "NATURAL_LEADER";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

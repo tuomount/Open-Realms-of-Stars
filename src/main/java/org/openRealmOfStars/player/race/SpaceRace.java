@@ -42,139 +42,103 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 public enum SpaceRace {
 
   /**
-   * Humans are about average in everything.
+   * Humans are commonly regarded as possessing average physical and mental
+   * attributes.
    */
-  HUMAN(0, "Humans", "Human",
-        "Humans are great diplomats but\n"
-      + "they are about average in everything else."),
+  HUMAN(0, "Humans", "Human"),
   /**
-   * Mechanical beings whom do not eat food. Each now population must be built.
+   * Mechions are a race of humanoid robot that resemble industrial machines.
+   * Heavy and sturdy looking mechanical creatures.
    */
-  MECHIONS(1, "Mechions", "Mechion",
-          "Mechanical beings whom do not eat food.\n"
-        + "Each population must be built."),
+  MECHIONS(1, "Mechions", "Mechion"),
   /**
-   * Aggressive and warmongering spieces.
+   * Sporks are a humanoid species which have green and tough skin.
+   * They also have horns growing from their skull.
    */
-  SPORKS(2, "Sporks", "Spork", "Aggressive and warmongering species."),
+  SPORKS(2, "Sporks", "Spork"),
   /**
-   * Humanoid creatures with grey skin and big eyes.
-   * Greyan are excellent researchers.
+   * Greyans are typically tall and slender, with long, graceful limbs
+   * and delicate features. Their grey skin is smooth and sleek, and
+   * it is said to shimmer in the light. They have large, almond-shaped
+   * eyes that are capable of seeing in a wide range of light levels, and
+   * they are highly perceptive and intuitive.
    */
-  GREYANS(3, "Greyans", "Greyan", "Humanoid creatures with grey skin and"
-          + " big eyes.\nGreyan are excellent researchers."),
+  GREYANS(3, "Greyans", "Greyan"),
   /**
-   * Quadrupedal humanoid creatures which are big, about 5 meters tall. Due
-   * their enormous size their space ships are must more rigid.
+   * Centaurs, reminiscent of the mythical beings from ancient Greek
+   * and Roman lore, bear a striking resemblance to their legendary
+   * counterparts. They possess the upper body of a humanoid, juxtaposed
+   * with a lower body reminiscent of an ant. Their formidable, resilient
+   * skin and towering stature further distinguish them.
    */
-  CENTAURS(4, "Centaurs", "Centaur",
-            "Quadrupedal humanoid creatures which are big,\n"
-          + "about 5 meters tall. Due their enormous size their space\n"
-          + "ships are more rigid. "),
+  CENTAURS(4, "Centaurs", "Centaur"),
   /**
-   * Mothoids are sentient insects with hivemind. They are fast breeding race.
+   * Mothoids are insect like creatures with exo-skeleton and pair of wings.
+   * They also have antenas for extra sensing.
    */
-  MOTHOIDS(5, "Mothoids", "Mothoid",
-        "Mothoids are sentient insects with capability to hivemind.\n"
-      + "They are fast breeding race. Their song is hypnotic so\n"
-      + "cultural bonus is granted. Mothoids exo-skeleton is weak\n"
-      + "and therefore get negative bonus on mining and troop power."),
+  MOTHOIDS(5, "Mothoids", "Mothoid"),
   /**
-   * Teuthidaes are octopus like creatures.
-   * They are scientific and military focused race. Their ships have built-in
-   * cloaking devices.
+   * Teuthidae an octopus-like species with intelligence. They are not
+   * humanoid creatures like most of the other sentient creatures in galaxy.
    */
-  TEUTHIDAES(6, "Teuthidaes", "Teuthidae",
-        "Teuthidaes are octopus like creatures. They are scientific\n"
-      + "and military focused race. Their ships have built-in\n"
-      + "cloaking devices."),
+  TEUTHIDAES(6, "Teuthidaes", "Teuthidae"),
   /**
-   * Scaurians are small but wide humanoid.
-   * They are merchantical race. They focus make better trades with other and
-   * gain more credits.
+   * Scaurians are a race of small but wide humanoids.
    */
-  SCAURIANS(7, "Scaurians", "Scaurian",
-          "Scaurians are small but wide humanoid. They are merchantical\n"
-        + "race. They focus make better trades with other and gain more\n"
-        + "credits."),
+  SCAURIANS(7, "Scaurians", "Scaurian"),
   /**
-   * Homarians are very strong creatures. They have humanoid form but
-   * they have very thick and hard exoskeleton.
+   * Homarians are a race of humanoid crabs that are known for their
+   * immense strength and hard exoskeletons. This exoskeleton also gives
+   * them incredible strength, allowing them to easily perform physical
+   * tasks that would be difficult for other species.
    */
-  HOMARIANS(8, "Homarians", "Homarian",
-          "Homarians are very strong creatures. They have humanoid\n"
-        + "form but they have very thick and hard exoskeleton.\n"
-        + "Due their strength they are good in physical tasks."),
+  HOMARIANS(8, "Homarians", "Homarian"),
   /**
-   * Humans are about average in everything and space pirates are probably
-   * humans or are just average.
+   * Generic space pirate which are aggressive and try cause trouble.
    */
-  SPACE_PIRATE(9, "Space Pirates", "Space pirate",
-         "Generic space pirate which are aggressive and try cause\n"
-       + " trouble. Stats are identical to humans."),
+  SPACE_PIRATE(9, "Space Pirates", "Space pirate"),
   /**
-   * Chiraloids are creatures with four arms and two legs. They have hard
-   * exoskeleton. They also have special gland which uses radioactivity
-   * to create nutrient. This is called radiosynthesis.
+   * Chiraloids are creatures that are distinguished by their four arms
+   * and two legs. They have a hard exoskeleton that provides them with
+   * protection and allows them to withstand harsh environments.
    */
-  CHIRALOIDS(10, "Chiraloids", "Chiraloid",
-          "Chiraloids are creatures with four arms and two legs.\n"
-        + "They have hard exoskeleton. They also have special gland\n"
-        + "which uses radioactivity to create nutrient. This is called\n"
-        + "radiosynthesis."),
+  CHIRALOIDS(10, "Chiraloids", "Chiraloid"),
   /**
-   * Reborgians are organism combined with organic and robotic
-   * parts. So they are cyborgs. They can synthesize any living space race
-   * to their own race, so they are fearful conquerors.
-   * They need only very little food surviving, but their
-   * reproduction is very slow.
+   * Reborgians are a race of cyborgs that are created by combining
+   * organic organisms with bionic and robotic parts. This gives them
+   * enhanced physical abilities and allows them to operate in a wide
+   * variety of environments.
    */
-  REBORGIANS(11, "Reborgians", "Reborgian",
-      "Reborgians are organism combined with bionic and robotic "
-      + "parts. So they are cyborgs. They can synthesize any living space race"
-      + " to their own race, so they are fearful conquerors. They need only"
-      + " very little food surviving, but their reproduction is very slow."),
+  REBORGIANS(11, "Reborgians", "Reborgian"),
   /**
-   * Lithorians are creatures that eat metal instead of food. They have slow
-   * grow rate and they have -2 population limit. They have
-   * excellent ability to mine metal.
+   * Lithorians are a race of crab like creatures. They have large and
+   * strong claws and very hard external shell. They have multiple
+   * legs which they use to move around.
    */
-  LITHORIANS(12, "Lithorians", "Lithorian",
-      "Lithorians are creatures that eat metal instead of food. They have"
-      + " slow grow rate and they have -2 population limit."
-      + " They have excellent ability to mine metal."),
+  LITHORIANS(12, "Lithorians", "Lithorian"),
   /**
-   * Alteirians are creatures that live in zero gravity. Because of this they
-   * need special suites to move planet surface. Most of their time they
-   * live on planet's orbit. Their orbitals are more improved than other
-   * space race.
+   * Alteirians are a race of creatures that look a bit like floating
+   * octopus. They are main just body, mouth and eyes. Below the body
+   * there are seven tentacles.
    */
-  ALTEIRIANS(13, "Alteirians", "Alteirian",
-      "Alteirians are creatures that live in zero gravity. Because of this they"
-      + " need special suites to move planet surface. Most of their time they"
-      + " live on planet's orbit. Their orbitals are more improved than other"
-      + " space race."),
+  ALTEIRIANS(13, "Alteirians", "Alteirian"),
   /**
-   * Smaugirians are humanoids that are known for smuggling goods.
-   * Their cargo ships can contain single weapon or privateering modules.
+   * Smaugirians are a humanoid race that resembles hare. They have quite
+   * large feet and very strong legs. They have two long ears and they can
+   * eat pretty much anything with those rodent like teeths.
    */
-  SMAUGIRIANS(14, "Smaugirians", "Smaugirian",
-      "Smaugirians are humanoids that are known for smuggling goods."
-      + " Their cargo ships can contain single weapon"
-      + " or privateering modules."),
+  SMAUGIRIANS(14, "Smaugirians", "Smaugirian"),
   /**
-   * Humans are about average in everything and space pirates are probably
-   * humans or are just average.
+   * Generic space monsters which are aggressive and try cause trouble.
+   *  No diplomacy with these guys.
    */
-  SPACE_MONSTERS(15, "Space Monsters", "Space monsters",
-         "Generic space monsters which are aggressive and try cause\n"
-       + " trouble. No diplomacy with these guys."),
+  SPACE_MONSTERS(15, "Space Monsters", "Space monsters"),
   /**
-   * Artificial beings that eat only small amount of food.
-   * Each population must be built. Alternative name Huskdroid.
+   * Synthdroids are a race of artificial beings that are designed to
+   * resemble human females. They are often portrayed as being sleek
+   * and elegant, with graceful movements and a polished appearance.
    */
-  SYNTHDROIDS(16, "Synthdroids", "Synthdroid", "Artificial beings that eat only"
-      + " small amount of food. Each population must be built.");
+  SYNTHDROIDS(16, "Synthdroids", "Synthdroid");
 
   /** Space race has not been initialized yet. */
   private static boolean initialized = false;
@@ -219,6 +183,7 @@ public enum SpaceRace {
     });
     TraitFactory.create(TraitIds.MERCANTILE).ifPresent(trait -> {
       SCAURIANS.addTrait(trait);
+      SYNTHDROIDS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.STEALTHY).ifPresent(trait -> {
       TEUTHIDAES.addTrait(trait);
@@ -229,6 +194,7 @@ public enum SpaceRace {
     });
     TraitFactory.create(TraitIds.FAST_GROWTH).ifPresent(trait -> {
       MOTHOIDS.addTrait(trait);
+      SMAUGIRIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.SLOW_GROWTH).ifPresent(trait -> {
       GREYANS.addTrait(trait);
@@ -254,7 +220,6 @@ public enum SpaceRace {
     TraitFactory.create(TraitIds.SLOW_RESEARCH).ifPresent(trait -> {
       MECHIONS.addTrait(trait);
       HOMARIANS.addTrait(trait);
-      CHIRALOIDS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.FAST_RESEARCH).ifPresent(trait -> {
       GREYANS.addTrait(trait);
@@ -295,20 +260,24 @@ public enum SpaceRace {
       REBORGIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.EXCELLENT_WAR_RESILIENCE).ifPresent(trait -> {
-      CENTAURS.addTrait(trait);
+      SPORKS.addTrait(trait);
       LITHORIANS.addTrait(trait);
       SMAUGIRIANS.addTrait(trait);
+      CHIRALOIDS.addTrait(trait);
+      SPACE_PIRATE.addTrait(trait);
+      SPACE_MONSTERS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.GOOD_WAR_RESILIENCE).ifPresent(trait -> {
+      CENTAURS.addTrait(trait);
       HUMAN.addTrait(trait);
       TEUTHIDAES.addTrait(trait);
       REBORGIANS.addTrait(trait);
-      SPACE_PIRATE.addTrait(trait);
-      SPACE_MONSTERS.addTrait(trait);
+      SYNTHDROIDS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.POOR_WAR_RESILIENCE).ifPresent(trait -> {
       GREYANS.addTrait(trait);
       SCAURIANS.addTrait(trait);
+      ALTEIRIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.WEAK_WAR_RESILIENCE).ifPresent(trait -> {
       MOTHOIDS.addTrait(trait);
@@ -317,6 +286,7 @@ public enum SpaceRace {
       HUMAN.addTrait(trait);
       SCAURIANS.addTrait(trait);
       HOMARIANS.addTrait(trait);
+      MOTHOIDS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.REPULSIVE).ifPresent(trait -> {
       MECHIONS.addTrait(trait);
@@ -333,16 +303,22 @@ public enum SpaceRace {
       MECHIONS.addTrait(trait);
       SPORKS.addTrait(trait);
       REBORGIANS.addTrait(trait);
+      HOMARIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.WEAK).ifPresent(trait -> {
+      TEUTHIDAES.addTrait(trait);
       CHIRALOIDS.addTrait(trait);
+      SMAUGIRIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.HANDY).ifPresent(trait -> {
       HOMARIANS.addTrait(trait);
+      GREYANS.addTrait(trait);
+      SMAUGIRIANS.addTrait(trait);
+      SPACE_PIRATE.addTrait(trait);
+      SPACE_MONSTERS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.IMPRACTICAL).ifPresent(trait -> {
       CHIRALOIDS.addTrait(trait);
-      ALTEIRIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.HIGH_GRAVITY_BEING).ifPresent(trait -> {
       CENTAURS.addTrait(trait);
@@ -361,15 +337,17 @@ public enum SpaceRace {
       HOMARIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.TOLERATE_HIGH_RADIATION).ifPresent(trait -> {
+      MECHIONS.addTrait(trait);
       GREYANS.addTrait(trait);
       ALTEIRIANS.addTrait(trait);
-      LITHORIANS.addTrait(trait);
       MOTHOIDS.addTrait(trait);
+      REBORGIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.TOLERATE_EXTREME_RADIATION).ifPresent(
         trait -> {
-      MECHIONS.addTrait(trait);
       CHIRALOIDS.addTrait(trait);
+      SCAURIANS.addTrait(trait);
+      LITHORIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.TOLERATE_COLD).ifPresent(trait -> {
       HUMAN.addTrait(trait);
@@ -377,22 +355,33 @@ public enum SpaceRace {
       SCAURIANS.addTrait(trait);
       HOMARIANS.addTrait(trait);
       TEUTHIDAES.addTrait(trait);
+      SMAUGIRIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.TOLERATE_HOT).ifPresent(trait -> {
+      SPORKS.addTrait(trait);
       MECHIONS.addTrait(trait);
       REBORGIANS.addTrait(trait);
+      MOTHOIDS.addTrait(trait);
+      TEUTHIDAES.addTrait(trait);
+      CHIRALOIDS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.TOLERATE_LAVA).ifPresent(trait -> {
       LITHORIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.COMMUNAL).ifPresent(trait -> {
-      CENTAURS.addTrait(trait);
+      SCAURIANS.addTrait(trait);
+      SPORKS.addTrait(trait);
+      MOTHOIDS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.SOLITARY).ifPresent(trait -> {
       LITHORIANS.addTrait(trait);
+      CENTAURS.addTrait(trait);
+      SMAUGIRIANS.addTrait(trait);
     });
     TraitFactory.create(TraitIds.NATURAL_LEADERS).ifPresent(trait -> {
       ALTEIRIANS.addTrait(trait);
+      HUMAN.addTrait(trait);
+      SMAUGIRIANS.addTrait(trait);
     });
     initialized = true;
   }
@@ -402,15 +391,13 @@ public enum SpaceRace {
    * @param index Space race index
    * @param name Space race name in plural
    * @param single Space race name in single format
-   * @param description Space race  description
    * @param traits Race's traits
    */
   SpaceRace(final int index, final String name, final String single,
-      final String description, final RaceTrait... traits) {
+      final RaceTrait... traits) {
     this.index = index;
     this.name = name;
     this.nameSingle = single;
-    this.description = description;
     this.traits = new ArrayList<>(traits.length);
     for (var trait : traits) {
       addTrait(trait);
@@ -455,10 +442,6 @@ public enum SpaceRace {
   public String getSpaceShipId() {
     return getNameSingle();
   }
-  /**
-   * Space race description
-   */
-  private String description;
 
   /** Race traits */
   private ArrayList<RaceTrait> traits;
@@ -638,13 +621,6 @@ public enum SpaceRace {
    */
   public String getName() {
     return name;
-  }
-
-  /**
-   * @return the description
-   */
-  public String getDescription() {
-    return description;
   }
 
   /**
@@ -1134,7 +1110,7 @@ public enum SpaceRace {
     if (!markDown) {
       sb.append("<p>");
     }
-    sb.append(description);
+    sb.append(getRacialDescription());
     if (!markDown) {
       sb.append("</p>");
     }
@@ -1156,26 +1132,6 @@ public enum SpaceRace {
     sb.append(getMinimumPopulationForLeader());
     sb.append(lf);
     sb.append(dot);
-    sb.append(" Production: ");
-    sb.append(getProductionSpeed(null));
-    sb.append("%");
-    sb.append(lf);
-    sb.append(dot);
-    sb.append(" Mining: ");
-    sb.append(getMiningSpeed(null));
-    sb.append("%");
-    sb.append(lf);
-    sb.append(dot);
-    sb.append(" Research: ");
-    sb.append(getResearchSpeed());
-    sb.append("%");
-    sb.append(lf);
-    sb.append(dot);
-    sb.append(" Food production: ");
-    sb.append(getFoodSpeed(null));
-    sb.append("%");
-    sb.append(lf);
-    sb.append(dot);
     sb.append(" Growth: ");
     switch (getGrowthSpeed()) {
     case 0: sb.append("never"); break;
@@ -1192,69 +1148,6 @@ public enum SpaceRace {
     default:
     case 100: sb.append("10 star years"); break;
     case 150: sb.append("6 star years"); break;
-    }
-    sb.append(lf);
-    sb.append(dot);
-    sb.append(" Food require: ");
-    sb.append(getFoodRequire());
-    sb.append("%");
-    if (getExtraPopulation() != 0) {
-      sb.append(lf);
-      sb.append(dot);
-      sb.append(" Population limit: ");
-      if (getExtraPopulation() > 0) {
-        sb.append("+");
-      }
-      sb.append(getExtraPopulation());
-    }
-    sb.append(lf);
-    sb.append(dot);
-    sb.append(" Culture: ");
-    sb.append(getCultureSpeed());
-    sb.append("%");
-    sb.append(lf);
-    sb.append(dot);
-    sb.append(" Diplomacy bonus: ");
-    sb.append(getDiplomacyBonus());
-    sb.append(lf);
-    sb.append(dot);
-    sb.append(" War resistance: ");
-    sb.append(getWarFatigueResistance());
-    sb.append(lf);
-    sb.append(dot);
-    sb.append(" Special: ");
-    if (this == CENTAURS) {
-      sb.append("Stronger ships");
-    } else if (this == MECHIONS || this == SYNTHDROIDS) {
-      sb.append("Population needs to be built and no heirs");
-    } else if (this == SPORKS) {
-      sb.append("Extra scout ship and higher combat tech at start");
-    } else if (this == GREYANS) {
-      sb.append("Electronics and propulsion techs are higher at start");
-    } else if (this == MOTHOIDS) {
-      sb.append("No defense tech but one Planetary improvement tech at start");
-    } else if (this == SpaceRace.TEUTHIDAES) {
-      sb.append("Each ship has built-in cloaking device");
-    } else if (this == SpaceRace.SCAURIANS) {
-      sb.append("Trade fleet gain 50% more credits and better trade"
-          + " buildings.");
-    } else if (this == SpaceRace.HOMARIANS) {
-      sb.append("Starts with 5 population");
-    } else if (this == SpaceRace.CHIRALOIDS) {
-      sb.append("Radiosynthesis (+1 food per radiation per population)");
-    } else if (this == SpaceRace.REBORGIANS) {
-      sb.append("Gain dead enemies as own population."
-          + " Steal technology by conquering planets."
-          + " No heirs available.");
-    } else if (this == SpaceRace.LITHORIANS) {
-      sb.append("Population eats metal instead of food.");
-    } else if (this == SpaceRace.ALTEIRIANS) {
-      sb.append("Lives only on orbitals. Orbitals are cheaper and colonized"
-          + " planets have space port.");
-    } else if (this == SpaceRace.SMAUGIRIANS) {
-      sb.append("Weapon allowed in cargo ships.");
-    } else {
-      sb.append("None");
     }
 
     if (traits.size() > 0) {

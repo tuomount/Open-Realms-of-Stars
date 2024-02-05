@@ -150,7 +150,7 @@ public final class TraitIds {
   /** Solitary, do not like to live together  */
   public static final String SOLITARY = "SOLITARY";
   /** Natural leaders, leaders are available a bit sooner. */
-  public static final String NATURAL_LEADERS = "NATURAL_LEADER";
+  public static final String NATURAL_LEADERS = "NATURAL_LEADERS";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

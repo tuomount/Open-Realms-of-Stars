@@ -288,7 +288,7 @@
   {
     "id": "WEAK",
     "name": "Weak",
-    "description": "Race is weaker than usual. This weakness is negatively impacting it's combat abilities, as well as labor work.",
+    "description": "Race is weaker than usual. This weakness is negatively impacting it's combat abilities, as well as mining work.",
     "points": -2,
     "conflictsWith": [
       "STRONG"

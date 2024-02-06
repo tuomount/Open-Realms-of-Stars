@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.player;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2023 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,8 +16,6 @@ package org.openRealmOfStars.player.player;
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
-
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -160,7 +158,7 @@ public class PlayerListTest extends TestCase {
     info.setGovernment(GovernmentType.DEMOCRACY);
     list.addPlayer(info);
     info = new PlayerInfo(SpaceRace.MECHIONS, 4, 2);
-    info.setGovernment(GovernmentType.MECHANICAL_HORDE);
+    info.setGovernment(GovernmentType.HORDE);
     list.addPlayer(info);
     info = new PlayerInfo(SpaceRace.GREYANS, 4, 3);
     info.setGovernment(GovernmentType.TECHNOCRACY);

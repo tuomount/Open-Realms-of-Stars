@@ -1031,7 +1031,6 @@ public final class LeaderUtility {
         || government == GovernmentType.HIVEMIND
         || government == GovernmentType.HORDE
         || government == GovernmentType.KINGDOM
-        || government == GovernmentType.MECHANICAL_HORDE
         || government == GovernmentType.NEST
         || government == GovernmentType.FEUDALISM
         || government == GovernmentType.REGIME) {

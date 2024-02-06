@@ -1372,7 +1372,7 @@ public class PlanetHandlingTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling5Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
-    info.setGovernment(GovernmentType.MECHANICAL_HORDE);
+    info.setGovernment(GovernmentType.HORDE);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 5);

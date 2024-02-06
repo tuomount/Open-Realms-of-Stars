@@ -85,7 +85,6 @@ public final class GovernmentUtility {
       case CLAN:
       case REGIME:
       case FEUDALISM:
-      case MECHANICAL_HORDE:
         return 3;
       case NEST:
       case AI:

@@ -83,41 +83,37 @@ public enum GovernmentType {
    */
   HORDE(13, "Horde", -1, 1, false, 3),
   /**
-   * Horde government for Mechions
-   */
-  MECHANICAL_HORDE(14, "Horde", -1, 1, false, 4),
-  /**
    * Clan government
    */
-  CLAN(15, "Clan", -1, 1, false, 4),
+  CLAN(14, "Clan", -1, 1, false, 4),
   /**
    * Collective government
    */
-  COLLECTIVE(16, "Collective", 0, 1, false, 4),
+  COLLECTIVE(15, "Collective", 0, 1, false, 4),
   /**
    * Utopia government
    */
-  UTOPIA(17, "Utopia", 2, -1, false, 1),
+  UTOPIA(16, "Utopia", 2, -1, false, 1),
   /**
    * Regime government
    */
-  REGIME(18, "Regime", -1, 1, false, 4),
+  REGIME(17, "Regime", -1, 1, false, 4),
   /**
    * Feudalism government
    */
-  FEUDALISM(19, "Feudalism", -1, 2, false, 3),
+  FEUDALISM(18, "Feudalism", -1, 2, false, 3),
   /**
    * Technocracy government
    */
-  TECHNOCRACY(20, "Technocracy", 0, -1, false, 2),
+  TECHNOCRACY(19, "Technocracy", 0, -1, false, 2),
   /**
    * Pirate government
    */
-  SPACE_PIRATES(21, "Pirates", 0, 0, true, 3),
+  SPACE_PIRATES(20, "Pirates", 0, 0, true, 3),
   /**
    * Syndicate government
    */
-  SYNDICATE(22, "Syndicate", 0, 1, false, 3);
+  SYNDICATE(21, "Syndicate", 0, 1, false, 3);
 
 
 
@@ -249,7 +245,7 @@ public enum GovernmentType {
   public int getProductionBonus() {
     if (this == DEMOCRACY || this == EMPIRE || this == REPUBLIC
         || this == REGIME || this == GUILD || this == HIERARCHY
-        || this == MECHANICAL_HORDE || this == TECHNOCRACY) {
+        || this == TECHNOCRACY) {
       return 1;
     }
     return 0;
@@ -324,8 +320,8 @@ public enum GovernmentType {
    * @return True if war happiness bonus
    */
   public boolean hasWarHappiness() {
-    if (this == HORDE || this == CLAN || this == MECHANICAL_HORDE
-        || this == REGIME || this == SYNDICATE) {
+    if (this == HORDE || this == CLAN || this == REGIME
+        || this == SYNDICATE) {
       return true;
     }
     return false;
@@ -337,8 +333,7 @@ public enum GovernmentType {
    */
   public boolean hasPopulationRush() {
     if (this == EMPIRE || this == KINGDOM || this == HIERARCHY
-        || this == HORDE || this == CLAN || this == MECHANICAL_HORDE
-        || this == REGIME) {
+        || this == HORDE || this == CLAN || this == REGIME) {
       return true;
     }
     return false;
@@ -392,7 +387,6 @@ public enum GovernmentType {
       case UNION:
       case DEMOCRACY:
       case FEDERATION:
-      case MECHANICAL_HORDE:
       case REPUBLIC: {
         return 10;
       }
@@ -437,7 +431,6 @@ public enum GovernmentType {
       case UNION:
       case DEMOCRACY:
       case FEDERATION:
-      case MECHANICAL_HORDE:
       case REPUBLIC:
       case EMPIRE:
       case KINGDOM:
@@ -506,7 +499,6 @@ public enum GovernmentType {
     switch (this) {
       case CLAN:
       case HORDE:
-      case MECHANICAL_HORDE:
       case HIVEMIND:
       case EMPIRE:
       case FEUDALISM:
@@ -574,7 +566,6 @@ public enum GovernmentType {
       case CLAN:
       case HORDE:
       case SYNDICATE:
-      case MECHANICAL_HORDE:
       case EMPIRE:
       case HIERARCHY:
       case REGIME: {

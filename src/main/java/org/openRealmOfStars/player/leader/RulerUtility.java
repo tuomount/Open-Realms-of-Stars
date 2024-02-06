@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.leader;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2020-2023 Tuomo Untinen
+ * Copyright (C) 2020-2024 Tuomo Untinen
  * Copyright (C) 2023 BottledByte
  *
  * This program is free software; you can redistribute it and/or
@@ -72,7 +72,6 @@ public final class RulerUtility {
         return "King";
       }
       case HORDE:
-      case MECHANICAL_HORDE:
       case CLAN: {
         return "Chief";
       }
@@ -1080,7 +1079,6 @@ public final class RulerUtility {
       default:
       case CLAN:
       case HORDE:
-      case MECHANICAL_HORDE:
       case HIVEMIND:
       case NEST: {
         bestLeader = getStrongestLeader(realm, true);

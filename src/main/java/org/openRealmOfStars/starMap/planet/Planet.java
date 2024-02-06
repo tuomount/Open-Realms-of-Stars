@@ -1183,6 +1183,9 @@ public class Planet {
 
     if (totalPopulation >= 4) {
       value = government.getProductionBonus();
+      if (planetOwnerInfo.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
+        value = value + government.getFoodBonus();
+      }
       result += value;
       addEntryIfWorthy(sb, "government", value);
     }
@@ -1256,6 +1259,9 @@ public class Planet {
 
     if (totalPopulation >= 4) {
       value = government.getMiningBonus();
+      if (planetOwnerInfo.getRace().isLithovorian()) {
+        value = value + government.getFoodBonus();
+      }
       result += value;
       addEntryIfWorthy(sb, "government", value);
     }
@@ -1343,7 +1349,7 @@ public class Planet {
       }
     }
 
-    if (totalPopulation >= 4) {
+    if (totalPopulation >= 4 && planetRace.isEatingFood()) {
       value = government.getFoodBonus();
       result += value;
       addEntryIfWorthy(sb, "government", value);

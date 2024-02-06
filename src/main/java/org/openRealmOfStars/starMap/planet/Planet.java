@@ -3530,6 +3530,81 @@ public class Planet {
   }
 
   /**
+   * Evaluate planet value based on PlayerInfo, distance from certain point.
+   * @param info PlayerInfo aka realm
+   * @param coord Coordinate where distance is calculate
+   * @param distanceDivider Is distance going to be divided with something.
+   * @return planet value
+   */
+  public int evaluatePlanetValue(final PlayerInfo info,
+      final Coordinate coord, final int distanceDivider) {
+    int value = getSizeAsInt() * 10;
+    int dist = (int) coord.calculateDistance(getCoordinate());
+    final var race = info.getRace();
+    if (race.isEatingFood()) {
+      value = value + getWaterLevel().getIndex() * 5;
+    }
+    if (getGravityType() == GravityType.HIGH_GRAVITY) {
+      if (race.hasTrait(TraitIds.LOW_GRAVITY_BEING)) {
+        value = value - 10;
+      } else if (race.hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+        value = value - 15;
+      } else if (race.hasTrait(TraitIds.HIGH_GRAVITY_BEING)) {
+        value = value - 1;
+        value = value + 1;
+      } else {
+        value = value - 5;
+      }
+    } else if (getGravityType() == GravityType.LOW_GRAVITY) {
+      if (race.hasTrait(TraitIds.LOW_GRAVITY_BEING)) {
+        value = value - 1;
+        value = value + 1;
+      } else if (race.hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+        value = value - 5;
+      } else if (race.hasTrait(TraitIds.HIGH_GRAVITY_BEING)) {
+        value = value + 10;
+      } else {
+        value = value + 5;
+      }
+    } else if (getGravityType() == GravityType.NORMAL_GRAVITY) {
+      if (race.hasTrait(TraitIds.LOW_GRAVITY_BEING)) {
+        value = value - 5;
+      } else if (race.hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+        value = value - 10;
+      } else if (race.hasTrait(TraitIds.HIGH_GRAVITY_BEING)) {
+        value = value + 5;
+      }
+    }
+    int suitability = info.getPlanetSuitabilityValue(this);
+    value = value * suitability / 100;
+    value = value + 10 - dist / distanceDivider;
+    final var raceMaxRad = race.getMaxRad();
+    int raceMaxRadInt = raceMaxRad.getIndex();
+    if (info.getTechList().isTech("Radiation dampener")) {
+      raceMaxRadInt++;
+    }
+    if (info.getTechList().isTech("Radiation well")) {
+      raceMaxRadInt++;
+    }
+    raceMaxRadInt = Math.min(RadiationType.values().length - 1, raceMaxRadInt);
+    final var planetRad = getRadiationLevel();
+    // Races with radiosythesis rate planets with radiation more favorably
+    if (race.hasTrait(TraitIds.RADIOSYNTHESIS)) {
+      if (planetRad.getIndex() > raceMaxRadInt) {
+        value -= (planetRad.getIndex() - raceMaxRadInt) * 2;
+      } else {
+        value += planetRad.getRadiosynthesisFood();
+      }
+    } else {
+      if (planetRad.getIndex() > raceMaxRad.getIndex()) {
+        value -= (planetRad.getIndex() - raceMaxRadInt) * 10;
+      } else {
+        value += raceMaxRadInt - planetRad.getIndex();
+      }
+    }
+    return value;
+  }
+  /**
    * Is planet colonizable for realm
    * @param realm PlayerINfo
    * @return True or false
@@ -3549,6 +3624,10 @@ public class Planet {
     }
     int suitability = realm.getPlanetSuitabilityValue(this);
     if (suitability == 0) {
+      result = false;
+    }
+    if (realm.getRace().isEatingFood()
+        && getWaterLevel() == WaterLevelType.BARREN) {
       result = false;
     }
     return result;

@@ -1177,6 +1177,8 @@ public class PlanetHandlingTest extends TestCase {
     Coordinate planetCoord = Mockito.mock(Coordinate.class);
     Mockito.when(planet.getCoordinate()).thenReturn(planetCoord);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(planet.evaluatePlanetValue(info, planetCoord, 1))
+        .thenReturn(25);
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);

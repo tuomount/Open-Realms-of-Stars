@@ -1345,7 +1345,8 @@ public class AITurnView extends BlackPanel {
     PlayerInfo info = game.getPlayers()
         .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
     if (info != null && !info.isHuman()) {
-      ArrayList<Planet> planets = game.getStarMap().getPlanetList();
+      Planet[] planets = StarMapUtilities.getBestFreePlanets(game.getStarMap(),
+          info);
       int colonizations = info.getMissions().getNumberOfMissionTypes(
           MissionType.COLONIZE, MissionPhase.PLANNING);
       int attacks = info.getMissions().getNumberOfMissionTypes(
@@ -1380,6 +1381,9 @@ public class AITurnView extends BlackPanel {
             colonyMissions.add(mission);
           }
         }
+      }
+      planets = game.getStarMap().getPlanetList().toArray(new Planet[0]);
+      for (Planet planet : planets) {
         if (planet.isColonizeablePlanet(info)
             && planet.getPlanetPlayerInfo() != null
             && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()) {

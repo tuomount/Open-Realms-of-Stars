@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,6 +16,8 @@ package org.openRealmOfStars.starMap;
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
+
+import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -980,6 +982,51 @@ public final class StarMapUtilities {
     return false;
   }
 
+  /**
+   * Get Best free available planet for colonization.
+   * @param map StarMap
+   * @param info Realm which is doing the search
+   * @return Best free planets. Index 0 contains the best.
+   */
+  public static Planet[] getBestFreePlanets(final StarMap map,
+      final PlayerInfo info) {
+    ArrayList<Planet> tempList = new ArrayList<>();
+    ArrayList<Planet> bestList = new ArrayList<>();
+    for (Planet planet : map.getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() == null
+          && info.getSectorVisibility(planet.getCoordinate())
+          > PlayerInfo.UNCHARTED && !planet.isGasGiant()) {
+        tempList.add(planet);
+      }
+    }
+    int index = map.getPlayerList().getIndex(info);
+    Coordinate coord = map.calculateCenterOfRealm(index);
+    info.setCenterRealm(coord);
+    while (tempList.size() > 0) {
+      Planet bestPlanet = null;
+      int bestValue = -999;
+      int divider = 1;
+      if (map.getMaxX() < 75) {
+        divider = 1;
+      } else if (map.getMaxX() < 130) {
+        divider = 2;
+      } else if (map.getMaxX() < 180) {
+        divider = 3;
+      } else {
+        divider = 4;
+      }
+      for (Planet planet : tempList) {
+        int value = planet.evaluatePlanetValue(info, coord, divider);
+        if (value > bestValue) {
+          bestPlanet = planet;
+          bestValue = value;
+        }
+      }
+      tempList.remove(bestPlanet);
+      bestList.add(bestPlanet);
+    }
+    return bestList.toArray(new Planet[bestList.size()]);
+  }
   /**
    * Makes governor guide adjustments for planet.
    * @param map StarMap

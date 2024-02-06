@@ -19,7 +19,6 @@ package org.openRealmOfStars.ai.mission;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -175,32 +174,22 @@ public class MissionList {
       maxRad++;
     }
     maxRad = Math.min(RadiationType.values().length - 1, maxRad);
+    int divider = 1;
+    if (map.getMaxX() < 75) {
+      divider = 1;
+    } else if (map.getMaxX() < 130) {
+      divider = 2;
+    } else if (map.getMaxX() < 180) {
+      divider = 3;
+    } else {
+      divider = 4;
+    }
     for (Mission mission : missions) {
       if (mission.getType() == MissionType.COLONIZE
           && mission.getPhase() == MissionPhase.PLANNING) {
         Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(),
             mission.getY());
-        int value = (colonPlanet.getGroundSize() - 6) * 10;
-        if (coordinate != null) {
-          double dist = coordinate.calculateDistance(
-              colonPlanet.getCoordinate());
-          if (dist < 10) {
-            value = value + 40;
-          } else  if (dist < 15) {
-            value = value + 20;
-          } else  if (dist > 40) {
-            value = value - 20;
-          }
-        }
-        if (info.getRace().hasTrait(TraitIds.RADIOSYNTHESIS)) {
-          value = value + colonPlanet
-              .getRadiationLevel().getRadiosynthesisFood() * 2;
-        } else {
-          value = value - colonPlanet.getRadiationLevel().getIndex() * 2;
-          if (colonPlanet.getRadiationLevel().getIndex() > maxRad) {
-            value = 0;
-          }
-        }
+        int value = colonPlanet.evaluatePlanetValue(info, coordinate, divider);
         if (value > totalValue) {
           result = mission;
           totalValue = value;

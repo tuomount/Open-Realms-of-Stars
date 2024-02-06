@@ -37,9 +37,8 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.race.trait.TraitIds;
-import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 
@@ -149,69 +148,17 @@ public class PlanetListView extends BlackPanel {
    * @return Scroll
    */
   private JScrollPane createUncolonizedPlanets(final ActionListener listener) {
+    freePlanets = StarMapUtilities.getBestFreePlanets(map, info);
     ArrayList<Planet> tempList = new ArrayList<>();
-    ArrayList<Planet> bestList = new ArrayList<>();
-    for (Planet planet : map.getPlanetList()) {
-      if (planet.getPlanetPlayerInfo() == null
-          && info.getSectorVisibility(planet.getCoordinate())
-          > PlayerInfo.UNCHARTED && !planet.isGasGiant()) {
-        tempList.add(planet);
+    for (Planet planet : freePlanets) {
+      tempList.add(planet);
+    }
+    if (freePlanets.length < 30) {
+      for (int i = 0; i < 30 - freePlanets.length; i++) {
+        tempList.add(null);
       }
     }
-    int index = map.getPlayerList().getIndex(info);
-    Coordinate coord = map.calculateCenterOfRealm(index);
-    info.setCenterRealm(coord);
-    while (tempList.size() > 0) {
-      Planet bestPlanet = null;
-      int bestValue = -999;
-      int divider = 1;
-      if (map.getMaxX() < 75) {
-        divider = 1;
-      } else if (map.getMaxX() < 130) {
-        divider = 2;
-      } else if (map.getMaxX() < 180) {
-        divider = 3;
-      } else {
-        divider = 4;
-      }
-      for (Planet planet : tempList) {
-        int value = planet.getSizeAsInt() * 10;
-        int dist = (int) coord.calculateDistance(planet.getCoordinate());
-        int suitability = info.getPlanetSuitabilityValue(planet);
-        value = value * suitability / 100;
-        value = value + 10 - dist / divider;
-        final var race = info.getRace();
-        final var raceMaxRad = race.getMaxRad();
-        final var planetRad = planet.getRadiationLevel();
-        // Races with radiosythesis rate planets with radiation more favorably
-        // NOTE: Why is planet-rating logic here, in GUI code???
-        if (race.hasTrait(TraitIds.RADIOSYNTHESIS)) {
-          if (planetRad.getIndex() > raceMaxRad.getIndex()) {
-            value -= (planetRad.getIndex() - raceMaxRad.getIndex()) * 2;
-          } else {
-            value += planetRad.getRadiosynthesisFood();
-          }
-        } else {
-          if (planetRad.getIndex() > raceMaxRad.getIndex()) {
-            value -= (planetRad.getIndex() - raceMaxRad.getIndex()) * 10;
-          } else {
-            value += raceMaxRad.getIndex() - planetRad.getIndex();
-          }
-        }
-        if (value > bestValue) {
-          bestPlanet = planet;
-          bestValue = value;
-        }
-      }
-      tempList.remove(bestPlanet);
-      bestList.add(bestPlanet);
-    }
-    if (bestList.size() < 30) {
-      for (int i = 0; i < 30 - bestList.size(); i++) {
-        bestList.add(null);
-      }
-    }
-    freePlanets = bestList.toArray(new Planet[bestList.size()]);
+    freePlanets = tempList.toArray(new Planet[0]);
     this.setLayout(new BorderLayout());
     EmptyInfoPanel base = new EmptyInfoPanel();
     base.setLayout(new GridLayout(0, 1));

@@ -993,6 +993,55 @@ public final class StarMapUtilities {
     ArrayList<Planet> tempList = new ArrayList<>();
     ArrayList<Planet> bestList = new ArrayList<>();
     for (Planet planet : map.getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetPlayerInfo() != info
+          && info.getSectorVisibility(planet.getCoordinate())
+          > PlayerInfo.UNCHARTED && !planet.isGasGiant()) {
+        tempList.add(planet);
+      }
+    }
+    int index = map.getPlayerList().getIndex(info);
+    Coordinate coord = map.calculateCenterOfRealm(index);
+    info.setCenterRealm(coord);
+    while (tempList.size() > 0) {
+      Planet bestPlanet = null;
+      int bestValue = -999;
+      int divider = 1;
+      if (map.getMaxX() < 75) {
+        divider = 1;
+      } else if (map.getMaxX() < 130) {
+        divider = 2;
+      } else if (map.getMaxX() < 180) {
+        divider = 3;
+      } else {
+        divider = 4;
+      }
+      for (Planet planet : tempList) {
+        int value = planet.evaluatePlanetValue(info, coord, divider);
+        if (planet.getHomeWorldIndex() != -1) {
+          value = value + 10;
+        }
+        if (value > bestValue) {
+          bestPlanet = planet;
+          bestValue = value;
+        }
+      }
+      tempList.remove(bestPlanet);
+      bestList.add(bestPlanet);
+    }
+    return bestList.toArray(new Planet[bestList.size()]);
+  }
+  /**
+   * Get Best conquerable planets. This is done based on planet's value.
+   * @param map StarMap
+   * @param info Realm which is doing the search
+   * @return Best conquerable planets. Index 0 contains the best.
+   */
+  public static Planet[] getBestConquerablePlanets(final StarMap map,
+      final PlayerInfo info) {
+    ArrayList<Planet> tempList = new ArrayList<>();
+    ArrayList<Planet> bestList = new ArrayList<>();
+    for (Planet planet : map.getPlanetList()) {
       if (planet.getPlanetPlayerInfo() == null
           && info.getSectorVisibility(planet.getCoordinate())
           > PlayerInfo.UNCHARTED && !planet.isGasGiant()) {
@@ -1027,6 +1076,7 @@ public final class StarMapUtilities {
     }
     return bestList.toArray(new Planet[bestList.size()]);
   }
+
   /**
    * Makes governor guide adjustments for planet.
    * @param map StarMap

@@ -1382,7 +1382,8 @@ public class AITurnView extends BlackPanel {
           }
         }
       }
-      planets = game.getStarMap().getPlanetList().toArray(new Planet[0]);
+      planets = StarMapUtilities.getBestConquerablePlanets(game.getStarMap(),
+          info);
       for (Planet planet : planets) {
         if (planet.isColonizeablePlanet(info)
             && planet.getPlanetPlayerInfo() != null

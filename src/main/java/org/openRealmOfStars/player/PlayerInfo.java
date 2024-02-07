@@ -332,7 +332,8 @@ public class PlayerInfo {
       extraTech[0] = "randomElectronics";
       extraTech[1] = "randomPropulsion";
     }
-    if (getStartingScenario() == StartingScenario.COLD_HUMID_SIZE12) {
+    if (getStartingScenario() == StartingScenario.COLD_HUMID_SIZE12
+        || getStartingScenario() == StartingScenario.FARMING_PLANET) {
       extraTech = new String[1];
       extraTech[0] = "randomImprovement";
     }

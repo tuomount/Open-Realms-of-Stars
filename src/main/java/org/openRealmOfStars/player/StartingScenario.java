@@ -63,7 +63,11 @@ public enum StartingScenario {
   /**
    * Hot arid planet size 12, extra technology for starters.
    */
-  HOT_ARID_SIZE12;
+  HOT_ARID_SIZE12,
+  /**
+   * Temperate Arid planet with 3 farms, 5 population but no starting ships.
+   */
+  FARMING_PLANET;
 
 
   /**
@@ -81,6 +85,7 @@ public enum StartingScenario {
       case COLD_HUMID_SIZE12: return 6;
       case TROPICAL_HUMID_SIZE12: return 7;
       case HOT_ARID_SIZE12: return 8;
+      case FARMING_PLANET: return 8;
       default: throw new IllegalArgumentException("Unknown starting scenario.");
     }
   }
@@ -121,6 +126,7 @@ public enum StartingScenario {
     case COLD_HUMID_SIZE12: return "Cold, humid planet with extra tech";
     case TROPICAL_HUMID_SIZE12: return "Tropical, humid planet";
     case HOT_ARID_SIZE12: return "Hot, arid planet with extra tech";
+    case FARMING_PLANET: return "Temperate arid farming planet, but no ships";
     }
   }
 
@@ -149,6 +155,10 @@ public enum StartingScenario {
     case HOT_ARID_SIZE12: return "Hot and arid planet with"
     + " ground size 12. World type is desert world. Start with extra"
     + " 2 technology.";
+    case FARMING_PLANET: return "Temperate arid planet with 3 farms,"
+    + " ground size 12. World type is desert world. No staring ships. Extra"
+    + " technology.";
+
     }
   }
 

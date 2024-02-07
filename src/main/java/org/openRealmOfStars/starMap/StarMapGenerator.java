@@ -223,6 +223,7 @@ public class StarMapGenerator {
       playerInfo.getMsgList().addNewMessage(msg);
       playerInfo.setRuler(ruler);
     }
+
     if (!playerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)
         && !planet.hasSpacePort()) {
        if (planet.getBuildingList().length >= planet.getGroundSize()) {
@@ -231,6 +232,29 @@ public class StarMapGenerator {
        }
       planet.addBuilding(BuildingFactory.createByName("Space port"));
     }
+    int extraPop = 0;
+    if (playerInfo.getStartingScenario() == StartingScenario.FARMING_PLANET) {
+      extraPop = 2;
+      if (playerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+        // No more space for zero gravity being.
+        extraPop = 1;
+      }
+      for (int i = 0; i < 3; i++) {
+        if (planet.getBuildingList().length >= planet.getGroundSize()) {
+          // Planet is full and no space for "farms".
+          planet.destroyOneBuilding();
+        }
+        if (playerInfo.getRace().isLithovorian()) {
+          planet.addBuilding(BuildingFactory.createByName("Basic mine"));
+        }
+        if (playerInfo.getRace().isEatingFood()) {
+          planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+        }
+        if (playerInfo.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
+          planet.addBuilding(BuildingFactory.createByName("Basic factory"));
+        }
+      }
+    }
     if (playerInfo.isHuman()) {
       // Adding starting building for human.
       planet.setUnderConstruction(ConstructionFactory.createByName(
@@ -238,37 +262,44 @@ public class StarMapGenerator {
     }
     planet.setWorkers(Planet.FOOD_FARMERS, 0);
     planet.setWorkers(Planet.METAL_MINERS, 0);
-    planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 1 + extraPop);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
     planet.setWorkers(Planet.CULTURE_ARTIST, 0);
     PlanetHandling.handlePlanetPopulation(planet, playerInfo, playerIndex,
         GameLengthState.START_GAME);
     ShipStat[] stats = playerInfo.getShipStatList();
     int count = 0;
-    for (ShipStat stat : stats) {
-      int numShip = 1;
-      for (int j = 0; j < numShip; j++) {
-        if (stat.getDesign().getHull().getHullType() == ShipHullType.ORBITAL) {
-          continue;
+    boolean noShips = false;
+    if (playerInfo.getStartingScenario() == StartingScenario.FARMING_PLANET) {
+      noShips = true;
+    }
+    if (!noShips) {
+      for (ShipStat stat : stats) {
+        int numShip = 1;
+        for (int j = 0; j < numShip; j++) {
+          if (stat.getDesign().getHull().getHullType()
+              == ShipHullType.ORBITAL) {
+            continue;
+          }
+          Ship ship = new Ship(stat.getDesign());
+          stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+          stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+          Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
+          playerInfo.getFleets().add(fleet);
+          if (ship.isColonyModule()) {
+            fleet.setName("Colony #" + count);
+          } else {
+            fleet.setName("Scout #" + count);
+          }
+          makeStartingFleetTutorialTexts(playerInfo, fleet);
+          msg = new Message(MessageType.FLEET,
+              fleet.getName() + " is waiting for orders.",
+              Icons.getIconByName(Icons.ICON_HULL_TECH));
+          msg.setCoordinate(planet.getCoordinate());
+          msg.setMatchByString(fleet.getName());
+          playerInfo.getMsgList().addNewMessage(msg);
+          count++;
         }
-        Ship ship = new Ship(stat.getDesign());
-        stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
-        stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
-        Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
-        playerInfo.getFleets().add(fleet);
-        if (ship.isColonyModule()) {
-          fleet.setName("Colony #" + count);
-        } else {
-          fleet.setName("Scout #" + count);
-        }
-        makeStartingFleetTutorialTexts(playerInfo, fleet);
-        msg = new Message(MessageType.FLEET,
-            fleet.getName() + " is waiting for orders.",
-            Icons.getIconByName(Icons.ICON_HULL_TECH));
-        msg.setCoordinate(planet.getCoordinate());
-        msg.setMatchByString(fleet.getName());
-        playerInfo.getMsgList().addNewMessage(msg);
-        count++;
       }
     }
     String backgroundStory = BackgroundStoryGenerator.generateBackgroundStory(
@@ -836,6 +867,11 @@ public class StarMapGenerator {
               == StartingScenario.TROPICAL_HUMID_SIZE12) {
             planet.setTemperatureType(TemperatureType.TROPICAL);
             planet.setWaterLevel(WaterLevelType.HUMID);
+            planet.setGroundSize(12);
+          } else if (playerInfo.getStartingScenario()
+              == StartingScenario.FARMING_PLANET) {
+            planet.setTemperatureType(TemperatureType.TEMPERATE);
+            planet.setWaterLevel(WaterLevelType.ARID);
             planet.setGroundSize(12);
           } else {
             planet.setTemperatureType(TemperatureType.TEMPERATE);

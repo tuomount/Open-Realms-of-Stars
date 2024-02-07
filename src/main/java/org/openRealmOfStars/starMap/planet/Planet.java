@@ -1289,7 +1289,7 @@ public class Planet {
     // Add info about lithovoric race's metal consumption
     int pop = totalPopulation / 2;
     if (planetOwnerInfo.getRace().isLithovorian() && pop > 0) {
-      addEntryIfWorthy(sb, "lithovorian", pop);
+      addEntryIfWorthy(sb, "lithovorian", -pop);
     }
 
     sb.append("</html>");

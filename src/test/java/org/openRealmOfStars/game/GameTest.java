@@ -140,13 +140,15 @@ public class GameTest {
             .getTechList().getTechLevel(techtype);
       }
       tech = tech * 10 / 6;
+      String scenario = game.getPlayers().getPlayerInfoByIndex(i)
+          .getStartingScenario().toString();
       String resultText = i + ": "
           + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
           + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()
           .toString() + ")"
           + " - planets " + planets[i] + "/" + maxPlanets[i] + " - Charted: "
           + charted[i] + "% Combats: " + combats[i] + " Conquest: "
-          + conquest[i] + " Tech:" + tech;
+          + conquest[i] + " Tech:" + tech+ " Scen:" + scenario;
       if (game.getPlayers().getPlayerInfoByIndex(i).isElderRealm()) {
         resultText = resultText + " - Elder";
       }

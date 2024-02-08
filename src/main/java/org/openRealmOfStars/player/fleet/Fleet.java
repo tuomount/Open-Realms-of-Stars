@@ -32,7 +32,6 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -898,18 +897,12 @@ public class Fleet {
 
   /**
    * Fleet has colony ship with working colony module and at least one colonist.
-   * @param race Required space race for colony ship. Null if non required.
    * @return True if has working colony ship.
    */
-  public boolean hasColonyShip(final SpaceRace race) {
+  public boolean hasColonyShip() {
     for (Ship ship : ships) {
       if (ship.isColonyShip() && ship.getColonist() > 0) {
-        if (race == null) {
-          return true;
-        }
-        if (race == ship.getHull().getRace()) {
-          return true;
-        }
+        return true;
       }
     }
     return false;

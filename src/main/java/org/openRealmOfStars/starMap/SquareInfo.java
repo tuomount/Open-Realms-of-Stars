@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -57,6 +57,10 @@ public class SquareInfo {
    * Black hole info center, value match on list number
    */
   public static final byte TYPE_BLACKHOLE_CENTER = 5;
+  /**
+   * Deep space start for realm.
+   */
+  public static final byte TYPE_DEEP_SPACE_START = 6;
 
   /**
    * Asccension vein info, value match on player index.
@@ -169,6 +173,8 @@ public class SquareInfo {
       return false;
     case TYPE_BLACKHOLE_CENTER:
       return true;
+    case TYPE_DEEP_SPACE_START:
+      return false;
     case TYPE_ASCENSION_VEIN:
       return false;
     default:
@@ -194,6 +200,8 @@ public class SquareInfo {
       return true;
     case TYPE_BLACKHOLE_CENTER:
       return true;
+    case TYPE_DEEP_SPACE_START:
+      return false;
     case TYPE_ASCENSION_VEIN:
       return false;
     default:

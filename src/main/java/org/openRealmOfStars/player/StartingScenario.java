@@ -67,7 +67,11 @@ public enum StartingScenario {
   /**
    * Temperate Arid planet with 3 farms, 5 population but no starting ships.
    */
-  FARMING_PLANET;
+  FARMING_PLANET,
+  /**
+   * Start without home planet with 4 scouts and 2 colony ships.
+   */
+  DESTROYED_HOME_PLANET;
 
 
   /**
@@ -85,7 +89,8 @@ public enum StartingScenario {
       case COLD_HUMID_SIZE12: return 6;
       case TROPICAL_HUMID_SIZE12: return 7;
       case HOT_ARID_SIZE12: return 8;
-      case FARMING_PLANET: return 8;
+      case FARMING_PLANET: return 9;
+      case DESTROYED_HOME_PLANET: return 10;
       default: throw new IllegalArgumentException("Unknown starting scenario.");
     }
   }
@@ -106,6 +111,8 @@ public enum StartingScenario {
       case 6: return COLD_HUMID_SIZE12;
       case 7: return TROPICAL_HUMID_SIZE12;
       case 8: return HOT_ARID_SIZE12;
+      case 9: return FARMING_PLANET;
+      case 10: return DESTROYED_HOME_PLANET;
       default: throw new IllegalArgumentException("Unknown starting scenario.");
     }
   }
@@ -127,6 +134,7 @@ public enum StartingScenario {
     case TROPICAL_HUMID_SIZE12: return "Tropical, humid planet";
     case HOT_ARID_SIZE12: return "Hot, arid planet with extra tech";
     case FARMING_PLANET: return "Temperate arid farming planet, but no ships";
+    case DESTROYED_HOME_PLANET: return "No home, start from deep space";
     }
   }
 
@@ -140,7 +148,8 @@ public enum StartingScenario {
     case RANDOM: return "Random starting scenario.";
     case TEMPERATE_HUMID_SIZE12: return "Temperate and humid planet with"
         + " ground size 12. World type is either Swamp or water planet.";
-    case EARTH: return "Realm starts at Earth and solar system is Sol.";
+    case EARTH: return "Realm starts at Earth and solar system is Sol."
+        + " Single start allowed.";
     case TEMPERATE_ARID_SIZE12: return "Temperate and arid planet with"
         + " ground size 12. World type is desert. Start with extra 2"
         + " technology.";
@@ -158,6 +167,10 @@ public enum StartingScenario {
     case FARMING_PLANET: return "Temperate arid planet with 3 farms,"
     + " ground size 12. World type is desert world. No staring ships. Extra"
     + " technology.";
+    case DESTROYED_HOME_PLANET: return "Home planet has been destroyed. Start"
+        + " from deep space with 4 scouts and 2 colony ships. Colony fleet in"
+        + " deep space provides extra research point."
+        + " Single start allowed.";
 
     }
   }

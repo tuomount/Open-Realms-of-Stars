@@ -45,8 +45,8 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
-import org.openRealmOfStars.player.espionage.EspionageBonusType;
-import org.openRealmOfStars.player.espionage.EspionageList;
+import org.openRealmOfStars.player.espionage.IntelligenceBonusType;
+import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.leader.Job;
@@ -2176,9 +2176,9 @@ public class StarMap {
     for (int i = 0; i < maxPlayers; i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
-        info.getEspionage().clearAllEspionageBonuses();
-        info.getEspionage().getByIndex(i).addEspionageBonus(
-            EspionageBonusType.OWN_REALM, 10, "Own realm");
+        info.getIntelligence().clearAllIntelligenceBonuses();
+        info.getIntelligence().getByIndex(i).addIntelligenceBonus(
+            IntelligenceBonusType.OWN_REALM, 10, "Own realm");
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
           int sectorIndex = getSectorCulture(fleet.getX(),
@@ -2189,8 +2189,9 @@ public class StarMap {
             if (spiedInfo != null && espionageBonus > 0) {
               String description = "Fleet " + fleet.getName() + " spying "
                   + spiedInfo.getEmpireName() + ".";
-              info.getEspionage().getByIndex(sectorIndex).addEspionageBonus(
-                  EspionageBonusType.SPY_FLEET, espionageBonus, description);
+              info.getIntelligence().getByIndex(sectorIndex)
+                  .addIntelligenceBonus(IntelligenceBonusType.SPY_FLEET,
+                      espionageBonus, description);
             }
           }
         }
@@ -2216,32 +2217,32 @@ public class StarMap {
             PlayerInfo trader = players.getPlayerInfoByIndex(j);
             for (int k = 0; k < players.getCurrentMaxPlayers(); k++) {
               // Then go through all the trader's espionage
-              info.getEspionage().getByIndex(k).addEspionageBonus(
-                  EspionageBonusType.TRADE,
-                  trader.getEspionage().getByIndex(k).getOwnBonus(),
+              info.getIntelligence().getByIndex(k).addIntelligenceBonus(
+                  IntelligenceBonusType.TRADE,
+                  trader.getIntelligence().getByIndex(k).getOwnBonus(),
                   "Spy trade with " + trader.getEmpireName());
             }
           }
           if (j != i && info.getDiplomacy().isAlliance(j)) {
             PlayerInfo trader = players.getPlayerInfoByIndex(j);
-            info.getEspionage().getByIndex(j).addEspionageBonus(
-                EspionageBonusType.TRADE,
-                trader.getEspionage().getByIndex(j).getTotalBonus(),
+            info.getIntelligence().getByIndex(j).addIntelligenceBonus(
+                IntelligenceBonusType.TRADE,
+                trader.getIntelligence().getByIndex(j).getTotalBonus(),
                 "Spy trade with " + trader.getEmpireName());
           }
           if (j != i) {
             PlayerInfo info2 = players.getPlayerInfoByIndex(j);
             if (info2.getRuler() != null
                 && info2.getRuler().hasPerk(Perk.CHATTERBOX)) {
-              info.getEspionage().getByIndex(j).addEspionageBonus(
-                  EspionageBonusType.CHATTERBOX, 1,
+              info.getIntelligence().getByIndex(j).addIntelligenceBonus(
+                  IntelligenceBonusType.CHATTERBOX, 1,
                   "Ruler has chatterbox perk");
             }
           }
           if (j != i && info.getRuler() != null
                 && info.getRuler().hasPerk(Perk.NEGOTIATOR)) {
-            info.getEspionage().getByIndex(j).addEspionageBonus(
-                EspionageBonusType.NEGOTIATOR, 1,
+            info.getIntelligence().getByIndex(j).addIntelligenceBonus(
+                IntelligenceBonusType.NEGOTIATOR, 1,
                 "Learned by negotiator perk");
           }
         }
@@ -2261,7 +2262,8 @@ public class StarMap {
     PlayerInfo firstInfo = players.getPlayerInfoByIndex(first);
     PlayerInfo secondInfo = players.getPlayerInfoByIndex(second);
     int actualMilitarySecond = NewsCorpData.calculateMilitaryValue(secondInfo);
-    EspionageList espionageList = firstInfo.getEspionage().getByIndex(second);
+    IntelligenceList espionageList = firstInfo.getIntelligence().getByIndex(
+        second);
     int estimateSecond = espionageList.estimateMilitaryPower(
         actualMilitarySecond);
     if (estimateSecond == 0) {
@@ -2331,21 +2333,21 @@ public class StarMap {
       int actualMilitaryFirst = NewsCorpData.calculateMilitaryValue(firstInfo);
       int actualMilitarySecond = NewsCorpData.calculateMilitaryValue(
           secondInfo);
-      EspionageList espionageList = firstInfo.getEspionage().getByIndex(
-          second);
-      int estimateSecond = espionageList.estimateMilitaryPower(
+      IntelligenceList intelligenceList = firstInfo.getIntelligence()
+          .getByIndex(second);
+      int estimateSecond = intelligenceList.estimateMilitaryPower(
           actualMilitarySecond);
       int estimateDiff = actualMilitaryFirst - estimateSecond;
-      if (espionageList.getTotalBonus() >= 7) {
+      if (intelligenceList.getTotalBonus() >= 7) {
         // 90-100% accuracy
         result = estimateDiff;
-      } else if (espionageList.getTotalBonus() >= 5) {
+      } else if (intelligenceList.getTotalBonus() >= 5) {
         // 80% accuracy
         result = estimateDiff * 90 / 100 + newsCorpDiff * 10 / 100;
-      } else if (espionageList.getTotalBonus() >= 3) {
+      } else if (intelligenceList.getTotalBonus() >= 3) {
         // 70% accuracy
         result = estimateDiff * 80 / 100 + newsCorpDiff * 20 / 100;
-      } else if (espionageList.getTotalBonus() >= 1) {
+      } else if (intelligenceList.getTotalBonus() >= 1) {
         // 70% accuracy
         result = estimateDiff * 70 / 100 + newsCorpDiff * 30 / 100;
       }

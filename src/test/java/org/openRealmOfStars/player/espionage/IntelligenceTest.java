@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.espionage;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,15 +24,15 @@ import org.junit.experimental.categories.Category;
 
 /**
 *
-* Espionage Test
+* Intelligence Test
 *
 */
-public class EspionageTest {
+public class IntelligenceTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
-    Espionage espionage = new Espionage(4);
+    Intelligence espionage = new Intelligence(4);
     assertEquals(4, espionage.getSize());
     assertNotNull(espionage.getByIndex(0));
     assertEquals(null, espionage.getByIndex(-1));
@@ -45,14 +45,14 @@ public class EspionageTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testClear() {
-    Espionage espionage = new Espionage(4);
+    Intelligence espionage = new Intelligence(4);
     assertEquals(4, espionage.getSize());
     assertEquals(false, espionage.isSpyTradePossible());
-    EspionageList list = espionage.getByIndex(1);
-    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test 1");
+    IntelligenceList list = espionage.getByIndex(1);
+    list.addIntelligenceBonus(IntelligenceBonusType.SPY_FLEET, 2, "Test 1");
     assertEquals(true, espionage.isSpyTradePossible());
     assertEquals(2, list.getTotalBonus());
-    espionage.clearAllEspionageBonuses();
+    espionage.clearAllIntelligenceBonuses();
     list = espionage.getByIndex(1);
     assertEquals(0, list.getTotalBonus());
   }
@@ -60,18 +60,18 @@ public class EspionageTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCost() {
-    assertEquals(0, Espionage.calculateEspionageCost(100));
-    assertEquals(0, Espionage.calculateEspionageCost(80));
-    assertEquals(1, Espionage.calculateEspionageCost(79));
-    assertEquals(1, Espionage.calculateEspionageCost(70));
-    assertEquals(2, Espionage.calculateEspionageCost(60));
-    assertEquals(3, Espionage.calculateEspionageCost(50));
-    assertEquals(0, Espionage.calculateEspionageCost(110));
-    assertEquals(0, Espionage.calculateEspionageCost(120));
-    assertEquals(1, Espionage.calculateEspionageCost(130));
-    assertEquals(2, Espionage.calculateEspionageCost(140));
-    assertEquals(4, Espionage.calculateEspionageCost(160));
-    assertEquals(8, Espionage.calculateEspionageCost(200));
+    assertEquals(0, Intelligence.calculateIntelligenceCost(100));
+    assertEquals(0, Intelligence.calculateIntelligenceCost(80));
+    assertEquals(1, Intelligence.calculateIntelligenceCost(79));
+    assertEquals(1, Intelligence.calculateIntelligenceCost(70));
+    assertEquals(2, Intelligence.calculateIntelligenceCost(60));
+    assertEquals(3, Intelligence.calculateIntelligenceCost(50));
+    assertEquals(0, Intelligence.calculateIntelligenceCost(110));
+    assertEquals(0, Intelligence.calculateIntelligenceCost(120));
+    assertEquals(1, Intelligence.calculateIntelligenceCost(130));
+    assertEquals(2, Intelligence.calculateIntelligenceCost(140));
+    assertEquals(4, Intelligence.calculateIntelligenceCost(160));
+    assertEquals(8, Intelligence.calculateIntelligenceCost(200));
   }
 
 }

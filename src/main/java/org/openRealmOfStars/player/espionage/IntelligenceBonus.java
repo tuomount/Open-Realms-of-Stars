@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.espionage;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,15 +18,15 @@ package org.openRealmOfStars.player.espionage;
  */
 
 /**
-* Espionage Bonus
+* Intelligence Bonus
 *
 */
-public class EspionageBonus {
+public class IntelligenceBonus {
 
   /**
-   * Espionage Bonus type
+   * Intelligence Bonus type
    */
-  private EspionageBonusType type;
+  private IntelligenceBonusType type;
 
   /**
    * Bonus as value
@@ -34,16 +34,16 @@ public class EspionageBonus {
   private int value;
 
   /**
-   * Esipionage description
+   * Intelligence description
    */
   private String description;
 
   /**
-   * Constructor for espionage bonus.
-   * @param bonusType Espionage type
+   * Constructor for intelligence bonus.
+   * @param bonusType Intelligence bonus type
    * @param bonusValue Numerical value between 0 to 10.
    */
-  public EspionageBonus(final EspionageBonusType bonusType,
+  public IntelligenceBonus(final IntelligenceBonusType bonusType,
       final int bonusValue) {
     type = bonusType;
     if (bonusValue > 10) {
@@ -57,15 +57,15 @@ public class EspionageBonus {
   }
 
   /**
-   * Get Espionage type
-   * @return EspionageBonusType
+   * Get Intelligence type
+   * @return IntelligenceBonusType
    */
-  public EspionageBonusType getType() {
+  public IntelligenceBonusType getType() {
     return type;
   }
 
   /**
-   * Get the espionage bonus value
+   * Get the intelligence bonus value
    * @return Bonus value
    */
   public int getValue() {
@@ -73,7 +73,7 @@ public class EspionageBonus {
   }
 
   /**
-   * Get Espionage description
+   * Get intelligence description
    * @return the description
    */
   public String getDescription() {
@@ -81,8 +81,8 @@ public class EspionageBonus {
   }
 
   /**
-   * Set espionage description. For example textual informat which fleet
-   * add espionage
+   * Set intelligence description. For example textual information which fleet
+   * add intelligence
    * @param description the description to set
    */
   public void setDescription(final String description) {

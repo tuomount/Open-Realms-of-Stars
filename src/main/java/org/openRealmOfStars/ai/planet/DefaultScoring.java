@@ -25,7 +25,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
-import org.openRealmOfStars.player.espionage.EspionageList;
+import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
@@ -734,11 +734,11 @@ public final class DefaultScoring {
       boolean moreIsRequired = false;
       int maxPlayers = map.getPlayerList().getCurrentMaxRealms();
       for (int i = 0; i < maxPlayers; i++) {
-        EspionageList espionage = info.getEspionage().getByIndex(i);
+        IntelligenceList intelligence = info.getIntelligence().getByIndex(i);
         DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(i);
-        if (espionage != null && diplomacy != null
+        if (intelligence != null && diplomacy != null
             && diplomacy.getNumberOfMeetings() > 0
-            && espionage.getTotalBonus() < 8) {
+            && intelligence.getTotalBonus() < 8) {
           moreIsRequired = true;
           break;
         }

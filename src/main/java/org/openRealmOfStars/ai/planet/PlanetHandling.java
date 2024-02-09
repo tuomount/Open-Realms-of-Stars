@@ -743,7 +743,7 @@ public final class PlanetHandling {
       final StarMap map) {
     Mission result = null;
     int targetRealm = info.getDiplomacy()
-        .getLeastLikingWithLowEspionage(info.getEspionage());
+        .getLeastLikingWithLowEspionage(info.getIntelligence());
     Planet[] planets = map.getPlanetListSeenByOther(targetRealm, info);
     if (planets.length > 0) {
       Planet target = DiceGenerator.pickRandom(planets);

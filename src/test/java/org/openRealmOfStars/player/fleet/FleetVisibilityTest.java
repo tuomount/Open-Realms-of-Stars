@@ -23,8 +23,8 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.espionage.Espionage;
-import org.openRealmOfStars.player.espionage.EspionageList;
+import org.openRealmOfStars.player.espionage.Intelligence;
+import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.starMap.Coordinate;
 
 /**
@@ -38,9 +38,9 @@ public class FleetVisibilityTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
-    Espionage espionage = Mockito.mock(Espionage.class);
+    Intelligence espionage = Mockito.mock(Intelligence.class);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getEspionage()).thenReturn(espionage);
+    Mockito.when(info.getIntelligence()).thenReturn(espionage);
     Coordinate coord = Mockito.mock(Coordinate.class);
     Mockito.when(coord.getX()).thenReturn(10);
     Mockito.when(coord.getY()).thenReturn(12);
@@ -57,9 +57,9 @@ public class FleetVisibilityTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testEspionage() {
-    Espionage espionage = Mockito.mock(Espionage.class);
+    Intelligence espionage = Mockito.mock(Intelligence.class);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getEspionage()).thenReturn(espionage);
+    Mockito.when(info.getIntelligence()).thenReturn(espionage);
     Mockito.when(info.getSectorCloakDetection(10, 12)).thenReturn(80);
     Coordinate coord = Mockito.mock(Coordinate.class);
     Mockito.when(coord.getX()).thenReturn(10);
@@ -79,13 +79,13 @@ public class FleetVisibilityTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testEspionageVisibility() {
-    EspionageList espionageList = Mockito.mock(EspionageList.class);
+    IntelligenceList espionageList = Mockito.mock(IntelligenceList.class);
     Mockito.when(espionageList.getTotalBonus()).thenReturn(10);
     Mockito.when(espionageList.isFleetTypeRecognized(FleetType.PRIVATEER)).thenReturn(true);
-    Espionage espionage = Mockito.mock(Espionage.class);
+    Intelligence espionage = Mockito.mock(Intelligence.class);
     Mockito.when(espionage.getByIndex(1)).thenReturn(espionageList);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getEspionage()).thenReturn(espionage);
+    Mockito.when(info.getIntelligence()).thenReturn(espionage);
     Mockito.when(info.getSectorCloakDetection(10, 12)).thenReturn(80);
     Coordinate coord = Mockito.mock(Coordinate.class);
     Mockito.when(coord.getX()).thenReturn(10);
@@ -106,9 +106,9 @@ public class FleetVisibilityTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testPrivateer() {
-    Espionage espionage = Mockito.mock(Espionage.class);
+    Intelligence espionage = Mockito.mock(Intelligence.class);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getEspionage()).thenReturn(espionage);
+    Mockito.when(info.getIntelligence()).thenReturn(espionage);
     Coordinate coord = Mockito.mock(Coordinate.class);
     Mockito.when(coord.getX()).thenReturn(10);
     Mockito.when(coord.getY()).thenReturn(12);
@@ -126,9 +126,9 @@ public class FleetVisibilityTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testHidden() {
-    Espionage espionage = Mockito.mock(Espionage.class);
+    Intelligence espionage = Mockito.mock(Intelligence.class);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getEspionage()).thenReturn(espionage);
+    Mockito.when(info.getIntelligence()).thenReturn(espionage);
     Coordinate coord = Mockito.mock(Coordinate.class);
     Mockito.when(coord.getX()).thenReturn(10);
     Mockito.when(coord.getY()).thenReturn(12);

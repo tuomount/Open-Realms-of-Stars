@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.espionage;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,54 +18,54 @@ package org.openRealmOfStars.player.espionage;
  */
 
 /**
-* Espionage class for handling espionage between realms.
+* Intelligence class for handling espionage between realms.
 * This contains espionage information for one realm.
 *
 */
-public class Espionage {
+public class Intelligence {
 
   /**
-   * Espionage information for each realm
+   * Intelligence information for each realm
    */
-  private EspionageList[] espionageLists;
+  private IntelligenceList[] intelligenceLists;
 
   /**
-   * Constructor for Espionage
+   * Constructor for Intelligence
    * @param maxPlayers Maximum number of player
    */
-  public Espionage(final int maxPlayers) {
-    espionageLists = new EspionageList[maxPlayers];
+  public Intelligence(final int maxPlayers) {
+    intelligenceLists = new IntelligenceList[maxPlayers];
     for (int i = 0; i < maxPlayers; i++) {
-      espionageLists[i] = new EspionageList(i);
+      intelligenceLists[i] = new IntelligenceList(i);
     }
   }
 
   /**
-   * Get espionage size
-   * @return Espionage size
+   * Get Intelligence size
+   * @return Intelligence size
    */
   public int getSize() {
-    return espionageLists.length;
+    return intelligenceLists.length;
   }
 
   /**
-   * Get Espionage list for certain realm
+   * Get Intelligence list for certain realm
    * @param index Realm/Player index
-   * @return Espionage list or null if not found
+   * @return Intelligence list or null if not found
    */
-  public EspionageList getByIndex(final int index) {
-    if (index > -1 && index < espionageLists.length) {
-      return espionageLists[index];
+  public IntelligenceList getByIndex(final int index) {
+    if (index > -1 && index < intelligenceLists.length) {
+      return intelligenceLists[index];
     }
     return null;
   }
 
   /**
-   * Clear all espionage list bonus.
+   * Clear all Intelligence list bonus.
    * This should be called after each turn.
    */
-  public void clearAllEspionageBonuses() {
-    for (EspionageList list : espionageLists) {
+  public void clearAllIntelligenceBonuses() {
+    for (IntelligenceList list : intelligenceLists) {
       if (list != null) {
         list.clearList();
       }
@@ -73,13 +73,13 @@ public class Espionage {
   }
 
   /**
-   * At least one players espionage must be 2 or more to be able to espionage
-   * trade.
+   * At least one players Intelligence must be 2 or more to be able to
+   * Intelligence trade.
    * @return True if spy trade is possible.
    */
   public boolean isSpyTradePossible() {
     boolean result = false;
-    for (EspionageList list : espionageLists) {
+    for (IntelligenceList list : intelligenceLists) {
       if (list != null && list.getOwnBonus() >= 2) {
         result = true;
       }
@@ -87,12 +87,12 @@ public class Espionage {
     return result;
   }
   /**
-   *  Calculate espionage cost from fakeMilitarySize;
+   *  Calculate Intelligence cost from fakeMilitarySize;
    *  FakeMilitarySize should be from 50 to 200.
    * @param fakeMilitarySize Fake military size between 50 to 200 percent.
-   * @return Cost of espionage
+   * @return Cost of Intelligence
    */
-  public static int calculateEspionageCost(final int fakeMilitarySize) {
+  public static int calculateIntelligenceCost(final int fakeMilitarySize) {
     int value = fakeMilitarySize;
     int cost = 0;
     if (value >= 80 && value <= 120) {

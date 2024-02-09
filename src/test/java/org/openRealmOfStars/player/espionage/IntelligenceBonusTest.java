@@ -24,37 +24,37 @@ import org.junit.experimental.categories.Category;
 
 /**
 *
-* Espionage Bonus Test
+* Intelligence Bonus Test
 *
 */
-public class EspionageBonusTest {
+public class IntelligenceBonusTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
-    EspionageBonus bonus = new EspionageBonus(EspionageBonusType.TRADE, 2);
-    assertEquals(EspionageBonusType.TRADE, bonus.getType());
+    IntelligenceBonus bonus = new IntelligenceBonus(IntelligenceBonusType.TRADE, 2);
+    assertEquals(IntelligenceBonusType.TRADE, bonus.getType());
     assertEquals(2, bonus.getValue());
-    bonus = new EspionageBonus(EspionageBonusType.SPY_FLEET, 3);
+    bonus = new IntelligenceBonus(IntelligenceBonusType.SPY_FLEET, 3);
     assertEquals("SPY_FLEET -  : 3", bonus.toString());
-    assertEquals(EspionageBonusType.SPY_FLEET, bonus.getType());
+    assertEquals(IntelligenceBonusType.SPY_FLEET, bonus.getType());
     assertEquals(3, bonus.getValue());
-    bonus = new EspionageBonus(EspionageBonusType.OWN_REALM, 10);
-    assertEquals(EspionageBonusType.OWN_REALM, bonus.getType());
+    bonus = new IntelligenceBonus(IntelligenceBonusType.OWN_REALM, 10);
+    assertEquals(IntelligenceBonusType.OWN_REALM, bonus.getType());
     assertEquals(10, bonus.getValue());
   }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testDescription() {
-    EspionageBonus bonus = new EspionageBonus(EspionageBonusType.TRADE, 2);
+    IntelligenceBonus bonus = new IntelligenceBonus(IntelligenceBonusType.TRADE, 2);
     bonus.setDescription("Test");
-    assertEquals(EspionageBonusType.TRADE, bonus.getType());
+    assertEquals(IntelligenceBonusType.TRADE, bonus.getType());
     assertEquals(2, bonus.getValue());
     assertEquals("Test", bonus.getDescription());
-    bonus = new EspionageBonus(EspionageBonusType.SPY_FLEET, 3);
+    bonus = new IntelligenceBonus(IntelligenceBonusType.SPY_FLEET, 3);
     bonus.setDescription("Test");
-    assertEquals(EspionageBonusType.SPY_FLEET, bonus.getType());
+    assertEquals(IntelligenceBonusType.SPY_FLEET, bonus.getType());
     assertEquals(3, bonus.getValue());
     assertEquals("Test", bonus.getDescription());
     bonus.setDescription("");

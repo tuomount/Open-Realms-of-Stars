@@ -58,7 +58,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
-import org.openRealmOfStars.player.espionage.EspionageList;
+import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetType;
 import org.openRealmOfStars.player.government.GovernmentType;
@@ -935,7 +935,8 @@ public class AITurnView extends BlackPanel {
               // Anchor is under Fog of war, but Maybe espionage
               // Will detect that is already occupied.
               int index = fleetTiles[x][y].getPlayerIndex();
-              EspionageList espionage = info.getEspionage().getByIndex(index);
+              IntelligenceList espionage = info.getIntelligence().getByIndex(
+                  index);
               if (espionage.isFleetTypeRecognized(FleetType.STARBASE)) {
                 // There is already starbase know by espionage
                 DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(

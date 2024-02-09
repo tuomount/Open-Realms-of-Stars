@@ -30,8 +30,8 @@ import org.openRealmOfStars.player.artifact.ArtifactLists;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
-import org.openRealmOfStars.player.espionage.Espionage;
-import org.openRealmOfStars.player.espionage.EspionageList;
+import org.openRealmOfStars.player.espionage.Intelligence;
+import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.government.GovernmentType;
@@ -156,7 +156,7 @@ public class PlayerInfo {
    * Player's espionage to other players. This has no need
    * to save it can always calculated.
    */
-  private Espionage espionage;
+  private Intelligence espionage;
 
   /**
    * Fake military size for GBNC
@@ -324,7 +324,7 @@ public class PlayerInfo {
     missions = new MissionList();
     setRace(race);
     diplomacy = new Diplomacy(maxPlayers, index, boardPlayerIndex);
-    espionage = new Espionage(maxPlayers);
+    espionage = new Intelligence(maxPlayers);
     attitude = Attitude.getRandom();
     String[] extraTech = null;
     if (getStartingScenario() == StartingScenario.TEMPERATE_ARID_SIZE12) {
@@ -642,11 +642,11 @@ public class PlayerInfo {
           + mapOffset + " " + e.getMessage());
     }
     diplomacy = DiplomacyRepository.loadDiplomacy(dis);
-    espionage = new Espionage(diplomacy.getDiplomacySize());
+    espionage = new Intelligence(diplomacy.getDiplomacySize());
 
     int size = dis.read();
     for (int i = 0; i < size; i++) {
-      EspionageList list = espionage.getByIndex(i);
+      IntelligenceList list = espionage.getByIndex(i);
       boolean nonNull = dis.readBoolean();
       int level1 = 0;
       int level3 = 0;
@@ -659,10 +659,10 @@ public class PlayerInfo {
         level7 = dis.readInt();
       }
       if (list != null && nonNull) {
-        list.setEspionageLevel1Estimate(level1);
-        list.setEspionageLevel3Estimate(level3);
-        list.setEspionageLevel5Estimate(level5);
-        list.setEspionageLevel7Estimate(level7);
+        list.setIntelligenceLevel1Estimate(level1);
+        list.setIntelligenceLevel3Estimate(level3);
+        list.setIntelligenceLevel5Estimate(level5);
+        list.setIntelligenceLevel7Estimate(level7);
       }
     }
     setFakeMilitarySize(dis.readInt());
@@ -745,13 +745,13 @@ public class PlayerInfo {
     DiplomacyRepository.saveDiplomacy(dos, diplomacy);
     dos.writeByte(espionage.getSize());
     for (int i = 0; i < espionage.getSize(); i++) {
-      EspionageList list = espionage.getByIndex(i);
+      IntelligenceList list = espionage.getByIndex(i);
       if (list != null) {
         dos.writeBoolean(true);
-        dos.writeInt(list.getEspionageLevel1Estimate());
-        dos.writeInt(list.getEspionageLevel3Estimate());
-        dos.writeInt(list.getEspionageLevel5Estimate());
-        dos.writeInt(list.getEspionageLevel7Estimate());
+        dos.writeInt(list.getIntelligenceLevel1Estimate());
+        dos.writeInt(list.getIntelligenceLevel3Estimate());
+        dos.writeInt(list.getIntelligenceLevel5Estimate());
+        dos.writeInt(list.getIntelligenceLevel7Estimate());
       } else {
         dos.writeBoolean(false);
       }
@@ -778,10 +778,10 @@ public class PlayerInfo {
   }
 
   /**
-   * Get player espionage information to other players
-   * @return Espionage
+   * Get player Intelligence information to other players
+   * @return Intelligence
    */
-  public Espionage getEspionage() {
+  public Intelligence getIntelligence() {
     return espionage;
   }
   /**
@@ -1939,7 +1939,7 @@ public class PlayerInfo {
    */
   public void handleFakeMilitarySizeCost() {
     int value = getFakeMilitarySize();
-    int cost = Espionage.calculateEspionageCost(value);
+    int cost = Intelligence.calculateIntelligenceCost(value);
     if (cost > getTotalCredits()) {
       int direction = 0;
       if (value > 100) {
@@ -1949,7 +1949,7 @@ public class PlayerInfo {
       }
       while (cost > getTotalCredits()) {
         value = value + direction;
-        cost = Espionage.calculateEspionageCost(value);
+        cost = Intelligence.calculateIntelligenceCost(value);
         if (cost == 0) {
           break;
         }
@@ -2101,9 +2101,10 @@ public class PlayerInfo {
    */
   public int getKnowledgeBonus(final int realmIndex) {
     int result = 0;
-    EspionageList espionageList = getEspionage().getByIndex(realmIndex);
-    if (espionageList != null) {
-      result = espionageList.getTotalBonus();
+    IntelligenceList intelligenceList = getIntelligence().getByIndex(
+        realmIndex);
+    if (intelligenceList != null) {
+      result = intelligenceList.getTotalBonus();
     }
     DiplomacyBonusList diplomacyList = getDiplomacy().getDiplomacyList(
         realmIndex);

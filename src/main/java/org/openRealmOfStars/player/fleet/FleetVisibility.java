@@ -18,7 +18,7 @@ package org.openRealmOfStars.player.fleet;
  */
 
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.espionage.EspionageList;
+import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.player.ship.Ship;
 
 /**
@@ -65,19 +65,19 @@ public class FleetVisibility {
     if (!fleet.isPrivateerFleet()) {
       recognized = true;
     } else {
-      EspionageList espionage = info.getEspionage().getByIndex(
+      IntelligenceList intelligence = info.getIntelligence().getByIndex(
           fleetOwnerIndex);
-      if (espionage != null && espionage.getTotalBonus() >= 4) {
+      if (intelligence != null && intelligence.getTotalBonus() >= 4) {
         FleetType fleetType = fleet.getFleetType();
-        recognized = espionage.isFleetTypeRecognized(fleetType);
+        recognized = intelligence.isFleetTypeRecognized(fleetType);
       }
     }
   } else {
-    EspionageList espionage = info.getEspionage().getByIndex(
+    IntelligenceList intelligence = info.getIntelligence().getByIndex(
         fleetOwnerIndex);
-    if (espionage != null && espionage.getTotalBonus() >= 4) {
+    if (intelligence != null && intelligence.getTotalBonus() >= 4) {
       FleetType fleetType = fleet.getFleetType();
-      recognized = espionage.isFleetTypeRecognized(fleetType);
+      recognized = intelligence.isFleetTypeRecognized(fleetType);
       if (recognized) {
         drawShip = true;
       }

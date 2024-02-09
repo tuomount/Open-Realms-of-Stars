@@ -41,7 +41,7 @@ public class EspionagePanelTest {
     int value = 5;
     String relationText = "Neutral Peace";
     Color color = GuiStatics.COLOR_GREEN_TEXT;
-    EspionagePanel panel = new EspionagePanel(realm, desc, value,
+    IntelligencePanel panel = new IntelligencePanel(realm, desc, value,
         relationText, color, listener);
     assertEquals(realm, panel.getRealmName());
     assertEquals(desc, panel.getDescription());

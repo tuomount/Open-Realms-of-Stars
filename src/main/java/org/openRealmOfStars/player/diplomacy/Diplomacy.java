@@ -24,8 +24,8 @@ import org.openRealmOfStars.game.state.DiplomacyView;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
-import org.openRealmOfStars.player.espionage.Espionage;
-import org.openRealmOfStars.player.espionage.EspionageList;
+import org.openRealmOfStars.player.espionage.Intelligence;
+import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.Ship;
@@ -385,30 +385,30 @@ public class Diplomacy {
    * @param espionage Realm which is doing the comparison
    * @return least liked realm index
    */
-  public int getLeastLikingWithLowEspionage(final Espionage espionage) {
+  public int getLeastLikingWithLowEspionage(final Intelligence espionage) {
     int index = -1;
     int likingForIndex = VERY_HIGH_LIKE;
     int bonus = 10;
     for (int i = 0; i < diplomacyList.length; i++) {
       if (diplomacyList[i] != null) {
         int liking = getLiking(i);
-        EspionageList espionageList = espionage.getByIndex(i);
-        int espionageValue = 10;
-        if (espionageList != null) {
-          espionageValue = espionageList.getTotalBonus();
+        IntelligenceList intelligenceList = espionage.getByIndex(i);
+        int intelligenceValue = 10;
+        if (intelligenceList != null) {
+          intelligenceValue = intelligenceList.getTotalBonus();
         }
-        if (liking < likingForIndex && espionageValue <= 8) {
-          bonus = espionageValue;
+        if (liking < likingForIndex && intelligenceValue <= 8) {
+          bonus = intelligenceValue;
           index = i;
           likingForIndex = liking;
         }
-        if (liking == likingForIndex && espionageValue < bonus) {
-          bonus = espionageValue;
+        if (liking == likingForIndex && intelligenceValue < bonus) {
+          bonus = intelligenceValue;
           index = i;
           likingForIndex = liking;
         }
         if (index == -1) {
-          bonus = espionageValue;
+          bonus = intelligenceValue;
           index = i;
           likingForIndex = liking;
         }

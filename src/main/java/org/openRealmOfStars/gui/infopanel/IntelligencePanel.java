@@ -1,7 +1,7 @@
 package org.openRealmOfStars.gui.infopanel;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,10 +36,10 @@ import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
 *
-* Espionage panel for showing espionage info for one realm.
+* Intelligence panel for showing espionage info for one realm.
 *
 */
-public class EspionagePanel extends InfoPanel {
+public class IntelligencePanel extends InfoPanel {
 
   /**
    *
@@ -50,34 +50,34 @@ public class EspionagePanel extends InfoPanel {
    */
   private String realmName;
   /**
-   * Description about the espionage
+   * Description about the Intelligence
    */
   private String description;
   /**
-   * Espionage value
+   * Intelligence value
    */
   private int value;
 
   /**
-   * Constructor for espionage panel. Contains title,
-   * espionage value and description info text
+   * Constructor for Intelligence panel. Contains title,
+   * Intelligence value and description info text
    * @param realm Realm name to show
-   * @param text Espionage text
-   * @param espionageValue Espionage value
+   * @param text Intelligence text
+   * @param intelligenceValue Intelligence value
    * @param relation Realm relation text
    * @param relationColor what color is used to draw relation text.
    * @param listener ActionListener for showing realm information button.
    */
-  public EspionagePanel(final String realm, final String text,
-      final int espionageValue, final String relation,
+  public IntelligencePanel(final String realm, final String text,
+      final int intelligenceValue, final String relation,
       final Color relationColor, final ActionListener listener) {
     realmName = realm;
     description = text;
-    value = espionageValue;
+    value = intelligenceValue;
     this.setTitle(realmName);
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     IconLabel iconLabel = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_SPY_GOGGLES), "Espionage: "
+        Icons.getIconByName(Icons.ICON_SPY_GOGGLES), "Intelligence: "
         + value + "/10");
     this.add(iconLabel);
     SpaceLabel likenessLabel = new SpaceLabel(relation);

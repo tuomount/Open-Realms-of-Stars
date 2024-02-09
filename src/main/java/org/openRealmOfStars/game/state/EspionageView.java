@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2022 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,7 +32,7 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.gui.infopanel.EspionagePanel;
+import org.openRealmOfStars.gui.infopanel.IntelligencePanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
@@ -41,8 +41,8 @@ import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
-import org.openRealmOfStars.player.espionage.Espionage;
-import org.openRealmOfStars.player.espionage.EspionageList;
+import org.openRealmOfStars.player.espionage.Intelligence;
+import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.starMap.newsCorp.GalaxyStat;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 
@@ -115,19 +115,19 @@ public class EspionageView extends BlackPanel {
     humanNewsMilitarySize = militaryNews.getLatest(humanIndex);
 
     InfoPanel centerPanel = new InfoPanel();
-    centerPanel.setTitle("Espionage");
+    centerPanel.setTitle("Intelligence");
     centerPanel.setLayout(new GridLayout(4, 4));
     int maxPlayer = playerList.getCurrentMaxRealms();
     for (int i = 0; i < maxPlayer; i++) {
       PlayerInfo realmInfo = playerList.getPlayerInfoByIndex(i);
-      EspionageList espionageList = player.getEspionage().getByIndex(i);
-      if (espionageList != null) {
-        int bonus = player.getEspionage().getByIndex(i).getTotalBonus();
-        String desc = EspionageList.getTotalBonusAsDescriptions(bonus);
+      IntelligenceList intelList = player.getIntelligence().getByIndex(i);
+      if (intelList != null) {
+        int bonus = player.getIntelligence().getByIndex(i).getTotalBonus();
+        String desc = IntelligenceList.getTotalBonusAsDescriptions(bonus);
         int militaryValue = 0;
         if (bonus > 0) {
           militaryValue = NewsCorpData.calculateMilitaryValue(realmInfo);
-          militaryValue = espionageList.estimateMilitaryPower(militaryValue);
+          militaryValue = intelList.estimateMilitaryPower(militaryValue);
         }
         int realmIndex = playerList.getIndex(realmInfo);
         int newsValue = militaryNews.getLatest(realmIndex);
@@ -148,8 +148,9 @@ public class EspionageView extends BlackPanel {
           text = "Own Realm";
           relationColor = GuiStatics.getInfoTextColor();
         }
-        EspionagePanel panel = new EspionagePanel(realmInfo.getEmpireName(),
-            desc, bonus, text, relationColor, listener);
+        IntelligencePanel panel = new IntelligencePanel(
+            realmInfo.getEmpireName(), desc, bonus, text, relationColor,
+            listener);
         centerPanel.add(panel);
       }
     }
@@ -197,7 +198,7 @@ public class EspionageView extends BlackPanel {
     fakeMilitarySlider.setText("Lie military size ("
       + fakeMilitarySlider.getSliderValue() + "%)");
     int value = fakeMilitarySlider.getSliderValue();
-    int cost = Espionage.calculateEspionageCost(value);
+    int cost = Intelligence.calculateIntelligenceCost(value);
     fakeMilitaryText.setText("Lying military power costs " + cost + " credits."
         + "Lying military might cause other realms wrongly evalutate your "
         + " military power and start war or not start war with you.\n"

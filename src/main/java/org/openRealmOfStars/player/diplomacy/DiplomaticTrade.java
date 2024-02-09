@@ -1216,7 +1216,7 @@ public class DiplomaticTrade {
             .equals(Diplomacy.TRADE_ALLIANCE)
             && !info.getDiplomacy().getDiplomaticRelation(second)
             .equals(Diplomacy.ALLIANCE)
-            && info.getEspionage().isSpyTradePossible()) {
+            && info.getIntelligence().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
     }
@@ -1309,7 +1309,7 @@ public class DiplomaticTrade {
           .equals(Diplomacy.TRADE_ALLIANCE)
           && !info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.ALLIANCE)
-          && info.getEspionage().isSpyTradePossible()) {
+          && info.getIntelligence().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
     }
@@ -1404,7 +1404,7 @@ public class DiplomaticTrade {
           .equals(Diplomacy.TRADE_ALLIANCE)
           && !info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.ALLIANCE)
-          && info.getEspionage().isSpyTradePossible()) {
+          && info.getIntelligence().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
     }
@@ -1497,7 +1497,7 @@ public class DiplomaticTrade {
           .equals(Diplomacy.TRADE_ALLIANCE)
           && !info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.ALLIANCE)
-          && info.getEspionage().isSpyTradePossible()) {
+          && info.getIntelligence().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
     }
@@ -1617,7 +1617,7 @@ public class DiplomaticTrade {
           .equals(Diplomacy.TRADE_ALLIANCE)
           && !info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.ALLIANCE)
-          && info.getEspionage().isSpyTradePossible()) {
+          && info.getIntelligence().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
     }
@@ -1710,7 +1710,7 @@ public class DiplomaticTrade {
           .equals(Diplomacy.TRADE_ALLIANCE)
           && !info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.ALLIANCE)
-          && info.getEspionage().isSpyTradePossible()) {
+          && info.getIntelligence().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
     }
@@ -1829,7 +1829,7 @@ public class DiplomaticTrade {
           .equals(Diplomacy.TRADE_ALLIANCE)
           && !info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.ALLIANCE)
-          && info.getEspionage().isSpyTradePossible()) {
+          && info.getIntelligence().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
     }
@@ -1924,7 +1924,7 @@ public class DiplomaticTrade {
           .equals(Diplomacy.TRADE_ALLIANCE)
           && !info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.ALLIANCE)
-          && info.getEspionage().isSpyTradePossible()) {
+          && info.getIntelligence().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
     }
@@ -2015,7 +2015,7 @@ public class DiplomaticTrade {
           .equals(Diplomacy.TRADE_ALLIANCE)
           && !info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.ALLIANCE)
-          && info.getEspionage().isSpyTradePossible()) {
+          && info.getIntelligence().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
     }

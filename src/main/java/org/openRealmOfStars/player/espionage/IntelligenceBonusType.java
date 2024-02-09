@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.espionage;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2023 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,30 +18,30 @@ package org.openRealmOfStars.player.espionage;
  */
 
 /**
-* Espionage Bonus Type
+* Intelligence Bonus Type
 *
 */
 
-public enum EspionageBonusType {
+public enum IntelligenceBonusType {
   /**
-   * Espionage from spy fleet
+   * Intelligence from spy fleet
    */
   SPY_FLEET,
   /**
-   * Espionage from trade
+   * Intelligence from trade
    */
   TRADE,
   /**
-   * "Espionage" on own realm, bonus for this
+   * "Intelligence" on own realm, bonus for this
    * should be always 10.
    */
   OWN_REALM,
   /**
-   * Ruler reveals espionage information.
+   * Ruler reveals Intelligence information.
    */
   CHATTERBOX,
   /**
-   * Ruler gains espionage information
+   * Ruler gains Intelligence information
    */
   NEGOTIATOR;
 }

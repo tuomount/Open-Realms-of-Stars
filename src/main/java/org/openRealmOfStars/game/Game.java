@@ -58,7 +58,7 @@ import org.openRealmOfStars.game.state.DiplomacyView;
 import org.openRealmOfStars.game.state.EndGameView;
 import org.openRealmOfStars.game.state.EndStoryView;
 import org.openRealmOfStars.game.state.EspionageMissionView;
-import org.openRealmOfStars.game.state.EspionageView;
+import org.openRealmOfStars.game.state.IntelligenceView;
 import org.openRealmOfStars.game.state.FleetTradeView;
 import org.openRealmOfStars.game.state.FleetView;
 import org.openRealmOfStars.game.state.GalaxyCreationView;
@@ -327,7 +327,7 @@ public class Game implements ActionListener {
   /**
    * Espionage view for the game
    */
-  private EspionageView espionageView;
+  private IntelligenceView espionageView;
 
   /**
    * History view for the game
@@ -1133,7 +1133,7 @@ public class Game implements ActionListener {
    * Show espionage view
    */
   public void showEspionageView() {
-    espionageView = new EspionageView(starMap.getPlayerList(),
+    espionageView = new IntelligenceView(starMap.getPlayerList(),
         starMap.getCurrentPlayerInfo(),
         starMap.getNewsCorpData().getMilitary(), this);
     this.updateDisplay(espionageView);

@@ -49,10 +49,10 @@ import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 
 /**
 *
-* Espionage view for spying and espionage
+* Intelligence view for spying and Intelligence
 *
 */
-public class EspionageView extends BlackPanel {
+public class IntelligenceView extends BlackPanel {
 
   /**
    *
@@ -80,13 +80,13 @@ public class EspionageView extends BlackPanel {
   private int humanNewsMilitarySize;
 
   /**
-   * Espionage View constructor
+   * Intelligence View constructor
    * @param playerList List of all players
    * @param info PlayerInfo who is doing the spying
    * @param militaryNews Galaxy news about military stats
    * @param listener Action Listener
    */
-  public EspionageView(final PlayerList playerList, final PlayerInfo info,
+  public IntelligenceView(final PlayerList playerList, final PlayerInfo info,
       final GalaxyStat militaryNews, final ActionListener listener) {
     player = info;
     this.setLayout(new BorderLayout());

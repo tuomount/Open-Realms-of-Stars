@@ -1,0 +1,25 @@
+{
+  "ID": "HUMANS",
+  "Name": "Humans",
+  "NameSingle": "Human",
+  "BridgeId": "Human",
+  "SpaceShipId": "Human",
+  "Traits": [
+              "GOOD_WAR_RESILIENCE",
+              "NATURAL_CHARM",
+              "TOLERATE_COLD",
+              "NATURAL_LEADERS"
+            ],
+  "Attitude": "DIPLOMATIC",
+  "Image": "resources/images/human_race.png",
+  "SocialSystem": "EQUAL",
+  "Genders": [
+               "MALE",
+               "FEMALE"
+             ],
+  "SpeechSetId": "Human",
+  "BridgeEffect": "WARM_WHITE",
+  "DiplomacyMusic": "WALKING_WITH_POSEIDON",
+  "NameGenerator": "SCIFI_HUMAN",
+  "Description": "Humans are commonly regarded as possessing average physical and mental attributes."
+}

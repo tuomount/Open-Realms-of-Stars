@@ -81,6 +81,12 @@ public class SpaceRaceClass {
   /** Textual description of the space race. This just flavor text. */
   private String description;
 
+  /**
+   * Constructor for SpaceRace.
+   * @param id SpaceRace ID
+   * @param name Name in plural
+   * @param nameSingle Name in single
+   */
   public SpaceRaceClass(final String id, final String name,
       final String nameSingle) {
     this.id = id;
@@ -176,6 +182,13 @@ public class SpaceRaceClass {
   }
 
   /**
+   * SpaceRace default attitude
+   * @param attitude Attitude
+   */
+  public void setAttitude(final Attitude attitude) {
+    this.attitude = attitude;
+  }
+  /**
    * Get race maximum Radiation
    * @return The race maximum radiation
    */
@@ -201,6 +214,13 @@ public class SpaceRaceClass {
     return imagePath;
   }
 
+  /**
+   * Set space race image path to resources.
+   * @param image Image path
+   */
+  public void setImage(final String image) {
+    this.imagePath = image;
+  }
   /**
    * Get race picture to wiki page with correct path
    * @return Path to image in master
@@ -524,6 +544,13 @@ public class SpaceRaceClass {
   }
 
   /**
+   * Set Space race social system
+   * @param socialSystem Social System
+   */
+  public void setSocialSystem(final SocialSystem socialSystem) {
+    this.socialSystem = socialSystem;
+  }
+  /**
    * Get Minimum population for leader on planet.
    * @return Minimum population number.
    */
@@ -615,6 +642,14 @@ public class SpaceRaceClass {
   }
 
   /**
+   * Add gender to gender list.
+   * @param gender Gender
+   */
+  public void addGender(final Gender gender) {
+    genderList.add(gender);
+  }
+
+  /**
    * Get ID of SpeechSet this race is using
    * TODO: Move this from SpaceRace to PlayerInfo or "Realm Preset"
    * @return SpeechSet ID
@@ -623,6 +658,28 @@ public class SpaceRaceClass {
     return speechSetId;
   }
 
+  /**
+   * Set space race speech set id. This is used in diplomacy view.
+   * @param speechSetId Speech set id.
+   */
+  public void setSpeechSetId(final String speechSetId) {
+    this.speechSetId = speechSetId;
+  }
+  /**
+   * Get Racial description text. This should contain only physical attributes
+   * and description. Nothing about the government or such.
+   * @return String of description.
+   */
+  public String getRacialDescription() {
+    return description;
+  }
+  /**
+   * Set space race description. This is purely for flavor text.
+   * @param description Space race description.
+   */
+  public void setDescription(final String description) {
+    this.description = description;
+  }
   /**
    * Get full description about the race, including the stats.
    * @param markDown if true then markDown is being used, otherwise HTML.
@@ -745,6 +802,13 @@ public class SpaceRaceClass {
   }
 
   /**
+   * Set space race diplomacy music.
+   * @param diplomacyMusic Diplomacy music.
+   */
+  public void setDiplomacyMusic(final MusicFileInfo diplomacyMusic) {
+    this.diplomacyMusic = diplomacyMusic;
+  }
+  /**
    * Get Name Generator type for space race.
    * @return NameGeneratorType Name generator type.
    */
@@ -753,11 +817,11 @@ public class SpaceRaceClass {
   }
 
   /**
-   * Get Racial description text. This should contain only physical attributes
-   * and description. Nothing about the government or such.
-   * @return String of description.
+   * Set space race leader name generator typ.
+   * @param leaderNameGenerator Namegenerator type.
    */
-  public String getRacialDescription() {
-    return description;
+  public void setLeaderNameGenerator(
+      final NameGeneratorType leaderNameGenerator) {
+    this.leaderNameGenerator = leaderNameGenerator;
   }
 }

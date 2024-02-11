@@ -57,6 +57,12 @@ public class SpaceRaceClass {
   /** Image path */
   private String imagePath;
 
+  /** Bridge Id. */
+  private String bridgeId;
+
+  /** Space Ship Id. */
+  private String spaceShipId;
+
   /** Social system for space race. */
   private SocialSystem socialSystem;
 
@@ -115,17 +121,32 @@ public class SpaceRaceClass {
    * @return Space ship bridge ID.
    */
   public String getBridgeId() {
-    return getNameSingle();
+    return bridgeId;
   }
 
+  /**
+   * Setter for bridge Id. SpaceBridges are recognized by original space
+   * race names.
+   * @param bridgeId Bridge Id
+   */
+  public void setBridgeId(final String bridgeId) {
+    this.bridgeId = bridgeId;
+  }
   /**
    * Get Space ship id. Currently space ship ID matches space race name.
    * @return Space ship bridge ID.
    */
   public String getSpaceShipId() {
-    return getNameSingle();
+    return spaceShipId;
   }
 
+  /**
+   * Set Space ship id. Currently space ship ID matches space race name.
+   * @param spaceShipId Space ship bridge id.
+   */
+  public void setSpaceShipId(final String spaceShipId) {
+    this.spaceShipId = spaceShipId;
+  }
   /**
    * Add RaceTrait to SpaceRace.
    * Throws IllegalArgumentException if adding trait would result

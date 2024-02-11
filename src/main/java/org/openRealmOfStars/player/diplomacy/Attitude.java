@@ -65,6 +65,25 @@ public enum Attitude {
   }
 
   /**
+   * Get Attitude name
+   * @return String
+   */
+  public String getName() {
+    switch (this) {
+      case AGGRESSIVE: return "aggressive";
+      case DIPLOMATIC: return "diplomatic";
+      case SCIENTIFIC: return "scientific";
+      case MILITARISTIC: return "militaristic";
+      case EXPANSIONIST: return "expansionist";
+      case BACKSTABBING: return "backstabbing";
+      case MERCHANTICAL: return "merchantical";
+      case PEACEFUL: return "peaceful";
+      case LOGICAL: return "logical";
+      default: throw new IllegalArgumentException("No such Attitude!");
+    }
+  }
+
+  /**
    * Return Attitude by index.
    * @param index This must be between 0-7
    * @return Attitude
@@ -84,6 +103,19 @@ public enum Attitude {
     }
   }
 
+  /**
+   * Get attitude by String.
+   * @param value String
+   * @return Attitude
+   */
+  public static Attitude getByString(final String value) {
+    for (Attitude attitude : Attitude.values()) {
+      if (attitude.getName().equalsIgnoreCase(value)) {
+        return attitude;
+      }
+    }
+    throw new IllegalArgumentException("Unexpected attitude, " + value + ".");
+  }
   /**
    * Get random AI attitude
    * @return Attitude

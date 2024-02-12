@@ -17,6 +17,7 @@ package org.openRealmOfStars.player.leader;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+
 /** Leader Name Generator type enumeration. */
 public enum NameGeneratorType {
 
@@ -53,4 +54,43 @@ public enum NameGeneratorType {
   PIRATE,
   /** Namegenerator that creates names for mix of all generators */
   ALL;
+
+  /**
+   * Get Name generator name as a string.
+   * @return String
+   */
+  public String getName() {
+    switch (this) {
+    case DEEP_ANCIENT_MONSTER: return "deep_ancient_monster";
+    case EVIL_CREATURE: return "evil_creature";
+    case SPACE_ORC: return "space_orc";
+    case INSECT: return "insect";
+    case ANCIENT_ROMAN: return "ancient_roman";
+    case LONG_NAMES: return "long_names";
+    case DEEP_CREATURE: return "deep_creature";
+    case ANCIENT_NORDIC: return "ancient_nordic";
+    case FEMALE_ROBOT: return "female_robot";
+    case ROBOT: return "robot";
+    case SCIFI_HUMAN: return "scifi_human";
+    case STONE_PEOPLE: return "stone_people";
+    case GASEOUS_CREATURE: return "gaseous_creature";
+    case PIRATE: return "pirate";
+    default:
+    case ALL: return "all";
+    }
+  }
+  /**
+   * Get NameGeneratorType by String.
+   * @param value String
+   * @return NameGeneratorType
+   */
+  public static NameGeneratorType getByString(final String value) {
+    for (NameGeneratorType type : NameGeneratorType.values()) {
+      if (type.getName().equalsIgnoreCase(value)) {
+        return type;
+      }
+    }
+    throw new IllegalArgumentException("Unexpected name generator type, "
+        + value + ".");
+  }
 }

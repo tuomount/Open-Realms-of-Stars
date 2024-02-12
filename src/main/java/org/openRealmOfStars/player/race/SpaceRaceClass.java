@@ -807,6 +807,13 @@ public class SpaceRaceClass {
   }
 
   /**
+   * Set Race bridge effect.
+   * @param type BridgeCommandType
+   */
+  public void setRaceBridgeEffect(final BridgeCommandType type) {
+    bridgeEffect = type;
+  }
+  /**
    * Get bridge effect for diplomacy screen.
    * @return BridgeCommandType
    */

@@ -36,4 +36,22 @@ public enum SocialSystem {
    * Rulers can be both males or females in Empire and Kingdom.
    */
   EQUAL;
+
+  /**
+   * Get social system by string.
+   * @param value String value
+   * @return Social system.
+   */
+  public static SocialSystem getByString(final String value) {
+    if (value.equalsIgnoreCase("matriarchy")) {
+      return MATRIARCHY;
+    }
+    if (value.equalsIgnoreCase("patriarchy")) {
+      return PATRIARCHY;
+    }
+    if (value.equalsIgnoreCase("equal")) {
+      return EQUAL;
+    }
+    throw new IllegalArgumentException("Unexpected social system: " + value);
+  }
 }

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.audio.music;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2022 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -308,6 +308,14 @@ public final class MusicPlayer {
    */
   protected static final MusicFileInfo[] COMBAT_MUSIC_LIST = {NEON_TRANSIT,
       THRUST_SEQUENCE, FIGHT_THEME01, LAW_IN_THE_CITY, UNSTOPPABLE_DRIVER};
+  /**
+   * List of music to played in diplomacy
+   */
+  protected static final MusicFileInfo[] DIPLOMACY_MUSIC_LIST = {
+      WALKING_WITH_POSEIDON, ABANDONED_STEEL_MILL, CONQUERORS, TROGL,
+      OVE_MELAA_DIPLOMACY, FANTASY_CHOIR_2, PRESSURE, INTERPLANETARY_ODYSSEY,
+      MALLOGA_BALLING, SET_FIRE_TO_REALITY, MENACE, BRAINDEAD,
+      TECHNODRIVE, SKY_PORTAL, GUITAR_SONG, CYBORG, DARK_INTRO};
 
   /**
    * What music file is currently playing
@@ -537,5 +545,29 @@ public final class MusicPlayer {
     if (player != null) {
       player.fadeout();
     }
+  }
+
+  /**
+   * Get Music based on name of the song.
+   * @param name Name of the song
+   * @return MusicFileInfo
+   */
+  public static MusicFileInfo getByString(final String name) {
+    for (MusicFileInfo info : DIPLOMACY_MUSIC_LIST) {
+      if (name.equalsIgnoreCase(info.getName())) {
+        return info;
+      }
+    }
+    for (MusicFileInfo info : GAME_MUSIC_LIST) {
+      if (name.equalsIgnoreCase(info.getName())) {
+        return info;
+      }
+    }
+    for (MusicFileInfo info : COMBAT_MUSIC_LIST) {
+      if (name.equalsIgnoreCase(info.getName())) {
+        return info;
+      }
+    }
+    throw new IllegalArgumentException("Unexpected music file: " + name);
   }
 }

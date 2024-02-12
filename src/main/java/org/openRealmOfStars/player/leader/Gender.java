@@ -118,4 +118,22 @@ public enum Gender {
       case FEMALE: return "she";
     }
   }
+
+  /**
+   * Get gender by string.
+   * @param value String
+   * @return Gender
+   */
+  public static Gender getByString(final String value) {
+    if (value.equalsIgnoreCase("none")) {
+      return NONE;
+    }
+    if (value.equalsIgnoreCase("male")) {
+      return MALE;
+    }
+    if (value.equalsIgnoreCase("female")) {
+      return FEMALE;
+    }
+    throw new IllegalArgumentException("Unexpected gender: " + value);
+  }
 }

@@ -1,0 +1,30 @@
+{
+  "ID": "SCAURIANS",
+  "Name": "Scaurians",
+  "NameSingle": "Scaurian",
+  "BridgeId": "Scaurian",
+  "SpaceShipId": "Scaurian",
+  "Traits": [
+              "MERCANTILE",
+              "SLOW_GROWTH",
+              "LONG_LIFE_SPAN",
+              "POOR_WAR_RESILIENCE",
+              "NATURAL_CHARM",
+              "LOW_GRAVITY_BEING",
+              "TOLERATE_EXTREME_RADIATION",
+              "TOLERATE_COLD",
+              "COMMUNAL"
+            ],
+  "Attitude": "MERCHANTICAL",
+  "Image": "resources/images/scaurian_race.png",
+  "SocialSystem": "EQUAL",
+  "Genders": [
+               "MALE",
+               "FEMALE"
+             ],
+  "SpeechSetId": "Scaurians",
+  "BridgeEffect": "DARK_ORANGE",
+  "DiplomacyMusic": "Malloga Balling",
+  "NameGenerator": "ANCIENT_ROMAN",
+  "Description": "Scaurians are a race of small but wide humanoids. "
+}

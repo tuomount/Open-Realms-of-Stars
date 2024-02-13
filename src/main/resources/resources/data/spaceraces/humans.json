@@ -17,9 +17,9 @@
                "MALE",
                "FEMALE"
              ],
-  "SpeechSetId": "Human",
+  "SpeechSetId": "Humans",
   "BridgeEffect": "WARM_WHITE",
-  "DiplomacyMusic": "WALKING_WITH_POSEIDON",
+  "DiplomacyMusic": "Walking with Poseidon",
   "NameGenerator": "SCIFI_HUMAN",
   "Description": "Humans are commonly regarded as possessing average physical and mental attributes."
 }

@@ -1,0 +1,27 @@
+{
+  "ID": "SPORKS",
+  "Name": "Sporks",
+  "NameSingle": "Spork",
+  "BridgeId": "Spork",
+  "SpaceShipId": "Spork",
+  "Traits": [
+              "SHORT_LIFE_SPAN",
+              "EXCELLENT_WAR_RESILIENCE",
+              "REPULSIVE",
+              "STRONG",
+              "TOLERATE_HOT",
+              "COMMUNAL"
+            ],
+  "Attitude": "AGGRESSIVE",
+  "Image": "resources/images/spork_race.png",
+  "SocialSystem": "PATRIARCHY",
+  "Genders": [
+               "MALE",
+               "FEMALE"
+             ],
+  "SpeechSetId": "Sporks",
+  "BridgeEffect": "DARK_RED",
+  "DiplomacyMusic": "Conquerors",
+  "NameGenerator": "SPACE_ORC",
+  "Description": "Sporks are a humanoid species which have green and tough skin. They also have horns growing from their skull. "
+}

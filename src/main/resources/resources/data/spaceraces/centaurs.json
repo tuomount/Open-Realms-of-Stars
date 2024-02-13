@@ -1,0 +1,29 @@
+{
+  "ID": "CENTAURS",
+  "Name": "Centaurs",
+  "NameSingle": "Centaur",
+  "BridgeId": "Centaur",
+  "SpaceShipId": "Centaur",
+  "Traits": [
+              "SLOW_GROWTH",
+              "VERY_LONG_LIFE_SPAN",
+              "MASSIVE_SIZE",
+              "GOOD_WAR_RESILIENCE",
+              "HIGH_GRAVITY_BEING",
+              "TOLERATE_NO_RADIATION",
+              "TOLERATE_COLD",
+              "SOLITARY"
+            ],
+  "Attitude": "DIPLOMATIC",
+  "Image": "resources/images/centaur_race.png",
+  "SocialSystem": "PATRIARCHY",
+  "Genders": [
+               "MALE",
+               "FEMALE"
+             ],
+  "SpeechSetId": "Centaurs",
+  "BridgeEffect": "BRIGHT_CYAN",
+  "DiplomacyMusic": "Diplomacy",
+  "NameGenerator": "LONG_NAMES",
+  "Description": "Centaurs, reminiscent of the mythical beings from ancient Greek and Roman lore, bear a striking resemblance to their legendary counterparts. They possess the upper body of a humanoid, juxtaposed with a lower body reminiscent of an ant. Their formidable, resilient skin and towering stature further distinguish them. "
+}

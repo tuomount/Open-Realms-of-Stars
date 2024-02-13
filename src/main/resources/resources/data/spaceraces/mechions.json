@@ -1,0 +1,30 @@
+{
+  "ID": "MECHIONS",
+  "Name": "Mechions",
+  "NameSingle": "Mechion",
+  "BridgeId": "Mechion",
+  "SpaceShipId": "Mechion",
+  "Traits": [
+              "ROBOTIC",
+              "ENERGY_POWERED",
+              "NO_HEIRS",
+              "CONSTRUCTED_POP",
+              "SLOW_CULTURE",
+              "SLOW_RESEARCH",
+              "REPULSIVE",
+              "STRONG",
+              "TOLERATE_HIGH_RADIATION",
+              "TOLERATE_HOT"
+            ],
+  "Attitude": "LOGICAL",
+  "Image": "resources/images/mechion_race.png",
+  "SocialSystem": "EQUAL",
+  "Genders": [
+               "NONE"
+             ],
+  "SpeechSetId": "Mechions",
+  "BridgeEffect": "WARM_WHITE",
+  "DiplomacyMusic": "Abandoned Steel Mill",
+  "NameGenerator": "ROBOT",
+  "Description": "Mechions are a race of humanoid robot that resemble industrial machines. Heavy and sturdy looking mechanical creatures. "
+}

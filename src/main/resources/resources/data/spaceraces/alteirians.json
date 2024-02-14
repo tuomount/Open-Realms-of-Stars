@@ -1,0 +1,28 @@
+{
+  "ID": "ALTEIRIANS",
+  "Name": "Alteirians",
+  "NameSingle": "Alteirian",
+  "BridgeId": "Alteirian",
+  "SpaceShipId": "Alteirian",
+  "Traits": [
+              "FAST_CULTURE",
+              "VERY_FAST_RESEARCH",
+              "LONG_LIFE_SPAN",
+              "POOR_WAR_RESILIENCE",
+              "ZERO_GRAVITY_BEING",
+              "TOLERATE_HIGH_RADIATION",
+              "NATURAL_LEADERS"
+            ],
+  "Attitude": "SCIENTIFIC",
+  "Image": "resources/images/alteirian_race.png",
+  "SocialSystem": "EQUAL",
+  "Genders": [
+               "MALE",
+               "FEMALE"
+             ],
+  "SpeechSetId": "Alteirians",
+  "BridgeEffect": "GREYBLUE",
+  "DiplomacyMusic": "Sky Portal",
+  "NameGenerator": "GASEOUS_CREATURE",
+  "Description": "Alteirians are a race of creatures that look a bit like floating octopus. They are main just body, mouth and eyes. Below the body there are seven tentacles. "
+}

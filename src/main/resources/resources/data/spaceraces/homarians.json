@@ -1,0 +1,31 @@
+{
+  "ID": "HOMARIANS",
+  "Name": "Homarians",
+  "NameSingle": "Homarian",
+  "BridgeId": "Homarian",
+  "SpaceShipId": "Homarian",
+  "Traits": [
+              "SLOW_CULTURE",
+              "SLOW_RESEARCH",
+              "SHORT_LIFE_SPAN",
+              "FAST_FOOD_PROD",
+              "NATURAL_CHARM",
+              "STRONG",
+              "HANDY",
+              "HIGH_GRAVITY_BEING",
+              "TOLERATE_NO_RADIATION",
+              "TOLERATE_COLD"
+            ],
+  "Attitude": "PEACEFUL",
+  "Image": "resources/images/homarian_race.png",
+  "SocialSystem": "MATRIARCHY",
+  "Genders": [
+               "MALE",
+               "FEMALE"
+             ],
+  "SpeechSetId": "Homarians",
+  "BridgeEffect": "BLUEISH_WHITE",
+  "DiplomacyMusic": "Malloga Balling",
+  "NameGenerator": "DEEP_CREATURE",
+  "Description": "Homarians are a race of humanoid crabs that are known for their immense strength and hard exoskeletons. This exoskeleton also gives them incredible strength, allowing them to easily perform physical tasks that would be difficult for other species. "
+}

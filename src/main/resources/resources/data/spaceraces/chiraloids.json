@@ -1,0 +1,30 @@
+{
+  "ID": "CHIRALOIDS",
+  "Name": "Chiraloids",
+  "NameSingle": "Chiraloid",
+  "BridgeId": "Chiraloid",
+  "SpaceShipId": "Chiraloid",
+  "Traits": [
+              "RADIOSYNTHESIS",
+              "SLOW_GROWTH",
+              "VERY_LONG_LIFE_SPAN",
+              "EXCELLENT_WAR_RESILIENCE",
+              "REPULSIVE",
+              "WEAK",
+              "IMPRACTICAL",
+              "TOLERATE_EXTREME_RADIATION",
+              "TOLERATE_HOT"
+            ],
+  "Attitude": "AGGRESSIVE",
+  "Image": "resources/images/chiraloid_race.png",
+  "SocialSystem": "PATRIARCHY",
+  "Genders": [
+               "MALE",
+               "FEMALE"
+             ],
+  "SpeechSetId": "Chiraloids",
+  "BridgeEffect": "BLUEISH_WHITE",
+  "DiplomacyMusic": "Menace",
+  "NameGenerator": "EVIL_CREATURE",
+  "Description": "Chiraloids are creatures that are distinguished by their four arms and two legs. They have a hard exoskeleton that provides them with protection and allows them to withstand harsh environments. "
+}

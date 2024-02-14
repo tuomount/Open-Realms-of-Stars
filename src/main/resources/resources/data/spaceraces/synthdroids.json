@@ -1,0 +1,27 @@
+{
+  "ID": "SYNTHDROIDS",
+  "Name": "Synthdroids",
+  "NameSingle": "Synthdroid",
+  "BridgeId": "Synthdroid",
+  "SpaceShipId": "Synthdroid",
+  "Traits": [
+              "ROBOTIC",
+              "NO_HEIRS",
+              "CONSTRUCTED_POP",
+              "MERCANTILE",
+              "EAT_LESS",
+              "SLOW_CULTURE",
+              "GOOD_WAR_RESILIENCE"
+            ],
+  "Attitude": "LOGICAL",
+  "Image": "resources/images/synthdroid_race.png",
+  "SocialSystem": "MATRIARCHY",
+  "Genders": [
+               "FEMALE"
+             ],
+  "SpeechSetId": "Synthdroids",
+  "BridgeEffect": "WARM_WHITE",
+  "DiplomacyMusic": "Cyborg",
+  "NameGenerator": "FEMALE_ROBOT",
+  "Description": "Synthdroids are a race of artificial beings that are designed to resemble human females. They are often portrayed as being sleek and elegant, with graceful movements and a polished appearance. "
+}

@@ -19,6 +19,8 @@ package org.openRealmOfStars.player.race;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +32,7 @@ import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.leader.NameGeneratorType;
 import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.utilities.DataLoader;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
 /** SpaceRace Factory which reads space races from JSON. */
@@ -43,16 +46,60 @@ public final class SpaceRaceFactory {
    * @param spaceRaceId ID of trait to retrieve
    * @return SpaceRaceClass or empty
    */
-  public static Optional<SpaceRaceClass> create(final String spaceRaceId) {
+  public static Optional<SpaceRace> create(final String spaceRaceId) {
     return SINGLETON.createById(spaceRaceId);
   }
 
+  /**
+   * Create/Retrieve SpaceRace for given ID, if loaded
+   * @param spaceRaceId ID of trait to retrieve
+   * @return SpaceRaceClass or empty
+   */
+  public static SpaceRace createOne(final String spaceRaceId) {
+    return SINGLETON.makeById(spaceRaceId);
+  }
+
+  public static SpaceRace[] getValues() {
+    return SINGLETON.getAll();
+  }
+
+  /**
+   * Get random living race.
+   * @return Living SpaceRace
+   */
+  public static SpaceRace getRandomLivingRace() {
+    var nonRoboticRaces = Stream.of(getValues())
+        .filter(race -> !race.isRoboticRace())
+        // Filter out "pseudo-races"
+        .filter(
+            race -> !race.isPirate()
+            && !race.isMonster())
+        .collect(Collectors.toList());
+    if (nonRoboticRaces.isEmpty()) {
+      return null;
+    }
+    return DiceGenerator.pickRandom(nonRoboticRaces);
+  }
+
+  /**
+   * Get random robotic race
+   * @return Robotic SpaceRace
+   */
+  public static SpaceRace getRandomRoboticRace() {
+    var roboticRaces = Stream.of(getValues())
+        .filter(race -> race.isRoboticRace())
+        .collect(Collectors.toList());
+    if (roboticRaces.isEmpty()) {
+      return null;
+    }
+    return DiceGenerator.pickRandom(roboticRaces);
+  }
   /** SpaceRace this factory knows. IDs are used as keys. */
-  private HashMap<String, SpaceRaceClass> spaceRaces;
+  private HashMap<String, SpaceRace> spaceRaces;
   /** Tracks if factory is initialized with data */
   private boolean initialized;
   /** JSON data loader */
-  private DataLoader<String, SpaceRaceClass> loader;
+  private DataLoader<String, SpaceRace> loader;
 
   /** Contructor */
   private SpaceRaceFactory() {
@@ -64,9 +111,9 @@ public final class SpaceRaceFactory {
   /**
    * Create/Retrieve SpaceRace for given ID, initialize factory if not yet
    * @param spaceRaceId ID of trait to retrieve
-   * @return RaceTrait or empty
+   * @return SpaceRace or empty
    */
-  private Optional<SpaceRaceClass> createById(final String spaceRaceId) {
+  private Optional<SpaceRace> createById(final String spaceRaceId) {
     if (!initialized) {
       initialized = true;
       init();
@@ -74,6 +121,41 @@ public final class SpaceRaceFactory {
 
     final var spaceRace = spaceRaces.get(spaceRaceId);
     return Optional.ofNullable(spaceRace);
+  }
+
+  /**
+   * Create/Retrieve SpaceRace for given ID, initialize factory if not yet
+   * @param spaceRaceId ID of trait to retrieve
+   * @return SpaceRace or humans by default
+   */
+  private SpaceRace makeById(final String spaceRaceId) {
+    if (!initialized) {
+      initialized = true;
+      init();
+    }
+
+    SpaceRace spaceRace = spaceRaces.get(spaceRaceId);
+    if (spaceRace == null) {
+      spaceRace = spaceRaces.get("HUMANS");
+      if (spaceRace == null) {
+        throw new IllegalArgumentException(
+            "Space race factory does not contain "
+            + spaceRaceId + " or humans.");
+      }
+    }
+    return spaceRace;
+  }
+
+  /**
+   * Create/Retrieve all SpaceRaces, initialize factory if not yet
+   * @return SpaceRaces array
+   */
+  private SpaceRace[] getAll() {
+    if (!initialized) {
+      initialized = true;
+      init();
+    }
+    return spaceRaces.values().toArray(new SpaceRace[0]);
   }
 
   /** (Re)Initialize the factory */
@@ -85,13 +167,13 @@ public final class SpaceRaceFactory {
         "mothoids", "teuthidaes", "scaurians", "homarians", "chiraloids",
         "lithorians", "reborgians", "smaugirians", "spacemonsters",
         "spacepirates", "synthdroids"};
-    final var traitsLoaded = loader.loadAll(spaceRaces, basePath, files);
-    ErrorLogger.log("SpaceRaces loaded: " + traitsLoaded);
+    final var spaceRacesLoaded = loader.loadAll(spaceRaces, basePath, files);
+    ErrorLogger.log("SpaceRaces loaded: " + spaceRacesLoaded);
   }
 }
 
 /** SpaceRace loader */
-class SpaceRaceLoader extends DataLoader<String, SpaceRaceClass> {
+class SpaceRaceLoader extends DataLoader<String, SpaceRace> {
 
   /**
    * Parse SpaceRace from a JSON file.
@@ -112,18 +194,19 @@ class SpaceRaceLoader extends DataLoader<String, SpaceRaceClass> {
    * <li>DiplomacyMusic : String</li>
    * <li>NameGenerator : String</li>
    * <li>Description : String</li>
+   * <li>SpaceRaceType : String (OPTIONAL)</li>
    * </ul>
    * </p>
    * @param jobj JSONObject to parse SpaceRace from
    * @return Parsed SpaceRace or empty
    */
   @Override
-  protected Optional<SpaceRaceClass> parseFromJson(final JSONObject jobj) {
+  protected Optional<SpaceRace> parseFromJson(final JSONObject jobj) {
     try {
       final var spaceRaceId = jobj.getString("ID");
       final var name = jobj.getString("Name");
       final var nameSingle = jobj.getString("NameSingle");
-      SpaceRaceClass tmp = new SpaceRaceClass(spaceRaceId, name, nameSingle);
+      SpaceRace tmp = new SpaceRace(spaceRaceId, name, nameSingle);
       final var bridgeId = jobj.getString("BridgeId");
       tmp.setBridgeId(bridgeId);
       final var spaceShipId = jobj.getString("SpaceShipId");
@@ -157,6 +240,8 @@ class SpaceRaceLoader extends DataLoader<String, SpaceRaceClass> {
           NameGeneratorType.getByString(nameGeneratorType));
       final var description = jobj.getString("Description");
       tmp.setDescription(description);
+      final var spaceRaceType = jobj.optString("SpaceRaceType", "REGULAR");
+      tmp.setSpaceRaceType(SpaceRaceType.getByString(spaceRaceType));
       return Optional.of(tmp);
     } catch (JSONException e) {
       ErrorLogger.log(e);
@@ -166,7 +251,7 @@ class SpaceRaceLoader extends DataLoader<String, SpaceRaceClass> {
   }
 
   @Override
-  protected String valueIdGetter(final SpaceRaceClass value) {
+  protected String valueIdGetter(final SpaceRace value) {
     return value.getId();
   }
 

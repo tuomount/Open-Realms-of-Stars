@@ -39,6 +39,7 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -475,7 +476,7 @@ public class SpaceAnomaly {
           break;
         }
         case TileNames.SPACE_ANOMALY_MECHION: {
-          final var leaderRace = SpaceRace.getRandomRoboticRace();
+          final var leaderRace = SpaceRaceFactory.getRandomRoboticRace();
           if (leaderRace == null) {
             ErrorLogger.debug("Could not get any robotic race for anomaly!");
             result = null;
@@ -663,7 +664,7 @@ public class SpaceAnomaly {
         }
         case TileNames.SPACE_ANOMALY_LEADER_IN_STASIS: {
           result = new SpaceAnomaly(AnomalyType.LEADER_IN_STASIS, 0);
-          SpaceRace leaderRace = SpaceRace.getRandomLivingRace();
+          SpaceRace leaderRace = SpaceRaceFactory.getRandomLivingRace();
           Gender gender = Gender.getRandom();
           String name = NameGenerator.generateName(
               leaderRace.getNameGeneratorType(), gender);

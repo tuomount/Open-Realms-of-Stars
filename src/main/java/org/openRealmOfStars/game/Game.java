@@ -116,6 +116,7 @@ import org.openRealmOfStars.player.message.ChangeMessagePlanet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -469,7 +470,6 @@ public class Game implements ActionListener {
    * @param visible Is game actually visible or not
    */
   public Game(final boolean visible) {
-    SpaceRace.initialize();
     readConfigFile();
     setShowMiniMapFlag(configFile.isShowMinimap());
     int musicVolume = configFile.getMusicVolume();
@@ -2128,7 +2128,7 @@ public class Game implements ActionListener {
       }
       if (tech.getHull() != null) {
         ShipHull hull = ShipHullFactory.createByName(tech.getHull(),
-            SpaceRace.HUMAN);
+            SpaceRaceFactory.createOne("HUMANS"));
         sb.append(i + 1);
         sb.append(". ");
         if (hull == null) {
@@ -2375,7 +2375,7 @@ public class Game implements ActionListener {
         + "(https://github.com/tuomount/Open-Realms-of-Stars/assets/"
         + "15839156/2ea934aa-5092-4cbc-a7c8-e8348939ace4)");
     sb.append("\n");
-    for (SpaceRace race : SpaceRace.values()) {
+    for (SpaceRace race : SpaceRaceFactory.getValues()) {
       sb.append("\n");
       sb.append(race.getFullDescription(true, true));
     }
@@ -2416,8 +2416,6 @@ public class Game implements ActionListener {
    * @param args from Command line
    */
   public static void main(final String[] args) {
-    // TODO: Remove when SpaceRaces are dehardcoded
-    SpaceRace.initialize();
     MusicPlayer.setMusicEnabled(true);
     SoundPlayer.setSoundEnabled(true);
     if (args.length > 0 && args[0].equals("--wiki-research")) {

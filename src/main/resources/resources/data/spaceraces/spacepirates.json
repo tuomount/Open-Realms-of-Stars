@@ -19,5 +19,6 @@
   "BridgeEffect": "DARKEST",
   "DiplomacyMusic": "Set Fire to Reality - dark/electronic",
   "NameGenerator": "ALL",
-  "Description": "Monsters of the space. "
+  "Description": "Monsters of the space. ",
+  "SpaceRaceType": "SPACE_PIRATE"
 }

@@ -27,6 +27,7 @@ import java.util.List;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.leader.stats.LeaderStats;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -132,7 +133,7 @@ public class Leader {
     level = 1;
     experience = 0;
     militaryRank = MilitaryRank.CIVILIAN;
-    setRace(SpaceRace.HUMAN);
+    setRace(SpaceRaceFactory.createOne("HUMANS"));
     gender = Gender.NONE;
     job = Job.UNASSIGNED;
     setParent(null);

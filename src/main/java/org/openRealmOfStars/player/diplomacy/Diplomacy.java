@@ -27,7 +27,7 @@ import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.espionage.Intelligence;
 import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
@@ -111,7 +111,7 @@ public class Diplomacy {
         diplomacyList[i] = new DiplomacyBonusList(i);
         if (boardPlayerIndex != -1 && boardPlayerIndex <= i) {
           diplomacyList[i].addBonus(DiplomacyBonusType.BOARD_PLAYER,
-              SpaceRace.SPACE_PIRATE);
+              SpaceRaceFactory.createOne("SPACE_PIRATES"));
         }
       }
     }

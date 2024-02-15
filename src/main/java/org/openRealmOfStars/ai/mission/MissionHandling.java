@@ -48,7 +48,6 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -2160,7 +2159,7 @@ public final class MissionHandling {
       return;
     }
     PlayerInfo secondInfo = game.getStarMap().getPlayerByIndex(secondIndex);
-    if (secondInfo.getRace() == SpaceRace.SPACE_MONSTERS) {
+    if (secondInfo.getRace().isMonster()) {
       // No diplomacy with space monsters.
       return;
     }
@@ -2355,7 +2354,7 @@ public final class MissionHandling {
         war = true;
       }
       if (war && info != infoAtTarget
-          && info.getRace() == SpaceRace.SPACE_PIRATE) {
+          && info.getRace().isPirate()) {
         int pirateIndex = map.getPlayerList().getIndex(info);
         if (pirateIndex != -1
             && infoAtTarget.getDiplomacy().isProctected(pirateIndex)) {

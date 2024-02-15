@@ -391,7 +391,7 @@ public class DiplomaticTrade {
   protected void generateProtectionOffer() {
     PlayerInfo offerMaker = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
-    if (offerMaker.getRace() == SpaceRace.SPACE_PIRATE) {
+    if (offerMaker.getRace().isPirate()) {
       if (techListForFirst.size() > 0) {
         firstOffer = new NegotiationList();
         int index = getBestTech(techListForFirst, offerMaker.getAiAttitude());

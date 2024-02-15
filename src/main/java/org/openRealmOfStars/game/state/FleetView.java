@@ -61,7 +61,6 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.leader.Job;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.starMap.Route;
@@ -569,7 +568,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       }
       if (starMap != null) {
         PlayerInfo fleetOwner = starMap.getPlayerInfoByFleet(fleet);
-        if (fleetOwner.getRace() == SpaceRace.SPACE_MONSTERS) {
+        if (fleetOwner.getRace().isMonster()) {
           hailBtn.setEnabled(false);
         }
       }
@@ -947,7 +946,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       }
       PlayerInfo fleetOwner = starMap.getPlayerInfoByFleet(fleet);
       if (fleetOwner != null
-          && fleetOwner.getRace() == SpaceRace.SPACE_MONSTERS) {
+          && fleetOwner.getRace().isMonster()) {
         hailBtn.setEnabled(false);
       }
       int x = fleet.getCoordinate().getX();

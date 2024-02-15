@@ -39,7 +39,6 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -1270,11 +1269,11 @@ public boolean launchIntercept(final int distance,
         stat.setNumberOfVictories(stat.getNumberOfVictories() + 1);
       }
     }
-    if (info.getRace() == SpaceRace.SPACE_PIRATE) {
+    if (info.getRace().isPirate()) {
       // Space pirates have special trait that they can gain
       // tech by steal enemy ships.
       for (Ship ship : fleet.getShips()) {
-        if (ship.getHull().getRace() != SpaceRace.SPACE_PIRATE) {
+        if (!ship.getHull().getRace().isPirate()) {
           for (int j = 0; j  < ship.getNumberOfComponents(); j++) {
             ShipComponent component = ship.getComponent(j);
             if (component != null

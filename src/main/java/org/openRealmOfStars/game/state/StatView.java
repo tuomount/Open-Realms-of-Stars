@@ -537,7 +537,7 @@ public class StatView extends BlackPanel {
       }
       if (planet.getPlanetPlayerInfo() != null
           && planet.getPlanetOwnerIndex() < homeworlds.length
-          && planet.getHomeWorldIndex() != -1) {
+          && planet.isHomeWorld()) {
         homeworlds[planet.getPlanetOwnerIndex()]++;
       }
       if (planet.getPlanetPlayerInfo() != null

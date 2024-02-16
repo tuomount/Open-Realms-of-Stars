@@ -23,6 +23,7 @@ import org.openRealmOfStars.player.StartingScenario;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.starMap.event.KarmaType;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -286,7 +287,7 @@ public class GalaxyConfig {
     setAiOnly(false);
     setAllNews(false);
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
-      setRace(i, SpaceRaceUtility.getRandomRace());
+      setRace(i, SpaceRaceFactory.getRandomRace());
       setPlayerColor(i, DiceGenerator.pickRandom(PlayerColor.values()));
       setStartingScenario(i, StartingScenario.RANDOM);
       while (true) {

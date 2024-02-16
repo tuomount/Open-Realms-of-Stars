@@ -43,7 +43,7 @@ import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.SpaceRace;
-import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -189,11 +189,11 @@ public class Planet {
   /** Planet playerInfo, null means not colonized. */
   private PlayerInfo planetOwnerInfo;
   /**
-   * Space race index which space race home world planet is.
-   * -1 means that is is not an home world.
+   * Space race id which space race home world planet is.
+   * Empty means that is is not an home world.
    * Home world needs generate 1 culture per turn.
    */
-  private int homeWorldIndex;
+  private String homeWorldId;
   /**
    * Starting realm index for elder realm start.
    * This value is only used when creating galaxy.
@@ -313,7 +313,7 @@ public class Planet {
     this.underConstruction = null;
     this.tax = 0;
     this.culture = 0;
-    this.homeWorldIndex = -1;
+    this.homeWorldId = "";
     this.startRealmIndex = -1;
     if (this.gasGiant) {
       this.planetType = PlanetTypes.GASGIANT1;
@@ -1065,7 +1065,7 @@ public class Planet {
     }
 
     // Home worlds produce one extra culture
-    if (homeWorldIndex != -1) {
+    if (isHomeWorld()) {
       value = 1;
       result += value;
       addEntryIfWorthy(sb, "home world", value);
@@ -2012,9 +2012,9 @@ public class Planet {
         sb.append(getAmountMetalInGround());
         sb.append("\n");
       }
-      if (homeWorldIndex != -1) {
+      if (isHomeWorld()) {
         sb.append("Home world of\n");
-        sb.append(SpaceRaceUtility.getRaceByIndex(homeWorldIndex).getName());
+        sb.append(SpaceRaceFactory.createOne(homeWorldId).getName());
         sb.append("\n");
       }
       if (planetOwnerInfo != null && activeScanned) {
@@ -3662,20 +3662,30 @@ public class Planet {
   }
 
   /**
-   * Get home world index. Index is matching for space race index who's
-   * home world planet is. -1 means that planet is not an home world.
-   * @return Space race index
+   * Is home world or not.
+   * @return True if homeworld.
    */
-  public int getHomeWorldIndex() {
-    return homeWorldIndex;
+  public boolean isHomeWorld() {
+    if (!homeWorldId.isEmpty()) {
+      return true;
+    }
+    return false;
+  }
+  /**
+   * Get home world id. Id is matching for space race  who's
+   * home world planet is. Empty means that planet is not an home world.
+   * @return Space race id
+   */
+  public String getHomeWorldId() {
+    return homeWorldId;
   }
 
   /**
-   * Set space race home world index.
-   * @param realmIndex Space race index. -1 for non home world.
+   * Set space race home world id.
+   * @param raceId Space race id. Empty for non home world.
    */
-  public void setHomeWorldIndex(final int realmIndex) {
-    this.homeWorldIndex = realmIndex;
+  public void setHomeWorldId(final String raceId) {
+    this.homeWorldId = raceId;
   }
 
   /**

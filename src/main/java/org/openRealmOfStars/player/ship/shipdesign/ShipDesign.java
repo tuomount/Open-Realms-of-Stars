@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import org.openRealmOfStars.player.race.SpaceRace;
-import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipComponentType;
@@ -72,9 +72,9 @@ public class ShipDesign {
   public ShipDesign(final DataInputStream dis) throws IOException {
     name = IOUtilities.readString(dis);
     String hullName = IOUtilities.readString(dis);
-    int raceIndex = dis.readInt();
+    String raceId = IOUtilities.readString(dis);
     setHull(ShipHullFactory.createByName(hullName,
-        SpaceRaceUtility.getRaceByIndex(raceIndex)));
+        SpaceRaceFactory.createOne(raceId)));
     int count = dis.readInt();
     components = new ArrayList<>();
     for (int i = 0; i < count; i++) {
@@ -97,7 +97,7 @@ public class ShipDesign {
   public void saveShipDesign(final DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, name);
     IOUtilities.writeString(dos, hull.getName());
-    dos.writeInt(hull.getRace().getIndex());
+    IOUtilities.writeString(dos, hull.getRace().getId());
     dos.writeInt(components.size());
     for (ShipComponent component : components) {
       IOUtilities.writeString(dos, component.getName());

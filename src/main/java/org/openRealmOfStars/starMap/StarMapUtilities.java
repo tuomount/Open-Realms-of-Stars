@@ -1018,7 +1018,7 @@ public final class StarMapUtilities {
       }
       for (Planet planet : tempList) {
         int value = planet.evaluatePlanetValue(info, coord, divider);
-        if (planet.getHomeWorldIndex() != -1) {
+        if (planet.isHomeWorld()) {
           value = value + 10;
         }
         if (value > bestValue) {

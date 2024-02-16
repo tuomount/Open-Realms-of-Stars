@@ -995,7 +995,7 @@ public class StarMapGenerator {
           planet.generateGravityBasedOnSize();
           planet.generateWorldType();
           planet.setAmountMetalInGround(HOMEWORLD_METAL);
-          planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
+          planet.setHomeWorldId(playerInfo.getRace().getId());
           planet.setStartRealmIndex(playerIndex);
           if (!elderRealmStart || playerInfo.isElderRealm()) {
             createRealmToPlanet(planet, playerInfo, playerIndex);
@@ -1165,7 +1165,7 @@ public class StarMapGenerator {
                 .getPlayerInfoByIndex(playerIndex);
             playerInfo.setElderRealm(config.getPlayerElderRealm(playerIndex));
             planet.setAmountMetalInGround(HOMEWORLD_METAL);
-            planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
+            planet.setHomeWorldId(playerInfo.getRace().getId());
             planet.setStartRealmIndex(playerIndex);
             if (!elderRealmStart) {
               createRealmToPlanet(planet, playerInfo, playerIndex);

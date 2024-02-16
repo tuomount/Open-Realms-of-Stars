@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.leader;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2019-2023 Tuomo Untinen
+ * Copyright (C) 2019-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,7 +28,6 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.leader.stats.LeaderStats;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
-import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -157,7 +156,7 @@ public class Leader {
     level = dis.read();
     experience = dis.readInt();
     setMilitaryRank(MilitaryRank.getByIndex(dis.read()));
-    setRace(SpaceRaceUtility.getRaceByIndex(dis.read()));
+    setRace(SpaceRaceFactory.createOne(IOUtilities.readString(dis)));
     setGender(Gender.getByIndex(dis.read()));
     job = Job.getByIndex(dis.read());
     parentIndex = dis.readInt();
@@ -186,7 +185,7 @@ public class Leader {
     dos.writeByte(level);
     dos.writeInt(experience);
     dos.writeByte(militaryRank.getIndex());
-    dos.writeByte(getRace().getIndex());
+    IOUtilities.writeString(dos, getRace().getId());
     dos.writeByte(getGender().getIndex());
     dos.writeByte(getJob().getIndex());
     if (getParent() == null) {

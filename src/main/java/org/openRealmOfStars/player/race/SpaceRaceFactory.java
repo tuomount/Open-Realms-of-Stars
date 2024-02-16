@@ -82,6 +82,23 @@ public final class SpaceRaceFactory {
   }
 
   /**
+   * Get random space race, filtered out monsters and pirates.
+   * @return SpaceRace
+   */
+  public static SpaceRace getRandomRace() {
+    var races = Stream.of(getValues())
+        // Filter out "pseudo-races"
+        .filter(
+            race -> !race.isPirate()
+            && !race.isMonster())
+        .collect(Collectors.toList());
+    if (races.isEmpty()) {
+      return null;
+    }
+    return DiceGenerator.pickRandom(races);
+  }
+
+  /**
    * Get random robotic race
    * @return Robotic SpaceRace
    */

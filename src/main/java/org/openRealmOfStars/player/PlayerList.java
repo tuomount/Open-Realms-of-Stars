@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,7 +27,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -124,7 +124,8 @@ public class PlayerList {
     }
     if (galaxyConfig.getSpacePiratesLevel() > 0) {
       int index = galaxyConfig.getMaxPlayers();
-      PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_PIRATE, maxPlayers,
+      PlayerInfo info = new PlayerInfo(
+          SpaceRaceFactory.createOne("SPACEPIRATE"), maxPlayers,
           index, boardIndex, StartingScenario.TEMPERATE_HUMID_SIZE12);
       info.setBoard(true);
       info.setGovernment(GovernmentType.SPACE_PIRATES);
@@ -151,7 +152,8 @@ public class PlayerList {
       if (galaxyConfig.getSpacePiratesLevel() > 0) {
         index++;
       }
-      PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_MONSTERS, maxPlayers,
+      PlayerInfo info = new PlayerInfo(
+          SpaceRaceFactory.createOne("SPACEMONSTER"), maxPlayers,
           index, boardIndex, StartingScenario.TEMPERATE_HUMID_SIZE12);
       info.setBoard(true);
       info.setGovernment(GovernmentType.SPACE_PIRATES);
@@ -244,7 +246,7 @@ public class PlayerList {
   public PlayerInfo getSpaceMonsterPlayer() {
     for (int i = list.size() - 1; i > -1; i--) {
       PlayerInfo info = list.get(i);
-      if (info.isBoard() && info.getRace() == SpaceRace.SPACE_MONSTERS) {
+      if (info.isBoard() && info.getRace().isMonster()) {
         return info;
       }
     }
@@ -258,7 +260,7 @@ public class PlayerList {
   public PlayerInfo getSpacePiratePlayer() {
     for (int i = list.size() - 1; i > -1; i--) {
       PlayerInfo info = list.get(i);
-      if (info.isBoard() && info.getRace() == SpaceRace.SPACE_PIRATE) {
+      if (info.isBoard() && info.getRace().isPirate()) {
         return info;
       }
     }

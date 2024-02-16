@@ -1310,7 +1310,7 @@ return map;
     Mockito.when(planetOne.getAmountMetalInGround()).thenReturn(3463);
     Mockito.when(planetOne.getGroundSize()).thenReturn(10);
     Mockito.when(planetOne.getTotalPopulation()).thenReturn(4);
-    Mockito.when(planetOne.getHomeWorldIndex()).thenReturn(-1);
+    Mockito.when(planetOne.getHomeWorldId()).thenReturn(-1);
     Mockito.when(planetOne.getRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
     Mockito.when(planetOne.getPlanetPlayerInfo()).thenReturn(info);
@@ -1320,7 +1320,7 @@ return map;
     Mockito.when(planetTwo.getAmountMetalInGround()).thenReturn(3463);
     Mockito.when(planetTwo.getGroundSize()).thenReturn(10);
     Mockito.when(planetTwo.getTotalPopulation()).thenReturn(4);
-    Mockito.when(planetTwo.getHomeWorldIndex()).thenReturn(0);
+    Mockito.when(planetTwo.getHomeWorldId()).thenReturn(0);
     Mockito.when(planetTwo.getRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
     Mockito.when(planetTwo.getPlanetPlayerInfo()).thenReturn(info);

@@ -55,7 +55,6 @@ import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -4239,7 +4238,7 @@ public class StarMap {
     for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info.isBoard()
-          && info.getRace() == SpaceRace.SPACE_MONSTERS) {
+          && info.getRace().isMonster()) {
         return i;
       }
     }

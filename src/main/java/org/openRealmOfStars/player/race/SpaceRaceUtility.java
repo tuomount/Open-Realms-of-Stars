@@ -43,18 +43,6 @@ public final class SpaceRaceUtility {
       "Synthdroid" };
 
   /**
-   * Get SpaceRace with indexed number
-   * @param index Space Race index
-   * @return SpaceRace, if index is out of bounds human is given
-   */
-  public static SpaceRace getRaceByIndex(final int index) {
-    if (index > -1 && index < SpaceRace.values().length) {
-      return SpaceRace.values()[index];
-    }
-    return SpaceRace.HUMAN;
-  }
-
-  /**
    * Get all SpaceRace with certain trait.
    * @param traitId Trait Id
    * @return Array of Space Race with certain trait.
@@ -70,7 +58,7 @@ public final class SpaceRaceUtility {
    */
   public static SpaceRace[] getRacesByTraits(final String ... traitIds) {
     ArrayList<SpaceRace> list = new ArrayList<>();
-    for (SpaceRace race : SpaceRace.values()) {
+    for (SpaceRace race : SpaceRaceFactory.getValues()) {
       for (String trait : traitIds) {
         if (race.hasTrait(trait)) {
           list.add(race);
@@ -89,21 +77,12 @@ public final class SpaceRaceUtility {
       return null;
     }
 
-    for (var race : SpaceRace.values()) {
+    for (var race : SpaceRaceFactory.getValues()) {
       if (name.equals(race.getNameSingle())) {
         return race;
       }
     }
     return null;
-  }
-
-  /**
-   * Get Random race
-   * @return SpaceRace
-   */
-  public static SpaceRace getRandomRace() {
-    var raceName = DiceGenerator.pickRandom(RACE_SELECTION);
-    return getRaceByName(raceName);
   }
 
   /**

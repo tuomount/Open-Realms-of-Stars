@@ -141,7 +141,7 @@ public class PlanetTest extends TestCase {
           + " Temperature: temperate\nWater: humid Gravity: normal gravity\n"
           + "Size: small\n"
           + "Metal: 6543\n",tmp);
-      planet.setHomeWorldIndex(1);
+      planet.setHomeWorldId(1);
       tmp = planet.generateInfoText(false, null);
       assertEquals("Earth\nWater world\nRadiation: no radiation"
           + " Temperature: temperate\nWater: humid Gravity: normal gravity\n"

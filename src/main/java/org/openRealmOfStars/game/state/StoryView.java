@@ -172,14 +172,13 @@ public class StoryView extends BlackPanel {
   private Planet getHomePlanet() {
     Planet result = null;
     int planetValueForHome = -1;
-    int realmIndex = map.getPlayerList().getIndex(realm);
     for (Planet planet : map.getPlanetList()) {
       if (planet.getPlanetPlayerInfo() == realm) {
         int planetValue = planet.getTotalPopulation() * 2
             + planet.getNumberOfBuildings();
-        if (planet.getHomeWorldIndex() == realmIndex) {
+        if (planet.getHomeWorldId().equals(realm.getRace().getId())) {
           planetValue = planetValue + 255;
-        } else if (planet.getHomeWorldIndex() != -1) {
+        } else if (planet.isHomeWorld()) {
           planetValue = planetValue + 32;
         }
         if (planetValue > planetValueForHome) {

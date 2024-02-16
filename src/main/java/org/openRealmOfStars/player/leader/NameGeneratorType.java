@@ -72,6 +72,7 @@ public enum NameGeneratorType {
     case FEMALE_ROBOT: return "female_robot";
     case ROBOT: return "robot";
     case SCIFI_HUMAN: return "scifi_human";
+    case CYBORG: return "cyborg";
     case STONE_PEOPLE: return "stone_people";
     case GASEOUS_CREATURE: return "gaseous_creature";
     case PIRATE: return "pirate";

@@ -1,0 +1,147 @@
+[
+  {
+    "ID": "ALTEIRIANS",
+    "Name": "Alteirians",
+    "NameSingle": "Alteirian",
+    "BridgeId": "Alteirian",
+    "SpaceShipId": "Alteirian",
+    "Traits": [
+                "FAST_CULTURE",
+                "VERY_FAST_RESEARCH",
+                "LONG_LIFE_SPAN",
+                "POOR_WAR_RESILIENCE",
+                "ZERO_GRAVITY_BEING",
+                "TOLERATE_HIGH_RADIATION",
+                "NATURAL_LEADERS"
+              ],
+    "Attitude": "SCIENTIFIC",
+    "Image": "resources/images/alteirian_race.png",
+    "SocialSystem": "EQUAL",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "Alteirians",
+    "BridgeEffect": "GREYBLUE",
+    "DiplomacyMusic": "Sky Portal",
+    "NameGenerator": "GASEOUS_CREATURE",
+    "Description": "Alteirians are a race of creatures that look a bit like floating octopus. They are main just body, mouth and eyes. Below the body there are seven tentacles. "
+  },
+  {
+    "ID": "CENTAURS",
+    "Name": "Centaurs",
+    "NameSingle": "Centaur",
+    "BridgeId": "Centaur",
+    "SpaceShipId": "Centaur",
+    "Traits": [
+                "SLOW_GROWTH",
+                "VERY_LONG_LIFE_SPAN",
+                "MASSIVE_SIZE",
+                "GOOD_WAR_RESILIENCE",
+                "HIGH_GRAVITY_BEING",
+                "TOLERATE_NO_RADIATION",
+                "TOLERATE_COLD",
+                "SOLITARY"
+              ],
+    "Attitude": "DIPLOMATIC",
+    "Image": "resources/images/centaur_race.png",
+    "SocialSystem": "PATRIARCHY",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "Centaurs",
+    "BridgeEffect": "BRIGHT_CYAN",
+    "DiplomacyMusic": "Diplomacy",
+    "NameGenerator": "LONG_NAMES",
+    "Description": "Centaurs, reminiscent of the mythical beings from ancient Greek and Roman lore, bear a striking resemblance to their legendary counterparts. They possess the upper body of a humanoid, juxtaposed with a lower body reminiscent of an ant. Their formidable, resilient skin and towering stature further distinguish them. "
+  },
+  {
+    "ID": "CHIRALOIDS",
+    "Name": "Chiraloids",
+    "NameSingle": "Chiraloid",
+    "BridgeId": "Chiraloid",
+    "SpaceShipId": "Chiraloid",
+    "Traits": [
+                "RADIOSYNTHESIS",
+                "SLOW_GROWTH",
+                "VERY_LONG_LIFE_SPAN",
+                "EXCELLENT_WAR_RESILIENCE",
+                "REPULSIVE",
+                "WEAK",
+                "IMPRACTICAL",
+                "TOLERATE_EXTREME_RADIATION",
+                "TOLERATE_HOT"
+              ],
+    "Attitude": "AGGRESSIVE",
+    "Image": "resources/images/chiraloid_race.png",
+    "SocialSystem": "PATRIARCHY",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "Chiraloids",
+    "BridgeEffect": "BLUEISH_WHITE",
+    "DiplomacyMusic": "Menace",
+    "NameGenerator": "EVIL_CREATURE",
+    "Description": "Chiraloids are creatures that are distinguished by their four arms and two legs. They have a hard exoskeleton that provides them with protection and allows them to withstand harsh environments. "
+  },
+  {
+    "ID": "MOTHOIDS",
+    "Name": "Moithoids",
+    "NameSingle": "Mothoid",
+    "BridgeId": "Mothoid",
+    "SpaceShipId": "Mothoid",
+    "Traits": [
+                "FAST_GROWTH",
+                "FAST_CULTURE",
+                "SHORT_LIFE_SPAN",
+                "WEAK_WAR_RESILIENCE",
+                "NATURAL_CHARM",
+                "LOW_GRAVITY_BEING",
+                "TOLERATE_HIGH_RADIATION",
+                "TOLERATE_HOT",
+                "COMMUNAL"
+              ],
+    "Attitude": "EXPANSIONIST",
+    "Image": "resources/images/mothoid_race.png",
+    "SocialSystem": "MATRIARCHY",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "Mothoids",
+    "BridgeEffect": "GREEN_CONSOLE",
+    "DiplomacyMusic": "Fantasy Choir 2",
+    "NameGenerator": "INSECT",
+    "Description": "Mothoids are insect like creatures with exo-skeleton and pair of wings. They also have antenas for extra sensing. "
+  },
+  {
+    "ID": "TEUTHIDAES",
+    "Name": "Teuthidaes",
+    "NameSingle": "Teuthidae",
+    "BridgeId": "Teuthidae",
+    "SpaceShipId": "Teuthidae",
+    "Traits": [
+                "STEALTHY",
+                "FAST_RESEARCH",
+                "GOOD_WAR_RESILIENCE",
+                "REPULSIVE",
+                "WEAK",
+                "TOLERATE_COLD",
+                "TOLERATE_HOT"
+              ],
+    "Attitude": "MILITARISTIC",
+    "Image": "resources/images/teuthidae_race.png",
+    "SocialSystem": "PATRIARCHY",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "Teuthidaes",
+    "BridgeEffect": "PURPLE_DREAM",
+    "DiplomacyMusic": "Pressure",
+    "NameGenerator": "DEEP_ANCIENT_MONSTER",
+    "Description": "Teuthidae an octopus-like species with intelligence. They are not humanoid creatures like most of the other sentient creatures in galaxy. "
+  }
+]

@@ -1,0 +1,91 @@
+[
+  {
+    "ID": "MECHIONS",
+    "Name": "Mechions",
+    "NameSingle": "Mechion",
+    "BridgeId": "Mechion",
+    "SpaceShipId": "Mechion",
+    "Traits": [
+                "ROBOTIC",
+                "ENERGY_POWERED",
+                "NO_HEIRS",
+                "CONSTRUCTED_POP",
+                "SLOW_CULTURE",
+                "SLOW_RESEARCH",
+                "REPULSIVE",
+                "STRONG",
+                "TOLERATE_HIGH_RADIATION",
+                "TOLERATE_HOT"
+              ],
+    "Attitude": "LOGICAL",
+    "Image": "resources/images/mechion_race.png",
+    "SocialSystem": "EQUAL",
+    "Genders": [
+                 "NONE"
+               ],
+    "SpeechSetId": "Mechions",
+    "BridgeEffect": "WARM_WHITE",
+    "DiplomacyMusic": "Abandoned Steel Mill",
+    "NameGenerator": "ROBOT",
+    "Description": "Mechions are a race of humanoid robot that resemble industrial machines. Heavy and sturdy looking mechanical creatures. "
+  },
+  {
+    "ID": "REBORGIANS",
+    "Name": "Reborgians",
+    "NameSingle": "Reborgian",
+    "BridgeId": "Reborgian",
+    "SpaceShipId": "Reborgian",
+    "Traits": [
+                "NO_HEIRS",
+                "EAT_LESS",
+                "SLOW_GROWTH",
+                "FIXED_GROWTH",
+                "SLOW_CULTURE",
+                "CYBORG_LIFE_SPAN",
+                "ASSIMILATION",
+                "GOOD_WAR_RESILIENCE",
+                "DISGUSTING",
+                "STRONG",
+                "TOLERATE_HIGH_RADIATION",
+                "TOLERATE_HOT"
+              ],
+    "Attitude": "AGGRESSIVE",
+    "Image": "resources/images/reborgian_race.png",
+    "SocialSystem": "EQUAL",
+    "Genders": [
+                 "NONE"
+               ],
+    "SpeechSetId": "Reborgians",
+    "BridgeEffect": "DARKEST",
+    "DiplomacyMusic": "Braindead",
+    "NameGenerator": "CYBORG",
+    "Description": "Reborgians are a race of cyborgs that are created by combining organic organisms with bionic and robotic parts. This gives them enhanced physical abilities and allows them to operate in a wide variety of environments. "
+  },
+  {
+    "ID": "SYNTHDROIDS",
+    "Name": "Synthdroids",
+    "NameSingle": "Synthdroid",
+    "BridgeId": "Synthdroid",
+    "SpaceShipId": "Synthdroid",
+    "Traits": [
+                "ROBOTIC",
+                "NO_HEIRS",
+                "CONSTRUCTED_POP",
+                "MERCANTILE",
+                "EAT_LESS",
+                "SLOW_CULTURE",
+                "GOOD_WAR_RESILIENCE"
+              ],
+    "Attitude": "LOGICAL",
+    "Image": "resources/images/synthdroid_race.png",
+    "SocialSystem": "MATRIARCHY",
+    "Genders": [
+                 "FEMALE"
+               ],
+    "SpeechSetId": "Synthdroids",
+    "BridgeEffect": "WARM_WHITE",
+    "DiplomacyMusic": "Cyborg",
+    "NameGenerator": "FEMALE_ROBOT",
+    "Description": "Synthdroids are a race of artificial beings that are designed to resemble human females. They are often portrayed as being sleek and elegant, with graceful movements and a polished appearance. "
+  }
+]

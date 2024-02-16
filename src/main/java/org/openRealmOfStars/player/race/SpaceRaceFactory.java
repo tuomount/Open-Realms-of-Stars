@@ -180,10 +180,7 @@ public final class SpaceRaceFactory {
     spaceRaces.clear();
     final var basePath = "resources/data/spaceraces/";
     final String[] files = {
-        "alteirians", "humans", "mechions", "sporks", "greyans", "centaurs",
-        "mothoids", "teuthidaes", "scaurians", "homarians", "chiraloids",
-        "lithorians", "reborgians", "smaugirians", "spacemonsters",
-        "spacepirates", "synthdroids"};
+        "arthropods", "humanoids", "lithovorians", "robots", "pseudoraces"};
     final var spaceRacesLoaded = loader.loadAll(spaceRaces, basePath, files);
     ErrorLogger.log("SpaceRaces loaded: " + spaceRacesLoaded);
   }

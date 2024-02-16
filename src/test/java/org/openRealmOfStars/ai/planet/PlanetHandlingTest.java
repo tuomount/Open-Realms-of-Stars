@@ -39,7 +39,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageList;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -68,13 +68,6 @@ import junit.framework.TestCase;
  */
 
 public class PlanetHandlingTest extends TestCase {
-
-  /** TODO: Remove when SpaceRaces are dehardcoded */
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    SpaceRace.initialize();
-  }
 
   /**
    * Create basic farm with mockito
@@ -344,7 +337,8 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = DefaultScoring.scoreBuilding(building, planet, info,
@@ -355,12 +349,12 @@ public class PlanetHandlingTest extends TestCase {
         Attitude.EXPANSIONIST, false);
     assertEquals(49,score);
 
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(49,score);
 
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("MECHIONS"));
     score = DefaultScoring.scoreBuilding(building, planet, info,
         Attitude.LOGICAL, false);
     assertEquals(-1,score);
@@ -370,10 +364,10 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBasicScoring() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
     info.setEmpireName("Human Kingdom");
     info.setGovernment(GovernmentType.KINGDOM);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.HUMAN, 2, 1);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 1);
     info2.setEmpireName("Terran Federation");
     info2.setGovernment(GovernmentType.FEDERATION);
 
@@ -459,11 +453,11 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBasicHighScoring() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
     info.setEmpireName("Human Kingdom");
     info.setGovernment(GovernmentType.KINGDOM);
     info.setStartingScenario(StartingScenario.EARTH);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.HUMAN, 2, 1);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 1);
     info2.setEmpireName("Terran Federation");
     info2.setGovernment(GovernmentType.FEDERATION);
 
@@ -621,7 +615,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(planet.exceedRadiation()).thenReturn(false);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = DefaultScoring.scoreBuilding(building, planet, info,
@@ -640,7 +634,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(planet.exceedRadiation()).thenReturn(false);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = DefaultScoring.scoreBuilding(building, planet, info,
@@ -664,7 +658,7 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(5);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(5);
@@ -687,7 +681,7 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(5);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(1);
@@ -710,7 +704,7 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(1);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(1);
@@ -733,7 +727,7 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = DefaultScoring.scoreBuilding(building, planet, info,
@@ -757,7 +751,7 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(5);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(5);
@@ -782,7 +776,7 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = DefaultScoring.scoreBuilding(building, planet, info,
@@ -803,7 +797,7 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(2);
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(2);
@@ -824,7 +818,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(planet.exceedRadiation()).thenReturn(false);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = DefaultScoring.scoreBuilding(building, planet, info,
@@ -846,7 +840,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(planet.exceedRadiation()).thenReturn(false);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = DefaultScoring.scoreBuilding(building, planet, info,
@@ -875,7 +869,7 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     Building building = PlanetHandling.getWorstBuilding(planet, info,
@@ -904,7 +898,7 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     Building building = PlanetHandling.getWorstBuilding(planet, info,
@@ -951,7 +945,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(ship.getProdCost()).thenReturn(22);
     Planet planet = Mockito.mock(Planet.class);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.ALTEIRIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("ALTEIRIANS"));
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info);
     int score = DefaultScoring.scoreShip(ship, GameLengthState.START_GAME,
         planet);
@@ -991,7 +985,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(ship2.getHull()).thenReturn(hull2);
     Mockito.when(ship2.getMetalCost()).thenReturn(14);
     Mockito.when(ship2.getProdCost()).thenReturn(22);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.ALTEIRIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("ALTEIRIANS"));
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info);
     Mockito.when(planet.getOrbital()).thenReturn(ship2);
     int score = DefaultScoring.scoreShip(ship, GameLengthState.START_GAME,
@@ -1032,7 +1026,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(ship2.getHull()).thenReturn(hull2);
     Mockito.when(ship2.getMetalCost()).thenReturn(14);
     Mockito.when(ship2.getProdCost()).thenReturn(22);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.ALTEIRIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("ALTEIRIANS"));
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info);
     Mockito.when(planet.getOrbital()).thenReturn(ship2);
     int score = DefaultScoring.scoreShip(ship, GameLengthState.START_GAME,
@@ -1181,7 +1175,7 @@ public class PlanetHandlingTest extends TestCase {
         .thenReturn(25);
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     MissionList missionList = new MissionList();
     Mission mission = Mockito.mock(Mission.class);
     Mockito.when(mission.getType()).thenReturn(MissionType.COLONIZE);
@@ -1224,7 +1218,7 @@ public class PlanetHandlingTest extends TestCase {
     ArrayList<Message> fullList = new ArrayList<>();
     Mockito.when(list.getFullList()).thenReturn(fullList);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getTotalCredits()).thenReturn(500);
     Mockito.when(info.getMsgList()).thenReturn(list);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.DEMOCRACY);
@@ -1259,7 +1253,7 @@ public class PlanetHandlingTest extends TestCase {
     Mockito.when(list.getFullList()).thenReturn(fullList);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("MECHIONS"));
     Mockito.when(info.getTotalCredits()).thenReturn(500);
     Mockito.when(info.getMsgList()).thenReturn(list);
     MissionList missionList = Mockito.mock(MissionList.class);
@@ -1288,7 +1282,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling1Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 1);
@@ -1303,7 +1297,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling2Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"));
     info.setAiDifficulty(AiDifficulty.WEAK);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
@@ -1314,7 +1308,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
-    info = new PlayerInfo(SpaceRace.MECHIONS);
+    info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"));
     info.setAiDifficulty(AiDifficulty.NORMAL);
     planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
@@ -1330,7 +1324,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling3Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 3);
@@ -1340,7 +1334,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
-    info = new PlayerInfo(SpaceRace.MECHIONS);
+    info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"));
     info.setAiDifficulty(AiDifficulty.CHALLENGING);
     planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
@@ -1356,7 +1350,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling4Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"));
     info.setGovernment(GovernmentType.HEGEMONY);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
@@ -1373,7 +1367,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling5Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"));
     info.setGovernment(GovernmentType.HORDE);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
@@ -1391,7 +1385,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling6Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"));
     info.setGovernment(GovernmentType.ENTERPRISE);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
@@ -1410,7 +1404,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling7Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"));
     info.setGovernment(GovernmentType.AI);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
@@ -1427,7 +1421,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling8Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 8);
@@ -1443,7 +1437,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling8Population2() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.FOOD_FARMERS, 5);
@@ -1461,7 +1455,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling1Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 1);
@@ -1476,7 +1470,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling2Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -1496,7 +1490,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling3Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     info.setGovernment(GovernmentType.NEST);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
@@ -1520,7 +1514,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling3PopulationLateGame() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     info.setGovernment(GovernmentType.NEST);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
@@ -1544,7 +1538,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling4Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     info.setGovernment(GovernmentType.NEST);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
@@ -1568,7 +1562,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling4PopulationClan() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     info.setGovernment(GovernmentType.CLAN);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
@@ -1592,7 +1586,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling5Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     info.setGovernment(GovernmentType.NEST);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
@@ -1616,7 +1610,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling5PopulationClan() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     info.setGovernment(GovernmentType.CLAN);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.MARINE);
@@ -1640,7 +1634,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling5PopulationClanLab() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     info.setGovernment(GovernmentType.CLAN);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
@@ -1666,7 +1660,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling5PopulationHegemony() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     info.setGovernment(GovernmentType.HEGEMONY);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
@@ -1690,7 +1684,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling6Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -1713,7 +1707,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling6PopulationAllMiners() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -1736,7 +1730,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling6Population4Miners() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -1759,7 +1753,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling6Population3Miners() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -1782,7 +1776,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling6Population2Miners() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -1812,7 +1806,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAlteirianHandling1Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("ALTEIRIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -1839,7 +1833,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAlteirianHandling2Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("ALTEIRIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -1866,7 +1860,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAlteirianHandling3Population() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("ALTEIRIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -1892,7 +1886,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAlteirianHandling3PopulationWithFarm() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("ALTEIRIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -1919,7 +1913,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAlteirianHandling3PopulationWithFarmAndLab() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("ALTEIRIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -1947,7 +1941,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAlteirianHandling3PopulationWithFactoryMineLab() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("ALTEIRIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -1976,7 +1970,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAlteirianHandling4PopulationWithFarmAndLab() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.ALTEIRIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("ALTEIRIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2005,7 +1999,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testChiraloidHandling2PopulationWithLab() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("CHIRALOIDS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2033,7 +2027,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testChiraloidHandling4PopulationHighRad() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("CHIRALOIDS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2060,7 +2054,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testLithorianHandling3PopulationKingdom() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.LITHORIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("LITHORIANS"));
     info.setGovernment(GovernmentType.KINGDOM);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
@@ -2089,7 +2083,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testLithorianHandling9PopulationKingdom() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.LITHORIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("LITHORIANS"));
     info.setGovernment(GovernmentType.KINGDOM);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.BARREN);
@@ -2118,7 +2112,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testScauriansHandling2PopulationKingdom() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("SCAURIANS"));
     info.setGovernment(GovernmentType.EMPIRE);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
@@ -2158,7 +2152,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testCentaursHandling3PopulationKingdomWithFarm() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.CENTAURS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"));
     info.setGovernment(GovernmentType.KINGDOM);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
@@ -2187,7 +2181,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMothoidsHandling10PopulationKingdom() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MOTHOIDS"));
     info.setGovernment(GovernmentType.KINGDOM);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
@@ -2225,7 +2219,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMothoidsHandling10PopulationKingdomFull() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MOTHOIDS"));
     info.setGovernment(GovernmentType.KINGDOM);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
@@ -2263,7 +2257,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGreyansHandling6PopulationAllFarmers() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2297,7 +2291,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGreyansHandling6PopulationAllFarmersLateGame() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2332,7 +2326,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGreyansHandling6PopulationAllFarmers2() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2367,7 +2361,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGreyansHandling7PopulationFullFarms() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2403,7 +2397,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTeuthidaesHandling9PopulationFullFarmers() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("TEUTHIDAES"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2441,7 +2435,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHumansHandling9PopulationFullFarmers() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2478,7 +2472,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHumansHandling7PopulationFullFarmers() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2515,7 +2509,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHumansHandling8PopulationFullFarmers() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2552,7 +2546,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTeuthidaesHandling10PopulationFullFarmers() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("TEUTHIDAES"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2590,7 +2584,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMothoidsHandling6PopulationFullFarms() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MOTHOIDS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2625,7 +2619,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMothoidsHandling7PopulationFullFarms() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MOTHOIDS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2662,7 +2656,7 @@ public class PlanetHandlingTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testScaurianHandling7PopulationFullFarms() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("SCAURIANS"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);

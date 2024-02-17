@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.fleet;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.ai.pathfinding.AStarSearch;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -518,7 +518,8 @@ public class FleetTest {
     fleet.addShip(obsoleteShip);
     fleet.addShip(obsoleteShip);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "HOMARIANS"));
     ShipStat[] stats = new ShipStat[1];
     stats[0] = Mockito.mock(ShipStat.class);
     ShipDesign design1 = Mockito.mock(ShipDesign.class);

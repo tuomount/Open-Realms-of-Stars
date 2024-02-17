@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.fleet;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2019 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,7 +22,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -34,12 +34,6 @@ import junit.framework.TestCase;
 */
 public class TradeRouteTest extends TestCase {
 
-  /** TODO: Remove when SpaceRaces are dehardcoded */
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    SpaceRace.initialize();
-  }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
@@ -58,7 +52,8 @@ public class TradeRouteTest extends TestCase {
     Mockito.when(fleet.calculateTrade(coordinate2)).thenReturn(10);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "SCAURIANS"));
     TradeRoute tradeRoute = new TradeRoute(originWorld, tradeWorld, info, fleet);
     assertEquals(7, tradeRoute.getTradeValue());
     assertEquals("Origin <-> Test I 7 credits", tradeRoute.toString());
@@ -84,7 +79,8 @@ public class TradeRouteTest extends TestCase {
     Mockito.when(coordinate2.calculateDistance(coordinate)).thenReturn(25.0);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "SCAURIANS"));
     TradeRoute tradeRoute = new TradeRoute(originWorld, tradeWorld, info, fleet);
     assertEquals(7, tradeRoute.getTradeValue());
     assertEquals("Origin <-> Test I 7 credits", tradeRoute.toString());

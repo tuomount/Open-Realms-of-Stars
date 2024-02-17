@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.diplomacy;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2023 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 /**
  * Tests for Diplomacy Bonus
@@ -33,7 +33,8 @@ public class DiplomacyBonusTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     DiplomacyBonus bonus = new DiplomacyBonus(
-        DiplomacyBonusType.getTypeByIndex(0), SpaceRace.HUMAN);
+        DiplomacyBonusType.getTypeByIndex(0),
+        SpaceRaceFactory.createOne("HUMANS"));
     bonus.setBonusLasting(9);
     bonus.setBonusValue(5);
     assertEquals(9, bonus.getBonusLasting());

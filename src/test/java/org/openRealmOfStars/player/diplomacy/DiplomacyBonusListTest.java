@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.diplomacy;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2022 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
@@ -47,24 +47,29 @@ public class DiplomacyBonusListTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testAdd() {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
-    boolean result = list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
+    boolean result = list.addBonus(DiplomacyBonusType.IN_WAR,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(-30, list.getDiplomacyBonus());
     DiplomacyBonus bonus = list.get(0);
     assertEquals(DiplomacyBonusType.IN_WAR, bonus.getType());
-    result = list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
+    result = list.addBonus(DiplomacyBonusType.IN_WAR,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(false, result);
     assertEquals(-30, list.getDiplomacyBonus());
-    result = list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
+    result = list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(-26, list.getDiplomacyBonus());
     bonus = list.get(1);
     assertEquals(DiplomacyBonusType.DIPLOMATIC_TRADE, bonus.getType());
-    result = list.addBonus(DiplomacyBonusType.GIVEN_VALUABLE_FREE, SpaceRace.HUMAN);
+    result = list.addBonus(DiplomacyBonusType.GIVEN_VALUABLE_FREE,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     bonus = list.get(2);
     assertEquals(DiplomacyBonusType.GIVEN_VALUABLE_FREE, bonus.getType());
-    result = list.addBonus(DiplomacyBonusType.LONG_PEACE, SpaceRace.HUMAN);
+    result = list.addBonus(DiplomacyBonusType.LONG_PEACE,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     bonus = list.get(0);
     assertEquals(DiplomacyBonusType.DIPLOMATIC_TRADE, bonus.getType());
@@ -78,15 +83,24 @@ public class DiplomacyBonusListTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testTypes() {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
-    list.addBonus(DiplomacyBonusType.BORDER_CROSSED, SpaceRace.HUMAN);
-    list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
-    list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
-    list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
-    list.addBonus(DiplomacyBonusType.BORDER_CROSSED, SpaceRace.HUMAN);
-    list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
-    list.addBonus(DiplomacyBonusType.GIVEN_VALUABLE_FREE, SpaceRace.HUMAN);
-    list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
-    list.addBonus(DiplomacyBonusType.BORDER_CROSSED, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.BORDER_CROSSED,
+        SpaceRaceFactory.createOne("HUMANS"));
+    list.addBonus(DiplomacyBonusType.IN_WAR,
+        SpaceRaceFactory.createOne("HUMANS"));
+    list.addBonus(DiplomacyBonusType.IN_WAR,
+        SpaceRaceFactory.createOne("HUMANS"));
+    list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE,
+        SpaceRaceFactory.createOne("HUMANS"));
+    list.addBonus(DiplomacyBonusType.BORDER_CROSSED,
+        SpaceRaceFactory.createOne("HUMANS"));
+    list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE,
+        SpaceRaceFactory.createOne("HUMANS"));
+    list.addBonus(DiplomacyBonusType.GIVEN_VALUABLE_FREE,
+        SpaceRaceFactory.createOne("HUMANS"));
+    list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE,
+        SpaceRaceFactory.createOne("HUMANS"));
+    list.addBonus(DiplomacyBonusType.BORDER_CROSSED,
+        SpaceRaceFactory.createOne("HUMANS"));
     DiplomacyBonusType[] types = list.getTypes();
     assertEquals(4, types.length);
     int value = list.getTotalBonusForType(DiplomacyBonusType.BORDER_CROSSED);
@@ -97,22 +111,30 @@ public class DiplomacyBonusListTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCasusBelliScore() {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
-    boolean result = list.addBonus(DiplomacyBonusType.BORDER_CROSSED, SpaceRace.HUMAN);
+    boolean result = list.addBonus(DiplomacyBonusType.BORDER_CROSSED,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(3, list.getCasusBelliScore());
-    list.addBonus(DiplomacyBonusType.LONG_PEACE, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.LONG_PEACE,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(3, list.getCasusBelliScore());
-    list.addBonus(DiplomacyBonusType.NUKED, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.NUKED,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(7, list.getCasusBelliScore());
-    list.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(12, list.getCasusBelliScore());
-    list.addBonus(DiplomacyBonusType.BORDER_CROSSED, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.BORDER_CROSSED,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(15, list.getCasusBelliScore());
-    list.addBonus(DiplomacyBonusType.DNS_OLYMPICS, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.DNS_OLYMPICS,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(16, list.getCasusBelliScore());
-    list.addBonus(DiplomacyBonusType.MADE_DEMAND, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.MADE_DEMAND,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(23, list.getCasusBelliScore());
-    list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
+    list.addBonus(DiplomacyBonusType.IN_WAR,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(23, list.getCasusBelliScore());
   }
 
@@ -120,10 +142,12 @@ public class DiplomacyBonusListTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCheckPromiseNoVoteNo() {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
-    boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_NO, SpaceRace.HUMAN);
+    boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_NO,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(3, list.getDiplomacyBonus());
-    list.checkPromise(VotingChoice.VOTED_NO, SpaceRace.HUMAN);
+    list.checkPromise(VotingChoice.VOTED_NO,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(8, list.getDiplomacyBonus());
   }
 
@@ -131,10 +155,12 @@ public class DiplomacyBonusListTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCheckPromiseNoVoteYes() {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
-    boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_NO, SpaceRace.HUMAN);
+    boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_NO,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(3, list.getDiplomacyBonus());
-    list.checkPromise(VotingChoice.VOTED_YES, SpaceRace.HUMAN);
+    list.checkPromise(VotingChoice.VOTED_YES,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(-8, list.getDiplomacyBonus());
   }
 
@@ -142,10 +168,12 @@ public class DiplomacyBonusListTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCheckPromiseYesVoteYes() {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
-    boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_YES, SpaceRace.HUMAN);
+    boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_YES,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(3, list.getDiplomacyBonus());
-    list.checkPromise(VotingChoice.VOTED_YES, SpaceRace.HUMAN);
+    list.checkPromise(VotingChoice.VOTED_YES,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(8, list.getDiplomacyBonus());
   }
 
@@ -153,10 +181,12 @@ public class DiplomacyBonusListTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCheckPromiseYesVoteNo() {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
-    boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_YES, SpaceRace.HUMAN);
+    boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_YES,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(3, list.getDiplomacyBonus());
-    list.checkPromise(VotingChoice.VOTED_NO, SpaceRace.HUMAN);
+    list.checkPromise(VotingChoice.VOTED_NO,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(-8, list.getDiplomacyBonus());
   }
 
@@ -165,7 +195,8 @@ public class DiplomacyBonusListTest {
   public void testAdd2() {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
     assertEquals(0, list.getListSize());
-    boolean result = list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
+    boolean result = list.addBonus(DiplomacyBonusType.IN_WAR,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(1, list.getListSize());
     DiplomacyBonus bonus = Mockito.mock(DiplomacyBonus.class);
@@ -177,7 +208,8 @@ public class DiplomacyBonusListTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testHandleTurn() {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
-    boolean result = list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
+    boolean result = list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     for (int i = 0; i < 110; i++) {
       list.handleForTurn();
@@ -189,30 +221,35 @@ public class DiplomacyBonusListTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testPeaceAndWar() {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
-    boolean result = list.addBonus(DiplomacyBonusType.LONG_PEACE, SpaceRace.HUMAN);
+    boolean result = list.addBonus(DiplomacyBonusType.LONG_PEACE,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(5, list.getDiplomacyBonus());
     assertEquals(true,list.isBonusType(DiplomacyBonusType.LONG_PEACE));
     assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_WAR));
-    result = list.addBonus(DiplomacyBonusType.IN_TRADE_ALLIANCE, SpaceRace.HUMAN);
+    result = list.addBonus(DiplomacyBonusType.IN_TRADE_ALLIANCE,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(true,list.isBonusType(DiplomacyBonusType.LONG_PEACE));
     assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE));
     assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_WAR));
-    result = list.addBonus(DiplomacyBonusType.IN_ALLIANCE, SpaceRace.HUMAN);
+    result = list.addBonus(DiplomacyBonusType.IN_ALLIANCE,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(true,list.isBonusType(DiplomacyBonusType.LONG_PEACE));
     assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE));
     assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_ALLIANCE));
     assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_WAR));
-    result = list.addBonus(DiplomacyBonusType.IN_DEFENSIVE_PACT, SpaceRace.HUMAN);
+    result = list.addBonus(DiplomacyBonusType.IN_DEFENSIVE_PACT,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(true,list.isBonusType(DiplomacyBonusType.LONG_PEACE));
     assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE));
     assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_ALLIANCE));
     assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT));
     assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_WAR));
-    result = list.addBonus(DiplomacyBonusType.TRADE_FLEET, SpaceRace.HUMAN);
+    result = list.addBonus(DiplomacyBonusType.TRADE_FLEET,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(true,list.isBonusType(DiplomacyBonusType.LONG_PEACE));
     assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE));
@@ -220,7 +257,8 @@ public class DiplomacyBonusListTest {
     assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT));
     assertEquals(true,list.isBonusType(DiplomacyBonusType.TRADE_FLEET));
     assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_WAR));
-    result = list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
+    result = list.addBonus(DiplomacyBonusType.IN_WAR,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(false,list.isBonusType(DiplomacyBonusType.LONG_PEACE));
     assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE));
@@ -228,7 +266,8 @@ public class DiplomacyBonusListTest {
     assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT));
     assertEquals(false,list.isBonusType(DiplomacyBonusType.TRADE_FLEET));
     assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_WAR));
-    result = list.addBonus(DiplomacyBonusType.LONG_PEACE, SpaceRace.HUMAN);
+    result = list.addBonus(DiplomacyBonusType.LONG_PEACE,
+        SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(true, result);
     assertEquals(true,list.isBonusType(DiplomacyBonusType.LONG_PEACE));
     assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_WAR));

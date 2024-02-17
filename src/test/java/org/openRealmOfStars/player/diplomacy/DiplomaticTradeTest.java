@@ -35,6 +35,7 @@ import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
@@ -74,7 +75,8 @@ public class DiplomaticTradeTest {
     Mockito.when(map.getMaxX()).thenReturn(5);
     Mockito.when(map.getMaxY()).thenReturn(5);
 
-    PlayerInfo player1 = new PlayerInfo(SpaceRace.HOMARIANS,maxPlayer,0);
+    PlayerInfo player1 = new PlayerInfo(SpaceRaceFactory.createOne(
+        "HOMARIANS"),maxPlayer,0);
     TechList tech1 = player1.getTechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -85,7 +87,8 @@ public class DiplomaticTradeTest {
     player1.setTotalCredits(15);
     player1.initMapData(5, 5);
 
-    PlayerInfo player2 = new PlayerInfo(SpaceRace.SPACE_PIRATE, maxPlayer,
+    PlayerInfo player2 = new PlayerInfo(SpaceRaceFactory.createOne(
+        "SPACEPIRATES"), maxPlayer,
         maxPlayer);
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
@@ -112,7 +115,7 @@ public class DiplomaticTradeTest {
     Votes votes = Mockito.mock(Votes.class);
     Mockito.when(map.getVotes()).thenReturn(votes);
 
-return map;
+    return map;
   }
 
   private static StarMap generateMapWithPlayer(final SpaceRace race) {
@@ -136,7 +139,8 @@ return map;
     player1.setTotalCredits(15);
     player1.initMapData(5, 5);
 
-    PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS, 2, 1);
+    PlayerInfo player2 = new PlayerInfo(SpaceRaceFactory.createOne(
+        "GREYANS"), 2, 1);
     player2.setEmpireName("Martian");
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
@@ -207,7 +211,7 @@ return map;
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     PlayerInfo player1 = Mockito.mock(PlayerInfo.class);
-    TechList tech1 = new TechList(SpaceRace.HUMAN);
+    TechList tech1 = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech3", TechType.Combat, 2));
@@ -216,7 +220,7 @@ return map;
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     Mockito.when(player1.getTechList()).thenReturn(tech1);
     PlayerInfo player2 = Mockito.mock(PlayerInfo.class);
-    TechList tech2 = new TechList(SpaceRace.HUMAN);
+    TechList tech2 = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech2.addTech(new Tech("EleTech1", TechType.Electrics, 1));
@@ -249,7 +253,8 @@ return map;
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(3);
-    PlayerInfo player1 = new PlayerInfo(SpaceRace.HUMAN,2,0);
+    PlayerInfo player1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
+        2, 0);
     TechList tech1 = player1.getTechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -258,7 +263,8 @@ return map;
     tech1.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
 
-    PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS,2,1);
+    PlayerInfo player2 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"),
+        2, 1);
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -294,7 +300,8 @@ return map;
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
-    PlayerInfo player1 = new PlayerInfo(SpaceRace.HUMAN, 0, 2);
+    PlayerInfo player1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
+        0, 2);
     TechList tech1 = player1.getTechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -303,7 +310,8 @@ return map;
     tech1.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
 
-    PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS, 1, 2);
+    PlayerInfo player2 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"),
+        1, 2);
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -379,7 +387,7 @@ return map;
     Mockito.when(player1.getIntelligence()).thenReturn(espionage);
     Mockito.when(player1.getSectorVisibility(Mockito.isA(Coordinate.class)))
         .thenReturn((byte) 2);
-    TechList tech1 = new TechList(SpaceRace.HUMAN);
+    TechList tech1 = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech3", TechType.Combat, 2));
@@ -390,7 +398,7 @@ return map;
     Mockito.when(player1.getTechList()).thenReturn(tech1);
     PlayerInfo player2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(player2.getIntelligence()).thenReturn(espionage);
-    TechList tech2 = new TechList(SpaceRace.HUMAN);
+    TechList tech2 = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech2.addTech(new Tech("EleTech1", TechType.Electrics, 1));
@@ -432,7 +440,7 @@ return map;
     Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     PlayerInfo player1 = Mockito.mock(PlayerInfo.class);
     Mockito.when(player1.getSectorVisibility(coord)).thenReturn((byte) 1);
-    TechList tech1 = new TechList(SpaceRace.HUMAN);
+    TechList tech1 = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech3", TechType.Combat, 2));
@@ -443,7 +451,7 @@ return map;
     Mockito.when(player1.getTechList()).thenReturn(tech1);
     PlayerInfo player2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(player2.getSectorVisibility(coord)).thenReturn((byte) 1);
-    TechList tech2 = new TechList(SpaceRace.HUMAN);
+    TechList tech2 = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech2.addTech(new Tech("EleTech1", TechType.Electrics, 1));
@@ -483,7 +491,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMapTrade() {
-    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     Votes votes = Mockito.mock(Votes.class);
     Mockito.when(map.getVotes()).thenReturn(votes);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
@@ -502,7 +510,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testUnEvenTrade() {
-    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     Votes votes = Mockito.mock(Votes.class);
     Mockito.when(map.getVotes()).thenReturn(votes);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
@@ -522,7 +530,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testUnEvenTradeFleet() {
-    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     Votes votes = Mockito.mock(Votes.class);
     Mockito.when(map.getVotes()).thenReturn(votes);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
@@ -543,7 +551,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testUnEvenTradeFleet2() {
-    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     Votes votes = Mockito.mock(Votes.class);
     Mockito.when(map.getVotes()).thenReturn(votes);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
@@ -584,7 +592,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMapPlanetTrade() {
-    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.generateMapTrade(DiplomaticTrade.TRADE, false);
     assertEquals(NegotiationType.MAP_PLANETS, trade.getFirstOffer().getByIndex(0)
@@ -601,7 +609,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testEqualTrade() {
-    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.generateEqualTrade(NegotiationType.ALLIANCE);
     assertEquals(NegotiationType.ALLIANCE, trade.getFirstOffer().getByIndex(0)
@@ -633,7 +641,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRecallFleet() {
-    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     Fleet fleet = Mockito.mock(Fleet.class);
     trade.generateRecallFleetOffer(fleet);
@@ -1090,7 +1098,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testTechTrade() {
-    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
 
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1110,7 +1118,8 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testTechTradeWithVote() {
-    StarMap map = generateMapWithPlayer(SpaceRace.CHIRALOIDS);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne(
+        "CHIRALOIDS"));
     Votes votes = Mockito.mock(Votes.class);
     Vote vote = Mockito.mock(Vote.class);
     Mockito.when(vote.getType()).thenReturn(VotingType.BAN_NUCLEAR_WEAPONS);
@@ -1130,7 +1139,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNullTrade() {
-    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     int value = trade.getOfferDifferenceForBoth();
     assertEquals(0, value);
@@ -1142,7 +1151,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGivingOutValuable() {
-    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(5, 5));
     Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(0);
@@ -1169,7 +1178,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testActualMapTrade() {
-    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     NegotiationList offerList1 = new NegotiationList();
     offerList1.add(new NegotiationOffer(NegotiationType.MAP, null));
@@ -1231,7 +1240,7 @@ return map;
     Mockito.when(player1.getFleets()).thenReturn(fleetList);
     Mockito.when(player1.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(player1.getIntelligence()).thenReturn(espionage);
-    TechList tech1 = new TechList(SpaceRace.HUMAN);
+    TechList tech1 = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech3", TechType.Combat, 2));
@@ -1240,13 +1249,14 @@ return map;
     tech1.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     Mockito.when(player1.getTechList()).thenReturn(tech1);
-    Mockito.when(player1.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(player1.getRace()).thenReturn(
+        SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo player2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(player2.getSectorVisibility(coord)).thenReturn((byte) 2);
     Mockito.when(player2.getFleets()).thenReturn(fleetList);
     Mockito.when(player2.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(player2.getIntelligence()).thenReturn(espionage);
-    TechList tech2 = new TechList(SpaceRace.HUMAN);
+    TechList tech2 = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
     tech2.addTech(new Tech("EleTech1", TechType.Electrics, 1));
@@ -1256,7 +1266,8 @@ return map;
     tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     Mockito.when(player2.getTechList()).thenReturn(tech2);
-    Mockito.when(player2.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(player2.getRace()).thenReturn(
+        SpaceRaceFactory.createOne("HUMANS"));
     StarMap map = Mockito.mock(StarMap.class);
     ArrayList<Planet> planets = new ArrayList<>();
     Planet planet = Mockito.mock(Planet.class);
@@ -1301,16 +1312,17 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGetBestPlanet() {
-    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"));
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SPORKS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "SPORKS"));
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     ArrayList<Planet> planets = new ArrayList<>();
     Planet planetOne = Mockito.mock(Planet.class);
     Mockito.when(planetOne.getAmountMetalInGround()).thenReturn(3463);
     Mockito.when(planetOne.getGroundSize()).thenReturn(10);
     Mockito.when(planetOne.getTotalPopulation()).thenReturn(4);
-    Mockito.when(planetOne.getHomeWorldId()).thenReturn(-1);
+    Mockito.when(planetOne.isHomeWorld()).thenReturn(false);
     Mockito.when(planetOne.getRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
     Mockito.when(planetOne.getPlanetPlayerInfo()).thenReturn(info);
@@ -1320,7 +1332,7 @@ return map;
     Mockito.when(planetTwo.getAmountMetalInGround()).thenReturn(3463);
     Mockito.when(planetTwo.getGroundSize()).thenReturn(10);
     Mockito.when(planetTwo.getTotalPopulation()).thenReturn(4);
-    Mockito.when(planetTwo.getHomeWorldId()).thenReturn(0);
+    Mockito.when(planetTwo.isHomeWorld()).thenReturn(true);
     Mockito.when(planetTwo.getRadiationLevel()).thenReturn(
         RadiationType.NO_RADIATION);
     Mockito.when(planetTwo.getPlanetPlayerInfo()).thenReturn(info);
@@ -1344,7 +1356,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGetBestFleet() {
-    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"));
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     ArrayList<Fleet> fleets = new ArrayList<>();
     Fleet fleet1 = Mockito.mock(Fleet.class);
@@ -1366,7 +1378,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGetBestFleet2() {
-    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"));
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     ArrayList<Fleet> fleets = new ArrayList<>();
     Fleet fleet1 = Mockito.mock(Fleet.class);
@@ -1388,7 +1400,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testFirstTrade() {
-    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"));
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1398,7 +1410,7 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.PEACE, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.MOTHOIDS);
+    map = generateMapWithPlayer(SpaceRaceFactory.createOne("MOTHOIDS"));
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.EXPANSIONIST);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1412,7 +1424,7 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.MAP, trade.getSecondOffer().getByIndex(1)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.MECHIONS);
+    map = generateMapWithPlayer(SpaceRaceFactory.createOne("MECHIONS"));
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1422,7 +1434,7 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.PEACE, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.TEUTHIDAES);
+    map = generateMapWithPlayer(SpaceRaceFactory.createOne("TEUTHIDAES"));
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.MILITARISTIC);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1437,14 +1449,18 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testLogicalOffer() {
-    StarMap map = generateMapWithPlayer(SpaceRace.MECHIONS,600);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne(
+        "MECHIONS"), 600);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
     map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
-        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.HOMARIANS);
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US,
+            SpaceRaceFactory.createOne("HOMARIANS"));
     map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
-        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.HOMARIANS);
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US,
+            SpaceRaceFactory.createOne("HOMARIANS"));
     map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
-        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.HOMARIANS);
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US,
+            SpaceRaceFactory.createOne("HOMARIANS"));
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
     trade.getTradeableTechListForSecond();
@@ -1453,7 +1469,7 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.MECHIONS,0);
+    map = generateMapWithPlayer(SpaceRaceFactory.createOne("MECHIONS"),0);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1477,14 +1493,17 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testPeacefulOffer() {
-    StarMap map = generateMapWithPlayer(SpaceRace.HOMARIANS,600);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HOMARIANS"),600);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.PEACEFUL);
     map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
-        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.HOMARIANS);
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US,
+            SpaceRaceFactory.createOne("HOMARIANS"));
     map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
-        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.HOMARIANS);
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US,
+            SpaceRaceFactory.createOne("HOMARIANS"));
     map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
-        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.HOMARIANS);
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US,
+            SpaceRaceFactory.createOne("HOMARIANS"));
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
     trade.getTradeableTechListForSecond();
@@ -1493,7 +1512,7 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.HOMARIANS,0);
+    map = generateMapWithPlayer(SpaceRaceFactory.createOne("HOMARIANS"),0);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.PEACEFUL);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1514,7 +1533,8 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testExpansionistOffer() {
-    StarMap map = generateMapWithPlayer(SpaceRace.MECHIONS,300);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("MECHIONS"),
+        300);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1524,7 +1544,8 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.MECHIONS,0);
+    map = generateMapWithPlayer(SpaceRaceFactory.createOne("MECHIONS"),
+        0);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1547,7 +1568,8 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testScientificOffer() {
-    StarMap map = generateMapWithPlayer(SpaceRace.MECHIONS,300);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("MECHIONS"),
+        300);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1557,7 +1579,8 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.MECHIONS,0);
+    map = generateMapWithPlayer(SpaceRaceFactory.createOne("MECHIONS"),
+        0);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1600,7 +1623,8 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testAggressiveOffer() {
-    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS,200);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"),
+        200);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1610,7 +1634,8 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.SPORKS,0);
+    map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"),
+        0);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1628,7 +1653,8 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMilitaristicOffer() {
-    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS,200);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"),
+        200);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1638,7 +1664,8 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.SPORKS,0);
+    map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"),
+        0);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1656,7 +1683,8 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBackstabbingOffer() {
-    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS,300);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"),
+        300);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1666,7 +1694,8 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.SPORKS,0);
+    map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"),
+        0);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1682,7 +1711,7 @@ return map;
     }
     map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy()
     .getDiplomacyList(1).addBonus(DiplomacyBonusType.IN_ALLIANCE,
-            SpaceRace.SPORKS);
+        SpaceRaceFactory.createOne("SPORKS"));
     if (type1 == NegotiationType.MAP
         || type1 == NegotiationType.MAP_PLANETS
         || type1 == NegotiationType.TECH
@@ -1697,14 +1726,18 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testDiplomaticOffer() {
-    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS,300);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"),
+        300);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
     map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
-        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.SPORKS);
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US,
+            SpaceRaceFactory.createOne("SPORKS"));
     map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
-        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.SPORKS);
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US,
+            SpaceRaceFactory.createOne("SPORKS"));
     map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy().getDiplomacyList(
-        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US, SpaceRace.SPORKS);
+        1).addBonus(DiplomacyBonusType.WAR_DECLARATION_AGAINST_US,
+            SpaceRaceFactory.createOne("SPORKS"));
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
     trade.getTradeableTechListForSecond();
@@ -1713,7 +1746,7 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.SPORKS,0);
+    map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"),0);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1733,7 +1766,8 @@ return map;
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMerchanticalOffer() {
-    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS,300);
+    StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"),
+        300);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
@@ -1743,7 +1777,7 @@ return map;
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    map = generateMapWithPlayer(SpaceRace.SPORKS,0);
+    map = generateMapWithPlayer(SpaceRaceFactory.createOne("SPORKS"), 0);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();

@@ -21,7 +21,7 @@
                  "MALE",
                  "FEMALE"
                ],
-    "SpeechSetId": "Alteirians",
+    "SpeechSetId": "ALTEIRIANS",
     "BridgeEffect": "GREYBLUE",
     "DiplomacyMusic": "Sky Portal",
     "NameGenerator": "GASEOUS_CREATURE",
@@ -50,7 +50,7 @@
                  "MALE",
                  "FEMALE"
                ],
-    "SpeechSetId": "Centaurs",
+    "SpeechSetId": "CENTAURS",
     "BridgeEffect": "BRIGHT_CYAN",
     "DiplomacyMusic": "Diplomacy",
     "NameGenerator": "LONG_NAMES",
@@ -80,7 +80,7 @@
                  "MALE",
                  "FEMALE"
                ],
-    "SpeechSetId": "Chiraloids",
+    "SpeechSetId": "CHIRALOIDS",
     "BridgeEffect": "BLUEISH_WHITE",
     "DiplomacyMusic": "Menace",
     "NameGenerator": "EVIL_CREATURE",
@@ -110,7 +110,7 @@
                  "MALE",
                  "FEMALE"
                ],
-    "SpeechSetId": "Mothoids",
+    "SpeechSetId": "MOTHOIDS",
     "BridgeEffect": "GREEN_CONSOLE",
     "DiplomacyMusic": "Fantasy Choir 2",
     "NameGenerator": "INSECT",
@@ -138,7 +138,7 @@
                  "MALE",
                  "FEMALE"
                ],
-    "SpeechSetId": "Teuthidaes",
+    "SpeechSetId": "TEUTHIDAES",
     "BridgeEffect": "PURPLE_DREAM",
     "DiplomacyMusic": "Pressure",
     "NameGenerator": "DEEP_ANCIENT_MONSTER",

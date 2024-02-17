@@ -24,7 +24,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.RadiationType;
@@ -58,7 +58,7 @@ public class NegotiationOfferTest {
     assertEquals(12, offer.getMapValue());
     offer.setMapValue(18);
     assertEquals(15, offer.getMapValue());
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(15, offer.getOfferValue(info));
     assertEquals(NegotiationType.MAP, offer.getNegotiationType());
     assertEquals(null, offer.getOfferObject());
@@ -137,7 +137,7 @@ public class NegotiationOfferTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testOfferValues() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     NegotiationOffer offer = new NegotiationOffer(NegotiationType.ALLIANCE, null);
     assertEquals(0, offer.getOfferValue(info));
 

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,6 +29,7 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 
 /**
@@ -42,7 +43,7 @@ public class PlayerSetupViewTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
-    SpaceRace race = SpaceRace.HUMAN;
+    SpaceRace race = SpaceRaceFactory.createOne("HUMANS");
     GovernmentType gov = GovernmentType.UNION;
     AiDifficulty dif = AiDifficulty.NORMAL;
     Mockito.when(config.getRace(Mockito.anyInt())).thenReturn(race);

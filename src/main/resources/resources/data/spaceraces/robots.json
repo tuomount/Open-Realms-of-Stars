@@ -23,7 +23,7 @@
     "Genders": [
                  "NONE"
                ],
-    "SpeechSetId": "Mechions",
+    "SpeechSetId": "MECHIONS",
     "BridgeEffect": "WARM_WHITE",
     "DiplomacyMusic": "Abandoned Steel Mill",
     "NameGenerator": "ROBOT",
@@ -55,7 +55,7 @@
     "Genders": [
                  "NONE"
                ],
-    "SpeechSetId": "Reborgians",
+    "SpeechSetId": "REBORGIANS",
     "BridgeEffect": "DARKEST",
     "DiplomacyMusic": "Braindead",
     "NameGenerator": "CYBORG",
@@ -82,7 +82,7 @@
     "Genders": [
                  "FEMALE"
                ],
-    "SpeechSetId": "Synthdroids",
+    "SpeechSetId": "SYNTHDROIDS",
     "BridgeEffect": "WARM_WHITE",
     "DiplomacyMusic": "Cyborg",
     "NameGenerator": "FEMALE_ROBOT",

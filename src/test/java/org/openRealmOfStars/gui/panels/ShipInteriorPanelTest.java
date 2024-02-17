@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -34,9 +34,10 @@ public class ShipInteriorPanelTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
-    ShipInteriorPanel panel = new ShipInteriorPanel(SpaceRace.GREYANS,
+    ShipInteriorPanel panel = new ShipInteriorPanel(SpaceRaceFactory.createOne(
+        "GREYANS"),
         GuiStatics.BIG_PLANET_WATERWORLD1);
-    assertEquals(SpaceRace.GREYANS, panel.getRace());
+    assertEquals(SpaceRaceFactory.createOne("GREYANS"), panel.getRace());
     assertEquals(GuiStatics.BIG_PLANET_WATERWORLD1, panel.getPlanetImage());
   }
 
@@ -44,8 +45,9 @@ public class ShipInteriorPanelTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNull() {
     DiceGenerator.initializeGenerators(90,90,90);
-    ShipInteriorPanel panel = new ShipInteriorPanel(SpaceRace.GREYANS, null);
-    assertEquals(SpaceRace.GREYANS, panel.getRace());
+    ShipInteriorPanel panel = new ShipInteriorPanel(SpaceRaceFactory.createOne(
+        "GREYANS"), null);
+    assertEquals(SpaceRaceFactory.createOne("GREYANS"), panel.getRace());
     assertEquals(null, panel.getPlanetImage());
   }
 
@@ -53,9 +55,10 @@ public class ShipInteriorPanelTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNebulae() {
     DiceGenerator.initializeGenerators(10,10,10);
-    ShipInteriorPanel panel = new ShipInteriorPanel(SpaceRace.GREYANS,
+    ShipInteriorPanel panel = new ShipInteriorPanel(SpaceRaceFactory.createOne(
+        "GREYANS"),
         GuiStatics.NEBULAE_IMAGE);
-    assertEquals(SpaceRace.GREYANS, panel.getRace());
+    assertEquals(SpaceRaceFactory.createOne("GREYANS"), panel.getRace());
     assertEquals(GuiStatics.NEBULAE_IMAGE, panel.getPlanetImage());
   }
 

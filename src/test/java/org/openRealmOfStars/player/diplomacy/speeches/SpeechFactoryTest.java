@@ -22,6 +22,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 /**
 * Speech factory for generating speeches
@@ -32,10 +33,10 @@ public class SpeechFactoryTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void test() {
-    int maxRaces = SpaceRace.values().length;
+    int maxRaces = SpaceRaceFactory.getValues().length;
     for (int i = 0; i < maxRaces; i++) {
-      SpaceRace race = SpaceRace.values()[i];
-      if (race == SpaceRace.SPACE_MONSTERS) {
+      SpaceRace race = SpaceRaceFactory.getValues()[i];
+      if (race.isMonster()) {
         continue;
       }
       SpeechLine line = SpeechFactory.createLine(SpeechType.AGREE, race, null);

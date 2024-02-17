@@ -22,7 +22,7 @@
                  "MALE",
                  "FEMALE"
                ],
-    "SpeechSetId": "Greyans",
+    "SpeechSetId": "GREYANS",
     "BridgeEffect": "WARM_WHITE",
     "DiplomacyMusic": "Trogl",
     "NameGenerator": "ANCIENT_NORDIC",
@@ -47,7 +47,7 @@
                  "MALE",
                  "FEMALE"
                ],
-    "SpeechSetId": "Humans",
+    "SpeechSetId": "HUMAN",
     "BridgeEffect": "WARM_WHITE",
     "DiplomacyMusic": "Walking with Poseidon",
     "NameGenerator": "SCIFI_HUMAN",
@@ -77,7 +77,7 @@
                  "MALE",
                  "FEMALE"
                ],
-    "SpeechSetId": "Scaurians",
+    "SpeechSetId": "SCAURIANS",
     "BridgeEffect": "DARK_ORANGE",
     "DiplomacyMusic": "Interplanetary Odyssey",
     "NameGenerator": "ANCIENT_ROMAN",
@@ -105,7 +105,7 @@
                  "MALE",
                  "FEMALE"
                ],
-    "SpeechSetId": "Smaugirians",
+    "SpeechSetId": "SMAUGIRIANS",
     "BridgeEffect": "ORANGE_BLINK",
     "DiplomacyMusic": "Guitar Song",
     "NameGenerator": "PIRATE",
@@ -132,7 +132,7 @@
                  "MALE",
                  "FEMALE"
                ],
-    "SpeechSetId": "Sporks",
+    "SpeechSetId": "SPORKS",
     "BridgeEffect": "DARK_RED",
     "DiplomacyMusic": "Conquerors",
     "NameGenerator": "SPACE_ORC",
@@ -163,7 +163,7 @@
                  "MALE",
                  "FEMALE"
                ],
-    "SpeechSetId": "Homarians",
+    "SpeechSetId": "HOMARIANS",
     "BridgeEffect": "BLUEISH_WHITE",
     "DiplomacyMusic": "Malloga Balling",
     "NameGenerator": "DEEP_CREATURE",

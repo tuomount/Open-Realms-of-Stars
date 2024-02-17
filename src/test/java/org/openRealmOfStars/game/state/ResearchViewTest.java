@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2022 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,7 +26,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.artifact.ArtifactLists;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.tech.TechList;
 
 
@@ -40,7 +40,8 @@ public class ResearchViewTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBasic() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "HUMANS"));
     TechList list = new TechList(info.getRace());
     ArtifactLists artifactList = new ArtifactLists();
     Mockito.when(info.getArtifactLists()).thenReturn(artifactList);

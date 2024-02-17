@@ -40,7 +40,7 @@
                  "MALE",
                  "FEMALE"
                ],
-    "SpeechSetId": "Space Pirates",
+    "SpeechSetId": "SPACE_PIRATE",
     "BridgeEffect": "DARKEST",
     "DiplomacyMusic": "Set Fire to Reality - dark/electronic",
     "NameGenerator": "ALL",

@@ -25,7 +25,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.construction.Building;
@@ -47,20 +47,13 @@ import junit.framework.TestCase;
  */
 public class PlanetTest extends TestCase {
 
-  /** TODO: Remove when SpaceRaces are dehardcoded */
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    SpaceRace.initialize();
-  }
-
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPlanetPopulationGrowthAndBuilding() {
     Coordinate planetCoordinate = new Coordinate(10, 15);
     Planet planet = new Planet(planetCoordinate, "Earth", 1, false);
     planet.setRadiationLevel(RadiationType.NO_RADIATION);
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     info.setEmpireName("Alliance of Humans");
     planet.setPlanetOwner(0, info);
     planet.setWorkers(Planet.FOOD_FARMERS, 1);
@@ -91,7 +84,7 @@ public class PlanetTest extends TestCase {
     Coordinate planetCoordinate = new Coordinate(10, 15);
     Planet planet = new Planet(planetCoordinate, "Earth", 1, false);
     planet.setRadiationLevel(RadiationType.NO_RADIATION);
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     info.setEmpireName("Alliance of Humans");
     planet.setPlanetOwner(0, info);
     Building spacePort = BuildingFactory.createByName("Space port");
@@ -141,17 +134,17 @@ public class PlanetTest extends TestCase {
           + " Temperature: temperate\nWater: humid Gravity: normal gravity\n"
           + "Size: small\n"
           + "Metal: 6543\n",tmp);
-      planet.setHomeWorldId(1);
+      planet.setHomeWorldId("HUMANS");
       tmp = planet.generateInfoText(false, null);
       assertEquals("Earth\nWater world\nRadiation: no radiation"
           + " Temperature: temperate\nWater: humid Gravity: normal gravity\n"
           + "Size: small\n"
-          + "Home world of\nMechions\n",tmp);
+          + "Home world of\nHumans\n",tmp);
       tmp = planet.generateInfoText(true, null);
       assertEquals("Earth\nWater world\nRadiation: no radiation"
           + " Temperature: temperate\nWater: humid Gravity: normal gravity\n"
           + "Size: small\n"
-          + "Metal: 6543\nHome world of\nMechions\n",tmp);
+          + "Metal: 6543\nHome world of\nHumans\n",tmp);
       PlayerInfo info = new PlayerInfo(SpaceRaceUtility.getRaceByName("Mechion"));
       info.setEmpireName("Mechion Great Empire");
       planet.setPlanetOwner(0, info);
@@ -162,7 +155,7 @@ public class PlanetTest extends TestCase {
           + " Temperature: temperate\nWater: humid Gravity: normal gravity\n"
           + "Size: small\n"
           + "Metal: 6543\n"
-          + "Home world of\nMechions\nMechion Great Empire\nPopulation"
+          + "Home world of\nHumans\nMechion Great Empire\nPopulation"
           + ": 1\nCulture: 5\n",tmp);
   }
 
@@ -173,7 +166,7 @@ public class PlanetTest extends TestCase {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.GUILD);
     Mockito.when(info.getWarFatigue()).thenReturn(0);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     planet.setPlanetOwner(0, info);
     planet.setWorkers(Planet.FOOD_FARMERS, 2);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
@@ -396,7 +389,7 @@ public class PlanetTest extends TestCase {
     planet.setWorkers(Planet.FOOD_FARMERS, 2);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("GREYANS"));
     planet.setPlanetOwner(0, info);
     Building building = Mockito.mock(Building.class);
     Mockito.when(building.getBattleBonus()).thenReturn(15);
@@ -421,7 +414,7 @@ public class PlanetTest extends TestCase {
   public void testCreditProduction() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     planet.setPlanetOwner(0, info);
     assertEquals(0, planet.getNumberOfBuildings());
     Building building = Mockito.mock(Building.class);
@@ -437,7 +430,7 @@ public class PlanetTest extends TestCase {
     assertEquals(2, planet.getNumberOfBuildings());
     planet.setRadiationLevel(RadiationType.LOW_RADIATION);
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("SCAURIANS"));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
   }
 
@@ -461,7 +454,7 @@ public class PlanetTest extends TestCase {
     planet.setTemperatureType(TemperatureType.TEMPERATE);
     planet.setRadiationLevel(RadiationType.NO_RADIATION);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     planet.setPlanetOwner(0, info);
     assertEquals(0, planet.getNumberOfBuildings());
     Building building = Mockito.mock(Building.class);
@@ -493,7 +486,7 @@ public class PlanetTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPlanetEventActivationAncientLab() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
     planet.setPlanetOwner(0, info);
     planet.setEventActivation(false);
     planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_LAB);
@@ -512,7 +505,7 @@ public class PlanetTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPlanetEventActivationAncientFactory() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
     planet.setPlanetOwner(0, info);
     planet.setEventActivation(false);
     planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
@@ -531,7 +524,7 @@ public class PlanetTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPlanetEventActivationAncientTemple() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
     planet.setPlanetOwner(0, info);
     planet.setEventActivation(false);
     planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_TEMPLE);

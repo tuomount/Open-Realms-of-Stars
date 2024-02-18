@@ -466,7 +466,7 @@ public class Leader {
     builder.append(", gender=");
     builder.append(gender);
     builder.append(", race=");
-    builder.append(race);
+    builder.append(race.getNameSingle());
     builder.append(", title=");
     builder.append(title);
     if (getParent() != null) {

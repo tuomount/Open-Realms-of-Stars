@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2022 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 /**
  * Test for GalaxyConfig
@@ -54,8 +54,9 @@ public class GalaxyConfigTest {
     assertEquals(1000, config.getScoringVictoryTurns());
     config.setScoringVictoryTurns(800);
     assertEquals(800, config.getScoringVictoryTurns());
-    config.setRace(0, SpaceRace.HUMAN);
-    assertEquals(SpaceRace.HUMAN, config.getRace(0));
+    config.setRace(0, SpaceRaceFactory.createOne("HUMANS"));
+    assertEquals(SpaceRaceFactory.createOne("HUMANS"),
+        config.getRace(0));
     assertEquals(true,config.isUniqueName("Test of Human"));
     config.setPlayerName(0, "Test of Human");
     assertEquals("Test of Human",config.getPlayerName(0));

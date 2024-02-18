@@ -64,7 +64,7 @@ public class LeaderTest {
     assertEquals(MilitaryRank.COLONEL, leader.getMilitaryRank());
     assertEquals("Leader [name=Test, homeworld=Planet I, job=Ruler,"
         + " age=33, TimeInJob=0, level=5, experience=50, militaryRank=Colonel,"
-        + " gender=female, race=HUMAN, title=King of the world, parent=Parent]",
+        + " gender=female, race=Human, title=King of the world, parent=Parent]",
         leader.toString());
     assertEquals("King of the world Test\n" +
         "Position: Ruler\n" +

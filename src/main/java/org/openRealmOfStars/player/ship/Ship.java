@@ -202,7 +202,7 @@ public class Ship extends Construction {
     super("SHIP", Icons.ICON_HULL_TECH);
     String tmpStr = IOUtilities.readString(dis);
     setName(tmpStr);
-    String race = IOUtilities.readString(dis);    
+    String race = IOUtilities.readString(dis);
     setProdCost(dis.readInt());
     setMetalCost(dis.readInt());
     String hullName = IOUtilities.readString(dis);

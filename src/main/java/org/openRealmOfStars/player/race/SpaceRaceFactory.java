@@ -59,6 +59,10 @@ public final class SpaceRaceFactory {
     return SINGLETON.makeById(spaceRaceId);
   }
 
+  /**
+   * Get All Space races in array.
+   * @return Space race array
+   */
   public static SpaceRace[] getValues() {
     return SINGLETON.getAll();
   }

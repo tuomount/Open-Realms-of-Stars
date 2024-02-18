@@ -993,8 +993,7 @@ public final class StarMapUtilities {
     ArrayList<Planet> tempList = new ArrayList<>();
     ArrayList<Planet> bestList = new ArrayList<>();
     for (Planet planet : map.getPlanetList()) {
-      if (planet.getPlanetPlayerInfo() != null
-          && planet.getPlanetPlayerInfo() != info
+      if (planet.getPlanetPlayerInfo() == null
           && info.getSectorVisibility(planet.getCoordinate())
           > PlayerInfo.UNCHARTED && !planet.isGasGiant()) {
         tempList.add(planet);
@@ -1042,7 +1041,8 @@ public final class StarMapUtilities {
     ArrayList<Planet> tempList = new ArrayList<>();
     ArrayList<Planet> bestList = new ArrayList<>();
     for (Planet planet : map.getPlanetList()) {
-      if (planet.getPlanetPlayerInfo() == null
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetPlayerInfo() != info
           && info.getSectorVisibility(planet.getCoordinate())
           > PlayerInfo.UNCHARTED && !planet.isGasGiant()) {
         tempList.add(planet);

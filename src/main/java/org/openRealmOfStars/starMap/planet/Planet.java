@@ -395,14 +395,16 @@ public class Planet {
   /**
    * Planet fights against wildlife.
    * @param building Wildlife building
+   * @param map StarMap
    * @return True if fight succeed and false if not
    */
-  public boolean fightAgainstWildLife(final Building building) {
+  public boolean fightAgainstWildLife(final Building building,
+      final StarMap map) {
     if (building.getWildLifePower() > 0) {
       if (getTroopPower() <= building.getWildLifePower()) {
         return false;
       }
-      fightAgainstAttacker(building.getWildLifePower(), null, "wild life",
+      fightAgainstAttacker(building.getWildLifePower(), map, "wild life",
           "fighting against wildlife", "fighting against wildlife");
     }
     return true;

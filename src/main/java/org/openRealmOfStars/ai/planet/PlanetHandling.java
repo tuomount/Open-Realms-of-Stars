@@ -87,7 +87,7 @@ public final class PlanetHandling {
     Building newBuild = (Building) planet.getUnderConstruction();
     Building worst = getWorstBuilding(planet, info, attitude, newBuild,
         nearFleetLimit);
-    if (worst != null && planet.fightAgainstWildLife(worst)) {
+    if (worst != null && planet.fightAgainstWildLife(worst, map)) {
       // Removing the worst building
       planet.removeBuilding(worst);
       return true;
@@ -284,7 +284,7 @@ public final class PlanetHandling {
           || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
         for (Building building : planet.getBuildingList()) {
           if (building.getWildLifePower() > 0
-              && planet.fightAgainstWildLife(building)) {
+              && planet.fightAgainstWildLife(building, map)) {
             // Removing the wild life
             planet.removeBuilding(building);
             break;

@@ -32,6 +32,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -53,6 +54,7 @@ import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -217,6 +219,10 @@ public class PlanetView extends BlackPanel {
   private SpaceCombo<String> governorGuideSelect;
 
   /**
+   * StarMap from listener.
+   */
+  private StarMap map;
+  /**
    * Planet view constructor. Planet view for viewing planet.
    * @param planet Planet to view
    * @param interactive If true view contains full planet controls.
@@ -226,6 +232,10 @@ public class PlanetView extends BlackPanel {
   public PlanetView(final Planet planet, final boolean interactive,
       final PlayerInfo player, final ActionListener listener) {
     this.setPlanet(planet);
+    if (listener instanceof Game) {
+      Game game = (Game) listener;
+      map = game.getStarMap();
+    }
     // Background image
     imgBase = new BigImagePanel(planet, true, null);
     imgBase.setPlayer(player);
@@ -732,7 +742,7 @@ public class PlanetView extends BlackPanel {
         .equals(GameCommands.COMMAND_DEMOLISH_BUILDING)) {
       Building building = buildingList.getSelectedValue();
       if (building != null) {
-        if (planet.fightAgainstWildLife(building)) {
+        if (planet.fightAgainstWildLife(building, map)) {
           planet.removeBuilding(building);
           SoundPlayer.playMenuSound();
           SoundPlayer.playSound(SoundPlayer.EXPLOSION_SMALL);

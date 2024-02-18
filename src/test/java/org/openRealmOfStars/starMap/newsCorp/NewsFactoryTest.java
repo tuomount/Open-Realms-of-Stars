@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap.newsCorp;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2023 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,7 +30,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.event.RandomEventType;
 import org.openRealmOfStars.starMap.event.RandomEvent;
@@ -83,7 +83,7 @@ public class NewsFactoryTest {
     Mockito.when(diplomacy.isTradeAlliance(1)).thenReturn(true);
     PlayerInfo owner = Mockito.mock(PlayerInfo.class);
     Mockito.when(owner.getEmpireName()).thenReturn("Kingdom of Test");
-    Mockito.when(owner.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(owner.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(owner);
     Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(1);
@@ -105,7 +105,7 @@ public class NewsFactoryTest {
     assertEquals(true, news.getNewsText().contains("Alpha Test I"));
     assertEquals(true, news.getNewsText().contains(spreader.getEmpireName()));
     assertEquals(true, news.getNewsText().contains(owner.getEmpireName()));
-    Mockito.when(owner.getRace()).thenReturn(SpaceRace.MECHIONS);
+    Mockito.when(owner.getRace()).thenReturn(SpaceRaceFactory.createOne("MECHIONS"));
     Mockito.when(diplomacy.isWar(1)).thenReturn(false);
     Mockito.when(diplomacy.isTradeAlliance(1)).thenReturn(false);
     news = NewsFactory.makeDeadlyVirusNews(planet, spreader, 2553);
@@ -364,7 +364,7 @@ public class NewsFactoryTest {
   public void testUnitedGalaxyTowerBuilding() {
     PlayerInfo builder = Mockito.mock(PlayerInfo.class);
     Mockito.when(builder.getEmpireName()).thenReturn("Empire of Test");
-    Mockito.when(builder.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(builder.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.WATERWORLD3.getImageInstructions());
@@ -496,7 +496,7 @@ public class NewsFactoryTest {
   public void testBroadcasting() {
     PlayerInfo builder = Mockito.mock(PlayerInfo.class);
     Mockito.when(builder.getEmpireName()).thenReturn("Empire of Test");
-    Mockito.when(builder.getRace()).thenReturn(SpaceRace.CHIRALOIDS);
+    Mockito.when(builder.getRace()).thenReturn(SpaceRaceFactory.createOne("CHIRALOIDS"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.WATERWORLD2.getImageInstructions());
@@ -548,7 +548,7 @@ public class NewsFactoryTest {
   public void testGalacticSportsEnding() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.WATERWORLD2.getImageInstructions());
@@ -791,7 +791,7 @@ public class NewsFactoryTest {
   public void testLostNews() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     NewsData news = NewsFactory.makeLostNews(info, 2500);
     assertEquals(true, news.getImageInstructions().contains(
         "Human"));
@@ -803,7 +803,8 @@ public class NewsFactoryTest {
   public void testPirateNews() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Space pirates");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SPACE_PIRATE);
+    Mockito.when(info.getRace()).thenReturn(
+        SpaceRaceFactory.createOne("SPACEPIRATES"));
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList list = Mockito.mock(PlayerList.class);
     Mockito.when(list.getSpacePiratePlayer()).thenReturn(info);
@@ -820,10 +821,10 @@ public class NewsFactoryTest {
   public void testStatNewsHalfway() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info2.getEmpireName()).thenReturn("Alliance of Test");
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("SCAURIANS"));
     GalaxyStat stat = Mockito.mock(GalaxyStat.class);
     Mockito.when(stat.getBiggest()).thenReturn(0);
     Mockito.when(stat.getSecond()).thenReturn(1);
@@ -853,10 +854,10 @@ public class NewsFactoryTest {
   public void testStatNewsLastQuarter() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info2.getEmpireName()).thenReturn("Alliance of Test");
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("SCAURIANS"));
     GalaxyStat stat = Mockito.mock(GalaxyStat.class);
     Mockito.when(stat.getBiggest()).thenReturn(0);
     Mockito.when(stat.getSecond()).thenReturn(1);
@@ -886,10 +887,10 @@ public class NewsFactoryTest {
   public void testStatNewsEnd() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info2.getEmpireName()).thenReturn("Alliance of Test");
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("SCAURIANS"));
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(diplomacy.hasAlliance()).thenReturn(false);
     Mockito.when(diplomacy.getAllianceIndex()).thenReturn(-1);
@@ -930,7 +931,7 @@ public class NewsFactoryTest {
   public void testStatNewsAfterFirstOne() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("MECHIONS"));
     GalaxyStat stat = Mockito.mock(GalaxyStat.class);
     Mockito.when(stat.getBiggest()).thenReturn(0);
     NewsCorpData data = Mockito.mock(NewsCorpData.class);
@@ -1001,12 +1002,12 @@ public class NewsFactoryTest {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
-    Mockito.when(aggressor.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(aggressor.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
-    Mockito.when(aggressor.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(aggressor.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(defender.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.SWAMPWORLD1.getImageInstructions());
     NewsData news = NewsFactory.makePlanetConqueredNews(aggressor, defender,
@@ -1031,7 +1032,7 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(defender.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     NewsData news = NewsFactory.makePlanetConqueredNews(aggressor, defender, planet,
         "nuclear bombs, raised to 9", -1);
     assertEquals(true, news.getNewsText().contains(
@@ -1052,7 +1053,7 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(defender.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.SWAMPWORLD1.getImageInstructions());
     NewsData news = NewsFactory.makePlanetBombedNews(aggressor, defender,
@@ -1077,7 +1078,7 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(defender.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     NewsData news = NewsFactory.makePlanetBombedNews(aggressor, defender, planet,
         "nuclear bombs, raised to 9", -1);
     assertEquals(true, news.getNewsText().contains(
@@ -1156,7 +1157,7 @@ public class NewsFactoryTest {
     Mockito.when(diplomacy2.isTradeAlliance(2)).thenReturn(false);
     Mockito.when(diplomacy2.isTradeAlliance(3)).thenReturn(true);
     Mockito.when(info3.getDiplomacy()).thenReturn(diplomacy2);
-    Mockito.when(info3.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info3.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     PlayerInfo info4 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info4.getEmpireName()).thenReturn("Empire IV");
     Mockito.when(info4.getFleets()).thenReturn(fleetList);
@@ -1253,7 +1254,7 @@ public class NewsFactoryTest {
     Mockito.when(diplomacy2.isTradeAlliance(2)).thenReturn(false);
     Mockito.when(diplomacy2.isTradeAlliance(3)).thenReturn(true);
     Mockito.when(info3.getDiplomacy()).thenReturn(diplomacy2);
-    Mockito.when(info3.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info3.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     PlayerInfo info4 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info4.getEmpireName()).thenReturn("Empire IV");
     Mockito.when(info4.getFleets()).thenReturn(fleetList);
@@ -1349,7 +1350,7 @@ public class NewsFactoryTest {
     Mockito.when(info3.getEmpireName()).thenReturn("Empire III");
     Mockito.when(info3.getFleets()).thenReturn(fleetList);
     Mockito.when(info3.getDiplomacy()).thenReturn(diplomacy);
-    Mockito.when(info3.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info3.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     PlayerInfo info4 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info4.getEmpireName()).thenReturn("Empire IV");
     Mockito.when(info4.getFleets()).thenReturn(fleetList);
@@ -1446,7 +1447,7 @@ public class NewsFactoryTest {
     Mockito.when(diplomacy2.isTradeAlliance(2)).thenReturn(false);
     Mockito.when(diplomacy2.isTradeAlliance(3)).thenReturn(true);
     Mockito.when(info3.getDiplomacy()).thenReturn(diplomacy2);
-    Mockito.when(info3.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info3.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     PlayerInfo info4 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info4.getEmpireName()).thenReturn("Empire IV");
     Mockito.when(info4.getFleets()).thenReturn(fleetList);
@@ -1540,17 +1541,17 @@ public class NewsFactoryTest {
     Mockito.when(info.getEmpireName()).thenReturn("Empire I");
     Mockito.when(info.getFleets()).thenReturn(fleetList);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("MECHIONS"));
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info2.getEmpireName()).thenReturn("Empire II");
     Mockito.when(info2.getFleets()).thenReturn(fleetList);
     Mockito.when(info2.getDiplomacy()).thenReturn(diplomacy2);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     PlayerInfo info3 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info3.getEmpireName()).thenReturn("Empire III");
     Mockito.when(info3.getFleets()).thenReturn(fleetList);
     Mockito.when(info3.getDiplomacy()).thenReturn(diplomacy3);
-    Mockito.when(info3.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info3.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     PlayerInfo info4 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info4.getEmpireName()).thenReturn("Empire IV");
     Mockito.when(info4.getFleets()).thenReturn(fleetList);
@@ -1586,22 +1587,22 @@ public class NewsFactoryTest {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
     Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(1);
-    Mockito.when(planet.getHomeWorldId()).thenReturn(0);
+    Mockito.when(planet.getHomeWorldId()).thenReturn("HUMANS");
     Mockito.when(planet.getCulture()).thenReturn(200);
     Planet planet2 = Mockito.mock(Planet.class);
     Mockito.when(planet2.getName()).thenReturn("Planet II");
     Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(1);
-    Mockito.when(planet.getHomeWorldId()).thenReturn(1);
+    Mockito.when(planet.getHomeWorldId()).thenReturn("GREYANS");
     Mockito.when(planet2.getCulture()).thenReturn(200);
     Planet planet3 = Mockito.mock(Planet.class);
     Mockito.when(planet3.getName()).thenReturn("Planet III");
     Mockito.when(planet3.getPlanetOwnerIndex()).thenReturn(1);
-    Mockito.when(planet.getHomeWorldId()).thenReturn(2);
+    Mockito.when(planet.getHomeWorldId()).thenReturn("SCAURIANS");
     Mockito.when(planet3.getCulture()).thenReturn(300);
     Planet planet4 = Mockito.mock(Planet.class);
     Mockito.when(planet4.getName()).thenReturn("Planet IV");
     Mockito.when(planet4.getPlanetOwnerIndex()).thenReturn(1);
-    Mockito.when(planet.getHomeWorldId()).thenReturn(3);
+    Mockito.when(planet.getHomeWorldId()).thenReturn("CHIRALOIDS");
     Mockito.when(planet4.getCulture()).thenReturn(200);
     ArrayList<Planet> planets = new ArrayList<>();
     planets.add(planet);
@@ -1616,11 +1617,11 @@ public class NewsFactoryTest {
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info2.getEmpireName()).thenReturn("Empire II");
     Mockito.when(info2.getDiplomacy()).thenReturn(diplomacy);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     PlayerInfo info3 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info3.getEmpireName()).thenReturn("Empire III");
     Mockito.when(info3.getDiplomacy()).thenReturn(diplomacy);
-    Mockito.when(info3.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info3.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     PlayerInfo info4 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info4.getEmpireName()).thenReturn("Empire IV");
     Mockito.when(info4.getDiplomacy()).thenReturn(diplomacy);
@@ -1649,22 +1650,26 @@ public class NewsFactoryTest {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
     Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(1);
-    Mockito.when(planet.getHomeWorldId()).thenReturn(0);
+    Mockito.when(planet.getHomeWorldId()).thenReturn("MECHIONS");
+    Mockito.when(planet.isHomeWorld()).thenReturn(true);
     Mockito.when(planet.getCulture()).thenReturn(200);
     Planet planet2 = Mockito.mock(Planet.class);
     Mockito.when(planet2.getName()).thenReturn("Planet II");
     Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(1);
-    Mockito.when(planet.getHomeWorldId()).thenReturn(1);
+    Mockito.when(planet2.getHomeWorldId()).thenReturn("HUMANS");
+    Mockito.when(planet2.isHomeWorld()).thenReturn(true);
     Mockito.when(planet2.getCulture()).thenReturn(200);
     Planet planet3 = Mockito.mock(Planet.class);
     Mockito.when(planet3.getName()).thenReturn("Planet III");
     Mockito.when(planet3.getPlanetOwnerIndex()).thenReturn(2);
-    Mockito.when(planet.getHomeWorldId()).thenReturn(2);
+    Mockito.when(planet3.getHomeWorldId()).thenReturn("SPORKS");
+    Mockito.when(planet3.isHomeWorld()).thenReturn(true);
     Mockito.when(planet3.getCulture()).thenReturn(300);
     Planet planet4 = Mockito.mock(Planet.class);
     Mockito.when(planet4.getName()).thenReturn("Planet IV");
     Mockito.when(planet4.getPlanetOwnerIndex()).thenReturn(1);
-    Mockito.when(planet.getHomeWorldId()).thenReturn(3);
+    Mockito.when(planet4.getHomeWorldId()).thenReturn("REBORGIANS");
+    Mockito.when(planet4.isHomeWorld()).thenReturn(true);
     Mockito.when(planet4.getCulture()).thenReturn(200);
     ArrayList<Planet> planets = new ArrayList<>();
     planets.add(planet);
@@ -1683,11 +1688,11 @@ public class NewsFactoryTest {
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info2.getEmpireName()).thenReturn("Empire Centaurs");
     Mockito.when(info2.getDiplomacy()).thenReturn(diplomacy);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     PlayerInfo info3 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info3.getEmpireName()).thenReturn("Empire Homarians");
     Mockito.when(info3.getDiplomacy()).thenReturn(diplomacy2);
-    Mockito.when(info3.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info3.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     PlayerInfo info4 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info4.getEmpireName()).thenReturn("Empire IV");
     Mockito.when(info4.getDiplomacy()).thenReturn(diplomacy3);
@@ -1711,7 +1716,7 @@ public class NewsFactoryTest {
   public void testScientificAchievement() {
     PlayerInfo maker = Mockito.mock(PlayerInfo.class);
     Mockito.when(maker.getEmpireName()).thenReturn("Empire of Test");
-    Mockito.when(maker.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(maker.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Building building = Mockito.mock(Building.class);
     Mockito.when(building.getName()).thenReturn("Awesome building");
     Planet planet = Mockito.mock(Planet.class);
@@ -1733,7 +1738,7 @@ public class NewsFactoryTest {
   public void testScientificAchievement2() {
     PlayerInfo maker = Mockito.mock(PlayerInfo.class);
     Mockito.when(maker.getEmpireName()).thenReturn("Empire of Test");
-    Mockito.when(maker.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(maker.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Building building = null;
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
@@ -1758,7 +1763,7 @@ public class NewsFactoryTest {
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(winner.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(winner.getEmpireName()).thenReturn("Empire of Homarian");
-    Mockito.when(winner.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(winner.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     Mockito.when(diplomacy.getAllianceIndex()).thenReturn(-1);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Planet planet = Mockito.mock(Planet.class);
@@ -1793,10 +1798,10 @@ public class NewsFactoryTest {
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(winner.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(winner.getEmpireName()).thenReturn("Empire of Homarian");
-    Mockito.when(winner.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(winner.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     PlayerInfo ally = Mockito.mock(PlayerInfo.class);
     Mockito.when(ally.getEmpireName()).thenReturn("Empire of Centaurs");
-    Mockito.when(ally.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(ally.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Mockito.when(diplomacy.getAllianceIndex()).thenReturn(1);
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(ally);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
@@ -1836,13 +1841,13 @@ public class NewsFactoryTest {
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(winner.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(winner.getEmpireName()).thenReturn("Empire of Homarian");
-    Mockito.when(winner.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(winner.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     Mockito.when(diplomacy.getAllianceIndex()).thenReturn(-1);
     PlayerInfo second = Mockito.mock(PlayerInfo.class);
     Diplomacy diplomacy2 = Mockito.mock(Diplomacy.class);
     Mockito.when(second.getDiplomacy()).thenReturn(diplomacy2);
     Mockito.when(second.getEmpireName()).thenReturn("Empire of Humans");
-    Mockito.when(second.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(second.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(diplomacy2.getAllianceIndex()).thenReturn(-1);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Mockito.when(map.getPlayerByIndex(0)).thenReturn(winner);
@@ -1885,19 +1890,19 @@ public class NewsFactoryTest {
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(winner.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(winner.getEmpireName()).thenReturn("Empire of Homarian");
-    Mockito.when(winner.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(winner.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     Mockito.when(diplomacy.getAllianceIndex()).thenReturn(1);
     PlayerInfo alliance = Mockito.mock(PlayerInfo.class);
     Diplomacy diplomacy3 = Mockito.mock(Diplomacy.class);
     Mockito.when(alliance.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(alliance.getEmpireName()).thenReturn("Empire of Centaurs");
-    Mockito.when(alliance.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(alliance.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Mockito.when(diplomacy3.getAllianceIndex()).thenReturn(2);
     PlayerInfo second = Mockito.mock(PlayerInfo.class);
     Diplomacy diplomacy2 = Mockito.mock(Diplomacy.class);
     Mockito.when(second.getDiplomacy()).thenReturn(diplomacy2);
     Mockito.when(second.getEmpireName()).thenReturn("Empire of Humans");
-    Mockito.when(second.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(second.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(diplomacy2.getAllianceIndex()).thenReturn(-1);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Mockito.when(map.getPlayerByIndex(0)).thenReturn(alliance);
@@ -1941,13 +1946,13 @@ public class NewsFactoryTest {
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(winner.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(winner.getEmpireName()).thenReturn("Empire of Homarian");
-    Mockito.when(winner.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(winner.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     Mockito.when(diplomacy.getAllianceIndex()).thenReturn(-1);
     PlayerInfo second = Mockito.mock(PlayerInfo.class);
     Diplomacy diplomacy2 = Mockito.mock(Diplomacy.class);
     Mockito.when(second.getDiplomacy()).thenReturn(diplomacy2);
     Mockito.when(second.getEmpireName()).thenReturn("Empire of Humans");
-    Mockito.when(second.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(second.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(diplomacy2.getAllianceIndex()).thenReturn(-1);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Mockito.when(map.getPlayerByIndex(2)).thenReturn(winner);
@@ -1984,13 +1989,13 @@ public class NewsFactoryTest {
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(winner.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(winner.getEmpireName()).thenReturn("Empire of Homarian");
-    Mockito.when(winner.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(winner.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     Mockito.when(diplomacy.getAllianceIndex()).thenReturn(3);
     PlayerInfo second = Mockito.mock(PlayerInfo.class);
     Diplomacy diplomacy2 = Mockito.mock(Diplomacy.class);
     Mockito.when(second.getDiplomacy()).thenReturn(diplomacy2);
     Mockito.when(second.getEmpireName()).thenReturn("Empire of Humans");
-    Mockito.when(second.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(second.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(diplomacy2.getAllianceIndex()).thenReturn(2);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Mockito.when(map.getPlayerByIndex(2)).thenReturn(winner);
@@ -2140,10 +2145,10 @@ public class NewsFactoryTest {
     Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_YES)).thenReturn(50);
     Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_NO)).thenReturn(25);
     PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info1.getRace()).thenReturn(SpaceRace.SPORKS);
+    Mockito.when(info1.getRace()).thenReturn(SpaceRaceFactory.createOne("SPORKS"));
     Mockito.when(info1.getEmpireName()).thenReturn("Test of Sporks");
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Mockito.when(info2.getEmpireName()).thenReturn("Monarcy of Centaurs");
     NewsData news = NewsFactory.makeVotingEndedNews(vote, VotingChoice.VOTED_YES,
         info1, info2, realmNames);
@@ -2198,7 +2203,7 @@ public class NewsFactoryTest {
     Mockito.when(vote.getType()).thenReturn(VotingType.RULER_OF_GALAXY);
     Mockito.when(vote.getTurnsToVote()).thenReturn(20);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     NewsData news = NewsFactory.makeVotingNews(vote, info, info);
     assertEquals(true, news.getNewsText().contains(VotingType.RULER_OF_GALAXY.getDescription()));
   }

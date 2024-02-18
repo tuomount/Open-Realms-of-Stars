@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2020 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  * Copyright (C) 2017 Lucas
  *
  * This program is free software; you can redistribute it and/or
@@ -21,7 +21,7 @@ package org.openRealmOfStars.player.ship;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 
 import static org.junit.Assert.*;
@@ -1394,7 +1394,7 @@ public class Ship2Test {
         Ship ship = new Ship(shipdesign);
 
         ship.setColonist(5);
-        Mockito.when(shiphull.getRace()).thenReturn(SpaceRace.HUMAN);
+        Mockito.when(shiphull.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
 
         assertEquals(75, ship.getTroopPower());
     }
@@ -1430,7 +1430,7 @@ public class Ship2Test {
         Ship ship = new Ship(shipdesign);
 
         ship.setColonist(5);
-        Mockito.when(shiphull.getRace()).thenReturn(SpaceRace.HUMAN);
+        Mockito.when(shiphull.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
 
         assertEquals(0, ship.getTroopPower());
     }

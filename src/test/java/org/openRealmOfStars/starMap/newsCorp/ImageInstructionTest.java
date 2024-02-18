@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 /**
 * Image instruction class.
@@ -327,7 +328,7 @@ public class ImageInstructionTest {
   public void testTextImage() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
-    instruction.addImage(SpaceRace.MECHIONS.getNameSingle());
+    instruction.addImage(SpaceRaceFactory.createOne("MECHIONS").getNameSingle());
     BufferedImage image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
     assertEquals(800, image.getWidth());
@@ -376,7 +377,7 @@ public class ImageInstructionTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testLogoSpaceRaces() {
-    for (SpaceRace race : SpaceRace.values()) {
+    for (SpaceRace race : SpaceRaceFactory.getValues()) {
       ImageInstruction instruction = new ImageInstruction();
       instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
       instruction.addLogo(ImageInstruction.POSITION_CENTER, race.getNameSingle(),

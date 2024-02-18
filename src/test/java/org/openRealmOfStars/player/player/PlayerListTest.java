@@ -23,7 +23,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 import junit.framework.TestCase;
 
@@ -34,12 +34,6 @@ import junit.framework.TestCase;
 */
 public class PlayerListTest extends TestCase {
 
-  /** TODO: Remove when SpaceRaces are dehardcoded */
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    SpaceRace.initialize();
-  }
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
@@ -116,16 +110,17 @@ public class PlayerListTest extends TestCase {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testStartDiplomacyBonuses() {
     PlayerList list = new PlayerList();
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 4, 0);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
+        4, 0);
     info.setGovernment(GovernmentType.DEMOCRACY);
     list.addPlayer(info);
-    info = new PlayerInfo(SpaceRace.SPORKS, 4, 1);
+    info = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"), 4, 1);
     info.setGovernment(GovernmentType.CLAN);
     list.addPlayer(info);
-    info = new PlayerInfo(SpaceRace.MECHIONS, 4, 2);
+    info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"), 4, 2);
     info.setGovernment(GovernmentType.AI);
     list.addPlayer(info);
-    info = new PlayerInfo(SpaceRace.GREYANS, 4, 3);
+    info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 4, 3);
     info.setGovernment(GovernmentType.FEDERATION);
     list.addPlayer(info);
     list.calculateInitialDiplomacyBonuses();
@@ -151,16 +146,17 @@ public class PlayerListTest extends TestCase {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testStartDiplomacyBonuses2() {
     PlayerList list = new PlayerList();
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 4, 0);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
+        4, 0);
     info.setGovernment(GovernmentType.DEMOCRACY);
     list.addPlayer(info);
-    info = new PlayerInfo(SpaceRace.SPORKS, 4, 1);
+    info = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"), 4, 1);
     info.setGovernment(GovernmentType.DEMOCRACY);
     list.addPlayer(info);
-    info = new PlayerInfo(SpaceRace.MECHIONS, 4, 2);
+    info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"), 4, 2);
     info.setGovernment(GovernmentType.HORDE);
     list.addPlayer(info);
-    info = new PlayerInfo(SpaceRace.GREYANS, 4, 3);
+    info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 4, 3);
     info.setGovernment(GovernmentType.TECHNOCRACY);
     list.addPlayer(info);
     list.calculateInitialDiplomacyBonuses();

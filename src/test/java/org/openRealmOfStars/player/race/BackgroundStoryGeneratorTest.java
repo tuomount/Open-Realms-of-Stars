@@ -39,7 +39,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForHumans() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Human federation");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.FEDERATION);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Rodolf Rednose");
@@ -62,7 +62,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForSporks() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Sporks kingdom");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SPORKS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("SPORKS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.KINGDOM);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -85,7 +85,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForMechions() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Mechion AI");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("MECHIONS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Droid D-9");
@@ -108,7 +108,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForMechions2() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Steel Empire");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("MECHIONS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Droid D-9");
@@ -131,7 +131,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForGreyans() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Greyan Technocracy");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("GREYANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.TECHNOCRACY);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -154,7 +154,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForHomarians() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Homarian Nest");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.NEST);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -177,7 +177,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForCentaurs() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Centaur Democracy");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.DEMOCRACY);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -200,7 +200,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForMothoids() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Mothoid Hivemind");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.MOTHOIDS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("MOTHOIDS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -223,7 +223,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForTeuthidae() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Teuthidae Empire");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.TEUTHIDAES);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("TEUTHIDAES"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -246,7 +246,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForScaurians() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Scaurian Enterprise");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("SCAURIANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.ENTERPRISE);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -269,7 +269,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForChiraloids() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Chiraloid Hivemind");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.CHIRALOIDS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("CHIRALOIDS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -291,7 +291,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForReborgians() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Reborgian AI");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.REBORGIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("REBORGIANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -315,7 +315,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForLithorian() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Lithorian Hive-mind");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.LITHORIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("LITHORIANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -339,7 +339,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForAlteirian() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Alteirian Hive-mind");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.ALTEIRIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("ALTEIRIANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -363,7 +363,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForSmaugirians() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Smaugirian Pirates");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SMAUGIRIANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("SMAUGIRIANS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.SPACE_PIRATES);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -387,7 +387,7 @@ public class BackgroundStoryGeneratorTest {
   public void testGenerateBackgroundStoryForSynthdroids() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Synthdroid AI");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SYNTHDROIDS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("SYNTHDROIDS"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
     Leader leader = Mockito.mock(Leader.class);
     Mockito.when(leader.getName()).thenReturn("Max Power");
@@ -406,27 +406,4 @@ public class BackgroundStoryGeneratorTest {
     assertEquals(true, result.contains("Synthdroid"));
   }
 
-  @Test
-  @Category(org.openRealmOfStars.UnitTest.class)
-  public void testGenerateBackgroundStoryForHuskdroids() {
-    PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getEmpireName()).thenReturn("Huskdroid Technocracy");
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SYNTHDROIDS);
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.TECHNOCRACY);
-    Leader leader = Mockito.mock(Leader.class);
-    Mockito.when(leader.getName()).thenReturn("Max Power");
-    Mockito.when(leader.getCallName()).thenReturn("Leader Max Power");
-    Mockito.when(info.getRuler()).thenReturn(leader);
-
-    Planet startingPlanet = Mockito.mock(Planet.class);
-    Mockito.when(startingPlanet.getName()).thenReturn("Mars");
-    Mockito.when(startingPlanet.getPlanetType())
-        .thenReturn(PlanetTypes.VOLCANICWORLD1);
-    int starYear = 2400;
-    String result = BackgroundStoryGenerator.generateBackgroundStory(
-        info, startingPlanet, starYear);
-    assertEquals(true, result.contains("Max Power"));
-    assertEquals(true, result.contains("technocracy"));
-    assertEquals(true, result.contains("Huskdroid"));
-  }
 }

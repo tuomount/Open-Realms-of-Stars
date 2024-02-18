@@ -23,7 +23,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 import junit.framework.TestCase;
 
@@ -33,12 +33,6 @@ import junit.framework.TestCase;
 */
 public class TechListTest extends TestCase {
 
-  /** TODO: Remove when SpaceRaces are dehardcoded */
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    SpaceRace.initialize();
-  }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTradeTechs() {
@@ -128,7 +122,7 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
-    TechList list = new TechList(SpaceRace.HUMAN);
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(20, list.getTechFocus(TechType.Combat));
     assertEquals(16, list.getTechFocus(TechType.Defense));
     assertEquals(16, list.getTechFocus(TechType.Electrics));
@@ -149,7 +143,7 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRareTechs() {
-    TechList list = new TechList(SpaceRace.HUMAN);
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     list.addTech(TechFactory.createDefenseTech("Armor plating Mk1", 1));
     list.addTech(TechFactory.createDefenseTech("Armor plating Mk2", 2));
     list.addTech(TechFactory.createDefenseTech("Armor plating Mk3", 3));
@@ -161,7 +155,7 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMissingTechCombat() {
-    TechList list = new TechList(SpaceRace.HUMAN);
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(false, list.isUpgradeable(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Chaingun Mk1", 1));
@@ -173,7 +167,7 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMissingTechDefense() {
-    TechList list = new TechList(SpaceRace.HUMAN);
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     Tech[] missing = list.getListMissingTech(TechType.Defense, 5);
     assertEquals(4, missing.length);
     assertEquals("Shield Mk5", missing[0].getName());
@@ -185,7 +179,7 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMissingTechHull() {
-    TechList list = new TechList(SpaceRace.HUMAN);
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     list.addTech(TechFactory.createHullTech("Large freighter", 6));
     Tech[] missing = list.getListMissingTech(TechType.Hulls, 6);
     assertEquals(4, missing.length);
@@ -198,7 +192,7 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMissingTechImprovement() {
-    TechList list = new TechList(SpaceRace.HUMAN);
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     list.addTech(TechFactory.createImprovementTech("VR movie center", 7));
     Tech[] missing = list.getListMissingTech(TechType.Improvements, 7);
     assertEquals(4, missing.length);
@@ -211,7 +205,7 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMissingTechPropulsion() {
-    TechList list = new TechList(SpaceRace.HUMAN);
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     list.addTech(TechFactory.createPropulsionTech("Antimatter source Mk2", 8));
     Tech[] missing = list.getListMissingTech(TechType.Propulsion, 8);
     assertEquals(4, missing.length);
@@ -224,7 +218,7 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMissingTechElectronics() {
-    TechList list = new TechList(SpaceRace.HUMAN);
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     list.addTech(TechFactory.createElectronicsTech("Planetary scanner Mk4", 8));
     Tech[] missing = list.getListMissingTech(TechType.Electrics, 8);
     assertEquals(2, missing.length);
@@ -235,14 +229,14 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testAddTech() {
-    TechList list = new TechList(SpaceRace.HUMAN);
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(1, list.getTechLevel(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Photon torpedo Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Callisto multicannon Mk1", 1));
     assertEquals(1, list.getTechLevel(TechType.Combat));
-    list = new TechList(SpaceRace.HUMAN);
+    list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(1, list.getTechLevel(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
@@ -254,7 +248,7 @@ public class TechListTest extends TestCase {
     list.addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
     list.addTech(TechFactory.createCombatTech("Callisto multicannon Mk2", 2));
     assertEquals(1, list.getTechLevel(TechType.Combat));
-    list = new TechList(SpaceRace.HUMAN);
+    list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     assertEquals(1, list.getTechLevel(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     assertEquals(1, list.getTechLevel(TechType.Combat));
@@ -273,7 +267,7 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testAddRandomTech() {
-    TechList list = new TechList(SpaceRace.HUMAN);
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     MessageList msgList = Mockito.mock(MessageList.class);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
@@ -284,10 +278,10 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testFullList() {
-    TechList list = new TechList(SpaceRace.HUMAN);
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     for (int i = 1; i < 11; i++) {
       String[] names = TechFactory.getListByTechLevel(TechType.Combat, i,
-          SpaceRace.HUMAN);
+          SpaceRaceFactory.createOne("HUMANS"));
       assertEquals(i, list.getTechLevel(TechType.Combat));
       for (String name : names) {
         list.addTech(TechFactory.createCombatTech(name, i));
@@ -305,7 +299,7 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testStarbaseTech() {
-    TechList list = new TechList(SpaceRace.HUMAN);
+    TechList list = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     list.addTech(TechFactory.createImprovementTech("Starbase music hall", 2));
     list.addTech(TechFactory.createImprovementTech("Starbase market", 3));
     list.addTech(TechFactory.createImprovementTech("Starbase lab", 4));
@@ -323,7 +317,8 @@ public class TechListTest extends TestCase {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTechResearch() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS, 2, 0);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MOTHOIDS"),
+        2, 0);
     info.getTechList().updateResearchPointByTurn(30, info, 300, false);
     assertEquals(1, info.getTechList().getTechLevel(TechType.Combat));
     assertEquals(MessageType.RESEARCH, info.getMsgList().getMsg().getType());

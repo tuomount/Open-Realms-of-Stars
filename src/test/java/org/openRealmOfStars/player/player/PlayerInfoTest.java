@@ -18,7 +18,11 @@ package org.openRealmOfStars.player.player;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -28,7 +32,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
@@ -70,7 +74,7 @@ public class PlayerInfoTest {
     @Test
     @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoHuman() {
-        PlayerInfo human = new PlayerInfo(SpaceRace.HUMAN);
+        PlayerInfo human = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
         assertEquals(false, human.isBoard());
         TechList techList = human.getTechList();
         Tech[] tech = techList.getList();
@@ -112,7 +116,8 @@ public class PlayerInfoTest {
     @Test
     @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoSpacePirate() {
-        PlayerInfo pirate = new PlayerInfo(SpaceRace.SPACE_PIRATE);
+        PlayerInfo pirate = new PlayerInfo(SpaceRaceFactory.createOne(
+            "SPACEPIRATES"));
         assertEquals(true, pirate.isBoard());
         ShipStat[] statList = pirate.getShipStatList();
         assertEquals("Scout Mk1", statList[0].getDesign().getName());
@@ -126,7 +131,7 @@ public class PlayerInfoTest {
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testDiplomacy() {
-      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
+      PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 8, 0);
       info.setAttitude(Attitude.AGGRESSIVE);
       assertEquals(Attitude.AGGRESSIVE, info.getAttitude());
       for (int i = 0; i < 10; i++) {
@@ -146,26 +151,26 @@ public class PlayerInfoTest {
       assertNotEquals(null, info.getDiplomacy().getDiplomacyList(6));
       assertNotEquals(null, info.getDiplomacy().getDiplomacyList(7));
       assertEquals(0, info.getDiplomacy().getPlayerIndex());
-      info = new PlayerInfo(SpaceRace.HUMAN, 8, 5);
+      info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 8, 5);
       assertEquals(5, info.getDiplomacy().getPlayerIndex());
     }
 
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testWarFatigue() {
-      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
+      PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 8, 0);
       info.setGovernment(GovernmentType.DEMOCRACY);
       assertEquals(0, info.getTotalWarFatigue());
       info.setWarFatigue(-80);
       assertEquals(-1, info.getTotalWarFatigue());
-      info.setWarFatigue(-SpaceRace.HUMAN.getWarFatigueResistance() * 7);
+      info.setWarFatigue(-SpaceRaceFactory.createOne("HUMANS").getWarFatigueResistance() * 7);
       assertEquals(-6, info.getTotalWarFatigue());
     }
 
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testBoard() {
-      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
+      PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 8, 0);
       assertEquals(false, info.isBoard());
       assertEquals(false, info.isHuman());
       info.setBoard(true);
@@ -180,7 +185,8 @@ public class PlayerInfoTest {
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testGovernment() {
-      PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS, 8, 0);
+      PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("SCAURIANS"),
+          8, 0);
       assertEquals(GovernmentType.AI, info.getGovernment());
       info.setGovernment(GovernmentType.DEMOCRACY);
       assertEquals(GovernmentType.DEMOCRACY, info.getGovernment());
@@ -195,7 +201,7 @@ public class PlayerInfoTest {
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testEspionage() {
-      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
+      PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 8, 0);
       assertNotNull(info.getIntelligence());
       assertNotNull(info.getIntelligence().getByIndex(0));
       assertNotEquals(null, info.getIntelligence().getByIndex(1));
@@ -213,7 +219,7 @@ public class PlayerInfoTest {
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testRandomEvent() {
-      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
+      PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 8, 0);
       assertNull(info.getRandomEventOccured());
       RandomEvent event = Mockito.mock(RandomEvent.class);
       info.setRandomEventOccured(event);
@@ -234,7 +240,7 @@ public class PlayerInfoTest {
         Mockito.when(sun.getCenterX()).thenReturn(3);
         Mockito.when(sun.getCenterY()).thenReturn(3);
         int maxX = 256, maxY = 256;
-        PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN);
+        PlayerInfo player = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
         player.initMapData(maxX, maxY);
         int expect = 0;
         expect = 100;
@@ -266,7 +272,7 @@ public class PlayerInfoTest {
         Mockito.when(fleet.getFleetScannerLvl()).thenReturn(0);
         PathPoint result;
         int maxX = 10, maxY = 10;
-        PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN);
+        PlayerInfo player = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
         player.initMapData(maxX, maxY);
         result = player.getUnchartedSector(sun, fleet);
         assertEquals(5, result.getX());
@@ -298,7 +304,7 @@ public class PlayerInfoTest {
         Coordinate coord = Mockito.mock(Coordinate.class);
         Mockito.when(coord.getX()).thenReturn(0);
         Mockito.when(coord.getY()).thenReturn(0);
-        PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN);
+        PlayerInfo player = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
         player.initMapData(10, 10);
         player.setSectorVisibility(0, 0, VISIBLE);
         byte result = player.getSectorVisibility(coord);
@@ -324,7 +330,7 @@ public class PlayerInfoTest {
         Coordinate coord = Mockito.mock(Coordinate.class);
         Mockito.when(coord.getX()).thenReturn(1);
         Mockito.when(coord.getY()).thenReturn(1);
-        PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN);
+        PlayerInfo player = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
         player.initMapData(10, 10);
         player.setSectorCloakingDetection(4, 4, 1);
         player.setSectorCloakingDetection(5, 5, 1);
@@ -345,7 +351,8 @@ public class PlayerInfoTest {
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testCheckDuplicateShipDesign() {
-      PlayerInfo player = new PlayerInfo(SpaceRace.SCAURIANS, 2, 0);
+      PlayerInfo player = new PlayerInfo(SpaceRaceFactory.createOne(
+          "SCAURIANS"), 2, 0);
       ShipDesign design1 = Mockito.mock(ShipDesign.class);
       Mockito.when(design1.getName()).thenReturn("Ship 1");
       ShipStat stat1 = Mockito.mock(ShipStat.class);
@@ -364,63 +371,63 @@ public class PlayerInfoTest {
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testFakeMilitarySetting() {
-      PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+      PlayerInfo player = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
       player.setAttitude(Attitude.DIPLOMATIC);
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.START_GAME));
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.END_GAME));
-      player = new PlayerInfo(SpaceRace.MECHIONS, 2, 0);
+      player = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"), 2, 0);
       player.setAttitude(Attitude.LOGICAL);
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.START_GAME));
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
       assertEquals(90, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
       assertEquals(80, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
       assertEquals(50, player.getFakeMilitarySetting(GameLengthState.END_GAME));
-      player = new PlayerInfo(SpaceRace.SPORKS, 2, 0);
+      player = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"), 2, 0);
       player.setAttitude(Attitude.AGGRESSIVE);
       assertEquals(120, player.getFakeMilitarySetting(GameLengthState.START_GAME));
       assertEquals(130, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
       assertEquals(80, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
       assertEquals(70, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.END_GAME));
-      player = new PlayerInfo(SpaceRace.GREYANS, 2, 0);
+      player = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 2, 0);
       player.setAttitude(Attitude.SCIENTIFIC);
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.START_GAME));
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.END_GAME));
-      player = new PlayerInfo(SpaceRace.MOTHOIDS, 2, 0);
+      player = new PlayerInfo(SpaceRaceFactory.createOne("MOTHOIDS"), 2, 0);
       player.setAttitude(Attitude.EXPANSIONIST);
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.START_GAME));
       assertEquals(130, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
       assertEquals(140, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
       assertEquals(150, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
       assertEquals(150, player.getFakeMilitarySetting(GameLengthState.END_GAME));
-      player = new PlayerInfo(SpaceRace.TEUTHIDAES, 2, 0);
+      player = new PlayerInfo(SpaceRaceFactory.createOne("TEUTHIDAES"), 2, 0);
       player.setAttitude(Attitude.MILITARISTIC);
       assertEquals(120, player.getFakeMilitarySetting(GameLengthState.START_GAME));
       assertEquals(150, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
       assertEquals(170, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
       assertEquals(200, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
       assertEquals(200, player.getFakeMilitarySetting(GameLengthState.END_GAME));
-      player = new PlayerInfo(SpaceRace.SCAURIANS, 2, 0);
+      player = new PlayerInfo(SpaceRaceFactory.createOne("SCAURIANS"), 2, 0);
       player.setAttitude(Attitude.MERCHANTICAL);
       assertEquals(110, player.getFakeMilitarySetting(GameLengthState.START_GAME));
       assertEquals(130, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
       assertEquals(130, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
       assertEquals(140, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
       assertEquals(140, player.getFakeMilitarySetting(GameLengthState.END_GAME));
-      player = new PlayerInfo(SpaceRace.HOMARIANS, 2, 0);
+      player = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"), 2, 0);
       player.setAttitude(Attitude.PEACEFUL);
       assertEquals(100, player.getFakeMilitarySetting(GameLengthState.START_GAME));
       assertEquals(140, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
       assertEquals(140, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
       assertEquals(150, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
       assertEquals(150, player.getFakeMilitarySetting(GameLengthState.END_GAME));
-      player = new PlayerInfo(SpaceRace.TEUTHIDAES, 2, 0);
+      player = new PlayerInfo(SpaceRaceFactory.createOne("TEUTHIDAES"), 2, 0);
       player.setAttitude(Attitude.MILITARISTIC);
       player.setFakeMilitarySize(160);
       player.tuneFakeMilitarySetting(GameLengthState.END_GAME);
@@ -440,12 +447,12 @@ public class PlayerInfoTest {
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testFakeMilitaryCost() {
-      PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+      PlayerInfo player = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
       player.setTotalCredits(0);
       player.setFakeMilitarySize(200);
       player.handleFakeMilitarySizeCost();
       assertEquals(120, player.getFakeMilitarySize());
-      player = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+      player = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
       player.setTotalCredits(0);
       player.setFakeMilitarySize(50);
       player.handleFakeMilitarySizeCost();

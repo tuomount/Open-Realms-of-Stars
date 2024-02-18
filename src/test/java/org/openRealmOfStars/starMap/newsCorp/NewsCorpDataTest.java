@@ -106,13 +106,13 @@ public class NewsCorpDataTest {
     Mockito.when(unhabitated.getPlanetOwnerIndex()).thenReturn(-1);
     Planet planet1 = Mockito.mock(Planet.class);
     Mockito.when(planet1.getPlanetOwnerIndex()).thenReturn(0);
-    Mockito.when(planet1.getHomeWorldId()).thenReturn(0);
+    Mockito.when(planet1.getHomeWorldId()).thenReturn("HUMANS");
     Planet planet2 = Mockito.mock(Planet.class);
     Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(1);
-    Mockito.when(planet2.getHomeWorldId()).thenReturn(1);
+    Mockito.when(planet2.getHomeWorldId()).thenReturn("MECHIONS");
     Planet planet3 = Mockito.mock(Planet.class);
     Mockito.when(planet3.getPlanetOwnerIndex()).thenReturn(2);
-    Mockito.when(planet3.getHomeWorldId()).thenReturn(2);
+    Mockito.when(planet3.getHomeWorldId()).thenReturn("SMAUGIRIANS");
 
     ArrayList<Planet> list = new ArrayList<>();
     list.add(unhabitated);

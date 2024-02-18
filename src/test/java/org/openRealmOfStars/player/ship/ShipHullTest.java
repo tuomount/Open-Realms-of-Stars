@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,7 +19,7 @@ package org.openRealmOfStars.player.ship;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 import junit.framework.TestCase;
 
@@ -28,18 +28,11 @@ import junit.framework.TestCase;
  */
 public class ShipHullTest extends TestCase {
 
-  /** TODO: Remove when SpaceRaces are dehardcoded */
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-    SpaceRace.initialize();
-  }
-
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testShipHull() {
     ShipHull hull = new ShipHull(0, "Test", 4, 1, ShipHullType.NORMAL,
-        ShipSize.SMALL, 8, 10, SpaceRace.GREYANS);
+        ShipSize.SMALL, 8, 10, SpaceRaceFactory.createOne("GREYANS"));
     assertEquals(0.1, hull.getFleetCapacity(), 0.01);
     hull.setFleetCapacity(0.2);
     assertEquals(0.2, hull.getFleetCapacity(), 0.01);
@@ -47,7 +40,7 @@ public class ShipHullTest extends TestCase {
     assertEquals(10, hull.getMetalCost());
     assertEquals(0, hull.getIndex());
     assertEquals("Test", hull.getName());
-    assertEquals(SpaceRace.GREYANS, hull.getRace());
+    assertEquals(SpaceRaceFactory.createOne("GREYANS"), hull.getRace());
     assertEquals(1, hull.getSlotHull());
     assertEquals(ShipSize.SMALL, hull.getSize());
     assertEquals(4, hull.getMaxSlot());
@@ -62,12 +55,12 @@ public class ShipHullTest extends TestCase {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testShipHullCentaurs() {
     ShipHull hull = new ShipHull(0, "Test", 4, 1, ShipHullType.NORMAL,
-        ShipSize.SMALL, 8, 10, SpaceRace.CENTAURS);
+        ShipSize.SMALL, 8, 10, SpaceRaceFactory.createOne("CENTAURS"));
     assertEquals(12, hull.getCost());
     assertEquals(20, hull.getMetalCost());
     assertEquals(0, hull.getIndex());
     assertEquals("Test", hull.getName());
-    assertEquals(SpaceRace.CENTAURS, hull.getRace());
+    assertEquals(SpaceRaceFactory.createOne("CENTAURS"), hull.getRace());
     assertEquals(2, hull.getSlotHull());
     assertEquals(ShipSize.SMALL, hull.getSize());
     assertEquals(4, hull.getMaxSlot());
@@ -77,12 +70,12 @@ public class ShipHullTest extends TestCase {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testShipHullSmaugirians() {
     ShipHull hull = new ShipHull(0, "Test", 6, 1, ShipHullType.FREIGHTER,
-        ShipSize.MEDIUM, 8, 10, SpaceRace.SMAUGIRIANS);
+        ShipSize.MEDIUM, 8, 10, SpaceRaceFactory.createOne("SMAUGIRIANS"));
     assertEquals(8, hull.getCost());
     assertEquals(10, hull.getMetalCost());
     assertEquals(0, hull.getIndex());
     assertEquals("Test", hull.getName());
-    assertEquals(SpaceRace.SMAUGIRIANS, hull.getRace());
+    assertEquals(SpaceRaceFactory.createOne("SMAUGIRIANS"), hull.getRace());
     assertEquals(1, hull.getSlotHull());
     assertEquals(ShipSize.MEDIUM, hull.getSize());
     assertEquals(6, hull.getMaxSlot());

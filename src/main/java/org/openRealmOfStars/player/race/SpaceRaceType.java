@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.race;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2020 Tuomo Untinen
+ * Copyright (C) 2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -17,41 +17,30 @@ package org.openRealmOfStars.player.race;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-/**
-*
-* Social System for Kingdoms and Empires
-*
-*/
-public enum SocialSystem {
+/** Space race type */
+public enum SpaceRaceType {
+  /** Regular playable space race */
+  REGULAR,
+  /** Special non playable space race, but has diplomacy */
+  SPACE_PIRATE,
+  /** Special non playable space race, but no diplomacy */
+  SPACE_MONSTER;
 
   /**
-   * Rulers should be females in Empire and Kingdom.
-   */
-  MATRIARCHY,
-  /**
-   * Rulers should be males in Empire and Kingdom.
-   */
-  PATRIARCHY,
-  /**
-   * Rulers can be both males or females in Empire and Kingdom.
-   */
-  EQUAL;
-
-  /**
-   * Get social system by string.
+   * Get space race type by string.
    * @param value String value
-   * @return Social system.
+   * @return Space race type.
    */
-  public static SocialSystem getByString(final String value) {
-    if (value.equalsIgnoreCase("matriarchy")) {
-      return MATRIARCHY;
+  public static SpaceRaceType getByString(final String value) {
+    if (value.equalsIgnoreCase("regular")) {
+      return REGULAR;
     }
-    if (value.equalsIgnoreCase("patriarchy")) {
-      return PATRIARCHY;
+    if (value.equalsIgnoreCase("space_pirate")) {
+      return SPACE_PIRATE;
     }
-    if (value.equalsIgnoreCase("equal")) {
-      return EQUAL;
+    if (value.equalsIgnoreCase("space_monster")) {
+      return SPACE_MONSTER;
     }
-    throw new IllegalArgumentException("Unexpected social system: " + value);
+    throw new IllegalArgumentException("Unexpected space race type: " + value);
   }
 }

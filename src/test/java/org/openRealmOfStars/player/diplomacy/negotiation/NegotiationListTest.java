@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 /**
  * Tests for NegotiationList
@@ -33,7 +33,7 @@ public class NegotiationListTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     NegotiationOffer offer = Mockito.mock(NegotiationOffer.class);
     Mockito.when(offer.getOfferValue(info)).thenReturn(5);
     NegotiationOffer offer2 = Mockito.mock(NegotiationOffer.class);
@@ -60,7 +60,7 @@ public class NegotiationListTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testPlanetsAndFleets() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     NegotiationOffer offer = Mockito.mock(NegotiationOffer.class);
     Mockito.when(offer.getOfferValue(info)).thenReturn(15);
     Mockito.when(offer.getNegotiationType()).thenReturn(NegotiationType.PLANET);

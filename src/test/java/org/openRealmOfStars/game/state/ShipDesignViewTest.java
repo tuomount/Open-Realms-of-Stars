@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.ShipComponent;
 
 /**
@@ -39,7 +39,8 @@ public class ShipDesignViewTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void test() {
     ActionListener listener = Mockito.mock(ActionListener.class);
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 4, 0);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
+        4, 0);
     ShipDesignView view = new ShipDesignView(info, null, listener);
     view.updatePanels();
     assertEquals(false, view.isDesignOK());

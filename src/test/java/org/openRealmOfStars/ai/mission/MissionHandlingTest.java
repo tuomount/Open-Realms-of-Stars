@@ -37,7 +37,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.MessageList;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -268,7 +268,8 @@ public class MissionHandlingTest {
     Mockito.when(diplomacy.getDiplomacyList(Mockito.anyInt())).thenReturn(diplomacyList);
     Mockito.when(diplomacy.getDiplomaticRelation(0)).thenReturn(Diplomacy.TRADE_ALLIANCE);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "HUMANS"));
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
@@ -344,7 +345,8 @@ public class MissionHandlingTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "CENTAURS"));
     FleetList fleetList = Mockito.mock(FleetList.class);
     Mockito.when(fleetList.getTotalFleetCapacity()).thenReturn(0d);
     Mockito.when(info.getFleets()).thenReturn(fleetList);
@@ -382,7 +384,8 @@ public class MissionHandlingTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCleaning() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "CENTAURS"));
     MissionList missionList = new MissionList();
     Mockito.when(info.getMissions()).thenReturn(missionList);
     FleetList fleetList = Mockito.mock(FleetList.class);
@@ -416,7 +419,8 @@ public class MissionHandlingTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     MissionList missions = Mockito.mock(MissionList.class);
     Mockito.when(info.getMissions()).thenReturn(missions);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "CENTAURS"));
     Mission mission = new Mission(MissionType.COLONY_EXPLORE, MissionPhase.EXECUTING,
         new Coordinate(2, 2));
     Game game = Mockito.mock(Game.class);
@@ -444,7 +448,8 @@ public class MissionHandlingTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testClosestPlanet() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "GREYANS"));
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
     Fleet fleet = Mockito.mock(Fleet.class);
     Coordinate fleetCoord = new Coordinate(5, 7);
@@ -502,7 +507,8 @@ public class MissionHandlingTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testSpyMission() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.TEUTHIDAES);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "TEUTHIDAES"));
     Mission mission = new Mission(MissionType.SPY_MISSION, MissionPhase.TREKKING,
         new Coordinate(2, 2));
     mission.setTargetPlanet("Planet I");
@@ -535,7 +541,8 @@ public class MissionHandlingTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMergingFleets() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.CENTAURS, 2, 0);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"),
+        2, 0);
     Fleet fleet1 = Mockito.mock(Fleet.class);
     Coordinate fleetCoord = new Coordinate(5, 7);
     Mockito.when(fleet1.getCoordinate()).thenReturn(fleetCoord);
@@ -560,7 +567,8 @@ public class MissionHandlingTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMergingFleetsTooBig() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.CENTAURS, 2, 0);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"),
+        2, 0);
     Fleet fleet1 = Mockito.mock(Fleet.class);
     Coordinate fleetCoord = new Coordinate(5, 7);
     Mockito.when(fleet1.getCoordinate()).thenReturn(fleetCoord);

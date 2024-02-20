@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2021 Tuomo Untinen
+ * Copyright (C) 2021-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,7 +24,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
@@ -42,7 +42,7 @@ public class ShipUpgradeViewTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBasic() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     info.getTechList().addTech(TechFactory.createHullTech("Destroyer Mk1", 1));
     info.getTechList().addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     info.getTechList().addTech(TechFactory.createCombatTech("Railgun Mk1", 1));

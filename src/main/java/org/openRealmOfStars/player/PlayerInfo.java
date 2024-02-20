@@ -41,7 +41,7 @@ import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.race.SpaceRace;
-import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -349,9 +349,9 @@ public class PlayerInfo {
     if (getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       addZeroGravityTechs(extraTech);
     } else {
-      if (getRace() == SpaceRace.SPACE_MONSTERS) {
+      if (getRace().isMonster()) {
         addSpaceMonsterTechs();
-      } else if (getRace() == SpaceRace.SPACE_PIRATE) {
+      } else if (getRace().isPirate()) {
         addSpacePirateTechs();
       } else {
         addDefaultTechs(extraTech);
@@ -573,7 +573,8 @@ public class PlayerInfo {
     setRealmLost(false);
     strategy = WinningStrategy.GENERIC;
     empireName = IOUtilities.readString(dis);
-    race = SpaceRaceUtility.getRaceByIndex(dis.readInt());
+    String raceId = IOUtilities.readString(dis);
+    race = SpaceRaceFactory.createOne(raceId);
     int elder = dis.read();
     if (elder == 1) {
       elderRealm = true;
@@ -699,7 +700,7 @@ public class PlayerInfo {
    */
   public void savePlayerInfo(final DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, empireName);
-    dos.writeInt(race.getIndex());
+    IOUtilities.writeString(dos, race.getId());
     if (elderRealm) {
       dos.writeByte(1);
     } else {

@@ -19,395 +19,27 @@ package org.openRealmOfStars.player.race;
  */
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.music.MusicFileInfo;
-import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.leader.NameGeneratorType;
 import org.openRealmOfStars.player.race.trait.RaceTrait;
-import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.starMap.planet.enums.GravityType;
 import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
-import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
- * Space races in enum
+ * Space race class.
  */
-public enum SpaceRace {
+public class SpaceRace {
 
   /**
-   * Humans are commonly regarded as possessing average physical and mental
-   * attributes.
+   * Space race id
    */
-  HUMAN(0, "Humans", "Human"),
-  /**
-   * Mechions are a race of humanoid robot that resemble industrial machines.
-   * Heavy and sturdy looking mechanical creatures.
-   */
-  MECHIONS(1, "Mechions", "Mechion"),
-  /**
-   * Sporks are a humanoid species which have green and tough skin.
-   * They also have horns growing from their skull.
-   */
-  SPORKS(2, "Sporks", "Spork"),
-  /**
-   * Greyans are typically tall and slender, with long, graceful limbs
-   * and delicate features. Their grey skin is smooth and sleek, and
-   * it is said to shimmer in the light. They have large, almond-shaped
-   * eyes that are capable of seeing in a wide range of light levels, and
-   * they are highly perceptive and intuitive.
-   */
-  GREYANS(3, "Greyans", "Greyan"),
-  /**
-   * Centaurs, reminiscent of the mythical beings from ancient Greek
-   * and Roman lore, bear a striking resemblance to their legendary
-   * counterparts. They possess the upper body of a humanoid, juxtaposed
-   * with a lower body reminiscent of an ant. Their formidable, resilient
-   * skin and towering stature further distinguish them.
-   */
-  CENTAURS(4, "Centaurs", "Centaur"),
-  /**
-   * Mothoids are insect like creatures with exo-skeleton and pair of wings.
-   * They also have antenas for extra sensing.
-   */
-  MOTHOIDS(5, "Mothoids", "Mothoid"),
-  /**
-   * Teuthidae an octopus-like species with intelligence. They are not
-   * humanoid creatures like most of the other sentient creatures in galaxy.
-   */
-  TEUTHIDAES(6, "Teuthidaes", "Teuthidae"),
-  /**
-   * Scaurians are a race of small but wide humanoids.
-   */
-  SCAURIANS(7, "Scaurians", "Scaurian"),
-  /**
-   * Homarians are a race of humanoid crabs that are known for their
-   * immense strength and hard exoskeletons. This exoskeleton also gives
-   * them incredible strength, allowing them to easily perform physical
-   * tasks that would be difficult for other species.
-   */
-  HOMARIANS(8, "Homarians", "Homarian"),
-  /**
-   * Generic space pirate which are aggressive and try cause trouble.
-   */
-  SPACE_PIRATE(9, "Space Pirates", "Space pirate"),
-  /**
-   * Chiraloids are creatures that are distinguished by their four arms
-   * and two legs. They have a hard exoskeleton that provides them with
-   * protection and allows them to withstand harsh environments.
-   */
-  CHIRALOIDS(10, "Chiraloids", "Chiraloid"),
-  /**
-   * Reborgians are a race of cyborgs that are created by combining
-   * organic organisms with bionic and robotic parts. This gives them
-   * enhanced physical abilities and allows them to operate in a wide
-   * variety of environments.
-   */
-  REBORGIANS(11, "Reborgians", "Reborgian"),
-  /**
-   * Lithorians are a race of crab like creatures. They have large and
-   * strong claws and very hard external shell. They have multiple
-   * legs which they use to move around.
-   */
-  LITHORIANS(12, "Lithorians", "Lithorian"),
-  /**
-   * Alteirians are a race of creatures that look a bit like floating
-   * octopus. They are main just body, mouth and eyes. Below the body
-   * there are seven tentacles.
-   */
-  ALTEIRIANS(13, "Alteirians", "Alteirian"),
-  /**
-   * Smaugirians are a humanoid race that resembles hare. They have quite
-   * large feet and very strong legs. They have two long ears and they can
-   * eat pretty much anything with those rodent like teeths.
-   */
-  SMAUGIRIANS(14, "Smaugirians", "Smaugirian"),
-  /**
-   * Generic space monsters which are aggressive and try cause trouble.
-   *  No diplomacy with these guys.
-   */
-  SPACE_MONSTERS(15, "Space Monsters", "Space monsters"),
-  /**
-   * Synthdroids are a race of artificial beings that are designed to
-   * resemble human females. They are often portrayed as being sleek
-   * and elegant, with graceful movements and a polished appearance.
-   */
-  SYNTHDROIDS(16, "Synthdroids", "Synthdroid");
-
-  /** Space race has not been initialized yet. */
-  private static boolean initialized = false;
-  /**
-   * Explicitly (re)initialize SpaceRaces.
-   * Needed, because RaceTraits are loaded later than SpaceRaces.
-   * Trying to use TraitFactory in an enum constructor
-   * will result in a critical Java failure.
-   * TODO: Remove when SpaceRaces get dehardcoded.
-   */
-  public static void initialize() {
-    if (initialized) {
-      return;
-    }
-    // Clear traits from races.
-    for (var race : values()) {
-      race.traits.clear();
-    }
-
-    // Add traits *that exist* to hardcoded list of races
-    TraitFactory.create(TraitIds.ROBOTIC).ifPresent(trait -> {
-      MECHIONS.addTrait(trait);
-      SYNTHDROIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.LITHOVORIC).ifPresent(trait -> {
-      LITHORIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.ENERGY_POWERED).ifPresent(trait -> {
-      MECHIONS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.NO_HEIRS).ifPresent(trait -> {
-      MECHIONS.addTrait(trait);
-      REBORGIANS.addTrait(trait);
-      SYNTHDROIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.CONSTRUCTED_POP).ifPresent(trait -> {
-      MECHIONS.addTrait(trait);
-      SYNTHDROIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.RADIOSYNTHESIS).ifPresent(trait -> {
-      CHIRALOIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.MERCANTILE).ifPresent(trait -> {
-      SCAURIANS.addTrait(trait);
-      SYNTHDROIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.STEALTHY).ifPresent(trait -> {
-      TEUTHIDAES.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.EAT_LESS).ifPresent(trait -> {
-      REBORGIANS.addTrait(trait);
-      SYNTHDROIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.FAST_GROWTH).ifPresent(trait -> {
-      MOTHOIDS.addTrait(trait);
-      SMAUGIRIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.SLOW_GROWTH).ifPresent(trait -> {
-      GREYANS.addTrait(trait);
-      CENTAURS.addTrait(trait);
-      SCAURIANS.addTrait(trait);
-      CHIRALOIDS.addTrait(trait);
-      REBORGIANS.addTrait(trait);
-      LITHORIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.FIXED_GROWTH).ifPresent(trait -> {
-      REBORGIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.SLOW_CULTURE).ifPresent(trait -> {
-      MECHIONS.addTrait(trait);
-      HOMARIANS.addTrait(trait);
-      REBORGIANS.addTrait(trait);
-      SYNTHDROIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.FAST_CULTURE).ifPresent(trait -> {
-      MOTHOIDS.addTrait(trait);
-      ALTEIRIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.SLOW_RESEARCH).ifPresent(trait -> {
-      MECHIONS.addTrait(trait);
-      HOMARIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.FAST_RESEARCH).ifPresent(trait -> {
-      GREYANS.addTrait(trait);
-      TEUTHIDAES.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.VERY_FAST_RESEARCH).ifPresent(trait -> {
-      ALTEIRIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.SHORT_LIFE_SPAN).ifPresent(trait -> {
-      SPORKS.addTrait(trait);
-      MOTHOIDS.addTrait(trait);
-      HOMARIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.LONG_LIFE_SPAN).ifPresent(trait -> {
-      SCAURIANS.addTrait(trait);
-      ALTEIRIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.VERY_LONG_LIFE_SPAN).ifPresent(trait -> {
-      GREYANS.addTrait(trait);
-      CENTAURS.addTrait(trait);
-      LITHORIANS.addTrait(trait);
-      CHIRALOIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.SLOW_METABOLISM).ifPresent(trait -> {
-      GREYANS.addTrait(trait);
-      LITHORIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.MASSIVE_SIZE).ifPresent(trait -> {
-      CENTAURS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.CYBORG_LIFE_SPAN).ifPresent(trait -> {
-      REBORGIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.FAST_FOOD_PROD).ifPresent(trait -> {
-      HOMARIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.ASSIMILATION).ifPresent(trait -> {
-      REBORGIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.EXCELLENT_WAR_RESILIENCE).ifPresent(trait -> {
-      SPORKS.addTrait(trait);
-      LITHORIANS.addTrait(trait);
-      SMAUGIRIANS.addTrait(trait);
-      CHIRALOIDS.addTrait(trait);
-      SPACE_PIRATE.addTrait(trait);
-      SPACE_MONSTERS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.GOOD_WAR_RESILIENCE).ifPresent(trait -> {
-      CENTAURS.addTrait(trait);
-      HUMAN.addTrait(trait);
-      TEUTHIDAES.addTrait(trait);
-      REBORGIANS.addTrait(trait);
-      SYNTHDROIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.POOR_WAR_RESILIENCE).ifPresent(trait -> {
-      GREYANS.addTrait(trait);
-      SCAURIANS.addTrait(trait);
-      ALTEIRIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.WEAK_WAR_RESILIENCE).ifPresent(trait -> {
-      MOTHOIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.NATURAL_CHARM).ifPresent(trait -> {
-      HUMAN.addTrait(trait);
-      SCAURIANS.addTrait(trait);
-      HOMARIANS.addTrait(trait);
-      MOTHOIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.REPULSIVE).ifPresent(trait -> {
-      MECHIONS.addTrait(trait);
-      SPORKS.addTrait(trait);
-      TEUTHIDAES.addTrait(trait);
-      CHIRALOIDS.addTrait(trait);
-      LITHORIANS.addTrait(trait);
-      SMAUGIRIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.DISGUSTING).ifPresent(trait -> {
-      REBORGIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.STRONG).ifPresent(trait -> {
-      MECHIONS.addTrait(trait);
-      SPORKS.addTrait(trait);
-      REBORGIANS.addTrait(trait);
-      HOMARIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.WEAK).ifPresent(trait -> {
-      TEUTHIDAES.addTrait(trait);
-      CHIRALOIDS.addTrait(trait);
-      SMAUGIRIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.HANDY).ifPresent(trait -> {
-      HOMARIANS.addTrait(trait);
-      GREYANS.addTrait(trait);
-      SMAUGIRIANS.addTrait(trait);
-      SPACE_PIRATE.addTrait(trait);
-      SPACE_MONSTERS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.IMPRACTICAL).ifPresent(trait -> {
-      CHIRALOIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.HIGH_GRAVITY_BEING).ifPresent(trait -> {
-      CENTAURS.addTrait(trait);
-      HOMARIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.LOW_GRAVITY_BEING).ifPresent(trait -> {
-      MOTHOIDS.addTrait(trait);
-      GREYANS.addTrait(trait);
-      SCAURIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.ZERO_GRAVITY_BEING).ifPresent(trait -> {
-      ALTEIRIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.TOLERATE_NO_RADIATION).ifPresent(trait -> {
-      CENTAURS.addTrait(trait);
-      HOMARIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.TOLERATE_HIGH_RADIATION).ifPresent(trait -> {
-      MECHIONS.addTrait(trait);
-      GREYANS.addTrait(trait);
-      ALTEIRIANS.addTrait(trait);
-      MOTHOIDS.addTrait(trait);
-      REBORGIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.TOLERATE_EXTREME_RADIATION).ifPresent(
-        trait -> {
-      CHIRALOIDS.addTrait(trait);
-      SCAURIANS.addTrait(trait);
-      LITHORIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.TOLERATE_COLD).ifPresent(trait -> {
-      HUMAN.addTrait(trait);
-      CENTAURS.addTrait(trait);
-      SCAURIANS.addTrait(trait);
-      HOMARIANS.addTrait(trait);
-      TEUTHIDAES.addTrait(trait);
-      SMAUGIRIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.TOLERATE_HOT).ifPresent(trait -> {
-      SPORKS.addTrait(trait);
-      MECHIONS.addTrait(trait);
-      REBORGIANS.addTrait(trait);
-      MOTHOIDS.addTrait(trait);
-      TEUTHIDAES.addTrait(trait);
-      CHIRALOIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.TOLERATE_LAVA).ifPresent(trait -> {
-      LITHORIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.COMMUNAL).ifPresent(trait -> {
-      SCAURIANS.addTrait(trait);
-      SPORKS.addTrait(trait);
-      MOTHOIDS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.SOLITARY).ifPresent(trait -> {
-      LITHORIANS.addTrait(trait);
-      CENTAURS.addTrait(trait);
-      SMAUGIRIANS.addTrait(trait);
-    });
-    TraitFactory.create(TraitIds.NATURAL_LEADERS).ifPresent(trait -> {
-      ALTEIRIANS.addTrait(trait);
-      HUMAN.addTrait(trait);
-      SMAUGIRIANS.addTrait(trait);
-    });
-    initialized = true;
-  }
-
-  /**
-   * Create space race
-   * @param index Space race index
-   * @param name Space race name in plural
-   * @param single Space race name in single format
-   * @param traits Race's traits
-   */
-  SpaceRace(final int index, final String name, final String single,
-      final RaceTrait... traits) {
-    this.index = index;
-    this.name = name;
-    this.nameSingle = single;
-    this.traits = new ArrayList<>(traits.length);
-    for (var trait : traits) {
-      addTrait(trait);
-    }
-  }
-
-  /**
-   * Space race index
-   */
-  private int index;
+  private String id;
 
   /**
    * Space race name in plural
@@ -419,6 +51,66 @@ public enum SpaceRace {
    */
   private String nameSingle;
 
+  /** Attitude for AI */
+  private Attitude attitude;
+
+  /** Image path */
+  private String imagePath;
+
+  /** Bridge Id. */
+  private String bridgeId;
+
+  /** Space Ship Id. */
+  private String spaceShipId;
+
+  /** Social system for space race. */
+  private SocialSystem socialSystem;
+
+  /** Genders for space race leader. */
+  private ArrayList<Gender> genderList;
+
+  /** Speech set id. */
+  private String speechSetId;
+
+  /** Space ship bridge effect for HUE lights. */
+  private BridgeCommandType bridgeEffect;
+
+  /** Diplomacy music for space race. */
+  private MusicFileInfo diplomacyMusic;
+
+  /** Race traits */
+  private ArrayList<RaceTrait> traits;
+
+  /** Leader name generator */
+  private NameGeneratorType leaderNameGenerator;
+
+  /** Textual description of the space race. This just flavor text. */
+  private String description;
+
+  /** Space Race type */
+  private SpaceRaceType spaceRaceType;
+  /**
+   * Constructor for SpaceRace.
+   * @param id SpaceRace ID
+   * @param name Name in plural
+   * @param nameSingle Name in single
+   */
+  public SpaceRace(final String id, final String name,
+      final String nameSingle) {
+    this.id = id;
+    this.name = name;
+    this.nameSingle = nameSingle;
+    traits = new ArrayList<>();
+    genderList = new ArrayList<>();
+    setSpaceRaceType(SpaceRaceType.REGULAR);
+  }
+  /**
+   * Space race Id.
+   * @return the id
+   */
+  public String getId() {
+    return id;
+  }
   /**
    * Get race name in single format
    * @return Race single name
@@ -432,27 +124,39 @@ public enum SpaceRace {
    * @return Space ship bridge ID.
    */
   public String getBridgeId() {
-    return getNameSingle();
+    return bridgeId;
   }
 
+  /**
+   * Setter for bridge Id. SpaceBridges are recognized by original space
+   * race names.
+   * @param bridgeId Bridge Id
+   */
+  public void setBridgeId(final String bridgeId) {
+    this.bridgeId = bridgeId;
+  }
   /**
    * Get Space ship id. Currently space ship ID matches space race name.
    * @return Space ship bridge ID.
    */
   public String getSpaceShipId() {
-    return getNameSingle();
+    return spaceShipId;
   }
 
-  /** Race traits */
-  private ArrayList<RaceTrait> traits;
-
+  /**
+   * Set Space ship id. Currently space ship ID matches space race name.
+   * @param spaceShipId Space ship bridge id.
+   */
+  public void setSpaceShipId(final String spaceShipId) {
+    this.spaceShipId = spaceShipId;
+  }
   /**
    * Add RaceTrait to SpaceRace.
    * Throws IllegalArgumentException if adding trait would result
    * in conflicting or duplicate traits.
    * @param trait RaceTrait to add to SpaceRace
    */
-  private void addTrait(final RaceTrait trait) {
+  public void addTrait(final RaceTrait trait) {
     var traitArray = this.traits.toArray(new RaceTrait[this.traits.size()]);
     if (RaceTrait.isTraitConflict(trait, traitArray)) {
       throw new IllegalArgumentException(
@@ -494,49 +198,20 @@ public enum SpaceRace {
   }
 
   /**
-   * Get attitude from space race. AI players have two attitudes:
-   * one from SpaceRace and one is random when game in
-   * being created.
+   * Get attitude from space race.
    * @return Attitude
    */
   public Attitude getAttitude() {
-    switch (this) {
-      case HUMAN:
-        return Attitude.DIPLOMATIC;
-      case SYNTHDROIDS:
-      case MECHIONS:
-        return Attitude.LOGICAL;
-      case SPORKS:
-      case SPACE_PIRATE:
-      case SPACE_MONSTERS:
-        return Attitude.AGGRESSIVE;
-      case GREYANS:
-        return Attitude.SCIENTIFIC;
-      case CENTAURS:
-        return Attitude.DIPLOMATIC;
-      case MOTHOIDS:
-        return Attitude.EXPANSIONIST;
-      case TEUTHIDAES:
-        return Attitude.MILITARISTIC;
-      case SCAURIANS:
-        return Attitude.MERCHANTICAL;
-      case HOMARIANS:
-        return Attitude.PEACEFUL;
-      case CHIRALOIDS:
-        return Attitude.AGGRESSIVE;
-      case REBORGIANS:
-        return Attitude.AGGRESSIVE;
-      case LITHORIANS:
-        return Attitude.EXPANSIONIST;
-      case ALTEIRIANS:
-        return Attitude.SCIENTIFIC;
-      case SMAUGIRIANS:
-        return Attitude.MILITARISTIC;
-      default:
-        return Attitude.PEACEFUL;
-    }
+    return attitude;
   }
 
+  /**
+   * SpaceRace default attitude
+   * @param attitude Attitude
+   */
+  public void setAttitude(final Attitude attitude) {
+    this.attitude = attitude;
+  }
   /**
    * Get race maximum Radiation
    * @return The race maximum radiation
@@ -560,45 +235,16 @@ public enum SpaceRace {
    * @return String path to image resource
    */
   public String getImage() {
-    switch (this) {
-      case HUMAN:
-        return "resources/images/human_race.png";
-      case MECHIONS:
-        return "resources/images/mechion_race.png";
-      case SPORKS:
-        return "resources/images/spork_race.png";
-      case GREYANS:
-        return "resources/images/greyan_race.png";
-      case CENTAURS:
-        return "resources/images/centaur_race.png";
-      case MOTHOIDS:
-        return "resources/images/mothoid_race.png";
-      case TEUTHIDAES:
-        return "resources/images/teuthidae_race.png";
-      case SCAURIANS:
-        return "resources/images/scaurian_race.png";
-      case HOMARIANS:
-        return "resources/images/homarian_race.png";
-      case SPACE_MONSTERS: // Should not matter
-      case SPACE_PIRATE:
-        return "resources/images/privateer_race.png";
-      case CHIRALOIDS:
-        return "resources/images/chiraloid_race.png";
-      case REBORGIANS:
-        return "resources/images/reborgian_race.png";
-      case LITHORIANS:
-        return "resources/images/lithorian_race.png";
-      case ALTEIRIANS:
-        return "resources/images/alteirian_race.png";
-      case SMAUGIRIANS:
-        return "resources/images/smaugirian_race.png";
-      case SYNTHDROIDS:
-        return "resources/images/synthdroid_race.png";
-      default:
-        return "resources/images/centaur_race.png";
-    }
+    return imagePath;
   }
 
+  /**
+   * Set space race image path to resources.
+   * @param image Image path
+   */
+  public void setImage(final String image) {
+    this.imagePath = image;
+  }
   /**
    * Get race picture to wiki page with correct path
    * @return Path to image in master
@@ -607,13 +253,6 @@ public enum SpaceRace {
     String start = "https://github.com/tuomount/Open-Realms-of-Stars/blob"
         + "/master/src/main/resources/";
     return start + this.getImage();
-  }
-
-  /**
-   * @return the index
-   */
-  public int getIndex() {
-    return index;
   }
 
   /**
@@ -925,45 +564,16 @@ public enum SpaceRace {
    * @return SocialSystem
    */
   public SocialSystem getSocialSystem() {
-    switch (this) {
-    case HUMAN:
-    case SPACE_PIRATE:
-    case SPACE_MONSTERS:
-      return SocialSystem.EQUAL;
-    case MECHIONS:
-      // Mechions cannot have empires or kingdoms.
-      return SocialSystem.EQUAL;
-    case SPORKS:
-      return SocialSystem.PATRIARCHY;
-    case GREYANS:
-      return SocialSystem.PATRIARCHY;
-    case CENTAURS:
-      return SocialSystem.PATRIARCHY;
-    case MOTHOIDS:
-      return SocialSystem.MATRIARCHY;
-    case TEUTHIDAES:
-      return SocialSystem.PATRIARCHY;
-    case SCAURIANS:
-      return SocialSystem.EQUAL;
-    case HOMARIANS:
-      return SocialSystem.MATRIARCHY;
-    case CHIRALOIDS:
-      return SocialSystem.PATRIARCHY;
-    case REBORGIANS:
-      return SocialSystem.EQUAL;
-    case LITHORIANS:
-      return SocialSystem.MATRIARCHY;
-    case ALTEIRIANS:
-      return SocialSystem.EQUAL;
-    case SMAUGIRIANS:
-      return SocialSystem.PATRIARCHY;
-    case SYNTHDROIDS:
-      return SocialSystem.MATRIARCHY;
-    default:
-      return SocialSystem.EQUAL;
-    }
+    return socialSystem;
   }
 
+  /**
+   * Set Space race social system
+   * @param socialSystem Social System
+   */
+  public void setSocialSystem(final SocialSystem socialSystem) {
+    this.socialSystem = socialSystem;
+  }
   /**
    * Get Minimum population for leader on planet.
    * @return Minimum population number.
@@ -1052,20 +662,15 @@ public enum SpaceRace {
    * @return Array of Genders
    */
   public Gender[] getGenders() {
-    if (this == MECHIONS || this == REBORGIANS) {
-      return new Gender[] {
-          Gender.NONE
-      };
-    }
-    if (this == SYNTHDROIDS) {
-      return new Gender[] {
-          Gender.FEMALE
-      };
-    }
+    return genderList.toArray(new Gender[genderList.size()]);
+  }
 
-    return new Gender[] {
-        Gender.FEMALE, Gender.MALE
-    };
+  /**
+   * Add gender to gender list.
+   * @param gender Gender
+   */
+  public void addGender(final Gender gender) {
+    genderList.add(gender);
   }
 
   /**
@@ -1074,9 +679,31 @@ public enum SpaceRace {
    * @return SpeechSet ID
    */
   public String getSpeechSetId() {
-    return this.name();
+    return speechSetId;
   }
 
+  /**
+   * Set space race speech set id. This is used in diplomacy view.
+   * @param speechSetId Speech set id.
+   */
+  public void setSpeechSetId(final String speechSetId) {
+    this.speechSetId = speechSetId;
+  }
+  /**
+   * Get Racial description text. This should contain only physical attributes
+   * and description. Nothing about the government or such.
+   * @return String of description.
+   */
+  public String getRacialDescription() {
+    return description;
+  }
+  /**
+   * Set space race description. This is purely for flavor text.
+   * @param description Space race description.
+   */
+  public void setDescription(final String description) {
+    this.description = description;
+  }
   /**
    * Get full description about the race, including the stats.
    * @param markDown if true then markDown is being used, otherwise HTML.
@@ -1183,78 +810,18 @@ public enum SpaceRace {
   }
 
   /**
-   * Get random living race.
-   * @return Living SpaceRace
+   * Set Race bridge effect.
+   * @param type BridgeCommandType
    */
-  public static SpaceRace getRandomLivingRace() {
-    var nonRoboticRaces = Stream.of(values())
-        .filter(race -> !race.isRoboticRace())
-        // Filter out "pseudo-races"
-        .filter(
-            race -> race != SPACE_PIRATE && race != SpaceRace.SPACE_MONSTERS)
-        .collect(Collectors.toList());
-    if (nonRoboticRaces.isEmpty()) {
-      return null;
-    }
-    return DiceGenerator.pickRandom(nonRoboticRaces);
+  public void setRaceBridgeEffect(final BridgeCommandType type) {
+    bridgeEffect = type;
   }
-
-  /**
-   * Get random robotic race
-   * @return Robotic SpaceRace
-   */
-  public static SpaceRace getRandomRoboticRace() {
-    var roboticRaces = Stream.of(values())
-        .filter(race -> race.isRoboticRace())
-        .collect(Collectors.toList());
-    if (roboticRaces.isEmpty()) {
-      return null;
-    }
-    return DiceGenerator.pickRandom(roboticRaces);
-  }
-
   /**
    * Get bridge effect for diplomacy screen.
    * @return BridgeCommandType
    */
   public BridgeCommandType getRaceBridgeEffect() {
-    switch (this) {
-    case HUMAN:
-      return BridgeCommandType.WARM_WHITE;
-    case SPACE_MONSTERS:
-    case SPACE_PIRATE:
-      return BridgeCommandType.DARKEST;
-    case MECHIONS:
-      return BridgeCommandType.WARM_WHITE;
-    case SPORKS:
-      return BridgeCommandType.DARK_RED;
-    case GREYANS:
-      return BridgeCommandType.WARM_WHITE;
-    case CENTAURS:
-      return BridgeCommandType.BRIGHT_CYAN;
-    case MOTHOIDS:
-      return BridgeCommandType.GREEN_CONSOLE;
-    case TEUTHIDAES:
-      return BridgeCommandType.PURPLE_DREAM;
-    case SCAURIANS:
-      return BridgeCommandType.DARK_ORANGE;
-    case HOMARIANS:
-      return BridgeCommandType.BLUEISH_WHITE;
-    case CHIRALOIDS:
-      return BridgeCommandType.BLUEISH_WHITE;
-    case REBORGIANS:
-      return BridgeCommandType.DARKEST;
-    case LITHORIANS:
-      return BridgeCommandType.DARKEST;
-    case ALTEIRIANS:
-      return BridgeCommandType.GREYBLUE;
-    case SMAUGIRIANS:
-      return BridgeCommandType.ORANGE_BLINK;
-    case SYNTHDROIDS:
-      return BridgeCommandType.WARM_WHITE;
-    default:
-      return BridgeCommandType.WARM_WHITE;
-    }
+    return bridgeEffect;
   }
 
   /**
@@ -1262,167 +829,59 @@ public enum SpaceRace {
    * @return MusicFileInfo
    */
   public MusicFileInfo getRaceDiplomacyMusic() {
-    switch (this) {
-    case HUMAN:
-      return MusicPlayer.WALKING_WITH_POSEIDON;
-    case MECHIONS:
-      return MusicPlayer.ABANDONED_STEEL_MILL;
-    case SPORKS:
-      return MusicPlayer.CONQUERORS;
-    case GREYANS:
-      return MusicPlayer.TROGL;
-    case CENTAURS:
-      return MusicPlayer.OVE_MELAA_DIPLOMACY;
-    case MOTHOIDS:
-      return MusicPlayer.FANTASY_CHOIR_2;
-    case TEUTHIDAES:
-      return MusicPlayer.PRESSURE;
-    case SCAURIANS:
-      return MusicPlayer.INTERPLANETARY_ODYSSEY;
-    case HOMARIANS:
-      return MusicPlayer.MALLOGA_BALLING;
-    case SPACE_MONSTERS: // No diplomacy so should not matter
-    case SPACE_PIRATE:
-      return MusicPlayer.SET_FIRE_TO_REALITY;
-    case CHIRALOIDS:
-      return MusicPlayer.MENACE;
-    case REBORGIANS:
-      return MusicPlayer.BRAINDEAD;
-    case LITHORIANS:
-      return MusicPlayer.TECHNODRIVE;
-    case ALTEIRIANS:
-      return MusicPlayer.SKY_PORTAL;
-    case SMAUGIRIANS:
-      return MusicPlayer.GUITAR_SONG;
-    case SYNTHDROIDS:
-      return MusicPlayer.CYBORG;
-    default:
-      return MusicPlayer.MILLION_LIGHT_YEARS;
-    }
+    return diplomacyMusic;
   }
 
+  /**
+   * Set space race diplomacy music.
+   * @param diplomacyMusic Diplomacy music.
+   */
+  public void setDiplomacyMusic(final MusicFileInfo diplomacyMusic) {
+    this.diplomacyMusic = diplomacyMusic;
+  }
   /**
    * Get Name Generator type for space race.
    * @return NameGeneratorType Name generator type.
    */
   public NameGeneratorType getNameGeneratorType() {
-    switch (this) {
-    case HUMAN:
-      return NameGeneratorType.SCIFI_HUMAN;
-    case MECHIONS:
-      return NameGeneratorType.ROBOT;
-    case SPORKS:
-      return NameGeneratorType.SPACE_ORC;
-    case GREYANS:
-      return NameGeneratorType.ANCIENT_NORDIC;
-    case CENTAURS:
-      return NameGeneratorType.LONG_NAMES;
-    case MOTHOIDS:
-      return NameGeneratorType.INSECT;
-    case TEUTHIDAES:
-      return NameGeneratorType.DEEP_ANCIENT_MONSTER;
-    case SCAURIANS:
-      return NameGeneratorType.ANCIENT_ROMAN;
-    case HOMARIANS:
-      return NameGeneratorType.DEEP_CREATURE;
-    case SPACE_MONSTERS: // No diplomacy so should not matter
-    case SPACE_PIRATE:
-      return NameGeneratorType.ALL;
-    case CHIRALOIDS:
-      return NameGeneratorType.EVIL_CREATURE;
-    case REBORGIANS:
-      return NameGeneratorType.CYBORG;
-    case LITHORIANS:
-      return NameGeneratorType.STONE_PEOPLE;
-    case ALTEIRIANS:
-      return NameGeneratorType.GASEOUS_CREATURE;
-    case SMAUGIRIANS:
-      return NameGeneratorType.PIRATE;
-    case SYNTHDROIDS:
-      return NameGeneratorType.FEMALE_ROBOT;
-    default:
-      return NameGeneratorType.ALL;
-    }
+    return leaderNameGenerator;
   }
 
   /**
-   * Get Racial description text. This should contain only physical attributes
-   * and description. Nothing about the government or such.
-   * @return String of description.
+   * Set space race leader name generator typ.
+   * @param leaderNameGenerator Namegenerator type.
    */
-  public String getRacialDescription() {
-    switch (this) {
-    case HUMAN:
-      return "Humans are commonly regarded as possessing average physical and "
-          + "mental attributes. ";
-    case MECHIONS:
-      return "Mechions are a race of humanoid robot that resemble industrial"
-          + " machines. Heavy and sturdy looking mechanical creatures. ";
-    case SPORKS:
-      return "Sporks are a humanoid species which have green and tough skin."
-          + " They also have horns growing from their skull. ";
-    case GREYANS:
-      return "Greyans are typically tall and slender, with long, graceful limbs"
-          + " and delicate features. Their grey skin is smooth and sleek,"
-          + " and it is said to shimmer in the light. They have large,"
-          + " almond-shaped eyes that are capable of seeing in a wide"
-          + " range of light levels, and they are highly perceptive"
-          + " and intuitive. ";
-    case CENTAURS:
-      return "Centaurs, reminiscent of the mythical beings from ancient"
-          + " Greek and Roman lore, bear a striking resemblance to "
-          + "their legendary counterparts. They possess the upper "
-          + "body of a humanoid, juxtaposed with a lower body "
-          + "reminiscent of an ant. Their formidable, resilient skin"
-          + " and towering stature further distinguish them. ";
-    case MOTHOIDS:
-      return "Mothoids are insect like creatures with exo-skeleton and"
-          + " pair of wings. They also have antenas for extra sensing. ";
-    case TEUTHIDAES:
-      return "Teuthidae an octopus-like species with intelligence. They are"
-          + " not humanoid creatures like most of the other sentient creatures"
-          + " in galaxy. ";
-    case SCAURIANS:
-      return "Scaurians are a race of small but wide humanoids. ";
-    case HOMARIANS:
-      return "Homarians are a race of humanoid crabs that are known for their "
-          + "immense strength and hard exoskeletons. This exoskeleton also"
-          + " gives them incredible strength, allowing them to easily"
-          + " perform physical tasks that would be difficult for other"
-          + " species. ";
-    case SPACE_MONSTERS:
-    case SPACE_PIRATE:
-      return "Monsters of the space.";
-    case CHIRALOIDS:
-      return "Chiraloids are creatures that are distinguished by their four"
-          + " arms and two legs. They have a hard exoskeleton that provides"
-          + " them with protection and allows them to withstand harsh "
-          + "environments. ";
-    case REBORGIANS:
-      return "Reborgians are a race of cyborgs that are created by combining"
-          + " organic organisms with bionic and robotic parts. This gives"
-          + " them enhanced physical abilities and allows them to"
-          + " operate in a wide variety of environments. ";
-    case LITHORIANS:
-      return "Lithorians are a race of crab like creatures. They have large"
-          + " and strong claws and very hard external shell. They have"
-          + " multiple legs which they use to move around. ";
-    case ALTEIRIANS:
-      return "Alteirians are a race of creatures that look a bit like floating"
-          + " octopus. They are main just body, mouth and eyes. Below the body"
-          + " there are seven tentacles. ";
-    case SMAUGIRIANS:
-      return "Smaugirians are a humanoid race that resembles hare. They have"
-          + " quite large feet and very strong legs. They have two long ears"
-          + " and they can eat pretty much anything with those rodent like"
-          + " teeths. ";
-    case SYNTHDROIDS:
-      return "Synthdroids are a race of artificial beings that are designed to "
-          + "resemble human females. They are often portrayed as being "
-          + "sleek and elegant, with graceful movements and a polished "
-          + "appearance. ";
-    default:
-      return "Unknown race, no description.";
-    }
+  public void setLeaderNameGenerator(
+      final NameGeneratorType leaderNameGenerator) {
+    this.leaderNameGenerator = leaderNameGenerator;
+  }
+  /**
+   * Get SpaceRaceType
+   * @return the spaceRaceType
+   */
+  public SpaceRaceType getSpaceRaceType() {
+    return spaceRaceType;
+  }
+  /**
+   * Set SpaceRaceType.
+   * @param spaceRaceType the spaceRaceType to set
+   */
+  public void setSpaceRaceType(final SpaceRaceType spaceRaceType) {
+    this.spaceRaceType = spaceRaceType;
+  }
+
+  /**
+   * Is space race actually space monster or not?
+   * @return True if monster
+   */
+  public boolean isMonster() {
+    return this.spaceRaceType == SpaceRaceType.SPACE_MONSTER;
+  }
+  /**
+   * Is space race actually space pirate or not?
+   * @return True if pirate
+   */
+  public boolean isPirate() {
+    return this.spaceRaceType == SpaceRaceType.SPACE_PIRATE;
   }
 }

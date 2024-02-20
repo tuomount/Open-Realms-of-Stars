@@ -161,7 +161,7 @@ public class ShipInteriorPanel extends JPanel {
         this.getHeight() / 2 - interior.getHeight() / 2,
         null);
     boolean drawImage = true;
-    if (race == SpaceRace.SPACE_PIRATE && DiceGenerator.getRandom(40) == 0) {
+    if (race.isPirate() && DiceGenerator.getRandom(40) == 0) {
       drawImage = false;
       SoundPlayer.playSound(SoundPlayer.GLITCH);
     }
@@ -171,7 +171,7 @@ public class ShipInteriorPanel extends JPanel {
           this.getWidth() / 2 - raceImg.getWidth() / 2,
           this.getHeight() - raceImg.getHeight() - yOffset, null);
     }
-    if (race == SpaceRace.SPACE_PIRATE) {
+    if (race.isPirate()) {
       float value1 = DiceGenerator.getRandom(1, 50) / 10f;
       float value2 = DiceGenerator.getRandom(1, 50) / 10f;
       Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE,

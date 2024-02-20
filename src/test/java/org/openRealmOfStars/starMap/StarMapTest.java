@@ -38,7 +38,7 @@ import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.message.MessageList;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
@@ -124,7 +124,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -171,7 +171,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -219,7 +219,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -230,7 +230,7 @@ public class StarMapTest {
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
     PlayerInfo board = Mockito.mock(PlayerInfo.class);
-    Mockito.when(board.getRace()).thenReturn(SpaceRace.SPACE_PIRATE);
+    Mockito.when(board.getRace()).thenReturn(SpaceRaceFactory.createOne("SPACEPIRATES"));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Mockito.when(board.getEmpireName()).thenReturn("board");
     Mockito.when(board.isBoard()).thenReturn(true);
@@ -297,7 +297,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -308,7 +308,7 @@ public class StarMapTest {
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
     PlayerInfo board = Mockito.mock(PlayerInfo.class);
-    Mockito.when(board.getRace()).thenReturn(SpaceRace.SPACE_PIRATE);
+    Mockito.when(board.getRace()).thenReturn(SpaceRaceFactory.createOne("SPACEPIRATES"));
     Mockito.when(board.getEmpireName()).thenReturn("board");
     Mockito.when(board.isBoard()).thenReturn(true);
     FleetList fleetList = Mockito.mock(FleetList.class);
@@ -376,7 +376,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -387,7 +387,8 @@ public class StarMapTest {
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
     PlayerInfo board = Mockito.mock(PlayerInfo.class);
-    Mockito.when(board.getRace()).thenReturn(SpaceRace.SPACE_PIRATE);
+    Mockito.when(board.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "SPACEPIRATES"));
     Mockito.when(board.getEmpireName()).thenReturn("board");
     Mockito.when(board.isBoard()).thenReturn(true);
     FleetList fleetList = Mockito.mock(FleetList.class);
@@ -461,7 +462,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_RANDOM);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -501,7 +502,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_RANDOM);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -538,7 +539,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_RANDOM);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -556,7 +557,7 @@ public class StarMapTest {
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
 
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.SPORKS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("SPORKS"));
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Sporks");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler2 = Mockito.mock(Leader.class);
@@ -640,7 +641,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_RANDOM);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -658,7 +659,7 @@ public class StarMapTest {
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
 
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.SPORKS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("SPORKS"));
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Sporks");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler2 = Mockito.mock(Leader.class);
@@ -736,7 +737,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_RANDOM);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -754,7 +755,7 @@ public class StarMapTest {
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
 
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.SPORKS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("SPORKS"));
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Sporks");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler2 = Mockito.mock(Leader.class);
@@ -821,7 +822,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -873,7 +874,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     MessageList msgList = Mockito.mock(MessageList.class);
@@ -917,7 +918,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -962,7 +963,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -1001,11 +1002,11 @@ public class StarMapTest {
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(3);
     PlayerList players = new PlayerList();
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.CENTAURS, 3, 0);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"), 3, 0);
     info1.setEmpireName("Empire of Centaurs");
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.GREYANS, 3, 1);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 3, 1);
     info2.setEmpireName("Empire of Greyans");
-    PlayerInfo info3 = new PlayerInfo(SpaceRace.CHIRALOIDS, 3, 2);
+    PlayerInfo info3 = new PlayerInfo(SpaceRaceFactory.createOne("CHIRALOIDS"), 3, 2);
     info3.setEmpireName("Empire of Chiraloids");
     players.addPlayer(info1);
     players.addPlayer(info2);
@@ -1081,11 +1082,11 @@ public class StarMapTest {
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(3);
     PlayerList players = new PlayerList();
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.CENTAURS, 3, 0);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"), 3, 0);
     info1.setEmpireName("Empire of Centaurs");
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.GREYANS, 3, 1);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 3, 1);
     info2.setEmpireName("Empire of Greyans");
-    PlayerInfo info3 = new PlayerInfo(SpaceRace.CHIRALOIDS, 3, 2);
+    PlayerInfo info3 = new PlayerInfo(SpaceRaceFactory.createOne("CHIRALOIDS"), 3, 2);
     info3.setEmpireName("Empire of Chiraloids");
     players.addPlayer(info1);
     players.addPlayer(info2);
@@ -1117,7 +1118,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -1238,7 +1239,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -1263,7 +1264,7 @@ public class StarMapTest {
     Mockito.when(info.getIntelligence()).thenReturn(espionage);
 
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Centaurs");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler2 = Mockito.mock(Leader.class);
@@ -1321,7 +1322,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -1346,7 +1347,7 @@ public class StarMapTest {
     Mockito.when(info.getIntelligence()).thenReturn(espionage);
 
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Centaurs");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler2 = Mockito.mock(Leader.class);
@@ -1395,7 +1396,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -1428,7 +1429,7 @@ public class StarMapTest {
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
 
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Centaurs");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler2 = Mockito.mock(Leader.class);
@@ -1489,7 +1490,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -1522,7 +1523,7 @@ public class StarMapTest {
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
 
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Centaurs");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler2 = Mockito.mock(Leader.class);
@@ -1583,7 +1584,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler = Mockito.mock(Leader.class);
@@ -1617,7 +1618,7 @@ public class StarMapTest {
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
 
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Mockito.when(info2.getEmpireName()).thenReturn("Empire of Centaurs");
     Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Leader ruler2 = Mockito.mock(Leader.class);
@@ -1693,11 +1694,11 @@ public class StarMapTest {
     Ship[] ships = new Ship[1];
     ships[0] = Mockito.mock(Ship.class);
     ShipHull hull = ShipHullFactory.createByName("Artificial planet",
-        SpaceRace.HUMAN);
+        SpaceRaceFactory.createOne("HUMANS"));
     Mockito.when(ships[0].getHull()).thenReturn(hull);
     Mockito.when(fleet.getShips()).thenReturn(ships);
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(realm.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     String[] buildingList = new String[4];
     buildingList[0] = "Basic lab";
     buildingList[1] = "Tax center";

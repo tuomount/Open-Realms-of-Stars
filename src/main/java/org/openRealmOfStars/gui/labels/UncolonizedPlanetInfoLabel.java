@@ -76,7 +76,7 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
     this.add(planetImage);
     SpaceLabel planetLabel = new SpaceLabel(planet.getName());
     this.add(planetLabel);
-    if (planet.getHomeWorldIndex() != -1) {
+    if (planet.isHomeWorld()) {
       this.add(new IconLabel(null, Icons.getIconByName(Icons.ICON_CULTURE),
           ""));
     } else {

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.mapTiles;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,7 +19,7 @@ package org.openRealmOfStars.mapTiles;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 import static org.junit.Assert.*;
 
@@ -32,20 +32,21 @@ public class FleetTileInfoTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCreateFleetTileInfo() {
-    FleetTileInfo tileInfo = new FleetTileInfo(SpaceRace.CENTAURS, 0, 1, 2);
-    assertEquals("Space race was not Centaurs", SpaceRace.CENTAURS,
-        tileInfo.getRace());
+    FleetTileInfo tileInfo = new FleetTileInfo(SpaceRaceFactory.createOne(
+        "CENTAURS"), 0, 1, 2);
+    assertEquals("Space race was not Centaurs", SpaceRaceFactory.createOne(
+        "CENTAURS"), tileInfo.getRace());
     assertEquals("No matching image index", 0,tileInfo.getImageIndex());
     assertEquals("No matching player index", 1,tileInfo.getPlayerIndex());
     assertEquals("No matching fleet index", 2,tileInfo.getFleetIndex());
     assertEquals("No matching planet index", -1, tileInfo.getPlanetIndex());
-    tileInfo.setRace(SpaceRace.MECHIONS);
+    tileInfo.setRace(SpaceRaceFactory.createOne("MECHIONS"));
     tileInfo.setImageIndex(1);
     tileInfo.setPlayerIndex(2);
     tileInfo.setFleetIndex(3);
     tileInfo.setPlanetIndex(4);
-    assertEquals("Space race was not Mechions", SpaceRace.MECHIONS,
-        tileInfo.getRace());
+    assertEquals("Space race was not Mechions", SpaceRaceFactory.createOne(
+        "MECHIONS"), tileInfo.getRace());
     assertEquals("No matching image index", 1,tileInfo.getImageIndex());
     assertEquals("No matching player index", 2,tileInfo.getPlayerIndex());
     assertEquals("No matching fleet index", 3,tileInfo.getFleetIndex());
@@ -58,9 +59,10 @@ public class FleetTileInfoTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCreateFleetTileInfo2() {
-    FleetTileInfo tileInfo = new FleetTileInfo(SpaceRace.CENTAURS, 0, 1);
-    assertEquals("Space race was not Centaurs", SpaceRace.CENTAURS,
-        tileInfo.getRace());
+    FleetTileInfo tileInfo = new FleetTileInfo(SpaceRaceFactory.createOne(
+        "CENTAURS"), 0, 1);
+    assertEquals("Space race was not Centaurs", SpaceRaceFactory.createOne(
+        "CENTAURS"), tileInfo.getRace());
     assertEquals("No matching image index", 0,tileInfo.getImageIndex());
     assertEquals("No matching player index", -1,tileInfo.getPlayerIndex());
     assertEquals("No matching fleet index", -1,tileInfo.getFleetIndex());

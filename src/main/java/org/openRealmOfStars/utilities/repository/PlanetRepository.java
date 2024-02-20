@@ -107,7 +107,8 @@ public class PlanetRepository {
     planet.setExtraFood(dis.readInt());
     planet.setTax(dis.readInt(), true);
     planet.setCulture(dis.readInt());
-    planet.setHomeWorldIndex(dis.readInt());
+    String raceId = IOUtilities.readString(dis);
+    planet.setHomeWorldId(raceId);
     planet.setPlanetaryEvent(PlanetaryEvent.getByIndex(dis.read()));
     planet.setEventActivation(dis.readBoolean());
 
@@ -183,7 +184,7 @@ public class PlanetRepository {
     dos.writeInt(planet.getExtraFood());
     dos.writeInt(planet.getTax());
     dos.writeInt(planet.getCulture());
-    dos.writeInt(planet.getHomeWorldIndex());
+    IOUtilities.writeString(dos, planet.getHomeWorldId());
     dos.writeByte(planet.getPlanetaryEvent().getIndex());
     dos.writeBoolean(planet.isEventActivated());
 

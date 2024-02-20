@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.leader;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2019-2023 Tuomo Untinen
+ * Copyright (C) 2019-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 /**
  * Test for Leader class
@@ -37,7 +37,7 @@ public class LeaderTest {
     assertEquals(28, leader.getAge());
     assertEquals(Gender.NONE, leader.getGender());
     assertEquals(MilitaryRank.CIVILIAN, leader.getMilitaryRank());
-    assertEquals(SpaceRace.HUMAN, leader.getRace());
+    assertEquals(SpaceRaceFactory.createOne("HUMANS"), leader.getRace());
     assertEquals(1, leader.getLevel());
     assertEquals(0, leader.getExperience());
     assertEquals(Job.UNASSIGNED, leader.getJob());
@@ -64,7 +64,7 @@ public class LeaderTest {
     assertEquals(MilitaryRank.COLONEL, leader.getMilitaryRank());
     assertEquals("Leader [name=Test, homeworld=Planet I, job=Ruler,"
         + " age=33, TimeInJob=0, level=5, experience=50, militaryRank=Colonel,"
-        + " gender=female, race=HUMAN, title=King of the world, parent=Parent]",
+        + " gender=female, race=Human, title=King of the world, parent=Parent]",
         leader.toString());
     assertEquals("King of the world Test\n" +
         "Position: Ruler\n" +

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2020 Tuomo Untinen
+ * Copyright (C) 2020-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,7 +26,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.Votes;
@@ -43,13 +43,17 @@ public class VoteViewTest {
   public void testBasic() {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = new PlayerList();
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN,4,0);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
+        4, 0);
     playerList.addPlayer(info1);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.CENTAURS,4,1);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"),
+        4, 1);
     playerList.addPlayer(info2);
-    PlayerInfo info3 = new PlayerInfo(SpaceRace.GREYANS,4,2);
+    PlayerInfo info3 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"),
+        4, 2);
     playerList.addPlayer(info3);
-    PlayerInfo info4 = new PlayerInfo(SpaceRace.MECHIONS,4,3);
+    PlayerInfo info4 = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"),
+        4, 3);
     playerList.addPlayer(info4);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Vote vote = new Vote(VotingType.BAN_NUCLEAR_WEAPONS, 4, 10);
@@ -80,13 +84,17 @@ public class VoteViewTest {
   public void testEmptyVotes() {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = new PlayerList();
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN,4,0);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
+        4, 0);
     playerList.addPlayer(info1);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.CENTAURS,4,1);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"),
+        4, 1);
     playerList.addPlayer(info2);
-    PlayerInfo info3 = new PlayerInfo(SpaceRace.GREYANS,4,2);
+    PlayerInfo info3 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"),
+        4, 2);
     playerList.addPlayer(info3);
-    PlayerInfo info4 = new PlayerInfo(SpaceRace.MECHIONS,4,3);
+    PlayerInfo info4 = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"),
+        4, 3);
     playerList.addPlayer(info4);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Votes votes = new Votes();

@@ -33,7 +33,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
@@ -114,7 +114,8 @@ public class AiTurnViewTest {
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(game.getStarMap()).thenReturn(map);
     AITurnView view = new AITurnView(game);
-    PlayerInfo pirates = new PlayerInfo(SpaceRace.SPACE_PIRATE, 9, 8);
+    PlayerInfo pirates = new PlayerInfo(SpaceRaceFactory.createOne(
+        "SPACEPIRATES"), 9, 8);
     Tech tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() <= 2);
     assertEquals(false, view.updateSpacePirates(pirates,
@@ -137,7 +138,8 @@ public class AiTurnViewTest {
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(game.getStarMap()).thenReturn(map);
     AITurnView view = new AITurnView(game);
-    PlayerInfo human = new PlayerInfo(SpaceRace.HUMAN, 9, 8);
+    PlayerInfo human = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
+        9, 8);
     human.getTechList().addTech(TechFactory.createHullTech("Privateer Mk1", 5));
     human.getTechList().addTech(TechFactory.createHullTech("Cruiser", 5));
     human.getTechList().addTech(TechFactory.createCombatTech("Orbital nuke", 4));
@@ -170,7 +172,8 @@ public class AiTurnViewTest {
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(game.getStarMap()).thenReturn(map);
     AITurnView view = new AITurnView(game);
-    PlayerInfo pirates = new PlayerInfo(SpaceRace.SPACE_PIRATE, 9, 8);
+    PlayerInfo pirates = new PlayerInfo(SpaceRaceFactory.createOne(
+        "SPACEPIRATES"), 9, 8);
     Tech tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() <= 2);
     view.updateSpacePirates(pirates,
@@ -221,7 +224,8 @@ public class AiTurnViewTest {
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(game.getStarMap()).thenReturn(map);
     AITurnView view = new AITurnView(game);
-    PlayerInfo pirates = new PlayerInfo(SpaceRace.SPACE_PIRATE, 9, 8);
+    PlayerInfo pirates = new PlayerInfo(SpaceRaceFactory.createOne(
+        "SPACE_PIRATE"), 9, 8);
     Tech tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() <= 2);
     Fleet fleet = Mockito.mock(Fleet.class);
@@ -278,7 +282,7 @@ public class AiTurnViewTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testLowCreditFlow() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"));
     assertEquals(0, info.getMsgList().getFullList().size());
     int creditFlow = -1;
     info.setTotalCredits(4);
@@ -362,21 +366,24 @@ public class AiTurnViewTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGalacticOlympicsDiplomacy() {
     PlayerList playerList = new PlayerList();
-    PlayerInfo info0 = new PlayerInfo(SpaceRace.CENTAURS, 8, 0);
+    PlayerInfo info0 = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"),
+        8, 0);
     playerList.addPlayer(info0);
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN, 8, 1);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
+        8, 1);
     playerList.addPlayer(info1);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS, 8, 2);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"),
+        8, 2);
     playerList.addPlayer(info2);
-    PlayerInfo info3 = new PlayerInfo(SpaceRace.GREYANS, 8, 3);
+    PlayerInfo info3 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 8, 3);
     playerList.addPlayer(info3);
-    PlayerInfo info4 = new PlayerInfo(SpaceRace.MECHIONS, 8, 4);
+    PlayerInfo info4 = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"), 8, 4);
     playerList.addPlayer(info4);
-    PlayerInfo info5 = new PlayerInfo(SpaceRace.HOMARIANS, 8, 5);
+    PlayerInfo info5 = new PlayerInfo(SpaceRaceFactory.createOne("HOMARIANS"), 8, 5);
     playerList.addPlayer(info5);
-    PlayerInfo info6 = new PlayerInfo(SpaceRace.SCAURIANS, 8, 6);
+    PlayerInfo info6 = new PlayerInfo(SpaceRaceFactory.createOne("SCAURIANS"), 8, 6);
     playerList.addPlayer(info6);
-    PlayerInfo info7 = new PlayerInfo(SpaceRace.TEUTHIDAES, 8, 7);
+    PlayerInfo info7 = new PlayerInfo(SpaceRaceFactory.createOne("TEUTHIDAES"), 8, 7);
     playerList.addPlayer(info7);
     Vote vote = new Vote(VotingType.GALACTIC_OLYMPIC_PARTICIPATE, 8, 0);
     vote.setOrganizerIndex(2);

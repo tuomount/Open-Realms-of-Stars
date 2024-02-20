@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Attitude;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -106,7 +106,7 @@ public final class ShipGenerator {
         if (design.getHull().getSize() == ShipSize.HUGE) {
           scores[i] = scores[i] + 10;
         }
-        if (player.getRace() == SpaceRace.SPACE_PIRATE) {
+        if (player.getRace().isPirate()) {
           scores[i] = scores[i] + 20;
         }
         break;
@@ -1799,9 +1799,7 @@ public final class ShipGenerator {
    * @return Orbital.
    */
   public static Ship generateRandomOrbital() {
-    PlayerInfo info = new PlayerInfo(
-        SpaceRace.values()[DiceGenerator.getRandom(
-            SpaceRace.values().length - 1)]);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.getRandomRace());
     info.getTechList().addTech(TechFactory.createHullTech("Small orbital", 2));
     info.getTechList().addTech(TechFactory.createHullTech("Medium orbital", 4));
     info.getTechList().addTech(TechFactory.createImprovementTech(

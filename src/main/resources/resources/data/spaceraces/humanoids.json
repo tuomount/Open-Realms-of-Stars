@@ -1,0 +1,172 @@
+[
+  {
+    "ID": "GREYANS",
+    "Name": "Greyans",
+    "NameSingle": "Greyan",
+    "BridgeId": "Greyan",
+    "SpaceShipId": "Greyan",
+    "Traits": [
+                "SLOW_GROWTH",
+                "FAST_RESEARCH",
+                "VERY_LONG_LIFE_SPAN",
+                "SLOW_METABOLISM",
+                "POOR_WAR_RESILIENCE",
+                "HANDY",
+                "LOW_GRAVITY_BEING",
+                "TOLERATE_HIGH_RADIATION"
+              ],
+    "Attitude": "SCIENTIFIC",
+    "Image": "resources/images/greyan_race.png",
+    "SocialSystem": "PATRIARCHY",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "GREYANS",
+    "BridgeEffect": "WARM_WHITE",
+    "DiplomacyMusic": "Trogl",
+    "NameGenerator": "ANCIENT_NORDIC",
+    "Description": "Greyans are typically tall and slender, with long, graceful limbs and delicate features. Their grey skin is smooth and sleek, and it is said to shimmer in the light. They have large, almond-shaped eyes that are capable of seeing in a wide range of light levels, and they are highly perceptive and intuitive. "
+  },
+  {
+    "ID": "HUMANS",
+    "Name": "Humans",
+    "NameSingle": "Human",
+    "BridgeId": "Human",
+    "SpaceShipId": "Human",
+    "Traits": [
+                "GOOD_WAR_RESILIENCE",
+                "NATURAL_CHARM",
+                "TOLERATE_COLD",
+                "NATURAL_LEADERS"
+              ],
+    "Attitude": "DIPLOMATIC",
+    "Image": "resources/images/human_race.png",
+    "SocialSystem": "EQUAL",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "HUMAN",
+    "BridgeEffect": "WARM_WHITE",
+    "DiplomacyMusic": "Walking with Poseidon",
+    "NameGenerator": "SCIFI_HUMAN",
+    "Description": "Humans are commonly regarded as possessing average physical and mental attributes."
+  },
+  {
+    "ID": "SCAURIANS",
+    "Name": "Scaurians",
+    "NameSingle": "Scaurian",
+    "BridgeId": "Scaurian",
+    "SpaceShipId": "Scaurian",
+    "Traits": [
+                "MERCANTILE",
+                "SLOW_GROWTH",
+                "LONG_LIFE_SPAN",
+                "POOR_WAR_RESILIENCE",
+                "NATURAL_CHARM",
+                "LOW_GRAVITY_BEING",
+                "TOLERATE_EXTREME_RADIATION",
+                "TOLERATE_COLD",
+                "COMMUNAL"
+              ],
+    "Attitude": "MERCHANTICAL",
+    "Image": "resources/images/scaurian_race.png",
+    "SocialSystem": "EQUAL",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "SCAURIANS",
+    "BridgeEffect": "DARK_ORANGE",
+    "DiplomacyMusic": "Interplanetary Odyssey",
+    "NameGenerator": "ANCIENT_ROMAN",
+    "Description": "Scaurians are a race of small but wide humanoids. "
+  },
+  {
+    "ID": "SMAUGIRIANS",
+    "Name": "Smaugirians",
+    "NameSingle": "Smaugirian",
+    "BridgeId": "Smaugirian",
+    "SpaceShipId": "Smaugirian",
+    "Traits": [
+                "EXCELLENT_WAR_RESILIENCE",
+                "REPULSIVE",
+                "WEAK",
+                "HANDY",
+                "TOLERATE_COLD",
+                "SOLITARY",
+                "NATURAL_LEADERS"
+              ],
+    "Attitude": "MILITARISTIC",
+    "Image": "resources/images/smaugirian_race.png",
+    "SocialSystem": "PATRIARCHY",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "SMAUGIRIANS",
+    "BridgeEffect": "ORANGE_BLINK",
+    "DiplomacyMusic": "Guitar Song",
+    "NameGenerator": "PIRATE",
+    "Description": "Smaugirians are a humanoid race that resembles hare. They have quite large feet and very strong legs. They have two long ears and they can eat pretty much anything with those rodent like teeths. "
+  },
+  {
+    "ID": "SPORKS",
+    "Name": "Sporks",
+    "NameSingle": "Spork",
+    "BridgeId": "Spork",
+    "SpaceShipId": "Spork",
+    "Traits": [
+                "SHORT_LIFE_SPAN",
+                "EXCELLENT_WAR_RESILIENCE",
+                "REPULSIVE",
+                "STRONG",
+                "TOLERATE_HOT",
+                "COMMUNAL"
+              ],
+    "Attitude": "AGGRESSIVE",
+    "Image": "resources/images/spork_race.png",
+    "SocialSystem": "PATRIARCHY",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "SPORKS",
+    "BridgeEffect": "DARK_RED",
+    "DiplomacyMusic": "Conquerors",
+    "NameGenerator": "SPACE_ORC",
+    "Description": "Sporks are a humanoid species which have green and tough skin. They also have horns growing from their skull. "
+  },
+  {
+    "ID": "HOMARIANS",
+    "Name": "Homarians",
+    "NameSingle": "Homarian",
+    "BridgeId": "Homarian",
+    "SpaceShipId": "Homarian",
+    "Traits": [
+                "SLOW_CULTURE",
+                "SLOW_RESEARCH",
+                "SHORT_LIFE_SPAN",
+                "FAST_FOOD_PROD",
+                "NATURAL_CHARM",
+                "STRONG",
+                "HANDY",
+                "HIGH_GRAVITY_BEING",
+                "TOLERATE_NO_RADIATION",
+                "TOLERATE_COLD"
+              ],
+    "Attitude": "PEACEFUL",
+    "Image": "resources/images/homarian_race.png",
+    "SocialSystem": "MATRIARCHY",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "HOMARIANS",
+    "BridgeEffect": "BLUEISH_WHITE",
+    "DiplomacyMusic": "Malloga Balling",
+    "NameGenerator": "DEEP_CREATURE",
+    "Description": "Homarians are a race of humanoid crabs that are known for their immense strength and hard exoskeletons. This exoskeleton also gives them incredible strength, allowing them to easily perform physical tasks that would be difficult for other species. "
+  }
+]

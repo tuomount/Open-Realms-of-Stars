@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2023 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,7 +30,7 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -54,7 +54,8 @@ public class PlanetListViewTest {
     listOfPlanets.add(planet1);
     listOfPlanets.add(planet2);
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(realm.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "HUMANS"));
     Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.AI);
     Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(realm);
     Mockito.when(planet1.getPlanetType()).thenReturn(PlanetTypes.ICEWORLD1);
@@ -86,7 +87,8 @@ public class PlanetListViewTest {
     listOfPlanets.add(planet1);
     listOfPlanets.add(planet2);
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getRace()).thenReturn(SpaceRace.LITHORIANS);
+    Mockito.when(realm.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "LITHORIANS"));
     Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(realm);
     Mockito.when(planet1.getPlanetType()).thenReturn(PlanetTypes.ICEWORLD1);
@@ -119,7 +121,8 @@ public class PlanetListViewTest {
     Planet planet2 = new Planet(new Coordinate(8, 8), "Test", 2, false);
     planet2.setRadiationLevel(RadiationType.NO_RADIATION);
     listOfPlanets.add(planet2);
-    PlayerInfo realm = new PlayerInfo(SpaceRace.GREYANS, 2, 0);
+    PlayerInfo realm = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"),
+        2, 0);
     realm.initMapData(50, 50);
     realm.setSectorVisibility(5, 5, PlayerInfo.VISIBLE);
     realm.setSectorVisibility(8, 8, PlayerInfo.FOG_OF_WAR);

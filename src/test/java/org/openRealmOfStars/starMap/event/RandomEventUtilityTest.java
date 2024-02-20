@@ -30,6 +30,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -67,7 +68,7 @@ public class RandomEventUtilityTest {
     player1.setTotalCredits(15);
     player1.initMapData(5, 5);
 
-    PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS, 2, 1);
+    PlayerInfo player2 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 2, 1);
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -125,8 +126,8 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMassiveDataLost() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     info.getTechList().setTechResearchPoints(TechType.Combat, 20);
     info.getTechList().setTechResearchPoints(TechType.Defense, 20);
     info.getTechList().setTechResearchPoints(TechType.Hulls, 20);
@@ -149,8 +150,8 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTechBreakThrough() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     RandomEvent event = new RandomEvent(RandomEventType.TECHNICAL_BREAKTHROUGH,
         info);
     assertEquals("", event.getText());
@@ -168,7 +169,7 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMeteorHit() {
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info = starMap.getPlayerByIndex(1);
     RandomEvent event = new RandomEvent(RandomEventType.METEOR_HIT, info);
     assertEquals("", event.getText());
@@ -180,7 +181,7 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMissedMeteoroid() {
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info = starMap.getPlayerByIndex(1);
     RandomEvent event = new RandomEvent(RandomEventType.MISSED_METEOROID, info);
     assertEquals("", event.getText());
@@ -192,7 +193,7 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testVirusOutbreak() {
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info = starMap.getPlayerByIndex(1);
     RandomEvent event = new RandomEvent(RandomEventType.DEADLY_VIRUS_OUTBREAK,
         info);
@@ -214,8 +215,8 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testCorruptionScandal() {
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
-    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
     RandomEvent event = new RandomEvent(RandomEventType.CORRUPTION_SCANDAL,
         info);
     assertEquals("", event.getText());
@@ -228,7 +229,7 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMysteriousSignal() {
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info = starMap.getPlayerByIndex(0);
     RandomEvent event = new RandomEvent(RandomEventType.MYSTERIOUS_SIGNAL,
         info);
@@ -241,7 +242,7 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testSolarActivityDimished() {
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info = starMap.getPlayerByIndex(1);
     RandomEvent event = new RandomEvent(RandomEventType.SOLAR_ACTIVITY_DIMISHED,
         info);
@@ -255,7 +256,7 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testSolarActivityIncreased() {
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info = starMap.getPlayerByIndex(1);
     RandomEvent event = new RandomEvent(RandomEventType.SOLAR_ACTIVITY_INCREASE,
         info);
@@ -269,7 +270,7 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testDesertedShip() {
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info = starMap.getPlayerByIndex(1);
     RandomEvent event = new RandomEvent(RandomEventType.DESERTED_SHIP,
         info);
@@ -284,7 +285,7 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testCatastrohicAccident() {
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info = starMap.getPlayerByIndex(1);
     RandomEvent event = new RandomEvent(RandomEventType.CATASTROPHIC_ACCIDENT,
         info);
@@ -297,7 +298,7 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRulerStress() {
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info = starMap.getPlayerByIndex(1);
     RandomEvent event = new RandomEvent(RandomEventType.RULER_STRESS,
         info);
@@ -309,7 +310,7 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testLeaderLevel() {
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info = starMap.getPlayerByIndex(1);
     RandomEvent event = new RandomEvent(RandomEventType.LEADER_LEVEL,
         info);
@@ -321,7 +322,7 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAggresiveWildLife() {
-    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    StarMap starMap = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     PlayerInfo info = starMap.getPlayerByIndex(1);
     RandomEvent event = new RandomEvent(RandomEventType.AGGRESSIVE_WILD_LIFE,
         info);
@@ -334,7 +335,7 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testLostTreasure() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
     info.setTotalCredits(9);
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     planet.setPlanetOwner(0, info);
@@ -354,8 +355,8 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMutiny() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
-    PlayerInfo board = new PlayerInfo(SpaceRace.SPACE_PIRATE);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
+    PlayerInfo board = new PlayerInfo(SpaceRaceFactory.createOne("SPACEPIRATES"));
     Fleet fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.getMilitaryValue()).thenReturn(40);
     Mockito.when(fleet.getName()).thenReturn("Test fleet");
@@ -377,8 +378,8 @@ public class RandomEventUtilityTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRaiders() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
-    PlayerInfo board = new PlayerInfo(SpaceRace.SPACE_PIRATE);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
+    PlayerInfo board = new PlayerInfo(SpaceRaceFactory.createOne("SPACEPIRATES"));
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     planet.setPlanetOwner(0, info);
     StarMap starMap = Mockito.mock(StarMap.class);

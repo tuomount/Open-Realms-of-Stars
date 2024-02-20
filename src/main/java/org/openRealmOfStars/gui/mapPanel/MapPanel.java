@@ -634,7 +634,7 @@ public class MapPanel extends JPanel {
     if (planet != null && !planet.isGasGiant() && info != null
         && info.getSectorVisibility(new Coordinate(i + cx,
             j + cy)) != PlayerInfo.UNCHARTED
-        && planet.getHomeWorldIndex() != -1
+        && planet.isHomeWorld()
         && starMap.getZoomLevel() > Tile.ZOOM_OUT1) {
       Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
       int offset = Icon16x16.MAX_WIDTH;
@@ -1465,7 +1465,7 @@ public class MapPanel extends JPanel {
         }
         Planet planet = starMap.getPlanetByCoordinate(i + cx, j + cy);
         if (planet != null && !planet.isGasGiant()
-            && planet.getHomeWorldIndex() != -1) {
+            && planet.isHomeWorld()) {
           Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
           icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
               pixelY + Icon16x16.MAX_HEIGHT);

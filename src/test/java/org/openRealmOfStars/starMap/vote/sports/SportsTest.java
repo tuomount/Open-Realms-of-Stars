@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap.vote.sports;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2019 Tuomo Untinen
+ * Copyright (C) 2019-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 /**
 *
@@ -71,19 +71,19 @@ public class SportsTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testSporting() {
     PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info1.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info1.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Athlete athlete1 = new Athlete("Planet I", info1);
     athlete1.setBonus(0);
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRaceFactory.createOne("CENTAURS"));
     Athlete athlete2 = new Athlete("Planet II", info2);
     athlete2.setBonus(800);
     PlayerInfo info3 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info3.getRace()).thenReturn(SpaceRace.GREYANS);
+    Mockito.when(info3.getRace()).thenReturn(SpaceRaceFactory.createOne("GREYANS"));
     Athlete athlete3 = new Athlete("Planet III", info3);
     athlete3.setBonus(100);
     PlayerInfo info4 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info4.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(info4.getRace()).thenReturn(SpaceRaceFactory.createOne("HOMARIANS"));
     Athlete athlete4 = new Athlete("Planet IV", info3);
     athlete4.setBonus(30);
     Sports sports = new Sports();

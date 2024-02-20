@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap.vote.sports;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2019 Tuomo Untinen
+ * Copyright (C) 2019-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 /**
 *
@@ -36,7 +36,7 @@ public class AthleteTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Athlete athlete = new Athlete("Test I", info);
     assertEquals(0, athlete.getBonus());
     assertEquals("Test I", athlete.getPlanetName());
@@ -52,7 +52,7 @@ public class AthleteTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testSportingValue() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Athlete athlete = new Athlete("Test I", info);
     athlete.setSportingValue(5);
     assertEquals(5, athlete.getSportingValue());

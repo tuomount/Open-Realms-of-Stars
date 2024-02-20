@@ -580,7 +580,7 @@ public class AITurnView extends BlackPanel {
       if (planet.getPlanetPlayerInfo() == info) {
         cx = cx + planet.getX();
         cy = cy + planet.getY();
-        if (planet.getHomeWorldIndex() != -1) {
+        if (planet.isHomeWorld()) {
           // Double the effect of home world
           cx = cx + planet.getX();
           cy = cy + planet.getY();
@@ -755,7 +755,7 @@ public class AITurnView extends BlackPanel {
     }
     if (info.getMissions().getAttackMission(planet.getName()) == null) {
       // No attack mission for this planet found, so adding it.
-      if (planet.getHomeWorldIndex() != -1) {
+      if (planet.isHomeWorld()) {
         info.getMissions().addHighestPriority(mission);
       } else {
         info.getMissions().add(mission);
@@ -1446,7 +1446,7 @@ public class AITurnView extends BlackPanel {
             }
           }
           if (info.getStrategy() == WinningStrategy.CONQUER
-              && planet.getHomeWorldIndex() > -1) {
+              && planet.isHomeWorld()) {
             int index1 = game.getStarMap().getPlayerList().getIndex(info);
             int index2 = planet.getPlanetOwnerIndex();
             int neededDifference = 150;

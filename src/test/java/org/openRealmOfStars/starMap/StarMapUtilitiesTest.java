@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-18 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,7 +30,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -47,8 +47,8 @@ public class StarMapUtilitiesTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testTrade() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.GREYANS, 2, 1);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 2, 1);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(5, 5));
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info2);
@@ -68,8 +68,8 @@ public class StarMapUtilitiesTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testTrade2() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS, 2, 0);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.GREYANS, 2, 1);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("SCAURIANS"), 2, 0);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 2, 1);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(5, 5));
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info2);
@@ -90,9 +90,9 @@ public class StarMapUtilitiesTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testTrade3() {
-    PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS, 2, 0);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("SCAURIANS"), 2, 0);
     info.setEmpireName("Traders of Universum");
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.GREYANS, 2, 1);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 2, 1);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(5, 5));
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info2);
@@ -156,13 +156,13 @@ public class StarMapUtilitiesTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testEmbargo() {
-    PlayerInfo embargoImposer = new PlayerInfo(SpaceRace.HUMAN, 4, 0);
+    PlayerInfo embargoImposer = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 4, 0);
     embargoImposer.setEmpireName("Empire of Imposer");
-    PlayerInfo embargoImposed = new PlayerInfo(SpaceRace.HUMAN, 4, 1);
+    PlayerInfo embargoImposed = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 4, 1);
     embargoImposed.setEmpireName("Empire of Imposed");
-    PlayerInfo embargoAgree = new PlayerInfo(SpaceRace.HUMAN, 4, 2);
+    PlayerInfo embargoAgree = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 4, 2);
     embargoAgree.setEmpireName("Empire of Agree");
-    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 4, 3);
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 4, 3);
     info.setEmpireName("Empire of Info");
     PlayerList playerList = new PlayerList();
     playerList.addPlayer(embargoImposer);
@@ -381,84 +381,13 @@ public class StarMapUtilitiesTest {
         Attitude.SCIENTIFIC, VotingType.FIRST_CANDIDATE));
 
   }
-/*
-  // XXX: Mechanics subject of change
-  @Test
-  @Category(org.openRealmOfStars.UnitTest.class)
-  public void testVotingSupportBanNuclearWeapons() {
-    PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getAttitude()).thenReturn(Attitude.PEACEFUL);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
-    Vote vote = new Vote(VotingType.BAN_NUCLEAR_WEAPONS, 8, 20);
-    StarMap map = Mockito.mock(StarMap.class);
-    assertEquals(10, StarMapUtilities.getVotingSupport(info, vote, map));
 
-    info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getAttitude()).thenReturn(Attitude.PEACEFUL);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
-    assertEquals(50, StarMapUtilities.getVotingSupport(info, vote, map));
-
-    info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getAttitude()).thenReturn(Attitude.AGGRESSIVE);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.CHIRALOIDS);
-    assertEquals(-40, StarMapUtilities.getVotingSupport(info, vote, map));
-
-    info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getAttitude()).thenReturn(Attitude.SCIENTIFIC);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
-    assertEquals(-15, StarMapUtilities.getVotingSupport(info, vote, map));
-
-    info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getAttitude()).thenReturn(Attitude.MERCHANTICAL);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.TEUTHIDAES);
-    assertEquals(0, StarMapUtilities.getVotingSupport(info, vote, map));
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.UnitTest.class)
-  public void testVotingSupportBanPrivateerShips() {
-    PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getAttitude()).thenReturn(Attitude.PEACEFUL);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);
-    FleetList fleetList = Mockito.mock(FleetList.class);
-    Fleet fleet1 = Mockito.mock(Fleet.class);
-    Fleet fleet2 = Mockito.mock(Fleet.class);
-    Mockito.when(fleet2.isPrivateerFleet()).thenReturn(true);
-    Mockito.when(fleetList.getNumberOfFleets()).thenReturn(2);
-    Mockito.when(fleetList.getByIndex(0)).thenReturn(fleet1);
-    Mockito.when(fleetList.getByIndex(1)).thenReturn(fleet1);
-    Mockito.when(info.getFleets()).thenReturn(fleetList);
-    Vote vote = new Vote(VotingType.BAN_PRIVATEER_SHIPS, 8, 20);
-    StarMap map = Mockito.mock(StarMap.class);
-    assertEquals(50, StarMapUtilities.getVotingSupport(info, vote, map));
-
-    Mockito.when(fleetList.getByIndex(1)).thenReturn(fleet2);
-    assertEquals(35, StarMapUtilities.getVotingSupport(info, vote, map));
-
-    Mockito.when(fleetList.getNumberOfFleets()).thenReturn(11);
-    Mockito.when(fleetList.getByIndex(0)).thenReturn(fleet2);
-    Mockito.when(fleetList.getByIndex(1)).thenReturn(fleet2);
-    Mockito.when(fleetList.getByIndex(2)).thenReturn(fleet2);
-    Mockito.when(fleetList.getByIndex(3)).thenReturn(fleet2);
-    Mockito.when(fleetList.getByIndex(4)).thenReturn(fleet2);
-    Mockito.when(fleetList.getByIndex(5)).thenReturn(fleet2);
-    Mockito.when(fleetList.getByIndex(6)).thenReturn(fleet2);
-    Mockito.when(fleetList.getByIndex(7)).thenReturn(fleet2);
-    Mockito.when(fleetList.getByIndex(8)).thenReturn(fleet2);
-    Mockito.when(fleetList.getByIndex(9)).thenReturn(fleet2);
-    Mockito.when(fleetList.getByIndex(10)).thenReturn(fleet2);
-    assertEquals(45, StarMapUtilities.getVotingSupport(info, vote, map));
-
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.TEUTHIDAES);
-    assertEquals(-5, StarMapUtilities.getVotingSupport(info, vote, map));
-  }
-*/
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testVotingSupportGalacticPeace() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getAttitude()).thenReturn(Attitude.MILITARISTIC);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Vote vote = new Vote(VotingType.GALACTIC_PEACE, 8, 20);
@@ -479,7 +408,7 @@ public class StarMapUtilitiesTest {
   public void testVotingSupportTaxationOfRichest() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getAttitude()).thenReturn(Attitude.MILITARISTIC);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Vote vote = new Vote(VotingType.TAXATION_OF_RICHEST_REALM, 8, 20);
@@ -518,7 +447,7 @@ public class StarMapUtilitiesTest {
   public void testVotingSupportTaxationOfRichest2() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getAttitude()).thenReturn(Attitude.DIPLOMATIC);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Vote vote = new Vote(VotingType.TAXATION_OF_RICHEST_REALM, 6, 20);
@@ -552,7 +481,7 @@ public class StarMapUtilitiesTest {
   public void testVotingSupportTaxationOfRichest3() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getAttitude()).thenReturn(Attitude.DIPLOMATIC);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.LIKE);
     Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.DISLIKE);
@@ -598,7 +527,7 @@ public class StarMapUtilitiesTest {
   public void testVotingSupportTaxationOfRichest4() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getAttitude()).thenReturn(Attitude.AGGRESSIVE);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.FRIENDS);
@@ -648,7 +577,7 @@ public class StarMapUtilitiesTest {
   public void testVotingSupportSecondCandidateMilitary() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getAttitude()).thenReturn(Attitude.AGGRESSIVE);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.LIKE);
@@ -700,7 +629,7 @@ public class StarMapUtilitiesTest {
   public void testVotingSupportSecondCandidateMilitary2() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getAttitude()).thenReturn(Attitude.AGGRESSIVE);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.DISLIKE);
@@ -753,7 +682,7 @@ public class StarMapUtilitiesTest {
   public void testVotingSupportSecondCandidateMilitary3() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getAttitude()).thenReturn(Attitude.AGGRESSIVE);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.FRIENDS);
@@ -801,7 +730,7 @@ public class StarMapUtilitiesTest {
   public void testVotingSupportRulerOfGalaxySelf() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getAttitude()).thenReturn(Attitude.AGGRESSIVE);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.FRIENDS);
@@ -826,7 +755,7 @@ public class StarMapUtilitiesTest {
   public void testVotingSupportRulerOfGalaxy() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getAttitude()).thenReturn(Attitude.AGGRESSIVE);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.FRIENDS);
@@ -868,7 +797,7 @@ public class StarMapUtilitiesTest {
   public void testVotingSupportRulerOfGalaxy2() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getAttitude()).thenReturn(Attitude.AGGRESSIVE);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.DISLIKE);

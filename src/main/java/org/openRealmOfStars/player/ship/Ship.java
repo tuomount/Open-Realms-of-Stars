@@ -28,8 +28,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.race.SpaceRace;
-import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -203,12 +202,12 @@ public class Ship extends Construction {
     super("SHIP", Icons.ICON_HULL_TECH);
     String tmpStr = IOUtilities.readString(dis);
     setName(tmpStr);
+    String race = IOUtilities.readString(dis);
     setProdCost(dis.readInt());
     setMetalCost(dis.readInt());
     String hullName = IOUtilities.readString(dis);
-    int raceIndex = dis.readInt();
     hull = ShipHullFactory.createByName(hullName,
-        SpaceRaceUtility.getRaceByIndex(raceIndex));
+        SpaceRaceFactory.createOne(race));
     image = ShipImage.scaleTo32x32(hull.getImage());
     int count = dis.readInt();
     components = new ArrayList<>();
@@ -249,10 +248,10 @@ public class Ship extends Construction {
    */
   public void saveShip(final DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, getName());
+    IOUtilities.writeString(dos, hull.getRace().getId());
     dos.writeInt(getProdCost());
     dos.writeInt(getMetalCost());
     IOUtilities.writeString(dos, hull.getName());
-    dos.writeInt(hull.getRace().getIndex());
     dos.writeInt(components.size());
     for (int i = 0; i < components.size(); i++) {
       IOUtilities.writeString(dos, components.get(i).getName());
@@ -2176,10 +2175,7 @@ private int increaseHitChanceByComponent() {
    * @return True if ship is space monster.
    */
   public boolean isMonster() {
-    if (getHull().getRace() == SpaceRace.SPACE_MONSTERS) {
-      return true;
-    }
-    return false;
+    return getHull().getRace().isMonster();
   }
   /**
    * Get Cargo Type

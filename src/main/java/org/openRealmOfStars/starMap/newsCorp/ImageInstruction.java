@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap.newsCorp;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2023 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,6 +27,7 @@ import org.openRealmOfStars.gui.util.GraphRoutines;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -1109,8 +1110,10 @@ public class ImageInstruction {
     if (race != null) {
       planetImg = GuiStatics.getRaceImg(race);
     }
-    if (SpaceRace.SPACE_PIRATE.getNameSingle().equals(planetType)) {
-      planetImg = GuiStatics.getRaceImg(SpaceRace.SPACE_PIRATE);
+    if (SpaceRaceFactory.createOne("SPACEPIRATE").getNameSingle()
+        .equals(planetType)) {
+      planetImg = GuiStatics.getRaceImg(
+          SpaceRaceFactory.createOne("SPACEPIRATE"));
     }
     if (SIZE_HALF.equals(size)) {
       planetImg = GuiStatics.scaleToHalf(planetImg);
@@ -1225,12 +1228,16 @@ public class ImageInstruction {
     if (race != null) {
       drawImg = GuiStatics.getRaceImg(race);
     }
-    if (SpaceRace.SPACE_MONSTERS.getNameSingle().equals(image)) {
+    if (SpaceRaceFactory.createOne("SPACEMONSTERS").getNameSingle()
+        .equals(image)) {
       //FIXME: This might be needed for changing...
-      drawImg = GuiStatics.getRaceImg(SpaceRace.SPACE_PIRATE);
+      drawImg = GuiStatics.getRaceImg(SpaceRaceFactory.createOne(
+          "SPACEPIRATES"));
     }
-    if (SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)) {
-      drawImg = GuiStatics.getRaceImg(SpaceRace.SPACE_PIRATE);
+    if (SpaceRaceFactory.createOne("SPACEPIRATES").getNameSingle()
+        .equals(image)) {
+      drawImg = GuiStatics.getRaceImg(SpaceRaceFactory.createOne(
+          "SPACEPIRATES"));
     }
     if (LOGO.equals(image)) {
       drawImg = GuiStatics.IMAGE_GBNC;

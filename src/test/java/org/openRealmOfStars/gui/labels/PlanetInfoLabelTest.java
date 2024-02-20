@@ -1,7 +1,7 @@
 package org.openRealmOfStars.gui.labels;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2023 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,7 +26,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
@@ -42,7 +42,8 @@ public class PlanetInfoLabelTest {
     ActionListener listener = Mockito.mock(ActionListener.class);
     Planet target = Mockito.mock(Planet.class);
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(realm.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "HUMANS"));
     Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.AI);
     Mockito.when(target.getPlanetPlayerInfo()).thenReturn(realm);
     Mockito.when(target.getPlanetType()).thenReturn(PlanetTypes.ICEWORLD1);

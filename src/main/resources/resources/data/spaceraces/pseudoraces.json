@@ -1,0 +1,50 @@
+[
+  {
+    "ID": "SPACEMONSTERS",
+    "Name": "Space Monsters",
+    "NameSingle": "Space Monster",
+    "BridgeId": "Space Monster",
+    "SpaceShipId": "Space monster",
+    "Traits": [
+                "EXCELLENT_WAR_RESILIENCE",
+                "HANDY"
+              ],
+    "Attitude": "AGGRESSIVE",
+    "Image": "resources/images/privateer_race.png",
+    "SocialSystem": "EQUAL",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "Space Pirates",
+    "BridgeEffect": "DARKEST",
+    "DiplomacyMusic": "Set Fire to Reality - dark/electronic",
+    "NameGenerator": "ALL",
+    "Description": "Monsters of the space. ",
+    "SpaceRaceType": "SPACE_MONSTER"
+  },
+  {
+    "ID": "SPACEPIRATES",
+    "Name": "Space Pirates",
+    "NameSingle": "Space Pirate",
+    "BridgeId": "Space Pirate",
+    "SpaceShipId": "Space pirate",
+    "Traits": [
+                "EXCELLENT_WAR_RESILIENCE",
+                "HANDY"
+              ],
+    "Attitude": "AGGRESSIVE",
+    "Image": "resources/images/privateer_race.png",
+    "SocialSystem": "EQUAL",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "SPACE_PIRATE",
+    "BridgeEffect": "DARKEST",
+    "DiplomacyMusic": "Set Fire to Reality - dark/electronic",
+    "NameGenerator": "ALL",
+    "Description": "Monsters of the space. ",
+    "SpaceRaceType": "SPACE_PIRATE"
+  }
+]

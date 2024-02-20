@@ -39,8 +39,7 @@ import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
-import org.openRealmOfStars.player.race.SpaceRace;
-import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
@@ -391,7 +390,7 @@ public class DiplomaticTrade {
   protected void generateProtectionOffer() {
     PlayerInfo offerMaker = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
-    if (offerMaker.getRace() == SpaceRace.SPACE_PIRATE) {
+    if (offerMaker.getRace().isPirate()) {
       if (techListForFirst.size() > 0) {
         firstOffer = new NegotiationList();
         int index = getBestTech(techListForFirst, offerMaker.getAiAttitude());
@@ -771,7 +770,7 @@ public class DiplomaticTrade {
     result = result + planet.getAmountMetalInGround() / 1000;
     result = result + planet.getGroundSize() - 7;
     result = result + planet.getTotalPopulation() / 3;
-    if (planet.getHomeWorldIndex() != -1) {
+    if (planet.isHomeWorld()) {
       result = result + 3;
     }
     if (!planet.isColonizeablePlanet(demander)) {
@@ -2783,15 +2782,13 @@ public class DiplomaticTrade {
         sb.append(" from ");
         sb.append(giver.getEmpireName());
         sb.append(". ");
-        if (starMap != null && planet.getHomeWorldIndex() != -1) {
-          SpaceRace race = SpaceRaceUtility.getRaceByIndex(
-              planet.getHomeWorldIndex());
-          if (race != null) {
+        if (starMap != null && planet.isHomeWorld()) {
+          SpaceRaceFactory.create(planet.getHomeWorldId()).ifPresent(race -> {
             sb.append(planet.getName());
             sb.append(" is home world for ");
             sb.append(race.getName());
             sb.append(". ");
-          }
+          });
         }
         countAsDiplomaticTrade = true;
         planetTraded = true;

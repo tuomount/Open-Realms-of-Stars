@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,13 +20,12 @@ package org.openRealmOfStars.game.state;
 import static org.junit.Assert.assertEquals;
 
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 /**
 *
@@ -37,9 +36,10 @@ public class ShipViewTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void test() throws IOException {
+  public void test() {
     ActionListener listener = Mockito.mock(ActionListener.class);
-    PlayerInfo player = new PlayerInfo(SpaceRace.CENTAURS, 2, 0);
+    PlayerInfo player = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"),
+        2, 0);
     ShipView shipView = new ShipView(player, listener);
     shipView.updateList();
     assertEquals(null, shipView.getSelectedShip());

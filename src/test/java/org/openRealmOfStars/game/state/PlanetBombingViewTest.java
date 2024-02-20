@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2021 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,7 +29,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipHull;
@@ -82,7 +82,8 @@ public class PlanetBombingViewTest {
   public void testBombing() {
     Planet planet = Mockito.mock(Planet.class);
 
-    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRace.SPORKS, 2, 1);
+    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRaceFactory.createOne(
+        "SPORKS") , 2, 1);
     attackerPlayerInfo.getTechList().addTech(TechFactory.createCombatTech(
         "Orbital bombs Mk1", 3));
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
@@ -118,7 +119,8 @@ public class PlanetBombingViewTest {
   public void testBombingNuke() {
     Planet planet = Mockito.mock(Planet.class);
 
-    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRace.SPORKS, 2, 1);
+    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRaceFactory.createOne(
+        "SPORKS"), 2, 1);
     attackerPlayerInfo.getTechList().addTech(TechFactory.createCombatTech(
         "Orbital nuke", 4));
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
@@ -152,12 +154,14 @@ public class PlanetBombingViewTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAiConquering() {
-    PlayerInfo defender = new PlayerInfo(SpaceRace.CENTAURS, 3, 2);
+    PlayerInfo defender = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"),
+        3, 2);
     Planet planet = new Planet(new Coordinate(5, 5), "Testopia", 1, false);
     planet.setPlanetOwner(2, defender);
     planet.setWorkers(Planet.FOOD_FARMERS, 2);
 
-    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRace.SPORKS, 3, 1);
+    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRaceFactory.createOne(
+        "SPORKS"), 3, 1);
     attackerPlayerInfo.getTechList().addTech(TechFactory.createCombatTech(
         "Orbital bombs Mk1", 3));
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
@@ -190,12 +194,14 @@ public class PlanetBombingViewTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAiConqueringHuman() {
-    PlayerInfo defender = new PlayerInfo(SpaceRace.CENTAURS, 3, 0);
+    PlayerInfo defender = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"),
+        3, 0);
     Planet planet = new Planet(new Coordinate(5, 5), "Testopia", 1, false);
     planet.setPlanetOwner(2, defender);
     planet.setWorkers(Planet.FOOD_FARMERS, 2);
 
-    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRace.SPORKS, 3, 1);
+    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRaceFactory.createOne(
+        "SPORKS"), 3, 1);
     attackerPlayerInfo.getTechList().addTech(TechFactory.createCombatTech(
         "Orbital bombs Mk1", 3));
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
@@ -241,12 +247,14 @@ public class PlanetBombingViewTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAiConqueringWithoutTrooperOrBombs() {
-    PlayerInfo defender = new PlayerInfo(SpaceRace.CENTAURS, 3, 0);
+    PlayerInfo defender = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"),
+        3, 0);
     Planet planet = new Planet(new Coordinate(5, 5), "Testopia", 1, false);
     planet.setPlanetOwner(2, defender);
     planet.setWorkers(Planet.FOOD_FARMERS, 2);
 
-    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRace.SPORKS, 3, 1);
+    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRaceFactory.createOne(
+        "SPORKS"), 3, 1);
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
         "Destroyer Mk1", 1));
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(

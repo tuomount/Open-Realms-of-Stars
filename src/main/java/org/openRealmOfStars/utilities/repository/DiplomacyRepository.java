@@ -21,7 +21,7 @@ import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonus;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
 import java.io.DataInputStream;
@@ -66,7 +66,9 @@ public final class DiplomacyRepository {
       throws IOException {
     int typeIndex = dis.read();
     DiplomacyBonus bonus = new DiplomacyBonus(DiplomacyBonusType
-        .getTypeByIndex(typeIndex), SpaceRace.HUMAN);
+        // This SpaceRace does not affect for diplomacy bonus, since
+        // value will be replaced in next line.
+        .getTypeByIndex(typeIndex), SpaceRaceFactory.createOne("HUMANS"));
     int bonusValue = dis.readInt();
     int bonusLasting = dis.read();
     if (bonusLasting == 0) {

@@ -28,7 +28,7 @@ import org.openRealmOfStars.ai.mission.MissionPhase;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -50,8 +50,8 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testNoCombatShips() {
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     ShipDesign design1 = ShipGenerator.createBattleShip(
         info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(
@@ -74,8 +74,8 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testWormHole() {
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     ShipDesign design1 = ShipGenerator.createBattleShip(
         info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(
@@ -95,8 +95,8 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testWormHole2() {
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     ShipDesign design1 = ShipGenerator.createBattleShip(
         info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(
@@ -120,8 +120,8 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRealCombat() {
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     info1.setEmpireName("Terran alliance");
     info2.setEmpireName("Spork empire");
     info1.getTechList().addTech(TechFactory.createCombatTech("Photon torpedo Mk2", 2));
@@ -148,8 +148,8 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRealCombatWithOrbitalDefense() {
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     info1.setEmpireName("Terran alliance");
     info2.setEmpireName("Spork empire");
     info2.getTechList().addTech(TechFactory.createDefenseTech("Shield Mk2", 2));
@@ -185,8 +185,8 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRealCombat2() {
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     info1.getTechList().addTech(TechFactory.createCombatTech("Photon torpedo Mk2", 2));
     ShipDesign design1 = ShipGenerator.createBattleShip(
         info1, ShipSize.SMALL, false, false);
@@ -206,7 +206,7 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRealCombatDraw() {
-    TechList techList = new TechList(SpaceRace.HUMAN);
+    TechList techList = new TechList(SpaceRaceFactory.createOne("HUMANS"));
     Tech tech = TechFactory.createCombatTech("Laser Mk1", 1);
     if (tech != null) {
       techList.addTech(tech);
@@ -231,9 +231,9 @@ public class CombatTest {
     if (tech != null) {
       techList.addTech(tech);
     }
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     info1.setTechList(techList);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     info2.setTechList(techList);
     ShipDesign design1 = ShipGenerator.createScout(info1);
     ShipDesign design2 = ShipGenerator.createScout(info2);
@@ -251,8 +251,8 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRealCombatOnPlanet() {
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL,
         false, false);
     ShipDesign design2 = ShipGenerator.createColony(info2, false);
@@ -290,8 +290,8 @@ public class CombatTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRealCombatWithPrivateer() {
     DiceGenerator.initializeGenerators(5L, 1234);
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     info1.getTechList().addTech(TechFactory.createHullTech(
         TechFactory.HULL_TECH_LEVEL5_NAMES[2], 5));
     info1.getTechList().addTech(TechFactory.createDefenseTech(
@@ -322,8 +322,8 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRealCombatWithPrivateers() {
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     info1.getTechList().addTech(TechFactory.createHullTech(
         TechFactory.HULL_TECH_LEVEL5_NAMES[2], 5));
     info1.getTechList().addTech(TechFactory.createDefenseTech(
@@ -363,8 +363,9 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testStarbaseFleetLose() {
-    PlayerInfo defender = new PlayerInfo(SpaceRace.SPACE_PIRATE);
-    PlayerInfo attacker = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo defender = new PlayerInfo(SpaceRaceFactory.createOne(
+        "SPACEPIRATES"));
+    PlayerInfo attacker = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     attacker.getTechList().addTech(TechFactory.createCombatTech(
         "Photon torpedo Mk8", 8));
     attacker.getTechList().addTech(TechFactory.createDefenseTech(
@@ -411,8 +412,9 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testStarbaseFleetWins() {
-    PlayerInfo defender = new PlayerInfo(SpaceRace.SPACE_PIRATE);
-    PlayerInfo attacker = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo defender = new PlayerInfo(SpaceRaceFactory.createOne(
+        "SPACEPIRATES"));
+    PlayerInfo attacker = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     defender.getTechList().addTech(TechFactory.createCombatTech(
         "Photon torpedo Mk5", 5));
     defender.getTechList().addTech(TechFactory.createDefenseTech(
@@ -457,9 +459,9 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHumanPlayer() {
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
     info1.setHuman(true);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     ShipDesign design1 = ShipGenerator.createBattleShip(
         info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(

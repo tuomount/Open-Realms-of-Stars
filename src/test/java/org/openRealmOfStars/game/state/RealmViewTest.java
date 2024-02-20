@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018 Tuomo Untinen
+ * Copyright (C) 2018-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,14 +18,13 @@ package org.openRealmOfStars.game.state;
  */
 
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 /**
 * Realm View tests
@@ -35,12 +34,13 @@ public class RealmViewTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void test() throws IOException {
+  public void test() {
     ActionListener listener = Mockito.mock(ActionListener.class);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
-    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        "HUMANS"));
     new RealmView(info, listener, 10,2);
   }
 

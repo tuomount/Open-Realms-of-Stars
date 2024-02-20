@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap.newsCorp;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2023 Tuomo Untinen
+ * Copyright (C) 2017-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -215,7 +215,7 @@ public class NewsCorpData {
     int[] data = new int[planets.getMaxPlayers()];
     for (Planet planet : planetList) {
       int i = planet.getPlanetOwnerIndex();
-      if (planet.getHomeWorldIndex() != -1 && i != -1
+      if (planet.isHomeWorld() && i != -1
           && i < planets.getMaxPlayers()) {
         data[i] = data[i] + 1;
       }

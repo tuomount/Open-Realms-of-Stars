@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2020 Tuomo Untinen
+ * Copyright (C) 2020-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,7 +28,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -46,16 +46,20 @@ public class LeaderViewTest {
   public void testEmptyPool() {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = new PlayerList();
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN,4,0);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
+        4, 0);
     info1.setEmpireName("Human Empire");
     playerList.addPlayer(info1);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.CENTAURS,4,1);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"),
+        4, 1);
     info2.setEmpireName("Centaur Empire");
     playerList.addPlayer(info2);
-    PlayerInfo info3 = new PlayerInfo(SpaceRace.GREYANS,4,2);
+    PlayerInfo info3 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"),
+        4, 2);
     info3.setEmpireName("Greyan Kingdom");
     playerList.addPlayer(info3);
-    PlayerInfo info4 = new PlayerInfo(SpaceRace.MECHIONS,4,3);
+    PlayerInfo info4 = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"),
+        4, 3);
     info4.setEmpireName("Mechion AI");
     playerList.addPlayer(info4);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
@@ -71,20 +75,24 @@ public class LeaderViewTest {
     PlayerList playerList = new PlayerList();
     Planet planet = new Planet(new Coordinate(5, 6), "Test planet", 1, false);
     planet.setRadiationLevel(RadiationType.NO_RADIATION);
-    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN,4,0);
+    PlayerInfo info1 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
+        4, 0);
     info1.setEmpireName("Human Empire");
     Leader leader = LeaderUtility.createLeader(info1, planet, 1);
     info1.getLeaderPool().add(leader);
     leader = LeaderUtility.createLeader(info1, planet, 1);
     info1.getLeaderPool().add(leader);
     playerList.addPlayer(info1);
-    PlayerInfo info2 = new PlayerInfo(SpaceRace.CENTAURS,4,1);
+    PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("CENTAURS"),
+        4, 1);
     info2.setEmpireName("Centaur Empire");
     playerList.addPlayer(info2);
-    PlayerInfo info3 = new PlayerInfo(SpaceRace.GREYANS,4,2);
+    PlayerInfo info3 = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"),
+        4, 2);
     info3.setEmpireName("Greyan Kingdom");
     playerList.addPlayer(info3);
-    PlayerInfo info4 = new PlayerInfo(SpaceRace.MECHIONS,4,3);
+    PlayerInfo info4 = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"),
+        4, 3);
     info4.setEmpireName("Mechion AI");
     playerList.addPlayer(info4);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);

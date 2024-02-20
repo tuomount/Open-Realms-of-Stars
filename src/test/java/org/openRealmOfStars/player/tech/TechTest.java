@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.tech;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2020 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.gui.icons.Icon16x16;
-import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 /**
  * Test for Tech
@@ -69,7 +69,8 @@ public class TechTest {
   public void testTechImprovementDescription() {
     Tech tech = new Tech("Basic lab", TechType.Improvements, 1);
     tech.setImprovement("Basic lab");
-    assertTrue("Basic lab",tech.getTechInfo(SpaceRace.HUMAN)
+    assertTrue("Basic lab",tech.getTechInfo(
+        SpaceRaceFactory.createOne("HUMANS"))
         .contains("Improvement: \nBasic lab"));
   }
   @Test
@@ -77,7 +78,8 @@ public class TechTest {
   public void testTechHullDescription() {
     Tech tech = new Tech("Destroyer Mk1", TechType.Hulls, 1);
     tech.setHull("Destroyer Mk1");
-    assertTrue("Destroyer Mk1",tech.getTechInfo(SpaceRace.HUMAN)
+    assertTrue("Destroyer Mk1",tech.getTechInfo(
+        SpaceRaceFactory.createOne("HUMANS"))
         .contains("Ship design: \nDestroyer Mk1"));
   }
 
@@ -86,7 +88,8 @@ public class TechTest {
   public void testTechComponentDescription() {
     Tech tech = new Tech("Scanner Mk1", TechType.Electrics, 1);
     tech.setComponent("Scanner Mk1");
-    assertTrue("Scanner Mk1",tech.getTechInfo(SpaceRace.HUMAN)
+    assertTrue("Scanner Mk1",tech.getTechInfo(
+        SpaceRaceFactory.createOne("HUMANS"))
         .contains("Ship component: \nScanner Mk1"));
   }
 

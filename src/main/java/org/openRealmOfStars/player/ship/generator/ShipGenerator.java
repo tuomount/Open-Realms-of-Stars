@@ -1002,6 +1002,52 @@ public final class ShipGenerator {
           result.addComponent(scannerComp);
         }
       }
+    } else {
+      result = new ShipDesign(hull);
+      if (hull.getName().equals("Probe")) {
+        probe = true;
+      }
+      if (hull.getMaxSlot() == 4) {
+        probe = true;
+      }
+      result.setName(
+           "Probe Mk" + (player.getShipStatHighestNumber(
+              "Probe ") + 1));
+      ShipComponent engine = ShipComponentFactory
+          .createByName(player.getTechList().getFastestEngine().getComponent());
+      result.addComponent(engine);
+      ShipComponent power = ShipComponentFactory.createByName(
+          player.getTechList().getBestEnergySource().getComponent());
+      result.addComponent(power);
+      Tech scanner = TechList.getBestTech(electronicTechs, "Scanner");
+      Tech cloak = TechList.getBestTech(electronicTechs, "Cloaking device");
+      ShipComponent scannerComp = null;
+      ShipComponent cloakComp = null;
+      if (scanner != null) {
+        scannerComp = ShipComponentFactory.createByName(
+            scanner.getComponent());
+      }
+      if (cloak != null) {
+        cloakComp = ShipComponentFactory.createByName(cloak.getComponent());
+      }
+      if (probe) {
+        // TODO: Consider innate cloaking from STEALTHY RaceTrait?
+        if (cloakComp != null
+            && result.getFreeEnergy() >= cloakComp.getEnergyRequirement()) {
+          result.addComponent(cloakComp);
+        } else if (scannerComp != null) {
+          result.addComponent(scannerComp);
+        }
+      } else {
+        if (cloakComp != null
+            && result.getFreeEnergy() >= cloakComp.getEnergyRequirement()) {
+          result.addComponent(cloakComp);
+        }
+        if (scannerComp != null
+            && result.getFreeEnergy() >= scannerComp.getEnergyRequirement()) {
+          result.addComponent(scannerComp);
+        }
+      }
     }
     return result;
   }

@@ -18,6 +18,7 @@ package org.openRealmOfStars.player.race;
  */
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.StartingScenario;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.leader.RulerUtility;
@@ -489,10 +490,31 @@ public final class BackgroundStoryGenerator {
   private static String generateExploration(final PlayerInfo info,
       final String name, final Planet startPlanet) {
     StringBuilder sb = new StringBuilder();
-    sb.append(info.getEmpireName());
-    sb.append(StoryGeneratorUtility.startSpaceExploration());
-    sb.append(startPlanet.getName());
-    if (info.getRuler() != null) {
+    boolean spaceExpStarted = true;
+    if (info.getStartingScenario() == StartingScenario.FARMING_PLANET) {
+      spaceExpStarted = false;
+    }
+    if (spaceExpStarted) {
+      sb.append(info.getEmpireName());
+      sb.append(StoryGeneratorUtility.startSpaceExploration());
+      sb.append(startPlanet.getName());
+    } else {
+      if (info.getStartingScenario() == StartingScenario.FARMING_PLANET) {
+        sb.append(info.getEmpireName());
+        sb.append(" isn't reaching for the stars yet, but instead ");
+        sb.append(" they have grown their population ");
+        if (info.getRace().isLithovorian()) {
+          sb.append(" by building extra mines ");
+        } else if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
+          sb.append(" by building extra factories ");
+        } else {
+          sb.append(" by building extra farms ");
+        }
+        sb.append(" in ");
+        sb.append(startPlanet.getName());
+      }
+    }
+    if (info.getRuler() != null && spaceExpStarted) {
       sb.append(" with ");
       sb.append(info.getRuler().getCallName());
       switch (DiceGenerator.getRandom(2)) {
@@ -531,12 +553,16 @@ public final class BackgroundStoryGenerator {
       final int startingYear) {
     StringBuilder sb = new StringBuilder();
     boolean scientific = false;
+    boolean shipsBuilt = true;
     if (info.getGovernment() == GovernmentType.TECHNOCRACY
         || info.getGovernment() == GovernmentType.HEGEMONY) {
       scientific = true;
     }
     if (info.getRace().getResearchSpeed() > 100) {
       scientific = true;
+    }
+    if (info.getStartingScenario() == StartingScenario.FARMING_PLANET) {
+      shipsBuilt = false;
     }
     if (scientific) {
       Gender gender = DiceGenerator.pickRandom(info.getRace().getGenders());
@@ -550,10 +576,15 @@ public final class BackgroundStoryGenerator {
               + " travel and thus first prototype of space craft was created at"
               + " star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-          sb.append(". First flights were magnificent success and then first"
-              + " armed scout and colony ship was create at star year ");
-          sb.append(startingYear);
-          sb.append(". ");
+          sb.append(". First flights were magnificent success");
+          if (shipsBuilt) {
+            sb.append(" and then first"
+                + " armed scout and colony ship was create at star year ");
+            sb.append(startingYear);
+            sb.append(". ");
+          } else {
+            sb.append(". ");
+          }
           break;
         }
         case 1: {
@@ -580,10 +611,14 @@ public final class BackgroundStoryGenerator {
             sb.append(greatLeader);
             sb.append(" was able to see his research on action");
           }
-          sb.append(". First flights were magnificent success and then first"
-              + " armed scout and colony ship was create at star year ");
-          sb.append(startingYear);
-          sb.append(". ");
+          if (shipsBuilt) {
+            sb.append(". First flights were magnificent success and then first"
+                + " armed scout and colony ship was create at star year ");
+            sb.append(startingYear);
+            sb.append(". ");
+          } else {
+            sb.append(". ");
+          }
           break;
         }
         case 2: {
@@ -593,10 +628,15 @@ public final class BackgroundStoryGenerator {
               + " than light travel and thus first prototype of space craft "
               + "was created at star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-          sb.append(". First flights were magnificent success and then first"
-              + " armed scout and colony ship was create at star year ");
-          sb.append(startingYear);
-          sb.append(". ");
+          sb.append(". First flights were magnificent success");
+          if (shipsBuilt) {
+            sb.append(" and then first"
+                + " armed scout and colony ship was create at star year ");
+            sb.append(startingYear);
+            sb.append(". ");
+          } else {
+            sb.append(". ");
+          }
           break;
         }
         case 3: {
@@ -606,10 +646,15 @@ public final class BackgroundStoryGenerator {
               + " and breakthrough was made and soon after it first prototype"
               + " of space craft was created at star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-          sb.append(". First flights were magnificent success and then first"
-              + " armed scout and colony ship was create at star year ");
-          sb.append(startingYear);
-          sb.append(". ");
+          sb.append(". First flights were magnificent success");
+          if (shipsBuilt) {
+            sb.append(" and then first"
+                + " armed scout and colony ship was create at star year ");
+            sb.append(startingYear);
+            sb.append(". ");
+          } else {
+            sb.append(". ");
+          }
           break;
         }
         case 4: {
@@ -620,11 +665,15 @@ public final class BackgroundStoryGenerator {
           sb.append(" pioneered the discovery of faster-than-light travel,"
               + " leading to the creation of the first prototype of a "
               + "spacecraft.");
-          sb.append(" These initial flights marked resounding successes, "
-              + "culminating in the development of the first armed scout "
-              + "and colony ship in the star year ");
-          sb.append(startingYear);
-          sb.append(". ");
+          sb.append(" These initial flights marked resounding successes");
+          if (shipsBuilt) {
+            sb.append(", culminating in the development of the first armed"
+                + " scout and colony ship in the star year ");
+            sb.append(startingYear);
+            sb.append(". ");
+          } else {
+            sb.append(". ");
+          }
           break;
         }
       }
@@ -636,10 +685,15 @@ public final class BackgroundStoryGenerator {
               + " than light travel and thus first prototype of space craft "
               + "was created at star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-          sb.append(". First flights were magnificent success and then first"
-              + " armed scout and colony ship was create at star year ");
-          sb.append(startingYear);
-          sb.append(". ");
+          sb.append(". First flights were magnificent success ");
+          if (shipsBuilt) {
+            sb.append(" and then first"
+                + " armed scout and colony ship was create at star year ");
+            sb.append(startingYear);
+            sb.append(". ");
+          } else {
+            sb.append(". ");
+          }
           break;
         }
         case 1: {
@@ -648,10 +702,15 @@ public final class BackgroundStoryGenerator {
               + " years before actual prototype was done. First prototype of"
               + " space craft was created at star year ");
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-          sb.append(". First flights were magnificent success and then first"
-              + " armed scout and colony ship was create at star year ");
-          sb.append(startingYear);
-          sb.append(". ");
+          sb.append(". First flights were magnificent success");
+          if (shipsBuilt) {
+            sb.append(" and then first"
+                + " armed scout and colony ship was create at star year ");
+            sb.append(startingYear);
+            sb.append(". ");
+          } else {
+            sb.append(". ");
+          }
           break;
         }
         case 2: {
@@ -732,11 +791,15 @@ public final class BackgroundStoryGenerator {
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
           sb.append(", the first prototype spacecraft had been crafted,"
               + " heralding magnificent success during its maiden voyages. ");
-          sb.append("This achievement culminated in the creation of the ");
-          sb.append(StoryGeneratorUtility.randomInaugural());
-          sb.append(" armed scout and colony ships by star year ");
-          sb.append(startingYear);
-          sb.append(". ");
+          if (shipsBuilt) {
+            sb.append("This achievement culminated in the creation of the ");
+            sb.append(StoryGeneratorUtility.randomInaugural());
+            sb.append(" armed scout and colony ships by star year ");
+            sb.append(startingYear);
+            sb.append(". ");
+          } else {
+            sb.append(". ");
+          }
           break;
         }
         case 3: {
@@ -790,10 +853,15 @@ public final class BackgroundStoryGenerator {
           }
         }
           sb.append(startingYear - 10 - DiceGenerator.getRandom(15));
-          sb.append(". First flights were magnificent success and then first"
-              + " armed scout and colony ship was create at star year ");
-          sb.append(startingYear);
-          sb.append(". ");
+          sb.append(". First flights were magnificent success");
+          if (shipsBuilt) {
+            sb.append(" and then first"
+                + " armed scout and colony ship was create at star year ");
+            sb.append(startingYear);
+            sb.append(". ");
+          } else {
+            sb.append(". ");
+          }
           break;
         }
       }
@@ -1582,6 +1650,32 @@ public final class BackgroundStoryGenerator {
       }
     }
     sb.append(endOfworldDescription);
+    if (info.getStartingScenario() == StartingScenario.DESTROYED_HOME_PLANET) {
+      sb.append(" This planet was destroyed star centuries ago ");
+      switch (DiceGenerator.getRandom(3)) {
+      default:
+      case 0: {
+        sb.append("when star of the system went into super nova. ");
+        break;
+      }
+      case 1: {
+        sb.append("massive asteroid cloud hit the planet and bombed the planet"
+            + "surface into waste land. ");
+        break;
+      }
+      case 2: {
+        sb.append("when star of system went past of it's time and engulfed the"
+            + " planet while star was growing to red giant.");
+        break;
+      }
+      case 3: {
+        sb.append(info.getRace().getName());
+        sb.append(" did something unforgiven by thermo nuking whole planet"
+            + " into pieces.");
+        break;
+      }
+      }
+    }
     return sb.toString();
   }
 

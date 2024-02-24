@@ -74,7 +74,9 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    sb.append(generateFtlStory(info, startingYear));
+    if (info.getStartingScenario() != StartingScenario.FROM_ANOTHER_GALAXY) {
+      sb.append(generateFtlStory(info, startingYear));
+    }
     sb.append(generateExploration(info, namePlural, startPlanet));
     return sb.toString();
   }
@@ -910,6 +912,11 @@ public final class BackgroundStoryGenerator {
     if (info.getGovernment().hasCreditRush()) {
       traders = true;
     }
+    if (info.getStartingScenario() == StartingScenario.FROM_ANOTHER_GALAXY) {
+      sb.append("Space pioneers space craft logs tell about history of ");
+      sb.append(info.getRace().getName());
+      sb.append("with following information: \n");
+    }
     if (unity) {
       switch (DiceGenerator.getRandom(3)) {
         default:
@@ -1239,6 +1246,40 @@ public final class BackgroundStoryGenerator {
     boolean harsh = false;
     boolean cold = false;
     boolean hot = false;
+    if (info.getStartingScenario() == StartingScenario.FROM_ANOTHER_GALAXY) {
+      sb.append(namePlural);
+      sb.append(" have been travelling millions of star years deep space "
+          + "with help of cryo sleep. They have travelling from another"
+          + " galaxy to this. ");
+      sb.append(" Their knowledge of their home planet is ");
+      switch (DiceGenerator.getRandom(3)) {
+      default:
+      case 0: {
+        sb.append("very vague and none of the pioneers cannot remember it due"
+            + " the cryo sleep.");
+        break;
+      }
+      case 1: {
+        sb.append("limited to knowledge that it was ");
+        sb.append(startPlanet.getPlanetType().getTypeAsString());
+        sb.append(". No other information of ");
+        sb.append(namePlural);
+        sb.append(" home planet is available.");
+        break;
+      }
+      case 2: {
+        sb.append("unknown. Since all the records on space crafts of the home"
+            + " planet was destroyed in ion storm star centuries ago.");
+        break;
+      }
+      case 3: {
+        sb.append("limited. None of the pioneers cannot remember due cryo"
+            + " sleep and it seems left out of space crafts on purpose.");
+        break;
+      }
+      }
+      return sb.toString();
+    }
     if (info.getRace().isLithovorian()) {
       sb.append("Life were developed from silicate material");
       switch (DiceGenerator.getRandom(2)) {

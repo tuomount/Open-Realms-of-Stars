@@ -71,7 +71,12 @@ public enum StartingScenario {
   /**
    * Start without home planet with 4 scouts and 2 colony ships.
    */
-  DESTROYED_HOME_PLANET;
+  DESTROYED_HOME_PLANET,
+  /**
+   * Start without home planet, since realm arrived from another galaxy.
+   * Start with 4 scouts and 2 colony ships.
+   */
+  FROM_ANOTHER_GALAXY;
 
 
   /**
@@ -91,6 +96,7 @@ public enum StartingScenario {
       case HOT_ARID_SIZE12: return 8;
       case FARMING_PLANET: return 9;
       case DESTROYED_HOME_PLANET: return 10;
+      case FROM_ANOTHER_GALAXY: return 11;
       default: throw new IllegalArgumentException("Unknown starting scenario.");
     }
   }
@@ -113,6 +119,7 @@ public enum StartingScenario {
       case 8: return HOT_ARID_SIZE12;
       case 9: return FARMING_PLANET;
       case 10: return DESTROYED_HOME_PLANET;
+      case 11: return FROM_ANOTHER_GALAXY;
       default: throw new IllegalArgumentException("Unknown starting scenario.");
     }
   }
@@ -135,6 +142,7 @@ public enum StartingScenario {
     case HOT_ARID_SIZE12: return "Hot, arid planet with extra tech";
     case FARMING_PLANET: return "Temperate arid farming planet, but no ships";
     case DESTROYED_HOME_PLANET: return "No home, start from deep space";
+    case FROM_ANOTHER_GALAXY: return "Arrived from another galaxy";
     }
   }
 
@@ -171,6 +179,9 @@ public enum StartingScenario {
         + " from deep space with 4 scouts and 2 colony ships. Colony fleet in"
         + " deep space provides extra research point."
         + " Single start allowed.";
+    case FROM_ANOTHER_GALAXY: return "No home planet. Start from deep space"
+        + " with 4 scouts and 2 colony ships. Colony fleet in deep space"
+        + " provides extra research point. Start with extra technology.";
 
     }
   }

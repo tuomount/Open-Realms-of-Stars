@@ -353,7 +353,9 @@ public class StarMapGenerator {
     for (ShipStat stat : stats) {
       int numShip = 1;
       if (playerInfo.getStartingScenario()
-          == StartingScenario.DESTROYED_HOME_PLANET) {
+          == StartingScenario.DESTROYED_HOME_PLANET
+          || playerInfo.getStartingScenario()
+          == StartingScenario.FROM_ANOTHER_GALAXY) {
         if (stat.getDesign().isMilitaryShip()) {
           numShip = 4;
         }
@@ -903,6 +905,26 @@ public class StarMapGenerator {
           return;
         }
         playerInfo.setStartingScenario(StartingScenario.TEMPERATE_HUMID_SIZE12);
+      }
+      if (playerInfo.getStartingScenario()
+          == StartingScenario.FROM_ANOTHER_GALAXY) {
+        destroyedPlanetStartAdded = true;
+        int sx = sunx + DiceGenerator.getRandom(-1, 1);
+        int sy = suny + DiceGenerator.getRandom(-1, 1);
+        if (!elderRealmStart) {
+          createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
+        } else if (playerInfo.isElderRealm()) {
+          createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
+        } else {
+          SquareInfo info = new SquareInfo(SquareInfo.TYPE_DEEP_SPACE_START,
+              playerIndex);
+          starMap.setSquareInfo(sx, sy, info);
+          starMap.setTile(sx, sy, Tiles.getTileByName(TileNames.EMPTY)
+              .getIndex());
+        }
+        solarSystem = StarMapUtilities.setSolarSystem(solarSystem, sx,
+            sy, getMaxX(), getMaxY());
+        return;
       }
     }
     if (playerIndex == -1 && !solHasAdded

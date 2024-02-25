@@ -342,6 +342,11 @@ public class PlayerInfo {
       extraTech[0] = "randomElectronics";
       extraTech[1] = "randomCombat";
     }
+    if (getStartingScenario() == StartingScenario.FROM_ANOTHER_GALAXY) {
+      extraTech = new String[2];
+      extraTech[0] = "randomPropulsion";
+      extraTech[1] = "randomPropulsion";
+    }
     setFakeMilitarySize(100);
     // This is the old way of government
     setGovernment(GovernmentType.AI);

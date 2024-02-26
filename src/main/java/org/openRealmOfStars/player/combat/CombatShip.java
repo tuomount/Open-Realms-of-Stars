@@ -442,6 +442,9 @@ public class CombatShip implements Comparable<CombatShip> {
       }
     }
     if (getEnergyLevel() < ship.getTotalEnergy() && !hasOverloaded()) {
+      if (ship.getTotalEnergy() > 0 && overloadFailure > 0) {
+        setOverloadFailure(getOverloadFailure() - 1);
+      }
       setEnergyLevel(getEnergyLevel() + 1);
     }
     setOverloaded(false);

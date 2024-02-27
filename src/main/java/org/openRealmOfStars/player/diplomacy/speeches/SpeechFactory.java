@@ -74,7 +74,11 @@ public final class SpeechFactory {
    */
   public static SpeechLine createLine(final SpeechType type,
       final SpaceRace race, final String dynamicContent) {
-    return SINGLETON.create(type, race.getSpeechSetId(), dynamicContent);
+    String tmp = dynamicContent;
+    if (dynamicContent == null) {
+      tmp = "";
+    }
+    return SINGLETON.create(type, race.getSpeechSetId(), tmp);
   }
 
   /**

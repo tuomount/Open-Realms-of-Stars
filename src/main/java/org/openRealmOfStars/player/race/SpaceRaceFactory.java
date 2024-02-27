@@ -38,6 +38,10 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /** SpaceRace Factory which reads space races from JSON. */
 public final class SpaceRaceFactory {
 
+  /** Constant for pseudo race SPACEPIRATES */
+  public static final String SPACE_PIRATE = "SPACEPIRATES";
+  /** Constant for pseudo race SPACEMONSTERS */
+  public static final String SPACE_MONSTER = "SPACEMONSTERS";
   /** The Singleton */
   private static final SpaceRaceFactory SINGLETON = new SpaceRaceFactory();
 

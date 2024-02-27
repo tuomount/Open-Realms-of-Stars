@@ -48,9 +48,8 @@ public enum RadiationType {
   public static RadiationType getByIndex(final int index) {
     if (index >= 0 && index < values().length) {
       return values()[index];
-    } else {
-      throw new IllegalArgumentException("Unknown radiation type");
     }
+    throw new IllegalArgumentException("Unknown radiation type");
   }
 
   /**

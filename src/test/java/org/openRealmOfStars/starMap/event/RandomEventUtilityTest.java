@@ -356,7 +356,8 @@ public class RandomEventUtilityTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMutiny() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
-    PlayerInfo board = new PlayerInfo(SpaceRaceFactory.createOne("SPACEPIRATES"));
+    PlayerInfo board = new PlayerInfo(SpaceRaceFactory.createOne(
+        SpaceRaceFactory.SPACE_PIRATE));
     Fleet fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.getMilitaryValue()).thenReturn(40);
     Mockito.when(fleet.getName()).thenReturn("Test fleet");
@@ -379,7 +380,8 @@ public class RandomEventUtilityTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRaiders() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
-    PlayerInfo board = new PlayerInfo(SpaceRaceFactory.createOne("SPACEPIRATES"));
+    PlayerInfo board = new PlayerInfo(SpaceRaceFactory.createOne(
+        SpaceRaceFactory.SPACE_PIRATE));
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     planet.setPlanetOwner(0, info);
     StarMap starMap = Mockito.mock(StarMap.class);

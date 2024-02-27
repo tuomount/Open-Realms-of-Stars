@@ -230,7 +230,8 @@ public class StarMapTest {
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
     PlayerInfo board = Mockito.mock(PlayerInfo.class);
-    Mockito.when(board.getRace()).thenReturn(SpaceRaceFactory.createOne("SPACEPIRATES"));
+    Mockito.when(board.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        SpaceRaceFactory.SPACE_PIRATE));
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
     Mockito.when(board.getEmpireName()).thenReturn("board");
     Mockito.when(board.isBoard()).thenReturn(true);
@@ -308,7 +309,8 @@ public class StarMapTest {
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
     PlayerInfo board = Mockito.mock(PlayerInfo.class);
-    Mockito.when(board.getRace()).thenReturn(SpaceRaceFactory.createOne("SPACEPIRATES"));
+    Mockito.when(board.getRace()).thenReturn(SpaceRaceFactory.createOne(
+        SpaceRaceFactory.SPACE_PIRATE));
     Mockito.when(board.getEmpireName()).thenReturn("board");
     Mockito.when(board.isBoard()).thenReturn(true);
     FleetList fleetList = Mockito.mock(FleetList.class);
@@ -388,7 +390,7 @@ public class StarMapTest {
     Mockito.when(info.getShipStatList()).thenReturn(stats);
     PlayerInfo board = Mockito.mock(PlayerInfo.class);
     Mockito.when(board.getRace()).thenReturn(SpaceRaceFactory.createOne(
-        "SPACEPIRATES"));
+        SpaceRaceFactory.SPACE_PIRATE));
     Mockito.when(board.getEmpireName()).thenReturn("board");
     Mockito.when(board.isBoard()).thenReturn(true);
     FleetList fleetList = Mockito.mock(FleetList.class);

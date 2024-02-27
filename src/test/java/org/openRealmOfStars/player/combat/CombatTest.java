@@ -364,7 +364,7 @@ public class CombatTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testStarbaseFleetLose() {
     PlayerInfo defender = new PlayerInfo(SpaceRaceFactory.createOne(
-        "SPACEPIRATES"));
+        SpaceRaceFactory.SPACE_PIRATE));
     PlayerInfo attacker = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     attacker.getTechList().addTech(TechFactory.createCombatTech(
         "Photon torpedo Mk8", 8));
@@ -413,7 +413,7 @@ public class CombatTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testStarbaseFleetWins() {
     PlayerInfo defender = new PlayerInfo(SpaceRaceFactory.createOne(
-        "SPACEPIRATES"));
+        SpaceRaceFactory.SPACE_PIRATE));
     PlayerInfo attacker = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"));
     defender.getTechList().addTech(TechFactory.createCombatTech(
         "Photon torpedo Mk5", 5));

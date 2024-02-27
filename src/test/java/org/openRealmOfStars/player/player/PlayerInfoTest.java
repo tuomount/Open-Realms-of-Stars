@@ -117,7 +117,7 @@ public class PlayerInfoTest {
     @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoSpacePirate() {
         PlayerInfo pirate = new PlayerInfo(SpaceRaceFactory.createOne(
-            "SPACEPIRATES"));
+            SpaceRaceFactory.SPACE_PIRATE));
         assertEquals(true, pirate.isBoard());
         ShipStat[] statList = pirate.getShipStatList();
         assertEquals("Scout Mk1", statList[0].getDesign().getName());

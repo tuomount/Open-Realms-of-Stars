@@ -115,7 +115,7 @@ public class AiTurnViewTest {
     Mockito.when(game.getStarMap()).thenReturn(map);
     AITurnView view = new AITurnView(game);
     PlayerInfo pirates = new PlayerInfo(SpaceRaceFactory.createOne(
-        "SPACEPIRATES"), 9, 8);
+        SpaceRaceFactory.SPACE_PIRATE), 9, 8);
     Tech tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() <= 2);
     assertEquals(false, view.updateSpacePirates(pirates,
@@ -173,7 +173,7 @@ public class AiTurnViewTest {
     Mockito.when(game.getStarMap()).thenReturn(map);
     AITurnView view = new AITurnView(game);
     PlayerInfo pirates = new PlayerInfo(SpaceRaceFactory.createOne(
-        "SPACEPIRATES"), 9, 8);
+        SpaceRaceFactory.SPACE_PIRATE), 9, 8);
     Tech tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() <= 2);
     view.updateSpacePirates(pirates,

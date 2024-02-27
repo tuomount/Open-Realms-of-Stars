@@ -111,7 +111,7 @@ public class Diplomacy {
         diplomacyList[i] = new DiplomacyBonusList(i);
         if (boardPlayerIndex != -1 && boardPlayerIndex <= i) {
           diplomacyList[i].addBonus(DiplomacyBonusType.BOARD_PLAYER,
-              SpaceRaceFactory.createOne("SPACE_PIRATES"));
+              SpaceRaceFactory.createOne(SpaceRaceFactory.SPACE_PIRATE));
         }
       }
     }

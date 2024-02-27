@@ -804,7 +804,7 @@ public class NewsFactoryTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Space pirates");
     Mockito.when(info.getRace()).thenReturn(
-        SpaceRaceFactory.createOne("SPACEPIRATES"));
+        SpaceRaceFactory.createOne(SpaceRaceFactory.SPACE_PIRATE));
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList list = Mockito.mock(PlayerList.class);
     Mockito.when(list.getSpacePiratePlayer()).thenReturn(info);

@@ -88,7 +88,7 @@ public class DiplomaticTradeTest {
     player1.initMapData(5, 5);
 
     PlayerInfo player2 = new PlayerInfo(SpaceRaceFactory.createOne(
-        "SPACEPIRATES"), maxPlayer,
+        SpaceRaceFactory.SPACE_PIRATE), maxPlayer,
         maxPlayer);
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));

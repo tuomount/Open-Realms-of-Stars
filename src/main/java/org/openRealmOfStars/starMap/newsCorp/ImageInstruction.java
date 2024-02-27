@@ -1228,16 +1228,16 @@ public class ImageInstruction {
     if (race != null) {
       drawImg = GuiStatics.getRaceImg(race);
     }
-    if (SpaceRaceFactory.createOne("SPACEMONSTERS").getNameSingle()
-        .equals(image)) {
+    if (SpaceRaceFactory.createOne(SpaceRaceFactory.SPACE_MONSTER)
+        .getNameSingle().equals(image)) {
       //FIXME: This might be needed for changing...
       drawImg = GuiStatics.getRaceImg(SpaceRaceFactory.createOne(
-          "SPACEPIRATES"));
+          SpaceRaceFactory.SPACE_PIRATE));
     }
-    if (SpaceRaceFactory.createOne("SPACEPIRATES").getNameSingle()
-        .equals(image)) {
+    if (SpaceRaceFactory.createOne(SpaceRaceFactory.SPACE_PIRATE)
+        .getNameSingle().equals(image)) {
       drawImg = GuiStatics.getRaceImg(SpaceRaceFactory.createOne(
-          "SPACEPIRATES"));
+          SpaceRaceFactory.SPACE_PIRATE));
     }
     if (LOGO.equals(image)) {
       drawImg = GuiStatics.IMAGE_GBNC;

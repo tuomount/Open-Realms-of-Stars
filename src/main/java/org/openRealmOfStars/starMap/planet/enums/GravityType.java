@@ -51,9 +51,8 @@ public enum GravityType {
   public static GravityType getByIndex(final int index) {
     if (index >= 0 && index < values().length) {
       return values()[index];
-    } else {
-      throw new IllegalArgumentException("Unknown gravity");
     }
+    throw new IllegalArgumentException("Unknown gravity");
   }
 
   @Override

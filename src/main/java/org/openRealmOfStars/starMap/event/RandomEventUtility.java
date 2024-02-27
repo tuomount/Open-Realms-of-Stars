@@ -521,7 +521,7 @@ public final class RandomEventUtility {
         Planet planet = DiceGenerator.pickRandom(planets);
         event.setPlanet(planet);
         PlayerInfo extraPlayer = new PlayerInfo(SpaceRaceFactory.createOne(
-            "SPACEPIRATES"));
+            SpaceRaceFactory.SPACE_PIRATE));
         int numberOfTechs = 5;
         switch (map.getGameLengthState()) {
           case ELDER_HEAD_START:

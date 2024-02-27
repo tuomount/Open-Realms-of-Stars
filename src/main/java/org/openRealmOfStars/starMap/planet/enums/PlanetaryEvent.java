@@ -99,17 +99,7 @@ public enum PlanetaryEvent {
    * @return Index
    */
   public int getIndex() {
-    switch (this) {
-      case NONE: return 0;
-      case ANCIENT_LAB: return 1;
-      case ANCIENT_FACTORY: return 2;
-      case ANCIENT_TEMPLE: return 3;
-      case ANCIENT_PALACE: return 4;
-      case BLACK_MONOLITH: return 5;
-      case ANCIENT_ARTIFACT: return 6;
-      default:
-        throw new IllegalArgumentException("Unknown planetary event!!");
-    }
+    return this.ordinal();
   }
 
   /**
@@ -154,16 +144,10 @@ public enum PlanetaryEvent {
    * @return PlanetaryEvent
    */
   public static PlanetaryEvent getByIndex(final int index) {
-    switch (index) {
-      case 0: return NONE;
-      case 1: return ANCIENT_LAB;
-      case 2: return ANCIENT_FACTORY;
-      case 3: return ANCIENT_TEMPLE;
-      case 4: return ANCIENT_PALACE;
-      case 5: return BLACK_MONOLITH;
-      case 6: return ANCIENT_ARTIFACT;
-      default:
-        throw new IllegalArgumentException("Unknown planetary event!!");
+    if (index >= 0 && index < values().length) {
+      return values()[index];
+    } else {
+      throw new IllegalArgumentException("Unknown planetary event!!");
     }
   }
 

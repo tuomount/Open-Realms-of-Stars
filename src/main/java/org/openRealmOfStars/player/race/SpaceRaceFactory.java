@@ -75,9 +75,7 @@ public final class SpaceRaceFactory {
     var nonRoboticRaces = Stream.of(getValues())
         .filter(race -> !race.isRoboticRace())
         // Filter out "pseudo-races"
-        .filter(
-            race -> !race.isPirate()
-            && !race.isMonster())
+        .filter(race -> race.getSpaceRaceType() == SpaceRaceType.REGULAR)
         .collect(Collectors.toList());
     if (nonRoboticRaces.isEmpty()) {
       return null;
@@ -92,9 +90,7 @@ public final class SpaceRaceFactory {
   public static SpaceRace getRandomRace() {
     var races = Stream.of(getValues())
         // Filter out "pseudo-races"
-        .filter(
-            race -> !race.isPirate()
-            && !race.isMonster())
+        .filter(race -> race.getSpaceRaceType() == SpaceRaceType.REGULAR)
         .collect(Collectors.toList());
     if (races.isEmpty()) {
       return null;
@@ -225,6 +221,7 @@ class SpaceRaceLoader extends DataLoader<String, SpaceRace> {
       final var name = jobj.getString("Name");
       final var nameSingle = jobj.getString("NameSingle");
       SpaceRace tmp = new SpaceRace(spaceRaceId, name, nameSingle);
+
       final var bridgeId = jobj.getString("BridgeId");
       tmp.setBridgeId(bridgeId);
       final var spaceShipId = jobj.getString("SpaceShipId");

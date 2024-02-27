@@ -43,18 +43,7 @@ public enum ShipSize {
    * @return int
    */
   public int getIndex() {
-    switch (this) {
-    case SMALL:
-      return 0;
-    case MEDIUM:
-      return 1;
-    case LARGE:
-      return 2;
-    case HUGE:
-      return 3;
-    default:
-      return 0;
-    }
+    return this.ordinal();
   }
 
   /**
@@ -87,17 +76,10 @@ public enum ShipSize {
    * @return Ship size
    */
   public static ShipSize getTypeByIndex(final int index) {
-    switch (index) {
-    case 0:
-      return ShipSize.SMALL;
-    case 1:
-      return ShipSize.MEDIUM;
-    case 2:
-      return ShipSize.LARGE;
-    case 3:
-      return ShipSize.HUGE;
-    default:
-      return ShipSize.SMALL;
+    if (index >= 0 && index < values().length) {
+      return values()[index];
+    } else {
+      throw new IllegalArgumentException("Unknown ship size");
     }
   }
 

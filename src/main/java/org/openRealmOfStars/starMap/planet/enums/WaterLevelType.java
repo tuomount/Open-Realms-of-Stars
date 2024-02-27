@@ -43,15 +43,7 @@ public enum WaterLevelType {
    * @return int
    */
   public int getIndex() {
-    switch (this) {
-      case BARREN: return 0;
-      case DESERT: return 1;
-      case ARID: return 2;
-      case HUMID: return 3;
-      case MARINE: return 4;
-      case OCEAN: return 5;
-      default: throw new IllegalArgumentException("Unknown water level");
-    }
+    return this.ordinal();
   }
 
   /**
@@ -60,14 +52,10 @@ public enum WaterLevelType {
    * @return WaterLevelType
    */
   public static WaterLevelType getByIndex(final int index) {
-    switch (index) {
-      case 0: return BARREN;
-      case 1: return DESERT;
-      case 2: return ARID;
-      case 3: return HUMID;
-      case 4: return MARINE;
-      case 5: return OCEAN;
-      default: throw new IllegalArgumentException("Unknown water level type");
+    if (index >= 0 && index < values().length) {
+      return values()[index];
+    } else {
+      throw new IllegalArgumentException("Unknown water level type");
     }
   }
 

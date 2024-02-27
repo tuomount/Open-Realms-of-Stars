@@ -1728,30 +1728,34 @@ public class StarMapGenerator {
    */
   private void makeStartingTutorialTexts(final PlayerInfo playerInfo,
       final Planet planet) {
-    if (Game.getTutorial() != null && playerInfo.isHuman()
-        && starMap.isTutorialEnabled()) {
-      String tutorialText = Game.getTutorial().showTutorialText(0);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
-      tutorialText = Game.getTutorial().showTutorialText(1);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.PLANETARY, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        msg.setCoordinate(planet.getCoordinate());
-        msg.setMatchByString(planet.getName());
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
-      tutorialText = Game.getTutorial().showTutorialText(2);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.PLANETARY, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        msg.setCoordinate(planet.getCoordinate());
-        msg.setMatchByString(planet.getName());
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
+    if (Game.getTutorial() == null || !playerInfo.isHuman()
+        || !starMap.isTutorialEnabled()) {
+      return;
+    }
+
+    String tutorialText = Game.getTutorial().showTutorialText(0);
+    if (tutorialText != null) {
+      Message msg = new Message(MessageType.INFORMATION, tutorialText,
+          Icons.getIconByName(Icons.ICON_TUTORIAL));
+      playerInfo.getMsgList().addNewMessage(msg);
+    }
+
+    tutorialText = Game.getTutorial().showTutorialText(1);
+    if (tutorialText != null) {
+      Message msg = new Message(MessageType.PLANETARY, tutorialText,
+          Icons.getIconByName(Icons.ICON_TUTORIAL));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(planet.getName());
+      playerInfo.getMsgList().addNewMessage(msg);
+    }
+
+    tutorialText = Game.getTutorial().showTutorialText(2);
+    if (tutorialText != null) {
+      Message msg = new Message(MessageType.PLANETARY, tutorialText,
+          Icons.getIconByName(Icons.ICON_TUTORIAL));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(planet.getName());
+      playerInfo.getMsgList().addNewMessage(msg);
     }
   }
 
@@ -1762,22 +1766,25 @@ public class StarMapGenerator {
    */
   private void makeStartingTutorialTextsInDeepSpace(final PlayerInfo playerInfo,
       final Coordinate coord) {
-    if (Game.getTutorial() != null && playerInfo.isHuman()
-        && starMap.isTutorialEnabled()) {
-      String tutorialText = Game.getTutorial().showTutorialText(0);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.INFORMATION, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
-      tutorialText = Game.getTutorial().showTutorialText(3);
-      if (tutorialText != null) {
-        Message msg = new Message(MessageType.FLEET, tutorialText,
-            Icons.getIconByName(Icons.ICON_TUTORIAL));
-        msg.setCoordinate(coord);
-        msg.setMatchByString("Colony #0");
-        playerInfo.getMsgList().addNewMessage(msg);
-      }
+    if (Game.getTutorial() == null || !playerInfo.isHuman()
+        || !starMap.isTutorialEnabled()) {
+      return;
+    }
+
+    String tutorialText = Game.getTutorial().showTutorialText(0);
+    if (tutorialText != null) {
+      Message msg = new Message(MessageType.INFORMATION, tutorialText,
+          Icons.getIconByName(Icons.ICON_TUTORIAL));
+      playerInfo.getMsgList().addNewMessage(msg);
+    }
+
+    tutorialText = Game.getTutorial().showTutorialText(3);
+    if (tutorialText != null) {
+      Message msg = new Message(MessageType.FLEET, tutorialText,
+          Icons.getIconByName(Icons.ICON_TUTORIAL));
+      msg.setCoordinate(coord);
+      msg.setMatchByString("Colony #0");
+      playerInfo.getMsgList().addNewMessage(msg);
     }
   }
 
@@ -1825,6 +1832,7 @@ public class StarMapGenerator {
     }
 
   }
+
   /**
    * Checks if 4x4 area is empty around the coordinate.
    * Note this is not centered. This is more closer

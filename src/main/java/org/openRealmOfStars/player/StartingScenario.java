@@ -84,21 +84,7 @@ public enum StartingScenario {
    * @return int
    */
   public int getIndex() {
-    switch (this) {
-      case RANDOM: return 0;
-      case TEMPERATE_HUMID_SIZE12: return 1;
-      case EARTH: return 2;
-      case TEMPERATE_ARID_SIZE12: return 3;
-      case TEMPERATE_MARINE_SIZE9: return 4;
-      case TEMPERATE_MARINE_SIZE14: return 5;
-      case COLD_HUMID_SIZE12: return 6;
-      case TROPICAL_HUMID_SIZE12: return 7;
-      case HOT_ARID_SIZE12: return 8;
-      case FARMING_PLANET: return 9;
-      case DESTROYED_HOME_PLANET: return 10;
-      case FROM_ANOTHER_GALAXY: return 11;
-      default: throw new IllegalArgumentException("Unknown starting scenario.");
-    }
+    return this.ordinal();
   }
 
   /**
@@ -107,20 +93,10 @@ public enum StartingScenario {
    * @return StartingScenario
    */
   public static StartingScenario getByIndex(final int index) {
-    switch (index) {
-      case 0: return RANDOM;
-      case 1: return TEMPERATE_HUMID_SIZE12;
-      case 2: return EARTH;
-      case 3: return TEMPERATE_ARID_SIZE12;
-      case 4: return TEMPERATE_MARINE_SIZE9;
-      case 5: return TEMPERATE_MARINE_SIZE14;
-      case 6: return COLD_HUMID_SIZE12;
-      case 7: return TROPICAL_HUMID_SIZE12;
-      case 8: return HOT_ARID_SIZE12;
-      case 9: return FARMING_PLANET;
-      case 10: return DESTROYED_HOME_PLANET;
-      case 11: return FROM_ANOTHER_GALAXY;
-      default: throw new IllegalArgumentException("Unknown starting scenario.");
+    if (index >= 0 && index < values().length) {
+      return values()[index];
+    } else {
+      throw new IllegalArgumentException("Unknown starting scenario.");
     }
   }
 

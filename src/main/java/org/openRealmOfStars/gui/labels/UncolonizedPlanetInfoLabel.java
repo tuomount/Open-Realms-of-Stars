@@ -98,15 +98,15 @@ public class UncolonizedPlanetInfoLabel extends EmptyInfoPanel {
     addIcon(icon);
     int suitable = info.getPlanetSuitabilityValue(planet);
     String iconName = Icons.ICON_OKAY;
-    if (suitable >= 150) {
+    if (suitable > 100) {
       iconName = Icons.ICON_VERY_HAPPY;
-    } else if (suitable >= 125) {
+    } else if (suitable == 100) {
       iconName = Icons.ICON_HAPPY;
-    } else if (suitable >= 100) {
-      iconName = Icons.ICON_OKAY;
     } else if (suitable >= 75) {
-      iconName = Icons.ICON_SAD;
+      iconName = Icons.ICON_OKAY;
     } else if (suitable >= 50) {
+      iconName = Icons.ICON_SAD;
+    } else {
       iconName = Icons.ICON_VERY_SAD;
     }
     icon = new IconLabel(null, Icons.getIconByName(iconName),

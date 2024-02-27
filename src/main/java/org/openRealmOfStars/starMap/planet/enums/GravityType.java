@@ -40,12 +40,7 @@ public enum GravityType {
    * @return int
    */
   public int getIndex() {
-    switch (this) {
-      case LOW_GRAVITY: return 1;
-      case NORMAL_GRAVITY: return 2;
-      case HIGH_GRAVITY: return 3;
-      default: throw new IllegalArgumentException("Unknown gravity");
-    }
+    return this.ordinal();
   }
 
   /**
@@ -54,11 +49,10 @@ public enum GravityType {
    * @return GravityType
    */
   public static GravityType getByIndex(final int index) {
-    switch (index) {
-      case 1: return LOW_GRAVITY;
-      case 2: return NORMAL_GRAVITY;
-      case 3: return HIGH_GRAVITY;
-      default: throw new IllegalArgumentException("Unknown gravity");
+    if (index >= 0 && index < values().length) {
+      return values()[index];
+    } else {
+      throw new IllegalArgumentException("Unknown gravity");
     }
   }
 

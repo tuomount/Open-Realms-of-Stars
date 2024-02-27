@@ -55,22 +55,7 @@ public enum ShipHullType {
    * @return int
    */
   public int getIndex() {
-    switch (this) {
-    case NORMAL:
-      return 0;
-    case FREIGHTER:
-      return 1;
-    case PROBE:
-      return 2;
-    case STARBASE:
-      return 3;
-    case PRIVATEER:
-      return 4;
-    case ORBITAL:
-      return 5;
-    default:
-      throw new IllegalArgumentException("Unexpected ship hull type!");
-    }
+    return this.ordinal();
   }
 
   /**
@@ -79,20 +64,9 @@ public enum ShipHullType {
    * @return Ship hull type
    */
   public static ShipHullType getTypeByIndex(final int index) {
-    switch (index) {
-    case 0:
-      return ShipHullType.NORMAL;
-    case 1:
-      return ShipHullType.FREIGHTER;
-    case 2:
-      return ShipHullType.PROBE;
-    case 3:
-      return ShipHullType.STARBASE;
-    case 4:
-      return ShipHullType.PRIVATEER;
-    case 5:
-      return ShipHullType.ORBITAL;
-    default:
+    if (index >= 0 && index < values().length) {
+      return values()[index];
+    } else {
       throw new IllegalArgumentException("Unexpected ship hull type!");
     }
   }

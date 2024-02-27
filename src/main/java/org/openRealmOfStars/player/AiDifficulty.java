@@ -53,18 +53,7 @@ public enum AiDifficulty {
    * @return int
    */
   public int getIndex() {
-    switch (this) {
-      case WEAK: {
-        return 0;
-      }
-      default:
-      case NORMAL: {
-        return 1;
-      }
-      case CHALLENGING: {
-        return 2;
-      }
-    }
+    return this.ordinal();
   }
 
   @Override

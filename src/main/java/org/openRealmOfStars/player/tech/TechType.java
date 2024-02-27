@@ -51,22 +51,7 @@ public enum TechType {
    * @return int
    */
   public int getIndex() {
-    switch (this) {
-    case Combat:
-      return 0;
-    case Defense:
-      return 1;
-    case Hulls:
-      return 2;
-    case Improvements:
-      return 3;
-    case Propulsion:
-      return 4;
-    case Electrics:
-      return 5;
-    default:
-      throw new IllegalArgumentException("Unexpected Tech type!");
-    }
+    return this.ordinal();
   }
 
   /**
@@ -75,21 +60,10 @@ public enum TechType {
    * @return Tech Type
    */
   public static TechType getTypeByIndex(final int index) {
-    switch (index) {
-    case 0:
-      return TechType.Combat;
-    case 1:
-      return TechType.Defense;
-    case 2:
-      return TechType.Hulls;
-    case 3:
-      return TechType.Improvements;
-    case 4:
-      return TechType.Propulsion;
-    case 5:
-      return TechType.Electrics;
-    default:
-      throw new IllegalArgumentException("Unexpected Tech type!");
+    if (index >= 0 && index < values().length) {
+      return values()[index];
+    } else {
+      throw new IllegalArgumentException("Unexpected tech type!");
     }
   }
 

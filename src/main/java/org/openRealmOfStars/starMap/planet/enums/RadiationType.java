@@ -37,13 +37,7 @@ public enum RadiationType {
    * @return int
    */
   public int getIndex() {
-    switch (this) {
-      case NO_RADIATION: return 0;
-      case LOW_RADIATION: return 1;
-      case HIGH_RADIATION: return 2;
-      case VERY_HIGH_RAD: return 3;
-      default: throw new IllegalArgumentException("Unknown radiation type");
-    }
+    return this.ordinal();
   }
 
   /**
@@ -52,12 +46,10 @@ public enum RadiationType {
    * @return RadiationType
    */
   public static RadiationType getByIndex(final int index) {
-    switch (index) {
-      case 0: return NO_RADIATION;
-      case 1: return LOW_RADIATION;
-      case 2: return HIGH_RADIATION;
-      case 3: return VERY_HIGH_RAD;
-      default: throw new IllegalArgumentException("Unknown radiation type");
+    if (index >= 0 && index < values().length) {
+      return values()[index];
+    } else {
+      throw new IllegalArgumentException("Unknown radiation type");
     }
   }
 

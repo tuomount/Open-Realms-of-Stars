@@ -194,86 +194,7 @@ public enum ShipComponentType {
    * @return int
    */
   public int getIndex() {
-    switch (this) {
-    case WEAPON_BEAM:
-      return 0;
-    case WEAPON_RAILGUN:
-      return 1;
-    case WEAPON_PHOTON_TORPEDO:
-      return 2;
-    case WEAPON_ECM_TORPEDO:
-      return 3;
-    case WEAPON_HE_MISSILE:
-      return 4;
-    case SCANNER:
-      return 5;
-    case SHIELD:
-      return 6;
-    case ARMOR:
-      return 7;
-    case SHIELD_GENERATOR:
-      return 8;
-    case ENGINE:
-      return 9;
-    case POWERSOURCE:
-      return 10;
-    case CLOAKING_DEVICE:
-      return 11;
-    case JAMMER:
-      return 12;
-    case TARGETING_COMPUTER:
-      return 13;
-    case PLANETARY_INVASION_MODULE:
-      return 14;
-    case COLONY_MODULE:
-      return 15;
-    case PRIVATEERING_MODULE:
-      return 16;
-    case ORBITAL_BOMBS:
-      return 17;
-    case ORBITAL_NUKE:
-      return 18;
-    case STARBASE_COMPONENT:
-      return 19;
-    case ESPIONAGE_MODULE:
-      return 20;
-    case THRUSTERS:
-      return 21;
-    case FIGHTER_BAY:
-      return 22;
-    case PLASMA_BEAM:
-      return 23;
-    case DISTORTION_SHIELD:
-      return 24;
-    case SOLAR_ARMOR:
-      return 25;
-    case ORGANIC_ARMOR:
-      return 26;
-    case TRACTOR_BEAM:
-      return 27;
-    case PLASMA_CANNON:
-      return 28;
-    case ION_CANNON:
-      return 29;
-    case MULTICANNON:
-      return 30;
-    case BITE:
-      return 31;
-    case TENTACLE:
-      return 32;
-    case HEART:
-      return 33;
-    case SPACE_FIN:
-      return 34;
-    case MULTIDIMENSION_SHIELD:
-      return 35;
-    case GRAVITY_RIPPER:
-      return 36;
-    case REPAIR_MODULE:
-      return 37;
-    default:
-      return 0;
-    }
+    return this.ordinal();
   }
 
   /**
@@ -282,85 +203,10 @@ public enum ShipComponentType {
    * @return Ship component type
    */
   public static ShipComponentType getTypeByIndex(final int index) {
-    switch (index) {
-    case 0:
-      return ShipComponentType.WEAPON_BEAM;
-    case 1:
-      return ShipComponentType.WEAPON_RAILGUN;
-    case 2:
-      return ShipComponentType.WEAPON_PHOTON_TORPEDO;
-    case 3:
-      return ShipComponentType.WEAPON_ECM_TORPEDO;
-    case 4:
-      return ShipComponentType.WEAPON_HE_MISSILE;
-    case 5:
-      return ShipComponentType.SCANNER;
-    case 6:
-      return ShipComponentType.SHIELD;
-    case 7:
-      return ShipComponentType.ARMOR;
-    case 8:
-      return ShipComponentType.SHIELD_GENERATOR;
-    case 9:
-      return ShipComponentType.ENGINE;
-    case 10:
-      return ShipComponentType.POWERSOURCE;
-    case 11:
-      return ShipComponentType.CLOAKING_DEVICE;
-    case 12:
-      return ShipComponentType.JAMMER;
-    case 13:
-      return ShipComponentType.TARGETING_COMPUTER;
-    case 14:
-      return ShipComponentType.PLANETARY_INVASION_MODULE;
-    case 15:
-      return ShipComponentType.COLONY_MODULE;
-    case 16:
-      return ShipComponentType.PRIVATEERING_MODULE;
-    case 17:
-      return ShipComponentType.ORBITAL_BOMBS;
-    case 18:
-      return ShipComponentType.ORBITAL_NUKE;
-    case 19:
-      return ShipComponentType.STARBASE_COMPONENT;
-    case 20:
-      return ShipComponentType.ESPIONAGE_MODULE;
-    case 21:
-      return ShipComponentType.THRUSTERS;
-    case 22:
-      return ShipComponentType.FIGHTER_BAY;
-    case 23:
-      return ShipComponentType.PLASMA_BEAM;
-    case 24:
-      return ShipComponentType.DISTORTION_SHIELD;
-    case 25:
-      return ShipComponentType.SOLAR_ARMOR;
-    case 26:
-      return ShipComponentType.ORGANIC_ARMOR;
-    case 27:
-      return ShipComponentType.TRACTOR_BEAM;
-    case 28:
-      return ShipComponentType.PLASMA_CANNON;
-    case 29:
-      return ShipComponentType.ION_CANNON;
-    case 30:
-      return ShipComponentType.MULTICANNON;
-    case 31:
-      return ShipComponentType.BITE;
-    case 32:
-      return ShipComponentType.TENTACLE;
-    case 33:
-      return ShipComponentType.HEART;
-    case 34:
-      return ShipComponentType.SPACE_FIN;
-    case 35:
-      return ShipComponentType.MULTIDIMENSION_SHIELD;
-    case 36:
-      return ShipComponentType.GRAVITY_RIPPER;
-    case 37:
-      return ShipComponentType.REPAIR_MODULE;
-    default:
-      return ShipComponentType.WEAPON_BEAM;
+    if (index >= 0 && index < values().length) {
+      return values()[index];
+    } else {
+      throw new IllegalArgumentException("Unknown Ship Component type");
     }
   }
 

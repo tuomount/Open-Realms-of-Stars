@@ -51,17 +51,7 @@ public enum TemperatureType {
    * @return int
    */
   public int getIndex() {
-    switch (this) {
-      case FROZEN: return 0;
-      case ARCTIC: return 1;
-      case COLD: return 2;
-      case TEMPERATE: return 3;
-      case TROPICAL: return 4;
-      case HOT: return 5;
-      case VOLCANIC: return 6;
-      case INFERNO: return 7;
-      default: throw new IllegalArgumentException("Unknown temperature");
-    }
+    return this.ordinal();
   }
 
   /**
@@ -70,16 +60,10 @@ public enum TemperatureType {
    * @return TemperatureType
    */
   public static TemperatureType getByIndex(final int index) {
-    switch (index) {
-      case 0: return FROZEN;
-      case 1: return ARCTIC;
-      case 2: return COLD;
-      case 3: return TEMPERATE;
-      case 4: return TROPICAL;
-      case 5: return HOT;
-      case 6: return VOLCANIC;
-      case 7: return INFERNO;
-      default: throw new IllegalArgumentException("Unknown temperature");
+    if (index >= 0 && index < values().length) {
+      return values()[index];
+    } else {
+      throw new IllegalArgumentException("Unknown temperature");
     }
   }
 

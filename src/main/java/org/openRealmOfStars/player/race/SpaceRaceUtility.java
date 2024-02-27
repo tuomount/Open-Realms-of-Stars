@@ -50,23 +50,26 @@ public final class SpaceRaceUtility {
   public static SpaceRace[] getRacesByTrait(final String traitId) {
     return getRacesByTraits(traitId);
   }
+
   /**
    * Get all SpaceRace with certain traits.
    * If any of the traits is found then space race is being selected.
    * @param traitIds Array of Trait Id
    * @return Array of Space Race with certain trait.
    */
-  public static SpaceRace[] getRacesByTraits(final String ... traitIds) {
+  public static SpaceRace[] getRacesByTraits(final String... traitIds) {
     ArrayList<SpaceRace> list = new ArrayList<>();
     for (SpaceRace race : SpaceRaceFactory.getValues()) {
       for (String trait : traitIds) {
         if (race.hasTrait(trait)) {
           list.add(race);
+          break;
         }
       }
     }
     return list.toArray(new SpaceRace[list.size()]);
   }
+
   /**
    * Get Space race by single name
    * @param name Race name in single format

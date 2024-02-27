@@ -36,19 +36,13 @@ import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
  */
 public class SpaceRace {
 
-  /**
-   * Space race id
-   */
+  /** Space race id */
   private String id;
 
-  /**
-   * Space race name in plural
-   */
+  /** Space race name in plural */
   private String name;
 
-  /**
-   * Space race name in single
-   */
+  /** Space race name in single */
   private String nameSingle;
 
   /** Attitude for AI */
@@ -89,6 +83,7 @@ public class SpaceRace {
 
   /** Space Race type */
   private SpaceRaceType spaceRaceType;
+
   /**
    * Constructor for SpaceRace.
    * @param id SpaceRace ID
@@ -104,6 +99,7 @@ public class SpaceRace {
     genderList = new ArrayList<>();
     setSpaceRaceType(SpaceRaceType.REGULAR);
   }
+
   /**
    * Space race Id.
    * @return the id
@@ -111,6 +107,7 @@ public class SpaceRace {
   public String getId() {
     return id;
   }
+
   /**
    * Get race name in single format
    * @return Race single name
@@ -135,6 +132,7 @@ public class SpaceRace {
   public void setBridgeId(final String bridgeId) {
     this.bridgeId = bridgeId;
   }
+
   /**
    * Get Space ship id. Currently space ship ID matches space race name.
    * @return Space ship bridge ID.
@@ -150,6 +148,7 @@ public class SpaceRace {
   public void setSpaceShipId(final String spaceShipId) {
     this.spaceShipId = spaceShipId;
   }
+
   /**
    * Add RaceTrait to SpaceRace.
    * Throws IllegalArgumentException if adding trait would result
@@ -212,6 +211,7 @@ public class SpaceRace {
   public void setAttitude(final Attitude attitude) {
     this.attitude = attitude;
   }
+
   /**
    * Get race maximum Radiation
    * @return The race maximum radiation
@@ -689,6 +689,7 @@ public class SpaceRace {
   public void setSpeechSetId(final String speechSetId) {
     this.speechSetId = speechSetId;
   }
+
   /**
    * Get Racial description text. This should contain only physical attributes
    * and description. Nothing about the government or such.
@@ -697,6 +698,7 @@ public class SpaceRace {
   public String getRacialDescription() {
     return description;
   }
+
   /**
    * Set space race description. This is purely for flavor text.
    * @param description Space race description.
@@ -704,6 +706,7 @@ public class SpaceRace {
   public void setDescription(final String description) {
     this.description = description;
   }
+
   /**
    * Get full description about the race, including the stats.
    * @param markDown if true then markDown is being used, otherwise HTML.
@@ -816,6 +819,7 @@ public class SpaceRace {
   public void setRaceBridgeEffect(final BridgeCommandType type) {
     bridgeEffect = type;
   }
+
   /**
    * Get bridge effect for diplomacy screen.
    * @return BridgeCommandType
@@ -839,6 +843,7 @@ public class SpaceRace {
   public void setDiplomacyMusic(final MusicFileInfo diplomacyMusic) {
     this.diplomacyMusic = diplomacyMusic;
   }
+
   /**
    * Get Name Generator type for space race.
    * @return NameGeneratorType Name generator type.
@@ -855,6 +860,7 @@ public class SpaceRace {
       final NameGeneratorType leaderNameGenerator) {
     this.leaderNameGenerator = leaderNameGenerator;
   }
+
   /**
    * Get SpaceRaceType
    * @return the spaceRaceType
@@ -862,6 +868,7 @@ public class SpaceRace {
   public SpaceRaceType getSpaceRaceType() {
     return spaceRaceType;
   }
+
   /**
    * Set SpaceRaceType.
    * @param spaceRaceType the spaceRaceType to set
@@ -877,6 +884,7 @@ public class SpaceRace {
   public boolean isMonster() {
     return this.spaceRaceType == SpaceRaceType.SPACE_MONSTER;
   }
+
   /**
    * Is space race actually space pirate or not?
    * @return True if pirate

@@ -859,6 +859,37 @@ public class StarMapGenerator {
   }
 
   /**
+   * Reserve start point from space
+   * @param sunx Sun's about coordinates
+   * @param suny Sun's about coordinates
+   * @param playerIndex if Player index is else than -1 then SolarSystem
+   * is created as home system for that player index.
+   * @param config GalaxyConfig
+   */
+  private void reserverStartFromSpace(final int sunx, final int suny,
+      final int playerIndex, final GalaxyConfig config) {
+    boolean elderRealmStart = config.isElderRealmStart();
+    int sx = sunx + DiceGenerator.getRandom(-1, 1);
+    int sy = suny + DiceGenerator.getRandom(-1, 1);
+    if (playerIndex != -1) {
+      PlayerInfo playerInfo = starMap.getPlayerList().getPlayerInfoByIndex(
+          playerIndex);
+      if (!elderRealmStart) {
+        createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
+      } else if (playerInfo.isElderRealm()) {
+        createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
+      } else {
+        SquareInfo info = new SquareInfo(SquareInfo.TYPE_DEEP_SPACE_START,
+            playerIndex);
+        starMap.setSquareInfo(sx, sy, info);
+        starMap.setTile(sx, sy, Tiles.getTileByName(TileNames.EMPTY)
+            .getIndex());
+      }
+      solarSystem = StarMapUtilities.setSolarSystem(solarSystem, sx,
+          sy, getMaxX(), getMaxY());
+    }
+  }
+  /**
    * Create Solar System
    * @param sunx Sun's about coordinates
    * @param suny Sun's about coordinates
@@ -887,43 +918,14 @@ public class StarMapGenerator {
           == StartingScenario.DESTROYED_HOME_PLANET) {
         if (!destroyedPlanetStartAdded) {
           destroyedPlanetStartAdded = true;
-          int sx = sunx + DiceGenerator.getRandom(-1, 1);
-          int sy = suny + DiceGenerator.getRandom(-1, 1);
-          if (!elderRealmStart) {
-            createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
-          } else if (playerInfo.isElderRealm()) {
-            createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
-          } else {
-            SquareInfo info = new SquareInfo(SquareInfo.TYPE_DEEP_SPACE_START,
-                playerIndex);
-            starMap.setSquareInfo(sx, sy, info);
-            starMap.setTile(sx, sy, Tiles.getTileByName(TileNames.EMPTY)
-                .getIndex());
-          }
-          solarSystem = StarMapUtilities.setSolarSystem(solarSystem, sx,
-              sy, getMaxX(), getMaxY());
+          reserverStartFromSpace(sunx, suny, playerIndex, config);
           return;
         }
         playerInfo.setStartingScenario(StartingScenario.TEMPERATE_HUMID_SIZE12);
       }
       if (playerInfo.getStartingScenario()
           == StartingScenario.FROM_ANOTHER_GALAXY) {
-        destroyedPlanetStartAdded = true;
-        int sx = sunx + DiceGenerator.getRandom(-1, 1);
-        int sy = suny + DiceGenerator.getRandom(-1, 1);
-        if (!elderRealmStart) {
-          createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
-        } else if (playerInfo.isElderRealm()) {
-          createRealmToGalaxy(sx, sy, playerInfo, playerIndex);
-        } else {
-          SquareInfo info = new SquareInfo(SquareInfo.TYPE_DEEP_SPACE_START,
-              playerIndex);
-          starMap.setSquareInfo(sx, sy, info);
-          starMap.setTile(sx, sy, Tiles.getTileByName(TileNames.EMPTY)
-              .getIndex());
-        }
-        solarSystem = StarMapUtilities.setSolarSystem(solarSystem, sx,
-            sy, getMaxX(), getMaxY());
+        reserverStartFromSpace(sunx, suny, playerIndex, config);
         return;
       }
     }

@@ -57,6 +57,19 @@ public enum StartingScenarioType {
     throw new IllegalArgumentException("Unknown starting scenario type");
   }
 
+  /**
+   * Get Starting Scenario Type as a String
+   * @return String
+   */
+  public String getName() {
+    switch (this) {
+    case REGULAR: return "regular";
+    case NO_HOME: return "no home";
+    case UTOPIA_WORLD: return "utopia world";
+    default:
+      throw new IllegalArgumentException("Unknown Starting scenario type");
+  }
+  }
   @Override
   public String toString() {
     switch (this) {
@@ -66,5 +79,20 @@ public enum StartingScenarioType {
       default:
         throw new IllegalArgumentException("Unknown Starting scenario type");
     }
+  }
+
+  /**
+   * Get StartingScenarioType by String.
+   * @param value String
+   * @return StartingScenarioType
+   */
+  public static StartingScenarioType getByString(final String value) {
+    for (StartingScenarioType type : StartingScenarioType.values()) {
+      if (type.getName().equalsIgnoreCase(value)) {
+        return type;
+      }
+    }
+    throw new IllegalArgumentException("Unexpected starting scenario type, "
+        + value + ".");
   }
 }

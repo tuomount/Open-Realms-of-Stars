@@ -82,4 +82,18 @@ public enum TemperatureType {
     }
   }
 
+  /**
+   * Get Temperature type based on String
+   * @param str Temperature type as a String
+   * @return TempereatureType
+   */
+  public static TemperatureType getByString(final String str) {
+    for (TemperatureType type : TemperatureType.values()) {
+      if (type.toString().equalsIgnoreCase(str)) {
+        return type;
+      }
+    }
+    throw new IllegalArgumentException("Unexpected temperature type, "
+        + str + ".");
+  }
 }

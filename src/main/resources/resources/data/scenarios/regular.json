@@ -1,0 +1,15 @@
+[
+  {
+    "ID": "TEMPERATE_HUMID_SIZE12",
+    "Type": "regular",
+    "Name": "Regular temperate humid size 12",
+    "NumberOfScouts": 1,
+    "NumberOfColonyShips": 1,
+    "WaterLevel": "humid",
+    "Temperature": "temperate",
+    "PlanetSize": 12,
+    "Population": 3,
+    "ColonyPop": 0,
+    "Description": "Good starting planet with nice weather and okay water level. Ground size is 12."
+  }
+]

@@ -1,9 +1,4 @@
 package org.openRealmOfStars.player.scenario;
-
-
-import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
-import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
-
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2023-2024 Tuomo Untinen
@@ -22,6 +17,11 @@ import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import java.util.ArrayList;
+
+import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
+import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
+
 /**
  * Starting Scenario for Open Realm of Stars
  */
@@ -33,6 +33,9 @@ public class StartingScenarioClass {
 
   /** Starting scenario type */
   private StartingScenarioType type;
+
+  /** Starting scenario name aka human readable */
+  private String name;
 
   /** Starting scenario description */
   private String description;
@@ -53,17 +56,37 @@ public class StartingScenarioClass {
   private int population;
   /** Number of colony pops in colony ships. */
   private int colonyPop;
+  /** Extra techologies at start. */
+  private ArrayList<String> extraTech;
   /**
    * Constructor for starting scenario.
    * @param id Unique id
    * @param type Starting Scenario type.
+   * @param name Starting scenario human readable name.
    */
   public StartingScenarioClass(final String id,
-      final StartingScenarioType type) {
+      final StartingScenarioType type, final String name) {
     this.id = id;
     this.type = type;
+    this.name = name;
+    extraTech = new ArrayList<>();
   }
 
+  /**
+   * Add Extra starting technology.
+   * @param tech Techname. These can direct technology name or randomTechType.
+   * Example: randomCombat, randomDefense and so on.
+   */
+  public void addTech(final String tech) {
+    extraTech.add(tech);
+  }
+  /**
+   * Get array of extra technology.
+   * @return Array of string of extra technology.
+   */
+  public String[] getTechs() {
+    return extraTech.toArray(new String[extraTech.size()]);
+  }
   /**
    * Get Starting Scenario description.
    * @return Description as string.
@@ -86,6 +109,13 @@ public class StartingScenarioClass {
    */
   public StartingScenarioType getType() {
     return type;
+  }
+
+  /**
+   * @return the name human readable name.
+   */
+  public String getName() {
+    return name;
   }
 
   /**

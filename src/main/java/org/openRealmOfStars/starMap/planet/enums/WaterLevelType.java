@@ -54,9 +54,8 @@ public enum WaterLevelType {
   public static WaterLevelType getByIndex(final int index) {
     if (index >= 0 && index < values().length) {
       return values()[index];
-    } else {
-      throw new IllegalArgumentException("Unknown water level type");
     }
+    throw new IllegalArgumentException("Unknown water level type");
   }
 
   @Override
@@ -73,6 +72,20 @@ public enum WaterLevelType {
     }
   }
 
+  /**
+   * Get Water level type based on String
+   * @param str Water Level as a String
+   * @return WaterLevelType
+   */
+  public static WaterLevelType getByString(final String str) {
+    for (WaterLevelType type : WaterLevelType.values()) {
+      if (type.toString().equalsIgnoreCase(str)) {
+        return type;
+      }
+    }
+    throw new IllegalArgumentException("Unexpected water level type, "
+        + str + ".");
+  }
   /**
    * Get amount food planet produces.
    * @return Food amount

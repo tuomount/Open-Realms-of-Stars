@@ -1,0 +1,26 @@
+[
+  {
+    "ID": "DESTROYED_HOME_PLANET",
+    "Type": "nohome",
+    "Name": "No home planet, home planet has been destroyed.",
+    "NumberOfScouts": 4,
+    "NumberOfColonyShips": 2,
+    "Population": 0,
+    "ColonyPop": 2,
+    "Description": "No home planet where to start since it was destroyed. Destroyed home planet can be discover from galaxy."
+  },
+  {
+    "ID": "FROM_ANOTHER_GALAXY",
+    "Type": "nohome",
+    "Name": "No home planet, arrived from another galaxy.",
+    "NumberOfScouts": 4,
+    "NumberOfColonyShips": 2,
+    "Population": 0,
+    "ColonyPop": 2,
+    "Tech": [
+      "randomPropulsion",
+      "randomPropulsion"
+    ],
+    "Description": "No home planet where to start since realm arrived from another galaxy. Starts with extra propulsion technology."
+  }
+]

@@ -2,7 +2,7 @@
   {
     "ID": "TEMPERATE_HUMID_SIZE12",
     "Type": "regular",
-    "Name": "Regular temperate humid size 12",
+    "Name": "Regular temperate humid planet size 12",
     "NumberOfScouts": 1,
     "NumberOfColonyShips": 1,
     "WaterLevel": "humid",
@@ -11,5 +11,107 @@
     "Population": 3,
     "ColonyPop": 0,
     "Description": "Good starting planet with nice weather and okay water level. Ground size is 12."
+  },
+  {
+    "ID": "EARTH",
+    "Type": "regular",
+    "Name": "Start from Earth",
+    "NumberOfScouts": 1,
+    "NumberOfColonyShips": 1,
+    "WaterLevel": "ocean",
+    "Temperature": "temperate",
+    "PlanetSize": 12,
+    "Population": 3,
+    "ColonyPop": 0,
+    "Description": "Excellent starting planet, but other planets in system are not that good."
+  },
+  {
+    "ID": "TEMPERATE_ARID_SIZE12",
+    "Type": "regular",
+    "Name": "Regular temperate humid planet size 12",
+    "NumberOfScouts": 1,
+    "NumberOfColonyShips": 1,
+    "WaterLevel": "arid",
+    "Temperature": "temperate",
+    "PlanetSize": 12,
+    "Population": 3,
+    "ColonyPop": 0,
+    "Tech": [
+      "randomElectronics",
+      "randomPropulsion"
+    ],
+    "Description": "Okay starting planet but start with extra technology in electronics and propulsion."
+  },
+  {
+    "ID": "TEMPERATE_MARINE_SIZE9",
+    "Type": "regular",
+    "Name": "Regular temperate marine planet size 9",
+    "NumberOfScouts": 1,
+    "NumberOfColonyShips": 1,
+    "WaterLevel": "marine",
+    "Temperature": "temperate",
+    "PlanetSize": 9,
+    "Population": 3,
+    "ColonyPop": 0,
+    "Description": "Starting planet has nice weather and good water level, but planet is a bit small. However planet has low gravity."
+  },
+  {
+    "ID": "TEMPERATE_MARINE_SIZE14",
+    "Type": "regular",
+    "Name": "Regular temperate marine planet size 14",
+    "NumberOfScouts": 1,
+    "NumberOfColonyShips": 1,
+    "WaterLevel": "marine",
+    "Temperature": "temperate",
+    "PlanetSize": 14,
+    "Population": 3,
+    "ColonyPop": 0,
+    "Description": "Starting planet has nice weather and good water level, and planet is large. However planet has high gravity."
+  },
+  {
+    "ID": "COLD_HUMID_SIZE12",
+    "Type": "regular",
+    "Name": "Regular cold humid planet size 12",
+    "NumberOfScouts": 1,
+    "NumberOfColonyShips": 1,
+    "WaterLevel": "humid",
+    "Temperature": "cold",
+    "PlanetSize": 12,
+    "Population": 3,
+    "ColonyPop": 0,
+    "Tech": [
+      "randomImprovement"
+    ],
+    "Description": "Cold starting planet with okay water level but start with extra technology in planetary improvements."
+  },
+  {
+    "ID": "TROPICAL_HUMID_SIZE12",
+    "Type": "regular",
+    "Name": "Regular tropical humid planet size 12",
+    "NumberOfScouts": 1,
+    "NumberOfColonyShips": 1,
+    "WaterLevel": "humid",
+    "Temperature": "cold",
+    "PlanetSize": 12,
+    "Population": 3,
+    "ColonyPop": 0,
+    "Description": "Tropical starting planet with okay water level."
+  },
+  {
+    "ID": "HOT_ARID_SIZE12",
+    "Type": "regular",
+    "Name": "Regular hot arid planet size 12",
+    "NumberOfScouts": 1,
+    "NumberOfColonyShips": 1,
+    "WaterLevel": "humid",
+    "Temperature": "cold",
+    "PlanetSize": 12,
+    "Population": 3,
+    "ColonyPop": 0,
+    "Tech": [
+      "randomElectronics",
+      "randomCombat"
+    ],
+    "Description": "Hot starting planet with some water level but start with extra technology in electronics and combat."
   }
 ]

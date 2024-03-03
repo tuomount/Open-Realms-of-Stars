@@ -10,6 +10,9 @@
     "PlanetSize": 12,
     "Population": 3,
     "ColonyPop": 0,
+    "Buildings": [
+      "Space port"
+    ],
     "Description": "Good starting planet with nice weather and okay water level. Ground size is 12."
   },
   {
@@ -23,6 +26,9 @@
     "PlanetSize": 12,
     "Population": 3,
     "ColonyPop": 0,
+    "Buildings": [
+      "Space port"
+    ],
     "Description": "Excellent starting planet, but other planets in system are not that good."
   },
   {
@@ -40,6 +46,9 @@
       "randomElectronics",
       "randomPropulsion"
     ],
+    "Buildings": [
+      "Space port"
+    ],
     "Description": "Okay starting planet but start with extra technology in electronics and propulsion."
   },
   {
@@ -53,6 +62,9 @@
     "PlanetSize": 9,
     "Population": 3,
     "ColonyPop": 0,
+    "Buildings": [
+      "Space port"
+    ],
     "Description": "Starting planet has nice weather and good water level, but planet is a bit small. However planet has low gravity."
   },
   {
@@ -66,6 +78,9 @@
     "PlanetSize": 14,
     "Population": 3,
     "ColonyPop": 0,
+    "Buildings": [
+      "Space port"
+    ],
     "Description": "Starting planet has nice weather and good water level, and planet is large. However planet has high gravity."
   },
   {
@@ -82,6 +97,9 @@
     "Tech": [
       "randomImprovement"
     ],
+    "Buildings": [
+      "Space port"
+    ],
     "Description": "Cold starting planet with okay water level but start with extra technology in planetary improvements."
   },
   {
@@ -95,6 +113,9 @@
     "PlanetSize": 12,
     "Population": 3,
     "ColonyPop": 0,
+    "Buildings": [
+      "Space port"
+    ],
     "Description": "Tropical starting planet with okay water level."
   },
   {
@@ -111,6 +132,9 @@
     "Tech": [
       "randomElectronics",
       "randomCombat"
+    ],
+    "Buildings": [
+      "Space port"
     ],
     "Description": "Hot starting planet with some water level but start with extra technology in electronics and combat."
   }

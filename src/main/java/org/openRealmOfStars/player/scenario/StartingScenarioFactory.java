@@ -108,7 +108,8 @@ class StartingScenarioLoader extends DataLoader<String, StartingScenarioClass> {
    * <li>Population : Number(OPTIONAL)</li>
    * <li>ColonyPop : Number(OPTIONAL)</li>
    * <li>WorldType : String(OPTIONAL)</li>
-   * <li>Tech : List of extra technology (OPTIONAL) </li>
+   * <li>Buildings: List of buildings (OPTIONAL)</li>
+   * <li>Tech : List of extra technology (OPTIONAL)</li>
    * <li>Description : String</li>
    * </ul>
    * </p>
@@ -139,10 +140,15 @@ class StartingScenarioLoader extends DataLoader<String, StartingScenarioClass> {
       tmp.setPopulation(population);
       int colonyPop = jobj.optInt("ColonyPop", 0);
       tmp.setColonyPop(colonyPop);
-      var jsonTraits = jobj.optJSONArray("Tech", new JSONArray());
-      for (int i = 0; i < jsonTraits.length(); i++) {
-        String techName = jsonTraits.getString(i);
+      var jsonTechs = jobj.optJSONArray("Tech", new JSONArray());
+      for (int i = 0; i < jsonTechs.length(); i++) {
+        String techName = jsonTechs.getString(i);
         tmp.addTech(techName);
+      }
+      var jsonBuildings = jobj.optJSONArray("Buildings", new JSONArray());
+      for (int i = 0; i < jsonBuildings.length(); i++) {
+        String buildingName = jsonBuildings.getString(i);
+        tmp.addBuilding(buildingName);
       }
       String description = jobj.getString("Description");
       tmp.setDescription(description);

@@ -13,6 +13,14 @@
     "Tech":[
       "randomImprovement"
     ],
+    "Buildings": [
+      "Space port",
+      "FarmBuilding",
+      "FarmBuilding",
+      "FarmBuilding",
+      "FarmBuilding"
+    ],
+    
     "Description": "Okay starting planet with extra buildings for food production, extra population and extra technology in planetary improvements.. There are no space ships at the start."
   }
 ]

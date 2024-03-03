@@ -56,8 +56,10 @@ public class StartingScenarioClass {
   private int population;
   /** Number of colony pops in colony ships. */
   private int colonyPop;
-  /** Extra techologies at start. */
+  /** Extra technologies at start. */
   private ArrayList<String> extraTech;
+  /** Starting buildings. */
+  private ArrayList<String> buildings;
   /**
    * Constructor for starting scenario.
    * @param id Unique id
@@ -70,6 +72,7 @@ public class StartingScenarioClass {
     this.type = type;
     this.name = name;
     extraTech = new ArrayList<>();
+    buildings = new ArrayList<>();
   }
 
   /**
@@ -80,12 +83,29 @@ public class StartingScenarioClass {
   public void addTech(final String tech) {
     extraTech.add(tech);
   }
+
+  /**
+   * Add building on start planet.
+   * @param building BuildingName to add. FarmBuilding is special it
+   * depends on space race dietary what is being added.
+   */
+  public void addBuilding(final String building) {
+    buildings.add(building);
+  }
   /**
    * Get array of extra technology.
    * @return Array of string of extra technology.
    */
   public String[] getTechs() {
     return extraTech.toArray(new String[extraTech.size()]);
+  }
+
+  /**
+   * Get array of buildings.
+   * @return Array of string of starting planet.
+   */
+  public String[] getBuildings() {
+    return buildings.toArray(new String[buildings.size()]);
   }
   /**
    * Get Starting Scenario description.

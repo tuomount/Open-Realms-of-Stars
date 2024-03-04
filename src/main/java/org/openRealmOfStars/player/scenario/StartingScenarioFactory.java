@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.utilities.DataLoader;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
 /** Starting scenario factory */
@@ -50,6 +51,21 @@ public final class StartingScenarioFactory {
     return SINGLETON.makeById(id);
   }
 
+  /**
+   * Get All starting scenario in array.
+   * @return Starting scenario array
+   */
+  public static StartingScenarioClass[] getValues() {
+    return SINGLETON.getAll();
+  }
+
+  /**
+   * Get random staring scenario.
+   * @return StartingScenario
+   */
+  public static StartingScenarioClass getRandomRace() {
+    return DiceGenerator.pickRandom(getValues());
+  }
   /**
    * Create/Retrieve StartingScenario for given ID,
    * initialize factory if not yet
@@ -87,6 +103,18 @@ public final class StartingScenarioFactory {
     final var startingScenariosLoaded = loader.loadAll(startingScenarios,
         basePath, files);
     ErrorLogger.log("Starting scenarios loaded: " + startingScenariosLoaded);
+  }
+
+  /**
+   * Create/Retrieve all Starting scenarios, initialize factory if not yet
+   * @return StartingScenario array
+   */
+  private StartingScenarioClass[] getAll() {
+    if (!initialized) {
+      initialized = true;
+      init();
+    }
+    return startingScenarios.values().toArray(new StartingScenarioClass[0]);
   }
 }
 

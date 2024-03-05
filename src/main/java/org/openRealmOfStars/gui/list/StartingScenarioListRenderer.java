@@ -25,7 +25,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.util.GuiFonts;
-import org.openRealmOfStars.player.StartingScenario;
+import org.openRealmOfStars.player.scenario.StartingScenario;
 
 /**
 *

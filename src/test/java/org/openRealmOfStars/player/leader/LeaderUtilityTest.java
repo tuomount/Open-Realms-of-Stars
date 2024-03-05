@@ -27,12 +27,12 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
-import org.openRealmOfStars.player.StartingScenario;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonus;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapGenerator;
@@ -686,12 +686,13 @@ public class LeaderUtilityTest {
     config.setPlayerGovernment(0, GovernmentType.DEMOCRACY);
     config.setRace(0, SpaceRaceFactory.createOne(
         "HUMANS"));
-    config.setStartingScenario(0, StartingScenario.TEMPERATE_MARINE_SIZE14);
+    config.setStartingScenario(0, StartingScenarioFactory.create(
+        "TEMPERATE_MARINE_SIZE14"));
     config.setPlayerName(1, "Realm of Credit");
     config.setPlayerGovernment(1, GovernmentType.DEMOCRACY);
     config.setRace(1, SpaceRaceFactory.createOne(
         "HUMANS"));
-    config.setStartingScenario(1, StartingScenario.EARTH);
+    config.setStartingScenario(1, StartingScenarioFactory.create("EARTH"));
     PlayerList playerList = PlayerList.createPlayerList(config);
     StarMapGenerator generator = new StarMapGenerator();
     StarMap map = generator.generateStarMap(config, playerList);

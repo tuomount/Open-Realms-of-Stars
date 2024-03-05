@@ -1,7 +1,7 @@
 [
   {
     "ID": "DESTROYED_HOME_PLANET",
-    "Type": "nohome",
+    "Type": "no home",
     "Name": "No home planet, home planet has been destroyed.",
     "NumberOfScouts": 4,
     "NumberOfColonyShips": 2,
@@ -11,7 +11,7 @@
   },
   {
     "ID": "FROM_ANOTHER_GALAXY",
-    "Type": "nohome",
+    "Type": "no home",
     "Name": "No home planet, arrived from another galaxy.",
     "NumberOfScouts": 4,
     "NumberOfColonyShips": 2,

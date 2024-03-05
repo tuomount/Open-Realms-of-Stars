@@ -65,7 +65,7 @@ public enum StartingScenarioType {
     switch (this) {
     case REGULAR: return "regular";
     case NO_HOME: return "no home";
-    case UTOPIA_WORLD: return "utopia world";
+    case UTOPIA_WORLD: return "utopia";
     default:
       throw new IllegalArgumentException("Unknown Starting scenario type");
   }

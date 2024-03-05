@@ -19,12 +19,13 @@ package org.openRealmOfStars.starMap;
 
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
-import org.openRealmOfStars.player.StartingScenario;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.scenario.StartingScenario;
+import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.starMap.event.KarmaType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -289,7 +290,7 @@ public class GalaxyConfig {
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
       setRace(i, SpaceRaceFactory.getRandomRace());
       setPlayerColor(i, DiceGenerator.pickRandom(PlayerColor.values()));
-      setStartingScenario(i, StartingScenario.RANDOM);
+      setStartingScenario(i, StartingScenarioFactory.createRandom());
       while (true) {
         GovernmentType gov = GovernmentUtility.getRandomGovernment();
         setPlayerGovernment(i, gov);

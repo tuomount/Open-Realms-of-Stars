@@ -18,11 +18,11 @@ package org.openRealmOfStars.player.race;
  */
 
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.StartingScenario;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.leader.RulerUtility;
 import org.openRealmOfStars.player.race.trait.TraitIds;
+import org.openRealmOfStars.player.scenario.StartingScenarioType;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.NameGenerator;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -74,7 +74,7 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    if (info.getStartingScenario() != StartingScenario.FROM_ANOTHER_GALAXY) {
+    if (!info.getStartingScenario().getId().equals("FROM_ANOTHER_GALAXY")) {
       sb.append(generateFtlStory(info, startingYear));
     }
     sb.append(generateExploration(info, namePlural, startPlanet));
@@ -493,7 +493,8 @@ public final class BackgroundStoryGenerator {
       final String name, final Planet startPlanet) {
     StringBuilder sb = new StringBuilder();
     boolean spaceExpStarted = true;
-    if (info.getStartingScenario() == StartingScenario.FARMING_PLANET) {
+    if (info.getStartingScenario().getType()
+        == StartingScenarioType.UTOPIA_WORLD) {
       spaceExpStarted = false;
     }
     if (spaceExpStarted) {
@@ -501,7 +502,7 @@ public final class BackgroundStoryGenerator {
       sb.append(StoryGeneratorUtility.startSpaceExploration());
       sb.append(startPlanet.getName());
     } else {
-      if (info.getStartingScenario() == StartingScenario.FARMING_PLANET) {
+      if (info.getStartingScenario().equals("FARMING_PLANET")) {
         sb.append(info.getEmpireName());
         sb.append(" isn't reaching for the stars yet, but instead ");
         sb.append(" they have grown their population ");
@@ -563,7 +564,8 @@ public final class BackgroundStoryGenerator {
     if (info.getRace().getResearchSpeed() > 100) {
       scientific = true;
     }
-    if (info.getStartingScenario() == StartingScenario.FARMING_PLANET) {
+    if (info.getStartingScenario().getNumberOfScouts() == 0
+        && info.getStartingScenario().getNumberOfColonyShips() == 0) {
       shipsBuilt = false;
     }
     if (scientific) {
@@ -912,7 +914,7 @@ public final class BackgroundStoryGenerator {
     if (info.getGovernment().hasCreditRush()) {
       traders = true;
     }
-    if (info.getStartingScenario() == StartingScenario.FROM_ANOTHER_GALAXY) {
+    if (info.getStartingScenario().getType() == StartingScenarioType.NO_HOME) {
       sb.append("Space pioneers space craft logs tell about history of ");
       sb.append(info.getRace().getName());
       sb.append("with following information: \n");
@@ -1246,7 +1248,7 @@ public final class BackgroundStoryGenerator {
     boolean harsh = false;
     boolean cold = false;
     boolean hot = false;
-    if (info.getStartingScenario() == StartingScenario.FROM_ANOTHER_GALAXY) {
+    if (info.getStartingScenario().equals("FROM_ANOTHER_GALAXY")) {
       sb.append(namePlural);
       sb.append(" have been travelling millions of star years deep space "
           + "with help of cryo sleep. They have travelling from another"
@@ -1691,7 +1693,7 @@ public final class BackgroundStoryGenerator {
       }
     }
     sb.append(endOfworldDescription);
-    if (info.getStartingScenario() == StartingScenario.DESTROYED_HOME_PLANET) {
+    if (info.getStartingScenario().equals("DESTROYED_HOME_PLANET")) {
       sb.append(" This planet was destroyed star centuries ago ");
       switch (DiceGenerator.getRandom(3)) {
       default:

@@ -25,7 +25,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  * Starting Scenarion enumeration for Open Realm of Stars
  */
-public enum StartingScenario {
+public enum StartingScenarioEnum {
 
   /**
    * Random starting scenario.
@@ -92,7 +92,7 @@ public enum StartingScenario {
    * @param index Index
    * @return StartingScenario
    */
-  public static StartingScenario getByIndex(final int index) {
+  public static StartingScenarioEnum getByIndex(final int index) {
     if (index >= 0 && index < values().length) {
       return values()[index];
     } else {
@@ -166,9 +166,9 @@ public enum StartingScenario {
    * Pick Random starting scenario.
    * @return Statring Scenario
    */
-  public static StartingScenario pickRandom() {
-    ArrayList<StartingScenario> list = new ArrayList<>();
-    for (StartingScenario scenario : StartingScenario.values()) {
+  public static StartingScenarioEnum pickRandom() {
+    ArrayList<StartingScenarioEnum> list = new ArrayList<>();
+    for (StartingScenarioEnum scenario : StartingScenarioEnum.values()) {
       if (scenario != RANDOM) {
         list.add(scenario);
       }

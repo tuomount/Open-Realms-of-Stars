@@ -141,7 +141,7 @@ public class GameTest {
       }
       tech = tech * 10 / 6;
       String scenario = game.getPlayers().getPlayerInfoByIndex(i)
-          .getStartingScenario().toString();
+          .getStartingScenario().getName();
       String resultText = i + ": "
           + game.getPlayers().getPlayerInfoByIndex(i).getEmpireName()
           + " (" + game.getPlayers().getPlayerInfoByIndex(i).getAiDifficulty()

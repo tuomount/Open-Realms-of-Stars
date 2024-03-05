@@ -29,7 +29,6 @@ import org.openRealmOfStars.ai.mission.MissionType;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
-import org.openRealmOfStars.player.StartingScenario;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -40,6 +39,7 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -456,7 +456,7 @@ public class PlanetHandlingTest extends TestCase {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
     info.setEmpireName("Human Kingdom");
     info.setGovernment(GovernmentType.KINGDOM);
-    info.setStartingScenario(StartingScenario.EARTH);
+    info.setStartingScenario(StartingScenarioFactory.create("EARTH"));
     PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 1);
     info2.setEmpireName("Terran Federation");
     info2.setGovernment(GovernmentType.FEDERATION);
@@ -464,8 +464,9 @@ public class PlanetHandlingTest extends TestCase {
     GalaxyConfig config = new GalaxyConfig();
     config.setPlayerName(0, info.getEmpireName());
     config.setPlayerName(1, info2.getEmpireName());
-    config.setStartingScenario(0, StartingScenario.EARTH);
-    config.setStartingScenario(1, StartingScenario.TEMPERATE_HUMID_SIZE12);
+    config.setStartingScenario(0, StartingScenarioFactory.create("EARTH"));
+    config.setStartingScenario(1, StartingScenarioFactory.create(
+        "TEMPERATE_HUMID_SIZE12"));
     config.setMaxPlayers(2);
     PlayerList playerList = new PlayerList();
     playerList.addPlayer(info);

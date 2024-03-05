@@ -43,6 +43,8 @@ import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
+import org.openRealmOfStars.player.scenario.StartingScenario;
+import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -290,7 +292,8 @@ public class PlayerInfo {
    */
   public PlayerInfo(final SpaceRace race, final int maxPlayers,
       final int index) {
-    this(race, maxPlayers, index, -1, StartingScenario.TEMPERATE_HUMID_SIZE12);
+    this(race, maxPlayers, index, -1, StartingScenarioFactory.create(
+        "TEMPERATE_HUMID_SIZE12"));
   }
   /**
    * Constructor player info. This can be used for game playing.
@@ -326,27 +329,7 @@ public class PlayerInfo {
     diplomacy = new Diplomacy(maxPlayers, index, boardPlayerIndex);
     espionage = new Intelligence(maxPlayers);
     attitude = Attitude.getRandom();
-    String[] extraTech = null;
-    if (getStartingScenario() == StartingScenario.TEMPERATE_ARID_SIZE12) {
-      extraTech = new String[2];
-      extraTech[0] = "randomElectronics";
-      extraTech[1] = "randomPropulsion";
-    }
-    if (getStartingScenario() == StartingScenario.COLD_HUMID_SIZE12
-        || getStartingScenario() == StartingScenario.FARMING_PLANET) {
-      extraTech = new String[1];
-      extraTech[0] = "randomImprovement";
-    }
-    if (getStartingScenario() == StartingScenario.HOT_ARID_SIZE12) {
-      extraTech = new String[2];
-      extraTech[0] = "randomElectronics";
-      extraTech[1] = "randomCombat";
-    }
-    if (getStartingScenario() == StartingScenario.FROM_ANOTHER_GALAXY) {
-      extraTech = new String[2];
-      extraTech[0] = "randomPropulsion";
-      extraTech[1] = "randomPropulsion";
-    }
+    String[] extraTech = startingScenario.getTechs();
     setFakeMilitarySize(100);
     // This is the old way of government
     setGovernment(GovernmentType.AI);
@@ -588,7 +571,8 @@ public class PlayerInfo {
     }
     artifactLists = new ArtifactLists(dis);
     color = PlayerColor.getByIndex(dis.read());
-    startingScenario = StartingScenario.getByIndex(dis.read());
+    String scenarioId = IOUtilities.readString(dis);
+    startingScenario = StartingScenarioFactory.create(scenarioId);
     aiDifficulty = AiDifficulty.getByIndex(dis.read());
     government = GovernmentUtility.getGovernmentByIndex(dis.readInt());
     warFatigue = dis.readInt();
@@ -713,7 +697,7 @@ public class PlayerInfo {
     }
     artifactLists.saveArtifactLists(dos);
     dos.writeByte(color.getIndex());
-    dos.writeByte(startingScenario.getIndex());
+    IOUtilities.writeString(dos, startingScenario.getId());
     dos.writeByte(aiDifficulty.getIndex());
     dos.writeInt(government.getIndex());
     dos.writeInt(warFatigue);
@@ -2363,7 +2347,8 @@ public class PlayerInfo {
    * Set starting scenario.
    * @param startingScenario the startingScenario to set
    */
-  public void setStartingScenario(final StartingScenario startingScenario) {
+  public void setStartingScenario(
+      final StartingScenario startingScenario) {
     this.startingScenario = startingScenario;
   }
 

@@ -49,11 +49,12 @@ import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
-import org.openRealmOfStars.player.StartingScenario;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.scenario.StartingScenario;
+import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
@@ -278,7 +279,8 @@ public class PlayerSetupView extends BlackPanel {
       SoundPlayer.playMenuSound();
       for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
         if (comboScenario[i].isEnabled()) {
-          StartingScenario scenario = (StartingScenario) comboScenario[i]
+          StartingScenario scenario = (StartingScenario)
+              comboScenario[i]
               .getSelectedItem();
           if (scenario != null) {
             config.setStartingScenario(i, scenario);
@@ -461,7 +463,15 @@ public class PlayerSetupView extends BlackPanel {
         + " statistics.</html>");
     info.add(comboRealmColor[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    comboScenario[index] = new SpaceComboBox<>(StartingScenario.values());
+    StartingScenario[] scenarioList = new StartingScenario[
+        StartingScenarioFactory.getValues().length + 1];
+    scenarioList[0] = StartingScenarioFactory.createRandom();
+    int j = 0;
+    for (StartingScenario scenario : StartingScenarioFactory.getValues()) {
+      j++;
+      scenarioList[j] = scenario;
+    }
+    comboScenario[index] = new SpaceComboBox<>(scenarioList);
     comboScenario[index]
         .setBackground(GuiStatics.getDeepSpaceDarkColor());
     comboScenario[index].setForeground(GuiStatics.getCoolSpaceColor());

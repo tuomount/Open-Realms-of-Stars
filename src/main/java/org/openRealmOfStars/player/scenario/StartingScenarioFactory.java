@@ -32,38 +32,55 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /** Starting scenario factory */
 public final class StartingScenarioFactory {
 
+  /** Random scenario ID. */
+  public static final String RANDOM_ID = "RANDOM";
   /** The Singleton */
   private static final StartingScenarioFactory SINGLETON =
       new StartingScenarioFactory();
 
   /** StartingScenario this factory knows. IDs are used as keys. */
-  private HashMap<String, StartingScenarioClass> startingScenarios;
+  private HashMap<String, StartingScenario> startingScenarios;
   /** Tracks if factory is initialized with data */
   private boolean initialized;
   /** JSON data loader */
-  private DataLoader<String, StartingScenarioClass> loader;
+  private DataLoader<String, StartingScenario> loader;
   /**
    * Create/Retrieve StartingScenario for given ID, if loaded
    * @param id StartingScenarioId
    * @return StartingScenario
    */
-  public static StartingScenarioClass create(final String id) {
+  public static StartingScenario create(final String id) {
     return SINGLETON.makeById(id);
   }
 
   /**
+   * Create pseudo starting scenario for random.
+   * @return Starting scenario.
+   */
+  public static StartingScenario createRandom() {
+    return new StartingScenario(RANDOM_ID,
+        StartingScenarioType.REGULAR, "Random");
+  }
+  /**
+   * Create default starting scenario for JUnits.
+   * @return Starting scenario.
+   */
+  public static StartingScenario createDefault() {
+    return create("TEMPERATE_HUMID_SIZE12");
+  }
+  /**
    * Get All starting scenario in array.
    * @return Starting scenario array
    */
-  public static StartingScenarioClass[] getValues() {
+  public static StartingScenario[] getValues() {
     return SINGLETON.getAll();
   }
 
   /**
-   * Get random staring scenario.
+   * Get random starting scenario.
    * @return StartingScenario
    */
-  public static StartingScenarioClass getRandomRace() {
+  public static StartingScenario pickRandomScenario() {
     return DiceGenerator.pickRandom(getValues());
   }
   /**
@@ -72,13 +89,13 @@ public final class StartingScenarioFactory {
    * @param id Starting scenario ID to fetch
    * @return StartingScenario
    */
-  private StartingScenarioClass makeById(final String id) {
+  private StartingScenario makeById(final String id) {
     if (!initialized) {
       initialized = true;
       init();
     }
 
-    StartingScenarioClass scenario = startingScenarios.get(id);
+    StartingScenario scenario = startingScenarios.get(id);
     if (scenario == null) {
         throw new IllegalArgumentException(
             "Starting scenario factory does not contain "
@@ -109,17 +126,17 @@ public final class StartingScenarioFactory {
    * Create/Retrieve all Starting scenarios, initialize factory if not yet
    * @return StartingScenario array
    */
-  private StartingScenarioClass[] getAll() {
+  private StartingScenario[] getAll() {
     if (!initialized) {
       initialized = true;
       init();
     }
-    return startingScenarios.values().toArray(new StartingScenarioClass[0]);
+    return startingScenarios.values().toArray(new StartingScenario[0]);
   }
 }
 
 /** StartingScenario loader */
-class StartingScenarioLoader extends DataLoader<String, StartingScenarioClass> {
+class StartingScenarioLoader extends DataLoader<String, StartingScenario> {
 
   /**
    * Parse Starting scenario from a JSON file.
@@ -145,13 +162,13 @@ class StartingScenarioLoader extends DataLoader<String, StartingScenarioClass> {
    * @return Parsed StartingScenario or empty
    */
   @Override
-  protected Optional<StartingScenarioClass> parseFromJson(
+  protected Optional<StartingScenario> parseFromJson(
       final JSONObject jobj) {
     try {
       final var id = jobj.getString("ID");
       final var type = jobj.getString("Type");
       final var name = jobj.getString("Name");
-      StartingScenarioClass tmp = new StartingScenarioClass(id,
+      StartingScenario tmp = new StartingScenario(id,
           StartingScenarioType.getByString(type), name);
 
       int numberOfScouts = jobj.getInt("NumberOfScouts");
@@ -160,7 +177,7 @@ class StartingScenarioLoader extends DataLoader<String, StartingScenarioClass> {
       tmp.setNumberOfColonyShips(numberOfColonyShips);
       String waterLevel = jobj.optString("WaterLevel", "Humid");
       tmp.setWaterLevel(WaterLevelType.getByString(waterLevel));
-      String temperature = jobj.optString("Temperature", "");
+      String temperature = jobj.optString("Temperature", "temperate");
       tmp.setTemperature(TemperatureType.getByString(temperature));
       int size = jobj.optInt("PlanetSize", 12);
       tmp.setPlanetSize(size);
@@ -189,7 +206,7 @@ class StartingScenarioLoader extends DataLoader<String, StartingScenarioClass> {
   }
 
   @Override
-  protected String valueIdGetter(final StartingScenarioClass value) {
+  protected String valueIdGetter(final StartingScenario value) {
     return value.getId();
   }
 

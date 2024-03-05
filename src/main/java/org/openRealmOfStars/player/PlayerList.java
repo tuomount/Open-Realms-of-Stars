@@ -28,6 +28,8 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.scenario.StartingScenario;
+import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -103,8 +105,8 @@ public class PlayerList {
     }
     for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
       StartingScenario scenario = galaxyConfig.getStartingScenario(i);
-      if (scenario == StartingScenario.RANDOM) {
-        scenario = StartingScenario.pickRandom();
+      if (scenario.getId().equals(StartingScenarioFactory.RANDOM_ID)) {
+        scenario = StartingScenarioFactory.pickRandomScenario();
       }
       PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i),
           maxPlayers, i, boardIndex, scenario);
@@ -126,7 +128,8 @@ public class PlayerList {
       int index = galaxyConfig.getMaxPlayers();
       PlayerInfo info = new PlayerInfo(
           SpaceRaceFactory.createOne("SPACEPIRATE"), maxPlayers,
-          index, boardIndex, StartingScenario.TEMPERATE_HUMID_SIZE12);
+          index, boardIndex, StartingScenarioFactory.create(
+              "TEMPERATE_HUMID_SIZE12"));
       info.setBoard(true);
       info.setGovernment(GovernmentType.SPACE_PIRATES);
       info.setEmpireName("Space pirates");
@@ -154,7 +157,8 @@ public class PlayerList {
       }
       PlayerInfo info = new PlayerInfo(
           SpaceRaceFactory.createOne("SPACEMONSTER"), maxPlayers,
-          index, boardIndex, StartingScenario.TEMPERATE_HUMID_SIZE12);
+          index, boardIndex, StartingScenarioFactory.create(
+              "TEMPERATE_HUMID_SIZE12"));
       info.setBoard(true);
       info.setGovernment(GovernmentType.SPACE_PIRATES);
       info.setEmpireName("Space monsters");

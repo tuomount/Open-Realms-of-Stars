@@ -25,7 +25,7 @@ import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 /**
  * Starting Scenario for Open Realm of Stars
  */
-public class StartingScenarioClass {
+public class StartingScenario {
 
 
   /** Starting Scenario unique ID */
@@ -66,7 +66,7 @@ public class StartingScenarioClass {
    * @param type Starting Scenario type.
    * @param name Starting scenario human readable name.
    */
-  public StartingScenarioClass(final String id,
+  public StartingScenario(final String id,
       final StartingScenarioType type, final String name) {
     this.id = id;
     this.type = type;

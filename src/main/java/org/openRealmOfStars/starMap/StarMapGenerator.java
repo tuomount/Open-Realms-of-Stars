@@ -29,7 +29,6 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
-import org.openRealmOfStars.player.StartingScenario;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
@@ -38,6 +37,9 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.BackgroundStoryGenerator;
 import org.openRealmOfStars.player.race.trait.TraitIds;
+import org.openRealmOfStars.player.scenario.StartingScenario;
+import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
+import org.openRealmOfStars.player.scenario.StartingScenarioType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -230,26 +232,23 @@ public class StarMapGenerator {
       playerInfo.setRuler(ruler);
     }
 
-    if (!playerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)
-        && !planet.hasSpacePort()) {
-       if (planet.getBuildingList().length >= planet.getGroundSize()) {
-         // Planet is full and no space for space port.
-         planet.destroyOneBuilding();
-       }
-      planet.addBuilding(BuildingFactory.createByName("Space port"));
-    }
-    int extraPop = 0;
-    if (playerInfo.getStartingScenario() == StartingScenario.FARMING_PLANET) {
-      extraPop = 2;
-      if (playerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+    StartingScenario scenario = playerInfo.getStartingScenario();
+    int pop = playerInfo.getStartingScenario().getPopulation();
+    if (playerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)
+        && pop > 4) {
         // No more space for zero gravity being.
-        extraPop = 1;
+        pop = 4;
+    }
+    for (String buildingName : scenario.getBuildings()) {
+      if (planet.getBuildingList().length >= planet.getGroundSize()) {
+        // Planet is full and no space for "farms".
+        planet.destroyOneBuilding();
       }
-      for (int i = 0; i < 3; i++) {
-        if (planet.getBuildingList().length >= planet.getGroundSize()) {
-          // Planet is full and no space for "farms".
-          planet.destroyOneBuilding();
+      if (buildingName.equalsIgnoreCase("Space port")) {
+        if (!planet.hasCertainBuilding("Space port")) {
+          planet.addBuilding(BuildingFactory.createByName("Space port"));
         }
+      } else if (buildingName.equalsIgnoreCase("FarmBuilding")) {
         if (playerInfo.getRace().isLithovorian()) {
           planet.addBuilding(BuildingFactory.createByName("Basic mine"));
         }
@@ -259,6 +258,8 @@ public class StarMapGenerator {
         if (playerInfo.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
           planet.addBuilding(BuildingFactory.createByName("Basic factory"));
         }
+      } else {
+        planet.addBuilding(BuildingFactory.createByName(buildingName));
       }
     }
     if (playerInfo.isHuman()) {
@@ -268,26 +269,31 @@ public class StarMapGenerator {
     }
     planet.setWorkers(Planet.FOOD_FARMERS, 0);
     planet.setWorkers(Planet.METAL_MINERS, 0);
-    planet.setWorkers(Planet.PRODUCTION_WORKERS, 1 + extraPop);
-    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, pop);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
     planet.setWorkers(Planet.CULTURE_ARTIST, 0);
     PlanetHandling.handlePlanetPopulation(planet, playerInfo, playerIndex,
         GameLengthState.START_GAME);
     ShipStat[] stats = playerInfo.getShipStatList();
     int count = 0;
     boolean noShips = false;
-    if (playerInfo.getStartingScenario() == StartingScenario.FARMING_PLANET) {
+    if (scenario.getNumberOfColonyShips() == 0
+        && scenario.getNumberOfScouts() == 0) {
       noShips = true;
     }
     if (!noShips) {
       for (ShipStat stat : stats) {
-        int numShip = 1;
+        if (stat.getDesign().getHull().getHullType()
+            == ShipHullType.ORBITAL) {
+          continue;
+        }
+        Ship ship = new Ship(stat.getDesign());
+        int numShip = scenario.getNumberOfScouts();
+        if (ship.isColonyModule()) {
+          numShip = scenario.getNumberOfColonyShips();
+        }
         for (int j = 0; j < numShip; j++) {
-          if (stat.getDesign().getHull().getHullType()
-              == ShipHullType.ORBITAL) {
-            continue;
-          }
-          Ship ship = new Ship(stat.getDesign());
+          ship = new Ship(stat.getDesign());
           stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
           stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
           Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
@@ -352,16 +358,11 @@ public class StarMapGenerator {
     int count = 0;
     for (ShipStat stat : stats) {
       int numShip = 1;
-      if (playerInfo.getStartingScenario()
-          == StartingScenario.DESTROYED_HOME_PLANET
-          || playerInfo.getStartingScenario()
-          == StartingScenario.FROM_ANOTHER_GALAXY) {
-        if (stat.getDesign().isMilitaryShip()) {
-          numShip = 4;
-        }
-        if (stat.getDesign().getName().startsWith("Colony")) {
-          numShip = 2;
-        }
+      if (stat.getDesign().isMilitaryShip()) {
+          numShip = playerInfo.getStartingScenario().getNumberOfScouts();
+      }
+      if (stat.getDesign().getName().startsWith("Colony")) {
+        numShip = playerInfo.getStartingScenario().getNumberOfColonyShips();
       }
       for (int j = 0; j < numShip; j++) {
         if (stat.getDesign().getHull().getHullType() == ShipHullType.ORBITAL) {
@@ -906,25 +907,27 @@ public class StarMapGenerator {
     if (playerIndex != -1) {
       PlayerInfo playerInfo = starMap.getPlayerList().getPlayerInfoByIndex(
           playerIndex);
-      if (playerInfo.getStartingScenario() == StartingScenario.EARTH) {
+      if (playerInfo.getStartingScenario().getId().equals("EARTH")) {
         if (!solHasAdded) {
           solHasAdded = true;
           createSolSystem(sunx, suny, playerIndex, config);
           return;
         }
-        playerInfo.setStartingScenario(StartingScenario.TEMPERATE_HUMID_SIZE12);
+        playerInfo.setStartingScenario(StartingScenarioFactory.create(
+            "TEMPERATE_HUMID_SIZE12"));
       }
-      if (playerInfo.getStartingScenario()
-          == StartingScenario.DESTROYED_HOME_PLANET) {
+      if (playerInfo.getStartingScenario().getId().equals(
+          "DESTROYED_HOME_PLANET")) {
         if (!destroyedPlanetStartAdded) {
           destroyedPlanetStartAdded = true;
           reserverStartFromSpace(sunx, suny, playerIndex, config);
           return;
         }
-        playerInfo.setStartingScenario(StartingScenario.TEMPERATE_HUMID_SIZE12);
+        playerInfo.setStartingScenario(StartingScenarioFactory.create(
+            "TEMPERATE_HUMID_SIZE12"));
       }
-      if (playerInfo.getStartingScenario()
-          == StartingScenario.FROM_ANOTHER_GALAXY) {
+      if (playerInfo.getStartingScenario().getType()
+          == StartingScenarioType.NO_HOME) {
         reserverStartFromSpace(sunx, suny, playerIndex, config);
         return;
       }
@@ -976,46 +979,12 @@ public class StarMapGenerator {
               .getPlayerInfoByIndex(playerIndex);
           playerInfo.setElderRealm(config.getPlayerElderRealm(playerIndex));
           planet.setRadiationLevel(RadiationType.NO_RADIATION);
-          if (playerInfo.getStartingScenario()
-              == StartingScenario.TEMPERATE_ARID_SIZE12) {
-            planet.setTemperatureType(TemperatureType.TEMPERATE);
-            planet.setWaterLevel(WaterLevelType.ARID);
-            planet.setGroundSize(12);
-          } else if (playerInfo.getStartingScenario()
-              == StartingScenario.TEMPERATE_MARINE_SIZE9) {
-            planet.setTemperatureType(TemperatureType.TEMPERATE);
-            planet.setWaterLevel(WaterLevelType.MARINE);
-            planet.setGroundSize(9);
-          } else if (playerInfo.getStartingScenario()
-              == StartingScenario.TEMPERATE_MARINE_SIZE14) {
-            planet.setTemperatureType(TemperatureType.TEMPERATE);
-            planet.setWaterLevel(WaterLevelType.MARINE);
-            planet.setGroundSize(14);
-          } else if (playerInfo.getStartingScenario()
-              == StartingScenario.COLD_HUMID_SIZE12) {
-            planet.setTemperatureType(TemperatureType.COLD);
-            planet.setWaterLevel(WaterLevelType.HUMID);
-            planet.setGroundSize(12);
-          } else if (playerInfo.getStartingScenario()
-              == StartingScenario.HOT_ARID_SIZE12) {
-            planet.setTemperatureType(TemperatureType.HOT);
-            planet.setWaterLevel(WaterLevelType.ARID);
-            planet.setGroundSize(12);
-          } else if (playerInfo.getStartingScenario()
-              == StartingScenario.TROPICAL_HUMID_SIZE12) {
-            planet.setTemperatureType(TemperatureType.TROPICAL);
-            planet.setWaterLevel(WaterLevelType.HUMID);
-            planet.setGroundSize(12);
-          } else if (playerInfo.getStartingScenario()
-              == StartingScenario.FARMING_PLANET) {
-            planet.setTemperatureType(TemperatureType.TEMPERATE);
-            planet.setWaterLevel(WaterLevelType.ARID);
-            planet.setGroundSize(12);
-          } else {
-            planet.setTemperatureType(TemperatureType.TEMPERATE);
-            planet.setWaterLevel(WaterLevelType.HUMID);
-            planet.setGroundSize(12);
-          }
+          planet.setTemperatureType(
+              playerInfo.getStartingScenario().getTemperature());
+          planet.setWaterLevel(
+              playerInfo.getStartingScenario().getWaterLevel());
+          planet.setGroundSize(
+              playerInfo.getStartingScenario().getPlanetSize());
           planet.generateGravityBasedOnSize();
           planet.generateWorldType();
           planet.setAmountMetalInGround(HOMEWORLD_METAL);

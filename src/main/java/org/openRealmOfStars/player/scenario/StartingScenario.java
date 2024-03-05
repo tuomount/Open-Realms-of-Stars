@@ -260,4 +260,8 @@ public class StartingScenario {
     this.colonyPop = colonyPop;
   }
 
+  @Override
+  public String toString() {
+    return getName();
+  }
 }

@@ -2,7 +2,7 @@
   {
     "ID": "FARMING_PLANET",
     "Type": "utopia",
-    "Name": "Utopia temperate arid planet size 12, with farming buildings. No ships.",
+    "Name": "Utopia planet, with farming buildings. No ships.",
     "NumberOfScouts": 0,
     "NumberOfColonyShips": 0,
     "WaterLevel": "arid",

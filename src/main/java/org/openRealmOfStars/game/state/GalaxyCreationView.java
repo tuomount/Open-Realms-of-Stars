@@ -60,6 +60,11 @@ public class GalaxyCreationView extends BlackPanel {
    */
   private static final long serialVersionUID = 1L;
 
+  /** Tool tip start to density. This will give estimate of planets and suns. */
+  private static final String DENSITY_TOOL_TIP = "<html>"
+      + "How close solar system are to"
+      + " each others? Sparse creates more space between them <br>"
+      + "and overlap setting there can be solar system inside each others.";
   /**
    * ComboBox on galaxy size
    */
@@ -295,10 +300,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboSunDensity.setSelectedIndex(this.config.getSunDensityIndex());
     comboSunDensity.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboSunDensity.addActionListener(listener);
-    comboSunDensity.setToolTipText("<html>How close solar system are to"
-        + " each others? Sparse creates more space between them <br>"
-        + "and overlap setting there can be solar system inside each others."
-        + "</html>");
+    estimateGalaxySizeToolTip();
     info.add(comboSunDensity);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new SpaceLabel("Planetary events");
@@ -856,33 +858,45 @@ public class GalaxyCreationView extends BlackPanel {
         comboGalaxySize.setSelectedIndex(3);
         this.repaint();
       }
+      int density = 0;
       switch (comboSunDensity.getSelectedIndex()) {
       case 0: {
         // SPARSE
-        config.setSolarSystemDistance(12, comboSunDensity.getSelectedIndex());
+        density = 12;
+        config.setSolarSystemDistance(density,
+            comboSunDensity.getSelectedIndex());
         break;
       }
       case 1: {
         // Medium
-        config.setSolarSystemDistance(10, comboSunDensity.getSelectedIndex());
+        density = 10;
+        config.setSolarSystemDistance(density,
+            comboSunDensity.getSelectedIndex());
         break;
       }
       case 2: {
         // Dense
-        config.setSolarSystemDistance(7, comboSunDensity.getSelectedIndex());
+        density = 7;
+        config.setSolarSystemDistance(density,
+            comboSunDensity.getSelectedIndex());
         break;
       }
       case 3: {
         // Overlap
-        config.setSolarSystemDistance(6, comboSunDensity.getSelectedIndex());
+        density = 6;
+        config.setSolarSystemDistance(density,
+            comboSunDensity.getSelectedIndex());
         break;
       }
       default: {
         // SPARSE
-        config.setSolarSystemDistance(10, comboSunDensity.getSelectedIndex());
+        density = 12;
+        config.setSolarSystemDistance(density,
+            comboSunDensity.getSelectedIndex());
         break;
       }
       }
+      estimateGalaxySizeToolTip();
       switch (comboPlanetaryEvent.getSelectedIndex()) {
       case 0: {
         // None
@@ -1074,6 +1088,21 @@ public class GalaxyCreationView extends BlackPanel {
     }
   }
 
+  /**
+   * Estimate galaxy size tool tip.
+   */
+  private void estimateGalaxySizeToolTip() {
+    int amount = config.getSizeX() / (config.getSolarSystemDistance() * 3);
+    int suns = amount * amount;
+    if (suns < config.getMaxPlayers()) {
+      suns = config.getMaxPlayers();
+    }
+    int planets = suns * 4;
+    comboSunDensity.setToolTipText(DENSITY_TOOL_TIP
+        + "With current settings estimate " + suns + " stars and"
+            + " " + planets + " planets. </html>");
+
+  }
   /**
    * Get Galaxy configuration
    * @return Galaxy configuration

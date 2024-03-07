@@ -46,7 +46,7 @@ public class GalaxyConfigTest {
     assertEquals(75, config.getSizeX());
     assertEquals(75, config.getSizeY());
     assertEquals(6, config.getMaxPlayers());
-    assertEquals(12, config.getSolarSystemDistance());
+    assertEquals(7, config.getSolarSystemDistance());
     assertEquals(300, config.getScoringVictoryTurns());
     config.setScoringVictoryTurns(0);
     assertEquals(200, config.getScoringVictoryTurns());

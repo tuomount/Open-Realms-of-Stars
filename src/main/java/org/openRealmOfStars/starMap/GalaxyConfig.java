@@ -275,7 +275,7 @@ public class GalaxyConfig {
     setScoreLimitPopulation(2);
     setMaxPlayers(6);
     setElderHeadStart(60);
-    setSolarSystemDistance(12, 0);
+    setSolarSystemDistance(7, 2);
     setStartingPosition(START_POSITION_RANDOM);
     playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
     playerName = new String[StarMap.MAX_PLAYERS];

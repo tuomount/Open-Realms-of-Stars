@@ -100,15 +100,45 @@ public final class SpaceRaceUtility {
     StringBuilder sb = new StringBuilder();
     switch (DiceGenerator.getRandom(6)) {
       default:
-      case 0:
-      case 1:
+      case 0: {
+        sb.append(race.getNameSingle());
+        sb.append(" ");
+        if (DiceGenerator.getBoolean()) {
+          sb.append("Space ");
+        } else {
+          sb.append("Astral ");
+        }
+        sb.append(government.getName());
+        break;
+      }
+      case 1: {
+        if (DiceGenerator.getBoolean()) {
+          sb.append("Space ");
+        } else {
+          sb.append("Astral ");
+        }
+        sb.append(government.getName());
+        sb.append(" of ");
+        sb.append(race.getName());
+        break;
+      }
       case 2: {
         sb.append(race.getNameSingle());
         sb.append(" ");
         sb.append(government.getName());
         break;
       }
-      case 3:
+      case 3: {
+        if (DiceGenerator.getBoolean()) {
+          sb.append("Supreme ");
+        } else {
+          sb.append("Sovereign ");
+        }
+        sb.append(government.getName());
+        sb.append(" of ");
+        sb.append(race.getName());
+        break;
+      }
       case 4: {
         sb.append(government.getName());
         sb.append(" of ");
@@ -117,7 +147,7 @@ public final class SpaceRaceUtility {
       }
       case 5: {
         sb.append(government.getName());
-        sb.append(" of united ");
+        sb.append(" of United ");
         sb.append(race.getName());
         break;
       }

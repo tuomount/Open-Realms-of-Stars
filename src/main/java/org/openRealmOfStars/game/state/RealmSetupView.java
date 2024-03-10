@@ -25,25 +25,34 @@ import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JTextField;
 
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
+import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.SpaceComboBox;
+import org.openRealmOfStars.gui.list.PlayerColorListRenderer;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.player.scenario.StartingScenario;
+import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 
 /**
@@ -151,6 +160,8 @@ public class RealmSetupView extends BlackPanel {
     mainPanel.setTitle("Realm Setup");
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     mainPanel.add(Box.createRigidArea(new Dimension(500, 10)));
+    mainPanel.add(createRealmSetup(mainPanel, realmIndex, actionListener));
+    imgBase.add(mainPanel, BorderLayout.CENTER);
 
     InvisiblePanel invisible = new InvisiblePanel(imgBase);
     invisible.setLayout(new BorderLayout());
@@ -164,5 +175,168 @@ public class RealmSetupView extends BlackPanel {
     invisible.add(btn, BorderLayout.EAST);
     imgBase.add(invisible, BorderLayout.SOUTH);
     this.add(imgBase, BorderLayout.CENTER);
+  }
+
+  /**
+   * Create Realm config for one realm
+   * @param base The panel
+   * @param index The player index
+   * @param listener The action listener
+   * @return panel with configuration components
+   */
+  private InvisiblePanel createRealmSetup(final InfoPanel base,
+      final int index, final ActionListener listener) {
+    InvisiblePanel xinvis = new InvisiblePanel(base);
+    xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
+    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
+
+    InfoPanel info = new InfoPanel();
+    info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
+    if (index == 0 && !config.isAiOnly()) {
+      info.setTitle("Player " + (index + 1));
+    } else {
+      info.setTitle("Player " + (index + 1) + " (AI)");
+    }
+    raceImgs = new RaceImagePanel();
+    raceImgs.setRaceToShow(config.getRace(index).getNameSingle());
+    info.add(raceImgs);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    comboRaceSelect = new SpaceComboBox<>(
+        SpaceRaceUtility.RACE_SELECTION);
+    comboRaceSelect.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    comboRaceSelect.setForeground(GuiStatics.getCoolSpaceColor());
+    comboRaceSelect.setBorder(new SimpleBorder());
+    comboRaceSelect.setFont(GuiFonts.getFontCubellan());
+    comboRaceSelect.getModel()
+        .setSelectedItem(config.getRace(index).getNameSingle());
+    DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    comboRaceSelect.setRenderer(dlcr);
+    comboRaceSelect.addActionListener(listener);
+    comboRaceSelect.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP + index);
+    if (config.getMaxPlayers() < (index + 1)) {
+      comboRaceSelect.setEnabled(false);
+    }
+    comboRaceSelect.setToolTipText(config.getRace(index)
+        .getFullDescription(false, false));
+    info.add(comboRaceSelect);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    EmptyInfoPanel info2 = new EmptyInfoPanel();
+    info2.setLayout(new BoxLayout(info2, BoxLayout.X_AXIS));
+    comboGovernmentSelect = new SpaceComboBox<>(GovernmentType.values());
+    comboGovernmentSelect.setBackground(
+        GuiStatics.getDeepSpaceDarkColor());
+    comboGovernmentSelect.setForeground(
+        GuiStatics.getCoolSpaceColor());
+    comboGovernmentSelect.setBorder(new SimpleBorder());
+    comboGovernmentSelect.setFont(GuiFonts.getFontCubellan());
+    comboGovernmentSelect.getModel()
+        .setSelectedItem(config.getRace(index).getNameSingle());
+    dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    comboGovernmentSelect.setRenderer(dlcr);
+    comboGovernmentSelect.addActionListener(listener);
+    comboGovernmentSelect.setActionCommand(
+        GameCommands.COMMAND_GOVERNMENT_SETUP + index);
+    if (config.getMaxPlayers() < (index + 1)) {
+      comboGovernmentSelect.setEnabled(false);
+    }
+    comboGovernmentSelect.setSelectedItem(
+        config.getPlayerGovernment(index));
+    int i = comboGovernmentSelect.getSelectedIndex();
+    GovernmentType[] governments = GovernmentType.values();
+    comboGovernmentSelect.setToolTipText(
+        governments[i].getDescription(false));
+    info2.add(comboGovernmentSelect);
+    info2.add(Box.createRigidArea(new Dimension(5, 5)));
+    checkElderRealm = new SpaceCheckBox("");
+    checkElderRealm.setType(SpaceCheckBox.CHECKBOX_TYPE_ELDER);
+    checkElderRealm.setToolTipText("<html>Select rune to mark Realm"
+        + " as an elder realm.<br> This will allow realm head"
+        + " start and will make realm more stronger than others.<br>"
+        + "Elder realms are played by AI for amount of head start.</html>");
+    info2.add(checkElderRealm);
+    info.add(info2);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    realmName = new JTextField(
+        "Empire of " + config.getRace(index).getName());
+    realmName.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    realmName.setForeground(GuiStatics.getCoolSpaceColor());
+    realmName.setFont(GuiFonts.getFontCubellanSmaller());
+    realmName.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    if (config.getMaxPlayers() < (index + 1)) {
+      realmName.setEnabled(false);
+      raceImgs.setRaceToShow(null);
+    } else {
+      realmName.setText(config.getPlayerName(index));
+      comboRaceSelect.setToolTipText(config.getRace(index)
+          .getFullDescription(false, false));
+    }
+    info.add(realmName);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    comboDifficult = new SpaceComboBox<>(AiDifficulty.values());
+    comboDifficult.setSelectedIndex(
+        config.getDifficultyLevel().getIndex());
+    comboDifficult.setBackground(
+        GuiStatics.getDeepSpaceDarkColor());
+    comboDifficult.setForeground(
+        GuiStatics.getCoolSpaceColor());
+    comboDifficult.setFont(GuiFonts.getFontCubellanSmaller());
+    comboDifficult.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    comboDifficult.setActionCommand(
+        GameCommands.COMMAND_DIFFICULT_SETUP);
+    comboDifficult.addActionListener(listener);
+    if (index == 0 && !config.isAiOnly()) {
+      comboDifficult.setEnabled(false);
+      comboDifficult.setToolTipText("");
+    }
+    info.add(comboDifficult);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    comboRealmColor = new SpaceComboBox<>(
+        PlayerColor.values());
+    comboRealmColor
+        .setBackground(GuiStatics.getDeepSpaceDarkColor());
+    comboRealmColor.setForeground(GuiStatics.getCoolSpaceColor());
+    comboRealmColor.setBorder(new SimpleBorder());
+    comboRealmColor.setFont(GuiFonts.getFontCubellan());
+
+    PlayerColor color = DiceGenerator.pickRandom(randomListOfColors);
+    randomListOfColors.remove(color);
+    comboRealmColor.getModel()
+        .setSelectedItem(color);
+    PlayerColorListRenderer pclr = new PlayerColorListRenderer();
+    comboRealmColor.setForeground(color.getColor());
+    comboRealmColor.setRenderer(pclr);
+    comboRealmColor.addActionListener(listener);
+    comboRealmColor.setActionCommand(GameCommands.COMMAND_COLOR_SETUP + index);
+    comboRealmColor.setToolTipText("<html>Realm color in map and"
+        + " statistics.</html>");
+    info.add(comboRealmColor);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    StartingScenario[] scenarioList = new StartingScenario[
+        StartingScenarioFactory.getValues().length + 1];
+    scenarioList[0] = StartingScenarioFactory.createRandom();
+    int j = 0;
+    for (StartingScenario scenario : StartingScenarioFactory.getValues()) {
+      j++;
+      scenarioList[j] = scenario;
+    }
+    comboScenario = new SpaceComboBox<>(scenarioList);
+    comboScenario.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    comboScenario.setForeground(GuiStatics.getCoolSpaceColor());
+    comboScenario.setBorder(new SimpleBorder());
+    comboScenario.setFont(GuiFonts.getFontCubellan());
+    comboScenario.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    comboScenario.setActionCommand(
+        GameCommands.COMMAND_SCENARIO_SETUP);
+    comboScenario.addActionListener(listener);
+    info.add(comboScenario);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    xinvis.add(info);
+    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
+    return xinvis;
   }
 }

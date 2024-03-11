@@ -34,7 +34,9 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceComboBox;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.list.PlayerColorListRenderer;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
@@ -127,6 +129,11 @@ public class RealmSetupView extends BlackPanel {
   /** Realm Index. */
   private int realmIndex;
 
+  /** Info text for space race. */
+  private InfoTextArea spaceRaceInfo;
+  /** Info text for government. */
+  private InfoTextArea governmentInfo;
+
   public RealmSetupView(final GalaxyConfig config,
       final ActionListener listener, final boolean allowChangeRealm) {
     this.config = config;
@@ -186,7 +193,9 @@ public class RealmSetupView extends BlackPanel {
    */
   private InvisiblePanel createRealmSetup(final InfoPanel base,
       final int index, final ActionListener listener) {
-    InvisiblePanel xinvis = new InvisiblePanel(base);
+    InvisiblePanel fullPanel = new InvisiblePanel(base);
+    fullPanel.setLayout(new BorderLayout());
+    InvisiblePanel xinvis = new InvisiblePanel(fullPanel);
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
     xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
 
@@ -337,6 +346,22 @@ public class RealmSetupView extends BlackPanel {
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
-    return xinvis;
+    fullPanel.add(xinvis, BorderLayout.WEST);
+    xinvis = new InvisiblePanel(fullPanel);
+    xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
+    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
+    SpaceLabel label = new SpaceLabel("Space race info:");
+    xinvis.add(label);
+    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
+    spaceRaceInfo = new InfoTextArea();
+    xinvis.add(spaceRaceInfo);
+    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
+    label = new SpaceLabel("Government info:");
+    xinvis.add(label);
+    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
+    governmentInfo = new InfoTextArea();
+    xinvis.add(governmentInfo);
+    fullPanel.add(xinvis, BorderLayout.CENTER);
+    return fullPanel;
   }
 }

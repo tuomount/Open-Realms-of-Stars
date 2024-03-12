@@ -167,7 +167,7 @@ public class RealmSetupView extends BlackPanel {
     mainPanel.setTitle("Realm Setup");
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     mainPanel.add(Box.createRigidArea(new Dimension(500, 10)));
-    mainPanel.add(createRealmSetup(mainPanel, realmIndex, actionListener));
+    mainPanel.add(createRealmSetup(realmIndex, actionListener));
     imgBase.add(mainPanel, BorderLayout.CENTER);
 
     InvisiblePanel invisible = new InvisiblePanel(imgBase);
@@ -186,30 +186,31 @@ public class RealmSetupView extends BlackPanel {
 
   /**
    * Create Realm config for one realm
-   * @param base The panel
    * @param index The player index
    * @param listener The action listener
    * @return panel with configuration components
    */
-  private InvisiblePanel createRealmSetup(final InfoPanel base,
-      final int index, final ActionListener listener) {
-    InvisiblePanel fullPanel = new InvisiblePanel(base);
+  private InfoPanel createRealmSetup(final int index,
+      final ActionListener listener) {
+    InfoPanel fullPanel = new InfoPanel();
     fullPanel.setLayout(new BorderLayout());
+    if (index == 0 && !config.isAiOnly()) {
+      fullPanel.setTitle("Player " + (index + 1));
+    } else {
+      fullPanel.setTitle("Player " + (index + 1) + " (AI)");
+    }
     InvisiblePanel xinvis = new InvisiblePanel(fullPanel);
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
     xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
 
-    InfoPanel info = new InfoPanel();
-    info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
-    if (index == 0 && !config.isAiOnly()) {
-      info.setTitle("Player " + (index + 1));
-    } else {
-      info.setTitle("Player " + (index + 1) + " (AI)");
-    }
+    InvisiblePanel westPanel = new InvisiblePanel(fullPanel);
+    westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
+    westPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
     raceImgs = new RaceImagePanel();
     raceImgs.setRaceToShow(config.getRace(index).getNameSingle());
-    info.add(raceImgs);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    westPanel.add(raceImgs);
+    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     comboRaceSelect = new SpaceComboBox<>(
         SpaceRaceUtility.RACE_SELECTION);
     comboRaceSelect.setBackground(GuiStatics.getDeepSpaceDarkColor());
@@ -228,8 +229,8 @@ public class RealmSetupView extends BlackPanel {
     }
     comboRaceSelect.setToolTipText(config.getRace(index)
         .getFullDescription(false, false));
-    info.add(comboRaceSelect);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    westPanel.add(comboRaceSelect);
+    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     EmptyInfoPanel info2 = new EmptyInfoPanel();
     info2.setLayout(new BoxLayout(info2, BoxLayout.X_AXIS));
     comboGovernmentSelect = new SpaceComboBox<>(GovernmentType.values());
@@ -265,8 +266,8 @@ public class RealmSetupView extends BlackPanel {
         + " start and will make realm more stronger than others.<br>"
         + "Elder realms are played by AI for amount of head start.</html>");
     info2.add(checkElderRealm);
-    info.add(info2);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    westPanel.add(info2);
+    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     realmName = new JTextField(
         "Empire of " + config.getRace(index).getName());
     realmName.setBackground(GuiStatics.getDeepSpaceDarkColor());
@@ -282,8 +283,8 @@ public class RealmSetupView extends BlackPanel {
       comboRaceSelect.setToolTipText(config.getRace(index)
           .getFullDescription(false, false));
     }
-    info.add(realmName);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    westPanel.add(realmName);
+    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     comboDifficult = new SpaceComboBox<>(AiDifficulty.values());
     comboDifficult.setSelectedIndex(
         config.getDifficultyLevel().getIndex());
@@ -301,8 +302,8 @@ public class RealmSetupView extends BlackPanel {
       comboDifficult.setEnabled(false);
       comboDifficult.setToolTipText("");
     }
-    info.add(comboDifficult);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    westPanel.add(comboDifficult);
+    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     comboRealmColor = new SpaceComboBox<>(
         PlayerColor.values());
     comboRealmColor
@@ -322,8 +323,8 @@ public class RealmSetupView extends BlackPanel {
     comboRealmColor.setActionCommand(GameCommands.COMMAND_COLOR_SETUP + index);
     comboRealmColor.setToolTipText("<html>Realm color in map and"
         + " statistics.</html>");
-    info.add(comboRealmColor);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    westPanel.add(comboRealmColor);
+    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     StartingScenario[] scenarioList = new StartingScenario[
         StartingScenarioFactory.getValues().length + 1];
     scenarioList[0] = StartingScenarioFactory.createRandom();
@@ -342,26 +343,26 @@ public class RealmSetupView extends BlackPanel {
     comboScenario.setActionCommand(
         GameCommands.COMMAND_SCENARIO_SETUP);
     comboScenario.addActionListener(listener);
-    info.add(comboScenario);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
-    xinvis.add(info);
+    westPanel.add(comboScenario);
+    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    xinvis.add(westPanel);
     xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
     fullPanel.add(xinvis, BorderLayout.WEST);
-    xinvis = new InvisiblePanel(fullPanel);
-    xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
-    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
+    InvisiblePanel centerPanel = new InvisiblePanel(fullPanel);
+    centerPanel.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
+    centerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     SpaceLabel label = new SpaceLabel("Space race info:");
-    xinvis.add(label);
-    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
+    centerPanel.add(label);
+    centerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     spaceRaceInfo = new InfoTextArea();
-    xinvis.add(spaceRaceInfo);
-    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
+    centerPanel.add(spaceRaceInfo);
+    centerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     label = new SpaceLabel("Government info:");
-    xinvis.add(label);
-    xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
+    centerPanel.add(label);
+    centerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     governmentInfo = new InfoTextArea();
-    xinvis.add(governmentInfo);
-    fullPanel.add(xinvis, BorderLayout.CENTER);
+    centerPanel.add(governmentInfo);
+    fullPanel.add(centerPanel, BorderLayout.CENTER);
     return fullPanel;
   }
 }

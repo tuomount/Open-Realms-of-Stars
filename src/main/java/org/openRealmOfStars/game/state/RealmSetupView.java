@@ -182,6 +182,7 @@ public class RealmSetupView extends BlackPanel {
     invisible.add(btn, BorderLayout.EAST);
     imgBase.add(invisible, BorderLayout.SOUTH);
     this.add(imgBase, BorderLayout.CENTER);
+    changeRealmIndex(realmIndex);
   }
 
   /**
@@ -364,5 +365,32 @@ public class RealmSetupView extends BlackPanel {
     centerPanel.add(governmentInfo);
     fullPanel.add(centerPanel, BorderLayout.CENTER);
     return fullPanel;
+  }
+
+  /**
+   * Change realm index
+   * @param index new index.
+   */
+  private void changeRealmIndex(final int index) {
+    raceImgs.setRaceToShow(config.getRace(index).getNameSingle());
+    comboRaceSelect.getModel()
+    .setSelectedItem(config.getRace(index).getNameSingle());
+    comboGovernmentSelect.getModel()
+    .setSelectedItem(config.getRace(index).getNameSingle());
+    checkElderRealm.setSelected(config.getPlayerElderRealm(index));
+    realmName.setText(config.getPlayerName(index));
+    if (index > 0 || config.isAiOnly()) {
+      comboDifficult.setEditable(true);
+      comboDifficult.setSelectedIndex(
+          config.getDifficultyLevel().getIndex());
+    } else {
+      comboDifficult.setEditable(false);
+    }
+    comboRealmColor.getModel().setSelectedItem(config.getPlayerColor(index));
+    comboScenario.getModel().setSelectedItem(config.getStartingScenario(index));
+    spaceRaceInfo.setText(config.getRace(index).getFullDescription(false,
+        false));
+    governmentInfo.setText(config.getPlayerGovernment(index)
+        .getDescription(false));
   }
 }

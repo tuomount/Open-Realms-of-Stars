@@ -17,6 +17,7 @@ package org.openRealmOfStars.player.race;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,6 +70,21 @@ public final class SpaceRaceFactory {
    */
   public static SpaceRace[] getValues() {
     return SINGLETON.getAll();
+  }
+
+  /**
+   * Get All Space race names in array. This will filter out pseudo races.
+   * @return Space race name array
+   */
+  public static String[] getNames() {
+    SpaceRace[] races = SINGLETON.getAll();
+    ArrayList<String> names = new ArrayList<>();
+    for (SpaceRace race : races) {
+      if (race.getSpaceRaceType() == SpaceRaceType.REGULAR) {
+        names.add(race.getNameSingle());
+      }
+    }
+    return names.toArray(new String[names.size()]);
   }
 
   /**

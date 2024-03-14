@@ -20,6 +20,7 @@ package org.openRealmOfStars.game.state;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JTextField;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -47,11 +49,15 @@ import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentUtility;
+import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.player.scenario.StartingScenario;
 import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -186,6 +192,48 @@ public class RealmSetupView extends BlackPanel {
   }
 
   /**
+   * Handle actions for Player Setup view
+   * @param arg0 The event
+   */
+  public void handleActions(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
+      SoundPlayer.playMenuSound();
+      String raceStr = (String) comboRaceSelect.getSelectedItem();
+      SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
+      config.setRace(realmIndex, race);
+      raceImgs.setRaceToShow(raceStr);
+      comboGovernmentSelect.removeActionListener(actionListener);
+      comboGovernmentSelect.removeAllItems();
+      GovernmentType[] govs = GovernmentType.values();
+      for (GovernmentType gov : govs) {
+        comboGovernmentSelect.addItem(gov);
+      }
+      spaceRaceInfo.setText(race.getFullDescription(false, false));
+      config.setPlayerGovernment(realmIndex,
+          GovernmentUtility.getRandomGovernment());
+      comboGovernmentSelect.setSelectedItem(
+          config.getPlayerGovernment(realmIndex));
+      governmentInfo.setText(
+          config.getPlayerGovernment(realmIndex).getDescription(false));
+      realmName.setText(SpaceRaceUtility.getRealmName(race,
+          config.getPlayerGovernment(realmIndex)));
+      comboGovernmentSelect.addActionListener(actionListener);
+    }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_GOVERNMENT_SETUP)) {
+      SoundPlayer.playMenuSound();
+      GovernmentType gov = (GovernmentType) comboGovernmentSelect
+          .getSelectedItem();
+      if (gov != null) {
+        governmentInfo.setText(gov.getDescription(false));
+        config.setPlayerGovernment(realmIndex, gov);
+      }
+      String raceStr = (String) comboRaceSelect.getSelectedItem();
+      SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
+      realmName.setText(SpaceRaceUtility.getRealmName(race, gov));
+    }
+  }
+  /**
    * Create Realm config for one realm
    * @param index The player index
    * @param listener The action listener
@@ -213,7 +261,7 @@ public class RealmSetupView extends BlackPanel {
     westPanel.add(raceImgs);
     westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     comboRaceSelect = new SpaceComboBox<>(
-        SpaceRaceUtility.RACE_SELECTION);
+        SpaceRaceFactory.getNames());
     comboRaceSelect.setBackground(GuiStatics.getDeepSpaceDarkColor());
     comboRaceSelect.setForeground(GuiStatics.getCoolSpaceColor());
     comboRaceSelect.setBorder(new SimpleBorder());
@@ -224,7 +272,7 @@ public class RealmSetupView extends BlackPanel {
     dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
     comboRaceSelect.setRenderer(dlcr);
     comboRaceSelect.addActionListener(listener);
-    comboRaceSelect.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP + index);
+    comboRaceSelect.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     if (config.getMaxPlayers() < (index + 1)) {
       comboRaceSelect.setEnabled(false);
     }
@@ -248,7 +296,7 @@ public class RealmSetupView extends BlackPanel {
     comboGovernmentSelect.setRenderer(dlcr);
     comboGovernmentSelect.addActionListener(listener);
     comboGovernmentSelect.setActionCommand(
-        GameCommands.COMMAND_GOVERNMENT_SETUP + index);
+        GameCommands.COMMAND_GOVERNMENT_SETUP);
     if (config.getMaxPlayers() < (index + 1)) {
       comboGovernmentSelect.setEnabled(false);
     }
@@ -321,7 +369,7 @@ public class RealmSetupView extends BlackPanel {
     comboRealmColor.setForeground(color.getColor());
     comboRealmColor.setRenderer(pclr);
     comboRealmColor.addActionListener(listener);
-    comboRealmColor.setActionCommand(GameCommands.COMMAND_COLOR_SETUP + index);
+    comboRealmColor.setActionCommand(GameCommands.COMMAND_COLOR_SETUP);
     comboRealmColor.setToolTipText("<html>Realm color in map and"
         + " statistics.</html>");
     westPanel.add(comboRealmColor);

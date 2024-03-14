@@ -52,6 +52,7 @@ import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.player.scenario.StartingScenario;
 import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
@@ -347,7 +348,7 @@ public class PlayerSetupView extends BlackPanel {
     info.add(raceImgs[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     comboRaceSelect[index] = new SpaceComboBox<>(
-        SpaceRaceUtility.RACE_SELECTION);
+        SpaceRaceFactory.getNames());
     comboRaceSelect[index]
         .setBackground(GuiStatics.getDeepSpaceDarkColor());
     comboRaceSelect[index].setForeground(GuiStatics.getCoolSpaceColor());

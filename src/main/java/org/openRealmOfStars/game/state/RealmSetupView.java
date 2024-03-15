@@ -232,6 +232,22 @@ public class RealmSetupView extends BlackPanel {
       SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
       realmName.setText(SpaceRaceUtility.getRealmName(race, gov));
     }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_DIFFICULT_SETUP)) {
+      SoundPlayer.playMenuSound();
+      AiDifficulty difficulty = (AiDifficulty) comboDifficult.getSelectedItem();
+      if (difficulty != null) {
+        config.setPlayerDifficult(realmIndex, difficulty);
+      }
+    }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_COLOR_SETUP)) {
+      SoundPlayer.playMenuSound();
+      PlayerColor color = (PlayerColor) comboRealmColor.getSelectedItem();
+      if (color != null) {
+        config.setPlayerColor(realmIndex, color);
+      }
+    }
   }
   /**
    * Create Realm config for one realm

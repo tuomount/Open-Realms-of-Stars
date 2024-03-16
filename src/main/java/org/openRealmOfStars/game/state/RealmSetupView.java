@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
+import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
@@ -57,7 +58,6 @@ import org.openRealmOfStars.player.scenario.StartingScenario;
 import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
-import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -248,6 +248,24 @@ public class RealmSetupView extends BlackPanel {
         config.setPlayerColor(realmIndex, color);
       }
     }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_GALAXY_PREV_REALM)) {
+      SoundPlayer.playMenuSound();
+      realmIndex--;
+      if (realmIndex <= 0) {
+        realmIndex = config.getMaxPlayers() - 1;
+      }
+      changeRealmIndex(realmIndex);
+    }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_GALAXY_NEXT_REALM)) {
+      SoundPlayer.playMenuSound();
+      realmIndex++;
+      if (realmIndex >= config.getMaxPlayers()) {
+        realmIndex = 1;
+      }
+      changeRealmIndex(realmIndex);
+    }
   }
   /**
    * Create Realm config for one realm
@@ -271,11 +289,26 @@ public class RealmSetupView extends BlackPanel {
     InvisiblePanel westPanel = new InvisiblePanel(fullPanel);
     westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
     westPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    InvisiblePanel topPanel = new InvisiblePanel(fullPanel);
+    topPanel.setLayout(new BoxLayout(westPanel, BoxLayout.X_AXIS));
 
+    if (allowChangingRealm) {
+      IconButton btn = new IconButton(GuiStatics.getArrowLeft(),
+          GuiStatics.getArrowLeftPressed(), false,
+          GameCommands.COMMAND_GALAXY_PREV_REALM, topPanel);
+      btn.addActionListener(listener);
+      topPanel.add(btn);
+    }
     raceImgs = new RaceImagePanel();
     raceImgs.setRaceToShow(config.getRace(index).getNameSingle());
-    westPanel.add(raceImgs);
-    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    topPanel.add(raceImgs);
+    if (allowChangingRealm) {
+      IconButton btn = new IconButton(GuiStatics.getArrowRight(),
+          GuiStatics.getArrowRightPressed(), false,
+          GameCommands.COMMAND_GALAXY_NEXT_REALM, topPanel);
+      btn.addActionListener(listener);
+      topPanel.add(btn);
+    }
     comboRaceSelect = new SpaceComboBox<>(
         SpaceRaceFactory.getNames());
     comboRaceSelect.setBackground(GuiStatics.getDeepSpaceDarkColor());
@@ -413,6 +446,7 @@ public class RealmSetupView extends BlackPanel {
     xinvis.add(westPanel);
     xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
     fullPanel.add(xinvis, BorderLayout.WEST);
+    fullPanel.add(topPanel, BorderLayout.NORTH);
     InvisiblePanel centerPanel = new InvisiblePanel(fullPanel);
     centerPanel.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
     centerPanel.add(Box.createRigidArea(new Dimension(10, 10)));

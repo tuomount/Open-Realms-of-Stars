@@ -22,6 +22,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -31,6 +32,8 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.SpaceComboBox;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
@@ -58,6 +61,20 @@ public class AiRealmSetupView extends BlackPanel {
    * Checkbox for Unique race
    */
   private SpaceCheckBox uniqueRace;
+  /**
+   * Checkbox for Unique government
+   */
+  private SpaceCheckBox uniqueGovernment;
+
+  /**
+   * ComboBox on minimum elder race
+   */
+  private SpaceComboBox<String> comboMinimumElderRace;
+  /**
+   * ComboBox on maximum elder race
+   */
+  private SpaceComboBox<String> comboMaximumElderRace;
+
   /**
    * Constructor for AI Realm setup View
    * @param config Galaxy Configuration
@@ -120,6 +137,48 @@ public class AiRealmSetupView extends BlackPanel {
   }
 
   /**
+   * Generate amount of elder based on number of realms.
+   * @return Elder options as Strings
+   */
+  private String[] generateAmountElders() {
+    double[] percentage = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.75, 1};
+    ArrayList<String> elderList = new ArrayList<>();
+    int oldValue = -1;
+    int maxRealms = config.getMaxPlayers() - 1;
+    for (int i = 0; i < percentage.length; i++) {
+      int value = (int) Math.round(maxRealms * percentage[i]);
+      if (value != oldValue) {
+        oldValue = value;
+        if (value == 0) {
+          elderList.add("No elder realms");
+        } else if (value == 1) {
+          elderList.add("One elder realm");
+        } else {
+          elderList.add(String.valueOf(value) + " elder realms");
+        }
+      }
+    }
+    return elderList.toArray(new String[elderList.size()]);
+  }
+
+  /**
+   * Parse amount of elder from string.
+   * @param str String to parse
+   * @return number of elder.
+   */
+  private int parseAmountOfElder(final String str) {
+    int index = str.indexOf("elder");
+    if (index > -1) {
+      String valueStr = str.substring(0, index);
+      valueStr.trim();
+      if (valueStr.contains("No")) {
+        return 0;
+      }
+      return Integer.valueOf(valueStr);
+    }
+    return 0;
+  }
+  /**
    * Create Realm Setup panel.
    * @param listener ActionListener
    * @return InfoPanel with galaxy creation settings.
@@ -133,7 +192,40 @@ public class AiRealmSetupView extends BlackPanel {
     uniqueRace.setToolTipText("Each realm has unique space race.");
     uniqueRace.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     uniqueRace.setAlignmentX(CENTER_ALIGNMENT);
+    uniqueRace.addActionListener(listener);
     info.add(uniqueRace);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    uniqueGovernment = new SpaceCheckBox("Unique government");
+    uniqueGovernment.setToolTipText("Each realm has unique government.");
+    uniqueGovernment.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    uniqueGovernment.setAlignmentX(CENTER_ALIGNMENT);
+    uniqueGovernment.addActionListener(listener);
+    info.add(uniqueGovernment);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    SpaceLabel label = new SpaceLabel("Minimum number of elder realms in galaxy: ");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    comboMinimumElderRace = new SpaceComboBox<>(generateAmountElders());
+    comboMinimumElderRace.setSelectedIndex(0);
+    comboMinimumElderRace.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboMinimumElderRace.addActionListener(listener);
+    comboMinimumElderRace.setToolTipText("<html>What is the minimum amount of"
+        + " elder realms in the galaxy.</html>");
+    info.add(comboMinimumElderRace);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    label = new SpaceLabel("Maximum number of elder realms in galaxy: ");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    comboMaximumElderRace = new SpaceComboBox<>(generateAmountElders());
+    comboMaximumElderRace.setSelectedIndex(0);
+    comboMaximumElderRace.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboMaximumElderRace.addActionListener(listener);
+    comboMaximumElderRace.setToolTipText("<html>What is the maximum amount of"
+        + " elder realms in the galaxy.</html>");
+    info.add(comboMaximumElderRace);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
     return info;
   }
 }

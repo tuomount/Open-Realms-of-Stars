@@ -545,6 +545,11 @@ public final class GameCommands {
   public static final String COMMAND_GALAXY_SETUP = "GalaxySetup";
 
   /**
+   * Realm details
+   */
+  public static final String COMMAND_REALM_DETAILS = "RealmDetails";
+
+  /**
    * Galaxy Setup Next Realm command.
    */
   public static final String COMMAND_GALAXY_NEXT_REALM = "GalaxyNextRealm";

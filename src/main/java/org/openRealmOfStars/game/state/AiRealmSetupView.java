@@ -67,6 +67,19 @@ public class AiRealmSetupView extends BlackPanel {
   private SpaceCheckBox uniqueGovernment;
 
   /**
+   * Checkbox for Start from earth
+   */
+  private SpaceCheckBox startEarth;
+  /**
+   * Checkbox for no home starting scenario.
+   */
+  private SpaceCheckBox noHomeStart;
+  /**
+   * Checkbox for utopia starting scenario.
+   */
+  private SpaceCheckBox utopiaStart;
+
+  /**
    * ComboBox on minimum elder race
    */
   private SpaceComboBox<String> comboMinimumElderRace;
@@ -225,6 +238,40 @@ public class AiRealmSetupView extends BlackPanel {
     comboMaximumElderRace.setToolTipText("<html>What is the maximum amount of"
         + " elder realms in the galaxy.</html>");
     info.add(comboMaximumElderRace);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    label = new SpaceLabel("Allowed starting scenarios: ");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    startEarth = new SpaceCheckBox("Allow starting from Earth");
+    startEarth.setToolTipText("Allow realm start from Earth. Only single"
+        + " realm may start from Earth.");
+    startEarth.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    startEarth.setAlignmentX(CENTER_ALIGNMENT);
+    startEarth.addActionListener(listener);
+    info.add(startEarth);
+    info.add(Box.createRigidArea(new Dimension(2, 2)));
+    noHomeStart = new SpaceCheckBox("Allow starting without home planet");
+    noHomeStart.setToolTipText("Realm starts without home planet. It has more "
+        + "ships though.");
+    noHomeStart.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    noHomeStart.setAlignmentX(CENTER_ALIGNMENT);
+    noHomeStart.addActionListener(listener);
+    info.add(noHomeStart);
+    info.add(Box.createRigidArea(new Dimension(2, 2)));
+    utopiaStart = new SpaceCheckBox("Allow utopia starting scenario");
+    utopiaStart.setToolTipText("Realm starts without any ships, but starting "
+        + "planet is better than normally would be.");
+    utopiaStart.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    utopiaStart.setAlignmentX(CENTER_ALIGNMENT);
+    utopiaStart.addActionListener(listener);
+    info.add(utopiaStart);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    SpaceButton btn = new SpaceButton("Edit details",
+        GameCommands.COMMAND_REALM_DETAILS);
+    btn.setAlignmentX(CENTER_ALIGNMENT);
+    btn.addActionListener(listener);
+    info.add(btn);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     return info;
   }

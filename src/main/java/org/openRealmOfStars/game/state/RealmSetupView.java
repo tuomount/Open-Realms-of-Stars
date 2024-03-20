@@ -290,7 +290,7 @@ public class RealmSetupView extends BlackPanel {
     westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
     westPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     InvisiblePanel topPanel = new InvisiblePanel(fullPanel);
-    topPanel.setLayout(new BoxLayout(westPanel, BoxLayout.X_AXIS));
+    topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
     if (allowChangingRealm) {
       IconButton btn = new IconButton(GuiStatics.getArrowLeft(),
@@ -448,7 +448,7 @@ public class RealmSetupView extends BlackPanel {
     fullPanel.add(xinvis, BorderLayout.WEST);
     fullPanel.add(topPanel, BorderLayout.NORTH);
     InvisiblePanel centerPanel = new InvisiblePanel(fullPanel);
-    centerPanel.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
+    centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.X_AXIS));
     centerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     SpaceLabel label = new SpaceLabel("Space race info:");
     centerPanel.add(label);

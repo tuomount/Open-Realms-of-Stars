@@ -73,6 +73,7 @@ import org.openRealmOfStars.game.state.PlanetBombingView;
 import org.openRealmOfStars.game.state.PlanetListView;
 import org.openRealmOfStars.game.state.PlanetView;
 import org.openRealmOfStars.game.state.PlayerSetupView;
+import org.openRealmOfStars.game.state.RealmSetupView;
 import org.openRealmOfStars.game.state.RealmView;
 import org.openRealmOfStars.game.state.ResearchView;
 import org.openRealmOfStars.game.state.SaveGameNameView;
@@ -369,6 +370,8 @@ public class Game implements ActionListener {
    * End Story view.
    */
   private EndStoryView endStoryView;
+  /** Player setup view for human player or detail setup for AI realms. */
+  private RealmSetupView realmSetupView;
   /**
    * Change Message Fleet or Planet
    */
@@ -1462,6 +1465,14 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show Realm setup panel
+   */
+  public void showRealmSetup(final boolean allowRealmChange) {
+    realmSetupView = new RealmSetupView(galaxyConfig, this, allowRealmChange);
+    this.updateDisplay(realmSetupView);
+  }
+
+  /**
    * Show Save Game save panel
    * @param loadedSaveFilename LoadedSaveFilename as a String
    */
@@ -1662,6 +1673,17 @@ public class Game implements ActionListener {
     case PLAYER_SETUP:
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showPlayerSetup();
+      break;
+    case REALM_SETUP_VIEW:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
+      boolean allowRealmChange = false;
+      if (dataObject instanceof String) {
+        String str = (String) dataObject;
+        if (str.equalsIgnoreCase("allowChange")) {
+          allowRealmChange = true;
+        }
+      }
+      showRealmSetup(allowRealmChange);
       break;
     case SAVE_GAME_NAME_VIEW:
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
@@ -2913,7 +2935,7 @@ public class Game implements ActionListener {
       } else if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         SoundPlayer.playMenuSound();
-        changeGameState(GameState.PLAYER_SETUP);
+        changeGameState(GameState.REALM_SETUP_VIEW);
         return;
       } else {
         galaxyCreationView.handleActions(arg0);

@@ -181,6 +181,9 @@ public enum GameState {
    * Story view for viewing full story of the realm when game ends.
    */
   END_STORY_VIEW,
-  /** View for setupping individual realm */
-  REALM_SETUP_VIEW;
+  /** View for configuring individual realm */
+  REALM_SETUP_VIEW,
+  /** View for configuring all AI realms */
+  AI_REALM_SETUP_VIEW;
+  
 }

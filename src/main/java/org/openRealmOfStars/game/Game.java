@@ -2886,6 +2886,9 @@ public class Game implements ActionListener {
       }
       return;
     }
+    if (gameState == GameState.REALM_SETUP_VIEW && realmSetupView != null) {
+      realmSetupView.handleActions(arg0);
+    }
     if (gameState == GameState.STORY_VIEW && arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
       SoundPlayer.playMenuSound();
@@ -3917,6 +3920,7 @@ public class Game implements ActionListener {
         || gameState == GameState.CHANGE_LOG
         || gameState == GameState.GAME_END_VIEW
         || gameState == GameState.STORY_VIEW
+        || gameState == GameState.REALM_SETUP_VIEW
         || gameState == GameState.END_STORY_VIEW) {
       actionPerformedMenus(arg0);
     }

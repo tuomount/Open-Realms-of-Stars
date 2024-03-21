@@ -20,6 +20,7 @@ package org.openRealmOfStars.game.state;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
@@ -37,9 +39,8 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.labels.HyperLabel;
 import org.openRealmOfStars.gui.labels.SpaceComboBox;
-import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.list.PlayerColorListRenderer;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
@@ -136,12 +137,21 @@ public class RealmSetupView extends BlackPanel {
   private int realmIndex;
 
   /** Info text for space race. */
-  private InfoTextArea spaceRaceInfo;
+  private HyperLabel spaceRaceInfo;
+  /**
+   * Info panel for Space race.
+   */
+  private InfoPanel infoPanelForSpaceRace;
   /** Info text for government. */
-  private InfoTextArea governmentInfo;
+  private HyperLabel governmentInfo;
+  /**
+   * Size has been adjusted.
+   */
+  private boolean sizeAdjusted;
 
   public RealmSetupView(final GalaxyConfig config,
       final ActionListener listener, final boolean allowChangeRealm) {
+    sizeAdjusted = false;
     this.config = config;
     this.actionListener = listener;
     this.allowChangingRealm = allowChangeRealm;
@@ -196,6 +206,11 @@ public class RealmSetupView extends BlackPanel {
    * @param arg0 The event
    */
   public void handleActions(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)
+        && !sizeAdjusted) {
+      adjustInfoTextSizes();
+    }
+
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
       SoundPlayer.playMenuSound();
       String raceStr = (String) comboRaceSelect.getSelectedItem();
@@ -447,22 +462,42 @@ public class RealmSetupView extends BlackPanel {
     xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
     fullPanel.add(xinvis, BorderLayout.WEST);
     fullPanel.add(topPanel, BorderLayout.NORTH);
-    InvisiblePanel centerPanel = new InvisiblePanel(fullPanel);
-    centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.X_AXIS));
-    centerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    SpaceLabel label = new SpaceLabel("Space race info:");
-    centerPanel.add(label);
-    centerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    spaceRaceInfo = new InfoTextArea();
-    centerPanel.add(spaceRaceInfo);
-    centerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    label = new SpaceLabel("Government info:");
-    centerPanel.add(label);
-    centerPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    governmentInfo = new InfoTextArea();
-    centerPanel.add(governmentInfo);
-    fullPanel.add(centerPanel, BorderLayout.CENTER);
+    EmptyInfoPanel panelX = new EmptyInfoPanel();
+    panelX.setLayout(new GridLayout(0, 1));
+    infoPanelForSpaceRace = new InfoPanel();
+    infoPanelForSpaceRace.setTitle("Racial information");
+    infoPanelForSpaceRace.setLayout(new BorderLayout());
+    infoPanelForSpaceRace.setPreferredSize(new Dimension(900, 30));
+    infoPanelForSpaceRace.setMaximumSize(new Dimension(900, 30));
+    JScrollPane scroll = new JScrollPane(infoPanelForSpaceRace);
+    spaceRaceInfo = new HyperLabel(
+        SpaceRaceFactory.getRandomRace().getFullDescription(false, false));
+    Dimension dim = new Dimension(infoPanelForSpaceRace.getWidth(),
+        spaceRaceInfo.getAdjustHeight());
+    infoPanelForSpaceRace.setPreferredSize(dim);
+    infoPanelForSpaceRace.setMaximumSize(dim);
+    infoPanelForSpaceRace.add(spaceRaceInfo, BorderLayout.CENTER);
+    panelX.add(scroll);
+    InfoPanel info = new InfoPanel();
+    info.setTitle("Government information");
+    info.setLayout(new BorderLayout());
+    governmentInfo = new HyperLabel(
+        GovernmentType.DEMOCRACY.getDescription(false));
+    info.add(governmentInfo, BorderLayout.CENTER);
+    panelX.add(info);
+    fullPanel.add(panelX, BorderLayout.CENTER);
     return fullPanel;
+  }
+
+  /**
+   * Adjust info text sizes.
+   */
+  private void adjustInfoTextSizes() {
+    Dimension dim = new Dimension(infoPanelForSpaceRace.getWidth(),
+        spaceRaceInfo.getAdjustHeight());
+    infoPanelForSpaceRace.setPreferredSize(dim);
+    infoPanelForSpaceRace.setMaximumSize(dim);
+    sizeAdjusted = true;
   }
 
   /**
@@ -488,6 +523,10 @@ public class RealmSetupView extends BlackPanel {
     comboScenario.getModel().setSelectedItem(config.getStartingScenario(index));
     spaceRaceInfo.setText(config.getRace(index).getFullDescription(false,
         false));
+    Dimension dim = new Dimension(infoPanelForSpaceRace.getWidth(),
+        spaceRaceInfo.getAdjustHeight());
+    infoPanelForSpaceRace.setPreferredSize(dim);
+    infoPanelForSpaceRace.setMaximumSize(dim);
     governmentInfo.setText(config.getPlayerGovernment(index)
         .getDescription(false));
   }

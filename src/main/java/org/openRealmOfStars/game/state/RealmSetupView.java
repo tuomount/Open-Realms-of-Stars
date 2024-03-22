@@ -32,6 +32,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.IconButton;
@@ -41,11 +42,13 @@ import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.HyperLabel;
 import org.openRealmOfStars.gui.labels.SpaceComboBox;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.list.PlayerColorListRenderer;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.AiDifficulty;
@@ -149,11 +152,23 @@ public class RealmSetupView extends BlackPanel {
    */
   private boolean sizeAdjusted;
 
+  /**
+   * Rigid box size
+   */
+  private int rigidSize = 10;
+
   public RealmSetupView(final GalaxyConfig config,
       final ActionListener listener, final boolean allowChangeRealm) {
     sizeAdjusted = false;
     this.config = config;
     this.actionListener = listener;
+    rigidSize = 15;
+    if (listener instanceof Game) {
+      Game game = (Game) listener;
+      if (game.getHeight() < 960) {
+        rigidSize = 5;
+      }
+    }
     this.allowChangingRealm = allowChangeRealm;
     realmIndex = 0;
     if (allowChangingRealm) {
@@ -297,14 +312,14 @@ public class RealmSetupView extends BlackPanel {
     } else {
       fullPanel.setTitle("Player " + (index + 1) + " (AI)");
     }
-    InvisiblePanel xinvis = new InvisiblePanel(fullPanel);
+    SpaceGreyPanel xinvis = new SpaceGreyPanel();
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
     xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
 
-    InvisiblePanel westPanel = new InvisiblePanel(fullPanel);
+    SpaceGreyPanel westPanel = new SpaceGreyPanel();
     westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
     westPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    InvisiblePanel topPanel = new InvisiblePanel(fullPanel);
+    SpaceGreyPanel topPanel = new SpaceGreyPanel();
     topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
     if (allowChangingRealm) {
@@ -324,6 +339,9 @@ public class RealmSetupView extends BlackPanel {
       btn.addActionListener(listener);
       topPanel.add(btn);
     }
+    SpaceLabel label = new SpaceLabel("Space Race:");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    westPanel.add(label);
     comboRaceSelect = new SpaceComboBox<>(
         SpaceRaceFactory.getNames());
     comboRaceSelect.setBackground(GuiStatics.getDeepSpaceDarkColor());
@@ -340,12 +358,11 @@ public class RealmSetupView extends BlackPanel {
     if (config.getMaxPlayers() < (index + 1)) {
       comboRaceSelect.setEnabled(false);
     }
-    comboRaceSelect.setToolTipText(config.getRace(index)
-        .getFullDescription(false, false));
     westPanel.add(comboRaceSelect);
-    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    EmptyInfoPanel info2 = new EmptyInfoPanel();
-    info2.setLayout(new BoxLayout(info2, BoxLayout.X_AXIS));
+    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    label = new SpaceLabel("Realm Government:");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    westPanel.add(label);
     comboGovernmentSelect = new SpaceComboBox<>(GovernmentType.values());
     comboGovernmentSelect.setBackground(
         GuiStatics.getDeepSpaceDarkColor());
@@ -368,19 +385,22 @@ public class RealmSetupView extends BlackPanel {
         config.getPlayerGovernment(index));
     int i = comboGovernmentSelect.getSelectedIndex();
     GovernmentType[] governments = GovernmentType.values();
-    comboGovernmentSelect.setToolTipText(
-        governments[i].getDescription(false));
-    info2.add(comboGovernmentSelect);
-    info2.add(Box.createRigidArea(new Dimension(5, 5)));
+    westPanel.add(comboGovernmentSelect);
+    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    label = new SpaceLabel("Ancient Realm:");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    westPanel.add(label);
     checkElderRealm = new SpaceCheckBox("");
     checkElderRealm.setType(SpaceCheckBox.CHECKBOX_TYPE_ELDER);
     checkElderRealm.setToolTipText("<html>Select rune to mark Realm"
         + " as an elder realm.<br> This will allow realm head"
         + " start and will make realm more stronger than others.<br>"
         + "Elder realms are played by AI for amount of head start.</html>");
-    info2.add(checkElderRealm);
-    westPanel.add(info2);
-    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    westPanel.add(checkElderRealm);
+    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    label = new SpaceLabel("Realm name:");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    westPanel.add(label);
     realmName = new JTextField(
         "Empire of " + config.getRace(index).getName());
     realmName.setBackground(GuiStatics.getDeepSpaceDarkColor());
@@ -397,26 +417,10 @@ public class RealmSetupView extends BlackPanel {
           .getFullDescription(false, false));
     }
     westPanel.add(realmName);
-    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    comboDifficult = new SpaceComboBox<>(AiDifficulty.values());
-    comboDifficult.setSelectedIndex(
-        config.getDifficultyLevel().getIndex());
-    comboDifficult.setBackground(
-        GuiStatics.getDeepSpaceDarkColor());
-    comboDifficult.setForeground(
-        GuiStatics.getCoolSpaceColor());
-    comboDifficult.setFont(GuiFonts.getFontCubellanSmaller());
-    comboDifficult.setMaximumSize(new Dimension(Integer.MAX_VALUE,
-        GuiStatics.TEXT_FIELD_HEIGHT));
-    comboDifficult.setActionCommand(
-        GameCommands.COMMAND_DIFFICULT_SETUP);
-    comboDifficult.addActionListener(listener);
-    if (index == 0 && !config.isAiOnly()) {
-      comboDifficult.setEnabled(false);
-      comboDifficult.setToolTipText("");
-    }
-    westPanel.add(comboDifficult);
-    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    label = new SpaceLabel("Realm color:");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    westPanel.add(label);
     comboRealmColor = new SpaceComboBox<>(
         PlayerColor.values());
     comboRealmColor
@@ -437,7 +441,10 @@ public class RealmSetupView extends BlackPanel {
     comboRealmColor.setToolTipText("<html>Realm color in map and"
         + " statistics.</html>");
     westPanel.add(comboRealmColor);
-    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    label = new SpaceLabel("Realm's starting scenario:");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    westPanel.add(label);
     StartingScenario[] scenarioList = new StartingScenario[
         StartingScenarioFactory.getValues().length + 1];
     scenarioList[0] = StartingScenarioFactory.createRandom();
@@ -457,7 +464,29 @@ public class RealmSetupView extends BlackPanel {
         GameCommands.COMMAND_SCENARIO_SETUP);
     comboScenario.addActionListener(listener);
     westPanel.add(comboScenario);
-    westPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
+    label = new SpaceLabel("AI Difficulty:");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    westPanel.add(label);
+    comboDifficult = new SpaceComboBox<>(AiDifficulty.values());
+    comboDifficult.setSelectedIndex(
+        config.getDifficultyLevel().getIndex());
+    comboDifficult.setBackground(
+        GuiStatics.getDeepSpaceDarkColor());
+    comboDifficult.setForeground(
+        GuiStatics.getCoolSpaceColor());
+    comboDifficult.setFont(GuiFonts.getFontCubellanSmaller());
+    comboDifficult.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    comboDifficult.setActionCommand(
+        GameCommands.COMMAND_DIFFICULT_SETUP);
+    comboDifficult.addActionListener(listener);
+    if (index == 0 && !config.isAiOnly()) {
+      comboDifficult.setEnabled(false);
+      comboDifficult.setToolTipText("");
+    }
+    westPanel.add(comboDifficult);
+    westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
     xinvis.add(westPanel);
     xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
     fullPanel.add(xinvis, BorderLayout.WEST);
@@ -472,6 +501,7 @@ public class RealmSetupView extends BlackPanel {
     JScrollPane scroll = new JScrollPane(infoPanelForSpaceRace);
     spaceRaceInfo = new HyperLabel(
         SpaceRaceFactory.getRandomRace().getFullDescription(false, false));
+    spaceRaceInfo.setFont(GuiFonts.getFontCubellanSmaller());
     Dimension dim = new Dimension(infoPanelForSpaceRace.getWidth(),
         spaceRaceInfo.getAdjustHeight());
     infoPanelForSpaceRace.setPreferredSize(dim);
@@ -483,6 +513,7 @@ public class RealmSetupView extends BlackPanel {
     info.setLayout(new BorderLayout());
     governmentInfo = new HyperLabel(
         GovernmentType.DEMOCRACY.getDescription(false));
+    governmentInfo.setFont(GuiFonts.getFontCubellanSmaller());
     info.add(governmentInfo, BorderLayout.CENTER);
     panelX.add(info);
     fullPanel.add(panelX, BorderLayout.CENTER);

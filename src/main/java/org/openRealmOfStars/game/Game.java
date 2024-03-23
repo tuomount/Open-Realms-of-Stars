@@ -2887,7 +2887,21 @@ public class Game implements ActionListener {
       return;
     }
     if (gameState == GameState.REALM_SETUP_VIEW && realmSetupView != null) {
-      realmSetupView.handleActions(arg0);
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.GALAXY_CREATION);
+        return;
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+        SoundPlayer.playMenuSound();
+        //TODO Fix to new state
+        realmSetupView.setupRealmConfig();
+        changeGameState(GameState.REALM_SETUP_VIEW);
+        return;
+      } else {
+        realmSetupView.handleActions(arg0);
+      }
     }
     if (gameState == GameState.STORY_VIEW && arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {

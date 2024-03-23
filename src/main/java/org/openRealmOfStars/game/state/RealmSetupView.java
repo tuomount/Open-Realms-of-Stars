@@ -217,6 +217,27 @@ public class RealmSetupView extends BlackPanel {
   }
 
   /**
+   * Setup realm info to config.
+   */
+  public void setupRealmConfig() {
+    String raceStr = (String) comboRaceSelect.getSelectedItem();
+    SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
+    if (race != null) {
+      config.setRace(realmIndex, race);
+    }
+    GovernmentType gov = (GovernmentType) comboGovernmentSelect
+        .getSelectedItem();
+    config.setPlayerGovernment(realmIndex, gov);
+    PlayerColor color = (PlayerColor) comboRealmColor.getSelectedItem();
+    config.setPlayerColor(realmIndex, color);
+    config.setPlayerElderRealm(realmIndex, checkElderRealm.isSelected());
+    AiDifficulty difficulty = (AiDifficulty) comboDifficult.getSelectedItem();
+    if (difficulty != null) {
+      config.setPlayerDifficult(realmIndex, difficulty);
+    }
+
+  }
+  /**
    * Handle actions for Player Setup view
    * @param arg0 The event
    */
@@ -232,12 +253,6 @@ public class RealmSetupView extends BlackPanel {
       SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
       config.setRace(realmIndex, race);
       raceImgs.setRaceToShow(raceStr);
-      comboGovernmentSelect.removeActionListener(actionListener);
-      comboGovernmentSelect.removeAllItems();
-      GovernmentType[] govs = GovernmentType.values();
-      for (GovernmentType gov : govs) {
-        comboGovernmentSelect.addItem(gov);
-      }
       spaceRaceInfo.setText(race.getFullDescription(false, false));
       config.setPlayerGovernment(realmIndex,
           GovernmentUtility.getRandomGovernment());
@@ -247,7 +262,7 @@ public class RealmSetupView extends BlackPanel {
           config.getPlayerGovernment(realmIndex).getDescription(false));
       realmName.setText(SpaceRaceUtility.getRealmName(race,
           config.getPlayerGovernment(realmIndex)));
-      comboGovernmentSelect.addActionListener(actionListener);
+      adjustInfoTextSizes();
     }
     if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_GOVERNMENT_SETUP)) {
@@ -261,6 +276,7 @@ public class RealmSetupView extends BlackPanel {
       String raceStr = (String) comboRaceSelect.getSelectedItem();
       SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
       realmName.setText(SpaceRaceUtility.getRealmName(race, gov));
+      adjustInfoTextSizes();
     }
     if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_DIFFICULT_SETUP)) {
@@ -281,6 +297,7 @@ public class RealmSetupView extends BlackPanel {
     if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_GALAXY_PREV_REALM)) {
       SoundPlayer.playMenuSound();
+      setupRealmConfig();
       realmIndex--;
       if (realmIndex <= 0) {
         realmIndex = config.getMaxPlayers() - 1;
@@ -290,6 +307,7 @@ public class RealmSetupView extends BlackPanel {
     if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_GALAXY_NEXT_REALM)) {
       SoundPlayer.playMenuSound();
+      setupRealmConfig();
       realmIndex++;
       if (realmIndex >= config.getMaxPlayers()) {
         realmIndex = 1;
@@ -371,20 +389,13 @@ public class RealmSetupView extends BlackPanel {
     comboGovernmentSelect.setBorder(new SimpleBorder());
     comboGovernmentSelect.setFont(GuiFonts.getFontCubellan());
     comboGovernmentSelect.getModel()
-        .setSelectedItem(config.getRace(index).getNameSingle());
+        .setSelectedItem(config.getPlayerGovernment(index));
     dlcr = new DefaultListCellRenderer();
     dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
     comboGovernmentSelect.setRenderer(dlcr);
     comboGovernmentSelect.addActionListener(listener);
     comboGovernmentSelect.setActionCommand(
         GameCommands.COMMAND_GOVERNMENT_SETUP);
-    if (config.getMaxPlayers() < (index + 1)) {
-      comboGovernmentSelect.setEnabled(false);
-    }
-    comboGovernmentSelect.setSelectedItem(
-        config.getPlayerGovernment(index));
-    int i = comboGovernmentSelect.getSelectedIndex();
-    GovernmentType[] governments = GovernmentType.values();
     westPanel.add(comboGovernmentSelect);
     westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));
     label = new SpaceLabel("Ancient Realm:");
@@ -540,7 +551,7 @@ public class RealmSetupView extends BlackPanel {
     comboRaceSelect.getModel()
     .setSelectedItem(config.getRace(index).getNameSingle());
     comboGovernmentSelect.getModel()
-    .setSelectedItem(config.getRace(index).getNameSingle());
+    .setSelectedItem(config.getPlayerGovernment(index));
     checkElderRealm.setSelected(config.getPlayerElderRealm(index));
     realmName.setText(config.getPlayerName(index));
     if (index > 0 || config.isAiOnly()) {

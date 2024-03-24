@@ -51,6 +51,7 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.config.ConfigFile;
 import org.openRealmOfStars.game.config.ConfigLine;
 import org.openRealmOfStars.game.state.AITurnView;
+import org.openRealmOfStars.game.state.AiRealmSetupView;
 import org.openRealmOfStars.game.state.AmbientLightView;
 import org.openRealmOfStars.game.state.BattleView;
 import org.openRealmOfStars.game.state.CreditsView;
@@ -372,6 +373,8 @@ public class Game implements ActionListener {
   private EndStoryView endStoryView;
   /** Player setup view for human player or detail setup for AI realms. */
   private RealmSetupView realmSetupView;
+  /** AI Realm setup view for AI realms. */
+  private AiRealmSetupView aiRealmSetupView;
   /**
    * Change Message Fleet or Planet
    */
@@ -1473,6 +1476,14 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show Realm setup panel
+   */
+  public void showAiRealmSetup() {
+    aiRealmSetupView = new AiRealmSetupView(galaxyConfig, this); 
+    this.updateDisplay(aiRealmSetupView);
+  }
+
+  /**
    * Show Save Game save panel
    * @param loadedSaveFilename LoadedSaveFilename as a String
    */
@@ -1684,6 +1695,10 @@ public class Game implements ActionListener {
         }
       }
       showRealmSetup(allowRealmChange);
+      break;
+    case AI_REALM_SETUP_VIEW:
+      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
+      showAiRealmSetup();
       break;
     case SAVE_GAME_NAME_VIEW:
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
@@ -2886,6 +2901,21 @@ public class Game implements ActionListener {
       }
       return;
     }
+    if (gameState == GameState.AI_REALM_SETUP_VIEW
+        && aiRealmSetupView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.REALM_SETUP_VIEW);
+        return;
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.SAVE_GAME_NAME_VIEW);
+        return;
+      }
+      //TODO: Handle actions
+    }
     if (gameState == GameState.REALM_SETUP_VIEW && realmSetupView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
@@ -2895,9 +2925,8 @@ public class Game implements ActionListener {
       } else if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         SoundPlayer.playMenuSound();
-        //TODO Fix to new state
         realmSetupView.setupRealmConfig();
-        changeGameState(GameState.REALM_SETUP_VIEW);
+        changeGameState(GameState.AI_REALM_SETUP_VIEW);
         return;
       } else {
         realmSetupView.handleActions(arg0);

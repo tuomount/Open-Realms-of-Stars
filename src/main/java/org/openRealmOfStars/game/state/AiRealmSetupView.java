@@ -29,6 +29,7 @@ import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -37,6 +38,8 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.util.GuiFonts;
+import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
@@ -137,7 +140,7 @@ public class AiRealmSetupView extends BlackPanel {
 
     invisible = new InvisiblePanel(imgBase);
     invisible.setLayout(new BorderLayout());
-    SpaceButton btn = new SpaceButton("BACK", GameCommands.COMMAND_CANCEL);
+    SpaceButton btn = new SpaceButton("Back", GameCommands.COMMAND_CANCEL);
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
     invisible.add(btn, BorderLayout.WEST);
@@ -206,6 +209,7 @@ public class AiRealmSetupView extends BlackPanel {
     uniqueRace.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     uniqueRace.setAlignmentX(CENTER_ALIGNMENT);
     uniqueRace.addActionListener(listener);
+    uniqueRace.setSelected(true);
     info.add(uniqueRace);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     uniqueGovernment = new SpaceCheckBox("Unique government");
@@ -220,6 +224,10 @@ public class AiRealmSetupView extends BlackPanel {
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     comboMinimumElderRace = new SpaceComboBox<>(generateAmountElders());
+    comboMinimumElderRace.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    comboMinimumElderRace.setForeground(GuiStatics.getCoolSpaceColor());
+    comboMinimumElderRace.setBorder(new SimpleBorder());
+    comboMinimumElderRace.setFont(GuiFonts.getFontCubellan());
     comboMinimumElderRace.setSelectedIndex(0);
     comboMinimumElderRace.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboMinimumElderRace.addActionListener(listener);
@@ -232,6 +240,10 @@ public class AiRealmSetupView extends BlackPanel {
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     comboMaximumElderRace = new SpaceComboBox<>(generateAmountElders());
+    comboMaximumElderRace.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    comboMaximumElderRace.setForeground(GuiStatics.getCoolSpaceColor());
+    comboMaximumElderRace.setBorder(new SimpleBorder());
+    comboMaximumElderRace.setFont(GuiFonts.getFontCubellan());
     comboMaximumElderRace.setSelectedIndex(0);
     comboMaximumElderRace.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboMaximumElderRace.addActionListener(listener);
@@ -257,6 +269,7 @@ public class AiRealmSetupView extends BlackPanel {
     noHomeStart.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     noHomeStart.setAlignmentX(CENTER_ALIGNMENT);
     noHomeStart.addActionListener(listener);
+    noHomeStart.setSelected(true);
     info.add(noHomeStart);
     info.add(Box.createRigidArea(new Dimension(2, 2)));
     utopiaStart = new SpaceCheckBox("Allow utopia starting scenario");
@@ -265,6 +278,7 @@ public class AiRealmSetupView extends BlackPanel {
     utopiaStart.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     utopiaStart.setAlignmentX(CENTER_ALIGNMENT);
     utopiaStart.addActionListener(listener);
+    utopiaStart.setSelected(true);
     info.add(utopiaStart);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceButton btn = new SpaceButton("Edit details",

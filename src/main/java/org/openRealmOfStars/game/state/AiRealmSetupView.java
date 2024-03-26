@@ -20,6 +20,7 @@ package org.openRealmOfStars.game.state;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
@@ -40,6 +42,9 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.player.government.GovernmentUtility;
+import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
@@ -288,5 +293,19 @@ public class AiRealmSetupView extends BlackPanel {
     info.add(btn);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     return info;
+  }
+
+  /**
+   * Handle actions for Player Setup view
+   * @param arg0 The event
+   */
+  public void handleActions(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
+      SoundPlayer.playMenuSound();
+      String minElderStr = (String) comboMinimumElderRace.getSelectedItem();
+      int minElder = parseAmountOfElder(minElderStr);
+      String maxElderStr = (String) comboMaximumElderRace.getSelectedItem();
+      int maxElder = parseAmountOfElder(maxElderStr);
+    }
   }
 }

@@ -42,9 +42,10 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
-import org.openRealmOfStars.player.government.GovernmentUtility;
+import org.openRealmOfStars.player.PlayerColor;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.race.SpaceRace;
-import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
@@ -187,7 +188,7 @@ public class AiRealmSetupView extends BlackPanel {
    * @param str String to parse
    * @return number of elder.
    */
-  private int parseAmountOfElder(final String str) {
+  private static int parseAmountOfElder(final String str) {
     int index = str.indexOf("elder");
     if (index > -1) {
       String valueStr = str.substring(0, index);
@@ -296,16 +297,71 @@ public class AiRealmSetupView extends BlackPanel {
   }
 
   /**
+   * Generate realms.
+   */
+  public void generateRealms() {
+    String minElderStr = (String) comboMinimumElderRace.getSelectedItem();
+    int minElder = parseAmountOfElder(minElderStr);
+    String maxElderStr = (String) comboMaximumElderRace.getSelectedItem();
+    int maxElder = parseAmountOfElder(maxElderStr);
+    int elders = 0;
+    if (minElder != maxElder && minElder < maxElder) {
+      elders = DiceGenerator.getRandom(minElder, maxElder);
+    } else if (minElder == maxElder && minElder > 0) {
+      elders = minElder;
+    }
+    int countElder = 0;
+    ArrayList<SpaceRace> availableRaces = new ArrayList<>();
+    for (String name : SpaceRaceFactory.getNames()) {
+      availableRaces.add(SpaceRaceFactory.createOne(name));
+    }
+    availableRaces.remove(config.getRace(0));
+    ArrayList<GovernmentType> availableGovs = new ArrayList<>();
+    for (GovernmentType government : GovernmentType.values()) {
+      availableGovs.add(government);
+    }
+    availableGovs.remove(config.getPlayerGovernment(0));
+    ArrayList<PlayerColor> availableColors = new ArrayList<>();
+    for (PlayerColor color : PlayerColor.values()) {
+      availableColors.add(color);
+    }
+    availableColors.remove(config.getPlayerColor(0));
+    for (int i = 1; i < config.getMaxPlayers(); i++) {
+      if (countElder < elders) {
+        countElder++;
+        config.setPlayerElderRealm(i, true);
+      } else {
+        config.setPlayerElderRealm(i, false);
+      }
+      if (uniqueRace.isSelected()) {
+        SpaceRace race = DiceGenerator.pickRandom(availableRaces);
+        availableRaces.remove(race);
+        config.setRace(i, race);
+      } else {
+        SpaceRace race = DiceGenerator.pickRandom(availableRaces);
+        config.setRace(i, race);
+      }
+      if (uniqueGovernment.isSelected()) {
+        GovernmentType gov = DiceGenerator.pickRandom(availableGovs);
+        availableGovs.remove(gov);
+        config.setPlayerGovernment(i, gov);
+      } else {
+        GovernmentType gov = DiceGenerator.pickRandom(availableGovs);
+        config.setPlayerGovernment(i, gov);
+      }
+      config.generateUniqueName(i);
+      PlayerColor color = DiceGenerator.pickRandom(availableColors);
+      availableColors.remove(color);
+      config.setPlayerColor(i, color);
+    }
+  }
+  /**
    * Handle actions for Player Setup view
    * @param arg0 The event
    */
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
       SoundPlayer.playMenuSound();
-      String minElderStr = (String) comboMinimumElderRace.getSelectedItem();
-      int minElder = parseAmountOfElder(minElderStr);
-      String maxElderStr = (String) comboMaximumElderRace.getSelectedItem();
-      int maxElder = parseAmountOfElder(maxElderStr);
     }
   }
 }

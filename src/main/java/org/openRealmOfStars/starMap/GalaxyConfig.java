@@ -306,6 +306,25 @@ public class GalaxyConfig {
   }
 
   /**
+   * Generate Unique realm name based on race and government type.
+   * @param index Realm index.
+   */
+  public void generateUniqueName(final int index) {
+    int count = 0;
+    while (true) {
+      count++;
+      String tmp = SpaceRaceUtility.getRealmName(getRace(index),
+          getPlayerGovernment(index));
+      if (isUniqueName(tmp)) {
+        setPlayerName(index, tmp);
+        break;
+      }
+      if (count > 100) {
+        break;
+      }
+    }
+  }
+  /**
    * Is player name unique
    * @param name Unique name
    * @return True if unique

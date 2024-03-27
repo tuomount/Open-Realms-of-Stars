@@ -196,13 +196,16 @@ public class AiRealmSetupView extends BlackPanel {
    * @param str String to parse
    * @return number of elder.
    */
-  private static int parseAmountOfElder(final String str) {
+  public static int parseAmountOfElder(final String str) {
     int index = str.indexOf("elder");
     if (index > -1) {
       String valueStr = str.substring(0, index);
-      valueStr.trim();
+      valueStr = valueStr.trim();
       if (valueStr.contains("No")) {
         return 0;
+      }
+      if (valueStr.contains("One")) {
+        return 1;
       }
       return Integer.valueOf(valueStr);
     }

@@ -2914,7 +2914,7 @@ public class Game implements ActionListener {
         changeGameState(GameState.SAVE_GAME_NAME_VIEW);
         return;
       }
-      //TODO: Handle actions
+      aiRealmSetupView.handleActions(arg0);
     }
     if (gameState == GameState.REALM_SETUP_VIEW && realmSetupView != null) {
       if (arg0.getActionCommand()
@@ -3019,7 +3019,7 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         SoundPlayer.playMenuSound();
         if (!saveGameView.isContinueGame()) {
-          playerSetupView.getNamesToConfig();
+          //playerSetupView.getNamesToConfig();
           saveFilename = saveGameView.getFilename();
           changeGameState(GameState.NEW_GAME);
         } else {
@@ -3964,6 +3964,7 @@ public class Game implements ActionListener {
         || gameState == GameState.GAME_END_VIEW
         || gameState == GameState.STORY_VIEW
         || gameState == GameState.REALM_SETUP_VIEW
+        || gameState == GameState.AI_REALM_SETUP_VIEW
         || gameState == GameState.END_STORY_VIEW) {
       actionPerformedMenus(arg0);
     }

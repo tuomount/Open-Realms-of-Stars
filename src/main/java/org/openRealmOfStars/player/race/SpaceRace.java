@@ -892,4 +892,9 @@ public class SpaceRace {
   public boolean isPirate() {
     return this.spaceRaceType == SpaceRaceType.SPACE_PIRATE;
   }
+
+  @Override
+  public String toString() {
+    return getName();
+  }
 }

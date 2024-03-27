@@ -46,6 +46,9 @@ import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.scenario.StartingScenario;
+import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
+import org.openRealmOfStars.player.scenario.StartingScenarioType;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
@@ -98,6 +101,10 @@ public class AiRealmSetupView extends BlackPanel {
   private SpaceComboBox<String> comboMaximumElderRace;
 
   /**
+   * Generated realms based on settings.
+   */
+  private boolean generated;
+  /**
    * Constructor for AI Realm setup View
    * @param config Galaxy Configuration
    * @param listener ActionListener
@@ -109,6 +116,7 @@ public class AiRealmSetupView extends BlackPanel {
     } else {
       this.config = config;
     }
+    generated = false;
     Planet planet = new Planet(new Coordinate(1, 1), "AI Realm Setup Planet",
         1, false);
     planet.setPlanetType(PlanetTypes.getRandomPlanetType(true, true, true));
@@ -287,11 +295,13 @@ public class AiRealmSetupView extends BlackPanel {
     utopiaStart.setSelected(true);
     info.add(utopiaStart);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    SpaceButton btn = new SpaceButton("Edit details",
+    // TODO: Add this when GalaxyConfig allows adding random spacerace,
+    //       governments and so on.
+    /*SpaceButton btn = new SpaceButton("Edit details",
         GameCommands.COMMAND_REALM_DETAILS);
     btn.setAlignmentX(CENTER_ALIGNMENT);
     btn.addActionListener(listener);
-    info.add(btn);
+    info.add(btn);*/
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     return info;
   }
@@ -312,7 +322,7 @@ public class AiRealmSetupView extends BlackPanel {
     }
     int countElder = 0;
     ArrayList<SpaceRace> availableRaces = new ArrayList<>();
-    for (String name : SpaceRaceFactory.getNames()) {
+    for (String name : SpaceRaceFactory.getIds()) {
       availableRaces.add(SpaceRaceFactory.createOne(name));
     }
     availableRaces.remove(config.getRace(0));
@@ -320,12 +330,36 @@ public class AiRealmSetupView extends BlackPanel {
     for (GovernmentType government : GovernmentType.values()) {
       availableGovs.add(government);
     }
-    availableGovs.remove(config.getPlayerGovernment(0));
+    if (uniqueGovernment.isSelected()) {
+      availableGovs.remove(config.getPlayerGovernment(0));
+    }
     ArrayList<PlayerColor> availableColors = new ArrayList<>();
     for (PlayerColor color : PlayerColor.values()) {
       availableColors.add(color);
     }
     availableColors.remove(config.getPlayerColor(0));
+    ArrayList<StartingScenario> availableScenario = new ArrayList<>();
+    for (StartingScenario scenario : StartingScenarioFactory.getValues()) {
+      if (scenario.getType() == StartingScenarioType.REGULAR) {
+        if (scenario.getId().equals("EARTH") && startEarth.isSelected()) {
+          availableScenario.add(scenario);
+          continue;
+        }
+        if (!scenario.getId().equals("EARTH")) {
+          availableScenario.add(scenario);
+          continue;
+        }
+      }
+      if (scenario.getType() == StartingScenarioType.NO_HOME
+          && noHomeStart.isSelected()) {
+        availableScenario.add(scenario);
+      }
+      if (scenario.getType() == StartingScenarioType.UTOPIA_WORLD
+          && utopiaStart.isSelected()) {
+        availableScenario.add(scenario);
+      }
+    }
+    
     for (int i = 1; i < config.getMaxPlayers(); i++) {
       if (countElder < elders) {
         countElder++;
@@ -360,8 +394,14 @@ public class AiRealmSetupView extends BlackPanel {
    * @param arg0 The event
    */
   public void handleActions(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)
+        && !generated) {
+      generateRealms();
+      generated = true;
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
       SoundPlayer.playMenuSound();
+      generateRealms();
     }
   }
 }

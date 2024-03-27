@@ -88,6 +88,21 @@ public final class SpaceRaceFactory {
   }
 
   /**
+   * Get All Space race ids in array. This will filter out pseudo races.
+   * @return Space race ids array
+   */
+  public static String[] getIds() {
+    SpaceRace[] races = SINGLETON.getAll();
+    ArrayList<String> names = new ArrayList<>();
+    for (SpaceRace race : races) {
+      if (race.getSpaceRaceType() == SpaceRaceType.REGULAR) {
+        names.add(race.getId());
+      }
+    }
+    return names.toArray(new String[names.size()]);
+  }
+
+  /**
    * Get random living race.
    * @return Living SpaceRace
    */

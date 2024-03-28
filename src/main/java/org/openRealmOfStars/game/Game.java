@@ -134,6 +134,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.Route;
+import org.openRealmOfStars.starMap.SquareInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapGenerator;
 import org.openRealmOfStars.starMap.StarMapUtilities;
@@ -2053,6 +2054,17 @@ public class Game implements ActionListener {
           PlayerInfo info = starMap.getPlayerByIndex(index);
           if (!info.isElderRealm()) {
             mapGenerator.createRealmToPlanet(planet, info, index);
+          }
+        }
+      }
+      for (int y = 0; y < starMap.getMaxY(); y++) {
+        for (int x = 0; x < starMap.getMaxX(); x++) {
+          SquareInfo info = starMap.getTileInfo(x, y);
+          if (info != null
+              && info.getType() == SquareInfo.TYPE_DEEP_SPACE_START) {
+            int index = info.getValue();
+            PlayerInfo realm = starMap.getPlayerByIndex(index);
+            mapGenerator.createRealmToGalaxy(x, y, realm, index);
           }
         }
       }

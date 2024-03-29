@@ -65,6 +65,7 @@ public class HyperLabel extends SpaceLabel {
 
   /**
    * Adjust component size based on text.
+   * @return Adjusted height based on text size.
    */
   public int getAdjustHeight() {
     int width = getWidth();

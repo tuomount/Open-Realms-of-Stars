@@ -508,7 +508,8 @@ public final class MusicPlayer {
           || state == GameState.LOAD_GAME
           || state == GameState.NEW_GAME
           || state == GameState.GALAXY_CREATION
-          || state == GameState.PLAYER_SETUP) {
+          || state == GameState.AI_REALM_SETUP_VIEW
+          || state == GameState.REALM_SETUP_VIEW) {
         // Main menu song
         // FIXME Change to main menu song later
         play(MILLION_LIGHT_YEARS);

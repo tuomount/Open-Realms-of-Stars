@@ -270,30 +270,47 @@ public class GameKeyAdapter implements KeyEventDispatcher {
   private void handleEscapeKey() {
     if (game.getGameState() == GameState.FLEETVIEW) {
       game.changeGameState(GameState.STARMAP);
+      return;
     }
     if (game.getGameState() == GameState.FLEET_TRADE_VIEW) {
       game.changeGameState(GameState.STARMAP);
+      return;
     }
     if (game.getGameState() == GameState.GALAXY_CREATION) {
       game.changeGameState(GameState.MAIN_MENU);
+      return;
     }
-    if (game.getGameState() == GameState.PLAYER_SETUP) {
-      game.changeGameState(GameState.GALAXY_CREATION);
+    if (game.getGameState() == GameState.REALM_SETUP_VIEW) {
+      if (game.isAiRealmDetailSetup()) {
+        game.changeGameState(GameState.AI_REALM_SETUP_VIEW);
+      } else {
+        game.changeGameState(GameState.GALAXY_CREATION);
+      }
+      return;
+    }
+    if (game.getGameState() == GameState.AI_REALM_SETUP_VIEW) {
+      game.changeGameState(GameState.REALM_SETUP_VIEW);
+      return;
     }
     if (game.getGameState() == GameState.LOAD_GAME) {
       game.changeGameState(GameState.MAIN_MENU);
+      return;
     }
     if (game.getGameState() == GameState.OPTIONS_VIEW) {
       game.changeGameState(GameState.MAIN_MENU);
+      return;
     }
     if (game.getGameState() == GameState.SETUP_AMBIENT_LIGHTS) {
       game.changeGameState(GameState.OPTIONS_VIEW);
+      return;
     }
     if (game.getGameState() == GameState.CREDITS) {
       game.changeGameState(GameState.MAIN_MENU);
+      return;
     }
     if (game.getGameState() == GameState.CHANGE_LOG) {
       game.changeGameState(GameState.MAIN_MENU);
+      return;
     }
     if (game.getGameState() == GameState.PLANETBOMBINGVIEW) {
       if (game.getPreviousState() == GameState.AITURN) {

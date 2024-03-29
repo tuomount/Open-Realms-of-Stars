@@ -236,7 +236,8 @@ public class AiRealmSetupView extends BlackPanel {
     uniqueGovernment.addActionListener(listener);
     info.add(uniqueGovernment);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    SpaceLabel label = new SpaceLabel("Minimum number of elder realms in galaxy: ");
+    SpaceLabel label = new SpaceLabel(
+        "Minimum number of elder realms in galaxy: ");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -360,7 +361,6 @@ public class AiRealmSetupView extends BlackPanel {
         availableScenario.add(scenario);
       }
     }
-    
     for (int i = 1; i < config.getMaxPlayers(); i++) {
       if (countElder < elders) {
         countElder++;

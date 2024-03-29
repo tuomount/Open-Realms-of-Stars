@@ -73,7 +73,6 @@ import org.openRealmOfStars.game.state.OptionsView;
 import org.openRealmOfStars.game.state.PlanetBombingView;
 import org.openRealmOfStars.game.state.PlanetListView;
 import org.openRealmOfStars.game.state.PlanetView;
-import org.openRealmOfStars.game.state.PlayerSetupView;
 import org.openRealmOfStars.game.state.RealmSetupView;
 import org.openRealmOfStars.game.state.RealmView;
 import org.openRealmOfStars.game.state.ResearchView;
@@ -243,11 +242,6 @@ public class Game implements ActionListener {
    * Galaxy Creation view
    */
   private GalaxyCreationView galaxyCreationView;
-
-  /**
-   * Player Setup view
-   */
-  private PlayerSetupView playerSetupView;
 
   /**
    * Save Game View
@@ -1461,15 +1455,8 @@ public class Game implements ActionListener {
   }
 
   /**
-   * Show Player setup panel
-   */
-  public void showPlayerSetup() {
-    playerSetupView = new PlayerSetupView(galaxyConfig, this);
-    this.updateDisplay(playerSetupView);
-  }
-
-  /**
    * Show Realm setup panel
+   * @param allowRealmChange Allow realm change in realm setup view.
    */
   public void showRealmSetup(final boolean allowRealmChange) {
     realmSetupView = new RealmSetupView(galaxyConfig, this, allowRealmChange);
@@ -1480,7 +1467,7 @@ public class Game implements ActionListener {
    * Show Realm setup panel
    */
   public void showAiRealmSetup() {
-    aiRealmSetupView = new AiRealmSetupView(galaxyConfig, this); 
+    aiRealmSetupView = new AiRealmSetupView(galaxyConfig, this);
     this.updateDisplay(aiRealmSetupView);
   }
 
@@ -1489,10 +1476,7 @@ public class Game implements ActionListener {
    * @param loadedSaveFilename LoadedSaveFilename as a String
    */
   public void showSaveGameSetup(final Object loadedSaveFilename) {
-    String filename = "savegame";
-    if (playerSetupView != null) {
-      filename = playerSetupView.getConfig().getPlayerName(0);
-    }
+    String filename = galaxyConfig.getPlayerName(0);
     if (loadedSaveFilename != null && loadedSaveFilename instanceof String) {
       filename = (String) loadedSaveFilename;
     }
@@ -1681,10 +1665,6 @@ public class Game implements ActionListener {
     case GALAXY_CREATION:
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showGalaxyCreation();
-      break;
-    case PLAYER_SETUP:
-      setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
-      showPlayerSetup();
       break;
     case REALM_SETUP_VIEW:
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
@@ -3012,23 +2992,6 @@ public class Game implements ActionListener {
         galaxyCreationView.handleActions(arg0);
         return;
       }
-    } else if (gameState == GameState.PLAYER_SETUP && playerSetupView != null) {
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
-        SoundPlayer.playMenuSound();
-        playerSetupView.getNamesToConfig();
-        changeGameState(GameState.GALAXY_CREATION);
-        return;
-      } else if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
-        SoundPlayer.playMenuSound();
-        playerSetupView.getNamesToConfig();
-        changeGameState(GameState.SAVE_GAME_NAME_VIEW);
-        return;
-      } else {
-        playerSetupView.handleActions(arg0);
-        return;
-      }
     } else if (gameState == GameState.SAVE_GAME_NAME_VIEW
         && saveGameView != null) {
       if (arg0.getActionCommand()
@@ -3977,7 +3940,6 @@ public class Game implements ActionListener {
       actionPerformedFleetViews(arg0);
     }
     if (gameState == GameState.GALAXY_CREATION
-        || gameState == GameState.PLAYER_SETUP
         || gameState == GameState.SAVE_GAME_NAME_VIEW
         || gameState == GameState.LOAD_GAME
         || gameState == GameState.OPTIONS_VIEW
@@ -4003,6 +3965,16 @@ public class Game implements ActionListener {
     return players;
   }
 
+  /**
+   * For GameKeyAdapter to check correct substate.
+   * @return True if AI realm setup view is state.
+   */
+  public boolean isAiRealmDetailSetup() {
+    if (gameState == GameState.REALM_SETUP_VIEW && realmSetupView != null) {
+      return realmSetupView.isAllowChange();
+    }
+    return false;
+  }
   /**
    * Get the current Game state
    * @return the current Game state

@@ -154,6 +154,12 @@ public class RealmSetupView extends BlackPanel {
    */
   private int rigidSize = 10;
 
+  /**
+   * Constructor for realm setup view.
+   * @param config GalaxyConfig
+   * @param listener ActionListener, should be the game.
+   * @param allowChangeRealm Allow changing realms in view.
+   */
   public RealmSetupView(final GalaxyConfig config,
       final ActionListener listener, final boolean allowChangeRealm) {
     sizeAdjusted = false;
@@ -221,6 +227,7 @@ public class RealmSetupView extends BlackPanel {
     GovernmentType gov = (GovernmentType) comboGovernmentSelect
         .getSelectedItem();
     config.setPlayerGovernment(realmIndex, gov);
+    config.setPlayerName(realmIndex, realmName.getText());
     PlayerColor color = (PlayerColor) comboRealmColor.getSelectedItem();
     config.setPlayerColor(realmIndex, color);
     config.setPlayerElderRealm(realmIndex, checkElderRealm.isSelected());
@@ -228,7 +235,8 @@ public class RealmSetupView extends BlackPanel {
     if (difficulty != null) {
       config.setPlayerDifficult(realmIndex, difficulty);
     }
-
+    StartingScenario sce = (StartingScenario) comboScenario.getSelectedItem();
+    config.setStartingScenario(realmIndex, sce);
   }
   /**
    * Is Allow change state? Allow change is after AI Realm, it is substate.

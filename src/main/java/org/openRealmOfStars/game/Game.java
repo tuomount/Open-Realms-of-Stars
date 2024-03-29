@@ -2925,6 +2925,11 @@ public class Game implements ActionListener {
         SoundPlayer.playMenuSound();
         changeGameState(GameState.SAVE_GAME_NAME_VIEW);
         return;
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_REALM_DETAILS)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.REALM_SETUP_VIEW, "allowChange");
+        return;
       }
       aiRealmSetupView.handleActions(arg0);
     }
@@ -2932,13 +2937,21 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         SoundPlayer.playMenuSound();
-        changeGameState(GameState.GALAXY_CREATION);
+        if (realmSetupView.isAllowChange()) {
+          changeGameState(GameState.AI_REALM_SETUP_VIEW);
+        } else {
+          changeGameState(GameState.GALAXY_CREATION);
+        }
         return;
       } else if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         SoundPlayer.playMenuSound();
         realmSetupView.setupRealmConfig();
-        changeGameState(GameState.AI_REALM_SETUP_VIEW);
+        if (realmSetupView.isAllowChange()) {
+          changeGameState(GameState.SAVE_GAME_NAME_VIEW);
+        } else {
+          changeGameState(GameState.AI_REALM_SETUP_VIEW);
+        }
         return;
       } else {
         realmSetupView.handleActions(arg0);
@@ -3022,7 +3035,7 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         SoundPlayer.playMenuSound();
         if (!saveGameView.isContinueGame()) {
-          changeGameState(GameState.PLAYER_SETUP);
+          changeGameState(GameState.AI_REALM_SETUP_VIEW);
         } else {
           changeGameState(GameState.LOAD_GAME);
         }

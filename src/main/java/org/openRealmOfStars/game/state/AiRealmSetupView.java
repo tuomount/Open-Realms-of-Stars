@@ -298,13 +298,11 @@ public class AiRealmSetupView extends BlackPanel {
     utopiaStart.setSelected(true);
     info.add(utopiaStart);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    // TODO: Add this when GalaxyConfig allows adding random spacerace,
-    //       governments and so on.
-    /*SpaceButton btn = new SpaceButton("Edit details",
+    SpaceButton btn = new SpaceButton("Edit details",
         GameCommands.COMMAND_REALM_DETAILS);
     btn.setAlignmentX(CENTER_ALIGNMENT);
     btn.addActionListener(listener);
-    info.add(btn);*/
+    info.add(btn);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     return info;
   }

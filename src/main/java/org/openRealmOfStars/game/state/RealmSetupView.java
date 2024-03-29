@@ -23,7 +23,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -64,7 +63,6 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
-import org.openRealmOfStars.utilities.DiceGenerator;
 
 
 /**
@@ -128,11 +126,6 @@ public class RealmSetupView extends BlackPanel {
    */
   private ActionListener actionListener;
 
-  /**
-   * Random list for colors.
-   */
-  private ArrayList<PlayerColor> randomListOfColors;
-
   /** Flag for allow changing realm */
   private boolean allowChangingRealm;
 
@@ -152,6 +145,10 @@ public class RealmSetupView extends BlackPanel {
    */
   private boolean sizeAdjusted;
 
+  /**
+   * Full panel with title
+   */
+  private InfoPanel fullPanel;
   /**
    * Rigid box size
    */
@@ -176,10 +173,6 @@ public class RealmSetupView extends BlackPanel {
     }
     if (this.config == null) {
       this.config = new GalaxyConfig();
-    }
-    randomListOfColors = new ArrayList<>();
-    for (PlayerColor color : PlayerColor.values()) {
-      randomListOfColors.add(color);
     }
     Planet planet = new Planet(new Coordinate(1, 1), "Galaxy Creation Planet",
         2, false);
@@ -236,6 +229,13 @@ public class RealmSetupView extends BlackPanel {
       config.setPlayerDifficult(realmIndex, difficulty);
     }
 
+  }
+  /**
+   * Is Allow change state? Allow change is after AI Realm, it is substate.
+   * @return True if allow change.
+   */
+  public boolean isAllowChange() {
+    return allowChangingRealm;
   }
   /**
    * Handle actions for Player Setup view
@@ -303,6 +303,7 @@ public class RealmSetupView extends BlackPanel {
         realmIndex = config.getMaxPlayers() - 1;
       }
       changeRealmIndex(realmIndex);
+      fullPanel.repaint();
     }
     if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_GALAXY_NEXT_REALM)) {
@@ -313,6 +314,7 @@ public class RealmSetupView extends BlackPanel {
         realmIndex = 1;
       }
       changeRealmIndex(realmIndex);
+      fullPanel.repaint();
     }
   }
   /**
@@ -323,7 +325,7 @@ public class RealmSetupView extends BlackPanel {
    */
   private InfoPanel createRealmSetup(final int index,
       final ActionListener listener) {
-    InfoPanel fullPanel = new InfoPanel();
+    fullPanel = new InfoPanel();
     fullPanel.setLayout(new BorderLayout());
     if (index == 0 && !config.isAiOnly()) {
       fullPanel.setTitle("Player " + (index + 1));
@@ -440,8 +442,7 @@ public class RealmSetupView extends BlackPanel {
     comboRealmColor.setBorder(new SimpleBorder());
     comboRealmColor.setFont(GuiFonts.getFontCubellan());
 
-    PlayerColor color = DiceGenerator.pickRandom(randomListOfColors);
-    randomListOfColors.remove(color);
+    PlayerColor color = config.getPlayerColor(index);
     comboRealmColor.getModel()
         .setSelectedItem(color);
     PlayerColorListRenderer pclr = new PlayerColorListRenderer();
@@ -547,6 +548,11 @@ public class RealmSetupView extends BlackPanel {
    * @param index new index.
    */
   private void changeRealmIndex(final int index) {
+    if (index == 0 && !config.isAiOnly()) {
+      fullPanel.setTitle("Player " + (index + 1));
+    } else {
+      fullPanel.setTitle("Player " + (index + 1) + " (AI)");
+    }
     raceImgs.setRaceToShow(config.getRace(index).getNameSingle());
     comboRaceSelect.getModel()
     .setSelectedItem(config.getRace(index).getNameSingle());
@@ -555,13 +561,15 @@ public class RealmSetupView extends BlackPanel {
     checkElderRealm.setSelected(config.getPlayerElderRealm(index));
     realmName.setText(config.getPlayerName(index));
     if (index > 0 || config.isAiOnly()) {
-      comboDifficult.setEditable(true);
+      comboDifficult.setEnabled(true);
       comboDifficult.setSelectedIndex(
           config.getDifficultyLevel().getIndex());
     } else {
-      comboDifficult.setEditable(false);
+      comboDifficult.setEnabled(false);
     }
-    comboRealmColor.getModel().setSelectedItem(config.getPlayerColor(index));
+    PlayerColor color = config.getPlayerColor(index);
+    comboRealmColor.getModel().setSelectedItem(color);
+    comboRealmColor.setForeground(color.getColor());
     comboScenario.getModel().setSelectedItem(config.getStartingScenario(index));
     spaceRaceInfo.setText(config.getRace(index).getFullDescription(false,
         false));

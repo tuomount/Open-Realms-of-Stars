@@ -67,7 +67,7 @@ public class Icon16x16 {
    */
   public Icon16x16(final BufferedImage image, final int x, final int y,
       final String name) throws RasterFormatException {
-    if (x >= 0 && y >= 0 && x * MAX_WIDTH < image.getHeight()
+    if (x >= 0 && y >= 0 && x * MAX_WIDTH < image.getWidth()
         && y * MAX_HEIGHT < image.getHeight()) {
       img = image.getSubimage(x * MAX_WIDTH, y * MAX_HEIGHT, MAX_WIDTH,
           MAX_HEIGHT);

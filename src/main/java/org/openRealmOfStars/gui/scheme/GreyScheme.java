@@ -149,14 +149,14 @@ public class GreyScheme extends BaseScheme {
         "/resources/images/grey_arrows.png", 1, 1,
         Icons.ICON_SCROLL_DOWN_PRESSED);
     smallScrollLeft = Icons.loadSmallIcon(
-        "/resources/images/grey_arrows.png", 1, 0, Icons.ICON_SCROLL_LEFT);
+        "/resources/images/grey_arrows.png", 2, 0, Icons.ICON_SCROLL_LEFT);
     smallScrollLeftPressed = Icons.loadSmallIcon(
-        "/resources/images/grey_arrows.png", 1, 1,
+        "/resources/images/grey_arrows.png", 2, 1,
         Icons.ICON_SCROLL_LEFT_PRESSED);
     smallScrollRight = Icons.loadSmallIcon(
-        "/resources/images/grey_arrows.png", 1, 0, Icons.ICON_SCROLL_RIGHT);
+        "/resources/images/grey_arrows.png", 3, 0, Icons.ICON_SCROLL_RIGHT);
     smallScrollRightPressed = Icons.loadSmallIcon(
-        "/resources/images/grey_arrows.png", 1, 1,
+        "/resources/images/grey_arrows.png", 3, 1,
         Icons.ICON_SCROLL_RIGHT_PRESSED);
     scrollLeft = IOUtilities
         .loadImage("/resources/images/grey_left_arrow.png");

@@ -84,10 +84,6 @@ public enum GameState {
    */
   GALAXY_CREATION,
   /**
-   * Player setup is state where all the players are being configured.
-   */
-  PLAYER_SETUP,
-  /**
    * State where player can select which saved game is about to be loaded.
    */
   LOAD_GAME,
@@ -180,5 +176,9 @@ public enum GameState {
   /**
    * Story view for viewing full story of the realm when game ends.
    */
-  END_STORY_VIEW;
+  END_STORY_VIEW,
+  /** View for configuring individual realm */
+  REALM_SETUP_VIEW,
+  /** View for configuring all AI realms */
+  AI_REALM_SETUP_VIEW;
 }

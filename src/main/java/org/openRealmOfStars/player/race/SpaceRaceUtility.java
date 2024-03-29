@@ -35,14 +35,6 @@ public final class SpaceRaceUtility {
   }
 
   /**
-   * List of selectable races
-   */
-  public static final String[] RACE_SELECTION = {"Human", "Mechion", "Spork",
-      "Greyan", "Centaur", "Mothoid", "Teuthidae", "Scaurian", "Homarian",
-      "Chiraloid", "Reborgian", "Lithorian", "Alteirian", "Smaugirian",
-      "Synthdroid" };
-
-  /**
    * Get all SpaceRace with certain trait.
    * @param traitId Trait Id
    * @return Array of Space Race with certain trait.

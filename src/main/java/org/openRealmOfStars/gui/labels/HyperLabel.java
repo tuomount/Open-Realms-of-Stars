@@ -1,7 +1,7 @@
 package org.openRealmOfStars.gui.labels;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2020 Tuomo Untinen
+ * Copyright (C) 2020-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -63,6 +63,77 @@ public class HyperLabel extends SpaceLabel {
     return text;
   }
 
+  /**
+   * Adjust component size based on text.
+   * @return Adjusted height based on text size.
+   */
+  public int getAdjustHeight() {
+    int width = getWidth();
+    int height = getHeight();
+    if (getText() != null) {
+      String text = convertHtml();
+      int lastSpace = -1;
+      int rowLen = 0;
+      int maxRowLen = width / 6;
+      int customCharWidth = GuiStatics.getTextWidth(getFont(),
+          "EeAaRrIiOoTtSs");
+      customCharWidth = customCharWidth / 14;
+      if (customCharWidth > 0) {
+        maxRowLen = width / customCharWidth;
+      }
+      StringBuilder sb = new StringBuilder(text);
+      for (int i = 0; i < sb.length(); i++) {
+        if (sb.charAt(i) == ' ') {
+          lastSpace = i;
+        }
+        if (sb.charAt(i) == '\n') {
+          lastSpace = -1;
+          rowLen = 0;
+        } else {
+          rowLen++;
+        }
+        if (rowLen > maxRowLen) {
+          if (lastSpace != -1) {
+            sb.setCharAt(lastSpace, '\n');
+            rowLen = i - lastSpace;
+            lastSpace = -1;
+          } else {
+            sb.setCharAt(i, '\n');
+            lastSpace = -1;
+            rowLen = 0;
+          }
+        }
+      }
+      String[] texts = sb.toString().split("\n");
+
+      int yTotal = 0;
+      int yCur = 0;
+      int lines = 0;
+      int totalLines = 0;
+      for (int i = 0; i < texts.length; i++) {
+        int yHeight = GuiStatics.getTextHeight(getFont(), texts[i]);
+        if (texts[i].contains("<ht>") && yCur > yTotal) {
+          yTotal = yCur;
+          totalLines = lines;
+          yCur = 0;
+          lines = 0;
+        }
+        yCur = yCur + yHeight;
+        lines++;
+      }
+      if (yCur > yTotal) {
+        yTotal = yCur;
+        totalLines = lines;
+      }
+      if (totalLines == 0) {
+        totalLines = 1;
+      }
+      int yAvg = yTotal / totalLines;
+      height = yTotal + 5 * yAvg;
+      return height;
+    }
+    return height;
+  }
   @Override
   protected void paintComponent(final Graphics g) {
     g.setColor(GuiStatics.getPanelBackground());

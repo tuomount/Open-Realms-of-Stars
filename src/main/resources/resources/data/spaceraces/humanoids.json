@@ -96,7 +96,8 @@
                 "HANDY",
                 "TOLERATE_COLD",
                 "SOLITARY",
-                "NATURAL_LEADERS"
+                "NATURAL_LEADERS",
+                "QUICK_LEARNERS"
               ],
     "Attitude": "MILITARISTIC",
     "Image": "resources/images/smaugirian_race.png",

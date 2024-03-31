@@ -949,8 +949,7 @@ public class Game implements ActionListener {
           starMap.clearFleetTiles();
           getStarMap().doFleetScanUpdate(info, fleet, null);
           if (fleet.getCommander() != null) {
-            fleet.getCommander().setExperience(
-                fleet.getCommander().getExperience() + 2);
+            fleet.getCommander().addExperience(2);
           }
         }
         if (starMapView != null) {

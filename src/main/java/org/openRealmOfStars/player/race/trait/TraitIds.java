@@ -151,6 +151,10 @@ public final class TraitIds {
   public static final String SOLITARY = "SOLITARY";
   /** Natural leaders, leaders are available a bit sooner. */
   public static final String NATURAL_LEADERS = "NATURAL_LEADERS";
+  /** Quick learners, leaders gain twice faster experience. */
+  public static final String QUICK_LEARNERS = "QUICK_LEARNERS";
+  /** Slow learners, leaders gain only half experience. */
+  public static final String SLOW_LEARNERS = "SLOW_LEARNERS";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

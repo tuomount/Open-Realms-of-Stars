@@ -2603,8 +2603,7 @@ public class Planet {
           metal = metal - requiredMetalCost;
           prodResource = prodResource - requiredProdCost;
           if (governor != null) {
-            governor.setExperience(governor.getExperience()
-                + underConstruction.getProdCost() / 2);
+            governor.addExperience(underConstruction.getProdCost() / 2);
             governor.getStats().addOne(StatType.NUMBER_OF_BUILDINGS_BUILT);
           }
           buildings.add((Building) underConstruction);
@@ -2636,8 +2635,7 @@ public class Planet {
         metal = metal - requiredMetalCost;
         prodResource = prodResource - requiredProdCost;
         if (governor != null) {
-          governor.setExperience(governor.getExperience()
-              + underConstruction.getProdCost() / 2);
+          governor.addExperience(underConstruction.getProdCost() / 2);
         }
         ShipStat stat = planetOwnerInfo.getShipStatByName(
             underConstruction.getName());
@@ -2908,8 +2906,7 @@ public class Planet {
       if (governor.getJob() == Job.DEAD) {
         governor = null;
       } else {
-        governor.setExperience(governor.getExperience()
-            + getTotalPopulation());
+        governor.addExperience(getTotalPopulation());
       }
     } else {
       if (Game.getTutorial() != null && map != null
@@ -3958,7 +3955,7 @@ public class Planet {
       if (commander.hasPerk(Perk.TREKKER)) {
         exp = exp * 2;
       }
-      commander.setExperience(commander.getExperience() + exp);
+      commander.addExperience(exp);
     }
   }
 

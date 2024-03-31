@@ -757,8 +757,7 @@ public final class StarMapUtilities {
         }
         info.setTotalCredits(info.getTotalCredits() + credits);
         if (fleet.getCommander() != null) {
-          fleet.getCommander().setExperience(
-              fleet.getCommander().getExperience() + credits);
+          fleet.getCommander().addExperience(credits);
         }
         planet.getPlanetPlayerInfo().setTotalCredits(
             planet.getPlanetPlayerInfo().getTotalCredits()
@@ -799,8 +798,7 @@ public final class StarMapUtilities {
           credits = credits * 3 / 2;
         }
         if (fleet.getCommander() != null) {
-          fleet.getCommander().setExperience(
-              fleet.getCommander().getExperience() + credits);
+          fleet.getCommander().addExperience(credits);
         }
         info.setTotalCredits(info.getTotalCredits() + credits);
         Message msg = new Message(MessageType.PLANETARY,

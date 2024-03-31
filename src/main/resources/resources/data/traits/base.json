@@ -414,8 +414,26 @@
   {
     "id": "NATURAL_LEADERS",
     "name": "Natural leaders",
-    "description": "Race has more natural leaders, one less population is required for trainig a leader.",
+    "description": "Race has more natural leaders, one less population is required for training a leader.",
     "points": 1
+  },
+  {
+    "id": "QUICK_LEARNERS",
+    "name": "Quick learners",
+    "description": "Leaders gain twice faster experience.",
+    "points": 2,
+    "conflictsWith": [
+      "SLOW_LEARNERS"
+    ]
+  },
+  {
+    "id": "SLOW_LEARNERS",
+    "name": "Slow learners",
+    "description": "Leaders gain only half of experience.",
+    "points": -2,
+    "conflictsWith": [
+      "QUICK_LEARNERS"
+    ]
   }
   
 ]

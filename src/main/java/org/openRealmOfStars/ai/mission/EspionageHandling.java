@@ -894,7 +894,7 @@ public final class EspionageHandling {
             planetEmpireName);
         var msg = makeSpyReportMessage(info, spy, planet, msgText);
 
-        spy.setExperience(spy.getExperience() + type.getExperienceReward());
+        spy.addExperience(type.getExperienceReward());
         history.addEvent(NewsFactory.makeLeaderEvent(
             spy, info, game.getStarMap(), msg.getMessage()));
       }
@@ -917,7 +917,7 @@ public final class EspionageHandling {
             spyEmpireName, stolen, planetEmpireName);
         var msg = makeSpyReportMessage(info, spy, planet, msgText);
 
-        spy.setExperience(spy.getExperience() + type.getExperienceReward());
+        spy.addExperience(type.getExperienceReward());
         history.addEvent(NewsFactory.makeLeaderEvent(
             spy, info, game.getStarMap(), msg.getMessage()));
       }
@@ -936,7 +936,7 @@ public final class EspionageHandling {
           tech.getName(), planetEmpireName);
       var msg = makeSpyReportMessage(info, spy, planet, msgText);
 
-      spy.setExperience(spy.getExperience() + type.getExperienceReward());
+      spy.addExperience(type.getExperienceReward());
       history.addEvent(NewsFactory.makeLeaderEvent(
           spy, info, game.getStarMap(), msg.getMessage()));
     } else
@@ -949,7 +949,7 @@ public final class EspionageHandling {
           planetEmpireName);
       var msg = makeSpyReportMessage(info, spy, planet, msgText);
 
-      spy.setExperience(spy.getExperience() + type.getExperienceReward());
+      spy.addExperience(type.getExperienceReward());
       history.addEvent(NewsFactory.makeLeaderEvent(
           spy, info, game.getStarMap(), msg.getMessage()));
     } else
@@ -975,7 +975,7 @@ public final class EspionageHandling {
         newsCorp.addNews(news);
       }
 
-      spy.setExperience(spy.getExperience() + type.getExperienceReward());
+      spy.addExperience(type.getExperienceReward());
       history.addEvent(NewsFactory.makeLeaderEvent(
           spy, info, game.getStarMap(), msg.getMessage()));
     } else
@@ -1004,7 +1004,7 @@ public final class EspionageHandling {
           killedTxt);
       newsCorp.addNews(news);
 
-      spy.setExperience(spy.getExperience() + type.getExperienceReward());
+      spy.addExperience(type.getExperienceReward());
       history.addEvent(NewsFactory.makeLeaderEvent(
           spy, info, game.getStarMap(), msg.getMessage()));
     } else
@@ -1044,7 +1044,7 @@ public final class EspionageHandling {
         if (starmap.hasHumanMet(planetPlayer)) {
           newsCorp.addNews(news);
         }
-        spy.setExperience(spy.getExperience() + type.getExperienceReward());
+        spy.addExperience(type.getExperienceReward());
       }
     } else
 
@@ -1084,7 +1084,7 @@ public final class EspionageHandling {
           || starmap.hasHumanMet(planetPlayer)) {
         newsCorp.addNews(news);
       }
-      spy.setExperience(spy.getExperience() + type.getExperienceReward());
+      spy.addExperience(type.getExperienceReward());
       info.getFleets().recalculateList();
     } else
 
@@ -1097,7 +1097,7 @@ public final class EspionageHandling {
       newsCorp.addNews(NewsFactory.makeDeadlyVirusNews(planet, info,
           starmap.getStarYear()));
 
-      spy.setExperience(spy.getExperience() + type.getExperienceReward());
+      spy.addExperience(type.getExperienceReward());
       history.addEvent(NewsFactory.makeLeaderEvent(
           spy, info, game.getStarMap(), msg.getMessage()));
     }

@@ -755,7 +755,7 @@ public boolean launchIntercept(final int distance,
       if (DiceGenerator.getRandom(99) < chance) {
         info.getTechList().addTech(
             TechFactory.createDefenseTech(organicArmorTech, level));
-        leader.setExperience(leader.getExperience() + level * 10);
+        leader.addExperience(level * 10);
         Message msg = new Message(MessageType.RESEARCH,
             "Commander " + leader.getCallName() + " has discovered "
             + organicArmorTech + " when fighting against space monster.",
@@ -1336,7 +1336,7 @@ public boolean launchIntercept(final int distance,
         isWinnerAttacker = true;
         if (attackerFleet.getCommander() != null) {
           Leader leader = attackerFleet.getCommander();
-          leader.setExperience(leader.getExperience() + defenderMilitaryValue);
+          leader.addExperience(defenderMilitaryValue);
           if (worthOfWarHero && !leader.hasPerk(Perk.WAR_HERO)) {
             leader.addPerk(Perk.WAR_HERO);
             Message msg = new Message(MessageType.LEADER,
@@ -1365,7 +1365,7 @@ public boolean launchIntercept(final int distance,
         isWinnerAttacker = false;
         if (defenderFleet.getCommander() != null) {
           Leader leader = defenderFleet.getCommander();
-          leader.setExperience(leader.getExperience() + attackerMilitaryValue);
+          leader.addExperience(attackerMilitaryValue);
           if (worthOfWarHero && !leader.hasPerk(Perk.WAR_HERO)) {
             leader.addPerk(Perk.WAR_HERO);
             Message msg = new Message(MessageType.LEADER,

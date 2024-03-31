@@ -2561,7 +2561,7 @@ public class AITurnView extends BlackPanel {
     } else {
       target.setJob(Job.DEAD);
       // Leader gains experience for succeesful assasination
-      leader.setExperience(leader.getExperience() + 50);
+      leader.addExperience(50);
       leader.getStats().addOne(StatType.KILLED_ANOTHER_LEADER);
       Message msg = new Message(MessageType.LEADER,
           target.getCallName()
@@ -2936,8 +2936,7 @@ public class AITurnView extends BlackPanel {
           leader.getStats().addOne(StatType.JAIL_TIME);
           if (DiceGenerator.getRandom(99) < 10) {
             // Small change to get little bit experience in prison.
-            leader.setExperience(leader.getExperience()
-                + DiceGenerator.getRandom(1, 3));
+            leader.addExperience(DiceGenerator.getRandom(1, 3));
           }
           if (leader.getTimeInJob() <= 0) {
             String change = "";
@@ -3156,8 +3155,7 @@ public class AITurnView extends BlackPanel {
             numberOfStarbases++;
           }
         }
-        leader.setExperience(
-            leader.getExperience() + numberOfPlanet * 4 + numberOfStarbases);
+        leader.addExperience(numberOfPlanet * 4 + numberOfStarbases);
         if (realm.getGovernment().reignTime() > -1
             && leader.getTimeInJob() >= realm.getGovernment().reignTime()) {
           leader.setJob(Job.UNASSIGNED);
@@ -3266,15 +3264,13 @@ public class AITurnView extends BlackPanel {
               if (enemyIndex > -1 && enemyIndex != i
                   && !info.getDiplomacy().isAlliance(enemyIndex)
                   && !info.getDiplomacy().isDefensivePact(enemyIndex)) {
-                fleet.getCommander().setExperience(
-                    fleet.getCommander().getExperience() + 10);
+                fleet.getCommander().addExperience(10);
               }
               if (fleet.getCommander().getAge() == 50
                   && fleet.getCommander().getMilitaryRank()
                   == MilitaryRank.ENSIGN) {
                 fleet.getCommander().setMilitaryRank(MilitaryRank.LIEUTENANT);
-                fleet.getCommander().setExperience(
-                    fleet.getCommander().getExperience() + 50);
+                fleet.getCommander().addExperience(50);
                 Message msg = new Message(MessageType.LEADER,
                     fleet.getCommander().getCallName()
                         + " has gained military rank lieutenant. ",
@@ -3284,9 +3280,8 @@ public class AITurnView extends BlackPanel {
                         + info.getLeaderIndex(fleet.getCommander()));
                 info.getMsgList().addUpcomingMessage(msg);
               }
-              fleet.getCommander().setExperience(
-                  fleet.getCommander().getExperience()
-                  + fleet.getNumberOfShip() * fleet.getCommander().getLevel());
+              fleet.getCommander().addExperience(
+                  fleet.getNumberOfShip() * fleet.getCommander().getLevel());
             }
           } else {
             if (Game.getTutorial() != null

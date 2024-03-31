@@ -286,7 +286,7 @@ public class SpaceAnomaly {
     SpaceAnomaly result = null;
     Tile tile = map.getTile(fleet.getX(), fleet.getY());
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
-    boolean addExp = true;
+    int addExp = 0;
     if (tile != null) {
       switch (tile.getName()) {
         case TileNames.SPACE_ANOMALY_CREDITS: {
@@ -298,10 +298,7 @@ public class SpaceAnomaly {
           result.setImage(GuiStatics.IMAGE_ASTEROIDS);
           info.setTotalCredits(info.getTotalCredits() + result.value);
           map.setTile(fleet.getX(), fleet.getY(), empty);
-          if (fleet.getCommander() != null) {
-            fleet.getCommander().setExperience(
-                fleet.getCommander().getExperience() + 10);
-          }
+          addExp = 30;
           break;
         }
         case TileNames.SPACE_ANOMALY_MAP: {
@@ -311,10 +308,7 @@ public class SpaceAnomaly {
               + " realm's exploration data.");
           result.setImage(GuiStatics.IMAGE_OLD_PROBE);
           map.setTile(fleet.getX(), fleet.getY(), empty);
-          if (fleet.getCommander() != null) {
-            fleet.getCommander().setExperience(
-                fleet.getCommander().getExperience() + 10);
-          }
+          addExp = 40;
           for (int x = -3; x < 4; x++) {
             for (int y = -3; y < 4; y++) {
               if (x == -3 && y == -3) {
@@ -343,10 +337,7 @@ public class SpaceAnomaly {
           result.setImage(GuiStatics.IMAGE_DSA);
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
           map.setTile(fleet.getX(), fleet.getY(), anchor);
-          if (fleet.getCommander() != null) {
-            fleet.getCommander().setExperience(
-                fleet.getCommander().getExperience() + 10);
-          }
+          addExp = 40;
           break;
         }
         case TileNames.SPACE_ANOMALY_LAIR: {
@@ -362,6 +353,7 @@ public class SpaceAnomaly {
               map.getStarYear());
           result.setCombat(fight);
           map.setTile(fleet.getX(), fleet.getY(), anchor);
+          addExp = 20;
           break;
         }
         case TileNames.SPACE_ANOMALY_PIRATE: {
@@ -376,6 +368,7 @@ public class SpaceAnomaly {
           Combat fight = new Combat(fleet, pirate, info, board,
               map.getStarYear());
           result.setCombat(fight);
+          addExp = 20;
           break;
         }
         case TileNames.SPACE_ANOMALY_MONSTER: {
@@ -399,6 +392,7 @@ public class SpaceAnomaly {
           Combat fight = new Combat(fleet, monster, info, board,
               map.getStarYear());
           result.setCombat(fight);
+          addExp = 40;
           break;
         }
         case TileNames.SPACE_ANOMALY_SHIP: {
@@ -426,10 +420,7 @@ public class SpaceAnomaly {
             result.setImage(GuiStatics.IMAGE_SPACE_SHIP);
             map.setTile(fleet.getX(), fleet.getY(), empty);
             info.getFleets().add(newFleet);
-            if (fleet.getCommander() != null) {
-              fleet.getCommander().setExperience(
-                  fleet.getCommander().getExperience() + 10);
-            }
+            addExp = 30;
           } else {
             result = new SpaceAnomaly(AnomalyType.SHIP, 0);
             result.setText("Ship pieces were found in "
@@ -448,10 +439,7 @@ public class SpaceAnomaly {
                 + " schematics of " + tech.getName() + ". This invention"
                 + " is immediately taken to use.");
             result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_OLD_SHIP));
-            if (fleet.getCommander() != null) {
-              fleet.getCommander().setExperience(
-                  fleet.getCommander().getExperience() + 10);
-            }
+            addExp = 40;
           } else {
             result = null;
           }
@@ -469,10 +457,7 @@ public class SpaceAnomaly {
           map.setTile(coord.getX(), coord.getY(), anchor);
           map.clearFleetTiles();
           // Actual drag is done on movement while checking the tile type
-          if (fleet.getCommander() != null) {
-            fleet.getCommander().setExperience(
-                fleet.getCommander().getExperience() + 30);
-          }
+          addExp = 80;
           break;
         }
         case TileNames.SPACE_ANOMALY_MECHION: {
@@ -515,10 +500,7 @@ public class SpaceAnomaly {
               leader.addPerk(newPerk);
             }
           }
-          if (fleet.getCommander() != null) {
-            fleet.getCommander().setExperience(
-                fleet.getCommander().getExperience() + 10);
-          }
+          addExp = 30;
           info.getLeaderPool().add(leader);
           break;
         }
@@ -576,10 +558,7 @@ public class SpaceAnomaly {
                 info.getTechList().getTechResearchPoints(TechType.Propulsion)
                 + rp);
           }
-          if (fleet.getCommander() != null) {
-            fleet.getCommander().setExperience(
-                fleet.getCommander().getExperience() + 40);
-          }
+          addExp = 90;
           map.setTile(fleet.getX(), fleet.getY(), empty);
           for (Ship ship : fleet.getShips()) {
             int damage = ship.getHull().getSlotHull()
@@ -644,18 +623,21 @@ public class SpaceAnomaly {
             }
           }
           map.setTile(fleet.getX(), fleet.getY(), empty);
+          addExp = 50;
           break;
         }
         case TileNames.SPACE_ANOMALY_NEWS_STATION: {
           result = createNewsStation(map, info, fleet);
+          addExp = 70;
           break;
         }
         case TileNames.NEWSTATION1:
         case TileNames.NEWSTATION2: {
           if (!info.getArtifactLists().hasBroadcastingArtifact()) {
             result = createNewsStation(map, info, fleet);
+            addExp = 50;
           } else {
-            addExp = false;
+            addExp = 0;
             result = new SpaceAnomaly(AnomalyType.NEWS_STATION, 0);
             result.setText(NEWS_STATION_VISITED_TEXT);
             result.setImage(IOUtilities.loadImage(GuiStatics.IMAGE_NEWSTATION));
@@ -694,22 +676,21 @@ public class SpaceAnomaly {
               leader.addPerk(newPerk);
             }
           }
-          if (fleet.getCommander() != null) {
-            fleet.getCommander().setExperience(
-                fleet.getCommander().getExperience() + 10);
-          }
+          addExp = 40;
           info.getLeaderPool().add(leader);
           break;
         }
         case TileNames.SPACE_ANOMALY_DESTROYED_PLANET: {
           result = createDestroyedPlanet(map, info, fleet);
+          addExp = 50;
           break;
         }
         case TileNames.DESTROYED_PLANET: {
           if (!info.getArtifactLists().hasDestroyedPlanetArtifact()) {
             result = createDestroyedPlanet(map, info, fleet);
+            addExp = 30;
           } else {
-            addExp = false;
+            addExp = 0;
             result = new SpaceAnomaly(AnomalyType.DESTROYED_PLANET, 0);
             result.setText(DESTROYED_VISITED_TEXT);
             result.setImage(IOUtilities.loadImage(
@@ -722,9 +703,8 @@ public class SpaceAnomaly {
           break;
         }
       }
-      if (fleet.getCommander() != null && result != null && addExp) {
-        fleet.getCommander().setExperience(
-            fleet.getCommander().getExperience() + 50);
+      if (fleet.getCommander() != null && result != null && addExp > 0) {
+        fleet.getCommander().addExperience(addExp);
       }
     }
     return result;

@@ -28,6 +28,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.leader.stats.LeaderStats;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -337,6 +338,23 @@ public class Leader {
    */
   public void setExperience(final int experience) {
     this.experience = experience;
+  }
+
+  /**
+   * Leader gains experience by certain amount. There might be modifiers for
+   * this.
+   * @param xp New experience gained.
+   */
+  public void addExperience(final int xp) {
+    int multiplier = 1;
+    int divider = 1;
+    if (race.hasTrait(TraitIds.QUICK_LEARNERS)) {
+      multiplier = 2;
+    }
+    if (race.hasTrait(TraitIds.SLOW_LEARNERS)) {
+      divider = 2;
+    }
+    this.experience = this.experience + xp * multiplier / divider;
   }
 
   /**

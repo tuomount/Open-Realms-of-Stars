@@ -2,6 +2,7 @@ package org.openRealmOfStars.starMap.planet.status;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2023 BottledByte
+ * Copyright (C) 2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -83,7 +84,11 @@ public class PlanetaryStatus {
   private int prodBonus;
   /** Bonus/malus to credits production */
   private int credBonus;
-
+  /** Status is not visible, until it is applied. This cannot be revealed even
+   * by sending away team. */
+  private boolean hidden;
+  /** Status can be found with away team */
+  private boolean awayTeam;
   /**
    * Create new planetary status definition
    * @param id ID of planetary status definition
@@ -97,6 +102,8 @@ public class PlanetaryStatus {
     this.name = Objects.requireNonNull(name);
     this.description = Objects.requireNonNull(description);
     this.conflictingIds = Objects.requireNonNull(conflictingIds);
+    this.hidden = false;
+    this.setAwayTeam(false);
   }
 
   /**
@@ -200,6 +207,34 @@ public class PlanetaryStatus {
    */
   void setCredBonus(final int credBonus) {
     this.credBonus = credBonus;
+  }
+
+  /**
+   * @return the hidden
+   */
+  public boolean isHidden() {
+    return hidden;
+  }
+
+  /**
+   * @param hidden the hidden to set
+   */
+  public void setHidden(final boolean hidden) {
+    this.hidden = hidden;
+  }
+
+  /**
+   * @return the awayTeam
+   */
+  public boolean isAwayTeam() {
+    return awayTeam;
+  }
+
+  /**
+   * @param awayTeam the awayTeam to set
+   */
+  public void setAwayTeam(final boolean awayTeam) {
+    this.awayTeam = awayTeam;
   }
 
 }

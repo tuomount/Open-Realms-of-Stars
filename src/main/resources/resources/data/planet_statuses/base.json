@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "id": "METAL_RICH_SURFACE",
+    "name": "Metal rich surface",
+    "description": "Planet's surface is covered with easy access metal. This will grant one extra metal per star year.",
+    "conflictsWith": [
+      "FERTILE_SOIL",
+      "MOLTEN_LAVA"
+    ],
+    "mineBonus": 1,
+    "awayTeam": true
+  },
+  {
+    "id": "FERTILE_SOIL",
+    "name": "Fertile soil",
+    "description": "Planet's surface has fertile soil where plants grow faster. This will grant one extra food per star year.",
+    "conflictsWith": [
+      "METAL_RICH_SURFACE",
+      "MOLTEN_LAVA"
+    ],
+    "foodBonus": 1,
+    "awayTeam": true
+  },
+  {
+    "id": "MOLTEN_LAVA",
+    "name": "Molten lava",
+    "description": "Planet surface has big lava pool or river. This can be used to easy access metal and temperature can be used to increase productivity, downside is this cause unhappiness to population.",
+    "conflictsWith": [
+      "FERTILE_SOIL",
+      "METAL_RICH_SURFACE"
+    ],
+    "mineBonus": 1,
+    "prodBonus": 1,
+    "happinessBonus": -1,
+    "awayTeam": true
+  }
+]

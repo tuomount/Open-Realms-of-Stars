@@ -17,6 +17,13 @@ package org.openRealmOfStars.starMap.planet.status;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.Optional;
+
+import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
  * Timed planetary status. This tells when timed planetary status is
@@ -85,6 +92,37 @@ public class TimedStatus {
   @Override
   public String toString() {
     return status.getId() + " " + timedType + " count: " + count;
+  }
+
+  /**
+   * Save to provided data stream
+   * @param dos DataOutputStream to save into
+   * @throws IOException stream error
+   */
+  public void save(final DataOutputStream dos) throws IOException {
+    IOUtilities.writeString(dos, status.getId());
+    dos.writeByte(timedType.getIndex());
+    dos.writeShort(count);
+  }
+
+  /**
+   * Load TimedStatus from provided data stream.
+   * @param dis DataInputStream to load from
+   * @return Loaded TimedStatus or empty if not defined
+   * @throws IOException stream error
+   */
+  public static Optional<TimedStatus> load(final DataInputStream dis)
+      throws IOException {
+    final var statusId = IOUtilities.readString(dis);
+    int value = dis.readByte();
+    TimedStatusType type = TimedStatusType.getByIndex(value);
+    int count = dis.readShort();
+    // Fail if status is not defined
+    final var status = StatusFactory.createTimedStatus(statusId, type, count);
+    if (status.isEmpty()) {
+      ErrorLogger.log("Failed to load TimedStatus \"" + statusId + "\"");
+    }
+    return status;
   }
 
 }

@@ -72,6 +72,7 @@ import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
 import org.openRealmOfStars.starMap.planet.status.PlanetaryStatus;
+import org.openRealmOfStars.starMap.planet.status.TimedStatus;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -207,6 +208,9 @@ public class Planet {
   /** Statuses applied on the Planet */
   private ArrayList<AppliedStatus> statuses;
 
+  /** Timed Statuses which are going to applied on the Planet */
+  private ArrayList<TimedStatus> timedStatuses;
+
   /** Planetary event when colonizing the planet */
   private PlanetaryEvent event;
   /** Event found AKA planet has been colonized */
@@ -323,6 +327,7 @@ public class Planet {
     this.event = PlanetaryEvent.NONE;
     this.eventFound = true;
     this.statuses = new ArrayList<>();
+    this.timedStatuses = new ArrayList<>();
   }
 
   /**
@@ -3765,6 +3770,14 @@ public class Planet {
   }
 
   /**
+   * Add timed status, since these are not applied these can be added to list.
+   * @param status TimedStatus to add
+   */
+  public void addTimedStatus(final TimedStatus status) {
+    timedStatuses.add(status);
+  }
+
+  /**
    * Try to add provided status. Returns true if addition
    * was successful, false otherwise.
    * @param status AppliedStatus to add
@@ -3798,6 +3811,14 @@ public class Planet {
    */
   public List<AppliedStatus> getStatuses() {
     return Collections.unmodifiableList(statuses);
+  }
+
+  /**
+   * Return unmodifiable list of planet's timed statuses
+   * @return Unmodifiable List of timed statuses
+   */
+  public List<TimedStatus> getTimedStatuses() {
+    return Collections.unmodifiableList(timedStatuses);
   }
 
   /**

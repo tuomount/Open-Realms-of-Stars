@@ -42,12 +42,46 @@ public final class StatusFactory {
   /**
    * Creates new status with requested statusId.
    * This will load data from files if not done already.
-   * @param statusId ID of PlanetaryStatus to create AppliedStatus from
-   * @return AppliedStatus with requested PlanetaryStatus,
+   * @param statusId ID of PlanetaryStatus
+   * @return Requested PlanetaryStatus,
    *         empty if statusId is invalid
    */
-  public static Optional<AppliedStatus> create(final String statusId) {
+  public static Optional<PlanetaryStatus> create(final String statusId) {
     return SINGLETON.createStatus(statusId);
+  }
+
+  /**
+   * Creates new status with requested statusId.
+   * This will load data from files if not done already.
+   * @param statusId ID of PlanetaryStatus
+   * @return Requested Applied status of PlanetaryStatus,
+   *         empty if statusId is invalid
+   */
+  public static Optional<AppliedStatus> createAppliedStatus(
+      final String statusId) {
+    var planetaryStatus = SINGLETON.createStatus(statusId);
+    if (planetaryStatus.isPresent()) {
+      return Optional.of(new AppliedStatus(planetaryStatus.get()));
+    }
+    return Optional.empty();
+  }
+
+  /**
+   * Creates new status with requested statusId.
+   * This will load data from files if not done already.
+   * @param statusId ID of PlanetaryStatus
+   * @param type TimedStatusType
+   * @param count Number of star year before to applied.
+   * @return Requested TimedStatus from planetaryStatus,
+   *         empty if statusId is invalid
+   */
+  public static Optional<TimedStatus> createTimedStatus(
+      final String statusId, final TimedStatusType type, final int count) {
+    var planetaryStatus = SINGLETON.createStatus(statusId);
+    if (planetaryStatus.isPresent()) {
+      return Optional.of(new TimedStatus(planetaryStatus.get(), type, count));
+    }
+    return Optional.empty();
   }
 
   /** Statuses factory can create */
@@ -67,11 +101,11 @@ public final class StatusFactory {
   /**
    * Creates new status with requested statusId.
    * This will load data from files if not done already.
-   * @param statusId ID of PlanetaryStatus to create AppliedStatus from
-   * @return AppliedStatus with requested PlanetaryStatus,
+   * @param statusId ID of PlanetaryStatus
+   * @return Requested PlanetaryStatus,
    *         empty if statusId is invalid
    */
-  private Optional<AppliedStatus> createStatus(final String statusId) {
+  private Optional<PlanetaryStatus> createStatus(final String statusId) {
     if (!initialized) {
       init();
       initialized = true;
@@ -81,7 +115,7 @@ public final class StatusFactory {
     if (statusDef == null) {
       return Optional.empty();
     }
-    return Optional.of(new AppliedStatus(statusDef));
+    return Optional.of(statusDef);
   }
 
   /** Initialize the factory with external data */

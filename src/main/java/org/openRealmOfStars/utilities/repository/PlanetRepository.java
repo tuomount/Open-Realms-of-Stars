@@ -33,6 +33,7 @@ import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
+import org.openRealmOfStars.starMap.planet.status.TimedStatus;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 import java.io.DataInputStream;
@@ -112,13 +113,22 @@ public class PlanetRepository {
     planet.setPlanetaryEvent(PlanetaryEvent.getByIndex(dis.read()));
     planet.setEventActivation(dis.readBoolean());
 
-    var statusCount = dis.readShort();
+    int statusCount = dis.readShort();
     for (int i = 0; i < statusCount; i++) {
       var loadedStatus = AppliedStatus.load(dis);
       if (loadedStatus.isEmpty()) {
         continue;
       }
       planet.addStatus(loadedStatus.get());
+    }
+
+    statusCount = dis.readShort();
+    for (int i = 0; i < statusCount; i++) {
+      var loadedStatus = TimedStatus.load(dis);
+      if (loadedStatus.isEmpty()) {
+        continue;
+      }
+      planet.addTimedStatus(loadedStatus.get());
     }
 
     for (int i = 0; i < Planet.MAX_WORKER_TYPE; i++) {
@@ -191,6 +201,12 @@ public class PlanetRepository {
     var statuses = planet.getStatuses();
     dos.writeShort(statuses.size());
     for (var status : statuses) {
+      status.save(dos);
+    }
+
+    var timedStatuses = planet.getTimedStatuses();
+    dos.writeShort(timedStatuses.size());
+    for (var status : timedStatuses) {
       status.save(dos);
     }
 

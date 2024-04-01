@@ -86,7 +86,7 @@ public class AppliedStatus {
       throws IOException {
     final var statusId = IOUtilities.readString(dis);
     // Fail if status is not defined
-    final var status = StatusFactory.create(statusId);
+    final var status = StatusFactory.createAppliedStatus(statusId);
     if (status.isEmpty()) {
       ErrorLogger.log("Failed to load AppliedStatus \"" + statusId + "\"");
     }

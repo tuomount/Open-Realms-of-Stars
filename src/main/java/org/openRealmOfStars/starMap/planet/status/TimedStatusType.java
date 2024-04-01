@@ -32,4 +32,31 @@ public enum TimedStatusType {
   AFTER_COLONIZATION,
   /** Timed from after colonization or immediately after away team visit */
   AFTER_COLONIZATION_OR_AWAY_TEAM;
+
+  /**
+   * Get index for TimedStatusType
+   * @return integer
+   */
+  public int getIndex() {
+    switch (this) {
+    default:
+    case GAME_START: return 0;
+    case AFTER_COLONIZATION: return 1;
+    case AFTER_COLONIZATION_OR_AWAY_TEAM: return 2;
+    }
+  }
+
+  /**
+   * Get TimedStatusType based in index.
+   * @param index Index.
+   * @return TimedStatusType
+   */
+  public static TimedStatusType getByIndex(final int index) {
+    switch (index) {
+    default:
+    case 0: return GAME_START;
+    case 1: return AFTER_COLONIZATION;
+    case 2: return AFTER_COLONIZATION_OR_AWAY_TEAM;
+    }
+  }
 }

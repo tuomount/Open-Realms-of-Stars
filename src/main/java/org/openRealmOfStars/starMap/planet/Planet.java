@@ -73,6 +73,7 @@ import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
 import org.openRealmOfStars.starMap.planet.status.PlanetaryStatus;
 import org.openRealmOfStars.starMap.planet.status.TimedStatus;
+import org.openRealmOfStars.starMap.planet.status.TimedStatusType;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -4498,5 +4499,47 @@ public class Planet {
     }
 
     return bestGuide;
+  }
+
+  /**
+   * Handle timed Status for planet.
+   * @param turnNumber Turn number not star year.
+   */
+  public void handleTimedStatuses(final int turnNumber) {
+    ArrayList<TimedStatus> removeList = new ArrayList<>();
+    for (TimedStatus status : timedStatuses) {
+      boolean afterColonization = false;
+      if (status.getTimedStatus() == TimedStatusType.AFTER_COLONIZATION) {
+        afterColonization = true;
+      }
+      if (status.getTimedStatus()
+          == TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM) {
+        afterColonization = true;
+      }
+      if (afterColonization && planetOwnerInfo != null) {
+        status.decrease();
+      }
+      if (status.getTimedStatus() == TimedStatusType.GAME_START
+          && turnNumber > 0) {
+        status.decrease();
+      }
+      if (status.isActive()) {
+        AppliedStatus applied = new AppliedStatus(status.getStatus());
+        if (statuses.add(applied) && planetOwnerInfo != null) {
+          // Need to improve text for new status
+          Message msg = new Message(MessageType.PLANETARY,
+              "Planet status changed: " + status.getStatus().getDescription(),
+              Icons.getIconByName(Icons.ICON_PLANET));
+          msg.setMatchByString(getName());
+          msg.setCoordinate(getCoordinate());
+          removeList.add(status);
+        }
+      }
+    }
+    if (removeList.size() > 0) {
+      for (TimedStatus status : removeList) {
+        timedStatuses.remove(status);
+      }
+    }
   }
 }

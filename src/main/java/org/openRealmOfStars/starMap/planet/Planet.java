@@ -4527,8 +4527,10 @@ public class Planet {
         AppliedStatus applied = new AppliedStatus(status.getStatus());
         if (statuses.add(applied) && planetOwnerInfo != null) {
           // Need to improve text for new status
+          String text = status.getStatus().getDiscoveryText();
+          text = text.replaceAll("<PLANETNAME>", getName());
           Message msg = new Message(MessageType.PLANETARY,
-              "Planet status changed: " + status.getStatus().getDescription(),
+              getName() + " has new discovery: " + text,
               Icons.getIconByName(Icons.ICON_PLANET));
           msg.setMatchByString(getName());
           msg.setCoordinate(getCoordinate());

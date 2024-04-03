@@ -165,6 +165,7 @@ class PlanetaryStatusLoader extends DataLoader<String, PlanetaryStatus> {
 
     // Optional fields
     final var description = jobj.optString("description", "");
+    String discovery = jobj.optString("discoveryText", description);
     var rawConflicts = jobj.optJSONArray("conflictsWith", new JSONArray());
     var conflictsWith = new ArrayList<String>();
     for (var rawEntry : rawConflicts) {
@@ -176,6 +177,7 @@ class PlanetaryStatusLoader extends DataLoader<String, PlanetaryStatus> {
     var tmp = new PlanetaryStatus(statusId, name, description,
         conflictsWith.toArray(new String[conflictsWith.size()]));
 
+    tmp.setDiscoveryText(discovery);
     // Other optional fields
     tmp.setFoodBonus(jobj.optInt("foodBonus", 0));
     tmp.setMineBonus(jobj.optInt("mineBonus", 0));

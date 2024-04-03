@@ -14,6 +14,7 @@
     "id": "FERTILE_SOIL",
     "name": "Fertile soil",
     "description": "Planet's surface has fertile soil where plants grow faster. This will grant one extra food per star year.",
+    "discoveryText": "<PLANETNAME> soil is full of minerals and has good growing biome for plants. This will grant one extra food per star year.",
     "conflictsWith": [
       "METAL_RICH_SURFACE",
       "MOLTEN_LAVA"
@@ -25,6 +26,7 @@
     "id": "MOLTEN_LAVA",
     "name": "Molten lava",
     "description": "Planet surface has big lava pool or river. This can be used to easy access metal and temperature can be used to increase productivity, downside is this cause unhappiness to population.",
+    "discoveryText": "<PLANETNAME> has massive lava flow. This hot magma can be used to access metal and heat can be used as energy source. Problem is that people near there lava are affraid.",
     "conflictsWith": [
       "FERTILE_SOIL",
       "METAL_RICH_SURFACE"

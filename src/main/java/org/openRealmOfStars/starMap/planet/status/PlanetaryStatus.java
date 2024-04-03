@@ -89,6 +89,8 @@ public class PlanetaryStatus {
   private boolean hidden;
   /** Status can be found with away team */
   private boolean awayTeam;
+  /** Text to show when discovering planetary status. */
+  private String discoveryText;
   /**
    * Create new planetary status definition
    * @param id ID of planetary status definition
@@ -104,6 +106,7 @@ public class PlanetaryStatus {
     this.conflictingIds = Objects.requireNonNull(conflictingIds);
     this.hidden = false;
     this.setAwayTeam(false);
+    setDiscoveryText("");
   }
 
   /**
@@ -235,6 +238,22 @@ public class PlanetaryStatus {
    */
   public void setAwayTeam(final boolean awayTeam) {
     this.awayTeam = awayTeam;
+  }
+
+  /**
+   * Get Planetary status discovery text.
+   * @return the discoveryText
+   */
+  public String getDiscoveryText() {
+    return discoveryText;
+  }
+
+  /**
+   * Set discovery text for planetary status.
+   * @param discoveryText the discoveryText to set
+   */
+  public void setDiscoveryText(final String discoveryText) {
+    this.discoveryText = discoveryText;
   }
 
 }

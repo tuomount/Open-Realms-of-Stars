@@ -691,6 +691,9 @@ public class PlanetBombingView extends BlackPanel {
     }
 
     Ship ship = fleet.getShipByIndex(shipIndex);
+    if (ship == null) {
+      return NO_EFFECT;
+    }
     ShipComponent comp = ship.getComponent(usedComponentIndex);
     if (!ship.componentIsWorking(usedComponentIndex)) {
       return NO_EFFECT;

@@ -22,6 +22,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -53,6 +55,155 @@ public class TimedStatus {
     this.count = count;
   }
 
+  /**
+   * Get Random Planetary Status.
+   * @param planetType PlanetType
+   * @param chance Chance for getting planetary status
+   * @return TimedPlanetary status or null
+   */
+  public static TimedStatus getRandomPlanetaryStatus(
+      final PlanetTypes planetType, final int chance) {
+    int value = DiceGenerator.getRandom(99);
+    TimedStatus status = null;
+    if (value < chance) {
+      switch (planetType) {
+      case PLANET_EARTH:
+      case PLANET_MARS: {
+        value = DiceGenerator.getRandom(99);
+        if (value < 33) {
+          status = StatusFactory.getTimedStatus("FERTILE_SOIL",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(8, 25));
+        } else if (value < 66) {
+          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(8, 30));
+        } else if (value < 100) {
+          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(4, 10));
+        }
+        break;
+      }
+      case SWAMPWORLD1:
+      case SWAMPWORLD2:
+      case SWAMPWORLD3:
+        value = DiceGenerator.getRandom(99);
+        if (value < 70) {
+          status = StatusFactory.getTimedStatus("FERTILE_SOIL",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(10, 25));
+        } else if (value < 85) {
+          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(8, 30));
+        } else if (value < 100) {
+          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(4, 10));
+        }
+        break;
+      case BARRENWORLD1:
+        value = DiceGenerator.getRandom(99);
+        if (value < 50) {
+          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(8, 30));
+        } else {
+          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(4, 10));
+        }
+        break;
+      case ICEWORLD1:
+      case ICEWORLD2:
+      case ICEWORLD3:
+      case ICEWORLD4:
+        value = DiceGenerator.getRandom(99);
+        if (value < 20) {
+          status = StatusFactory.getTimedStatus("FERTILE_SOIL",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(15, 35));
+        } else if (value < 60) {
+          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(15, 30));
+        } else if (value < 100) {
+          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(2, 8));
+        }
+        break;
+      case DESERTWORLD1:
+      case DESERTWORLD2:
+      case DESERTWORLD3:
+        value = DiceGenerator.getRandom(99);
+        if (value < 10) {
+          status = StatusFactory.getTimedStatus("FERTILE_SOIL",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(15, 35));
+        } else if (value < 55) {
+          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(15, 30));
+        } else if (value < 100) {
+          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(2, 8));
+        }
+        break;
+      case VOLCANICWORLD1:
+      case VOLCANICWORLD2:
+      case VOLCANICWORLD3:
+      case VOLCANICWORLD4:
+      case VOLCANICWORLD5:
+      case VOLCANICWORLD6:
+        value = DiceGenerator.getRandom(99);
+        if (value < 30) {
+          status = StatusFactory.getTimedStatus("FERTILE_SOIL",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(15, 35));
+        } else if (value < 50) {
+          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(15, 30));
+        } else if (value < 100) {
+          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(2, 8));
+        }
+        break;
+      case WATERWORLD1:
+      case WATERWORLD2:
+      case WATERWORLD3:
+      case WATERWORLD4:
+      case WATERWORLD5:
+      case WATERWORLD6:
+      case WATERWORLD7:
+      case WATERWORLD8:
+      case WATERWORLD9:
+        value = DiceGenerator.getRandom(99);
+        if (value < 60) {
+          status = StatusFactory.getTimedStatus("FERTILE_SOIL",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(15, 35));
+        } else if (value < 95) {
+          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(6, 32));
+        } else if (value < 100) {
+          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+              TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+              DiceGenerator.getRandom(3, 8));
+        }
+        break;
+
+      default:
+        break;
+    }
+    }
+    return status;
+  }
   /**
    * Decrease counter by one only if not active yet.
    */

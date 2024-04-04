@@ -84,6 +84,24 @@ public final class StatusFactory {
     return Optional.empty();
   }
 
+  /**
+   * Get new status with requested statusId.
+   * This will load data from files if not done already.
+   * @param statusId ID of PlanetaryStatus
+   * @param type TimedStatusType
+   * @param count Number of star year before to applied.
+   * @return Requested TimedStatus from planetaryStatus,
+   *         null if statusId is invalid
+   */
+  public static TimedStatus getTimedStatus(
+      final String statusId, final TimedStatusType type, final int count) {
+    var planetaryStatus = SINGLETON.createStatus(statusId);
+    if (planetaryStatus.isPresent()) {
+      return new TimedStatus(planetaryStatus.get(), type, count);
+    }
+    return null;
+  }
+
   /** Statuses factory can create */
   private HashMap<String, PlanetaryStatus> validStatuses;
   /** Tracks if factory is already initialized from external data */

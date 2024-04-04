@@ -2035,8 +2035,8 @@ public class Planet {
         sb.append(getCulture());
         sb.append("\n");
       }
-      if (activeScanned && !isEventActivated()
-          && event != PlanetaryEvent.NONE) {
+      if (activeScanned && (!isEventActivated()
+          && event != PlanetaryEvent.NONE || hasStatusForAwayTeam())) {
         sb.append("\nAway team could be send down.");
         sb.append("\n");
       }
@@ -3822,6 +3822,20 @@ public class Planet {
     return Collections.unmodifiableList(timedStatuses);
   }
 
+  /**
+   * Has timed planetary status which away team can find.
+   * @return True if timed status can be discovered by away team.
+   */
+  public boolean hasStatusForAwayTeam() {
+    boolean result = false;
+    for (TimedStatus status : timedStatuses) {
+      if (status.getTimedStatus()
+          == TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM) {
+        result = true;
+      }
+    }
+    return result;
+  }
   /**
    * Remove status with specified ID from planet
    * @param statusId ID of status to remove

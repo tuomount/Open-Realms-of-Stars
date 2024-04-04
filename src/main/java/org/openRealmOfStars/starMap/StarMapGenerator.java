@@ -53,6 +53,7 @@ import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
+import org.openRealmOfStars.starMap.planet.status.TimedStatus;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.WeightedList;
@@ -993,15 +994,25 @@ public class StarMapGenerator {
           if (!elderRealmStart || playerInfo.isElderRealm()) {
             createRealmToPlanet(planet, playerInfo, playerIndex);
           }
+          TimedStatus status = TimedStatus.getRandomPlanetaryStatus(
+              planet.getPlanetType(), config.getChanceForPlanetaryEvent());
+          if (status != null) {
+            planet.addTimedStatus(status);
+          }
         } else {
-          planet.setPlanetaryEvent(PlanetaryEvent.getRandomEvent(
-              planet.getPlanetType(), config.getChanceForPlanetaryEvent()));
           planet.setRadiationLevel(SunType.getRadiation(sunType));
           planet.setTemperatureType(SunType.getTemperature(sunType));
           planet.generateGravityBasedOnSize();
           planet.generateWaterLevelBasedOnTemperature();
           planet.generateWorldType();
           planet.setEventActivation(false);
+          planet.setPlanetaryEvent(PlanetaryEvent.getRandomEvent(
+              planet.getPlanetType(), config.getChanceForPlanetaryEvent()));
+          TimedStatus status = TimedStatus.getRandomPlanetaryStatus(
+              planet.getPlanetType(), config.getChanceForPlanetaryEvent());
+          if (status != null) {
+            planet.addTimedStatus(status);
+          }
         }
         starMap.getPlanetList().add(planet);
         int planetNumber = starMap.getPlanetList().size() - 1;
@@ -1134,6 +1145,11 @@ public class StarMapGenerator {
           planet.generateGravityBasedOnSize();
           planet.generateWorldType();
           planet.setName("Mercury I");
+          TimedStatus status = TimedStatus.getRandomPlanetaryStatus(
+              planet.getPlanetType(), config.getChanceForPlanetaryEvent());
+          if (status != null) {
+            planet.addTimedStatus(status);
+          }
         }
         if (planets == 2) {
           planet.setPlanetType(PlanetTypes.SWAMPWORLD2);
@@ -1144,6 +1160,11 @@ public class StarMapGenerator {
           planet.generateGravityBasedOnSize();
           planet.generateWorldType();
           planet.setName("Venus II");
+          TimedStatus status = TimedStatus.getRandomPlanetaryStatus(
+              planet.getPlanetType(), config.getChanceForPlanetaryEvent());
+          if (status != null) {
+            planet.addTimedStatus(status);
+          }
         }
         if (planets == 3) {
           planet.setPlanetType(PlanetTypes.PLANET_EARTH);
@@ -1153,6 +1174,11 @@ public class StarMapGenerator {
           planet.setWaterLevel(WaterLevelType.OCEAN);
           planet.generateGravityBasedOnSize();
           planet.setName("Earth III");
+          TimedStatus status = TimedStatus.getRandomPlanetaryStatus(
+              planet.getPlanetType(), config.getChanceForPlanetaryEvent());
+          if (status != null) {
+            planet.addTimedStatus(status);
+          }
           if (playerIndex != -1) {
             PlayerInfo playerInfo = starMap.getPlayerList()
                 .getPlayerInfoByIndex(playerIndex);
@@ -1184,6 +1210,11 @@ public class StarMapGenerator {
           planet.setWaterLevel(WaterLevelType.ARID);
           planet.generateGravityBasedOnSize();
           planet.setName("Mars IV");
+          TimedStatus status = TimedStatus.getRandomPlanetaryStatus(
+              planet.getPlanetType(), config.getChanceForPlanetaryEvent());
+          if (status != null) {
+            planet.addTimedStatus(status);
+          }
           if (playerIndex == -1 && DiceGenerator.getRandom(99) <= 25) {
             WeightedList<PlanetaryEvent> list = new WeightedList<>();
             list.add(1, PlanetaryEvent.ANCIENT_FACTORY);

@@ -35,5 +35,12 @@
     "prodBonus": 1,
     "happinessBonus": -1,
     "awayTeam": true
+  },
+  {
+    "id": "TECTONIC_QUAKE",
+    "name": "Tectonic quake",
+    "description": "Tectonic plates move over the crust and cause quakes.",
+    "discoveryText": "<PLANETNAME> has tectonic quakes, this will cause damage to buildings and population.",
+    "awayTeam": false
   }
 ]

@@ -999,6 +999,8 @@ public class StarMapGenerator {
           if (status != null) {
             planet.addTimedStatus(status);
           }
+          planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
+              config.getScoringVictoryTurns());
         } else {
           planet.setRadiationLevel(SunType.getRadiation(sunType));
           planet.setTemperatureType(SunType.getTemperature(sunType));
@@ -1013,6 +1015,8 @@ public class StarMapGenerator {
           if (status != null) {
             planet.addTimedStatus(status);
           }
+          planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
+              config.getScoringVictoryTurns());
         }
         starMap.getPlanetList().add(planet);
         int planetNumber = starMap.getPlanetList().size() - 1;
@@ -1150,6 +1154,8 @@ public class StarMapGenerator {
           if (status != null) {
             planet.addTimedStatus(status);
           }
+          planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
+              config.getScoringVictoryTurns());
         }
         if (planets == 2) {
           planet.setPlanetType(PlanetTypes.SWAMPWORLD2);
@@ -1165,6 +1171,8 @@ public class StarMapGenerator {
           if (status != null) {
             planet.addTimedStatus(status);
           }
+          planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
+              config.getScoringVictoryTurns());
         }
         if (planets == 3) {
           planet.setPlanetType(PlanetTypes.PLANET_EARTH);
@@ -1179,6 +1187,8 @@ public class StarMapGenerator {
           if (status != null) {
             planet.addTimedStatus(status);
           }
+          planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
+              config.getScoringVictoryTurns());
           if (playerIndex != -1) {
             PlayerInfo playerInfo = starMap.getPlayerList()
                 .getPlayerInfoByIndex(playerIndex);
@@ -1215,6 +1225,8 @@ public class StarMapGenerator {
           if (status != null) {
             planet.addTimedStatus(status);
           }
+          planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
+              config.getScoringVictoryTurns());
           if (playerIndex == -1 && DiceGenerator.getRandom(99) <= 25) {
             WeightedList<PlanetaryEvent> list = new WeightedList<>();
             list.add(1, PlanetaryEvent.ANCIENT_FACTORY);

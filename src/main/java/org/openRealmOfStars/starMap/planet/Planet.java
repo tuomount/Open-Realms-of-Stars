@@ -72,6 +72,7 @@ import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
 import org.openRealmOfStars.starMap.planet.status.PlanetaryStatus;
+import org.openRealmOfStars.starMap.planet.status.StatusFactory;
 import org.openRealmOfStars.starMap.planet.status.TimedStatus;
 import org.openRealmOfStars.starMap.planet.status.TimedStatusType;
 import org.openRealmOfStars.starMap.vote.Vote;
@@ -2040,7 +2041,12 @@ public class Planet {
         sb.append("\nAway team could be send down.");
         sb.append("\n");
       }
-
+      for (AppliedStatus status : statuses) {
+        sb.append(status.getStatus().getName());
+        sb.append(":\n");
+        sb.append(status.getStatus().getDescription());
+        sb.append("\n");
+      }
     }
     return sb.toString();
   }
@@ -4516,6 +4522,27 @@ public class Planet {
   }
 
   /**
+   * Generate planet's timed statuses.
+   * These might be effects for rest of the game.
+   *
+   * @param chance Chance to have some status.
+   * @param lastTurn Last game turn
+   */
+  public void addPlanetTimedStatus(final int chance, final int lastTurn) {
+    int value = DiceGenerator.getRandom(100);
+    if (value < chance / 2) {
+      int totalTurn = 0;
+      int turn = 14;
+      while (totalTurn < lastTurn) {
+        turn = DiceGenerator.getRandom(turn + 1, turn + 66);
+        TimedStatus status = StatusFactory.getTimedStatus("TECTONIC_QUAKE",
+            TimedStatusType.AFTER_COLONIZATION, turn);
+        addTimedStatus(status);
+        totalTurn = turn;
+      }
+    }
+  }
+  /**
    * Handle timed Status for planet.
    * @param turnNumber Turn number not star year.
    */
@@ -4548,7 +4575,36 @@ public class Planet {
               Icons.getIconByName(Icons.ICON_PLANET));
           msg.setMatchByString(getName());
           msg.setCoordinate(getCoordinate());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
           removeList.add(status);
+        }
+        if (status.getStatus().getId().equals("TECTONIC_QUAKE")) {
+          StringBuilder sb = new StringBuilder();
+          sb.append("Massive tectonic quake happens on ");
+          sb.append(getName());
+          sb.append(". It");
+          int chance = DiceGenerator.getRandom(getSizeAsInt() - 1);
+          boolean and = false;
+          if (chance < buildings.size()) {
+            Building building = destroyOneBuilding();
+            sb.append(" destroys ");
+            sb.append(building.getName());
+            and = true;
+          }
+          if (getTotalPopulation() > 1 && chance < getTotalPopulation()) {
+            killOneWorker();
+            if (and) {
+              sb.append(" and");
+            }
+            sb.append(" kills one population");
+          }
+          sb.append(".");
+          Message msg = new Message(MessageType.PLANETARY,
+              sb.toString(),
+              Icons.getIconByName(Icons.ICON_DEATH));
+          msg.setMatchByString(getName());
+          msg.setCoordinate(getCoordinate());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
         }
       }
     }

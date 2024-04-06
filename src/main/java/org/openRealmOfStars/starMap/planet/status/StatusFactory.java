@@ -125,8 +125,8 @@ public final class StatusFactory {
    */
   private Optional<PlanetaryStatus> createStatus(final String statusId) {
     if (!initialized) {
-      init();
       initialized = true;
+      init();
     }
 
     var statusDef = validStatuses.getOrDefault(statusId, null);
@@ -143,8 +143,25 @@ public final class StatusFactory {
         "base" };
     var loadedTotal = loader.loadAll(validStatuses, basePath, dataFiles);
     ErrorLogger.log("Loaded planetary statuses: " + loadedTotal);
+    if (!hasHardcodedStatuses()) {
+      ErrorLogger.log("Some core StatusId were not loaded."
+          + " Game might not work as expected!");
+    }
   }
 
+  /**
+   * Check if all hardcoded StatusIds are available.
+   * @return True if all hardcoded StatusIds are loaded
+   */
+  private boolean hasHardcodedStatuses() {
+    for (var statusId : StatusIds.getHardcodedIds()) {
+      final var statusOpt = createStatus(statusId);
+      if (statusOpt.isEmpty()) {
+        return false;
+      }
+    }
+    return true;
+  }
   /**
    * Create/Retrieve all planetary statuses, initialize factory if not yet
    * @return Status array

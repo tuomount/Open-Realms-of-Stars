@@ -73,6 +73,7 @@ import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
 import org.openRealmOfStars.starMap.planet.status.PlanetaryStatus;
 import org.openRealmOfStars.starMap.planet.status.StatusFactory;
+import org.openRealmOfStars.starMap.planet.status.StatusIds;
 import org.openRealmOfStars.starMap.planet.status.TimedStatus;
 import org.openRealmOfStars.starMap.planet.status.TimedStatusType;
 import org.openRealmOfStars.starMap.vote.Vote;
@@ -4535,8 +4536,8 @@ public class Planet {
       int turn = 14;
       while (totalTurn < lastTurn) {
         turn = DiceGenerator.getRandom(turn + 1, turn + 66);
-        TimedStatus status = StatusFactory.getTimedStatus("TECTONIC_QUAKE",
-            TimedStatusType.AFTER_COLONIZATION, turn);
+        TimedStatus status = StatusFactory.getTimedStatus(
+            StatusIds.TECTONIC_QUAKE, TimedStatusType.AFTER_COLONIZATION, turn);
         addTimedStatus(status);
         totalTurn = turn;
       }
@@ -4575,10 +4576,25 @@ public class Planet {
               Icons.getIconByName(Icons.ICON_PLANET));
           msg.setMatchByString(getName());
           msg.setCoordinate(getCoordinate());
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          if (status.getStatus().getId().equals(StatusIds.FERTILE_SOIL)) {
+            if (DiceGenerator.getBoolean()) {
+              imageInst.addImage(ImageInstruction.PARADISE);
+            } else {
+              imageInst.addImage(ImageInstruction.LUSH_VEGETATION);
+            }
+          }
+          if (status.getStatus().getId().equals(StatusIds.METAL_RICH_SURFACE)) {
+            imageInst.addImage(ImageInstruction.METAL_RICH_SURFACE);
+          }
+          if (status.getStatus().getId().equals(StatusIds.MOLTEN_LAVA)) {
+            imageInst.addImage(ImageInstruction.MOLTEN_LAVA);
+          }
           planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
           removeList.add(status);
         }
-        if (status.getStatus().getId().equals("TECTONIC_QUAKE")) {
+        if (status.getStatus().getId().equals(StatusIds.TECTONIC_QUAKE)) {
           StringBuilder sb = new StringBuilder();
           sb.append("Massive tectonic quake happens on ");
           sb.append(getName());
@@ -4599,6 +4615,7 @@ public class Planet {
             sb.append(" kills one population");
           }
           sb.append(".");
+          //TODO: Tectonic quake is missing picture
           Message msg = new Message(MessageType.PLANETARY,
               sb.toString(),
               Icons.getIconByName(Icons.ICON_DEATH));

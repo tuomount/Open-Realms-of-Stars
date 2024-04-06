@@ -41,6 +41,21 @@ import java.util.stream.Collectors;
  */
 public final class StatusIds {
 
+  /** Planet surface is metal rich surface. Cannot combine with
+   * FERTILE_SOIL or  MOLTEN_LAVA */
+  public static final String METAL_RICH_SURFACE = "METAL_RICH_SURFACE";
+
+  /** Planet surface has fertile soil. Cannot combine with
+   * METAL_RICH_SURFACE or  MOLTEN_LAVA */
+  public static final String FERTILE_SOIL = "FERTILE_SOIL";
+
+  /** Planet has molten lava. Cannot combine with
+   * METAL_RICH_SURFACE or  FERTILE_SOIL */
+  public static final String MOLTEN_LAVA = "MOLTEN_LAVA";
+
+  /** Planet has tectonic quakes. */
+  public static final String TECTONIC_QUAKE = "TECTONIC_QUAKE";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

@@ -71,15 +71,15 @@ public class TimedStatus {
       case PLANET_MARS: {
         value = DiceGenerator.getRandom(99);
         if (value < 33) {
-          status = StatusFactory.getTimedStatus("FERTILE_SOIL",
+          status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(8, 25));
         } else if (value < 66) {
-          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+          status = StatusFactory.getTimedStatus(StatusIds.METAL_RICH_SURFACE,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(8, 30));
         } else if (value < 100) {
-          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+          status = StatusFactory.getTimedStatus(StatusIds.MOLTEN_LAVA,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(4, 10));
         }
@@ -90,15 +90,15 @@ public class TimedStatus {
       case SWAMPWORLD3:
         value = DiceGenerator.getRandom(99);
         if (value < 70) {
-          status = StatusFactory.getTimedStatus("FERTILE_SOIL",
+          status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(10, 25));
         } else if (value < 85) {
-          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+          status = StatusFactory.getTimedStatus(StatusIds.METAL_RICH_SURFACE,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(8, 30));
         } else if (value < 100) {
-          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+          status = StatusFactory.getTimedStatus(StatusIds.MOLTEN_LAVA,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(4, 10));
         }
@@ -106,11 +106,11 @@ public class TimedStatus {
       case BARRENWORLD1:
         value = DiceGenerator.getRandom(99);
         if (value < 50) {
-          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+          status = StatusFactory.getTimedStatus(StatusIds.METAL_RICH_SURFACE,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(8, 30));
         } else {
-          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+          status = StatusFactory.getTimedStatus(StatusIds.MOLTEN_LAVA,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(4, 10));
         }
@@ -121,15 +121,15 @@ public class TimedStatus {
       case ICEWORLD4:
         value = DiceGenerator.getRandom(99);
         if (value < 20) {
-          status = StatusFactory.getTimedStatus("FERTILE_SOIL",
+          status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(15, 35));
         } else if (value < 60) {
-          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+          status = StatusFactory.getTimedStatus(StatusIds.METAL_RICH_SURFACE,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(15, 30));
         } else if (value < 100) {
-          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+          status = StatusFactory.getTimedStatus(StatusIds.MOLTEN_LAVA,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(2, 8));
         }
@@ -139,15 +139,15 @@ public class TimedStatus {
       case DESERTWORLD3:
         value = DiceGenerator.getRandom(99);
         if (value < 10) {
-          status = StatusFactory.getTimedStatus("FERTILE_SOIL",
+          status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(15, 35));
         } else if (value < 55) {
-          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+          status = StatusFactory.getTimedStatus(StatusIds.METAL_RICH_SURFACE,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(15, 30));
         } else if (value < 100) {
-          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+          status = StatusFactory.getTimedStatus(StatusIds.MOLTEN_LAVA,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(2, 8));
         }
@@ -160,15 +160,15 @@ public class TimedStatus {
       case VOLCANICWORLD6:
         value = DiceGenerator.getRandom(99);
         if (value < 30) {
-          status = StatusFactory.getTimedStatus("FERTILE_SOIL",
+          status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(15, 35));
         } else if (value < 50) {
-          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+          status = StatusFactory.getTimedStatus(StatusIds.METAL_RICH_SURFACE,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(15, 30));
         } else if (value < 100) {
-          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+          status = StatusFactory.getTimedStatus(StatusIds.MOLTEN_LAVA,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(2, 8));
         }
@@ -184,15 +184,15 @@ public class TimedStatus {
       case WATERWORLD9:
         value = DiceGenerator.getRandom(99);
         if (value < 60) {
-          status = StatusFactory.getTimedStatus("FERTILE_SOIL",
+          status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(15, 35));
         } else if (value < 95) {
-          status = StatusFactory.getTimedStatus("METAL_RICH_SURFACE",
+          status = StatusFactory.getTimedStatus(StatusIds.METAL_RICH_SURFACE,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(6, 32));
         } else if (value < 100) {
-          status = StatusFactory.getTimedStatus("MOLTEN_LAVA",
+          status = StatusFactory.getTimedStatus(StatusIds.MOLTEN_LAVA,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(3, 8));
         }

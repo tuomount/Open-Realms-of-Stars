@@ -502,7 +502,7 @@ public final class BackgroundStoryGenerator {
       sb.append(StoryGeneratorUtility.startSpaceExploration());
       sb.append(startPlanet.getName());
     } else {
-      if (info.getStartingScenario().equals("FARMING_PLANET")) {
+      if (info.getStartingScenario().getId().equals("FARMING_PLANET")) {
         sb.append(info.getEmpireName());
         sb.append(" isn't reaching for the stars yet, but instead ");
         sb.append(" they have grown their population ");
@@ -1248,7 +1248,7 @@ public final class BackgroundStoryGenerator {
     boolean harsh = false;
     boolean cold = false;
     boolean hot = false;
-    if (info.getStartingScenario().equals("FROM_ANOTHER_GALAXY")) {
+    if (info.getStartingScenario().getId().equals("FROM_ANOTHER_GALAXY")) {
       sb.append(namePlural);
       sb.append(" have been travelling millions of star years deep space "
           + "with help of cryo sleep. They have travelling from another"
@@ -1693,7 +1693,7 @@ public final class BackgroundStoryGenerator {
       }
     }
     sb.append(endOfworldDescription);
-    if (info.getStartingScenario().equals("DESTROYED_HOME_PLANET")) {
+    if (info.getStartingScenario().getId().equals("DESTROYED_HOME_PLANET")) {
       sb.append(" This planet was destroyed star centuries ago ");
       switch (DiceGenerator.getRandom(3)) {
       default:

@@ -43,6 +43,7 @@ import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitIds;
+import org.openRealmOfStars.player.scenario.ScenarioIds;
 import org.openRealmOfStars.player.scenario.StartingScenario;
 import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.player.ship.Ship;
@@ -293,7 +294,7 @@ public class PlayerInfo {
   public PlayerInfo(final SpaceRace race, final int maxPlayers,
       final int index) {
     this(race, maxPlayers, index, -1, StartingScenarioFactory.create(
-        "TEMPERATE_HUMID_SIZE12"));
+        ScenarioIds.TEMPERATE_HUMID_SIZE12));
   }
   /**
    * Constructor player info. This can be used for game playing.

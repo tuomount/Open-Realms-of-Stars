@@ -120,6 +120,24 @@ public final class StartingScenarioFactory {
     final var startingScenariosLoaded = loader.loadAll(startingScenarios,
         basePath, files);
     ErrorLogger.log("Starting scenarios loaded: " + startingScenariosLoaded);
+    if (!hasHardcodedScenarios()) {
+      ErrorLogger.log("Some core startingScenarioIds were not loaded."
+          + " Game might not work as expected!");
+    }
+  }
+
+  /**
+   * Check if all hardcoded starting scenarios are available.
+   * @return True if all hardcoded starting scenarios are loaded
+   */
+  private static boolean hasHardcodedScenarios() {
+    for (var scenarioId : ScenarioIds.getHardcodedIds()) {
+      StartingScenario scenarioOpt = create(scenarioId);
+      if (scenarioOpt == null) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**

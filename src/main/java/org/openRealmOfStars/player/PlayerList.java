@@ -28,6 +28,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.scenario.ScenarioIds;
 import org.openRealmOfStars.player.scenario.StartingScenario;
 import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.starMap.GalaxyConfig;
@@ -129,7 +130,7 @@ public class PlayerList {
       PlayerInfo info = new PlayerInfo(
           SpaceRaceFactory.createOne("SPACEPIRATE"), maxPlayers,
           index, boardIndex, StartingScenarioFactory.create(
-              "TEMPERATE_HUMID_SIZE12"));
+              ScenarioIds.TEMPERATE_HUMID_SIZE12));
       info.setBoard(true);
       info.setGovernment(GovernmentType.SPACE_PIRATES);
       info.setEmpireName("Space pirates");
@@ -158,7 +159,7 @@ public class PlayerList {
       PlayerInfo info = new PlayerInfo(
           SpaceRaceFactory.createOne("SPACEMONSTER"), maxPlayers,
           index, boardIndex, StartingScenarioFactory.create(
-              "TEMPERATE_HUMID_SIZE12"));
+              ScenarioIds.TEMPERATE_HUMID_SIZE12));
       info.setBoard(true);
       info.setGovernment(GovernmentType.SPACE_PIRATES);
       info.setEmpireName("Space monsters");

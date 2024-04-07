@@ -22,6 +22,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.leader.RulerUtility;
 import org.openRealmOfStars.player.race.trait.TraitIds;
+import org.openRealmOfStars.player.scenario.ScenarioIds;
 import org.openRealmOfStars.player.scenario.StartingScenarioType;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.NameGenerator;
@@ -74,7 +75,8 @@ public final class BackgroundStoryGenerator {
     sb.append("\n\n");
     sb.append(generateGovernmentType(info, namePlural));
     sb.append("\n\n");
-    if (!info.getStartingScenario().getId().equals("FROM_ANOTHER_GALAXY")) {
+    if (!info.getStartingScenario().getId()
+        .equals(ScenarioIds.FROM_ANOTHER_GALAXY)) {
       sb.append(generateFtlStory(info, startingYear));
     }
     sb.append(generateExploration(info, namePlural, startPlanet));
@@ -1248,7 +1250,8 @@ public final class BackgroundStoryGenerator {
     boolean harsh = false;
     boolean cold = false;
     boolean hot = false;
-    if (info.getStartingScenario().getId().equals("FROM_ANOTHER_GALAXY")) {
+    if (info.getStartingScenario().getId()
+        .equals(ScenarioIds.FROM_ANOTHER_GALAXY)) {
       sb.append(namePlural);
       sb.append(" have been travelling millions of star years deep space "
           + "with help of cryo sleep. They have travelling from another"
@@ -1693,7 +1696,8 @@ public final class BackgroundStoryGenerator {
       }
     }
     sb.append(endOfworldDescription);
-    if (info.getStartingScenario().getId().equals("DESTROYED_HOME_PLANET")) {
+    if (info.getStartingScenario().getId()
+        .equals(ScenarioIds.DESTROYED_HOME_PLANET)) {
       sb.append(" This planet was destroyed star centuries ago ");
       switch (DiceGenerator.getRandom(3)) {
       default:

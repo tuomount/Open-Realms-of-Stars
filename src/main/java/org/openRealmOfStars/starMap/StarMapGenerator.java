@@ -37,6 +37,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.BackgroundStoryGenerator;
 import org.openRealmOfStars.player.race.trait.TraitIds;
+import org.openRealmOfStars.player.scenario.ScenarioIds;
 import org.openRealmOfStars.player.scenario.StartingScenario;
 import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.player.scenario.StartingScenarioType;
@@ -908,24 +909,24 @@ public class StarMapGenerator {
     if (playerIndex != -1) {
       PlayerInfo playerInfo = starMap.getPlayerList().getPlayerInfoByIndex(
           playerIndex);
-      if (playerInfo.getStartingScenario().getId().equals("EARTH")) {
+      if (playerInfo.getStartingScenario().getId().equals(ScenarioIds.EARTH)) {
         if (!solHasAdded) {
           solHasAdded = true;
           createSolSystem(sunx, suny, playerIndex, config);
           return;
         }
         playerInfo.setStartingScenario(StartingScenarioFactory.create(
-            "TEMPERATE_HUMID_SIZE12"));
+            ScenarioIds.TEMPERATE_HUMID_SIZE12));
       }
       if (playerInfo.getStartingScenario().getId().equals(
-          "DESTROYED_HOME_PLANET")) {
+          ScenarioIds.DESTROYED_HOME_PLANET)) {
         if (!destroyedPlanetStartAdded) {
           destroyedPlanetStartAdded = true;
           reserverStartFromSpace(sunx, suny, playerIndex, config);
           return;
         }
         playerInfo.setStartingScenario(StartingScenarioFactory.create(
-            "TEMPERATE_HUMID_SIZE12"));
+            ScenarioIds.TEMPERATE_HUMID_SIZE12));
       }
       if (playerInfo.getStartingScenario().getType()
           == StartingScenarioType.NO_HOME) {

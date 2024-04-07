@@ -39,6 +39,7 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.scenario.ScenarioIds;
 import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
@@ -466,7 +467,7 @@ public class PlanetHandlingTest extends TestCase {
     config.setPlayerName(1, info2.getEmpireName());
     config.setStartingScenario(0, StartingScenarioFactory.create("EARTH"));
     config.setStartingScenario(1, StartingScenarioFactory.create(
-        "TEMPERATE_HUMID_SIZE12"));
+        ScenarioIds.TEMPERATE_HUMID_SIZE12));
     config.setMaxPlayers(2);
     PlayerList playerList = new PlayerList();
     playerList.addPlayer(info);

@@ -46,6 +46,7 @@ import org.openRealmOfStars.player.PlayerColor;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.scenario.ScenarioIds;
 import org.openRealmOfStars.player.scenario.StartingScenario;
 import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.player.scenario.StartingScenarioType;
@@ -343,11 +344,12 @@ public class AiRealmSetupView extends BlackPanel {
     ArrayList<StartingScenario> availableScenario = new ArrayList<>();
     for (StartingScenario scenario : StartingScenarioFactory.getValues()) {
       if (scenario.getType() == StartingScenarioType.REGULAR) {
-        if (scenario.getId().equals("EARTH") && startEarth.isSelected()) {
+        if (scenario.getId().equals(ScenarioIds.EARTH)
+            && startEarth.isSelected()) {
           availableScenario.add(scenario);
           continue;
         }
-        if (!scenario.getId().equals("EARTH")) {
+        if (!scenario.getId().equals(ScenarioIds.EARTH)) {
           availableScenario.add(scenario);
           continue;
         }

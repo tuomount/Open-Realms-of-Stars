@@ -4576,9 +4576,10 @@ public class Planet {
               Icons.getIconByName(Icons.ICON_PLANET));
           msg.setMatchByString(getName());
           msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          ImageInstruction imageInst = null;
           if (status.getStatus().getId().equals(StatusIds.FERTILE_SOIL)) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             if (DiceGenerator.getBoolean()) {
               imageInst.addImage(ImageInstruction.PARADISE);
             } else {
@@ -4586,10 +4587,22 @@ public class Planet {
             }
           }
           if (status.getStatus().getId().equals(StatusIds.METAL_RICH_SURFACE)) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             imageInst.addImage(ImageInstruction.METAL_RICH_SURFACE);
           }
           if (status.getStatus().getId().equals(StatusIds.MOLTEN_LAVA)) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             imageInst.addImage(ImageInstruction.MOLTEN_LAVA);
+          }
+          if (status.getStatus().getId().equals(StatusIds.PERCIOUS_GEMS)) {
+            imageInst = new ImageInstruction();
+            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+            imageInst.addImage(ImageInstruction.PRECIOUS_GEMS);
+          }
+          if (imageInst != null) {
+            msg.setImageInstructions(imageInst.build());
           }
           planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
           removeList.add(status);

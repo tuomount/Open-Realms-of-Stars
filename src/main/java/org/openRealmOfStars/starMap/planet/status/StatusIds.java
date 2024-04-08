@@ -56,6 +56,9 @@ public final class StatusIds {
   /** Planet has tectonic quakes. */
   public static final String TECTONIC_QUAKE = "TECTONIC_QUAKE";
 
+  /** Planet has precious gems on surface. */
+  public static final String PERCIOUS_GEMS = "PRECIOUS_GEMS";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

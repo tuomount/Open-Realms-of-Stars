@@ -995,10 +995,12 @@ public class StarMapGenerator {
           if (!elderRealmStart || playerInfo.isElderRealm()) {
             createRealmToPlanet(planet, playerInfo, playerIndex);
           }
-          TimedStatus status = TimedStatus.getRandomPlanetaryStatus(
+          TimedStatus[] statuses = TimedStatus.getRandomPlanetaryStatus(
               planet.getPlanetType(), config.getChanceForPlanetaryEvent());
-          if (status != null) {
-            planet.addTimedStatus(status);
+          for (TimedStatus status : statuses) {
+            if (status != null) {
+              planet.addTimedStatus(status);
+            }
           }
           planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
               config.getScoringVictoryTurns());
@@ -1011,10 +1013,12 @@ public class StarMapGenerator {
           planet.setEventActivation(false);
           planet.setPlanetaryEvent(PlanetaryEvent.getRandomEvent(
               planet.getPlanetType(), config.getChanceForPlanetaryEvent()));
-          TimedStatus status = TimedStatus.getRandomPlanetaryStatus(
+          TimedStatus[] statuses = TimedStatus.getRandomPlanetaryStatus(
               planet.getPlanetType(), config.getChanceForPlanetaryEvent());
-          if (status != null) {
-            planet.addTimedStatus(status);
+          for (TimedStatus status : statuses) {
+            if (status != null) {
+              planet.addTimedStatus(status);
+            }
           }
           planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
               config.getScoringVictoryTurns());
@@ -1150,10 +1154,12 @@ public class StarMapGenerator {
           planet.generateGravityBasedOnSize();
           planet.generateWorldType();
           planet.setName("Mercury I");
-          TimedStatus status = TimedStatus.getRandomPlanetaryStatus(
+          TimedStatus[] statuses = TimedStatus.getRandomPlanetaryStatus(
               planet.getPlanetType(), config.getChanceForPlanetaryEvent());
-          if (status != null) {
-            planet.addTimedStatus(status);
+          for (TimedStatus status : statuses) {
+            if (status != null) {
+              planet.addTimedStatus(status);
+            }
           }
           planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
               config.getScoringVictoryTurns());
@@ -1167,10 +1173,12 @@ public class StarMapGenerator {
           planet.generateGravityBasedOnSize();
           planet.generateWorldType();
           planet.setName("Venus II");
-          TimedStatus status = TimedStatus.getRandomPlanetaryStatus(
+          TimedStatus[] statuses = TimedStatus.getRandomPlanetaryStatus(
               planet.getPlanetType(), config.getChanceForPlanetaryEvent());
-          if (status != null) {
-            planet.addTimedStatus(status);
+          for (TimedStatus status : statuses) {
+            if (status != null) {
+              planet.addTimedStatus(status);
+            }
           }
           planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
               config.getScoringVictoryTurns());
@@ -1183,10 +1191,12 @@ public class StarMapGenerator {
           planet.setWaterLevel(WaterLevelType.OCEAN);
           planet.generateGravityBasedOnSize();
           planet.setName("Earth III");
-          TimedStatus status = TimedStatus.getRandomPlanetaryStatus(
+          TimedStatus[] statuses = TimedStatus.getRandomPlanetaryStatus(
               planet.getPlanetType(), config.getChanceForPlanetaryEvent());
-          if (status != null) {
-            planet.addTimedStatus(status);
+          for (TimedStatus status : statuses) {
+            if (status != null) {
+              planet.addTimedStatus(status);
+            }
           }
           planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
               config.getScoringVictoryTurns());
@@ -1221,10 +1231,12 @@ public class StarMapGenerator {
           planet.setWaterLevel(WaterLevelType.ARID);
           planet.generateGravityBasedOnSize();
           planet.setName("Mars IV");
-          TimedStatus status = TimedStatus.getRandomPlanetaryStatus(
+          TimedStatus[] statuses = TimedStatus.getRandomPlanetaryStatus(
               planet.getPlanetType(), config.getChanceForPlanetaryEvent());
-          if (status != null) {
-            planet.addTimedStatus(status);
+          for (TimedStatus status : statuses) {
+            if (status != null) {
+              planet.addTimedStatus(status);
+            }
           }
           planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
               config.getScoringVictoryTurns());

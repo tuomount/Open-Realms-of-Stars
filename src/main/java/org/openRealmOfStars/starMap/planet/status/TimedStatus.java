@@ -20,6 +20,7 @@ package org.openRealmOfStars.starMap.planet.status;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
@@ -61,14 +62,17 @@ public class TimedStatus {
    * @param chance Chance for getting planetary status
    * @return TimedPlanetary status or null
    */
-  public static TimedStatus getRandomPlanetaryStatus(
+  public static TimedStatus[] getRandomPlanetaryStatus(
       final PlanetTypes planetType, final int chance) {
+    ArrayList<TimedStatus> list = new ArrayList<>();
     int value = DiceGenerator.getRandom(99);
     TimedStatus status = null;
+    int gems = 0;
     if (value < chance) {
       switch (planetType) {
       case PLANET_EARTH:
       case PLANET_MARS: {
+        gems = 10;
         value = DiceGenerator.getRandom(99);
         if (value < 33) {
           status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
@@ -83,11 +87,13 @@ public class TimedStatus {
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(4, 10));
         }
+        list.add(status);
         break;
       }
       case SWAMPWORLD1:
       case SWAMPWORLD2:
       case SWAMPWORLD3:
+        gems = 10;
         value = DiceGenerator.getRandom(99);
         if (value < 70) {
           status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
@@ -102,8 +108,10 @@ public class TimedStatus {
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(4, 10));
         }
+        list.add(status);
         break;
       case BARRENWORLD1:
+        gems = 20;
         value = DiceGenerator.getRandom(99);
         if (value < 50) {
           status = StatusFactory.getTimedStatus(StatusIds.METAL_RICH_SURFACE,
@@ -114,11 +122,13 @@ public class TimedStatus {
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(4, 10));
         }
+        list.add(status);
         break;
       case ICEWORLD1:
       case ICEWORLD2:
       case ICEWORLD3:
       case ICEWORLD4:
+        gems = 5;
         value = DiceGenerator.getRandom(99);
         if (value < 20) {
           status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
@@ -133,10 +143,12 @@ public class TimedStatus {
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(2, 8));
         }
+        list.add(status);
         break;
       case DESERTWORLD1:
       case DESERTWORLD2:
       case DESERTWORLD3:
+        gems = 15;
         value = DiceGenerator.getRandom(99);
         if (value < 10) {
           status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
@@ -151,6 +163,7 @@ public class TimedStatus {
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(2, 8));
         }
+        list.add(status);
         break;
       case VOLCANICWORLD1:
       case VOLCANICWORLD2:
@@ -158,6 +171,7 @@ public class TimedStatus {
       case VOLCANICWORLD4:
       case VOLCANICWORLD5:
       case VOLCANICWORLD6:
+        gems = 12;
         value = DiceGenerator.getRandom(99);
         if (value < 30) {
           status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
@@ -172,6 +186,7 @@ public class TimedStatus {
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(2, 8));
         }
+        list.add(status);
         break;
       case WATERWORLD1:
       case WATERWORLD2:
@@ -182,6 +197,7 @@ public class TimedStatus {
       case WATERWORLD7:
       case WATERWORLD8:
       case WATERWORLD9:
+        gems = 10;
         value = DiceGenerator.getRandom(99);
         if (value < 60) {
           status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
@@ -196,13 +212,20 @@ public class TimedStatus {
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(3, 8));
         }
+        list.add(status);
         break;
-
       default:
         break;
+      }
+      value = DiceGenerator.getRandom(0, 99);
+      if (value < gems) {
+        status = StatusFactory.getTimedStatus(StatusIds.PERCIOUS_GEMS,
+            TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
+            DiceGenerator.getRandom(6, 40));
+        list.add(status);
+      }
     }
-    }
-    return status;
+    return list.toArray(new TimedStatus[list.size()]);
   }
   /**
    * Decrease counter by one only if not active yet.

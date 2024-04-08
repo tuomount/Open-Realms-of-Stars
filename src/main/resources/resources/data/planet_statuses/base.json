@@ -42,5 +42,14 @@
     "description": "Tectonic plates move over the crust and cause quakes.",
     "discoveryText": "<PLANETNAME> has tectonic quakes, this will cause damage to buildings and population.",
     "awayTeam": false
+  },
+  {
+    "id": "PRECIOUS_GEMS",
+    "name": "Precious gems",
+    "description": "Planet has precious gems on surface. These will grant extra credit per star year.",
+    "discoveryText": "<PLANETNAME> has surface full of precious gems. This can produce extra credit.",
+    "credBonus": 1,
+    "awayTeam": true
   }
+  
 ]

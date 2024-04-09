@@ -3416,7 +3416,7 @@ public class AITurnView extends BlackPanel {
                            .getCurrentMaxRealms()];
     for (int i = 0; i < game.getStarMap().getPlanetList().size(); i++) {
       Planet planet = game.getStarMap().getPlanetList().get(i);
-      planet.handleTimedStatuses(game.getStarMap().getTurn());
+      planet.handleTimedStatuses(game.getStarMap());
       if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
         if (planet.getPlanetOwnerIndex() < numberOfPlanets.length) {

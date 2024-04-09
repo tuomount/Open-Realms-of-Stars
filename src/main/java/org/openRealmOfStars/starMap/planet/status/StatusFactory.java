@@ -140,7 +140,7 @@ public final class StatusFactory {
   private void init() {
     final var basePath = "resources/data/planet_statuses/";
     final String[] dataFiles = {
-        "base" };
+        "base", "timed" };
     var loadedTotal = loader.loadAll(validStatuses, basePath, dataFiles);
     ErrorLogger.log("Loaded planetary statuses: " + loadedTotal);
     if (!hasHardcodedStatuses()) {

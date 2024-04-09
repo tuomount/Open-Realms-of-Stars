@@ -59,6 +59,10 @@ public final class StatusIds {
   /** Planet has precious gems on surface. */
   public static final String PERCIOUS_GEMS = "PRECIOUS_GEMS";
 
+  /** Planet has hidden pirate base and they will control planet
+   *  at some point. */
+  public static final String PIRATE_WORLD = "PIRATE_WORLD";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

@@ -54,7 +54,10 @@ import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
+import org.openRealmOfStars.starMap.planet.status.StatusFactory;
+import org.openRealmOfStars.starMap.planet.status.StatusIds;
 import org.openRealmOfStars.starMap.planet.status.TimedStatus;
+import org.openRealmOfStars.starMap.planet.status.TimedStatusType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.WeightedList;
@@ -1022,6 +1025,17 @@ public class StarMapGenerator {
           }
           planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
               config.getScoringVictoryTurns());
+          if (config.getSpacePiratesLevel() >= 4) {
+            int value = DiceGenerator.getRandom(0, 99);
+            if (value < config.getSpacePiratesLevel() * 3) {
+              TimedStatus status = StatusFactory.getTimedStatus(
+                  StatusIds.PIRATE_WORLD, TimedStatusType.GAME_START,
+                  DiceGenerator.getRandom(70, 210));
+              if (status != null) {
+                planet.addTimedStatus(status);
+              }
+            }
+          }
         }
         starMap.getPlanetList().add(planet);
         int planetNumber = starMap.getPlanetList().size() - 1;
@@ -1163,6 +1177,17 @@ public class StarMapGenerator {
           }
           planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
               config.getScoringVictoryTurns());
+          if (config.getSpacePiratesLevel() >= 4) {
+            int value = DiceGenerator.getRandom(0, 99);
+            if (value < config.getSpacePiratesLevel() * 3) {
+              TimedStatus status = StatusFactory.getTimedStatus(
+                  "PIRATE_WORLD", TimedStatusType.GAME_START,
+                  DiceGenerator.getRandom(70, 210));
+              if (status != null) {
+                planet.addTimedStatus(status);
+              }
+            }
+          }
         }
         if (planets == 2) {
           planet.setPlanetType(PlanetTypes.SWAMPWORLD2);
@@ -1182,6 +1207,17 @@ public class StarMapGenerator {
           }
           planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
               config.getScoringVictoryTurns());
+          if (config.getSpacePiratesLevel() >= 4) {
+            int value = DiceGenerator.getRandom(0, 99);
+            if (value < config.getSpacePiratesLevel() * 3) {
+              TimedStatus status = StatusFactory.getTimedStatus(
+                  "PIRATE_WORLD", TimedStatusType.GAME_START,
+                  DiceGenerator.getRandom(70, 210));
+              if (status != null) {
+                planet.addTimedStatus(status);
+              }
+            }
+          }
         }
         if (planets == 3) {
           planet.setPlanetType(PlanetTypes.PLANET_EARTH);
@@ -1221,6 +1257,17 @@ public class StarMapGenerator {
             list.add(1, PlanetaryEvent.BLACK_MONOLITH);
             list.add(1, PlanetaryEvent.ANCIENT_ARTIFACT);
             planet.setPlanetaryEvent(list.pickRandom());
+            if (config.getSpacePiratesLevel() >= 4) {
+              int value = DiceGenerator.getRandom(0, 99);
+              if (value < config.getSpacePiratesLevel() * 3) {
+                TimedStatus status = StatusFactory.getTimedStatus(
+                    "PIRATE_WORLD", TimedStatusType.GAME_START,
+                    DiceGenerator.getRandom(70, 210));
+                if (status != null) {
+                  planet.addTimedStatus(status);
+                }
+              }
+            }
           }
         }
         if (planets == 4) {

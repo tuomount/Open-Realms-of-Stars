@@ -4545,9 +4545,10 @@ public class Planet {
   }
   /**
    * Handle timed Status for planet.
-   * @param turnNumber Turn number not star year.
+   * @param map StarMap
    */
-  public void handleTimedStatuses(final int turnNumber) {
+  public void handleTimedStatuses(final StarMap map) {
+    int turnNumber = map.getTurn();
     ArrayList<TimedStatus> removeList = new ArrayList<>();
     for (TimedStatus status : timedStatuses) {
       boolean afterColonization = false;
@@ -4567,6 +4568,26 @@ public class Planet {
       }
       if (status.isActive()) {
         AppliedStatus applied = new AppliedStatus(status.getStatus());
+        if (applied.getStatusId().equals(StatusIds.PIRATE_WORLD)) {
+          removeList.add(status);
+          if (getPlanetPlayerInfo() == null
+              && map.getPlayerList().getSpacePiratePlayer() != null) {
+            PlayerInfo info = map.getPlayerList().getSpacePiratePlayer();
+            if (isColonizeablePlanet(info)) {
+              int index = map.getPlayerList().getIndex(info);
+              setPlanetOwner(index, info);
+              setWorkers(FOOD_FARMERS, 1);
+              EventOnPlanet eventOnPlanet = new EventOnPlanet(
+                  EventType.PLANET_COLONIZED, getCoordinate(), getName(),
+                  index);
+              eventOnPlanet.setText(info.getEmpireName()
+                  + " has managed to form a base on " + getName()
+                  + ". ");
+              map.getHistory().addEvent(eventOnPlanet);
+            }
+          }
+          continue;
+        }
         if (statuses.add(applied) && planetOwnerInfo != null) {
           // Need to improve text for new status
           String text = status.getStatus().getDiscoveryText();

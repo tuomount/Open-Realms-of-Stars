@@ -57,7 +57,7 @@ public final class StatusIds {
   public static final String TECTONIC_QUAKE = "TECTONIC_QUAKE";
 
   /** Planet has precious gems on surface. */
-  public static final String PERCIOUS_GEMS = "PRECIOUS_GEMS";
+  public static final String PRECIOUS_GEMS = "PRECIOUS_GEMS";
 
   /** Planet has hidden pirate base and they will control planet
    *  at some point. */

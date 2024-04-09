@@ -219,7 +219,7 @@ public class TimedStatus {
       }
       value = DiceGenerator.getRandom(0, 99);
       if (value < gems) {
-        status = StatusFactory.getTimedStatus(StatusIds.PERCIOUS_GEMS,
+        status = StatusFactory.getTimedStatus(StatusIds.PRECIOUS_GEMS,
             TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
             DiceGenerator.getRandom(6, 40));
         list.add(status);

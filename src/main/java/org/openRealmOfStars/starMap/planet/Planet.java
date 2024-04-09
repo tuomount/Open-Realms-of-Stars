@@ -2037,7 +2037,8 @@ public class Planet {
         sb.append(getCulture());
         sb.append("\n");
       }
-      if (activeScanned && (!isEventActivated()
+      if (getPlanetPlayerInfo() == null
+          && (activeScanned && !isEventActivated()
           && event != PlanetaryEvent.NONE || hasStatusForAwayTeam())) {
         sb.append("\nAway team could be send down.");
         sb.append("\n");
@@ -3792,7 +3793,10 @@ public class Planet {
    * @return True if status was added
    */
   public boolean addStatus(final AppliedStatus status) {
-    var statusesArray = statuses.toArray(new PlanetaryStatus[statuses.size()]);
+    var statusesArray = new PlanetaryStatus[statuses.size()];
+    for (int i = 0; i < statusesArray.length; i++) {
+      statusesArray[i] = statuses.get(i).getStatus();
+    }
     var conflicting = PlanetaryStatus.isConflictingWith(status.getStatus(),
         statusesArray);
 
@@ -4617,7 +4621,7 @@ public class Planet {
             imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             imageInst.addImage(ImageInstruction.MOLTEN_LAVA);
           }
-          if (status.getStatus().getId().equals(StatusIds.PERCIOUS_GEMS)) {
+          if (status.getStatus().getId().equals(StatusIds.PRECIOUS_GEMS)) {
             imageInst = new ImageInstruction();
             imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
             imageInst.addImage(ImageInstruction.PRECIOUS_GEMS);

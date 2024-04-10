@@ -63,6 +63,12 @@ public final class StatusIds {
    *  at some point. */
   public static final String PIRATE_WORLD = "PIRATE_WORLD";
 
+  /** Planet has nanite sand which is active. Cannot mix with SPACE_TIME_WARP*/
+  public static final String NANITE_SAND = "NANITE_SAND";
+
+  /** Planet has space time warp. This cannot be mixed with NANITE_SAND. */
+  public static final String SPACE_TIME_WARP = "SPACE_TIME_WARP";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

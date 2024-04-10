@@ -113,7 +113,17 @@ public class TimedStatus {
       case BARRENWORLD1:
         gems = 20;
         value = DiceGenerator.getRandom(99);
-        if (value < 50) {
+        if (value < 5) {
+          if (DiceGenerator.getBoolean()) {
+            status = StatusFactory.getTimedStatus(StatusIds.NANITE_SAND,
+                TimedStatusType.AFTER_COLONIZATION,
+                DiceGenerator.getRandom(11, 60));
+          } else {
+            status = StatusFactory.getTimedStatus(StatusIds.SPACE_TIME_WARP,
+                TimedStatusType.AFTER_COLONIZATION,
+                DiceGenerator.getRandom(11, 60));
+          }
+        } else if (value < 55) {
           status = StatusFactory.getTimedStatus(StatusIds.METAL_RICH_SURFACE,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(8, 30));
@@ -151,10 +161,20 @@ public class TimedStatus {
         gems = 15;
         value = DiceGenerator.getRandom(99);
         if (value < 10) {
+          if (DiceGenerator.getBoolean()) {
+            status = StatusFactory.getTimedStatus(StatusIds.NANITE_SAND,
+                TimedStatusType.AFTER_COLONIZATION,
+                DiceGenerator.getRandom(11, 60));
+          } else {
+            status = StatusFactory.getTimedStatus(StatusIds.SPACE_TIME_WARP,
+                TimedStatusType.AFTER_COLONIZATION,
+                DiceGenerator.getRandom(11, 60));
+          }
+        } else if (value < 20) {
           status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(15, 35));
-        } else if (value < 55) {
+        } else if (value < 65) {
           status = StatusFactory.getTimedStatus(StatusIds.METAL_RICH_SURFACE,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(15, 30));
@@ -173,7 +193,17 @@ public class TimedStatus {
       case VOLCANICWORLD6:
         gems = 12;
         value = DiceGenerator.getRandom(99);
-        if (value < 30) {
+        if (value < 8) {
+          if (DiceGenerator.getBoolean()) {
+            status = StatusFactory.getTimedStatus(StatusIds.NANITE_SAND,
+                TimedStatusType.AFTER_COLONIZATION,
+                DiceGenerator.getRandom(11, 60));
+          } else {
+            status = StatusFactory.getTimedStatus(StatusIds.SPACE_TIME_WARP,
+                TimedStatusType.AFTER_COLONIZATION,
+                DiceGenerator.getRandom(11, 60));
+          }
+        } else if (value < 38) {
           status = StatusFactory.getTimedStatus(StatusIds.FERTILE_SOIL,
               TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM,
               DiceGenerator.getRandom(15, 35));

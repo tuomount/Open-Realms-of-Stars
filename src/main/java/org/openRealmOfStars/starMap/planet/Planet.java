@@ -1135,6 +1135,13 @@ public class Planet {
       addEntryIfWorthy(sb, "government", value);
     }
 
+    for (var appliedStatus : statuses) {
+      final var status = appliedStatus.getStatus();
+      final var tmpVal = status.getReseBonus();
+      result += tmpVal;
+      addEntryIfWorthy(sb, status.getName(), tmpVal);
+    }
+
     value = 0;
     if (governor != null) {
       if (governor.hasPerk(Perk.SCIENTIST)) {

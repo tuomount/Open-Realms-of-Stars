@@ -84,11 +84,11 @@ public class PlanetaryStatus {
   private int prodBonus;
   /** Bonus/malus to credits production */
   private int credBonus;
+  /** Bonus/malus to research production */
+  private int reseBonus;
   /** Status is not visible, until it is applied. This cannot be revealed even
    * by sending away team. */
   private boolean hidden;
-  /** Status can be found with away team */
-  private boolean awayTeam;
   /** Text to show when discovering planetary status. */
   private String discoveryText;
   /**
@@ -105,7 +105,6 @@ public class PlanetaryStatus {
     this.description = Objects.requireNonNull(description);
     this.conflictingIds = Objects.requireNonNull(conflictingIds);
     this.hidden = false;
-    this.setAwayTeam(false);
     setDiscoveryText("");
   }
 
@@ -178,6 +177,13 @@ public class PlanetaryStatus {
   //
 
   /**
+   * @return the reseBonus
+   */
+  public int getReseBonus() {
+    return reseBonus;
+  }
+
+  /**
    * @param foodBonus the foodBonus to set
    */
   void setFoodBonus(final int foodBonus) {
@@ -213,6 +219,13 @@ public class PlanetaryStatus {
   }
 
   /**
+   * @param reseBonus the reseBonus to set
+   */
+  void setReseBonus(final int reseBonus) {
+    this.reseBonus = reseBonus;
+  }
+
+  /**
    * @return the hidden
    */
   public boolean isHidden() {
@@ -224,20 +237,6 @@ public class PlanetaryStatus {
    */
   public void setHidden(final boolean hidden) {
     this.hidden = hidden;
-  }
-
-  /**
-   * @return the awayTeam
-   */
-  public boolean isAwayTeam() {
-    return awayTeam;
-  }
-
-  /**
-   * @param awayTeam the awayTeam to set
-   */
-  public void setAwayTeam(final boolean awayTeam) {
-    this.awayTeam = awayTeam;
   }
 
   /**

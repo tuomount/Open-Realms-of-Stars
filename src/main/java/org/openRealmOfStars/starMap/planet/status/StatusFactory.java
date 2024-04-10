@@ -219,8 +219,8 @@ class PlanetaryStatusLoader extends DataLoader<String, PlanetaryStatus> {
     tmp.setProdBonus(jobj.optInt("prodBonus", 0));
     tmp.setHappinessBonus(jobj.optInt("happinesBonus", 0));
     tmp.setCredBonus(jobj.optInt("credBonus", 0));
+    tmp.setReseBonus(jobj.optInt("reseBonus", 0));
     tmp.setHidden(jobj.optBoolean("hidden", false));
-    tmp.setAwayTeam(jobj.optBoolean("awayTeam", false));
 
     return Optional.of(tmp);
   }

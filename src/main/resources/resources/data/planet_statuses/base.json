@@ -8,7 +8,7 @@
       "MOLTEN_LAVA"
     ],
     "mineBonus": 1,
-    "awayTeam": true
+    "hidden": false
   },
   {
     "id": "FERTILE_SOIL",
@@ -20,7 +20,7 @@
       "MOLTEN_LAVA"
     ],
     "foodBonus": 1,
-    "awayTeam": true
+    "hidden": false
   },
   {
     "id": "MOLTEN_LAVA",
@@ -34,14 +34,14 @@
     "mineBonus": 1,
     "prodBonus": 1,
     "happinessBonus": -1,
-    "awayTeam": true
+    "hidden": false
   },
   {
     "id": "TECTONIC_QUAKE",
     "name": "Tectonic quake",
     "description": "Tectonic plates move over the crust and cause quakes.",
     "discoveryText": "<PLANETNAME> has tectonic quakes, this will cause damage to buildings and population.",
-    "awayTeam": false
+    "hidden": true
   },
   {
     "id": "PRECIOUS_GEMS",
@@ -49,7 +49,29 @@
     "description": "Planet has precious gems on surface. These will grant extra credit per star year.",
     "discoveryText": "<PLANETNAME> has surface full of precious gems. This can produce extra credit.",
     "credBonus": 1,
-    "awayTeam": true
+    "hidden": false
+  },
+  {
+    "id": "NANITE_SAND",
+    "name": "Nanite sand",
+    "description": "Planet has nanite sand which is active. These will grant extra two research per star year.",
+    "discoveryText": "<PLANETNAME> has active nanites as a sand. This can produce extra two research.",
+    "reseBonus": 2,
+    "conflictsWith": [
+      "SPACE_TIME_WARP"
+    ],
+    "hidden": true
+  },
+  {
+    "id": "SPACE_TIME_WARP",
+    "name": "Space time warp",
+    "description": "Planet has small area where space time acts strangly. These will grant extra research per star year.",
+    "discoveryText": "<PLANETNAME> has small area where space time acts strangle. This can produce extra research.",
+    "reseBonus": 1,
+    "conflictsWith": [
+      "NANITE_SAND"
+    ],
+    "hidden": true
   }
   
 ]

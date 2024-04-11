@@ -97,7 +97,12 @@ public final class StatusFactory {
       final String statusId, final TimedStatusType type, final int count) {
     var planetaryStatus = SINGLETON.createStatus(statusId);
     if (planetaryStatus.isPresent()) {
-      return new TimedStatus(planetaryStatus.get(), type, count);
+      TimedStatusType actualType = type;
+      if (actualType == TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM
+          && planetaryStatus.get().isHidden()) {
+        actualType = TimedStatusType.AFTER_COLONIZATION;
+      }
+      return new TimedStatus(planetaryStatus.get(), actualType, count);
     }
     return null;
   }

@@ -1,0 +1,213 @@
+[
+  {
+    "id": "DIPLOMATIC",
+    "name": "Diplomatic",
+    "description": "Government is considered to be diplomatic and +1 for diplomacy.",
+    "points": 2
+  },
+  {
+    "id": "FRIENDLY",
+    "name": "Friendly",
+    "description": "Ruler is friendly and +1 for diplomacy.",
+    "points": 1
+  },
+  {
+    "id": "MERCANTILE",
+    "name": "Mercantile",
+    "description": "Trading creates extra credit",
+    "points": 1,
+    "conflictsWith": [
+      "BUSINESS_ORIENTED"
+    ]
+  },
+  {
+    "id": "BUSINESS_ORIENTED",
+    "name": "Business oriented",
+    "description": "Trading creates two extra credits",
+    "points": 2
+  },
+  {
+    "id": "INDUSTRIAL",
+    "name": "Industrial",
+    "description": "Extra production when planet has 4 or more population.",
+    "points": 1
+  },
+  {
+    "id": "MINING_ORIENTED",
+    "name": "Mining oriented",
+    "description": "Extra metal when planet has 4 or more population.",
+    "points": 1
+  },
+  {
+    "id": "RESEARCH_ORIENTED",
+    "name": "Research oriented",
+    "description": "Extra research point when planet has 4 or more population.",
+    "points": 1,
+    "conflictsWith": [
+      "TECHNOLOGY_FOCUSED"
+    ]
+  },
+  {
+    "id": "TECHNOLOGY_FOCUSED",
+    "name": "Technology focused",
+    "description": "Two extra research points when planet has 4 or more population.",
+    "points": 2,
+    "conflictsWith": [
+      "RESEARCH_ORIENTED"
+    ]
+  },
+  {
+    "id": "WAR_HAPPY",
+    "name": "War happy",
+    "description": "One extra happiness if realm is in war.",
+    "points": 2,
+    "conflictsWith": [
+      "SINGLE_MIND"
+    ]
+  },
+  {
+    "id": "SINGLE_MIND",
+    "name": "Single mind",
+    "description": "No effects from happiness.",
+    "points": 3,
+    "conflictsWith": [
+      "WAR_HAPPY",
+      "GOVERNOR_HAPPINESS",
+      "UNHAPPY",
+      "HAPPY",
+      "EXTRA_HAPPY",
+      "WEAKNESS_FOR_WAR",
+      "TOLERANT_FOR_WAR",
+      "ENDURE_WAR"
+    ]
+  },
+  {
+    "id": "POPULATION_RUSH",
+    "name": "Population rush",
+    "description": "Rush projects with population.",
+    "points": 1
+  },
+  {
+    "id": "CREDIT_RUSH",
+    "name": "Credit rush",
+    "description": "Rush projects with credit.",
+    "points": 1
+  },
+  {
+    "id": "ARMED_FREIGHTERS",
+    "name": "Armed freighter",
+    "description": "Single weapon is allowed in freighter. Other realm still consideres them as unarmed.",
+    "points": 2
+  },
+  {
+    "id": "XENO_PHOBIC",
+    "name": "Xeno phobic",
+    "description": "Deny hiring leaders from other realms. No other space race can be the ruler.",
+    "points": -1
+  },
+  {
+    "id": "GOVERNOR_HAPPINESS",
+    "name": "Governor happiness",
+    "description": "Governor on planet automatically gives extra happiness.",
+    "points": 1,
+    "conflictsWith": [
+      "SINGLE_MIND"
+    ]
+  },
+  {
+    "id": "REIGN_SHORT",
+    "name": "Reign period short",
+    "description": "Ruler is in reign 20 star years.",
+    "points": -1,
+    "conflictsWith": [
+      "REIGN_LONG",
+      "REIGN_LIFE_TIME"
+    ]
+  },
+  {
+    "id": "REIGN_LONG",
+    "name": "Reign period long",
+    "description": "Ruler is in reign 60 star years.",
+    "points": 1,
+    "conflictsWith": [
+      "REIGN_SHORT",
+      "REIGN_LIFE_TIME"
+    ]
+  },
+  {
+    "id": "REIGN_LIFE_TIME",
+    "name": "Reign period life time",
+    "description": "Ruler is in reign for a life.",
+    "points": 2,
+    "conflictsWith": [
+      "REIGN_SHORT",
+      "REIGN_LONG"
+    ]
+  },
+  {
+    "id": "HAPPY",
+    "name": "Happy population",
+    "description": "Population are generally happy with government.",
+    "points": 1,
+    "conflictsWith": [
+      "UNHAPPY",
+      "EXTRA_HAPPY",
+      "SINGLE_MIND"
+    ]
+  },
+  {
+    "id": "UNHAPPY",
+    "name": "Unhappy population",
+    "description": "Population are generally unhappy with government.",
+    "points": -11,
+    "conflictsWith": [
+      "HAPPY",
+      "EXTRA_HAPPY",
+      "SINGLE_MIND"
+    ]
+  },
+  {
+    "id": "EXTRA_HAPPY",
+    "name": "Extra happy population",
+    "description": "Population are generally really happy with government.",
+    "points": 2,
+    "conflictsWith": [
+      "HAPPY",
+      "UNHAPPY",
+      "SINGLE_MIND"
+    ]
+  },
+  {
+    "id": "WEAKNESS_FOR_WAR",
+    "name": "Weakness for war",
+    "description": "War causes unhappiness much faster.",
+    "points": -2,
+    "conflictsWith": [
+      "TOLERANT_FOR_WAR",
+      "ENDURE_WAR",
+      "SINGLE_MIND"
+    ]
+  },
+  {
+    "id": "TOLERANT_FOR_WAR",
+    "name": "Tolerant for war",
+    "description": "Single war does not cause unhappiness.",
+    "points": 1,
+    "conflictsWith": [
+      "WEAKNESS_FOR_WAR",
+      "ENDURE_WAR",
+      "SINGLE_MIND"
+    ]
+  },
+  {
+    "id": "ENDURE_WAR",
+    "name": "Endure war",
+    "description": "Two wars does not cause unhappiness.",
+    "points": 2,
+    "conflictsWith": [
+      "WEAKNESS_FOR_WAR",
+      "ENDURE_WAR",
+      "SINGLE_MIND"
+    ]
+  }
+]

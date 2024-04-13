@@ -198,6 +198,51 @@ public enum GovernmentType {
   }
 
   /**
+   * Get Ruler selection type.
+   * @return Ruler Selection type.
+   */
+  public RulerSelection getRulerSelection() {
+    switch (this) {
+      default:
+      case CLAN:
+      case HORDE:
+      case HIVEMIND:
+      case NEST: {
+        return RulerSelection.STRONG_RULER;
+      }
+      case HIERARCHY:
+      case REGIME: {
+        return RulerSelection.STRONG_RULER;
+      }
+      case EMPIRE:
+      case FEUDALISM:
+      case KINGDOM: {
+        return RulerSelection.HEIR_TO_THRONE;
+      }
+      case GUILD:
+      case ENTERPRISE: {
+        return RulerSelection.CEO_AS_A_RULER;
+      }
+      case DEMOCRACY:
+      case TECHNOCRACY:
+      case UNION: {
+        return RulerSelection.ELECTION_TYPE1;
+      }
+      case FEDERATION:
+      case REPUBLIC: {
+        return RulerSelection.ELECTION_TYPE2;
+      }
+      case UTOPIA:
+      case HEGEMONY: {
+        return RulerSelection.HEGEMONIA_RULER;
+      }
+      case AI:
+      case COLLECTIVE: {
+        return RulerSelection.AI_RULER;
+      }
+    }
+  }
+  /**
    * Is government immune to happiness system?
    * Is Government single minded organism?
    * @return True if no effects from happiness at all

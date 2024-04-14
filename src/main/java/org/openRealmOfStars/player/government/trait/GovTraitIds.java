@@ -40,12 +40,10 @@ import java.util.stream.Collectors;
  * TODO: Use code generation instead, the reflection is not needed for this
  */
 public final class GovTraitIds {
-  /** Diplomatic */
+  /** Diplomatic +2 diplomacy */
   public static final String DIPLOMATIC = "DIPLOMATIC";
-  /**
-   * Friendly.
-   */
-  public static final String FRIENDLY = "FRIENDLY";
+  /** Political +1 diplomacy. */
+  public static final String POLITICAL = "POLITICAL";
   /** Mercantile. */
   public static final String MERCANTILE = "MERCANTILE";
   /** Business oriented */
@@ -90,6 +88,45 @@ public final class GovTraitIds {
   public static final String TOLERANT_FOR_WAR = "TOLERANT_FOR_WAR";
   /** Endure war */
   public static final String ENDURE_WAR = "ENDURE_WAR";
+  /** Culture bonus */
+  public static final String CULTURE_ORIENTED = "CULTURE_ORIENTED";
+  /** Agricultural oriented */
+  public static final String AGRICULTURAL_ORIENTED = "AGRICULTURAL_ORIENTED";
+  /** Tax oriented */
+  public static final String TAX_ORIENTED = "TAX_ORIENTED";
+  /** Very low fleet capacity */
+  public static final String VERY_LOW_FLEET_CAPACITY =
+      "VERY_LOW_FLEET_CAPACITY";
+  /** Low fleet capacity */
+  public static final String LOW_FLEET_CAPACITY =
+      "LOW_FLEET_CAPACITY";
+  /** High fleet capacity */
+  public static final String HIGH_FLEET_CAPACITY =
+      "HIGH_FLEET_CAPACITY";
+  /** Low leader pool size */
+  public static final String LOW_LEADER_POOL_SIZE =
+      "LOW_LEADER_POOL_SIZE";
+  /** High leader pool size */
+  public static final String HIGH_LEADER_POOL_SIZE =
+      "HIGH_LEADER_POOL_SIZE";
+  /** Very high leader pool size */
+  public static final String VERY_HIGH_LEADER_POOL_SIZE =
+      "VERY_HIGH_LEADER_POOL_SIZE";
+  /** Low leader hiring cost */
+  public static final String LOW_LEADER_HIRING_COST =
+      "LOW_LEADER_HIRING_COST";
+  /** High leader hiring cost */
+  public static final String HIGH_LEADER_HIRING_COST =
+      "HIGH_LEADER_HIRING_COST";
+  /** Very low leader hiring cost */
+  public static final String VERY_LOW_LEADER_HIRING_COST =
+      "VERY_LOW_LEADER_HIRING_COST";
+  /** Chance for heir born */
+  public static final String CHANCE_FOR_HEIR_BORN =
+      "CHANCE_FOR_HEIR_BORN";
+  /** Ruler assasination */
+  public static final String RULER_ASSASINATION =
+      "RULER_ASSASINATION";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import org.openRealmOfStars.player.government.trait.GovTrait;
 import org.openRealmOfStars.player.government.trait.GovTraitIds;
 import org.openRealmOfStars.player.leader.LeaderUtility;
-import org.openRealmOfStars.player.race.trait.RaceTrait;
 
 /**
 *
@@ -36,10 +35,6 @@ public class Government {
    * Create government
    * @param id Government ID
    * @param name Government type name
-   * @param happiness Generic happiness
-   * @param warResistance War resistance for government
-   * @param singleMind Is government single minded
-   * @param baseFleetCapacity Base fleet capacity based on government
    */
   Government(final String id, final String name) {
     this.id = id;
@@ -71,6 +66,13 @@ public class Government {
     return name;
   }
 
+  /**
+   * Get Id for government.
+   * @return Id
+   */
+  public String getId() {
+    return id;
+  }
   /**
    * Set Ruler selection
    * @param rulerSelection RulerSelection
@@ -166,9 +168,9 @@ public class Government {
   public int getDiplomaticBonus() {
     int result = 0;
     if (hasTrait(GovTraitIds.DIPLOMATIC)) {
-      result = 1;
+      result = 2;
     }
-    if (hasTrait(GovTraitIds.FRIENDLY)) {
+    if (hasTrait(GovTraitIds.POLITICAL)) {
       result = 1;
     }
     return result;
@@ -235,7 +237,7 @@ public class Government {
    * @return Culture bonus
    */
   public int getCultureBonus() {
-    if (this == UTOPIA) {
+    if (hasTrait(GovTraitIds.CULTURE_ORIENTED)) {
       return 1;
     }
     return 0;
@@ -247,7 +249,7 @@ public class Government {
    * @return Food bonus
    */
   public int getFoodBonus() {
-    if (this == HORDE || this == CLAN || this == UTOPIA) {
+    if (hasTrait(GovTraitIds.AGRICULTURAL_ORIENTED)) {
       return 1;
     }
     return 0;
@@ -259,7 +261,7 @@ public class Government {
    * @return Credit bonus
    */
   public int getCreditBonus() {
-    if (this == KINGDOM || this == ENTERPRISE || this == FEUDALISM) {
+    if (hasTrait(GovTraitIds.TAX_ORIENTED)) {
       return 1;
     }
     return 0;
@@ -307,7 +309,17 @@ public class Government {
    * @return Fleet capacity base value.
    */
   public int getFleetCapacity() {
-    return fleetCapacity;
+    int result = 3;
+    if (hasTrait(GovTraitIds.VERY_LOW_FLEET_CAPACITY)) {
+      result = 1;
+    }
+    if (hasTrait(GovTraitIds.LOW_FLEET_CAPACITY)) {
+      result = 2;
+    }
+    if (hasTrait(GovTraitIds.HIGH_FLEET_CAPACITY)) {
+      result = 4;
+    }
+    return result;
   }
 
   /**
@@ -316,43 +328,17 @@ public class Government {
    * @return Leader Pool size.
    */
   public int leaderPoolLimit() {
-    switch (this) {
-      default:
-      case UNION:
-      case DEMOCRACY:
-      case FEDERATION:
-      case REPUBLIC: {
-        return 10;
-      }
-      case AI:
-      case SPACE_PIRATES:
-      case HIVEMIND:
-      case COLLECTIVE:
-      case NEST:
-      case UTOPIA: {
-        return 6;
-      }
-      case GUILD:
-      case FEUDALISM:
-      case ENTERPRISE:
-      case SYNDICATE: {
-        return 12;
-      }
-      case EMPIRE:
-      case KINGDOM:
-      case REGIME: {
-        return 7;
-      }
-      case HORDE:
-      case CLAN: {
-        return 9;
-      }
-      case HEGEMONY:
-      case TECHNOCRACY:
-      case HIERARCHY: {
-        return 8;
-      }
+    int result = 8;
+    if (hasTrait(GovTraitIds.LOW_LEADER_POOL_SIZE)) {
+      result = 6;
     }
+    if (hasTrait(GovTraitIds.HIGH_LEADER_POOL_SIZE)) {
+      result = 10;
+    }
+    if (hasTrait(GovTraitIds.VERY_HIGH_LEADER_POOL_SIZE)) {
+      result = 12;
+    }
+    return result;
   }
   /**
    * Get regular leader recruit cost.
@@ -360,39 +346,17 @@ public class Government {
    * @return single leader recruit cost
    */
   public int leaderRecruitCost() {
-    switch (this) {
-      default:
-      case UNION:
-      case DEMOCRACY:
-      case FEDERATION:
-      case REPUBLIC:
-      case EMPIRE:
-      case KINGDOM:
-      case FEUDALISM:
-      case REGIME:
-      case TECHNOCRACY:
-      case HORDE:
-      case CLAN: {
-        return 10;
-      }
-      case AI:
-      case SPACE_PIRATES:
-      case HIVEMIND:
-      case NEST: {
-        return 5;
-      }
-      case GUILD:
-      case ENTERPRISE:
-      case UTOPIA:
-      case SYNDICATE: {
-        return 12;
-      }
-      case HEGEMONY:
-      case HIERARCHY:
-      case COLLECTIVE: {
-        return 8;
-      }
+    int result = 10;
+    if (hasTrait(GovTraitIds.LOW_LEADER_HIRING_COST)) {
+      result = 8;
     }
+    if (hasTrait(GovTraitIds.VERY_LOW_LEADER_HIRING_COST)) {
+      result = 6;
+    }
+    if (hasTrait(GovTraitIds.HIGH_LEADER_HIRING_COST)) {
+      result = 12;
+    }
+    return result;
   }
 
   /**
@@ -400,21 +364,14 @@ public class Government {
    * @return Chance for new heir, 0 if government does not have heirs.
    */
   public int getHeirChance() {
-    switch (this) {
-      case EMPIRE:
-      case KINGDOM:
-      case FEUDALISM: {
-        return 10;
-      }
-      case NEST:
-      case HORDE:
-      case CLAN: {
-        return 6;
-      }
-      default: {
-        return 0;
-      }
+    int result = 0;
+    if (rulerSelection == RulerSelection.HEIR_TO_THRONE) {
+      result = result + 4;
     }
+    if (hasTrait(GovTraitIds.CHANCE_FOR_HEIR_BORN)) {
+      result = result + 6;
+    }
+    return result;
   }
 
   /**
@@ -430,7 +387,7 @@ public class Government {
    * @return True or false
    */
   public boolean isXenophopic() {
-    return hasTrait(GovTraitIds.XENO_PHOBIC)
+    return hasTrait(GovTraitIds.XENO_PHOBIC);
   }
 
   /**

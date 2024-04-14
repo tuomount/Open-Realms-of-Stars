@@ -31,7 +31,9 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.AttitudeScore;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.trait.GovTraitIds;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -1034,6 +1036,19 @@ public final class LeaderUtility {
         || government == GovernmentType.NEST
         || government == GovernmentType.FEUDALISM
         || government == GovernmentType.REGIME) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Is leader with power hungry perk ready to kill ruler?
+   * @param government Government type
+   * @return True if ready to kill
+   */
+  public static boolean isPowerHungryReadyForKill(
+      final Government government) {
+    if (government.hasTrait(GovTraitIds.RULER_ASSASINATION)) {
       return true;
     }
     return false;

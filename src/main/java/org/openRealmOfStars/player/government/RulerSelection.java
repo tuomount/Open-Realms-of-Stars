@@ -61,4 +61,33 @@ public enum RulerSelection {
    */
   AI_RULER;
 
+  /**
+   * Get Ruler selection based on string.
+   * @param value RulerSelection as String
+   * @return RulerSelection
+   */
+  public static RulerSelection getByString(final String value) {
+    if (value.equals("STRONG_RULER")) {
+      return STRONG_RULER;
+    }
+    if (value.equals("HEIR_TO_THRONE")) {
+      return HEIR_TO_THRONE;
+    }
+    if (value.equals("CEO_AS_A_RULER")) {
+      return CEO_AS_A_RULER;
+    }
+    if (value.equals("ELECTION_TYPE1")) {
+      return ELECTION_TYPE1;
+    }
+    if (value.equals("ELECTION_TYPE2")) {
+      return ELECTION_TYPE2;
+    }
+    if (value.equals("HEGEMONIA_RULER")) {
+      return HEGEMONIA_RULER;
+    }
+    if (value.equals("AI_RULER")) {
+      return AI_RULER;
+    }
+    return STRONG_RULER;
+  }
 }

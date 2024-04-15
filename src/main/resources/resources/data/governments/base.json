@@ -1,0 +1,16 @@
+[
+  {
+    "ID": "DEMOCRACY",
+    "Name": "Democracy",
+    "RulerSelection" : "ELECTION_TYPE1",
+    "Traits": [
+                "HAPPY",
+                "LOW_FLEET_CAPACITY",
+                "WEAKNESS_FOR_WAR",
+                "POLITICAL",
+                "MERCANTILE",
+                "INDUSTRIAL",
+                "REIGN_SHORT"
+              ]
+  }
+]

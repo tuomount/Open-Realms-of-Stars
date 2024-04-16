@@ -134,7 +134,7 @@
     "id": "REIGN_LONG",
     "name": "Reign period long",
     "description": "Ruler is in reign 60 star years.",
-    "points": 1,
+    "points": 0,
     "conflictsWith": [
       "REIGN_SHORT",
       "REIGN_LIFE_TIME"
@@ -144,7 +144,7 @@
     "id": "REIGN_LIFE_TIME",
     "name": "Reign period life time",
     "description": "Ruler is in reign for a life.",
-    "points": 2,
+    "points": 1,
     "conflictsWith": [
       "REIGN_SHORT",
       "REIGN_LONG"
@@ -165,7 +165,7 @@
     "id": "UNHAPPY",
     "name": "Unhappy population",
     "description": "Population are generally unhappy with government.",
-    "points": -11,
+    "points": -1,
     "conflictsWith": [
       "HAPPY",
       "EXTRA_HAPPY",

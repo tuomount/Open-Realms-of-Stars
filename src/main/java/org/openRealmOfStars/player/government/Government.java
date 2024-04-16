@@ -39,6 +39,7 @@ public class Government {
   Government(final String id, final String name) {
     this.id = id;
     this.name = name;
+    traits = new ArrayList<>();
   }
 
   /**
@@ -563,6 +564,24 @@ public class Government {
         sb.append(lf);
       }
     }
+    sb.append("Traits:");
+    sb.append(lf);
+    int traitPoints = 0;
+    for (GovTrait trait : traits) {
+      traitPoints = traitPoints + trait.getPoints();
+      sb.append(dot);
+      sb.append(" ");
+      sb.append(trait.getName());
+      sb.append(" - ");
+      sb.append(trait.getDescription());
+      sb.append(" ");
+      sb.append(trait.getPoints());
+      sb.append(lf);
+    }
+    sb.append(lf);
+    sb.append("Points: ");
+    sb.append(traitPoints);
+    sb.append(lf);
     if (!markDown) {
       sb.append("</html>");
     }

@@ -10,7 +10,69 @@
                 "POLITICAL",
                 "MERCANTILE",
                 "INDUSTRIAL",
-                "REIGN_SHORT"
+                "HIGH_LEADER_POOL_SIZE",
+                "REIGN_SHORT",
+                "CREDIT_RUSH"
+              ]
+  },
+  {
+    "ID": "UNION",
+    "Name": "Union",
+    "RulerSelection" : "ELECTION_TYPE1",
+    "Traits": [
+                "HAPPY",
+                "LOW_FLEET_CAPACITY",
+                "WEAKNESS_FOR_WAR",
+                "POLITICAL",
+                "MERCANTILE",
+                "MINING_ORIENTED",
+                "HIGH_LEADER_POOL_SIZE",
+                "REIGN_SHORT",
+                "CREDIT_RUSH"
+              ]
+  },
+  {
+    "ID": "FEDERATION",
+    "Name": "Federation",
+    "RulerSelection" : "ELECTION_TYPE2",
+    "Traits": [
+                "HAPPY",
+                "POLITICAL",
+                "MERCANTILE",
+                "HIGH_LEADER_POOL_SIZE",
+                "REIGN_SHORT",
+                "CREDIT_RUSH"
+              ]
+  },
+  {
+    "ID": "REPUBLIC",
+    "Name": "Republic",
+    "RulerSelection" : "ELECTION_TYPE2",
+    "Traits": [
+                "POLITICAL",
+                "MERCANTILE",
+                "INDUSTRIAL",
+                "HIGH_LEADER_POOL_SIZE",
+                "REIGN_SHORT",
+                "CREDIT_RUSH"
+              ]
+  },
+  {
+    "ID": "KINGDOM",
+    "Name": "Kingdom",
+    "RulerSelection" : "HEIR_TO_THRONE",
+    "Traits": [
+                "UNHAPPY",
+                "HIGH_FLEET_CAPACITY",
+                "TOLERANT_FOR_WAR",
+                "TAX_ORIENTED",
+                "LOW_LEADER_POOL_SIZE",
+                "CHANCE_FOR_HEIR_BORN",
+                "RULER_ASSASINATION",
+                "POPULATION_RUSH",
+                "REIGN_LIFE_TIME",
+                "XENO_PHOBIC"
               ]
   }
+  
 ]

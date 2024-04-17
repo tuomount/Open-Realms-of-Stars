@@ -58,6 +58,100 @@
               ]
   },
   {
+    "ID": "GUILD",
+    "Name": "Guild",
+    "RulerSelection" : "CEO_AS_A_RULER",
+    "Traits": [
+                "BUSINESS_ORIENTED",
+                "INDUSTRIAL",
+                "VERY_HIGH_LEADER_POOL_SIZE",
+                "HIGH_LEADER_HIRING_COST",
+                "CREDIT_RUSH"
+              ]
+  },
+  {
+    "ID": "ENTERPRISE",
+    "Name": "Enterprise",
+    "RulerSelection" : "CEO_AS_A_RULER",
+    "Traits": [
+                "BUSINESS_ORIENTED",
+                "TAX_ORIENTED",
+                "VERY_HIGH_LEADER_POOL_SIZE",
+                "HIGH_LEADER_HIRING_COST",
+                "CREDIT_RUSH"
+              ]
+  },
+  {
+    "ID": "HEGEMONY",
+    "Name": "Hegemony",
+    "RulerSelection" : "HEGEMONIA_RULER",
+    "Traits": [
+                "UNHAPPY",
+                "HIGH_FLEET_CAPACITY",
+                "TOLERANT_FOR_WAR",
+                "RESEARCH_ORIENTED",
+                "RULER_ASSASINATION",
+                "LOW_LEADER_HIRING_COST",
+                "REIGN_LIFE_TIME",
+                "XENO_PHOBIC"
+              ]
+  },
+  {
+    "ID": "NEST",
+    "Name": "Nest",
+    "RulerSelection" : "STRONG_RULER",
+    "Traits": [
+                "LOW_LEADER_POOL_SIZE",
+                "RULER_ASSASINATION",
+                "SINGLE_MIND",
+                "VERY_LOW_LEADER_HIRING_COST",
+                "REIGN_LIFE_TIME",
+                "XENO_PHOBIC"
+              ]
+  },
+  {
+    "ID": "HIVEMIND",
+    "Name": "Hivemind",
+    "RulerSelection" : "STRONG_RULER",
+    "Traits": [
+                "HIGH_FLEET_CAPACITY",
+                "LOW_LEADER_POOL_SIZE",
+                "RULER_ASSASINATION",
+                "SINGLE_MIND",
+                "VERY_LOW_LEADER_HIRING_COST",
+                "REIGN_LIFE_TIME",
+                "XENO_PHOBIC"
+              ]
+  },
+  {
+    "ID": "AI",
+    "Name": "AI",
+    "RulerSelection" : "AI_RULER",
+    "Traits": [
+                "LOW_LEADER_POOL_SIZE",
+                "SINGLE_MIND",
+                "VERY_LOW_LEADER_HIRING_COST",
+                "REIGN_LONG"
+              ]
+  },
+  {
+    "ID": "EMPIRE",
+    "Name": "Empire",
+    "RulerSelection" : "HEIR_TO_THRONE",
+    "Traits": [
+                "UNHAPPY",
+                "HIGH_FLEET_CAPACITY",
+                "TOLERANT_FOR_WAR",
+                "INDUSTRIAL",
+                "LOW_LEADER_POOL_SIZE",
+                "CHANCE_FOR_HEIR_BORN",
+                "RULER_ASSASINATION",
+                "POPULATION_RUSH",
+                "REIGN_LIFE_TIME",
+                "XENO_PHOBIC"
+              ]
+  },
+  {
     "ID": "KINGDOM",
     "Name": "Kingdom",
     "RulerSelection" : "HEIR_TO_THRONE",
@@ -73,6 +167,22 @@
                 "REIGN_LIFE_TIME",
                 "XENO_PHOBIC"
               ]
-  }
+  },
+  {
+    "ID": "HIERARCHY",
+    "Name": "Hierarchy",
+    "RulerSelection" : "STRONG_RULER",
+    "Traits": [
+                "UNHAPPY",
+                "HIGH_FLEET_CAPACITY",
+                "TOLERANT_FOR_WAR",
+                "INDUSTRIAL",
+                "LOW_LEADER_HIRING_COST",
+                "RULER_ASSASINATION",
+                "POPULATION_RUSH",
+                "REIGN_LIFE_TIME",
+                "XENO_PHOBIC"
+              ]
+  },
   
 ]

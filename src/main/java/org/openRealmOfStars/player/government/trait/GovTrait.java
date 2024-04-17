@@ -128,18 +128,18 @@ public final class GovTrait {
    * If otherTraits already contains the trait, it is considered a conflict.
    * @param trait GovTrait checked if being in conflict
    * @param otherTraits Set of traits checked against
-   * @return True if trait is in conflict
+   * @return null or gov trait id which causes conflict.
    */
-  public static boolean isTraitConflict(final GovTrait trait,
+  public static String isTraitConflict(final GovTrait trait,
       final GovTrait... otherTraits) {
     for (var otherTrait : otherTraits) {
       if (trait.conflictsWithIds.contains(otherTrait.traitId)) {
-        return true;
+        return otherTrait.traitId;
       }
       if (trait.traitId.equals(otherTrait.traitId)) {
-        return true;
+        return otherTrait.traitId;
       }
     }
-    return false;
+    return null;
   }
 }

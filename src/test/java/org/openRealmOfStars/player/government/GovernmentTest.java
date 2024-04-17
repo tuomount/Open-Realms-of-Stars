@@ -55,6 +55,58 @@ public class GovernmentTest {
   }
 
   @Test
+  public void testGuild() {
+    System.out.println("Old:" + GovernmentType.GUILD.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("GUILD")
+        .getDescription(true));
+  }
+
+  @Test
+  public void testEnterprise() {
+    System.out.println("Old:" + GovernmentType.ENTERPRISE.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("ENTERPRISE")
+        .getDescription(true));
+  }
+  @Test
+  public void testHegemony() {
+    System.out.println("Old:" + GovernmentType.HEGEMONY.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("HEGEMONY")
+        .getDescription(true));
+  }
+  @Test
+  public void testNest() {
+    System.out.println("Old:" + GovernmentType.NEST.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("NEST")
+        .getDescription(true));
+  }
+  @Test
+  public void testHivemind() {
+    System.out.println("Old:" + GovernmentType.HIVEMIND.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("HIVEMIND")
+        .getDescription(true));
+  }
+  @Test
+  public void testAi() {
+    System.out.println("Old:" + GovernmentType.AI.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("AI")
+        .getDescription(true));
+  }
+
+  @Test
+  public void testEmpire() {
+    System.out.println("Old:" + GovernmentType.EMPIRE.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("EMPIRE")
+        .getDescription(true));
+  }
+
+  @Test
+  public void testHierarchy() {
+    System.out.println("Old:" + GovernmentType.HIERARCHY.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("HIERARCHY")
+        .getDescription(true));
+  }
+
+  @Test
   public void testKingdom() {
     System.out.println("Old:" + GovernmentType.KINGDOM.getDescription(true));
     System.out.println("New:" + GovernmentFactory.createOne("KINGDOM")

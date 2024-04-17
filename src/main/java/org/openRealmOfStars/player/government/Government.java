@@ -96,9 +96,11 @@ public class Government {
    */
   public void addTrait(final GovTrait trait) {
     GovTrait[] traitArray = traits.toArray(new GovTrait[0]);
-    if (GovTrait.isTraitConflict(trait, traitArray)) {
+    String conflict = GovTrait.isTraitConflict(trait, traitArray);
+    if (conflict != null) {
       throw new IllegalArgumentException(
-          "Cannot add Government trait because of conflict");
+          "Cannot add Government trait because of conflict. Conflicting ID "
+          + conflict + " while trying to add " + trait.getId() + ".");
     }
     traits.add(trait);
   }
@@ -186,7 +188,7 @@ public class Government {
       result = 1;
     }
     if (hasTrait(GovTraitIds.BUSINESS_ORIENTED)) {
-      result = 1;
+      result = 2;
     }
     return result;
   }

@@ -5,7 +5,8 @@
     "description": "+2 diplomacy",
     "points": 2,
     "conflictsWith": [
-      "POLITICAL"
+      "POLITICAL",
+      "RUDE"
     ]
   },
   {
@@ -14,7 +15,18 @@
     "description": "+1 for diplomacy",
     "points": 1,
     "conflictsWith": [
-      "DIPLOMATIC"
+      "DIPLOMATIC",
+      "RUDE"
+    ]
+  },
+  {
+    "id": "RUDE",
+    "name": "Rude",
+    "description": "-1 for diplomacy",
+    "points": -1,
+    "conflictsWith": [
+      "DIPLOMATIC",
+      "POLITICAL"
     ]
   },
   {
@@ -327,7 +339,7 @@
   {
     "id": "CHANCE_FOR_HEIR_BORN",
     "name": "Increased chance for heir being born",
-    "description": "There is extra chance for heir being born. Only useable ruler selection heir to the throne.",
+    "description": "There is extra chance for heir being born.",
     "points": 1
   },
   {

@@ -44,6 +44,8 @@ public final class GovTraitIds {
   public static final String DIPLOMATIC = "DIPLOMATIC";
   /** Political +1 diplomacy. */
   public static final String POLITICAL = "POLITICAL";
+  /** Rude -1 diplomacy */
+  public static final String RUDE = "RUDE";
   /** Mercantile. */
   public static final String MERCANTILE = "MERCANTILE";
   /** Business oriented */

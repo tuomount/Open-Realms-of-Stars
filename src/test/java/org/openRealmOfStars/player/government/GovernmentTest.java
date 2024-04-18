@@ -107,6 +107,34 @@ public class GovernmentTest {
   }
 
   @Test
+  public void testHorde() {
+    System.out.println("Old:" + GovernmentType.HORDE.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("HORDE")
+        .getDescription(true));
+  }
+
+  @Test
+  public void testClan() {
+    System.out.println("Old:" + GovernmentType.CLAN.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("CLAN")
+        .getDescription(true));
+  }
+
+  @Test
+  public void testCollective() {
+    System.out.println("Old:" + GovernmentType.COLLECTIVE.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("COLLECTIVE")
+        .getDescription(true));
+  }
+
+  @Test
+  public void testUtopia() {
+    System.out.println("Old:" + GovernmentType.UTOPIA.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("UTOPIA")
+        .getDescription(true));
+  }
+
+  @Test
   public void testKingdom() {
     System.out.println("Old:" + GovernmentType.KINGDOM.getDescription(true));
     System.out.println("New:" + GovernmentFactory.createOne("KINGDOM")

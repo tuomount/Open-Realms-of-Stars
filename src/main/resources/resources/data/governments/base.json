@@ -184,5 +184,71 @@
                 "XENO_PHOBIC"
               ]
   },
+  {
+    "ID": "HORDE",
+    "Name": "Horde",
+    "RulerSelection" : "STRONG_RULER",
+    "Traits": [
+                "UNHAPPY",
+                "TOLERANT_FOR_WAR",
+                "MINING_ORIENTED",
+                "AGRICULTURAL_ORIENTED",
+                "WAR_HAPPY",
+                "HIGH_LEADER_POOL_SIZE",
+                "CHANCE_FOR_HEIR_BORN",
+                "RULER_ASSASINATION",
+                "POPULATION_RUSH",
+                "REIGN_LIFE_TIME",
+                "XENO_PHOBIC"
+              ]
+  },
+  {
+    "ID": "CLAN",
+    "Name": "Clan",
+    "RulerSelection" : "STRONG_RULER",
+    "Traits": [
+                "UNHAPPY",
+                "TOLERANT_FOR_WAR",
+                "HIGH_FLEET_CAPACITY",
+                "AGRICULTURAL_ORIENTED",
+                "WAR_HAPPY",
+                "HIGH_LEADER_POOL_SIZE",
+                "CHANCE_FOR_HEIR_BORN",
+                "RULER_ASSASINATION",
+                "POPULATION_RUSH",
+                "REIGN_LIFE_TIME",
+                "XENO_PHOBIC"
+              ]
+  },
+  {
+    "ID": "COLLECTIVE",
+    "Name": "Collective",
+    "RulerSelection" : "AI_RULER",
+    "Traits": [
+                "TOLERANT_FOR_WAR",
+                "HIGH_FLEET_CAPACITY",
+                "MINING_ORIENTED",
+                "LOW_LEADER_POOL_SIZE",
+                "LOW_LEADER_HIRING_COST"
+              ]
+  },
+  {
+    "ID": "UTOPIA",
+    "Name": "Utopia",
+    "RulerSelection" : "HEGEMONIA_RULER",
+    "Traits": [
+                "WEAKNESS_FOR_WAR",
+                "VERY_LOW_FLEET_CAPACITY",
+                "EXTRA_HAPPY",
+                "DIPLOMATIC",
+                "MERCANTILE",
+                "CULTURE_ORIENTED",
+                "AGRICULTURAL_ORIENTED",
+                "LOW_LEADER_POOL_SIZE",
+                "HIGH_LEADER_HIRING_COST"
+              ]
+  }
+
+  
   
 ]

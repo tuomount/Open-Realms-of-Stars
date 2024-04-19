@@ -247,8 +247,55 @@
                 "LOW_LEADER_POOL_SIZE",
                 "HIGH_LEADER_HIRING_COST"
               ]
-  }
-
+  },
+  {
+    "ID": "REGIME",
+    "Name": "Regime",
+    "RulerSelection" : "STRONG_RULER",
+    "Traits": [
+                "TOLERANT_FOR_WAR",
+                "HIGH_FLEET_CAPACITY",
+                "UNHAPPY",
+                "INDUSTRIAL",
+                "MINING_ORIENTED",
+                "RUDE",
+                "WAR_HAPPY",
+                "POPULATION_RUSH",
+                "ARMED_FREIGHTERS",
+                "RULER_ASSASINATION",
+              ]
+  },
+  {
+    "ID": "FEUDALISM",
+    "Name": "Feudalism",
+    "RulerSelection" : "HEIR_TO_THRONE",
+    "Traits": [
+                "UNHAPPY",
+                "ENDURE_WAR",
+                "TAX_ORIENTED",
+                "CREDIT_RUSH",
+                "CHANCE_FOR_HEIR_BORN",
+                "RULER_ASSASINATION",
+                "VERY_HIGH_LEADER_POOL_SIZE",
+                "REIGN_LIFE_TIME",
+                "XENO_PHOBIC",
+                "GOVERNOR_HAPPINESS"
+              ]
+  },
+  {
+    "ID": "TECHNOCRACY",
+    "Name": "Technocracy",
+    "RulerSelection" : "ELECTION_TYPE1",
+    "Traits": [
+                "LOW_FLEET_CAPACITY",
+                "WEAKNESS_FOR_WAR",
+                "POLITICAL",
+                "TECHNOLOGY_FOCUSED",
+                "INDUSTRIAL",
+                "REIGN_SHORT",
+                "CREDIT_RUSH"
+              ]
+  },
   
   
 ]

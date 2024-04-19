@@ -133,11 +133,30 @@ public class GovernmentTest {
     System.out.println("New:" + GovernmentFactory.createOne("UTOPIA")
         .getDescription(true));
   }
+  @Test
+  public void testRegime() {
+    System.out.println("Old:" + GovernmentType.REGIME.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("REGIME")
+        .getDescription(true));
+  }
 
   @Test
   public void testKingdom() {
     System.out.println("Old:" + GovernmentType.KINGDOM.getDescription(true));
     System.out.println("New:" + GovernmentFactory.createOne("KINGDOM")
+        .getDescription(true));
+  }
+  @Test
+  public void testFeudalism() {
+    System.out.println("Old:" + GovernmentType.FEUDALISM.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("FEUDALISM")
+        .getDescription(true));
+  }
+
+  @Test
+  public void testTechnocracy() {
+    System.out.println("Old:" + GovernmentType.TECHNOCRACY.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("TECHNOCRACY")
         .getDescription(true));
   }
 

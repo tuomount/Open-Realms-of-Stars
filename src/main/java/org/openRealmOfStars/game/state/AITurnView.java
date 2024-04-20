@@ -2786,6 +2786,7 @@ public class AITurnView extends BlackPanel {
         result = result + 3;
       }
     }
+    // TODO Corruption traits from Government
     return result;
   }
 

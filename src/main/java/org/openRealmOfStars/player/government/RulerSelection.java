@@ -56,7 +56,7 @@ public enum RulerSelection {
    */
   HEGEMONIA_RULER,
   /**
-   * Skillful, charismatic leader, but pacifist or peacefull is negative for
+   * Skillful, charismatic leader, but pacifist or peaceful is negative for
    * leader. Age does not matter at all. Only number of perks.
    */
   AI_RULER;
@@ -90,4 +90,19 @@ public enum RulerSelection {
     }
     return STRONG_RULER;
   }
+
+  @Override
+  public String toString() {
+    switch (this) {
+      case AI_RULER: return "Logical, but aggressive ruler";
+      case CEO_AS_A_RULER: return "CEO as a ruler";
+      case ELECTION_TYPE1: return "Elected ruler, peaceful";
+      case ELECTION_TYPE2: return "Elected ruler, a bit more aggressive";
+      case HEGEMONIA_RULER: return "Hegemonia ruler";
+      case HEIR_TO_THRONE: return "Heir to throne";
+      default:
+      case STRONG_RULER: return "Strong ruler";
+    }
+  }
+
 }

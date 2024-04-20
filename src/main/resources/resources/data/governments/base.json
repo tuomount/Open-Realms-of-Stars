@@ -27,6 +27,7 @@
                 "MERCANTILE",
                 "MINING_ORIENTED",
                 "HIGH_LEADER_POOL_SIZE",
+                "VERY_LOW_LEADER_HIRING_COST",
                 "REIGN_SHORT",
                 "CREDIT_RUSH"
               ]
@@ -64,9 +65,11 @@
     "Traits": [
                 "BUSINESS_ORIENTED",
                 "INDUSTRIAL",
+                "MINING_ORIENTED",
                 "VERY_HIGH_LEADER_POOL_SIZE",
                 "HIGH_LEADER_HIRING_COST",
-                "CREDIT_RUSH"
+                "CREDIT_RUSH",
+                "WEAKNESS_FOR_WAR"
               ]
   },
   {
@@ -77,8 +80,8 @@
                 "BUSINESS_ORIENTED",
                 "TAX_ORIENTED",
                 "VERY_HIGH_LEADER_POOL_SIZE",
-                "HIGH_LEADER_HIRING_COST",
-                "CREDIT_RUSH"
+                "CREDIT_RUSH",
+                "WEAKNESS_FOR_WAR"
               ]
   },
   {
@@ -90,6 +93,8 @@
                 "HIGH_FLEET_CAPACITY",
                 "TOLERANT_FOR_WAR",
                 "RESEARCH_ORIENTED",
+                "AGRICULTURAL_ORIENTED",
+                "POPULATION_RUSH",
                 "RULER_ASSASINATION",
                 "LOW_LEADER_HIRING_COST",
                 "REIGN_LIFE_TIME",
@@ -104,9 +109,11 @@
                 "LOW_LEADER_POOL_SIZE",
                 "RULER_ASSASINATION",
                 "SINGLE_MIND",
-                "VERY_LOW_LEADER_HIRING_COST",
+                "LOW_LEADER_HIRING_COST",
                 "REIGN_LIFE_TIME",
-                "XENO_PHOBIC"
+                "XENO_PHOBIC",
+                "AGRICULTURAL_ORIENTED",
+                "MINING_ORIENTED"
               ]
   },
   {
@@ -115,10 +122,11 @@
     "RulerSelection" : "STRONG_RULER",
     "Traits": [
                 "HIGH_FLEET_CAPACITY",
-                "LOW_LEADER_POOL_SIZE",
+                "RUDE",
                 "RULER_ASSASINATION",
                 "SINGLE_MIND",
-                "VERY_LOW_LEADER_HIRING_COST",
+                "LOW_LEADER_HIRING_COST",
+                "RESEARCH_ORIENTED",
                 "REIGN_LIFE_TIME",
                 "XENO_PHOBIC"
               ]
@@ -130,8 +138,9 @@
     "Traits": [
                 "LOW_LEADER_POOL_SIZE",
                 "SINGLE_MIND",
-                "VERY_LOW_LEADER_HIRING_COST",
-                "REIGN_LONG"
+                "LOW_LEADER_HIRING_COST",
+                "REIGN_LONG",
+                "INDUSTRIAL"
               ]
   },
   {
@@ -160,10 +169,10 @@
                 "HIGH_FLEET_CAPACITY",
                 "TOLERANT_FOR_WAR",
                 "TAX_ORIENTED",
-                "LOW_LEADER_POOL_SIZE",
                 "CHANCE_FOR_HEIR_BORN",
                 "RULER_ASSASINATION",
                 "POPULATION_RUSH",
+                "CREDIT_RUSH",
                 "REIGN_LIFE_TIME",
                 "XENO_PHOBIC"
               ]
@@ -177,7 +186,7 @@
                 "HIGH_FLEET_CAPACITY",
                 "TOLERANT_FOR_WAR",
                 "INDUSTRIAL",
-                "LOW_LEADER_HIRING_COST",
+                "VERY_LOW_LEADER_HIRING_COST",
                 "RULER_ASSASINATION",
                 "POPULATION_RUSH",
                 "REIGN_LIFE_TIME",
@@ -194,7 +203,7 @@
                 "MINING_ORIENTED",
                 "AGRICULTURAL_ORIENTED",
                 "WAR_HAPPY",
-                "HIGH_LEADER_POOL_SIZE",
+                "RUDE",
                 "CHANCE_FOR_HEIR_BORN",
                 "RULER_ASSASINATION",
                 "POPULATION_RUSH",
@@ -209,10 +218,8 @@
     "Traits": [
                 "UNHAPPY",
                 "TOLERANT_FOR_WAR",
-                "HIGH_FLEET_CAPACITY",
                 "AGRICULTURAL_ORIENTED",
                 "WAR_HAPPY",
-                "HIGH_LEADER_POOL_SIZE",
                 "CHANCE_FOR_HEIR_BORN",
                 "RULER_ASSASINATION",
                 "POPULATION_RUSH",
@@ -276,7 +283,6 @@
                 "CREDIT_RUSH",
                 "CHANCE_FOR_HEIR_BORN",
                 "RULER_ASSASINATION",
-                "VERY_HIGH_LEADER_POOL_SIZE",
                 "REIGN_LIFE_TIME",
                 "XENO_PHOBIC",
                 "GOVERNOR_HAPPINESS"
@@ -293,18 +299,21 @@
                 "TECHNOLOGY_FOCUSED",
                 "INDUSTRIAL",
                 "REIGN_SHORT",
-                "CREDIT_RUSH"
+                "CREDIT_RUSH",
+                "MERCANTILE",
+                "VERY_LOW_LEADER_HIRING_COST"
               ]
   },
   {
-    "ID": "SPACE_PIRATES",
-    "Name": "Space pirates",
+    "ID": "PIRATES",
+    "Name": "Pirates",
     "RulerSelection" : "STRONG_RULER",
     "Traits": [
                 "SINGLE_MIND",
+                "RUDE",
                 "ARMED_FREIGHTERS",
                 "LOW_LEADER_POOL_SIZE",
-                "VERY_LOW_LEADER_HIRING_COST",
+                "LOW_LEADER_HIRING_COST",
                 "REIGN_LONG"
               ]
   },
@@ -318,9 +327,11 @@
                 "BUSINESS_ORIENTED",
                 "WAR_HAPPY",
                 "CREDIT_RUSH",
-                "VERY_HIGH_LEADER_POOL_SIZE",
+                "LOW_LEADER_POOL_SIZE",
                 "HIGH_LEADER_HIRING_COST",
-                "REIGN_LIFE_TIME"
+                "RULER_ASSASINATION",
+                "REIGN_LIFE_TIME",
+                "HIGH_CORRUPTION"
               ]
   }
 ]

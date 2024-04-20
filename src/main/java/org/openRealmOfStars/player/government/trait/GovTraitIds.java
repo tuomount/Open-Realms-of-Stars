@@ -129,6 +129,12 @@ public final class GovTraitIds {
   /** Ruler assasination */
   public static final String RULER_ASSASINATION =
       "RULER_ASSASINATION";
+  /** High corruption */
+  public static final String HIGH_CORRUPTION =
+      "HIGH_CORRUPTION";
+  /** Low corruption */
+  public static final String LOW_CORRUPTION =
+      "LOW_CORRUPTION";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

@@ -443,6 +443,10 @@ public class Government {
     sb.append(getName());
     sb.append(lf);
     sb.append(dot);
+    sb.append(" Ruler selection: ");
+    sb.append(getRulerSelection());
+    sb.append(lf);
+    sb.append(dot);
     sb.append(" Base fleet capacity: ");
     sb.append(getFleetCapacity());
     sb.append(lf);

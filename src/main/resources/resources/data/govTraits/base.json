@@ -96,7 +96,9 @@
       "EXTRA_HAPPY",
       "WEAKNESS_FOR_WAR",
       "TOLERANT_FOR_WAR",
-      "ENDURE_WAR"
+      "ENDURE_WAR",
+      "HIGH_CORRUPTION",
+      "LOW_CORRUPTION"
     ]
   },
   {
@@ -347,5 +349,26 @@
     "name": "Ruler assasination possible",
     "description": "Power hunger leaders can assinate ruler.",
     "points": -1
-  }
+  },
+  {
+    "id": "HIGH_CORRUPTION",
+    "name": "High corruption",
+    "description": "Leaders get corruption much more likely.",
+    "points": -1,
+    "conflictsWith": [
+      "LOW_CORRUPTION",
+      "SINGLE_MIND"
+    ]
+  },
+  {
+    "id": "LOW_CORRUPTION",
+    "name": "Low corruption",
+    "description": "Leaders get corruption less likely.",
+    "points": 1,
+    "conflictsWith": [
+      "HIGH_CORRUPTION",
+      "SINGLE_MIND"
+    ]
+  },
+  
 ]

@@ -162,7 +162,7 @@ public class GovernmentTest {
   @Test
   public void testSpacePirates() {
     System.out.println("Old:" + GovernmentType.SPACE_PIRATES.getDescription(true));
-    System.out.println("New:" + GovernmentFactory.createOne("SPACE_PIRATES")
+    System.out.println("New:" + GovernmentFactory.createOne("PIRATES")
         .getDescription(true));
   }
   @Test

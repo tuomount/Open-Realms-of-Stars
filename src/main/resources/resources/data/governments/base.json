@@ -262,7 +262,7 @@
                 "WAR_HAPPY",
                 "POPULATION_RUSH",
                 "ARMED_FREIGHTERS",
-                "RULER_ASSASINATION",
+                "RULER_ASSASINATION"
               ]
   },
   {
@@ -296,6 +296,31 @@
                 "CREDIT_RUSH"
               ]
   },
-  
-  
+  {
+    "ID": "SPACE_PIRATES",
+    "Name": "Space pirates",
+    "RulerSelection" : "STRONG_RULER",
+    "Traits": [
+                "SINGLE_MIND",
+                "ARMED_FREIGHTERS",
+                "LOW_LEADER_POOL_SIZE",
+                "VERY_LOW_LEADER_HIRING_COST",
+                "REIGN_LONG"
+              ]
+  },
+  {
+    "ID": "SYNDICATE",
+    "Name": "Syndicate",
+    "RulerSelection" : "STRONG_RULER",
+    "Traits": [
+                "TOLERANT_FOR_WAR",
+                "ARMED_FREIGHTERS",
+                "BUSINESS_ORIENTED",
+                "WAR_HAPPY",
+                "CREDIT_RUSH",
+                "VERY_HIGH_LEADER_POOL_SIZE",
+                "HIGH_LEADER_HIRING_COST",
+                "REIGN_LIFE_TIME"
+              ]
+  }
 ]

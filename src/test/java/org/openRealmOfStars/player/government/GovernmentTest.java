@@ -159,5 +159,17 @@ public class GovernmentTest {
     System.out.println("New:" + GovernmentFactory.createOne("TECHNOCRACY")
         .getDescription(true));
   }
+  @Test
+  public void testSpacePirates() {
+    System.out.println("Old:" + GovernmentType.SPACE_PIRATES.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("SPACE_PIRATES")
+        .getDescription(true));
+  }
+  @Test
+  public void testSyndicate() {
+    System.out.println("Old:" + GovernmentType.SYNDICATE.getDescription(true));
+    System.out.println("New:" + GovernmentFactory.createOne("SYNDICATE")
+        .getDescription(true));
+  }
 
 }

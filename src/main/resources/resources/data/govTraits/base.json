@@ -279,7 +279,7 @@
   {
     "id": "LOW_LEADER_POOL_SIZE",
     "name": "Low leader pool size",
-    "description": "Leader pool size is 6.",
+    "description": "Optimal amount leaders is 6.",
     "points": -1,
     "conflictsWith": [
       "HIGH_LEADER_POOL_SIZE",
@@ -289,7 +289,7 @@
   {
     "id": "HIGH_LEADER_POOL_SIZE",
     "name": "High leader pool size",
-    "description": "Leader pool size is 10.",
+    "description": "Optimal amount leaders is 10.",
     "points": 1,
     "conflictsWith": [
       "LOW_LEADER_POOL_SIZE",
@@ -299,7 +299,7 @@
   {
     "id": "VERY_HIGH_LEADER_POOL_SIZE",
     "name": "Very high leader pool size",
-    "description": "Leader pool size is 12.",
+    "description": "Optimal amount leaders is 12.",
     "points": 2,
     "conflictsWith": [
       "HIGH_LEADER_POOL_SIZE",

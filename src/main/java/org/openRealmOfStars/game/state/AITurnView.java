@@ -61,7 +61,7 @@ import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetType;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.player.leader.RulerUtility;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
@@ -3787,7 +3787,7 @@ public class AITurnView extends BlackPanel {
             Planet.PRODUCTION_CREDITS, i);
         handleLowCreditWarning(info, creditFlow);
         // Handle war fatigue for player
-        GovernmentType government = info.getGovernment();
+        Government government = info.getGovernment();
         if (!government.isImmuneToHappiness()) {
           int warResistance = government.getWarResistance();
           if (info.getRuler() != null

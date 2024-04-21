@@ -28,7 +28,7 @@ import org.openRealmOfStars.game.state.AITurnView;
 import org.openRealmOfStars.game.tutorial.TutorialList;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -341,13 +341,16 @@ public class GameTest {
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     config.setRace(0, SpaceRaceFactory.createOne("HUMANS"));
     config.setPlayerName(0, "Challenging Terran");
-    config.setPlayerGovernment(0, GovernmentType.FEDERATION);
+    config.setPlayerGovernment(0, GovernmentFactory
+        .createOne("FEDERATION"));
     config.setRace(1, SpaceRaceFactory.createOne("HUMANS"));
-    config.setPlayerGovernment(1, GovernmentType.UNION);
+    config.setPlayerGovernment(1, GovernmentFactory
+        .createOne("UNION"));
     config.setPlayerName(1, "Normal Human");
     config.setRace(2, SpaceRaceFactory.createOne("HUMANS"));
     config.setPlayerName(2, "Weak Human");
-    config.setPlayerGovernment(2, GovernmentType.DEMOCRACY);
+    config.setPlayerGovernment(2, GovernmentFactory
+        .createOne("DEMOCRACY"));
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
     game.makeNewGame(false);

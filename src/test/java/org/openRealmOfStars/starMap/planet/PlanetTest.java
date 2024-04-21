@@ -24,7 +24,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -164,7 +164,8 @@ public class PlanetTest extends TestCase {
   public void testPlanetKillWorker() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.GUILD);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("GUILD"));
     Mockito.when(info.getWarFatigue()).thenReturn(0);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne("HUMANS"));
     planet.setPlanetOwner(0, info);

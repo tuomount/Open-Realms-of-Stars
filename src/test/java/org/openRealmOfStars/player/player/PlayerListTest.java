@@ -22,7 +22,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 import junit.framework.TestCase;
@@ -112,16 +112,16 @@ public class PlayerListTest extends TestCase {
     PlayerList list = new PlayerList();
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
         4, 0);
-    info.setGovernment(GovernmentType.DEMOCRACY);
+    info.setGovernment(GovernmentFactory.createOne("DEMOCRACY"));
     list.addPlayer(info);
     info = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"), 4, 1);
-    info.setGovernment(GovernmentType.CLAN);
+    info.setGovernment(GovernmentFactory.createOne("CLAN"));
     list.addPlayer(info);
     info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"), 4, 2);
-    info.setGovernment(GovernmentType.AI);
+    info.setGovernment(GovernmentFactory.createOne("AI"));
     list.addPlayer(info);
     info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 4, 3);
-    info.setGovernment(GovernmentType.FEDERATION);
+    info.setGovernment(GovernmentFactory.createOne("FEDERATION"));
     list.addPlayer(info);
     list.calculateInitialDiplomacyBonuses();
     info = list.getPlayerInfoByIndex(0);
@@ -148,16 +148,16 @@ public class PlayerListTest extends TestCase {
     PlayerList list = new PlayerList();
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"),
         4, 0);
-    info.setGovernment(GovernmentType.DEMOCRACY);
+    info.setGovernment(GovernmentFactory.createOne("DEMOCRACY"));
     list.addPlayer(info);
     info = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"), 4, 1);
-    info.setGovernment(GovernmentType.DEMOCRACY);
+    info.setGovernment(GovernmentFactory.createOne("DEMOCRACY"));
     list.addPlayer(info);
     info = new PlayerInfo(SpaceRaceFactory.createOne("MECHIONS"), 4, 2);
-    info.setGovernment(GovernmentType.HORDE);
+    info.setGovernment(GovernmentFactory.createOne("HORDE"));
     list.addPlayer(info);
     info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"), 4, 3);
-    info.setGovernment(GovernmentType.TECHNOCRACY);
+    info.setGovernment(GovernmentFactory.createOne("TECHNOCRACY"));
     list.addPlayer(info);
     list.calculateInitialDiplomacyBonuses();
     info = list.getPlayerInfoByIndex(0);

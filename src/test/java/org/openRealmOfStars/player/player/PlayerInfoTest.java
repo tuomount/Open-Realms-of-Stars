@@ -31,7 +31,7 @@ import org.openRealmOfStars.ai.pathfinding.PathPoint;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
@@ -159,7 +159,7 @@ public class PlayerInfoTest {
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testWarFatigue() {
       PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 8, 0);
-      info.setGovernment(GovernmentType.DEMOCRACY);
+      info.setGovernment(GovernmentFactory.createOne("DEMOCRACY"));
       assertEquals(0, info.getTotalWarFatigue());
       info.setWarFatigue(-80);
       assertEquals(-1, info.getTotalWarFatigue());
@@ -187,9 +187,9 @@ public class PlayerInfoTest {
     public void testGovernment() {
       PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("SCAURIANS"),
           8, 0);
-      assertEquals(GovernmentType.AI, info.getGovernment());
-      info.setGovernment(GovernmentType.DEMOCRACY);
-      assertEquals(GovernmentType.DEMOCRACY, info.getGovernment());
+      assertEquals(GovernmentFactory.createOne("AI"), info.getGovernment());
+      info.setGovernment(GovernmentFactory.createOne("DEMOCRACY"));
+      assertEquals(GovernmentFactory.createOne("DEMOCRACY"), info.getGovernment());
       assertEquals(0, info.getWarFatigue());
       info.setWarFatigue(5);
       assertEquals(5, info.getWarFatigue());

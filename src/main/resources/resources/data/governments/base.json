@@ -3,6 +3,8 @@
     "ID": "DEMOCRACY",
     "Name": "Democracy",
     "RulerSelection" : "ELECTION_TYPE1",
+    "RulerTitleMale" : "President",
+    "RulerTitleFemale" : "President",
     "Traits": [
                 "HAPPY",
                 "LOW_FLEET_CAPACITY",
@@ -21,6 +23,8 @@
     "ID": "UNION",
     "Name": "Union",
     "RulerSelection" : "ELECTION_TYPE1",
+    "RulerTitleMale" : "President",
+    "RulerTitleFemale" : "President",
     "Traits": [
                 "HAPPY",
                 "LOW_FLEET_CAPACITY",
@@ -38,6 +42,8 @@
     "ID": "FEDERATION",
     "Name": "Federation",
     "RulerSelection" : "ELECTION_TYPE2",
+    "RulerTitleMale" : "President",
+    "RulerTitleFemale" : "President",
     "Traits": [
                 "HAPPY",
                 "POLITICAL",
@@ -51,6 +57,8 @@
     "ID": "REPUBLIC",
     "Name": "Republic",
     "RulerSelection" : "ELECTION_TYPE2",
+    "RulerTitleMale" : "President",
+    "RulerTitleFemale" : "President",
     "Traits": [
                 "POLITICAL",
                 "MERCANTILE",
@@ -64,6 +72,8 @@
     "ID": "GUILD",
     "Name": "Guild",
     "RulerSelection" : "CEO_AS_A_RULER",
+    "RulerTitleMale" : "Leader",
+    "RulerTitleFemale" : "Leader",
     "Traits": [
                 "BUSINESS_ORIENTED",
                 "INDUSTRIAL",
@@ -78,6 +88,8 @@
     "ID": "ENTERPRISE",
     "Name": "Enterprise",
     "RulerSelection" : "CEO_AS_A_RULER",
+    "RulerTitleMale" : "CEO",
+    "RulerTitleFemale" : "CEO",
     "Traits": [
                 "BUSINESS_ORIENTED",
                 "TAX_ORIENTED",
@@ -90,6 +102,8 @@
     "ID": "HEGEMONY",
     "Name": "Hegemony",
     "RulerSelection" : "HEGEMONIA_RULER",
+    "RulerTitleMale" : "Leader",
+    "RulerTitleFemale" : "Leader",
     "Traits": [
                 "UNHAPPY",
                 "HIGH_FLEET_CAPACITY",
@@ -107,6 +121,8 @@
     "ID": "NEST",
     "Name": "Nest",
     "RulerSelection" : "STRONG_RULER",
+    "RulerTitleMale" : "King",
+    "RulerTitleFemale" : "Queen",
     "Traits": [
                 "LOW_LEADER_POOL_SIZE",
                 "RULER_ASSASINATION",
@@ -122,6 +138,8 @@
     "ID": "HIVEMIND",
     "Name": "Hivemind",
     "RulerSelection" : "STRONG_RULER",
+    "RulerTitleMale" : "Master",
+    "RulerTitleFemale" : "Master",
     "Traits": [
                 "HIGH_FLEET_CAPACITY",
                 "RUDE",
@@ -137,6 +155,8 @@
     "ID": "AI",
     "Name": "AI",
     "RulerSelection" : "AI_RULER",
+    "RulerTitleMale" : "Main Process",
+    "RulerTitleFemale" : "Main Process",
     "Traits": [
                 "LOW_LEADER_POOL_SIZE",
                 "SINGLE_MIND",
@@ -149,6 +169,8 @@
     "ID": "EMPIRE",
     "Name": "Empire",
     "RulerSelection" : "HEIR_TO_THRONE",
+    "RulerTitleMale" : "Emperor",
+    "RulerTitleFemale" : "Empiress",
     "Traits": [
                 "UNHAPPY",
                 "HIGH_FLEET_CAPACITY",
@@ -166,6 +188,8 @@
     "ID": "KINGDOM",
     "Name": "Kingdom",
     "RulerSelection" : "HEIR_TO_THRONE",
+    "RulerTitleMale" : "King",
+    "RulerTitleFemale" : "Queen",
     "Traits": [
                 "UNHAPPY",
                 "HIGH_FLEET_CAPACITY",
@@ -183,6 +207,8 @@
     "ID": "HIERARCHY",
     "Name": "Hierarchy",
     "RulerSelection" : "STRONG_RULER",
+    "RulerTitleMale" : "Lord",
+    "RulerTitleFemale" : "Lady",
     "Traits": [
                 "UNHAPPY",
                 "HIGH_FLEET_CAPACITY",
@@ -199,6 +225,8 @@
     "ID": "HORDE",
     "Name": "Horde",
     "RulerSelection" : "STRONG_RULER",
+    "RulerTitleMale" : "Chief",
+    "RulerTitleFemale" : "Chiefess",
     "Traits": [
                 "UNHAPPY",
                 "TOLERANT_FOR_WAR",
@@ -217,6 +245,8 @@
     "ID": "CLAN",
     "Name": "Clan",
     "RulerSelection" : "STRONG_RULER",
+    "RulerTitleMale" : "Chief",
+    "RulerTitleFemale" : "Chiefess",
     "Traits": [
                 "UNHAPPY",
                 "TOLERANT_FOR_WAR",
@@ -233,6 +263,8 @@
     "ID": "COLLECTIVE",
     "Name": "Collective",
     "RulerSelection" : "AI_RULER",
+    "RulerTitleMale" : "Leader",
+    "RulerTitleFemale" : "Leader",
     "Traits": [
                 "TOLERANT_FOR_WAR",
                 "HIGH_FLEET_CAPACITY",
@@ -246,6 +278,8 @@
     "ID": "UTOPIA",
     "Name": "Utopia",
     "RulerSelection" : "HEGEMONIA_RULER",
+    "RulerTitleMale" : "Wise",
+    "RulerTitleFemale" : "Wise",
     "Traits": [
                 "WEAKNESS_FOR_WAR",
                 "VERY_LOW_FLEET_CAPACITY",
@@ -263,6 +297,8 @@
     "ID": "REGIME",
     "Name": "Regime",
     "RulerSelection" : "STRONG_RULER",
+    "RulerTitleMale" : "Leader",
+    "RulerTitleFemale" : "Leader",
     "Traits": [
                 "TOLERANT_FOR_WAR",
                 "UNHAPPY",
@@ -280,6 +316,8 @@
     "ID": "FEUDALISM",
     "Name": "Feudalism",
     "RulerSelection" : "HEIR_TO_THRONE",
+    "RulerTitleMale" : "King",
+    "RulerTitleFemale" : "Queen",
     "Traits": [
                 "UNHAPPY",
                 "ENDURE_WAR",
@@ -296,6 +334,8 @@
     "ID": "TECHNOCRACY",
     "Name": "Technocracy",
     "RulerSelection" : "ELECTION_TYPE1",
+    "RulerTitleMale" : "Master engineer",
+    "RulerTitleFemale" : "Master engineer",
     "Traits": [
                 "LOW_FLEET_CAPACITY",
                 "WEAKNESS_FOR_WAR",
@@ -312,6 +352,8 @@
     "ID": "PIRATES",
     "Name": "Pirates",
     "RulerSelection" : "STRONG_RULER",
+    "RulerTitleMale" : "Leader",
+    "RulerTitleFemale" : "Leader",
     "Traits": [
                 "SINGLE_MIND",
                 "RUDE",
@@ -325,6 +367,8 @@
     "ID": "SYNDICATE",
     "Name": "Syndicate",
     "RulerSelection" : "STRONG_RULER",
+    "RulerTitleMale" : "Boss",
+    "RulerTitleFemale" : "Boss",
     "Traits": [
                 "TOLERANT_FOR_WAR",
                 "ARMED_FREIGHTERS",

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.race;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,7 +19,7 @@ package org.openRealmOfStars.player.race;
 
 import java.util.ArrayList;
 
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -82,13 +82,12 @@ public final class SpaceRaceUtility {
 
   /**
    * Get random empire name for realm
-   * TODO: Remove from here, realm name is only loosely coupled to race
    * @param race SpaceRace for which random name is going to be generated
-   * @param government Government type for realm
+   * @param government Government for realm
    * @return realm name
    */
   public static String getRealmName(final SpaceRace race,
-      final GovernmentType government) {
+      final Government government) {
     StringBuilder sb = new StringBuilder();
     switch (DiceGenerator.getRandom(6)) {
       default:

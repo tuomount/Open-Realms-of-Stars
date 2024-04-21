@@ -32,7 +32,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.TradeRoute;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -73,8 +73,10 @@ public class FleetTradeViewTest {
     Coordinate coord = Mockito.mock(Coordinate.class);
     Mockito.when(info.getSectorVisibility(coord)).thenReturn(PlayerInfo.VISIBLE);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.CLAN);
-    Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.CLAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("CLAN"));
+    Mockito.when(info2.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("CLAN"));
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(playerList.getIndex(info2)).thenReturn(1);
     Mockito.when(playerList.getIndex(info)).thenReturn(0);
@@ -114,8 +116,10 @@ public class FleetTradeViewTest {
     Coordinate coord = Mockito.mock(Coordinate.class);
     Mockito.when(info.getSectorVisibility(coord)).thenReturn(PlayerInfo.VISIBLE);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.CLAN);
-    Mockito.when(info2.getGovernment()).thenReturn(GovernmentType.CLAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("CLAN"));
+    Mockito.when(info2.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("CLAN"));
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(playerList.getIndex(info2)).thenReturn(1);
     Mockito.when(playerList.getIndex(info)).thenReturn(0);

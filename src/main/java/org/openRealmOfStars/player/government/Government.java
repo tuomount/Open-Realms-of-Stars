@@ -56,6 +56,14 @@ public class Government {
    */
   private RulerSelection rulerSelection;
   /**
+   * Ruler title for male.
+   */
+  private String rulerTitleMale;
+  /**
+   * Ruler title for female.
+   */
+  private String rulerTitleFemale;
+  /**
    * List of traits government has.
    */
   private ArrayList<GovTrait> traits;
@@ -421,12 +429,95 @@ public class Government {
     }
     return result;
   }
+
+  /**
+   * Is government aggressive? Does it have traits to that benefit for war.
+   * @return True or false
+   */
+  public boolean isAggressive() {
+    boolean result = false;
+    if (hasTrait(GovTraitIds.WAR_HAPPY)) {
+      result = true;
+    }
+    if (hasTrait(GovTraitIds.ENDURE_WAR)) {
+      result = true;
+    }
+    if (hasTrait(GovTraitIds.TOLERANT_FOR_WAR)) {
+      result = true;
+    }
+    if (hasTrait(GovTraitIds.SINGLE_MIND)) {
+      result = true;
+    }
+    return result;
+  }
+
+  /**
+   * Get all Government traits.
+   * @return Goverment traits.
+   */
+  public GovTrait[] getTraits() {
+    return traits.toArray(new GovTrait[0]);
+  }
+  /**
+   * Calculate number of trait values for Government
+   * @return Trait points.
+   */
+  public int getTraitValue() {
+    int result = 0;
+    for (GovTrait trait : traits) {
+      result = result + trait.getPoints();
+    }
+    return result;
+  }
+  /**
+   * Get Ruler Title male
+   * @return Title
+   */
+  public String getRulerTitleMale() {
+    return rulerTitleMale;
+  }
+
+  /**
+   * Get Ruler Title female
+   * @return Title
+   */
+  public String getRulerTitleFemale() {
+    return rulerTitleFemale;
+  }
+
+  /**
+   * Set Ruler title male.
+   * @param rulerTitleMale Title
+   */
+  public void setRulerTitleMale(final String rulerTitleMale) {
+    this.rulerTitleMale = rulerTitleMale;
+  }
+
+  /**
+   * Set Ruler title female.
+   * @param rulerTitleFemale Title
+   */
+  public void setRulerTitleFemale(final String rulerTitleFemale) {
+    this.rulerTitleFemale = rulerTitleFemale;
+  }
+
   /**
    * Get Government type description
    * @param markDown Is description on Markdown format or HTML.
    * @return Description
    */
   public String getDescription(final boolean markDown) {
+    return getDescription(markDown, false);
+  }
+
+  /**
+   * Get Government type description
+   * @param markDown Is description on Markdown format or HTML.
+   * @param listTraits true to list traits.
+   * @return Description
+   */
+  public String getDescription(final boolean markDown,
+      final boolean listTraits) {
     String lf = "<br>";
     String dot = "<li>";
     if (markDown) {
@@ -585,27 +676,30 @@ public class Government {
       sb.append(" Credit rush");
       sb.append(lf);
     }
-    sb.append("Traits:");
-    sb.append(lf);
-    int traitPoints = 0;
-    for (GovTrait trait : traits) {
-      traitPoints = traitPoints + trait.getPoints();
-      sb.append(dot);
-      sb.append(" ");
-      sb.append(trait.getName());
-      sb.append(" - ");
-      sb.append(trait.getDescription());
-      sb.append(" ");
-      sb.append(trait.getPoints());
+    if (listTraits) {
+      sb.append("Traits:");
+      sb.append(lf);
+      int traitPoints = 0;
+      for (GovTrait trait : traits) {
+        traitPoints = traitPoints + trait.getPoints();
+        sb.append(dot);
+        sb.append(" ");
+        sb.append(trait.getName());
+        sb.append(" - ");
+        sb.append(trait.getDescription());
+        sb.append(" ");
+        sb.append(trait.getPoints());
+        sb.append(lf);
+      }
+      sb.append(lf);
+      sb.append("Points: ");
+      sb.append(traitPoints);
       sb.append(lf);
     }
-    sb.append(lf);
-    sb.append("Points: ");
-    sb.append(traitPoints);
-    sb.append(lf);
     if (!markDown) {
       sb.append("</html>");
     }
     return sb.toString();
   }
+
 }

@@ -17,14 +17,12 @@ package org.openRealmOfStars.player.government;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import org.openRealmOfStars.player.leader.LeaderUtility;
-
 /**
 *
 * Government Type enumeration
 *
 */
-public enum GovernmentType {
+public enum GovernmentTypeEnum {
 
   /**
    * Democracy government
@@ -126,7 +124,7 @@ public enum GovernmentType {
    * @param singleMind Is government single minded
    * @param baseFleetCapacity Base fleet capacity based on government
    */
-  GovernmentType(final int index, final String name, final int happiness,
+  GovernmentTypeEnum(final int index, final String name, final int happiness,
       final int warResistance, final boolean singleMind,
       final int baseFleetCapacity) {
     this.index = index;
@@ -668,11 +666,6 @@ public enum GovernmentType {
     if (hasHeirs()) {
       sb.append(dot);
       sb.append(" Rulers have heirs");
-      sb.append(lf);
-    }
-    if (LeaderUtility.isPowerHungryReadyForKill(this)) {
-      sb.append(dot);
-      sb.append(" Possibility to internal power struggle");
       sb.append(lf);
     }
     if (allowArmedFreighters()) {

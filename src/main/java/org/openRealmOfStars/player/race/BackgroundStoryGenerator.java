@@ -18,7 +18,6 @@ package org.openRealmOfStars.player.race;
  */
 
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.leader.RulerUtility;
 import org.openRealmOfStars.player.race.trait.TraitIds;
@@ -559,8 +558,7 @@ public final class BackgroundStoryGenerator {
     StringBuilder sb = new StringBuilder();
     boolean scientific = false;
     boolean shipsBuilt = true;
-    if (info.getGovernment() == GovernmentType.TECHNOCRACY
-        || info.getGovernment() == GovernmentType.HEGEMONY) {
+    if (info.getGovernment().getResearchBonus() > 0) {
       scientific = true;
     }
     if (info.getRace().getResearchSpeed() > 100) {
@@ -891,7 +889,7 @@ public final class BackgroundStoryGenerator {
     boolean traders = false;
     String joinedVerb = "joined";
     String lowcaseGovernmentName = info.getGovernment().getName().toLowerCase();
-    if (info.getGovernment() == GovernmentType.AI) {
+    if (info.getGovernment().getId().equals("AI")) {
       lowcaseGovernmentName = "AI";
     }
     if (info.getGovernment().isImmuneToHappiness()) {

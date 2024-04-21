@@ -32,7 +32,6 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.AttitudeScore;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.Government;
-import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.trait.GovTraitIds;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
@@ -122,9 +121,7 @@ public final class LeaderUtility {
       final int level) {
     Gender gender = DiceGenerator.pickRandom(info.getRace().getGenders());
     // Adjust gender for starting rulers based on social system
-    if (level == LEVEL_START_RULER
-        && (info.getGovernment() == GovernmentType.EMPIRE
-          || info.getGovernment() == GovernmentType.KINGDOM)) {
+    if (level == LEVEL_START_RULER) {
       if (info.getRace().getSocialSystem() == SocialSystem.PATRIARCHY) {
         gender = Gender.MALE;
       }
@@ -1017,28 +1014,6 @@ public final class LeaderUtility {
       fleet.getCommander().getStats().addOne(StatType.NUMBER_OF_JAIL_TIME);
       fleet.setCommander(null);
     }
-  }
-
-  /**
-   * Is leader with power hungry perk ready to kill ruler?
-   * @param government Government type
-   * @return True if ready to kill
-   */
-  public static boolean isPowerHungryReadyForKill(
-      final GovernmentType government) {
-    if (government == GovernmentType.CLAN
-        || government == GovernmentType.EMPIRE
-        || government == GovernmentType.HEGEMONY
-        || government == GovernmentType.HIERARCHY
-        || government == GovernmentType.HIVEMIND
-        || government == GovernmentType.HORDE
-        || government == GovernmentType.KINGDOM
-        || government == GovernmentType.NEST
-        || government == GovernmentType.FEUDALISM
-        || government == GovernmentType.REGIME) {
-      return true;
-    }
-    return false;
   }
 
   /**

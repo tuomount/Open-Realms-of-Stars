@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openRealmOfStars.player.government.trait.GovTraitFactory;
 import org.openRealmOfStars.utilities.DataLoader;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
@@ -51,6 +52,20 @@ public final class GovernmentFactory {
     return SINGLETON.makeById(governmentId);
   }
 
+  /**
+   * Get random Government
+   * @return Government
+   */
+  public static Government getRandomGovernment() {
+    return DiceGenerator.pickRandom(SINGLETON.getAll());
+  }
+  /**
+   * Get all Governments in array
+   * @return array of Governments
+   */
+  public static Government[] getValues() {
+    return SINGLETON.getAll();
+  }
   /** Contructor */
   private GovernmentFactory() {
     this.governments = new HashMap<>();
@@ -90,6 +105,18 @@ public final class GovernmentFactory {
     final var governmentsLoaded = loader.loadAll(governments, basePath, files);
     ErrorLogger.log("SpaceRaces loaded: " + governmentsLoaded);
   }
+
+  /**
+   * Create/Retrieve all Governments, initialize factory if not yet
+   * @return Governments array
+   */
+  private Government[] getAll() {
+    if (!initialized) {
+      initialized = true;
+      init();
+    }
+    return governments.values().toArray(new Government[0]);
+  }
 }
 
 /** Government loader */
@@ -102,6 +129,8 @@ class GovernmentLoader extends DataLoader<String, Government> {
    * <li>ID : String</li>
    * <li>Name : String</li>
    * <li>RulerSelection : String</li>
+   * <li>RulerTitleMale : String (OPTINAL)</li>
+   * <li>RulerTitleFemale : String (OPTINAL)</li>
    * <li>Traits : List of traits (OPTIONAL) </li>
    * </ul>
    * </p>
@@ -114,8 +143,13 @@ class GovernmentLoader extends DataLoader<String, Government> {
       final var spaceRaceId = jobj.getString("ID");
       final var name = jobj.getString("Name");
       final var rulerSelection = jobj.getString("RulerSelection");
+      final var rulerTitleMale = jobj.optString("RulerTitleMale", "President");
+      final var rulerTitleFemale = jobj.optString("RulerTitleFemale",
+          "President");
       Government tmp = new Government(spaceRaceId, name);
       tmp.setRulerSelection(RulerSelection.getByString(rulerSelection));
+      tmp.setRulerTitleMale(rulerTitleMale);
+      tmp.setRulerTitleFemale(rulerTitleFemale);
       var jsonTraits = jobj.optJSONArray("Traits", new JSONArray());
       for (int i = 0; i < jsonTraits.length(); i++) {
         String traitName = jsonTraits.getString(i);

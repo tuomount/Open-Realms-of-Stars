@@ -473,9 +473,24 @@ public class Government {
       sb.append(" Rulers have heirs");
       sb.append(lf);
     }
+    if (isXenophopic()) {
+      sb.append(dot);
+      sb.append(" Xenophobic");
+      sb.append(lf);
+    }
     if (LeaderUtility.isPowerHungryReadyForKill(this)) {
       sb.append(dot);
       sb.append(" Possibility to internal power struggle");
+      sb.append(lf);
+    }
+    if (hasTrait(GovTraitIds.LOW_CORRUPTION)) {
+      sb.append(dot);
+      sb.append(" Low corruption");
+      sb.append(lf);
+    }
+    if (hasTrait(GovTraitIds.HIGH_CORRUPTION)) {
+      sb.append(dot);
+      sb.append(" High corruption");
       sb.append(lf);
     }
     if (allowArmedFreighters()) {
@@ -500,75 +515,75 @@ public class Government {
         sb.append(getGovernorHappiness());
         sb.append(lf);
       }
-      if (getDiplomaticBonus() != 0) {
-        sb.append(dot);
-        sb.append(" Diplomatic bonus: ");
-        sb.append(getDiplomaticBonus());
-        sb.append(lf);
-      }
-      if (getTradeBonus() != 0) {
-        sb.append(dot);
-        sb.append(" Trade bonus: ");
-        sb.append(getTradeBonus());
-        sb.append(lf);
-      }
-      if (getWarResistance() != 0) {
-        sb.append(dot);
-        sb.append(" War resistance: ");
-        sb.append(getWarResistance());
-        sb.append(lf);
-      }
-      if (getMiningBonus() != 0) {
-        sb.append(dot);
-        sb.append(" Mining bonus: ");
-        sb.append(getMiningBonus());
-        sb.append(lf);
-      }
-      if (getProductionBonus() != 0) {
-        sb.append(dot);
-        sb.append(" Production bonus: ");
-        sb.append(getProductionBonus());
-        sb.append(lf);
-      }
-      if (getCreditBonus() != 0) {
-        sb.append(dot);
-        sb.append(" Credit bonus: ");
-        sb.append(getCreditBonus());
-        sb.append(lf);
-      }
-      if (getResearchBonus() != 0) {
-        sb.append(dot);
-        sb.append(" Research bonus: ");
-        sb.append(getResearchBonus());
-        sb.append(lf);
-      }
-      if (getFoodBonus() != 0) {
-        sb.append(dot);
-        sb.append(" Food bonus: ");
-        sb.append(getFoodBonus());
-        sb.append(lf);
-      }
-      if (getCultureBonus() != 0) {
-        sb.append(dot);
-        sb.append(" Culture bonus: ");
-        sb.append(getCultureBonus());
-        sb.append(lf);
-      }
-      if (hasWarHappiness()) {
-        sb.append(dot);
-        sb.append(" War happiness");
-        sb.append(lf);
-      }
-      if (hasPopulationRush()) {
-        sb.append(dot);
-        sb.append(" Population rush");
-        sb.append(lf);
-      }
-      if (hasCreditRush()) {
-        sb.append(dot);
-        sb.append(" Credit rush");
-        sb.append(lf);
-      }
+    }
+    if (getDiplomaticBonus() != 0) {
+      sb.append(dot);
+      sb.append(" Diplomatic bonus: ");
+      sb.append(getDiplomaticBonus());
+      sb.append(lf);
+    }
+    if (getTradeBonus() != 0) {
+      sb.append(dot);
+      sb.append(" Trade bonus: ");
+      sb.append(getTradeBonus());
+      sb.append(lf);
+    }
+    if (getWarResistance() != 0) {
+      sb.append(dot);
+      sb.append(" War resistance: ");
+      sb.append(getWarResistance());
+      sb.append(lf);
+    }
+    if (getMiningBonus() != 0) {
+      sb.append(dot);
+      sb.append(" Mining bonus: ");
+      sb.append(getMiningBonus());
+      sb.append(lf);
+    }
+    if (getProductionBonus() != 0) {
+      sb.append(dot);
+      sb.append(" Production bonus: ");
+      sb.append(getProductionBonus());
+      sb.append(lf);
+    }
+    if (getCreditBonus() != 0) {
+      sb.append(dot);
+      sb.append(" Credit bonus: ");
+      sb.append(getCreditBonus());
+      sb.append(lf);
+    }
+    if (getResearchBonus() != 0) {
+      sb.append(dot);
+      sb.append(" Research bonus: ");
+      sb.append(getResearchBonus());
+      sb.append(lf);
+    }
+    if (getFoodBonus() != 0) {
+      sb.append(dot);
+      sb.append(" Food bonus: ");
+      sb.append(getFoodBonus());
+      sb.append(lf);
+    }
+    if (getCultureBonus() != 0) {
+      sb.append(dot);
+      sb.append(" Culture bonus: ");
+      sb.append(getCultureBonus());
+      sb.append(lf);
+    }
+    if (hasWarHappiness()) {
+      sb.append(dot);
+      sb.append(" War happiness");
+      sb.append(lf);
+    }
+    if (hasPopulationRush()) {
+      sb.append(dot);
+      sb.append(" Population rush");
+      sb.append(lf);
+    }
+    if (hasCreditRush()) {
+      sb.append(dot);
+      sb.append(" Credit rush");
+      sb.append(lf);
     }
     sb.append("Traits:");
     sb.append(lf);

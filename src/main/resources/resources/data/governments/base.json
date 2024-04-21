@@ -11,7 +11,9 @@
                 "MERCANTILE",
                 "INDUSTRIAL",
                 "HIGH_LEADER_POOL_SIZE",
+                "LOW_LEADER_HIRING_COST",
                 "REIGN_SHORT",
+                "LOW_CORRUPTION",
                 "CREDIT_RUSH"
               ]
   },
@@ -152,7 +154,7 @@
                 "HIGH_FLEET_CAPACITY",
                 "TOLERANT_FOR_WAR",
                 "INDUSTRIAL",
-                "LOW_LEADER_POOL_SIZE",
+                "CULTURE_ORIENTED",
                 "CHANCE_FOR_HEIR_BORN",
                 "RULER_ASSASINATION",
                 "POPULATION_RUSH",
@@ -235,6 +237,7 @@
                 "TOLERANT_FOR_WAR",
                 "HIGH_FLEET_CAPACITY",
                 "MINING_ORIENTED",
+                "RESEARCH_ORIENTED",
                 "LOW_LEADER_POOL_SIZE",
                 "LOW_LEADER_HIRING_COST"
               ]
@@ -251,8 +254,9 @@
                 "MERCANTILE",
                 "CULTURE_ORIENTED",
                 "AGRICULTURAL_ORIENTED",
-                "LOW_LEADER_POOL_SIZE",
-                "HIGH_LEADER_HIRING_COST"
+                "HIGH_LEADER_POOL_SIZE",
+                "HIGH_LEADER_HIRING_COST",
+                "LOW_CORRUPTION"
               ]
   },
   {
@@ -261,7 +265,6 @@
     "RulerSelection" : "STRONG_RULER",
     "Traits": [
                 "TOLERANT_FOR_WAR",
-                "HIGH_FLEET_CAPACITY",
                 "UNHAPPY",
                 "INDUSTRIAL",
                 "MINING_ORIENTED",
@@ -269,7 +272,8 @@
                 "WAR_HAPPY",
                 "POPULATION_RUSH",
                 "ARMED_FREIGHTERS",
-                "RULER_ASSASINATION"
+                "RULER_ASSASINATION",
+                "HIGH_CORRUPTION"
               ]
   },
   {
@@ -325,6 +329,7 @@
                 "TOLERANT_FOR_WAR",
                 "ARMED_FREIGHTERS",
                 "BUSINESS_ORIENTED",
+                "RUDE",
                 "WAR_HAPPY",
                 "CREDIT_RUSH",
                 "LOW_LEADER_POOL_SIZE",

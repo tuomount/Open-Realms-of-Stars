@@ -1580,7 +1580,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1629,7 +1629,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1705,7 +1705,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
-    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
@@ -1821,7 +1821,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
@@ -1998,6 +1998,7 @@ public class PlanetHandlingTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAlteirianHandling4PopulationWithFarmAndLab() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("ALTEIRIANS"));
+    info.setGovernment(GovernmentFactory.createOne("PIRATES"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2070,7 +2071,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
-    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
@@ -2309,7 +2310,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
@@ -2321,6 +2322,7 @@ public class PlanetHandlingTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGreyansHandling6PopulationAllFarmersLateGame() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
+    info.setGovernment(GovernmentFactory.createOne("PIRATES"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2356,6 +2358,7 @@ public class PlanetHandlingTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGreyansHandling6PopulationAllFarmers2() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
+    info.setGovernment(GovernmentFactory.createOne("PIRATES"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2391,6 +2394,7 @@ public class PlanetHandlingTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGreyansHandling7PopulationFullFarms() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("GREYANS"));
+    info.setGovernment(GovernmentFactory.createOne("PIRATES"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2455,7 +2459,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(4, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(13, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
@@ -2465,6 +2469,7 @@ public class PlanetHandlingTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHumansHandling9PopulationFullFarmers() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
+    info.setGovernment(GovernmentFactory.createOne("PIRATES"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2502,6 +2507,7 @@ public class PlanetHandlingTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHumansHandling7PopulationFullFarmers() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
+    info.setGovernment(GovernmentFactory.createOne("PIRATES"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2566,7 +2572,7 @@ public class PlanetHandlingTest extends TestCase {
     assertEquals(3, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
     assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
-    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(12, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
@@ -2576,6 +2582,7 @@ public class PlanetHandlingTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTeuthidaesHandling10PopulationFullFarmers() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("TEUTHIDAES"));
+    info.setGovernment(GovernmentFactory.createOne("PIRATES"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2614,6 +2621,7 @@ public class PlanetHandlingTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMothoidsHandling6PopulationFullFarms() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MOTHOIDS"));
+    info.setGovernment(GovernmentFactory.createOne("PIRATES"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2649,6 +2657,7 @@ public class PlanetHandlingTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMothoidsHandling7PopulationFullFarms() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MOTHOIDS"));
+    info.setGovernment(GovernmentFactory.createOne("PIRATES"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);
@@ -2686,6 +2695,7 @@ public class PlanetHandlingTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testScaurianHandling7PopulationFullFarms() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("SCAURIANS"));
+    info.setGovernment(GovernmentFactory.createOne("PIRATES"));
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setWaterLevel(WaterLevelType.HUMID);
     planet.setTemperatureType(TemperatureType.TEMPERATE);

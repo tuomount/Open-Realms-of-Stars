@@ -372,7 +372,7 @@ public class BackgroundStoryGeneratorTest {
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
     assertEquals(true, result.contains("Max Power"));
-    assertEquals(true, result.contains("hive-mind"));
+    assertEquals(true, result.contains("hivemind"));
     assertEquals(true, result.contains("Lithorians"));
   }
 
@@ -399,7 +399,7 @@ public class BackgroundStoryGeneratorTest {
     String result = BackgroundStoryGenerator.generateBackgroundStory(
         info, startingPlanet, starYear);
     assertEquals(true, result.contains("Max Power"));
-    assertEquals(true, result.contains("hive-mind"));
+    assertEquals(true, result.contains("hivemind"));
     assertEquals(true, result.contains("Alteirian"));
   }
 

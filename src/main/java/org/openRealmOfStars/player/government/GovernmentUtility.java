@@ -53,7 +53,7 @@ public final class GovernmentUtility {
         }
       }
     }
-    if (government1.getRulerSelection() == government1.getRulerSelection()) {
+    if (government1.getRulerSelection() == government2.getRulerSelection()) {
       result++;
     }
     if (government2.getRulerTitleMale().equals(

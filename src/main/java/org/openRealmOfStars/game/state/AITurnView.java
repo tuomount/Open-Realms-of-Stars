@@ -62,6 +62,7 @@ import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetType;
 import org.openRealmOfStars.player.government.Government;
+import org.openRealmOfStars.player.government.trait.GovTraitIds;
 import org.openRealmOfStars.player.leader.RulerUtility;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
@@ -2739,34 +2740,29 @@ public class AITurnView extends BlackPanel {
     }
     int planets = 0;
     int happiness = 0;
-    int population = 0;
     for (Planet planet : map.getPlanetList()) {
       if (planet.getPlanetPlayerInfo() == realm) {
         planets++;
         happiness = happiness
-            + planet.calculateHappiness() * planet.getTotalPopulation();
-        population = population + planet.getTotalPopulation();
+            + planet.calculateHappiness() * planet.getTotalPopulation() / 2;
       }
-    }
-    if (population > 0) {
-      happiness = happiness / population;
     }
     switch (planets) {
     case 0:
     case 1: {
-      result = result - 10;
+      result = result - 24;
       break;
     }
     case 2: {
-      result = result - 5;
+      result = result - 12;
       break;
     }
     case 3: {
-      result = result - 2;
+      result = result - 6;
       break;
     }
     case 4: {
-      result = result - 1;
+      result = result - 3;
       break;
     }
     default: {
@@ -2786,7 +2782,12 @@ public class AITurnView extends BlackPanel {
         result = result + 3;
       }
     }
-    // TODO Corruption traits from Government
+    if (realm.getGovernment().hasTrait(GovTraitIds.HIGH_CORRUPTION)) {
+      result = result + 10;
+    }
+    if (realm.getGovernment().hasTrait(GovTraitIds.LOW_CORRUPTION)) {
+      result = result - 10;
+    }
     return result;
   }
 

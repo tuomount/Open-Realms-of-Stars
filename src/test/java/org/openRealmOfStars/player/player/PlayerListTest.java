@@ -163,18 +163,18 @@ public class PlayerListTest extends TestCase {
     info = list.getPlayerInfoByIndex(0);
     assertEquals(2, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
     assertEquals(-4, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
-    assertEquals(2, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
+    assertEquals(3, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
     info = list.getPlayerInfoByIndex(1);
     assertEquals(6, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
     assertEquals(-4, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
-    assertEquals(2, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
+    assertEquals(3, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
     info = list.getPlayerInfoByIndex(2);
     assertEquals(1, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
     assertEquals(-3, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
     assertEquals(-1, info.getDiplomacy().getDiplomacyList(3).getDiplomacyBonus());
     info = list.getPlayerInfoByIndex(3);
-    assertEquals(4, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
-    assertEquals(0, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
+    assertEquals(5, info.getDiplomacy().getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(1, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
     assertEquals(-4, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
   }
 

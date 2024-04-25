@@ -29,7 +29,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonus;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
@@ -49,7 +49,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("KINGDOM"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -73,7 +74,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.DEMOCRACY);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("DEMOCRACY"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -93,7 +95,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("EMPIRE"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -117,7 +120,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "CENTAURS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIERARCHY);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("HIERARCHY"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -141,7 +145,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "SCAURIANS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.ENTERPRISE);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("ENTERPRISE"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -161,7 +166,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "SPORKS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.CLAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("CLAN"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -181,7 +187,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "GREYANS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HEGEMONY);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("HEGEMONY"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -201,7 +208,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "MOTHOIDS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("HIVEMIND"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -221,7 +229,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("KINGDOM"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet, 1);
@@ -238,7 +247,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("KINGDOM"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet, 2);
@@ -255,7 +265,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "MECHIONS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("AI"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -275,7 +286,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "MOTHOIDS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("EMPIRE"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -292,7 +304,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "SPORKS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("KINGDOM"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -309,7 +322,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("KINGDOM"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -325,7 +339,8 @@ public class LeaderUtilityTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("KINGDOM"));
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test Planet I");
     Leader leader = LeaderUtility.createLeader(info, planet,
@@ -339,7 +354,8 @@ public class LeaderUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNextLeaderKingdom() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("KINGDOM"));
     Mockito.when(realm.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
     ArrayList<Leader> pool = new ArrayList<>();
@@ -387,7 +403,8 @@ public class LeaderUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNextLeaderHorde() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.HORDE);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("HORDE"));
     Mockito.when(realm.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
     ArrayList<Leader> pool = new ArrayList<>();
@@ -432,7 +449,8 @@ public class LeaderUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNextLeaderCeo() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.ENTERPRISE);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("ENTERPRISE"));
     ArrayList<Leader> pool = new ArrayList<>();
     Mockito.when(realm.getLeaderPool()).thenReturn(pool);
     Leader leader = new Leader("Test Leader");
@@ -469,7 +487,8 @@ public class LeaderUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNextLeaderDemocracy() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.UNION);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("UNION"));
     ArrayList<Leader> pool = new ArrayList<>();
     Mockito.when(realm.getLeaderPool()).thenReturn(pool);
     Leader leader = new Leader("Test Leader");
@@ -505,7 +524,8 @@ public class LeaderUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNextLeaderFederation() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.FEDERATION);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("FEDERATION"));
     ArrayList<Leader> pool = new ArrayList<>();
     Mockito.when(realm.getLeaderPool()).thenReturn(pool);
     Leader leader = new Leader("Test Leader");
@@ -543,7 +563,8 @@ public class LeaderUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNextLeaderHegemony() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.HEGEMONY);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("HEGEMONY"));
     Mockito.when(realm.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
     ArrayList<Leader> pool = new ArrayList<>();
@@ -576,7 +597,8 @@ public class LeaderUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNextLeaderAi() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("AI"));
     ArrayList<Leader> pool = new ArrayList<>();
     Mockito.when(realm.getLeaderPool()).thenReturn(pool);
     Leader leader = new Leader("Test Leader");
@@ -607,7 +629,8 @@ public class LeaderUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testLeaderBio() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("AI"));
     Leader leader = new Leader("Robot X");
     leader.setJob(Job.GOVERNOR);
     leader.setTitle("Governor");
@@ -639,7 +662,8 @@ public class LeaderUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testLeaderBio2() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.FEDERATION);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("FEDERATION"));
     Leader leader = new Leader("T.J. Test");
     leader.setJob(Job.COMMANDER);
     leader.setTitle("Captain");
@@ -683,13 +707,15 @@ public class LeaderUtilityTest {
     config.setPlayerDifficult(2, AiDifficulty.NORMAL);
     config.setPlayerDifficult(3, AiDifficulty.NORMAL);
     config.setPlayerName(0, "Realm of Pop");
-    config.setPlayerGovernment(0, GovernmentType.DEMOCRACY);
+    config.setPlayerGovernment(0, GovernmentFactory
+        .createOne("DEMOCRACY"));
     config.setRace(0, SpaceRaceFactory.createOne(
         "HUMANS"));
     config.setStartingScenario(0, StartingScenarioFactory.create(
         "TEMPERATE_MARINE_SIZE14"));
     config.setPlayerName(1, "Realm of Credit");
-    config.setPlayerGovernment(1, GovernmentType.DEMOCRACY);
+    config.setPlayerGovernment(1, GovernmentFactory
+        .createOne("DEMOCRACY"));
     config.setRace(1, SpaceRaceFactory.createOne(
         "HUMANS"));
     config.setStartingScenario(1, StartingScenarioFactory.create("EARTH"));

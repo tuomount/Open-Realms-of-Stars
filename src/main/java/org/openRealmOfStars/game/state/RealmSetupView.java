@@ -52,8 +52,8 @@ import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
-import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.government.GovernmentUtility;
+import org.openRealmOfStars.player.government.Government;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
@@ -85,7 +85,7 @@ public class RealmSetupView extends BlackPanel {
   /**
    * ComboBox on government
    */
-  private SpaceComboBox<GovernmentType> comboGovernmentSelect;
+  private SpaceComboBox<Government> comboGovernmentSelect;
 
   /**
    * Checkbox for elder realm
@@ -224,7 +224,7 @@ public class RealmSetupView extends BlackPanel {
     if (race != null) {
       config.setRace(realmIndex, race);
     }
-    GovernmentType gov = (GovernmentType) comboGovernmentSelect
+    Government gov = (Government) comboGovernmentSelect
         .getSelectedItem();
     config.setPlayerGovernment(realmIndex, gov);
     config.setPlayerName(realmIndex, realmName.getText());
@@ -263,7 +263,7 @@ public class RealmSetupView extends BlackPanel {
       raceImgs.setRaceToShow(raceStr);
       spaceRaceInfo.setText(race.getFullDescription(false, false));
       config.setPlayerGovernment(realmIndex,
-          GovernmentUtility.getRandomGovernment());
+          GovernmentFactory.getRandomGovernment());
       comboGovernmentSelect.setSelectedItem(
           config.getPlayerGovernment(realmIndex));
       governmentInfo.setText(
@@ -275,7 +275,7 @@ public class RealmSetupView extends BlackPanel {
     if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_GOVERNMENT_SETUP)) {
       SoundPlayer.playMenuSound();
-      GovernmentType gov = (GovernmentType) comboGovernmentSelect
+      Government gov = (Government) comboGovernmentSelect
           .getSelectedItem();
       if (gov != null) {
         governmentInfo.setText(gov.getDescription(false));
@@ -391,7 +391,7 @@ public class RealmSetupView extends BlackPanel {
     label = new SpaceLabel("Realm Government:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     westPanel.add(label);
-    comboGovernmentSelect = new SpaceComboBox<>(GovernmentType.values());
+    comboGovernmentSelect = new SpaceComboBox<>(GovernmentFactory.getValues());
     comboGovernmentSelect.setBackground(
         GuiStatics.getDeepSpaceDarkColor());
     comboGovernmentSelect.setForeground(
@@ -532,7 +532,7 @@ public class RealmSetupView extends BlackPanel {
     info.setTitle("Government information");
     info.setLayout(new BorderLayout());
     governmentInfo = new HyperLabel(
-        GovernmentType.DEMOCRACY.getDescription(false));
+        GovernmentFactory.getRandomGovernment().getDescription(false));
     governmentInfo.setFont(GuiFonts.getFontCubellanSmaller());
     info.add(governmentInfo, BorderLayout.CENTER);
     panelX.add(info);

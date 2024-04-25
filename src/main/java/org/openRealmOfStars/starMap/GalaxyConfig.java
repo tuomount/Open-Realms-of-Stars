@@ -19,8 +19,8 @@ package org.openRealmOfStars.starMap;
 
 import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerColor;
-import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.government.GovernmentUtility;
+import org.openRealmOfStars.player.government.Government;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
@@ -124,7 +124,7 @@ public class GalaxyConfig {
   /**
    * Player government
    */
-  private GovernmentType[] playerGovernment;
+  private Government[] playerGovernment;
   /**
    * Player colors
    */
@@ -279,7 +279,7 @@ public class GalaxyConfig {
     setStartingPosition(START_POSITION_RANDOM);
     playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
     playerName = new String[StarMap.MAX_PLAYERS];
-    playerGovernment = new GovernmentType[StarMap.MAX_PLAYERS];
+    playerGovernment = new Government[StarMap.MAX_PLAYERS];
     playerElderRealm = new boolean[StarMap.MAX_PLAYERS];
     playerDifficult = new AiDifficulty[StarMap.MAX_PLAYERS];
     playerColors = new PlayerColor[StarMap.MAX_PLAYERS];
@@ -292,7 +292,7 @@ public class GalaxyConfig {
       setPlayerColor(i, DiceGenerator.pickRandom(PlayerColor.values()));
       setStartingScenario(i, StartingScenarioFactory.createRandom());
       while (true) {
-        GovernmentType gov = GovernmentUtility.getRandomGovernment();
+        Government gov = GovernmentFactory.getRandomGovernment();
         setPlayerGovernment(i, gov);
         setPlayerDifficult(i, AiDifficulty.NORMAL);
         String tmp = SpaceRaceUtility.getRealmName(getRace(i),
@@ -391,7 +391,7 @@ public class GalaxyConfig {
    * @param government Government type
    */
   public void setPlayerGovernment(final int index,
-      final GovernmentType government) {
+      final Government government) {
     if (index >= 0 && index < StarMap.MAX_PLAYERS) {
       playerGovernment[index] = government;
     }
@@ -401,7 +401,7 @@ public class GalaxyConfig {
    * @param index Player index
    * @return GovernmentType
    */
-  public GovernmentType getPlayerGovernment(final int index) {
+  public Government getPlayerGovernment(final int index) {
     if (index >= 0 && index < StarMap.MAX_PLAYERS) {
       return playerGovernment[index];
     }

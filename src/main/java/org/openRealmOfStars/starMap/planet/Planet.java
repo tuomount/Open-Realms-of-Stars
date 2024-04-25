@@ -34,7 +34,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.artifact.ArtifactFactory;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
@@ -860,7 +860,7 @@ public class Planet {
   private int getTotalCreditProduction() {
     StringBuilder sb = new StringBuilder();
     int result = 0;
-    GovernmentType government = planetOwnerInfo.getGovernment();
+    Government government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
     sb.append("Total credits production.<br>");
@@ -1046,7 +1046,7 @@ public class Planet {
     StringBuilder sb = new StringBuilder();
     int result = 0;
     int div = 100;
-    GovernmentType government = planetOwnerInfo.getGovernment();
+    Government government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
     sb.append("Total culture production.<br>");
@@ -1107,7 +1107,7 @@ public class Planet {
     StringBuilder sb = new StringBuilder();
     int result = 0;
     int div = 100;
-    GovernmentType government = planetOwnerInfo.getGovernment();
+    Government government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
     sb.append("Total research production.<br>");
@@ -1172,7 +1172,7 @@ public class Planet {
     StringBuilder sb = new StringBuilder();
     int result = 0;
     int div = 100;
-    GovernmentType government = planetOwnerInfo.getGovernment();
+    Government government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
     sb.append("Total production.<br>");
@@ -1248,7 +1248,7 @@ public class Planet {
     StringBuilder sb = new StringBuilder();
     int result = 0;
     int div = 100;
-    GovernmentType government = planetOwnerInfo.getGovernment();
+    Government government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
     sb.append("Total metal production.<br>");
@@ -1325,7 +1325,7 @@ public class Planet {
     int result = 0;
     int div = 100;
     final var planetRace = planetOwnerInfo.getRace();
-    GovernmentType government = planetOwnerInfo.getGovernment();
+    Government government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
     sb.append("Food requirement: ");
@@ -4030,7 +4030,7 @@ public class Planet {
     }
     StringBuilder sb = new StringBuilder();
     sb.append("<html>");
-    GovernmentType government = planetOwnerInfo.getGovernment();
+    Government government = planetOwnerInfo.getGovernment();
     int base = government.getGenericHappiness();
     if (government.getGenericHappiness() != 0) {
       sb.append("<li>");

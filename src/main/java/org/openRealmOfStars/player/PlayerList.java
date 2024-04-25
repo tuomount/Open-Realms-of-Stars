@@ -25,7 +25,8 @@ import java.util.ArrayList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonus;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.Government;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.scenario.ScenarioIds;
@@ -132,7 +133,7 @@ public class PlayerList {
           index, boardIndex, StartingScenarioFactory.create(
               ScenarioIds.TEMPERATE_HUMID_SIZE12));
       info.setBoard(true);
-      info.setGovernment(GovernmentType.SPACE_PIRATES);
+      info.setGovernment(GovernmentFactory.createOne("PIRATES"));
       info.setEmpireName("Space pirates");
       PirateDifficultLevel difficultyLevel = galaxyConfig
           .getSpacePiratesDifficulty();
@@ -161,7 +162,7 @@ public class PlayerList {
           index, boardIndex, StartingScenarioFactory.create(
               ScenarioIds.TEMPERATE_HUMID_SIZE12));
       info.setBoard(true);
-      info.setGovernment(GovernmentType.SPACE_PIRATES);
+      info.setGovernment(GovernmentFactory.createOne("PIRATES"));
       info.setEmpireName("Space monsters");
       info.setAiDifficulty(AiDifficulty.WEAK);
       var color = DiceGenerator.pickRandom(randomListOfColors);
@@ -393,7 +394,7 @@ public class PlayerList {
             // Board AI has war against every body
             bonus.addBonus(DiplomacyBonusType.IN_WAR, info.getRace());
           }
-          GovernmentType government = info2.getGovernment();
+          Government government = info2.getGovernment();
           DiplomacyBonus diplomacyBonus = new DiplomacyBonus(
               DiplomacyBonusType.DIPLOMACY_BONUS, info2.getRace());
           diplomacyBonus.setBonusValue(government.getDiplomaticBonus());
@@ -406,14 +407,12 @@ public class PlayerList {
           if (info.getGovernment() == info2.getGovernment()) {
             bonus.addBonus(DiplomacyBonusType.SAME_GOVERNMENT, info2.getRace());
           } else {
-            int group1 = GovernmentUtility.getGovernmentGroup(
-                info.getGovernment());
-            int group2 = GovernmentUtility.getGovernmentGroup(
-                info2.getGovernment());
-            if (group1 == group2) {
+            int value = GovernmentUtility.getGovernmentComparison(
+                info.getGovernment(), info2.getGovernment());
+            if (value > 2) {
               bonus.addBonus(DiplomacyBonusType.SIMILAR_GOVERNMENT,
                   info2.getRace());
-            } else if (group1 <= 2 && group2 <= 2) {
+            } else if (value > 0) {
                 bonus.addBonus(
                     DiplomacyBonusType.SIMILAR_GOVERNMENT_DIFFERENT_GROUP,
                     info2.getRace());

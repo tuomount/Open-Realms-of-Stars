@@ -43,7 +43,8 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerColor;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.Government;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.scenario.ScenarioIds;
@@ -329,8 +330,8 @@ public class AiRealmSetupView extends BlackPanel {
       availableRaces.add(SpaceRaceFactory.createOne(name));
     }
     availableRaces.remove(config.getRace(0));
-    ArrayList<GovernmentType> availableGovs = new ArrayList<>();
-    for (GovernmentType government : GovernmentType.values()) {
+    ArrayList<Government> availableGovs = new ArrayList<>();
+    for (Government government : GovernmentFactory.getValues()) {
       availableGovs.add(government);
     }
     if (uniqueGovernment.isSelected()) {
@@ -379,11 +380,11 @@ public class AiRealmSetupView extends BlackPanel {
         config.setRace(i, race);
       }
       if (uniqueGovernment.isSelected()) {
-        GovernmentType gov = DiceGenerator.pickRandom(availableGovs);
+        Government gov = DiceGenerator.pickRandom(availableGovs);
         availableGovs.remove(gov);
         config.setPlayerGovernment(i, gov);
       } else {
-        GovernmentType gov = DiceGenerator.pickRandom(availableGovs);
+        Government gov = DiceGenerator.pickRandom(availableGovs);
         config.setPlayerGovernment(i, gov);
       }
       config.generateUniqueName(i);

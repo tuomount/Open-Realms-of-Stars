@@ -20,7 +20,7 @@ package org.openRealmOfStars.player.leader;
 
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -48,67 +48,11 @@ public final class RulerUtility {
    * @return Ruler title
    */
   public static String getRulerTitle(final Gender gender,
-      final GovernmentType government) {
-    switch (government) {
-      default:
-      case DEMOCRACY:
-      case FEDERATION:
-      case REPUBLIC:
-      case UNION: {
-        return "President";
-      }
-      case EMPIRE: {
-        if (gender == Gender.FEMALE) {
-          return "Empiress";
-        }
-        return "Emperor";
-      }
-      case FEUDALISM:
-      case NEST:
-      case KINGDOM: {
-        if (gender == Gender.FEMALE) {
-          return "Queen";
-        }
-        return "King";
-      }
-      case HORDE:
-      case CLAN: {
-        return "Chief";
-      }
-      case UTOPIA: {
-        return "Wise";
-      }
-      case ENTERPRISE: {
-        return "CEO";
-      }
-      case SYNDICATE: {
-        return "Boss";
-      }
-      case GUILD:
-      case HEGEMONY:
-      case REGIME:
-      case COLLECTIVE: {
-        return "Leader";
-      }
-      case TECHNOCRACY: {
-        return "Master engineer";
-      }
-      case AI: {
-        return "Main Process";
-      }
-      case SPACE_PIRATES: {
-        return "Leader";
-      }
-      case HIVEMIND: {
-        return "Master";
-      }
-      case HIERARCHY: {
-        if (gender == Gender.FEMALE) {
-          return "Lady";
-        }
-        return "Lord";
-      }
+      final Government government) {
+    if (gender == Gender.FEMALE) {
+      return government.getRulerTitleFemale();
     }
+    return government.getRulerTitleMale();
   }
 
   /**
@@ -1075,23 +1019,14 @@ public final class RulerUtility {
    */
   public static Leader getNextRuler(final PlayerInfo realm) {
     Leader bestLeader = null;
-    switch (realm.getGovernment()) {
+    switch (realm.getGovernment().getRulerSelection()) {
       default:
-      case CLAN:
-      case HORDE:
-      case HIVEMIND:
-      case NEST: {
-        bestLeader = getStrongestLeader(realm, true);
+      case STRONG_RULER: {
+        bestLeader = getStrongestLeader(realm,
+            realm.getGovernment().isXenophopic());
         break;
       }
-      case HIERARCHY:
-      case REGIME: {
-        bestLeader = getStrongestLeader(realm, false);
-        break;
-      }
-      case EMPIRE:
-      case FEUDALISM:
-      case KINGDOM: {
+      case HEIR_TO_THRONE: {
         bestLeader = getNextHeir(realm);
         if (bestLeader == null && hasTooYoungHeirs(realm)) {
           Message msg = new Message(MessageType.LEADER,
@@ -1102,36 +1037,29 @@ public final class RulerUtility {
           break;
         }
         if (bestLeader == null) {
-          bestLeader = getStrongestLeader(realm, true);
+          bestLeader = getStrongestLeader(realm,
+              realm.getGovernment().isXenophopic());
         }
         break;
       }
-      case GUILD:
-      case ENTERPRISE: {
+      case CEO_AS_A_RULER: {
         bestLeader = getNextCeo(realm);
         break;
       }
-      case DEMOCRACY:
-      case TECHNOCRACY:
-      case UNION: {
+      case ELECTION_TYPE1: {
         bestLeader = getNextDemocraticRuler(realm);
         break;
       }
-      case FEDERATION:
-      case REPUBLIC: {
+      case ELECTION_TYPE2: {
         bestLeader = getNextFederationRuler(realm);
         break;
       }
-      case HEGEMONY: {
-        bestLeader = getNextHegemonyRuler(realm, true);
+      case HEGEMONIA_RULER: {
+        bestLeader = getNextHegemonyRuler(realm,
+            realm.getGovernment().isXenophopic());
         break;
       }
-      case UTOPIA: {
-        bestLeader = getNextHegemonyRuler(realm, false);
-        break;
-      }
-      case AI:
-      case COLLECTIVE: {
+      case AI_RULER: {
         bestLeader = getNextAiRuler(realm);
         break;
       }

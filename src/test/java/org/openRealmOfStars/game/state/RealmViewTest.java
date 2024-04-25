@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 
 /**
@@ -38,7 +38,8 @@ public class RealmViewTest {
     ActionListener listener = Mockito.mock(ActionListener.class);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("EMPIRE"));
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
     new RealmView(info, listener, 10,2);

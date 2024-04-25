@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -51,7 +51,8 @@ public class TradeRouteTest extends TestCase {
     Mockito.when(fleet.getCoordinate()).thenReturn(coordinate);
     Mockito.when(fleet.calculateTrade(coordinate2)).thenReturn(10);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("HIVEMIND"));
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "SCAURIANS"));
     TradeRoute tradeRoute = new TradeRoute(originWorld, tradeWorld, info, fleet);
@@ -78,7 +79,8 @@ public class TradeRouteTest extends TestCase {
     Mockito.when(fleet.calculateTrade(coordinate)).thenReturn(10);
     Mockito.when(coordinate2.calculateDistance(coordinate)).thenReturn(25.0);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("HIVEMIND"));
     Mockito.when(info.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "SCAURIANS"));
     TradeRoute tradeRoute = new TradeRoute(originWorld, tradeWorld, info, fleet);

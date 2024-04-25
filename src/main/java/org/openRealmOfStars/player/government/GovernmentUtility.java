@@ -17,7 +17,7 @@ package org.openRealmOfStars.player.government;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
-import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.player.government.trait.GovTrait;
 
 /**
 *
@@ -35,62 +35,35 @@ public final class GovernmentUtility {
   }
 
   /**
-   * Get Random government type
-   * @return GovernmentType
+   * Get Government comparison
+   * @param government1 Government 1
+   * @param government2 Government 2
+   * @return Value how close governments are.
    */
-  public static GovernmentType getRandomGovernment() {
-    GovernmentType[] govs = GovernmentType.values();
-    return DiceGenerator.pickRandom(govs);
-  }
-  /**
-   * Get government type by index
-   * @param index Index to fetch
-   * @return GovernmentType
-   */
-  public static GovernmentType getGovernmentByIndex(final int index) {
-    GovernmentType[] govs = GovernmentType.values();
-    if (index >= 0 && index < govs.length) {
-      return govs[index];
+  public static int getGovernmentComparison(final Government government1,
+      final Government government2) {
+    int result = -2;
+    if (government1 == government2) {
+      return 100;
     }
-    throw new IllegalArgumentException("Unknown government type index:"
-      + index);
-  }
-
-  /**
-   * Get Government Group
-   * @param government Government which to get group id
-   * @return Government group id.
-   */
-  public static int getGovernmentGroup(final GovernmentType government) {
-    switch (government) {
-      default:
-      case DEMOCRACY:
-      case UNION:
-      case FEDERATION:
-      case REPUBLIC:
-        return 0;
-      case GUILD:
-      case ENTERPRISE:
-      case SYNDICATE:
-        return 1;
-      case COLLECTIVE:
-      case UTOPIA:
-      case TECHNOCRACY:
-        return 2;
-      case HEGEMONY:
-      case EMPIRE:
-      case KINGDOM:
-      case HIERARCHY:
-      case HORDE:
-      case CLAN:
-      case REGIME:
-      case FEUDALISM:
-        return 3;
-      case NEST:
-      case AI:
-      case HIVEMIND:
-      case SPACE_PIRATES:
-        return 4;
+    for (GovTrait trait : government1.getTraits()) {
+      for (GovTrait trait2 : government2.getTraits()) {
+        if (trait.getId().equals(trait2.getId())) {
+          result++;
+        }
+      }
     }
+    if (government1.getRulerSelection() == government2.getRulerSelection()) {
+      result++;
+    }
+    if (government2.getRulerTitleMale().equals(
+        government1.getRulerTitleMale())) {
+      result++;
+    }
+    if (government2.getRulerTitleFemale().equals(
+        government1.getRulerTitleFemale())) {
+      result++;
+    }
+    return result;
   }
 }

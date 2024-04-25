@@ -20,7 +20,7 @@ package org.openRealmOfStars.player.leader;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Attitude;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -37,11 +37,11 @@ public final class LeaderBiography {
   /**
    * Get Main job description for leader.
    * @param leader Leader for getting the main job.
-   * @param government Government type for getting proper title for ruler.
+   * @param government Government for getting proper title for ruler.
    * @return Job title
    */
   private static String getMainJob(final Leader leader,
-      final GovernmentType government) {
+      final Government government) {
     int ruler = leader.getStats().getStat(StatType.RULER_REIGN_LENGTH);
     int governor = leader.getStats().getStat(StatType.GOVERNOR_LENGTH);
     int commander = leader.getStats().getStat(StatType.COMMANDER_LENGTH);

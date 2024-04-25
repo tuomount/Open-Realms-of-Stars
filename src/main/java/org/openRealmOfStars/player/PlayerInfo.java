@@ -34,8 +34,8 @@ import org.openRealmOfStars.player.espionage.Intelligence;
 import org.openRealmOfStars.player.espionage.IntelligenceList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
-import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.government.GovernmentUtility;
+import org.openRealmOfStars.player.government.Government;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
@@ -82,7 +82,7 @@ public class PlayerInfo {
   /**
    * Player's Government
    */
-  private GovernmentType government;
+  private Government government;
   /**
    * Realm's war fatigue value
    */
@@ -333,7 +333,7 @@ public class PlayerInfo {
     String[] extraTech = startingScenario.getTechs();
     setFakeMilitarySize(100);
     // This is the old way of government
-    setGovernment(GovernmentType.AI);
+    setGovernment(GovernmentFactory.createOne("AI"));
     setWarFatigue(0);
     if (getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       addZeroGravityTechs(extraTech);
@@ -575,7 +575,7 @@ public class PlayerInfo {
     String scenarioId = IOUtilities.readString(dis);
     startingScenario = StartingScenarioFactory.create(scenarioId);
     aiDifficulty = AiDifficulty.getByIndex(dis.read());
-    government = GovernmentUtility.getGovernmentByIndex(dis.readInt());
+    government = GovernmentFactory.createOne(IOUtilities.readString(dis));
     warFatigue = dis.readInt();
     totalCredits = dis.readInt();
     attitude = Attitude.getTypeByIndex(dis.read());
@@ -700,7 +700,7 @@ public class PlayerInfo {
     dos.writeByte(color.getIndex());
     IOUtilities.writeString(dos, startingScenario.getId());
     dos.writeByte(aiDifficulty.getIndex());
-    dos.writeInt(government.getIndex());
+    IOUtilities.writeString(dos, government.getId());
     dos.writeInt(warFatigue);
     dos.writeInt(totalCredits);
     dos.writeByte(attitude.getIndex());
@@ -1712,18 +1712,18 @@ public class PlayerInfo {
   }
 
   /**
-   * Get government type for player
-   * @return Government type
+   * Get government for player
+   * @return Government
    */
-  public GovernmentType getGovernment() {
+  public Government getGovernment() {
     return government;
   }
 
   /**
-   * Set government type for player
-   * @param government Government type
+   * Set government for player
+   * @param government Government
    */
-  public void setGovernment(final GovernmentType government) {
+  public void setGovernment(final Government government) {
     this.government = government;
   }
   /**

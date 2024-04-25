@@ -26,7 +26,7 @@ import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.espionage.IntelligenceList;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -162,15 +162,11 @@ public final class DefaultScoring {
             }
           }
           if (ship.isPrivateeringShip()
-              && (info.getGovernment() == GovernmentType.SPACE_PIRATES
-                  || info.getGovernment() == GovernmentType.SYNDICATE)) {
+              && info.getGovernment().allowArmedFreighters()) {
             score = score + ship.getTotalMilitaryPower() * 2;
           }
           if (ship.isPrivateeringShip()
-              && (info.getGovernment() == GovernmentType.FEUDALISM
-                  || info.getGovernment() == GovernmentType.KINGDOM
-                  || info.getGovernment() == GovernmentType.EMPIRE
-                  || info.getGovernment() == GovernmentType.REGIME)) {
+              && info.getGovernment().isAggressive()) {
             score = score + ship.getTotalMilitaryPower();
           }
         }
@@ -497,7 +493,7 @@ public final class DefaultScoring {
       score = score + 10;
     }
 
-    GovernmentType government = info.getGovernment();
+    Government government = info.getGovernment();
     if (!government.isImmuneToHappiness() && building.getHappiness() > 0) {
       int happyness = planet.calculateHappiness();
       int mult = 10 - (happyness - 1) * 5;

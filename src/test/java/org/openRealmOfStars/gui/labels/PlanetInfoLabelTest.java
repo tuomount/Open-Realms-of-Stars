@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -44,7 +44,8 @@ public class PlanetInfoLabelTest {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
     Mockito.when(realm.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("AI"));
     Mockito.when(target.getPlanetPlayerInfo()).thenReturn(realm);
     Mockito.when(target.getPlanetType()).thenReturn(PlanetTypes.ICEWORLD1);
     Construction[] list = new Construction[1];

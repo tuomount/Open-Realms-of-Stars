@@ -29,7 +29,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -56,7 +56,8 @@ public class PlanetListViewTest {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
     Mockito.when(realm.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "HUMANS"));
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("AI"));
     Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(realm);
     Mockito.when(planet1.getPlanetType()).thenReturn(PlanetTypes.ICEWORLD1);
     Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(realm);
@@ -89,7 +90,8 @@ public class PlanetListViewTest {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
     Mockito.when(realm.getRace()).thenReturn(SpaceRaceFactory.createOne(
         "LITHORIANS"));
-    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("EMPIRE"));
     Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(realm);
     Mockito.when(planet1.getPlanetType()).thenReturn(PlanetTypes.ICEWORLD1);
     Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(realm);
@@ -126,7 +128,8 @@ public class PlanetListViewTest {
     realm.initMapData(50, 50);
     realm.setSectorVisibility(5, 5, PlayerInfo.VISIBLE);
     realm.setSectorVisibility(8, 8, PlayerInfo.FOG_OF_WAR);
-    realm.setGovernment(GovernmentType.UNION);
+    realm.setGovernment(GovernmentFactory
+        .createOne("UNION"));
     planet1.setPlanetOwner(0, realm);
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(playerList.getIndex(realm)).thenReturn(0);

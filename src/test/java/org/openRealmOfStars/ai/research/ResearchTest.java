@@ -23,7 +23,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.diplomacy.Attitude;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
@@ -150,7 +150,7 @@ public class ResearchTest extends TestCase {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRemoveObsoleteDesigns() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"), 2, 0);
-    info.setGovernment(GovernmentType.COLLECTIVE);
+    info.setGovernment(GovernmentFactory.createOne("COLLECTIVE"));
     info.setEmpireName("Human Collective");
     info.setAttitude(Attitude.BACKSTABBING);
     Leader ruler = Mockito.mock(Leader.class);
@@ -158,7 +158,8 @@ public class ResearchTest extends TestCase {
     Mockito.when(ruler.getName()).thenReturn("Max Power");
 
     PlayerInfo info2 = new PlayerInfo(SpaceRaceFactory.createOne("SPORKS"), 2, 1);
-    info2.setGovernment(GovernmentType.EMPIRE);
+    info2.setGovernment(GovernmentFactory
+        .createOne("EMPIRE"));
     info2.setEmpireName("Spork Empire");
     info2.setAttitude(Attitude.BACKSTABBING);
     Leader ruler2 = Mockito.mock(Leader.class);

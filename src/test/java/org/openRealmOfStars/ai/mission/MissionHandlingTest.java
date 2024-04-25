@@ -35,7 +35,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.ship.Ship;
@@ -272,7 +272,8 @@ public class MissionHandlingTest {
         "HUMANS"));
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("AI"));
     TechList techList = Mockito.mock(TechList.class);
     Mockito.when(info.getTechList()).thenReturn(techList);
     Mission mission = new Mission(MissionType.TRADE_FLEET, MissionPhase.LOADING,

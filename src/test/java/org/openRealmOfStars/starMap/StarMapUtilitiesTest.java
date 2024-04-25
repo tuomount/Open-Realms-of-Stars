@@ -29,7 +29,7 @@ import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
@@ -395,7 +395,8 @@ public class StarMapUtilitiesTest {
     assertEquals(5, StarMapUtilities.getVotingSupport(info, vote, map));
 
     Mockito.when(diplomacy.getNumberOfWar()).thenReturn(1);
-    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.DEMOCRACY);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentFactory
+        .createOne("DEMOCRACY"));
     assertEquals(10, StarMapUtilities.getVotingSupport(info, vote, map));
 
     Mockito.when(info.getTotalWarFatigue()).thenReturn(-2);

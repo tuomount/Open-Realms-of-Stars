@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.government;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018-2021 Tuomo Untinen
+ * Copyright (C) 2018-2023 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,24 +23,28 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 /**
-* Government Utility Test
+* Government Type enumeration tests
 *
 */
-public class GovernmentUtilityTest {
+public class GovernmentTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testGovernmentIndexes() {
-    GovernmentType[] govs = GovernmentType.values();
-    for (int i = 0; i < govs.length; i++) {
-      assertEquals(govs[i], GovernmentUtility.getGovernmentByIndex(i));
+  public void testDescriptions() {
+    for (Government gov : GovernmentFactory.getValues()) {
+      //System.out.println(gov.getDescription(true));
+      assertEquals(4, gov.getTraitValue());
     }
   }
 
-  @Test(expected=IllegalArgumentException.class)
+  @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testGovernmentIndexesBig() {
-    GovernmentUtility.getGovernmentByIndex(255);
+  public void testDescriptions2() {
+    for (Government gov : GovernmentFactory.getValues()) {
+      String result = gov.getDescription(true, true);
+      assertEquals(true, result.contains("Points: 4"));
+      assertEquals(4, gov.getTraitValue());
+    }
   }
 
 }

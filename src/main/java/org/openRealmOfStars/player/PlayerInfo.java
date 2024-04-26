@@ -62,6 +62,7 @@ import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.event.RandomEvent;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.enums.GravityType;
 import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
@@ -2221,6 +2222,17 @@ public class PlayerInfo {
     if (worldType == WorldType.WATERWORLD
         && techList.hasTech("Aquatic colonization")) {
       result = result + 25;
+    }
+    if (getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+      if (planet.getGravityType() == GravityType.HIGH_GRAVITY) {
+        result = 50;
+      }
+      if (planet.getGravityType() == GravityType.NORMAL_GRAVITY) {
+        result = 75;
+      }
+      if (planet.getGravityType() == GravityType.LOW_GRAVITY) {
+        result = 75;
+      }
     }
     return result;
   }

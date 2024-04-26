@@ -281,8 +281,8 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
       if (colonizeBtn != null) {
         if (!planet.isColonizeablePlanet(playerInfo)) {
-          SpaceLabel radWarning = new SpaceLabel("Warning!"
-              + " Not able to colonize.");
+          SpaceLabel radWarning = new SpaceLabel("Warning! "
+              + planet.getNotColonizeablePlanet(playerInfo));
           radWarning.setForeground(GuiStatics.COLOR_RED_TEXT);
           panel.add(radWarning);
           panel.add(Box.createRigidArea(new Dimension(5, 5)));

@@ -3624,13 +3624,14 @@ public class Planet {
     }
     return value;
   }
+
   /**
-   * Is planet colonizable for realm
-   * @param realm PlayerINfo
-   * @return True or false
+   * Get reason why planet is not able to colonize.
+   * @param realm PlayerInfo
+   * @return Explanation why realm cannot colonize the planet.
    */
-  public boolean isColonizeablePlanet(final PlayerInfo realm) {
-    boolean result = true;
+  public String getNotColonizeablePlanet(final PlayerInfo realm) {
+    String result = "";
     int maxRad = realm.getRace().getMaxRad().getIndex();
     if (realm.getTechList().hasTech("Radiation dampener")) {
       maxRad++;
@@ -3640,17 +3641,30 @@ public class Planet {
     }
     if (maxRad
         < getTotalRadiationLevel().getIndex()) {
-      result = false;
+      result = "Planet has too high radiation!";
     }
     int suitability = realm.getPlanetSuitabilityValue(this);
-    if (suitability == 0) {
-      result = false;
+    if (suitability == 0
+        && !realm.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+      result = "Planet climate is not suitable!";
     }
     if (realm.getRace().isEatingFood()
         && getWaterLevel() == WaterLevelType.BARREN) {
-      result = false;
+      result = "Planet is not able to grow food.";
     }
     return result;
+  }
+  /**
+   * Is planet colonizable for realm
+   * @param realm PlayerInfo
+   * @return True or false
+   */
+  public boolean isColonizeablePlanet(final PlayerInfo realm) {
+    String tmp = getNotColonizeablePlanet(realm);
+    if (tmp.isEmpty()) {
+      return true;
+    }
+    return false;
   }
   /**
    * Set Planet's culture value

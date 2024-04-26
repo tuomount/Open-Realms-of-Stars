@@ -2678,7 +2678,8 @@ public class StarMap {
           sb.append(".");
         } else if (!planet.isColonizeablePlanet(info)) {
           sb.append(" Unfortunately planet is not suitable");
-          sb.append(" for your people to live there...");
+          sb.append(" for your people to live there...\n");
+          sb.append(planet.getNotColonizeablePlanet(info));
         } else {
           int value = info.getPlanetSuitabilityValue(planet);
           if (value > 0) {

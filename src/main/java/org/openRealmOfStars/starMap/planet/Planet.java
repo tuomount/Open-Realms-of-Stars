@@ -4094,18 +4094,18 @@ public class Planet {
       sb.append(bonusBuildings);
       sb.append("<br>");
     }
-    int statusesBonus = statuses.stream()
-        .map(status -> status.getStatus().getHappinessBonus())
-        .reduce(0, (acc, b) -> acc + b);
-    if (statusesBonus != 0) {
-      sb.append("<li>");
-      sb.append(event.getName());
-      if (statusesBonus > 0) {
-        sb.append("+");
-      }
-      base = base + statusesBonus;
-      sb.append(statusesBonus);
-      sb.append("<br>");
+    for (AppliedStatus status : statuses) {
+      int statusBonus = status.getStatus().getHappinessBonus();
+      if (statusBonus != 0) {
+          sb.append("<li>");
+          sb.append(status.getStatus().getName());
+          if (statusBonus > 0) {
+            sb.append("+");
+          }
+          base = base + statusBonus;
+          sb.append(statusBonus);
+          sb.append("<br>");
+        }
     }
     int totalWarFatigue = planetOwnerInfo.getTotalWarFatigue();
     base = base + totalWarFatigue;

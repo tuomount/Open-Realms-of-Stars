@@ -66,7 +66,7 @@ public class MusicPlayerTest {
       }
     }
     assertEquals(true, found);
-    MusicPlayer.setMusicEnabled(true);
+    MusicPlayer.setMusicEnabled(false);
 
   }
 

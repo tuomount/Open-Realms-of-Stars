@@ -1,6 +1,26 @@
 - New features and updates -
 
+* New realm setup view.
+* New player realm setup.
+* Realms now have selectable/random starting scenario.
+* Most of the game data is now stored in JSON files.
+* Space races are now based on traits.
+* Governments are now based on traits.
+* Each space race should be more balanced.
+* Each government should be more balanced.
+* Planets have more features.
+* Planets have temperature which tells how suitable planet is for certain space race.
+* Planets have humidity which tells how much food planet can produce automatically
+* Planets have gravity depending on planet size, larger planets have high gravity.
+* Some of the space race features are now moved to government traits like armed freighters.
+* Planets may have statuses which can be found during colonization or be even timed.
+* All speeches are now in JSON files.
+* When viewing uncolonized planets, if it is not colonizeable there is textual reason.
+
+
 - Bugfixes -
+
+* Realm wide espionage is now called intelligence. Commander doing espionage on planets is called espionage.
 
 # Open Realm of Stars 0.25.0
 

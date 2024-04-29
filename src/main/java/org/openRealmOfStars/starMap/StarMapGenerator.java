@@ -991,8 +991,13 @@ public class StarMapGenerator {
           planet.setGroundSize(
               playerInfo.getStartingScenario().getPlanetSize());
           planet.generateGravityBasedOnSize();
-          planet.generateWorldType();
-          planet.setAmountMetalInGround(HOMEWORLD_METAL);
+          if (playerInfo.getStartingScenario().getId().equals("METAL_PLANET")) {
+            planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
+            planet.setMetal(HOMEWORLD_METAL / 2);
+          } else {
+            planet.generateWorldType();
+            planet.setAmountMetalInGround(HOMEWORLD_METAL);
+          }
           planet.setHomeWorldId(playerInfo.getRace().getId());
           planet.setStartRealmIndex(playerIndex);
           if (!elderRealmStart || playerInfo.isElderRealm()) {

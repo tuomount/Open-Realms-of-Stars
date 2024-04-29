@@ -21,6 +21,46 @@
       "FarmBuilding"
     ],
     
-    "Description": "Okay starting planet with extra buildings for food production, extra population and extra technology in planetary improvements.. There are no space ships at the start."
+    "Description": "Okay starting planet with extra buildings for food production, extra population and extra technology in planetary improvements. There are no space ships at the start."
+  },
+  {
+    "ID": "PROD_PLANET",
+    "Type": "utopia",
+    "Name": "Utopia planet, with production buildings. No ships.",
+    "NumberOfScouts": 0,
+    "NumberOfColonyShips": 0,
+    "WaterLevel": "arid",
+    "Temperature": "temperate",
+    "PlanetSize": 12,
+    "Population": 3,
+    "ColonyPop": 0,
+    "Buildings": [
+      "Space port",
+      "Basic factory",
+      "Basic factory",
+      "Basic mine",
+      "Basic mine"
+    ],
+    
+    "Description": "Okay starting planet with extra buildings for production. There are no space ships at the start."
+  },
+  {
+    "ID": "METAL_PLANET",
+    "Type": "utopia",
+    "Name": "Metal planet, with all metal available. No ships.",
+    "NumberOfScouts": 0,
+    "NumberOfColonyShips": 0,
+    "WaterLevel": "humid",
+    "Temperature": "temperate",
+    "PlanetSize": 10,
+    "Population": 3,
+    "ColonyPop": 0,
+    "Buildings": [
+      "Space port",
+      "Basic factory"
+    ],
+    
+    "Description": "Artificial planet with metal ready to use. There are no space ships at the start."
   }
+  
 ]

@@ -76,6 +76,12 @@ public final class ScenarioIds {
   /** Utopia start, no ships but planet of farms. */
   public static final String FARMING_PLANET = "FARMING_PLANET";
 
+  /** Utopia start from artifical planet, no ships. */
+  public static final String METAL_PLANET = "METAL_PLANET";
+
+  /** Utopia start, no ships but planet of factories and mines. */
+  public static final String PROD_PLANET = "PROD_PLANET";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

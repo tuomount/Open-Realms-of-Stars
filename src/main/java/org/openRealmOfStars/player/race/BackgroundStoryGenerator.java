@@ -1233,6 +1233,128 @@ public final class BackgroundStoryGenerator {
     }
     return sb.toString();
   }
+
+  /**
+   * Generate artificial planet background.
+   * @param info PlayerInfo
+   * @param startPlanet Starting planet
+   * @param namePlural Space race name in plural
+   * @param name Space race in in single
+   * @return Background story
+   */
+  private static String generateArtificialPlanet(final PlayerInfo info,
+      final Planet startPlanet, final String namePlural, final String name) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(namePlural);
+    if (DiceGenerator.getBoolean()) {
+      sb.append(" do not have proof or certain how they started on"
+          + " artificial planet but ");
+    } else {
+      sb.append(" have hypothesis about how they ended on artificial"
+          + " planet but ");
+    }
+    if (info.getRace().isRoboticRace()) {
+      if (DiceGenerator.getBoolean()) {
+        sb.append(namePlural);
+        sb.append(" think that ");
+        sb.append(startPlanet.getName());
+        sb.append(" was originally a factory for building ");
+        sb.append(name);
+        sb.append(". ");
+        if (DiceGenerator.getBoolean()) {
+          sb.append("At some point original creator abandoned the"
+              + " factory and ");
+          sb.append(namePlural);
+          sb.append(" needed to continue their own to survive. ");
+          sb.append(" This meant that ");
+          sb.append(namePlural);
+          if (info.getGovernment().isImmuneToHappiness()) {
+            sb.append(" learn how to effiecently communicate via network and"
+                + " become like a hive mind. ");
+          } else {
+            sb.append(" learned true intelligence and became sentient. ");
+          }
+        } else {
+          sb.append("At some point ");
+          sb.append(namePlural);
+          if (info.getGovernment().isImmuneToHappiness()) {
+            sb.append(" learn how to effiecently communicate via network and"
+                + " become like a hive mind. ");
+          } else {
+            sb.append(" learned true intelligence and became sentient. ");
+          }
+        }
+      } else {
+        sb.append(namePlural);
+        sb.append(" think that ");
+        sb.append(startPlanet.getName());
+        sb.append(" was a test how semi-intelligent robotic race would"
+            + " survive alone. ");
+        sb.append("At some point ");
+        sb.append(namePlural);
+        if (info.getGovernment().isImmuneToHappiness()) {
+          sb.append(" learn how to effiecently communicate via network and"
+              + " become like a hive mind. ");
+        } else {
+          sb.append(" learned true intelligence and became sentient. ");
+        }
+      }
+    } else {
+      if (DiceGenerator.getBoolean()) {
+        sb.append(namePlural);
+        sb.append(" think that ");
+        sb.append(startPlanet.getName());
+        sb.append(" was gruel prison like test for ");
+        sb.append(namePlural);
+        sb.append(". ");
+        if (DiceGenerator.getBoolean()) {
+          sb.append("At some point original creator abandoned the"
+              + " test and ");
+          sb.append(namePlural);
+          sb.append(" needed to continue their own to survive. ");
+          sb.append(" This meant that ");
+          sb.append(namePlural);
+          sb.append(" learned enough technology are now ready to step"
+              + " out from ");
+          sb.append(startPlanet.getName());
+          sb.append(". ");
+        } else {
+          sb.append("At some point ");
+          sb.append(namePlural);
+          sb.append(" are ready to leave their metal home world and move"
+              + " out from ");
+          sb.append(startPlanet.getName());
+          sb.append(". ");
+        }
+      } else {
+        sb.append(namePlural);
+        sb.append(" think that ");
+        sb.append(startPlanet.getName());
+        sb.append(" was massive research laboratory for some ancient precursor"
+            + " space race for studying sentient creatures. ");
+        if (DiceGenerator.getBoolean()) {
+          sb.append("At some point original creator abandoned the"
+              + " test and ");
+          sb.append(namePlural);
+          sb.append(" needed to continue their own to survive. ");
+          sb.append(" This meant that ");
+          sb.append(namePlural);
+          sb.append(" learned enough technology are now ready to step"
+              + " out from ");
+          sb.append(startPlanet.getName());
+          sb.append(". ");
+        } else {
+          sb.append("At some point ");
+          sb.append(namePlural);
+          sb.append(" are ready to leave their metal home world and move"
+              + " out from ");
+          sb.append(startPlanet.getName());
+          sb.append(". ");
+        }
+      }
+    }
+    return sb.toString();
+  }
   /**
    * Generate world type prehistory for realm.
    * @param info Realm
@@ -1283,7 +1405,9 @@ public final class BackgroundStoryGenerator {
       }
       return sb.toString();
     }
-    if (info.getRace().isLithovorian()) {
+    if (info.getStartingScenario().getId().equals(ScenarioIds.METAL_PLANET)) {
+      return generateArtificialPlanet(info, startPlanet, namePlural, name);
+    } else if (info.getRace().isLithovorian()) {
       sb.append("Life were developed from silicate material");
       switch (DiceGenerator.getRandom(2)) {
         default:

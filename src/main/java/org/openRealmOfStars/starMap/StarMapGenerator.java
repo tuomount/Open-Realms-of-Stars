@@ -991,7 +991,8 @@ public class StarMapGenerator {
           planet.setGroundSize(
               playerInfo.getStartingScenario().getPlanetSize());
           planet.generateGravityBasedOnSize();
-          if (playerInfo.getStartingScenario().getId().equals("METAL_PLANET")) {
+          if (playerInfo.getStartingScenario().getId()
+              .equals(ScenarioIds.METAL_PLANET)) {
             planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
             planet.setMetal(HOMEWORLD_METAL / 2);
           } else {

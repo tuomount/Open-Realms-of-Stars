@@ -4,5 +4,12 @@
     "name": "Pirate world",
     "description": "Planet had small pirate base, but they have now taken control of the planet.",
     "hidden": true
+  },
+  {
+    "id": "VOLCANIC_ERUPTION",
+    "name": "VOlcanic eruption",
+    "description": "Massive volcanic eruption happens on planet, and rapidly changing planet to volcanic.",
+    "hidden": true
   } 
+   
 ]

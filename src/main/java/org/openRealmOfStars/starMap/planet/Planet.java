@@ -4682,6 +4682,24 @@ public class Planet {
           msg.setCoordinate(getCoordinate());
           planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
         }
+        if (status.getStatus().getId().equals(StatusIds.VOLCANIC_ERUPTION)) {
+          StringBuilder sb = new StringBuilder();
+          sb.append("Massive planet wide vulcanic eruption happens on ");
+          sb.append(getName());
+          sb.append(". It changes the whole planet climate to vulcanic. ");
+          sb.append("Temprature raises into intolerable levels. Population ");
+          sb.append("starts dying...");
+          setTemperatureType(TemperatureType.VOLCANIC);
+          setWaterLevel(WaterLevelType.BARREN);
+          generateWorldType();
+          //TODO: Vulcanic eruption
+          Message msg = new Message(MessageType.PLANETARY,
+              sb.toString(),
+              Icons.getIconByName(Icons.ICON_DEATH));
+          msg.setMatchByString(getName());
+          msg.setCoordinate(getCoordinate());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+        }
       }
     }
     if (removeList.size() > 0) {

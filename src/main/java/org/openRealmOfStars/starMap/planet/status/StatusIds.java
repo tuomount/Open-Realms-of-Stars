@@ -69,6 +69,9 @@ public final class StatusIds {
   /** Planet has space time warp. This cannot be mixed with NANITE_SAND. */
   public static final String SPACE_TIME_WARP = "SPACE_TIME_WARP";
 
+  /** Planet has massive vulcanic eruption. */
+  public static final String VOLCANIC_ERUPTION = "VOLCANIC_ERUPTION";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

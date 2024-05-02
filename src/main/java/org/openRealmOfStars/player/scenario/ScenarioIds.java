@@ -82,6 +82,9 @@ public final class ScenarioIds {
   /** Utopia start, no ships but planet of factories and mines. */
   public static final String PROD_PLANET = "PROD_PLANET";
 
+  /** Doomed start, bankruptcy with bad factories and mines. */
+  public static final String LEAKING_PROD = "LEADKING_PROD";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

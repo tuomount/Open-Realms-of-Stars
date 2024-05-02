@@ -1,0 +1,30 @@
+[
+  {
+    "ID": "LEAKING_PROD",
+    "Type": "doomed",
+    "Name": "Doomed planet, high production and credits, but production is very expensive. No ships.",
+    "NumberOfScouts": 0,
+    "NumberOfColonyShips": 0,
+    "WaterLevel": "humid",
+    "Temperature": "temperate",
+    "PlanetSize": 12,
+    "Population": 3,
+    "ColonyPop": 0,
+    "Tech":[
+      "randomCombat",
+      "randomElectronics",
+      "randomPropulsion"
+    ],
+    "Buildings": [
+      "Space port",
+      "Leaking factory",
+      "Leaking factory",
+      "Leaking factory",
+      "Leaking mine",
+      "Leaking mine",
+      "Leaking mine"
+    ],
+    "StartingCredit": 20,
+    "Description": "Prebuilt factories and mines are leaking energy which costs credits. There are no space ships at start."
+  } 
+]

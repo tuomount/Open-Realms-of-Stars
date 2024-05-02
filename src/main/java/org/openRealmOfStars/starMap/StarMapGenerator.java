@@ -272,6 +272,7 @@ public class StarMapGenerator {
       planet.setUnderConstruction(ConstructionFactory.createByName(
           "Extra credit"));
     }
+    playerInfo.setTotalCredits(scenario.getStartingCredit());
     planet.setWorkers(Planet.FOOD_FARMERS, 0);
     planet.setWorkers(Planet.METAL_MINERS, 0);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, pop);

@@ -76,7 +76,7 @@ public final class BuildingFactory {
     final var dataFilesBase = "resources/data/buildings/";
     final String[] dataFiles = {
         "farm", "mine", "factory", "research",
-        "culture", "credit", "military", "wildlife" };
+        "culture", "credit", "military", "wildlife", "badones" };
 
     var loadedCount = loader.loadAll(buildings, dataFilesBase, dataFiles);
     ErrorLogger.log("Buildings loaded: " + loadedCount);

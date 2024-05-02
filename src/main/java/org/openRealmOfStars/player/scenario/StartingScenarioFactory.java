@@ -116,7 +116,7 @@ public final class StartingScenarioFactory {
     startingScenarios.clear();
     final var basePath = "resources/data/scenarios/";
     final String[] files = {
-        "regular", "nohome", "utopia"};
+        "regular", "nohome", "utopia", "doomed"};
     final var startingScenariosLoaded = loader.loadAll(startingScenarios,
         basePath, files);
     ErrorLogger.log("Starting scenarios loaded: " + startingScenariosLoaded);
@@ -173,6 +173,7 @@ class StartingScenarioLoader extends DataLoader<String, StartingScenario> {
    * <li>WorldType : String(OPTIONAL)</li>
    * <li>Buildings: List of buildings (OPTIONAL)</li>
    * <li>Tech : List of extra technology (OPTIONAL)</li>
+   * <li>StartingCredit : Number(Optional)
    * <li>Description : String</li>
    * </ul>
    * </p>
@@ -213,6 +214,8 @@ class StartingScenarioLoader extends DataLoader<String, StartingScenario> {
         String buildingName = jsonBuildings.getString(i);
         tmp.addBuilding(buildingName);
       }
+      int startingCred = jobj.optInt("StartingCredit", 0);
+      tmp.setStartingCredit(startingCred);
       String description = jobj.getString("Description");
       tmp.setDescription(description);
       return Optional.of(tmp);

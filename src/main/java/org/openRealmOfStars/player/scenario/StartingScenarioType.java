@@ -35,7 +35,12 @@ public enum StartingScenarioType {
   /**
    * Realm starts without no ships, but their home planet has more buildings.
    */
-  UTOPIA_WORLD;
+  UTOPIA_WORLD,
+  /**
+   * Starting planet will eventually encounter somekind of bad event or it bad
+   * start.
+   */
+  DOOMED;
 
   /**
    * Get starting scenario type as an integer value.
@@ -66,6 +71,7 @@ public enum StartingScenarioType {
     case REGULAR: return "regular";
     case NO_HOME: return "no home";
     case UTOPIA_WORLD: return "utopia";
+    case DOOMED: return "doomed";
     default:
       throw new IllegalArgumentException("Unknown Starting scenario type");
   }
@@ -76,6 +82,7 @@ public enum StartingScenarioType {
       case REGULAR: return "Regular start from single planet with ships";
       case NO_HOME: return "No starting planet, but lot's of ships";
       case UTOPIA_WORLD: return "Start from improved planet, but no ships.";
+      case DOOMED: return "Starting planet will encounter really bad event.";
       default:
         throw new IllegalArgumentException("Unknown Starting scenario type");
     }

@@ -1,0 +1,22 @@
+[
+  {
+    "description": "Single mass production line but it excessive amount of energy.",
+    "type": "FACTORY",
+    "metalCost": 20,
+    "prodCost": 20,
+    "iconId": "Factory",
+    "factBonus": 1,
+    "maintenanceCost": 0.5,
+    "name": "Leaking factory"
+  },
+  {
+    "description": "Small scale automatic mine, but requires much energy.",
+    "type": "MINE",
+    "metalCost": 15,
+    "prodCost": 15,
+    "mineBonus": 1,
+    "iconId": "Mine",
+    "maintenanceCost": 0.5,
+    "name": "Leaking mine"
+  }
+]

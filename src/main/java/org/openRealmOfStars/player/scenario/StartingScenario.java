@@ -46,6 +46,9 @@ public class StartingScenario {
   /** Number of colony ships in start. */
   private int numberOfColonyShips;
 
+  /** Starting credit. */
+  private int startingCredit;
+
   /** Planet's water level */
   private WaterLevelType waterLevel;
   /** Planet's temperature */
@@ -258,6 +261,22 @@ public class StartingScenario {
    */
   public void setColonyPop(final int colonyPop) {
     this.colonyPop = colonyPop;
+  }
+
+  /**
+   * Get staring credits.
+   * @return the startingCredit
+   */
+  public int getStartingCredit() {
+    return startingCredit;
+  }
+
+  /**
+   * Set amount of starting credits.
+   * @param startingCredit the startingCredit to set
+   */
+  public void setStartingCredit(final int startingCredit) {
+    this.startingCredit = startingCredit;
   }
 
   @Override

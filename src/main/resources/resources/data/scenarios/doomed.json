@@ -24,7 +24,7 @@
       "Leaking mine",
       "Leaking mine"
     ],
-    "StartingCredit": 20,
+    "StartingCredit": 50,
     "Description": "Prebuilt factories and mines are leaking energy which costs credits. There are no space ships at start."
   } 
 ]

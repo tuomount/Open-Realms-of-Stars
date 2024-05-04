@@ -84,6 +84,8 @@ public final class ScenarioIds {
 
   /** Doomed start, bankruptcy with bad factories and mines. */
   public static final String LEAKING_PROD = "LEADKING_PROD";
+  /** Doomed start, Planet turns into volcanic world. */
+  public static final String VOLCANIC_DISASTER = "VOLCANIC_DISASTER";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

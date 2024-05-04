@@ -996,6 +996,24 @@ public class StarMapGenerator {
               .equals(ScenarioIds.METAL_PLANET)) {
             planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
             planet.setMetal(HOMEWORLD_METAL / 2);
+          } else if (playerInfo.getStartingScenario().getId()
+              .equals(ScenarioIds.VOLCANIC_DISASTER)) {
+            int lastTurn = 80 + DiceGenerator.getRandom(40);
+            int totalTurn = 0;
+            int turn = 14;
+            while (totalTurn < lastTurn) {
+              turn = DiceGenerator.getRandom(turn + 1, turn + 66);
+              if (turn < lastTurn) {
+                TimedStatus status = StatusFactory.getTimedStatus(
+                    StatusIds.TECTONIC_QUAKE, TimedStatusType.GAME_START, turn);
+                planet.addTimedStatus(status);
+              }
+              totalTurn = turn;
+            }
+            TimedStatus status = StatusFactory.getTimedStatus(
+                StatusIds.VOLCANIC_ERUPTION, TimedStatusType.GAME_START,
+                lastTurn);
+            planet.addTimedStatus(status);
           } else {
             planet.generateWorldType();
             planet.setAmountMetalInGround(HOMEWORLD_METAL);

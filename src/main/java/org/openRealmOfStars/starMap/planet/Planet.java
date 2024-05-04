@@ -2195,22 +2195,40 @@ public class Planet {
         && getTotalPopulation() > getPopulationLimit()) {
       var workerName = killWorkerPrioritzed();
 
-      // TODO: Better resource reclamation calculation
-      setMetal(getMetal() + 10);
-
-      final var tplOverpopKill = "%1$s on %2$s died due to over-population."
-          + " %3$s start killing others because of over-population."
-          + " Remnants of killed population will be reused if possible."
-          + " Population is now %4$s";
+      if (getTotalPopulation() > 0) {
+        String tplOverpopKill;
+        if (hasStatus(StatusIds.VOLCANIC_ERUPTION)) {
+          tplOverpopKill = "%1$s on %2$s died due to extreme temperature."
+              + " and volcanic activity. %3$s need to move away from this"
+              + " planet now. Population is now %4$s";
+        } else {
+          tplOverpopKill = "%1$s on %2$s died due to over-population."
+              + " %3$s start killing others because of over-population."
+              + " Remnants of killed population will be reused if possible."
+              + " Population is now %4$s";
+        }
+        msg = new Message(MessageType.POPULATION,
+            String.format(tplOverpopKill, workerName, getName(),
+                planetRace.getName(), getTotalPopulation()),
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setCoordinate(getCoordinate());
+        msg.setMatchByString(getName());
+        planetOwnerInfo.getMsgList().addNewMessage(msg);
+        return true;
+      }
       msg = new Message(MessageType.POPULATION,
-          String.format(tplOverpopKill, workerName, getName(),
-              planetRace.getName(), getTotalPopulation()),
+          getName() + " has lost last population. " + getName()
+              + " is now uncolonized!",
           Icons.getIconByName(Icons.ICON_DEATH));
       msg.setCoordinate(getCoordinate());
       msg.setMatchByString(getName());
       planetOwnerInfo.getMsgList().addNewMessage(msg);
-
-      return true;
+      if (getGovernor() != null) {
+        getGovernor().setJob(Job.UNASSIGNED);
+        setGovernor(null);
+      }
+      setPlanetOwner(-1, null);
+      return false;
     }
 
     int food = 0;
@@ -2316,9 +2334,11 @@ public class Planet {
       msg.setMatchByString(getName());
       planetOwnerInfo.getMsgList().addNewMessage(msg);
       if (getTotalPopulation() < 1) {
-        ErrorLogger.log("This probably should not happen but "
-            + planetOwnerInfo.getEmpireName()
-            + " has lost planet by starvation!!!");
+        if (!hasStatus(StatusIds.VOLCANIC_ERUPTION)) {
+          ErrorLogger.log("This probably should not happen but "
+              + planetOwnerInfo.getEmpireName()
+              + " has lost planet by starvation!!!");
+        }
         msg = new Message(MessageType.POPULATION,
             getName() + " has lost last population. " + getName()
                 + " is now uncolonized!",
@@ -4684,15 +4704,15 @@ public class Planet {
         }
         if (status.getStatus().getId().equals(StatusIds.VOLCANIC_ERUPTION)) {
           StringBuilder sb = new StringBuilder();
-          sb.append("Massive planet wide vulcanic eruption happens on ");
+          sb.append("Massive planet wide volcanic eruption happens on ");
           sb.append(getName());
-          sb.append(". It changes the whole planet climate to vulcanic. ");
+          sb.append(". It changes the whole planet climate to volcanic. ");
           sb.append("Temprature raises into intolerable levels. Population ");
           sb.append("starts dying...");
           setTemperatureType(TemperatureType.VOLCANIC);
           setWaterLevel(WaterLevelType.BARREN);
           generateWorldType();
-          //TODO: Vulcanic eruption
+          //TODO: Volcanic eruption
           Message msg = new Message(MessageType.PLANETARY,
               sb.toString(),
               Icons.getIconByName(Icons.ICON_DEATH));

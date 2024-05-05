@@ -1002,7 +1002,7 @@ public class StarMapGenerator {
             int totalTurn = 0;
             int turn = 14;
             while (totalTurn < lastTurn) {
-              turn = DiceGenerator.getRandom(turn + 1, turn + 66);
+              turn = DiceGenerator.getRandom(turn + 1, turn + 37);
               if (turn < lastTurn) {
                 TimedStatus status = StatusFactory.getTimedStatus(
                     StatusIds.TECTONIC_QUAKE, TimedStatusType.GAME_START, turn);

@@ -92,6 +92,10 @@ public class AiRealmSetupView extends BlackPanel {
    * Checkbox for utopia starting scenario.
    */
   private SpaceCheckBox utopiaStart;
+  /**
+   * Checkbox for doomed starting scenario.
+   */
+  private SpaceCheckBox doomedStart;
 
   /**
    * ComboBox on minimum elder race
@@ -228,7 +232,12 @@ public class AiRealmSetupView extends BlackPanel {
     uniqueRace.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     uniqueRace.setAlignmentX(CENTER_ALIGNMENT);
     uniqueRace.addActionListener(listener);
-    uniqueRace.setSelected(true);
+    if (config.getMaxPlayers() > SpaceRaceFactory.getValues().length - 2) {
+      uniqueRace.setSelected(false);
+      uniqueRace.setEnabled(false);
+    } else {
+      uniqueRace.setSelected(true);
+    }
     info.add(uniqueRace);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     uniqueGovernment = new SpaceCheckBox("Unique government");
@@ -301,6 +310,14 @@ public class AiRealmSetupView extends BlackPanel {
     utopiaStart.setSelected(true);
     info.add(utopiaStart);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
+    doomedStart = new SpaceCheckBox("Allow doomed starting scenario");
+    doomedStart.setToolTipText("Realm starts in planet which fate is doomed");
+    doomedStart.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    doomedStart.setAlignmentX(CENTER_ALIGNMENT);
+    doomedStart.addActionListener(listener);
+    doomedStart.setSelected(true);
+    info.add(doomedStart);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceButton btn = new SpaceButton("Edit details",
         GameCommands.COMMAND_REALM_DETAILS);
     btn.setAlignmentX(CENTER_ALIGNMENT);
@@ -329,7 +346,9 @@ public class AiRealmSetupView extends BlackPanel {
     for (String name : SpaceRaceFactory.getIds()) {
       availableRaces.add(SpaceRaceFactory.createOne(name));
     }
-    availableRaces.remove(config.getRace(0));
+    if (uniqueRace.isSelected()) {
+      availableRaces.remove(config.getRace(0));
+    }
     ArrayList<Government> availableGovs = new ArrayList<>();
     for (Government government : GovernmentFactory.getValues()) {
       availableGovs.add(government);
@@ -361,6 +380,10 @@ public class AiRealmSetupView extends BlackPanel {
       }
       if (scenario.getType() == StartingScenarioType.UTOPIA_WORLD
           && utopiaStart.isSelected()) {
+        availableScenario.add(scenario);
+      }
+      if (scenario.getType() == StartingScenarioType.DOOMED
+          && doomedStart.isSelected()) {
         availableScenario.add(scenario);
       }
     }

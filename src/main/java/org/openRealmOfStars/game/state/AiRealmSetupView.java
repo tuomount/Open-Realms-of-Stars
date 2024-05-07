@@ -410,6 +410,8 @@ public class AiRealmSetupView extends BlackPanel {
         Government gov = DiceGenerator.pickRandom(availableGovs);
         config.setPlayerGovernment(i, gov);
       }
+      StartingScenario scenario = DiceGenerator.pickRandom(availableScenario);
+      config.setStartingScenario(i, scenario);
       config.generateUniqueName(i);
       PlayerColor color = DiceGenerator.pickRandom(availableColors);
       availableColors.remove(color);

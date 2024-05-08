@@ -61,6 +61,26 @@
     ],
     
     "Description": "Artificial planet with metal ready to use. There are no space ships at the start."
+  },
+  {
+    "ID": "TRADE_PLANET",
+    "Type": "utopia",
+    "Name": "Utopia planet, with starting 10 credits and Tax center.",
+    "NumberOfScouts": 0,
+    "NumberOfColonyShips": 0,
+    "WaterLevel": "marine",
+    "Temperature": "temperate",
+    "PlanetSize": 10,
+    "Population": 4,
+    "ColonyPop": 0,
+    "Tech":[
+      "Tax center"
+    ],
+    "Buildings": [
+      "Space port",
+      "Tax center"
+    ],
+    "StartingCredit": 10,
+    "Description": "Smaller starting planet with tax center and extra credit."
   }
-  
 ]

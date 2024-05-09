@@ -1356,11 +1356,71 @@ public final class BackgroundStoryGenerator {
     return sb.toString();
   }
   /**
+   * Generate planet specific background based on starting scenario.
+   * @param info Realm
+   * @param startPlanet Starting planet
+   * @return generated history.
+   */
+  private static String generateStartingScenarioPlanetDescription(
+      final PlayerInfo info, final Planet startPlanet) {
+    StringBuilder sb = new StringBuilder();
+    if (info.getStartingScenario().getId()
+        .equals(ScenarioIds.DESTROYED_HOME_PLANET)) {
+      sb.append(" This planet was destroyed star centuries ago ");
+      switch (DiceGenerator.getRandom(3)) {
+      default:
+      case 0: {
+        sb.append("when star of the system went into super nova. ");
+        break;
+      }
+      case 1: {
+        sb.append("massive asteroid cloud hit the planet and bombed the planet"
+            + "surface into waste land. ");
+        break;
+      }
+      case 2: {
+        sb.append("when star of system went past of it's time and engulfed the"
+            + " planet while star was growing to red giant.");
+        break;
+      }
+      case 3: {
+        sb.append(info.getRace().getName());
+        sb.append(" did something unforgiven by thermo nuking whole planet"
+            + " into pieces.");
+        break;
+      }
+      }
+    }
+    if (info.getStartingScenario().getId()
+        .equals(ScenarioIds.VOLCANIC_DISASTER)) {
+      sb.append(" This planet is doomed to turn into volcanic world. ");
+      sb.append(startPlanet.getName());
+      sb.append(" has increasing tectonic events which will eventually tear ");
+      sb.append("up the planet's crust and hot lava will get to surface. ");
+      sb.append("Planet's temperature is expected to be rise when that"
+          + " happens. It is uncertain when this will happen,"
+          + " estimates are it will happen in 80 to 120 star years.");
+    }
+    if (info.getStartingScenario().getId()
+        .equals(ScenarioIds.LEAKING_PROD)) {
+      sb.append(" ");
+      sb.append(info.getEmpireName());
+      sb.append(" has rapidly built cheap and effective productions on ");
+      sb.append(startPlanet.getName());
+      sb.append(" but these buildings were built with bad quality. Now these ");
+      sb.append("buildings are coming end of life and are leaking energy. ");
+      sb.append(info.getEmpireName());
+      sb.append(" has gathered some resource so they can up hold for"
+          + " a while...");
+    }
+    return sb.toString();
+  }
+  /**
    * Generate world type prehistory for realm.
    * @param info Realm
    * @param startPlanet Starting planet
    * @param namePlural Realm space race name plural format.
-   * @param name Realm sapce race name in single format.
+   * @param name Realm space race name in single format.
    * @return generated history.
    */
   private static String generateWorldType(final PlayerInfo info,
@@ -1818,33 +1878,7 @@ public final class BackgroundStoryGenerator {
       }
     }
     sb.append(endOfworldDescription);
-    if (info.getStartingScenario().getId()
-        .equals(ScenarioIds.DESTROYED_HOME_PLANET)) {
-      sb.append(" This planet was destroyed star centuries ago ");
-      switch (DiceGenerator.getRandom(3)) {
-      default:
-      case 0: {
-        sb.append("when star of the system went into super nova. ");
-        break;
-      }
-      case 1: {
-        sb.append("massive asteroid cloud hit the planet and bombed the planet"
-            + "surface into waste land. ");
-        break;
-      }
-      case 2: {
-        sb.append("when star of system went past of it's time and engulfed the"
-            + " planet while star was growing to red giant.");
-        break;
-      }
-      case 3: {
-        sb.append(info.getRace().getName());
-        sb.append(" did something unforgiven by thermo nuking whole planet"
-            + " into pieces.");
-        break;
-      }
-      }
-    }
+    sb.append(generateStartingScenarioPlanetDescription(info, startPlanet));
     return sb.toString();
   }
 

@@ -86,6 +86,8 @@ public final class ScenarioIds {
   public static final String LEAKING_PROD = "LEADKING_PROD";
   /** Doomed start, Planet turns into volcanic world. */
   public static final String VOLCANIC_DISASTER = "VOLCANIC_DISASTER";
+  /** Utopia, Trade planet. */
+  public static final String TRADE_PLANET = "TRADE_PLANET";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

@@ -339,6 +339,8 @@ Artifact on Planet by Tuomo Untinen with Stable Diffusion
 
 Destroyed planet map tile by Tuomo Untinen with Stable Diffusion
 
+City fire by Tuomo Untinen with Stable Diffusion
+
 Gravity veins map tiles by Tuomo Untinen
 
 Black hole map tiles by Tuomo Untinen

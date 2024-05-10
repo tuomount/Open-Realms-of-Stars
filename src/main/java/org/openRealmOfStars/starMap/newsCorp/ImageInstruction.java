@@ -408,6 +408,10 @@ public class ImageInstruction {
    */
   public static final String VIRUSES = "viruses";
   /**
+   * City in fire image
+   */
+  public static final String CITY_IN_FIRE = "city in fire";
+  /**
    * Signal image
    */
   public static final String SIGNAL = "signal";
@@ -699,6 +703,7 @@ public class ImageInstruction {
         && !DESERT.equals(image)
         && !PARADISE.equals(image)
         && !VIRUSES.equals(image)
+        && !CITY_IN_FIRE.equals(image)
         && !METEOR.equals(image)
         && !SIGNAL.equals(image)
         && !TECHNICAL_BREAKTHROUGH.equals(image)
@@ -1304,6 +1309,9 @@ public class ImageInstruction {
     }
     if (VIRUSES.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_VIRUSES);
+    }
+    if (VIRUSES.equals(image)) {
+      drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_FIRE_IN_CITY);
     }
     if (SIGNAL.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_SIGNAL);

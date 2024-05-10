@@ -689,6 +689,9 @@ public final class GuiStatics {
   public static final String IMAGE_PARADISE = "/resources/images/landscape.png";
   /** Image viruses */
   public static final String IMAGE_VIRUSES = "/resources/images/viruses.png";
+  /** Image city in fire */
+  public static final String IMAGE_FIRE_IN_CITY =
+      "/resources/images/city-fire.png";
   /** Image mysterious signal */
   public static final String IMAGE_SIGNAL =
       "/resources/images/mysterious_signal.png";

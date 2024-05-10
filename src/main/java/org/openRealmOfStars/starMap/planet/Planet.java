@@ -4670,7 +4670,7 @@ public class Planet {
           if (imageInst != null) {
             msg.setImageInstructions(imageInst.build());
           }
-          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
           removeList.add(status);
         }
         if (status.getStatus().getId().equals(StatusIds.TECTONIC_QUAKE)) {
@@ -4694,13 +4694,16 @@ public class Planet {
             sb.append(" kills one population");
           }
           sb.append(".");
-          //TODO: Tectonic quake is missing picture
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+          imageInst.addImage(ImageInstruction.CITY_IN_FIRE);
           Message msg = new Message(MessageType.PLANETARY,
               sb.toString(),
               Icons.getIconByName(Icons.ICON_DEATH));
+          msg.setImageInstructions(imageInst.build());
           msg.setMatchByString(getName());
           msg.setCoordinate(getCoordinate());
-          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
         }
         if (status.getStatus().getId().equals(StatusIds.VOLCANIC_ERUPTION)) {
           StringBuilder sb = new StringBuilder();
@@ -4718,7 +4721,7 @@ public class Planet {
               Icons.getIconByName(Icons.ICON_DEATH));
           msg.setMatchByString(getName());
           msg.setCoordinate(getCoordinate());
-          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
         }
       }
     }

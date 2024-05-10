@@ -1014,6 +1014,8 @@ public class StarMapGenerator {
                 StatusIds.VOLCANIC_ERUPTION, TimedStatusType.GAME_START,
                 lastTurn);
             planet.addTimedStatus(status);
+            planet.generateWorldType();
+            planet.setAmountMetalInGround(HOMEWORLD_METAL);
           } else {
             planet.generateWorldType();
             planet.setAmountMetalInGround(HOMEWORLD_METAL);

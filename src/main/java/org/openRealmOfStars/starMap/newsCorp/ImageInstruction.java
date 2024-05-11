@@ -1310,7 +1310,7 @@ public class ImageInstruction {
     if (VIRUSES.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_VIRUSES);
     }
-    if (VIRUSES.equals(image)) {
+    if (CITY_IN_FIRE.equals(image)) {
       drawImg = IOUtilities.loadImage(GuiStatics.IMAGE_FIRE_IN_CITY);
     }
     if (SIGNAL.equals(image)) {

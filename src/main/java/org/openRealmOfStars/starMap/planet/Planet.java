@@ -3849,6 +3849,32 @@ public class Planet {
   }
 
   /**
+   * Tries to add applied status on planet. It checks possible conflict and
+   * that status is unique. How ever even if status is unique it does not
+   * mean that apply could not happen. There can be multiple tectonic events
+   * but only one status is needed for them.
+   * @param status Applied status to apply
+   * @return True applied status was added to applied statuses list.
+   */
+  public boolean addAppliedStatus(final AppliedStatus status) {
+    var statusesArray = new PlanetaryStatus[statuses.size()];
+    for (int i = 0; i < statusesArray.length; i++) {
+      statusesArray[i] = statuses.get(i).getStatus();
+    }
+    var conflicting = PlanetaryStatus.isConflictingWith(status.getStatus(),
+        statusesArray);
+
+    if (conflicting) {
+      return false;
+    }
+    for (AppliedStatus comp : statuses) {
+      if (comp.getStatusId().equals(status.getStatusId())) {
+        return false;
+      }
+    }
+    return statuses.add(status);
+  }
+  /**
    * Return true if Planet has status with given ID
    * @param statusId ID of status
    * @return True if planet has status with given ID
@@ -4633,7 +4659,7 @@ public class Planet {
           }
           continue;
         }
-        if (statuses.add(applied) && planetOwnerInfo != null) {
+        if (addAppliedStatus(applied) && planetOwnerInfo != null) {
           // Need to improve text for new status
           String text = status.getStatus().getDiscoveryText();
           text = text.replaceAll("<PLANETNAME>", getName());
@@ -4686,12 +4712,24 @@ public class Planet {
             sb.append(building.getName());
             and = true;
           }
+          boolean onGround = true;
+          if (planetOwnerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+            onGround = false;
+          }
           if (getTotalPopulation() > 1 && chance < getTotalPopulation()) {
-            killOneWorker();
-            if (and) {
-              sb.append(" and");
+            if (onGround) {
+              killOneWorker();
+              if (and) {
+                sb.append(" and");
+              }
+              sb.append(" kills one population");
+            } else {
+              if (and) {
+                sb.append(" and");
+              }
+              sb.append(" does not affect on population since they are"
+                  + " safe in orbital");
             }
-            sb.append(" kills one population");
           }
           sb.append(".");
           ImageInstruction imageInst = new ImageInstruction();
@@ -4704,6 +4742,7 @@ public class Planet {
           msg.setMatchByString(getName());
           msg.setCoordinate(getCoordinate());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
+          removeList.add(status);
         }
         if (status.getStatus().getId().equals(StatusIds.VOLCANIC_ERUPTION)) {
           StringBuilder sb = new StringBuilder();
@@ -4722,6 +4761,7 @@ public class Planet {
           msg.setMatchByString(getName());
           msg.setCoordinate(getCoordinate());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
+          removeList.add(status);
         }
       }
     }

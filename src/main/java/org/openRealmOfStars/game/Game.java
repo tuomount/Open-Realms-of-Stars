@@ -1475,7 +1475,10 @@ public class Game implements ActionListener {
    * @param loadedSaveFilename LoadedSaveFilename as a String
    */
   public void showSaveGameSetup(final Object loadedSaveFilename) {
-    String filename = galaxyConfig.getPlayerName(0);
+    String filename = "no_name";
+    if (galaxyConfig != null) {
+      filename = galaxyConfig.getPlayerName(0);
+    }
     if (loadedSaveFilename != null && loadedSaveFilename instanceof String) {
       filename = (String) loadedSaveFilename;
     }

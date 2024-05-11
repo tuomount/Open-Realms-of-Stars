@@ -998,7 +998,7 @@ public class StarMapGenerator {
             planet.setMetal(HOMEWORLD_METAL / 2);
           } else if (playerInfo.getStartingScenario().getId()
               .equals(ScenarioIds.VOLCANIC_DISASTER)) {
-            int lastTurn = 80 + DiceGenerator.getRandom(40);
+            int lastTurn = 80 + DiceGenerator.getRandom(60);
             int totalTurn = 0;
             int turn = 14;
             while (totalTurn < lastTurn) {

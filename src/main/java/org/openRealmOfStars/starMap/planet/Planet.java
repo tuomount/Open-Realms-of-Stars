@@ -4749,17 +4749,27 @@ public class Planet {
           sb.append("Massive planet wide volcanic eruption happens on ");
           sb.append(getName());
           sb.append(". It changes the whole planet climate to volcanic. ");
-          sb.append("Temprature raises into intolerable levels. Population ");
-          sb.append("starts dying...");
+          sb.append("Temprature raises into intolerable levels.");
+          if (planetOwnerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+            sb.append(" Population is safe at the orbital.");
+          } else {
+            sb.append(" Population starts dying...");
+          }
           setTemperatureType(TemperatureType.VOLCANIC);
           setWaterLevel(WaterLevelType.BARREN);
           generateWorldType();
-          //TODO: Volcanic eruption
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_STARS);
+          imageInst.addPlanet(ImageInstruction.POSITION_CENTER,
+              getPlanetType().getImageInstructions(),
+              ImageInstruction.SIZE_FULL);
+          map.setTile(getX(), getY(), getPlanetType().getTileIndex());
           Message msg = new Message(MessageType.PLANETARY,
               sb.toString(),
               Icons.getIconByName(Icons.ICON_DEATH));
           msg.setMatchByString(getName());
           msg.setCoordinate(getCoordinate());
+          msg.setImageInstructions(imageInst.build());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
           removeList.add(status);
         }

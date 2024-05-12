@@ -17,6 +17,7 @@ package org.openRealmOfStars.player.scenario;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -76,6 +77,18 @@ public final class StartingScenarioFactory {
     return SINGLETON.getAll();
   }
 
+  /**
+   * Get All starting scenario in sorted array
+   * @return Starting scenario array
+   */
+  public static StartingScenario[] getSorted() {
+    ArrayList<StartingScenario> list = new ArrayList<>();
+    for (StartingScenario scenario : SINGLETON.getAll()) {
+      list.add(scenario);
+    }
+    list.sort((s1, s2) -> s1.getName().compareTo(s2.getName()));
+    return list.toArray(new StartingScenario[0]);
+  }
   /**
    * Get random starting scenario.
    * @return StartingScenario

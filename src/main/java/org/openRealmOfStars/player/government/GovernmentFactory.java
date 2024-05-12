@@ -103,7 +103,7 @@ public final class GovernmentFactory {
     final String[] files = {
         "base"};
     final var governmentsLoaded = loader.loadAll(governments, basePath, files);
-    ErrorLogger.log("SpaceRaces loaded: " + governmentsLoaded);
+    ErrorLogger.log("Governments loaded: " + governmentsLoaded);
   }
 
   /**

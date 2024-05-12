@@ -469,7 +469,7 @@ public class RealmSetupView extends BlackPanel {
         StartingScenarioFactory.getValues().length + 1];
     scenarioList[0] = StartingScenarioFactory.createRandom();
     int j = 0;
-    for (StartingScenario scenario : StartingScenarioFactory.getValues()) {
+    for (StartingScenario scenario : StartingScenarioFactory.getSorted()) {
       j++;
       scenarioList[j] = scenario;
     }

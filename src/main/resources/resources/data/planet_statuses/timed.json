@@ -7,9 +7,14 @@
   },
   {
     "id": "VOLCANIC_ERUPTION",
-    "name": "VOlcanic eruption",
+    "name": "Volcanic eruption",
     "description": "Massive volcanic eruption happens on planet, and rapidly changing planet to volcanic.",
     "hidden": true
-  } 
-   
+  },
+  {
+    "id": "CLIMATE_COOLDOWN",
+    "name": "Climate cooldown",
+    "description": "Climate suddenly cool downs, this could be catastorphic for life on planet.",
+    "hidden": true
+  }
 ]

@@ -1467,6 +1467,22 @@ public class Planet {
   }
 
   /**
+   * Decrease temperature type.
+   */
+  public void decreaseTemperatureType() {
+    switch (this.temperatureType) {
+    case INFERNO: setTemperatureType(TemperatureType.VOLCANIC); break;
+    case VOLCANIC: setTemperatureType(TemperatureType.HOT); break;
+    case HOT: setTemperatureType(TemperatureType.TROPICAL); break;
+    case TROPICAL: setTemperatureType(TemperatureType.TEMPERATE); break;
+    default:
+    case TEMPERATE: setTemperatureType(TemperatureType.COLD); break;
+    case COLD: setTemperatureType(TemperatureType.ARCTIC); break;
+    case ARCTIC: setTemperatureType(TemperatureType.FROZEN); break;
+    case FROZEN: setTemperatureType(TemperatureType.FROZEN); break;
+    }
+  }
+  /**
    * Get planet's water level
    * @return the waterLevel
    */
@@ -4752,12 +4768,42 @@ public class Planet {
           sb.append("Temprature raises into intolerable levels.");
           if (planetOwnerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
             sb.append(" Population is safe at the orbital.");
+          } else if (planetOwnerInfo.getRace()
+              .hasTrait(TraitIds.TOLERATE_LAVA)) {
+            sb.append(" Population can still survive in volcanic planet.");
           } else {
             sb.append(" Population starts dying...");
           }
           setTemperatureType(TemperatureType.VOLCANIC);
           setWaterLevel(WaterLevelType.BARREN);
           generateWorldType();
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_STARS);
+          imageInst.addPlanet(ImageInstruction.POSITION_CENTER,
+              getPlanetType().getImageInstructions(),
+              ImageInstruction.SIZE_FULL);
+          map.setTile(getX(), getY(), getPlanetType().getTileIndex());
+          Message msg = new Message(MessageType.PLANETARY,
+              sb.toString(),
+              Icons.getIconByName(Icons.ICON_DEATH));
+          msg.setMatchByString(getName());
+          msg.setCoordinate(getCoordinate());
+          msg.setImageInstructions(imageInst.build());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+          removeList.add(status);
+        }
+        if (status.getStatus().getId().equals(StatusIds.CLIMATE_COOLDOWN)) {
+          StringBuilder sb = new StringBuilder();
+          decreaseTemperatureType();
+          generateWorldType();
+          sb.append("Climate on ");
+          sb.append(getName());
+          sb.append(" cool downs and is now ");
+          sb.append(temperatureType.toString());
+          sb.append(".");
+          if (isColonizeablePlanet(planetOwnerInfo)) {
+            sb.append(" Population starts freezing...");
+          }
           ImageInstruction imageInst = new ImageInstruction();
           imageInst.addBackground(ImageInstruction.BACKGROUND_STARS);
           imageInst.addPlanet(ImageInstruction.POSITION_CENTER,

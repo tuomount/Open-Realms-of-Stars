@@ -72,6 +72,9 @@ public final class StatusIds {
   /** Planet has massive vulcanic eruption. */
   public static final String VOLCANIC_ERUPTION = "VOLCANIC_ERUPTION";
 
+  /** Planet has climate cool down. */
+  public static final String CLIMATE_COOLDOWN = "CLIMATE_COOLDOWN";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

@@ -913,6 +913,14 @@ public class StarMapGenerator {
     if (playerIndex != -1) {
       PlayerInfo playerInfo = starMap.getPlayerList().getPlayerInfoByIndex(
           playerIndex);
+      if (playerInfo.getStartingScenario().getId()
+          .equals(ScenarioIds.METAL_PLANET)
+          && config.getScoreLimitResearch() < 2) {
+        // Metal planet should not be available if
+        // only one technology advancement is require for winning.
+        playerInfo.setStartingScenario(StartingScenarioFactory.create(
+            ScenarioIds.TEMPERATE_HUMID_SIZE12));
+      }
       if (playerInfo.getStartingScenario().getId().equals(ScenarioIds.EARTH)) {
         if (!solHasAdded) {
           solHasAdded = true;

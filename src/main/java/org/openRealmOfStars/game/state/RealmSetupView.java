@@ -57,6 +57,7 @@ import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
+import org.openRealmOfStars.player.scenario.ScenarioIds;
 import org.openRealmOfStars.player.scenario.StartingScenario;
 import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -465,13 +466,22 @@ public class RealmSetupView extends BlackPanel {
     label = new SpaceLabel("Realm's starting scenario:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     westPanel.add(label);
-    StartingScenario[] scenarioList = new StartingScenario[
-        StartingScenarioFactory.getValues().length + 1];
+    int numberOfScenarios = StartingScenarioFactory.getValues().length + 1;
+    boolean metalPlanetNotAllowed = false;
+    if (config.getScoreLimitResearch() == 1) {
+      numberOfScenarios--;
+      metalPlanetNotAllowed = true;
+    }
+    StartingScenario[] scenarioList = new StartingScenario[numberOfScenarios];
     scenarioList[0] = StartingScenarioFactory.createRandom();
     int j = 0;
     for (StartingScenario scenario : StartingScenarioFactory.getSorted()) {
-      j++;
-      scenarioList[j] = scenario;
+      if (!metalPlanetNotAllowed
+          || !scenario.getId().equals(ScenarioIds.METAL_PLANET)
+          && metalPlanetNotAllowed) {
+        j++;
+        scenarioList[j] = scenario;
+      }
     }
     comboScenario = new SpaceComboBox<>(scenarioList);
     comboScenario.setBackground(GuiStatics.getDeepSpaceDarkColor());

@@ -75,6 +75,9 @@ public final class StatusIds {
   /** Planet has climate cool down. */
   public static final String CLIMATE_COOLDOWN = "CLIMATE_COOLDOWN";
 
+  /** Planet has climate heat up. */
+  public static final String CLIMATE_HEATUP = "CLIMATE_HEATUP";
+
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;
 

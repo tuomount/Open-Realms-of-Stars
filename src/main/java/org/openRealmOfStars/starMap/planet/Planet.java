@@ -1483,6 +1483,22 @@ public class Planet {
     }
   }
   /**
+   * Increase temperature type.
+   */
+  public void inccreaseTemperatureType() {
+    switch (this.temperatureType) {
+    case FROZEN: setTemperatureType(TemperatureType.ARCTIC); break;
+    case ARCTIC: setTemperatureType(TemperatureType.COLD); break;
+    case COLD: setTemperatureType(TemperatureType.TEMPERATE); break;
+    default:
+    case TEMPERATE: setTemperatureType(TemperatureType.TROPICAL); break;
+    case TROPICAL: setTemperatureType(TemperatureType.HOT); break;
+    case HOT: setTemperatureType(TemperatureType.VOLCANIC); break;
+    case VOLCANIC: setTemperatureType(TemperatureType.INFERNO); break;
+    case INFERNO: setTemperatureType(TemperatureType.INFERNO); break;
+    }
+  }
+  /**
    * Get planet's water level
    * @return the waterLevel
    */
@@ -4803,6 +4819,33 @@ public class Planet {
           sb.append(".");
           if (isColonizeablePlanet(planetOwnerInfo)) {
             sb.append(" Population starts freezing...");
+          }
+          ImageInstruction imageInst = new ImageInstruction();
+          imageInst.addBackground(ImageInstruction.BACKGROUND_STARS);
+          imageInst.addPlanet(ImageInstruction.POSITION_CENTER,
+              getPlanetType().getImageInstructions(),
+              ImageInstruction.SIZE_FULL);
+          map.setTile(getX(), getY(), getPlanetType().getTileIndex());
+          Message msg = new Message(MessageType.PLANETARY,
+              sb.toString(),
+              Icons.getIconByName(Icons.ICON_DEATH));
+          msg.setMatchByString(getName());
+          msg.setCoordinate(getCoordinate());
+          msg.setImageInstructions(imageInst.build());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+          removeList.add(status);
+        }
+        if (status.getStatus().getId().equals(StatusIds.CLIMATE_HEATUP)) {
+          StringBuilder sb = new StringBuilder();
+          decreaseTemperatureType();
+          generateWorldType();
+          sb.append("Climate on ");
+          sb.append(getName());
+          sb.append(" heat ups and is now ");
+          sb.append(temperatureType.toString());
+          sb.append(".");
+          if (isColonizeablePlanet(planetOwnerInfo)) {
+            sb.append(" Population dying due too hot conditions...");
           }
           ImageInstruction imageInst = new ImageInstruction();
           imageInst.addBackground(ImageInstruction.BACKGROUND_STARS);

@@ -4646,6 +4646,80 @@ public class Planet {
       }
     }
   }
+
+  /**
+   * Check global warming.
+   * This is not good, yet since this already alters planet statuses,
+   * so this method cannot be used just for getting pollution text.
+   * DO NOT USE YET.
+   * @return Pollution text.
+   */
+  public String checkGlobalWarming() {
+    boolean hasGlobalWarming = false;
+    for (TimedStatus status : timedStatuses) {
+      if (status.getStatus().getId().equals(StatusIds.CLIMATE_HEATUP)) {
+        hasGlobalWarming = true;
+      }
+    }
+    int chance = 0;
+    if (!hasGlobalWarming) {
+      int pollution = getTotalProdProduction() + getTotalMetalProduction();
+      pollution = pollution - getTotalFoodProduction();
+      pollution = pollution + getTotalPopulation() - 4;
+      if (hasCertainBuilding("Recycle center")) {
+        pollution = pollution - 4;
+      }
+      if (hasCertainBuilding("Advanced recycle center")) {
+        pollution = pollution - 8;
+      }
+      if (hasCertainBuilding("Ancient factory")) {
+        pollution = pollution + 1;
+      }
+      if (hasCertainBuilding("Orbital elevator Mk1")) {
+        pollution = pollution - 1;
+      }
+      if (hasCertainBuilding("Orbital elevator Mk2")) {
+        pollution = pollution - 1;
+      }
+      if (hasCertainBuilding("Orbital elevator Mk3")) {
+        pollution = pollution - 1;
+      }
+      if (hasCertainBuilding("Orbital lift")) {
+        pollution = pollution - 1;
+      }
+      if (hasCertainBuilding("Leaking factory")) {
+        pollution = pollution + 1;
+      }
+      if (hasCertainBuilding("Leaking mine")) {
+        pollution = pollution + 1;
+      }
+      chance = pollution - getGroundSize();
+      if (chance > 0) {
+        String str = "Pollution level: " + pollution + " - Low risk\n";
+        int minTurn = 30;
+        int maxTurn = 60;
+        if (chance < 10) {
+          str = "Pollution level: " + pollution + " - Medium risk\n";
+          minTurn = 20;
+          maxTurn = 50;
+        } else {
+          str = "Pollution level: " + pollution + " - High risk\n";
+          minTurn = 10;
+          maxTurn = 25;
+        }
+        int value = DiceGenerator.getRandom(99);
+        if (value < chance) {
+          TimedStatus status = StatusFactory.getTimedStatus(
+              StatusIds.CLIMATE_HEATUP, TimedStatusType.GAME_START,
+              DiceGenerator.getRandom(minTurn, maxTurn));
+          addTimedStatus(status);
+        }
+        return str;
+      }
+      return "Pollution level: " + pollution + " - No risk\n";
+    }
+    return "";
+  }
   /**
    * Handle timed Status for planet.
    * @param map StarMap

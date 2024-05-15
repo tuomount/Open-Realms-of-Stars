@@ -1024,6 +1024,22 @@ public class StarMapGenerator {
             planet.addTimedStatus(status);
             planet.generateWorldType();
             planet.setAmountMetalInGround(HOMEWORLD_METAL);
+          } else if (playerInfo.getStartingScenario().getId()
+              .equals(ScenarioIds.FREEZING_PLANET)) {
+            int lastTurn = 85 + DiceGenerator.getRandom(45);
+            int turn = 10;
+            for (int i = 0; i < 3; i++) {
+              turn = DiceGenerator.getRandom(turn + 5, turn + 25);
+              TimedStatus status = StatusFactory.getTimedStatus(
+                  StatusIds.CLIMATE_COOLDOWN, TimedStatusType.GAME_START, turn);
+              planet.addTimedStatus(status);
+            }
+            TimedStatus status = StatusFactory.getTimedStatus(
+                StatusIds.CLIMATE_COOLDOWN, TimedStatusType.GAME_START,
+                lastTurn);
+            planet.addTimedStatus(status);
+            planet.generateWorldType();
+            planet.setAmountMetalInGround(HOMEWORLD_METAL);
           } else {
             planet.generateWorldType();
             planet.setAmountMetalInGround(HOMEWORLD_METAL);

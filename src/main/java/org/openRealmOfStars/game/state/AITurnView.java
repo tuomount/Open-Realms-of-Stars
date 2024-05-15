@@ -3418,6 +3418,7 @@ public class AITurnView extends BlackPanel {
                            .getCurrentMaxRealms()];
     for (int i = 0; i < game.getStarMap().getPlanetList().size(); i++) {
       Planet planet = game.getStarMap().getPlanetList().get(i);
+      //TODO: Add global warming check here for planet
       planet.handleTimedStatuses(game.getStarMap());
       if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();

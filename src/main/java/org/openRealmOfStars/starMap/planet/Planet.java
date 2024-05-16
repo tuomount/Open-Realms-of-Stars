@@ -2297,7 +2297,9 @@ public class Planet {
       require = 10 * 100 / planetRace.getGrowthSpeed();
     }
 
-    extraFood = extraFood + food;
+    if (isColonizeablePlanet(getPlanetPlayerInfo())) {
+      extraFood = extraFood + food;
+    }
     if (exceedRadiation() && extraFood > 0) {
       // Clear extra food if radiation is exceeded
       extraFood = 0;
@@ -2366,7 +2368,8 @@ public class Planet {
       msg.setMatchByString(getName());
       planetOwnerInfo.getMsgList().addNewMessage(msg);
       if (getTotalPopulation() < 1) {
-        if (!hasStatus(StatusIds.VOLCANIC_ERUPTION)) {
+        if (!hasStatus(StatusIds.VOLCANIC_ERUPTION)
+            && !hasStatus(StatusIds.CLIMATE_COOLDOWN)) {
           ErrorLogger.log("This probably should not happen but "
               + planetOwnerInfo.getEmpireName()
               + " has lost planet by starvation!!!");
@@ -4891,7 +4894,7 @@ public class Planet {
           sb.append(" cool downs and is now ");
           sb.append(temperatureType.toString());
           sb.append(".");
-          if (isColonizeablePlanet(planetOwnerInfo)) {
+          if (!isColonizeablePlanet(planetOwnerInfo)) {
             sb.append(" Population starts freezing...");
           }
           ImageInstruction imageInst = new ImageInstruction();

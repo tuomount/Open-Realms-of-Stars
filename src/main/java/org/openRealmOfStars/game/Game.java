@@ -2406,7 +2406,7 @@ public class Game implements ActionListener {
         + "(https://github.com/tuomount/Open-Realms-of-Stars/assets/"
         + "15839156/2ea934aa-5092-4cbc-a7c8-e8348939ace4)");
     sb.append("\n");
-    for (SpaceRace race : SpaceRaceFactory.getValues()) {
+    for (SpaceRace race : SpaceRaceFactory.getValuesNoPseudo()) {
       sb.append("\n");
       sb.append(race.getFullDescription(true, true));
     }

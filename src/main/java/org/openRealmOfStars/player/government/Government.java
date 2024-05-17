@@ -677,7 +677,7 @@ public class Government {
       sb.append(lf);
     }
     if (listTraits) {
-      sb.append("Traits:");
+      sb.append("\nTraits:");
       sb.append(lf);
       int traitPoints = 0;
       for (GovTrait trait : traits) {

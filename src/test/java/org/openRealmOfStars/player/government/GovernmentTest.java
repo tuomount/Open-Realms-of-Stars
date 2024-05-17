@@ -42,6 +42,7 @@ public class GovernmentTest {
   public void testDescriptions2() {
     for (Government gov : GovernmentFactory.getValues()) {
       String result = gov.getDescription(true, true);
+      //System.out.println(result);
       assertEquals(true, result.contains("Points: 4"));
       assertEquals(4, gov.getTraitValue());
     }

@@ -52,8 +52,9 @@ See more [screenshots](ArtModification/screenshots)
 ### Features
 
  * Randomized galaxy with three different starting placements
- * 16 different space races to play
- * 23 different government types to play
+ * 15 different space races to play
+ * 22 different government types to play
+ * 17 different starting scenarios to play
  * Any realm can start as an elder realm even human player
  * Random events
  * Planetary events
@@ -66,7 +67,7 @@ See more [screenshots](ArtModification/screenshots)
  * AI remembers how it has been treated and will treat others accordingly
  * Galactic Olympics to influence to other realms
  * Technology can be traded in diplomatic trades
- * If two realms are in alliance they won the game together.
+ * If two realms are in alliance they win the game together.
  * Possibility to fake military power in the galactic news (Can be lower or higher)
  * Espionage ships and espionage missions with leaders
  * Leaders acting as rulers, governors and commanders

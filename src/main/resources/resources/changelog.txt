@@ -1,6 +1,6 @@
 - New features and updates -
 
-* New realm setup view.
+* New AI realm setup view.
 * New player realm setup.
 * Realms now have selectable/random starting scenario.
 * Most of the game data is now stored in JSON files.
@@ -12,10 +12,13 @@
 * Planets have temperature which tells how suitable planet is for certain space race.
 * Planets have humidity which tells how much food planet can produce automatically
 * Planets have gravity depending on planet size, larger planets have high gravity.
+* There are four radiation levels: No radiation, Low, High and Very high radiation.
 * Some of the space race features are now moved to government traits like armed freighters.
 * Planets may have statuses which can be found during colonization or be even timed.
+* There can be multiple statuses on planet.
 * All speeches are now in JSON files.
-* When viewing uncolonized planets, if it is not colonizeable there is textual reason.
+* When viewing uncolonized planets, if it is not colonizable there is textual reason.
+* Alonian space race is no longer. It's main feature is now as a starting scenario available for each space race.
 
 
 - Bugfixes -

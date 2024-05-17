@@ -146,9 +146,8 @@ public enum PlanetaryEvent {
   public static PlanetaryEvent getByIndex(final int index) {
     if (index >= 0 && index < values().length) {
       return values()[index];
-    } else {
-      throw new IllegalArgumentException("Unknown planetary event!!");
     }
+    throw new IllegalArgumentException("Unknown planetary event!!");
   }
 
   /**

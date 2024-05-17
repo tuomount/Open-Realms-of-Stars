@@ -73,6 +73,21 @@ public final class SpaceRaceFactory {
   }
 
   /**
+   * Get All Space races in array but not pseudo races.
+   * @return Space race array
+   */
+  public static SpaceRace[] getValuesNoPseudo() {
+    ArrayList<SpaceRace> list = new ArrayList<>();
+    for (SpaceRace race : getValues()) {
+      if (!race.getId().equals(SPACE_MONSTER)
+          && !race.getId().equals(SPACE_PIRATE)) {
+        list.add(race);
+      }
+    }
+    return list.toArray(new SpaceRace[list.size()]);
+  }
+
+  /**
    * Get All Space race names in array. This will filter out pseudo races.
    * @return Space race name array
    */

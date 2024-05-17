@@ -798,7 +798,7 @@ public class SpaceRace {
         sb.append(trait.getDescription());
         sb.append(lf);
       }
-      sb.append("Total trait points: ");
+      sb.append("\nTotal trait points: ");
       sb.append(points);
       sb.append(lf);
       if (!markDown) {

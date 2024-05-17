@@ -555,6 +555,9 @@ public final class MissionHandling {
               fleet.getY(), Route.ROUTE_EXPLORED));
           planet.eventActivation(game.getStarMap().isTutorialEnabled(),
               fleet.getCommander(), info);
+          planet.handleTimedStatusForAwayTeam(game.getStarMap(),
+              fleet.getCommander(), info);
+
         }
       }
       if (mission.getPhase() == MissionPhase.TREKKING

@@ -273,6 +273,10 @@ public class StarMapMouseListener extends MouseAdapter {
           && nearByPlanet.getPlanetaryEvent() != PlanetaryEvent.NONE
           && !nearByPlanet.isEventActivated()) {
         mapInfoPanel.setExploreBtn();
+      } else if (nearByPlanet != null
+          && nearByPlanet.getPlanetPlayerInfo() == null
+          && nearByPlanet.hasStatusForAwayTeam()) {
+        mapInfoPanel.setExploreBtn();
       } else {
         mapInfoPanel.disableFixTradeBtn();
       }

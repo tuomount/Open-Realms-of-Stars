@@ -4105,6 +4105,7 @@ public class Planet {
         exp = exp * 2;
       }
       commander.addExperience(exp);
+      commander.getStats().addOne(StatType.NUMBER_OF_PLANETS_EXPLORED);
     }
   }
 
@@ -4723,6 +4724,269 @@ public class Planet {
     }
     return "";
   }
+
+  /**
+   * Activate Timed status
+   * @param map StarMap
+   * @param status Status to be activated
+   * @param info Possible realm doing the activating via away team
+   * @param leader Away team leader
+   * @return True if status was activated and should be removed.
+   */
+  public boolean activateTimedStatus(final StarMap map,
+      final TimedStatus status, final PlayerInfo info, final Leader leader) {
+    PlayerInfo realm = info;
+    if (info == null && getPlanetPlayerInfo() != null) {
+      realm = getPlanetPlayerInfo();
+    }
+    boolean addToRemoveList = false;
+    AppliedStatus applied = new AppliedStatus(status.getStatus());
+    if (applied.getStatusId().equals(StatusIds.PIRATE_WORLD)) {
+      addToRemoveList = true;
+      if (realm == null
+          && map.getPlayerList().getSpacePiratePlayer() != null) {
+        PlayerInfo pirate = map.getPlayerList().getSpacePiratePlayer();
+        if (isColonizeablePlanet(pirate)) {
+          int index = map.getPlayerList().getIndex(pirate);
+          setPlanetOwner(index, pirate);
+          setWorkers(FOOD_FARMERS, 1);
+          EventOnPlanet eventOnPlanet = new EventOnPlanet(
+              EventType.PLANET_COLONIZED, getCoordinate(), getName(),
+              index);
+          eventOnPlanet.setText(pirate.getEmpireName()
+              + " has managed to form a base on " + getName()
+              + ". ");
+          map.getHistory().addEvent(eventOnPlanet);
+        }
+      }
+      return addToRemoveList;
+    }
+    if (realm == null) {
+      return false;
+    }
+    if (addAppliedStatus(applied)) {
+      // Need to improve text for new status
+      String text = status.getStatus().getDiscoveryText();
+      text = text.replaceAll("<PLANETNAME>", getName());
+      StringBuilder sb = new StringBuilder();
+      sb.append(getName());
+      sb.append(" has new discovery");
+      if (leader != null) {
+        sb.append(" by ");
+        sb.append(leader.getCallName());
+        sb.append(": ");
+      } else {
+        sb.append(": ");
+      }
+      sb.append(text);
+      if (leader != null) {
+        sb.append(" ");
+        sb.append(leader.getName());
+        sb.append(" gains ");
+        int exp = 8;
+        if (leader.hasPerk(Perk.TREKKER)) {
+          exp = exp * 2;
+        }
+        leader.addExperience(exp);
+        leader.getStats().addOne(StatType.NUMBER_OF_PLANETS_EXPLORED);
+        sb.append(exp);
+        sb.append(" experience points by doing away mission.");
+      }
+      Message msg = new Message(MessageType.PLANETARY, sb.toString(),
+          Icons.getIconByName(Icons.ICON_PLANET));
+      msg.setMatchByString(getName());
+      msg.setCoordinate(getCoordinate());
+      ImageInstruction imageInst = null;
+      if (status.getStatus().getId().equals(StatusIds.FERTILE_SOIL)) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        if (DiceGenerator.getBoolean()) {
+          imageInst.addImage(ImageInstruction.PARADISE);
+        } else {
+          imageInst.addImage(ImageInstruction.LUSH_VEGETATION);
+        }
+      }
+      if (status.getStatus().getId().equals(StatusIds.METAL_RICH_SURFACE)) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.METAL_RICH_SURFACE);
+      }
+      if (status.getStatus().getId().equals(StatusIds.MOLTEN_LAVA)) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.MOLTEN_LAVA);
+      }
+      if (status.getStatus().getId().equals(StatusIds.PRECIOUS_GEMS)) {
+        imageInst = new ImageInstruction();
+        imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+        imageInst.addImage(ImageInstruction.PRECIOUS_GEMS);
+      }
+      if (imageInst != null) {
+        msg.setImageInstructions(imageInst.build());
+      }
+      realm.getMsgList().addNewMessage(msg);
+      addToRemoveList = true;
+    }
+    if (status.getStatus().getId().equals(StatusIds.TECTONIC_QUAKE)) {
+      StringBuilder sb = new StringBuilder();
+      sb.append("Massive tectonic quake happens on ");
+      sb.append(getName());
+      sb.append(". It");
+      int chance = DiceGenerator.getRandom(getSizeAsInt() - 1);
+      boolean and = false;
+      if (chance < buildings.size()) {
+        Building building = destroyOneBuilding();
+        sb.append(" destroys ");
+        sb.append(building.getName());
+        and = true;
+      }
+      boolean onGround = true;
+      if (realm.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+        onGround = false;
+      }
+      if (getTotalPopulation() > 1 && chance < getTotalPopulation()) {
+        if (onGround) {
+          killOneWorker();
+          if (and) {
+            sb.append(" and");
+          }
+          sb.append(" kills one population");
+        } else {
+          if (and) {
+            sb.append(" and");
+          }
+          sb.append(" does not affect on population since they are"
+              + " safe in orbital");
+        }
+      }
+      sb.append(".");
+      ImageInstruction imageInst = new ImageInstruction();
+      imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
+      imageInst.addImage(ImageInstruction.CITY_IN_FIRE);
+      Message msg = new Message(MessageType.PLANETARY,
+          sb.toString(),
+          Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setImageInstructions(imageInst.build());
+      msg.setMatchByString(getName());
+      msg.setCoordinate(getCoordinate());
+      realm.getMsgList().addNewMessage(msg);
+      addToRemoveList = true;
+    }
+    if (status.getStatus().getId().equals(StatusIds.VOLCANIC_ERUPTION)) {
+      StringBuilder sb = new StringBuilder();
+      sb.append("Massive planet wide volcanic eruption happens on ");
+      sb.append(getName());
+      sb.append(". It changes the whole planet climate to volcanic. ");
+      sb.append("Temprature raises into intolerable levels.");
+      if (realm.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+        sb.append(" Population is safe at the orbital.");
+      } else if (realm.getRace()
+          .hasTrait(TraitIds.TOLERATE_LAVA)) {
+        sb.append(" Population can still survive in volcanic planet.");
+      } else {
+        sb.append(" Population starts dying...");
+      }
+      setTemperatureType(TemperatureType.VOLCANIC);
+      setWaterLevel(WaterLevelType.BARREN);
+      generateWorldType();
+      ImageInstruction imageInst = new ImageInstruction();
+      imageInst.addBackground(ImageInstruction.BACKGROUND_STARS);
+      imageInst.addPlanet(ImageInstruction.POSITION_CENTER,
+          getPlanetType().getImageInstructions(),
+          ImageInstruction.SIZE_FULL);
+      map.setTile(getX(), getY(), getPlanetType().getTileIndex());
+      Message msg = new Message(MessageType.PLANETARY,
+          sb.toString(),
+          Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setMatchByString(getName());
+      msg.setCoordinate(getCoordinate());
+      msg.setImageInstructions(imageInst.build());
+      realm.getMsgList().addNewMessage(msg);
+      addToRemoveList = true;
+    }
+    if (status.getStatus().getId().equals(StatusIds.CLIMATE_COOLDOWN)) {
+      StringBuilder sb = new StringBuilder();
+      decreaseTemperatureType();
+      generateWorldType();
+      sb.append("Climate on ");
+      sb.append(getName());
+      sb.append(" cool downs and is now ");
+      sb.append(temperatureType.toString());
+      sb.append(".");
+      if (!isColonizeablePlanet(planetOwnerInfo)) {
+        sb.append(" Population starts freezing...");
+      }
+      ImageInstruction imageInst = new ImageInstruction();
+      imageInst.addBackground(ImageInstruction.BACKGROUND_STARS);
+      imageInst.addPlanet(ImageInstruction.POSITION_CENTER,
+          getPlanetType().getImageInstructions(),
+          ImageInstruction.SIZE_FULL);
+      map.setTile(getX(), getY(), getPlanetType().getTileIndex());
+      Message msg = new Message(MessageType.PLANETARY,
+          sb.toString(),
+          Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setMatchByString(getName());
+      msg.setCoordinate(getCoordinate());
+      msg.setImageInstructions(imageInst.build());
+      realm.getMsgList().addNewMessage(msg);
+      addToRemoveList = true;
+    }
+    if (status.getStatus().getId().equals(StatusIds.CLIMATE_HEATUP)) {
+      StringBuilder sb = new StringBuilder();
+      decreaseTemperatureType();
+      generateWorldType();
+      sb.append("Climate on ");
+      sb.append(getName());
+      sb.append(" heat ups and is now ");
+      sb.append(temperatureType.toString());
+      sb.append(".");
+      if (isColonizeablePlanet(planetOwnerInfo)) {
+        sb.append(" Population dying due too hot conditions...");
+      }
+      ImageInstruction imageInst = new ImageInstruction();
+      imageInst.addBackground(ImageInstruction.BACKGROUND_STARS);
+      imageInst.addPlanet(ImageInstruction.POSITION_CENTER,
+          getPlanetType().getImageInstructions(),
+          ImageInstruction.SIZE_FULL);
+      map.setTile(getX(), getY(), getPlanetType().getTileIndex());
+      Message msg = new Message(MessageType.PLANETARY,
+          sb.toString(),
+          Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setMatchByString(getName());
+      msg.setCoordinate(getCoordinate());
+      msg.setImageInstructions(imageInst.build());
+      realm.getMsgList().addNewMessage(msg);
+      addToRemoveList = true;
+    }
+    return addToRemoveList;
+  }
+
+  /**
+   * Handle timed status for away team
+   * @param map Starmap
+   * @param leader Leader doing the away team
+   * @param realm PlayerInfo who is doing the away team.
+   */
+  public void handleTimedStatusForAwayTeam(final StarMap map,
+      final Leader leader, final PlayerInfo realm) {
+    ArrayList<TimedStatus> removeList = new ArrayList<>();
+    for (TimedStatus status : timedStatuses) {
+      if (status.getTimedStatus()
+          == TimedStatusType.AFTER_COLONIZATION_OR_AWAY_TEAM) {
+        boolean addToRemoveList = activateTimedStatus(map, status, realm,
+            leader);
+        if (addToRemoveList) {
+          removeList.add(status);
+        }
+      }
+    }
+    if (removeList.size() > 0) {
+      for (TimedStatus status : removeList) {
+        timedStatuses.remove(status);
+      }
+    }
+
+  }
   /**
    * Handle timed Status for planet.
    * @param map StarMap
@@ -4747,196 +5011,8 @@ public class Planet {
         status.decrease();
       }
       if (status.isActive()) {
-        AppliedStatus applied = new AppliedStatus(status.getStatus());
-        if (applied.getStatusId().equals(StatusIds.PIRATE_WORLD)) {
-          removeList.add(status);
-          if (getPlanetPlayerInfo() == null
-              && map.getPlayerList().getSpacePiratePlayer() != null) {
-            PlayerInfo info = map.getPlayerList().getSpacePiratePlayer();
-            if (isColonizeablePlanet(info)) {
-              int index = map.getPlayerList().getIndex(info);
-              setPlanetOwner(index, info);
-              setWorkers(FOOD_FARMERS, 1);
-              EventOnPlanet eventOnPlanet = new EventOnPlanet(
-                  EventType.PLANET_COLONIZED, getCoordinate(), getName(),
-                  index);
-              eventOnPlanet.setText(info.getEmpireName()
-                  + " has managed to form a base on " + getName()
-                  + ". ");
-              map.getHistory().addEvent(eventOnPlanet);
-            }
-          }
-          continue;
-        }
-        if (addAppliedStatus(applied) && planetOwnerInfo != null) {
-          // Need to improve text for new status
-          String text = status.getStatus().getDiscoveryText();
-          text = text.replaceAll("<PLANETNAME>", getName());
-          Message msg = new Message(MessageType.PLANETARY,
-              getName() + " has new discovery: " + text,
-              Icons.getIconByName(Icons.ICON_PLANET));
-          msg.setMatchByString(getName());
-          msg.setCoordinate(getCoordinate());
-          ImageInstruction imageInst = null;
-          if (status.getStatus().getId().equals(StatusIds.FERTILE_SOIL)) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            if (DiceGenerator.getBoolean()) {
-              imageInst.addImage(ImageInstruction.PARADISE);
-            } else {
-              imageInst.addImage(ImageInstruction.LUSH_VEGETATION);
-            }
-          }
-          if (status.getStatus().getId().equals(StatusIds.METAL_RICH_SURFACE)) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.METAL_RICH_SURFACE);
-          }
-          if (status.getStatus().getId().equals(StatusIds.MOLTEN_LAVA)) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.MOLTEN_LAVA);
-          }
-          if (status.getStatus().getId().equals(StatusIds.PRECIOUS_GEMS)) {
-            imageInst = new ImageInstruction();
-            imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-            imageInst.addImage(ImageInstruction.PRECIOUS_GEMS);
-          }
-          if (imageInst != null) {
-            msg.setImageInstructions(imageInst.build());
-          }
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-          removeList.add(status);
-        }
-        if (status.getStatus().getId().equals(StatusIds.TECTONIC_QUAKE)) {
-          StringBuilder sb = new StringBuilder();
-          sb.append("Massive tectonic quake happens on ");
-          sb.append(getName());
-          sb.append(". It");
-          int chance = DiceGenerator.getRandom(getSizeAsInt() - 1);
-          boolean and = false;
-          if (chance < buildings.size()) {
-            Building building = destroyOneBuilding();
-            sb.append(" destroys ");
-            sb.append(building.getName());
-            and = true;
-          }
-          boolean onGround = true;
-          if (planetOwnerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
-            onGround = false;
-          }
-          if (getTotalPopulation() > 1 && chance < getTotalPopulation()) {
-            if (onGround) {
-              killOneWorker();
-              if (and) {
-                sb.append(" and");
-              }
-              sb.append(" kills one population");
-            } else {
-              if (and) {
-                sb.append(" and");
-              }
-              sb.append(" does not affect on population since they are"
-                  + " safe in orbital");
-            }
-          }
-          sb.append(".");
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_BLACK);
-          imageInst.addImage(ImageInstruction.CITY_IN_FIRE);
-          Message msg = new Message(MessageType.PLANETARY,
-              sb.toString(),
-              Icons.getIconByName(Icons.ICON_DEATH));
-          msg.setImageInstructions(imageInst.build());
-          msg.setMatchByString(getName());
-          msg.setCoordinate(getCoordinate());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-          removeList.add(status);
-        }
-        if (status.getStatus().getId().equals(StatusIds.VOLCANIC_ERUPTION)) {
-          StringBuilder sb = new StringBuilder();
-          sb.append("Massive planet wide volcanic eruption happens on ");
-          sb.append(getName());
-          sb.append(". It changes the whole planet climate to volcanic. ");
-          sb.append("Temprature raises into intolerable levels.");
-          if (planetOwnerInfo.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
-            sb.append(" Population is safe at the orbital.");
-          } else if (planetOwnerInfo.getRace()
-              .hasTrait(TraitIds.TOLERATE_LAVA)) {
-            sb.append(" Population can still survive in volcanic planet.");
-          } else {
-            sb.append(" Population starts dying...");
-          }
-          setTemperatureType(TemperatureType.VOLCANIC);
-          setWaterLevel(WaterLevelType.BARREN);
-          generateWorldType();
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_STARS);
-          imageInst.addPlanet(ImageInstruction.POSITION_CENTER,
-              getPlanetType().getImageInstructions(),
-              ImageInstruction.SIZE_FULL);
-          map.setTile(getX(), getY(), getPlanetType().getTileIndex());
-          Message msg = new Message(MessageType.PLANETARY,
-              sb.toString(),
-              Icons.getIconByName(Icons.ICON_DEATH));
-          msg.setMatchByString(getName());
-          msg.setCoordinate(getCoordinate());
-          msg.setImageInstructions(imageInst.build());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-          removeList.add(status);
-        }
-        if (status.getStatus().getId().equals(StatusIds.CLIMATE_COOLDOWN)) {
-          StringBuilder sb = new StringBuilder();
-          decreaseTemperatureType();
-          generateWorldType();
-          sb.append("Climate on ");
-          sb.append(getName());
-          sb.append(" cool downs and is now ");
-          sb.append(temperatureType.toString());
-          sb.append(".");
-          if (!isColonizeablePlanet(planetOwnerInfo)) {
-            sb.append(" Population starts freezing...");
-          }
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_STARS);
-          imageInst.addPlanet(ImageInstruction.POSITION_CENTER,
-              getPlanetType().getImageInstructions(),
-              ImageInstruction.SIZE_FULL);
-          map.setTile(getX(), getY(), getPlanetType().getTileIndex());
-          Message msg = new Message(MessageType.PLANETARY,
-              sb.toString(),
-              Icons.getIconByName(Icons.ICON_DEATH));
-          msg.setMatchByString(getName());
-          msg.setCoordinate(getCoordinate());
-          msg.setImageInstructions(imageInst.build());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
-          removeList.add(status);
-        }
-        if (status.getStatus().getId().equals(StatusIds.CLIMATE_HEATUP)) {
-          StringBuilder sb = new StringBuilder();
-          decreaseTemperatureType();
-          generateWorldType();
-          sb.append("Climate on ");
-          sb.append(getName());
-          sb.append(" heat ups and is now ");
-          sb.append(temperatureType.toString());
-          sb.append(".");
-          if (isColonizeablePlanet(planetOwnerInfo)) {
-            sb.append(" Population dying due too hot conditions...");
-          }
-          ImageInstruction imageInst = new ImageInstruction();
-          imageInst.addBackground(ImageInstruction.BACKGROUND_STARS);
-          imageInst.addPlanet(ImageInstruction.POSITION_CENTER,
-              getPlanetType().getImageInstructions(),
-              ImageInstruction.SIZE_FULL);
-          map.setTile(getX(), getY(), getPlanetType().getTileIndex());
-          Message msg = new Message(MessageType.PLANETARY,
-              sb.toString(),
-              Icons.getIconByName(Icons.ICON_DEATH));
-          msg.setMatchByString(getName());
-          msg.setCoordinate(getCoordinate());
-          msg.setImageInstructions(imageInst.build());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        boolean addToRemoveList = activateTimedStatus(map, status, null, null);
+        if (addToRemoveList) {
           removeList.add(status);
         }
       }

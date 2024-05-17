@@ -557,6 +557,8 @@ public class StarMapView extends BlackPanel {
         SoundPlayer.playMenuSound();
         nearByPlanet.eventActivation(map.isTutorialEnabled(),
             fleet.getCommander(), infoPanel.getFleetOwner());
+        nearByPlanet.handleTimedStatusForAwayTeam(map, fleet.getCommander(),
+            infoPanel.getFleetOwner());
       } else {
         SoundPlayer.playMenuDisabled();
       }

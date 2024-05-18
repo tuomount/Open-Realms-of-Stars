@@ -29,6 +29,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Perk;
+import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.race.trait.TraitIds;
@@ -758,6 +759,7 @@ public final class StarMapUtilities {
         info.setTotalCredits(info.getTotalCredits() + credits);
         if (fleet.getCommander() != null) {
           fleet.getCommander().addExperience(credits);
+          fleet.getCommander().getStats().addOne(StatType.NUMBER_OF_TRADES);
         }
         planet.getPlanetPlayerInfo().setTotalCredits(
             planet.getPlanetPlayerInfo().getTotalCredits()
@@ -799,6 +801,7 @@ public final class StarMapUtilities {
         }
         if (fleet.getCommander() != null) {
           fleet.getCommander().addExperience(credits);
+          fleet.getCommander().getStats().addOne(StatType.NUMBER_OF_TRADES);
         }
         info.setTotalCredits(info.getTotalCredits() + credits);
         Message msg = new Message(MessageType.PLANETARY,

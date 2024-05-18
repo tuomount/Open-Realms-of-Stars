@@ -24,6 +24,10 @@
 - Bugfixes -
 
 * Realm wide espionage is now called intelligence. Commander doing espionage on planets is called espionage.
+* Fleet commander did not gains statistics for finding planets.
+* Fleet commander did not get experience by finding planets.
+* Ruler got too easily negotiator perk when doing diplomatic trades.
+* Fleet commander did not gains statistics for trading.
 
 # Open Realm of Stars 0.25.0
 

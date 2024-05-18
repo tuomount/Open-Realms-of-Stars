@@ -2623,7 +2623,7 @@ public class DiplomaticTrade {
   private static void checkNegotiatorPerk(final PlayerInfo info) {
     if (info.getRuler() != null
         && info.getRuler().getStats().getStat(
-        StatType.DIPLOMATIC_TRADE) >= 4
+        StatType.DIPLOMATIC_TRADE) >= 8
         && !info.getRuler().hasPerk(Perk.NEGOTIATOR)) {
       Perk perk = Perk.NEGOTIATOR;
       Leader leader = info.getRuler();
@@ -2898,15 +2898,9 @@ public class DiplomaticTrade {
       if (giver.getRuler() != null) {
         giver.getRuler().getStats().addOne(StatType.WAR_DECLARATIONS);
       }
-    } else if (countAsDiplomaticTrade) {
-      if (giver.getRuler() != null) {
-        giver.getRuler().getStats().addOne(StatType.DIPLOMATIC_TRADE);
-        checkNegotiatorPerk(giver);
-      }
-      if (info.getRuler() != null) {
-        info.getRuler().getStats().addOne(StatType.DIPLOMATIC_TRADE);
-        checkNegotiatorPerk(info);
-      }
+    } else if (countAsDiplomaticTrade && info.getRuler() != null) {
+      info.getRuler().getStats().addOne(StatType.DIPLOMATIC_TRADE);
+      checkNegotiatorPerk(info);
     }
     if (planetTraded) {
       if (majorDeals != null) {

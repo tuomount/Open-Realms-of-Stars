@@ -53,6 +53,7 @@ import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
+import org.openRealmOfStars.player.leader.stats.StatType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -2703,6 +2704,9 @@ public class StarMap {
           sb.append(" gained ");
           sb.append(exp);
           sb.append(" amount of experience.");
+          fleet.getCommander().addExperience(exp);
+          fleet.getCommander().getStats().addOne(
+              StatType.NUMBER_OF_PLANETS_EXPLORED);
         }
         Message msg = new Message(MessageType.FLEET,
             sb.toString(), Icons.getIconByName(Icons.ICON_PLANET));
@@ -2734,6 +2738,9 @@ public class StarMap {
           sb.append(" gained ");
           sb.append(exp);
           sb.append(" amount of experience.");
+          fleet.getCommander().addExperience(exp);
+          fleet.getCommander().getStats().addOne(
+              StatType.NUMBER_OF_PLANETS_EXPLORED);
         }
         Message msg = new Message(MessageType.FLEET,
             sb.toString(), Icons.getIconByName(Icons.ICON_PLANET));

@@ -1402,6 +1402,17 @@ public final class BackgroundStoryGenerator {
           + " estimates are it will happen in 80 to 120 star years.");
     }
     if (info.getStartingScenario().getId()
+        .equals(ScenarioIds.FREEZING_PLANET)) {
+      sb.append(" This planet is doomed to turn into frozen world. ");
+      sb.append(startPlanet.getName());
+      sb.append(" has strange climate change going on which will eventually ");
+      sb.append("cool down planet's temperature to freezing. ");
+      sb.append("Planet's temperature is expected to gradually drop."
+          + " These events will happened during incoming years,"
+          + " estimates for planet being totally frozen varies from 80 to 120"
+          + " star years.");
+    }
+    if (info.getStartingScenario().getId()
         .equals(ScenarioIds.LEAKING_PROD)) {
       sb.append(" ");
       sb.append(info.getEmpireName());

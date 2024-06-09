@@ -671,6 +671,9 @@ public class Game implements ActionListener {
       line = new ConfigLine(ConfigFile.CONFIG_SHOW_MINIMAP + "="
           + ConfigFile.TRUE);
       configFile.add(line);
+      line = new ConfigLine(ConfigFile.CONFIG_UI_HIGH_CONTRAST_GRID + "="
+              + ConfigFile.FALSE);
+      configFile.add(line);
     }
   }
 
@@ -3072,6 +3075,7 @@ public class Game implements ActionListener {
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
         configFile.setShowMinimap(optionsView.isShowMinimap());
+        configFile.setHighContrastGrid(optionsView.isHighContrastGrid());
         configFile.setUiScheme(optionsView.getUiScheme());
         GuiStatics.setSchemeType(SchemeType.getByName(
             configFile.getUiScheme()));
@@ -3109,6 +3113,7 @@ public class Game implements ActionListener {
         configFile.setLightIntense(optionsView.getIntense());
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
+        configFile.setHighContrastGrid(optionsView.isHighContrastGrid());
         configFile.setShowMinimap(optionsView.isShowMinimap());
         configFile.setUiScheme(optionsView.getUiScheme());
         writeConfigFile();
@@ -3136,6 +3141,7 @@ public class Game implements ActionListener {
         configFile.setAmbientLights(optionsView.isLightsEnabled());
         configFile.setBorderScrolling(optionsView.isBorderScrolling());
         configFile.setShowMinimap(optionsView.isShowMinimap());
+        configFile.setHighContrastGrid(optionsView.isHighContrastGrid());
         configFile.setUiScheme(optionsView.getUiScheme());
         GuiStatics.setSchemeType(SchemeType.getByName(
             configFile.getUiScheme()));
@@ -4073,6 +4079,14 @@ public class Game implements ActionListener {
   public boolean isImprovedParallax() {
     return configFile.isImprovedParallax();
   }
+
+  /** Is high contrast grid enabled?
+   * @return True if enabled.
+   */
+  public boolean isHighContrastGrid() {
+    return configFile.isHighContrastGrid();
+  }
+
   /**
    * Set minimap showing flag.
    * @param showMiniMapFlag true to show minimap.

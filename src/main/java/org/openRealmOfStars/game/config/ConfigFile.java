@@ -112,6 +112,10 @@ public class ConfigFile {
    */
   public static final String CONFIG_UI_SCHEME = "UIScheme";
   /**
+   * Config option for High contrast grid
+   */
+  public static final String CONFIG_UI_HIGH_CONTRAST_GRID = "HighContrastGrid";
+  /**
    * String true
    */
   public static final String TRUE = "true";
@@ -573,6 +577,21 @@ public class ConfigFile {
    */
   public void setShowMinimap(final boolean showMinimap) {
     setBoolean(CONFIG_SHOW_MINIMAP, showMinimap);
+  }
+
+  /**
+   * Is high contrast grid enabled?
+   * @return True if enabled
+   */
+  public boolean isHighContrastGrid() {
+    return getBoolean(CONFIG_UI_HIGH_CONTRAST_GRID);
+  }
+  /**
+   * Set high contrast grid setting.
+   * @param highContrast High contrast grid to be set.
+   */
+  public void setHighContrastGrid(final boolean highContrast) {
+    setBoolean(CONFIG_UI_HIGH_CONTRAST_GRID, highContrast);
   }
 
   /**

@@ -131,6 +131,11 @@ public class OptionsView extends BlackPanel {
   private SpaceCheckBox showMinimapBox;
 
   /**
+   * High contrast grid checkbox options
+   */
+  private SpaceCheckBox highContrastGridBox;
+
+  /**
    * Constructor for OptionsView
    * @param config Current ConfigFile
    * @param gameFrame Game frame
@@ -313,6 +318,18 @@ public class OptionsView extends BlackPanel {
     showMinimapBox.createToolTip();
     showMinimapBox.setSelected(config.isShowMinimap());
     xPanel.add(showMinimapBox);
+    gameplayPanel.add(xPanel);
+    gameplayPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    highContrastGridBox = new SpaceCheckBox("High contrast grid on starmap");
+    highContrastGridBox.setToolTipText("<html>High contrast grid on starmap."
+        + " This will help visibility of grids during bright daylight."
+        + "</html>");
+    highContrastGridBox.createToolTip();
+    highContrastGridBox.setSelected(config.isHighContrastGrid());
+    xPanel.add(highContrastGridBox);
     gameplayPanel.add(xPanel);
     gameplayPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     xPanel = new EmptyInfoPanel();
@@ -613,6 +630,14 @@ public class OptionsView extends BlackPanel {
    */
   public boolean isShowMinimap() {
     return showMinimapBox.isSelected();
+  }
+
+  /**
+   * Is high contrast grid enabled or not?
+   * @return True if high contrast grid is enabled.
+   */
+  public boolean isHighContrastGrid() {
+    return highContrastGridBox.isSelected();
   }
 
 }

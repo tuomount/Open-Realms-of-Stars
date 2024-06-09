@@ -224,6 +224,9 @@ public class MapPanel extends JPanel {
    */
   private boolean showMiniMap;
 
+  /** Flag for high contrast grid */
+  private boolean highContrastGrid;
+
   /**
    * Mini map top X coordinate in map panel.
    */
@@ -325,10 +328,12 @@ public class MapPanel extends JPanel {
     setShowMiniMap(false);
     tileOverride = null;
     improvedParallax = false;
+    highContrastGrid = false;
     lastCursorPosX = -1;
     lastCursorPosY = -1;
     if (game != null) {
       improvedParallax = game.isImprovedParallax();
+      highContrastGrid = game.isHighContrastGrid();
     }
     if (battle && game == null) {
       width = BATTLE_VIEW_SIZE;
@@ -444,10 +449,14 @@ public class MapPanel extends JPanel {
    * Flicker color green start
    */
   private static final int FLICKER_GREEN = 118;
+  /** High contrast green */
+  private static final int HIGH_FLICKER_GREEN = 208;
   /**
    * Flicker color blue start
    */
   private static final int FLICKER_BLUE = 150;
+  /** High contrast blue */
+  private static final int HIGH_FLICKER_BLUE = 240;
 
   /**
    * Color component divider
@@ -988,10 +997,10 @@ public class MapPanel extends JPanel {
     lastDrawnCenterY = cy;
     int lastCursorIndexX = -1;
     int lastCursorIndexY = -1;
-    int scaled = 16 * (flickerBlue - COLOR_COMPONENT_HALF)
-        / COLOR_COMPONENT_DIVIDER;
-    Color colorDarkBlue = new Color(0, FLICKER_GREEN + scaled,
-        FLICKER_BLUE + scaled);
+    Color colorDarkBlue = new Color(0, FLICKER_GREEN, FLICKER_BLUE);
+    if (highContrastGrid) {
+      colorDarkBlue = new Color(0, HIGH_FLICKER_GREEN, HIGH_FLICKER_BLUE);
+    }
     Color colorFlickerBlue = new Color(0, 0, 16);
     if (flickerBlue < COLOR_COMPONENT_DIVIDER) {
       colorFlickerBlue = new Color(0, 0, flickerBlue);
@@ -1380,10 +1389,10 @@ public class MapPanel extends JPanel {
 
     lastDrawnCenterX = cx;
     lastDrawnCenterY = cy;
-    int scaled = 16 * (flickerBlue - COLOR_COMPONENT_HALF)
-        / COLOR_COMPONENT_DIVIDER;
-    Color colorDarkBlue = new Color(0, FLICKER_GREEN + scaled,
-        FLICKER_BLUE + scaled);
+    Color colorDarkBlue = new Color(0, FLICKER_GREEN, FLICKER_BLUE);
+    if (highContrastGrid) {
+      colorDarkBlue = new Color(0, HIGH_FLICKER_GREEN, HIGH_FLICKER_BLUE);
+    }
     Color colorFlickerBlue = new Color(0, 0, 16);
     if (flickerBlue < COLOR_COMPONENT_DIVIDER) {
       colorFlickerBlue = new Color(0, 0, flickerBlue);
@@ -1642,10 +1651,10 @@ public class MapPanel extends JPanel {
           100 - backgroundImg.getHeight() / 25, null);
     }
 
-    int scaled = 16 * (flickerBlue - COLOR_COMPONENT_HALF)
-        / COLOR_COMPONENT_MAX;
-    Color colorDarkBlue = new Color(0, FLICKER_GREEN + scaled,
-        FLICKER_BLUE + scaled);
+    Color colorDarkBlue = new Color(0, FLICKER_GREEN, FLICKER_BLUE);
+    if (highContrastGrid) {
+      colorDarkBlue = new Color(0, HIGH_FLICKER_GREEN, HIGH_FLICKER_BLUE);
+    }
     Color colorFlickerBlue = new Color(0, 0, 16);
     if (flickerBlue < COLOR_COMPONENT_DIVIDER) {
       colorFlickerBlue = new Color(0, 0, flickerBlue);

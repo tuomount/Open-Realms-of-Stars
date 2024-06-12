@@ -3006,7 +3006,7 @@ public class Planet {
         && happinessType != HappinessBonus.NONE) {
       if (happinessEffect.getValue() > 0) {
         final var tplProdBonus = "Population of %1$s is working harder due to"
-            + "happiness. Planet's %2$s has temporarily increased by %3$d.";
+            + " happiness. Planet's %2$s has temporarily increased by %3$d.";
         Message message = new Message(MessageType.PLANETARY,
             String.format(tplProdBonus, getName(), happinessType.getName(),
                 happinessEffect.getValue()),
@@ -3017,7 +3017,7 @@ public class Planet {
       }
       if (happinessEffect.getValue() < 0) {
         final var tplProdMalus = "Population of %1$s is working less due to"
-            + "happiness. Planet's %2$s has temporarily decreased by %3$d.";
+            + " happiness. Planet's %2$s has temporarily decreased by %3$d.";
         Message message = new Message(MessageType.PLANETARY,
             String.format(tplProdMalus, getName(), happinessType.getName(),
                 happinessEffect.getValue()),

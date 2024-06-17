@@ -4410,9 +4410,9 @@ public class Planet {
         msg.setMatchByString("Index:" + getPlanetPlayerInfo().getLeaderIndex(
             getGovernor()));
         getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
-        NewsData news = NewsFactory.makeLeaderDies(getGovernor(),
-            getPlanetPlayerInfo(), reason, starMap.getStarYear());
         if (starMap != null) {
+          NewsData news = NewsFactory.makeLeaderDies(getGovernor(),
+              getPlanetPlayerInfo(), reason, starMap.getStarYear());
           if (starMap.hasHumanMet(getPlanetPlayerInfo())) {
             starMap.getNewsCorpData().addNews(news);
           }

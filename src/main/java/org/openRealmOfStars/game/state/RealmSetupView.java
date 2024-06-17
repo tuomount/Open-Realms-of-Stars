@@ -301,6 +301,7 @@ public class RealmSetupView extends BlackPanel {
       PlayerColor color = (PlayerColor) comboRealmColor.getSelectedItem();
       if (color != null) {
         config.setPlayerColor(realmIndex, color);
+        comboRealmColor.setForeground(color.getColor());
       }
     }
     if (arg0.getActionCommand().equals(
@@ -447,7 +448,6 @@ public class RealmSetupView extends BlackPanel {
         PlayerColor.values());
     comboRealmColor
         .setBackground(GuiStatics.getDeepSpaceDarkColor());
-    comboRealmColor.setForeground(GuiStatics.getCoolSpaceColor());
     comboRealmColor.setBorder(new SimpleBorder());
     comboRealmColor.setFont(GuiFonts.getFontCubellan());
 

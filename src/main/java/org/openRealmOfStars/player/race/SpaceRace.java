@@ -493,8 +493,21 @@ public class SpaceRace {
     if (hasTrait(TraitIds.ENERGY_POWERED)) {
       return false;
     }
-
+    if (hasTrait(TraitIds.PHOTOSYNTHESIS)) {
+      return false;
+    }
     return true;
+  }
+
+  /**
+   * Is race photosynthetic?
+   * @return True if photosynthetic.
+   */
+  public boolean isPhotosynthetic() {
+    if (hasTrait(TraitIds.PHOTOSYNTHESIS)) {
+      return true;
+    }
+    return false;
   }
 
   /**

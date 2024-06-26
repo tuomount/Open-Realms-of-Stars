@@ -62,6 +62,12 @@ public final class TraitIds {
    * but rather that it can *sustain itself* with radiation.
    */
   public static final String RADIOSYNTHESIS = "RADIOSYNTHESIS";
+  /**
+   * Race can gain sustenance from water.
+   * If there is more water available than population require
+   * population will grow.
+   */
+  public static final String PHOTOSYNTHESIS = "PHOTOSYNTHESIS";
   /** Gets +1 credit for each "trade" building and +50% from ship trading */
   public static final String MERCANTILE = "MERCANTILE";
   /** All ship design have 10% cloaking device built it. */

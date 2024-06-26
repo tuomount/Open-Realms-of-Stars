@@ -11,7 +11,7 @@
     "description": "Eats minerals instead of food. This life-long bond with earth consquently results in talent for mining.",
     "points": 0,
     "conflictsWith": [
-      "ENERGY_POWERED", "FAST_FOOD_PROD"
+      "ENERGY_POWERED", "FAST_FOOD_PROD", "PHOTOSYNTHESIS", "RADIOSYNTHESIS"
     ]
   },
   {
@@ -20,7 +20,16 @@
     "description": "Consumes energy credits instead of food at a rate of 1 credit per 4 population.",
     "points": 1,
     "conflictsWith": [
-      "LITHOVORIC", "FAST_FOOD_PROD"
+      "LITHOVORIC", "FAST_FOOD_PROD", "PHOTOSYNTHESIS", "RADIOSYNTHESIS", "EAT_LESS"
+    ]
+  },
+  {
+    "id": "PHOTOSYNTHESIS",
+    "name": "Photosynthesis",
+    "description": "Requires water to survive, does not require food survive. Can built more water supplies.",
+    "points": 2,
+    "conflictsWith": [
+      "LITHOVORIC", "FAST_FOOD_PROD", "ENERGY_POWERED", "RADIOSYNTHESIS", "EAT_LESS"
     ]
   },
   {
@@ -42,8 +51,11 @@
   {
     "id": "RADIOSYNTHESIS",
     "name": "Radiosynthesis",
-    "description": "Required sustenance (food) for population is reduced by 1 per existing population up to planet's radiation points.",
-    "points": 3
+    "description": "Required sustenance (food) for population is covered by 1 per existing population up to planet's radiation level.",
+    "points": 3,
+    "conflictsWith": [
+      "PHOTOSYNTHESIS", "ENERGY_POWERED", "LITHOVORIC", "FAST_FOOD_PROD"
+    ]
   },
   {
     "id": "MERCANTILE",
@@ -63,7 +75,7 @@
     "description": "Required sustenance (food) for population is 50% less than normal requirement.",
     "points": 1,
     "conflictsWith": [
-      "ENERGY_POWERED"
+      "ENERGY_POWERED", "PHOTOSYNTHESIS"
     ]
   },
   {

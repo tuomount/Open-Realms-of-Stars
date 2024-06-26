@@ -1328,24 +1328,40 @@ public class Planet {
     Government government = planetOwnerInfo.getGovernment();
     int totalPopulation = getTotalPopulation();
     sb.append("<html>");
-    sb.append("Food requirement: ");
-    sb.append(calculateFoodRequirement());
+    if (planetRace.isPhotosynthetic()) {
+      sb.append("Water requirement: ");
+      sb.append(getTotalPopulation());
+    } else {
+      sb.append("Food requirement: ");
+      sb.append(calculateFoodRequirement());
+    }
     sb.append("<br><br>");
-    sb.append("Total food production.<br>");
+    if (planetRace.isPhotosynthetic()) {
+      sb.append("Total Water supply: ");
+    } else {
+      sb.append("Total food production.<br>");
+    }
 
     // Planet always produces 0 - 5 food
     var value = getWaterLevel().getPlanetFoodProd();
+    if (planetRace.isPhotosynthetic()) {
+      value = value * 2; // Double water level
+    }
     result += value;
     addEntryIfWorthy(sb, "planet", value);
 
-    var mult = planetOwnerInfo.getRace().getFoodSpeed(getGravityType());
-    value = workers[FOOD_FARMERS] * mult / div;
-    result += value;
-    addEntryIfWorthy(sb, "farmers", value);
+    if (!planetRace.isPhotosynthetic()) {
+      var mult = planetOwnerInfo.getRace().getFoodSpeed(getGravityType());
+      value = workers[FOOD_FARMERS] * mult / div;
+      result += value;
+      addEntryIfWorthy(sb, "farmers", value);
+    }
 
-    value = getTotalProductionFromBuildings(Planet.PRODUCTION_FOOD);
-    result += value;
-    addEntryIfWorthy(sb, "buildings", value);
+    if (!planetRace.isPhotosynthetic()) {
+      value = getTotalProductionFromBuildings(Planet.PRODUCTION_FOOD);
+      result += value;
+      addEntryIfWorthy(sb, "buildings", value);
+    }
 
     for (var appliedStatus : statuses) {
       final var status = appliedStatus.getStatus();
@@ -1372,7 +1388,8 @@ public class Planet {
       addEntryIfWorthy(sb, "government", value);
     }
 
-    if (governor != null && governor.hasPerk(Perk.AGRICULTURAL)) {
+    if (governor != null && governor.hasPerk(Perk.AGRICULTURAL)
+        && planetRace.isEatingFood()) {
       value = 1;
       result += value;
       addEntryIfWorthy(sb, "governor", value);
@@ -2195,11 +2212,15 @@ public class Planet {
    * @return Sur plus food.
    */
   public int calculateSurPlusFood() {
-    if (!planetOwnerInfo.getRace().isEatingFood()) {
+    if (!planetOwnerInfo.getRace().isEatingFood()
+        && !planetOwnerInfo.getRace().isPhotosynthetic()) {
       return 0;
     }
     int food = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
         * planetOwnerInfo.getRace().getFoodRequire() / 100;
+    if (planetOwnerInfo.getRace().isPhotosynthetic()) {
+      food = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation();
+    }
     return food;
   }
 
@@ -2314,6 +2335,8 @@ public class Planet {
         } else {
           workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
         }
+      } else if (planetRace.isPhotosynthetic()) {
+        workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS] + 1;
       } else {
         workers[FOOD_FARMERS] = workers[FOOD_FARMERS] + 1;
       }
@@ -3616,8 +3639,11 @@ public class Planet {
     int value = getSizeAsInt() * 10;
     int dist = (int) coord.calculateDistance(getCoordinate());
     final var race = info.getRace();
-    if (race.isEatingFood()) {
+    if (race.isEatingFood() || race.isPhotosynthetic()) {
       value = value + getWaterLevel().getIndex() * 5;
+      if (race.isPhotosynthetic() && getWaterLevel().getIndex() == 0) {
+        value = 0;
+      }
     }
     if (getGravityType() == GravityType.HIGH_GRAVITY) {
       if (race.hasTrait(TraitIds.LOW_GRAVITY_BEING)) {

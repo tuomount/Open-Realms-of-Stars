@@ -1824,6 +1824,12 @@ public class Planet {
           result.add(farmBuilding);
         }
       }
+      if (planetRace.isPhotosynthetic()) {
+        var farmBuilding = BuildingFactory.createByName("Basic reservoir");
+        if (farmBuilding != null && !exceedRadiation()) {
+          result.add(farmBuilding);
+        }
+      }
     }
 
     Building tmp = BuildingFactory.createByName("Basic mine");

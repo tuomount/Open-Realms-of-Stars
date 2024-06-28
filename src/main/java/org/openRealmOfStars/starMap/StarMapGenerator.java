@@ -260,6 +260,9 @@ public class StarMapGenerator {
         if (playerInfo.getRace().isEatingFood()) {
           planet.addBuilding(BuildingFactory.createByName("Basic farm"));
         }
+        if (playerInfo.getRace().isPhotosynthetic()) {
+          planet.addBuilding(BuildingFactory.createByName("Basic reservoir"));
+        }
         if (playerInfo.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
           planet.addBuilding(BuildingFactory.createByName("Basic factory"));
         }

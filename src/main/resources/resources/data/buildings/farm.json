@@ -48,7 +48,7 @@
     "iconId": "Farm",
     "maintenanceCost": 0.25,
     "name": "Advanced reservoir",
-    "farmBonus": 2
+    "waterBonus": 2
   },
   {
     "description": "Large underground reservoir for increase water amount.",
@@ -59,7 +59,7 @@
     "singleAllowed": true,
     "maintenanceCost": 0.25,
     "name": "Underground reservoir",
-    "farmBonus": 3
+    "waterBonus": 3
   },
   {
     "description": "Massive reservoir built in planet's crust.",
@@ -70,7 +70,7 @@
     "singleAllowed": true,
     "maintenanceCost": 0.33,
     "name": "Crust reservoir",
-    "farmBonus": 4
+    "waterBonus": 4
   },
   {
     "description": "Reservoir built on ground.",
@@ -79,6 +79,6 @@
     "prodCost": 4,
     "iconId": "Farm",
     "name": "Basic reservoir",
-    "farmBonus": 1
+    "waterBonus": 1
   }
 ]

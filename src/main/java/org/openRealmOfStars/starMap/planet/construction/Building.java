@@ -33,6 +33,8 @@ public class Building extends Construction {
 
   /** Bonus for farming */
   private int farmBonus;
+  /** Bonus for water */
+  private int waterBonus;
   /** Bonus for mining */
   private int mineBonus;
   /** Bonus for production */
@@ -94,6 +96,7 @@ public class Building extends Construction {
     super(name, iconId);
     this.type = type;
     this.farmBonus = 0;
+    this.waterBonus = 0;
     this.mineBonus = 0;
     this.factBonus = 0;
     this.cultBonus = 0;
@@ -138,6 +141,22 @@ public class Building extends Construction {
    */
   public void setFarmBonus(final int farmBonus) {
     this.farmBonus = farmBonus;
+  }
+
+  /**
+   * Get building water produce bonus
+   * @return water production bonus
+   */
+  public int getWaterBonus() {
+    return waterBonus;
+  }
+
+  /**
+   * Set water production bonus for building
+   * @param waterBonus Water production bonus
+   */
+  public void setWaterBonus(final int waterBonus) {
+    this.waterBonus = waterBonus;
   }
 
   /**

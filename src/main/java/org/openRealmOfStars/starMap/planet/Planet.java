@@ -138,6 +138,8 @@ public class Planet {
   public static final int PRODUCTION_MATERIAL = 7;
   /** Artifact research production */
   public static final int PRODUCTION_ARTIFACT_RESEARCH = 8;
+  /** Water production */
+  public static final int PRODUCTION_WATER = 9;
 
   /** Number of credits one population is worth when rushing. */
   public static final int POPULATION_RUSH_COST = 80;
@@ -744,6 +746,10 @@ public class Planet {
         }
         case PRODUCTION_ARTIFACT_RESEARCH: {
           value = build.getAncientArtifactResearch();
+          break;
+        }
+        case PRODUCTION_WATER: {
+          value = build.getWaterBonus();
           break;
         }
       }
@@ -1359,6 +1365,11 @@ public class Planet {
 
     if (!planetRace.isPhotosynthetic()) {
       value = getTotalProductionFromBuildings(Planet.PRODUCTION_FOOD);
+      result += value;
+      addEntryIfWorthy(sb, "buildings", value);
+    }
+    if (planetRace.isPhotosynthetic()) {
+      value = getTotalProductionFromBuildings(Planet.PRODUCTION_WATER);
       result += value;
       addEntryIfWorthy(sb, "buildings", value);
     }

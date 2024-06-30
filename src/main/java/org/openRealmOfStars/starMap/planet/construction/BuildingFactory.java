@@ -102,6 +102,7 @@ class BuildingLoader extends DataLoader<String, Building> {
       tmp.setDescription(jobj.optString("description", ""));
 
       tmp.setFarmBonus(jobj.optInt("farmBonus", 0));
+      tmp.setWaterBonus(jobj.optInt("waterBonus", 0));
       tmp.setMineBonus(jobj.optInt("mineBonus", 0));
       tmp.setFactBonus(jobj.optInt("factBonus", 0));
       tmp.setCultBonus(jobj.optInt("cultBonus", 0));

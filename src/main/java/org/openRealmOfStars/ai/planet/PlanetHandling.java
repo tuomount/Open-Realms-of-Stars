@@ -781,108 +781,6 @@ public final class PlanetHandling {
   }
 
   /**
-   * Handle Mechion population on planet
-   * @param planet Which to handle
-   * @param info Planet owner
-   * @param totalResearch Total research of realm
-   */
-  protected static void handleMechionPopulation(final Planet planet,
-      final PlayerInfo info, final int totalResearch) {
-    int total = planet.getTotalPopulation();
-    int metalProd = planet.getTotalProductionFromBuildings(
-        Planet.PRODUCTION_METAL);
-    int prodProd = planet.getTotalProductionFromBuildings(
-        Planet.PRODUCTION_PRODUCTION);
-    int resProd = planet.getTotalProductionFromBuildings(
-        Planet.PRODUCTION_RESEARCH);
-    int otherWorldResearch = totalResearch - planet.getTotalProduction(
-        Planet.PRODUCTION_RESEARCH);
-    int happiness = planet.calculateHappiness();
-    if (!info.getGovernment().isImmuneToHappiness()) {
-      happiness = happiness - planet.getWorkers(Planet.CULTURE_ARTIST);
-    }
-    if (total > 3) {
-      int metalAdd = 0;
-      int prodAdd = 1;
-      int reseAdd = 0;
-      int cultAdd = 0;
-      total--;
-      if (resProd < 2 && otherWorldResearch < 2) {
-        reseAdd = 2;
-        total = total - 2;
-      }
-      do {
-        if (metalProd < prodProd && total > 0) {
-          metalAdd++;
-          metalProd++;
-          total--;
-        } else if (total > 0) {
-          prodAdd++;
-          prodProd++;
-          total--;
-        }
-        if (happiness < -1 & total > 0) {
-          cultAdd++;
-          happiness++;
-          total--;
-        }
-      } while (total > 0);
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, metalAdd);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, prodAdd);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, reseAdd);
-      planet.setWorkers(Planet.CULTURE_ARTIST, cultAdd);
-    } else {
-
-      setPlanetNoWorkers(planet);
-
-      switch (total) {
-        case 1: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          break;
-        }
-        case 2: {
-          if (info.getAiDifficulty() == AiDifficulty.NORMAL
-              || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
-            if (otherWorldResearch > 3) {
-              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-              planet.setWorkers(Planet.METAL_MINERS, 1);
-            } else {
-              planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-            }
-          } else {
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.METAL_MINERS, 1);
-          }
-          break;
-        }
-        case 3: {
-          if (info.getAiDifficulty() == AiDifficulty.NORMAL
-              || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
-            if (otherWorldResearch > 3) {
-              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-              planet.setWorkers(Planet.METAL_MINERS, 2);
-            } else {
-              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-              planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-            }
-          } else {
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          }
-          break;
-        }
-        default: {
-          // This happens only if there are no population or it is negative.
-          // There no works can be set.
-          throw new IllegalArgumentException("Planet(" + planet.getName()
-              + ") has no population but is still colonized!");
-        }
-      }
-    }
-  }
-
-  /**
    * Handle Lithorian population on planet
    * @param planet Which to handle
    * @param info Planet owner
@@ -1223,7 +1121,8 @@ public final class PlanetHandling {
     int scientistsPerResearch = Math.max(1, 100 / popResearchSpeed);
     if (planet.getTotalProductionFromBuildings(
         Planet.PRODUCTION_RESEARCH) == 0 && freePop >= scientistsPerResearch
-        && otherWorldResearch < 1) {
+        && otherWorldResearch < 1
+        && info.getAiDifficulty() != AiDifficulty.WEAK) {
       scientist = scientistsPerResearch;
       freePop -= scientistsPerResearch;
     }
@@ -1440,7 +1339,7 @@ public final class PlanetHandling {
       handleLithorianPopulation(planet, info, totalResearch);
       branch = 3;
     } else if (!info.getRace().isEatingFood()) {
-      handleMechionPopulation(planet, info, totalResearch);
+      handleGenericPopulationNotEating(planet, info, totalResearch);
       branch = 0;
     } else {
       // Handle races whom need something to eat and have regular research

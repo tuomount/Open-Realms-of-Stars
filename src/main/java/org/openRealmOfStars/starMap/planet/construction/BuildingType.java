@@ -50,6 +50,8 @@ public enum BuildingType {
   /**
    * Builing that produces credits
    */
-  CREDIT
+  CREDIT,
+  /** Water reservoir for photosynthesis. */
+  WATER;
 
 }

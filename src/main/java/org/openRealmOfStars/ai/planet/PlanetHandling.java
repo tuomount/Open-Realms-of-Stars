@@ -781,108 +781,6 @@ public final class PlanetHandling {
   }
 
   /**
-   * Handle Mechion population on planet
-   * @param planet Which to handle
-   * @param info Planet owner
-   * @param totalResearch Total research of realm
-   */
-  protected static void handleMechionPopulation(final Planet planet,
-      final PlayerInfo info, final int totalResearch) {
-    int total = planet.getTotalPopulation();
-    int metalProd = planet.getTotalProductionFromBuildings(
-        Planet.PRODUCTION_METAL);
-    int prodProd = planet.getTotalProductionFromBuildings(
-        Planet.PRODUCTION_PRODUCTION);
-    int resProd = planet.getTotalProductionFromBuildings(
-        Planet.PRODUCTION_RESEARCH);
-    int otherWorldResearch = totalResearch - planet.getTotalProduction(
-        Planet.PRODUCTION_RESEARCH);
-    int happiness = planet.calculateHappiness();
-    if (!info.getGovernment().isImmuneToHappiness()) {
-      happiness = happiness - planet.getWorkers(Planet.CULTURE_ARTIST);
-    }
-    if (total > 3) {
-      int metalAdd = 0;
-      int prodAdd = 1;
-      int reseAdd = 0;
-      int cultAdd = 0;
-      total--;
-      if (resProd < 2 && otherWorldResearch < 2) {
-        reseAdd = 2;
-        total = total - 2;
-      }
-      do {
-        if (metalProd < prodProd && total > 0) {
-          metalAdd++;
-          metalProd++;
-          total--;
-        } else if (total > 0) {
-          prodAdd++;
-          prodProd++;
-          total--;
-        }
-        if (happiness < -1 & total > 0) {
-          cultAdd++;
-          happiness++;
-          total--;
-        }
-      } while (total > 0);
-      planet.setWorkers(Planet.FOOD_FARMERS, 0);
-      planet.setWorkers(Planet.METAL_MINERS, metalAdd);
-      planet.setWorkers(Planet.PRODUCTION_WORKERS, prodAdd);
-      planet.setWorkers(Planet.RESEARCH_SCIENTIST, reseAdd);
-      planet.setWorkers(Planet.CULTURE_ARTIST, cultAdd);
-    } else {
-
-      setPlanetNoWorkers(planet);
-
-      switch (total) {
-        case 1: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          break;
-        }
-        case 2: {
-          if (info.getAiDifficulty() == AiDifficulty.NORMAL
-              || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
-            if (otherWorldResearch > 3) {
-              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-              planet.setWorkers(Planet.METAL_MINERS, 1);
-            } else {
-              planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-            }
-          } else {
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.METAL_MINERS, 1);
-          }
-          break;
-        }
-        case 3: {
-          if (info.getAiDifficulty() == AiDifficulty.NORMAL
-              || info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
-            if (otherWorldResearch > 3) {
-              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-              planet.setWorkers(Planet.METAL_MINERS, 2);
-            } else {
-              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-              planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-            }
-          } else {
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          }
-          break;
-        }
-        default: {
-          // This happens only if there are no population or it is negative.
-          // There no works can be set.
-          throw new IllegalArgumentException("Planet(" + planet.getName()
-              + ") has no population but is still colonized!");
-        }
-      }
-    }
-  }
-
-  /**
    * Handle Lithorian population on planet
    * @param planet Which to handle
    * @param info Planet owner
@@ -1194,6 +1092,230 @@ public final class PlanetHandling {
   }
 
   /**
+   * Handle generic population which do not eat food.
+   * This does not have that WEAK AI feature that mechion handler has:
+   * This will place 2 pops for research if that is only research available.
+   *
+   * @param planet Planet to handle
+   * @param info Owner of the planet
+   * @param totalResearch Total research value for whole realm
+   */
+  protected static void handleGenericPopulationNotEating(final Planet planet,
+      final PlayerInfo info, final int totalResearch) {
+    int otherWorldResearch = totalResearch - planet.getTotalProduction(
+        Planet.PRODUCTION_RESEARCH);
+    int totalPop = planet.getTotalPopulation();
+    int happy = planet.calculateHappiness();
+
+    setPlanetNoWorkers(planet);
+
+    int freePop = totalPop;
+    int workers = 0;
+    int miners = 0;
+    int artists = 0;
+    int scientist = 0;
+
+    // Prioritize allocation of scientists if possible
+    // -> when have enough people to get at least 1 research
+    int popResearchSpeed = info.getRace().getResearchSpeed();
+    int scientistsPerResearch = Math.max(1, 100 / popResearchSpeed);
+    if (planet.getTotalProductionFromBuildings(
+        Planet.PRODUCTION_RESEARCH) == 0 && freePop >= scientistsPerResearch
+        && otherWorldResearch < 1
+        && info.getAiDifficulty() != AiDifficulty.WEAK) {
+      scientist = scientistsPerResearch;
+      freePop -= scientistsPerResearch;
+    }
+
+    int cultureSpeed = info.getRace().getCultureSpeed();
+    int artistPerCulture = Math.max(1, 100 / cultureSpeed);
+    int workerSpeed = info.getRace().getProductionSpeed(
+        planet.getGravityType());
+    int workerPerProd = 0;
+    if (workerSpeed > 0) {
+      workerPerProd = Math.max(1, 100 / workerSpeed);
+    }
+    int minerSpeed = info.getRace().getMiningSpeed(
+        planet.getGravityType());
+    int minerPerMetal = 0;
+    if (minerSpeed > 0) {
+      minerPerMetal = Math.max(1, 100 / minerSpeed);
+    }
+
+    if (freePop > 0
+        && info.getRace().getProductionSpeed(planet.getGravityType()) >= 100) {
+      workers++;
+      freePop--;
+    }
+
+    int part = 0;
+    if (info.getRace().getMiningSpeed(planet.getGravityType()) <= 50
+        && info.getRace().getProductionSpeed(planet.getGravityType()) <= 50) {
+      part = freePop % 2;
+      int div = freePop / 2;
+      if (div == 1) {
+        if (workerPerProd == 2) {
+          workers = workers + div + div;
+        } else if (minerPerMetal == 2) {
+          miners = miners + div + div;
+        } else {
+          artists = artists + div;
+          scientist = scientist + div;
+        }
+      } else {
+        artists = artists + div;
+        scientist = scientist + div;
+      }
+    } else if (info.getRace().getMiningSpeed(planet.getGravityType()) <= 50) {
+      part = freePop % 3;
+      int div = freePop / 3;
+      workers = workers + div;
+      if (div == 1) {
+        if (artistPerCulture == 1 && scientistsPerResearch == 1) {
+          artists = artists + div;
+          scientist = scientist + div;
+        } else if (scientistsPerResearch == 1) {
+          scientist = scientist + div + div;
+        } else if (artistPerCulture == 1) {
+          artistPerCulture = artistPerCulture + div + div;
+        } else {
+          workers = workers + div + div;
+        }
+      } else {
+        artists = artists + div;
+        scientist = scientist + div;
+      }
+    } else if (info.getRace().getProductionSpeed(
+        planet.getGravityType()) <= 50) {
+      part = freePop % 3;
+      int div = freePop / 3;
+      miners = miners + div;
+      if (div == 1) {
+        if (artistPerCulture == 1 && scientistsPerResearch == 1) {
+          artists = artists + div;
+          scientist = scientist + div;
+        } else if (scientistsPerResearch == 1) {
+          scientist = scientist + div + div;
+        } else if (artistPerCulture == 1) {
+          artistPerCulture = artistPerCulture + div + div;
+        } else {
+          miners = miners + div + div;
+        }
+      } else {
+        artists = artists + div;
+        scientist = scientist + div;
+      }
+    } else {
+      part = freePop % 4;
+      int div = freePop / 4;
+      if (div == 1) {
+        div = 0;
+        if (scientistsPerResearch > 1) {
+          part++;
+        } else {
+          scientist++;
+        }
+        if (artistPerCulture > 1) {
+          part++;
+        } else {
+          artists++;
+        }
+        if (minerPerMetal > 1) {
+          part++;
+        } else {
+          miners++;
+        }
+        if (workerPerProd > 1) {
+          part++;
+        } else {
+          workers++;
+        }
+        // Prioritize research
+        if (part > 1 && scientistsPerResearch > 1) {
+          scientist = scientist + 2;
+          part = part - 2;
+        }
+        if (part > 1 && workerPerProd > 1) {
+          workers = workers + 2;
+          part = part - 2;
+        }
+        if (part > 1 && minerPerMetal > 1) {
+          miners = miners + 2;
+          part = part - 2;
+        }
+        if (part > 1 && artistPerCulture > 1) {
+          artists = artists + 2;
+          part = part - 2;
+        }
+      }
+      workers = workers + div;
+      artists = artists + div;
+      scientist = scientist + div;
+      miners = miners + div;
+    }
+    if (happy < -1 && part > 0) {
+      artists++;
+      part--;
+    }
+    if (part == 1) {
+      if (info.getRace().getResearchSpeed() >= 100) {
+        scientist++;
+      } else if (info.getRace().getCultureSpeed() >= 100) {
+        artists++;
+      } else if (info.getRace().getProductionSpeed(
+          planet.getGravityType()) >= 100) {
+        workers++;
+      } else if (info.getRace().getMiningSpeed(
+          planet.getGravityType()) >= 100) {
+        miners++;
+      } else {
+        workers++;
+      }
+    }
+    if (part == 2) {
+      if (info.getRace().getProductionSpeed(planet.getGravityType()) >= 100) {
+        workers++;
+      } else if (info.getRace().getResearchSpeed() >= 100) {
+        scientist++;
+      } else if (info.getRace().getMiningSpeed(
+          planet.getGravityType()) >= 100) {
+        miners++;
+      } else if (info.getRace().getCultureSpeed() >= 100) {
+        artists++;
+      } else {
+        workers++;
+      }
+      if (info.getRace().getResearchSpeed() >= 100) {
+        scientist++;
+      } else if (info.getRace().getMiningSpeed(
+          planet.getGravityType()) >= 100) {
+        miners++;
+      } else if (info.getRace().getProductionSpeed(
+          planet.getGravityType()) >= 100) {
+        workers++;
+      } else if (info.getRace().getCultureSpeed() >= 100) {
+        artists++;
+      } else {
+        workers++;
+      }
+    }
+    // Part 3 is never for miners 50%
+    if (part == 3) {
+      workers = workers + 2;
+      miners++;
+    }
+
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, workers);
+    planet.setWorkers(Planet.METAL_MINERS, miners);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, scientist);
+    planet.setWorkers(Planet.CULTURE_ARTIST, artists);
+    if (totalPop != planet.getTotalPopulation()) {
+      ErrorLogger.log("Original population: " + totalPop + " new pop: "
+         + planet.getTotalPopulation());
+    }
+  }
+
+  /**
    * Handle planet population positions
    * @param planet Planet to handle
    * @param info Player who owns the planet
@@ -1217,7 +1339,7 @@ public final class PlanetHandling {
       handleLithorianPopulation(planet, info, totalResearch);
       branch = 3;
     } else if (!info.getRace().isEatingFood()) {
-      handleMechionPopulation(planet, info, totalResearch);
+      handleGenericPopulationNotEating(planet, info, totalResearch);
       branch = 0;
     } else {
       // Handle races whom need something to eat and have regular research

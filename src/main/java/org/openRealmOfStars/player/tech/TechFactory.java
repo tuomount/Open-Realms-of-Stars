@@ -302,7 +302,7 @@ public final class TechFactory {
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL2_NAMES = {"Advanced farm",
       "Advanced mine", "Advanced factory", "Starbase music hall", "Cyber lab",
-      "Advanced furnace"};
+      "Advanced furnace", "Advanced reservoir"};
   /**
    * Planetary Improvement tech names for level 3
    */
@@ -333,7 +333,8 @@ public final class TechFactory {
   public static final String[] IMPROVEMENT_TECH_LEVEL5_NAMES = {
       "Farming center", "Mining center", "Manufacturing center",
       "Radiation dampener", "Galactic sports center",
-      "Collective research center", "Massive blast furnace" };
+      "Collective research center", "Massive blast furnace",
+      "Underground reservoir" };
   /**
    * Planetary Improvement tech names for level 6
    */
@@ -363,7 +364,7 @@ public final class TechFactory {
   public static final String[] IMPROVEMENT_TECH_LEVEL9_NAMES = {
       "Hydropodic farming center", "Nanobot mining center",
       "Nanobot manufacturing center", "Research matrix",
-      "Planetary furnace"};
+      "Planetary furnace", "Crust reservoir"};
   /**
    * Planetary Improvement rare tech names for level 9
    */
@@ -1031,13 +1032,15 @@ public final class TechFactory {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
             tech.setExcludeList(true);
             tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
-                TraitIds.ENERGY_POWERED, TraitIds.LITHOVORIC));
+                TraitIds.ENERGY_POWERED, TraitIds.LITHOVORIC,
+                TraitIds.PHOTOSYNTHESIS));
           } else if (techName.startsWith("Farming center")
               || techName.startsWith("Hydropodic farming center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
             tech.setExcludeList(true);
             tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
-                TraitIds.ENERGY_POWERED, TraitIds.LITHOVORIC));
+                TraitIds.ENERGY_POWERED, TraitIds.LITHOVORIC,
+                TraitIds.PHOTOSYNTHESIS));
           } else if (techName.startsWith("Cyber lab")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
             tech.setExcludeList(false);
@@ -1060,6 +1063,15 @@ public final class TechFactory {
                 TraitIds.LITHOVORIC));
             // This tech is rare tech that only Lithorians will learn it
             // but they can trade it to others if they wish.
+            tech.setRareTech(true);
+          } else if (techName.startsWith("Advanced reservoir")
+              || techName.startsWith("Underground reservoir")
+              || techName.startsWith("Crust reservoir")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
+            tech.setExcludeList(false);
+            tech.setTradeable(false);
+            tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
+                TraitIds.PHOTOSYNTHESIS));
             tech.setRareTech(true);
           } else if (techName.startsWith("Advanced mine")
               || techName.startsWith("Mining center")

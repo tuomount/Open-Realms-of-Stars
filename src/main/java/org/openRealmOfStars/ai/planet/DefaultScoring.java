@@ -410,6 +410,9 @@ public final class DefaultScoring {
       extraFarmBonus = true;
     }
 
+    if (info.getRace().isPhotosynthetic() && building.getWaterBonus() > 0) {
+      score += building.getWaterBonus() * 40;
+    }
     if (extraFarmBonus && building.getFarmBonus() > 0) {
       if (planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
         score += 40;

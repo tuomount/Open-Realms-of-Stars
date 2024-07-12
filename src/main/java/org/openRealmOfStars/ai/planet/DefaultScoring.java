@@ -431,12 +431,27 @@ public final class DefaultScoring {
       // XXX: Possible logic error, farms are discarded from scoring lower
       score = 0;
     }
-    if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
-      score += building.getReseBonus() * 80;
-      score += building.getCultBonus() * 60;
-    } else {
-      score += building.getReseBonus() * 60;
-      score += building.getCultBonus() * 40;
+    score += building.getReseBonus() * 60;
+    score += building.getCultBonus() * 40;
+    if (building.getReseBonus() > 0
+        && info.getRace().getResearchSpeed() < 100) {
+      score = score + building.getReseBonus() * 40;
+    }
+    if (building.getCultBonus() > 0
+        && info.getRace().getCultureSpeed() < 100) {
+      score = score + building.getCultBonus() * 20;
+    }
+    if (building.getFactBonus() > 0
+        && info.getRace().getProductionSpeed(planet.getGravityType()) < 100) {
+      score = score + building.getFactBonus() * 50;
+    }
+    if (building.getMineBonus() > 0
+        && info.getRace().getMiningSpeed(planet.getGravityType()) < 100) {
+      score = score + building.getMineBonus() * 50;
+    }
+    if (building.getFarmBonus() > 0 && info.getRace().isEatingFood()
+        && info.getRace().getFoodSpeed(planet.getGravityType()) < 100) {
+      score = score + building.getFarmBonus() * 50;
     }
     if (building.getReseBonus() > 0
         && planet.getEffectiveGovernorGuide() == Planet.RESEARCH_PLANET) {

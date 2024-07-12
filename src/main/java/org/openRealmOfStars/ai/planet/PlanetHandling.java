@@ -1012,6 +1012,46 @@ public final class PlanetHandling {
     } else {
       part = freePop % 4;
       int div = freePop / 4;
+      if (div == 1) {
+        div = 0;
+        if (scientistsPerResearch > 1) {
+          part++;
+        } else {
+          scientist++;
+        }
+        if (artistPerCulture > 1) {
+          part++;
+        } else {
+          artists++;
+        }
+        if (minerPerMetal > 1) {
+          part++;
+        } else {
+          miners++;
+        }
+        if (workerPerProd > 1) {
+          part++;
+        } else {
+          workers++;
+        }
+        // Prioritize research
+        if (part > 1 && scientistsPerResearch > 1) {
+          scientist = scientist + 2;
+          part = part - 2;
+        }
+        if (part > 1 && workerPerProd > 1) {
+          workers = workers + 2;
+          part = part - 2;
+        }
+        if (part > 1 && minerPerMetal > 1) {
+          miners = miners + 2;
+          part = part - 2;
+        }
+        if (part > 1 && artistPerCulture > 1) {
+          artists = artists + 2;
+          part = part - 2;
+        }
+      }
       workers = workers + div;
       artists = artists + div;
       scientist = scientist + div;

@@ -2248,6 +2248,44 @@ public class PlanetHandlingTest extends TestCase {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHumanHandling10PopulationKingdom() {
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("HUMANS"));
+    info.setGovernment(GovernmentFactory.createOne("KINGDOM"));
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setWaterLevel(WaterLevelType.OCEAN);
+    planet.setTemperatureType(TemperatureType.TEMPERATE);
+    planet.setRadiationLevel(RadiationType.NO_RADIATION);
+    planet.setGroundSize(12);
+    planet.generateGravityBasedOnSize();
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic lab"));
+    planet.addBuilding(BuildingFactory.createByName("Advanced mine"));
+    planet.addBuilding(BuildingFactory.createByName("Advanced farm"));
+    planet.addBuilding(BuildingFactory.createByName("Advanced farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Advanced factory"));
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 10);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info, 0);
+    assertEquals(10, planet.getTotalPopulation());
+    assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(3, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(10, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    assertEquals(0, planet.calculateHappiness());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMothoidsHandling10PopulationKingdomFull() {
     PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("MOTHOIDS"));
     info.setGovernment(GovernmentFactory.createOne("KINGDOM"));

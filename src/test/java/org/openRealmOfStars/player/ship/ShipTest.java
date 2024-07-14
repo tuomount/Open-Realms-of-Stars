@@ -126,6 +126,7 @@ public class ShipTest {
         + "Cost: 23 Metal: 16\n"
         + "Speed: 2 FTL: 2 Tactic: 1\n"
         + "Shield: 1/1 Armor: 0/0 Hull Points: 4\n"
+        + "Defense: 10\n"
         + "Military power: 6\n"
         + "Slots: 4/4";
     assertEquals(desc, ship.getDescription());
@@ -133,6 +134,7 @@ public class ShipTest {
         "Capacity: 0.1 Energy: 5 Init.: 15\n" +
         "Speed: 2 FTL: 2 Tactic: 1\n" +
         "Shield: 1/1 Armor: 0/0 Hull Points: 4\n" +
+        "Defense: 10\n" +
         "Military power: 6";
     assertEquals(desc, ship.getTacticalInfo());
     ship.setExperience(3);
@@ -142,6 +144,7 @@ public class ShipTest {
         + "Cost: 23 Metal: 16\n"
         + "Speed: 2 FTL: 2 Tactic: 1\n"
         + "Shield: 1/1 Armor: 0/0 Hull Points: 4\n"
+        + "Defense: 10\n"
         + "Military power: 6 Exp: 3\n"
         + "Slots: 4/4";
     assertEquals(desc, ship.getDescription());
@@ -188,7 +191,7 @@ public class ShipTest {
     assertEquals(false,ship.hasBombs());
     assertEquals(100, ship.getScannerDetectionLvl());
     assertEquals(5, ship.getScannerLvl());
-    assertEquals(0, ship.getDefenseValue());
+    assertEquals(5, ship.getDefenseValue());
     assertEquals(false, ship.isColonyShip());
     assertEquals(true, ship.isPrivateeringShip());
     assertEquals(false, ship.isTrooperShip());

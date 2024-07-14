@@ -274,6 +274,30 @@ public class ShipHull {
   }
 
   /**
+   * @return defenseValue by ship hull size
+   */
+  public int getDefenseValueByShipHullSize() {
+    int defenseValue;
+    switch (size) {
+    case SMALL:
+        defenseValue = 10;
+      break;
+    case MEDIUM:
+        defenseValue = 5;
+      break;
+    case LARGE:
+        defenseValue = 0;
+      break;
+    case HUGE:
+        defenseValue = -5;
+      break;
+    default:
+        defenseValue = 0;
+    }
+    return defenseValue;
+  }
+
+  /**
    * Get hull description.
    * @param allowArmedFreighter True if arms are allowed in freighters
    * @return description as a string.

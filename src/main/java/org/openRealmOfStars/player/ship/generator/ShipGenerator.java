@@ -323,7 +323,7 @@ public final class ShipGenerator {
     if (distortionShield != null
         && design.getFreeEnergy() >= distortionShield.getEnergyRequirement()) {
       distortionShieldValue = distortionShield.getDefenseValue()
-          + distortionShield.getDamage() / 5;
+          + distortionShield.getDamage() / 10;
       if (distortionShieldValue > biggestValue) {
         biggestValue = distortionShieldValue;
         biggestComponent = distortionShield;

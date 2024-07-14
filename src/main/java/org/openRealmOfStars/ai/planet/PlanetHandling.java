@@ -1052,7 +1052,8 @@ public final class PlanetHandling {
     if (part == 1) {
       if (info.getRace().getResearchSpeed() >= 100) {
         scientist++;
-      } else if (info.getRace().getCultureSpeed() >= 100) {
+      } else if (info.getRace().getCultureSpeed() >= 100
+          && checkIfArtistIsAssigned(info)) {
         artists++;
       } else if (info.getRace().getProductionSpeed(
           planet.getGravityType()) >= 100) {
@@ -1063,8 +1064,7 @@ public final class PlanetHandling {
       } else {
         workers++;
       }
-    }
-    if (part == 2) {
+    } else if (part == 2) {
       if (info.getRace().getProductionSpeed(planet.getGravityType()) >= 100) {
         workers++;
       } else if (info.getRace().getResearchSpeed() >= 100) {
@@ -1072,7 +1072,8 @@ public final class PlanetHandling {
       } else if (info.getRace().getMiningSpeed(
           planet.getGravityType()) >= 100) {
         miners++;
-      } else if (info.getRace().getCultureSpeed() >= 100) {
+      } else if (info.getRace().getCultureSpeed() >= 100
+          && checkIfArtistIsAssigned(info)) {
         artists++;
       } else {
         workers++;
@@ -1085,23 +1086,43 @@ public final class PlanetHandling {
       } else if (info.getRace().getProductionSpeed(
           planet.getGravityType()) >= 100) {
         workers++;
-      } else if (info.getRace().getCultureSpeed() >= 100) {
+      } else if (info.getRace().getCultureSpeed() >= 100
+          && checkIfArtistIsAssigned(info)) {
         artists++;
       } else {
         workers++;
       }
+    } else {
+      boolean workerAssigned = false;
+      boolean minerAssigned = false;
+      boolean scientistAssigned = false;
+      while (part > 0) {
+        if (info.getRace().getProductionSpeed(
+            planet.getGravityType()) >= 100 && !workerAssigned) {
+          workers++;
+          workerAssigned = true;
+          part--;
+        } else  if (info.getRace().getMiningSpeed(
+            planet.getGravityType()) >= 100 && !minerAssigned) {
+          miners++;
+          minerAssigned = true;
+          part--;
+        } else if (info.getRace().getResearchSpeed() >= 100
+            && !scientistAssigned) {
+          scientist++;
+          scientistAssigned = true;
+          part--;
+        } else if (info.getRace().getCultureSpeed() >= 100
+            && checkIfArtistIsAssigned(info)) {
+          artists++;
+          part--;
+        } else {
+          workerAssigned = false;
+          minerAssigned = false;
+          scientistAssigned = false;
+        }
+      }
     }
-    // Part 3 is never for miners 50%
-    if (part == 3) {
-      workers = workers + 2;
-      miners++;
-    }
-    if (part == 4) {
-      workers = workers + 2;
-      miners++;
-      scientist++;
-    }
-
     planet.setWorkers(Planet.PRODUCTION_WORKERS, workers);
     planet.setWorkers(Planet.METAL_MINERS, miners);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, scientist);

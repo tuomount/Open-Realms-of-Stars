@@ -1698,11 +1698,8 @@ public boolean launchIntercept(final int distance,
     }
     accuracy = accuracy - target.getShip().getDefenseValue();
     accuracy = accuracy - target.getOverloadedJammer();
-    if (target.isCloaked()) {
-      accuracy = accuracy - 5;
-    }
-    if (accuracy < 5) {
-      accuracy = 5;
+    if (accuracy < 10) {
+      accuracy = 10;
     }
     if (target.isCloakOverloaded()) {
       accuracy = -1;
@@ -2420,7 +2417,7 @@ public boolean launchIntercept(final int distance,
             getCurrentShip().getEnergyLevel() - 1);
         if (!getCurrentShip().isOverloadFailure(index)) {
           getCurrentShip().setOverloadedJammer(
-              component.getDefenseValue() * 3);
+              component.getDefenseValue() * 2);
           if (textLogger != null) {
             textLogger.addLog(component.getName() + " overloaded!");
             SoundPlayer.playSound(SoundPlayer.JAMMER_OVERLOAD);

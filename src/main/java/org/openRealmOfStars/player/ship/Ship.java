@@ -324,6 +324,10 @@ public class Ship extends Construction {
     sb.append(getTotalArmor());
     sb.append(" Hull Points: ");
     sb.append(hull.getSlotHull() * getNumberOfComponents());
+    sb.append("\n");
+    sb.append("Defense: ");
+    sb.append(getDefenseValue());
+
     if (getTotalMilitaryPower() > 0) {
       sb.append("\n");
       sb.append("Military power: ");
@@ -414,6 +418,10 @@ public class Ship extends Construction {
     sb.append(getTotalArmor());
     sb.append(" Hull Points: ");
     sb.append(hull.getSlotHull() * getNumberOfComponents());
+    sb.append("\n");
+    sb.append("Defense: ");
+    sb.append(getDefenseValue());
+    //FIXME
     if (getTotalMilitaryPower() > 0) {
       sb.append("\n");
       sb.append("Military power: ");
@@ -1260,12 +1268,13 @@ private int increaseHitChanceByComponent() {
    * @return defense value for ship
    */
   public int getDefenseValue() {
-    int defenseValue = getDefenseValueByShipHullSize();
+    int defenseValue = hull.getDefenseValueByShipHullSize();
     defenseValue += increaseDefenseValueWithJammer();
     if (getTacticSpeed() == 0) {
         defenseValue = defenseValue - 15;
     }
     boolean thrusters = false;
+    boolean cloakingDevice = false;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0
@@ -1273,8 +1282,16 @@ private int increaseHitChanceByComponent() {
           && hasComponentEnergy(i)) {
         thrusters = true;
       }
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.CLOAKING_DEVICE
+          && hasComponentEnergy(i)) {
+        cloakingDevice = true;
+      }
     }
     if (thrusters) {
+      defenseValue = defenseValue + 5;
+    }
+    if (cloakingDevice) {
       defenseValue = defenseValue + 5;
     }
     return defenseValue;
@@ -1295,30 +1312,6 @@ private int increaseHitChanceByComponent() {
       }
     }
     return size;
-  }
-
-  /**
-   * @return defenseValue by ship hull size
-   */
-  private int getDefenseValueByShipHullSize() {
-    int defenseValue;
-    switch (hull.getSize()) {
-    case SMALL:
-        defenseValue = 10;
-      break;
-    case MEDIUM:
-        defenseValue = 5;
-      break;
-    case LARGE:
-        defenseValue = 0;
-      break;
-    case HUGE:
-        defenseValue = -5;
-      break;
-    default:
-        defenseValue = 0;
-    }
-    return defenseValue;
   }
 
   /**
@@ -1865,11 +1858,11 @@ private int increaseHitChanceByComponent() {
         power = power + comp.getDamage() / 10.0;
       }
       if (comp.getType() == ShipComponentType.JAMMER) {
-        power = power + comp.getDefenseValue() / 5.0;
+        power = power + comp.getDefenseValue() / 10.0;
       }
       if (comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
         power = power + comp.getDefenseValue();
-        power = power + comp.getDamage() / 5;
+        power = power + comp.getDamage() / 10;
       }
       if (comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD) {
         power = power + comp.getDefenseValue();
@@ -1944,17 +1937,17 @@ private int increaseHitChanceByComponent() {
         power = power + comp.getDamage() / 10.0;
       }
       if (comp.getType() == ShipComponentType.JAMMER && componentIsWorking(i)) {
-        power = power + comp.getDefenseValue() / 5.0;
+        power = power + comp.getDefenseValue() / 10.0;
       }
       if (comp.getType() == ShipComponentType.DISTORTION_SHIELD
           && componentIsWorking(i)) {
         power = power + comp.getDefenseValue();
-        power = power + comp.getDamage() / 5;
+        power = power + comp.getDamage() / 10;
       }
       if (comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD
           && componentIsWorking(i)) {
         power = power + comp.getDefenseValue();
-        power = power + comp.getDamage() / 5;
+        power = power + comp.getDamage() / 10;
       }
       if (comp.getType() == ShipComponentType.ORGANIC_ARMOR
           && componentIsWorking(i)) {

@@ -2413,6 +2413,24 @@ public class Planet {
           ErrorLogger.log("This probably should not happen but "
               + planetOwnerInfo.getEmpireName()
               + " has lost planet by starvation!!!");
+          StringBuilder sb = new StringBuilder();
+          for (Building building : getBuildingList()) {
+            sb.append(building.getName());
+            sb.append(", ");
+          }
+          StringBuilder sbStat = new StringBuilder();
+          for (AppliedStatus status : getStatuses()) {
+            sbStat.append(status.getStatusId());
+            sbStat.append(", ");
+          }
+          ErrorLogger.log("Planet starved:"
+                + " Water: " + getWaterLevel().getPlanetFoodProd()
+                + " Type: " + getPlanetType().getTypeAsString()
+                + " Planet Owner: "
+                + getPlanetPlayerInfo().getRace().getName() + " Event: "
+                + getPlanetaryEvent().getName() + " Buildings: "
+                + sb.toString() + " Statuses: "
+                + sbStat.toString());
         }
         msg = new Message(MessageType.POPULATION,
             getName() + " has lost last population. " + getName()
@@ -3746,7 +3764,10 @@ public class Planet {
         && !realm.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       result = "Planet climate is not suitable!";
     }
-    if (realm.getRace().isEatingFood()
+    if (realm.getRace().isPhotosynthetic()
+        && getWaterLevel() == WaterLevelType.BARREN) {
+      result = "Planet has no water at all.";
+    } else if (realm.getRace().isEatingFood()
         && getWaterLevel() == WaterLevelType.BARREN) {
       result = "Planet is not able to grow food.";
     }

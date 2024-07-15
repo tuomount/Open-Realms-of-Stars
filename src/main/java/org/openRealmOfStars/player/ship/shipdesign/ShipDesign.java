@@ -1070,6 +1070,54 @@ public class ShipDesign {
     return result;
   }
 
+  /**
+   * @return defenseValue
+   */
+  private int increaseDefenseValueWithJammer() {
+    int defenseValue = 0;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.JAMMER) {
+          defenseValue = defenseValue + comp.getDefenseValue();
+      }
+      if (comp.getType() == ShipComponentType.DISTORTION_SHIELD) {
+          defenseValue = defenseValue + comp.getDamage();
+      }
+      if (comp.getType() == ShipComponentType.MULTIDIMENSION_SHIELD) {
+          defenseValue = defenseValue + comp.getDamage();
+      }
+    }
+    return defenseValue;
+  }
+  /**
+   * Get defense value for ship
+   * @return defense value for ship
+   */
+  public int getDefenseValue() {
+    int defenseValue = hull.getDefenseValueByShipHullSize();
+    defenseValue += increaseDefenseValueWithJammer();
+    if (getTacticSpeed() == 0) {
+        defenseValue = defenseValue - 15;
+    }
+    boolean thrusters = false;
+    boolean cloakingDevice = false;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.THRUSTERS) {
+        thrusters = true;
+      }
+      if (comp.getType() == ShipComponentType.CLOAKING_DEVICE) {
+        cloakingDevice = true;
+      }
+    }
+    if (thrusters) {
+      defenseValue = defenseValue + 5;
+    }
+    if (cloakingDevice) {
+      defenseValue = defenseValue + 5;
+    }
+    return defenseValue;
+  }
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -1098,6 +1146,8 @@ public class ShipDesign {
     sb.append(getTotalShield());
     sb.append(" Armor: ");
     sb.append(getTotalArmor());
+    sb.append(" Defense: ");
+    sb.append(getDefenseValue());
     sb.append(" Hull Points: ");
     sb.append(hull.getSlotHull() * getNumberOfComponents());
     if (getTotalMilitaryPower() > 0) {

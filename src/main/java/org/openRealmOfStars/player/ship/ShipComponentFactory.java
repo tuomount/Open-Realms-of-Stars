@@ -2169,7 +2169,7 @@ public final class ShipComponentFactory {
     if (index == COMPONENT_JAMMER_MK1) {
       tmp = new ShipComponent(index, "Jammer Mk1", 3, 1,
           ShipComponentType.JAMMER);
-      tmp.setDefenseValue(5);
+      tmp.setDefenseValue(10);
       tmp.setEnergyRequirement(1);
     }
     if (index == COMPONENT_FUSION_SOURCE_MK2) {
@@ -2234,7 +2234,7 @@ public final class ShipComponentFactory {
     if (index == COMPONENT_JAMMER_MK2) {
       tmp = new ShipComponent(index, "Jammer Mk2", 4, 1,
           ShipComponentType.JAMMER);
-      tmp.setDefenseValue(10);
+      tmp.setDefenseValue(20);
       tmp.setEnergyRequirement(1);
     }
     if (index == COMPONENT_ANTIMATTER_SOURCE_MK1) {
@@ -2272,7 +2272,7 @@ public final class ShipComponentFactory {
     if (index == COMPONENT_JAMMER_MK3) {
       tmp = new ShipComponent(index, "Jammer Mk3", 4, 1,
           ShipComponentType.JAMMER);
-      tmp.setDefenseValue(15);
+      tmp.setDefenseValue(30);
       tmp.setEnergyRequirement(1);
     }
     if (index == COMPONENT_SHOCK_TROOPER_MODULE) {
@@ -2344,7 +2344,7 @@ public final class ShipComponentFactory {
     if (index == COMPONENT_JAMMER_MK4) {
       tmp = new ShipComponent(index, "Jammer Mk4", 5, 1,
           ShipComponentType.JAMMER);
-      tmp.setDefenseValue(20);
+      tmp.setDefenseValue(40);
       tmp.setEnergyRequirement(1);
     }
     if (index == COMPONENT_PRIVATEER_MODULE) {
@@ -3148,22 +3148,22 @@ public final class ShipComponentFactory {
       tmp = new ShipComponent(index, "Distortion shield Mk1", 7, 2,
           ShipComponentType.DISTORTION_SHIELD);
       tmp.setDefenseValue(3); // Shield bonus
-      tmp.setDamage(5); // Jammer bonus
-      tmp.setEnergyRequirement(3);
+      tmp.setDamage(10); // Jammer bonus
+      tmp.setEnergyRequirement(2);
     }
     if (index == COMPONENT_DISTORTION_SHIELD_MK2) {
       tmp = new ShipComponent(index, "Distortion shield Mk2", 8, 3,
           ShipComponentType.DISTORTION_SHIELD);
       tmp.setDefenseValue(4); // Shield bonus
-      tmp.setDamage(10); // Jammer bonus
-      tmp.setEnergyRequirement(3);
+      tmp.setDamage(20); // Jammer bonus
+      tmp.setEnergyRequirement(2);
     }
     if (index == COMPONENT_DISTORTION_SHIELD_MK3) {
       tmp = new ShipComponent(index, "Distortion shield Mk3", 9, 4,
           ShipComponentType.DISTORTION_SHIELD);
       tmp.setDefenseValue(5); // Shield bonus
-      tmp.setDamage(15); // Jammer bonus
-      tmp.setEnergyRequirement(4);
+      tmp.setDamage(30); // Jammer bonus
+      tmp.setEnergyRequirement(3);
     }
     if (index == COMPONENT_ORGANIC_ARMOR_MK1) {
       tmp = new ShipComponent(index, "Organic armor Mk1", 6, 6,
@@ -3187,7 +3187,7 @@ public final class ShipComponentFactory {
       tmp = new ShipComponent(index, "Multi-dimension shield", 18, 5,
           ShipComponentType.MULTIDIMENSION_SHIELD);
       tmp.setDefenseValue(7); // Shield bonus
-      tmp.setDamage(10); // Jammer bonus
+      tmp.setDamage(20); // Jammer bonus
       tmp.setEnergyRequirement(5);
     }
     if (index == COMPONENT_REPAIR_MODULE_MK1) {

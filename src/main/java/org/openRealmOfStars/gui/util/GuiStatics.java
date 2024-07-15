@@ -500,6 +500,9 @@ public final class GuiStatics {
   /** Teuthidae race selection image */
   public static final BufferedImage IMAGE_TEUTHIDAE_RACE = IOUtilities
       .loadImage("/resources/images/teuthidae_race.png");
+  /** Teuthidae race selection image */
+  public static final BufferedImage IMAGE_FERNID_RACE = IOUtilities
+      .loadImage("/resources/images/fernid_race.png");
   /** Scaurian race selection image */
   public static final BufferedImage IMAGE_SCAURIAN_RACE = IOUtilities
       .loadImage("/resources/images/scaurian_race.png");

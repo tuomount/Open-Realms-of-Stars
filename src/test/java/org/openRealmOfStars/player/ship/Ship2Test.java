@@ -856,18 +856,22 @@ public class Ship2Test {
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
 
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.SMALL);
+        Mockito.when(shipdesign.getHull().getDefenseValueByShipHullSize()).thenReturn(10);
         Ship ship1 = new Ship(shipdesign);
         assertEquals(10, ship1.getDefenseValue());
 
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.MEDIUM);
+        Mockito.when(shipdesign.getHull().getDefenseValueByShipHullSize()).thenReturn(5);
         Ship ship2 = new Ship(shipdesign);
         assertEquals(5, ship2.getDefenseValue());
 
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.LARGE);
+        Mockito.when(shipdesign.getHull().getDefenseValueByShipHullSize()).thenReturn(0);
         Ship ship3 = new Ship(shipdesign);
         assertEquals(0, ship3.getDefenseValue());
 
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.HUGE);
+        Mockito.when(shipdesign.getHull().getDefenseValueByShipHullSize()).thenReturn(-5);
         Ship ship4 = new Ship(shipdesign);
         assertEquals(-5, ship4.getDefenseValue());
     }
@@ -902,20 +906,24 @@ public class Ship2Test {
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
 
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.SMALL);
+        Mockito.when(shipdesign.getHull().getDefenseValueByShipHullSize()).thenReturn(10);
         Ship ship1 = new Ship(shipdesign);
-        assertEquals(15, ship1.getDefenseValue());
+        assertEquals(20, ship1.getDefenseValue());
 
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.MEDIUM);
+        Mockito.when(shipdesign.getHull().getDefenseValueByShipHullSize()).thenReturn(5);
         Ship ship2 = new Ship(shipdesign);
-        assertEquals(10, ship2.getDefenseValue());
+        assertEquals(15, ship2.getDefenseValue());
 
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.LARGE);
+        Mockito.when(shipdesign.getHull().getDefenseValueByShipHullSize()).thenReturn(0);
         Ship ship3 = new Ship(shipdesign);
-        assertEquals(5, ship3.getDefenseValue());
+        assertEquals(10, ship3.getDefenseValue());
 
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.HUGE);
+        Mockito.when(shipdesign.getHull().getDefenseValueByShipHullSize()).thenReturn(-5);
         Ship ship4 = new Ship(shipdesign);
-        assertEquals(0, ship4.getDefenseValue());
+        assertEquals(5, ship4.getDefenseValue());
     }
     /**
      * Purpose: Confirm getDefenseValue()
@@ -945,18 +953,22 @@ public class Ship2Test {
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
 
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.SMALL);
+        Mockito.when(shipdesign.getHull().getDefenseValueByShipHullSize()).thenReturn(10);
         Ship ship1 = new Ship(shipdesign);
         assertEquals(-5, ship1.getDefenseValue());
 
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.MEDIUM);
+        Mockito.when(shipdesign.getHull().getDefenseValueByShipHullSize()).thenReturn(5);
         Ship ship2 = new Ship(shipdesign);
         assertEquals(-10, ship2.getDefenseValue());
 
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.LARGE);
+        Mockito.when(shipdesign.getHull().getDefenseValueByShipHullSize()).thenReturn(0);
         Ship ship3 = new Ship(shipdesign);
         assertEquals(-15, ship3.getDefenseValue());
 
         Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.HUGE);
+        Mockito.when(shipdesign.getHull().getDefenseValueByShipHullSize()).thenReturn(-5);
         Ship ship4 = new Ship(shipdesign);
         assertEquals(-20, ship4.getDefenseValue());
     }

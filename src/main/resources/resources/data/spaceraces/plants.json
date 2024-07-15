@@ -1,0 +1,32 @@
+[
+  {
+    "ID": "FERNIDS",
+    "Name": "Fernids",
+    "NameSingle": "Fernids",
+    "BridgeId": "Mothoid",
+    "SpaceShipId": "Spork",
+    "Traits": [
+                "PHOTOSYNTHESIS",
+                "IMPRACTICAL",
+                "STRONG",
+                "VERY_LONG_LIFE_SPAN",
+                "REPULSIVE",
+                "SLOW_LEARNERS",
+                "GOOD_WAR_RESILIENCE",
+                "TOLERATE_HOT",
+                "HIGH_GRAVITY_BEING"
+              ],
+    "Attitude": "EXPANSIONIST",
+    "Image": "resources/images/fernid_race.png",
+    "SocialSystem": "MATRIARCHY",
+    "Genders": [
+                 "MALE",
+                 "FEMALE"
+               ],
+    "SpeechSetId": "CENTAURS",
+    "BridgeEffect": "GREYBLUE",
+    "DiplomacyMusic": "Sky Portal",
+    "NameGenerator": "DEEP_ANCIENT_MONSTER",
+    "Description": "Fernids are template for planet population."
+  }
+]

@@ -749,8 +749,8 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
-              TraitIds.ZERO_GRAVITY_BEING));
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+              TraitIds.ZERO_GRAVITY_BEING, TraitIds.PHOTOSYNTHESIS));
         } else if (techName.equals("Desert colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);

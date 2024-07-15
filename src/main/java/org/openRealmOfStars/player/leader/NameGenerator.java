@@ -313,6 +313,170 @@ public final class NameGenerator {
   }
 
   /**
+   * Generate Deep Ancient leader name
+   * @param gender Leader gender
+   * @return Deep Ancient leader name
+   */
+  private static String generateBigPlant(final Gender gender) {
+    StringBuilder sb = new StringBuilder();
+    if (gender == Gender.FEMALE) {
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("Ambrosia"); break;
+        case 1: sb.append("Apple"); break;
+        case 2: sb.append("Cabbage"); break;
+        case 3: sb.append("Carrot"); break;
+        case 4: sb.append("Cherry"); break;
+        case 5: sb.append("Daisy"); break;
+        case 6: sb.append("Garlic"); break;
+        case 7: sb.append("Herb"); break;
+        case 8: sb.append("Hortensia"); break;
+        case 9: sb.append("Lilac"); break;
+        case 10: sb.append("Nettle"); break;
+        case 11: sb.append("Onion"); break;
+        case 12: sb.append("Orange"); break;
+        case 13: sb.append("Raspberry"); break;
+        case 14: sb.append("Rocket"); break;
+        case 15: sb.append("Rose"); break;
+        case 16: sb.append("Sanguinary"); break;
+        case 17: sb.append("Tea"); break;
+        case 18: sb.append("Thistle"); break;
+        case 19: sb.append("Violet"); break;
+      }
+      sb.append("-");
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("iris"); break;
+        case 1: sb.append("hair"); break;
+        case 2: sb.append("eye"); break;
+        case 3: sb.append("ear"); break;
+        case 4: sb.append("finger"); break;
+        case 5: sb.append("thumb"); break;
+        case 6: sb.append("palm"); break;
+        case 7: sb.append("toe"); break;
+        case 8: sb.append("heel"); break;
+        case 9: sb.append("hand"); break;
+        case 10: sb.append("arm"); break;
+        case 11: sb.append("foot"); break;
+        case 12: sb.append("belly"); break;
+        case 13: sb.append("waist"); break;
+        case 14: sb.append("hip"); break;
+        case 15: sb.append("neck"); break;
+        case 16: sb.append("cheek"); break;
+        case 17: sb.append("nose"); break;
+        case 18: sb.append("lips"); break;
+        case 19: sb.append("tongue"); break;
+      }
+    }
+    if (gender == Gender.MALE) {
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("Alder"); break;
+        case 1: sb.append("Ash"); break;
+        case 2: sb.append("Birch"); break;
+        case 3: sb.append("Cornel"); break;
+        case 4: sb.append("Cress"); break;
+        case 5: sb.append("Fern"); break;
+        case 6: sb.append("Hedge"); break;
+        case 7: sb.append("Maple"); break;
+        case 8: sb.append("Mulberry"); break;
+        case 9: sb.append("Oak"); break;
+        case 10: sb.append("Redbrush"); break;
+        case 11: sb.append("Rambler"); break;
+        case 12: sb.append("Willow"); break;
+        case 13: sb.append("Windroot"); break;
+        case 14: sb.append("Tree"); break;
+        case 15: sb.append("Juniper"); break;
+        case 16: sb.append("Spruce"); break;
+        case 17: sb.append("Pine"); break;
+        case 18: sb.append("Wormwood"); break;
+        case 19: sb.append("Root"); break;
+      }
+      sb.append("-");
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("head"); break;
+        case 1: sb.append("mouth"); break;
+        case 2: sb.append("nose"); break;
+        case 3: sb.append("tooth"); break;
+        case 4: sb.append("jaw"); break;
+        case 5: sb.append("chin"); break;
+        case 6: sb.append("arm"); break;
+        case 7: sb.append("chest"); break;
+        case 8: sb.append("shoulder"); break;
+        case 9: sb.append("elbow"); break;
+        case 10: sb.append("knuckle"); break;
+        case 11: sb.append("fist"); break;
+        case 12: sb.append("spine"); break;
+        case 13: sb.append("leg"); break;
+        case 14: sb.append("knee"); break;
+        case 15: sb.append("ankle"); break;
+        case 16: sb.append("beard"); break;
+        case 17: sb.append("moustache"); break;
+        case 18: sb.append("bald"); break;
+        case 19: sb.append("back"); break;
+      }
+    }
+
+    sb.append(" ");
+    // Surname part
+    switch (DiceGenerator.getRandom(20)) {
+      default:
+      case 0: sb.append("Thu"); break;
+      case 1: sb.append("Dhu"); break;
+      case 2: sb.append("Bhu"); break;
+      case 3: sb.append("Phu"); break;
+      case 4: sb.append("Whu"); break;
+      case 5: sb.append("Mhu"); break;
+      case 6: sb.append("Khu"); break;
+      case 7: sb.append("Tha"); break;
+      case 8: sb.append("Dha"); break;
+      case 9: sb.append("Bha"); break;
+      case 10: sb.append("Pha"); break;
+      case 11: sb.append("Wha"); break;
+      case 12: sb.append("Mha"); break;
+      case 13: sb.append("Kha"); break;
+      case 14: sb.append("Tho"); break;
+      case 15: sb.append("Dho"); break;
+      case 16: sb.append("Bho"); break;
+      case 17: sb.append("Pho"); break;
+      case 18: sb.append("Who"); break;
+      case 19: sb.append("Mho"); break;
+      case 20: sb.append("Kho"); break;
+    }
+    if (DiceGenerator.getRandom(10) == 0) {
+      switch (DiceGenerator.getRandom(5)) {
+        default:
+        case 0: sb.append("'u'"); break;
+        case 1: sb.append("'a'"); break;
+        case 2: sb.append("'o'"); break;
+        case 3: sb.append("'um"); break;
+        case 4: sb.append("'am"); break;
+        case 5: sb.append("'om"); break;
+      }
+    }
+    switch (DiceGenerator.getRandom(14)) {
+      default:
+      case 0: sb.append("um"); break;
+      case 1: sb.append("am"); break;
+      case 2: sb.append("om"); break;
+      case 3: sb.append("uum"); break;
+      case 4: sb.append("uam"); break;
+      case 5: sb.append("uom"); break;
+      case 6: sb.append("muu"); break;
+      case 7: sb.append("moo"); break;
+      case 8: sb.append("maa"); break;
+      case 9: sb.append("dum"); break;
+      case 10: sb.append("dam"); break;
+      case 11: sb.append("dom"); break;
+      case 12: sb.append("bum"); break;
+      case 13: sb.append("bam"); break;
+      case 14: sb.append("bom"); break;
+    }
+    return sb.toString();
+  }
+
+  /**
    * Generate Evil leader name
    * @param gender Leader gender
    * @return Evil leader name
@@ -2755,7 +2919,7 @@ public final class NameGenerator {
   public static String generateName(final NameGeneratorType type,
       final Gender gender) {
     if (type == NameGeneratorType.ALL) {
-      switch (DiceGenerator.getRandom(14)) {
+      switch (DiceGenerator.getRandom(15)) {
         default:
         case 0: return generateScifiHumanName(gender);
         case 1: return generateSpaceOrc(gender);
@@ -2772,6 +2936,7 @@ public final class NameGenerator {
         case 12: return generateGaseousPeople(gender);
         case 13: return generatePirateName(gender);
         case 14: return generateFemaleRobotName();
+        case 15: return generateBigPlant(gender);
       }
     }
     if (type == NameGeneratorType.SCIFI_HUMAN) {
@@ -2815,6 +2980,9 @@ public final class NameGenerator {
     }
     if (type == NameGeneratorType.PIRATE) {
       return generatePirateName(gender);
+    }
+    if (type == NameGeneratorType.BIG_PLANT) {
+      return generateBigPlant(gender);
     }
     if (type == NameGeneratorType.FEMALE_ROBOT) {
       return generateFemaleRobotName();

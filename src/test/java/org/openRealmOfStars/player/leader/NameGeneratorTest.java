@@ -71,6 +71,28 @@ public class NameGeneratorTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBigPlanetNameMale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.BIG_PLANT,
+          Gender.MALE);
+      assertNotNull(name);
+      assertEquals(true, name.contains(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBigPlanetNameFemale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.BIG_PLANT,
+          Gender.FEMALE);
+      assertNotNull(name);
+      assertEquals(true, name.contains(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testLongNameFemale() {
     for (int i = 0; i < 50; i++) {
       String name = NameGenerator.generateName(NameGeneratorType.LONG_NAMES,

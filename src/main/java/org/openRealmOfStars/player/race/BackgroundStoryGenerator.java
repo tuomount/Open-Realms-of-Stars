@@ -57,6 +57,7 @@ public final class BackgroundStoryGenerator {
 
     sb.append(info.getRace().getRacialDescription());
     sb.append(generateRobotCyborgBackground(info));
+    sb.append(generatePlantLithovoreBackground(info));
     sb.append(generateGravityBackground(info));
     sb.append(generateRadiationBackground(info));
     sb.append(generateTemperatureBackground(info));
@@ -429,6 +430,7 @@ public final class BackgroundStoryGenerator {
     String namePlural = "$1";
     if (info.getRace().hasTrait(TraitIds.ROBOTIC)) {
       if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
+        sb.append(" ");
         sb.append(namePlural);
         sb.append(" are a type of mechanical robot that are designed to"
             + " function without the need for food or other organic"
@@ -436,6 +438,7 @@ public final class BackgroundStoryGenerator {
             + " such as batteries or fuel cells, which allow them to operate"
             + " for long periods of time without needing to be refueled. ");
       } else {
+        sb.append(" ");
         sb.append("Despite their robotic nature, ");
         sb.append(namePlural);
         sb.append(" are able to perform many of the same functions as organic "
@@ -449,6 +452,7 @@ public final class BackgroundStoryGenerator {
       }
     } else if (info.getRace().hasTrait(TraitIds.CYBORG_LIFE_SPAN)) {
       if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
+        sb.append(" ");
         sb.append(namePlural);
         sb.append(" are a type of cyborg creates which are mix of organic "
             + " and robotic parts. This allows them to function without "
@@ -457,6 +461,7 @@ public final class BackgroundStoryGenerator {
             + " such as batteries or fuel cells, which allow them to operate"
             + " for long periods of time without needing to be refueled. ");
       } else {
+        sb.append(" ");
         sb.append(namePlural);
         sb.append(" are a type of cyborg creates which are mix of organic "
             + " and robotic parts. Despite of this, ");
@@ -471,11 +476,13 @@ public final class BackgroundStoryGenerator {
 
       }
     } else if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
+      sb.append(" ");
       sb.append(namePlural);
       sb.append(" are a strange type of creatures which allow sustaining "
           + "themselves using pure energy. They can store this energy into"
           + " their bodies and allow them function for extended lengths. ");
     } else if (info.getRace().hasTrait(TraitIds.EAT_LESS)) {
+      sb.append(" ");
       sb.append(namePlural);
       sb.append(" require only a small amount of food to sustain"
           + " themselves, making them highly efficient"
@@ -483,6 +490,34 @@ public final class BackgroundStoryGenerator {
     }
     return sb.toString();
   }
+
+  /**
+   * Generate plants or lithovoric background.
+   * If space race is either then this returns empty string.
+   * @param info PlayerInfo
+   * @return Background string
+   */
+  private static String generatePlantLithovoreBackground(
+      final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = "$1";
+    if (info.getRace().hasTrait(TraitIds.PHOTOSYNTHESIS)) {
+      sb.append(" ");
+      sb.append(namePlural);
+      sb.append(" are a sentient plants which can get all the nutrients"
+          + " they need from ground water and sun light. This is beneficial"
+          + " since they do not need to farm or grow food,"
+          + " all they need is water source.");
+    } else if (info.getRace().hasTrait(TraitIds.LITHOVORIC)) {
+      sb.append(" ");
+      sb.append(namePlural);
+      sb.append(" are creatures which are able nourish themselves with metal."
+          + " This quite a feat to gain energy from metal. They do not need to"
+          + "grow food but instead they can keep mining metal.");
+    }
+    return sb.toString();
+  }
+
   /**
    * Generate exploration part.
    * @param info Realm

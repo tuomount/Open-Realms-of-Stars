@@ -1,0 +1,39 @@
+[
+  {
+    "id": "FERNIDS",
+    "data": {
+      "TRADE": ["Bhum, what do you think about this?"],
+      "MOVE_FLEET": ["Bhum, I call my fleet back!"],
+      "LIKE_GREET": ["Bhum bhum, nice to meet you again!"],
+      "DEFESIVE_PACT": ["Bhum, We should defend each others. What do you say?"],
+      "BORDER_WARS": ["Bham, your %1$s will be rooted and dried along with you!"],
+      "ASK_PROTECTION": ["Bhum, I could pay if you leave my fleet alone for 5 star years!"],
+      "ASK_MOVE_FLEET": ["Bhum, your fleet called %1$s is in our sector!"],
+      "OFFER_SPY_TRADE": ["Bhum, How about intelligence change for 20 star years?"],
+      "MAKE_WAR": ["Bham, You will be rooted and dried!%1$s"],
+      "OFFER_ACCEPTED": [
+        "Bhum thum, This is a begin of friendship!",
+        "Bhum thum, Great trade!"
+      ],
+      "TRADE_EMBARGO": ["Bhum, Let's do trade embargo for 20 star years for %1$s?"],
+      "DECLINE_WAR": ["Bham, Prepare to be rooted out!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["Very well, prepare to be stomped!"],
+      "NOTHING_TO_TRADE": ["Sorry, you got nothing to trade with me, bhum."],
+      "NEUTRAL_GREET": ["Bhum, let drink water together, %1$s."],
+      "DECLINE_ANGER": ["Bham, Take back your offer!"],
+      "FRIENDS_GREET": ["Bhum, My friend let's drink water together!"],
+      "OFFER_REJECTED": ["So maybe next time then..."],
+      "ALLIANCE": ["Bhum, We should join our forces. What do you say?"],
+      "DECLINE": ["I cannot accept your offer."],
+      "TRADE_ALLIANCE": ["Bhum, We should start trading between!"],
+      "DISLIKE_GREET": ["Bham, we have roots hardened!"],
+      "DEMAND": ["Bham, You accept this offer or be rooted!"],
+      "HATE_GREET": ["Bham, Be careful what you say or you'll be rooted!"],
+      "AGREE": ["Bhum bhum, agreed!"],
+      "PEACE_OFFER": ["Bhum, Are ready to make a peace?"],
+      "INSULT_RESPOND": ["Bham, You are rude, we should root you!"],
+      "ASK_MOVE_SPY": ["Bham, your SPY FLEET called %1$s is in our sector!"]
+    }
+  }
+]

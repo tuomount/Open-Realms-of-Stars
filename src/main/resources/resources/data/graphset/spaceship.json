@@ -85,6 +85,11 @@
     "monsters": true
   },
   {
+    "id": "Fernid",
+    "path": "fernidships.png",
+    "monsters": false
+  },
+  {
     "id": "Default",
     "path": "humanships.png",
     "monsters": false

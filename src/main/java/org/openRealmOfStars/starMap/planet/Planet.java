@@ -3747,7 +3747,8 @@ public class Planet {
    * @return Explanation why realm cannot colonize the planet.
    */
   public String getNotColonizeablePlanet(final PlayerInfo realm) {
-    String result = "";
+    StringBuilder sb = new StringBuilder();
+    boolean and = false;
     int maxRad = realm.getRace().getMaxRad().getIndex();
     if (realm.getTechList().hasTech("Radiation dampener")) {
       maxRad++;
@@ -3757,21 +3758,41 @@ public class Planet {
     }
     if (maxRad
         < getTotalRadiationLevel().getIndex()) {
-      result = "Planet has too high radiation!";
+      sb.append("Planet has too high radiation");
+      and = true;
     }
     int suitability = realm.getPlanetSuitabilityValue(this);
     if (suitability == 0
         && !realm.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
-      result = "Planet climate is not suitable!";
+      if (and) {
+        sb.append(" and ");
+        sb.append("planet climate is not suitable");
+      } else {
+        sb.append("Planet climate is not suitable");
+        and = true;
+      }
     }
     if (realm.getRace().isPhotosynthetic()
         && getWaterLevel() == WaterLevelType.BARREN) {
-      result = "Planet has no water at all.";
+      if (and) {
+        sb.append(" and ");
+        sb.append("planet has no water at all");
+      } else {
+        sb.append("Planet has no water at all");
+      }
     } else if (realm.getRace().isEatingFood()
         && getWaterLevel() == WaterLevelType.BARREN) {
-      result = "Planet is not able to grow food.";
+      if (and) {
+        sb.append(" and ");
+        sb.append("planet is not able to grow food");
+      } else {
+        sb.append("Planet is not able to grow food");
+      }
     }
-    return result;
+    if (sb.length() > 0) {
+      sb.append("!");
+    }
+    return sb.toString();
   }
   /**
    * Is planet colonizable for realm

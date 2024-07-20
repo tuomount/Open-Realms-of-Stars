@@ -78,5 +78,10 @@
     "id": "Synthdroid",
     "path": "/resources/images/bridge1.png",
     "y-offset": 57
+  },
+  {
+    "id": "Fernid",
+    "path": "/resources/images/fernid_bridge.png",
+    "y-offset": 35
   }
 ]

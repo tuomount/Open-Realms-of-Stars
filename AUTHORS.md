@@ -283,6 +283,8 @@ Smaugirian Space Ship Bridge by Tuomo Untinen
 
 Alteirian Space Ship Bridge by Tuomo Untinen
 
+Fernid Space Ship Bridge by Tuomo Untinen
+
 Scanner animation by Tuomo Untinen
 
 Warzone Concept by Justin Nichol

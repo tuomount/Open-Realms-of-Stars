@@ -2,8 +2,8 @@
   {
     "ID": "FERNIDS",
     "Name": "Fernids",
-    "NameSingle": "Fernids",
-    "BridgeId": "Mothoid",
+    "NameSingle": "Fernid",
+    "BridgeId": "Fernid",
     "SpaceShipId": "Fernid",
     "Traits": [
                 "PHOTOSYNTHESIS",

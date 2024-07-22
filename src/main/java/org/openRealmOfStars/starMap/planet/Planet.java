@@ -2070,7 +2070,7 @@ public class Planet {
       }
       if (getPlanetPlayerInfo() == null && viewerInfo != null) {
         sb.append("Suitable: ");
-        sb.append(viewerInfo.getPlanetSuitabilityValue(this));
+        sb.append(viewerInfo.getPlanetSuitabilityValue(this, false));
         sb.append("%\n");
       }
       if (activeScanned && event != PlanetaryEvent.NONE && eventFound) {
@@ -3761,7 +3761,7 @@ public class Planet {
       sb.append("Planet has too high radiation");
       and = true;
     }
-    int suitability = realm.getPlanetSuitabilityValue(this);
+    int suitability = realm.getPlanetSuitabilityValue(this, true);
     if (suitability == 0
         && !realm.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       if (and) {
@@ -3784,9 +3784,9 @@ public class Planet {
         && getWaterLevel() == WaterLevelType.BARREN) {
       if (and) {
         sb.append(" and ");
-        sb.append("planet is not able to grow food");
+        sb.append("planet has no natural growing food");
       } else {
-        sb.append("Planet is not able to grow food");
+        sb.append("Planet has no naturally growing food");
       }
     }
     if (sb.length() > 0) {

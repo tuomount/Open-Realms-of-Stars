@@ -245,7 +245,7 @@ public class Tech {
           + "trade with another realm.";
     }
     if (techName.equals("Advanced colonization")) {
-      result = "Improves survivality of colonies on almost barren \n"
+      result = "Improves survivality of colonies on barren \n"
           + " worlds. This will increase barren world suitability by 25%.";
     }
     if (techName.equals("Desert colonization")) {

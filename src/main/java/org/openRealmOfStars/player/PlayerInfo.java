@@ -63,6 +63,7 @@ import org.openRealmOfStars.starMap.event.RandomEvent;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.GravityType;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
@@ -2196,32 +2197,62 @@ public class PlayerInfo {
    * @return Base value between 0 - 125 %.
    */
   public int getPlanetSuitabilityValue(final Planet planet) {
-    int result = this.getRace().getTemperatureBaseValue(
+    return getPlanetSuitabilityValue(planet, false);
+  }
+
+  /**
+   * Get planet base value for space race.
+   * This will tell how much of population world type can
+   * hold.
+   * @param planet Planet
+   * @param ignoreRadiation Flag to ignore radiation.
+   * @return Base value between 0 - 125 %.
+   */
+  public int getPlanetSuitabilityValue(final Planet planet,
+      final boolean ignoreRadiation) {
+    int result = 0;
+    int originalTemperatureBaseValue = this.getRace().getTemperatureBaseValue(
         planet.getTemperatureType());
+    result = originalTemperatureBaseValue;
     WorldType worldType = planet.getPlanetType().getWorldType();
     if (worldType == WorldType.BARRENWORLD
-        && techList.hasTech("Advanced colonization")) {
-      result = result + 25;
+        && originalTemperatureBaseValue != 0) {
+      result = 0; // Normally barren worlds are 0% suitable.
+      if (getRace().isLithovorian()) {
+         result = 50;
+      }
+      if (!getRace().isEatingFood() && !getRace().isPhotosynthetic()) {
+        result = 50;
+      }
+      if (getRace().hasTrait(TraitIds.EAT_LESS)) {
+        result = 25;
+      }
     }
-    if (worldType == WorldType.DESERTWORLD
-        && techList.hasTech("Desert colonization")) {
-      result = result + 25;
-    }
-    if (worldType == WorldType.SWAMPWORLD
-        && techList.hasTech("Swamp colonization")) {
-      result = result + 25;
-    }
-    if (worldType == WorldType.ICEWORLD
-        && techList.hasTech("Ice colonization")) {
-      result = result + 25;
-    }
-    if (worldType == WorldType.VOLCANICWORLD
-        && techList.hasTech("Volcanic colonization")) {
-      result = result + 25;
-    }
-    if (worldType == WorldType.WATERWORLD
-        && techList.hasTech("Aquatic colonization")) {
-      result = result + 25;
+    if (originalTemperatureBaseValue != 0) {
+      if (worldType == WorldType.BARRENWORLD
+          && techList.hasTech("Advanced colonization")) {
+        result = result + 25;
+      }
+      if (worldType == WorldType.DESERTWORLD
+          && techList.hasTech("Desert colonization")) {
+        result = result + 25;
+      }
+      if (worldType == WorldType.SWAMPWORLD
+          && techList.hasTech("Swamp colonization")) {
+        result = result + 25;
+      }
+      if (worldType == WorldType.ICEWORLD
+          && techList.hasTech("Ice colonization")) {
+        result = result + 25;
+      }
+      if (worldType == WorldType.VOLCANICWORLD
+          && techList.hasTech("Volcanic colonization")) {
+        result = result + 25;
+      }
+      if (worldType == WorldType.WATERWORLD
+          && techList.hasTech("Aquatic colonization")) {
+        result = result + 25;
+      }
     }
     if (getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       if (planet.getGravityType() == GravityType.HIGH_GRAVITY) {
@@ -2234,6 +2265,22 @@ public class PlayerInfo {
         result = 75;
       }
     }
+    if (!ignoreRadiation) {
+      RadiationType raceMaxRad = race.getMaxRad();
+      int raceMaxRadInt = raceMaxRad.getIndex();
+      if (getTechList().isTech("Radiation dampener")) {
+        raceMaxRadInt++;
+      }
+      if (getTechList().isTech("Radiation well")) {
+        raceMaxRadInt++;
+      }
+      raceMaxRadInt = Math.min(RadiationType.values().length - 1,
+          raceMaxRadInt);
+      if (planet.getRadiationLevel().getIndex() > raceMaxRadInt) {
+        result = 0;
+      }
+    }
+
     return result;
   }
 

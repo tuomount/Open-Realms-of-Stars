@@ -20,19 +20,24 @@ package org.openRealmOfStars.game.state;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EtchedBorder;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.ImageLabel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.StatisticPanel;
@@ -65,10 +70,53 @@ public class StatView extends BlackPanel {
    */
   private static final long serialVersionUID = 1L;
 
+  /** Text to have when realm has highest population */
+  private static final String HIGHEST_POPULATION_TEXT =
+      "Your realm has highest population in the galaxy.";
+  /** Text to have when realm has highest score */
+  private static final String HIGHEST_SCORE_TEXT =
+      "Your realm has currently highest score.";
+  /** Text to have when realm has highest culture */
+  private static final String HIGHEST_CULTURE_TEXT =
+      "Your realm has currently highest culture.";
+  /** Text to have when realm has highest number of home planets */
+  private static final String HIGHEST_HOME_PLANETS_TEXT =
+      "Your realm conquered most of the home planets.";
+  /** Text to have when realm has highest number of towers */
+  private static final String HIGHEST_TOWERS_TEXT =
+      "Your realm has built most of the United galaxy towers.";
+  /** Text to have when realm has highest science */
+  private static final String HIGHEST_SCIENCE_TEXT =
+      "Your realm has built most the scientific achievements on single planet.";
   /**
    * Back button
    */
   private SpaceButton backBtn;
+  /**
+   * Flag if human player has reached highest score.
+   */
+  private boolean highestScore;
+  /**
+   * Flag if human player has reached highest culture.
+   */
+  private boolean highestCulture;
+  /**
+   * Flag if human player has reached highest count of home planets.
+   */
+  private boolean highestHomePlanets;
+  /**
+   * Flag if human player has reached highest count
+   *  of planet with United galaxy towers.
+   */
+  private boolean highestTowers;
+  /**
+   * Highest amount of scientic achievements on single planet.
+   */
+  private boolean highestScience;
+  /**
+   * Highest population.
+   */
+  private boolean highestPopulation;
   /**
    * Create new stat view
    * @param map StarMap which contains players and planet lists.
@@ -170,6 +218,11 @@ public class StatView extends BlackPanel {
     if (map.isGameEnded()) {
       scroll = new JScrollPane(createShipStatPanel(map, names));
       tabs.add("Ship designs", scroll);
+    }
+    if (highestCulture || highestHomePlanets || highestPopulation
+        || highestScience || highestScore || highestTowers) {
+      scroll = new JScrollPane(createSnowmanPanel(map, listener));
+      tabs.add("Snowman", scroll);
     }
     base.add(tabs, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
@@ -568,6 +621,12 @@ public class StatView extends BlackPanel {
         towers[planet.getPlanetOwnerIndex()]++;
       }
     }
+    highestScore = true;
+    highestCulture = true;
+    highestScience = true;
+    highestTowers = true;
+    highestPopulation = true;
+    highestHomePlanets = true;
     // Loop where to add player labels
     for (int i = 0; i < names.length; i++) {
       // Realm name
@@ -576,14 +635,27 @@ public class StatView extends BlackPanel {
       label.setForeground(realm.getColor().getColor());
       panel.add(label);
       int value = scoreStat.getLatest(i);
+      if (i != 0) {
+        int humanValue = scoreStat.getLatest(0);
+        if (value >= humanValue) {
+          highestScore = false;
+        }
+      }
       // Scoring victory
       label = new TransparentLabel(null, String.valueOf(value), true, true);
       label.setForeground(realm.getColor().getColor());
       panel.add(label);
       // Cultural victory
       if (cultureLabels) {
+        int cultValue = map.getNewsCorpData().getCultural().getLatest(i);
+        if (i != 0) {
+          int humanValue = map.getNewsCorpData().getCultural().getLatest(0);
+          if (cultValue >= humanValue) {
+            highestCulture = false;
+          }
+        }
         StringBuilder sb = new StringBuilder();
-        sb.append(map.getNewsCorpData().getCultural().getLatest(i));
+        sb.append(cultValue);
         sb.append("/");
         sb.append(maxCulture);
         if (broadcasters[i]) {
@@ -600,12 +672,17 @@ public class StatView extends BlackPanel {
         label = new TransparentLabel(null, sb.toString(), true, true);
         label.setForeground(realm.getColor().getColor());
         panel.add(label);
+      } else {
+        highestCulture = false;
       }
       // Domination victory
       if (dominationLabels) {
         int limit = map.getPlayerList().getCurrentMaxRealms() / 2;
         if (limit < 3) {
           limit = 3;
+        }
+        if (i != 0 && homeworlds[i] >= homeworlds[0]) {
+          highestHomePlanets = false;
         }
         StringBuilder sb = new StringBuilder();
         sb.append(homeworlds[i]);
@@ -615,9 +692,14 @@ public class StatView extends BlackPanel {
         label = new TransparentLabel(null, sb.toString(), true, true);
         label.setForeground(realm.getColor().getColor());
         panel.add(label);
+      } else {
+        highestHomePlanets = false;
       }
       if (scienceLabels) {
         int limit = map.getScoreResearch();
+        if (i != 0 && achievements[i] >= achievements[0]) {
+          highestScience = false;
+        }
         StringBuilder sb = new StringBuilder();
         sb.append(achievements[i]);
         sb.append("/");
@@ -626,8 +708,13 @@ public class StatView extends BlackPanel {
         label = new TransparentLabel(null, sb.toString(), true, true);
         label.setForeground(realm.getColor().getColor());
         panel.add(label);
+      } else {
+        highestScience = false;
       }
       if (diplomacyLabels) {
+        if (i != 0 && towers[i] >= towers[0]) {
+          highestTowers = false;
+        }
         StringBuilder sb = new StringBuilder();
         sb.append(towers[i]);
         sb.append("/");
@@ -636,8 +723,13 @@ public class StatView extends BlackPanel {
         label = new TransparentLabel(null, sb.toString(), true, true);
         label.setForeground(realm.getColor().getColor());
         panel.add(label);
+      } else {
+        highestTowers = false;
       }
       if (populationLabels) {
+        if (i != 0 && population[i] >= population[0]) {
+          highestPopulation = false;
+        }
         StringBuilder sb = new StringBuilder();
         sb.append(population[i]);
         sb.append("/");
@@ -649,6 +741,8 @@ public class StatView extends BlackPanel {
         label = new TransparentLabel(null, sb.toString(), true, true);
         label.setForeground(realm.getColor().getColor());
         panel.add(label);
+      } else {
+        highestPopulation = false;
       }
     }
     return panel;
@@ -743,6 +837,88 @@ public class StatView extends BlackPanel {
     return panel;
   }
 
+  /**
+   * Create snowman Panel.
+   * @param map StarMap
+   * @param listener ActionListener
+   * @return Panel
+   */
+  public BlackPanel createSnowmanPanel(final StarMap map,
+      final ActionListener listener) {
+    BlackPanel panel = new BlackPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    SpaceLabel label = new SpaceLabel("Your realm has reached highest score"
+        + " in follow categories:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    panel.add(label);
+    if (highestScore) {
+      label = new SpaceLabel(HIGHEST_SCORE_TEXT);
+      ImageIcon icon = new ImageIcon(
+          Icons.getIconByName(Icons.ICON_STATS).getIcon());
+      label.setIcon(icon);
+      label.setMaximumSize(new Dimension(
+          GuiStatics.getTextWidth(label.getFont(), HIGHEST_SCORE_TEXT)
+          + 30, 20));
+      label.setAlignmentX(CENTER_ALIGNMENT);
+      panel.add(label);
+    }
+    if (highestCulture) {
+      ImageIcon icon = new ImageIcon(
+          Icons.getIconByName(Icons.ICON_CULTURE).getIcon());
+      label.setIcon(icon);
+      label = new SpaceLabel(HIGHEST_CULTURE_TEXT);
+      label.setAlignmentX(CENTER_ALIGNMENT);
+      label.setMaximumSize(new Dimension(
+          GuiStatics.getTextWidth(label.getFont(), HIGHEST_CULTURE_TEXT)
+          + 30, 20));
+      panel.add(label);
+    }
+    if (highestHomePlanets) {
+      label = new SpaceLabel(HIGHEST_HOME_PLANETS_TEXT);
+      ImageIcon icon = new ImageIcon(
+          Icons.getIconByName(Icons.ICON_PLANET).getIcon());
+      label.setIcon(icon);
+      label.setAlignmentX(CENTER_ALIGNMENT);
+      label.setMaximumSize(new Dimension(
+          GuiStatics.getTextWidth(label.getFont(), HIGHEST_HOME_PLANETS_TEXT)
+          + 30, 20));
+      panel.add(label);
+    }
+    if (highestTowers) {
+      label = new SpaceLabel(HIGHEST_TOWERS_TEXT);
+      ImageIcon icon = new ImageIcon(
+          Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH).getIcon());
+      label.setIcon(icon);
+      label.setAlignmentX(CENTER_ALIGNMENT);
+      label.setMaximumSize(new Dimension(
+          GuiStatics.getTextWidth(label.getFont(), HIGHEST_TOWERS_TEXT)
+          + 30, 20));
+      panel.add(label);
+    }
+    if (highestScience) {
+      label = new SpaceLabel(HIGHEST_SCIENCE_TEXT);
+      ImageIcon icon = new ImageIcon(
+          Icons.getIconByName(Icons.ICON_RESEARCH).getIcon());
+      label.setIcon(icon);
+      label.setAlignmentX(CENTER_ALIGNMENT);
+      label.setMaximumSize(new Dimension(
+          GuiStatics.getTextWidth(label.getFont(), HIGHEST_SCIENCE_TEXT)
+          + 30, 20));
+      panel.add(label);
+    }
+    if (highestPopulation) {
+      label = new SpaceLabel(HIGHEST_POPULATION_TEXT);
+      ImageIcon icon = new ImageIcon(
+          Icons.getIconByName(Icons.ICON_PEOPLE).getIcon());
+      label.setIcon(icon);
+      label.setAlignmentX(CENTER_ALIGNMENT);
+      label.setMaximumSize(new Dimension(
+          GuiStatics.getTextWidth(label.getFont(), HIGHEST_POPULATION_TEXT)
+          + 30, 20));
+      panel.add(label);
+    }
+    return panel;
+  }
   /**
    * Handle actions for stat view.
    * @param arg0 ActionEvent command what player did

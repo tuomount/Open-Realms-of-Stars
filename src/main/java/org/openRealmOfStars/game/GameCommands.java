@@ -545,6 +545,16 @@ public final class GameCommands {
   public static final String COMMAND_GALAXY_SETUP = "GalaxySetup";
 
   /**
+   * Winning combo has been selected in snowman
+   */
+  public static final String COMMAND_SNOWMAN_SELECT = "SnowmanSelect";
+
+  /**
+   * Winning combo has been selected and activated in snowman panel
+   */
+  public static final String COMMAND_SNOWMAN_ACTIVATE = "SnowmanActivate";
+
+  /**
    * Realm details
    */
   public static final String COMMAND_REALM_DETAILS = "RealmDetails";

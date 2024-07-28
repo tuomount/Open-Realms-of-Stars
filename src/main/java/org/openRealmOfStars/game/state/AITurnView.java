@@ -197,7 +197,11 @@ public class AITurnView extends BlackPanel {
       }
     }
     // Background image
-    BigImagePanel imgBase = new BigImagePanel(planet, true, "Enemy turn");
+    String title = "Enemy turns";
+    if (game.getStarMap().isGenerateFullGame()) {
+      title = "Snowman mode";
+    }
+    BigImagePanel imgBase = new BigImagePanel(planet, true, title);
     if (orbital != null) {
       imgBase.setCustomOrbital(orbital);
     }
@@ -233,49 +237,55 @@ public class AITurnView extends BlackPanel {
     switch (textAnim) {
     default:
     case 0:
-      if (game.getStarMap().isHumanLost()) {
+      if (game.getStarMap().isHumanLost()
+          || game.getStarMap().isGenerateFullGame()) {
         setText("Turn " + game.getStarMap().getTurn() + "/"
-            + game.getStarMap().getScoreVictoryTurn() + ".....");
+            + game.getStarMap().getScoreVictoryTurn());
       } else {
         setText("Please wait.....");
       }
       break;
     case 1:
-      if (game.getStarMap().isHumanLost()) {
+      if (game.getStarMap().isHumanLost()
+          || game.getStarMap().isGenerateFullGame()) {
         setText("Turn " + game.getStarMap().getTurn() + "/"
-            + game.getStarMap().getScoreVictoryTurn() + "*....");
+            + game.getStarMap().getScoreVictoryTurn() + ".");
       } else {
         setText("Please wait*....");
       }
       break;
     case 2:
-      if (game.getStarMap().isHumanLost()) {
+      if (game.getStarMap().isHumanLost()
+          || game.getStarMap().isGenerateFullGame()) {
         setText("Turn " + game.getStarMap().getTurn() + "/"
-            + game.getStarMap().getScoreVictoryTurn() + ".*...");
+            + game.getStarMap().getScoreVictoryTurn() + "..");
       } else {
         setText("Please wait.*...");
       }
       break;
     case 3:
-      if (game.getStarMap().isHumanLost()) {
+      if (game.getStarMap().isHumanLost()
+          || game.getStarMap().isGenerateFullGame()) {
         setText("Turn " + game.getStarMap().getTurn() + "/"
-            + game.getStarMap().getScoreVictoryTurn() + "..*..");
+            + game.getStarMap().getScoreVictoryTurn() + "...");
       } else {
         setText("Please wait..*..");
       }
       break;
     case 4:
-      if (game.getStarMap().isHumanLost()) {
+      if (game.getStarMap().isHumanLost()
+          || game.getStarMap().isGenerateFullGame()) {
         setText("Turn " + game.getStarMap().getTurn() + "/"
-            + game.getStarMap().getScoreVictoryTurn() + "...*.");
+            + game.getStarMap().getScoreVictoryTurn() + "..");
       } else {
         setText("Please wait...*.");
       }
       break;
     case 5:
-      if (game.getStarMap().isHumanLost()) {
+      if (game.getStarMap().isHumanLost()
+          || game.getStarMap().isGenerateFullGame()) {
         setText("Turn " + game.getStarMap().getTurn() + "/"
-            + game.getStarMap().getScoreVictoryTurn() + "....*");
+            + game.getStarMap().getScoreVictoryTurn() + ".");
       } else {
         setText("Please wait....*");
       }
@@ -3874,10 +3884,24 @@ public class AITurnView extends BlackPanel {
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
       updateText();
-      synchronized (aiThread) {
-        if (!aiThread.isStarted()) {
-          aiThread.start();
+      if (!game.getStarMap().isGenerateFullGame()) {
+        synchronized (aiThread) {
+          if (!aiThread.isStarted()) {
+            aiThread.start();
+          }
         }
+      } else {
+        if (!game.getStarMap().isGameEnded()) {
+          boolean singleTurnEnd = false;
+          do {
+            synchronized (aiThread) {
+              singleTurnEnd = handleAiTurn();
+            }
+          } while (!singleTurnEnd);
+        } else {
+          game.changeGameState(GameState.END_STORY_VIEW);
+        }
+        return;
       }
       if (!aiThread.isRunning() && aiThread.isStarted()) {
         if (getNextState() != null) {

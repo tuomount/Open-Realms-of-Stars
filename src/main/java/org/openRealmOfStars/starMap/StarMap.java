@@ -311,6 +311,11 @@ public class StarMap {
    */
   private int zoomLevel;
   /**
+   * Flag to mark run full game with one end turn click. This
+   * will not be save on file.
+   */
+  private boolean generateFullGame;
+  /**
    * Magic string to save game files
    */
   public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.26";
@@ -326,6 +331,7 @@ public class StarMap {
   public StarMap(final int maxX, final int maxY, final int maxPlayers,
       final int maxRealms) {
     zoomLevel = Tile.ZOOM_NORMAL;
+    generateFullGame = false;
     setDebug(false);
     setHumanLost(false);
     history = new History();
@@ -4388,5 +4394,17 @@ public class StarMap {
    */
   public ArrayList<Sun> getSunList() {
     return sunList;
+  }
+  /**
+   * @return the generateFullGame
+   */
+  public boolean isGenerateFullGame() {
+    return generateFullGame;
+  }
+  /**
+   * @param generateFullGame the generateFullGame to set
+   */
+  public void setGenerateFullGame(final boolean generateFullGame) {
+    this.generateFullGame = generateFullGame;
   }
 }

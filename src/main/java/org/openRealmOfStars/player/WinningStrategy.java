@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2019-2021 Tuomo Untinen
+ * Copyright (C) 2019-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -45,4 +45,18 @@ public enum WinningStrategy {
    * Population victory
    */
   POPULATION;
+
+  @Override
+  public String toString() {
+    switch (this) {
+      default:
+      case GENERIC: return "Highest score at end of the game";
+      case CONQUER: return "Conquer home worlds";
+      case DIPLOMATIC: return "Diplomatic victory";
+      case CULTURAL: return "Cultural victory";
+      case SCIENCE: return "Build science world";
+      case POPULATION: return "Population victory";
+    }
+  }
+
 }

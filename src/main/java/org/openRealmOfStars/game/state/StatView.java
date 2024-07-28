@@ -24,16 +24,20 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EtchedBorder;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.buttons.SpaceCombo;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.ImageLabel;
@@ -44,6 +48,7 @@ import org.openRealmOfStars.gui.panels.StatisticPanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.ship.ShipImageFactor;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -56,6 +61,7 @@ import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
  *
@@ -88,6 +94,10 @@ public class StatView extends BlackPanel {
   /** Text to have when realm has highest science */
   private static final String HIGHEST_SCIENCE_TEXT =
       "Your realm has built most the scientific achievements on single planet.";
+  /** Text to which winning AI should try to win. */
+  private static final String SNOWMAN_SELECT_TEXT =
+      "Select what victory condition AI should try achieve:";
+
   /**
    * Back button
    */
@@ -117,6 +127,14 @@ public class StatView extends BlackPanel {
    * Highest population.
    */
   private boolean highestPopulation;
+  /**
+   * StarMap.
+   */
+  private StarMap starMap;
+  /**
+   * Winning startegy selector.
+   */
+  private SpaceCombo<WinningStrategy> winningCombo;
   /**
    * Create new stat view
    * @param map StarMap which contains players and planet lists.
@@ -221,9 +239,10 @@ public class StatView extends BlackPanel {
     }
     if (highestCulture || highestHomePlanets || highestPopulation
         || highestScience || highestScore || highestTowers) {
-      scroll = new JScrollPane(createSnowmanPanel(map, listener));
+      scroll = new JScrollPane(createSnowmanPanel(listener));
       tabs.add("Snowman", scroll);
     }
+    starMap = map;
     base.add(tabs, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
 
@@ -839,13 +858,12 @@ public class StatView extends BlackPanel {
 
   /**
    * Create snowman Panel.
-   * @param map StarMap
    * @param listener ActionListener
    * @return Panel
    */
-  public BlackPanel createSnowmanPanel(final StarMap map,
-      final ActionListener listener) {
+  public BlackPanel createSnowmanPanel(final ActionListener listener) {
     BlackPanel panel = new BlackPanel();
+    ArrayList<WinningStrategy> list = new ArrayList<>();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     SpaceLabel label = new SpaceLabel("Your realm has reached highest score"
         + " in follow categories:");
@@ -861,6 +879,7 @@ public class StatView extends BlackPanel {
           + 30, 20));
       label.setAlignmentX(CENTER_ALIGNMENT);
       panel.add(label);
+      list.add(WinningStrategy.GENERIC);
     }
     if (highestCulture) {
       ImageIcon icon = new ImageIcon(
@@ -872,6 +891,7 @@ public class StatView extends BlackPanel {
           GuiStatics.getTextWidth(label.getFont(), HIGHEST_CULTURE_TEXT)
           + 30, 20));
       panel.add(label);
+      list.add(WinningStrategy.CULTURAL);
     }
     if (highestHomePlanets) {
       label = new SpaceLabel(HIGHEST_HOME_PLANETS_TEXT);
@@ -883,6 +903,7 @@ public class StatView extends BlackPanel {
           GuiStatics.getTextWidth(label.getFont(), HIGHEST_HOME_PLANETS_TEXT)
           + 30, 20));
       panel.add(label);
+      list.add(WinningStrategy.CONQUER);
     }
     if (highestTowers) {
       label = new SpaceLabel(HIGHEST_TOWERS_TEXT);
@@ -894,6 +915,7 @@ public class StatView extends BlackPanel {
           GuiStatics.getTextWidth(label.getFont(), HIGHEST_TOWERS_TEXT)
           + 30, 20));
       panel.add(label);
+      list.add(WinningStrategy.DIPLOMATIC);
     }
     if (highestScience) {
       label = new SpaceLabel(HIGHEST_SCIENCE_TEXT);
@@ -905,6 +927,7 @@ public class StatView extends BlackPanel {
           GuiStatics.getTextWidth(label.getFont(), HIGHEST_SCIENCE_TEXT)
           + 30, 20));
       panel.add(label);
+      list.add(WinningStrategy.SCIENCE);
     }
     if (highestPopulation) {
       label = new SpaceLabel(HIGHEST_POPULATION_TEXT);
@@ -916,7 +939,42 @@ public class StatView extends BlackPanel {
           GuiStatics.getTextWidth(label.getFont(), HIGHEST_POPULATION_TEXT)
           + 30, 20));
       panel.add(label);
+      list.add(WinningStrategy.POPULATION);
     }
+    panel.add(Box.createRigidArea(new Dimension(5, 50)));
+    label = new SpaceLabel(SNOWMAN_SELECT_TEXT);
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    label.setMaximumSize(new Dimension(
+        GuiStatics.getTextWidth(label.getFont(), SNOWMAN_SELECT_TEXT)
+        + 30, 20));
+    panel.add(label);
+    panel.add(Box.createRigidArea(new Dimension(5, 50)));
+    winningCombo = new SpaceCombo<>(
+        list.toArray(new WinningStrategy[0]));
+    winningCombo.setSelectedIndex(0);
+    winningCombo.setActionCommand(GameCommands.COMMAND_SNOWMAN_SELECT);
+    winningCombo.addActionListener(listener);
+    winningCombo.setAlignmentX(CENTER_ALIGNMENT);
+    winningCombo.setMaximumSize(new Dimension(
+        GuiStatics.getTextWidth(winningCombo.getFont(),
+            WinningStrategy.GENERIC.toString()) + 20, 30));
+    winningCombo.setToolTipText("<html>Select what winning category AI should"
+        + " try to achieve while you wait result as a snowman.<br>"
+        + " Snowman is a bit of word play: 4X games have snowballing term and"
+        + " ironman terms. Also snowman is always outside doing nothing."
+        + "</html>");
+    panel.add(winningCombo);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
+    SpaceButton btn = new SpaceButton("Activate Snowman mode",
+        GameCommands.COMMAND_SNOWMAN_ACTIVATE);
+    btn.addActionListener(listener);
+    btn.setAlignmentX(CENTER_ALIGNMENT);
+    btn.setToolTipText("<html>Active Snowman mode.<Br>"
+        + "Which means you let AI to try to win game "
+        + "for your based on winning strategy you chose.<br>"
+        + "Your game will be saved before selecting this and you will see"
+        + "the end results and how story ends.</html>");
+    panel.add(btn);
     return panel;
   }
   /**
@@ -924,7 +982,18 @@ public class StatView extends BlackPanel {
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(final ActionEvent arg0) {
-    // Nothing to do yet
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SNOWMAN_SELECT)) {
+      SoundPlayer.playMenuSound();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SNOWMAN_ACTIVATE)) {
+      SoundPlayer.playMenuSound();
+      new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
+          "snowman.save", starMap);
+      starMap.getPlayerByIndex(0).setHuman(false);
+      starMap.getPlayerByIndex(0).setStrategy(
+          (WinningStrategy) winningCombo.getSelectedItem());
+      starMap.setGenerateFullGame(true);
+    }
   }
 
 

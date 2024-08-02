@@ -1,7 +1,7 @@
 package org.openRealmOfStars.gui.icons;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -496,6 +496,11 @@ public final class Icons {
   public static final String ICON_MOVES_DONE = "IconMovesDone";
 
   /**
+   * Snowman icon
+   */
+  public static final String ICON_SNOWMAN = "IconSnowman";
+
+  /**
    * List of Icon
    */
   private static ArrayList<Icon16x16> listOfIcons;
@@ -850,6 +855,8 @@ public final class Icons {
     icon = new Icon16x16(image, 6, 5, ICON_ENROUTED_MOVES);
     addIcon(icon);
     icon = new Icon16x16(image, 7, 5, ICON_MOVES_DONE);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 6, ICON_SNOWMAN);
     addIcon(icon);
   }
 

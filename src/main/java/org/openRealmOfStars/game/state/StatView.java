@@ -236,8 +236,7 @@ public class StatView extends BlackPanel {
     if (map.isGameEnded()) {
       scroll = new JScrollPane(createShipStatPanel(map, names));
       tabs.add("Ship designs", scroll);
-    }
-    if (highestCulture || highestHomePlanets || highestPopulation
+    } else if (highestCulture || highestHomePlanets || highestPopulation
         || highestScience || highestScore || highestTowers) {
       scroll = new JScrollPane(createSnowmanPanel(listener));
       tabs.add("Snowman", scroll);
@@ -967,6 +966,7 @@ public class StatView extends BlackPanel {
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceButton btn = new SpaceButton("Activate Snowman mode",
         GameCommands.COMMAND_SNOWMAN_ACTIVATE);
+    btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_SNOWMAN));
     btn.addActionListener(listener);
     btn.setAlignmentX(CENTER_ALIGNMENT);
     btn.setToolTipText("<html>Active Snowman mode.<Br>"

@@ -116,6 +116,10 @@ public class Bridge {
    */
   public static final String EFFECT_ORANGE_BLUE = "Orange Blue";
   /**
+   * Effect jungle
+   */
+  public static final String EFFECT_JUNGLE = "Jungle";
+  /**
    * Name for contact Hue bridge.
    */
   public static final String DEVICE_TYPE = "OROS AMBIENT LIGHTS";
@@ -938,6 +942,52 @@ public class Bridge {
     makeLightEffect(light, hue, 255, bri);
   }
 
+  /**
+   * Makes green and orange floating effect
+   */
+  public void effectJungle() {
+    int centerGreen = 21845;
+    int centerYellow = 10012;
+    int centerYellowGreen = 14563;
+    int amp = 6500;
+    int inc = 2;
+    int trickle = 100;
+    if (intense == 4) {
+      trickle = 60;
+      inc = 10;
+    }
+    if (intense == 3) {
+      trickle = 50;
+      inc = 8;
+    }
+    if (intense == 2) {
+      trickle = 40;
+      inc = 6;
+    }
+    if (intense == 1) {
+      trickle = 40;
+      inc = 4;
+    }
+    phase = phase + inc;
+    if (phase > 359) {
+      phase = phase - 359;
+    }
+    int hue = (int) (Math.sin(Math.toRadians(phase)) * amp);
+    hue = hue + centerGreen;
+    int bri = 150 + (int) (Math.sin(Math.toRadians(phase * 2)) * trickle);
+    Light light = getLeftLight();
+    makeLightEffect(light, hue, 255, bri);
+    hue = (int) (Math.cos(Math.toRadians(phase)) * amp);
+    hue = hue + centerYellow;
+    bri = 150 + (int) (Math.cos(Math.toRadians(phase * 2)) * trickle);
+    light = getRightLight();
+    makeLightEffect(light, hue, 255, bri);
+    hue = (int) (Math.sin(Math.toRadians(phase)) * amp);
+    hue = hue + centerYellowGreen;
+    bri = 150 + (int) (Math.sin(Math.toRadians(phase * 2)) * trickle);
+    light = getCenterLight();
+    makeLightEffect(light, hue, 255, bri);
+  }
   /**
    * Makes left light green, and right blueish space.
    * Center is green space floating.

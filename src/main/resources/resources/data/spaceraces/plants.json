@@ -24,8 +24,8 @@
                  "FEMALE"
                ],
     "SpeechSetId": "FERNIDS",
-    "BridgeEffect": "GREYBLUE",
-    "DiplomacyMusic": "Sky Portal",
+    "BridgeEffect": "JUNGLE",
+    "DiplomacyMusic": "Sylvan Waltz",
     "NameGenerator": "BIG_PLANT",
     "Description": "Fernids are tree like creatures. They have two branch functioning as hands and roots working as legs."
   }

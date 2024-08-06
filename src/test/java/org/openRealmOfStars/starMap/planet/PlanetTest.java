@@ -28,6 +28,7 @@ import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -37,6 +38,8 @@ import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
+import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
+import org.openRealmOfStars.starMap.planet.status.StatusFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 import junit.framework.TestCase;
@@ -189,6 +192,36 @@ public class PlanetTest extends TestCase {
       assertEquals("<html></html>",
           planet.getHappinessExplanation());
     }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testPlanetMysteryStarving() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    StarMap map = Mockito.mock(StarMap.class);
+    planet.setWaterLevel(WaterLevelType.ARID);
+    planet.setTemperatureType(TemperatureType.ARCTIC);
+    planet.setRadiationLevel(RadiationType.HIGH_RADIATION);
+    planet.setGroundSize(12);
+    planet.setPlanetType(PlanetTypes.ICEWORLD1);
+    planet.addAppliedStatus(new AppliedStatus(
+        StatusFactory.create("MOLTEN_LAVA").get()));
+    PlayerInfo info = new PlayerInfo(SpaceRaceFactory.createOne("FERNIDS"),
+        0, 0);
+    info.setGovernment(GovernmentFactory.createOne("SYNDICATE"));
+    planet.setPlanetOwner(0, info);
+    planet.setWorkers(Planet.FOOD_FARMERS, 0);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    planet.addBuilding(BuildingFactory.createByName("Advanced factory"));
+    planet.addBuilding(BuildingFactory.createByName("Basic lab"));
+    planet.addBuilding(BuildingFactory.createByName("Advanced Mine"));
+    planet.addBuilding(BuildingFactory.createByName("Space port"));
+    planet.addBuilding(BuildingFactory.createByName("Advanced factory"));
+    planet.addBuilding(BuildingFactory.createByName("Advanced factory"));
+    planet.updateOneTurn(false, map);
+    assertEquals(1, planet.getTotalPopulation());
   }
 
   @Test

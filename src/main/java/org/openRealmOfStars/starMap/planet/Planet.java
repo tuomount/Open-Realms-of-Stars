@@ -2389,7 +2389,7 @@ public class Planet {
         // Over populated no extra food more than maximum required.
         extraFood = require;
       }
-      if (getTotalPopulation() > getPopulationLimit()) {
+      if (getTotalPopulation() > getPopulationLimitIgnoreRadiation()) {
         msg = new Message(MessageType.POPULATION,
             getName() + " has population over the limit!",
             Icons.getIconByName(Icons.ICON_DEATH));
@@ -2426,6 +2426,9 @@ public class Planet {
           ErrorLogger.log("Planet starved:"
                 + " Water: " + getWaterLevel().getPlanetFoodProd()
                 + " Type: " + getPlanetType().getTypeAsString()
+                + " Temp: " + getTemperatureType().toString()
+                + " PopLimit: " + getPopulationLimit()
+                + " Rad: " + getRadiationLevel().toString()
                 + " Planet Owner: "
                 + getPlanetPlayerInfo().getRace().getName() + " Event: "
                 + getPlanetaryEvent().getName() + " Buildings: "
@@ -3206,18 +3209,37 @@ public class Planet {
   }
 
   /**
+   * Get Planet's population limit based on race on planet but ignore radiation.
+   * @return Planet's population limit
+   */
+  public int getPopulationLimitIgnoreRadiation() {
+    return getPopulationLimit(getPlanetPlayerInfo(), true);
+  }
+
+  /**
    * Get Planet's population limit based on certain realm.
    * @param info PlayerInfo
    * @return Planet's population limit
    */
   public int getPopulationLimit(final PlayerInfo info) {
+    return getPopulationLimit(info, false);
+  }
+
+  /**
+   * Get Planet's population limit based on certain realm.
+   * @param info PlayerInfo
+   * @param ignoreRadiation Flag for ignore radiation
+   * @return Planet's population limit
+   */
+  public int getPopulationLimit(final PlayerInfo info,
+      final boolean ignoreRadiation) {
     int result = 0;
     if (info != null) {
       result = info.getRace().getExtraPopulation();
     }
     result = result + getGroundSize();
     if (info != null) {
-      int percent = info.getPlanetSuitabilityValue(this);
+      int percent = info.getPlanetSuitabilityValue(this, ignoreRadiation);
       result = result * percent / 100;
       if (result < 2 && percent > 0) {
         result = 2;
@@ -3251,6 +3273,7 @@ public class Planet {
     }
     return result;
   }
+
   /**
    * Is planet full of population or not
    * @return True if planet is full of population

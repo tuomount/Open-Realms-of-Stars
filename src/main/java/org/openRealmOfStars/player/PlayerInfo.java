@@ -1023,14 +1023,31 @@ public class PlayerInfo {
   }
 
   /**
+   * Calculate full charted based on scanner level.
+   * This will only give amount for scanner level 1,2,3.
+   * @param scannerRange Scanner level
+   * @return full charted sectors.
+   */
+  private static int calculateFullCharted(final int scannerRange) {
+    if (scannerRange == 1) {
+      return 5;
+    }
+    if (scannerRange == 2) {
+      return 13;
+    }
+    return 25;
+  }
+
+  /**
    * Calculate amount of uncharted sectors.
    * @param coord Center coordinate
    * @param scannerRange Scanner Range.
    * @param sun Sun
+   * @param minDist Minimum distance from sun
    * @return Amount uncharted sectors.
    */
   private int calculateAmountOfUncharted(final Coordinate coord,
-      final int scannerRange, final Sun sun) {
+      final int scannerRange, final Sun sun, final int minDist) {
     int amount = 0;
     int cx = coord.getX();
     int cy = coord.getY();
@@ -1039,31 +1056,31 @@ public class PlayerInfo {
       Coordinate newCoord = new Coordinate(cx - 1, cy);
       if (newCoord.isValidCoordinate(maxCoordinate)
           && getSectorVisibility(newCoord) == UNCHARTED
-          && sun.getCenterCoordinate().calculateDistance(newCoord) >= 2) {
+          && sun.getCenterCoordinate().calculateDistance(newCoord) >= minDist) {
         amount++;
       }
       newCoord = new Coordinate(cx, cy - 1);
       if (newCoord.isValidCoordinate(maxCoordinate)
           && getSectorVisibility(newCoord) == UNCHARTED
-          && sun.getCenterCoordinate().calculateDistance(newCoord) >= 2) {
+          && sun.getCenterCoordinate().calculateDistance(newCoord) >= minDist) {
         amount++;
       }
       newCoord = new Coordinate(cx, cy + 1);
       if (newCoord.isValidCoordinate(maxCoordinate)
           && getSectorVisibility(newCoord) == UNCHARTED
-          && sun.getCenterCoordinate().calculateDistance(newCoord) >= 2) {
+          && sun.getCenterCoordinate().calculateDistance(newCoord) >= minDist) {
         amount++;
       }
       newCoord = new Coordinate(cx + 1, cy);
       if (newCoord.isValidCoordinate(maxCoordinate)
           && getSectorVisibility(newCoord) == UNCHARTED
-          && sun.getCenterCoordinate().calculateDistance(newCoord) >= 2) {
+          && sun.getCenterCoordinate().calculateDistance(newCoord) >= minDist) {
         amount++;
       }
       newCoord = new Coordinate(cx, cy);
       if (newCoord.isValidCoordinate(maxCoordinate)
           && getSectorVisibility(newCoord) == UNCHARTED
-          && sun.getCenterCoordinate().calculateDistance(newCoord) >= 2) {
+          && sun.getCenterCoordinate().calculateDistance(newCoord) >= minDist) {
         amount++;
       }
     } else {
@@ -1072,7 +1089,8 @@ public class PlayerInfo {
           Coordinate newCoord = new Coordinate(cx + x, cy + y);
           if (newCoord.isValidCoordinate(maxCoordinate)
               && getSectorVisibility(newCoord) == UNCHARTED
-              && sun.getCenterCoordinate().calculateDistance(newCoord) >= 2
+              && sun.getCenterCoordinate().calculateDistance(newCoord)
+              >= minDist
               && coord.calculateDistance(newCoord) <= scannerRange) {
             amount++;
           }
@@ -1154,7 +1172,7 @@ public class PlayerInfo {
             double sundist = coordinate.calculateDistance(
                 sun.getCenterCoordinate());
             int score = 5 - Math.abs((sunScanRad - (int) sundist))
-                + calculateAmountOfUncharted(coordinate, scanner, sun);
+                + calculateAmountOfUncharted(coordinate, scanner, sun, 2);
             if (score > bestScore) {
               bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
                   dist);
@@ -1176,18 +1194,196 @@ public class PlayerInfo {
   }
 
   /**
-   * Get Best uncharted sector around certain solar system
+   * Get corner of the sun
+   * @param sun The Sun
+   * @param scanner Scanner range
+   * @param round Which round of exploration is going on
+   * @param position Corner position
+   * @return Coordinate of corner or null
+   */
+  private static Coordinate getCorner(final Sun sun, final int scanner,
+      final int round, final int position) {
+    int offset = 2;
+    if (scanner == 1 && round == 0) {
+      offset = 3;
+    }
+    if (scanner == 1 && round == 1) {
+      offset = 5;
+    }
+    if (scanner == 1 && round == 2) {
+      offset = 7;
+    }
+    if (scanner == 2 && round == 0) {
+      offset = 4;
+    }
+    if (scanner == 2 && round == 1) {
+      offset = 6;
+    }
+    if (scanner == 3 && round == 0) {
+      offset = 5;
+    }
+    int mx = 0;
+    int my = 0;
+    if (position == Coordinate.UP_LEFT) {
+      mx = -1 * offset;
+      my = -1 * offset;
+    }
+    if (position == Coordinate.UP_RIGHT) {
+      mx = 1 * offset;
+      my = -1 * offset;
+    }
+    if (position == Coordinate.DOWN_RIGHT) {
+      mx = 1 * offset;
+      my = 1 * offset;
+    }
+    if (position == Coordinate.DOWN_LEFT) {
+      mx = 1 * offset;
+      my = 1 * offset;
+    }
+    if (mx == 0 && my == 0) {
+      return null;
+    }
+    Coordinate coord = new Coordinate(sun.getCenterX() + mx,
+        sun.getCenterY() + my);
+    return coord;
+  }
+  /**
+   * Get Best uncharted sector around certain solar system for challenging AI.
    * @param sun Solar system
    * @param fleet Fleet doing the exploring.
    * @return PathPoint where to go next or null if no more exploring
    */
-  public PathPoint getBestUnchartedSector(final Sun sun,
+  private PathPoint getBestUnchartedSectorChallenging(final Sun sun,
       final Fleet fleet) {
+    int scanner = fleet.getFleetScannerLvl();
+    if (scanner > 3) {
+      scanner = 3;
+    }
+    int rounds = 0;
+    int maxRounds = 3;
+    if (scanner == 2) {
+      maxRounds = 2;
+    }
+    if (scanner == 3) {
+      maxRounds = 1;
+    }
+    PathPoint bestPoint = null;
+    int startDir = sun.getCenterCoordinate().getPosition(fleet.getCoordinate());
+    int startPos = Coordinate.NONE;
+    int curPos = Coordinate.NONE;
+    while (rounds < maxRounds) {
+      if (startDir == Coordinate.UP) {
+        if (DiceGenerator.getBoolean()) {
+          startPos = Coordinate.UP_LEFT;
+        } else {
+          startPos = Coordinate.UP_RIGHT;
+        }
+      }
+      if (startDir == Coordinate.UP_LEFT) {
+        if (DiceGenerator.getBoolean()) {
+          startPos = Coordinate.DOWN_LEFT;
+        } else {
+          startPos = Coordinate.UP_RIGHT;
+        }
+      }
+      if (startDir == Coordinate.UP_RIGHT) {
+        if (DiceGenerator.getBoolean()) {
+          startPos = Coordinate.DOWN_RIGHT;
+        } else {
+          startPos = Coordinate.UP_LEFT;
+        }
+      }
+      if (startDir == Coordinate.RIGHT) {
+        if (DiceGenerator.getBoolean()) {
+          startPos = Coordinate.DOWN_RIGHT;
+        } else {
+          startPos = Coordinate.UP_RIGHT;
+        }
+      }
+      if (startDir == Coordinate.DOWN_RIGHT) {
+        if (DiceGenerator.getBoolean()) {
+          startPos = Coordinate.DOWN_LEFT;
+        } else {
+          startPos = Coordinate.UP_RIGHT;
+        }
+      }
+      if (startDir == Coordinate.DOWN) {
+        if (DiceGenerator.getBoolean()) {
+          startPos = Coordinate.DOWN_LEFT;
+        } else {
+          startPos = Coordinate.DOWN_RIGHT;
+        }
+      }
+      if (startDir == Coordinate.DOWN_LEFT) {
+        if (DiceGenerator.getBoolean()) {
+          startPos = Coordinate.DOWN_RIGHT;
+        } else {
+          startPos = Coordinate.UP_LEFT;
+        }
+      }
+      if (startDir == Coordinate.LEFT) {
+        if (DiceGenerator.getBoolean()) {
+          startPos = Coordinate.DOWN_LEFT;
+        } else {
+          startPos = Coordinate.UP_LEFT;
+        }
+      }
+      curPos = startPos + 1;
+      if (curPos > Coordinate.UP_LEFT) {
+        curPos = Coordinate.UP;
+      }
+      while (curPos != startPos) {
+        Coordinate coord = getCorner(sun, scanner, rounds, curPos);
+        if (coord != null) {
+          int amount = calculateAmountOfUncharted(coord, scanner, sun, 3);
+          int percent = amount * 100 / calculateFullCharted(scanner);
+          if (percent < 33) {
+            curPos = curPos + 1;
+            if (curPos > Coordinate.UP_LEFT) {
+              curPos = Coordinate.UP;
+            }
+          } else {
+            double dist = coord.calculateDistance(fleet.getCoordinate());
+            bestPoint = new PathPoint(coord.getX(), coord.getY(), dist);
+            rounds = maxRounds;
+            break;
+          }
+        } else {
+          curPos = curPos + 1;
+          if (curPos > Coordinate.UP_LEFT) {
+            curPos = Coordinate.UP;
+          }
+        }
+      }
+      rounds++;
+    }
+    if (bestPoint == null) {
+      if (DiceGenerator.getBoolean()) {
+        bestPoint = getClosestUnchartedSector(sun, fleet);
+      } else {
+        bestPoint = getUnchartedSector(sun, fleet);
+      }
+    }
+    return bestPoint;
+  }
+
+  /**
+   * Get Best uncharted sector around certain solar system
+   * @param sun Solar system
+   * @param fleet Fleet doing the exploring.
+   * @param map StarMap
+   * @return PathPoint where to go next or null if no more exploring
+   */
+  public PathPoint getBestUnchartedSector(final Sun sun,
+      final Fleet fleet, final StarMap map) {
     if (aiDifficulty == AiDifficulty.WEAK) {
       return getBestUnchartedSectorWeak(sun, fleet);
     }
     if (aiDifficulty == AiDifficulty.NORMAL) {
       return getBestUnchartedSectorNormal(sun, fleet);
+    }
+    if (aiDifficulty == AiDifficulty.CHALLENGING) {
+      return getBestUnchartedSectorChallenging(sun, fleet);
     }
     double bestDistance = 999;
     int bestScore = 0;
@@ -1207,7 +1403,7 @@ public class PlayerInfo {
             uncharted++;
           }
           double dist = coordinate.calculateDistance(fleet.getCoordinate());
-          int score = calculateAmountOfUncharted(coordinate, scanner, sun);
+          int score = calculateAmountOfUncharted(coordinate, scanner, sun, 2);
           if (score > bestScore && dist <= bestDistance) {
             bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
                 dist);

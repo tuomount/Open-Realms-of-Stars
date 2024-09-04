@@ -29,14 +29,24 @@ public class Coordinate {
     /** The Y value of the coordinate */
     private final int y;
 
+    /** Direction NONE */
+    public static final int NONE = -1;
     /** Direction up */
     public static final int UP = 0;
+    /** Direction up right */
+    public static final int UP_RIGHT = 1;
     /** Direction right */
     public static final int RIGHT = 2;
+    /** Direction down right */
+    public static final int DOWN_RIGHT = 3;
     /** Direction down */
     public static final int DOWN = 4;
+    /** Direction down left */
+    public static final int DOWN_LEFT = 5;
     /** Direction left */
     public static final int LEFT = 6;
+    /** Direction up left */
+    public static final int UP_LEFT = 7;
 
     /**
      * Constructor for Coordinate
@@ -63,6 +73,86 @@ public class Coordinate {
       }
     }
 
+    /**
+     * Get position of coordinate against current coordinate.
+     * @param coord Coordinate to compate
+     * @return int Position
+     */
+    public int getPosition(final Coordinate coord) {
+      int pos = NONE;
+      int mx = coord.getX() - this.getX();
+      int my = coord.getY() - this.getY();
+      if (mx == 0 && my == 0) {
+        return pos;
+      }
+      if (Math.abs(mx) == Math.abs(my)) {
+        if (my < 0 && mx < 0) {
+          pos = UP_LEFT;
+        }
+        if (my < 0 && mx > 0) {
+          pos = UP_RIGHT;
+        }
+        if (my > 0 && mx < 0) {
+          pos = DOWN_LEFT;
+        }
+        if (my > 0 && mx > 0) {
+          pos = DOWN_RIGHT;
+        }
+      }
+      if (mx == 0) {
+        if (my < 0) {
+          pos = UP;
+        }
+        if (my > 0) {
+          pos = DOWN;
+        }
+      }
+      if (my == 0) {
+        if (mx < 0) {
+          pos = LEFT;
+        }
+        if (mx > 0) {
+          pos = RIGHT;
+        }
+      }
+      if (pos == NONE) {
+        double dist = this.calculateDistance(coord);
+        int distInt = (int) dist;
+        if (distInt > Math.abs(mx) && distInt > Math.abs(my)) {
+          if (my < 0 && mx < 0) {
+            pos = UP_LEFT;
+          }
+          if (my < 0 && mx > 0) {
+            pos = UP_RIGHT;
+          }
+          if (my > 0 && mx < 0) {
+            pos = DOWN_LEFT;
+          }
+          if (my > 0 && mx > 0) {
+            pos = DOWN_RIGHT;
+          }
+        }
+        if (pos == NONE) {
+          if (distInt == Math.abs(mx)) {
+            if (mx < 0) {
+              pos = LEFT;
+            }
+            if (mx > 0) {
+              pos = RIGHT;
+            }
+          }
+          if (distInt == Math.abs(my)) {
+            if (my < 0) {
+              pos = UP;
+            }
+            if (my > 0) {
+              pos = DOWN;
+            }
+          }
+        }
+      }
+      return pos;
+    }
     /**
      * Get the X value ot the coordinate
      * @return the X value ot the coordinate

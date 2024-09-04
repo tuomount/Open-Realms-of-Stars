@@ -624,7 +624,8 @@ public final class MissionHandling {
             return;
           }
           Sun sun = game.getStarMap().getSunByName(mission.getSunName());
-          PathPoint point = info.getBestUnchartedSector(sun, fleet);
+          PathPoint point = info.getBestUnchartedSector(sun, fleet,
+              game.getStarMap());
 /*          if (point == null) {
             point = info.getClosestUnchartedSector(sun, fleet);
             if (DiceGenerator.getRandom(99) < 50) {

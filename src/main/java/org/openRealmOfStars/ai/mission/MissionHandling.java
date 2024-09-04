@@ -63,6 +63,7 @@ import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.enums.PlanetaryEvent;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -150,6 +151,10 @@ public final class MissionHandling {
           continue;
         }
         Tile tile = starMap.getTile(center.getX() + x, center.getY() + y);
+        if (info.getSectorVisibility(center.getX() + x,
+            center.getY() + y) == PlayerInfo.UNCHARTED) {
+          tile = null;
+        }
         if (tile != null && tile.isSpaceAnomaly()) {
           if (targetCoord == null) {
             targetCoord = new Coordinate(center.getX() + x, center.getY() + y);
@@ -189,6 +194,10 @@ public final class MissionHandling {
         }
         Planet planet = starMap.getPlanetByCoordinate(center.getX() + x,
             center.getY() + y);
+        if (info.getSectorVisibility(center.getX() + x,
+            center.getY() + y) == PlayerInfo.UNCHARTED) {
+          planet = null;
+        }
         if (planet != null && planet.getPlanetPlayerInfo() == null
             && !planet.isEventActivated()) {
           if (targetCoord == null) {
@@ -227,6 +236,8 @@ public final class MissionHandling {
       if (planet.getPlanetPlayerInfo() != null
           && planet.getPlanetPlayerInfo() != info
           && planet.getOrbital() != null
+          && info.getSectorVisibility(planet.getCoordinate())
+             != PlayerInfo.UNCHARTED
           && !info.getDiplomacy().isAlliance(planet.getPlanetOwnerIndex())) {
         double dist = center.calculateDistance(planet.getCoordinate());
         if (dist < maxDist) {
@@ -549,6 +560,7 @@ public final class MissionHandling {
         Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
             fleet.getY());
         if (planet != null && !planet.isEventActivated()
+            && planet.getPlanetaryEvent() != PlanetaryEvent.NONE
             && fleet.getCommander() != null && fleet.getMovesLeft() > 0) {
           fleet.setMovesLeft(0);
           fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
@@ -604,9 +616,19 @@ public final class MissionHandling {
         }
         mission.setMissionTime(mission.getMissionTime() + 1);
         boolean missionComplete = false;
-        if (mission.getMissionTime() >= AI_EXPLORING_AMOUNT) {
-          fleet.setaStarSearch(null);
-          missionComplete = true;
+        if (info.getAiDifficulty() == AiDifficulty.WEAK
+            || info.getAiDifficulty() == AiDifficulty.NORMAL) {
+          if (mission.getMissionTime() >= AI_EXPLORING_AMOUNT) {
+            fleet.setaStarSearch(null);
+            missionComplete = true;
+          }
+        } else {
+          Sun sun = game.getStarMap().getSunByName(mission.getSunName());
+          int value = info.getUnchartedValueSystem(sun);
+          if (value <= 25) {
+            fleet.setaStarSearch(null);
+            missionComplete = true;
+          }
         }
         if (fleet.getaStarSearch() == null) {
           Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),

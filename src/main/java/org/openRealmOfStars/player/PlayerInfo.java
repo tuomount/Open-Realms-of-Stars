@@ -1635,6 +1635,25 @@ public class PlayerInfo {
   }
 
   /**
+   * Get sector visibility
+   * @param x X-Coordinate
+   * @param y Y-Coordinate
+   * @return UNCHARTED, FOG_OF_WAR or VISIBLE
+   */
+  public byte getSectorVisibility(final int x, final int y) {
+    byte result = UNCHARTED;
+    try {
+      if (x >= 0 && x < maxCoordinate.getX() && y >= 0
+          && y < maxCoordinate.getY()) {
+        result = mapData[x][y];
+      }
+    } catch (ArrayIndexOutOfBoundsException e) {
+      ErrorLogger.log(e);
+    }
+    return result;
+  }
+
+  /**
    * Set sector visibility
    * @param x X coordinate
    * @param y Y coordinate

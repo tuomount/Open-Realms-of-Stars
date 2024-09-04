@@ -560,6 +560,7 @@ public final class MissionHandling {
         Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
             fleet.getY());
         if (planet != null && !planet.isEventActivated()
+            && planet.getPlanetPlayerInfo() == null
             && planet.getPlanetaryEvent() != PlanetaryEvent.NONE
             && fleet.getCommander() != null && fleet.getMovesLeft() > 0) {
           fleet.setMovesLeft(0);

@@ -129,7 +129,7 @@ public class PlayerList {
     if (galaxyConfig.getSpacePiratesLevel() > 0) {
       int index = galaxyConfig.getMaxPlayers();
       PlayerInfo info = new PlayerInfo(
-          SpaceRaceFactory.createOne("SPACEPIRATE"), maxPlayers,
+          SpaceRaceFactory.createOne(SpaceRaceFactory.SPACE_PIRATE), maxPlayers,
           index, boardIndex, StartingScenarioFactory.create(
               ScenarioIds.TEMPERATE_HUMID_SIZE12));
       info.setBoard(true);
@@ -158,8 +158,8 @@ public class PlayerList {
         index++;
       }
       PlayerInfo info = new PlayerInfo(
-          SpaceRaceFactory.createOne("SPACEMONSTER"), maxPlayers,
-          index, boardIndex, StartingScenarioFactory.create(
+          SpaceRaceFactory.createOne(SpaceRaceFactory.SPACE_MONSTER),
+          maxPlayers, index, boardIndex, StartingScenarioFactory.create(
               ScenarioIds.TEMPERATE_HUMID_SIZE12));
       info.setBoard(true);
       info.setGovernment(GovernmentFactory.createOne("PIRATES"));

@@ -4,7 +4,7 @@
     "Name": "Space Monsters",
     "NameSingle": "Space Monster",
     "BridgeId": "Space Monster",
-    "SpaceShipId": "Space monster",
+    "SpaceShipId": "Space monsters",
     "Traits": [
                 "EXCELLENT_WAR_RESILIENCE",
                 "HANDY"

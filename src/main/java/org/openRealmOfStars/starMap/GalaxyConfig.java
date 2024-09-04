@@ -261,7 +261,7 @@ public class GalaxyConfig {
     this.galaxySizeIndex = 1;
     this.spacePiratesLevel = 1;
     this.setSpacePiratesDifficulty(PirateDifficultLevel.EASY);
-    this.spaceAnomaliesLevel = 1;
+    this.spaceAnomaliesLevel = 2;
     this.setKarmaType(KarmaType.BALANCED);
     this.setKarmaSpeed(1);
     setChanceForPlanetaryEvent(10);

@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game.state;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018 Tuomo Untinen
+ * Copyright (C) 2016-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,7 +48,7 @@ public class GalaxyCreationViewTest {
     assertEquals(75, config.getSizeX());
     assertEquals(75, config.getSizeY());
     assertEquals(1, config.getScoreLimitCulture());
-    assertEquals(1, config.getSpaceAnomaliesLevel());
+    assertEquals(2, config.getSpaceAnomaliesLevel());
     assertEquals(1, config.getSpacePiratesLevel());
   }
 

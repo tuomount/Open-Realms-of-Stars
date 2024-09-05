@@ -1059,8 +1059,10 @@ public class StarMapGenerator {
               planet.addTimedStatus(status);
             }
           }
-          planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
-              config.getScoringVictoryTurns());
+          if (planet.getPlanetType() != PlanetTypes.ARTIFICIALWORLD1) {
+            planet.addPlanetTimedStatus(config.getChanceForPlanetaryEvent(),
+                config.getScoringVictoryTurns());
+          }
         } else {
           planet.setRadiationLevel(SunType.getRadiation(sunType));
           planet.setTemperatureType(SunType.getTemperature(sunType));

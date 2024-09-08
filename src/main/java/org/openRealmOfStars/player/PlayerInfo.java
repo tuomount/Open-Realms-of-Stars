@@ -1269,6 +1269,7 @@ public class PlayerInfo {
     }
     PathPoint bestPoint = null;
     double bestDist = 999;
+    int leastAmount = 999;
     int startDir = sun.getCenterCoordinate().getPosition(fleet.getCoordinate());
     int startPos = Coordinate.NONE;
     int curPos = Coordinate.NONE;
@@ -1347,7 +1348,18 @@ public class PlayerInfo {
             double dist = coord.calculateDistance(fleet.getCoordinate());
             if (dist < bestDist) {
               bestPoint = new PathPoint(coord.getX(), coord.getY(), dist);
+              leastAmount = amount;
+              bestDist = dist;
               rounds = maxRounds;
+            } else {
+              int bestDistInt = (int) bestDist;
+              int distInt = (int) dist;
+              if (bestDistInt == distInt && amount < leastAmount) {
+                bestPoint = new PathPoint(coord.getX(), coord.getY(), dist);
+                leastAmount = amount;
+                bestDist = dist;
+                rounds = maxRounds;
+              }
             }
             curPos = curPos + 1;
             if (curPos > Coordinate.UP_LEFT) {

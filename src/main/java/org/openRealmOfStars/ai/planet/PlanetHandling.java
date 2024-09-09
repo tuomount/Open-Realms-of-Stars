@@ -176,7 +176,8 @@ public final class PlanetHandling {
         }
       }
     }
-    if (gotMines == -1 && !constructionSelected) {
+    if (gotMines == -1 && !constructionSelected
+        && planet.getAmountMetalInGround() > 30) {
       // No mines at all
       int i = getConstruction("Advanced mine", constructions);
       if (i != -1) {

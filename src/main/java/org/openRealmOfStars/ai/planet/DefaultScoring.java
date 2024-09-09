@@ -548,6 +548,10 @@ public final class DefaultScoring {
       // Planet has enough metal production
       score = -1;
     }
+    if (planet.getAmountMetalInGround() < 30 && building.getMineBonus() > 0) {
+      // Planet has no metal ore to mine
+      score = -1;
+    }
     if (!info.getRace().isEatingFood()
         && building.getType() == BuildingType.FARM) {
       // Races that do not eat normal food do not build farms

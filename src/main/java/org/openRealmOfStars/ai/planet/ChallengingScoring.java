@@ -77,7 +77,8 @@ public final class ChallengingScoring {
             scores[i] = scores[i] + 10;
           }
         }
-        if (building.getName().equals("Basic mine") && metalProd < 5) {
+        if (building.getName().equals("Basic mine") && metalProd < 5
+            && planet.getAmountMetalInGround() > 0) {
           scores[i] = scores[i] + (40 - metalProd * 10);
           if (!planet.hasCertainBuilding("Basic factory")) {
             scores[i] = scores[i] - 15;

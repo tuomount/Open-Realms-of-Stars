@@ -26,8 +26,11 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.ai.pathfinding.AStarSearch;
 import org.openRealmOfStars.game.Game;
+import org.openRealmOfStars.game.state.AITurnView;
+import org.openRealmOfStars.game.state.AiTurnViewTest;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
@@ -38,13 +41,16 @@ import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
+import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 
@@ -588,6 +594,43 @@ public class MissionHandlingTest {
     assertEquals(2, info.getFleets().getNumberOfFleets());
     MissionHandling.mergeFleets(fleet1, info);
     assertEquals(2, info.getFleets().getNumberOfFleets());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testExploreSpeed() {
+    Game game = new Game(false);
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(2);
+    config.setScoringVictoryTurns(200);
+    config.setStartingPosition(GalaxyConfig.START_POSITION_BORDER);
+    config.setAiOnly(true);
+    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
+    config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
+    config.setStartingScenario(0, StartingScenarioFactory.createDefault());
+    config.setStartingScenario(1, StartingScenarioFactory.createDefault());
+    game.setGalaxyConfig(config);
+    game.setPlayerInfo();
+    game.makeNewGame(false);
+    StarMap map = game.getStarMap();
+    PlayerInfo info = map.getPlayerList().getPlayerInfoByIndex(0);
+    Fleet fleet = info.getFleets().getFirst();
+    Sun sun = map.locateSolarSystem(fleet.getX(), fleet.getY());
+    Mission mission = new Mission(MissionType.EXPLORE, MissionPhase.EXECUTING,
+        sun.getCenterCoordinate());
+    mission.setFleetName(fleet.getName());
+    mission.setSunName(sun.getName());
+    info.getMissions().clearMissions();
+    info.getMissions().add(mission);
+    AITurnView view = new AITurnView(game);
+    System.out.println("Charted:" + info.getUnchartedValueSystem(sun) + "%");
+    for (int i = 0; i < 50; i++) {
+      fleet.setMovesLeft(2);
+      view.handleAIFleet();
+      map.setAiTurnNumber(0);
+      map.setAIFleet(fleet);
+    }
+    System.out.println("Charted:" + info.getUnchartedValueSystem(sun) + "%");
   }
 
 }

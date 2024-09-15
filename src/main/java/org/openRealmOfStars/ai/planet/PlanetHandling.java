@@ -510,7 +510,8 @@ public final class PlanetHandling {
         over400 = true;
       }
     }
-    if (info.getAiDifficulty() == AiDifficulty.CHALLENGING && highest != -1) {
+    if (info.getAiDifficulty() == AiDifficulty.CHALLENGING && highest != -1
+        && DiceGenerator.getRandom(100) > 10) {
       planet.setUnderConstruction(constructions[highest]);
       constructionSelected = true;
     } else if (highest != -1
@@ -542,8 +543,8 @@ public final class PlanetHandling {
             list.add(constructions[i]);
             listScore.add(Integer.valueOf(scores[i]));
             sum = sum + scores[i];
-          } else if (constructions[i].getName()
-              .equals(ConstructionFactory.MECHION_CITIZEN) && freeSlot < 3
+          } else if (constructions[i].getName().endsWith(" citizen")
+              && freeSlot < 3
               && planet.getTotalPopulation() < planet.getPopulationLimit()
               && scores[i] > 0) {
             list.add(constructions[i]);
@@ -847,6 +848,16 @@ public final class PlanetHandling {
         total--;
       }
     } while (total > 0);
+    if (planet.getAmountMetalInGround() == 0) {
+      if (info.getRace().getProductionSpeed(
+          planet.getGravityType()) >= 100) {
+        worker = worker + miners;
+        miners = 0;
+      } else {
+        research = research + miners;
+        miners = 0;
+      }
+    }
     planet.setWorkers(Planet.FOOD_FARMERS, 0);
     planet.setWorkers(Planet.PRODUCTION_WORKERS, worker);
     planet.setWorkers(Planet.METAL_MINERS, miners);
@@ -919,7 +930,7 @@ public final class PlanetHandling {
       if (div == 1) {
         if (workerPerProd == 2) {
           workers = workers + div + div;
-        } else if (minerPerMetal == 2) {
+        } else if (minerPerMetal == 2 && planet.getAmountMetalInGround() > 30) {
           miners = miners + div + div;
         } else {
           artists = artists + div;
@@ -1122,6 +1133,16 @@ public final class PlanetHandling {
           minerAssigned = false;
           scientistAssigned = false;
         }
+      }
+    }
+    if (planet.getAmountMetalInGround() == 0) {
+      if (info.getRace().getProductionSpeed(
+          planet.getGravityType()) >= 100) {
+        workers = workers + miners;
+        miners = 0;
+      } else {
+        scientist = scientist + miners;
+        miners = 0;
       }
     }
     planet.setWorkers(Planet.PRODUCTION_WORKERS, workers);

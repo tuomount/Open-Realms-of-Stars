@@ -104,7 +104,7 @@ public final class ChallengingScoring {
         if (building.getName().equals("Basic farm")) {
           if (info.getRace().getFoodRequire() == 100
               && planet.getTotalPopulation() < 4
-              && prod > 2 && metalProd > 2 && food < 4) {
+              && prod > 2 && food < 4) {
             scores[i] = scores[i] + (40 - planet.getTotalPopulation() * 10);
           }
           if (info.getRace().getFoodRequire() == 100
@@ -211,13 +211,16 @@ public final class ChallengingScoring {
         }
         if (ship.isColonyModule()) {
           // Colony ship should be built only on request
+          if (planet.getTotalPopulation() > 2) {
+            score = score + 10;
+          }
           if (planet.getTotalPopulation() > 4) {
+            score = score + 20;
+          }
+          if (planet.getTotalPopulation() > 7) {
             score = score + 30;
           }
-          if (planet.getTotalPopulation() > 8) {
-            score = score + 30;
-          }
-          if (planet.getTotalPopulation() > 12) {
+          if (planet.getTotalPopulation() > 11) {
             score = score + 30;
           }
           score = DefaultScoring.scoreColonyShip(score, ship, info, map,

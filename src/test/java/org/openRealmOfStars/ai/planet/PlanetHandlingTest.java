@@ -1204,22 +1204,22 @@ public class PlanetHandlingTest extends TestCase {
         Mockito.anyInt())).thenReturn(planet);
     int score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
-    assertEquals(63, score);
+    assertEquals(60, score);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.MERCHANTICAL, planet);
-    assertEquals(43, score);
+    assertEquals(40, score);
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.START_GAME);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
-    assertEquals(93, score);
+    assertEquals(90, score);
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.EARLY_GAME);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
-    assertEquals(83, score);
+    assertEquals(80, score);
     Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.MIDDLE_GAME);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.EXPANSIONIST, planet);
-    assertEquals(73, score);
+    assertEquals(70, score);
     missionList.remove(mission);
     score = DefaultScoring.scoreColonyShip(20, ship, info, map,
         Attitude.AGGRESSIVE, planet);

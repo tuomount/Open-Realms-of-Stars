@@ -27,7 +27,6 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.ai.pathfinding.AStarSearch;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.state.AITurnView;
-import org.openRealmOfStars.game.state.AiTurnViewTest;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.AiDifficulty;
@@ -596,6 +595,7 @@ public class MissionHandlingTest {
     assertEquals(2, info.getFleets().getNumberOfFleets());
   }
 
+
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testExploreSpeed() {
@@ -605,7 +605,8 @@ public class MissionHandlingTest {
     config.setScoringVictoryTurns(200);
     config.setStartingPosition(GalaxyConfig.START_POSITION_BORDER);
     config.setAiOnly(true);
-    config.setPlayerDifficult(0, AiDifficulty.CHALLENGING);
+    config.setSpaceAnomaliesLevel(0);
+    config.setPlayerDifficult(0, AiDifficulty.NORMAL);
     config.setPlayerDifficult(1, AiDifficulty.CHALLENGING);
     config.setStartingScenario(0, StartingScenarioFactory.createDefault());
     config.setStartingScenario(1, StartingScenarioFactory.createDefault());
@@ -616,21 +617,33 @@ public class MissionHandlingTest {
     PlayerInfo info = map.getPlayerList().getPlayerInfoByIndex(0);
     Fleet fleet = info.getFleets().getFirst();
     Sun sun = map.locateSolarSystem(fleet.getX(), fleet.getY());
-    Mission mission = new Mission(MissionType.EXPLORE, MissionPhase.EXECUTING,
+    fleet.setPos(new Coordinate(sun.getCenterX() + 5, sun.getCenterY()));
+    for (int y = 0; y < map.getMaxY(); y++) {
+      for (int x = 0; x < map.getMaxX(); x++) {
+        info.setSectorVisibility(x, y, PlayerInfo.UNCHARTED);
+      }
+    }
+    map.doFleetScanUpdate(info, fleet, null);
+    Mission mission = new Mission(MissionType.EXPLORE, MissionPhase.TREKKING,
         sun.getCenterCoordinate());
     mission.setFleetName(fleet.getName());
     mission.setSunName(sun.getName());
     info.getMissions().clearMissions();
     info.getMissions().add(mission);
     AITurnView view = new AITurnView(game);
-    System.out.println("Charted:" + info.getUnchartedValueSystem(sun) + "%");
-    for (int i = 0; i < 50; i++) {
+    map.setAiTurnNumber(0);
+    map.setAIFleet(fleet);
+    //System.out.println("Uncharted:" + info.getUnchartedValueSystem(sun) + "%");
+    int steps = 0;
+    while (info.getUnchartedValueSystem(sun) > 50 && steps < 100) {
       fleet.setMovesLeft(2);
       view.handleAIFleet();
       map.setAiTurnNumber(0);
       map.setAIFleet(fleet);
+      steps++;
     }
-    System.out.println("Charted:" + info.getUnchartedValueSystem(sun) + "%");
+/*    System.out.println("Uncharted:" + info.getUnchartedValueSystem(sun)
+        + "% with " + steps + " steps.");*/
   }
 
 }

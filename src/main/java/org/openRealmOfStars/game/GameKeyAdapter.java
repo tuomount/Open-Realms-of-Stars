@@ -30,6 +30,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
+import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.repository.GameRepository;
@@ -192,6 +193,18 @@ public class GameKeyAdapter implements KeyEventDispatcher {
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
         System.out.println("Cursor X: " + game.getStarMap().getCursorX()
             + " Y: " + game.getStarMap().getCursorY());
+        return true;
+      }
+      if (arg0.getKeyCode() == KeyEvent.VK_U
+          && arg0.getID() == KeyEvent.KEY_PRESSED) {
+        Sun sun = game.getStarMap().locateSolarSystem(
+            game.getStarMap().getCursorX(), game.getStarMap().getCursorY());
+        if (sun != null) {
+          PlayerInfo info = game.getStarMap().getPlayerList()
+              .getCurrentPlayerInfo();
+          System.out.println("Uncharted( " + sun.getName() + "): "
+              + info.getUnchartedValueSystem(sun) + "%");
+        }
         return true;
       }
       if (arg0.getKeyCode() == KeyEvent.VK_M

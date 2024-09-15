@@ -618,11 +618,13 @@ public final class MissionHandling {
         mission.setMissionTime(mission.getMissionTime() + 1);
         boolean missionComplete = false;
         if (info.getAiDifficulty() == AiDifficulty.WEAK
-            || info.getAiDifficulty() == AiDifficulty.NORMAL) {
-          if (mission.getMissionTime() >= AI_EXPLORING_AMOUNT) {
-            fleet.setaStarSearch(null);
-            missionComplete = true;
-          }
+            && mission.getMissionTime() >= AI_EXPLORING_AMOUNT) {
+          fleet.setaStarSearch(null);
+          missionComplete = true;
+        } else if (info.getAiDifficulty() == AiDifficulty.NORMAL
+            && mission.getMissionTime() >= AI_EXPLORING_AMOUNT * 5 / 4) {
+          fleet.setaStarSearch(null);
+          missionComplete = true;
         } else {
           Sun sun = game.getStarMap().getSunByName(mission.getSunName());
           int value = info.getUnchartedValueSystem(sun);

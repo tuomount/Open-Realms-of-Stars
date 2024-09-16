@@ -1569,7 +1569,8 @@ public final class ShipGenerator {
         continue;
       }
       if (tempHull.getHullType() == ShipHullType.ORBITAL
-          && tempHull.getSize() == size) {
+          && tempHull.getSize() == size
+          && !tempHull.getName().equals("Minor orbital")) {
         int tempValue = tempHull.getMaxSlot() * tempHull.getSlotHull();
         if (tempValue > value) {
           value = tempValue;

@@ -763,6 +763,15 @@ public class StatView extends BlackPanel {
         highestPopulation = false;
       }
     }
+    if (map.getTurn() < 100) {
+      // No snowman allowed if played less than 100 turns.
+      highestCulture = false;
+      highestHomePlanets = false;
+      highestPopulation = false;
+      highestScience = false;
+      highestScore = false;
+      highestTowers = false;
+    }
     return panel;
   }
   /**

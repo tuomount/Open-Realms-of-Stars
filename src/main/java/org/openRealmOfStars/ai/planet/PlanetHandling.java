@@ -119,7 +119,7 @@ public final class PlanetHandling {
         buildings);
     int gotLabs = gotBuildings(new String[] {
         "Basic lab", "Advanced laboratory", "Research center",
-        "Neural research center", "Ancient lab" },
+        "Neural research center", "Ancient lab", "College of history" },
         buildings);
     int gotFarms = gotBuildings(new String[] {
         "Basic farm", "Advanced farm",
@@ -134,21 +134,15 @@ public final class PlanetHandling {
         buildings);
     if (gotFactory == -1) {
       // No factories at all
-      int i = getConstruction("Advanced factory", constructions);
-      if (i != -1) {
-        planet.setUnderConstruction(constructions[i]);
+     int i = getConstruction("Basic factory", constructions);
+     if (i != -1) {
+       planet.setUnderConstruction(constructions[i]);
         constructionSelected = true;
-      } else {
-        i = getConstruction("Basic factory", constructions);
-        if (i != -1) {
-          planet.setUnderConstruction(constructions[i]);
-          constructionSelected = true;
-        }
       }
     }
     if (gotLabs == -1 && !constructionSelected) {
       // No labs at all
-      int i = getConstruction("Advanced laboratory", constructions);
+      int i = getConstruction("College of history", constructions);
       if (i != -1) {
         planet.setUnderConstruction(constructions[i]);
         constructionSelected = true;
@@ -164,31 +158,18 @@ public final class PlanetHandling {
     boolean needFood = info.getRace().isEatingFood();
     if (gotFarms == -1 && !constructionSelected && !needFood) {
       // No farms at all
-      int i = getConstruction("Advanced farm", constructions);
+      int i = getConstruction("Basic farm", constructions);
       if (i != -1) {
         planet.setUnderConstruction(constructions[i]);
         constructionSelected = true;
-      } else {
-        i = getConstruction("Basic farm", constructions);
-        if (i != -1) {
-          planet.setUnderConstruction(constructions[i]);
-          constructionSelected = true;
-        }
       }
     }
     if (gotMines == -1 && !constructionSelected
         && planet.getAmountMetalInGround() > 30) {
-      // No mines at all
-      int i = getConstruction("Advanced mine", constructions);
+      int i = getConstruction("Basic mine", constructions);
       if (i != -1) {
         planet.setUnderConstruction(constructions[i]);
         constructionSelected = true;
-      } else {
-        i = getConstruction("Basic mine", constructions);
-        if (i != -1) {
-          planet.setUnderConstruction(constructions[i]);
-          constructionSelected = true;
-        }
       }
     }
 

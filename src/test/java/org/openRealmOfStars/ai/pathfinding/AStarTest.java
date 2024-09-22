@@ -25,6 +25,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatShip;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.StarMap;
 
 /**
@@ -50,6 +51,8 @@ public class AStarTest {
     CombatShip target = Mockito.mock(CombatShip.class);
     Mockito.when(target.getX()).thenReturn(4);
     Mockito.when(target.getY()).thenReturn(1);
+    Ship targetShip = Mockito.mock(Ship.class);
+    Mockito.when(target.getShip()).thenReturn(targetShip);
     CombatShip source = Mockito.mock(CombatShip.class);
     Mockito.when(source.getX()).thenReturn(4);
     Mockito.when(source.getY()).thenReturn(7);
@@ -85,6 +88,8 @@ public class AStarTest {
     CombatShip target = Mockito.mock(CombatShip.class);
     Mockito.when(target.getX()).thenReturn(4);
     Mockito.when(target.getY()).thenReturn(1);
+    Ship targetShip = Mockito.mock(Ship.class);
+    Mockito.when(target.getShip()).thenReturn(targetShip);
     CombatShip source = Mockito.mock(CombatShip.class);
     Mockito.when(source.getX()).thenReturn(4);
     Mockito.when(source.getY()).thenReturn(7);

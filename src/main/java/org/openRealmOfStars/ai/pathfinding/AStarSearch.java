@@ -104,6 +104,7 @@ public class AStarSearch {
       final CombatShip target, final int targetDistance) {
     maxX = Combat.MAX_X;
     maxY = Combat.MAX_Y;
+    boolean moreShips = combat.biggerFleet(start.getPlayer());
     blockMap = new int[maxX][maxY];
     this.targetDistance = targetDistance;
     for (int y = 0; y < maxY; y++) {
@@ -112,6 +113,18 @@ public class AStarSearch {
           blockMap[x][y] = BLOCKED;
         } else {
           blockMap[x][y] = UNBLOCKED;
+        }
+        if (target.getShip().isStarBaseOrOrbital() && !moreShips) {
+          if (x > 0 && x < 8 && y > 1 && y < 6) {
+            blockMap[x][y] = BLOCKED;
+          }
+          if (blockMap[x][y] == BLOCKED) {
+            CombatShip blockShip = combat.getShipFromCoordinate(x, y);
+            if (blockShip != null
+                && blockShip.getPlayer() == start.getPlayer()) {
+              blockMap[x][y] = UNBLOCKED;
+            }
+          }
         }
       }
     }

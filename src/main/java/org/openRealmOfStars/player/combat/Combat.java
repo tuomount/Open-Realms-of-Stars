@@ -540,6 +540,41 @@ public class Combat {
   }
 
   /**
+   * Is clear shot from shooter to target with used weapon
+   * @param shooter Shooter's combat ship
+   * @param target Target's combat Ship
+   * @return True if shot is possible to shoot
+   */
+  public boolean isAbleToShoot(final CombatShip shooter,
+      final CombatShip target) {
+    boolean result = false;
+    for (int i = 0; i < shooter.getShip().getNumberOfComponents(); i++) {
+      ShipComponent weapon = shooter.getShip().getComponent(i);
+      if (weapon != null && weapon.isWeapon()
+          && shooter.getShip().componentIsWorking(i)) {
+        CombatCoordinate shooterCoordinate =
+                new CombatCoordinate(shooter.getX(), shooter.getY());
+        CombatCoordinate targetCoordinate =
+                new CombatCoordinate(target.getX(), target.getY());
+        double xAxisDistance = Math.abs(shooter.getX() - target.getX());
+        double yAxisDistance = Math.abs(shooter.getY() - target.getY());
+        int distance;
+        if (xAxisDistance > yAxisDistance) {
+            distance = (int) xAxisDistance;
+        } else {
+            distance = (int) yAxisDistance;
+        }
+        if (shooter.getShip().getWeaponRange(weapon) >= distance
+            && distance > 0) {
+          result = launchIntercept(distance,
+              shooterCoordinate, targetCoordinate);
+        }
+      }
+    }
+
+    return result;
+  }
+  /**
    * Can ship do tractor beam on target
    * @param tractor Ship having tractor beam
    * @param target Target's combat ship
@@ -1962,6 +1997,7 @@ public boolean launchIntercept(final int distance,
     CombatShip deadliest = getMostPowerfulShip(info);
     CombatShip closest = getClosestEnemyShip(info, getCurrentShip());
     CombatShip trader = null;
+    boolean defenseOverLoad = false;
     if (areCloakedShips(info)) {
       int index = getCurrentShip().getComponentForUse(
           ShipComponentType.SCANNER);
@@ -2140,7 +2176,7 @@ public boolean launchIntercept(final int distance,
             // Even closest was too far away, ending the turn now
             aStar = null;
             if (closest != null) {
-              overloadDefense(textLogger, closest);
+              defenseOverLoad = overloadDefense(textLogger, closest);
             }
             endRound(textLogger);
             return true;
@@ -2149,7 +2185,10 @@ public boolean launchIntercept(final int distance,
       } else {
         aStar = null;
         if (deadliest != null) {
-          overloadDefense(textLogger, deadliest);
+          defenseOverLoad = overloadDefense(textLogger, deadliest);
+        }
+        if (closest != null && !defenseOverLoad) {
+          overloadDefense(textLogger, closest);
         }
         endRound(textLogger);
         return true;
@@ -2158,7 +2197,10 @@ public boolean launchIntercept(final int distance,
     if (getAnimation() == null && ai.getAiShotsLeft() == 0
         && ai.getMovesLeft() == 0) {
       if (deadliest != null) {
-        overloadDefense(textLogger, deadliest);
+        defenseOverLoad = overloadDefense(textLogger, deadliest);
+      }
+      if (closest != null && !defenseOverLoad) {
+        overloadDefense(textLogger, closest);
       }
       endRound(textLogger);
     }
@@ -2169,9 +2211,11 @@ public boolean launchIntercept(final int distance,
    * Overload ship's possible defenses if needed
    * @param textLogger where logging is added if not null
    * @param attacker CombatShip which is the biggest threat.
+   * @return boolean True if defense has been overloaded.
    */
-  private void overloadDefense(final Logger textLogger,
+  private boolean overloadDefense(final Logger textLogger,
       final CombatShip attacker) {
+    boolean overLoaded = false;
     if (getCurrentShip().getShip().getShield() < getCurrentShip()
         .getShip().getTotalShield()) {
       // Faster shield generating
@@ -2180,27 +2224,28 @@ public boolean launchIntercept(final int distance,
       if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
           && DiceGenerator.getRandom(99) < 20) {
         handleOverloading(textLogger, index);
+        overLoaded = true;
       }
     }
     if (attacker != null
-        && calculateDistance(getCurrentShip(), attacker) < 3) {
-      // Better defense
+        && isAbleToShoot(attacker, getCurrentShip())) {
       int index = getCurrentShip().getComponentForUse(
-          ShipComponentType.JAMMER);
-      boolean overloaded = false;
+          ShipComponentType.CLOAKING_DEVICE);
       if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
-          && DiceGenerator.getRandom(99) < 20) {
-        overloaded = handleOverloading(textLogger, index);
+          && isAbleToShoot(attacker, getCurrentShip())) {
+        overLoaded = handleOverloading(textLogger, index);
       }
-      if (!overloaded) {
+      if (!overLoaded) {
+        // Better defense
         index = getCurrentShip().getComponentForUse(
-            ShipComponentType.CLOAKING_DEVICE);
+            ShipComponentType.JAMMER);
         if (index != -1 && getCurrentShip().getEnergyReserve() >= 0
             && DiceGenerator.getRandom(99) < 20) {
-          overloaded = handleOverloading(textLogger, index);
+          overLoaded = handleOverloading(textLogger, index);
         }
       }
     }
+    return overLoaded;
   }
   /**
    * AI handling for non military ships.
@@ -2752,4 +2797,24 @@ public boolean launchIntercept(final int distance,
     return attackerFleet;
   }
 
+  /**
+   * Does player have more ships than enemy?
+   * @param info PlayerInfo
+   * @return True if has more ships
+   */
+  public boolean biggerFleet(final PlayerInfo info) {
+    int playerShips = 0;
+    int enemyShips = 0;
+    for (CombatShip ship : combatShipList) {
+      if (ship.getPlayer() == info) {
+        playerShips++;
+      } else {
+        enemyShips++;
+      }
+    }
+    if (playerShips > enemyShips) {
+      return true;
+    }
+    return false;
+  }
 }

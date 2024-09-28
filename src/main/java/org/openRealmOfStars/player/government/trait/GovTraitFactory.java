@@ -135,6 +135,7 @@ class GovTraitLoader extends DataLoader<String, GovTrait> {
       final var name = jobj.getString("name");
       final var description = jobj.getString("description");
       final var points = ((byte) jobj.getInt("points"));
+      String group = jobj.optString("group");
 
       var jsonConflictingIds = jobj.optJSONArray("conflictsWith",
           new JSONArray());
@@ -145,6 +146,9 @@ class GovTraitLoader extends DataLoader<String, GovTrait> {
 
       var tmpTrait = new GovTrait(traitId, name, description, points,
           conflictingIds);
+      if (!group.isEmpty()) {
+        tmpTrait.setGroup(group);
+      }
       return Optional.of(tmpTrait);
     } catch (JSONException e) {
       ErrorLogger.log(e);

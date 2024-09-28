@@ -4,6 +4,7 @@
     "name": "Diplomatic",
     "description": "+2 diplomacy",
     "points": 2,
+    "group": "Diplomacy",
     "conflictsWith": [
       "POLITICAL",
       "RUDE"
@@ -14,6 +15,7 @@
     "name": "Political",
     "description": "+1 for diplomacy",
     "points": 1,
+    "group": "Diplomacy",
     "conflictsWith": [
       "DIPLOMATIC",
       "RUDE"
@@ -24,6 +26,7 @@
     "name": "Rude",
     "description": "-1 for diplomacy",
     "points": -1,
+    "group": "Diplomacy",
     "conflictsWith": [
       "DIPLOMATIC",
       "POLITICAL"
@@ -34,6 +37,7 @@
     "name": "Mercantile",
     "description": "Trading creates extra credit",
     "points": 1,
+    "group": "Trading",
     "conflictsWith": [
       "BUSINESS_ORIENTED"
     ]
@@ -42,25 +46,32 @@
     "id": "BUSINESS_ORIENTED",
     "name": "Business oriented",
     "description": "Trading creates two extra credits",
-    "points": 2
+    "points": 2,
+    "group": "Trading",
+    "conflictsWith": [
+      "MERCANTILE"
+    ]
   },
   {
     "id": "INDUSTRIAL",
     "name": "Industrial",
     "description": "Extra production when planet has 4 or more population.",
-    "points": 1
+    "points": 1,
+    "group": "Production bonus"
   },
   {
     "id": "MINING_ORIENTED",
     "name": "Mining oriented",
     "description": "Extra metal when planet has 4 or more population.",
-    "points": 1
+    "points": 1,
+    "group": "Production bonus"
   },
   {
     "id": "RESEARCH_ORIENTED",
     "name": "Research oriented",
     "description": "Extra research point when planet has 4 or more population.",
     "points": 1,
+    "group": "Production bonus",
     "conflictsWith": [
       "TECHNOLOGY_FOCUSED"
     ]
@@ -70,6 +81,7 @@
     "name": "Technology focused",
     "description": "Two extra research points when planet has 4 or more population.",
     "points": 2,
+    "group": "Production bonus",
     "conflictsWith": [
       "RESEARCH_ORIENTED"
     ]
@@ -79,6 +91,7 @@
     "name": "War happy",
     "description": "One extra happiness if realm is in war.",
     "points": 2,
+    "group": "Happiness",
     "conflictsWith": [
       "SINGLE_MIND"
     ]
@@ -88,6 +101,7 @@
     "name": "Single mind",
     "description": "No effects from happiness.",
     "points": 3,
+    "group": "Happiness",
     "conflictsWith": [
       "WAR_HAPPY",
       "GOVERNOR_HAPPINESS",
@@ -105,31 +119,36 @@
     "id": "POPULATION_RUSH",
     "name": "Population rush",
     "description": "Rush projects with population.",
-    "points": 1
+    "points": 1,
+    "group": "Rushing"
   },
   {
     "id": "CREDIT_RUSH",
     "name": "Credit rush",
     "description": "Rush projects with credit.",
-    "points": 1
+    "points": 1,
+    "group": "Rushing"
   },
   {
     "id": "ARMED_FREIGHTERS",
     "name": "Armed freighter",
     "description": "Single weapon is allowed in freighter. Other realm still consideres them as unarmed.",
-    "points": 2
+    "points": 2,
+    "group": "Other"
   },
   {
     "id": "XENO_PHOBIC",
     "name": "Xeno phobic",
     "description": "Deny hiring leaders from other realms. No other space race can be the ruler.",
-    "points": -1
+    "points": -1,
+    "group": "Other"
   },
   {
     "id": "GOVERNOR_HAPPINESS",
     "name": "Governor happiness",
     "description": "Governor on planet automatically gives extra happiness.",
     "points": 1,
+    "group": "Happiness",
     "conflictsWith": [
       "SINGLE_MIND"
     ]
@@ -139,6 +158,7 @@
     "name": "Reign period short",
     "description": "Ruler is in reign 20 star years.",
     "points": -1,
+    "group": "Ruler",
     "conflictsWith": [
       "REIGN_LONG",
       "REIGN_LIFE_TIME"
@@ -149,6 +169,7 @@
     "name": "Reign period long",
     "description": "Ruler is in reign 60 star years.",
     "points": 0,
+    "group": "Ruler",
     "conflictsWith": [
       "REIGN_SHORT",
       "REIGN_LIFE_TIME"
@@ -159,6 +180,7 @@
     "name": "Reign period life time",
     "description": "Ruler is in reign for a life.",
     "points": 1,
+    "group": "Ruler",
     "conflictsWith": [
       "REIGN_SHORT",
       "REIGN_LONG"
@@ -169,6 +191,7 @@
     "name": "Happy population",
     "description": "Population are generally happy with government.",
     "points": 1,
+    "group": "Happiness",
     "conflictsWith": [
       "UNHAPPY",
       "EXTRA_HAPPY",
@@ -180,6 +203,7 @@
     "name": "Unhappy population",
     "description": "Population are generally unhappy with government.",
     "points": -1,
+    "group": "Happiness",
     "conflictsWith": [
       "HAPPY",
       "EXTRA_HAPPY",
@@ -191,6 +215,7 @@
     "name": "Extra happy population",
     "description": "Population are generally really happy with government.",
     "points": 2,
+    "group": "Happiness",
     "conflictsWith": [
       "HAPPY",
       "UNHAPPY",
@@ -202,6 +227,7 @@
     "name": "Weakness for war",
     "description": "War causes unhappiness much faster.",
     "points": -2,
+    "group": "Happiness",
     "conflictsWith": [
       "TOLERANT_FOR_WAR",
       "ENDURE_WAR",
@@ -213,6 +239,7 @@
     "name": "Tolerant for war",
     "description": "Single war does not cause unhappiness.",
     "points": 1,
+    "group": "Happiness",
     "conflictsWith": [
       "WEAKNESS_FOR_WAR",
       "ENDURE_WAR",
@@ -224,6 +251,7 @@
     "name": "Endure war",
     "description": "Two wars does not cause unhappiness.",
     "points": 2,
+    "group": "Happiness",
     "conflictsWith": [
       "WEAKNESS_FOR_WAR",
       "ENDURE_WAR",
@@ -234,25 +262,29 @@
     "id": "CULTURE_ORIENTED",
     "name": "Culture oriented",
     "description": "Extra culture point when planet has 4 or more population.",
-    "points": 1
+    "points": 1,
+    "group": "Production bonus"
   },
   {
     "id": "AGRICULTURAL_ORIENTED",
     "name": "Agricultural oriented",
     "description": "Extra food production when planet has 4 or more population.",
-    "points": 1
+    "points": 1,
+    "group": "Production bonus"
   },
     {
     "id": "TAX_ORIENTED",
     "name": "Tax oriented",
     "description": "Extra credit when planet has 4 or more population.",
-    "points": 1
+    "points": 1,
+    "group": "Production bonus"
   },
   {
     "id": "VERY_LOW_FLEET_CAPACITY",
     "name": "Very low fleet capacity",
     "description": "Fleet capacity 1",
     "points": -2,
+    "group": "Fleet capacity",
     "conflictsWith": [
       "LOW_FLEET_CAPACITY",
       "HIGH_FLEET_CAPACITY"
@@ -263,6 +295,7 @@
     "name": "Low fleet capacity",
     "description": "Fleet capacity 2",
     "points": -1,
+    "group": "Fleet capacity",
     "conflictsWith": [
       "VERY_LOW_FLEET_CAPACITY",
       "HIGH_FLEET_CAPACITY"
@@ -273,6 +306,7 @@
     "name": "High fleet capacity",
     "description": "Fleet capacity 4",
     "points": 1,
+    "group": "Fleet capacity",
     "conflictsWith": [
       "VERY_LOW_FLEET_CAPACITY",
       "LOW_FLEET_CAPACITY"
@@ -283,6 +317,7 @@
     "name": "Low leader pool size",
     "description": "Optimal amount leaders is 6.",
     "points": -1,
+    "group": "Leaders",
     "conflictsWith": [
       "HIGH_LEADER_POOL_SIZE",
       "VERY_HIGH_LEADER_POOL_SIZE"
@@ -293,6 +328,7 @@
     "name": "High leader pool size",
     "description": "Optimal amount leaders is 10.",
     "points": 1,
+    "group": "Leaders",
     "conflictsWith": [
       "LOW_LEADER_POOL_SIZE",
       "HIGH_LEADER_POOL_SIZE"
@@ -303,6 +339,7 @@
     "name": "Very high leader pool size",
     "description": "Optimal amount leaders is 12.",
     "points": 2,
+    "group": "Leaders",
     "conflictsWith": [
       "HIGH_LEADER_POOL_SIZE",
       "LOW_LEADER_POOL_SIZE"
@@ -313,6 +350,7 @@
     "name": "Low leader hiring cost",
     "description": "Leader hiring cost 8 credits",
     "points": 1,
+    "group": "Leaders",
     "conflictsWith": [
       "HIGH_LEADER_HIRING_COST",
       "VERY_LOW_LEADER_HIRING_COST"
@@ -323,6 +361,7 @@
     "name": "High leader hiring cost",
     "description": "Leader hiring cost 12 credits",
     "points": -1,
+    "group": "Leaders",
     "conflictsWith": [
       "LOW_LEADER_HIRING_COST",
       "VERY_LOW_LEADER_HIRING_COST"
@@ -333,6 +372,7 @@
     "name": "Very low leader hiring cost",
     "description": "Leader hiring cost 6 credits",
     "points": 2,
+    "group": "Leaders",
     "conflictsWith": [
       "HIGH_LEADER_HIRING_COST",
       "LOW_LEADER_HIRING_COST"
@@ -342,19 +382,22 @@
     "id": "CHANCE_FOR_HEIR_BORN",
     "name": "Increased chance for heir being born",
     "description": "There is extra chance for heir being born.",
-    "points": 1
+    "points": 1,
+    "group": "Ruler"
   },
   {
     "id": "RULER_ASSASINATION",
     "name": "Ruler assasination possible",
     "description": "Power hunger leaders can assinate ruler.",
-    "points": -1
+    "points": -1,
+    "group": "Ruler"
   },
   {
     "id": "HIGH_CORRUPTION",
     "name": "High corruption",
     "description": "Leaders get corruption much more likely.",
     "points": -1,
+    "group": "Leaders",
     "conflictsWith": [
       "LOW_CORRUPTION",
       "SINGLE_MIND"
@@ -365,6 +408,7 @@
     "name": "Low corruption",
     "description": "Leaders get corruption less likely.",
     "points": 1,
+    "group": "Leaders",
     "conflictsWith": [
       "HIGH_CORRUPTION",
       "SINGLE_MIND"

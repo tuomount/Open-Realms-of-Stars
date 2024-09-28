@@ -52,6 +52,8 @@ public final class GovTrait {
   private String traitName;
   /** Description of the trait */
   private String description;
+  /** Group which Goverment traint belongs, used in goverment editor */
+  private String group;
   /** IDs of traits this trait conflicts with */
   private ArrayList<String> conflictsWithIds;
   /** How good (+) or bad (-) the trait is from gameplay perspective */
@@ -84,6 +86,7 @@ public final class GovTrait {
     this.traitName = Objects.requireNonNull(name);
     this.description = Objects.requireNonNull(description);
     this.traitPoints = points;
+    this.group = ""; // Default is no group.
     this.conflictsWithIds = new ArrayList<>(conflictsWith);
   }
 
@@ -121,6 +124,22 @@ public final class GovTrait {
    */
   public byte getPoints() {
     return traitPoints;
+  }
+
+  /**
+   * Get group name where trait belongs.
+   * @return the group
+   */
+  public String getGroup() {
+    return group;
+  }
+
+  /**
+   * Set group name where trait belongs
+   * @param group Group name
+   */
+  public void setGroup(final String group) {
+    this.group = group;
   }
 
   /**

@@ -27,7 +27,7 @@
     "ID": "SPACEPIRATES",
     "Name": "Space Pirates",
     "NameSingle": "Space Pirate",
-    "BridgeId": "Space Pirate",
+    "BridgeId": "Space pirate",
     "SpaceShipId": "Space pirate",
     "Traits": [
                 "EXCELLENT_WAR_RESILIENCE",

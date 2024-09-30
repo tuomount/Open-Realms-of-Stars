@@ -1507,7 +1507,7 @@ public class DiplomacyView extends BlackPanel {
     }
     if (trade.getFirstOffer().isTypeInOffer(NegotiationType.PEACE)) {
       NewsData newsData = NewsFactory.makePeaceNews(ai, human,
-          meetingPlace, trade.getMajorDeals(), starMap.getStarYear());
+          meetingPlace, trade.getMajorDeals(), starMap.getStarYear(), starMap);
       starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
           meetingPlace, newsData));
       starMap.getNewsCorpData().addNews(newsData);
@@ -1844,7 +1844,8 @@ public class DiplomacyView extends BlackPanel {
       if (trade.isOfferGoodForBoth()) {
         finishTransaction(SpeechType.AGREE);
         NewsData newsData = NewsFactory.makePeaceNews(human, ai,
-            meetingPlace, trade.getMajorDeals(), starMap.getStarYear());
+            meetingPlace, trade.getMajorDeals(), starMap.getStarYear(),
+            starMap);
         starMap.getNewsCorpData().addNews(newsData);
         starMap.getHistory().addEvent(
             NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));

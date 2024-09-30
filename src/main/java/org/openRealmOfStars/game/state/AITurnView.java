@@ -1988,7 +1988,8 @@ public class AITurnView extends BlackPanel {
               trade.doTrades();
               PlayerInfo defender = game.getStarMap().getPlayerByIndex(j);
               NewsData newsData = NewsFactory.makePeaceNews(info, defender,
-                  null, null, game.getStarMap().getStarYear());
+                  null, null, game.getStarMap().getStarYear(),
+                  game.getStarMap());
               game.getStarMap().getHistory().addEvent(
                   NewsFactory.makeDiplomaticEvent(null, newsData));
               game.getStarMap().getNewsCorpData().addNews(newsData);

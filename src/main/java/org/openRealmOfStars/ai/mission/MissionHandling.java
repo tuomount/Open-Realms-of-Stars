@@ -2284,7 +2284,8 @@ public final class MissionHandling {
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.PEACE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         NewsData newsData = NewsFactory.makePeaceNews(info, defender,
-            fleet, trade.getMajorDeals(), game.getStarMap().getStarYear());
+            fleet, trade.getMajorDeals(), game.getStarMap().getStarYear(),
+            game.getStarMap());
         game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);

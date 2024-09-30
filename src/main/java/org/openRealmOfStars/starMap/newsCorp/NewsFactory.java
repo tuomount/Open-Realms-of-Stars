@@ -1537,6 +1537,25 @@ public final class NewsFactory {
   public static NewsData makePeaceNews(final PlayerInfo peaceMaker,
       final PlayerInfo acceptor, final Object meetingPlace,
       final String majorDeals, final int starYear) {
+    return makePeaceNews(peaceMaker, acceptor, meetingPlace, majorDeals,
+        starYear, null);
+  }
+
+  /**
+   * Make Peace news. PeaceMaker makes peace offer to acceptor.
+   * This diplomatic meeting happened in meeting place which
+   * can be planet or fleet.
+   * @param peaceMaker Player who is make the peace offer
+   * @param acceptor Player who is accepting
+   * @param meetingPlace Where meeting happened, fleet or planet
+   * @param majorDeals Textual description of major deals that cause peace.
+   * @param starYear Current star year.
+   * @param map StarMap, used only for alliance peace.
+   * @return NewsData
+   */
+  public static NewsData makePeaceNews(final PlayerInfo peaceMaker,
+      final PlayerInfo acceptor, final Object meetingPlace,
+      final String majorDeals, final int starYear, final StarMap map) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
@@ -1570,6 +1589,58 @@ public final class NewsFactory {
     sb.append(" made peace with ");
     sb.append(acceptor.getEmpireName());
     sb.append("! ");
+    if (map != null) {
+      PlayerInfo peaceMakerAlly = null;
+      PlayerInfo acceptorAlly = null;
+      boolean and = false;
+      int parties = 2;
+      int allyIndex = peaceMaker.getDiplomacy().getAllianceIndex();
+      if (allyIndex != -1) {
+        peaceMakerAlly = map.getPlayerByIndex(allyIndex);
+      }
+      allyIndex = acceptor.getDiplomacy().getAllianceIndex();
+      if (allyIndex != -1) {
+        acceptorAlly = map.getPlayerByIndex(allyIndex);
+      }
+      if (peaceMakerAlly != null) {
+        sb.append("Peace treaty also involves ");
+        sb.append(peaceMakerAlly.getEmpireName());
+        parties++;
+        and = true;
+        peaceMakerAlly.getMissions().removeAttackAgainstPlayer(acceptor, map);
+        acceptor.getMissions().removeAttackAgainstPlayer(peaceMakerAlly, map);
+        if (acceptorAlly != null) {
+          peaceMakerAlly.getMissions().removeAttackAgainstPlayer(acceptorAlly,
+              map);
+        }
+      }
+      if (acceptorAlly != null) {
+        if (!and) {
+          sb.append("Peace treaty also involves ");
+          sb.append(acceptorAlly.getEmpireName());
+        } else {
+          sb.append(" and ");
+          sb.append(acceptorAlly.getEmpireName());
+        }
+        parties++;
+        peaceMaker.getMissions().removeAttackAgainstPlayer(acceptorAlly, map);
+        acceptorAlly.getMissions().removeAttackAgainstPlayer(peaceMaker, map);
+        if (peaceMakerAlly != null) {
+          acceptorAlly.getMissions().removeAttackAgainstPlayer(peaceMakerAlly,
+              map);
+        }
+      }
+      if (parties > 2) {
+        sb.append(". All ");
+        if (parties == 3) {
+          sb.append(" three");
+        }
+        if (parties == 4) {
+          sb.append(" four");
+        }
+        sb.append(" realms make peace with each others! ");
+      }
+    }
     if (majorDeals != null) {
       switch (DiceGenerator.getRandom(2)) {
       case 0:

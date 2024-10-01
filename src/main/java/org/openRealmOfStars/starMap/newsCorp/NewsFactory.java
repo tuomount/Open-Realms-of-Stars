@@ -1590,55 +1590,58 @@ public final class NewsFactory {
     sb.append(acceptor.getEmpireName());
     sb.append("! ");
     if (map != null) {
-      PlayerInfo peaceMakerAlly = null;
-      PlayerInfo acceptorAlly = null;
-      boolean and = false;
-      int parties = 2;
-      int allyIndex = peaceMaker.getDiplomacy().getAllianceIndex();
-      if (allyIndex != -1) {
-        peaceMakerAlly = map.getPlayerByIndex(allyIndex);
-      }
-      allyIndex = acceptor.getDiplomacy().getAllianceIndex();
-      if (allyIndex != -1) {
-        acceptorAlly = map.getPlayerByIndex(allyIndex);
-      }
-      if (peaceMakerAlly != null) {
-        sb.append("Peace treaty also involves ");
-        sb.append(peaceMakerAlly.getEmpireName());
-        parties++;
-        and = true;
-        peaceMakerAlly.getMissions().removeAttackAgainstPlayer(acceptor, map);
-        acceptor.getMissions().removeAttackAgainstPlayer(peaceMakerAlly, map);
-        if (acceptorAlly != null) {
-          peaceMakerAlly.getMissions().removeAttackAgainstPlayer(acceptorAlly,
-              map);
+      int acceptorIndex = map.getPlayerList().getIndex(acceptor);
+      if (peaceMaker.getDiplomacy().isWar(acceptorIndex)) {
+        PlayerInfo peaceMakerAlly = null;
+        PlayerInfo acceptorAlly = null;
+        boolean and = false;
+        int parties = 2;
+        int allyIndex = peaceMaker.getDiplomacy().getAllianceIndex();
+        if (allyIndex != -1) {
+          peaceMakerAlly = map.getPlayerByIndex(allyIndex);
         }
-      }
-      if (acceptorAlly != null) {
-        if (!and) {
-          sb.append("Peace treaty also involves ");
-          sb.append(acceptorAlly.getEmpireName());
-        } else {
-          sb.append(" and ");
-          sb.append(acceptorAlly.getEmpireName());
+        allyIndex = acceptor.getDiplomacy().getAllianceIndex();
+        if (allyIndex != -1) {
+          acceptorAlly = map.getPlayerByIndex(allyIndex);
         }
-        parties++;
-        peaceMaker.getMissions().removeAttackAgainstPlayer(acceptorAlly, map);
-        acceptorAlly.getMissions().removeAttackAgainstPlayer(peaceMaker, map);
         if (peaceMakerAlly != null) {
-          acceptorAlly.getMissions().removeAttackAgainstPlayer(peaceMakerAlly,
-              map);
+          sb.append("Peace treaty also involves ");
+          sb.append(peaceMakerAlly.getEmpireName());
+          parties++;
+          and = true;
+          peaceMakerAlly.getMissions().removeAttackAgainstPlayer(acceptor, map);
+          acceptor.getMissions().removeAttackAgainstPlayer(peaceMakerAlly, map);
+          if (acceptorAlly != null) {
+            peaceMakerAlly.getMissions().removeAttackAgainstPlayer(acceptorAlly,
+                map);
+          }
         }
-      }
-      if (parties > 2) {
-        sb.append(". All ");
-        if (parties == 3) {
-          sb.append(" three");
+        if (acceptorAlly != null) {
+          if (!and) {
+            sb.append("Peace treaty also involves ");
+            sb.append(acceptorAlly.getEmpireName());
+          } else {
+            sb.append(" and ");
+            sb.append(acceptorAlly.getEmpireName());
+          }
+          parties++;
+          peaceMaker.getMissions().removeAttackAgainstPlayer(acceptorAlly, map);
+          acceptorAlly.getMissions().removeAttackAgainstPlayer(peaceMaker, map);
+          if (peaceMakerAlly != null) {
+            acceptorAlly.getMissions().removeAttackAgainstPlayer(peaceMakerAlly,
+                map);
+          }
         }
-        if (parties == 4) {
-          sb.append(" four");
+        if (parties > 2) {
+          sb.append(". All ");
+          if (parties == 3) {
+            sb.append(" three");
+          }
+          if (parties == 4) {
+            sb.append(" four");
+          }
+          sb.append(" realms make peace with each others! ");
         }
-        sb.append(" realms make peace with each others! ");
       }
     }
     if (majorDeals != null) {

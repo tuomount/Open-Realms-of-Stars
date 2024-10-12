@@ -3784,7 +3784,8 @@ public class AITurnView extends BlackPanel {
             game.getStarMap().isTutorialEnabled());
         if (!info.areLeadersDead() && !info.isBoard()) {
           Leader scientist = RulerUtility.getBestScientist(info);
-          if (scientist != null) {
+          if (scientist != null
+              && info.getArtifactLists().getDiscoveredArtifacts().length > 0) {
             NewsData news = info.getArtifactLists().updateResearchPointByTurn(
                 game.getStarMap().getTotalProductionByPlayerPerTurn(
                     Planet.PRODUCTION_ARTIFACT_RESEARCH, i), info,

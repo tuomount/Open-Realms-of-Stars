@@ -334,6 +334,9 @@ public class ArtifactLists {
         }
       }
       Artifact artifact = researchArtifact();
+      if (artifact == null) {
+        return null;
+      }
       artifactResearchPoints = artifactResearchPoints - limit;
       StringBuilder sb = new StringBuilder();
       sb.append(scientist.getCallName());

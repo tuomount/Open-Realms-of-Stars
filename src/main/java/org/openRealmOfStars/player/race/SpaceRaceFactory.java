@@ -231,7 +231,7 @@ public final class SpaceRaceFactory {
     final var basePath = "resources/data/spaceraces/";
     final String[] files = {
         "arthropods", "humanoids", "lithovorians", "robots", "pseudoraces",
-        "plants"};
+        "plants", "custom"};
     final var spaceRacesLoaded = loader.loadAll(spaceRaces, basePath, files);
     ErrorLogger.log("SpaceRaces loaded: " + spaceRacesLoaded);
   }

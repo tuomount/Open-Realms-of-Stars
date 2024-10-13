@@ -90,7 +90,7 @@ public final class GovernmentFactory {
       if (government == null) {
         throw new IllegalArgumentException(
             "Government factory does not contain "
-            + governmentId + " or DECOCRACY.");
+            + governmentId + " or DEMOCRACY.");
       }
     }
     return government;
@@ -101,7 +101,7 @@ public final class GovernmentFactory {
     governments.clear();
     final var basePath = "resources/data/governments/";
     final String[] files = {
-        "base"};
+        "base", "custom"};
     final var governmentsLoaded = loader.loadAll(governments, basePath, files);
     ErrorLogger.log("Governments loaded: " + governmentsLoaded);
   }

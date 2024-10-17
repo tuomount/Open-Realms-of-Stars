@@ -2408,8 +2408,7 @@ public class Planet {
       msg.setMatchByString(getName());
       planetOwnerInfo.getMsgList().addNewMessage(msg);
       if (getTotalPopulation() < 1) {
-        if (!hasStatus(StatusIds.VOLCANIC_ERUPTION)
-            && !hasStatus(StatusIds.CLIMATE_COOLDOWN)) {
+        if (getPopulationLimit() != 0) {
           ErrorLogger.log("This probably should not happen but "
               + planetOwnerInfo.getEmpireName()
               + " has lost planet by starvation!!!");

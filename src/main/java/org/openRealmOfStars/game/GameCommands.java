@@ -67,6 +67,11 @@ public final class GameCommands {
   public static final String COMMAND_OPTIONS_VIEW = "OptionsView";
 
   /**
+   * Edit government command
+   */
+  public static final String COMMAND_EDIT_GOVERNMENT = "EditGovernmentView";
+
+  /**
    * Music volume up
    */
   public static final String COMMAND_MUSIC_VOLUME_UP = "OptionsMusicVolumeUp";
@@ -238,6 +243,11 @@ public final class GameCommands {
    * View Star map
    */
   public static final String COMMAND_VIEW_STARMAP = "ViewStarMap";
+
+  /**
+   * Back to main menu
+   */
+  public static final String COMMAND_MAIN_MENU = "ViewMainMenu";
 
   /**
    * View Voting view

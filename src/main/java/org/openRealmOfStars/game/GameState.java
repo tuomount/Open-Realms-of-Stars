@@ -180,5 +180,7 @@ public enum GameState {
   /** View for configuring individual realm */
   REALM_SETUP_VIEW,
   /** View for configuring all AI realms */
-  AI_REALM_SETUP_VIEW;
+  AI_REALM_SETUP_VIEW,
+  /** View for government editor */
+  GOVERNMENT_EDITOR;
 }

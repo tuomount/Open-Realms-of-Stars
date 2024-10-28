@@ -595,6 +595,12 @@ public final class GameCommands {
   public static final String COMMAND_GOVERNMENT_SETUP = "GovernmentSetup";
 
   /**
+   * Government ruler selected in government editor.
+   */
+  public static final String COMMAND_GOVERNMENT_EDITOR_RULER_SELECT =
+      "GovernmentEditorRulerSelect";
+
+  /**
    * Difficulty has changed in Galaxy Setup
    */
   public static final String COMMAND_DIFFICULT_SETUP = "DifficultSetup";

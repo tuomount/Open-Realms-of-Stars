@@ -24,15 +24,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JTextField;
 
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.SpaceComboBox;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.player.government.RulerSelection;
 
 /**
  * Editor for government JSON files with UI.
@@ -49,6 +53,19 @@ public class GovernmentEditorView extends BlackPanel {
    * Government name.
    */
   private JTextField governmentNameField;
+
+  /**
+   * Combobox for Ruler selection.
+   */
+  private SpaceComboBox<RulerSelection> rulerSelectionCombo;
+  /**
+   * Ruler title for male.
+   */
+  private JTextField rulerTitleMaleField;
+  /**
+   * Ruler title for female.
+   */
+  private JTextField rulerTitleFemaleField;
   /**
    * Constructor for GovernmentEditorView.
    *
@@ -74,6 +91,52 @@ public class GovernmentEditorView extends BlackPanel {
     governmentNameField.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     governmentInfoPanel.add(governmentNameField);
+    governmentInfoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    label = new SpaceLabel("How ruler is selected:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    governmentInfoPanel.add(label);
+    governmentInfoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    rulerSelectionCombo = new SpaceComboBox<>(RulerSelection.values());
+    rulerSelectionCombo.setBackground(
+        GuiStatics.getDeepSpaceDarkColor());
+    rulerSelectionCombo.setForeground(
+        GuiStatics.getCoolSpaceColor());
+    rulerSelectionCombo.setBorder(new SimpleBorder());
+    rulerSelectionCombo.setFont(GuiFonts.getFontCubellan());
+    rulerSelectionCombo.getModel()
+        .setSelectedItem(RulerSelection.AI_RULER);
+    DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    rulerSelectionCombo.setRenderer(dlcr);
+    rulerSelectionCombo.addActionListener(listener);
+    rulerSelectionCombo.setActionCommand(
+        GameCommands.COMMAND_GOVERNMENT_EDITOR_RULER_SELECT);
+    governmentInfoPanel.add(rulerSelectionCombo);
+    governmentInfoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+
+    label = new SpaceLabel("Ruler title for male:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    governmentInfoPanel.add(label);
+    governmentInfoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    rulerTitleMaleField = new JTextField("President");
+    rulerTitleMaleField.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    rulerTitleMaleField.setForeground(GuiStatics.getCoolSpaceColor());
+    rulerTitleMaleField.setFont(GuiFonts.getFontCubellanSmaller());
+    rulerTitleMaleField.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    governmentInfoPanel.add(rulerTitleMaleField);
+    label = new SpaceLabel("Ruler title for female:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    governmentInfoPanel.add(label);
+    governmentInfoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    rulerTitleFemaleField = new JTextField("President");
+    rulerTitleFemaleField.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    rulerTitleFemaleField.setForeground(GuiStatics.getCoolSpaceColor());
+    rulerTitleFemaleField.setFont(GuiFonts.getFontCubellanSmaller());
+    rulerTitleFemaleField.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    governmentInfoPanel.add(rulerTitleFemaleField);
+
     mainPanel.add(governmentInfoPanel);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();

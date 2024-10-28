@@ -104,5 +104,4 @@ public enum RulerSelection {
       case STRONG_RULER: return "Strong ruler";
     }
   }
-
 }

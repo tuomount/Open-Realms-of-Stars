@@ -75,6 +75,13 @@ public class TraitGroupPanel extends JPanel {
     border.setTitle(title);
   }
 
+  /**
+   * Get Group title aka group name
+   * @return Group name
+   */
+  public String getTitle() {
+    return border.getTitle();
+  }
   @Override
   protected void paintComponent(final Graphics arg0) {
     Graphics2D g2d = (Graphics2D) arg0;

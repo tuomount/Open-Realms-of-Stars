@@ -51,6 +51,12 @@ public class TraitCheckBox extends SpaceCheckBox {
     group = trait.getGroup();
     conflictsWithId = trait.getConflictsWithIds().toArray(new String[0]);
     traitPoints = trait.getPoints();
+    String pointStr = "Cost: ";
+    if (traitPoints > 0) {
+      pointStr = pointStr + "+";
+    }
+    pointStr = pointStr + traitPoints;
+    this.setToolTipText(description + " " + pointStr);
   }
 
   /**

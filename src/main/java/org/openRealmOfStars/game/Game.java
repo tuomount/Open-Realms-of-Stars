@@ -2918,6 +2918,8 @@ public class Game implements ActionListener {
         governmentEditorView = null;
         SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);
+      } else {
+        governmentEditorView.handleAction(arg0);
       }
       return;
     }

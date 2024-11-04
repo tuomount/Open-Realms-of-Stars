@@ -52,6 +52,14 @@ public final class GovTraitFactory {
     return SINGLETON.hasHardcodedTraits();
   }
 
+  /**
+   * Get ALl Government Traits in array.
+   * @return Array of GovTrait.
+   */
+  public static GovTrait[] getAll() {
+    return SINGLETON.createAll();
+  }
+
   /** GovTraits this factory knows. IDs are used as keys. */
   private HashMap<String, GovTrait> govTraits;
   /** Tracks if factory is initialized with data */
@@ -79,6 +87,19 @@ public final class GovTraitFactory {
 
     final var cachedTrait = govTraits.get(traitId);
     return Optional.ofNullable(cachedTrait);
+  }
+
+  /**
+   * Get ALl Government Traits in array.
+   * @return Array of GovTrait.
+   */
+  private GovTrait[] createAll() {
+    if (!initialized) {
+      initialized = true;
+      init();
+    }
+
+    return SINGLETON.govTraits.values().toArray(new GovTrait[0]);
   }
 
   /**

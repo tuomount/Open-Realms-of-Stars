@@ -18,13 +18,17 @@ package org.openRealmOfStars.gui.infopanel.traitpanel;
  */
 
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JScrollPane;
 
+import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
+import org.openRealmOfStars.player.government.trait.GovTrait;
 
 /**
  * Trait panel for both government and space race editor.
@@ -51,25 +55,113 @@ public class TraitPanel extends InfoPanel {
   private ArrayList<TraitCheckBox> checkBoxes;
 
   /**
+   * Coloumns;
+   */
+  private ArrayList<EmptyInfoPanel> columns;
+  /**
+   * Max Number of columns;
+   */
+  private int maxColumns = 2;
+  /**
+   * Current column index.
+   */
+  private int currentColumn = 0;
+  /**
    * TraitPanel constructor.
    * @param screenWidth Screen width
+   * @param traits Government Traits in array
+   * @param listener ActionListener
    */
-  public TraitPanel(final int screenWidth) {
+  public TraitPanel(final int screenWidth, final GovTrait[] traits,
+      final ActionListener listener) {
     super();
+    this.setTitle("Government Traits");
     groups = new ArrayList<>();
     checkBoxes = new ArrayList<>();
+    columns = new ArrayList<>();
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     traitValue = new SpaceLabel(TRAIT_VALUE_LABEL + "+44");
     this.add(traitValue);
     EmptyInfoPanel traitsPane = new EmptyInfoPanel();
     if (screenWidth < 1280) {
       traitsPane.setLayout(new GridLayout(0, 2));
-    } else {
+      maxColumns = 2;
+      for (int i = 0; i < maxColumns; i++) {
+        EmptyInfoPanel column = new EmptyInfoPanel();
+        column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
+        columns.add(column);
+      }
+    } else if (screenWidth < 1600) {
       traitsPane.setLayout(new GridLayout(0, 3));
+      maxColumns = 3;
+      for (int i = 0; i < maxColumns; i++) {
+        EmptyInfoPanel column = new EmptyInfoPanel();
+        column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
+        columns.add(column);
+      }
+    } else {
+      traitsPane.setLayout(new GridLayout(0, 4));
+      maxColumns = 4;
+      for (int i = 0; i < maxColumns; i++) {
+        EmptyInfoPanel column = new EmptyInfoPanel();
+        column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
+        columns.add(column);
+      }
     }
-    this.add(traitsPane);
+    for (GovTrait trait : traits) {
+      TraitCheckBox checkBox = new TraitCheckBox(trait);
+      checkBox.addActionListener(listener);
+      checkBox.setActionCommand(GameCommands.COMMAND_GOV_TRAIT_SELECTED);
+      checkBoxes.add(checkBox);
+      TraitGroupPanel groupPanel = getOrCreateGroup(trait.getGroup());
+      groupPanel.addCheckBox(checkBox);
+    }
+    orderGroupsIntoColumn();
+    for (EmptyInfoPanel columnPanel : columns) {
+      traitsPane.add(columnPanel);
+    }
+    JScrollPane scroll = new JScrollPane(traitsPane);
+    this.add(scroll);
   }
 
+  /**
+   * Order groups into columns.
+   */
+  private void orderGroupsIntoColumn() {
+    int[] boxes = new int[maxColumns];
+    for (int i = 0; i < maxColumns; i++) {
+      boxes[i] = 0;
+    }
+    for (TraitGroupPanel panel : groups) {
+      getCurrentColumn().add(panel);
+      boxes[currentColumn] = boxes[currentColumn] + panel.countCheckBoxes();
+      if (currentColumn > 0) {
+        if (boxes[currentColumn - 1] < boxes[currentColumn] + 2) {
+          moveToNextColumn();
+        }
+      } else {
+        moveToNextColumn();
+      }
+    }
+  }
+  /**
+   * Get current column from array.
+   * @return EmptyInfoPanel
+   */
+  private EmptyInfoPanel getCurrentColumn() {
+    return columns.get(currentColumn);
+  }
+
+  /**
+   * Move column index to next column. Jumps back to zero if goes past
+   * the upper limit.
+   */
+  private void moveToNextColumn() {
+    currentColumn++;
+    if (currentColumn >= maxColumns) {
+      currentColumn = 0;
+    }
+  }
   /**
    * Get Group by group name or create if it does not exits.
    * @param groupName GroupName to search.
@@ -82,6 +174,7 @@ public class TraitPanel extends InfoPanel {
       }
     }
     TraitGroupPanel panel = new TraitGroupPanel(groupName);
+    groups.add(panel);
     return panel;
   }
 }

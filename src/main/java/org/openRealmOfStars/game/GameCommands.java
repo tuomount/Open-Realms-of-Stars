@@ -72,6 +72,11 @@ public final class GameCommands {
   public static final String COMMAND_EDIT_GOVERNMENT = "EditGovernmentView";
 
   /**
+   * Government trait selected.
+   */
+  public static final String COMMAND_GOV_TRAIT_SELECTED = "GovTraitSelected";
+
+  /**
    * Music volume up
    */
   public static final String COMMAND_MUSIC_VOLUME_UP = "OptionsMusicVolumeUp";

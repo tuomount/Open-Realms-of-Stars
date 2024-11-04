@@ -27,6 +27,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 
 /**
@@ -52,9 +53,19 @@ public class TraitGroupPanel extends JPanel {
   public TraitGroupPanel(final String groupName) {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     border = new TitledBorder(groupName);
+    border.setTitleColor(GuiStatics.getInfoTextColor());
+    border.setTitleFont(GuiFonts.getFontCubellanSmaller());
+    this.setBorder(border);
     checkBoxes = new ArrayList<>();
   }
 
+  /**
+   * How many check box in single group?
+   * @return Number of check boxes.
+   */
+  public int countCheckBoxes() {
+    return checkBoxes.size();
+  }
   /**
    * Add check box into group.
    * @param checkBox TraitCheckBox

@@ -20,6 +20,7 @@ package org.openRealmOfStars.game.state;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
@@ -27,16 +28,20 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JTextField;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.infopanel.traitpanel.TraitPanel;
 import org.openRealmOfStars.gui.labels.SpaceComboBox;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.government.RulerSelection;
+import org.openRealmOfStars.player.government.trait.GovTraitFactory;
 
 /**
  * Editor for government JSON files with UI.
@@ -66,6 +71,10 @@ public class GovernmentEditorView extends BlackPanel {
    * Ruler title for female.
    */
   private JTextField rulerTitleFemaleField;
+  /**
+   * Trait panel containing all the selectable traits.
+   */
+  private TraitPanel traitPanel;
   /**
    * Constructor for GovernmentEditorView.
    *
@@ -138,6 +147,14 @@ public class GovernmentEditorView extends BlackPanel {
     governmentInfoPanel.add(rulerTitleFemaleField);
 
     mainPanel.add(governmentInfoPanel);
+    int screenWidth = 1024;
+    if (listener instanceof Game) {
+      Game game = (Game) listener;
+      screenWidth = game.getWidth();
+    }
+    traitPanel = new TraitPanel(screenWidth,
+        GovTraitFactory.getAll(), listener);
+    mainPanel.add(traitPanel);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
@@ -148,5 +165,16 @@ public class GovernmentEditorView extends BlackPanel {
     bottomPanel.add(btn, BorderLayout.CENTER);
     this.add(mainPanel, BorderLayout.CENTER);
     this.add(bottomPanel, BorderLayout.SOUTH);
+  }
+
+  /**
+   * Handle actions for Government editor
+   * @param arg0 ActionEvent command what player did
+   */
+  public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_GOV_TRAIT_SELECTED)) {
+      SoundPlayer.playMenuSound();
+    }
   }
 }

@@ -151,10 +151,37 @@ public class TraitPanel extends InfoPanel {
         for (TraitCheckBox box : checkBoxes) {
           if (box.getTraitId().equals(conflict)) {
             box.setEnabled(conflictEnable);
+            if (conflictEnable) {
+              TraitCheckBox[] possibleConflicts = getBoxesById(
+                  box.getTraitConflictsWithId());
+              for (TraitCheckBox boxConflict : possibleConflicts) {
+                if (boxConflict.isSelected()) {
+                  box.setEnabled(false);
+                  break;
+                }
+              }
+            }
           }
         }
       }
     }
+  }
+
+  /**
+   * Get Boxes by ID.
+   * @param ids Array of IDs
+   * @return array of check boxes.
+   */
+  private TraitCheckBox[] getBoxesById(final String[] ids) {
+    ArrayList<TraitCheckBox> list = new ArrayList<>();
+    for (String id : ids) {
+      for (TraitCheckBox box : checkBoxes) {
+        if (box.getTraitId().equals(id)) {
+          list.add(box);
+        }
+      }
+    }
+    return list.toArray(new TraitCheckBox[0]);
   }
   /**
    * Order groups into columns.

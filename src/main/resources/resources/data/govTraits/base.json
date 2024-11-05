@@ -254,7 +254,7 @@
     "group": "Happiness",
     "conflictsWith": [
       "WEAKNESS_FOR_WAR",
-      "ENDURE_WAR",
+      "TOLERANT_FOR_WAR",
       "SINGLE_MIND"
     ]
   },
@@ -331,7 +331,7 @@
     "group": "Leaders",
     "conflictsWith": [
       "LOW_LEADER_POOL_SIZE",
-      "HIGH_LEADER_POOL_SIZE"
+      "VERY_HIGH_LEADER_POOL_SIZE"
     ]
   },
   {

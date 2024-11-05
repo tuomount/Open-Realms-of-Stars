@@ -39,7 +39,7 @@ public class TraitPanel extends InfoPanel {
   /**
    * Static string for traitValue label.
    */
-  private static final String TRAIT_VALUE_LABEL = "Selected traits: ";
+  private static final String TRAIT_VALUE_LABEL = "Trait points left: ";
   /**
    * Label containing total trait value
    */
@@ -80,7 +80,7 @@ public class TraitPanel extends InfoPanel {
     checkBoxes = new ArrayList<>();
     columns = new ArrayList<>();
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    traitValue = new SpaceLabel(TRAIT_VALUE_LABEL + "+44");
+    traitValue = new SpaceLabel(TRAIT_VALUE_LABEL + "4");
     this.add(traitValue);
     EmptyInfoPanel traitsPane = new EmptyInfoPanel();
     if (screenWidth < 1280) {
@@ -111,7 +111,8 @@ public class TraitPanel extends InfoPanel {
     for (GovTrait trait : traits) {
       TraitCheckBox checkBox = new TraitCheckBox(trait);
       checkBox.addActionListener(listener);
-      checkBox.setActionCommand(GameCommands.COMMAND_GOV_TRAIT_SELECTED);
+      checkBox.setActionCommand(GameCommands.COMMAND_GOV_TRAIT_SELECTED
+          + "+" + checkBox.getTraitId());
       checkBoxes.add(checkBox);
       TraitGroupPanel groupPanel = getOrCreateGroup(trait.getGroup());
       groupPanel.addCheckBox(checkBox);
@@ -124,6 +125,37 @@ public class TraitPanel extends InfoPanel {
     this.add(scroll);
   }
 
+  /**
+   * Handle Trait selection.
+   * @param traitId Trait ID which was selected.
+   */
+  public void handleTraitSelection(final String traitId) {
+    int points = 4;
+    TraitCheckBox selectedBox = null;
+    for (TraitCheckBox box : checkBoxes) {
+      if (box.getTraitId().equals(traitId)) {
+        selectedBox = box;
+      }
+      if (box.isSelected()) {
+        points = points - box.getTraitPoints();
+      }
+    }
+    traitValue.setText(TRAIT_VALUE_LABEL + points);
+    if (selectedBox != null
+        && selectedBox.getTraitConflictsWithId().length > 0) {
+      boolean conflictEnable = true;
+      if (selectedBox.isSelected()) {
+        conflictEnable = false;
+      }
+      for (String conflict : selectedBox.getTraitConflictsWithId()) {
+        for (TraitCheckBox box : checkBoxes) {
+          if (box.getTraitId().equals(conflict)) {
+            box.setEnabled(conflictEnable);
+          }
+        }
+      }
+    }
+  }
   /**
    * Order groups into columns.
    */

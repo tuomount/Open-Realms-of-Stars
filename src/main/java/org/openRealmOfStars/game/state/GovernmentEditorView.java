@@ -172,8 +172,12 @@ public class GovernmentEditorView extends BlackPanel {
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(final ActionEvent arg0) {
-    if (arg0.getActionCommand().equals(
+    if (arg0.getActionCommand().startsWith(
         GameCommands.COMMAND_GOV_TRAIT_SELECTED)) {
+      String[] param = arg0.getActionCommand().split("\\+");
+      if (param.length == 2) {
+        traitPanel.handleTraitSelection(param[1]);
+      }
       SoundPlayer.playMenuSound();
     }
   }

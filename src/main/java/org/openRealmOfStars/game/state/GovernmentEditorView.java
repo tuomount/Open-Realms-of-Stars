@@ -34,6 +34,7 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.infopanel.traitpanel.TraitCheckBox;
 import org.openRealmOfStars.gui.infopanel.traitpanel.TraitPanel;
 import org.openRealmOfStars.gui.labels.SpaceComboBox;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
@@ -167,6 +168,50 @@ public class GovernmentEditorView extends BlackPanel {
     this.add(bottomPanel, BorderLayout.SOUTH);
   }
 
+  /**
+   * Build Json file based on government editor
+   * @return String as a JSON.
+   */
+  public String buildJson() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("[\n");
+    sb.append("  {\n");
+    sb.append("    \"ID\": \"");
+    sb.append(governmentNameField.getText().toUpperCase().trim());
+    sb.append("\",\n");
+    sb.append("    \"Name\": \"");
+    sb.append(governmentNameField.getText());
+    sb.append("\",\n");
+    sb.append("    \"RulerSelection\": \"");
+    RulerSelection rulerSelect = (RulerSelection) rulerSelectionCombo
+        .getSelectedItem();
+    sb.append(rulerSelect.getAsString());
+    sb.append("\",\n");
+    sb.append("    \"RulerTitleMale\": \"");
+    sb.append(rulerTitleMaleField.getText());
+    sb.append("\",\n");
+    sb.append("    \"RulerTitleFemale\": \"");
+    sb.append(rulerTitleFemaleField.getText());
+    sb.append("\",\n");
+    sb.append("    \"Traits\": [\n");
+    boolean notFirst = false;
+    for (TraitCheckBox box : traitPanel.getAllBoxes()) {
+      if (box.isSelected()) {
+        if (notFirst) {
+          sb.append(",\n");
+        }
+        sb.append("      \"");
+        sb.append(box.getTraitId());
+        sb.append("\"");
+        notFirst = true;
+      }
+    }
+    sb.append("\n");
+    sb.append("     ]\n");
+    sb.append("  }\n");
+    sb.append("]\n");
+    return sb.toString();
+  }
   /**
    * Handle actions for Government editor
    * @param arg0 ActionEvent command what player did

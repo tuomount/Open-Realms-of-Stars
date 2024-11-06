@@ -91,6 +91,23 @@ public enum RulerSelection {
     return STRONG_RULER;
   }
 
+  /**
+   * Get Ruler selection as a string.
+   * @return String
+   */
+  public String getAsString() {
+    switch (this) {
+      case AI_RULER: return "AI_RULER";
+      case CEO_AS_A_RULER: return "CEO_AS_A_RULER";
+      case ELECTION_TYPE1: return "ELECTION_TYPE1";
+      case ELECTION_TYPE2: return "ELECTION_TYPE2";
+      case HEGEMONIA_RULER: return "HEGEMONIA_RULER";
+      case HEIR_TO_THRONE: return "HEIR_TO_THRONE";
+      default:
+      case STRONG_RULER: return "STRONG_RULER";
+    }
+  }
+
   @Override
   public String toString() {
     switch (this) {

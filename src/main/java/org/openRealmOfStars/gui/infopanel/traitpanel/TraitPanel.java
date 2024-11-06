@@ -236,4 +236,12 @@ public class TraitPanel extends InfoPanel {
     groups.add(panel);
     return panel;
   }
+
+  /**
+   * Get all checkboxes in array.
+   * @return TraitCheckBox array
+   */
+  public TraitCheckBox[] getAllBoxes() {
+    return checkBoxes.toArray(new TraitCheckBox[0]);
+  }
 }

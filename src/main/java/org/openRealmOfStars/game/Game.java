@@ -2915,6 +2915,7 @@ public class Game implements ActionListener {
     if (gameState == GameState.GOVERNMENT_EDITOR) {
       if (arg0.getActionCommand().equalsIgnoreCase(
           GameCommands.COMMAND_MAIN_MENU)) {
+        System.out.println(governmentEditorView.buildJson());
         governmentEditorView = null;
         SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);

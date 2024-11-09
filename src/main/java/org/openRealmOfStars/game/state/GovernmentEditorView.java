@@ -22,6 +22,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -41,6 +43,8 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
+import org.openRealmOfStars.player.government.Government;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.government.RulerSelection;
 import org.openRealmOfStars.player.government.trait.GovTraitFactory;
 
@@ -77,6 +81,10 @@ public class GovernmentEditorView extends BlackPanel {
    */
   private TraitPanel traitPanel;
   /**
+   * Conflict with government ID.
+   */
+  private boolean conflictWithId = false;
+  /**
    * Constructor for GovernmentEditorView.
    *
    * @param listener ActionListener
@@ -100,6 +108,35 @@ public class GovernmentEditorView extends BlackPanel {
     governmentNameField.setFont(GuiFonts.getFontCubellanSmaller());
     governmentNameField.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
+    governmentNameField.addKeyListener(new KeyListener() {
+
+      @Override
+      public void keyTyped(final KeyEvent e) {
+        // Nothing to do here
+      }
+
+      @Override
+      public void keyReleased(final KeyEvent e) {
+        String tmp = getEditedGovernmentId();
+        conflictWithId = false;
+        for (Government gov : GovernmentFactory.getValues()) {
+          if (gov.getId().equals(tmp)) {
+            conflictWithId = true;
+          }
+        }
+        if (conflictWithId) {
+          governmentNameField.setForeground(GuiStatics.COLOR_RED_TEXT);
+        } else {
+          governmentNameField.setForeground(GuiStatics.getCoolSpaceColor());
+        }
+        governmentNameField.repaint();
+      }
+
+      @Override
+      public void keyPressed(final KeyEvent e) {
+        // Nothing to do here
+      }
+    });
     governmentInfoPanel.add(governmentNameField);
     governmentInfoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
     label = new SpaceLabel("How ruler is selected:");
@@ -169,6 +206,22 @@ public class GovernmentEditorView extends BlackPanel {
   }
 
   /**
+   * Get Government ID
+   * @return GovernmentId.
+   */
+  private String getEditedGovernmentId() {
+    String tmp = governmentNameField.getText().toUpperCase().trim();
+    return tmp.replaceAll(" ", "_");
+  }
+
+  /**
+   * Is conflict with government ID.
+   * @return true or false
+   */
+  public boolean isConflictWithId() {
+    return conflictWithId;
+  }
+  /**
    * Build Json file based on government editor
    * @return String as a JSON.
    */
@@ -177,7 +230,7 @@ public class GovernmentEditorView extends BlackPanel {
     sb.append("[\n");
     sb.append("  {\n");
     sb.append("    \"ID\": \"");
-    sb.append(governmentNameField.getText().toUpperCase().trim());
+    sb.append(getEditedGovernmentId());
     sb.append("\",\n");
     sb.append("    \"Name\": \"");
     sb.append(governmentNameField.getText());

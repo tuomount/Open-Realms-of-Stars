@@ -412,6 +412,13 @@ public class Game implements ActionListener {
    * Flag if main method has called.
    */
   private static boolean mainMethodCalled;
+
+  /** User folder */
+  private static String userFolder;
+  /** Custom government folder */
+  private static final String CUSTOM_GOV_FOLDER = "/custom/government";
+  /** Custom space race folder */
+  private static final String CUSTOM_RACE_FOLDER = "/custom/spacerace";
   /**
    * Ambient light bridge
    */
@@ -2460,6 +2467,38 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Init folders. Return null string if everything went fine.
+   * Otherwise returns error message.
+   * @return Null or error message.
+   */
+  public static String initFolders() {
+    userFolder = System.getProperty("user.home");
+    userFolder = userFolder + "/.oros";
+    try {
+      File path = new File(userFolder);
+      if (!path.exists()) {
+        if (!path.mkdirs()) {
+          return "Could not create .oros folder.";
+        }
+      }
+      path = new File(userFolder + CUSTOM_GOV_FOLDER);
+      if (!path.exists()) {
+        if (!path.mkdirs()) {
+          return "Could not create custom government folder.";
+        }
+      }
+      path = new File(userFolder + CUSTOM_RACE_FOLDER);
+      if (!path.exists()) {
+        if (!path.mkdirs()) {
+          return "Could not create custom space race folder.";
+        }
+      }
+    } catch (SecurityException e) {
+      return "Creating folder failed: " + e.getMessage();
+    }
+    return null;
+  }
+  /**
    * Main method to run the game
    * @param args from Command line
    */
@@ -2487,6 +2526,11 @@ public class Game implements ActionListener {
       if (args.length > 0 && args[0].equals("--debug")) {
         System.out.println("Debugging enabled.");
         ErrorLogger.enabledDebugging();
+      }
+      String error = initFolders();
+      if (error != null) {
+        ErrorLogger.log(error);
+        return;
       }
       mainMethodCalled = true;
       new Game(true);

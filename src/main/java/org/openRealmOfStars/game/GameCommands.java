@@ -253,6 +253,14 @@ public final class GameCommands {
    * Back to main menu
    */
   public static final String COMMAND_MAIN_MENU = "ViewMainMenu";
+  /**
+   * Load government
+   */
+  public static final String COMMAND_LOAD_GOVERNMENT = "LoadGovernment";
+  /**
+   * Save government
+   */
+  public static final String COMMAND_SAVE_GOVERNMENT = "SaveGovernment";
 
   /**
    * View Voting view

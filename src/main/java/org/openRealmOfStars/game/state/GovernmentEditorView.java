@@ -28,7 +28,9 @@ import java.awt.event.KeyListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
@@ -201,6 +203,14 @@ public class GovernmentEditorView extends BlackPanel {
         GameCommands.COMMAND_MAIN_MENU);
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.CENTER);
+    btn = new SpaceButton("Load government",
+        GameCommands.COMMAND_LOAD_GOVERNMENT);
+    btn.addActionListener(listener);
+    bottomPanel.add(btn, BorderLayout.WEST);
+    btn = new SpaceButton("Save government",
+        GameCommands.COMMAND_SAVE_GOVERNMENT);
+    btn.addActionListener(listener);
+    bottomPanel.add(btn, BorderLayout.EAST);
     this.add(mainPanel, BorderLayout.CENTER);
     this.add(bottomPanel, BorderLayout.SOUTH);
   }
@@ -277,6 +287,19 @@ public class GovernmentEditorView extends BlackPanel {
         traitPanel.handleTraitSelection(param[1]);
       }
       SoundPlayer.playMenuSound();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SAVE_GOVERNMENT)) {
+      JFileChooser saveFileChooser = new JFileChooser();
+      saveFileChooser.setFileFilter(new FileNameExtensionFilter(
+          "JSON Data file", "json"));
+      saveFileChooser.setDialogTitle("Save government file");
+      int returnValue = saveFileChooser.showOpenDialog(this);
+      if (returnValue == JFileChooser.APPROVE_OPTION) {
+        // Mo real function yet
+        SoundPlayer.playMenuSound();
+      } else {
+        SoundPlayer.playMenuDisabled();
+      }
     }
   }
 }

@@ -2476,27 +2476,32 @@ public class Game implements ActionListener {
     userFolder = userFolder + "/.oros";
     try {
       File path = new File(userFolder);
-      if (!path.exists()) {
-        if (!path.mkdirs()) {
-          return "Could not create .oros folder.";
-        }
+      if (!path.exists() && !path.mkdirs()) {
+        return "Could not create .oros folder.";
       }
       path = new File(userFolder + CUSTOM_GOV_FOLDER);
-      if (!path.exists()) {
-        if (!path.mkdirs()) {
-          return "Could not create custom government folder.";
-        }
+      if (!path.exists() && !path.mkdirs()) {
+        return "Could not create custom government folder.";
       }
       path = new File(userFolder + CUSTOM_RACE_FOLDER);
-      if (!path.exists()) {
-        if (!path.mkdirs()) {
-          return "Could not create custom space race folder.";
-        }
+      if (!path.exists() && !path.mkdirs()) {
+        return "Could not create custom space race folder.";
       }
     } catch (SecurityException e) {
       return "Creating folder failed: " + e.getMessage();
     }
     return null;
+  }
+
+  /**
+   * Get Path for Custom government path
+   * @return Path for custom governments.
+   */
+  public static String getCustomGovPath() {
+    if (userFolder == null) {
+      initFolders();
+    }
+    return userFolder + CUSTOM_GOV_FOLDER;
   }
   /**
    * Main method to run the game
@@ -2959,7 +2964,6 @@ public class Game implements ActionListener {
     if (gameState == GameState.GOVERNMENT_EDITOR) {
       if (arg0.getActionCommand().equalsIgnoreCase(
           GameCommands.COMMAND_MAIN_MENU)) {
-        System.out.println(governmentEditorView.buildJson());
         governmentEditorView = null;
         SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);

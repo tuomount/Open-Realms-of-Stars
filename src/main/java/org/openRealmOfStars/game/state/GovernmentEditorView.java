@@ -24,6 +24,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -49,6 +54,7 @@ import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.government.RulerSelection;
 import org.openRealmOfStars.player.government.trait.GovTraitFactory;
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
  * Editor for government JSON files with UI.
@@ -289,13 +295,25 @@ public class GovernmentEditorView extends BlackPanel {
       SoundPlayer.playMenuSound();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SAVE_GOVERNMENT)) {
-      JFileChooser saveFileChooser = new JFileChooser();
+      JFileChooser saveFileChooser = new JFileChooser(
+          new File(Game.getCustomGovPath()));
       saveFileChooser.setFileFilter(new FileNameExtensionFilter(
           "JSON Data file", "json"));
+      String fileName = getEditedGovernmentId().toLowerCase() + ".json";
+      saveFileChooser.setSelectedFile(
+          new File(Game.getCustomGovPath() + "/" + fileName));
       saveFileChooser.setDialogTitle("Save government file");
       int returnValue = saveFileChooser.showOpenDialog(this);
       if (returnValue == JFileChooser.APPROVE_OPTION) {
-        // Mo real function yet
+        File file = saveFileChooser.getSelectedFile();
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+          fos.write(buildJson().getBytes(StandardCharsets.UTF_8));
+          fos.flush();
+        } catch (FileNotFoundException e) {
+          ErrorLogger.log(e);
+        } catch (IOException e) {
+          ErrorLogger.log(e);
+        }
         SoundPlayer.playMenuSound();
       } else {
         SoundPlayer.playMenuDisabled();

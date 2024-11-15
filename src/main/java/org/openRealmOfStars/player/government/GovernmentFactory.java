@@ -18,12 +18,7 @@ package org.openRealmOfStars.player.government;
  */
 
 import java.util.HashMap;
-import java.util.Optional;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.openRealmOfStars.player.government.trait.GovTraitFactory;
 import org.openRealmOfStars.utilities.DataLoader;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
@@ -118,61 +113,3 @@ public final class GovernmentFactory {
     return governments.values().toArray(new Government[0]);
   }
 }
-
-/** Government loader */
-class GovernmentLoader extends DataLoader<String, Government> {
-
-  /**
-   * Parse Government from a JSON file.
-   * <p>
-   * JSON Government object must have following format:<ul>
-   * <li>ID : String</li>
-   * <li>Name : String</li>
-   * <li>RulerSelection : String</li>
-   * <li>RulerTitleMale : String (OPTINAL)</li>
-   * <li>RulerTitleFemale : String (OPTINAL)</li>
-   * <li>Traits : List of traits (OPTIONAL) </li>
-   * </ul>
-   * </p>
-   * @param jobj JSONObject to parse Government from
-   * @return Parsed Government or empty
-   */
-  @Override
-  protected Optional<Government> parseFromJson(final JSONObject jobj) {
-    try {
-      final var spaceRaceId = jobj.getString("ID");
-      final var name = jobj.getString("Name");
-      final var rulerSelection = jobj.getString("RulerSelection");
-      final var rulerTitleMale = jobj.optString("RulerTitleMale", "President");
-      final var rulerTitleFemale = jobj.optString("RulerTitleFemale",
-          "President");
-      Government tmp = new Government(spaceRaceId, name);
-      tmp.setRulerSelection(RulerSelection.getByString(rulerSelection));
-      tmp.setRulerTitleMale(rulerTitleMale);
-      tmp.setRulerTitleFemale(rulerTitleFemale);
-      var jsonTraits = jobj.optJSONArray("Traits", new JSONArray());
-      for (int i = 0; i < jsonTraits.length(); i++) {
-        String traitName = jsonTraits.getString(i);
-        GovTraitFactory.create(traitName).ifPresent(trait -> {
-          tmp.addTrait(trait);
-        });
-      }
-      return Optional.of(tmp);
-    } catch (JSONException e) {
-      ErrorLogger.log(e);
-    }
-
-    return Optional.empty();
-  }
-
-  @Override
-  protected String valueIdGetter(final Government value) {
-    return value.getId();
-  }
-
-  @Override
-  protected String typeNameGetter() {
-    return "Government";
-  }
-}
-

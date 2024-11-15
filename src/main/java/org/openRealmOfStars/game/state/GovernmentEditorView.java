@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,6 +38,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
@@ -52,7 +56,9 @@ import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.player.government.GovernmentFactory;
+import org.openRealmOfStars.player.government.GovernmentLoader;
 import org.openRealmOfStars.player.government.RulerSelection;
+import org.openRealmOfStars.player.government.trait.GovTrait;
 import org.openRealmOfStars.player.government.trait.GovTraitFactory;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
@@ -302,6 +308,7 @@ public class GovernmentEditorView extends BlackPanel {
       String fileName = getEditedGovernmentId().toLowerCase() + ".json";
       saveFileChooser.setSelectedFile(
           new File(Game.getCustomGovPath() + "/" + fileName));
+      saveFileChooser.setApproveButtonText("Save");
       saveFileChooser.setDialogTitle("Save government file");
       int returnValue = saveFileChooser.showOpenDialog(this);
       if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -313,6 +320,51 @@ public class GovernmentEditorView extends BlackPanel {
           ErrorLogger.log(e);
         } catch (IOException e) {
           ErrorLogger.log(e);
+        }
+        SoundPlayer.playMenuSound();
+      } else {
+        SoundPlayer.playMenuDisabled();
+      }
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_LOAD_GOVERNMENT)) {
+      JFileChooser loadFileChooser = new JFileChooser(
+          new File(Game.getCustomGovPath()));
+      loadFileChooser.setFileFilter(new FileNameExtensionFilter(
+          "JSON Data file", "json"));
+      String fileName = getEditedGovernmentId().toLowerCase() + ".json";
+      loadFileChooser.setSelectedFile(
+          new File(Game.getCustomGovPath() + "/" + fileName));
+      loadFileChooser.setApproveButtonText("Load");
+      loadFileChooser.setDialogTitle("Load government file");
+      int returnValue = loadFileChooser.showOpenDialog(this);
+      if (returnValue == JFileChooser.APPROVE_OPTION) {
+        GovernmentLoader loader = new GovernmentLoader();
+        File file = loadFileChooser.getSelectedFile();
+        try (FileInputStream fis = new FileInputStream(file)) {
+          JSONArray jsonArray = new JSONArray(new JSONTokener(fis));
+
+          for (var obj : jsonArray) {
+            if (!(obj instanceof JSONObject)) {
+              ErrorLogger.log("Malformed JSON file: " + file.getAbsolutePath());
+            }
+            var governmentOpt = loader.parseFromJson((JSONObject) obj);
+            if (governmentOpt.isEmpty()) {
+              ErrorLogger.log("Malformed JSON file: " + file.getAbsolutePath());
+            } else {
+              Government gov = governmentOpt.get();
+              governmentNameField.setText(gov.getName());
+              rulerSelectionCombo.setSelectedItem(gov.getRulerSelection());
+              rulerTitleMaleField.setText(gov.getRulerTitleMale());
+              rulerTitleFemaleField.setText(gov.getRulerTitleFemale());
+              traitPanel.uncheckAllTraits();
+              for (GovTrait trait : gov.getTraits()) {
+                traitPanel.checkTrait(trait.getId());
+                traitPanel.handleTraitSelection(trait.getId());
+              }
+            }
+          }
+        } catch (IOException e) {
+          ErrorLogger.log("Failed reading Government: " + e);
         }
         SoundPlayer.playMenuSound();
       } else {

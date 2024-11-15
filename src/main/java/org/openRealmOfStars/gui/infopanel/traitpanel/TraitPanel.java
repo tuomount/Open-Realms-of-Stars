@@ -126,6 +126,28 @@ public class TraitPanel extends InfoPanel {
   }
 
   /**
+   * Uncheck all trait boxes.
+   */
+  public void uncheckAllTraits() {
+    int points = 4;
+    traitValue.setText(TRAIT_VALUE_LABEL + points);
+    for (TraitCheckBox box : checkBoxes) {
+      box.setSelected(false);
+    }
+  }
+
+  /**
+   * Check trait box.
+   * @param traitId TraitID to check
+   */
+  public void checkTrait(final String traitId) {
+    for (TraitCheckBox box : checkBoxes) {
+      if (box.getTraitId().equals(traitId)) {
+        box.setSelected(true);
+      }
+    }
+  }
+  /**
    * Handle Trait selection.
    * @param traitId Trait ID which was selected.
    */

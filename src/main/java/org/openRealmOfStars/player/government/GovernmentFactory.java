@@ -19,7 +19,9 @@ package org.openRealmOfStars.player.government;
 
 import java.util.HashMap;
 
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.utilities.DataLoader;
+import org.openRealmOfStars.utilities.DataSources;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
@@ -95,9 +97,12 @@ public final class GovernmentFactory {
   private void init() {
     governments.clear();
     final var basePath = "resources/data/governments/";
-    final String[] files = {
-        "base", "custom"};
-    final var governmentsLoaded = loader.loadAll(governments, basePath, files);
+    String[] files = {
+        "base"};
+    int governmentsLoaded = loader.loadAll(governments, basePath, files);
+    files = DataSources.findJsonFilesInPath(Game.getCustomGovPath());
+    governmentsLoaded = governmentsLoaded + loader.loadAll(governments,
+        Game.getCustomGovPath() + "/", files);
     ErrorLogger.log("Governments loaded: " + governmentsLoaded);
   }
 

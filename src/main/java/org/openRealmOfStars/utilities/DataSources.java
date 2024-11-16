@@ -18,6 +18,7 @@ package org.openRealmOfStars.utilities;
  */
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -51,6 +52,33 @@ public final class DataSources {
    */
   public static Optional<URL> getDataUrl(final String relativeName) {
     return SINGLETON.getUrl(relativeName);
+  }
+
+  /**
+   * Find JSON files in certain path.
+   * @param path Path where to search
+   * @return Array of JSON files in path.
+   */
+  public static String[] findJsonFilesInPath(final String path) {
+    ArrayList<String> jsonInPath = new ArrayList<>();
+    File folder = new File(path);
+    File[] listOfFiles = folder.listFiles();
+    if (listOfFiles != null) {
+      for (File file : listOfFiles) {
+        if (file.isFile() && file.getAbsolutePath().endsWith(".json")) {
+          String parentPath;
+          try {
+            parentPath = file.getParentFile().getCanonicalPath();
+            String str = file.getCanonicalPath();
+            str = str.substring(parentPath.length() + 1, str.length() - 5);
+            jsonInPath.add(str);
+          } catch (IOException e) {
+            ErrorLogger.log("Error with path handling: " + e.getMessage());
+          }
+        }
+      }
+    }
+    return jsonInPath.toArray(new String[0]);
   }
 
   /** List of paths to try before fallback */
@@ -99,7 +127,16 @@ public final class DataSources {
    */
   private Optional<URL> getUrl(final String relativeName) {
     Objects.requireNonNull(relativeName);
-    // Search in external data directories first
+    // Search in absolute path first
+    File absFile = new File(relativeName);
+    if (absFile.exists() && absFile.isFile()) {
+      try {
+        return Optional.of(absFile.toURI().toURL());
+      } catch (MalformedURLException e) {
+        ErrorLogger.log(e);
+      }
+    }
+    // Search in external data directories second
     for (var basePath : shadowPaths) {
       final var file = new File(basePath, relativeName);
       if (file.exists() && file.isFile()) {
@@ -107,7 +144,6 @@ public final class DataSources {
           return Optional.of(file.toURI().toURL());
         } catch (MalformedURLException e) {
           ErrorLogger.log(e);
-          return Optional.empty();
         }
       }
     }

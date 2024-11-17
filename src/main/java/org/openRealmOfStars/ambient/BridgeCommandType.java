@@ -167,6 +167,7 @@ public enum BridgeCommandType {
       throw new IllegalArgumentException("Missing bridge command name.");
     }
   }
+
   /**
    * Get BridgeCommandType by String.
    * @param value String

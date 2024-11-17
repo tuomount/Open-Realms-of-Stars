@@ -1,7 +1,7 @@
 package org.openRealmOfStars.ambient;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2020-2021 Tuomo Untinen
+ * Copyright (C) 2020-2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -231,6 +231,23 @@ public class Bridge {
    */
   public String getUsername() {
     return username;
+  }
+
+  /**
+   * Get all Effect IDs in array.
+   * @return Array of Strings.
+   */
+  public static String[] getEffectIds() {
+    String[] effectList = {Bridge.EFFECT_WARM_WHITE, Bridge.EFFECT_DARKEST,
+        Bridge.EFFECT_RED_ALERT, Bridge.EFFECT_YELLOW_ALERT,
+        Bridge.EFFECT_NUKE, Bridge.EFFECT_FLOAT_IN_SPACE,
+        Bridge.EFFECT_GREEN_CONSOLE, Bridge.EFFECT_SPACE_CONSOLE,
+        Bridge.EFFECT_BRIGHT_CYAN, Bridge.EFFECT_BLUEISH_WHITE,
+        Bridge.EFFECT_DARK_ORANGE, Bridge.EFFECT_DARK_RED,
+        Bridge.EFFECT_PURPLE_DREAM, Bridge.EFFECT_FADE_IN,
+        Bridge.EFFECT_ORANGE_BLINK, Bridge.EFFECT_ORANGE_BLUE,
+        Bridge.EFFECT_GREY_BLUE, Bridge.EFFECT_JUNGLE};
+    return effectList;
   }
 
   /**

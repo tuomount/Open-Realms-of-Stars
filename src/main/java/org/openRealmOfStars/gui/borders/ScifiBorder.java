@@ -280,7 +280,7 @@ public class ScifiBorder extends AbstractBorder {
       g2d.drawImage(rightImage,
           x + width / 2 - textWidth / 2 + centerPiece.getWidth(), y, null);
 
-      g2d.setColor(GuiStatics.COLOR_GOLD_TRANS);
+      g2d.setColor(GuiStatics.getScifiBorderTextColor());
       g2d.setFont(GuiFonts.getFontCubellanSC());
       int offsetY = 0;
       if (hires) {

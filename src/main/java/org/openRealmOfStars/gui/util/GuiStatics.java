@@ -37,6 +37,7 @@ import org.openRealmOfStars.gui.scheme.BaseScheme;
 import org.openRealmOfStars.gui.scheme.ClassicScheme;
 import org.openRealmOfStars.gui.scheme.GreyScheme;
 import org.openRealmOfStars.gui.scheme.SchemeType;
+import org.openRealmOfStars.gui.scheme.YellowScheme;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -55,8 +56,10 @@ public final class GuiStatics {
 
   /** Classic scheme */
   public static final BaseScheme CLASSIC_SCHEME = new ClassicScheme();
-  /** Classic scheme */
+  /** Space grey scheme */
   public static final BaseScheme GREY_SCHEME = new GreyScheme();
+  /** Dangerous Yellow scheme */
+  public static final BaseScheme YELLOW_SCHEME = new YellowScheme();
   /** Scheme selection for UI. */
   private static BaseScheme schemeType = CLASSIC_SCHEME;
 
@@ -489,13 +492,7 @@ public final class GuiStatics {
   private static final BufferedImage TEMP_IMAGE = new BufferedImage(100, 100,
       BufferedImage.TYPE_4BYTE_ABGR);
 
-  /** Horizontal thumb */
-  public static final BufferedImage IMAGE_SCROLL_BAR_THUMB = IOUtilities
-      .loadImage("/resources/images/thumb.png");
 
-  /** Vertical thumb */
-  public static final BufferedImage IMAGE_SCROLL_BAR_THUMB2 = IOUtilities
-      .loadImage("/resources/images/thumb2.png");
 
   /** Teuthidae race selection image */
   public static final BufferedImage IMAGE_TEUTHIDAE_RACE = IOUtilities
@@ -926,6 +923,9 @@ public final class GuiStatics {
     if (schemeType == SchemeType.SPACE_GREY) {
       setSchemeType(GREY_SCHEME);
     }
+    if (schemeType == SchemeType.DANGEROUS_YELLOW) {
+      setSchemeType(YELLOW_SCHEME);
+    }
   }
 
   /**
@@ -952,6 +952,13 @@ public final class GuiStatics {
     return schemeType.getCoolSpaceColor();
   }
 
+  /**
+   * Get Scifi border text color.
+   * @return Color
+   */
+  public static Color getScifiBorderTextColor() {
+    return schemeType.getScifiBorderTextColor();
+  }
   /**
    * Get cool space color transparent.
    * @return Color
@@ -1063,6 +1070,22 @@ public final class GuiStatics {
    */
   public static BufferedImage getArrowRightPressed() {
     return schemeType.getArrowRightPressed();
+  }
+
+  /**
+   * Get horizontal thumb based on scheme.
+   * @return BufferedImage
+   */
+  public static BufferedImage getHorizontalThumb() {
+    return schemeType.getHorizontalThumb();
+  }
+
+  /**
+   * Get vertical thumb based on scheme.
+   * @return BufferedImage
+   */
+  public static BufferedImage getVerticalThumb() {
+    return schemeType.getVerticalThumb();
   }
 
 }

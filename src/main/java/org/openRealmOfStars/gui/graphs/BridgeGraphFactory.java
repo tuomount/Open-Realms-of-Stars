@@ -61,6 +61,18 @@ public final class BridgeGraphFactory {
     }
     return bridge;
   }
+
+  /**
+   * Get All Bridge graphics IDs in array.
+   * @return Array of Strings.
+   */
+  public static String[] getAllIds() {
+    if (!initialized) {
+      SINGLETON.init();
+      initialized = true;
+    }
+    return SINGLETON.mapForBridges.keySet().toArray(new String[0]);
+  }
   /**
    * Constructor for bridge graph factory
    */

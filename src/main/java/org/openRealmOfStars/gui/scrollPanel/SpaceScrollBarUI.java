@@ -103,7 +103,7 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
           - decrButton.getHeight();
       y = y + distance * scrollbar.getValue()
           / (scrollbar.getMaximum() - scrollbar.getMinimum());
-      int picHeight = GuiStatics.IMAGE_SCROLL_BAR_THUMB.getHeight();
+      int picHeight = GuiStatics.getHorizontalThumb().getHeight();
       int endHeight = thumbBounds.height / 2;
       int middleLen = BAR_LEN;
       int bars = 0;
@@ -121,17 +121,17 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
           }
         }
       }
-      if (endHeight > GuiStatics.IMAGE_SCROLL_BAR_THUMB.getHeight() - 16) {
-        endHeight = GuiStatics.IMAGE_SCROLL_BAR_THUMB.getHeight() - 16;
+      if (endHeight > GuiStatics.getHorizontalThumb().getHeight() - 16) {
+        endHeight = GuiStatics.getHorizontalThumb().getHeight() - 16;
       }
 
-      BufferedImage top = GuiStatics.IMAGE_SCROLL_BAR_THUMB.getSubimage(0, 0,
-          GuiStatics.IMAGE_SCROLL_BAR_THUMB.getWidth(), endHeight);
-      BufferedImage bottom = GuiStatics.IMAGE_SCROLL_BAR_THUMB.getSubimage(0,
-          GuiStatics.IMAGE_SCROLL_BAR_THUMB.getHeight() - endHeight,
-          GuiStatics.IMAGE_SCROLL_BAR_THUMB.getWidth(), endHeight);
-      BufferedImage middle = GuiStatics.IMAGE_SCROLL_BAR_THUMB.getSubimage(0,
-          16, GuiStatics.IMAGE_SCROLL_BAR_THUMB.getWidth(), middleLen);
+      BufferedImage top = GuiStatics.getHorizontalThumb().getSubimage(0, 0,
+          GuiStatics.getHorizontalThumb().getWidth(), endHeight);
+      BufferedImage bottom = GuiStatics.getHorizontalThumb().getSubimage(0,
+          GuiStatics.getHorizontalThumb().getHeight() - endHeight,
+          GuiStatics.getHorizontalThumb().getWidth(), endHeight);
+      BufferedImage middle = GuiStatics.getHorizontalThumb().getSubimage(0,
+          16, GuiStatics.getHorizontalThumb().getWidth(), middleLen);
       g.drawImage(top, 0, y, null);
       if (bars > 0) {
         for (int i = 0; i < bars; i++) {
@@ -147,7 +147,7 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
           - decrButton.getWidth();
       x = x + distance * scrollbar.getValue()
           / (scrollbar.getMaximum() - scrollbar.getMinimum());
-      int picWidth = GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getHeight();
+      int picWidth = GuiStatics.getVerticalThumb().getHeight();
       int endWidth = thumbBounds.width / 2;
       int middleLen = BAR_LEN;
       int bars = 0;
@@ -165,17 +165,17 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
           }
         }
       }
-      if (endWidth > GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getWidth() - 16) {
-        endWidth = GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getWidth() - 16;
+      if (endWidth > GuiStatics.getVerticalThumb().getWidth() - 16) {
+        endWidth = GuiStatics.getVerticalThumb().getWidth() - 16;
       }
 
-      BufferedImage left = GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getSubimage(0, 0,
-          endWidth, GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getHeight());
-      BufferedImage right = GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getSubimage(
-          GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getWidth() - endWidth, 0, endWidth,
-          GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getHeight());
-      BufferedImage middle = GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getSubimage(16,
-          0, middleLen, GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getHeight());
+      BufferedImage left = GuiStatics.getVerticalThumb().getSubimage(0, 0,
+          endWidth, GuiStatics.getVerticalThumb().getHeight());
+      BufferedImage right = GuiStatics.getVerticalThumb().getSubimage(
+          GuiStatics.getVerticalThumb().getWidth() - endWidth, 0, endWidth,
+          GuiStatics.getVerticalThumb().getHeight());
+      BufferedImage middle = GuiStatics.getVerticalThumb().getSubimage(16,
+          0, middleLen, GuiStatics.getVerticalThumb().getHeight());
       g.drawImage(left, x, 0, null);
       if (bars > 0) {
         for (int i = 0; i < bars; i++) {

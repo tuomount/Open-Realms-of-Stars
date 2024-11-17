@@ -83,6 +83,12 @@ public abstract class BaseScheme {
   public abstract Color getDeepSpaceActivityColor();
 
   /**
+   * Get scifi border text color
+   * @return Color
+   */
+  public abstract Color getScifiBorderTextColor();
+
+  /**
    * Get Info text color.
    * @return Color
    */
@@ -125,4 +131,14 @@ public abstract class BaseScheme {
    * @return BufferedImage
    */
   public abstract BufferedImage getArrowRightPressed();
+  /**
+   * Get Horizontal thumb for scroll bar.
+   * @return BufferedImage
+   */
+  public abstract BufferedImage getHorizontalThumb();
+  /**
+   * Get Vertical thumb for scroll bar.
+   * @return BufferedImage
+   */
+  public abstract BufferedImage getVerticalThumb();
 }

@@ -336,7 +336,8 @@ public class OptionsView extends BlackPanel {
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
     String[] uiScheme = {SchemeType.CLASSIC_SPACE_GREY_BLUE.toString(),
-        SchemeType.SPACE_GREY.toString()};
+        SchemeType.SPACE_GREY.toString(),
+        SchemeType.DANGEROUS_YELLOW.toString()};
 
     uiSchemeSelection = new JComboBox<>(uiScheme);
     uiSchemeSelection.setBackground(GuiStatics.getDeepSpaceDarkColor());

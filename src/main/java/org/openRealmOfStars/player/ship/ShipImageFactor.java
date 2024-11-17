@@ -62,7 +62,19 @@ public final class ShipImageFactor {
     }
     return image;
   }
+
   /**
+   * Get All Ship Image IDs
+   * @return Array of strings
+   */
+  public static String[] getAllIds() {
+    if (!initialized) {
+      SINGLETON.init();
+      initialized = true;
+    }
+    return SINGLETON.mapForShipImages.keySet().toArray(new String[0]);
+  }
+/**
    * Constructor for bridge graph factory
    */
   private ShipImageFactor() {

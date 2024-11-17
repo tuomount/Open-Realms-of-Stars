@@ -30,7 +30,11 @@ public enum SchemeType {
   /**
    * Grey scheme
    */
-  SPACE_GREY;
+  SPACE_GREY,
+  /**
+   * DangerousYellow
+   */
+  DANGEROUS_YELLOW;
 
   @Override
   public String toString() {
@@ -38,6 +42,7 @@ public enum SchemeType {
       default:
       case CLASSIC_SPACE_GREY_BLUE: return "ClassicSpaceGreyBlue";
       case SPACE_GREY: return "SpaceGrey";
+      case DANGEROUS_YELLOW: return "DangerousYellow";
     }
   }
 
@@ -47,6 +52,9 @@ public enum SchemeType {
    * @return UI Scheme type
    */
   public static SchemeType getByName(final String name) {
+    if (name.equals(DANGEROUS_YELLOW.toString())) {
+      return DANGEROUS_YELLOW;
+    }
     if (name.equals(CLASSIC_SPACE_GREY_BLUE.toString())) {
       return CLASSIC_SPACE_GREY_BLUE;
     }

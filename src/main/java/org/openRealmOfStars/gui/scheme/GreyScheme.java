@@ -85,6 +85,10 @@ public class GreyScheme extends BaseScheme {
    */
   public static final Color COLOR_DEEP_SPACE_ACT = new Color(43, 43, 60);
 
+  /** Scifi border text */
+  public static final Color COLOR_SCIFI_BORDER_TEXT = new Color(210, 181, 44,
+      230);
+
   /**
    * Icon for small scroll up.
    */
@@ -135,6 +139,15 @@ public class GreyScheme extends BaseScheme {
   private BufferedImage scrollRightPressed;
 
   /**
+   * Image for horizontal thumb for scroll bar
+   */
+  private BufferedImage horizontalThumb;
+  /**
+   * Image for vertical thumb for scroll bar
+   */
+  private BufferedImage verticalThumb;
+
+  /**
    * Initialize Grey Scheme.
    */
   public GreyScheme() {
@@ -166,6 +179,8 @@ public class GreyScheme extends BaseScheme {
         .loadImage("/resources/images/grey_right_arrow.png");
     scrollRightPressed = IOUtilities.loadImage(
         "/resources/images/grey_right_arrow_pressed.png");
+    horizontalThumb = IOUtilities.loadImage("/resources/images/thumb.png");
+    verticalThumb = IOUtilities.loadImage("/resources/images/thumb2.png");
   }
   @Override
   public Color getPanelBackground() {
@@ -267,4 +282,20 @@ public class GreyScheme extends BaseScheme {
   public Color getDeepSpaceActivityColor() {
     return COLOR_DEEP_SPACE_ACT;
   }
+
+  @Override
+  public Color getScifiBorderTextColor() {
+    return COLOR_SCIFI_BORDER_TEXT;
+  }
+
+  @Override
+  public BufferedImage getHorizontalThumb() {
+    return horizontalThumb;
+  }
+
+  @Override
+  public BufferedImage getVerticalThumb() {
+    return verticalThumb;
+  }
+
 }

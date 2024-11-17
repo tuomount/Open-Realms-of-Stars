@@ -1,7 +1,7 @@
 package org.openRealmOfStars.gui.scheme;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2023 Tuomo Untinen
+ * Copyright (C) 2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,69 +26,69 @@ import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
-* Classic Scheme for UI.
+* Grey Scheme for UI.
 *
 */
-public class ClassicScheme extends BaseScheme {
+public class YellowScheme extends BaseScheme {
 
   /**
    * Panel background
    */
-  private static final Color COLOR_SPACE_GREY_BLUE = new Color(81, 87, 133,
+  private static final Color COLOR_SPACE_GREY = new Color(76, 76, 76,
       255);
 
   /**
    * Cool space color
    */
-  public static final Color COLOR_COOL_SPACE_BLUE = new Color(88, 210, 255);
+  public static final Color COLOR_COOL_SPACE_YELLOW = new Color(247, 233, 0);
   /**
-   * Cool space blue, opacity 128
+   * Cool space color, opacity 128
    */
-  public static final Color COLOR_COOL_SPACE_BLUE_TRANS = new Color(88, 210,
-      255, 128);
+  public static final Color COLOR_COOL_SPACE_YELLOW_TRANS = new Color(247, 233,
+      0, 128);
   /**
-   * Cool space blue dark
+   * Cool space color dark
    */
-  public static final Color COLOR_COOL_SPACE_BLUE_DARK = new Color(25, 120,
-      193);
+  public static final Color COLOR_COOL_SPACE_ORANGE = new Color(254, 194,
+      0);
   /**
-   * Cool space blue dark, opacity 128
+   * Cool space color darker
    */
-  public static final Color COLOR_COOL_SPACE_BLUE_DARK_TRANS = new Color(25,
-      120, 193, 128);
+  public static final Color COLOR_COOL_SPACE_ORANGE_DARK = new Color(255, 154,
+      0);
   /**
-   * Cool space blue darker
+   * Cool space color darker transparent
    */
-  public static final Color COLOR_COOL_SPACE_BLUE_DARKER = new Color(20, 110,
-      180);
-
+  public static final Color COLOR_COOL_SPACE_ORANGE_DARK_TRANSPARENT
+      = new Color(255, 154, 0, 128);
   /**
    * Green text
    */
-  public static final Color COLOR_GREEN_TEXT = new Color(4, 186, 0, 255);
+  public static final Color COLOR_GREEN_TEXT = new Color(163, 255, 0, 255);
   /**
    * Green text dark one
    */
-  public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
-
-
-  /**
-   * Deep space purple
-   */
-  public static final Color COLOR_DEEP_SPACE_PURPLE = new Color(47, 27, 92);
+  public static final Color COLOR_GREEN_TEXT_DARK = new Color(191, 89, 7, 255);
 
   /**
-   * Deep space purple dark
+   * Deep space gray
    */
-  public static final Color COLOR_DEEP_SPACE_PURPLE_DARK = new Color(25, 9, 61);
+  public static final Color COLOR_DEEP_SPACE_GRAY = new Color(44, 44, 44);
+
+  /**
+   * Deep space gray dark
+   */
+  public static final Color COLOR_DEEP_SPACE_GRAY_DARK = new Color(22, 22, 22);
+
   /**
    * Deep Space Blue
    */
-  public static final Color COLOR_DEEP_SPACE_BLUE = new Color(33, 33, 208);
+  public static final Color COLOR_DEEP_SPACE_ACT = new Color(218, 141, 14);
 
   /** Scifi border text */
-  public static final Color COLOR_SCIFI_BORDER_TEXT = new Color(210, 181, 44,
+  public static final Color COLOR_SCIFI_BORDER_TEXT = new Color(222, 188, 0,
       230);
+
   /**
    * Icon for small scroll up.
    */
@@ -137,6 +137,7 @@ public class ClassicScheme extends BaseScheme {
    * Image for small scroll right pressed.
    */
   private BufferedImage scrollRightPressed;
+
   /**
    * Image for horizontal thumb for scroll bar
    */
@@ -149,59 +150,58 @@ public class ClassicScheme extends BaseScheme {
   /**
    * Initialize Grey Scheme.
    */
-  public ClassicScheme() {
-    smallScrollUp = Icons.loadSmallIcon("/resources/images/classic_arrows.png",
+  public YellowScheme() {
+    smallScrollUp = Icons.loadSmallIcon("/resources/images/yellow_arrows.png",
         0, 0, Icons.ICON_SCROLL_UP);
     smallScrollUpPressed = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 0, 1,
+        "/resources/images/yellow_arrows.png", 0, 1,
         Icons.ICON_SCROLL_UP_PRESSED);
     smallScrollDown = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 1, 0, Icons.ICON_SCROLL_DOWN);
+        "/resources/images/yellow_arrows.png", 1, 0, Icons.ICON_SCROLL_DOWN);
     smallScrollDownPressed = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 1, 1,
+        "/resources/images/yellow_arrows.png", 1, 1,
         Icons.ICON_SCROLL_DOWN_PRESSED);
     smallScrollLeft = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 2, 0, Icons.ICON_SCROLL_LEFT);
+        "/resources/images/yellow_arrows.png", 2, 0, Icons.ICON_SCROLL_LEFT);
     smallScrollLeftPressed = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 2, 1,
+        "/resources/images/yellow_arrows.png", 2, 1,
         Icons.ICON_SCROLL_LEFT_PRESSED);
     smallScrollRight = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 3, 0, Icons.ICON_SCROLL_RIGHT);
+        "/resources/images/yellow_arrows.png", 3, 0, Icons.ICON_SCROLL_RIGHT);
     smallScrollRightPressed = Icons.loadSmallIcon(
-        "/resources/images/classic_arrows.png", 3, 1,
+        "/resources/images/yellow_arrows.png", 3, 1,
         Icons.ICON_SCROLL_RIGHT_PRESSED);
     scrollLeft = IOUtilities
-        .loadImage("/resources/images/left_arrow.png");
+        .loadImage("/resources/images/yellow_left_arrow.png");
     scrollLeftPressed = IOUtilities.loadImage(
-        "/resources/images/left_arrow_pressed.png");
+        "/resources/images/yellow_left_arrow_pressed.png");
     scrollRight = IOUtilities
-        .loadImage("/resources/images/right_arrow.png");
+        .loadImage("/resources/images/yellow_right_arrow.png");
     scrollRightPressed = IOUtilities.loadImage(
-        "/resources/images/right_arrow_pressed.png");
+        "/resources/images/yellow_right_arrow_pressed.png");
     horizontalThumb = IOUtilities.loadImage(
-        "/resources/images/classic_thumb.png");
+        "/resources/images/yellow_thumb.png");
     verticalThumb = IOUtilities.loadImage(
-        "/resources/images/classic_thumb2.png");
+        "/resources/images/yellow_thumb2.png");
   }
-
   @Override
   public Color getPanelBackground() {
-    return COLOR_SPACE_GREY_BLUE;
+    return COLOR_SPACE_GREY;
   }
 
   @Override
   public SchemeType getType() {
-    return SchemeType.CLASSIC_SPACE_GREY_BLUE;
+    return SchemeType.DANGEROUS_YELLOW;
   }
 
   @Override
   public Color getCoolSpaceColor() {
-    return COLOR_COOL_SPACE_BLUE;
+    return COLOR_COOL_SPACE_YELLOW;
   }
 
   @Override
   public Color getCoolSpaceColorTransparent() {
-    return COLOR_COOL_SPACE_BLUE_TRANS;
+    return COLOR_COOL_SPACE_YELLOW_TRANS;
   }
 
   @Override
@@ -216,24 +216,22 @@ public class ClassicScheme extends BaseScheme {
 
   @Override
   public Color getCoolSpaceColorDark() {
-    return COLOR_COOL_SPACE_BLUE_DARK;
+    return COLOR_COOL_SPACE_ORANGE;
   }
 
   @Override
   public Color getCoolSpaceColorDarker() {
-    return COLOR_COOL_SPACE_BLUE_DARKER;
+    return COLOR_COOL_SPACE_ORANGE_DARK;
   }
 
   @Override
   public Color getDeepSpaceColor() {
-    return COLOR_DEEP_SPACE_PURPLE;
+    return COLOR_DEEP_SPACE_GRAY;
   }
-
   @Override
   public Color getDeepSpaceDarkColor() {
-    return COLOR_DEEP_SPACE_PURPLE_DARK;
+    return COLOR_DEEP_SPACE_GRAY_DARK;
   }
-
   @Override
   public Icon16x16 getSmallArrowIcon(final String name) {
     if (name.equals(Icons.ICON_SCROLL_UP)) {
@@ -278,17 +276,14 @@ public class ClassicScheme extends BaseScheme {
   public BufferedImage getArrowRightPressed() {
     return scrollRightPressed;
   }
-
   @Override
   public Color getCoolSpaceColorDarkerTransparent() {
-    return COLOR_COOL_SPACE_BLUE_DARK_TRANS;
+    return COLOR_COOL_SPACE_ORANGE_DARK_TRANSPARENT;
   }
-
   @Override
   public Color getDeepSpaceActivityColor() {
-    return COLOR_DEEP_SPACE_BLUE;
+    return COLOR_DEEP_SPACE_ACT;
   }
-
   @Override
   public Color getScifiBorderTextColor() {
     return COLOR_SCIFI_BORDER_TEXT;
@@ -303,6 +298,5 @@ public class ClassicScheme extends BaseScheme {
   public BufferedImage getVerticalThumb() {
     return verticalThumb;
   }
-
 
 }

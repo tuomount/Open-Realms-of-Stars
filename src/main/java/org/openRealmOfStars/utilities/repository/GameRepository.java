@@ -38,10 +38,6 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 */
 public class GameRepository {
 
-  /**
-   * Default save game folder name
-   */
-  public static final String DEFAULT_SAVE_FOLDER = "saves";
 
   /**
    * Save game for certain file name

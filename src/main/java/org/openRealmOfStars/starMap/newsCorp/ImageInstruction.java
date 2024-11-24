@@ -30,7 +30,7 @@ import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.SpaceRaceUtility;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
 *

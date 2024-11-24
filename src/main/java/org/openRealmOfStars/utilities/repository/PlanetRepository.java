@@ -34,7 +34,7 @@ import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.starMap.planet.status.AppliedStatus;
 import org.openRealmOfStars.starMap.planet.status.TimedStatus;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

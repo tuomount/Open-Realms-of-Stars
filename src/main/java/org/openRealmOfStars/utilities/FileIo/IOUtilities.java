@@ -1,4 +1,4 @@
-package org.openRealmOfStars.utilities;
+package org.openRealmOfStars.utilities.FileIo;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016-2020 Tuomo Untinen
@@ -29,6 +29,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import javax.imageio.ImageIO;
+
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
  *
@@ -103,7 +105,7 @@ public final class IOUtilities {
       dir.mkdir();
     }
     String filename = "Screenshot-" + System.currentTimeMillis() + ".png";
-    File file = new File("screenshots/" + filename);
+    File file = new File(Folders.getScreenShotPath() + "/" + filename);
     try {
       ImageIO.write(image, "png", file);
     } catch (IOException e) {
@@ -265,7 +267,7 @@ public final class IOUtilities {
   public static int convertSigned16BitsToInt(final int hi, final int lo) {
     int value = (hi << 8) + lo;
     short temp = (short) value;
-    return (int) temp;
+    return temp;
   }
   /**
    * Read signed 16 bits to int from input stream. It assumes that

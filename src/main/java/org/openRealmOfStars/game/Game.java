@@ -152,7 +152,8 @@ import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.GenericFileFilter;
+import org.openRealmOfStars.utilities.FileIo.Folders;
+import org.openRealmOfStars.utilities.FileIo.GenericFileFilter;
 import org.openRealmOfStars.utilities.repository.ConfigFileRepository;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
@@ -413,12 +414,6 @@ public class Game implements ActionListener {
    */
   private static boolean mainMethodCalled;
 
-  /** User folder */
-  private static String userFolder;
-  /** Custom government folder */
-  private static final String CUSTOM_GOV_FOLDER = "/custom/government";
-  /** Custom space race folder */
-  private static final String CUSTOM_RACE_FOLDER = "/custom/spacerace";
   /**
    * Ambient light bridge
    */
@@ -1527,7 +1522,7 @@ public class Game implements ActionListener {
    */
   public boolean loadSavedGame(final String filename) {
     GameRepository repository = new GameRepository();
-    starMap = repository.loadGame(GameRepository.DEFAULT_SAVE_FOLDER,
+    starMap = repository.loadGame(Folders.getSavegamePath(),
                                   filename);
     return setLoadedGame(starMap);
   }
@@ -2447,7 +2442,7 @@ public class Game implements ActionListener {
     } catch (IOException e1) {
       ErrorLogger.log(e1);
     }
-    File folder = new File("saves");
+    File folder = new File(Folders.getSavegamePath());
     File[] files = folder.listFiles(new GenericFileFilter(".save"));
     if (files == null) {
       files = new File[0];
@@ -2459,50 +2454,13 @@ public class Game implements ActionListener {
         System.err.println("Failed upgrade save file: "
             + files[i].getName());
       } else {
-        repository.saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
+        repository.saveGame(Folders.getSavegamePath(),
             files[i].getName(), game.getStarMap());
         System.out.println(files[i].getName() + " saved!");
       }
     }
   }
 
-  /**
-   * Init folders. Return null string if everything went fine.
-   * Otherwise returns error message.
-   * @return Null or error message.
-   */
-  public static String initFolders() {
-    userFolder = System.getProperty("user.home");
-    userFolder = userFolder + "/.oros";
-    try {
-      File path = new File(userFolder);
-      if (!path.exists() && !path.mkdirs()) {
-        return "Could not create .oros folder.";
-      }
-      path = new File(userFolder + CUSTOM_GOV_FOLDER);
-      if (!path.exists() && !path.mkdirs()) {
-        return "Could not create custom government folder.";
-      }
-      path = new File(userFolder + CUSTOM_RACE_FOLDER);
-      if (!path.exists() && !path.mkdirs()) {
-        return "Could not create custom space race folder.";
-      }
-    } catch (SecurityException e) {
-      return "Creating folder failed: " + e.getMessage();
-    }
-    return null;
-  }
-
-  /**
-   * Get Path for Custom government path
-   * @return Path for custom governments.
-   */
-  public static String getCustomGovPath() {
-    if (userFolder == null) {
-      initFolders();
-    }
-    return userFolder + CUSTOM_GOV_FOLDER;
-  }
   /**
    * Main method to run the game
    * @param args from Command line
@@ -2532,7 +2490,7 @@ public class Game implements ActionListener {
         System.out.println("Debugging enabled.");
         ErrorLogger.enabledDebugging();
       }
-      String error = initFolders();
+      String error = Folders.initFolders();
       if (error != null) {
         ErrorLogger.log(error);
         return;
@@ -3401,7 +3359,7 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
         SoundPlayer.playMenuSound();
         new GameRepository()
-        .saveGame(GameRepository.DEFAULT_SAVE_FOLDER, "autosave.save", starMap);
+        .saveGame(Folders.getSavegamePath(), "autosave.save", starMap);
         if (needForHumanVotingSelection()) {
           changeGameState(GameState.VOTING_SELECTION_VIEW);
         } else {

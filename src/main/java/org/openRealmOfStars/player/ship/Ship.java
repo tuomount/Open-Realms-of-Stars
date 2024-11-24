@@ -35,7 +35,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.utilities.DiceGenerator;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
  *

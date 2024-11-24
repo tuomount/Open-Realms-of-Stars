@@ -52,7 +52,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
 *

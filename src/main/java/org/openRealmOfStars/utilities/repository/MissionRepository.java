@@ -23,7 +23,7 @@ import org.openRealmOfStars.ai.mission.MissionType;
 import org.openRealmOfStars.player.leader.EspionageMission;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

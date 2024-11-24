@@ -28,7 +28,7 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.labels.StarFieldTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
  *

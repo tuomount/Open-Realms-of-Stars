@@ -25,8 +25,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Optional;
 
-import org.openRealmOfStars.utilities.DataSources;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.FileIo.DataSources;
 
 /**
  * Manages loading, caching and scaling of GUI fonts.

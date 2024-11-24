@@ -23,7 +23,7 @@ import java.io.IOException;
 
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
 *

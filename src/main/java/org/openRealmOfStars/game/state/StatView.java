@@ -61,6 +61,7 @@ import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.utilities.FileIo.Folders;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
@@ -996,7 +997,7 @@ public class StatView extends BlackPanel {
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SNOWMAN_ACTIVATE)) {
       SoundPlayer.playMenuSound();
-      new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
+      new GameRepository().saveGame(Folders.getSavegamePath(),
           "snowman.save", starMap);
       starMap.getPlayerByIndex(0).setHuman(false);
       starMap.getPlayerByIndex(0).setStrategy(

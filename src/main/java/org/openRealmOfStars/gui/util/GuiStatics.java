@@ -40,7 +40,7 @@ import org.openRealmOfStars.gui.scheme.SchemeType;
 import org.openRealmOfStars.gui.scheme.YellowScheme;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.player.race.SpaceRace;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
  *

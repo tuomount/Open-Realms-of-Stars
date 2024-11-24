@@ -19,7 +19,7 @@ package org.openRealmOfStars.utilities.repository;
 
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Sun;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

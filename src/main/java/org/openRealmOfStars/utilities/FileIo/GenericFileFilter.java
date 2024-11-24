@@ -1,4 +1,4 @@
-package org.openRealmOfStars.utilities;
+package org.openRealmOfStars.utilities.FileIo;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2016 Tuomo Untinen

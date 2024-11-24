@@ -1,4 +1,4 @@
-package org.openRealmOfStars.utilities;
+package org.openRealmOfStars.utilities.FileIo;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2023 BottledByte
@@ -26,6 +26,7 @@ import java.util.Optional;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
  * Abstract class for loading of type V, uniquely identified by type K,

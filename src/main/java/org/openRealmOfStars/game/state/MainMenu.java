@@ -37,7 +37,8 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.utilities.DiceGenerator;
-import org.openRealmOfStars.utilities.GenericFileFilter;
+import org.openRealmOfStars.utilities.FileIo.Folders;
+import org.openRealmOfStars.utilities.FileIo.GenericFileFilter;
 
 /**
  *
@@ -93,7 +94,7 @@ public class MainMenu extends BlackPanel {
         GameCommands.COMMAND_CONTINUE_GAME);
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    File folder = new File("saves");
+    File folder = new File(Folders.getSavegamePath());
     if (folder.exists()) {
       File[] files = folder.listFiles(new GenericFileFilter(".save"));
       if (files == null) {

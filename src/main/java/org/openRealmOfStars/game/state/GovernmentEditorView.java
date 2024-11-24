@@ -61,6 +61,7 @@ import org.openRealmOfStars.player.government.RulerSelection;
 import org.openRealmOfStars.player.government.trait.GovTrait;
 import org.openRealmOfStars.player.government.trait.GovTraitFactory;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.FileIo.Folders;
 
 /**
  * Editor for government JSON files with UI.
@@ -302,12 +303,12 @@ public class GovernmentEditorView extends BlackPanel {
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SAVE_GOVERNMENT)) {
       JFileChooser saveFileChooser = new JFileChooser(
-          new File(Game.getCustomGovPath()));
+          new File(Folders.getCustomGovPath()));
       saveFileChooser.setFileFilter(new FileNameExtensionFilter(
           "JSON Data file", "json"));
       String fileName = getEditedGovernmentId().toLowerCase() + ".json";
       saveFileChooser.setSelectedFile(
-          new File(Game.getCustomGovPath() + "/" + fileName));
+          new File(Folders.getCustomGovPath() + "/" + fileName));
       saveFileChooser.setApproveButtonText("Save");
       saveFileChooser.setDialogTitle("Save government file");
       int returnValue = saveFileChooser.showOpenDialog(this);
@@ -328,12 +329,12 @@ public class GovernmentEditorView extends BlackPanel {
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_LOAD_GOVERNMENT)) {
       JFileChooser loadFileChooser = new JFileChooser(
-          new File(Game.getCustomGovPath()));
+          new File(Folders.getCustomGovPath()));
       loadFileChooser.setFileFilter(new FileNameExtensionFilter(
           "JSON Data file", "json"));
       String fileName = getEditedGovernmentId().toLowerCase() + ".json";
       loadFileChooser.setSelectedFile(
-          new File(Game.getCustomGovPath() + "/" + fileName));
+          new File(Folders.getCustomGovPath() + "/" + fileName));
       loadFileChooser.setApproveButtonText("Load");
       loadFileChooser.setDialogTitle("Load government file");
       int returnValue = loadFileChooser.showOpenDialog(this);

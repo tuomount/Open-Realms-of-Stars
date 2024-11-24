@@ -22,8 +22,8 @@ import java.util.Optional;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openRealmOfStars.utilities.DataLoader;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.FileIo.DataLoader;
 
 /**
  * Ship Image factor. */

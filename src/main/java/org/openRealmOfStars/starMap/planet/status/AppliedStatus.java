@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
  * Represents status that can be applied to a Planet.

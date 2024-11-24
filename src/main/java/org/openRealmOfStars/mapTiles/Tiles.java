@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.openRealmOfStars.starMap.SunType;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
  *

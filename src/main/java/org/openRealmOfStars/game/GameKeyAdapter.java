@@ -32,7 +32,8 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.Folders;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
@@ -140,7 +141,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
             && !game.getSaveGameFile().equals("autosave.save")) {
           saveFilename = game.getSaveGameFile();
         }
-        new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
+        new GameRepository().saveGame(Folders.getSavegamePath(),
                                       saveFilename, game.getStarMap());
         game.changeGameState(GameState.MAIN_MENU);
         return true;

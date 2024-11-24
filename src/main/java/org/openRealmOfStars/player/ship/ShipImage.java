@@ -22,7 +22,7 @@ import java.awt.image.RasterFormatException;
 
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
  * Ship image for 64x64 images read from single file

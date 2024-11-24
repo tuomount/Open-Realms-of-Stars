@@ -24,8 +24,8 @@ import java.util.Optional;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openRealmOfStars.utilities.DataLoader;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.FileIo.DataLoader;
 
 /**
  * Creates {@link RaceTrait}s, which it loaded from data files.

@@ -32,9 +32,9 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.leader.NameGeneratorType;
 import org.openRealmOfStars.player.race.trait.TraitFactory;
-import org.openRealmOfStars.utilities.DataLoader;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.FileIo.DataLoader;
 
 /** SpaceRace Factory which reads space races from JSON. */
 public final class SpaceRaceFactory {

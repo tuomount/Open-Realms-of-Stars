@@ -25,9 +25,9 @@ import java.util.Optional;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openRealmOfStars.player.race.SpaceRace;
-import org.openRealmOfStars.utilities.DataLoader;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.FileIo.DataLoader;
 
 /**
  * Factory for creating {@link SpeechLine}s

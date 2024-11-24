@@ -1,4 +1,4 @@
-package org.openRealmOfStars.utilities;
+package org.openRealmOfStars.utilities.FileIo;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2023 BottledByte
@@ -25,6 +25,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
+
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
  * Class for looking-up files in various data sources.

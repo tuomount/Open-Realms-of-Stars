@@ -81,7 +81,7 @@ import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 import org.openRealmOfStars.utilities.namegenerators.UnrealPlanetNameGenerator;
 import org.openRealmOfStars.utilities.repository.NewsCorpRepository;
 import org.openRealmOfStars.utilities.repository.PlanetRepository;

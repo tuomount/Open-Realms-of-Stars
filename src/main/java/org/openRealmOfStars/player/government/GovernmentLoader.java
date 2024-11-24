@@ -23,8 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openRealmOfStars.player.government.trait.GovTraitFactory;
-import org.openRealmOfStars.utilities.DataLoader;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.FileIo.DataLoader;
 
 /** Government loader */
 public class GovernmentLoader extends DataLoader<String, Government> {

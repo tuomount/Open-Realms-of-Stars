@@ -22,7 +22,7 @@ import java.awt.image.RasterFormatException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
  *

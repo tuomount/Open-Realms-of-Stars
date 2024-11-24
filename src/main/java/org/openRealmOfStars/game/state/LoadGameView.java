@@ -46,8 +46,8 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
 import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.GenericFileFilter;
-import org.openRealmOfStars.utilities.repository.GameRepository;
+import org.openRealmOfStars.utilities.FileIo.Folders;
+import org.openRealmOfStars.utilities.FileIo.GenericFileFilter;
 
 /**
  *
@@ -95,7 +95,7 @@ public class LoadGameView extends BlackPanel {
     info.setTitle("Saved games");
     info.add(Box.createRigidArea(new Dimension(5, 5)));
 
-    File folder = new File("saves");
+    File folder = new File(Folders.getSavegamePath());
     File[] files = folder.listFiles(new GenericFileFilter(".save"));
     if (files == null) {
       files = new File[0];
@@ -104,7 +104,7 @@ public class LoadGameView extends BlackPanel {
     ArrayList<SavedGame> listOfGames = new ArrayList<>();
     for (int i = 0; i < files.length; i++) {
       try {
-        listOfGames.add(new SavedGame(GameRepository.DEFAULT_SAVE_FOLDER,
+        listOfGames.add(new SavedGame(Folders.getSavegamePath(),
                                  files[i].getName()));
       } catch (IOException e) {
         ErrorLogger.log("Failed reading save game " + files[i].getName());

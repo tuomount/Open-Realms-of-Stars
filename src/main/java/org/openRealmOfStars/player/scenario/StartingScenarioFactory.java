@@ -26,9 +26,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openRealmOfStars.starMap.planet.enums.TemperatureType;
 import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
-import org.openRealmOfStars.utilities.DataLoader;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.FileIo.DataLoader;
 
 /** Starting scenario factory */
 public final class StartingScenarioFactory {

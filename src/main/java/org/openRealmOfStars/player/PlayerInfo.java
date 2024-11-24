@@ -67,7 +67,7 @@ import org.openRealmOfStars.starMap.planet.enums.RadiationType;
 import org.openRealmOfStars.starMap.planet.enums.WorldType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 import org.openRealmOfStars.utilities.repository.DiplomacyRepository;
 
 /**

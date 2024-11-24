@@ -18,7 +18,8 @@ package org.openRealmOfStars.gui.graphs;
  */
 
 import java.awt.image.BufferedImage;
-import org.openRealmOfStars.utilities.IOUtilities;
+
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
  * Bridge Graphics containing actual buffered image for bridge and

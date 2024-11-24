@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.starMap.history.event.Event;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
 *

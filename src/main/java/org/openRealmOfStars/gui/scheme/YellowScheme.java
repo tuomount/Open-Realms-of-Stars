@@ -81,6 +81,12 @@ public class YellowScheme extends BaseScheme {
   public static final Color COLOR_DEEP_SPACE_GRAY_DARK = new Color(22, 22, 22);
 
   /**
+   * Deep space activation purple
+   */
+  public static final Color COLOR_DEEP_SPACE_ACTIVATION_BROWN = new Color(92,
+      78, 67);
+
+  /**
    * Deep Space Blue
    */
   public static final Color COLOR_DEEP_SPACE_ACT = new Color(218, 141, 14);
@@ -284,6 +290,12 @@ public class YellowScheme extends BaseScheme {
   public Color getDeepSpaceActivityColor() {
     return COLOR_DEEP_SPACE_ACT;
   }
+
+  @Override
+  public Color getActivationColor() {
+    return COLOR_DEEP_SPACE_ACTIVATION_BROWN;
+  }
+
   @Override
   public Color getScifiBorderTextColor() {
     return COLOR_SCIFI_BORDER_TEXT;

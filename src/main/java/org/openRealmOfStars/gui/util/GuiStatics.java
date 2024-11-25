@@ -910,6 +910,9 @@ public final class GuiStatics {
         GuiStatics.getCoolSpaceColor());
     UIManager.put("ToolTip.border", BorderFactory
         .createLineBorder(GuiStatics.getCoolSpaceColorDarker()));
+    UIManager.put("TabbedPane.selected", GuiStatics.getActivitionColor());
+    UIManager.put("ComboBox.selectionBackground",
+        GuiStatics.getActivitionColor());
   }
 
   /**
@@ -1029,6 +1032,14 @@ public final class GuiStatics {
    */
   public static Color getDeepSpaceActivityColor() {
     return schemeType.getDeepSpaceActivityColor();
+  }
+
+  /**
+   * Get Activation color
+   * @return Color
+   */
+  public static Color getActivitionColor() {
+    return schemeType.getActivationColor();
   }
 
   /**

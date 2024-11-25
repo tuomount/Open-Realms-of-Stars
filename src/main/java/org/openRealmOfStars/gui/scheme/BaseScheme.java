@@ -83,6 +83,12 @@ public abstract class BaseScheme {
   public abstract Color getDeepSpaceActivityColor();
 
   /**
+   * Get activation color.
+   * @return Color
+   */
+  public abstract Color getActivationColor();
+
+  /**
    * Get scifi border text color
    * @return Color
    */

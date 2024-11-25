@@ -81,6 +81,12 @@ public class GreyScheme extends BaseScheme {
   public static final Color COLOR_DEEP_SPACE_GRAY_DARK = new Color(38, 38, 65);
 
   /**
+   * Deep space activation purple
+   */
+  public static final Color COLOR_DEEP_SPACE_ACTIVATION_PURPLE = new Color(160,
+      164, 202);
+
+  /**
    * Deep Space Blue
    */
   public static final Color COLOR_DEEP_SPACE_ACT = new Color(43, 43, 60);
@@ -281,6 +287,11 @@ public class GreyScheme extends BaseScheme {
   @Override
   public Color getDeepSpaceActivityColor() {
     return COLOR_DEEP_SPACE_ACT;
+  }
+
+  @Override
+  public Color getActivationColor() {
+    return COLOR_DEEP_SPACE_ACTIVATION_PURPLE;
   }
 
   @Override

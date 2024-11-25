@@ -90,6 +90,17 @@ public final class Folders {
   }
 
   /**
+   * Get Open Realm of Stars user folder
+   * @return Path for user folder for Open Realm of Stars.
+   */
+  public static String getUserFolder() {
+    if (userFolder == null) {
+      initFolders();
+    }
+    return userFolder;
+  }
+
+  /**
    * Get Path for Screenshot folder
    * @return Path for screenshots.
    */

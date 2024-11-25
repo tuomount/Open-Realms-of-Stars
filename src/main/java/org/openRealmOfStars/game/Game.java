@@ -651,7 +651,7 @@ public class Game implements ActionListener {
    * default config file.
    */
   private void readConfigFile() {
-    File file = new File("oros.cfg");
+    File file = new File(Folders.getUserFolder() + "/oros.cfg");
     if (file.exists()) {
       try (FileInputStream fis = new FileInputStream(file)) {
         configFile = ConfigFileRepository.readConfigFile(fis);
@@ -686,7 +686,7 @@ public class Game implements ActionListener {
    * Write config file to oros.cfg.
    */
   private void writeConfigFile() {
-    File file = new File("oros.cfg");
+    File file = new File(Folders.getUserFolder() + "/oros.cfg");
     try (FileOutputStream fos = new FileOutputStream(file)) {
       ConfigFileRepository.writeConfigFile(fos, configFile);
     } catch (IOException e) {

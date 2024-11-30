@@ -82,6 +82,17 @@ public final class SpeechFactory {
   }
 
   /**
+   * Get Speeches
+   * @return Array of speeches ID.
+   */
+  public static String[] getAllIds() {
+    if (!SINGLETON.initialized) {
+      SINGLETON.init();
+      SINGLETON.initialized = true;
+    }
+    return SINGLETON.speechSets.keySet().toArray(new String[0]);
+  }
+  /**
    * Create SpeechLine of given type from given SpeechSet,
    * return generic text if not in SpeechSet
    * @param type SpeechType

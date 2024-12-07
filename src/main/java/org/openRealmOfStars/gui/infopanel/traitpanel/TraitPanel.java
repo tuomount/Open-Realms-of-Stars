@@ -29,6 +29,7 @@ import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.player.government.trait.GovTrait;
+import org.openRealmOfStars.player.race.trait.RaceTrait;
 
 /**
  * Trait panel for both government and space race editor.
@@ -109,6 +110,65 @@ public class TraitPanel extends InfoPanel {
       }
     }
     for (GovTrait trait : traits) {
+      TraitCheckBox checkBox = new TraitCheckBox(trait);
+      checkBox.addActionListener(listener);
+      checkBox.setActionCommand(GameCommands.COMMAND_GOV_TRAIT_SELECTED
+          + "+" + checkBox.getTraitId());
+      checkBoxes.add(checkBox);
+      TraitGroupPanel groupPanel = getOrCreateGroup(trait.getGroup());
+      groupPanel.addCheckBox(checkBox);
+    }
+    orderGroupsIntoColumn();
+    for (EmptyInfoPanel columnPanel : columns) {
+      traitsPane.add(columnPanel);
+    }
+    JScrollPane scroll = new JScrollPane(traitsPane);
+    this.add(scroll);
+  }
+
+  /**
+   * TraitPanel constructor.
+   * @param screenWidth Screen width
+   * @param traits Race Traits in array
+   * @param listener ActionListener
+   */
+  public TraitPanel(final int screenWidth, final RaceTrait[] traits,
+      final ActionListener listener) {
+    super();
+    this.setTitle("Race Traits");
+    groups = new ArrayList<>();
+    checkBoxes = new ArrayList<>();
+    columns = new ArrayList<>();
+    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    traitValue = new SpaceLabel(TRAIT_VALUE_LABEL + "4");
+    this.add(traitValue);
+    EmptyInfoPanel traitsPane = new EmptyInfoPanel();
+    if (screenWidth < 1280) {
+      traitsPane.setLayout(new GridLayout(0, 2));
+      maxColumns = 2;
+      for (int i = 0; i < maxColumns; i++) {
+        EmptyInfoPanel column = new EmptyInfoPanel();
+        column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
+        columns.add(column);
+      }
+    } else if (screenWidth < 1600) {
+      traitsPane.setLayout(new GridLayout(0, 3));
+      maxColumns = 3;
+      for (int i = 0; i < maxColumns; i++) {
+        EmptyInfoPanel column = new EmptyInfoPanel();
+        column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
+        columns.add(column);
+      }
+    } else {
+      traitsPane.setLayout(new GridLayout(0, 4));
+      maxColumns = 4;
+      for (int i = 0; i < maxColumns; i++) {
+        EmptyInfoPanel column = new EmptyInfoPanel();
+        column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
+        columns.add(column);
+      }
+    }
+    for (RaceTrait trait : traits) {
       TraitCheckBox checkBox = new TraitCheckBox(trait);
       checkBox.addActionListener(listener);
       checkBox.setActionCommand(GameCommands.COMMAND_GOV_TRAIT_SELECTED

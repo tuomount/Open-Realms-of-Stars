@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.race.trait;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2023 BottledByte
+ * Copyright (C) 2024 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -52,6 +53,8 @@ public final class RaceTrait {
   private String traitName;
   /** Description of the trait */
   private String description;
+  /** Group where trait belongs */
+  private String group;
   /** IDs of traits this trait conflicts with */
   private ArrayList<String> conflictsWithIds;
   /** How good (+) or bad (-) the trait is from gameplay perspective */
@@ -84,6 +87,7 @@ public final class RaceTrait {
     this.traitName = Objects.requireNonNull(name);
     this.description = Objects.requireNonNull(description);
     this.traitPoints = points;
+    this.group = ""; // Default is no group.
     this.conflictsWithIds = new ArrayList<>(conflictsWith);
   }
 
@@ -121,6 +125,22 @@ public final class RaceTrait {
    */
   public byte getPoints() {
     return traitPoints;
+  }
+
+  /**
+   * Get Trait group name
+   * @return the group
+   */
+  public String getGroup() {
+    return group;
+  }
+
+  /**
+   * Set trait group name.
+   * @param group the group to set
+   */
+  public void setGroup(final String group) {
+    this.group = group;
   }
 
   /**

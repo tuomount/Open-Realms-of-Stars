@@ -112,6 +112,11 @@ public class MainMenu extends BlackPanel {
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
     invisible.add(btn);
+    btn = new SpaceButton("Edit space race",
+        GameCommands.COMMAND_EDIT_SPACERACE);
+    btn.addActionListener(listener);
+    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    invisible.add(btn);
     btn = new SpaceButton("Edit government",
         GameCommands.COMMAND_EDIT_GOVERNMENT);
     btn.addActionListener(listener);

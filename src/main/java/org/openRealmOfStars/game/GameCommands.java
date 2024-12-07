@@ -72,6 +72,11 @@ public final class GameCommands {
   public static final String COMMAND_EDIT_GOVERNMENT = "EditGovernmentView";
 
   /**
+   * Edit space race command
+   */
+  public static final String COMMAND_EDIT_SPACERACE = "EditSpaceRaceView";
+
+  /**
    * Government trait selected.
    */
   public static final String COMMAND_GOV_TRAIT_SELECTED = "GovTraitSelected";

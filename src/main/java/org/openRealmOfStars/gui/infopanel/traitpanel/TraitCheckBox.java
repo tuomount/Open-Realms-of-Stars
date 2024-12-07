@@ -19,6 +19,7 @@ package org.openRealmOfStars.gui.infopanel.traitpanel;
 
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.player.government.trait.GovTrait;
+import org.openRealmOfStars.player.race.trait.RaceTrait;
 
 /**
  * Trait Check box based on SpaceCheckBox.
@@ -44,6 +45,26 @@ public class TraitCheckBox extends SpaceCheckBox {
    * @param trait Government Trait.
    */
   public TraitCheckBox(final GovTrait trait) {
+    super(trait.getName());
+    id = trait.getId();
+    name = trait.getName();
+    description = trait.getDescription();
+    group = trait.getGroup();
+    conflictsWithId = trait.getConflictsWithIds().toArray(new String[0]);
+    traitPoints = trait.getPoints();
+    String pointStr = "Cost: ";
+    if (traitPoints > 0) {
+      pointStr = pointStr + "+";
+    }
+    pointStr = pointStr + traitPoints;
+    this.setToolTipText(description + " " + pointStr);
+  }
+
+  /**
+   * Constructor for building check box for spacerace trait.
+   * @param trait Race Trait.
+   */
+  public TraitCheckBox(final RaceTrait trait) {
     super(trait.getName());
     id = trait.getId();
     name = trait.getName();

@@ -349,6 +349,12 @@ public class SpaceAnomaly {
           PlayerInfo board = map.getPlayerList().getSpacePiratePlayer();
           Fleet lair = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
               board, StarMap.ENEMY_PIRATE_LAIR);
+          if (lair == null) {
+            result.setText("Pirate ship was found on the deep space anchor."
+                + " Battle begins...");
+            lair = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
+                board, StarMap.ENEMY_PIRATE);
+          }
           Combat fight = new Combat(fleet, lair, info, board,
               map.getStarYear());
           result.setCombat(fight);

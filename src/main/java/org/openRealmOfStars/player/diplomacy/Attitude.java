@@ -65,15 +65,6 @@ public enum Attitude {
   }
 
   /**
-   * Get all Attitudes in array.
-   * @return Array of attitudes
-   */
-  public static Attitude[] getAllAttitudes() {
-    Attitude[] list = {AGGRESSIVE, DIPLOMATIC, SCIENTIFIC, MERCHANTICAL,
-        MILITARISTIC, EXPANSIONIST, BACKSTABBING, PEACEFUL, LOGICAL};
-    return list;
-  }
-  /**
    * Get Attitude name
    * @return String
    */

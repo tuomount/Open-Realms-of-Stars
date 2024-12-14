@@ -619,6 +619,33 @@ public final class GameCommands {
       "GovernmentEditorRulerSelect";
 
   /**
+   * Spacerace attitude selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_ATTITUDE_SELECT =
+      "SpaceRaceEditorAttitudeSelect";
+
+  /**
+   * Spacerace social system selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_SOCIAL_SELECT =
+      "SpaceRaceEditorSocialSelect";
+  /**
+   * Spacerace gender option selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_GENDER_SELECT =
+      "SpaceRaceEditorGenderSelect";
+  /**
+   * Spacerace speechset selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_SPEECH_SELECT =
+      "SpaceRaceEditorSpeechSelect";
+  /**
+   * Spacerace namegenerator selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_NAMEGEN_SELECT =
+      "SpaceRaceEditorNameGenSelect";
+
+  /**
    * Difficulty has changed in Galaxy Setup
    */
   public static final String COMMAND_DIFFICULT_SETUP = "DifficultSetup";

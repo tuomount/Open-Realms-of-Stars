@@ -24,13 +24,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-
+import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
@@ -45,6 +44,7 @@ import org.openRealmOfStars.gui.labels.SpaceComboBox;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.list.GenderOptionListRenderer;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.panels.ShipInteriorPanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.diplomacy.Attitude;
@@ -101,6 +101,10 @@ public class SpaceRaceEditorView extends BlackPanel {
    */
   private SpaceComboBox<NameGeneratorType> nameGenCombo;
   /**
+   * Ship interior panel, to show how space race looks.
+   */
+  private ShipInteriorPanel interiorPanel;
+  /**
    * Ruler title for male.
    */
   private JTextField rulerTitleMaleField;
@@ -108,6 +112,8 @@ public class SpaceRaceEditorView extends BlackPanel {
    * Ruler title for female.
    */
   private JTextField rulerTitleFemaleField;
+  /** Space race to be created */
+  private SpaceRace newRace;
   /**
    * Trait panel containing all the selectable traits.
    */
@@ -116,6 +122,10 @@ public class SpaceRaceEditorView extends BlackPanel {
    * Conflict with government ID.
    */
   private boolean conflictWithId = false;
+  /** Game object. */
+  private Game game;
+
+
   /**
    * Constructor for GovernmentEditorView.
    *
@@ -123,6 +133,17 @@ public class SpaceRaceEditorView extends BlackPanel {
    */
   public SpaceRaceEditorView(final ActionListener listener) {
     this.setLayout(new BorderLayout());
+    newRace = new SpaceRace("CUSTOM_TERRANS", "Custom Terrans",
+        "Custom Terran");
+    newRace.setBridgeId("Human");
+    newRace.setImage("resources/images/human_race.png");
+    newRace.setSpaceShipId("Human");
+    newRace.setRaceBridgeEffect(BridgeCommandType.BLUEISH_WHITE);
+    if (listener instanceof Game) {
+      game = (Game) listener;
+    } else {
+      game = null;
+    }
     InfoPanel mainPanel = new InfoPanel();
     mainPanel.setTitle("Space Race Editor");
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -132,6 +153,7 @@ public class SpaceRaceEditorView extends BlackPanel {
     tabs.setBackground(GuiStatics.getDeepSpaceDarkColor());
     tabs.add("Name and Traits", createSpaceRaceMainTab(listener));
     tabs.add("Behaviour", createBehaviourTab(listener));
+    tabs.add("Appearance", createAppearanceTab(listener));
     mainPanel.add(tabs);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
@@ -245,7 +267,7 @@ public class SpaceRaceEditorView extends BlackPanel {
     mainPanel.add(infoPanel);
     int screenWidth = 1024;
     if (listener instanceof Game) {
-      Game game = (Game) listener;
+      game = (Game) listener;
       screenWidth = game.getWidth();
     }
     traitPanel = new TraitPanel(screenWidth,
@@ -375,12 +397,42 @@ public class SpaceRaceEditorView extends BlackPanel {
   }
 
   /**
+   * Create Space Race appearance tab.
+   * @param listener Action Listener
+   * @return InfoPanel
+   */
+  private EmptyInfoPanel createAppearanceTab(final ActionListener listener) {
+    EmptyInfoPanel mainPanel = new EmptyInfoPanel();
+    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    InfoPanel infoPanel = new InfoPanel();
+    infoPanel.setTitle("New space race");
+    infoPanel.setLayout(new BoxLayout(infoPanel,
+        BoxLayout.Y_AXIS));
+    interiorPanel = new ShipInteriorPanel(newRace, null);
+    setAmbientEffect(newRace.getRaceBridgeEffect());
+    interiorPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    mainPanel.add(interiorPanel);
+    SpaceLabel label = new SpaceLabel("Default AI Attitude:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    return mainPanel;
+  }
+  /**
    * Get Government ID
    * @return GovernmentId.
    */
   private String getEditedSpaceRaceId() {
     String tmp = spaceRaceNameField.getText().toUpperCase().trim();
     return tmp.replaceAll(" ", "_");
+  }
+
+  /**
+   * Set Ambient light effect during edit.
+   * @param command BridgeCommandType.
+   */
+  private void setAmbientEffect(final BridgeCommandType command) {
+    if (game != null) {
+      game.setBridgeCommand(command);
+    }
   }
 
   /**

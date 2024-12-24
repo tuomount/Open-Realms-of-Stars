@@ -660,6 +660,11 @@ public final class GameCommands {
   public static final String COMMAND_SPACERACE_EDITOR_SHIP_SELECT =
       "SpaceRaceEditorShipSelect";
   /**
+   * Spacerace editor music select
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_MUSIC_SELECT =
+      "SpaceRaceEditorMusicSelect";
+  /**
    * Spacerace apply appearance
    */
   public static final String COMMAND_SPACERACE_EDITOR_APPLY_APPEARANCE =

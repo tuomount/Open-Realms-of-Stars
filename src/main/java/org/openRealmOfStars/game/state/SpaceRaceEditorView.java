@@ -21,6 +21,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -30,10 +31,13 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.openRealmOfStars.ambient.Bridge;
 import org.openRealmOfStars.ambient.BridgeCommandType;
+import org.openRealmOfStars.audio.music.MusicFileInfo;
+import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
@@ -136,6 +140,10 @@ public class SpaceRaceEditorView extends BlackPanel {
    */
   private SpaceComboBox<String> spaceShipIdCombo;
   /**
+   * Combobox for diplomacy music
+   */
+  private SpaceComboBox<MusicFileInfo> diplomacyMusicCombo;
+  /**
    * Space ship preview image.
    */
   private ImageLabel hullImage;
@@ -143,6 +151,10 @@ public class SpaceRaceEditorView extends BlackPanel {
    * Space ship hull label
    */
   private SpaceLabel hullNameLabel;
+  /**
+   * Space race description text.
+   */
+  private JTextArea descriptionText;
   /**
    * Ruler title for male.
    */
@@ -205,6 +217,7 @@ public class SpaceRaceEditorView extends BlackPanel {
     tabs.add("Name and Traits", createSpaceRaceMainTab(listener));
     tabs.add("Behaviour", createBehaviourTab(listener));
     tabs.add("Appearance", createAppearanceTab(listener));
+    tabs.add("Description", createDescriptionTab());
     mainPanel.add(tabs);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
@@ -439,8 +452,10 @@ public class SpaceRaceEditorView extends BlackPanel {
     mainPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     EmptyInfoPanel borderPanel = new EmptyInfoPanel();
     borderPanel.setLayout(new BorderLayout());
+    EmptyInfoPanel gridPanel = new EmptyInfoPanel();
+    gridPanel.setLayout(new GridLayout(1, 0));
 
-    // North panel
+    // First column
     EmptyInfoPanel infoPanel = new EmptyInfoPanel();
     infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
     SpaceLabel label = new SpaceLabel("Space Race Image:");
@@ -464,8 +479,9 @@ public class SpaceRaceEditorView extends BlackPanel {
     spaceRaceImageCombo.setActionCommand(
         GameCommands.COMMAND_SPACERACE_EDITOR_IMAGE_SELECT);
     infoPanel.add(spaceRaceImageCombo);
-    borderPanel.add(infoPanel, BorderLayout.NORTH);
-    // West panel
+    gridPanel.add(infoPanel);
+
+    // second column
     infoPanel = new EmptyInfoPanel();
     infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
     label = new SpaceLabel("Space ship bridge:");
@@ -489,8 +505,15 @@ public class SpaceRaceEditorView extends BlackPanel {
         GameCommands.COMMAND_SPACERACE_EDITOR_BRIDGE_SELECT);
     infoPanel.add(bridgeIdCombo);
     infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
-    label = new SpaceLabel("Space ship bridge effect "
-        + "(Requires ambient lights setup):");
+    String text = "Space ship bridge effect (Requires ambient lights setup):";
+    if (screenWidth == 1024) {
+      text = "Bridge effect (Req. ambient lights):";
+    } else if (screenWidth <= 1280) {
+      text = "Bridge effect (Requires ambient lights):";
+    } else if (screenWidth <= 1440) {
+      text = "Space ship bridge effect (Req. ambient lights):";
+    }
+    label = new SpaceLabel(text);
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     infoPanel.add(label);
     infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
@@ -511,8 +534,30 @@ public class SpaceRaceEditorView extends BlackPanel {
         GameCommands.COMMAND_SPACERACE_EDITOR_BRIDGE_SELECT);
     infoPanel.add(bridgeEffectCombo);
     infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
-    borderPanel.add(infoPanel, BorderLayout.WEST);
-    // East panel
+    label = new SpaceLabel("Theme music:");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    infoPanel.add(label);
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    diplomacyMusicCombo = new SpaceComboBox<>(MusicPlayer.DIPLOMACY_MUSIC_LIST);
+    diplomacyMusicCombo.setBackground(
+        GuiStatics.getDeepSpaceDarkColor());
+    diplomacyMusicCombo.setForeground(
+        GuiStatics.getCoolSpaceColor());
+    diplomacyMusicCombo.setBorder(new SimpleBorder());
+    diplomacyMusicCombo.setFont(GuiFonts.getFontCubellan());
+    diplomacyMusicCombo.getModel()
+        .setSelectedItem(MusicPlayer.DIPLOMACY_MUSIC_LIST[0]);
+    dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.LEFT);
+    diplomacyMusicCombo.setRenderer(dlcr);
+    diplomacyMusicCombo.addActionListener(listener);
+    diplomacyMusicCombo.setActionCommand(
+        GameCommands.COMMAND_SPACERACE_EDITOR_MUSIC_SELECT);
+    infoPanel.add(diplomacyMusicCombo);
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    gridPanel.add(infoPanel);
+
+    // third column
     infoPanel = new EmptyInfoPanel();
     infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
     label = new SpaceLabel("Space ship type:");
@@ -546,16 +591,59 @@ public class SpaceRaceEditorView extends BlackPanel {
     hullNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
     infoPanel.add(hullNameLabel);
     infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    gridPanel.add(infoPanel);
+    borderPanel.add(gridPanel, BorderLayout.CENTER);
+
+    // South Panel
+    infoPanel = new EmptyInfoPanel();
+    infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
     SpaceButton button = new SpaceButton("Apply",
         GameCommands.COMMAND_SPACERACE_EDITOR_APPLY_APPEARANCE);
     button.setAlignmentX(JComponent.CENTER_ALIGNMENT);
     infoPanel.add(button);
-    borderPanel.add(infoPanel, BorderLayout.EAST);
+    borderPanel.add(infoPanel, BorderLayout.SOUTH);
 
     // Finalize main panel
     mainPanel.add(borderPanel);
     return mainPanel;
   }
+
+  /**
+   * Create Space Race description tab.
+   * @return InfoPanel
+   */
+  private EmptyInfoPanel createDescriptionTab() {
+    EmptyInfoPanel mainPanel = new EmptyInfoPanel();
+    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    SpaceGreyPanel panel = new SpaceGreyPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    panel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    panel.setMaximumSize(new Dimension(700, 400));
+    interiorPanel = new ShipInteriorPanel(newRace, null);
+    setAmbientEffect(newRace.getRaceBridgeEffect());
+    interiorPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    panel.add(interiorPanel);
+    mainPanel.add(panel);
+    mainPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+
+    SpaceLabel label = new SpaceLabel("Space Race description:");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    mainPanel.add(label);
+    mainPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+
+    descriptionText = new JTextArea(20, 120);
+    descriptionText.setText("Foo barr");
+    descriptionText.setEditable(true);
+    descriptionText.setLineWrap(true);
+    descriptionText.setFont(GuiFonts.getFontSquarion());
+    descriptionText.setForeground(GuiStatics.getInfoTextColor());
+    descriptionText.setBackground(Color.BLACK);
+    descriptionText.setBorder(new SimpleBorder());
+
+    mainPanel.add(descriptionText);
+    return mainPanel;
+  }
+
   /**
    * Get Government ID
    * @return GovernmentId.

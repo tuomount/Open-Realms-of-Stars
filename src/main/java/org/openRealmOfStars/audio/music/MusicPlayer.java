@@ -318,7 +318,7 @@ public final class MusicPlayer {
   /**
    * List of music to played in diplomacy
    */
-  protected static final MusicFileInfo[] DIPLOMACY_MUSIC_LIST = {
+  public static final MusicFileInfo[] DIPLOMACY_MUSIC_LIST = {
       WALKING_WITH_POSEIDON, ABANDONED_STEEL_MILL, CONQUERORS, TROGL,
       OVE_MELAA_DIPLOMACY, FANTASY_CHOIR_2, PRESSURE, INTERPLANETARY_ODYSSEY,
       MALLOGA_BALLING, SET_FIRE_TO_REALITY, MENACE, BRAINDEAD,

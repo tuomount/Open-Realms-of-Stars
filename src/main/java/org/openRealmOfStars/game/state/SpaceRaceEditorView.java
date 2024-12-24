@@ -18,6 +18,7 @@ package org.openRealmOfStars.game.state;
  */
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -27,8 +28,11 @@ import java.awt.event.KeyListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+
+import org.openRealmOfStars.ambient.Bridge;
 import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
@@ -36,15 +40,18 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.state.options.GenderOption;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.graphs.BridgeGraphFactory;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.traitpanel.TraitCheckBox;
 import org.openRealmOfStars.gui.infopanel.traitpanel.TraitPanel;
+import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.SpaceComboBox;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.list.GenderOptionListRenderer;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ShipInteriorPanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.diplomacy.Attitude;
@@ -55,6 +62,8 @@ import org.openRealmOfStars.player.race.SocialSystem;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitFactory;
+import org.openRealmOfStars.player.ship.ShipImage;
+import org.openRealmOfStars.player.ship.ShipImageFactor;
 
 /**
  * Editor for government JSON files with UI.
@@ -68,6 +77,16 @@ public class SpaceRaceEditorView extends BlackPanel {
   private static final long serialVersionUID = 1L;
 
   /**
+   * Screen width.
+   */
+  private int screenWidth;
+  /**
+   * Screen height.
+   */
+  private int screenHeight;
+  /** Gap Height in pixels. */
+  private int gapY = 5;
+  /**
    * SpaceRace name.
    */
   private JTextField spaceRaceNameField;
@@ -79,7 +98,7 @@ public class SpaceRaceEditorView extends BlackPanel {
   /**
    * Combobox for space ship bridge selection.
    */
-  private SpaceComboBox<RulerSelection> bridgeIdCombo;
+  private SpaceComboBox<String> bridgeIdCombo;
   /**
    * Combobox for attitude selection.
    */
@@ -104,6 +123,26 @@ public class SpaceRaceEditorView extends BlackPanel {
    * Ship interior panel, to show how space race looks.
    */
   private ShipInteriorPanel interiorPanel;
+  /**
+   * Combobox for space race image
+   */
+  private SpaceComboBox<String> spaceRaceImageCombo;
+  /**
+   * Combobox for bridge effect.
+   */
+  private SpaceComboBox<String> bridgeEffectCombo;
+  /**
+   * Combobox for space ship id
+   */
+  private SpaceComboBox<String> spaceShipIdCombo;
+  /**
+   * Space ship preview image.
+   */
+  private ImageLabel hullImage;
+  /**
+   * Space ship hull label
+   */
+  private SpaceLabel hullNameLabel;
   /**
    * Ruler title for male.
    */
@@ -139,10 +178,22 @@ public class SpaceRaceEditorView extends BlackPanel {
     newRace.setImage("resources/images/human_race.png");
     newRace.setSpaceShipId("Human");
     newRace.setRaceBridgeEffect(BridgeCommandType.BLUEISH_WHITE);
+    screenWidth = 1024;
+    screenHeight = 768;
     if (listener instanceof Game) {
       game = (Game) listener;
+      screenWidth = game.getWidth();
+      screenHeight = game.getHeight();
     } else {
       game = null;
+    }
+    gapY = 5;
+    if (screenHeight <= 768) {
+      gapY = 2;
+    } else if (screenHeight <= 960) {
+      gapY = 3;
+    } else if (screenHeight <= 1024) {
+      gapY = 4;
     }
     InfoPanel mainPanel = new InfoPanel();
     mainPanel.setTitle("Space Race Editor");
@@ -163,11 +214,11 @@ public class SpaceRaceEditorView extends BlackPanel {
         GameCommands.COMMAND_MAIN_MENU);
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.CENTER);
-    btn = new SpaceButton("Load government",
+    btn = new SpaceButton("Load space race",
         GameCommands.COMMAND_LOAD_GOVERNMENT);
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.WEST);
-    btn = new SpaceButton("Save government",
+    btn = new SpaceButton("Save space race",
         GameCommands.COMMAND_SAVE_GOVERNMENT);
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.EAST);
@@ -190,7 +241,7 @@ public class SpaceRaceEditorView extends BlackPanel {
     SpaceLabel label = new SpaceLabel("Space Race name:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     infoPanel.add(label);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     spaceRaceNameField = new JTextField("Custom Terrans");
     spaceRaceNameField.setBackground(GuiStatics.getDeepSpaceDarkColor());
     spaceRaceNameField.setForeground(GuiStatics.getCoolSpaceColor());
@@ -227,11 +278,11 @@ public class SpaceRaceEditorView extends BlackPanel {
       }
     });
     infoPanel.add(spaceRaceNameField);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     label = new SpaceLabel("Space Race name in single:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     infoPanel.add(label);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     spaceRaceNameSingleField = new JTextField("Custom Terran");
     spaceRaceNameSingleField.setBackground(GuiStatics.getDeepSpaceDarkColor());
     spaceRaceNameSingleField.setForeground(GuiStatics.getCoolSpaceColor());
@@ -239,37 +290,9 @@ public class SpaceRaceEditorView extends BlackPanel {
     spaceRaceNameSingleField.setMaximumSize(new Dimension(Integer.MAX_VALUE,
         GuiStatics.TEXT_FIELD_HEIGHT));
     infoPanel.add(spaceRaceNameSingleField);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
-
-    label = new SpaceLabel("Space ship bridge:");
-    label.setAlignmentX(Component.LEFT_ALIGNMENT);
-    infoPanel.add(label);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
-    bridgeIdCombo = new SpaceComboBox<>(RulerSelection.values());
-    bridgeIdCombo.setBackground(
-        GuiStatics.getDeepSpaceDarkColor());
-    bridgeIdCombo.setForeground(
-        GuiStatics.getCoolSpaceColor());
-    bridgeIdCombo.setBorder(new SimpleBorder());
-    bridgeIdCombo.setFont(GuiFonts.getFontCubellan());
-    bridgeIdCombo.getModel()
-        .setSelectedItem(RulerSelection.AI_RULER);
-    DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
-    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
-    bridgeIdCombo.setRenderer(dlcr);
-    bridgeIdCombo.addActionListener(listener);
-    bridgeIdCombo.setActionCommand(
-        GameCommands.COMMAND_GOVERNMENT_EDITOR_RULER_SELECT);
-    infoPanel.add(bridgeIdCombo);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
-
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
 
     mainPanel.add(infoPanel);
-    int screenWidth = 1024;
-    if (listener instanceof Game) {
-      game = (Game) listener;
-      screenWidth = game.getWidth();
-    }
     traitPanel = new TraitPanel(screenWidth,
         TraitFactory.getAll(), listener);
     mainPanel.add(traitPanel);
@@ -291,7 +314,7 @@ public class SpaceRaceEditorView extends BlackPanel {
     SpaceLabel label = new SpaceLabel("Default AI Attitude:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     infoPanel.add(label);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     attitudeCombo = new SpaceComboBox<>(Attitude.values());
     attitudeCombo.setBackground(
         GuiStatics.getDeepSpaceDarkColor());
@@ -308,11 +331,11 @@ public class SpaceRaceEditorView extends BlackPanel {
     attitudeCombo.setActionCommand(
         GameCommands.COMMAND_SPACERACE_EDITOR_ATTITUDE_SELECT);
     infoPanel.add(attitudeCombo);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     label = new SpaceLabel("Social system:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     infoPanel.add(label);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     socialCombo = new SpaceComboBox<>(SocialSystem.values());
     socialCombo.setBackground(
         GuiStatics.getDeepSpaceDarkColor());
@@ -329,11 +352,11 @@ public class SpaceRaceEditorView extends BlackPanel {
     socialCombo.setActionCommand(
         GameCommands.COMMAND_SPACERACE_EDITOR_SOCIAL_SELECT);
     infoPanel.add(socialCombo);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     label = new SpaceLabel("Leader genders:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     infoPanel.add(label);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     genderCombo = new SpaceComboBox<>(GenderOption.values());
     genderCombo.setBackground(
         GuiStatics.getDeepSpaceDarkColor());
@@ -348,11 +371,11 @@ public class SpaceRaceEditorView extends BlackPanel {
     genderCombo.setActionCommand(
         GameCommands.COMMAND_SPACERACE_EDITOR_GENDER_SELECT);
     infoPanel.add(genderCombo);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     label = new SpaceLabel("Speech set:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     infoPanel.add(label);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     speechCombo = new SpaceComboBox<>(SpeechFactory.getAllIds());
     speechCombo.setBackground(
         GuiStatics.getDeepSpaceDarkColor());
@@ -369,11 +392,11 @@ public class SpaceRaceEditorView extends BlackPanel {
     speechCombo.setActionCommand(
         GameCommands.COMMAND_SPACERACE_EDITOR_SPEECH_SELECT);
     infoPanel.add(speechCombo);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     label = new SpaceLabel("Leader name generator:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     infoPanel.add(label);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
     nameGenCombo = new SpaceComboBox<>(NameGeneratorType.values());
     nameGenCombo.setBackground(
         GuiStatics.getDeepSpaceDarkColor());
@@ -390,7 +413,7 @@ public class SpaceRaceEditorView extends BlackPanel {
     nameGenCombo.setActionCommand(
         GameCommands.COMMAND_SPACERACE_EDITOR_NAMEGEN_SELECT);
     infoPanel.add(nameGenCombo);
-    infoPanel.add(Box.createRigidArea(new Dimension(10, 5)));
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
 
     mainPanel.add(infoPanel);
     return mainPanel;
@@ -404,16 +427,133 @@ public class SpaceRaceEditorView extends BlackPanel {
   private EmptyInfoPanel createAppearanceTab(final ActionListener listener) {
     EmptyInfoPanel mainPanel = new EmptyInfoPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-    InfoPanel infoPanel = new InfoPanel();
-    infoPanel.setTitle("New space race");
-    infoPanel.setLayout(new BoxLayout(infoPanel,
-        BoxLayout.Y_AXIS));
+    SpaceGreyPanel panel = new SpaceGreyPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    panel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    panel.setMaximumSize(new Dimension(700, 400));
     interiorPanel = new ShipInteriorPanel(newRace, null);
     setAmbientEffect(newRace.getRaceBridgeEffect());
     interiorPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    mainPanel.add(interiorPanel);
-    SpaceLabel label = new SpaceLabel("Default AI Attitude:");
-    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    panel.add(interiorPanel);
+    mainPanel.add(panel);
+    mainPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    EmptyInfoPanel borderPanel = new EmptyInfoPanel();
+    borderPanel.setLayout(new BorderLayout());
+
+    // North panel
+    EmptyInfoPanel infoPanel = new EmptyInfoPanel();
+    infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+    SpaceLabel label = new SpaceLabel("Space Race Image:");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    infoPanel.add(label);
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    spaceRaceImageCombo = new SpaceComboBox<>(
+        GuiStatics.BUILT_IN_SPACE_RACE_IMAGES);
+    spaceRaceImageCombo.setBackground(
+        GuiStatics.getDeepSpaceDarkColor());
+    spaceRaceImageCombo.setForeground(
+        GuiStatics.getCoolSpaceColor());
+    spaceRaceImageCombo.setBorder(new SimpleBorder());
+    spaceRaceImageCombo.setFont(GuiFonts.getFontCubellan());
+    spaceRaceImageCombo.getModel()
+        .setSelectedItem(GuiStatics.BUILT_IN_SPACE_RACE_IMAGES[0]);
+    DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    spaceRaceImageCombo.setRenderer(dlcr);
+    spaceRaceImageCombo.addActionListener(listener);
+    spaceRaceImageCombo.setActionCommand(
+        GameCommands.COMMAND_SPACERACE_EDITOR_IMAGE_SELECT);
+    infoPanel.add(spaceRaceImageCombo);
+    borderPanel.add(infoPanel, BorderLayout.NORTH);
+    // West panel
+    infoPanel = new EmptyInfoPanel();
+    infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+    label = new SpaceLabel("Space ship bridge:");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    infoPanel.add(label);
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    bridgeIdCombo = new SpaceComboBox<>(BridgeGraphFactory.getAllIds());
+    bridgeIdCombo.setBackground(
+        GuiStatics.getDeepSpaceDarkColor());
+    bridgeIdCombo.setForeground(
+        GuiStatics.getCoolSpaceColor());
+    bridgeIdCombo.setBorder(new SimpleBorder());
+    bridgeIdCombo.setFont(GuiFonts.getFontCubellan());
+    bridgeIdCombo.getModel()
+        .setSelectedItem(BridgeGraphFactory.getAllIds()[0]);
+    dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    bridgeIdCombo.setRenderer(dlcr);
+    bridgeIdCombo.addActionListener(listener);
+    bridgeIdCombo.setActionCommand(
+        GameCommands.COMMAND_SPACERACE_EDITOR_BRIDGE_SELECT);
+    infoPanel.add(bridgeIdCombo);
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    label = new SpaceLabel("Space ship bridge effect "
+        + "(Requires ambient lights setup):");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    infoPanel.add(label);
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    bridgeEffectCombo = new SpaceComboBox<>(Bridge.getEffectIds());
+    bridgeEffectCombo.setBackground(
+        GuiStatics.getDeepSpaceDarkColor());
+    bridgeEffectCombo.setForeground(
+        GuiStatics.getCoolSpaceColor());
+    bridgeEffectCombo.setBorder(new SimpleBorder());
+    bridgeEffectCombo.setFont(GuiFonts.getFontCubellan());
+    bridgeEffectCombo.getModel()
+        .setSelectedItem(Bridge.getEffectIds()[0]);
+    dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    bridgeEffectCombo.setRenderer(dlcr);
+    bridgeEffectCombo.addActionListener(listener);
+    bridgeEffectCombo.setActionCommand(
+        GameCommands.COMMAND_SPACERACE_EDITOR_BRIDGE_SELECT);
+    infoPanel.add(bridgeEffectCombo);
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    borderPanel.add(infoPanel, BorderLayout.WEST);
+    // East panel
+    infoPanel = new EmptyInfoPanel();
+    infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+    label = new SpaceLabel("Space ship type:");
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
+    infoPanel.add(label);
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    spaceShipIdCombo = new SpaceComboBox<>(ShipImageFactor.getAllIds());
+    spaceShipIdCombo.setBackground(
+        GuiStatics.getDeepSpaceDarkColor());
+    spaceShipIdCombo.setForeground(
+        GuiStatics.getCoolSpaceColor());
+    spaceShipIdCombo.setBorder(new SimpleBorder());
+    spaceShipIdCombo.setFont(GuiFonts.getFontCubellan());
+    spaceShipIdCombo.getModel()
+        .setSelectedItem(ShipImageFactor.getAllIds()[0]);
+    dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    spaceShipIdCombo.setRenderer(dlcr);
+    spaceShipIdCombo.addActionListener(listener);
+    spaceShipIdCombo.setActionCommand(
+        GameCommands.COMMAND_SPACERACE_EDITOR_SHIP_SELECT);
+    infoPanel.add(spaceShipIdCombo);
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    hullImage = new ImageLabel(
+        ShipImageFactor.create("DEFAULT").getShipImage(ShipImage.COLONY), true);
+    hullImage.setFillColor(Color.BLACK);
+    hullImage.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    infoPanel.add(hullImage);
+    infoPanel.add(Box.createRigidArea(new Dimension(10, 2)));
+    hullNameLabel = new SpaceLabel("Preview of space ship");
+    hullNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    infoPanel.add(hullNameLabel);
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    SpaceButton button = new SpaceButton("Apply",
+        GameCommands.COMMAND_SPACERACE_EDITOR_APPLY_APPEARANCE);
+    button.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    infoPanel.add(button);
+    borderPanel.add(infoPanel, BorderLayout.EAST);
+
+    // Finalize main panel
+    mainPanel.add(borderPanel);
     return mainPanel;
   }
   /**

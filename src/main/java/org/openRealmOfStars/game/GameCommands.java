@@ -644,6 +644,26 @@ public final class GameCommands {
    */
   public static final String COMMAND_SPACERACE_EDITOR_NAMEGEN_SELECT =
       "SpaceRaceEditorNameGenSelect";
+  /**
+   * Spacerace image selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_IMAGE_SELECT =
+      "SpaceRaceEditorImageSelect";
+  /**
+   * Spacerace bridge id selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_BRIDGE_SELECT =
+      "SpaceRaceEditorBridgeSelect";
+  /**
+   * Spacerace ship id selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_SHIP_SELECT =
+      "SpaceRaceEditorShipSelect";
+  /**
+   * Spacerace apply appearance
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_APPLY_APPEARANCE =
+      "SpaceRaceEditorApplyAppearance";
 
   /**
    * Difficulty has changed in Galaxy Setup

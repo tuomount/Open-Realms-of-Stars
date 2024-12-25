@@ -2947,7 +2947,8 @@ public class Game implements ActionListener {
     if (gameState == GameState.SPACERACE_EDITOR) {
       if (arg0.getActionCommand().equalsIgnoreCase(
           GameCommands.COMMAND_MAIN_MENU)) {
-        governmentEditorView = null;
+        spaceRaceEditorView.clearTimer();
+        spaceRaceEditorView = null;
         SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);
       } else {

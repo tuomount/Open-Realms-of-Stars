@@ -33,6 +33,7 @@ import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 
 import org.openRealmOfStars.ambient.Bridge;
 import org.openRealmOfStars.ambient.BridgeCommandType;
@@ -100,6 +101,10 @@ public class SpaceRaceEditorView extends BlackPanel {
   private JTextField spaceRaceNameSingleField;
 
   /**
+   * Ship timer to change ship image.
+   */
+  private Timer shipTimer;
+  /**
    * Combobox for space ship bridge selection.
    */
   private SpaceComboBox<String> bridgeIdCombo;
@@ -143,6 +148,10 @@ public class SpaceRaceEditorView extends BlackPanel {
    * Combobox for diplomacy music
    */
   private SpaceComboBox<MusicFileInfo> diplomacyMusicCombo;
+  /**
+   * Hull Image count
+   */
+  private int hullImageCount = 0;
   /**
    * Space ship preview image.
    */
@@ -433,11 +442,21 @@ public class SpaceRaceEditorView extends BlackPanel {
   }
 
   /**
+   * Clear timer
+   */
+  public void clearTimer() {
+    shipTimer.stop();
+  }
+  /**
    * Create Space Race appearance tab.
    * @param listener Action Listener
    * @return InfoPanel
    */
   private EmptyInfoPanel createAppearanceTab(final ActionListener listener) {
+    shipTimer = new Timer(3000, listener);
+    shipTimer.setActionCommand(
+        GameCommands.COMMAND_SPACERACE_EDITOR_SHIP_TIMER);
+    shipTimer.start();
     EmptyInfoPanel mainPanel = new EmptyInfoPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
     SpaceGreyPanel panel = new SpaceGreyPanel();
@@ -581,13 +600,16 @@ public class SpaceRaceEditorView extends BlackPanel {
         GameCommands.COMMAND_SPACERACE_EDITOR_SHIP_SELECT);
     infoPanel.add(spaceShipIdCombo);
     infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    hullImageCount = ShipImage.MASSIVE_FREIGHTER;
     hullImage = new ImageLabel(
-        ShipImageFactor.create("DEFAULT").getShipImage(ShipImage.COLONY), true);
+        ShipImageFactor.create(newRace.getSpaceShipId())
+        .getShipImage(hullImageCount), true);
     hullImage.setFillColor(Color.BLACK);
     hullImage.setAlignmentX(JComponent.CENTER_ALIGNMENT);
     infoPanel.add(hullImage);
     infoPanel.add(Box.createRigidArea(new Dimension(10, 2)));
-    hullNameLabel = new SpaceLabel("Preview of space ship");
+    hullNameLabel = new SpaceLabel("Preview of "
+        + ShipImage.getShipType(hullImageCount));
     hullNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
     infoPanel.add(hullNameLabel);
     infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
@@ -720,12 +742,25 @@ public class SpaceRaceEditorView extends BlackPanel {
    */
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().startsWith(
-        GameCommands.COMMAND_GOV_TRAIT_SELECTED)) {
+        GameCommands.COMMAND_RACE_TRAIT_SELECTED)) {
       String[] param = arg0.getActionCommand().split("\\+");
       if (param.length == 2) {
         traitPanel.handleTraitSelection(param[1]);
       }
       SoundPlayer.playMenuSound();
+    }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_SPACERACE_EDITOR_SHIP_TIMER)) {
+      hullImageCount++;
+      if (hullImageCount >= ShipImage.NUMBER_OF_IMAGES) {
+        hullImageCount = 0;
+      }
+      hullImage.setImage(ShipImageFactor.create(
+          newRace.getSpaceShipId()).getShipImage(hullImageCount));
+      hullNameLabel.setText("Preview of "
+          + ShipImage.getShipType(hullImageCount));
+      hullNameLabel.repaint();
+      hullImage.repaint();
     }
   }
 }

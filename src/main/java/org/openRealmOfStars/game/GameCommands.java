@@ -82,6 +82,11 @@ public final class GameCommands {
   public static final String COMMAND_GOV_TRAIT_SELECTED = "GovTraitSelected";
 
   /**
+   * Space race trait selected.
+   */
+  public static final String COMMAND_RACE_TRAIT_SELECTED = "RaceTraitSelected";
+
+  /**
    * Music volume up
    */
   public static final String COMMAND_MUSIC_VOLUME_UP = "OptionsMusicVolumeUp";
@@ -669,6 +674,11 @@ public final class GameCommands {
    */
   public static final String COMMAND_SPACERACE_EDITOR_APPLY_APPEARANCE =
       "SpaceRaceEditorApplyAppearance";
+  /**
+   * Shiptimer.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_SHIP_TIMER =
+      "SpaceRaceEditorShipTimer";
 
   /**
    * Difficulty has changed in Galaxy Setup

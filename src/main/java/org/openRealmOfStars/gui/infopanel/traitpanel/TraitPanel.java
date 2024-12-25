@@ -171,7 +171,7 @@ public class TraitPanel extends InfoPanel {
     for (RaceTrait trait : traits) {
       TraitCheckBox checkBox = new TraitCheckBox(trait);
       checkBox.addActionListener(listener);
-      checkBox.setActionCommand(GameCommands.COMMAND_GOV_TRAIT_SELECTED
+      checkBox.setActionCommand(GameCommands.COMMAND_RACE_TRAIT_SELECTED
           + "+" + checkBox.getTraitId());
       checkBoxes.add(checkBox);
       TraitGroupPanel groupPanel = getOrCreateGroup(trait.getGroup());

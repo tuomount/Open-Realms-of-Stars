@@ -129,7 +129,7 @@ public final class SpeechFactory {
         "homarians", "human", "lithorians", "mechions",
         "mothoids", "reborgians", "scaurians",
         "smaugirians", "space_pirate", "sporks",
-        "synthdroids", "teuthidaes", "fernids" };
+        "synthdroids", "teuthidaes", "fernids", "dwarf" };
     final var traitsLoaded = loader.loadAll(speechSets, basePath, files);
     ErrorLogger.log("SpeechSets loaded: " + traitsLoaded);
   }

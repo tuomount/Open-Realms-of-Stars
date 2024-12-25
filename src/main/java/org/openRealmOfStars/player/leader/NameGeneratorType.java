@@ -54,6 +54,8 @@ public enum NameGeneratorType {
   PIRATE,
   /** Namegenerator that create names for big planet like creatures */
   BIG_PLANT,
+  /** Namegenerator that create names for dwarven like creatures */
+  DWARF,
   /** Namegenerator that creates names for mix of all generators */
   ALL;
 
@@ -79,6 +81,7 @@ public enum NameGeneratorType {
     case GASEOUS_CREATURE: return "gaseous_creature";
     case PIRATE: return "pirate";
     case BIG_PLANT: return "big_plant";
+    case DWARF: return "dwarf";
     default:
     case ALL: return "all";
     }

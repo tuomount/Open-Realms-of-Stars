@@ -1,0 +1,36 @@
+[
+  {
+    "id": "DWARF",
+    "data": {
+      "TRADE": ["Here is my deal for you. What is your answer?"],
+      "MOVE_FLEET": ["My sincere apologize, I'll call back the fleet."],
+      "LIKE_GREET": ["Formal salutations to you."],
+      "DEFESIVE_PACT": ["Would you form defensice pact with me?"],
+      "BORDER_WARS": ["Your puny %1$s shall meet my space weapons!"],
+      "ASK_PROTECTION": ["Spare my fleet for 5 star years and I will pay for it."],
+      "ASK_MOVE_FLEET": ["Your fleet %1$s has crossed border. Move it away!"],
+      "OFFER_SPY_TRADE": ["How about share some intel trades for 20 star years?"],
+      "MAKE_WAR": ["Prepare to meet my space weapons!%1$s"],
+      "OFFER_ACCEPTED": ["You made a deal! I'll accept."],
+      "TRADE_EMBARGO": [ "Are you ready for trade embargo for 20 star years against %1$s?"],
+      "DECLINE_WAR": ["You will regret this! Prepare for war!%1$s"],
+      "TRADE_EMBARGO_REALM_CHOICE": [],
+      "ACKNOWLEDGE_WAR": ["Prepare to meet my space weapons!"],
+      "NOTHING_TO_TRADE": ["Sorry but I thought you had something to trade."],
+      "NEUTRAL_GREET": ["Salutations to you %1$s."],
+      "DECLINE_ANGER": [ "This is ridicilous! I will not accept this one!"],
+      "FRIENDS_GREET": ["Sincere salutations to you my friend."],
+      "OFFER_REJECTED": ["Too tough bargain, eh? How about you make an offer."],
+      "ALLIANCE": ["Would you form alliance with me?"],
+      "DECLINE": ["I have to turn down this deal."],
+      "TRADE_ALLIANCE": ["Would you form trade alliance with me?"],
+      "DISLIKE_GREET": ["Salutations! I hope for the best but expect the worst."],
+      "DEMAND": ["I demand you accept this deal!"],
+      "HATE_GREET": ["Hmph, salutations and all that. Let's get this over."],
+      "AGREE": ["You and me made a deal!"],
+      "PEACE_OFFER": ["I propose a deal. Let's make a peace?"],
+      "INSULT_RESPOND": ["Is that all, you infant?"],
+      "ASK_MOVE_SPY": ["Your spy fleet %1$s has crossed border. Move it away!"]
+    }
+  }
+]

@@ -133,6 +133,10 @@ public class SpaceRaceEditorView extends BlackPanel {
    */
   private ShipInteriorPanel interiorPanel;
   /**
+   * Ship interior panel, to show how space race looks.
+   */
+  private ShipInteriorPanel interiorPanel2;
+  /**
    * Combobox for space race image
    */
   private SpaceComboBox<String> spaceRaceImageCombo;
@@ -621,6 +625,7 @@ public class SpaceRaceEditorView extends BlackPanel {
     infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
     SpaceButton button = new SpaceButton("Apply",
         GameCommands.COMMAND_SPACERACE_EDITOR_APPLY_APPEARANCE);
+    button.addActionListener(listener);
     button.setAlignmentX(JComponent.CENTER_ALIGNMENT);
     infoPanel.add(button);
     borderPanel.add(infoPanel, BorderLayout.SOUTH);
@@ -641,10 +646,10 @@ public class SpaceRaceEditorView extends BlackPanel {
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
     panel.setMaximumSize(new Dimension(700, 400));
-    interiorPanel = new ShipInteriorPanel(newRace, null);
+    interiorPanel2 = new ShipInteriorPanel(newRace, null);
     setAmbientEffect(newRace.getRaceBridgeEffect());
-    interiorPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    panel.add(interiorPanel);
+    interiorPanel2.setAlignmentX(Component.LEFT_ALIGNMENT);
+    panel.add(interiorPanel2);
     mainPanel.add(panel);
     mainPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
 
@@ -761,6 +766,31 @@ public class SpaceRaceEditorView extends BlackPanel {
           + ShipImage.getShipType(hullImageCount));
       hullNameLabel.repaint();
       hullImage.repaint();
+    }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_ANIMATION_TIMER)) {
+      interiorPanel.repaint();
+      interiorPanel2.repaint();
+    }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_SPACERACE_EDITOR_APPLY_APPEARANCE)) {
+      newRace.setImage((String) spaceRaceImageCombo.getSelectedItem());
+      newRace.setBridgeId((String) bridgeIdCombo.getSelectedItem());
+      newRace.setSpaceShipId((String) spaceShipIdCombo.getSelectedItem());
+      hullImage.setImage(ShipImageFactor.create(
+          newRace.getSpaceShipId()).getShipImage(hullImageCount));
+      hullNameLabel.setText("Preview of "
+          + ShipImage.getShipType(hullImageCount));
+      hullNameLabel.repaint();
+      hullImage.repaint();
+      interiorPanel.setRace(newRace);
+      String tmp = (String) bridgeEffectCombo.getSelectedItem();
+      tmp = tmp.replaceAll(" ", "_");
+      newRace.setRaceBridgeEffect(BridgeCommandType.getByString(tmp));
+      setAmbientEffect(newRace.getRaceBridgeEffect());
+      interiorPanel.repaint();
+      MusicPlayer.play((MusicFileInfo) diplomacyMusicCombo.getSelectedItem());
+      SoundPlayer.playMenuSound();
     }
   }
 }

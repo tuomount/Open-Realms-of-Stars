@@ -58,11 +58,11 @@ public class Bridge {
   /**
    * Effect name Red alert.
    */
-  public static final String EFFECT_RED_ALERT = "Red alert!";
+  public static final String EFFECT_RED_ALERT = "Red alert";
   /**
    * Effect name Yellow alert.
    */
-  public static final String EFFECT_YELLOW_ALERT = "Yellow alert!";
+  public static final String EFFECT_YELLOW_ALERT = "Yellow alert";
   /**
    * Effect name Nuke.
    */
@@ -240,11 +240,10 @@ public class Bridge {
   public static String[] getEffectIds() {
     String[] effectList = {Bridge.EFFECT_WARM_WHITE, Bridge.EFFECT_DARKEST,
         Bridge.EFFECT_RED_ALERT, Bridge.EFFECT_YELLOW_ALERT,
-        Bridge.EFFECT_NUKE, Bridge.EFFECT_FLOAT_IN_SPACE,
-        Bridge.EFFECT_GREEN_CONSOLE, Bridge.EFFECT_SPACE_CONSOLE,
-        Bridge.EFFECT_BRIGHT_CYAN, Bridge.EFFECT_BLUEISH_WHITE,
-        Bridge.EFFECT_DARK_ORANGE, Bridge.EFFECT_DARK_RED,
-        Bridge.EFFECT_PURPLE_DREAM, Bridge.EFFECT_FADE_IN,
+        Bridge.EFFECT_FLOAT_IN_SPACE, Bridge.EFFECT_GREEN_CONSOLE,
+        Bridge.EFFECT_SPACE_CONSOLE, Bridge.EFFECT_BRIGHT_CYAN,
+        Bridge.EFFECT_BLUEISH_WHITE, Bridge.EFFECT_DARK_ORANGE,
+        Bridge.EFFECT_DARK_RED, Bridge.EFFECT_PURPLE_DREAM,
         Bridge.EFFECT_ORANGE_BLINK, Bridge.EFFECT_ORANGE_BLUE,
         Bridge.EFFECT_GREY_BLUE, Bridge.EFFECT_JUNGLE};
     return effectList;

@@ -26,14 +26,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.openRealmOfStars.ambient.Bridge;
 import org.openRealmOfStars.ambient.BridgeCommandType;
@@ -69,6 +73,7 @@ import org.openRealmOfStars.player.race.SpaceRaceFactory;
 import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImageFactor;
+import org.openRealmOfStars.utilities.FileIo.Folders;
 
 /**
  * Editor for government JSON files with UI.
@@ -137,9 +142,21 @@ public class SpaceRaceEditorView extends BlackPanel {
    */
   private ShipInteriorPanel interiorPanel2;
   /**
+   * List of built int space race images and custom one.
+   */
+  private String[] raceImages;
+  /**
+   * Custom image index.
+   */
+  private int customImageIndex;
+  /**
    * Combobox for space race image
    */
   private SpaceComboBox<String> spaceRaceImageCombo;
+  /**
+   * Browse button for space race image.
+   */
+  private SpaceButton browseButton;
   /**
    * Combobox for bridge effect.
    */
@@ -451,6 +468,19 @@ public class SpaceRaceEditorView extends BlackPanel {
   public void clearTimer() {
     shipTimer.stop();
   }
+
+  /**
+   * Init space race images list.
+   * Gets values from GuiStatics plus add custom one.
+   */
+  private void initSpaceRaceImages() {
+    raceImages = new String[GuiStatics.BUILT_IN_SPACE_RACE_IMAGES.length + 1];
+    customImageIndex = GuiStatics.BUILT_IN_SPACE_RACE_IMAGES.length;
+    for (int i = 0; i < GuiStatics.BUILT_IN_SPACE_RACE_IMAGES.length; i++) {
+      raceImages[i] = GuiStatics.BUILT_IN_SPACE_RACE_IMAGES[i];
+    }
+    raceImages[customImageIndex] = "Custom";
+  }
   /**
    * Create Space Race appearance tab.
    * @param listener Action Listener
@@ -485,8 +515,8 @@ public class SpaceRaceEditorView extends BlackPanel {
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     infoPanel.add(label);
     infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
-    spaceRaceImageCombo = new SpaceComboBox<>(
-        GuiStatics.BUILT_IN_SPACE_RACE_IMAGES);
+    initSpaceRaceImages();
+    spaceRaceImageCombo = new SpaceComboBox<>(raceImages);
     spaceRaceImageCombo.setBackground(
         GuiStatics.getDeepSpaceDarkColor());
     spaceRaceImageCombo.setForeground(
@@ -494,7 +524,7 @@ public class SpaceRaceEditorView extends BlackPanel {
     spaceRaceImageCombo.setBorder(new SimpleBorder());
     spaceRaceImageCombo.setFont(GuiFonts.getFontCubellan());
     spaceRaceImageCombo.getModel()
-        .setSelectedItem(GuiStatics.BUILT_IN_SPACE_RACE_IMAGES[0]);
+        .setSelectedItem(raceImages[0]);
     DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
     dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
     spaceRaceImageCombo.setRenderer(dlcr);
@@ -502,6 +532,13 @@ public class SpaceRaceEditorView extends BlackPanel {
     spaceRaceImageCombo.setActionCommand(
         GameCommands.COMMAND_SPACERACE_EDITOR_IMAGE_SELECT);
     infoPanel.add(spaceRaceImageCombo);
+    infoPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
+    browseButton = new SpaceButton("Select Image",
+        GameCommands.COMMAND_SPACERACE_EDITOR_BROWSE_IMAGE);
+    browseButton.addActionListener(listener);
+    browseButton.setEnabled(false);
+    browseButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    infoPanel.add(browseButton);
     gridPanel.add(infoPanel);
 
     // second column
@@ -742,6 +779,38 @@ public class SpaceRaceEditorView extends BlackPanel {
     return sb.toString();
   }
   /**
+   * Handle image selection for space race image.
+   */
+  public void handleImageSelection() {
+    boolean imageSelected = false;
+    JFileChooser loadFileChooser = new JFileChooser(
+        new File(Folders.getCustomGovPath()));
+    loadFileChooser.setFileFilter(new FileNameExtensionFilter(
+        "PNG Image", "png"));
+    String fileName = "*.png";
+    loadFileChooser.setSelectedFile(
+        new File(Folders.getCustomSpaceRaceImage() + "/" + fileName));
+    loadFileChooser.setApproveButtonText("Load");
+    loadFileChooser.setDialogTitle("Load image file");
+    int returnValue = loadFileChooser.showOpenDialog(this);
+    if (returnValue == JFileChooser.APPROVE_OPTION) {
+      File file = loadFileChooser.getSelectedFile();
+      if (file.exists()) {
+        imageSelected = true;
+        SoundPlayer.playMenuSound();
+        raceImages[customImageIndex] = file.getPath();
+        spaceRaceImageCombo.setSelectedIndex(customImageIndex);
+        spaceRaceImageCombo.getModel().setSelectedItem(
+            raceImages[customImageIndex]);
+      }
+    } else {
+      SoundPlayer.playMenuDisabled();
+    }
+    if (!imageSelected) {
+      spaceRaceImageCombo.setSelectedIndex(0);
+    }
+  }
+  /**
    * Handle actions for Government editor
    * @param arg0 ActionEvent command what player did
    */
@@ -773,8 +842,23 @@ public class SpaceRaceEditorView extends BlackPanel {
       interiorPanel2.repaint();
     }
     if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_SPACERACE_EDITOR_IMAGE_SELECT)) {
+      if (spaceRaceImageCombo.getSelectedIndex() == customImageIndex) {
+        browseButton.setEnabled(true);
+      } else {
+        browseButton.setEnabled(false);
+      }
+    }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_SPACERACE_EDITOR_BROWSE_IMAGE)) {
+      handleImageSelection();
+    }
+    if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_SPACERACE_EDITOR_APPLY_APPEARANCE)) {
-      newRace.setImage((String) spaceRaceImageCombo.getSelectedItem());
+      String tmp = (String) spaceRaceImageCombo.getSelectedItem();
+      if (!tmp.equals("Custom")) {
+        newRace.setImage(tmp);
+      }
       newRace.setBridgeId((String) bridgeIdCombo.getSelectedItem());
       newRace.setSpaceShipId((String) spaceShipIdCombo.getSelectedItem());
       hullImage.setImage(ShipImageFactor.create(
@@ -784,7 +868,7 @@ public class SpaceRaceEditorView extends BlackPanel {
       hullNameLabel.repaint();
       hullImage.repaint();
       interiorPanel.setRace(newRace);
-      String tmp = (String) bridgeEffectCombo.getSelectedItem();
+      tmp = (String) bridgeEffectCombo.getSelectedItem();
       tmp = tmp.replaceAll(" ", "_");
       newRace.setRaceBridgeEffect(BridgeCommandType.getByString(tmp));
       setAmbientEffect(newRace.getRaceBridgeEffect());

@@ -670,6 +670,11 @@ public final class GameCommands {
   public static final String COMMAND_SPACERACE_EDITOR_MUSIC_SELECT =
       "SpaceRaceEditorMusicSelect";
   /**
+   * Spacerace browse image
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_BROWSE_IMAGE =
+      "SpaceRaceEditorBrowseImage";
+  /**
    * Spacerace apply appearance
    */
   public static final String COMMAND_SPACERACE_EDITOR_APPLY_APPEARANCE =

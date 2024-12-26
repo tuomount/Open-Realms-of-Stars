@@ -31,6 +31,9 @@ public final class Folders {
   private static final String CUSTOM_GOV_FOLDER = "/custom/government";
   /** Custom space race folder */
   private static final String CUSTOM_RACE_FOLDER = "/custom/spacerace";
+  /** Custom space race image folder */
+  private static final String CUSTOM_RACE_IMAGE_FOLDER =
+      "/custom/images/spacerace";
   /** Folder to screenshots */
   private static final String SCREENSHOT_FOLDER = "/screenshots";
   /** Save game folder */
@@ -64,6 +67,10 @@ public final class Folders {
       if (!path.exists() && !path.mkdirs()) {
         return "Could not create custom space race folder.";
       }
+      path = new File(userFolder + CUSTOM_RACE_IMAGE_FOLDER);
+      if (!path.exists() && !path.mkdirs()) {
+        return "Could not create custom space race image folder.";
+      }
       path = new File(userFolder + SCREENSHOT_FOLDER);
       if (!path.exists() && !path.mkdirs()) {
         return "Could not create screenshot folder.";
@@ -87,6 +94,17 @@ public final class Folders {
       initFolders();
     }
     return userFolder + CUSTOM_GOV_FOLDER;
+  }
+
+  /**
+   * Get Path for Custom space race image path
+   * @return Path for custom space race image.
+   */
+  public static String getCustomSpaceRaceImage() {
+    if (userFolder == null) {
+      initFolders();
+    }
+    return userFolder + CUSTOM_RACE_IMAGE_FOLDER;
   }
 
   /**

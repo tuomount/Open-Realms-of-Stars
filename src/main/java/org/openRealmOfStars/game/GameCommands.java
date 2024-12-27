@@ -271,6 +271,14 @@ public final class GameCommands {
    * Save government
    */
   public static final String COMMAND_SAVE_GOVERNMENT = "SaveGovernment";
+  /**
+   * Load spacerace
+   */
+  public static final String COMMAND_LOAD_SPACERACE = "LoadSpaceRace";
+  /**
+   * Save spacerace
+   */
+  public static final String COMMAND_SAVE_SPACERACE = "SaveSpaceRace";
 
   /**
    * View Voting view

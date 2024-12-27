@@ -27,6 +27,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -39,6 +44,9 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.openRealmOfStars.ambient.Bridge;
 import org.openRealmOfStars.ambient.BridgeCommandType;
 import org.openRealmOfStars.audio.music.MusicFileInfo;
@@ -65,14 +73,18 @@ import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechFactory;
-import org.openRealmOfStars.player.government.RulerSelection;
+import org.openRealmOfStars.player.leader.Gender;
 import org.openRealmOfStars.player.leader.NameGeneratorType;
 import org.openRealmOfStars.player.race.SocialSystem;
 import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.race.SpaceRaceLoader;
+import org.openRealmOfStars.player.race.trait.RaceTrait;
 import org.openRealmOfStars.player.race.trait.TraitFactory;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImageFactor;
+import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.TextUtilities;
 import org.openRealmOfStars.utilities.FileIo.Folders;
 
 /**
@@ -185,14 +197,6 @@ public class SpaceRaceEditorView extends BlackPanel {
    * Space race description text.
    */
   private JTextArea descriptionText;
-  /**
-   * Ruler title for male.
-   */
-  private JTextField rulerTitleMaleField;
-  /**
-   * Ruler title for female.
-   */
-  private JTextField rulerTitleFemaleField;
   /** Space race to be created */
   private SpaceRace newRace;
   /**
@@ -258,11 +262,11 @@ public class SpaceRaceEditorView extends BlackPanel {
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.CENTER);
     btn = new SpaceButton("Load space race",
-        GameCommands.COMMAND_LOAD_GOVERNMENT);
+        GameCommands.COMMAND_LOAD_SPACERACE);
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.WEST);
     btn = new SpaceButton("Save space race",
-        GameCommands.COMMAND_SAVE_GOVERNMENT);
+        GameCommands.COMMAND_SAVE_SPACERACE);
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.EAST);
     this.add(mainPanel, BorderLayout.CENTER);
@@ -748,16 +752,14 @@ public class SpaceRaceEditorView extends BlackPanel {
     sb.append("    \"Name\": \"");
     sb.append(spaceRaceNameField.getText());
     sb.append("\",\n");
-    sb.append("    \"RulerSelection\": \"");
-    RulerSelection rulerSelect = (RulerSelection) bridgeIdCombo
-        .getSelectedItem();
-    sb.append(rulerSelect.getAsString());
+    sb.append("    \"NameSingle\": \"");
+    sb.append(spaceRaceNameSingleField.getText());
     sb.append("\",\n");
-    sb.append("    \"RulerTitleMale\": \"");
-    sb.append(rulerTitleMaleField.getText());
+    sb.append("    \"BridgeId\": \"");
+    sb.append(newRace.getBridgeId());
     sb.append("\",\n");
-    sb.append("    \"RulerTitleFemale\": \"");
-    sb.append(rulerTitleFemaleField.getText());
+    sb.append("    \"SpaceShipId\": \"");
+    sb.append(newRace.getSpaceShipId());
     sb.append("\",\n");
     sb.append("    \"Traits\": [\n");
     boolean notFirst = false;
@@ -773,7 +775,55 @@ public class SpaceRaceEditorView extends BlackPanel {
       }
     }
     sb.append("\n");
-    sb.append("     ]\n");
+    sb.append("     ],\n");
+    sb.append("    \"Attitude\": \"");
+    Attitude attitude = (Attitude) attitudeCombo.getSelectedItem();
+    sb.append(attitude.getName().toUpperCase());
+    sb.append("\",\n");
+    sb.append("    \"Image\": \"");
+    sb.append(newRace.getImage());
+    sb.append("\",\n");
+    sb.append("    \"SocialSystem\": \"");
+    SocialSystem social = (SocialSystem) socialCombo.getSelectedItem();
+    sb.append(social.toString());
+    sb.append("\",\n");
+    sb.append("    \"Genders\": [\n");
+    GenderOption genderOption = (GenderOption) genderCombo.getSelectedItem();
+    if (genderOption == GenderOption.FEMALE_ONLY) {
+      sb.append("                 \"FEMALE\"\n");
+    }
+    if (genderOption == GenderOption.MALE_ONLY) {
+      sb.append("                 \"MALE\"\n");
+    }
+    if (genderOption == GenderOption.MALE_AND_FEMALE) {
+      sb.append("                 \"MALE\",\n");
+      sb.append("                 \"FEMALE\"\n");
+    }
+    if (genderOption == GenderOption.NONE) {
+      sb.append("                 \"NONE\"\n");
+    }
+    sb.append("                 ],\n");
+    sb.append("    \"SpeechSetId\": \"");
+    sb.append((String) speechCombo.getSelectedItem());
+    sb.append("\",\n");
+    sb.append("    \"BridgeEffect\": \"");
+    String tmp = (String) bridgeEffectCombo.getSelectedItem();
+    tmp = (String) bridgeEffectCombo.getSelectedItem();
+    tmp = tmp.replaceAll(" ", "_");
+    sb.append(tmp.toUpperCase());
+    sb.append("\",\n");
+    sb.append("    \"DiplomacyMusic\": \"");
+    MusicFileInfo music = (MusicFileInfo) diplomacyMusicCombo.getSelectedItem();
+    sb.append(music.getName());
+    sb.append("\",\n");
+    sb.append("    \"NameGenerator\": \"");
+    NameGeneratorType nameGen = (NameGeneratorType) nameGenCombo
+        .getSelectedItem();
+    sb.append(nameGen.getName().toUpperCase());
+    sb.append("\",\n");
+    sb.append("    \"Description\": \"");
+    sb.append(TextUtilities.escapeJson(descriptionText.getText()));
+    sb.append("\",\n");
     sb.append("  }\n");
     sb.append("]\n");
     return sb.toString();
@@ -876,5 +926,110 @@ public class SpaceRaceEditorView extends BlackPanel {
       MusicPlayer.play((MusicFileInfo) diplomacyMusicCombo.getSelectedItem());
       SoundPlayer.playMenuSound();
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SAVE_SPACERACE)) {
+      JFileChooser saveFileChooser = new JFileChooser(
+          new File(Folders.getCustomSpaceRacePath()));
+      saveFileChooser.setFileFilter(new FileNameExtensionFilter(
+          "JSON Data file", "json"));
+      String fileName = getEditedSpaceRaceId().toLowerCase() + ".json";
+      saveFileChooser.setSelectedFile(
+          new File(Folders.getCustomSpaceRacePath() + "/" + fileName));
+      saveFileChooser.setApproveButtonText("Save");
+      saveFileChooser.setDialogTitle("Save space race file");
+      int returnValue = saveFileChooser.showOpenDialog(this);
+      if (returnValue == JFileChooser.APPROVE_OPTION) {
+        File file = saveFileChooser.getSelectedFile();
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+          fos.write(buildJson().getBytes(StandardCharsets.UTF_8));
+          fos.flush();
+        } catch (FileNotFoundException e) {
+          ErrorLogger.log(e);
+        } catch (IOException e) {
+          ErrorLogger.log(e);
+        }
+        SoundPlayer.playMenuSound();
+      } else {
+        SoundPlayer.playMenuDisabled();
+      }
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_LOAD_SPACERACE)) {
+      JFileChooser loadFileChooser = new JFileChooser(
+          new File(Folders.getCustomSpaceRacePath()));
+      loadFileChooser.setFileFilter(new FileNameExtensionFilter(
+          "JSON Data file", "json"));
+      String fileName = getEditedSpaceRaceId().toLowerCase() + ".json";
+      loadFileChooser.setSelectedFile(
+          new File(Folders.getCustomSpaceRacePath() + "/" + fileName));
+      loadFileChooser.setApproveButtonText("Load");
+      loadFileChooser.setDialogTitle("Load space race file");
+      int returnValue = loadFileChooser.showOpenDialog(this);
+      if (returnValue == JFileChooser.APPROVE_OPTION) {
+        SpaceRaceLoader loader = new SpaceRaceLoader();
+        File file = loadFileChooser.getSelectedFile();
+        try (FileInputStream fis = new FileInputStream(file)) {
+          JSONArray jsonArray = new JSONArray(new JSONTokener(fis));
+
+          for (var obj : jsonArray) {
+            if (!(obj instanceof JSONObject)) {
+              ErrorLogger.log("Malformed JSON file: " + file.getAbsolutePath());
+            }
+            var spaceRaceOpt = loader.parseFromJson((JSONObject) obj);
+            if (spaceRaceOpt.isEmpty()) {
+              ErrorLogger.log("Malformed JSON file: " + file.getAbsolutePath());
+            } else {
+              newRace = spaceRaceOpt.get();
+              spaceRaceNameField.setText(newRace.getName());
+              spaceRaceNameSingleField.setText(newRace.getNameSingle());
+              bridgeIdCombo.setSelectedItem(newRace.getBridgeId());
+              attitudeCombo.setSelectedItem(newRace.getAttitude());
+              socialCombo.setSelectedItem(newRace.getSocialSystem());
+              GenderOption genderOpt = GenderOption.NONE;
+              for (Gender gender : newRace.getGenders()) {
+                if (gender == Gender.MALE && genderOpt == GenderOption.NONE) {
+                  genderOpt = GenderOption.MALE_ONLY;
+                } else if (gender == Gender.FEMALE
+                    && genderOpt == GenderOption.NONE) {
+                  genderOpt = GenderOption.FEMALE_ONLY;
+                } else if (gender == Gender.MALE
+                    && genderOpt == GenderOption.FEMALE_ONLY) {
+                  genderOpt = GenderOption.MALE_AND_FEMALE;
+                } else if (gender == Gender.FEMALE
+                    && genderOpt == GenderOption.MALE_ONLY) {
+                  genderOpt = GenderOption.MALE_AND_FEMALE;
+                }
+              }
+              genderCombo.setSelectedItem(genderOpt);
+              speechCombo.setSelectedItem(newRace.getSpeechSetId());
+              nameGenCombo.setSelectedItem(newRace.getNameGeneratorType());
+              traitPanel.uncheckAllTraits();
+              for (RaceTrait trait : newRace.getAllTraits()) {
+                traitPanel.checkTrait(trait.getId());
+                traitPanel.handleTraitSelection(trait.getId());
+              }
+              hullImage.setImage(ShipImageFactor.create(
+                  newRace.getSpaceShipId()).getShipImage(hullImageCount));
+              hullNameLabel.setText("Preview of "
+                  + ShipImage.getShipType(hullImageCount));
+              hullNameLabel.repaint();
+              hullImage.repaint();
+              interiorPanel.setRace(newRace);
+              String tmp = (String) bridgeEffectCombo.getSelectedItem();
+              tmp = tmp.replaceAll(" ", "_");
+              newRace.setRaceBridgeEffect(BridgeCommandType.getByString(tmp));
+              setAmbientEffect(newRace.getRaceBridgeEffect());
+              interiorPanel.repaint();
+              MusicPlayer.play(
+                  (MusicFileInfo) diplomacyMusicCombo.getSelectedItem());
+            }
+          }
+        } catch (IOException e) {
+          ErrorLogger.log("Failed reading Government: " + e);
+        }
+        SoundPlayer.playMenuSound();
+      } else {
+        SoundPlayer.playMenuDisabled();
+      }
+    }
+
   }
 }

@@ -97,6 +97,17 @@ public final class Folders {
   }
 
   /**
+   * Get Path for Custom government path
+   * @return Path for custom governments.
+   */
+  public static String getCustomSpaceRacePath() {
+    if (userFolder == null) {
+      initFolders();
+    }
+    return userFolder + CUSTOM_RACE_FOLDER;
+  }
+
+  /**
    * Get Path for Custom space race image path
    * @return Path for custom space race image.
    */

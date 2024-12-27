@@ -106,6 +106,63 @@ public final class TextUtilities {
     }
     return sb.toString();
   }
+
+  /**
+   * Escape typical json escape character.
+   * @param text Original text
+   * @return JSON escaped string
+   */
+  public static String escapeJson(final String text) {
+    StringBuilder sb = new StringBuilder(text.length() + 10);
+    for (int i = 0; i < text.length(); i++) {
+      char ch = text.charAt(i);
+      switch (ch) {
+        case '\\': sb.append("\\\\"); break;
+        case '\n': sb.append("\\n"); break;
+        case '\t': sb.append("\\t"); break;
+        case '\b': sb.append("\\b"); break;
+        case '\f': sb.append("\\f"); break;
+        case '\r': sb.append("\\r"); break;
+        case '/': sb.append("\\/"); break;
+        case '"': sb.append("\\\""); break;
+        default:
+          sb.append(ch);
+          break;
+      }
+    }
+    return sb.toString();
+  }
+  /**
+   * UNescape typical json escape characters.
+   * @param text JSON escaped string
+   * @return Unescaped String
+   */
+  public static String unescapeJson(final String text) {
+    StringBuilder sb = new StringBuilder(text.length() + 10);
+    for (int i = 0; i < text.length(); i++) {
+      char ch = text.charAt(i);
+      if (ch == '\\') {
+        i++;
+        ch = text.charAt(i);
+        switch (ch) {
+        case '\\': sb.append('\\'); break;
+        case 'n': sb.append('\n'); break;
+        case 't': sb.append('\t'); break;
+        case 'b': sb.append('\b'); break;
+        case 'f': sb.append('\f'); break;
+        case 'r': sb.append('\r'); break;
+        case '/': sb.append('/'); break;
+        case '"': sb.append('"'); break;
+        default:
+          sb.append(ch);
+          break;
+        }
+      } else {
+        sb.append(ch);
+      }
+    }
+    return sb.toString();
+  }
   /**
    * Handle character escapes with one single loop.
    * @param text Text to handle

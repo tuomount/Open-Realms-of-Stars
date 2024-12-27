@@ -176,4 +176,13 @@ public class TextUtilitiestTest {
     assertEquals(result, TextUtilities.removeLineChanges(value4));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEscape() {
+    String value1 = "{ \n \r \" ' \f / \b}";
+    String result = "{ \\n \\r \\\" ' \\f \\/ \\b}";
+    assertEquals(result, TextUtilities.escapeJson(value1));
+    assertEquals(value1, TextUtilities.unescapeJson(result));
+  }
+
 }

@@ -1006,6 +1006,11 @@ public class SpaceRaceEditorView extends BlackPanel {
                 traitPanel.checkTrait(trait.getId());
                 traitPanel.handleTraitSelection(trait.getId());
               }
+              spaceShipIdCombo.setSelectedItem(newRace.getSpaceShipId());
+              spaceRaceImageCombo.setSelectedItem(newRace.getImage());
+              diplomacyMusicCombo.setSelectedItem(
+                  newRace.getRaceDiplomacyMusic());
+              descriptionText.setText(newRace.getRacialDescription());
               hullImage.setImage(ShipImageFactor.create(
                   newRace.getSpaceShipId()).getShipImage(hullImageCount));
               hullNameLabel.setText("Preview of "
@@ -1013,6 +1018,7 @@ public class SpaceRaceEditorView extends BlackPanel {
               hullNameLabel.repaint();
               hullImage.repaint();
               interiorPanel.setRace(newRace);
+              interiorPanel2.setRace(newRace);
               String tmp = (String) bridgeEffectCombo.getSelectedItem();
               tmp = tmp.replaceAll(" ", "_");
               newRace.setRaceBridgeEffect(BridgeCommandType.getByString(tmp));

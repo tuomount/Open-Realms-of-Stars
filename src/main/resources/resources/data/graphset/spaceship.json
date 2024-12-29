@@ -90,6 +90,11 @@
     "monsters": false
   },
   {
+    "id": "Dwarf",
+    "path": "alonianships.png",
+    "monsters": false
+  },
+  {
     "id": "Default",
     "path": "humanships.png",
     "monsters": false

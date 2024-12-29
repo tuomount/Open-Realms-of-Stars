@@ -182,5 +182,7 @@ public enum GameState {
   /** View for configuring all AI realms */
   AI_REALM_SETUP_VIEW,
   /** View for government editor */
-  GOVERNMENT_EDITOR;
+  GOVERNMENT_EDITOR,
+  /** View for space race editor */
+  SPACERACE_EDITOR;
 }

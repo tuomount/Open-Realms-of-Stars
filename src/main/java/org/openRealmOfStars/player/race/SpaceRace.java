@@ -165,6 +165,13 @@ public class SpaceRace {
   }
 
   /**
+   * Get All space race traits
+   * @return array of space race traits
+   */
+  public RaceTrait[] getAllTraits() {
+    return traits.toArray(new RaceTrait[0]);
+  }
+  /**
    * Return true if race has trait specified by ID.
    * @param traitId RaceTrait ID
    * @return True if race has specified trait

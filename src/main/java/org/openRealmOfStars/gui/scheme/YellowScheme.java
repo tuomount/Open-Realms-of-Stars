@@ -49,13 +49,13 @@ public class YellowScheme extends BaseScheme {
   /**
    * Cool space color dark
    */
-  public static final Color COLOR_COOL_SPACE_ORANGE = new Color(254, 194,
-      0);
+  public static final Color COLOR_COOL_SPACE_ORANGE = new Color(222, 147,
+      56);
   /**
    * Cool space color darker
    */
-  public static final Color COLOR_COOL_SPACE_ORANGE_DARK = new Color(255, 154,
-      0);
+  public static final Color COLOR_COOL_SPACE_ORANGE_DARK = new Color(164, 97,
+      45);
   /**
    * Cool space color darker transparent
    */
@@ -89,7 +89,7 @@ public class YellowScheme extends BaseScheme {
   /**
    * Deep Space Blue
    */
-  public static final Color COLOR_DEEP_SPACE_ACT = new Color(218, 141, 14);
+  public static final Color COLOR_DEEP_SPACE_ACT = new Color(146, 131, 107);
 
   /** Scifi border text */
   public static final Color COLOR_SCIFI_BORDER_TEXT = new Color(222, 188, 0,

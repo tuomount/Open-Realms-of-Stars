@@ -81,6 +81,7 @@ import org.openRealmOfStars.game.state.SaveGameNameView;
 import org.openRealmOfStars.game.state.ShipDesignView;
 import org.openRealmOfStars.game.state.ShipUpgradeView;
 import org.openRealmOfStars.game.state.ShipView;
+import org.openRealmOfStars.game.state.SpaceRaceEditorView;
 import org.openRealmOfStars.game.state.StarMapView;
 import org.openRealmOfStars.game.state.StatView;
 import org.openRealmOfStars.game.state.StoryView;
@@ -374,6 +375,8 @@ public class Game implements ActionListener {
   private AiRealmSetupView aiRealmSetupView;
   /** Editor for governments */
   private GovernmentEditorView governmentEditorView;
+  /** Editor for space races */
+  private SpaceRaceEditorView spaceRaceEditorView;
   /**
    * Change Message Fleet or Planet
    */
@@ -1423,6 +1426,14 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show government editor panel
+   */
+  public void showSpaceRaceEditor() {
+    spaceRaceEditorView = new SpaceRaceEditorView(this);
+    this.updateDisplay(spaceRaceEditorView);
+  }
+
+  /**
    * Show main menu panel
    * @param text Text should be shown on front of planet.
    */
@@ -1682,6 +1693,9 @@ public class Game implements ActionListener {
       break;
     case GOVERNMENT_EDITOR:
       showGovernmentEditor();
+      break;
+    case SPACERACE_EDITOR:
+      showSpaceRaceEditor();
       break;
     case GALAXY_CREATION:
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
@@ -2930,6 +2944,18 @@ public class Game implements ActionListener {
       }
       return;
     }
+    if (gameState == GameState.SPACERACE_EDITOR) {
+      if (arg0.getActionCommand().equalsIgnoreCase(
+          GameCommands.COMMAND_MAIN_MENU)) {
+        spaceRaceEditorView.clearTimer();
+        spaceRaceEditorView = null;
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.MAIN_MENU);
+      } else {
+        spaceRaceEditorView.handleAction(arg0);
+      }
+      return;
+    }
     if (gameState == GameState.AI_REALM_SETUP_VIEW
         && aiRealmSetupView != null) {
       if (arg0.getActionCommand()
@@ -3258,6 +3284,12 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_EDIT_GOVERNMENT)) {
         SoundPlayer.playMenuSound();
         changeGameState(GameState.GOVERNMENT_EDITOR);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_EDIT_SPACERACE)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.SPACERACE_EDITOR);
         return;
       }
       if (arg0.getActionCommand()
@@ -3999,7 +4031,8 @@ public class Game implements ActionListener {
         || gameState == GameState.REALM_SETUP_VIEW
         || gameState == GameState.AI_REALM_SETUP_VIEW
         || gameState == GameState.END_STORY_VIEW
-        || gameState == GameState.GOVERNMENT_EDITOR) {
+        || gameState == GameState.GOVERNMENT_EDITOR
+        || gameState == GameState.SPACERACE_EDITOR) {
       actionPerformedMenus(arg0);
     }
   }

@@ -492,7 +492,27 @@ public final class GuiStatics {
   private static final BufferedImage TEMP_IMAGE = new BufferedImage(100, 100,
       BufferedImage.TYPE_4BYTE_ABGR);
 
-
+  /**
+   * List of built-in space race images.
+   */
+  public static final String[] BUILT_IN_SPACE_RACE_IMAGES = {
+      "/resources/images/human_race.png",
+      "/resources/images/teuthidae_race.png",
+      "/resources/images/fernid_race.png",
+      "/resources/images/scaurian_race.png",
+      "/resources/images/homarian_race.png",
+      "/resources/images/mothoid_race.png",
+      "/resources/images/centaur_race.png",
+      "/resources/images/greyan_race.png",
+      "/resources/images/mechion_race.png",
+      "/resources/images/spork_race.png",
+      "/resources/images/chiraloid_race.png",
+      "/resources/images/reborgian_race.png",
+      "/resources/images/lithorian_race.png",
+      "/resources/images/smaugirian_race.png",
+      "/resources/images/synthdroid_race.png",
+      "/resources/images/alonian_race.png"
+  };
 
   /** Teuthidae race selection image */
   public static final BufferedImage IMAGE_TEUTHIDAE_RACE = IOUtilities

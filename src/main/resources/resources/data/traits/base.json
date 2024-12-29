@@ -3,12 +3,14 @@
     "id": "ROBOTIC",
     "name": "Robotic",
     "description": "Race is robotic. It makes it immune to some biological effects and leaders cannot die from old age.",
+    "group": "Special",
     "points": 3
   },
   {
     "id": "LITHOVORIC",
     "name": "Lithovoric",
     "description": "Eats minerals instead of food. This life-long bond with earth consquently results in talent for mining.",
+    "group": "Metabolism",
     "points": 0,
     "conflictsWith": [
       "ENERGY_POWERED", "FAST_FOOD_PROD", "PHOTOSYNTHESIS", "RADIOSYNTHESIS"
@@ -18,6 +20,7 @@
     "id": "ENERGY_POWERED",
     "name": "Powered",
     "description": "Consumes energy credits instead of food at a rate of 1 credit per 4 population.",
+    "group": "Metabolism",
     "points": 1,
     "conflictsWith": [
       "LITHOVORIC", "FAST_FOOD_PROD", "PHOTOSYNTHESIS", "RADIOSYNTHESIS", "EAT_LESS"
@@ -27,6 +30,7 @@
     "id": "PHOTOSYNTHESIS",
     "name": "Photosynthesis",
     "description": "Requires water to survive, does not require food survive. Can built more water supplies.",
+    "group": "Metabolism",
     "points": 2,
     "conflictsWith": [
       "LITHOVORIC", "FAST_FOOD_PROD", "ENERGY_POWERED", "RADIOSYNTHESIS", "EAT_LESS"
@@ -36,12 +40,14 @@
     "id": "NO_HEIRS",
     "name": "No heirs",
     "description": "Race has unusual birth process, to which it is not possible to apply concept of parental heritage.",
+    "group": "Reproduction",
     "points": -1
   },
   {
     "id": "CONSTRUCTED_POP",
     "name": "Constructed",
     "description": "Breeds by external process, where individuals are \"constructed\" in some way.",
+    "group": "Reproduction",
     "points": 0,
     "conflictsWith": [
       "SLOW_GROWTH", "FAST_GROWTH", "FIXED_GROWTH", "LIMITED_GROWTH",
@@ -52,6 +58,7 @@
     "id": "RADIOSYNTHESIS",
     "name": "Radiosynthesis",
     "description": "Required sustenance (food) for population is covered by 1 per existing population up to planet's radiation level.",
+    "group": "Metabolism",
     "points": 3,
     "conflictsWith": [
       "PHOTOSYNTHESIS", "ENERGY_POWERED", "LITHOVORIC", "FAST_FOOD_PROD"
@@ -61,18 +68,21 @@
     "id": "MERCANTILE",
     "name": "Mercantile",
     "description": "Receives +1 additional credit from each credit-producing building and 50% more from trade routes.",
+    "group": "Skills",
     "points": 1
   },
   {
     "id": "STEALTHY",
     "name": "Stealthy",
     "description": "Natural aptitude towards stealthy movement and actions. Race's ships have 10% cloaking, sharing this trait with their constructors.",
+    "group": "Skills",
     "points": 2
   },
   {
     "id": "EAT_LESS",
     "name": "Eat less",
     "description": "Required sustenance (food) for population is 50% less than normal requirement.",
+    "group": "Metabolism",
     "points": 1,
     "conflictsWith": [
       "ENERGY_POWERED", "PHOTOSYNTHESIS"
@@ -82,6 +92,7 @@
     "id": "FAST_GROWTH",
     "name": "Fast population growth",
     "description": "Population grows 150% faster than normally",
+    "group": "Reproduction",
     "points": 2,
     "conflictsWith": [
       "SLOW_GROWTH", "CONSTRUCTED_POP"
@@ -91,6 +102,7 @@
     "id": "SLOW_GROWTH",
     "name": "Slow population growth",
     "description": "Population grows 50% slower than normally",
+    "group": "Reproduction",
     "points": -2,
     "conflictsWith": [
       "FAST_GROWTH", "CONSTRUCTED_POP"
@@ -100,6 +112,7 @@
     "id": "FIXED_GROWTH",
     "name": "Fixed maximum population growth",
     "description": "Population grows always with fixed speed.",
+    "group": "Reproduction",
     "points": -2,
     "conflictsWith": [
       "CONSTRUCTED_POP"
@@ -109,6 +122,7 @@
     "id": "LIMITED_GROWTH",
     "name": "Limited maximum population growth",
     "description": "Population growth is limited.",
+    "group": "Reproduction",
     "points": -1,
     "conflictsWith": [
       "CONSTRUCTED_POP", "FIXED_GROWTH"
@@ -118,6 +132,7 @@
     "id": "SLOW_CULTURE",
     "name": "Slow culture",
     "description": "Slow culture speed from artist population.",
+    "group": "Skills",
     "points": -1,
     "conflictsWith": [
       "FAST_CULTURE"
@@ -127,6 +142,7 @@
     "id": "FAST_CULTURE",
     "name": "Fast culture",
     "description": "Fast culture speed from artist population.",
+    "group": "Skills",
     "points": 1,
     "conflictsWith": [
       "SLOW_CULTURE"
@@ -136,6 +152,7 @@
     "id": "FAST_RESEARCH",
     "name": "Fast research",
     "description": "Fast research speed from scientist population.",
+    "group": "Skills",
     "points": 2,
     "conflictsWith": [
       "SLOW_RESEARCH", "VERY_FAST_RESEARCH"
@@ -145,6 +162,7 @@
     "id": "VERY_FAST_RESEARCH",
     "name": "Fast research",
     "description": "Very fast research speed from scientist population.",
+    "group": "Skills",
     "points": 3,
     "conflictsWith": [
       "SLOW_RESEARCH", "FAST_RESEARCH"
@@ -154,6 +172,7 @@
     "id": "SLOW_RESEARCH",
     "name": "Slow research",
     "description": "Slow research speed from scientist population.",
+    "group": "Skills",
     "points": -2,
     "conflictsWith": [
       "FAST_RESEARCH", "VERY_FAST_RESEARCH"
@@ -163,6 +182,7 @@
     "id": "SHORT_LIFE_SPAN",
     "name": "Short life span",
     "description": "Short life span for leaders. Leaders live about 10 star years below average.",
+    "group": "Life span",
     "points": -1,
     "conflictsWith": [
       "LONG_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
@@ -172,6 +192,7 @@
     "id": "LONG_LIFE_SPAN",
     "name": "Long life span",
     "description": "Long life span for leaders. Leaders live about 10 star years longer than average.",
+    "group": "Life span",
     "points": 1,
     "conflictsWith": [
       "LONG_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
@@ -181,6 +202,7 @@
     "id": "VERY_LONG_LIFE_SPAN",
     "name": "Very long life span",
     "description": "Very long life span for leaders. Leaders live about 20 star years longer than average.",
+    "group": "Life span",
     "points": 2,
     "conflictsWith": [
       "LONG_LIFE_SPAN", "SHORT_LIFE_SPAN", "CYBORG_LIFE_SPAN"
@@ -190,6 +212,7 @@
     "id": "CYBORG_LIFE_SPAN",
     "name": "Cyborg life span",
     "description": "Cyborgs live exceptionally long life, since those can be repaired.. Leaders live about 70 star years longer than average.",
+    "group": "Life span",
     "points": 3,
     "conflictsWith": [
       "LONG_LIFE_SPAN", "SHORT_LIFE_SPAN", "VERY_LONG_LIFE_SPAN"
@@ -199,12 +222,14 @@
     "id": "MASSIVE_SIZE",
     "name": "Massive size",
     "description": "Massive size, that ships are more robust and leaders live a longer life.",
+    "group": "Physical",
     "points": 3
   },
   {
     "id": "SLOW_METABOLISM",
     "name": "Slow metabolism",
     "description": "Leaders live a longer life due slower metabolism but troops fight with less power.",
+    "group": "Metabolism",
     "points": 0,
     "conflictsWith": [
       "CONSTRUCTED_POP"
@@ -214,6 +239,7 @@
     "id": "FAST_FOOD_PROD",
     "name": "Fast food production",
     "description": "Farmers work 100% faster than regular farmers.",
+    "group": "Skills",
     "points": 2,
     "conflictsWith": [
       "ENERGY_POWERED", "LITHOVORIC"
@@ -223,6 +249,7 @@
     "id": "ASSIMILATION",
     "name": "Assimilation",
     "description": "Assimilates non-robotic population as own after conquering a planet, while potentially stealing technology in the process.",
+    "group": "Special",
     "points": 3
   },
   {
@@ -230,6 +257,7 @@
     "name": "Good war resilience",
     "description": "Population can sustain war 10 extra star years longer without fatigue.",
     "points": 1,
+    "group": "War resilience",
     "conflictsWith": [
       "EXCELLENT_WAR_RESILIENCE", "POOR_WAR_RESILIENCE", "WEAK_WAR_RESILIENCE"
     ]
@@ -238,6 +266,7 @@
     "id": "EXCELLENT_WAR_RESILIENCE",
     "name": "Excellent war resilience",
     "description": "Population can sustain war 20 extra star years longer without fatigue.",
+    "group": "War resilience",
     "points": 2,
     "conflictsWith": [
       "GOOD_WAR_RESILIENCE", "POOR_WAR_RESILIENCE", "WEAK_WAR_RESILIENCE"
@@ -247,6 +276,7 @@
     "id": "POOR_WAR_RESILIENCE",
     "name": "Poor war resilience",
     "description": "Population can sustain war 10 star years less without fatigue.",
+    "group": "War resilience",
     "points": -1,
     "conflictsWith": [
       "GOOD_WAR_RESILIENCE", "EXCELLENT_WAR_RESILIENCE", "WEAK_WAR_RESILIENCE"
@@ -256,6 +286,7 @@
     "id": "WEAK_WAR_RESILIENCE",
     "name": "Weak war resilience",
     "description": "Population can sustain war 20 star years less without fatigue.",
+    "group": "War resilience",
     "points": -2,
     "conflictsWith": [
       "GOOD_WAR_RESILIENCE", "EXCELLENT_WAR_RESILIENCE", "POOR_WAR_RESILIENCE"
@@ -265,6 +296,7 @@
     "id": "NATURAL_CHARM",
     "name": "Natural charm",
     "description": "Naturally charming, others just tend to like individuals of the race, which makes diplomacy easier for the race.",
+    "group": "Physical",
     "points": 1,
     "conflictsWith": [
       "REPULSIVE", "DISGUSTING"
@@ -274,6 +306,7 @@
     "id": "REPULSIVE",
     "name": "Repulsive",
     "description": "Be it because of it's bad looks or habits, others tend to dislike the race. Diplomacy suffers as a consequence.",
+    "group": "Physical",
     "points": -1,
     "conflictsWith": [
       "NATURAL_CHARM", "DISGUSTING"
@@ -283,6 +316,7 @@
     "id": "DISGUSTING",
     "name": "Disgusting",
     "description": "Race's habits or appearance are so unnaceptable to other races that race's attempts to do diplomacy are practically futile.",
+    "group": "Physical",
     "points": -3,
     "conflictsWith": [
       "NATURAL_CHARM", "REPULSIVE"
@@ -292,6 +326,7 @@
     "id": "STRONG",
     "name": "Strong",
     "description": "Unnaturally strong for it's size. Race's troops are more powerful and mining minerals is easier.",
+    "group": "Physical",
     "points": 2,
     "conflictsWith": [
       "WEAK"
@@ -301,6 +336,7 @@
     "id": "WEAK",
     "name": "Weak",
     "description": "Race is weaker than usual. This weakness is negatively impacting it's combat abilities, as well as mining work.",
+    "group": "Physical",
     "points": -2,
     "conflictsWith": [
       "STRONG"
@@ -310,6 +346,7 @@
     "id": "HANDY",
     "name": "Handy",
     "description": "Whether it is due to anatomy or cognitive abilities, race exhibits unnatural handiness, benefiting production.",
+    "group": "Skills",
     "points": 2,
     "conflictsWith": [
       "IMPRACTICAL"
@@ -319,6 +356,7 @@
     "id": "IMPRACTICAL",
     "name": "Impractical",
     "description": "Anatomy or cognitive abilities of the race negatively impact it's production capabilities.",
+    "group": "Skills",
     "points": -2,
     "conflictsWith": [
       "HANDY"
@@ -328,6 +366,7 @@
     "id": "LOW_GRAVITY_BEING",
     "name": "Low gravity being",
     "description": "Race is use to work in low gravity conditions. Working in normal or high gravity is much more challenging.",
+    "group": "Gravity",
     "points": -1,
     "conflictsWith": [
       "HIGH_GRAVITY_BEING","ZERO_GRAVITY_BEING"
@@ -337,6 +376,7 @@
     "id": "HIGH_GRAVITY_BEING",
     "name": "High gravity being",
     "description": "Race is use to work in high gravity conditions. Working in normal or low gravity is much lighter.",
+    "group": "Gravity",
     "points": 1,
     "conflictsWith": [
       "LOW_GRAVITY_BEING","ZERO_GRAVITY_BEING"
@@ -346,6 +386,7 @@
     "id": "ZERO_GRAVITY_BEING",
     "name": "Zero gravity being",
     "description": "Race is use to work in zero gravity conditions. Working in low, normal or high gravity is much more challenging. Race has focus living on orbitals.",
+    "group": "Gravity",
     "points": -3,
     "conflictsWith": [
       "HIGH_GRAVITY_BEING","LOW_GRAVITY_BEING"
@@ -355,6 +396,7 @@
     "id": "TOLERATE_NO_RADIATION",
     "name": "Radiation intolerant",
     "description": "Race does not handle radiation well, and is able tolerate only very small levels of radiation on planets.",
+    "group": "Radiation",
     "points": -1,
     "conflictsWith": [
       "TOLERATE_HIGH_RADIATION","TOLERATE_EXTREME_RADIATION"
@@ -364,6 +406,7 @@
     "id": "TOLERATE_HIGH_RADIATION",
     "name": "Tolerate high radiation",
     "description": "Race is able to tolerate high radiation on planets.",
+    "group": "Radiation",
     "points": 2,
     "conflictsWith": [
       "TOLERATE_NO_RADIATION","TOLERATE_EXTREME_RADIATION"
@@ -373,6 +416,7 @@
     "id": "TOLERATE_EXTREME_RADIATION",
     "name": "Tolerate extreme radiation",
     "description": "Race is able to tolerate extremely high radiation on planets.",
+    "group": "Radiation",
     "points": 3,
     "conflictsWith": [
       "TOLERATE_NO_RADIATION","TOLERATE_HIGH_RADIATION"
@@ -382,6 +426,7 @@
     "id": "TOLERATE_COLD",
     "name": "Tolerate cold temperature",
     "description": "Race is able to tolerate cold temperature on planets.",
+    "group": "Temperature",
     "points": 1,
     "conflictsWith": [
       "TOLERATE_LAVA"
@@ -391,6 +436,7 @@
     "id": "TOLERATE_HOT",
     "name": "Tolerate hot temperature",
     "description": "Race is able to tolerate hot temperature on planets.",
+    "group": "Temperature",
     "points": 1,
     "conflictsWith": [
       "TOLERATE_LAVA"
@@ -400,6 +446,7 @@
     "id": "TOLERATE_LAVA",
     "name": "Tolerate volcanic temperature",
     "description": "Race is able to tolerate volcanic temperature and lava on planets, but cold temperature causes problems.",
+    "group": "Temperature",
     "points": 1,
     "conflictsWith": [
       "TOLERATE_COLD", "TOLERATE_HOT"
@@ -409,6 +456,7 @@
     "id": "COMMUNAL",
     "name": "Communal",
     "description": "Race is able to tolerate more dense population. Allows growing 2 extra population to planet.",
+    "group": "Community",
     "points": 1,
     "conflictsWith": [
       "SOLITARY"
@@ -418,6 +466,7 @@
     "id": "SOLITARY",
     "name": "Solitary",
     "description": "Race is not able to tolerate dense population. Maximum population is 2 lower than normally.",
+    "group": "Community",
     "points": -1,
     "conflictsWith": [
       "Communal"
@@ -427,12 +476,14 @@
     "id": "NATURAL_LEADERS",
     "name": "Natural leaders",
     "description": "Race has more natural leaders, one less population is required for training a leader.",
+    "group": "Community",
     "points": 1
   },
   {
     "id": "QUICK_LEARNERS",
     "name": "Quick learners",
     "description": "Leaders gain twice faster experience.",
+    "group": "Community",
     "points": 2,
     "conflictsWith": [
       "SLOW_LEARNERS"
@@ -442,6 +493,7 @@
     "id": "SLOW_LEARNERS",
     "name": "Slow learners",
     "description": "Leaders gain only half of experience.",
+    "group": "Community",
     "points": -2,
     "conflictsWith": [
       "QUICK_LEARNERS"

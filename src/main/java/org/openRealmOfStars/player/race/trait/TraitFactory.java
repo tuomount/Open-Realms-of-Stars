@@ -44,6 +44,13 @@ public final class TraitFactory {
   }
 
   /**
+   * Get all space race traits.
+   * @return RaceTraits in array
+   */
+  public static RaceTrait[] getAll() {
+    return SINGLETON.createAll();
+  }
+  /**
    * Check if all hardcoded RaceTraits are available.
    * @return True if all hardcoded RaceTraits are loaded
    */
@@ -78,6 +85,18 @@ public final class TraitFactory {
 
     final var cachedTrait = raceTraits.get(traitId);
     return Optional.ofNullable(cachedTrait);
+  }
+
+  /**
+   * Create all space race traits
+   * @return Array of traits
+   */
+  private RaceTrait[] createAll() {
+    if (!initialized) {
+      initialized = true;
+      init();
+    }
+    return raceTraits.values().toArray(new RaceTrait[0]);
   }
 
   /**
@@ -134,6 +153,7 @@ class RaceTraitLoader extends DataLoader<String, RaceTrait> {
       final var name = jobj.getString("name");
       final var description = jobj.getString("description");
       final var points = ((byte) jobj.getInt("points"));
+      String group = jobj.optString("group");
 
       var jsonConflictingIds = jobj.optJSONArray("conflictsWith",
           new JSONArray());
@@ -144,6 +164,9 @@ class RaceTraitLoader extends DataLoader<String, RaceTrait> {
 
       var tmpTrait = new RaceTrait(traitId, name, description, points,
           conflictingIds);
+      if (!group.isEmpty()) {
+        tmpTrait.setGroup(group);
+      }
       return Optional.of(tmpTrait);
     } catch (JSONException e) {
       ErrorLogger.log(e);

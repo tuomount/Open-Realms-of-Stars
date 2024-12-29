@@ -116,6 +116,13 @@ public class ShipInteriorPanel extends JPanel {
   }
 
   /**
+   * Set the space race for panel.
+   * @param race SpaceRace
+   */
+  public void setRace(final SpaceRace race) {
+    this.race = race;
+  }
+  /**
    * Get the planet background image
    * @return Image of planet or null
    */

@@ -72,9 +72,19 @@ public final class GameCommands {
   public static final String COMMAND_EDIT_GOVERNMENT = "EditGovernmentView";
 
   /**
+   * Edit space race command
+   */
+  public static final String COMMAND_EDIT_SPACERACE = "EditSpaceRaceView";
+
+  /**
    * Government trait selected.
    */
   public static final String COMMAND_GOV_TRAIT_SELECTED = "GovTraitSelected";
+
+  /**
+   * Space race trait selected.
+   */
+  public static final String COMMAND_RACE_TRAIT_SELECTED = "RaceTraitSelected";
 
   /**
    * Music volume up
@@ -261,6 +271,14 @@ public final class GameCommands {
    * Save government
    */
   public static final String COMMAND_SAVE_GOVERNMENT = "SaveGovernment";
+  /**
+   * Load spacerace
+   */
+  public static final String COMMAND_LOAD_SPACERACE = "LoadSpaceRace";
+  /**
+   * Save spacerace
+   */
+  public static final String COMMAND_SAVE_SPACERACE = "SaveSpaceRace";
 
   /**
    * View Voting view
@@ -612,6 +630,68 @@ public final class GameCommands {
    */
   public static final String COMMAND_GOVERNMENT_EDITOR_RULER_SELECT =
       "GovernmentEditorRulerSelect";
+
+  /**
+   * Spacerace attitude selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_ATTITUDE_SELECT =
+      "SpaceRaceEditorAttitudeSelect";
+
+  /**
+   * Spacerace social system selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_SOCIAL_SELECT =
+      "SpaceRaceEditorSocialSelect";
+  /**
+   * Spacerace gender option selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_GENDER_SELECT =
+      "SpaceRaceEditorGenderSelect";
+  /**
+   * Spacerace speechset selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_SPEECH_SELECT =
+      "SpaceRaceEditorSpeechSelect";
+  /**
+   * Spacerace namegenerator selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_NAMEGEN_SELECT =
+      "SpaceRaceEditorNameGenSelect";
+  /**
+   * Spacerace image selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_IMAGE_SELECT =
+      "SpaceRaceEditorImageSelect";
+  /**
+   * Spacerace bridge id selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_BRIDGE_SELECT =
+      "SpaceRaceEditorBridgeSelect";
+  /**
+   * Spacerace ship id selected in spacerace editor.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_SHIP_SELECT =
+      "SpaceRaceEditorShipSelect";
+  /**
+   * Spacerace editor music select
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_MUSIC_SELECT =
+      "SpaceRaceEditorMusicSelect";
+  /**
+   * Spacerace browse image
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_BROWSE_IMAGE =
+      "SpaceRaceEditorBrowseImage";
+  /**
+   * Spacerace apply appearance
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_APPLY_APPEARANCE =
+      "SpaceRaceEditorApplyAppearance";
+  /**
+   * Shiptimer.
+   */
+  public static final String COMMAND_SPACERACE_EDITOR_SHIP_TIMER =
+      "SpaceRaceEditorShipTimer";
 
   /**
    * Difficulty has changed in Galaxy Setup

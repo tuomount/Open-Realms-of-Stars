@@ -151,7 +151,7 @@ public class ShipImage {
   /**
    * Must be one bigger than last ship
    */
-  private static final int NUMBER_OF_IMAGES = 20;
+  public static final int NUMBER_OF_IMAGES = 20;
 
   /**
    * Number of monster images.
@@ -171,6 +171,39 @@ public class ShipImage {
     loadImages(fileToRead);
   }
 
+  /**
+   * Get name for ship type.
+   * @param index Image type
+   * @return Ship type name
+   */
+  public static String getShipType(final int index) {
+    switch (index) {
+      default:
+      case 0: return "Scout";
+      case 1: return "Colony";
+      case 2: return "Destroyer";
+      case 3: return "Probe";
+      case 4: return "Small freighter";
+      case 5: return "Small starbase";
+      case 6: return "Corvette";
+      case 7: return "Medium starbase";
+      case 8: return "Medium freighter";
+      case 9: return "Cruiser";
+      case 10: return "Battleship";
+      case 11: return "Privateer";
+      case 12: return "Large privateer";
+      case 13: return "Large freighter";
+      case 14: return "Large starbase";
+      case 15: return "Battle cruiser";
+      case 16: return "Massive freighter";
+      case 17: return "Massive starbase";
+      case 18: return "Capital ship";
+      case 19: return "Artificial planet";
+      case 20: return "Space worm";
+      case 21: return "Space kraken";
+      case 22: return "Large space kraken";
+    }
+  }
   /**
    * Initialize ship images.
    * @param fileToRead Needs to be inside JAR file

@@ -220,6 +220,15 @@ public class DiplomacyView extends BlackPanel {
    */
   private SpaceCheckBox aiMapPlanetsOffer;
   /**
+   * Human offering a map of war planets trade
+   */
+  private SpaceCheckBox humanMapWarPlanetsOffer;
+
+  /**
+   * AI offering a map of war planets trade
+   */
+  private SpaceCheckBox aiMapWarPlanetsOffer;
+  /**
    * Human offering a map trade
    */
   private SpaceCheckBox humanMapOffer;
@@ -374,6 +383,19 @@ public class DiplomacyView extends BlackPanel {
     humanMapPlanetsOffer.setToolTipText("Trade only map of your planets."
         + " Useful when starting to trade alliance.");
     humanOffer.add(humanMapPlanetsOffer);
+    humanMapWarPlanetsOffer = new SpaceCheckBox("Trade map of enemy planets");
+    humanMapWarPlanetsOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
+    humanMapWarPlanetsOffer.setActionCommand(
+        GameCommands.COMMAND_HUMAN_WAR_PLANET_MAP);
+    humanMapWarPlanetsOffer.addActionListener(listener);
+    humanMapWarPlanetsOffer.setToolTipText("Trade only map of enemy planets."
+        + " which both have war against. Useable only with defensive pacts.");
+    if (human.getDiplomacy().isDefensivePact(aiIndex)) {
+      humanMapWarPlanetsOffer.setEnabled(true);
+    } else {
+      humanMapWarPlanetsOffer.setEnabled(false);
+    }
+    humanOffer.add(humanMapWarPlanetsOffer);
     humanMapOffer = new SpaceCheckBox("Trade full map");
     humanMapOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanMapOffer.setActionCommand(GameCommands.COMMAND_HUMAN_FULL_MAP);
@@ -556,6 +578,19 @@ public class DiplomacyView extends BlackPanel {
     aiMapPlanetsOffer.setToolTipText("Trade only map of other party's planets."
         + " Useful when starting to trade alliance.");
     aiOffer.add(aiMapPlanetsOffer);
+    aiMapWarPlanetsOffer = new SpaceCheckBox("Trade map of enemy planets");
+    aiMapWarPlanetsOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
+    aiMapWarPlanetsOffer.setActionCommand(
+        GameCommands.COMMAND_AI_WAR_PLANET_MAP);
+    aiMapWarPlanetsOffer.addActionListener(listener);
+    aiMapWarPlanetsOffer.setToolTipText("Trade only map of enemy planets."
+        + " which both have war against. Useable only with defensive pacts.");
+    if (ai.getDiplomacy().isDefensivePact(humanIndex)) {
+      aiMapWarPlanetsOffer.setEnabled(true);
+    } else {
+      aiMapWarPlanetsOffer.setEnabled(false);
+    }
+    aiOffer.add(aiMapWarPlanetsOffer);
     aiMapOffer = new SpaceCheckBox("Trade full map");
     aiMapOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiMapOffer.setActionCommand(GameCommands.COMMAND_AI_FULL_MAP);
@@ -1031,8 +1066,7 @@ public class DiplomacyView extends BlackPanel {
   /**
    * Get offering list from UI components
    * @param playerTechList Human or AI list
-   * @param mapPlanetOffer Human or AI map of planets offering
-   * @param mapFullOffer Human or AI map offering
+   * @param mapType Maptype which to trade.
    * @param voteOffer Human or AI vote offer. Can be null.
    * @param playerFleetList Human or AI list
    * @param playerPlanetList Human or AI list
@@ -1041,7 +1075,7 @@ public class DiplomacyView extends BlackPanel {
    * @return Negotation list for that player
    */
   private NegotiationList getOfferingList(final JList<Tech> playerTechList,
-      final boolean mapPlanetOffer, final boolean mapFullOffer,
+      final int mapType,
       final NegotiationOffer voteOffer, final JList<Fleet> playerFleetList,
       final JList<Planet> playerPlanetList, final int credits,
       final int artifacts) {
@@ -1052,27 +1086,23 @@ public class DiplomacyView extends BlackPanel {
           tech);
       list.add(offer);
     }
-    if (mapPlanetOffer) {
-      NegotiationOffer offer = new NegotiationOffer(
-          NegotiationType.MAP_PLANETS, null);
-      if (playerTechList == humanTechListOffer) {
-        offer.setMapValue(DiplomaticTrade.calculateMapValue(starMap, ai,
-            human, false));
-      } else {
-        offer.setMapValue(DiplomaticTrade.calculateMapValue(starMap, human,
-            ai, false));
-      }
-      list.add(offer);
-    }
-    if (mapFullOffer) {
+    if (mapType != DiplomaticTrade.MAP_NOTRADE) {
       NegotiationOffer offer = new NegotiationOffer(NegotiationType.MAP,
           null);
+      if (mapType == DiplomaticTrade.MAP_ONLYPLANETS) {
+        offer = new NegotiationOffer(
+            NegotiationType.MAP_PLANETS, null);
+      }
+      if (mapType == DiplomaticTrade.MAP_ENEMYPLANETS_ONLY) {
+        offer = new NegotiationOffer(
+            NegotiationType.MAP_ENEMY_PLANETS, null);
+      }
       if (playerTechList == humanTechListOffer) {
         offer.setMapValue(DiplomaticTrade.calculateMapValue(starMap, ai,
-            human, true));
+            human, mapType));
       } else {
         offer.setMapValue(DiplomaticTrade.calculateMapValue(starMap, human,
-            ai, true));
+            ai, mapType));
       }
       list.add(offer);
     }
@@ -1139,6 +1169,10 @@ public class DiplomacyView extends BlackPanel {
             aiMapPlanetsOffer.setSelected(true);
             break;
           }
+          case MAP_ENEMY_PLANETS: {
+            aiMapWarPlanetsOffer.setSelected(true);
+            break;
+          }
           case MAP: {
             aiMapOffer.setSelected(true);
             break;
@@ -1195,6 +1229,7 @@ public class DiplomacyView extends BlackPanel {
     ArrayList<Tech> techArray = new ArrayList<>();
     humanMapOffer.setSelected(false);
     humanMapPlanetsOffer.setSelected(false);
+    humanMapWarPlanetsOffer.setSelected(false);
     if (offerList != null) {
       for (int i = 0; i < offerList.getSize(); i++) {
         NegotiationOffer offer = offerList.getByIndex(i);
@@ -1218,6 +1253,10 @@ public class DiplomacyView extends BlackPanel {
           }
           case MAP_PLANETS: {
             humanMapPlanetsOffer.setSelected(true);
+            break;
+          }
+          case MAP_ENEMY_PLANETS: {
+            humanMapWarPlanetsOffer.setSelected(true);
             break;
           }
           case MAP: {
@@ -1260,6 +1299,7 @@ public class DiplomacyView extends BlackPanel {
         new Fleet[fleetArray.size()]));
     humanMapOffer.setEnabled(false);
     humanMapPlanetsOffer.setEnabled(false);
+    humanMapWarPlanetsOffer.setEnabled(false);
     humanVoteNo.setEnabled(false);
     humanVoteYes.setEnabled(false);
     humanCreditOffer.setInteractive(false);
@@ -1304,6 +1344,7 @@ public class DiplomacyView extends BlackPanel {
     humanMapOffer.setEnabled(true);
     humanMapPlanetsOffer.setSelected(false);
     humanMapPlanetsOffer.setEnabled(true);
+    humanMapWarPlanetsOffer.setSelected(false);
     humanVoteNo.setSelected(false);
     humanVoteYes.setSelected(false);
     if (vote != null && !trade.isDiplomacyWithPirates()) {
@@ -1895,8 +1936,16 @@ public class DiplomacyView extends BlackPanel {
    * @return NegotiationList
    */
   private NegotiationList getAiNegotiationList() {
-    return getOfferingList(aiTechListOffer, aiMapPlanetsOffer.isSelected(),
-        aiMapOffer.isSelected(), createAiVoteOffer(), aiFleetListOffer,
+    int mapType = DiplomaticTrade.MAP_NOTRADE;
+    if (aiMapOffer.isSelected()) {
+      mapType = DiplomaticTrade.MAP_FULLMAP;
+    } else if (aiMapPlanetsOffer.isSelected()) {
+      mapType = DiplomaticTrade.MAP_ONLYPLANETS;
+    } else if (aiMapWarPlanetsOffer.isSelected()) {
+      mapType = DiplomaticTrade.MAP_ENEMYPLANETS_ONLY;
+    }
+    return getOfferingList(aiTechListOffer, mapType,
+        createAiVoteOffer(), aiFleetListOffer,
         aiPlanetListOffer, aiCredits, aiArtifacts);
   }
 
@@ -1905,8 +1954,15 @@ public class DiplomacyView extends BlackPanel {
    * @return NegotiationList
    */
   private NegotiationList getHumanNegotiationList() {
-    return getOfferingList(humanTechListOffer,
-        humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
+    int mapType = DiplomaticTrade.MAP_NOTRADE;
+    if (humanMapOffer.isSelected()) {
+      mapType = DiplomaticTrade.MAP_FULLMAP;
+    } else if (humanMapPlanetsOffer.isSelected()) {
+      mapType = DiplomaticTrade.MAP_ONLYPLANETS;
+    } else if (humanMapWarPlanetsOffer.isSelected()) {
+      mapType = DiplomaticTrade.MAP_ENEMYPLANETS_ONLY;
+    }
+    return getOfferingList(humanTechListOffer, mapType,
         createHumanVoteOffer(), humanFleetListOffer, humanPlanetListOffer,
         humanCredits, humanArtifacts);
   }
@@ -1952,11 +2008,27 @@ public class DiplomacyView extends BlackPanel {
       if (humanMapOffer.isSelected()) {
         humanMapOffer.setSelected(false);
       }
+      if (humanMapWarPlanetsOffer.isSelected()) {
+        humanMapWarPlanetsOffer.setSelected(false);
+      }
+    }
+    if (GameCommands.COMMAND_HUMAN_WAR_PLANET_MAP.equals(
+        arg0.getActionCommand())) {
+      SoundPlayer.playMenuSound();
+      if (humanMapOffer.isSelected()) {
+        humanMapOffer.setSelected(false);
+      }
+      if (humanMapPlanetsOffer.isSelected()) {
+        humanMapPlanetsOffer.setSelected(false);
+      }
     }
     if (GameCommands.COMMAND_HUMAN_FULL_MAP.equals(arg0.getActionCommand())) {
       SoundPlayer.playMenuSound();
       if (humanMapPlanetsOffer.isSelected()) {
         humanMapPlanetsOffer.setSelected(false);
+      }
+      if (humanMapWarPlanetsOffer.isSelected()) {
+        humanMapWarPlanetsOffer.setSelected(false);
       }
     }
     if (GameCommands.COMMAND_AI_PLANET_MAP.equals(arg0.getActionCommand())) {
@@ -1964,11 +2036,27 @@ public class DiplomacyView extends BlackPanel {
       if (aiMapOffer.isSelected()) {
         aiMapOffer.setSelected(false);
       }
+      if (aiMapWarPlanetsOffer.isSelected()) {
+        aiMapWarPlanetsOffer.setSelected(false);
+      }
+    }
+    if (GameCommands.COMMAND_AI_WAR_PLANET_MAP.equals(
+        arg0.getActionCommand())) {
+      SoundPlayer.playMenuSound();
+      if (aiMapOffer.isSelected()) {
+        aiMapOffer.setSelected(false);
+      }
+      if (aiMapPlanetsOffer.isSelected()) {
+        aiMapPlanetsOffer.setSelected(false);
+      }
     }
     if (GameCommands.COMMAND_AI_FULL_MAP.equals(arg0.getActionCommand())) {
       SoundPlayer.playMenuSound();
       if (aiMapPlanetsOffer.isSelected()) {
         aiMapPlanetsOffer.setSelected(false);
+      }
+      if (aiMapWarPlanetsOffer.isSelected()) {
+        aiMapWarPlanetsOffer.setSelected(false);
       }
     }
     if (GameCommands.COMMAND_MINUS_HUMAN_CREDIT.equals(

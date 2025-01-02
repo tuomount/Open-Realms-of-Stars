@@ -771,6 +771,20 @@ public class PlayerInfo {
   }
 
   /**
+   * Check if two realms have mutual enemy.
+   * @param other Other player info
+   * @return True if has mutual enemy.
+   */
+  public boolean hasMutualEnemy(final PlayerInfo other) {
+    boolean result = false;
+    for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
+      if (getDiplomacy().isWar(i) && other.getDiplomacy().isWar(i)) {
+        result = true;
+      }
+    }
+    return result;
+  }
+  /**
    * Get player Intelligence information to other players
    * @return Intelligence
    */

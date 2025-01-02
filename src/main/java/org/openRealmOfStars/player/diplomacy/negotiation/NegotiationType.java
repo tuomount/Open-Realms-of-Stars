@@ -58,6 +58,8 @@ public enum NegotiationType {
   /** Discovered ancient artifact. */
   DISCOVERED_ARTIFACT,
   /** Ask protection from space pirates. */
-  ASK_PROTECTION;
+  ASK_PROTECTION,
+  /** Map containing only shared enemy planets. */
+  MAP_ENEMY_PLANETS;
 
 }

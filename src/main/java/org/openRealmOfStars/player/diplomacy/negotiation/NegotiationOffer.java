@@ -77,6 +77,10 @@ public class NegotiationOffer {
       negotiationType = type;
       mapValue = 5;
       offerObject = null;
+    } else if (type == NegotiationType.MAP_ENEMY_PLANETS) {
+      negotiationType = type;
+      mapValue = 2;
+      offerObject = null;
     } else {
       throw new IllegalArgumentException("Offer type is wrong for offer!");
     }
@@ -160,6 +164,9 @@ public class NegotiationOffer {
       offerValue = 0;
       break;
     case MAP_PLANETS:
+      offerValue = getMapValue();
+      break;
+    case MAP_ENEMY_PLANETS:
       offerValue = getMapValue();
       break;
     case PROMISE_VOTE_NO:
@@ -303,7 +310,7 @@ public class NegotiationOffer {
 
   /**
    * Set the map value. Maximum value for map is 15. For map of planet maximum
-   * value is 7.
+   * value is 7. For enemy planet maximum value is 3.
    * @param mapValue the mapValue to set
    */
   public void setMapValue(final int mapValue) {
@@ -313,6 +320,9 @@ public class NegotiationOffer {
     }
     if (negotiationType == NegotiationType.MAP_PLANETS && limit > 7) {
       limit = 7;
+    }
+    if (negotiationType == NegotiationType.MAP_ENEMY_PLANETS && limit > 7) {
+      limit = 3;
     }
     this.mapValue = limit;
   }

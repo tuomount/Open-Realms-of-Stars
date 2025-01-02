@@ -298,6 +298,15 @@ public class ScifiBorder extends AbstractBorder {
    */
   public void setTitle(final String title) {
     this.title = title;
+    if (this.title == null) {
+      topGap = DEFAULT_BOTTOP_GAP;
+    } else {
+      // Title is available making top gap bigger
+      topGap = DEFAULT_BOTTOP_GAP + DEFAULT_SIDE_GAP;
+      if (this.hires) {
+        topGap = topGap + DEFAULT_SIDE_GAP;
+      }
+    }
   }
 
   @Override

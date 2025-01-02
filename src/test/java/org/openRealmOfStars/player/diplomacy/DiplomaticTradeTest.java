@@ -495,12 +495,12 @@ public class DiplomaticTradeTest {
     Votes votes = Mockito.mock(Votes.class);
     Mockito.when(map.getVotes()).thenReturn(votes);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
-    trade.generateMapTrade(DiplomaticTrade.TRADE, true);
+    trade.generateMapTrade(DiplomaticTrade.TRADE, DiplomaticTrade.MAP_FULLMAP);
     assertEquals(NegotiationType.MAP, trade.getFirstOffer().getByIndex(0)
         .getNegotiationType());
     assertEquals(NegotiationType.MAP, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    trade.generateMapTrade(DiplomaticTrade.BUY, true);
+    trade.generateMapTrade(DiplomaticTrade.BUY, DiplomaticTrade.MAP_FULLMAP);
     assertEquals(NegotiationType.MAP, trade.getFirstOffer().getByIndex(0)
         .getNegotiationType());
     assertEquals(NegotiationType.CREDIT, trade.getSecondOffer().getByIndex(0)
@@ -594,16 +594,18 @@ public class DiplomaticTradeTest {
   public void testMapPlanetTrade() {
     StarMap map = generateMapWithPlayer(SpaceRaceFactory.createOne("HUMANS"));
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
-    trade.generateMapTrade(DiplomaticTrade.TRADE, false);
-    assertEquals(NegotiationType.MAP_PLANETS, trade.getFirstOffer().getByIndex(0)
-        .getNegotiationType());
-    assertEquals(NegotiationType.MAP_PLANETS, trade.getSecondOffer().getByIndex(0)
-        .getNegotiationType());
-    trade.generateMapTrade(DiplomaticTrade.BUY, false);
-    assertEquals(NegotiationType.MAP_PLANETS, trade.getFirstOffer().getByIndex(0)
-        .getNegotiationType());
-    assertEquals(NegotiationType.CREDIT, trade.getSecondOffer().getByIndex(0)
-        .getNegotiationType());
+    trade.generateMapTrade(DiplomaticTrade.TRADE, 
+        DiplomaticTrade.MAP_ONLYPLANETS);
+    assertEquals(NegotiationType.MAP_PLANETS, 
+        trade.getFirstOffer().getByIndex(0).getNegotiationType());
+    assertEquals(NegotiationType.MAP_PLANETS, 
+        trade.getSecondOffer().getByIndex(0).getNegotiationType());
+    trade.generateMapTrade(DiplomaticTrade.BUY,
+        DiplomaticTrade.MAP_ONLYPLANETS);
+    assertEquals(NegotiationType.MAP_PLANETS,
+        trade.getFirstOffer().getByIndex(0).getNegotiationType());
+    assertEquals(NegotiationType.CREDIT, 
+        trade.getSecondOffer().getByIndex(0).getNegotiationType());
   }
 
   @Test
@@ -1212,7 +1214,7 @@ public class DiplomaticTradeTest {
     seller.setSectorVisibility(4, 2, PlayerInfo.VISIBLE);
     seller.setSectorVisibility(0, 3, PlayerInfo.VISIBLE);
     trade = new DiplomaticTrade(map, 0, 1);
-    trade.generateMapTrade(DiplomaticTrade.BUY, true);
+    trade.generateMapTrade(DiplomaticTrade.BUY, DiplomaticTrade.MAP_FULLMAP);
     int oldSellerCreds = seller.getTotalCredits();
     int oldBuyerCreds = buyer.getTotalCredits();
     trade.doTrades();

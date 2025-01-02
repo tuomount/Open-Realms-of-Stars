@@ -1041,6 +1041,10 @@ public final class GameCommands {
    */
   public static final String COMMAND_HUMAN_PLANET_MAP = "HumanPlanetMap";
   /**
+   * Human planet war map trade
+   */
+  public static final String COMMAND_HUMAN_WAR_PLANET_MAP = "HumanWARPlanetMap";
+  /**
    * AI full map trade
    */
   public static final String COMMAND_AI_FULL_MAP = "AiFullMap";
@@ -1048,6 +1052,10 @@ public final class GameCommands {
    * AI planet map trade
    */
   public static final String COMMAND_AI_PLANET_MAP = "AiPlanetMap";
+  /**
+   * AI planet war map trade
+   */
+  public static final String COMMAND_AI_WAR_PLANET_MAP = "AiWarPlanetMap";
   /**
    * Human Promise Vote Yes
    */

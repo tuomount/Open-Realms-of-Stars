@@ -1,4 +1,34 @@
 - New features and updates -
+* Space race editor, allows player to make custom space races.
+* Government editor, allows player to make custom governments.
+* Alonian image, namegenerators, speeches, bridges and ships are available for custom space race.
+* Improved explanation about planet's suitability.
+* New ready made space race called Fernids. These guys are getting food via photosynthesis.
+* Allow human player to declare to be winner and let AI play game till end. So called Snowman option.
+* Move external files into user's home folder.
+* Improved AI for planet handling and building selection.
+* If alliance member makes peace with third party, also other alliance party should get peace.
+* Possibility to ask third party planet locations when in defesive pact against third party.
+* Improved AI tactics when attacking against starbases and orbitals.
+* Improved challenging AI exploring algorithm.
+* Improved jammers in game.
+* Doomed starting scenarios should be visible in background story.
+* Tutorial texts has been improved.
+* New UI Scheme called Dangerous Yellow.
+* High contrast grid option when playing in bright daylight.
+
+- Bugfixes -
+* Fixed possible null pointer on exploring pirate lair.
+* Fixed possible null pointer on artifact research.
+* Fixed AI handling of artificial planets.
+* Fixed bug where artificial planets could have tectonics.
+* Fixed bug which caused space pirates not working after creating new space race system.
+* Fixed bug where realm color did not change in realm setup view in dropdown menu.
+* Fixed bug where Alteirians did not obsolete their Minor orbitals. They could have multiple these.
+
+# Open Realm of Stars 0.26.0
+
+- New features and updates -
 
 * New AI realm setup view.
 * New player realm setup.

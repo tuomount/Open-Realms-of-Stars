@@ -92,6 +92,15 @@ public final class SpeechFactory {
     }
     return SINGLETON.speechSets.keySet().toArray(new String[0]);
   }
+
+  /**
+   * Restart factory and reload everything again when needed.
+   */
+  public static void restartFactory() {
+    SINGLETON.initialized = false;
+    SINGLETON.speechSets.clear();
+  }
+
   /**
    * Create SpeechLine of given type from given SpeechSet,
    * return generic text if not in SpeechSet

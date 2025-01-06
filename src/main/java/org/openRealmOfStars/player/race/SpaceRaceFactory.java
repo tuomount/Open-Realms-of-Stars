@@ -26,6 +26,8 @@ import java.util.stream.Stream;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.FileIo.DataLoader;
+import org.openRealmOfStars.utilities.FileIo.DataSources;
+import org.openRealmOfStars.utilities.FileIo.Folders;
 
 /** SpaceRace Factory which reads space races from JSON. */
 public final class SpaceRaceFactory {
@@ -152,6 +154,15 @@ public final class SpaceRaceFactory {
     }
     return DiceGenerator.pickRandom(roboticRaces);
   }
+
+  /**
+   * Restart factory and reload everything again when needed.
+   */
+  public static void restartFactory() {
+    SINGLETON.initialized = false;
+    SINGLETON.spaceRaces.clear();
+  }
+
   /** SpaceRace this factory knows. IDs are used as keys. */
   private HashMap<String, SpaceRace> spaceRaces;
   /** Tracks if factory is initialized with data */
@@ -220,10 +231,13 @@ public final class SpaceRaceFactory {
   private void init() {
     spaceRaces.clear();
     final var basePath = "resources/data/spaceraces/";
-    final String[] files = {
+    String[] files = {
         "arthropods", "humanoids", "lithovorians", "robots", "pseudoraces",
-        "plants", "custom"};
-    final var spaceRacesLoaded = loader.loadAll(spaceRaces, basePath, files);
+        "plants"};
+    int spaceRacesLoaded = loader.loadAll(spaceRaces, basePath, files);
+    files = DataSources.findJsonFilesInPath(Folders.getCustomSpaceRacePath());
+    spaceRacesLoaded = spaceRacesLoaded + loader.loadAll(spaceRaces,
+        Folders.getCustomSpaceRacePath() + "/", files);
     ErrorLogger.log("SpaceRaces loaded: " + spaceRacesLoaded);
   }
 }

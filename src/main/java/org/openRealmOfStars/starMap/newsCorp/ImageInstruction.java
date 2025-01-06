@@ -744,7 +744,7 @@ public class ImageInstruction {
    */
   public ImageInstruction addBridge(final String image) {
     checkDelim();
-    if (SpaceRaceUtility.getRaceByName(image) == null) {
+    if (BridgeGraphFactory.create(image) == null) {
       throw new IllegalArgumentException("Illegal image: " + image);
     }
     sb.append(BRIDGE);

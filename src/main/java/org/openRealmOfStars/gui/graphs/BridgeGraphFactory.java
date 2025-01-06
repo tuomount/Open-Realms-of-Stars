@@ -73,6 +73,14 @@ public final class BridgeGraphFactory {
     }
     return SINGLETON.mapForBridges.keySet().toArray(new String[0]);
   }
+
+  /**
+   * Restart factory and reload everything again when needed.
+   */
+  public static void restartFactory() {
+    initialized = false;
+    SINGLETON.mapForBridges.clear();
+  }
   /**
    * Constructor for bridge graph factory
    */

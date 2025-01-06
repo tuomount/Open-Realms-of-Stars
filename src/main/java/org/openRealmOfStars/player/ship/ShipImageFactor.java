@@ -74,6 +74,15 @@ public final class ShipImageFactor {
     }
     return SINGLETON.mapForShipImages.keySet().toArray(new String[0]);
   }
+
+  /**
+   * Restart factory and reload everything again when needed.
+   */
+  public static void restartFactory() {
+    initialized = false;
+    SINGLETON.mapForShipImages.clear();
+  }
+
 /**
    * Constructor for bridge graph factory
    */

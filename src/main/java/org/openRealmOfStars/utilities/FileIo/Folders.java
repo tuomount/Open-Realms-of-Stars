@@ -34,6 +34,15 @@ public final class Folders {
   /** Custom space race image folder */
   private static final String CUSTOM_RACE_IMAGE_FOLDER =
       "/custom/images/spacerace";
+  /** Custom space ship image folder */
+  private static final String CUSTOM_SHIP_IMAGE_FOLDER =
+      "/custom/images/ships";
+  /** Custom space ship bridge image folder */
+  private static final String CUSTOM_BRIDGE_IMAGE_FOLDER =
+      "/custom/images/bridges";
+  /** Custom speeches folder */
+  private static final String CUSTOM_SPEECHES_FOLDER =
+      "/custom/speeches";
   /** Folder to screenshots */
   private static final String SCREENSHOT_FOLDER = "/screenshots";
   /** Save game folder */
@@ -71,6 +80,18 @@ public final class Folders {
       if (!path.exists() && !path.mkdirs()) {
         return "Could not create custom space race image folder.";
       }
+      path = new File(userFolder + CUSTOM_SHIP_IMAGE_FOLDER);
+      if (!path.exists() && !path.mkdirs()) {
+        return "Could not create custom space ship image folder.";
+      }
+      path = new File(userFolder + CUSTOM_BRIDGE_IMAGE_FOLDER);
+      if (!path.exists() && !path.mkdirs()) {
+        return "Could not create custom space ship bridge image folder.";
+      }
+      path = new File(userFolder + CUSTOM_SPEECHES_FOLDER);
+      if (!path.exists() && !path.mkdirs()) {
+        return "Could not create custom speeches folder.";
+      }
       path = new File(userFolder + SCREENSHOT_FOLDER);
       if (!path.exists() && !path.mkdirs()) {
         return "Could not create screenshot folder.";
@@ -97,8 +118,8 @@ public final class Folders {
   }
 
   /**
-   * Get Path for Custom government path
-   * @return Path for custom governments.
+   * Get Path for Custom space race path
+   * @return Path for custom space race.
    */
   public static String getCustomSpaceRacePath() {
     if (userFolder == null) {
@@ -116,6 +137,39 @@ public final class Folders {
       initFolders();
     }
     return userFolder + CUSTOM_RACE_IMAGE_FOLDER;
+  }
+
+  /**
+   * Get Path for Custom space ship image path
+   * @return Path for custom space ship image.
+   */
+  public static String getCustomSpaceShipImage() {
+    if (userFolder == null) {
+      initFolders();
+    }
+    return userFolder + CUSTOM_SHIP_IMAGE_FOLDER;
+  }
+
+  /**
+   * Get Path for Custom space ship bridge image path
+   * @return Path for custom space ship bridge image.
+   */
+  public static String getCustomSpaceShipBridgeImage() {
+    if (userFolder == null) {
+      initFolders();
+    }
+    return userFolder + CUSTOM_BRIDGE_IMAGE_FOLDER;
+  }
+
+  /**
+   * Get Path for Custom speeches path
+   * @return Path for custom speeches.
+   */
+  public static String getCustomSpeeches() {
+    if (userFolder == null) {
+      initFolders();
+    }
+    return userFolder + CUSTOM_SPEECHES_FOLDER;
   }
 
   /**

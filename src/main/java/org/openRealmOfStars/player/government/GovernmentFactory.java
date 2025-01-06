@@ -63,6 +63,15 @@ public final class GovernmentFactory {
   public static Government[] getValues() {
     return SINGLETON.getAll();
   }
+
+  /**
+   * Restart factory and reload everything again when needed.
+   */
+  public static void restartFactory() {
+    SINGLETON.initialized = false;
+    SINGLETON.governments.clear();
+  }
+
   /** Contructor */
   private GovernmentFactory() {
     this.governments = new HashMap<>();

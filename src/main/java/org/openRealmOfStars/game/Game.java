@@ -89,6 +89,7 @@ import org.openRealmOfStars.game.state.VoteView;
 import org.openRealmOfStars.game.state.VotingSelectionView;
 import org.openRealmOfStars.game.tutorial.HelpLine;
 import org.openRealmOfStars.game.tutorial.TutorialList;
+import org.openRealmOfStars.gui.graphs.BridgeGraphFactory;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
@@ -107,9 +108,11 @@ import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
+import org.openRealmOfStars.player.diplomacy.speeches.SpeechFactory;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.fleet.TradeRoute;
+import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.stats.StatType;
@@ -126,6 +129,7 @@ import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
+import org.openRealmOfStars.player.ship.ShipImageFactor;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.Tech;
@@ -423,6 +427,10 @@ public class Game implements ActionListener {
   private Bridge bridge;
 
   /**
+   * Is factory restarted needed?
+   */
+  private boolean factoryRestartNeeded = false;
+  /**
    * Get Star map
    * @return StarMap
    */
@@ -569,6 +577,22 @@ public class Game implements ActionListener {
     changeGameState(GameState.MAIN_MENU);
   }
 
+  /**
+   * Restart factories which may load user edited content.
+   */
+  public void restartFactories() {
+    if (factoryRestartNeeded) {
+      SpaceRaceFactory.restartFactory();
+      GovernmentFactory.restartFactory();
+      SpeechFactory.restartFactory();
+      ShipImageFactor.restartFactory();
+      BridgeGraphFactory.restartFactory();
+      ErrorLogger.log("Factories restated...");
+      System.gc();
+      ErrorLogger.log("Explicit garbage collector called.");
+    }
+    factoryRestartNeeded = true;
+  }
   /**
    * Has Fullscreen mode enabled or not.
    * @return True if enabled.
@@ -1692,12 +1716,15 @@ public class Game implements ActionListener {
       showMainMenu();
       break;
     case GOVERNMENT_EDITOR:
+      restartFactories();
       showGovernmentEditor();
       break;
     case SPACERACE_EDITOR:
+      restartFactories();
       showSpaceRaceEditor();
       break;
     case GALAXY_CREATION:
+      restartFactories();
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showGalaxyCreation();
       break;
@@ -1721,6 +1748,7 @@ public class Game implements ActionListener {
       showSaveGameSetup(dataObject);
       break;
     case LOAD_GAME:
+      restartFactories();
       setBridgeCommand(BridgeCommandType.FLOAT_IN_SPACE);
       showLoadGame();
       break;

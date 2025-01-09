@@ -450,7 +450,8 @@ public final class DefaultScoring {
       score = score + building.getMineBonus() * 50;
     }
     if (building.getFarmBonus() > 0 && info.getRace().isEatingFood()
-        && info.getRace().getFoodSpeed(planet.getGravityType()) < 100) {
+        && info.getRace().getFoodSpeed(planet.getGravityType()) < 100
+        && planet.getTotalPopulation() < planet.getPopulationLimit()) {
       score = score + building.getFarmBonus() * 50;
     }
     if (building.getReseBonus() > 0

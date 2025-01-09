@@ -299,6 +299,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
             GameCommands.COMMAND_COLONIST_PLUS, Icons.ICON_PEOPLE,
             "Colonist: 10000", "How many colonist/troops is on board of fleet.",
             listener);
+        colonistSelection.setInteractive(interactive);
         panel.add(colonistSelection);
         metalSelection = new WorkerProductionPanel(
             GameCommands.COMMAND_METAL_CARGO_MINUS,
@@ -306,6 +307,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
             "Metal: 1000000", "How many metal cargo is on board of fleet.",
             listener);
         panel.add(metalSelection);
+        metalSelection.setInteractive(interactive);
       }
       topPanel.add(panel);
       topPanel.add(Box.createRigidArea(new Dimension(50, 25)));

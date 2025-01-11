@@ -1,7 +1,7 @@
 package org.openRealmOfStars.ai.research;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2017-2024 Tuomo Untinen
+ * Copyright (C) 2017-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -269,7 +269,7 @@ public class ResearchTest extends TestCase {
     leader.addPerk(Perk.LOGICAL);
     info.setRuler(leader);
     Research.handle(info);
-    assertEquals(Research.FOCUS_FOR_LAB_HIGH,
+    assertEquals(Research.FOCUS_FOR_LAB,
         info.getTechList().getTechFocus(TechType.Improvements));
     info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
     Research.handle(info);

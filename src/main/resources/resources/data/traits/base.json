@@ -48,7 +48,7 @@
     "name": "Constructed",
     "description": "Breeds by external process, where individuals are \"constructed\" in some way.",
     "group": "Reproduction",
-    "points": 0,
+    "points": -2,
     "conflictsWith": [
       "SLOW_GROWTH", "FAST_GROWTH", "FIXED_GROWTH", "LIMITED_GROWTH",
       "SLOW_METABOLISM"
@@ -83,7 +83,7 @@
     "name": "Eat less",
     "description": "Required sustenance (food) for population is 50% less than normal requirement.",
     "group": "Metabolism",
-    "points": 1,
+    "points": 3,
     "conflictsWith": [
       "ENERGY_POWERED", "PHOTOSYNTHESIS"
     ]
@@ -113,7 +113,7 @@
     "name": "Fixed maximum population growth",
     "description": "Population grows always with fixed speed.",
     "group": "Reproduction",
-    "points": -2,
+    "points": -4,
     "conflictsWith": [
       "CONSTRUCTED_POP"
     ]
@@ -195,7 +195,7 @@
     "group": "Life span",
     "points": 1,
     "conflictsWith": [
-      "LONG_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
+      "SHORT_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
     ]
   },
   {

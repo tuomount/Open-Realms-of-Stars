@@ -2322,7 +2322,13 @@ public class Planet {
       food = calculateSurPlusFood();
       if (planetRace.hasTrait(TraitIds.FIXED_GROWTH)
           && food > 0) {
+        // Fixed grow rate
         food = 1;
+      }
+      if (planetRace.hasTrait(TraitIds.LIMITED_GROWTH)
+          && food > 2) {
+        // Limited grow rate
+        food = 2;
       }
     }
 

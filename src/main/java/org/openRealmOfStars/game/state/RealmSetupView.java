@@ -436,8 +436,6 @@ public class RealmSetupView extends BlackPanel {
       raceImgs.setRaceToShow(null);
     } else {
       realmName.setText(config.getPlayerName(index));
-      comboRaceSelect.setToolTipText(config.getRace(index)
-          .getFullDescription(false, false));
     }
     westPanel.add(realmName);
     westPanel.add(Box.createRigidArea(new Dimension(rigidSize, rigidSize)));

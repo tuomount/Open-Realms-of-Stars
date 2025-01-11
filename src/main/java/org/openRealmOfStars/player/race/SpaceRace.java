@@ -796,7 +796,16 @@ public class SpaceRace {
       break;
     }
     default:
-    case 100: sb.append("10 star years"); break;
+    case 100: {
+      if (hasTrait(TraitIds.FIXED_GROWTH)) {
+        sb.append("always ");
+      }
+      sb.append("10 star years");
+      if (hasTrait(TraitIds.LIMITED_GROWTH)) {
+        sb.append(" limited");
+      }
+      break;
+    }
     case 150: sb.append("6 star years"); break;
     }
 

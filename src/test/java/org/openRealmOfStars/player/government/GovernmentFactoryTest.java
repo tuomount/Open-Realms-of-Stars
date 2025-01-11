@@ -1,4 +1,4 @@
-package org.openRealmOfStars.player.race;
+package org.openRealmOfStars.player.government;
 /*
  * Open Realm of Stars game project
  * Copyright (C) 2025 Tuomo Untinen
@@ -21,27 +21,27 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openRealmOfStars.player.race.trait.RaceTrait;
+import org.openRealmOfStars.player.government.trait.GovTrait;
 
 /**
 * Tests for SpaceRaceFactory
 *
 */
-public class SpaceRaceFactoryTest {
+public class GovernmentFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBalancedScore() {
     final int expectedScore = 4;
     boolean failure = false;
-    SpaceRace[] races = SpaceRaceFactory.getValuesNoPseudo();
-    for (SpaceRace race : races) {
+    Government[] govs = GovernmentFactory.getValues();
+    for (Government gov : govs) {
       int score = 0;
-      for (RaceTrait trait : race.getAllTraits()) {
+      for (GovTrait trait : gov.getTraits()) {
         score = score + trait.getPoints();
       }
       if (score != expectedScore) {
-        System.err.println(race.getName() + " traits do not add up to"
+        System.err.println(gov.getName() + " traits do not add up to"
             + " expected score.");
         System.err.println("Expected: " + expectedScore + " but it was "
             + score + ".");
@@ -49,21 +49,21 @@ public class SpaceRaceFactoryTest {
       }
     }
     assertFalse(failure);
-    System.err.println("Standard space races are balanced based on points.");
+    System.err.println("Standard governments are balanced based on points.");
   }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testNoConflicts() {
     boolean failure = false;
-    SpaceRace[] races = SpaceRaceFactory.getValuesNoPseudo();
-    for (SpaceRace race : races) {
-      for (RaceTrait trait : race.getAllTraits()) {
+    Government[] govs = GovernmentFactory.getValues();
+    for (Government gov : govs) {
+      for (GovTrait trait : gov.getTraits()) {
         for (String id : trait.getConflictsWithIds()) {
-          for (RaceTrait possibleConflict : race.getAllTraits()) {
+          for (GovTrait possibleConflict : gov.getTraits()) {
             if (id.equals(possibleConflict.getId())) {
               failure = true;
-              System.err.println(race.getName() + " has conflicting traits:"
+              System.err.println(gov.getName() + " has conflicting traits:"
                   + id + " and " + possibleConflict.getId() + ".");
               
             }
@@ -72,7 +72,7 @@ public class SpaceRaceFactoryTest {
       }
     }
     assertFalse(failure);
-    System.err.println("Standard space races do not have conflict traits.");
+    System.err.println("Standard governments do not have conflict traits.");
   }
 
 }

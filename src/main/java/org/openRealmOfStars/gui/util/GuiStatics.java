@@ -40,6 +40,7 @@ import org.openRealmOfStars.gui.scheme.SchemeType;
 import org.openRealmOfStars.gui.scheme.YellowScheme;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.player.race.SpaceRace;
+import org.openRealmOfStars.utilities.FileIo.Folders;
 import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
@@ -790,7 +791,11 @@ public final class GuiStatics {
    * @return BufferedImage
    */
   public static BufferedImage getRaceImg(final SpaceRace race) {
-    return IOUtilities.loadImage(race.getImage());
+    if (race.getImage().startsWith("resources/images")) {
+      return IOUtilities.loadImage(race.getImage());
+    }
+    return IOUtilities.loadImage(Folders.getCustomSpaceRaceImage()
+        + "/" + race.getImage());
   }
 
   /**

@@ -846,9 +846,17 @@ public class SpaceRaceEditorView extends BlackPanel {
     if (returnValue == JFileChooser.APPROVE_OPTION) {
       File file = loadFileChooser.getSelectedFile();
       if (file.exists()) {
+        if (file.getAbsolutePath().contains(
+            Folders.getCustomSpaceRaceImage())) {
+          String str = file.getAbsolutePath();
+          int index = str.lastIndexOf('/');
+          str = str.substring(index + 1);
+          raceImages[customImageIndex] = str;
+        } else {
+          raceImages[customImageIndex] = file.getPath();
+        }
         imageSelected = true;
         SoundPlayer.playMenuSound();
-        raceImages[customImageIndex] = file.getPath();
         spaceRaceImageCombo.setSelectedIndex(customImageIndex);
         spaceRaceImageCombo.getModel().setSelectedItem(
             raceImages[customImageIndex]);

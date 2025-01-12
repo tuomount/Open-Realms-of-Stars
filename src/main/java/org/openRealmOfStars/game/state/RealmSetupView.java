@@ -20,7 +20,6 @@ package org.openRealmOfStars.game.state;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -141,10 +140,6 @@ public class RealmSetupView extends BlackPanel {
   private InfoPanel infoPanelForSpaceRace;
   /** Info text for government. */
   private HyperLabel governmentInfo;
-  /**
-   * Size has been adjusted.
-   */
-  private boolean sizeAdjusted;
 
   /**
    * Full panel with title
@@ -155,6 +150,9 @@ public class RealmSetupView extends BlackPanel {
    */
   private int rigidSize = 10;
 
+  /** Max Combobox width */
+  private int maxComboWidth = 512;
+
   /**
    * Constructor for realm setup view.
    * @param config GalaxyConfig
@@ -163,7 +161,6 @@ public class RealmSetupView extends BlackPanel {
    */
   public RealmSetupView(final GalaxyConfig config,
       final ActionListener listener, final boolean allowChangeRealm) {
-    sizeAdjusted = false;
     this.config = config;
     this.actionListener = listener;
     rigidSize = 15;
@@ -172,6 +169,7 @@ public class RealmSetupView extends BlackPanel {
       if (game.getHeight() < 960) {
         rigidSize = 5;
       }
+      maxComboWidth = (game.getWidth() - 24) / 2;
     }
     this.allowChangingRealm = allowChangeRealm;
     realmIndex = 0;
@@ -251,11 +249,6 @@ public class RealmSetupView extends BlackPanel {
    * @param arg0 The event
    */
   public void handleActions(final ActionEvent arg0) {
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)
-        && !sizeAdjusted) {
-      adjustInfoTextSizes();
-    }
-
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
       SoundPlayer.playMenuSound();
       String raceStr = (String) comboRaceSelect.getSelectedItem();
@@ -271,7 +264,6 @@ public class RealmSetupView extends BlackPanel {
           config.getPlayerGovernment(realmIndex).getDescription(false));
       realmName.setText(SpaceRaceUtility.getRealmName(race,
           config.getPlayerGovernment(realmIndex)));
-      adjustInfoTextSizes();
     }
     if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_GOVERNMENT_SETUP)) {
@@ -285,7 +277,6 @@ public class RealmSetupView extends BlackPanel {
       String raceStr = (String) comboRaceSelect.getSelectedItem();
       SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
       realmName.setText(SpaceRaceUtility.getRealmName(race, gov));
-      adjustInfoTextSizes();
     }
     if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_DIFFICULT_SETUP)) {
@@ -346,9 +337,6 @@ public class RealmSetupView extends BlackPanel {
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
     xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
 
-    SpaceGreyPanel westPanel = new SpaceGreyPanel();
-    westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
-    westPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     SpaceGreyPanel topPanel = new SpaceGreyPanel();
     topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
@@ -369,6 +357,10 @@ public class RealmSetupView extends BlackPanel {
       btn.addActionListener(listener);
       topPanel.add(btn);
     }
+    fullPanel.add(topPanel, BorderLayout.NORTH);
+    SpaceGreyPanel westPanel = new SpaceGreyPanel();
+    westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
+    westPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     SpaceLabel label = new SpaceLabel("Space Race:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     westPanel.add(label);
@@ -384,6 +376,8 @@ public class RealmSetupView extends BlackPanel {
     dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
     comboRaceSelect.setRenderer(dlcr);
     comboRaceSelect.addActionListener(listener);
+    comboRaceSelect.setMaximumSize(new Dimension(maxComboWidth,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     comboRaceSelect.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     if (config.getMaxPlayers() < (index + 1)) {
       comboRaceSelect.setEnabled(false);
@@ -406,6 +400,8 @@ public class RealmSetupView extends BlackPanel {
     dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
     comboGovernmentSelect.setRenderer(dlcr);
     comboGovernmentSelect.addActionListener(listener);
+    comboGovernmentSelect.setMaximumSize(new Dimension(maxComboWidth,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     comboGovernmentSelect.setActionCommand(
         GameCommands.COMMAND_GOVERNMENT_SETUP);
     westPanel.add(comboGovernmentSelect);
@@ -429,7 +425,7 @@ public class RealmSetupView extends BlackPanel {
     realmName.setBackground(GuiStatics.getDeepSpaceDarkColor());
     realmName.setForeground(GuiStatics.getCoolSpaceColor());
     realmName.setFont(GuiFonts.getFontCubellanSmaller());
-    realmName.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+    realmName.setMaximumSize(new Dimension(maxComboWidth,
         GuiStatics.TEXT_FIELD_HEIGHT));
     if (config.getMaxPlayers() < (index + 1)) {
       realmName.setEnabled(false);
@@ -457,6 +453,8 @@ public class RealmSetupView extends BlackPanel {
     comboRealmColor.setRenderer(pclr);
     comboRealmColor.addActionListener(listener);
     comboRealmColor.setActionCommand(GameCommands.COMMAND_COLOR_SETUP);
+    comboRealmColor.setMaximumSize(new Dimension(maxComboWidth,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     comboRealmColor.setToolTipText("<html>Realm color in map and"
         + " statistics.</html>");
     westPanel.add(comboRealmColor);
@@ -486,7 +484,9 @@ public class RealmSetupView extends BlackPanel {
     comboScenario.setForeground(GuiStatics.getCoolSpaceColor());
     comboScenario.setBorder(new SimpleBorder());
     comboScenario.setFont(GuiFonts.getFontCubellan());
-    comboScenario.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+    comboScenario.setPreferredSize(new Dimension(maxComboWidth,
+        GuiStatics.TEXT_FIELD_HEIGHT));
+    comboScenario.setMaximumSize(new Dimension(maxComboWidth,
         GuiStatics.TEXT_FIELD_HEIGHT));
     comboScenario.setActionCommand(
         GameCommands.COMMAND_SCENARIO_SETUP);
@@ -504,7 +504,7 @@ public class RealmSetupView extends BlackPanel {
     comboDifficult.setForeground(
         GuiStatics.getCoolSpaceColor());
     comboDifficult.setFont(GuiFonts.getFontCubellanSmaller());
-    comboDifficult.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+    comboDifficult.setMaximumSize(new Dimension(maxComboWidth,
         GuiStatics.TEXT_FIELD_HEIGHT));
     comboDifficult.setActionCommand(
         GameCommands.COMMAND_DIFFICULT_SETUP);
@@ -518,45 +518,38 @@ public class RealmSetupView extends BlackPanel {
     xinvis.add(westPanel);
     xinvis.add(Box.createRigidArea(new Dimension(10, 10)));
     fullPanel.add(xinvis, BorderLayout.WEST);
-    fullPanel.add(topPanel, BorderLayout.NORTH);
     EmptyInfoPanel panelX = new EmptyInfoPanel();
-    panelX.setLayout(new GridLayout(0, 1));
+    panelX.setLayout(new BoxLayout(panelX, BoxLayout.Y_AXIS));
     infoPanelForSpaceRace = new InfoPanel();
     infoPanelForSpaceRace.setTitle("Racial information");
     infoPanelForSpaceRace.setLayout(new BorderLayout());
-    infoPanelForSpaceRace.setPreferredSize(new Dimension(900, 30));
-    infoPanelForSpaceRace.setMaximumSize(new Dimension(900, 30));
+    int minWidth = maxComboWidth;
+    if (minWidth < 500) {
+      minWidth = 500;
+    }
+    infoPanelForSpaceRace.setMinimumSize(new Dimension(500, 200));
+    infoPanelForSpaceRace.setPreferredSize(new Dimension(minWidth, 600));
+    infoPanelForSpaceRace.setMaximumSize(new Dimension(800, 800));
     JScrollPane scroll = new JScrollPane(infoPanelForSpaceRace);
     spaceRaceInfo = new HyperLabel(
         SpaceRaceFactory.getRandomRace().getFullDescription(false, false));
     spaceRaceInfo.setFont(GuiFonts.getFontCubellanSmaller());
-    Dimension dim = new Dimension(infoPanelForSpaceRace.getWidth(),
-        spaceRaceInfo.getAdjustHeight());
-    infoPanelForSpaceRace.setPreferredSize(dim);
-    infoPanelForSpaceRace.setMaximumSize(dim);
     infoPanelForSpaceRace.add(spaceRaceInfo, BorderLayout.CENTER);
     panelX.add(scroll);
     InfoPanel info = new InfoPanel();
     info.setTitle("Government information");
     info.setLayout(new BorderLayout());
+    info.setMinimumSize(new Dimension(400, 200));
+    info.setPreferredSize(new Dimension(minWidth, 600));
+    info.setMaximumSize(new Dimension(600, 500));
     governmentInfo = new HyperLabel(
         GovernmentFactory.getRandomGovernment().getDescription(false));
     governmentInfo.setFont(GuiFonts.getFontCubellanSmaller());
     info.add(governmentInfo, BorderLayout.CENTER);
-    panelX.add(info);
+    scroll = new JScrollPane(info);
+    panelX.add(scroll);
     fullPanel.add(panelX, BorderLayout.CENTER);
     return fullPanel;
-  }
-
-  /**
-   * Adjust info text sizes.
-   */
-  private void adjustInfoTextSizes() {
-    Dimension dim = new Dimension(infoPanelForSpaceRace.getWidth(),
-        spaceRaceInfo.getAdjustHeight());
-    infoPanelForSpaceRace.setPreferredSize(dim);
-    infoPanelForSpaceRace.setMaximumSize(dim);
-    sizeAdjusted = true;
   }
 
   /**
@@ -589,10 +582,10 @@ public class RealmSetupView extends BlackPanel {
     comboScenario.getModel().setSelectedItem(config.getStartingScenario(index));
     spaceRaceInfo.setText(config.getRace(index).getFullDescription(false,
         false));
-    Dimension dim = new Dimension(infoPanelForSpaceRace.getWidth(),
+/*    Dimension dim = new Dimension(infoPanelForSpaceRace.getWidth(),
         spaceRaceInfo.getAdjustHeight());
     infoPanelForSpaceRace.setPreferredSize(dim);
-    infoPanelForSpaceRace.setMaximumSize(dim);
+    infoPanelForSpaceRace.setMaximumSize(dim);*/
     governmentInfo.setText(config.getPlayerGovernment(index)
         .getDescription(false));
   }

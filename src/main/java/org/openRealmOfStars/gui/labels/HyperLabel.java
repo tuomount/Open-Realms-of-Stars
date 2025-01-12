@@ -139,7 +139,7 @@ public class HyperLabel extends SpaceLabel {
     g.setColor(GuiStatics.getPanelBackground());
     int sx = 0;
     int sy = 0;
-    int width = getWidth();
+    int width = getWidth() - 30;
     int height = getHeight();
     if (this.getBorder() != null) {
       Insets inset = this.getBorder().getBorderInsets(this);
@@ -209,7 +209,10 @@ public class HyperLabel extends SpaceLabel {
         totalLines = 1;
       }
       int yAvg = yTotal / totalLines;
-      int yOffset = height / 2 - yTotal / 2;
+      /* Place text in middle of Y coordinates */
+      //int yOffset = height / 2 - yTotal / 2;
+      /* Place text on top of Y Coordinates */
+      int yOffset = yAvg;
       g.setColor(getForeground());
       int y = 0;
       int x = 0;

@@ -28,6 +28,8 @@ import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.FileIo.DataLoader;
+import org.openRealmOfStars.utilities.FileIo.DataSources;
+import org.openRealmOfStars.utilities.FileIo.Folders;
 
 /**
  * Factory for creating {@link SpeechLine}s
@@ -133,14 +135,17 @@ public final class SpeechFactory {
   private void init() {
     speechSets.clear();
     final var basePath = "resources/data/speech/";
-    final String[] files = {
+    String[] files = {
         "alteirians", "centaurs", "chiraloids", "greyans",
         "homarians", "human", "lithorians", "mechions",
         "mothoids", "reborgians", "scaurians",
         "smaugirians", "space_pirate", "sporks",
         "synthdroids", "teuthidaes", "fernids", "dwarf" };
-    final var traitsLoaded = loader.loadAll(speechSets, basePath, files);
-    ErrorLogger.log("SpeechSets loaded: " + traitsLoaded);
+    int speechesLoaded = loader.loadAll(speechSets, basePath, files);
+    files = DataSources.findJsonFilesInPath(Folders.getCustomSpeeches());
+    speechesLoaded = speechesLoaded + loader.loadAll(speechSets,
+        Folders.getCustomSpeeches() + "/", files);
+    ErrorLogger.log("SpeechSets loaded: " + speechesLoaded);
   }
 
 }

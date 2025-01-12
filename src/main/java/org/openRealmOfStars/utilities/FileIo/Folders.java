@@ -37,9 +37,15 @@ public final class Folders {
   /** Custom space ship image folder */
   private static final String CUSTOM_SHIP_IMAGE_FOLDER =
       "/custom/images/ships";
+  /** Custom space ship graphset folder */
+  private static final String CUSTOM_SHIP_GRAPHSET_FOLDER =
+      "/custom/graphset/ships";
   /** Custom space ship bridge image folder */
   private static final String CUSTOM_BRIDGE_IMAGE_FOLDER =
       "/custom/images/bridges";
+  /** Custom space ship bridge graphset folder */
+  private static final String CUSTOM_BRIDGE_GRAPHSET_FOLDER =
+      "/custom/graphset/bridges";
   /** Custom speeches folder */
   private static final String CUSTOM_SPEECHES_FOLDER =
       "/custom/speeches";
@@ -84,9 +90,17 @@ public final class Folders {
       if (!path.exists() && !path.mkdirs()) {
         return "Could not create custom space ship image folder.";
       }
+      path = new File(userFolder + CUSTOM_SHIP_GRAPHSET_FOLDER);
+      if (!path.exists() && !path.mkdirs()) {
+        return "Could not create custom space ship graphset folder.";
+      }
       path = new File(userFolder + CUSTOM_BRIDGE_IMAGE_FOLDER);
       if (!path.exists() && !path.mkdirs()) {
         return "Could not create custom space ship bridge image folder.";
+      }
+      path = new File(userFolder + CUSTOM_BRIDGE_GRAPHSET_FOLDER);
+      if (!path.exists() && !path.mkdirs()) {
+        return "Could not create custom space ship bridge graphset folder.";
       }
       path = new File(userFolder + CUSTOM_SPEECHES_FOLDER);
       if (!path.exists() && !path.mkdirs()) {
@@ -151,6 +165,17 @@ public final class Folders {
   }
 
   /**
+   * Get Path for Custom space ship graphset path
+   * @return Path for custom space ship graphset.
+   */
+  public static String getCustomSpaceShipGraphset() {
+    if (userFolder == null) {
+      initFolders();
+    }
+    return userFolder + CUSTOM_SHIP_GRAPHSET_FOLDER;
+  }
+
+  /**
    * Get Path for Custom space ship bridge image path
    * @return Path for custom space ship bridge image.
    */
@@ -159,6 +184,17 @@ public final class Folders {
       initFolders();
     }
     return userFolder + CUSTOM_BRIDGE_IMAGE_FOLDER;
+  }
+
+  /**
+   * Get Path for Custom space ship bridge graphset path
+   * @return Path for custom space ship bridge graphset.
+   */
+  public static String getCustomSpaceShipBridgeGraphset() {
+    if (userFolder == null) {
+      initFolders();
+    }
+    return userFolder + CUSTOM_BRIDGE_GRAPHSET_FOLDER;
   }
 
   /**

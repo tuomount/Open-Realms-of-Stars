@@ -19,6 +19,7 @@ package org.openRealmOfStars.gui.graphs;
 
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.utilities.FileIo.Folders;
 import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
@@ -37,16 +38,26 @@ public class BridgeGraph {
   /** Bridge name based on space race name. */
   private String name;
 
+  /** Flag if custom image and should be loaded outside of JAR. */
+  private boolean customImage;
+
   /**
    * Constructor for Bridge Graph
    * @param name Bridge name
    * @param imagePath Path to image
    * @param yOffset Y Coordinate offset for captain.
+   * @param custom Flag for load outside of JAR.
    */
   public BridgeGraph(final String name, final String imagePath,
-      final int yOffset) {
+      final int yOffset, final boolean custom) {
     this.name = name;
-    bridgeImage = IOUtilities.loadImage(imagePath);
+    this.customImage = custom;
+    if (isCustomImage()) {
+      bridgeImage = IOUtilities.loadImage(
+          Folders.getCustomSpaceShipBridgeImage() + "/" + imagePath);
+    } else {
+      bridgeImage = IOUtilities.loadImage(imagePath);
+    }
     this.yOffset = yOffset;
   }
   /**
@@ -57,6 +68,13 @@ public class BridgeGraph {
     return bridgeImage;
   }
 
+  /**
+   * Is image custom and should be loaded outside of JAR.
+   * @return boolean
+   */
+  public boolean isCustomImage() {
+    return customImage;
+  }
   /**
    * Get captain Y-offset on bridge. Captain is always in middle of bridge, but
    * Y coordinate varies a bit.

@@ -24,13 +24,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.FileIo.DataLoader;
+import org.openRealmOfStars.utilities.FileIo.DataSources;
+import org.openRealmOfStars.utilities.FileIo.Folders;
 
 /** Bridge Graph Factory */
 public final class BridgeGraphFactory {
 
   /** Default bridge if fetching correct one fails */
   private static final BridgeGraph DEFAULT_BRIDGE = new BridgeGraph("Default",
-      "/resources/images/bridge1.png", 57);
+      "/resources/images/bridge1.png", 57, false);
   /** The Singleton */
   private static final BridgeGraphFactory SINGLETON = new BridgeGraphFactory();
 
@@ -101,10 +103,14 @@ public final class BridgeGraphFactory {
   /** Init bridges by loading from JSON */
   private void init() {
     final var basePath = "resources/data/graphset/";
-    final String[] files = {
+    String[] files = {
         "bridges" };
-    final var traitsLoaded = loader.loadAll(mapForBridges, basePath, files);
-    ErrorLogger.log("Bridges loaded: " + traitsLoaded);
+    int imagesLoaded = loader.loadAll(mapForBridges, basePath, files);
+    files = DataSources.findJsonFilesInPath(
+        Folders.getCustomSpaceShipBridgeGraphset());
+    imagesLoaded = imagesLoaded + loader.loadAll(mapForBridges,
+        Folders.getCustomSpaceShipBridgeGraphset() + "/", files);
+    ErrorLogger.log("Bridges loaded: " + imagesLoaded);
   }
 }
 
@@ -112,19 +118,17 @@ public final class BridgeGraphFactory {
 class BridgeGraphLoader extends DataLoader<String, BridgeGraph> {
 
   /**
-   * Parse RaceTrait from a JSON file.
+   * Parse BridgeGraph from a JSON file.
    * <p>
-   * JSON RaceTrait object must have following format:<ul>
+   * JSON BridgeGraph object must have following format:<ul>
    * <li>id : String</li>
-   * <li>name : String</li>
-   * <li>description: String</li>
-   * <li>conflictsWith : List of Strings (OPTIONAL)</li>
+   * <li>path : String</li>
+   * <li>y-offset: integer</li>
+   * <li>custom : boolean (OPTIONAL)</li>
    * </ul>
    * </p>
-   * JSON RaceTraits missing the "conflicsWith" field
-   * are considered to have no conflicts.
-   * @param jobj JSONObject to parse RaceTrait from
-   * @return Parsed RaceTrait or empty
+   * @param jobj JSONObject to parse BridgeGraph from
+   * @return Parsed BridgeGraph or empty
    */
   @Override
   protected Optional<BridgeGraph> parseFromJson(final JSONObject jobj) {
@@ -132,10 +136,11 @@ class BridgeGraphLoader extends DataLoader<String, BridgeGraph> {
       final var id = jobj.getString("id");
       final var path = jobj.getString("path");
       final var yOffset = jobj.getInt("y-offset");
+      final var custom = jobj.optBoolean("custom", false);
 
 
-      var tmpTrait = new BridgeGraph(id, path, yOffset);
-      return Optional.of(tmpTrait);
+      var tmpImage = new BridgeGraph(id, path, yOffset, custom);
+      return Optional.of(tmpImage);
     } catch (JSONException e) {
       ErrorLogger.log(e);
     }

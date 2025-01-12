@@ -24,6 +24,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.FileIo.DataLoader;
+import org.openRealmOfStars.utilities.FileIo.DataSources;
+import org.openRealmOfStars.utilities.FileIo.Folders;
 
 /**
  * Ship Image factor. */
@@ -31,7 +33,7 @@ public final class ShipImageFactor {
 
   /** Default shipimage */
   private static final ShipImage DEFAULT_SHIPIMAGE = new ShipImage(
-      "humanships.png", false, "DEFAULT");
+      "humanships.png", false, "DEFAULT", false);
   /** The Singleton */
   private static final ShipImageFactor SINGLETON = new ShipImageFactor();
 
@@ -103,10 +105,14 @@ public final class ShipImageFactor {
   /** Init bridges by loading from JSON */
   private void init() {
     final var basePath = "resources/data/graphset/";
-    final String[] files = {
+    String[] files = {
         "spaceship" };
-    final var traitsLoaded = loader.loadAll(mapForShipImages, basePath, files);
-    ErrorLogger.log("Spaceship images loaded: " + traitsLoaded);
+    int imagesLoaded = loader.loadAll(mapForShipImages, basePath, files);
+    files = DataSources.findJsonFilesInPath(
+        Folders.getCustomSpaceShipGraphset());
+    imagesLoaded = imagesLoaded + loader.loadAll(mapForShipImages,
+        Folders.getCustomSpaceShipGraphset() + "/", files);
+    ErrorLogger.log("Spaceship images loaded: " + imagesLoaded);
   }
 }
 
@@ -119,7 +125,8 @@ class ShipImageLoader extends DataLoader<String, ShipImage> {
    * JSON ShipImage object must have following format:<ul>
    * <li>id : String</li>
    * <li>path : String</li>
-   * <li>monsters: Boolean</li>
+   * <li>monsters : Boolean</li>
+   * <li>custom : boolean (optional)</li>
    * </ul>
    * </p>
    * @param jobj JSONObject to parse ShipImage from
@@ -131,10 +138,11 @@ class ShipImageLoader extends DataLoader<String, ShipImage> {
       final var id = jobj.getString("id");
       final var path = jobj.getString("path");
       final var monsters = jobj.getBoolean("monsters");
+      final var custom = jobj.optBoolean("custom", false);
 
 
-      var tmpTrait = new ShipImage(path, monsters, id);
-      return Optional.of(tmpTrait);
+      var tmpImage = new ShipImage(path, monsters, id, custom);
+      return Optional.of(tmpImage);
     } catch (JSONException e) {
       ErrorLogger.log(e);
     }

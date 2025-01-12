@@ -22,6 +22,7 @@ import java.awt.image.RasterFormatException;
 
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.utilities.FileIo.Folders;
 import org.openRealmOfStars.utilities.FileIo.IOUtilities;
 
 /**
@@ -55,6 +56,8 @@ public class ShipImage {
   private String id;
   /** Flag for monsters. */
   private boolean monsters;
+  /** Flag for custom image path */
+  private boolean customImage = false;
   /**
    * Index for Scout
    */
@@ -163,11 +166,13 @@ public class ShipImage {
    * @param fileToRead Needs to be inside JAR file
    * @param monsters Read space monster images if true.
    * @param id ShipImage Id.
+   * @param custom Flag for custom
    */
   public ShipImage(final String fileToRead, final boolean monsters,
-      final String id) {
+      final String id, final boolean custom) {
     this.id = id;
     this.monsters = monsters;
+    this.customImage = custom;
     loadImages(fileToRead);
   }
 
@@ -209,8 +214,13 @@ public class ShipImage {
    * @param fileToRead Needs to be inside JAR file
    */
   private void loadImages(final String fileToRead) {
-    BufferedImage image = IOUtilities
-        .loadImage("/resources/images/" + fileToRead);
+    BufferedImage image = null;
+    if (isCustomImage()) {
+      image = IOUtilities.loadImage(Folders.getCustomSpaceShipImage()
+          + "/" + fileToRead);
+    } else {
+      image = IOUtilities.loadImage("/resources/images/" + fileToRead);
+    }
     int number = NUMBER_OF_IMAGES;
     if (monsters) {
       number = number + NUMBER_OF_MONSTER_IMAGES;
@@ -393,6 +403,14 @@ public class ShipImage {
   public String getId() {
     return id;
   }
+  /**
+   * Is Custom image which should be loaded outside of JAR.
+   * @return the customImage
+   */
+  public boolean isCustomImage() {
+    return customImage;
+  }
+
   /**
    * Scale 64x64 image to 32x32 image
    * @param source Buffered image to scale

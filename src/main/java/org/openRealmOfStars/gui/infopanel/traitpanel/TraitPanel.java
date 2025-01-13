@@ -83,7 +83,7 @@ public class TraitPanel extends InfoPanel {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     traitValue = new SpaceLabel(TRAIT_VALUE_LABEL + "4");
     this.add(traitValue);
-    SpaceLabel hint = new SpaceLabel("Balanced trait value is 4."
+    SpaceLabel hint = new SpaceLabel("Balanced trait value is 0."
         + " Below government is overpowered. Above government is weak.");
     this.add(hint);
     EmptyInfoPanel traitsPane = new EmptyInfoPanel();
@@ -145,7 +145,7 @@ public class TraitPanel extends InfoPanel {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     traitValue = new SpaceLabel(TRAIT_VALUE_LABEL + "4");
     this.add(traitValue);
-    SpaceLabel hint = new SpaceLabel("Balanced trait value is 4."
+    SpaceLabel hint = new SpaceLabel("Balanced trait value is 0."
         + " Below space race is overpowered. Above space race is weak.");
     this.add(hint);
     EmptyInfoPanel traitsPane = new EmptyInfoPanel();

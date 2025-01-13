@@ -78,6 +78,7 @@ See more [screenshots](ArtModification/screenshots)
  * 3 Difficulty levels to choose for each AI realm.
  * Turn based space combat
  * Planets can conquered with troops and bombs
+ * Mod support for custom governments, space races, speeches, space ship images and space ship bridges
 
 ## Warning about saved games working on newer version
 
@@ -170,3 +171,12 @@ for music and sounds is okay, but the credits page will need to be updated.
 Fonts needs to be licensed with SIL Open Font License.
 
 See more information on [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## Modding
+
+Open Realm of Stars support now modding. These allow creating custom space race(via built-in editor),
+government(also via built-in editor), speechset, graphsets including spaceship images and bridge images.
+
+These later ones are done by adding new PNG files and JSON files.
+
+See more information on [MODDING.md](MODDING.md)

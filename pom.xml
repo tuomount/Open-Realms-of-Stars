@@ -23,7 +23,7 @@
                 <directory>src/main/resources/</directory>
             </resource>
             <resource>
-                <directory>.</directory>
+                <directory>${basedir}</directory>
                 <includes>
                     <include>AUTHORS.md</include>
                     <include>CONTRIBUTING.md</include>

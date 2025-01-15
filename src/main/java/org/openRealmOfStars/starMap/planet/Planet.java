@@ -1004,11 +1004,8 @@ public class Planet {
     } else if (planetOwnerInfo.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
       // Energy power use power instead of food
       require = getTotalPopulation() / 4;
-      int available = getTotalProduction(PRODUCTION_PRODUCTION);
+      int available = getTotalCreditProduction();
       result = available - require;
-      if (result > 3) {
-        result = 3;
-      }
       if (planetOwnerInfo.getRace().hasTrait(TraitIds.FIXED_GROWTH)
           && result > 0) {
         // Fixed grow rate
@@ -2340,11 +2337,8 @@ public class Planet {
     } else if (planetRace.hasTrait(TraitIds.ENERGY_POWERED)
         && !planetRace.hasTrait(TraitIds.CONSTRUCTED_POP)) {
       int require = getTotalPopulation() / 4;
-      int energy = getTotalProdProduction();
+      int energy = getTotalCreditProduction();
       food = energy - require;
-      if (food > 3) {
-        food = 3;
-      }
       if (planetRace.hasTrait(TraitIds.FIXED_GROWTH)
           && food > 0) {
         // Fixed grow rate

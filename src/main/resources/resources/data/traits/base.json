@@ -4,7 +4,10 @@
     "name": "Robotic",
     "description": "Race is robotic. It makes it immune to some biological effects and leaders cannot die from old age.",
     "group": "Special",
-    "points": 3
+    "points": 3,
+    "conflictsWith": [
+      "LONG_LIFE_SPAN", "SHORT_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
+    ]
   },
   {
     "id": "LITHOVORIC",
@@ -185,7 +188,7 @@
     "group": "Life span",
     "points": -1,
     "conflictsWith": [
-      "LONG_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
+      "LONG_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN", "ROBOTIC"
     ]
   },
   {
@@ -195,7 +198,7 @@
     "group": "Life span",
     "points": 1,
     "conflictsWith": [
-      "SHORT_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN"
+      "SHORT_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "CYBORG_LIFE_SPAN", "ROBOTIC"
     ]
   },
   {
@@ -205,7 +208,7 @@
     "group": "Life span",
     "points": 2,
     "conflictsWith": [
-      "LONG_LIFE_SPAN", "SHORT_LIFE_SPAN", "CYBORG_LIFE_SPAN"
+      "LONG_LIFE_SPAN", "SHORT_LIFE_SPAN", "CYBORG_LIFE_SPAN", "ROBOTIC"
     ]
   },
   {
@@ -215,7 +218,7 @@
     "group": "Life span",
     "points": 3,
     "conflictsWith": [
-      "LONG_LIFE_SPAN", "SHORT_LIFE_SPAN", "VERY_LONG_LIFE_SPAN"
+      "LONG_LIFE_SPAN", "SHORT_LIFE_SPAN", "VERY_LONG_LIFE_SPAN", "ROBOTIC"
     ]
   },
   {

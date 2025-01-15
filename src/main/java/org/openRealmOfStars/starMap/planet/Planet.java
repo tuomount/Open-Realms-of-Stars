@@ -1001,6 +1001,25 @@ public class Planet {
         result = 2;
       }
       require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
+    } else if (planetOwnerInfo.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
+      // Energy power use power instead of food
+      require = getTotalPopulation() / 4;
+      int available = getTotalProduction(PRODUCTION_PRODUCTION);
+      result = available - require;
+      if (result > 3) {
+        result = 3;
+      }
+      if (planetOwnerInfo.getRace().hasTrait(TraitIds.FIXED_GROWTH)
+          && result > 0) {
+        // Fixed grow rate
+        result = 1;
+      }
+      if (planetOwnerInfo.getRace().hasTrait(TraitIds.LIMITED_GROWTH)
+          && result > 2) {
+        // Limited grow rate
+        result = 2;
+      }
+      require = 10 * 100 / planetOwnerInfo.getRace().getGrowthSpeed();
     } else {
       // Planet does not have population bonus
       result = getTotalProduction(PRODUCTION_FOOD) - getTotalPopulation()
@@ -2317,6 +2336,24 @@ public class Planet {
       } else {
         food = -1;
         setMetal(0);
+      }
+    } else if (planetRace.hasTrait(TraitIds.ENERGY_POWERED)
+        && !planetRace.hasTrait(TraitIds.CONSTRUCTED_POP)) {
+      int require = getTotalPopulation() / 4;
+      int energy = getTotalProdProduction();
+      food = energy - require;
+      if (food > 3) {
+        food = 3;
+      }
+      if (planetRace.hasTrait(TraitIds.FIXED_GROWTH)
+          && food > 0) {
+        // Fixed grow rate
+        food = 1;
+      }
+      if (planetRace.hasTrait(TraitIds.LIMITED_GROWTH)
+          && food > 2) {
+        // Limited grow rate
+        food = 2;
       }
     } else {
       food = calculateSurPlusFood();

@@ -2,6 +2,7 @@
 * Space race editor, allows player to make custom space races.
 * Government editor, allows player to make custom governments.
 * Alonian image, namegenerators, speeches, bridges and ships are available for custom space race.
+* Mod support for loading custom speeches, bridges and ship images.
 * Improved explanation about planet's suitability.
 * New ready made space race called Fernids. These guys are getting food via photosynthesis.
 * Allow human player to declare to be winner and let AI play game till end. So called Snowman option.

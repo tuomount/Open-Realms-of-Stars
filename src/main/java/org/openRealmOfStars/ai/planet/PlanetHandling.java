@@ -31,6 +31,7 @@ import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -287,6 +288,22 @@ public final class PlanetHandling {
       } else if (credit > 0 && planet.getTax() > 0) {
         planet.setTax(planet.getTax() - 1, false);
       }
+      SpaceRace planetRace = planet.getPlanetPlayerInfo().getRace();
+      if (planetRace.hasTrait(TraitIds.ENERGY_POWERED)
+          && !planetRace.hasTrait(TraitIds.CONSTRUCTED_POP)) {
+        int grow = planet.getTotalProduction(Planet.PRODUCTION_POPULATION);
+        if (grow < 0) {
+          // Tries to set that population do not die
+          planet.setTax(planet.getTax() - grow, false);
+        }
+        if (planet.getTotalPopulation() < planet.getPopulationLimit()) {
+          grow = planet.getTotalProduction(Planet.PRODUCTION_POPULATION);
+          if (grow < 1) {
+            planet.setTax(planet.getTax() + 1, false);
+          }
+        }
+      }
+
       if (info.areLeadersDead() && credit == 0
           && info.getTotalCredits() < LeaderUtility.leaderRecruitCost(info)
           && planet.getTax() < planet.getTotalProduction(
@@ -1130,7 +1147,6 @@ public final class PlanetHandling {
     planet.setWorkers(Planet.METAL_MINERS, miners);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, scientist);
     planet.setWorkers(Planet.CULTURE_ARTIST, artists);
-
   }
   /**
    * Handle generic population

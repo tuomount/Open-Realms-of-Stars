@@ -700,7 +700,7 @@ public class SpaceRaceEditorView extends BlackPanel {
     mainPanel.add(Box.createRigidArea(new Dimension(10, gapY)));
 
     descriptionText = new JTextArea(20, 120);
-    descriptionText.setText("Foo barr");
+    descriptionText.setText("");
     descriptionText.setEditable(true);
     descriptionText.setLineWrap(true);
     descriptionText.setFont(GuiFonts.getFontSquarion());

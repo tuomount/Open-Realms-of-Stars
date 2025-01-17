@@ -432,7 +432,17 @@
     "group": "Temperature",
     "points": 1,
     "conflictsWith": [
-      "TOLERATE_LAVA"
+      "TOLERATE_LAVA", "INTOLERATE_COLD"
+    ]
+  },
+  {
+    "id": "INTOLERATE_COLD",
+    "name": "Intolerate cold temperature",
+    "description": "Race is unable to tolerate cold temperature on planets.",
+    "group": "Temperature",
+    "points": -1,
+    "conflictsWith": [
+      "TOLERATE_COLD"
     ]
   },
   {
@@ -442,7 +452,17 @@
     "group": "Temperature",
     "points": 1,
     "conflictsWith": [
-      "TOLERATE_LAVA"
+      "TOLERATE_LAVA", "INTOLERATE_HOT"
+    ]
+  },
+  {
+    "id": "INTOLERATE_HOT",
+    "name": "Intolerate hot temperature",
+    "description": "Race is unable to tolerate hot temperature on planets.",
+    "group": "Temperature",
+    "points": -1,
+    "conflictsWith": [
+      "TOLERATE_LAVA", "TOLERATE_HOT"
     ]
   },
   {
@@ -452,7 +472,7 @@
     "group": "Temperature",
     "points": 1,
     "conflictsWith": [
-      "TOLERATE_COLD", "TOLERATE_HOT"
+      "TOLERATE_COLD", "TOLERATE_HOT", "INTOLERATE_HOT"
     ]
   },
   {
@@ -472,7 +492,7 @@
     "group": "Community",
     "points": -1,
     "conflictsWith": [
-      "Communal"
+      "COMMUNAL"
     ]
   },
   {

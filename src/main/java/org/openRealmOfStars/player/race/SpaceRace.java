@@ -622,6 +622,9 @@ public class SpaceRace {
       if (hasTrait(TraitIds.TOLERATE_LAVA)) {
         result = result - 25;
       }
+      if (hasTrait(TraitIds.INTOLERATE_COLD)) {
+        result = result - 25;
+      }
       return result;
     }
 
@@ -631,6 +634,9 @@ public class SpaceRace {
         result = result + 25;
       }
       if (hasTrait(TraitIds.TOLERATE_LAVA)) {
+        result = result - 25;
+      }
+      if (hasTrait(TraitIds.INTOLERATE_COLD)) {
         result = result - 25;
       }
       return result;
@@ -652,6 +658,9 @@ public class SpaceRace {
       if (hasTrait(TraitIds.TOLERATE_LAVA)) {
         result = result + 25;
       }
+      if (hasTrait(TraitIds.INTOLERATE_HOT)) {
+        result = result - 25;
+      }
       return result;
     }
 
@@ -662,6 +671,9 @@ public class SpaceRace {
       }
       if (hasTrait(TraitIds.TOLERATE_LAVA)) {
         result = result + 25;
+      }
+      if (hasTrait(TraitIds.INTOLERATE_HOT)) {
+        result = result - 25;
       }
       return result;
     }

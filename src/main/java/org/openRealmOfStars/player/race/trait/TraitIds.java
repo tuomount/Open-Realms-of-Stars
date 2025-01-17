@@ -147,8 +147,12 @@ public final class TraitIds {
       "TOLERATE_EXTREME_RADIATION";
   /** Tolerate cold temperature on planets. */
   public static final String TOLERATE_COLD = "TOLERATE_COLD";
+  /** Intolerate cold temperature on planets. */
+  public static final String INTOLERATE_COLD = "INTOLERATE_COLD";
   /** Tolerate hot temperature on planets. */
   public static final String TOLERATE_HOT = "TOLERATE_HOT";
+  /** Intolerate hot temperature on planets. */
+  public static final String INTOLERATE_HOT = "INTOLERATE_HOT";
   /** Tolerate lava on planets. */
   public static final String TOLERATE_LAVA = "TOLERATE_LAVA";
   /** Communal, like to live together  */

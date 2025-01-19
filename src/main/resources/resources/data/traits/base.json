@@ -163,7 +163,7 @@
   },
   {
     "id": "VERY_FAST_RESEARCH",
-    "name": "Fast research",
+    "name": "Very fast research",
     "description": "Very fast research speed from scientist population.",
     "group": "Skills",
     "points": 3,

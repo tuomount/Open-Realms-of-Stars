@@ -66,7 +66,9 @@ public final class BackgroundStoryGenerator {
     sb.append(generateEnergyBackground(info));
     sb.append(generateResearchBackground(info));
     sb.append(generateSizeAndStrengthBackground(info));
+    sb.append(generateSkillsBackground(info));
     sb.append(generateCharmingBackground(info));
+    sb.append(generateCommunityBackground(info));
     String tmp = replaceMarkerWithRaceName(info, sb.toString());
     sb = new StringBuilder();
     sb.append(tmp);
@@ -238,6 +240,150 @@ public final class BackgroundStoryGenerator {
   }
 
   /**
+   * Generate skills background.
+   * @param info PlayerInfo
+   * @return Background string.
+   */
+  private static String generateSkillsBackground(
+      final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = "$1";
+    if (info.getRace().hasTrait(TraitIds.FAST_FOOD_PROD)) {
+      sb.append(namePlural);
+      if (DiceGenerator.getBoolean()) {
+        sb.append(" have a natural interest in growing food and,"
+            + " as a result, make great farmers. ");
+      } else {
+        sb.append(" possess an inherent curiosity for growing food,"
+            + " which makes them excellent farmers.");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.IMPRACTICAL)) {
+      sb.append(namePlural);
+      if (DiceGenerator.getBoolean()) {
+        sb.append(" have ");
+      } else {
+        sb.append(" face ");
+      }
+      sb.append("physical limitations in their ");
+      if (DiceGenerator.getBoolean()) {
+        sb.append("arms ");
+      } else {
+        sb.append("limbs ");
+      }
+      if (DiceGenerator.getBoolean()) {
+        sb.append("that make them less effective in factory work. ");
+      } else {
+        sb.append(", which can reduce their efficiency in factory settings. ");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.MERCANTILE)) {
+      sb.append(namePlural);
+      if (DiceGenerator.getBoolean()) {
+        sb.append(" have a natural interest in trading,"
+            + " which makes them excellent merchants. ");
+      } else {
+        sb.append(" are naturally drawn to trading,"
+            + " which enables them to be excellent merchants. ");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.FAST_CULTURE)) {
+      sb.append(namePlural);
+      if (DiceGenerator.getBoolean()) {
+        sb.append(" are talented performers, known throughout the galaxy. ");
+      } else {
+        sb.append(" are skilled performers, recognized across the galaxy. ");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.SLOW_CULTURE)) {
+      sb.append(namePlural);
+      if (DiceGenerator.getBoolean()) {
+        sb.append(" are known for their questionable taste in culture"
+            + " throughout the galaxy");
+      } else {
+        sb.append(" are famous for their peculiar taste in culture"
+            + " across the galaxy");
+      }
+      if (DiceGenerator.getBoolean()) {
+        if (info.getRace().getTrooperPower() > 10) {
+          sb.append(" - but at least they’ve mastered the art of war! ");
+        } else if (info.getRace().hasTrait(TraitIds.LITHOVORIC)) {
+          sb.append(" - but at least they’ve mastered the art of "
+              + "rock eating! ");
+        } else if (info.getRace().hasTrait(TraitIds.ROBOTIC)) {
+          sb.append(" - but at least they’ve mastered the art of robotics! ");
+        } else if (info.getRace().hasTrait(TraitIds.PHOTOSYNTHESIS)) {
+          sb.append(" - but at least they’ve mastered the art of plants! ");
+        } else {
+          sb.append(". ");
+        }
+      } else {
+        sb.append(". ");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.VERY_FAST_RESEARCH)) {
+      sb.append(namePlural);
+      if (DiceGenerator.getBoolean()) {
+        sb.append("are exceptional researchers, possessing incredible"
+            + " scientific skills, and are known throughout the galaxy.  ");
+      } else {
+        sb.append(" re outstanding researchers, with remarkable "
+            + "scientific abilities, renowned throughout the galaxy. ");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.FAST_RESEARCH)) {
+      sb.append(namePlural);
+      if (DiceGenerator.getBoolean()) {
+        sb.append(" are talented scientists, known throughout the galaxy. ");
+      } else {
+        sb.append(" are skilled scientists, recognized across the galaxy. ");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.STEALTHY)) {
+      sb.append(namePlural);
+      if (DiceGenerator.getBoolean()) {
+        sb.append(" have honed their skills in sneaking and hiding to"
+            + " such an extent that they even use them to stealthily"
+            + " navigate their starships through enemy fleets. ");
+      } else {
+        sb.append("  have perfected the art of sneaking and hiding to"
+            + " such a degree that they even employ it to cloak"
+            + " their starships from enemy detection. ");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.HANDY)) {
+      sb.append(namePlural);
+      sb.append("' arms have ");
+      if (!info.getRace().hasTrait(TraitIds.CONSTRUCTED_POP)) {
+        sb.append("evolved ");
+      } else {
+        sb.append("been engineered ");
+      }
+      if (DiceGenerator.getBoolean()) {
+        sb.append("in such a way that they’re perfectly suited for "
+            + "the intricate tasks required in advanced factory "
+            + "environments across the galaxy. ");
+      } else {
+        sb.append("to such an advanced level that they excel in "
+            + "performing complex tasks within manufacturing facilities. ");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.SLOW_RESEARCH)) {
+      sb.append(namePlural);
+      if (DiceGenerator.getBoolean()) {
+        sb.append(" are far from being the galaxy's finest scientists,"
+            + " often stumbling through experiments that"
+            + " more advanced civilizations would find primitive. ");
+      } else {
+        sb.append("  are not known for their scientific prowess,"
+            + " often coming up with ideas that even their "
+            + "closest allies find laughably outdated. ");
+      }
+    }
+    return sb.toString();
+  }
+
+  /**
    * Generate gravity background for space race.
    * @param info PlayerInfo
    * @return background string.
@@ -327,8 +473,89 @@ public final class BackgroundStoryGenerator {
       sb.append(" have extremely longer life span than average sentient"
           + " being in the galaxy. ");
     }
+    if (info.getRace().hasTrait(TraitIds.SLOW_METABOLISM)) {
+      sb.append(namePlural);
+      sb.append(" have slower metabolism which grants them a bit longer"
+          + " life span but they are not physically that active. ");
+    }
     return sb.toString();
   }
+
+  /**
+   * Generate community background
+   * @param info PlayerInfo
+   * @return Background string.
+   */
+  private static String generateCommunityBackground(final PlayerInfo info) {
+    StringBuilder sb = new StringBuilder();
+    String namePlural = "$1";
+    if (info.getRace().hasTrait(TraitIds.SLOW_LEARNERS)) {
+      sb.append(namePlural);
+      if (DiceGenerator.getBoolean()) {
+        sb.append(" need more ");
+      } else {
+        sb.append(" take more ");
+      }
+      if (DiceGenerator.getBoolean()) {
+        sb.append("time to ");
+      } else {
+        sb.append("practing to ");
+      }
+      if (DiceGenerator.getBoolean()) {
+        sb.append("develop new skills and learn things. ");
+      } else {
+        sb.append("get to use new things. ");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.QUICK_LEARNERS)) {
+      sb.append(namePlural);
+      sb.append(" can ");
+      if (DiceGenerator.getBoolean()) {
+        sb.append("learn ");
+      } else {
+        sb.append("adapt to ");
+      }
+      if (DiceGenerator.getBoolean()) {
+        sb.append("new things quickly. ");
+      } else {
+        sb.append("new ideas quickly. ");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.NATURAL_LEADERS)) {
+      sb.append(namePlural);
+      sb.append(" are eager to ");
+      if (DiceGenerator.getBoolean()) {
+        sb.append("stand up ");
+      } else {
+        sb.append("step up ");
+      }
+      if (DiceGenerator.getBoolean()) {
+        sb.append("and be a leader. ");
+      } else {
+        sb.append("and lead the people. ");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.COMMUNAL)) {
+      sb.append(namePlural);
+      sb.append(" are use to live in ");
+      if (DiceGenerator.getBoolean()) {
+        sb.append("highly crowded areas. ");
+      } else {
+        sb.append("populous cities. ");
+      }
+    }
+    if (info.getRace().hasTrait(TraitIds.SOLITARY)) {
+      sb.append(namePlural);
+      sb.append(" are use to live in ");
+      if (DiceGenerator.getBoolean()) {
+        sb.append("uncrowded areas. ");
+      } else {
+        sb.append("smaller villages. ");
+      }
+    }
+    return sb.toString();
+  }
+
   /**
    * Generate charming background
    * @param info PlayerInfo
@@ -407,13 +634,35 @@ public final class BackgroundStoryGenerator {
             + " This feat is really beneficial when colonizing planets. ");
       } else if (info.getRace().hasTrait(TraitIds.TOLERATE_COLD)) {
         sb.append(namePlural);
-        sb.append(" are able to tolerate cold conditions on planets.");
+        sb.append(" are able to tolerate cold conditions on planets");
+        if (info.getRace().hasTrait(TraitIds.INTOLERATE_HOT)) {
+          sb.append(" but cannot stand hot envinronments. ");
+        } else {
+          sb.append(". ");
+        }
       } else if (info.getRace().hasTrait(TraitIds.TOLERATE_HOT)) {
         sb.append(namePlural);
-        sb.append(" are able to tolerate hot conditions on planets.");
+        sb.append(" are able to tolerate hot conditions on planets");
+        if (info.getRace().hasTrait(TraitIds.INTOLERATE_COLD)) {
+          sb.append(" but cannot stand cold envinronments. ");
+        } else {
+          sb.append(". ");
+        }
       } else {
         sb.append(namePlural);
-        sb.append(" feel most comfortable in temperate planets.");
+        if (info.getRace().hasTrait(TraitIds.INTOLERATE_HOT)
+            && info.getRace().hasTrait(TraitIds.INTOLERATE_COLD)) {
+          sb.append(" survives best on temperate planets, but suffers both hot"
+              + " and cold envinronments. ");
+        } else if (info.getRace().hasTrait(TraitIds.INTOLERATE_HOT)) {
+          sb.append(" cannot tolerate hot temperatures on planets but "
+              + "thrives on temperate worlds. ");
+        } else if (info.getRace().hasTrait(TraitIds.INTOLERATE_COLD)) {
+          sb.append(" cannot tolerate cold temperatures on planets but "
+              + "thrives on temperate worlds. ");
+        } else {
+        sb.append(" feel most comfortable in temperate planets. ");
+        }
       }
     }
     return sb.toString();
@@ -454,7 +703,7 @@ public final class BackgroundStoryGenerator {
       if (info.getRace().hasTrait(TraitIds.ENERGY_POWERED)) {
         sb.append(" ");
         sb.append(namePlural);
-        sb.append(" are a type of cyborg creates which are mix of organic "
+        sb.append(" are a type of cyborg creatures which are mix of organic "
             + " and robotic parts. This allows them to function without "
             + "the need of food or other organic sustenance."
             + " Instead, they are powered by advanced technology,"
@@ -463,7 +712,7 @@ public final class BackgroundStoryGenerator {
       } else {
         sb.append(" ");
         sb.append(namePlural);
-        sb.append(" are a type of cyborg creates which are mix of organic "
+        sb.append(" are a type of cyborg creatures which are mix of organic "
             + " and robotic parts. Despite of this, ");
         sb.append(namePlural);
         sb.append(" still require food to survive. ");

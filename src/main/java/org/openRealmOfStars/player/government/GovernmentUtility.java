@@ -54,15 +54,15 @@ public final class GovernmentUtility {
       }
     }
     if (government1.getRulerSelection() == government2.getRulerSelection()) {
-      result++;
+      result = result + 10;
     }
     if (government2.getRulerTitleMale().equals(
         government1.getRulerTitleMale())) {
-      result++;
+      result = result + 5;
     }
     if (government2.getRulerTitleFemale().equals(
         government1.getRulerTitleFemale())) {
-      result++;
+      result = result + 5;
     }
     return result;
   }

@@ -17,13 +17,17 @@ package org.openRealmOfStars.player.player;
  * along with this program; if not, see http://www.gnu.org/licenses/
  */
 
+import static org.junit.Assert.assertNotEquals;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.government.GovernmentFactory;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.scenario.StartingScenario;
 
 import junit.framework.TestCase;
 
@@ -177,5 +181,16 @@ public class PlayerListTest extends TestCase {
     assertEquals(1, info.getDiplomacy().getDiplomacyList(1).getDiplomacyBonus());
     assertEquals(-4, info.getDiplomacy().getDiplomacyList(2).getDiplomacyBonus());
   }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSuitablePlanets() {
+    for (SpaceRace race : SpaceRaceFactory.getValuesNoPseudo()) {
+      StartingScenario[] scenarios = PlayerList.getPossibleStartingScenarios(
+          race);
+      assertNotEquals(0, scenarios.length);
+    }
+  }
+  
 
 }

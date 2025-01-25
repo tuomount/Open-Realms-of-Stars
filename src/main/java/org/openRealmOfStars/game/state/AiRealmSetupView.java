@@ -43,6 +43,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.player.PlayerColor;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.race.SpaceRace;
@@ -410,7 +411,10 @@ public class AiRealmSetupView extends BlackPanel {
         Government gov = DiceGenerator.pickRandom(availableGovs);
         config.setPlayerGovernment(i, gov);
       }
-      StartingScenario scenario = DiceGenerator.pickRandom(availableScenario);
+      StartingScenario[] possibleScenarios =
+          PlayerList.getPossibleStartingScenarios(config.getRace(i),
+              availableScenario.toArray(new StartingScenario[0]));
+      StartingScenario scenario = DiceGenerator.pickRandom(possibleScenarios);
       config.setStartingScenario(i, scenario);
       config.generateUniqueName(i);
       PlayerColor color = DiceGenerator.pickRandom(availableColors);

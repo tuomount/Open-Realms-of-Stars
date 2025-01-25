@@ -28,12 +28,20 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.government.Government;
 import org.openRealmOfStars.player.government.GovernmentFactory;
 import org.openRealmOfStars.player.government.GovernmentUtility;
+import org.openRealmOfStars.player.race.SpaceRace;
 import org.openRealmOfStars.player.race.SpaceRaceFactory;
+import org.openRealmOfStars.player.race.trait.TraitIds;
 import org.openRealmOfStars.player.scenario.ScenarioIds;
 import org.openRealmOfStars.player.scenario.StartingScenario;
 import org.openRealmOfStars.player.scenario.StartingScenarioFactory;
+import org.openRealmOfStars.player.scenario.StartingScenarioType;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
+import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.enums.RadiationType;
+import org.openRealmOfStars.starMap.planet.enums.WaterLevelType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -82,6 +90,61 @@ public class PlayerList {
     }
   }
 
+  /**
+   * Get possible starting scenarios when using fixed scenario list.
+   * @param race Space Race
+   * @param scenarioList Scenarios available.
+   * @return Array of starting scenarios
+   */
+  public static StartingScenario[] getPossibleStartingScenarios(
+      final SpaceRace race, final StartingScenario[] scenarioList) {
+    ArrayList<StartingScenario> scenarios = new ArrayList<>();
+    PlayerInfo info = new PlayerInfo(race);
+    for (StartingScenario scenario : scenarioList) {
+      info.setStartingScenario(scenario);
+      if (scenario.getType() == StartingScenarioType.NO_HOME) {
+        // No home scenarios are always suitable
+        scenarios.add(scenario);
+      } else {
+        Planet planet = new Planet(new Coordinate(5, 5), "TempPlanet",
+            0, false);
+        planet.setRadiationLevel(RadiationType.NO_RADIATION);
+        planet.setTemperatureType(scenario.getTemperature());
+        planet.setWaterLevel(scenario.getWaterLevel());
+        planet.setGroundSize(scenario.getPlanetSize());
+        planet.generateGravityBasedOnSize();
+        if (scenario.getId().equals(ScenarioIds.METAL_PLANET)) {
+          planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
+        } else {
+          planet.generateWorldType();
+        }
+        int value = info.getPlanetSuitabilityValue(planet);
+        if (race.hasTrait(TraitIds.PHOTOSYNTHESIS)
+            && scenario.getWaterLevel() == WaterLevelType.DESERT
+            || scenario.getWaterLevel() == WaterLevelType.BARREN) {
+          value = 0;
+        }
+        if (race.hasTrait(TraitIds.ZERO_GRAVITY_BEING) && value > 0) {
+          // Zero gravity being lives on orbitals.
+          value = 100;
+        }
+        if (value >= 75) {
+          scenarios.add(scenario);
+        }
+      }
+    }
+    return scenarios.toArray(new StartingScenario[0]);
+  }
+  /**
+   * Get possible starting scenarios when using random scenario.
+   * @param race Space Race
+   * @return Array of starting scenarios
+   */
+  public static StartingScenario[] getPossibleStartingScenarios(
+      final SpaceRace race) {
+    return getPossibleStartingScenarios(race,
+        StartingScenarioFactory.getValues());
+  }
   /**
    * Creates PlayerList based on galaxy config
    * @param galaxyConfig Galaxy Config
@@ -409,10 +472,10 @@ public class PlayerList {
           } else {
             int value = GovernmentUtility.getGovernmentComparison(
                 info.getGovernment(), info2.getGovernment());
-            if (value > 2) {
+            if (value > 8) {
               bonus.addBonus(DiplomacyBonusType.SIMILAR_GOVERNMENT,
                   info2.getRace());
-            } else if (value > 0) {
+            } else if (value > 1) {
                 bonus.addBonus(
                     DiplomacyBonusType.SIMILAR_GOVERNMENT_DIFFERENT_GROUP,
                     info2.getRace());

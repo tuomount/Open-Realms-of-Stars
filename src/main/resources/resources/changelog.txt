@@ -19,6 +19,7 @@
 * High contrast grid option when playing in bright daylight.
 
 - Bugfixes -
+* Fixed bug where Realm was lost but alliance with was still active.
 * Fixed possible null pointer on exploring pirate lair.
 * Fixed possible null pointer on artifact research.
 * Fixed AI handling of artificial planets.

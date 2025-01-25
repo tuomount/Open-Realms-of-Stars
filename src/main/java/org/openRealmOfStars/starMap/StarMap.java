@@ -4324,7 +4324,12 @@ public class StarMap {
     int myIndex = players.getIndex(realm);
     for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
       if (myIndex != i) {
+        // First make war against the realm. Now all alliances are canceled.
         DiplomaticTrade trade = new DiplomaticTrade(this, myIndex, i);
+        trade.generateEqualTrade(NegotiationType.WAR);
+        trade.doTrades();
+        // Then peace to negate effects of the war.
+        trade = new DiplomaticTrade(this, myIndex, i);
         trade.generateEqualTrade(NegotiationType.PEACE);
         trade.doTrades();
       }

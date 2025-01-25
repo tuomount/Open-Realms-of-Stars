@@ -66,9 +66,8 @@ public enum ShipHullType {
   public static ShipHullType getTypeByIndex(final int index) {
     if (index >= 0 && index < values().length) {
       return values()[index];
-    } else {
-      throw new IllegalArgumentException("Unexpected ship hull type!");
     }
+    throw new IllegalArgumentException("Unexpected ship hull type!");
   }
 
   @Override

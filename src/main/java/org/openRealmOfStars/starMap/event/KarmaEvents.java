@@ -232,7 +232,7 @@ public class KarmaEvents implements GalaxyEvents {
    * @param realm Realm who is getting the event
    * @return RandomEvent
    */
-  private RandomEvent createGoodRandomEvent(final PlayerInfo realm) {
+  private static RandomEvent createGoodRandomEvent(final PlayerInfo realm) {
     var values = Arrays.stream(RandomEventType.values())
         .filter(type -> !type.isBad())
         .collect(Collectors.toList());
@@ -246,7 +246,7 @@ public class KarmaEvents implements GalaxyEvents {
    * @param realm Realm who is getting the event
    * @return RandomEvent
    */
-  private RandomEvent createBadRandomEvent(final PlayerInfo realm) {
+  private static RandomEvent createBadRandomEvent(final PlayerInfo realm) {
     var values = Arrays.stream(RandomEventType.values())
         .filter(type -> type.isBad())
         .collect(Collectors.toList());

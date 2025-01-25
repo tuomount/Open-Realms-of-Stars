@@ -22,4 +22,5 @@ package org.openRealmOfStars;
  *
  */
 public interface BehaviourTest {
+  // Nothing to declare here...
 }

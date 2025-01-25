@@ -1,7 +1,7 @@
 package org.openRealmOfStars.starMap.history;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2018 Tuomo Untinen
+ * Copyright (C) 2018-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -120,7 +120,7 @@ public class HistoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testCultureUpdateClearCulture() throws IOException {
+  public void testCultureUpdateClearCulture() {
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getMaxX()).thenReturn(5);
     Mockito.when(map.getMaxY()).thenReturn(5);
@@ -136,7 +136,7 @@ public class HistoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testCultureUpdate() throws IOException {
+  public void testCultureUpdate() {
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getMaxX()).thenReturn(5);
     Mockito.when(map.getMaxY()).thenReturn(5);
@@ -195,7 +195,7 @@ public class HistoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testTileOverrideUpdate() throws IOException {
+  public void testTileOverrideUpdate() {
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getMaxX()).thenReturn(5);
     Mockito.when(map.getMaxY()).thenReturn(5);

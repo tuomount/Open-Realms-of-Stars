@@ -205,9 +205,8 @@ public enum ShipComponentType {
   public static ShipComponentType getTypeByIndex(final int index) {
     if (index >= 0 && index < values().length) {
       return values()[index];
-    } else {
-      throw new IllegalArgumentException("Unknown Ship Component type");
     }
+    throw new IllegalArgumentException("Unknown Ship Component type");
   }
 
   @Override

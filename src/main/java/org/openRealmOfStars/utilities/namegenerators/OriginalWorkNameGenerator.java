@@ -71,7 +71,7 @@ public class OriginalWorkNameGenerator extends NameGenerator {
    * @param str String which to capitalize
    * @return String
    */
-  private String capitalize(final String str) {
+  private static String capitalize(final String str) {
     if (str.length() >= 2) {
       String first = str.substring(0, 1).toUpperCase();
       return first + str.substring(1);

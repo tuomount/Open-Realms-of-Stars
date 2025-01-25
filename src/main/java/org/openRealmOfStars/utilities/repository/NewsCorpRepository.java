@@ -81,7 +81,7 @@ public class NewsCorpRepository {
    * @param stat GalaxyStat to save
    * @throws IOException if there is any problem with DataOutputStream
    */
-  private void saveGalaxyStat(final DataOutputStream dos,
+  private static void saveGalaxyStat(final DataOutputStream dos,
       final GalaxyStat stat) throws IOException {
     int[][] data = stat.getGalaxyData();
     int dataSize = data[0].length;
@@ -99,7 +99,7 @@ public class NewsCorpRepository {
    * @param stat GalaxyStat to load
    * @throws IOException if there is any problem with DataInputStream
    */
-  private void loadGalaxyStat(final DataInputStream dis,
+  private static void loadGalaxyStat(final DataInputStream dis,
       final GalaxyStat stat) throws IOException {
     int dataSize = dis.read();
     for (int i = 0; i < stat.getMaxPlayers(); i++) {

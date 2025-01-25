@@ -22,4 +22,5 @@ package org.openRealmOfStars;
  *
  */
 public interface UnitTest {
+  // Nothing to declare here...
 }

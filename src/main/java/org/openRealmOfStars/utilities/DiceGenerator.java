@@ -124,7 +124,7 @@ public final class DiceGenerator {
       return list.get(idx);
     }
 
-    var tmpList = new ArrayList<T>(collection);
+    var tmpList = new ArrayList<>(collection);
     var idx = getRandom(tmpList.size() - 1);
     return tmpList.get(idx);
   }

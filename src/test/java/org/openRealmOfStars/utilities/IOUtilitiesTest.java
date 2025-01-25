@@ -1,7 +1,7 @@
 package org.openRealmOfStars.utilities;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,7 +35,7 @@ public class IOUtilitiesTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testBits() throws IOException {
+  public void testBits() {
     byte value = 0;
     int k = 1;
     for (int i = 0; i<8; i++) {
@@ -100,7 +100,7 @@ public class IOUtilitiesTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testSignedBitConversions() throws IOException {
+  public void testSignedBitConversions() {
     byte[] buf = IOUtilities.convertShortTo16BitMsb(-5);
     assertEquals(-1, buf[0]);
     assertEquals(-5, buf[1]);

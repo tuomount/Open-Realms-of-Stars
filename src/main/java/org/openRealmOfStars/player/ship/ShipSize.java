@@ -78,9 +78,8 @@ public enum ShipSize {
   public static ShipSize getTypeByIndex(final int index) {
     if (index >= 0 && index < values().length) {
       return values()[index];
-    } else {
-      throw new IllegalArgumentException("Unknown ship size");
     }
+    throw new IllegalArgumentException("Unknown ship size");
   }
 
   @Override

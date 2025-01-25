@@ -589,6 +589,9 @@ public class PlanetBombingView extends BlackPanel {
    */
   public void removeDestroyedShip() {
     Ship ship = fleet.getShipByIndex(shipIndex);
+    if (ship == null) {
+      return;
+    }
     if (ship.getHullPoints() > 0) {
       return;
     }

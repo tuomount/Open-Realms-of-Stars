@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.tech;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2023 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -748,15 +748,15 @@ public final class TechFactory {
         if (techName.equals("Volcanic colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
-          tech.setExcludeList(true);
+          tech.setExcludeList(false);
           tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
-              TraitIds.ZERO_GRAVITY_BEING, TraitIds.PHOTOSYNTHESIS));
+              TraitIds.TOLERATE_LAVA));
         } else if (techName.equals("Desert colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
           tech.setTradeable(false);
           tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
-              TraitIds.ZERO_GRAVITY_BEING));
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+              TraitIds.ZERO_GRAVITY_BEING, TraitIds.PHOTOSYNTHESIS));
         } else if (techName.startsWith("Planetary defense turret Mk")
             || techName.startsWith("Orbital shield")
             || techName.equals("Space academy")
@@ -887,9 +887,9 @@ public final class TechFactory {
         Tech tech = new Tech(techName, TechType.Hulls, level);
         if (techName.equals("Advanced colonization")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANET));
-          tech.setExcludeList(true);
-          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
-              TraitIds.ZERO_GRAVITY_BEING));
+          tech.setExcludeList(false);
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTraits(
+              TraitIds.ENERGY_POWERED, TraitIds.LITHOVORIC, TraitIds.EAT_LESS));
           tech.setTradeable(false);
           return tech;
         } else if (techName.equals("Minor orbital")

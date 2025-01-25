@@ -171,7 +171,8 @@ public class PlayerList {
     for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
       StartingScenario scenario = galaxyConfig.getStartingScenario(i);
       if (scenario.getId().equals(StartingScenarioFactory.RANDOM_ID)) {
-        scenario = StartingScenarioFactory.pickRandomScenario();
+        scenario = DiceGenerator.pickRandom(
+            getPossibleStartingScenarios(galaxyConfig.getRace(i)));
       }
       PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i),
           maxPlayers, i, boardIndex, scenario);

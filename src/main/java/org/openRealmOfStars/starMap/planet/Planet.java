@@ -2128,7 +2128,8 @@ public class Planet {
       }
       if (getPlanetPlayerInfo() == null
           && (activeScanned && !isEventActivated()
-          && event != PlanetaryEvent.NONE || hasStatusForAwayTeam())) {
+          && event != PlanetaryEvent.NONE)
+          || hasStatusForAwayTeam() && !isEventActivated()) {
         sb.append("\nAway team could be send down.");
         sb.append("\n");
       }

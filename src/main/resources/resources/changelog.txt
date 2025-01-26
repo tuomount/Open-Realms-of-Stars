@@ -4,6 +4,7 @@
 * Alonian image, namegenerators, speeches, bridges and ships are available for custom space race.
 * Mod support for loading custom speeches, bridges and ship images.
 * Improved explanation about planet's suitability.
+* Random starting scenario is no longer such that Realm immediately starts losing population.
 * New ready made space race called Fernids. These guys are getting food via photosynthesis.
 * Allow human player to declare to be winner and let AI play game till end. So called Snowman option.
 * Move external files into user's home folder.
@@ -19,6 +20,7 @@
 * High contrast grid option when playing in bright daylight.
 
 - Bugfixes -
+* Fixed issue where colonization technology could be research even though it had no use.
 * Fixed bug where Realm was lost but alliance with was still active.
 * Fixed possible null pointer on exploring pirate lair.
 * Fixed possible null pointer on artifact research.

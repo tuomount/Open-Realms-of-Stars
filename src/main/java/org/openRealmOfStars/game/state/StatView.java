@@ -379,10 +379,12 @@ public class StatView extends BlackPanel {
       label = new TransparentLabel(null, stat.getDesign().getName() + " - "
           + stat.getNumberOfBuilt(), true, true);
       label.setForeground(realm.getColor().getColor());
+      label.setToolTipText(stat.getDesignStatsAsHtml());
       ImageLabel image = new ImageLabel(
           ShipImageFactor.create(
               stat.getDesign().getHull().getRace().getSpaceShipId())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
+      image.setToolTipText(stat.getDesignDescriptionAsHtml());
       BlackPanel invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
       invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
@@ -395,10 +397,12 @@ public class StatView extends BlackPanel {
       label = new TransparentLabel(null, stat.getDesign().getName() + " - "
           + stat.getDesign().getTotalMilitaryPower(), true, true);
       label.setForeground(realm.getColor().getColor());
+      label.setToolTipText(stat.getDesignStatsAsHtml());
       image = new ImageLabel(
           ShipImageFactor.create(
               stat.getDesign().getHull().getRace().getSpaceShipId())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
+      image.setToolTipText(stat.getDesignDescriptionAsHtml());
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
       invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
@@ -411,10 +415,12 @@ public class StatView extends BlackPanel {
       label = new TransparentLabel(null, stat.getDesign().getName() + " - "
           + stat.getNumberOfCombats(), true, true);
       label.setForeground(realm.getColor().getColor());
+      label.setToolTipText(stat.getDesignStatsAsHtml());
       image = new ImageLabel(
           ShipImageFactor.create(
               stat.getDesign().getHull().getRace().getSpaceShipId())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
+      image.setToolTipText(stat.getDesignDescriptionAsHtml());
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
       invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
@@ -427,10 +433,12 @@ public class StatView extends BlackPanel {
       label = new TransparentLabel(null, stat.getDesign().getName() + " - "
           + stat.getNumberOfVictories(), true, true);
       label.setForeground(realm.getColor().getColor());
+      label.setToolTipText(stat.getDesignStatsAsHtml());
       image = new ImageLabel(
           ShipImageFactor.create(
               stat.getDesign().getHull().getRace().getSpaceShipId())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
+      image.setToolTipText(stat.getDesignDescriptionAsHtml());
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
       invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
@@ -443,10 +451,12 @@ public class StatView extends BlackPanel {
       label = new TransparentLabel(null, stat.getDesign().getName() + " - "
           + stat.getNumberOfLoses(), true, true);
       label.setForeground(realm.getColor().getColor());
+      label.setToolTipText(stat.getDesignStatsAsHtml());
       image = new ImageLabel(
           ShipImageFactor.create(
               stat.getDesign().getHull().getRace().getSpaceShipId())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
+      image.setToolTipText(stat.getDesignDescriptionAsHtml());
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
       invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
@@ -459,10 +469,12 @@ public class StatView extends BlackPanel {
       label = new TransparentLabel(null, stat.getDesign().getName() + " - "
           + stat.getNumberOfKills(), true, true);
       label.setForeground(realm.getColor().getColor());
+      label.setToolTipText(stat.getDesignStatsAsHtml());
       image = new ImageLabel(
           ShipImageFactor.create(
               stat.getDesign().getHull().getRace().getSpaceShipId())
           .getShipImage(stat.getDesign().getHull().getImageIndex()), true);
+      image.setToolTipText(stat.getDesignDescriptionAsHtml());
       invis = new BlackPanel();
       invis.setLayout(new GridLayout(0, 2));
       invis.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,

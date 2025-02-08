@@ -221,6 +221,28 @@ public class ShipStat implements Comparable<ShipStat> {
     return design;
   }
 
+  /**
+   * Get Design description as HTML.
+   * @return Description as HTML.
+   */
+  public String getDesignDescriptionAsHtml() {
+    String tmp = design.getDesignInfo();
+    tmp = tmp.replaceAll("\n", "<br>");
+    return "<html>" + tmp + "</html>";
+  }
+
+  /**
+   * Get Design stats as HTML.
+   * @return Stats as HTML.
+   */
+  public String getDesignStatsAsHtml() {
+    return "<html>" + "Stats:<br>Ships built: " + getNumberOfBuilt()
+      + " Ships in use: " + getNumberOfInUse() + "<br>Combats: "
+      + getNumberOfCombats() + " Victories: " + getNumberOfVictories()
+      + " Lost: " + getNumberOfLoses() + " Kills: " + getNumberOfKills()
+      + "</html>";
+  }
+
   @Override
   public String toString() {
     return design.toString() + "\n\nStats:\nShips built: " + getNumberOfBuilt()

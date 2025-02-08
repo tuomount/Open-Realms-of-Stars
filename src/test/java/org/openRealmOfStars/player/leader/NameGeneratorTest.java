@@ -35,6 +35,19 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.ROBOT,
           Gender.NONE);
       assertNotNull(name);
+      assertFalse(name.startsWith(" "));
+    }
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.ROBOT,
+          Gender.MALE);
+      assertNotNull(name);
+      assertFalse(name.startsWith(" "));
+    }
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.ROBOT,
+          Gender.FEMALE);
+      assertNotNull(name);
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -45,6 +58,19 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.FEMALE_ROBOT,
           Gender.FEMALE);
       assertNotNull(name);
+      assertFalse(name.startsWith(" "));
+    }
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.FEMALE_ROBOT,
+          Gender.MALE);
+      assertNotNull(name);
+      assertFalse(name.startsWith(" "));
+    }
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.FEMALE_ROBOT,
+          Gender.NONE);
+      assertNotNull(name);
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -55,6 +81,19 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.CYBORG,
           Gender.NONE);
       assertNotNull(name);
+      assertFalse(name.startsWith(" "));
+    }
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.CYBORG,
+          Gender.MALE);
+      assertNotNull(name);
+      assertFalse(name.startsWith(" "));
+    }
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.CYBORG,
+          Gender.FEMALE);
+      assertNotNull(name);
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -65,7 +104,22 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.LONG_NAMES,
           Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.LONG_NAMES,
+          Gender.FEMALE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.LONG_NAMES,
+          Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -76,7 +130,20 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.BIG_PLANT,
           Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBigPlanetNameNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.BIG_PLANT,
+          Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -87,7 +154,8 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.BIG_PLANT,
           Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -98,7 +166,8 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.LONG_NAMES,
           Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -109,7 +178,8 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.ANCIENT_NORDIC,
           Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -120,7 +190,20 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.ANCIENT_NORDIC,
           Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGAncientNordicNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.ANCIENT_NORDIC,
+          Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -131,7 +214,8 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.DEEP_CREATURE,
           Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -142,10 +226,24 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.DEEP_CREATURE,
           Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDeepCreatureNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.DEEP_CREATURE,
+          Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRomanMale() {
@@ -153,7 +251,8 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.ANCIENT_ROMAN,
           Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -164,7 +263,20 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.ANCIENT_ROMAN,
           Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRomanNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.ANCIENT_ROMAN,
+          Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -175,7 +287,8 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.INSECT,
           Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -186,7 +299,20 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.INSECT,
           Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testInsectNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.INSECT,
+          Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -197,7 +323,8 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.EVIL_CREATURE,
           Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -208,7 +335,20 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.EVIL_CREATURE,
           Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEvilNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.EVIL_CREATURE,
+          Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -219,8 +359,9 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(
           NameGeneratorType.DEEP_ANCIENT_MONSTER, Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
-      assertEquals(false, name.contains("''"));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+      assertFalse(name.contains("''"));
     }
   }
 
@@ -231,8 +372,22 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(
           NameGeneratorType.DEEP_ANCIENT_MONSTER, Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
-      assertEquals(false, name.contains("''"));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+      assertFalse(name.contains("''"));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAncientDeepNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(
+          NameGeneratorType.DEEP_ANCIENT_MONSTER, Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+      assertFalse(name.contains("''"));
     }
   }
 
@@ -243,7 +398,8 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.SPACE_ORC,
           Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -254,7 +410,20 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.SPACE_ORC,
           Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpaceOrcNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.SPACE_ORC,
+          Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -265,7 +434,20 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.SCIFI_HUMAN,
           Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testScifiHumanNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.SCIFI_HUMAN,
+          Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -276,7 +458,8 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.SCIFI_HUMAN,
           Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -287,7 +470,8 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.STONE_PEOPLE,
           Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -298,7 +482,20 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(NameGeneratorType.STONE_PEOPLE,
           Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStonePeopleNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.STONE_PEOPLE,
+          Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -309,7 +506,8 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(
           NameGeneratorType.GASEOUS_CREATURE, Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -320,7 +518,20 @@ public class NameGeneratorTest {
       String name = NameGenerator.generateName(
           NameGeneratorType.GASEOUS_CREATURE, Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGaseousPeopleNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(
+          NameGeneratorType.GASEOUS_CREATURE, Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -328,9 +539,11 @@ public class NameGeneratorTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testPirateMale() {
     for (int i = 0; i < 50; i++) {
-      String name = NameGenerator.generateName(NameGeneratorType.PIRATE, Gender.MALE);
+      String name = NameGenerator.generateName(NameGeneratorType.PIRATE,
+          Gender.MALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 
@@ -338,9 +551,23 @@ public class NameGeneratorTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testPirateFemale() {
     for (int i = 0; i < 50; i++) {
-      String name = NameGenerator.generateName(NameGeneratorType.PIRATE, Gender.FEMALE);
+      String name = NameGenerator.generateName(NameGeneratorType.PIRATE,
+          Gender.FEMALE);
       assertNotNull(name);
-      assertEquals(true, name.contains(" "));
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPirateNone() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(NameGeneratorType.PIRATE,
+          Gender.NONE);
+      assertNotNull(name);
+      assertTrue(name.contains(" "));
+      assertFalse(name.startsWith(" "));
     }
   }
 

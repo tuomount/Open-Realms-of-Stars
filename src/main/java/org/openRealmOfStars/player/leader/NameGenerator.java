@@ -309,6 +309,13 @@ public final class NameGenerator {
         sb.append("hoth");
       }
     }
+    if (gender == Gender.NONE) {
+      if (sb.toString().endsWith("h")) {
+        sb.append("uth");
+      } else {
+        sb.append("huth");
+      }
+    }
     return sb.toString();
   }
 
@@ -415,6 +422,56 @@ public final class NameGenerator {
         case 17: sb.append("moustache"); break;
         case 18: sb.append("bald"); break;
         case 19: sb.append("back"); break;
+      }
+    }
+
+    if (gender == Gender.NONE) {
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("Alder"); break;
+        case 1: sb.append("Ash"); break;
+        case 2: sb.append("Birch"); break;
+        case 3: sb.append("Cornel"); break;
+        case 4: sb.append("Cress"); break;
+        case 5: sb.append("Fern"); break;
+        case 6: sb.append("Hedge"); break;
+        case 7: sb.append("Maple"); break;
+        case 8: sb.append("Mulberry"); break;
+        case 9: sb.append("Oak"); break;
+        case 10: sb.append("Redbrush"); break;
+        case 11: sb.append("Rambler"); break;
+        case 12: sb.append("Willow"); break;
+        case 13: sb.append("Windroot"); break;
+        case 14: sb.append("Tree"); break;
+        case 15: sb.append("Juniper"); break;
+        case 16: sb.append("Spruce"); break;
+        case 17: sb.append("Pine"); break;
+        case 18: sb.append("Wormwood"); break;
+        case 19: sb.append("Root"); break;
+      }
+      sb.append("-");
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("soil"); break;
+        case 1: sb.append("ground"); break;
+        case 2: sb.append("dirt"); break;
+        case 3: sb.append("stone"); break;
+        case 4: sb.append("rock"); break;
+        case 5: sb.append("land"); break;
+        case 6: sb.append("grass"); break;
+        case 7: sb.append("moss"); break;
+        case 8: sb.append("sand"); break;
+        case 9: sb.append("gravel"); break;
+        case 10: sb.append("clay"); break;
+        case 11: sb.append("mud"); break;
+        case 12: sb.append("mold"); break;
+        case 13: sb.append("silt"); break;
+        case 14: sb.append("gem"); break;
+        case 15: sb.append("gemstone"); break;
+        case 16: sb.append("tree"); break;
+        case 17: sb.append("forest"); break;
+        case 18: sb.append("woods"); break;
+        case 19: sb.append("timber"); break;
       }
     }
 
@@ -576,7 +633,7 @@ public final class NameGenerator {
         case 34: sb.append("rust"); break;
       }
     }
-    if (gender == Gender.FEMALE) {
+    if (gender == Gender.FEMALE || gender == Gender.NONE) {
       switch (DiceGenerator.getRandom(54)) {
         default:
         case 0: sb.append("Ba"); break;
@@ -634,6 +691,31 @@ public final class NameGenerator {
         case 52: sb.append("Di"); break;
         case 53: sb.append("Fi"); break;
         case 54: sb.append("Gi"); break;
+      }
+      if (gender == Gender.NONE) {
+        switch (DiceGenerator.getRandom(19)) {
+          default:
+          case 0: sb.append("ra"); break;
+          case 1: sb.append("ri"); break;
+          case 2: sb.append("zi"); break;
+          case 3: sb.append("za"); break;
+          case 4: sb.append("ze"); break;
+          case 5: sb.append("ge"); break;
+          case 6: sb.append("gu"); break;
+          case 7: sb.append("ba"); break;
+          case 8: sb.append("bi"); break;
+          case 9: sb.append("ti"); break;
+          case 10: sb.append("ta"); break;
+          case 11: sb.append("ma"); break;
+          case 12: sb.append("mu"); break;
+          case 13: sb.append("mo"); break;
+          case 14: sb.append("bo"); break;
+          case 15: sb.append("lo"); break;
+          case 16: sb.append("vo"); break;
+          case 17: sb.append("vi"); break;
+          case 18: sb.append("ga"); break;
+          case 19: sb.append("fa"); break;
+        }
       }
       if (DiceGenerator.getRandom(3) == 0) {
         switch (DiceGenerator.getRandom(19)) {
@@ -742,7 +824,15 @@ public final class NameGenerator {
    */
   private static String generateSpaceOrc(final Gender gender) {
     StringBuilder sb = new StringBuilder();
-    if (gender == Gender.MALE) {
+    Gender tmpGender = gender;
+    if (gender == Gender.NONE) {
+      if (DiceGenerator.getBoolean()) {
+        tmpGender = Gender.MALE;
+      } else {
+        tmpGender = Gender.FEMALE;
+      }
+    }
+    if (tmpGender == Gender.MALE) {
       switch (DiceGenerator.getRandom(19)) {
         default:
         case 0: sb.append("Bal"); break;
@@ -815,7 +905,7 @@ public final class NameGenerator {
         case 19: sb.append("mog"); break;
       }
     }
-    if (gender == Gender.FEMALE) {
+    if (tmpGender == Gender.FEMALE) {
       switch (DiceGenerator.getRandom(19)) {
         default:
         case 0: sb.append("Ba"); break;
@@ -1326,6 +1416,82 @@ public final class NameGenerator {
         case 14: sb.append("via"); break;
       }
     }
+    if (gender == Gender.NONE) {
+      switch (DiceGenerator.getRandom(36)) {
+        default:
+        case 0: sb.append("Coc"); break;
+        case 1: sb.append("Ne"); break;
+        case 2: sb.append("Sta"); break;
+        case 3: sb.append("Fun"); break;
+        case 4: sb.append("Ar"); break;
+        case 5: sb.append("Lo"); break;
+        case 6: sb.append("Quinc"); break;
+        case 7: sb.append("Au"); break;
+        case 8: sb.append("Be"); break;
+        case 9: sb.append("Cor"); break;
+        case 10: sb.append("Al"); break;
+        case 11: sb.append("At"); break;
+        case 12: sb.append("Mi"); break;
+        case 13: sb.append("Mur"); break;
+        case 14: sb.append("Me"); break;
+        case 15: sb.append("Ac"); break;
+        case 16: sb.append("Max"); break;
+        case 17: sb.append("Mar"); break;
+        case 18: sb.append("Ni"); break;
+        case 19: sb.append("Bur"); break;
+        case 20: sb.append("Ser"); break;
+        case 21: sb.append("Bal"); break;
+        case 22: sb.append("Cis"); break;
+        case 23: sb.append("Fla"); break;
+        case 24: sb.append("Pu"); break;
+        case 25: sb.append("Lae"); break;
+        case 26: sb.append("Ta"); break;
+        case 27: sb.append("Co"); break;
+        case 28: sb.append("Hel"); break;
+        case 29: sb.append("Ru"); break;
+        case 30: sb.append("Ici"); break;
+        case 31: sb.append("Val"); break;
+        case 32: sb.append("Um"); break;
+        case 33: sb.append("Her"); break;
+        case 34: sb.append("Avi"); break;
+        case 35: sb.append("Fla"); break;
+        case 36: sb.append("Ti"); break;
+      }
+      switch (DiceGenerator.getRandom(14)) {
+        default:
+        case 0: sb.append("vo"); break;
+        case 1: sb.append("do"); break;
+        case 2: sb.append("ti"); break;
+        case 3: sb.append("pi"); break;
+        case 4: sb.append("mi"); break;
+        case 5: sb.append("na"); break;
+        case 6: sb.append("se"); break;
+        case 7: sb.append("ga"); break;
+        case 8: sb.append("se"); break;
+        case 9: sb.append("lo"); break;
+        case 10: sb.append("gi"); break;
+        case 11: sb.append("pa"); break;
+        case 12: sb.append("ta"); break;
+        case 13: sb.append("pu"); break;
+        case 14: sb.append("ro"); break;
+      }
+      if (DiceGenerator.getRandom(5) == 0) {
+        switch (DiceGenerator.getRandom(10)) {
+          default:
+          case 0: sb.append("nus"); break;
+          case 1: sb.append("rius"); break;
+          case 2: sb.append("tis"); break;
+          case 3: sb.append("tius"); break;
+          case 4: sb.append("rus"); break;
+          case 5: sb.append("tus"); break;
+          case 6: sb.append("vius"); break;
+          case 7: sb.append("nus"); break;
+          case 8: sb.append("sus"); break;
+          case 9: sb.append("cus"); break;
+          case 10: sb.append("gus"); break;
+        }
+      }
+    }
     sb.append(" ");
     //Surname
     sb.append(generateRomanMaleName(1));
@@ -1425,7 +1591,7 @@ public final class NameGenerator {
     if (gender == Gender.MALE) {
       sb.append(generateLongNameMaleName());
     }
-    if (gender == Gender.FEMALE) {
+    if (gender == Gender.FEMALE || gender == Gender.NONE) {
       switch (DiceGenerator.getRandom(25)) {
         default:
         case 0: sb.append("Per"); break;
@@ -1674,6 +1840,104 @@ public final class NameGenerator {
         case 6: sb.append("tyn"); break;
       }
     }
+    if (gender == Gender.NONE) {
+      switch (DiceGenerator.getRandom(60)) {
+        default:
+        case 0: sb.append("Raz"); break;
+        case 1: sb.append("Coh"); break;
+        case 2: sb.append("Keh"); break;
+        case 3: sb.append("Min"); break;
+        case 4: sb.append("Dhar"); break;
+        case 5: sb.append("Ko"); break;
+        case 6: sb.append("Zum"); break;
+        case 7: sb.append("Zel"); break;
+        case 8: sb.append("Num"); break;
+        case 9: sb.append("Rim"); break;
+        case 10: sb.append("Kha"); break;
+        case 11: sb.append("Zuh"); break;
+        case 12: sb.append("Ke"); break;
+        case 13: sb.append("Khi"); break;
+        case 14: sb.append("Dih"); break;
+        case 15: sb.append("Car"); break;
+        case 16: sb.append("Do"); break;
+        case 17: sb.append("Zi"); break;
+        case 18: sb.append("Khul"); break;
+        case 19: sb.append("Dhim"); break;
+        case 20: sb.append("Dhan"); break;
+        case 21: sb.append("Mag"); break;
+        case 22: sb.append("Man"); break;
+        case 23: sb.append("De"); break;
+        case 24: sb.append("Mo"); break;
+        case 25: sb.append("Jo"); break;
+        case 26: sb.append("Jed"); break;
+        case 27: sb.append("Dem"); break;
+        case 28: sb.append("Nun"); break;
+        case 29: sb.append("Ril"); break;
+        case 30: sb.append("Mu"); break;
+        case 31: sb.append("Dhum"); break;
+        case 32: sb.append("Zeg"); break;
+        case 33: sb.append("Jhor"); break;
+        case 34: sb.append("Zel"); break;
+        case 35: sb.append("Riz"); break;
+        case 36: sb.append("Ki"); break;
+        case 37: sb.append("Ve"); break;
+        case 38: sb.append("Va"); break;
+        case 39: sb.append("Jar"); break;
+        case 40: sb.append("Dah"); break;
+        case 41: sb.append("Jom"); break;
+        case 42: sb.append("Rud"); break;
+        case 43: sb.append("Nel"); break;
+        case 44: sb.append("Cun"); break;
+        case 45: sb.append("Khir"); break;
+        case 46: sb.append("Dor"); break;
+        case 47: sb.append("Moh"); break;
+        case 48: sb.append("Du"); break;
+        case 49: sb.append("Cul"); break;
+        case 50: sb.append("Mil"); break;
+        case 51: sb.append("Jim"); break;
+        case 52: sb.append("Vun"); break;
+        case 53: sb.append("Ni"); break;
+        case 54: sb.append("Khog"); break;
+        case 55: sb.append("Jham"); break;
+        case 56: sb.append("Tul"); break;
+        case 57: sb.append("Tha"); break;
+        case 58: sb.append("Kha"); break;
+        case 59: sb.append("Bal"); break;
+        case 60: sb.append("Bha"); break;
+      }
+      if (DiceGenerator.getRandom(3) == 0) {
+        switch (DiceGenerator.getRandom(16)) {
+          default:
+          case 0: sb.append("ra"); break;
+          case 1: sb.append("ne"); break;
+          case 2: sb.append("di"); break;
+          case 3: sb.append("ri"); break;
+          case 4: sb.append("lo"); break;
+          case 5: sb.append("ro"); break;
+          case 6: sb.append("sha"); break;
+          case 7: sb.append("to"); break;
+          case 8: sb.append("na"); break;
+          case 9: sb.append("la"); break;
+          case 10: sb.append("no"); break;
+          case 11: sb.append("te"); break;
+          case 12: sb.append("lu"); break;
+          case 13: sb.append("hi"); break;
+          case 14: sb.append("ti"); break;
+          case 15: sb.append("hu"); break;
+          case 16: sb.append("tu"); break;
+        }
+      }
+      switch (DiceGenerator.getRandom(6)) {
+        default:
+        case 0: sb.append("ryn"); break;
+        case 1: sb.append("dyn"); break;
+        case 2: sb.append("lyn"); break;
+        case 3: sb.append("myn"); break;
+        case 4: sb.append("syn"); break;
+        case 5: sb.append("nyn"); break;
+        case 6: sb.append("tyn"); break;
+      }
+    }
     sb.append(" ");
     //Surname
     switch (DiceGenerator.getRandom(40)) {
@@ -1856,6 +2120,43 @@ public final class NameGenerator {
         case 29: sb.append("Inghild"); break;
         case 30: sb.append("Audhild"); break;
         case 31: sb.append("Dotta"); break;
+      }
+    }
+    if (gender == Gender.NONE) {
+      switch (DiceGenerator.getRandom(31)) {
+        default:
+        case 0: sb.append("Sweinhild"); break;
+        case 1: sb.append("Gunnid"); break;
+        case 2: sb.append("Gunnhaild"); break;
+        case 3: sb.append("Jufrid"); break;
+        case 4: sb.append("Thorhild"); break;
+        case 5: sb.append("Thurmund"); break;
+        case 6: sb.append("Sulveig"); break;
+        case 7: sb.append("Anguld"); break;
+        case 8: sb.append("Branhild"); break;
+        case 9: sb.append("Fridir"); break;
+        case 10: sb.append("Asrild"); break;
+        case 11: sb.append("Ragid"); break;
+        case 12: sb.append("Asar"); break;
+        case 13: sb.append("Mathild"); break;
+        case 14: sb.append("Ulrheid"); break;
+        case 15: sb.append("Gydar"); break;
+        case 16: sb.append("Katlar"); break;
+        case 17: sb.append("Ingar"); break;
+        case 18: sb.append("Gudrunn"); break;
+        case 19: sb.append("Fhurda"); break;
+        case 20: sb.append("Hildir"); break;
+        case 21: sb.append("Isgerdir"); break;
+        case 22: sb.append("Yngvoldir"); break;
+        case 23: sb.append("Gydar"); break;
+        case 24: sb.append("Stoldar"); break;
+        case 25: sb.append("Birleif"); break;
+        case 26: sb.append("Skuldar"); break;
+        case 27: sb.append("Geir"); break;
+        case 28: sb.append("Hildberg"); break;
+        case 29: sb.append("Ingdir"); break;
+        case 30: sb.append("Audberg"); break;
+        case 31: sb.append("Dottolf"); break;
       }
     }
     sb.append(" ");
@@ -2118,7 +2419,15 @@ public final class NameGenerator {
    */
   private static String generateScifiHumanName(final Gender gender) {
     StringBuilder sb = new StringBuilder();
-    if (gender == Gender.MALE) {
+    Gender tmpGender = gender;
+    if (gender == Gender.NONE) {
+      if (DiceGenerator.getBoolean()) {
+        tmpGender = Gender.MALE;
+      } else {
+        tmpGender = Gender.FEMALE;
+      }
+    }
+    if (tmpGender == Gender.MALE) {
       switch (DiceGenerator.getRandom(26)) {
         default:
         case 0: sb.append("Albert"); break;
@@ -2150,7 +2459,7 @@ public final class NameGenerator {
         case 26: sb.append("Thomas"); break;
       }
     }
-    if (gender == Gender.FEMALE) {
+    if (tmpGender == Gender.FEMALE) {
       switch (DiceGenerator.getRandom(22)) {
         default:
         case 0: sb.append("Samatha"); break;
@@ -2488,6 +2797,79 @@ public final class NameGenerator {
         case 19: sb.append("ti"); break;
       }
     }
+    if (gender == Gender.NONE) {
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("Smul"); break;
+        case 1: sb.append("Bul"); break;
+        case 2: sb.append("Umb"); break;
+        case 3: sb.append("Rag"); break;
+        case 4: sb.append("Fer"); break;
+        case 5: sb.append("Thorm"); break;
+        case 6: sb.append("Mol"); break;
+        case 7: sb.append("Mug"); break;
+        case 8: sb.append("A"); break;
+        case 9: sb.append("Mag"); break;
+        case 10: sb.append("Yam"); break;
+        case 11: sb.append("Shur"); break;
+        case 12: sb.append("Kur"); break;
+        case 13: sb.append("Yak"); break;
+        case 14: sb.append("Sha"); break;
+        case 15: sb.append("Dur"); break;
+        case 16: sb.append("Gur"); break;
+        case 17: sb.append("Bam"); break;
+        case 18: sb.append("Mul"); break;
+        case 19: sb.append("Tug"); break;
+      }
+      if (DiceGenerator.getRandom(3) == 0) {
+        switch (DiceGenerator.getRandom(19)) {
+          default:
+          case 0: sb.append("re"); break;
+          case 1: sb.append("mu"); break;
+          case 2: sb.append("go"); break;
+          case 3: sb.append("ro"); break;
+          case 4: sb.append("ra"); break;
+          case 5: sb.append("shi"); break;
+          case 6: sb.append("lo"); break;
+          case 7: sb.append("gu"); break;
+          case 8: sb.append("du"); break;
+          case 9: sb.append("ga"); break;
+          case 10: sb.append("ma"); break;
+          case 11: sb.append("le"); break;
+          case 12: sb.append("di"); break;
+          case 13: sb.append("ka"); break;
+          case 14: sb.append("ha"); break;
+          case 15: sb.append("re"); break;
+          case 16: sb.append("te"); break;
+          case 17: sb.append("ti"); break;
+          case 18: sb.append("me"); break;
+          case 19: sb.append("fe"); break;
+        }
+      }
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("re"); break;
+        case 1: sb.append("nus"); break;
+        case 2: sb.append("fa"); break;
+        case 3: sb.append("rios"); break;
+        case 4: sb.append("quis"); break;
+        case 5: sb.append("ce"); break;
+        case 6: sb.append("xus"); break;
+        case 7: sb.append("gen"); break;
+        case 8: sb.append("toa"); break;
+        case 9: sb.append("son"); break;
+        case 10: sb.append("gon"); break;
+        case 11: sb.append("zius"); break;
+        case 12: sb.append("han"); break;
+        case 13: sb.append("bon"); break;
+        case 14: sb.append("ra"); break;
+        case 15: sb.append("he"); break;
+        case 16: sb.append("za"); break;
+        case 17: sb.append("mah"); break;
+        case 18: sb.append("log"); break;
+        case 19: sb.append("ti"); break;
+      }
+    }
     sb.append(" ");
     switch (DiceGenerator.getRandom(19)) {
       default:
@@ -2643,6 +3025,80 @@ public final class NameGenerator {
         case 18: sb.append("Free"); break;
         case 19: sb.append("Frey"); break;
         case 20: sb.append("Frei"); break;
+      }
+      if (DiceGenerator.getRandom(3) == 0) {
+        switch (DiceGenerator.getRandom(19)) {
+          default:
+          case 0: sb.append("da"); break;
+          case 1: sb.append("la"); break;
+          case 2: sb.append("ta"); break;
+          case 3: sb.append("za"); break;
+          case 4: sb.append("ma"); break;
+          case 5: sb.append("na"); break;
+          case 6: sb.append("we"); break;
+          case 7: sb.append("wa"); break;
+          case 8: sb.append("wu"); break;
+          case 9: sb.append("wo"); break;
+          case 10: sb.append("dy"); break;
+          case 11: sb.append("du"); break;
+          case 12: sb.append("do"); break;
+          case 13: sb.append("le"); break;
+          case 14: sb.append("me"); break;
+          case 15: sb.append("wu"); break;
+          case 16: sb.append("ze"); break;
+          case 17: sb.append("te"); break;
+          case 18: sb.append("tu"); break;
+          case 19: sb.append("to"); break;
+        }
+      }
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("del"); break;
+        case 1: sb.append("dil"); break;
+        case 2: sb.append("dul"); break;
+        case 3: sb.append("dol"); break;
+        case 4: sb.append("dyl"); break;
+        case 5: sb.append("tel"); break;
+        case 6: sb.append("til"); break;
+        case 7: sb.append("tul"); break;
+        case 8: sb.append("tol"); break;
+        case 9: sb.append("sel"); break;
+        case 10: sb.append("sul"); break;
+        case 11: sb.append("sol"); break;
+        case 12: sb.append("syl"); break;
+        case 13: sb.append("sil"); break;
+        case 14: sb.append("gel"); break;
+        case 15: sb.append("gyl"); break;
+        case 16: sb.append("gul"); break;
+        case 17: sb.append("gil"); break;
+        case 18: sb.append("gol"); break;
+        case 19: sb.append("tyl"); break;
+      }
+    }
+    if (gender == Gender.NONE) {
+      switch (DiceGenerator.getRandom(21)) {
+        default:
+        case 0: sb.append("Fzo"); break;
+        case 1: sb.append("Fza"); break;
+        case 2: sb.append("Fzu"); break;
+        case 3: sb.append("Fze"); break;
+        case 4: sb.append("Fzy"); break;
+        case 5: sb.append("Fzi"); break;
+        case 6: sb.append("Fzoa"); break;
+        case 7: sb.append("Fzou"); break;
+        case 8: sb.append("Fzoe"); break;
+        case 9: sb.append("Fzoy"); break;
+        case 10: sb.append("Fzoi"); break;
+        case 11: sb.append("Fzua"); break;
+        case 12: sb.append("Fzuu"); break;
+        case 13: sb.append("Fzue"); break;
+        case 14: sb.append("Fzuy"); break;
+        case 15: sb.append("Fzui"); break;
+        case 16: sb.append("Fzea"); break;
+        case 17: sb.append("Fzeu"); break;
+        case 18: sb.append("Fzee"); break;
+        case 19: sb.append("Fzey"); break;
+        case 20: sb.append("Fzei"); break;
       }
       if (DiceGenerator.getRandom(3) == 0) {
         switch (DiceGenerator.getRandom(19)) {
@@ -2981,6 +3437,61 @@ public final class NameGenerator {
         case 23: sb.append("Ni"); break;
         case 24: sb.append("Don"); break;
         case 25: sb.append("May"); break;
+      }
+      switch (DiceGenerator.getRandom(23)) {
+        default:
+        case 0: sb.append("ra"); break;
+        case 1: sb.append("la"); break;
+        case 2: sb.append("sica"); break;
+        case 3: sb.append("lie"); break;
+        case 4: sb.append("mie"); break;
+        case 5: sb.append("dra"); break;
+        case 6: sb.append("my"); break;
+        case 7: sb.append("lia"); break;
+        case 8: sb.append("welle"); break;
+        case 9: sb.append("ore"); break;
+        case 10: sb.append("ora"); break;
+        case 11: sb.append("nia"); break;
+        case 12: sb.append("ena"); break;
+        case 13: sb.append("anna"); break;
+        case 14: sb.append("aine"); break;
+        case 15: sb.append("men"); break;
+        case 16: sb.append("nora"); break;
+        case 17: sb.append("sie"); break;
+        case 18: sb.append("sy"); break;
+        case 19: sb.append("in"); break;
+        case 20: sb.append("ka"); break;
+        case 21: sb.append("nie"); break;
+        case 22: sb.append("na"); break;
+        case 23: sb.append("belle"); break;
+      }
+    }
+    if (gender == Gender.NONE) {
+      switch (DiceGenerator.getRandom(22)) {
+        default:
+        case 0: sb.append("Bu"); break;
+        case 1: sb.append("Mor"); break;
+        case 2: sb.append("Rad"); break;
+        case 3: sb.append("Er"); break;
+        case 4: sb.append("Rick"); break;
+        case 5: sb.append("Nor"); break;
+        case 6: sb.append("Whea"); break;
+        case 7: sb.append("Hew"); break;
+        case 8: sb.append("Clay"); break;
+        case 9: sb.append("Beas"); break;
+        case 10: sb.append("Way"); break;
+        case 11: sb.append("Mil"); break;
+        case 12: sb.append("Brigh"); break;
+        case 13: sb.append("Mel"); break;
+        case 14: sb.append("Stan"); break;
+        case 15: sb.append("Til"); break;
+        case 16: sb.append("Kirk"); break;
+        case 17: sb.append("Ray"); break;
+        case 18: sb.append("Pen"); break;
+        case 19: sb.append("Gib"); break;
+        case 20: sb.append("Crom"); break;
+        case 21: sb.append("Ham"); break;
+        case 22: sb.append("Rich"); break;
       }
       switch (DiceGenerator.getRandom(23)) {
         default:

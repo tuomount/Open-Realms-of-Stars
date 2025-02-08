@@ -707,6 +707,9 @@ public class SpaceRaceEditorView extends BlackPanel {
     descriptionText.setForeground(GuiStatics.getInfoTextColor());
     descriptionText.setBackground(Color.BLACK);
     descriptionText.setBorder(new SimpleBorder());
+    descriptionText.setToolTipText("<html>Describe new space race looks and"
+        + " exterior features.<br> Game will automatically generate"
+        + " description for selected traits.</html>");
 
     mainPanel.add(descriptionText);
     return mainPanel;

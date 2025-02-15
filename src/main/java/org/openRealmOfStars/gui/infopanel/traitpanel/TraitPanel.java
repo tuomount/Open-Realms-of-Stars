@@ -68,6 +68,11 @@ public class TraitPanel extends InfoPanel {
    */
   private int currentColumn = 0;
   /**
+   * Screenwidth
+   */
+  private int screenWidth;
+
+  /**
    * TraitPanel constructor.
    * @param screenWidth Screen width
    * @param traits Government Traits in array
@@ -77,6 +82,7 @@ public class TraitPanel extends InfoPanel {
       final ActionListener listener) {
     super();
     this.setTitle("Government Traits");
+    this.screenWidth = screenWidth;
     groups = new ArrayList<>();
     checkBoxes = new ArrayList<>();
     columns = new ArrayList<>();
@@ -87,7 +93,7 @@ public class TraitPanel extends InfoPanel {
         + " Below government is overpowered. Above government is weak.");
     this.add(hint);
     EmptyInfoPanel traitsPane = new EmptyInfoPanel();
-    if (screenWidth < 1280) {
+    if (this.screenWidth < 1280) {
       traitsPane.setLayout(new GridLayout(0, 2));
       maxColumns = 2;
       for (int i = 0; i < maxColumns; i++) {
@@ -95,7 +101,7 @@ public class TraitPanel extends InfoPanel {
         column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
         columns.add(column);
       }
-    } else if (screenWidth < 1600) {
+    } else if (this.screenWidth < 1600) {
       traitsPane.setLayout(new GridLayout(0, 3));
       maxColumns = 3;
       for (int i = 0; i < maxColumns; i++) {
@@ -119,6 +125,7 @@ public class TraitPanel extends InfoPanel {
           + "+" + checkBox.getTraitId());
       checkBoxes.add(checkBox);
       TraitGroupPanel groupPanel = getOrCreateGroup(trait.getGroup());
+      resizeGroupPanel(groupPanel);
       groupPanel.addCheckBox(checkBox);
     }
     orderGroupsIntoColumn();
@@ -139,6 +146,7 @@ public class TraitPanel extends InfoPanel {
       final ActionListener listener) {
     super();
     this.setTitle("Race Traits");
+    this.screenWidth = screenWidth;
     groups = new ArrayList<>();
     checkBoxes = new ArrayList<>();
     columns = new ArrayList<>();
@@ -149,7 +157,7 @@ public class TraitPanel extends InfoPanel {
         + " Below space race is overpowered. Above space race is weak.");
     this.add(hint);
     EmptyInfoPanel traitsPane = new EmptyInfoPanel();
-    if (screenWidth < 1280) {
+    if (this.screenWidth < 1280) {
       traitsPane.setLayout(new GridLayout(0, 2));
       maxColumns = 2;
       for (int i = 0; i < maxColumns; i++) {
@@ -157,7 +165,7 @@ public class TraitPanel extends InfoPanel {
         column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
         columns.add(column);
       }
-    } else if (screenWidth < 1600) {
+    } else if (this.screenWidth < 1600) {
       traitsPane.setLayout(new GridLayout(0, 3));
       maxColumns = 3;
       for (int i = 0; i < maxColumns; i++) {
@@ -181,6 +189,7 @@ public class TraitPanel extends InfoPanel {
           + "+" + checkBox.getTraitId());
       checkBoxes.add(checkBox);
       TraitGroupPanel groupPanel = getOrCreateGroup(trait.getGroup());
+      resizeGroupPanel(groupPanel);
       groupPanel.addCheckBox(checkBox);
     }
     orderGroupsIntoColumn();
@@ -189,6 +198,22 @@ public class TraitPanel extends InfoPanel {
     }
     JScrollPane scroll = new JScrollPane(traitsPane);
     this.add(scroll);
+  }
+
+  /**
+   * Resize Group panel by increasing insets based on screen width.
+   * @param groupPanel TraitGroupPanel
+   */
+  private void resizeGroupPanel(final TraitGroupPanel groupPanel) {
+    if (this.screenWidth < 1280) {
+      groupPanel.setBorderInsets(0, 6, 0, 0);
+    } else if (this.screenWidth < 1440) {
+      groupPanel.setBorderInsets(5, 8, 3, 5);
+    } else if (this.screenWidth < 1680) {
+      groupPanel.setBorderInsets(7, 10, 5, 7);
+    } else {
+      groupPanel.setBorderInsets(9, 12, 7, 9);
+    }
   }
 
   /**

@@ -18,13 +18,12 @@ package org.openRealmOfStars.gui.infopanel.traitpanel;
  */
 
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.openRealmOfStars.gui.util.GuiFonts;
@@ -47,6 +46,15 @@ public class TraitGroupPanel extends JPanel {
   private TitledBorder border;
 
   /**
+   * Internal panel with empty border.
+   */
+  private JPanel internalPanel;
+  /**
+   * Internal border.
+   */
+  private EmptyBorder internalBorder;
+
+  /**
    * TraitGroupPanel Constructor.
    * @param groupName Group name
    */
@@ -56,9 +64,30 @@ public class TraitGroupPanel extends JPanel {
     border.setTitleColor(GuiStatics.getInfoTextColor());
     border.setTitleFont(GuiFonts.getFontCubellanSmaller());
     this.setBorder(border);
+    this.setBackground(GuiStatics.getPanelBackground());
+    internalPanel = new JPanel();
+    internalPanel.setLayout(new BoxLayout(internalPanel, BoxLayout.Y_AXIS));
+    internalPanel.setBackground(GuiStatics.getPanelBackground());
+    internalBorder = null;
+    this.add(internalPanel);
     checkBoxes = new ArrayList<>();
   }
 
+  /**
+   * Set clear border size by pixels.
+   *
+   * @param top How many pixels are added on top.
+   * @param left How many pixels are added on left.
+   * @param right How many pixels are added on right.
+   * @param bottom How many pixels are added on bottom.
+   */
+  public void setBorderInsets(final int top, final int left, final int right,
+      final int bottom) {
+    if (internalBorder == null) {
+      internalBorder = new EmptyBorder(top, left, bottom, right);
+      internalPanel.setBorder(internalBorder);
+    }
+  }
   /**
    * How many check box in single group?
    * @return Number of check boxes.
@@ -73,9 +102,9 @@ public class TraitGroupPanel extends JPanel {
   public void addCheckBox(final TraitCheckBox checkBox) {
     checkBoxes.add(checkBox);
     if (checkBoxes.size() > 1) {
-      this.add(Box.createRigidArea(new Dimension(5, 5)));
+      internalPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     }
-    this.add(checkBox);
+    internalPanel.add(checkBox);
   }
 
   /**
@@ -92,11 +121,5 @@ public class TraitGroupPanel extends JPanel {
    */
   public String getTitle() {
     return border.getTitle();
-  }
-  @Override
-  protected void paintComponent(final Graphics arg0) {
-    Graphics2D g2d = (Graphics2D) arg0;
-    g2d.setColor(GuiStatics.getPanelBackground());
-    g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
   }
 }

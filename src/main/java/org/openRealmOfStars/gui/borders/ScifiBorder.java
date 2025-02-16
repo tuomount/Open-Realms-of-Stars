@@ -26,6 +26,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.border.AbstractBorder;
 
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.util.GuiFonts;
 import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.utilities.FileIo.IOUtilities;
@@ -142,12 +143,12 @@ public class ScifiBorder extends AbstractBorder {
   /**
    * Default side gap in pixels
    */
-  private static final int DEFAULT_SIDE_GAP = 15;
+  private static final int DEFAULT_SIDE_GAP = 16;
 
   /**
    * Default bottom and top gap in pixels
    */
-  private static final int DEFAULT_BOTTOP_GAP = 9;
+  private static final int DEFAULT_BOTTOP_GAP = 10;
 
   /**
    * Constructor for scifi border. Scifi border support optinal title text
@@ -155,23 +156,71 @@ public class ScifiBorder extends AbstractBorder {
    * @param hires Hires images for borders
    */
   public ScifiBorder(final String title, final boolean hires) {
-    leftGap = DEFAULT_SIDE_GAP;
-    rightGap = DEFAULT_SIDE_GAP;
-    bottomGap = DEFAULT_BOTTOP_GAP;
+    leftGap = DEFAULT_SIDE_GAP + getSideAdjust();
+    rightGap = DEFAULT_SIDE_GAP  + getSideAdjust();
+    bottomGap = DEFAULT_BOTTOP_GAP + getBottomAdjust();
     this.hires = hires;
     if (title == null || title.isEmpty()) {
-      topGap = DEFAULT_BOTTOP_GAP;
+      topGap = DEFAULT_BOTTOP_GAP + getTopAdjust();
       this.title = null;
     } else {
       // Title is available making top gap bigger
-      topGap = DEFAULT_BOTTOP_GAP + DEFAULT_SIDE_GAP;
+      topGap = DEFAULT_BOTTOP_GAP + DEFAULT_SIDE_GAP + getTopAdjust();
       if (this.hires) {
-        topGap = topGap + DEFAULT_SIDE_GAP;
+        topGap = topGap + DEFAULT_SIDE_GAP + getTopAdjust();
       }
       this.title = title;
     }
   }
 
+  /**
+   * Scifi border adjust on sides based on resolution.
+   * @return Scifi border adjust on sides.
+   */
+  private static int getSideAdjust() {
+    int screenWidth = Game.getScreenWidth();
+    if (screenWidth < 1280) {
+      return 0;
+    } else if (screenWidth < 1440) {
+      return 2;
+    } else if (screenWidth < 1680) {
+      return 4;
+    } else {
+      return 6;
+    }
+  }
+  /**
+   * Scifi border adjust on top based on resolution.
+   * @return Scifi border adjust on top.
+   */
+  private static int getTopAdjust() {
+    int screenWidth = Game.getScreenWidth();
+    if (screenWidth < 1280) {
+      return 2;
+    } else if (screenWidth < 1440) {
+      return 4;
+    } else if (screenWidth < 1680) {
+      return 6;
+    } else {
+      return 8;
+    }
+  }
+  /**
+   * Scifi border adjust on bottom based on resolution.
+   * @return Scifi border adjust on bottom.
+   */
+  private static int getBottomAdjust() {
+    int screenWidth = Game.getScreenWidth();
+    if (screenWidth < 1280) {
+      return 0;
+    } else if (screenWidth < 1440) {
+      return 2;
+    } else if (screenWidth < 1680) {
+      return 4;
+    } else {
+      return 4;
+    }
+  }
   @Override
   public void paintBorder(final Component c, final Graphics g, final int x,
       final int y, final int width, final int height) {
@@ -299,12 +348,12 @@ public class ScifiBorder extends AbstractBorder {
   public void setTitle(final String title) {
     this.title = title;
     if (this.title == null) {
-      topGap = DEFAULT_BOTTOP_GAP;
+      topGap = DEFAULT_BOTTOP_GAP + getTopAdjust();
     } else {
       // Title is available making top gap bigger
-      topGap = DEFAULT_BOTTOP_GAP + DEFAULT_SIDE_GAP;
+      topGap = DEFAULT_BOTTOP_GAP + DEFAULT_SIDE_GAP + getTopAdjust();
       if (this.hires) {
-        topGap = topGap + DEFAULT_SIDE_GAP;
+        topGap = topGap + DEFAULT_SIDE_GAP + getTopAdjust();
       }
     }
   }

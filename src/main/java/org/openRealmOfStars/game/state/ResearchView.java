@@ -327,7 +327,10 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     infoText.setEditable(false);
     infoText.setFont(GuiFonts.getFontCubellanSmaller());
     infoText.setCharacterWidth(8);
-    greyPanel.add(infoText);
+    scroll = new JScrollPane(infoText);
+    scroll.setBackground(GuiStatics.getDeepSpaceDarkColor());
+    scroll.setBackground(Color.BLACK);
+    greyPanel.add(scroll);
     greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     if (focusTech != null) {
       for (int i = 0; i < techs.length; i++) {

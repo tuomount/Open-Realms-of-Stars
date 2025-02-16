@@ -475,6 +475,11 @@ public class Game implements ActionListener {
   private static final int ANIMATION_DELAY_COMBAT = 60;
 
   /**
+   * Static variable for screen width.
+   */
+  private static int screenWidth;
+
+  /**
    * Has fullscreen enabled or not.
    */
   private boolean fullscreenMode = false;
@@ -493,6 +498,7 @@ public class Game implements ActionListener {
     int soundVolume = configFile.getSoundVolume();
     int resolutionWidth = configFile.getResolutionWidth();
     int resolutionHeight = configFile.getResolutionHeight();
+    screenWidth = resolutionWidth;
     if (visible) {
       if (configFile.isHardwareAcceleration()) {
         System.setProperty("sun.java2d.opengl", "true");
@@ -1047,6 +1053,7 @@ public class Game implements ActionListener {
     int resolutionHeight = Integer.parseInt(resolutionParts[1]);
     if (resolutionWidth != gameFrame.getWidth()
         || resolutionHeight != gameFrame.getHeight()) {
+      screenWidth = resolutionWidth;
       gameFrame.setVisible(false);
       gameFrame.setSize(resolutionWidth, resolutionHeight);
       gameFrame.setLocationRelativeTo(null);
@@ -2549,6 +2556,14 @@ public class Game implements ActionListener {
    */
   public static boolean isMainMethodCalled() {
     return mainMethodCalled;
+  }
+
+  /**
+   * Get static screen width.
+   * @return Screen width.
+   */
+  public static int getScreenWidth() {
+    return screenWidth;
   }
   /**
    * Focus on active message

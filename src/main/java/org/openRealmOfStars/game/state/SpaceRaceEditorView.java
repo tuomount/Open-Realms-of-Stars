@@ -42,6 +42,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.json.JSONArray;
@@ -281,6 +282,17 @@ public class SpaceRaceEditorView extends BlackPanel {
   private EmptyInfoPanel createSpaceRaceMainTab(final ActionListener listener) {
     EmptyInfoPanel mainPanel = new EmptyInfoPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    EmptyBorder border = null;
+    if (this.screenWidth < 1280) {
+      border = new EmptyBorder(5, 3, 5, 3);
+    } else if (this.screenWidth < 1440) {
+      border = new EmptyBorder(10, 8, 10, 8);
+    } else if (this.screenWidth < 1680) {
+      border = new EmptyBorder(12, 10, 10, 10);
+    } else {
+      border = new EmptyBorder(15, 13, 15, 13);
+    }
+    mainPanel.setBorder(border);
     InfoPanel infoPanel = new InfoPanel();
     infoPanel.setTitle("New space race");
     infoPanel.setLayout(new BoxLayout(infoPanel,
@@ -354,6 +366,9 @@ public class SpaceRaceEditorView extends BlackPanel {
   private EmptyInfoPanel createBehaviourTab(final ActionListener listener) {
     EmptyInfoPanel mainPanel = new EmptyInfoPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    EmptyBorder border = new EmptyBorder(screenHeight / 8, screenWidth / 4, 30,
+        screenWidth / 4);
+    mainPanel.setBorder(border);
     InfoPanel infoPanel = new InfoPanel();
     infoPanel.setTitle("New space race");
     infoPanel.setLayout(new BoxLayout(infoPanel,
@@ -497,6 +512,17 @@ public class SpaceRaceEditorView extends BlackPanel {
     shipTimer.start();
     EmptyInfoPanel mainPanel = new EmptyInfoPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    EmptyBorder border = null;
+    if (this.screenWidth < 1280) {
+      border = new EmptyBorder(5, 3, 5, 3);
+    } else if (this.screenWidth < 1440) {
+      border = new EmptyBorder(10, 8, 10, 8);
+    } else if (this.screenWidth < 1680) {
+      border = new EmptyBorder(12, 10, 10, 10);
+    } else {
+      border = new EmptyBorder(15, 13, 15, 13);
+    }
+    mainPanel.setBorder(border);
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -683,6 +709,17 @@ public class SpaceRaceEditorView extends BlackPanel {
   private EmptyInfoPanel createDescriptionTab() {
     EmptyInfoPanel mainPanel = new EmptyInfoPanel();
     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+    EmptyBorder border = null;
+    if (this.screenWidth < 1280) {
+      border = new EmptyBorder(5, 3, 5, 3);
+    } else if (this.screenWidth < 1440) {
+      border = new EmptyBorder(10, 8, 10, 8);
+    } else if (this.screenWidth < 1680) {
+      border = new EmptyBorder(12, 10, 10, 10);
+    } else {
+      border = new EmptyBorder(15, 13, 15, 13);
+    }
+    mainPanel.setBorder(border);
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.setAlignmentX(JComponent.CENTER_ALIGNMENT);

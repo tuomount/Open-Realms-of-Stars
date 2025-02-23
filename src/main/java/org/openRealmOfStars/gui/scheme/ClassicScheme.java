@@ -84,13 +84,30 @@ public class ClassicScheme extends BaseScheme {
       140, 157);
 
   /**
+   * Activation selection
+   */
+  public static final Color COLOR_SELECTION_ACTIVATION = new Color(123, 200,
+      245);
+
+  /**
+   * Checkbox enabled color
+   */
+  public static final Color COLOR_CHECKBOX_ENABLED = new Color(33, 148, 208);
+
+  /**
+   * Checkbox disabled color
+   */
+  public static final Color COLOR_CHECKBOX_DISABLED = new Color(20, 110,
+      180);
+
+  /**
    * Deep space purple dark
    */
   public static final Color COLOR_DEEP_SPACE_PURPLE_DARK = new Color(25, 9, 61);
   /**
    * Deep Space Blue
    */
-  public static final Color COLOR_DEEP_SPACE_BLUE = new Color(33, 33, 208);
+  public static final Color COLOR_DEEP_SPACE_BLUE = new Color(33, 48, 208);
 
   /** Scifi border text */
   public static final Color COLOR_SCIFI_BORDER_TEXT = new Color(210, 181, 44,
@@ -315,5 +332,19 @@ public class ClassicScheme extends BaseScheme {
     return verticalThumb;
   }
 
+  @Override
+  public Color getSeclectionActivityColor() {
+    return COLOR_SELECTION_ACTIVATION;
+  }
+
+  @Override
+  public Color getCheckBoxEnabledColor() {
+    return COLOR_CHECKBOX_ENABLED;
+  }
+
+  @Override
+  public Color getCheckBoxDisabledColor() {
+    return COLOR_CHECKBOX_DISABLED;
+  }
 
 }

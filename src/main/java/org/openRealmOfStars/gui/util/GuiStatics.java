@@ -1061,6 +1061,30 @@ public final class GuiStatics {
   }
 
   /**
+   * Get Checkbox enabled Color
+   * @return Color
+   */
+  public static Color getCheckBoxEnabledColor() {
+    return schemeType.getCheckBoxEnabledColor();
+  }
+
+  /**
+   * Get Checkbox disabled Color
+   * @return Color
+   */
+  public static Color getCheckBoxDisabledColor() {
+    return schemeType.getCheckBoxDisabledColor();
+  }
+
+  /**
+   * Get Selection Activity Color
+   * @return Color
+   */
+  public static Color getSelectionActivityColor() {
+    return schemeType.getSeclectionActivityColor();
+  }
+
+  /**
    * Get Activation color
    * @return Color
    */

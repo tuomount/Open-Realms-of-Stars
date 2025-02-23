@@ -147,4 +147,22 @@ public abstract class BaseScheme {
    * @return BufferedImage
    */
   public abstract BufferedImage getVerticalThumb();
+
+  /**
+   * Get Selection activity color.
+   * @return Color
+   */
+  public abstract Color getSeclectionActivityColor();
+
+  /**
+   * Get Color for checkbox enabled
+   * @return Color
+   */
+  public abstract Color getCheckBoxEnabledColor();
+
+  /**
+   * Get Color for checkbox disabled
+   * @return Color
+   */
+  public abstract Color getCheckBoxDisabledColor();
 }

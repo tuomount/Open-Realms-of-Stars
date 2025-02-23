@@ -87,6 +87,23 @@ public class YellowScheme extends BaseScheme {
       78, 67);
 
   /**
+   * Activation selection
+   */
+  public static final Color COLOR_SELECTION_ACTIVATION = new Color(230, 225,
+      76);
+
+  /**
+   * Checkbox Enabled color
+   */
+  public static final Color COLOR_CHECKBOX_ENABLED = new Color(146, 131, 107);
+
+  /**
+   * Checkbox disabled color
+   */
+  public static final Color COLOR_CHECKBOX_DISABLED = new Color(121, 74,
+      39);
+
+  /**
    * Deep Space Blue
    */
   public static final Color COLOR_DEEP_SPACE_ACT = new Color(146, 131, 107);
@@ -309,6 +326,21 @@ public class YellowScheme extends BaseScheme {
   @Override
   public BufferedImage getVerticalThumb() {
     return verticalThumb;
+  }
+
+  @Override
+  public Color getSeclectionActivityColor() {
+    return COLOR_SELECTION_ACTIVATION;
+  }
+
+  @Override
+  public Color getCheckBoxEnabledColor() {
+    return COLOR_CHECKBOX_ENABLED;
+  }
+
+  @Override
+  public Color getCheckBoxDisabledColor() {
+    return COLOR_CHECKBOX_DISABLED;
   }
 
 }

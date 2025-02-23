@@ -70,7 +70,7 @@ public class SpaceCheckBox extends JCheckBox {
     type = CHECKBOX_TYPE_NORMAL;
     setSpaceIcon(Icons.getIconByName(Icons.ICON_CHECKBOX));
     setBackground(GuiStatics.getPanelBackground());
-    setForeground(GuiStatics.COLOR_GREY_40);
+    setForeground(GuiStatics.getCheckBoxEnabledColor());
     setBorderPainted(true);
   }
 
@@ -134,12 +134,12 @@ public class SpaceCheckBox extends JCheckBox {
 
     if (this.isEnabled()) {
       if (this.getModel().isRollover()) {
-        g2d.setColor(GuiStatics.getDeepSpaceActivityColor());
+        g2d.setColor(GuiStatics.getSelectionActivityColor());
       } else {
         g2d.setColor(getForeground());
       }
     } else {
-      g2d.setColor(GuiStatics.getCoolSpaceColorDarker());
+      g2d.setColor(GuiStatics.getCheckBoxDisabledColor());
     }
     String[] texts = getText().split("\n");
     g.setFont(GuiFonts.getFontCubellan());

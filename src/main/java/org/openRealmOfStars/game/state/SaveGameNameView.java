@@ -43,6 +43,7 @@ import org.openRealmOfStars.gui.util.GuiStatics;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.enums.PlanetTypes;
+import org.openRealmOfStars.utilities.FileIo.Folders;
 
 /**
 *
@@ -177,7 +178,7 @@ public class SaveGameNameView extends BlackPanel {
     if (!saveGameField.getText().endsWith(".save")) {
       filename = saveGameField.getText() + ".save";
     }
-    filename = "saves/" + filename;
+    filename = Folders.getSavegamePath() + "/" + filename;
     return filename;
   }
 

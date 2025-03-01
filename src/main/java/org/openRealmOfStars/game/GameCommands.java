@@ -567,6 +567,16 @@ public final class GameCommands {
   public static final String COMMAND_CONTINUE_GAME = "ContinueGame";
 
   /**
+   * Confirm Delete game
+   */
+  public static final String COMMAND_CONFIRM_DELETE = "ConfirmDelete";
+
+  /**
+   * Delete Game
+   */
+  public static final String COMMAND_DELETE_GAME = "DeleteGame";
+
+  /**
    * Show credits command
    */
   public static final String COMMAND_CREDITS = "Credits";

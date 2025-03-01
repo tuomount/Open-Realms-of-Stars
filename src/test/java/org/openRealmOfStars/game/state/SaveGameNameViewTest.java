@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.utilities.FileIo.Folders;
 /**
 *
 * JUnit for save game name view.
@@ -38,7 +39,8 @@ public class SaveGameNameViewTest {
   public void testGetFilenames() {
     ActionListener listener = Mockito.mock(ActionListener.class);
     SaveGameNameView view = new SaveGameNameView("testfile", listener);
-    assertEquals("saves/testfile.save", view.getFullFilename());
+    assertEquals(Folders.getSavegamePath() + "/" + "testfile.save",
+        view.getFullFilename());
     assertEquals("testfile.save", view.getFilename());
   }
 

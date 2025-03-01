@@ -3145,6 +3145,11 @@ public class Game implements ActionListener {
           changeGameState(GameState.STARMAP);
         }
         return;
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_DELETE_GAME)
+          && loadGameView.getSelectedSaveFile() != null) {
+        loadGameView.deleteSelectedGame();
+        return;
       }
     }
     if (gameState == GameState.OPTIONS_VIEW && optionsView != null) {

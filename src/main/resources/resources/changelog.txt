@@ -1,4 +1,17 @@
 - New features and updates -
+
+* Adds more spacing to UI.
+* New font colors for checkboxes
+* Adds delete saved game feature.
+
+- Bugfixes -
+
+* Fix bug where loading saved game did not warn if new save game is going to overwrite old game.
+
+# Open Realm of Stars 0.27.0
+
+- New features and updates -
+
 * Space race editor, allows player to make custom space races.
 * Government editor, allows player to make custom governments.
 * Alonian image, namegenerators, speeches, bridges and ships are available for custom space race.

@@ -33,7 +33,7 @@ public final class ShipImageFactor {
 
   /** Default shipimage */
   private static final ShipImage DEFAULT_SHIPIMAGE = new ShipImage(
-      "humanships.png", false, "DEFAULT", false);
+      "humanships.png", "DEFAULT", false);
   /** The Singleton */
   private static final ShipImageFactor SINGLETON = new ShipImageFactor();
 
@@ -137,11 +137,10 @@ class ShipImageLoader extends DataLoader<String, ShipImage> {
     try {
       final var id = jobj.getString("id");
       final var path = jobj.getString("path");
-      final var monsters = jobj.getBoolean("monsters");
       final var custom = jobj.optBoolean("custom", false);
 
 
-      var tmpImage = new ShipImage(path, monsters, id, custom);
+      var tmpImage = new ShipImage(path, id, custom);
       return Optional.of(tmpImage);
     } catch (JSONException e) {
       ErrorLogger.log(e);

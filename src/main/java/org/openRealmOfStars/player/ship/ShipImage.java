@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 /*
  * Open Realm of Stars game project
- * Copyright (C) 2016-2024 Tuomo Untinen
+ * Copyright (C) 2016-2025 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -54,8 +54,6 @@ public class ShipImage {
 
   /** Ship image id. */
   private String id;
-  /** Flag for monsters. */
-  private boolean monsters;
   /** Flag for custom image path */
   private boolean customImage = false;
   /**
@@ -164,14 +162,12 @@ public class ShipImage {
   /**
    * Initialize ship images
    * @param fileToRead Needs to be inside JAR file
-   * @param monsters Read space monster images if true.
    * @param id ShipImage Id.
    * @param custom Flag for custom
    */
-  public ShipImage(final String fileToRead, final boolean monsters,
+  public ShipImage(final String fileToRead,
       final String id, final boolean custom) {
     this.id = id;
-    this.monsters = monsters;
     this.customImage = custom;
     loadImages(fileToRead);
   }
@@ -222,9 +218,7 @@ public class ShipImage {
       image = IOUtilities.loadImage("/resources/images/" + fileToRead);
     }
     int number = NUMBER_OF_IMAGES;
-    if (monsters) {
-      number = number + NUMBER_OF_MONSTER_IMAGES;
-    }
+    number = number + NUMBER_OF_MONSTER_IMAGES;
     shipImages = new BufferedImage[number];
     normalShipImages = new BufferedImage[number];
     smallShipImages = new BufferedImage[number];
@@ -267,14 +261,18 @@ public class ShipImage {
     shipImages[BATTLESHIP] = image64x64(image, 0, 2);
     normalShipImages[BATTLESHIP] = scaleTo32x32(shipImages[BATTLESHIP]);
     smallShipImages[BATTLESHIP] = scaleTo16x16(shipImages[BATTLESHIP]);
-    shipImages[PRIVATEER] = image64x64(image, 1, 2);
-    normalShipImages[PRIVATEER] = scaleTo32x32(shipImages[PRIVATEER]);
-    smallShipImages[PRIVATEER] = scaleTo16x16(shipImages[PRIVATEER]);
-    shipImages[PRIVATEER_LARGE] = image64x64(image, 2, 2);
-    normalShipImages[PRIVATEER_LARGE] = scaleTo32x32(
-        shipImages[PRIVATEER_LARGE]);
-    smallShipImages[PRIVATEER_LARGE] = scaleTo16x16(
-        shipImages[PRIVATEER_LARGE]);
+    shipImages[PRIVATEER] = SharedShipImages.getShipImage(
+        SharedShipImages.PRIVATEER);
+    normalShipImages[PRIVATEER] = SharedShipImages.getNormalShipImage(
+        SharedShipImages.PRIVATEER);
+    smallShipImages[PRIVATEER] = SharedShipImages.getSmallShipImage(
+        SharedShipImages.PRIVATEER);
+    shipImages[PRIVATEER_LARGE] = SharedShipImages.getShipImage(
+        SharedShipImages.PRIVATEER_LARGE);
+    normalShipImages[PRIVATEER_LARGE] = SharedShipImages.getNormalShipImage(
+        SharedShipImages.PRIVATEER_LARGE);
+    smallShipImages[PRIVATEER_LARGE] = SharedShipImages.getSmallShipImage(
+        SharedShipImages.PRIVATEER_LARGE);
     shipImages[LARGE_FREIGHTER] = image64x64(image, 3, 2);
     normalShipImages[LARGE_FREIGHTER] = scaleTo32x32(
         shipImages[LARGE_FREIGHTER]);
@@ -299,24 +297,32 @@ public class ShipImage {
     shipImages[CAPITAL_SHIP] = image64x64(image, 3, 3);
     normalShipImages[CAPITAL_SHIP] = scaleTo32x32(shipImages[CAPITAL_SHIP]);
     smallShipImages[CAPITAL_SHIP] = scaleTo16x16(shipImages[CAPITAL_SHIP]);
-    shipImages[ARTIFICIAL_PLANET] = image64x64(image, 4, 3);
-    normalShipImages[ARTIFICIAL_PLANET] = scaleTo32x32(
-        shipImages[ARTIFICIAL_PLANET]);
-    smallShipImages[ARTIFICIAL_PLANET] = scaleTo16x16(
-        shipImages[ARTIFICIAL_PLANET]);
-    if (monsters) {
-      shipImages[SPACE_WORM] = image64x64(image, 0, 4);
-      normalShipImages[SPACE_WORM] = scaleTo32x32(shipImages[SPACE_WORM]);
-      smallShipImages[SPACE_WORM] = scaleTo16x16(shipImages[SPACE_WORM]);
-      shipImages[SPACE_KRAKEN] = image64x64(image, 1, 4);
-      normalShipImages[SPACE_KRAKEN] = scaleTo32x32(shipImages[SPACE_KRAKEN]);
-      smallShipImages[SPACE_KRAKEN] = scaleTo16x16(shipImages[SPACE_KRAKEN]);
-      shipImages[LARGE_SPACE_KRAKEN] = image64x64(image, 2, 4);
-      normalShipImages[LARGE_SPACE_KRAKEN] = scaleTo32x32(
-          shipImages[LARGE_SPACE_KRAKEN]);
-      smallShipImages[LARGE_SPACE_KRAKEN] = scaleTo16x16(
-          shipImages[LARGE_SPACE_KRAKEN]);
-    }
+    shipImages[ARTIFICIAL_PLANET] = SharedShipImages.getShipImage(
+        SharedShipImages.ARTIFICIAL_PLANET);
+    normalShipImages[ARTIFICIAL_PLANET] = SharedShipImages.getNormalShipImage(
+        SharedShipImages.ARTIFICIAL_PLANET);
+    smallShipImages[ARTIFICIAL_PLANET] = SharedShipImages.getSmallShipImage(
+        SharedShipImages.ARTIFICIAL_PLANET);
+    shipImages[SPACE_WORM] = SharedShipImages.getMonsterShipImage(
+        SharedShipImages.SPACE_WORM);
+    normalShipImages[SPACE_WORM] = SharedShipImages.getNormalMonsterShipImage(
+        SharedShipImages.SPACE_WORM);
+    smallShipImages[SPACE_WORM] = SharedShipImages.getSmallMonsterShipImage(
+        SharedShipImages.SPACE_WORM);
+    shipImages[SPACE_KRAKEN] = SharedShipImages.getMonsterShipImage(
+        SharedShipImages.SPACE_KRAKEN);
+    normalShipImages[SPACE_KRAKEN] = SharedShipImages.getNormalMonsterShipImage(
+        SharedShipImages.SPACE_KRAKEN);
+    smallShipImages[SPACE_KRAKEN] = SharedShipImages.getSmallMonsterShipImage(
+        SharedShipImages.SPACE_KRAKEN);
+    shipImages[LARGE_SPACE_KRAKEN] = SharedShipImages.getMonsterShipImage(
+        SharedShipImages.LARGE_SPACE_KRAKEN);
+    normalShipImages[LARGE_SPACE_KRAKEN] =
+        SharedShipImages.getNormalMonsterShipImage(
+            SharedShipImages.LARGE_SPACE_KRAKEN);
+    smallShipImages[LARGE_SPACE_KRAKEN] =
+        SharedShipImages.getSmallMonsterShipImage(
+            SharedShipImages.LARGE_SPACE_KRAKEN);
   }
   /**
    * Capture 64x64 image from bigger one
@@ -326,7 +332,7 @@ public class ShipImage {
    * @return 64x64 pixels buffered image
    * @throws RasterFormatException If trying to capture outside of image.
    */
-  private static BufferedImage image64x64(final BufferedImage image,
+  public static BufferedImage image64x64(final BufferedImage image,
       final int x, final int y) throws RasterFormatException {
 
     if (x >= 0 && y >= 0 && x * MAX_WIDTH < image.getHeight()

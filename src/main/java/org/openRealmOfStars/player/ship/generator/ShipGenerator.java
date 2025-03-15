@@ -1066,6 +1066,7 @@ public final class ShipGenerator {
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     int value = -1;
     Tech hullTech = null;
+    boolean spore = false;
     for (Tech tech : hullTechs) {
       ShipHull hull = ShipHullFactory.createByName(tech.getHull(),
           player.getRace());
@@ -1074,13 +1075,22 @@ public final class ShipGenerator {
         // Large and huge are too large for colony ships
         continue;
       }
+      if (hull.getName().equals("Spore") && !troop) {
+        hullTech = tech;
+        spore = true;
+        break;
+      }
       if (hull.getMaxSlot() > value
           && hull.getHullType() == ShipHullType.FREIGHTER) {
         hullTech = tech;
         value = hull.getMaxSlot();
       }
     }
-    if (hullTech != null) {
+    if (spore && hullTech != null) {
+      ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
+          player.getRace());
+      result = createSpore(player, hull);
+    } else if (hullTech != null) {
       ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
           player.getRace());
       result = createColony(player, hull, troop);
@@ -1178,6 +1188,29 @@ public final class ShipGenerator {
             bombTech.getComponent()));
       }
     }
+    return result;
+  }
+
+  /**
+   * Create colony/troop ship with best possible technology. This is used
+   * for human players in beginning and AI every time they design
+   * new colony/troop ship.
+   * @param player whom is designing the new ship
+   * @param hull ShipHull to use in design.
+   * @return ShipDesign or null if fails
+   */
+  public static ShipDesign createSpore(final PlayerInfo player,
+      final ShipHull hull) {
+    ShipDesign result = null;
+    result = new ShipDesign(hull);
+    result.setName("Spore Mk"
+        + (player.getShipStatHighestNumber("Spore Mk") + 1));
+    ShipComponent engine = ShipComponentFactory
+        .createByName(player.getTechList().getBestEngineAndPowerSource()
+            .getComponent());
+    result.addComponent(engine);
+    ShipComponent colony = ShipComponentFactory.createByName("Spore module");
+    result.addComponent(colony);
     return result;
   }
 

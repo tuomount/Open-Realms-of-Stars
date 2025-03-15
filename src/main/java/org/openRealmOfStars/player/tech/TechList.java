@@ -439,6 +439,34 @@ public class TechList {
   }
 
   /**
+   * Get best possible engine with most enery and FTL speed.
+   * @return Tech
+   */
+  public Tech getBestEngineAndPowerSource() {
+    Tech best = null;
+    int bestValue = -1;
+    Tech[] list = getListForType(TechType.Propulsion);
+    for (Tech tech : list) {
+      ShipComponent comp = ShipComponentFactory
+          .createByName(tech.getComponent());
+      if (comp == null) {
+        continue;
+      }
+      int value = comp.getEnergyResource() + comp.getFtlSpeed();
+      if (comp.getEnergyResource() == 0) {
+        value = -1;
+      }
+      if (comp.getFtlSpeed() == 0) {
+        value = -1;
+      }
+      if (value > bestValue) {
+        best = tech;
+        bestValue = value;
+      }
+    }
+    return best;
+  }
+  /**
    * Get best Engine for current technology. If there two equally good
    * techs then it is randomized between those two.
    * @return Best engine tech or null if not found

@@ -1533,6 +1533,7 @@ public class Ship2Test {
     public void TestIsTypeShip() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class, Mockito.RETURNS_DEEP_STUBS);
+        Mockito.when(shiphull.getName()).thenReturn("Freighter");
 
         Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
         Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);

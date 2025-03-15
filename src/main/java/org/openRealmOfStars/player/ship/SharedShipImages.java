@@ -65,6 +65,10 @@ public final class SharedShipImages {
    */
   public static final int ARTIFICIAL_PLANET = 2;
   /**
+   * Index for spore ship.
+   */
+  public static final int SPORE = 3;
+  /**
    * Index for space worm
    */
   public static final int SPACE_WORM = 0;
@@ -79,7 +83,7 @@ public final class SharedShipImages {
   /**
    * Must be one bigger than last ship
    */
-  public static final int NUMBER_OF_IMAGES = 3;
+  public static final int NUMBER_OF_IMAGES = 4;
 
   /**
    * Number of monster images.
@@ -116,6 +120,10 @@ public final class SharedShipImages {
         shipImages[ARTIFICIAL_PLANET]);
     smallShipImages[ARTIFICIAL_PLANET] = ShipImage.scaleTo16x16(
         shipImages[ARTIFICIAL_PLANET]);
+    shipImages[SPORE] = ShipImage.image64x64(image, 3, 0);
+    normalShipImages[SPORE] = ShipImage.scaleTo32x32(shipImages[SPORE]);
+    smallShipImages[SPORE] = ShipImage.scaleTo16x16(shipImages[SPORE]);
+
     image = IOUtilities.loadImage("/resources/images/space_monsters_ships.png");
     number = NUMBER_OF_MONSTER_IMAGES;
     monsterShipImages = new BufferedImage[number];

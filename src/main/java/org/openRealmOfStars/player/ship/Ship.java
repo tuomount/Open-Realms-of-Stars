@@ -1370,6 +1370,10 @@ private int increaseHitChanceByComponent() {
     if (hull.getHullType() == ShipHullType.PRIVATEER) {
       return true;
     }
+    if (hull.getName().equals("Spore")) {
+      // Spore ships are "unknown", so these will considered as privateers.
+      return true;
+    }
     return false;
   }
 

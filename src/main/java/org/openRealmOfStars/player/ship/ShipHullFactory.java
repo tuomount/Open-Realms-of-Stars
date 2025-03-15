@@ -35,7 +35,7 @@ public final class ShipHullFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPHULL = 43;
+  private static final int MAX_SHIPHULL = 44;
 
   /**
    * Create ShipHull with matching name
@@ -260,6 +260,10 @@ public final class ShipHullFactory {
    * Hull for Probe Mk3
    */
   public static final int HULL_PROBE_MK3 = 42;
+  /**
+   * Hull for Spore
+   */
+  public static final int HULL_SPORE = 43;
 
   /**
    * Create ship hull with index
@@ -568,6 +572,13 @@ public final class ShipHullFactory {
           ShipSize.SMALL, 4, 4, race);
       tmp.setFleetCapacity(0);
       tmp.setImageIndex(ShipImage.PROBE);
+      return tmp;
+    }
+    if (index == HULL_SPORE) {
+      tmp = new ShipHull(index, "Spore", 2, 1, ShipHullType.FREIGHTER,
+          ShipSize.SMALL, 3, 3, race);
+      tmp.setFleetCapacity(0);
+      tmp.setImageIndex(ShipImage.SPORE);
       return tmp;
     }
 

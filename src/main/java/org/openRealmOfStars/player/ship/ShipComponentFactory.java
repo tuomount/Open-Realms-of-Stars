@@ -36,7 +36,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 209;
+  private static final int MAX_SHIPCOMPONENT = 211;
 
   /**
    * Component Ion drive Mk1
@@ -1027,6 +1027,15 @@ public final class ShipComponentFactory {
    * Combat thrusters Mk2
    */
   public static final int COMPONENT_COMBAT_THRUSTERS_MK2 = 208;
+  /**
+   * Component Solar drive
+   */
+  public static final int COMPONENT_SOLAR_DRIVE = 209;
+  /**
+   * Component Spore module
+   */
+  public static final int COMPONENT_SPORE_MODULE = 210;
+
 
 /**
    * Create ShipComponent with matching name
@@ -1726,6 +1735,12 @@ public final class ShipComponentFactory {
     case COMPONENT_COMBAT_THRUSTERS_MK2:
       tmp = createEngine(index);
       break; // Combat thrusters
+    case COMPONENT_SOLAR_DRIVE:
+      tmp = createEngine(index);
+      break; // Solar drive
+    case COMPONENT_SPORE_MODULE:
+      tmp = createElectronics(index);
+      break; // Spore module
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -1997,6 +2012,14 @@ public final class ShipComponentFactory {
       tmp.setTacticSpeed(1);
       tmp.setInitiativeBoost(2);
       tmp.setSpeed(1);
+      tmp.setEnergyResource(1);
+    }
+    if (index == COMPONENT_SOLAR_DRIVE) {
+      tmp = new ShipComponent(index, "Solar drive", 3, 3,
+          ShipComponentType.ENGINE);
+      tmp.setSpeed(1);
+      tmp.setFtlSpeed(1);
+      tmp.setTacticSpeed(1);
       tmp.setEnergyResource(1);
     }
     return tmp;
@@ -2444,6 +2467,11 @@ public final class ShipComponentFactory {
           ShipComponentType.SCANNER);
       tmp.setScannerRange(5);
       tmp.setCloakDetection(40);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_SPORE_MODULE) {
+      tmp = new ShipComponent(index, "Spore Module", 5, 5,
+          ShipComponentType.COLONY_MODULE);
       tmp.setEnergyRequirement(1);
     }
     return tmp;

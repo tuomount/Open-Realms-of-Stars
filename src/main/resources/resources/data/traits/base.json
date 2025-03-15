@@ -10,6 +10,14 @@
     ]
   },
   {
+    "id": "SPORE_COLONIZATION",
+    "name": "Spore colonization",
+    "description": "Race spreads only with uncrewed colonize ship which contains seeds to start new life at target planet.",
+    "group": "Special",
+    "points": 2,
+    "conflictsWith": []
+  },
+  {
     "id": "LITHOVORIC",
     "name": "Lithovoric",
     "description": "Eats minerals instead of food. This life-long bond with earth consquently results in talent for mining.",

@@ -165,6 +165,11 @@ public final class TraitIds {
   public static final String QUICK_LEARNERS = "QUICK_LEARNERS";
   /** Slow learners, leaders gain only half experience. */
   public static final String SLOW_LEARNERS = "SLOW_LEARNERS";
+  /**
+   *  Race spreads only with uncrewed colonize ship which contains seeds
+   *  to start new life at target planet.
+   */
+  public static final String SPORE_COLONIZATION = "SPORE_COLONIZATION";
 
   /** List storing all hardcoded IDs. Populated at runtime, via reflection. */
   private static List<String> hardcodedIds = null;

@@ -227,7 +227,7 @@ public final class TechFactory {
    * Hull tech names for level 1
    */
   public static final String[] HULL_TECH_LEVEL1_NAMES = {"Scout Mk1",
-      "Destroyer Mk1", "Colony", "Minor orbital" };
+      "Destroyer Mk1", "Colony", "Minor orbital", "Spore" };
   /**
    * Hull tech names for level 2
    */
@@ -381,7 +381,7 @@ public final class TechFactory {
    */
   public static final String[] PROPULSION_TECH_LEVEL1_NAMES = {"Ion drive Mk1",
       "Fission source Mk1", "Ion drive Mk2", "Nuclear drive Mk1",
-      "Fission source Mk2" };
+      "Fission source Mk2", "Solar Drive" };
   /**
    * Propulsion tech names for level 2
    */
@@ -916,6 +916,18 @@ public final class TechFactory {
           tech.setHull(techName);
           tech.setComponent("Colonization module");
           tech.setIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
+          tech.setTradeable(false);
+          tech.setExcludeList(true);
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
+              TraitIds.SPORE_COLONIZATION));
+        } else if (techName.startsWith("Spore")) {
+          tech.setHull(techName);
+          tech.setComponent("Spore module");
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
+          tech.setTradeable(false);
+          tech.setExcludeList(false);
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
+              TraitIds.SPORE_COLONIZATION));
         } else if (techName.startsWith("Fighter bay Mk")) {
           tech.setComponent(techName);
         } else if (techName.startsWith("Repair module Mk")) {
@@ -1154,6 +1166,12 @@ public final class TechFactory {
           tech.setExcludeList(true);
           tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
+        } else if (techName.startsWith("Solar drive")) {
+          tech.setComponent(techName);
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PROPULSION_TECH));
+          tech.setExcludeList(false);
+          tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
+              TraitIds.SPORE_COLONIZATION));
         } else if (tech.getName().equals("Material replicator")) {
           tech.setImprovement(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_METAL_ORE));

@@ -2658,6 +2658,9 @@ public class Game implements ActionListener {
    */
   private void colonizePlanetAction() {
     Ship ship = fleetView.getFleet().getColonyShip();
+    if (ship == null) {
+      ship = fleetView.getFleet().getSporeShip();
+    }
     if (ship != null && fleetView.getPlanet() != null
         && fleetView.getPlanet().getPlanetPlayerInfo() == null) {
       final var currPlayer = players.getCurrentPlayerInfo();

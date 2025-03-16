@@ -708,6 +708,18 @@ public class Fleet {
   }
 
   /**
+   * Get first spore ship from the fleet.
+   * @return Spore ship or null
+   */
+  public Ship getSporeShip() {
+    for (Ship ship : ships) {
+      if (ship.isSporeShip()) {
+        return ship;
+      }
+    }
+    return null;
+  }
+  /**
    * Get first trooper ship from the fleet.
    * @return Trooper ship or null
    */
@@ -792,6 +804,20 @@ public class Fleet {
     return true;
   }
 
+  /**
+   * Is fleet spore fleet? It mean at least one ship is spore ship.
+   * It does not mean fleet is privateer fleet.
+   * @return True if fleet has at least one spore ship
+   */
+  public boolean isSporeFleet() {
+    boolean result = false;
+    for (Ship ship : ships) {
+      if (ship.isSporeShip()) {
+        result = true;
+      }
+    }
+    return result;
+  }
   /**
    * Get fleet type. See FleetType enum.
    * @return Fleet type.

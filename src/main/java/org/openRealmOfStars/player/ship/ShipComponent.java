@@ -600,6 +600,12 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case SPORE_MODULE: {
+      sb.append("Spore module to start new population on new planet."
+          + "\nSpores will automatically kill previous population on planet.");
+      sb.append("\n");
+      break;
+    }
     case HEART:
     case POWERSOURCE: {
       // Do nothing

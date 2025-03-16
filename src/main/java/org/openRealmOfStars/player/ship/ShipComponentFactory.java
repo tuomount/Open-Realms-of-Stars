@@ -2471,7 +2471,7 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_SPORE_MODULE) {
       tmp = new ShipComponent(index, "Spore Module", 5, 5,
-          ShipComponentType.COLONY_MODULE);
+          ShipComponentType.SPORE_MODULE);
       tmp.setEnergyRequirement(1);
     }
     return tmp;

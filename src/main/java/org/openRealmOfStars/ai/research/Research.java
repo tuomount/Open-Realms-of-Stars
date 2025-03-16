@@ -304,6 +304,19 @@ public final class Research {
             break;
           }
         }
+        if (stat.getDesign().getHull().getHullType() == ShipHullType.FREIGHTER
+            && stat.getDesign()
+                .gotCertainType(ShipComponentType.SPORE_MODULE)
+            && !stat.isObsolete()) {
+          notFound = false;
+          if (design.getTotalColonyPower() > stat.getDesign()
+              .getTotalColonyPower()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+        }
       }
       if (notFound) {
         ShipStat ship = new ShipStat(design);

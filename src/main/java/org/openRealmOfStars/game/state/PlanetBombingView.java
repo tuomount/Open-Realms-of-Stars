@@ -468,8 +468,7 @@ public class PlanetBombingView extends BlackPanel {
   }
 
   /**
-   * Use component on ship. Currently Orbital bombs/nukes and
-   * planetary invasion module work
+   * Use component on ship during bombing/conquer.
    * @param index Ship Component index
    */
   public void shipComponentUsage(final int index) {
@@ -506,7 +505,8 @@ public class PlanetBombingView extends BlackPanel {
     }
 
     if (comp.getType() == ShipComponentType.ORBITAL_BOMBS
-        || comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+        || comp.getType() == ShipComponentType.ORBITAL_NUKE
+        || comp.getType() == ShipComponentType.SPORE_MODULE) {
       planetTurretShoot();
       updatePanel();
       usedComponentIndex = index;
@@ -729,6 +729,9 @@ public class PlanetBombingView extends BlackPanel {
     }
     if (compType == ShipComponentType.PLANETARY_INVASION_MODULE) {
       attackResult = attackInvasionModule(ship, comp);
+    }
+    if (compType == ShipComponentType.SPORE_MODULE) {
+      attackResult = attackSporeModule(ship);
     }
 
     usedComponentIndex = -1;
@@ -977,6 +980,81 @@ public class PlanetBombingView extends BlackPanel {
   }
 
   /**
+   * Attack the planet with spore module
+   * @param ship Ship which attacks
+   * @return AttackResult
+   */
+  private AttackResult attackSporeModule(final Ship ship) {
+    AttackResult result = new AttackResult();
+    if (!allAi && game != null) {
+      game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
+    }
+    imgBase.setAnimation(null);
+    int damage = ship.getHull().getSlotHull()
+        * ship.getHull().getMaxSlot();
+    ShipDamage shipDamage = new ShipDamage(1, "Spore module activated.");
+    while (damage > 0) {
+      damage = ship.damageComponent(damage, shipDamage);
+    }
+    suppressionFire = 0;
+    if (planet.getTotalPopulation() > 1) {
+      planet.killOneWorker();
+      textLogger.addLog("Your spore attack kills one of the planet's"
+          + " population. Your ship is destroyed in process.");
+      return result;
+    }
+
+    int origPop = planet.getTotalPopulation();
+    Tech[] stealableTechs = null;
+    if (planet.getPlanetPlayerInfo() != null) {
+      stealableTechs = EspionageUtility.getStealableTech(planet, attacker);
+    }
+    String extraPop = "";
+    if (planet.getPlanetPlayerInfo() != null
+        && attacker.getRace().hasTrait(TraitIds.ASSIMILATION)
+        && !planet.getPlanetPlayerInfo().getRace().isRoboticRace()) {
+      extraPop = " Killed population is synthesized into your population.";
+      if (stealableTechs != null && stealableTechs.length > 0) {
+        Tech tech = DiceGenerator.pickRandom(stealableTechs);
+        attacker.getTechList().addTech(tech);
+        final var tplStolenTech = "%1$s has stolen %2$s technology"
+            + "from %3$s. This was gained via %4$s special ability.";
+        Message msg = new Message(MessageType.RESEARCH,
+            String.format(tplStolenTech, attacker.getEmpireName(),
+                tech.getName(),
+                planet.getPlanetPlayerInfo().getEmpireName(),
+                attacker.getRace().getNameSingle()),
+            Icons.getIconByName(Icons.ICON_RESEARCH));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(planet.getName());
+        attacker.getMsgList().addNewMessage(msg);
+      }
+    }
+
+    planet.killOneWorker("Conquest", "spore attack", starMap);
+    int left = 1;
+    if (!extraPop.isEmpty()) {
+      left += origPop;
+    }
+
+    planet.setPlanetOwner(attackPlayerIndex, attacker);
+    if (attacker.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+      planet.colonizeWithOrbital();
+    }
+    result.conquered = true;
+    if (!attacker.getRace().isEatingFood()) {
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, left);
+    } else {
+      planet.setWorkers(Planet.PRODUCTION_FOOD, left);
+    }
+    textLogger.addLog("Your troops colonize the planet with spores but"
+        + " your ship is destroyed in process." + extraPop);
+    result.attackType = "conquest";
+    result.reason = " conquest of planet";
+    return result;
+  }
+
+  /**
    * Handle bombing/conquer when AI is attacking
    * And all parties are Ai
    */
@@ -1100,7 +1178,8 @@ public class PlanetBombingView extends BlackPanel {
               || component.getType() == ShipComponentType.WEAPON_RAILGUN
               || component.getType() == ShipComponentType.MULTICANNON
               || component.getType() == ShipComponentType.GRAVITY_RIPPER
-              || component.getType() == ShipComponentType.PLASMA_CANNON) {
+              || component.getType() == ShipComponentType.PLASMA_CANNON
+              || component.getType() == ShipComponentType.SPORE_MODULE) {
             // Always bombing or shooting
             shipComponentUsage(aiComponentIndex);
           }

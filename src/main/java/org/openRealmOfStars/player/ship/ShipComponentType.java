@@ -187,7 +187,12 @@ public enum ShipComponentType {
    * Repair module that will repair one hull point and armor point when
    * overloaded during combat. Also fixes ship faster outside of combat.
    */
-  REPAIR_MODULE;
+  REPAIR_MODULE,
+  /**
+   * SPORE_MODULE for spore colonization.
+   */
+  SPORE_MODULE;
+
 
   /**
    * Get ShipComponentType index
@@ -288,6 +293,8 @@ public enum ShipComponentType {
       return "Gravity ripper";
     case REPAIR_MODULE:
       return "Repair module";
+    case SPORE_MODULE:
+      return "Spore module";
     default:
       return "Error - Unknown";
     }

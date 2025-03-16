@@ -730,6 +730,10 @@ public class ShipDesign {
           power = power + freeSlots;
         }
       }
+      if (comp.getType() == ShipComponentType.SPORE_MODULE) {
+        colonyShip = true;
+        power = power + 1;
+      }
       if (hasDefenseComponent()) {
         power = power + comp.getDefenseValue();
       }
@@ -899,6 +903,13 @@ public class ShipDesign {
         if (hull.getHullType() != ShipHullType.FREIGHTER) {
           designOk = false;
           sb.append("Colonization module in non freighter hull.");
+        }
+      }
+      if (comp.getType() == ShipComponentType.SPORE_MODULE) {
+        colonizationModule = true;
+        if (hull.getHullType() != ShipHullType.FREIGHTER) {
+          designOk = false;
+          sb.append("Spore module in non freighter hull.");
         }
       }
       if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {

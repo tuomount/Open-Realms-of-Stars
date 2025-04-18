@@ -381,7 +381,7 @@ public final class TechFactory {
    */
   public static final String[] PROPULSION_TECH_LEVEL1_NAMES = {"Ion drive Mk1",
       "Fission source Mk1", "Ion drive Mk2", "Nuclear drive Mk1",
-      "Fission source Mk2", "Solar Drive" };
+      "Fission source Mk2", "Solar drive" };
   /**
    * Propulsion tech names for level 2
    */
@@ -1166,7 +1166,7 @@ public final class TechFactory {
           tech.setExcludeList(true);
           tech.setSpaceRaces(SpaceRaceUtility.getRacesByTrait(
               TraitIds.ZERO_GRAVITY_BEING));
-        } else if (techName.startsWith("Solar drive")) {
+        } else if (techName.equals("Solar drive")) {
           tech.setComponent(techName);
           tech.setIcon(Icons.getIconByName(Icons.ICON_PROPULSION_TECH));
           tech.setExcludeList(false);

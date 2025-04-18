@@ -2881,6 +2881,11 @@ public class Planet {
                         .generateUniqueName("Colony"));
                     mission.setFleetName(fleet.getName());
                   }
+                  if (mission.getType() == MissionType.SPORE_COLONY) {
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Spore"));
+                    mission.setFleetName(fleet.getName());
+                  }
                   if (mission.getType() == MissionType.DEPLOY_STARBASE
                       && fleet.getStarbaseShip() != null) {
                     fleet.setName(planetOwnerInfo.getFleets()

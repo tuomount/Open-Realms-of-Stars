@@ -337,6 +337,9 @@ public class PlayerInfo {
     // This is the old way of government
     setGovernment(GovernmentFactory.createOne("AI"));
     setWarFatigue(0);
+    if (!getRace().isPirate() && !getRace().isMonster()) {
+      addColonyTechs();
+    }
     if (getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
       addZeroGravityTechs(extraTech);
     } else {
@@ -424,10 +427,10 @@ public class PlayerInfo {
    */
   private void addDefaultTechs(final String[] extraTech) {
     final String[] techs1 = {
-      "Colony", "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
+      "Scout Mk1", "Ion drive Mk1", "Fission source Mk1",
     };
     final String[] techs2 = {
-        "Colony", "Scout Mk1", "Nuclear drive Mk1", "Fission source Mk1",
+       "Scout Mk1", "Nuclear drive Mk1", "Fission source Mk1",
       };
     if (DiceGenerator.getBoolean()) {
       addTechs(techs1);
@@ -444,12 +447,29 @@ public class PlayerInfo {
     designInitialShips();
   }
 
+  /**
+   * Add Zero Gravity techs and ship designs.
+   */
+  private void addColonyTechs() {
+    final String[] defaultColony = {
+      "Colony"
+    };
+    final String[] sporeColony = {
+        "Spore", "Solar drive"
+      };
+    if (getRace().hasTrait(TraitIds.SPORE_COLONIZATION)) {
+      addTechs(sporeColony);
+    } else {
+      addTechs(defaultColony);
+    }
+  }
+
   /** Add Zero Gravity techs and ship designs.
    * @param extraTech Extra tech based on starting scenario.
    */
   private void addZeroGravityTechs(final String[] extraTech) {
     final String[] techs = {
-      "Railgun Mk1", "Shield Mk1", "Colony", "Scout Mk1", "Minor orbital",
+      "Railgun Mk1", "Shield Mk1", "Scout Mk1", "Minor orbital",
       "Nuclear drive Mk1", "Fission source Mk1",
     };
     addTechs(techs);

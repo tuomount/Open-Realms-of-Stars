@@ -792,7 +792,7 @@ public final class DefaultScoring {
       final PlayerInfo info, final StarMap map, final Attitude attitude,
       final Planet planet) {
     int score = preScore;
-    if (ship.isColonyModule()) {
+    if (ship.isColonyModule() || ship.isSporeShip()) {
       // Colony ship should be built only on request
       Mission mission = info.getMissions().getBestColonizeMissionPlanning(map,
           info, planet.getCoordinate());
@@ -817,6 +817,8 @@ public final class DefaultScoring {
         }
         score = score + info.getMissions().getNumberOfMissionTypes(
             MissionType.COLONIZE, MissionPhase.PLANNING) * 5;
+        score = score + info.getMissions().getNumberOfMissionTypes(
+            MissionType.SPORE_COLONY, MissionPhase.PLANNING) * 6;
         if (planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
           score = score + 40;
         }

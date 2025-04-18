@@ -972,6 +972,99 @@ public final class MissionHandling {
   }
 
   /**
+   * Handle Spore Colonize mission
+   * @param mission Spore Colonize mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleSporeColony(final Mission mission, final Fleet fleet,
+      final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.SPORE_COLONY) {
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        mission.setPhase(MissionPhase.TREKKING);
+        Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+            mission.getY(), fleet.getFleetFtlSpeed());
+        fleet.setRoute(route);
+      }
+      if ((mission.getPhase() == MissionPhase.TREKKING
+          || mission.getPhase() == MissionPhase.EXECUTING)
+          && fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
+        // Target acquired
+        mission.setPhase(MissionPhase.EXECUTING);
+        Ship ship = fleet.getSporeShip();
+        Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
+            fleet.getY());
+        if (ship != null && planet != null
+            && planet.getPlanetPlayerInfo() == null) {
+          // Make sure that ship is really spore colony and there is planet to
+          // colonize
+          planet.setPlanetOwner(game.getStarMap().getAiTurnNumber(), info);
+          // Zero-G beings colonize with orbitals
+          if (info.getRace().hasTrait(TraitIds.ZERO_GRAVITY_BEING)) {
+            planet.colonizeWithOrbital();
+          }
+
+          if (!info.getRace().isEatingFood()) {
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          } else {
+            planet.setWorkers(Planet.PRODUCTION_FOOD, 1);
+          }
+          // Remove the ship and AI just colonized planet
+          info.getMissions().remove(mission);
+          fleet.removeShip(ship);
+          if (fleet.getNumberOfShip() == 0) {
+            if (fleet.getCommander() != null) {
+              fleet.getCommander().assignJob(Job.UNASSIGNED, info);
+              fleet.setCommander(null);
+            }
+            // Remove also empty fleet
+            info.getFleets().recalculateList();
+          }
+          ShipStat stat = info.getShipStatByName(ship.getName());
+          if (stat != null) {
+            stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+          }
+          EventOnPlanet event = new EventOnPlanet(EventType.PLANET_COLONIZED,
+              planet.getCoordinate(),
+              planet.getName(), game.getStarMap().getAiTurnNumber());
+          event.setText(info.getEmpireName()
+              + " colonized planet " + planet.getName()
+              + ". ");
+          game.getStarMap().getHistory().addEvent(event);
+          planet.eventActivation(game.getStarMap().isTutorialEnabled(),
+              null, null);
+        }
+        if (ship != null && planet != null
+            && planet.getPlanetPlayerInfo() != null
+            && planet.getPlanetPlayerInfo() != info) {
+          // Target acquired, mission completed!
+          info.getMissions().remove(mission);
+          if (planet.getPlanetPlayerInfo() != null
+              && planet.getPlanetPlayerInfo().isHuman()) {
+            // Spore colonize human planet
+            int attackerIndex = game.getStarMap().getPlayerList().getIndex(
+                info);
+            PlanetBombingView bombView = new PlanetBombingView(planet, fleet,
+                info, attackerIndex, game);
+            game.changeGameState(GameState.PLANETBOMBINGVIEW, bombView);
+          } else {
+            // Spore colonize AI planet
+            PlanetBombingView bombingView = new PlanetBombingView(planet, fleet,
+                info, game.getStarMap().getPlayerList().getIndex(info), game);
+            bombingView.setStarMap(game.getStarMap());
+            bombingView.handleAiToAiAttack();
+          }
+        }
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+          makeReroute(game, fleet, info, mission);
+      }
+    } // End of spore colony
+
+  }
+
+  /**
    * Handle Deploy starbase mission
    * @param mission Deploy starbase mission, does nothing if type is wrong
    * @param fleet Fleet on mission

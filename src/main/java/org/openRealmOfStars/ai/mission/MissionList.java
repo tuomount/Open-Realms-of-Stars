@@ -195,11 +195,21 @@ public class MissionList {
           totalValue = value;
         }
       }
+      if (mission.getType() == MissionType.SPORE_COLONY
+          && mission.getPhase() == MissionPhase.PLANNING) {
+        Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(),
+            mission.getY());
+        int value = colonPlanet.evaluatePlanetValue(info, coordinate, divider);
+        if (value > totalValue) {
+          result = mission;
+          totalValue = value;
+        }
+      }
     }
     return result;
   }
   /**
-   * Find a colonize mission for certain planet
+   * Find a colonize/spore mission for certain planet
    * @param x Planet X coordinate
    * @param y Planet Y coordinate
    * @return Mission or null if not found
@@ -208,6 +218,10 @@ public class MissionList {
     for (Mission mission : missions) {
       if (mission.getX() == x && mission.getY() == y
           && mission.getType() == MissionType.COLONIZE) {
+        return mission;
+      }
+      if (mission.getX() == x && mission.getY() == y
+          && mission.getType() == MissionType.SPORE_COLONY) {
         return mission;
       }
     }
@@ -274,6 +288,24 @@ public class MissionList {
       }
     }
     return null;
+
+  }
+
+  /**
+   * Find a number of spore colony mission for certain planet
+   * @param name Planet where to spore colony
+   * @return number of missions
+   */
+  public int getNumberOfSporeAttackMissions(final String name) {
+    int count = 0;
+    for (Mission mission : missions) {
+      if (mission.getTargetPlanet() != null
+          && mission.getTargetPlanet().equals(name)
+          && mission.getType() == MissionType.SPORE_COLONY) {
+        count++;
+      }
+    }
+    return count;
 
   }
 

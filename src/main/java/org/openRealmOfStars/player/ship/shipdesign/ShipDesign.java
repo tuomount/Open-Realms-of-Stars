@@ -907,6 +907,7 @@ public class ShipDesign {
       }
       if (comp.getType() == ShipComponentType.SPORE_MODULE) {
         colonizationModule = true;
+        flawNoCargoSpace = false;
         if (hull.getHullType() != ShipHullType.FREIGHTER) {
           designOk = false;
           sb.append("Spore module in non freighter hull.");

@@ -409,7 +409,8 @@ public class SpaceAnomaly {
               Ship ship = new Ship(stat.getDesign());
               if (ship.getHull().getSize() == ShipSize.SMALL
                   && !ship.isStarBase()
-                  && ship.getHull().getHullType() != ShipHullType.ORBITAL) {
+                  && ship.getHull().getHullType() != ShipHullType.ORBITAL
+                  && !ship.isSporeShip()) {
                 listStats.add(stat);
               }
             }

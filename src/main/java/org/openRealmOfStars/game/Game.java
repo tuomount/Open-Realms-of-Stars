@@ -2663,6 +2663,10 @@ public class Game implements ActionListener {
     }
     if (ship != null && fleetView.getPlanet() != null
         && fleetView.getPlanet().getPlanetPlayerInfo() == null) {
+      int colonists = ship.getColonist();
+      if (ship.isSporeShip()) {
+        colonists = 1;
+      }
       final var currPlayer = players.getCurrentPlayerInfo();
       // Make sure that ship is really colony and there is planet to
       // colonize
@@ -2673,13 +2677,13 @@ public class Game implements ActionListener {
       }
       if (currPlayer.getRace().getFoodRequire() == 0) {
         fleetView.getPlanet().setWorkers(Planet.PRODUCTION_WORKERS,
-            ship.getColonist());
+            colonists);
       } else if (currPlayer.getRace().isLithovorian()) {
         fleetView.getPlanet().setWorkers(Planet.METAL_MINERS,
-            ship.getColonist());
+            colonists);
       } else {
         fleetView.getPlanet().setWorkers(Planet.FOOD_FARMERS,
-            ship.getColonist());
+            colonists);
       }
 
       // Remove the ship and show the planet view you just colonized

@@ -313,6 +313,7 @@ public class SpaceAnomalyTest {
         .getShipImage(0));
     Mockito.when(hull.getHullType()).thenReturn(ShipHullType.NORMAL);
     Mockito.when(hull.getSize()).thenReturn(ShipSize.SMALL);
+    Mockito.when(hull.getName()).thenReturn("Scout Mk1");
     Mockito.when(design.getHull()).thenReturn(hull);
     Mockito.when(design.getComponentList()).thenReturn(components);
     Mockito.when(info.getShipStatList()).thenReturn(stats);

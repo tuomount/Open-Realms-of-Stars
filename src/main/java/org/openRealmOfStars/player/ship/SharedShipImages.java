@@ -205,10 +205,10 @@ public final class SharedShipImages {
     if (monsterShipImages == null) {
       loadImages();
     }
-    if (index >= 0 && index < shipImages.length) {
-      return shipImages[index];
+    if (index >= 0 && index < monsterShipImages.length) {
+      return monsterShipImages[index];
     }
-    return shipImages[0];
+    return monsterShipImages[0];
   }
 
   /**

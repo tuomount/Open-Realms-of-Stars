@@ -643,7 +643,11 @@ public class BigSpherePanel extends JPanel {
           if ((animation.getAnimationType()
               == PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM
               || animation.getAnimationType()
-              == PlanetAnimation.ANIMATION_TYPE_NUKE_AIM)
+              == PlanetAnimation.ANIMATION_TYPE_NUKE_AIM
+              || animation.getAnimationType()
+              == PlanetAnimation.ANIMATION_TYPE_GROUND_COMBAT_AIM
+              || animation.getAnimationType()
+              == PlanetAnimation.ANIMATION_TYPE_SPORE_ATTACK_AIM)
               && backgroundImg != null) {
             int px = BOMB_X_OFFSET;
             int py = BOMB_Y_OFFSET;
@@ -662,6 +666,16 @@ public class BigSpherePanel extends JPanel {
                 == PlanetAnimation.ANIMATION_TYPE_NUKE_AIM) {
               animation.setAnimationType(
                   PlanetAnimation.ANIMATION_TYPE_NUKING);
+            }
+            if (animation.getAnimationType()
+                == PlanetAnimation.ANIMATION_TYPE_GROUND_COMBAT_AIM) {
+              animation.setAnimationType(
+                  PlanetAnimation.ANIMATION_TYPE_GROUND_COMBAT);
+            }
+            if (animation.getAnimationType()
+                == PlanetAnimation.ANIMATION_TYPE_SPORE_ATTACK_AIM) {
+              animation.setAnimationType(
+                  PlanetAnimation.ANIMATION_TYPE_SPORE_ATTACK);
             }
           }
         }

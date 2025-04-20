@@ -907,7 +907,8 @@ public class PlanetBombingView extends BlackPanel {
     if (!allAi && game != null) {
       game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
     }
-    imgBase.setAnimation(null);
+    imgBase.setAnimation(new PlanetAnimation(
+        PlanetAnimation.ANIMATION_TYPE_GROUND_COMBAT_AIM, 0, 0, 1, 1));
     int shipTroop = ship.getHull().getRace().getTrooperPower()
         * (100 + comp.getDamage()) / 100;
     int shipTroops = ship.getHull().getRace().getTrooperPower()
@@ -989,7 +990,8 @@ public class PlanetBombingView extends BlackPanel {
     if (!allAi && game != null) {
       game.setBridgeCommand(BridgeCommandType.YELLOW_ALERT);
     }
-    imgBase.setAnimation(null);
+    imgBase.setAnimation(new PlanetAnimation(
+        PlanetAnimation.ANIMATION_TYPE_SPORE_ATTACK_AIM, 0, 0, 1, 1));
     int damage = ship.getHull().getSlotHull()
         * ship.getHull().getMaxSlot();
     ShipDamage shipDamage = new ShipDamage(1, "Spore module activated.");
@@ -1001,6 +1003,7 @@ public class PlanetBombingView extends BlackPanel {
       planet.killOneWorker();
       textLogger.addLog("Your spore attack kills one of the planet's"
           + " population. Your ship is destroyed in process.");
+      removeDestroyedShip();
       return result;
     }
 
@@ -1051,6 +1054,7 @@ public class PlanetBombingView extends BlackPanel {
         + " your ship is destroyed in process." + extraPop);
     result.attackType = "conquest";
     result.reason = " conquest of planet";
+    removeDestroyedShip();
     return result;
   }
 

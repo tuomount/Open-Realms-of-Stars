@@ -178,6 +178,13 @@ https://opengameart.org/content/sci-fi-effects
 Licensed under CC BY 4.0
 https://creativecommons.org/licenses/by/4.0/
 
+Pulsating shield animation from Sci-fi effects by Skorpio
+https://opengameart.org/content/sci-fi-effects
+Licensed under CC BY 4.0
+https://creativecommons.org/licenses/by/4.0/
+
+Ground combat animation by Tuomo Untinen
+
 ORoS logos by Tuomo Untinen
 
 Scaurian Space Ship Bridge by Tuomo Untinen

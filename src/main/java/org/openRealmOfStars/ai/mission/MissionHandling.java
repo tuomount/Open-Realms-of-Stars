@@ -2476,6 +2476,9 @@ public final class MissionHandling {
       if (fleet.isPrivateerFleet()) {
         war = true;
       }
+      if (fleetAtTarget != null && fleetAtTarget.isPrivateerFleet()) {
+        war = true;
+      }
       if (war && info != infoAtTarget
           && info.getRace().isPirate()) {
         int pirateIndex = map.getPlayerList().getIndex(info);

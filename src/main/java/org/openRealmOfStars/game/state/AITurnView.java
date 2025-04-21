@@ -1076,6 +1076,26 @@ public class AITurnView extends BlackPanel {
             }
           }
         }
+        if (fleetOwner != info && !info.getDiplomacy().isWar(i)) {
+          int numberOfFleets = fleetOwner.getFleets().getNumberOfFleets();
+          for (int j = 0; j < numberOfFleets; j++) {
+            Fleet fleet = fleetOwner.getFleets().getByIndex(j);
+            if (fleet.isPrivateerFleet()) {
+              int detect = info.getSectorCloakDetection(fleet.getX(),
+                  fleet.getY());
+              byte visibility = info.getSectorVisibility(fleet.getCoordinate());
+              if (detect >= fleet.getFleetCloackingValue()
+                  && visibility >= PlayerInfo.VISIBLE) {
+                CulturePower culture = game.getStarMap().getSectorCulture(
+                    fleet.getX(), fleet.getY());
+                if (culture.getHighestCulture() == game.getStarMap()
+                    .getAiTurnNumber()) {
+                  info.addInterceptableFleet(fleet);
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

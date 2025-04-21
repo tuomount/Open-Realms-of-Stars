@@ -603,7 +603,7 @@ public class PlanetBombingView extends BlackPanel {
       stat.setNumberOfLoses(stat.getNumberOfLoses() + 1);
       stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
     }
-
+    attacker.getFleets().recalculateList();
   }
 
   /**

@@ -136,6 +136,9 @@ public final class ChallengingScoring {
           if (info.getDiplomacy().getNumberOfWar() > 0) {
             score = score + info.getDiplomacy().getNumberOfWar() * 3;
           }
+          if (info.isEnemyShipsDetected()) {
+            score = score + ship.getTotalMilitaryPower() * 2;
+          }
           Mission defendMission = info.getMissions()
               .getMissionForPlanet(planet.getName(), MissionType.DEFEND);
           Mission attackMission = info.getMissions().getMission(

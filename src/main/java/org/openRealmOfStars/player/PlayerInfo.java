@@ -250,6 +250,11 @@ public class PlayerInfo {
   private String backgroundStory;
 
   /**
+   * Enemy ships detected, add defend mission on every planet.
+   */
+  private boolean enemyShipsDetected;
+
+  /**
    * Uncharted map sector, only suns are visible
    */
   public static final byte UNCHARTED = 0;
@@ -314,6 +319,7 @@ public class PlayerInfo {
     strategy = WinningStrategy.GENERIC;
     this.msgList = new MessageList();
     shipStatList = new ArrayList<>();
+    enemyShipsDetected = false;
     fleets = new FleetList();
     elderRealm = false;
     leaderPool = new ArrayList<>();
@@ -2206,6 +2212,20 @@ public class PlayerInfo {
    */
   public void cleanInterceptableFleetList() {
     interceptableFleets = new ArrayList<>();
+  }
+  /**
+   * Is enemy ships detected.
+   * @return True if enemy ships spotted.
+   */
+  public boolean isEnemyShipsDetected() {
+    return enemyShipsDetected;
+  }
+  /**
+   * Set flag if enemy ships has been spotted.
+   * @param enemyShipsDetected Boolean if enemy ships has been detected
+   */
+  public void setEnemyShipsDetected(final boolean enemyShipsDetected) {
+    this.enemyShipsDetected = enemyShipsDetected;
   }
   /**
    * Get Center of realm. This will return

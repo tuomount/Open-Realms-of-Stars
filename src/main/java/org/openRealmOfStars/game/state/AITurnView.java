@@ -48,6 +48,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.player.AiDifficulty;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.WinningStrategy;
@@ -1054,6 +1055,7 @@ public class AITurnView extends BlackPanel {
     PlayerInfo info = game.getPlayers()
         .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
     if (info != null && !info.isHuman() && !info.isBoard()) {
+      info.setEnemyShipsDetected(false);
       info.cleanInterceptableFleetList();
       int maxPlayer = game.getPlayers().getCurrentMaxRealms();
       for (int i = 0; i < maxPlayer; i++) {
@@ -1071,6 +1073,9 @@ public class AITurnView extends BlackPanel {
                   fleet.getX(), fleet.getY());
               if (culture.getHighestCulture() == game.getStarMap()
                   .getAiTurnNumber()) {
+                if (info.getAiDifficulty() != AiDifficulty.WEAK) {
+                  info.setEnemyShipsDetected(true);
+                }
                 info.addInterceptableFleet(fleet);
               }
             }
@@ -1090,6 +1095,9 @@ public class AITurnView extends BlackPanel {
                     fleet.getX(), fleet.getY());
                 if (culture.getHighestCulture() == game.getStarMap()
                     .getAiTurnNumber()) {
+                  if (info.getAiDifficulty() != AiDifficulty.WEAK) {
+                    info.setEnemyShipsDetected(true);
+                  }
                   info.addInterceptableFleet(fleet);
                 }
               }
@@ -1570,7 +1578,7 @@ public class AITurnView extends BlackPanel {
   /**
    * Get closes intercept mission.
    * @param origin Origin fleet which doing intercept mission
-   * @param info Realm who is planning interceptiong
+   * @param info Realm who is planning intercepting
    * @param map Starmap
    * @return Interceptable fleet or null none available.
    */

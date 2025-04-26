@@ -239,6 +239,10 @@ public class MissionList {
           && mission.getType() == MissionType.COLONIZE) {
         return true;
       }
+      if (mission.getPhase() == MissionPhase.PLANNING
+          && mission.getType() == MissionType.SPORE_COLONY) {
+        return true;
+      }
     }
     return false;
   }

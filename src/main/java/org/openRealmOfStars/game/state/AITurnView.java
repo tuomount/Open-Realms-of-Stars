@@ -3593,6 +3593,10 @@ public class AITurnView extends BlackPanel {
               colonyShips = true;
               break;
             }
+            if (fleet != null && fleet.isSporeFleet()) {
+              colonyShips = true;
+              break;
+            }
           }
           if (colonyShips) {
             continue;

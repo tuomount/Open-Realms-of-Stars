@@ -821,7 +821,10 @@ public final class DefaultScoring {
         score = score + info.getMissions().getNumberOfMissionTypes(
             MissionType.COLONIZE, MissionPhase.PLANNING) * 5;
         score = score + info.getMissions().getNumberOfMissionTypes(
-            MissionType.SPORE_COLONY, MissionPhase.PLANNING) * 6;
+            MissionType.SPORE_COLONY, MissionPhase.PLANNING) * 5;
+        if (ship.isSporeShip()) {
+          score = score + 10;
+        }
         if (planet.getEffectiveGovernorGuide() == Planet.POPULATION_PLANET) {
           score = score + 40;
         }

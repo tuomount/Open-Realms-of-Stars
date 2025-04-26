@@ -477,7 +477,7 @@ public final class MissionHandling {
    * @param info Realm exploring
    * @param game and whole game with starmap.
    */
-  private static void findSunToExplore(final Mission mission, final Fleet fleet,
+  public static void findSunToExplore(final Mission mission, final Fleet fleet,
       final PlayerInfo info, final Game game) {
     Sun sun = null;
     if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
@@ -756,6 +756,7 @@ public final class MissionHandling {
                 fleet.getCoordinate());
         if (sporeColony != null) {
           info.getMissions().remove(mission);
+          fleet.setRoute(null);
           sporeColony.setPhase(MissionPhase.TREKKING);
           sporeColony.setFleetName(fleet.getName());
           return;

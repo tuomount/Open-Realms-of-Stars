@@ -410,11 +410,18 @@ public class AITurnView extends BlackPanel {
         mission = new Mission(MissionType.COLONY_EXPLORE,
             MissionPhase.EXECUTING, sun.getCenterCoordinate());
         mission.setFleetName(fleet.getName());
-        mission.setSunName(sun.getName());
-        if (planet != null) {
-          mission.setPlanetBuilding(planet.getName());
+        Mission explore =  info.getMissions().getExploringForSun(sun.getName());
+        if (explore == null) {
+          mission.setSunName(sun.getName());
+          if (planet != null) {
+            mission.setPlanetBuilding(planet.getName());
+          }
+          mission.setTarget(fleet.getCoordinate());
+          info.getMissions().add(mission);
+          // Mission assigned continue...
+          return;
         }
-        mission.setTarget(fleet.getCoordinate());
+        MissionHandling.findSunToExplore(mission, fleet, info, game);
         info.getMissions().add(mission);
         // Mission assigned continue...
         return;
@@ -1280,7 +1287,8 @@ public class AITurnView extends BlackPanel {
       info.getMissions().addHighestPriority(bestMission);
       Mission mission = info.getMissions().getMission(
           MissionType.COLONY_EXPLORE, MissionPhase.EXECUTING);
-      if (mission != null) {
+      if (mission != null
+          && !info.getRace().hasTrait(TraitIds.SPORE_COLONIZATION)) {
         // Colony ship was exploring, calling it back to home
         mission.setPhase(MissionPhase.TREKKING);
       }

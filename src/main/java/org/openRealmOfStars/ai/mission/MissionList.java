@@ -230,6 +230,33 @@ public class MissionList {
   }
 
   /**
+   * Get closest colony mission for fleet.
+   * @param fleet Spore colony or colony fleet.
+   * @param sporeColony True for spore colony mission.
+   * @return Closest colony mission or null;
+   */
+  public Mission getClosestColonyMission(final Fleet fleet,
+      final boolean sporeColony) {
+    MissionType type = MissionType.COLONIZE;
+    if (sporeColony) {
+      type = MissionType.SPORE_COLONY;
+    }
+    double shortest = 999;
+    Mission closest = null;
+    for (Mission mission : missions) {
+      if (mission.getType() == type
+          && mission.getPhase() == MissionPhase.PLANNING) {
+        Coordinate coord = new Coordinate(mission.getX(), mission.getY());
+        double dist = fleet.getCoordinate().calculateDistance(coord);
+        if (dist < shortest) {
+          shortest = dist;
+          closest = mission;
+        }
+      }
+    }
+    return closest;
+  }
+  /**
    * Has planned colony mission on the list?
    * @return True or false
    */

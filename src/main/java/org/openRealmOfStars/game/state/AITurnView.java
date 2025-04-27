@@ -1687,8 +1687,22 @@ public class AITurnView extends BlackPanel {
         if (planet != null && planet.getPlanetPlayerInfo() == info) {
           fleet.aiUpgradeShips(info, planet);
         }
-        Mission mission = info.getMissions().getMission(MissionType.COLONIZE,
-            MissionPhase.PLANNING);
+        Mission mission = null;
+        if (info.getAiDifficulty() == AiDifficulty.WEAK) {
+          mission = info.getMissions().getMission(MissionType.COLONIZE,
+              MissionPhase.PLANNING);
+        }
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL) {
+          if (DiceGenerator.getBoolean()) {
+            mission = info.getMissions().getMission(MissionType.COLONIZE,
+                MissionPhase.PLANNING);
+          } else {
+            mission = info.getMissions().getClosestColonyMission(fleet, false);
+          }
+        }
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          mission = info.getMissions().getClosestColonyMission(fleet, false);
+        }
         Mission fleetMission = info.getMissions().getMissionForFleet(
             fleet.getName());
         if (mission != null && fleet.getColonyShip() != null
@@ -1708,8 +1722,21 @@ public class AITurnView extends BlackPanel {
           mission.setPhase(MissionPhase.TREKKING);
           mission.setFleetName(fleet.getName());
         }
-        mission = info.getMissions().getMission(MissionType.SPORE_COLONY,
-            MissionPhase.PLANNING);
+        if (info.getAiDifficulty() == AiDifficulty.WEAK) {
+          mission = info.getMissions().getMission(MissionType.SPORE_COLONY,
+              MissionPhase.PLANNING);
+        }
+        if (info.getAiDifficulty() == AiDifficulty.NORMAL) {
+          if (DiceGenerator.getBoolean()) {
+            mission = info.getMissions().getMission(MissionType.SPORE_COLONY,
+                MissionPhase.PLANNING);
+          } else {
+            mission = info.getMissions().getClosestColonyMission(fleet, true);
+          }
+        }
+        if (info.getAiDifficulty() == AiDifficulty.CHALLENGING) {
+          mission = info.getMissions().getClosestColonyMission(fleet, true);
+        }
         fleetMission = info.getMissions().getMissionForFleet(
             fleet.getName());
         if (mission != null && fleet.getSporeShip() != null

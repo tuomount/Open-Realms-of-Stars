@@ -541,7 +541,7 @@ public class TechList {
   public Tech getBestTacticalEngine() {
     Tech best = null;
     int bestValue = -1;
-    int energy = 0;
+    int otherValues = 0;
     Tech[] list = getListForType(TechType.Propulsion);
     for (Tech tech : list) {
       ShipComponent comp = ShipComponentFactory
@@ -549,15 +549,17 @@ public class TechList {
       if (comp != null
           && (comp.getType() == ShipComponentType.ENGINE
               || comp.getType() == ShipComponentType.SPACE_FIN)) {
-        int compValue = comp.getEnergyResource() - comp.getEnergyRequirement();
+        int compValue = comp.getEnergyResource() - comp.getEnergyRequirement()
+            + comp.getSpeed() + comp.getFtlSpeed();
         if (comp.getTacticSpeed() > bestValue) {
           best = tech;
           bestValue = comp.getTacticSpeed();
-          energy = compValue;
-        } else if (comp.getTacticSpeed() == bestValue && compValue > energy) {
+          otherValues = compValue;
+        } else if (comp.getTacticSpeed() == bestValue
+            && compValue > otherValues) {
           best = tech;
           bestValue = comp.getTacticSpeed();
-          energy = compValue;
+          otherValues = compValue;
         }
       }
     }
